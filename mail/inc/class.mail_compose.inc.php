@@ -3585,6 +3585,9 @@ class mail_compose
 
 		$contacts_obj = new Api\Contacts();
 		$results = array();
+		$mailPrefs = $GLOBALS['egw_info']['user']['preferences']['mail'];
+		$contactLabelPref = !is_array($mailPrefs['contactLabel']) && !empty($mailPrefs['contactLabel']) ?
+			explode(',', $mailPrefs['contactLabel']) : $mailPrefs['contactLabel'];
 
 		// Add some matching mailing lists, and some groups, limited by config
 		if($include_lists)
@@ -3655,10 +3658,10 @@ class mail_compose
 					if (method_exists($contacts_obj,'search'))
 					{
 						$contact['n_fn']='';
-						if (!empty($contact['n_prefix'])) $contact['n_fn'] = $contact['n_prefix'];
-						if (!empty($contact['n_given'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_given'];
-						if (!empty($contact['n_family'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_family'];
-						if (!empty($contact['org_name'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').'('.$contact['org_name'].')';
+						if (!empty($contact['n_prefix']) && (empty($contactLabelPref) || in_array('n_prefix', $contactLabelPref))) $contact['n_fn'] = $contact['n_prefix'];
+						if (!empty($contact['n_given']) && (empty($contactLabelPref) || in_array('n_given', $contactLabelPref))) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_given'];
+						if (!empty($contact['n_family']) && (empty($contactLabelPref) || in_array('n_family', $contactLabelPref))) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_family'];
+						if (!empty($contact['org_name']) && (empty($contactLabelPref) || in_array('org_name', $contactLabelPref))) $contact['n_fn'] .= ($contact['n_fn']?' ':'').'('.$contact['org_name'].')';
 						$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
 					}
 					else
