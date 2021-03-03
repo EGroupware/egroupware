@@ -478,5 +478,5 @@ var exports = {};
  */
 function et2_call(_func)
 {
-	return egw.applyFunc(_func, [].slice.call(arguments, 1), this);
+	return egw.applyFunc(_func, [].slice.call(arguments, 1));
 }
