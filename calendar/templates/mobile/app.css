@@ -911,9 +911,12 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calEventLabel {
   font-weight: bold;
   font-size: 90%;
+  display: inline;
 }
 .calendar_calEventTitle {
   font-weight: bold;
+  font-size: 100%;
+  display: inline;
 }
 /* Event is too small for full display */
 .calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall[data-visible_lines='1'] .calendar_calTimespan {
@@ -2774,7 +2777,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 @media all {
   #calendar-toolbar {
     height: 70px;
-    box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     background: #0c5da5;
     z-index: 1;
