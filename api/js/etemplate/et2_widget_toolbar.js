@@ -434,7 +434,6 @@ var et2_toolbar = /** @class */ (function (_super) {
             .attr('id', this.id + '-' + action.id)
             .attr('type', 'button')
             .appendTo(this.preference[action.id] ? this.actionbox.children()[1] : jQuery('[data-group=' + action.group + ']', this.actionlist));
-        this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' (' + action.shortcut.caption + ')' : '');
         if (action && action.checkbox) {
             if (action.data.toggle_on || action.data.toggle_off) {
                 var toggle = et2_core_widget_1.et2_createWidget('checkbox', {
@@ -456,6 +455,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                     button.addClass('toolbar_toggled' + (typeof action.toggledClass != 'undefined' ? " " + action.toggledClass : ''));
             }
         }
+        this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' (' + action.shortcut.caption + ')' : '');
         if (action.iconUrl) {
             button.attr('style', 'background-image:url(' + action.iconUrl + ')');
         }

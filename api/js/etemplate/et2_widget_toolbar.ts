@@ -530,8 +530,6 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 
-		this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : '');
-
 		if (action && action.checkbox)
 		{
 			if (action.data.toggle_on || action.data.toggle_off)
@@ -556,6 +554,8 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				if (this.checkbox(action.id)) button.addClass('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
 			}
 		}
+		this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : '');
+
 		if ( action.iconUrl)
 		{
 			button.attr('style','background-image:url(' + action.iconUrl + ')');
