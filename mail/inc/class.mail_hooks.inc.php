@@ -451,6 +451,37 @@ class mail_hooks
 					8 => lang('Ident name')
 				),
 				'default' => 7
+			),
+			'contactLabel' => array(
+				'type' => 'taglist',
+				'label' => 'Contact label',
+				'help' => 'Defines what to show as contact label for added contact into To/Cc/Bcc when composing an email. Default is firstname lastname and empty means include eveything available.',
+				'name' => 'contactLabel',
+				'values' => '',
+				'attributes' => array(
+					'allowFreeEntries' => false,
+					'editModeEnabled' => false,
+					'autocomplete_url' => ' ',
+					'select_options' => array (
+						'n_prefix' => array (
+							'id' => 'n_prefix',
+							'label' => lang('Prefix'),
+						),
+						'n_given' => array (
+							'id' => 'n_given',
+							'label' => lang('First name')
+						),
+						'n_family' => array(
+							'id' => 'n_family',
+							'label' => lang('Last name')
+						),
+						'org_name' => array(
+							'id' => 'org_name',
+							'label' => lang('Organisation')
+						)
+					)
+				),
+				'default' => ['n_given','n_family']
 			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
