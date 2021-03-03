@@ -717,7 +717,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			if (this.applications[appname])
 			{
 				this.setActiveApp(this.applications[appname]);
-				return;
+				return appname;
 			}
 			var self = this;
 			// add target flag
@@ -750,6 +750,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			}));
 
 			this._setTabAppsSession(this.tabApps);
+
+			return appname;
 		}
 		else
 		{
