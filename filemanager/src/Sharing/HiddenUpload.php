@@ -6,6 +6,7 @@ namespace EGroupware\Filemanager\Sharing;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Json;
 use EGroupware\Api\Vfs;
+use EGroupware\Api\Translation;
 use EGroupware\Api\Vfs\Sharing;
 use EGroupware\Api\Vfs\UploadSharingUi;
 
@@ -68,7 +69,7 @@ class HiddenUpload extends AnonymousList
 	 */
 	protected static function handle_upload_action(string $action, $selected, $dir, $props, &$arr)
 	{
-		Api\Translation::add_app('filemanager');
+		Translation::add_app('filemanager');
 		$vfs = Vfs::mount();
 		$GLOBALS['egw']->sharing->redo();
 		parent::handle_upload_action($action, $selected, $dir, $props, $arr);
