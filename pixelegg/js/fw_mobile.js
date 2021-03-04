@@ -404,6 +404,7 @@
 			$avatar.off().on('click',function(){
 				$sidebar.toggleClass('avatarSubmenu',!$sidebar.hasClass('avatarSubmenu'));
 			});
+			jQuery('#topmenu_info_darkmode').click(function(){window.framework.toggle_darkmode(this);});
 		},
 
 		/**
@@ -1039,21 +1040,23 @@
 		 *
 		 * @param node
 		 */
-		toggle_darkmode: function()
+		toggle_darkmode: function(_node)
 		{
-			let node = document.getElementById('topmenu_darkmode');
+			let node = _node || document.getElementById('topmenu_darkmode');
 			let state = node.classList.contains('darkmode_on');
 			egw.set_preference('common', 'darkmode',state?'0':'1');
 			this._setDarkMode(state?'0':'1');
 			if (state == 1)
 			{
 				node.classList.remove('darkmode_on');
+				if (node.hasChildNodes()) node.children[0].classList.remove('darkmode_on');
 				node.title = egw.lang('light mode');
 			}
 			else
 			{
 				node.classList.add('darkmode_on');
 				node.title = egw.lang('dark mode');
+				if (node.hasChildNodes()) node.children[0].classList.add('darkmode_on');
 			}
 		}
 	});
