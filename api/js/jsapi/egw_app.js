@@ -300,42 +300,6 @@ var EgwApp = /** @class */ (function () {
         var id_app = _senders[0].id.split('::');
         egw.open(id_app[1], this.appname);
     };
-    /**
-     * Open a CRM view for a contact
-     *
-     * @param _action
-     * @param _senders
-     * @param _contact_id default: use contact_id from data of _senders[0].id
-     */
-    EgwApp.prototype.openCRMview = function (_action, _senders) {
-        var contact_id = _senders;
-        if (typeof _senders === 'object') {
-            var data = egw.dataGetUIDdata(_senders[0].id);
-            contact_id = data.data.contact_id;
-        }
-        if (typeof contact_id !== 'undefined') {
-            var crm_list_1 = egw.preference('crm_list', 'addressbook');
-            if (!crm_list_1 || crm_list_1 === '~edit~')
-                crm_list_1 = 'infolog';
-            var open_1 = function (_title) {
-                var title = _title || this.egw.link_title('addressbook', contact_id, open_1);
-                if (title) {
-                    this.egw.openTab(contact_id, 'addressbook', 'view', {
-                        crm_list: crm_list_1
-                    }, {
-                        displayName: title,
-                        icon: this.egw.link('/api/avatar.php', {
-                            contact_id: contact_id,
-                            etag: (new Date).valueOf() / 86400 | 0 // cache for a day, better then no invalidation
-                        }),
-                        refreshCallback: 'app.addressbook.view_refresh',
-                        id: contact_id + '-' + crm_list_1
-                    });
-                }
-            }.bind(this);
-            open_1();
-        }
-    };
     EgwApp.prototype._do_action = function (action_id, selected) {
     };
     /**

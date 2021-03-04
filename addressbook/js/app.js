@@ -194,16 +194,15 @@ var AddressbookApp = /** @class */ (function (_super) {
         return !promise;
     };
     /**
-     * Open CRM view
+     * Open CRM view from addressbook index itself
      *
      * @param _action
      * @param _senders
      */
     AddressbookApp.prototype.view = function (_action, _senders) {
-        var index = _senders[0]._index;
-        var id = _senders[0].id.split('::').pop();
         var extras = {
-            index: index
+            contact_id: _senders[0].id.split('::').pop(),
+            index: _senders[0]._index
         };
         var data = egw.dataGetUIDdata(_senders[0].id)['data'];
         // CRM list
@@ -212,21 +211,55 @@ var AddressbookApp = /** @class */ (function (_super) {
         }
         if (!extras.crm_list)
             extras.crm_list = egw.preference('crm_list', 'addressbook');
-        this.egw.openTab(id, 'addressbook', 'view', extras, {
-            displayName: (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
-                : data.n_fn + " (" + egw.lang(extras.crm_list) + ")",
-            icon: data.photo,
-            refreshCallback: this.view_refresh,
-            id: id + '-' + extras.crm_list,
-        });
+        extras.title = (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
+            : data.n_fn + " (" + egw.lang(extras.crm_list) + ")";
+        extras.icon = data.photo;
+        return this.openCRMview(extras);
     };
     /**
-     * callback for refreshing relative crm view list
+     * Open a CRM view for a contact: callback for link-registry / egw.open / other apps
+     *
+     * @param {CrmParams} _params object with attribute "contact_id" and optional "title", "crm_list", "icon"
+     * @param {object} _senders use egw.dataGetUIDdata to get contact_id
      */
-    AddressbookApp.prototype.view_refresh = function () {
-        var et2 = etemplate2_1.etemplate2.getById("addressbook-view-" + this.appName);
-        if (et2) {
-            et2.app_obj.addressbook.view_set_list();
+    AddressbookApp.prototype.openCRMview = function (_params, _senders) {
+        var contact_id = typeof _params === 'object' ? _params.contact_id : _params;
+        if (typeof _senders === 'object') {
+            var data = egw.dataGetUIDdata(_senders[0].id);
+            contact_id = data.data.contact_id;
+        }
+        if (typeof contact_id !== 'undefined') {
+            var crm_list_1 = _params.crm_list || egw.preference('crm_list', 'addressbook');
+            if (!crm_list_1 || crm_list_1 === '~edit~')
+                crm_list_1 = 'infolog';
+            var url_1 = this.egw.link('/index.php', {
+                menuaction: 'addressbook.addressbook_ui.view',
+                ajax: 'true',
+                contact_id: contact_id,
+                crm_list: crm_list_1
+            });
+            // no framework, just open the url
+            if (typeof this.egw.window.framework === 'undefined') {
+                return this.egw.open_link(url_1);
+            }
+            var open_1 = function (_title) {
+                var title = _title || this.egw.link_title('addressbook', contact_id, open_1);
+                if (title) {
+                    this.egw.window.framework.tabLinkHandler(url_1, {
+                        displayName: title,
+                        icon: _params.icon || this.egw.link('/api/avatar.php', {
+                            contact_id: contact_id,
+                            etag: (new Date).valueOf() / 86400 | 0 // cache for a day, better then no invalidation
+                        }),
+                        refreshCallback: function () {
+                            var _a;
+                            (_a = etemplate2_1.etemplate2.getById("addressbook-view-" + this.appName)) === null || _a === void 0 ? void 0 : _a.app_obj.addressbook.view_set_list();
+                        },
+                        id: contact_id + '-' + crm_list_1
+                    });
+                }
+            }.bind(this);
+            open_1(_params.title);
         }
     };
     /**

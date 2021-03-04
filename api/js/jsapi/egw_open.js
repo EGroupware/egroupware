@@ -187,7 +187,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 					// Copy, not get a reference, or we'll change the registry
 					params = jQuery.extend({},app_registry[type]);
 				}
-				else if (typeof app_registry[type] === 'string' && app_registry[type].indexOf('javascript:') === 0)
+				else if (typeof app_registry[type] === 'string' &&
+					(app_registry[type].substr(0, 11) === 'javascript:' || app_registry[type].substr(0, 4) === 'app.'))
 				{
 					// JavaScript, just pass it on
 					url = app_registry[type];
@@ -214,10 +215,15 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			if(url.indexOf('javascript:') === 0)
+			if (url.substr(0, 11) === 'javascript:')
 			{
 				// Add parameters into javascript
 				url = 'javascript:var params = '+ JSON.stringify(params) + '; '+ url.substr(11);
+			}
+			// app.<appname>.<method>: call app method direct with parameter object as first parameter
+			else if (url.substr(0, 4) === 'app.')
+			{
+				return this.callFunc(url, params);
 			}
 			else
 			{

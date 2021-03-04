@@ -21,6 +21,17 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 
 /**
+ * Object to call app.addressbook.openCRMview with
+ */
+export 	interface CrmParams {
+	contact_id: number|string;
+	crm_list?: "infolog"|"tracker"|"infolog-organisation"; // default: use preference
+	title?: string;	// default: link-title of contact_id
+	icon?: string;	// default: avatar for contact_id
+	index?: number;
+}
+
+/**
  * UI for Addressbook
  *
  * @augments AppJS
@@ -212,44 +223,80 @@ class AddressbookApp extends EgwApp
 		}
 		return !promise;
 	}
+
 	/**
-	 * Open CRM view
+	 * Open CRM view from addressbook index itself
 	 *
 	 * @param _action
 	 * @param _senders
 	 */
 	view(_action, _senders)
 	{
-		var index = _senders[0]._index;
-		var id = _senders[0].id.split('::').pop();
-		var extras : any = {
-			index: index
+		let extras : CrmParams = {
+			contact_id: _senders[0].id.split('::').pop(),
+			index: _senders[0]._index
 		};
-		var data = egw.dataGetUIDdata(_senders[0].id)['data'];
+		let data = egw.dataGetUIDdata(_senders[0].id)['data'];
 		// CRM list
-		if(_action.id != 'view')
+		if (_action.id != 'view')
 		{
 			extras.crm_list = _action.id.replace('view-','');
 		}
-		if (!extras.crm_list) extras.crm_list = egw.preference('crm_list', 'addressbook');
-		this.egw.openTab(id, 'addressbook', 'view', extras, {
-			displayName: (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
-				: data.n_fn+" ("+egw.lang(extras.crm_list)+")",
-			icon: data.photo,
-			refreshCallback: this.view_refresh,
-			id: id+'-'+extras.crm_list,
-		});
+		if (!extras.crm_list) extras.crm_list = <string>egw.preference('crm_list', 'addressbook');
+		extras.title = (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
+			: data.n_fn+" ("+egw.lang(extras.crm_list)+")";
+		extras.icon = data.photo;
+		return this.openCRMview(extras);
 	}
 
 	/**
-	 * callback for refreshing relative crm view list
+	 * Open a CRM view for a contact: callback for link-registry / egw.open / other apps
+	 *
+	 * @param {CrmParams} _params object with attribute "contact_id" and optional "title", "crm_list", "icon"
+	 * @param {object} _senders use egw.dataGetUIDdata to get contact_id
 	 */
-	view_refresh()
+	openCRMview(_params: CrmParams, _senders?: object)
 	{
-		let et2 = etemplate2.getById("addressbook-view-"+this.appName);
-		if (et2)
+		let contact_id = typeof _params === 'object' ? _params.contact_id : _params;
+		if (typeof _senders === 'object')
 		{
-			et2.app_obj.addressbook.view_set_list();
+			let data = egw.dataGetUIDdata(_senders[0].id);
+			contact_id = data.data.contact_id;
+		}
+		if (typeof contact_id !== 'undefined')
+		{
+			let crm_list = _params.crm_list || egw.preference('crm_list', 'addressbook');
+			if (!crm_list || crm_list === '~edit~') crm_list = 'infolog';
+			let url = this.egw.link('/index.php', {
+				menuaction: 'addressbook.addressbook_ui.view',
+				ajax: 'true',
+				contact_id: contact_id,
+				crm_list: crm_list
+			});
+			// no framework, just open the url
+			if (typeof this.egw.window.framework === 'undefined')
+			{
+				return this.egw.open_link(url);
+			}
+			let open = function(_title)
+			{
+				let title = _title || this.egw.link_title('addressbook', contact_id, open);
+				if (title)
+				{
+					this.egw.window.framework.tabLinkHandler(url, {
+						displayName: title,
+						icon: _params.icon || this.egw.link('/api/avatar.php', {
+							contact_id: contact_id,
+							etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
+						}),
+						refreshCallback: function() {
+							etemplate2.getById("addressbook-view-"+this.appName)?.app_obj.addressbook.view_set_list();
+						},
+						id: contact_id + '-'+crm_list
+					});
+				}
+			}.bind(this);
+			open(_params.title);
 		}
 	}
 

@@ -739,7 +739,7 @@ var InfologApp = /** @class */ (function (_super) {
         var app = this.et2.getInstanceManager().app_obj;
         if (!app.stylite) {
             var self = this;
-            egw_LAB.script('stylite/js/infolog-encryption.js?' + this.et2.getArrayMgr('content').data.encryption_ts).wait(function () {
+            egw_LAB.script('stylite/js/app.js?' + this.et2.getArrayMgr('content').getEntry('encryption_ts')).wait(function () {
                 app.stylite = new app.classes.stylite;
                 app.stylite.et2 = self.et2;
                 if (callback) {

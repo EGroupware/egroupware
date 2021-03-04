@@ -524,7 +524,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						{
 							self.includeJS('/'+parts[1]+'/js/app.js', function ()
 							{
-								resolve(self.apply(_func, args));
+								resolve(self.applyFunc(_func, args));
 							}, self, self.webserverUrl);
 						});
 					}
