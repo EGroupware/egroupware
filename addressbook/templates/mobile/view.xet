@@ -12,8 +12,10 @@
 				<row class="dialogHeadbar" >
 				</row>
 				<row>
-					<hbox  disabled="@hidebuttons" class="avatar">
-						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;"/>
+					<hbox>
+						<hbox  disabled="@hidebuttons" class="avatar">
+							<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;"/>
+						</hbox>
 					</hbox>
 				</row>
 				<row>

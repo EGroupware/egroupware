@@ -8367,7 +8367,7 @@ table.egwGridView_grid img.et2_appicon {
     display: none;
   }
   body button.plus_button {
-    position: absolute !important;
+    position: fixed !important;
     right: 15px;
     bottom: 15px;
     border-radius: 50%;
@@ -8377,7 +8377,6 @@ table.egwGridView_grid img.et2_appicon {
     z-index: 100;
     background-color: #0c5da5;
     border: none;
-    box-shadow: 0px 1px 5px 3px silver;
     background-image: url(../images/topmenu_items/mobile/plus_white.svg) !important;
     background-repeat: no-repeat;
     background-size: 24px 24px;
@@ -8556,7 +8555,6 @@ table.egwGridView_grid img.et2_appicon {
     background-image: url(../images/menu_list.svg);
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 5px;
     width: 50px;
     height: 50px;
     display: block;
@@ -8574,7 +8572,6 @@ table.egwGridView_grid img.et2_appicon {
     background-image: url(../images/dots.svg);
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 2px;
     border-left: 1px solid silver;
     border: 0;
     color: white;
@@ -8605,7 +8602,6 @@ table.egwGridView_grid img.et2_appicon {
     border: none;
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 5px;
     border-left: 1px solid silver;
     border: 0;
     color: black;
@@ -8619,7 +8615,6 @@ table.egwGridView_grid img.et2_appicon {
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
     background-repeat: no-repeat;
-    margin-right: 5px;
     border-left: 1px solid silver;
     border: 0;
     color: white;
@@ -9031,7 +9026,7 @@ table.egwGridView_grid img.et2_appicon {
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
-    margin-right: 15px;
+    width: 40px;
   }
   body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more {
     position: inherit;
@@ -9047,6 +9042,7 @@ table.egwGridView_grid img.et2_appicon {
     background-image: url(../images/dots.svg);
     background-repeat: no-repeat;
     background-position: center;
+    outline: none;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
@@ -9061,6 +9057,7 @@ table.egwGridView_grid img.et2_appicon {
   }
   body .et2_tabbox.vertical .et2_tabflag div.et2_tabtitle {
     background-color: #f0f0f0;
+    padding-left: 6px;
   }
   body .et2_tabbox.vertical .et2_tabflag div.et2_tabtitle:before {
     padding: 0;
@@ -9262,6 +9259,7 @@ table.egwGridView_grid img.et2_appicon {
     display: inline-block;
     background-repeat: no-repeat;
     background-size: 31px;
+    margin-left: -5px;
   }
   body input[type="checkbox"]:checked {
     background-image: url(../images/topmenu_items/mobile/checkbox.svg) !important;
