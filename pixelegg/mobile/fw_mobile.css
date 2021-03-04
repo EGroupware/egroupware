@@ -8307,13 +8307,14 @@ table.egwGridView_grid img.et2_appicon {
   body div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl td.sub_item_hk {
     width: 100%;
   }
-  body div#egw_message {
+  body div.egw_message_wrapper {
     bottom: 0px;
     top: auto;
     left: 0px;
     right: 0px !important;
     max-width: 100%;
     border-radius: 0;
+    position: fixed;
   }
   body div.ui-dialog {
     width: 100% !important;
