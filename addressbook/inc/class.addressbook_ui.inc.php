@@ -3039,6 +3039,10 @@ class addressbook_ui extends addressbook_bo
 						unset($contact_id);
 					}
 					break;
+				default:
+					// No button, probably a refresh
+					$content = $this->read($content['id']);
+					break;
 			}
 		}
 		else
@@ -3193,7 +3197,7 @@ class addressbook_ui extends addressbook_bo
 
 		// Load CRM code
 		Framework::includeJS('.','CRM','addressbook');
-		$content['view_sidebox'] = addressbook_hooks::getViewDOMID($contact_id, $crm_list);
+		$content['view_sidebox'] = addressbook_hooks::getViewDOMID($content['id'], $crm_list);
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
 			'index' => $content['index'],

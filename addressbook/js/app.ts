@@ -17,7 +17,7 @@ import 'jqueryui';
 import '../jsapi/egw_global';
 import '../etemplate/et2_types';
 
-import {EgwApp} from '../../api/js/jsapi/egw_app';
+import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 
 /**
@@ -181,6 +181,43 @@ class AddressbookApp extends EgwApp
 		}
 
 		return true;
+	}
+
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * Get's called for data of all apps, but should only handle data of apps it displays,
+	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
+	 *
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
+	 */
+	push(pushData : PushData)
+	{
+		// don't care about other apps data
+		if(pushData.app !== this.appname) return;
+
+		// Update the contact list
+		if(this.et2 && this.et2.getInstanceManager().name == "addressbook.index")
+		{
+			return super.push(pushData);
+		}
+
+		// Update CRM view (sidebox part), if open
+		let contact_id = this.et2?.getArrayMgr("content")?.getEntry("id") || 0;
+		if(this.et2 && contact_id && contact_id == pushData.id)
+		{
+			this.et2.getInstanceManager().submit();
+		}
 	}
 
 	/**

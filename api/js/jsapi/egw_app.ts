@@ -285,7 +285,7 @@ export abstract class EgwApp
 		// If we know about it and it's an update, just update.
 		// This must be before all ACL checks, as responsible might have changed and entry need to be removed
 		// (server responds then with null / no entry causing the entry to disappear)
-		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
+		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)) && this.et2)
 		{
 			return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
 		}
@@ -299,7 +299,7 @@ export abstract class EgwApp
 		}
 
 		// Nextmatch does the hard part of updating.  Try to find one.
-		let nm = <et2_nextmatch>this.et2.getDOMWidgetById('nm');
+		let nm = <et2_nextmatch>this.et2?.getDOMWidgetById('nm');
 		if(!nm)
 		{
 			return;

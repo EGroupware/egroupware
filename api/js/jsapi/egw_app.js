@@ -160,6 +160,7 @@ var EgwApp = /** @class */ (function () {
      * @param {number} pushData.account_id User that caused the notification
      */
     EgwApp.prototype.push = function (pushData) {
+        var _a;
         // don't care about other apps data, reimplement if your app does care eg. calendar
         if (pushData.app !== this.appname)
             return;
@@ -171,7 +172,7 @@ var EgwApp = /** @class */ (function () {
         // If we know about it and it's an update, just update.
         // This must be before all ACL checks, as responsible might have changed and entry need to be removed
         // (server responds then with null / no entry causing the entry to disappear)
-        if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData))) {
+        if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)) && this.et2) {
             return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
         }
         // Check grants to see if we know we aren't supposed to show it
@@ -180,7 +181,7 @@ var EgwApp = /** @class */ (function () {
             return;
         }
         // Nextmatch does the hard part of updating.  Try to find one.
-        var nm = this.et2.getDOMWidgetById('nm');
+        var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getDOMWidgetById('nm');
         if (!nm) {
             return;
         }

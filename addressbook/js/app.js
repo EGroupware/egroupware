@@ -162,6 +162,39 @@ var AddressbookApp = /** @class */ (function (_super) {
         return true;
     };
     /**
+     * Handle a push notification about entry changes from the websocket
+     *
+     * Get's called for data of all apps, but should only handle data of apps it displays,
+     * which is by default only it's own, but can be for multiple apps eg. for calendar.
+     *
+     * @param  pushData
+     * @param {string} pushData.app application name
+     * @param {(string|number)} pushData.id id of entry to refresh or null
+     * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+     * - update: request just modified data from given rows.  Sorting is not considered,
+     *		so if the sort field is changed, the row will not be moved.
+     * - edit: rows changed, but sorting may be affected.  Requires full reload.
+     * - delete: just delete the given rows clientside (no server interaction neccessary)
+     * - add: requires full reload for proper sorting
+     * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+     * @param {number} pushData.account_id User that caused the notification
+     */
+    AddressbookApp.prototype.push = function (pushData) {
+        var _a, _b;
+        // don't care about other apps data
+        if (pushData.app !== this.appname)
+            return;
+        // Update the contact list
+        if (this.et2 && this.et2.getInstanceManager().name == "addressbook.index") {
+            return _super.prototype.push.call(this, pushData);
+        }
+        // Update CRM view (sidebox part), if open
+        var contact_id = ((_b = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getArrayMgr("content")) === null || _b === void 0 ? void 0 : _b.getEntry("id")) || 0;
+        if (this.et2 && contact_id && contact_id == pushData.id) {
+            this.et2.getInstanceManager().submit();
+        }
+    };
+    /**
      * Change handler for contact / org selectbox
      *
      * @param node
