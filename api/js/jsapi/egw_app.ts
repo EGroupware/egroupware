@@ -324,10 +324,13 @@ export abstract class EgwApp
 	 *
 	 * @param pushData
 	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access eg: info_responsible
+	 * @param appname Optional, to check against the grants for a different application.  Defaults to this.appname.
+	 *
+	 * @return boolean Entry has ACL access
 	 */
-	_push_grant_check(pushData : PushData, grant_fields : string[]) : boolean
+	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
 	{
-		let grants = egw.grants(this.appname);
+		let grants = egw.grants(appname || this.appname);
 
 		// No grants known
 		if(!grants) return true;

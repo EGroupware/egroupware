@@ -29,6 +29,10 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 class TimesheetApp extends EgwApp
 {
 
+	// These fields help with push filtering & access control to see if we care about a push message
+	protected push_grant_fields = ["ts_owner"];
+	protected push_filter_fields = ["ts_owner"]
+
 	constructor()
 	{
 		super('timesheet');
@@ -197,58 +201,6 @@ class TimesheetApp extends EgwApp
 	{
 		var widget = this.et2.getWidgetById('ts_title');
 		if(widget) return widget.options.value;
-	}
-
-	private _grants : any;
-
-	/**
-	 * Handle a push notification about entry changes from the websocket
-	 *
-	 * @param  pushData
-	 * @param {string} pushData.app application name
-	 * @param {(string|number)} pushData.id id of entry to refresh or null
-	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
-	 * - update: request just modified data from given rows.  Sorting is not considered,
-	 *		so if the sort field is changed, the row will not be moved.
-	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
-	 * - delete: just delete the given rows clientside (no server interaction neccessary)
-	 * - add: requires full reload for proper sorting
-	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
-	 * @param {number} pushData.account_id User that caused the notification
-	 */
-	push(pushData)
-	{
-		// timesheed does NOT care about other apps data
-		if (pushData.app !== this.appname) return;
-
-		if (pushData.type === 'delete')
-		{
-			return super.push(pushData);
-		}
-
-		// This must be before all ACL checks, as owner might have changed and entry need to be removed
-		// (server responds then with null / no entry causing the entry to disapear)
-		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
-		{
-			return etemplate2.app_refresh("", pushData.app, pushData.id, pushData.type);
-		}
-
-		// all other cases (add, edit, update) are handled identical
-		// check visibility
-		if (typeof this._grants === 'undefined')
-		{
-			this._grants = egw.grants(this.appname);
-		}
-		if (typeof this._grants[pushData.acl.ts_owner] === 'undefined') return;
-
-		// check if we might not see it because of an owner filter
-		let nm = <et2_nextmatch>this.et2?.getWidgetById('nm');
-		let nm_value = nm?.getValue();
-		if (nm && nm_value && nm_value.col_filter?.ts_owner && nm_value.col_filter.ts_owner != pushData.acl.ts_owner)
-		{
-			return;
-		}
-		etemplate2.app_refresh("",pushData.app, pushData.id, pushData.type);
 	}
 
 	/**

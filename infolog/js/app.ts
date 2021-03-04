@@ -31,8 +31,9 @@ import {CRMView} from "../../addressbook/js/CRM";
 class InfologApp extends EgwApp
 {
 
-	// Hold on to ACL grants
-	private _grants : any;
+	// These fields help with push filtering & access control to see if we care about a push message
+	protected push_grant_fields = ["info_owner","info_responsible"];
+	protected push_filter_fields = ["info_owner","info_responsible"]
 
 	/**
 	 * Constructor
@@ -162,108 +163,6 @@ class InfologApp extends EgwApp
 		{
 			this.et2._inst.refresh(_msg, _app, _id, _type);
 		}
-	}
-	/**
-	 * Handle a push notification about entry changes from the websocket
-	 *
-	 * @param  pushData
-	 * @param {string} pushData.app application name
-	 * @param {(string|number)} pushData.id id of entry to refresh or null
-	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
-	 * - update: request just modified data from given rows.  Sorting is not considered,
-	 *		so if the sort field is changed, the row will not be moved.
-	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
-	 * - delete: just delete the given rows clientside (no server interaction neccessary)
-	 * - add: ask server for data, add in intelligently
-	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
-	 * @param {number} pushData.account_id User that caused the notification
-	 */
-	push(pushData)
-	{
-		if(pushData.app !== this.appname) return;
-
-		// pushData does not contain everything, just the minimum.
-		let event = pushData.acl || {};
-
-		if(pushData.type === 'delete')
-		{
-			return super.push(pushData);
-		}
-
-		// If we know about it and it's an update, just update.
-		// This must be before all ACL checks, as responsible might have changed and entry need to be removed
-		// (server responds then with null / no entry causing the entry to disapear)
-		if (pushData.type !== "add" && this.egw.dataHasUID(this.uid(pushData)))
-		{
-			return this.et2.getInstanceManager().refresh("", pushData.app, pushData.id, pushData.type);
-		}
-
-		// check visibility - grants is ID => permission of people we're allowed to see
-		if (typeof this._grants === 'undefined')
-		{
-			this._grants = egw.grants(this.appname);
-		}
-		// check user has a grant from owner or a responsible
-		if (this._grants && typeof this._grants[pushData.acl.info_owner] === 'undefined' &&
-			// responsible gets implicit access, so we need to check them too
-			!pushData.acl.info_responsible.filter(res => typeof this._grants[res] !== 'undefined').length)
-		{
-			// No ACL access
-			return;
-		}
-
-		// no responsible means, owner is responsible
-		if (!pushData.acl.info_responsible || !pushData.acl.info_responsible.length)
-		{
-			pushData.acl.info_responsible = [pushData.acl.info_owner];
-		}
-
-		// Filter what's allowed down to those we care about
-		let filters = {
-			owner: {col: "info_owner", filter_values: []},
-			responsible: {col: "info_responsible", filter_values: []}
-		};
-		if(this.et2)
-		{
-			this.et2.iterateOver( function(nm) {
-				let value = nm.getValue();
-				if(!value || !value.col_filter) return;
-
-				for(let field_filter of Object.values(filters))
-				{
-					if(value.col_filter[field_filter.col])
-					{
-						field_filter.filter_values.push(value.col_filter[field_filter.col]);
-					}
-				}
-			},this, et2_nextmatch);
-		}
-
-		// check filters against ACL data
-		for(let field_filter of Object.values(filters))
-		{
-			// no filter set
-			if (field_filter.filter_values.length == 0) continue;
-
-			// acl value is a scalar (not array) --> check contained in filter
-			if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object')
-			{
-				if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0)
-				{
-					return;
-				}
-				continue;
-			}
-			// acl value is an array (eg. info_responsible) --> check intersection with filter
-			if(!field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >= 0).length)
-			{
-				return;
-			}
-		}
-
-		// Pass actual refresh on to just nextmatch
-		let nm = <et2_nextmatch>this.et2.getDOMWidgetById('nm');
-		nm.refresh(pushData.id, pushData.type);
 	}
 
 	/**

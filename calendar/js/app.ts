@@ -465,9 +465,6 @@ class CalendarApp extends EgwApp
 	 */
 	push(pushData)
 	{
-		// Calendar cares about calendar & infolog
-		if(pushData.app !== this.appname && pushData.app !== 'infolog') return;
-
 		switch (pushData.app)
 		{
 			case "calendar":
@@ -476,8 +473,17 @@ class CalendarApp extends EgwApp
 					return super.push(pushData);
 				}
 				return this.push_calendar(pushData);
-			case "infolog":
-				return this.push_infolog(pushData);
+			default:
+				if(jQuery.extend([],egw.preference("integration_toggle","calendar")).indexOf(pushData.app) >= 0)
+				{
+					if(pushData.app == "infolog")
+					{
+						return this.push_infolog(pushData);
+					}
+					// Other integration here
+					// TODO
+					debugger;
+				}
 		}
 	}
 
@@ -488,20 +494,24 @@ class CalendarApp extends EgwApp
 	 */
 	private push_infolog(pushData : PushData)
 	{
+		// Check if we have access
+		if(!this._push_grant_check(pushData, ["info_owner","info_responsible"],"infolog"))
+		{
+			return;
+		}
+
 		// check visibility - grants is ID => permission of people we're allowed to see
-		let owners = [];
 		let infolog_grants = egw.grants(pushData.app);
 
 		// Filter what's allowed down to those we care about
 		let filtered = Object.keys(infolog_grants).filter(account => this.state.owner.indexOf(account) >= 0);
 
-		// Check if we're interested in displaying by owner / responsible
 		let owner_check = filtered.filter(function(value) {
 			return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
 		})
 		if(!owner_check || owner_check.length == 0)
 		{
-			// The owner is not in the list of what we're allowed / care about
+			// The owner is not in the list of what we care about
 			return;
 		}
 

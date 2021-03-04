@@ -534,17 +534,21 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {number} pushData.account_id User that caused the notification
      */
     CalendarApp.prototype.push = function (pushData) {
-        // Calendar cares about calendar & infolog
-        if (pushData.app !== this.appname && pushData.app !== 'infolog')
-            return;
         switch (pushData.app) {
             case "calendar":
                 if (pushData.type === 'delete') {
                     return _super.prototype.push.call(this, pushData);
                 }
                 return this.push_calendar(pushData);
-            case "infolog":
-                return this.push_infolog(pushData);
+            default:
+                if (jQuery.extend([], egw.preference("integration_toggle", "calendar")).indexOf(pushData.app) >= 0) {
+                    if (pushData.app == "infolog") {
+                        return this.push_infolog(pushData);
+                    }
+                    // Other integration here
+                    // TODO
+                    debugger;
+                }
         }
     };
     /**
@@ -555,17 +559,19 @@ var CalendarApp = /** @class */ (function (_super) {
     CalendarApp.prototype.push_infolog = function (pushData) {
         var _this = this;
         var _a;
+        // Check if we have access
+        if (!this._push_grant_check(pushData, ["info_owner", "info_responsible"], "infolog")) {
+            return;
+        }
         // check visibility - grants is ID => permission of people we're allowed to see
-        var owners = [];
         var infolog_grants = egw.grants(pushData.app);
         // Filter what's allowed down to those we care about
         var filtered = Object.keys(infolog_grants).filter(function (account) { return _this.state.owner.indexOf(account) >= 0; });
-        // Check if we're interested in displaying by owner / responsible
         var owner_check = filtered.filter(function (value) {
             return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
         });
         if (!owner_check || owner_check.length == 0) {
-            // The owner is not in the list of what we're allowed / care about
+            // The owner is not in the list of what we care about
             return;
         }
         // Only need to update the list if we're on that view
