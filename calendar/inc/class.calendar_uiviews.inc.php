@@ -905,7 +905,16 @@ class calendar_uiviews extends calendar_ui
 		$app_data = calendar_bo::integration_get_data($app,'icons');
 		if (is_null($app_data))
 		{
-			$icons[] = Api\Html::image($app,'navbar');	// use navbar icon
+			if (($icon = Api\Link::get_registry($app,'icon')) &&
+				($icon = explode('/', $icon)))
+			{
+
+				$icons[] = Api\Html::image($icon[0], $icon[1]);	// use icon from link registry
+			}
+			else
+			{
+				$icons[] = Api\Html::image($app,'navbar');	// use navbar icon
+			}
 		}
 		elseif ($app_data)
 		{
