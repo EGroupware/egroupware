@@ -1780,7 +1780,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (isset($event['participants'][$n])) $content['participants'][$n] = $event['participants'][$n];
 		}
-		$this->setup_participants($event,$content,$readonlys,$preserv,$view);
+		$this->setup_participants($event,$content,$sel_options, $readonlys,$preserv,$view);
 
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		// set notify_externals in participants from cfs
@@ -1973,13 +1973,14 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Set up the participants for display in edit dialog
 	 *
-	 * @param $event
-	 * @param $content
-	 * @param $readonlys
-	 * @param $preserv
-	 * @param $view
+	 * @param array $event
+	 * @param array $content
+	 * @param array $sel_options
+	 * @param array $readonlys
+	 * @param array $preserv
+	 * @param string $view
 	 */
-	protected function setup_participants($event, &$content, &$readonlys, &$preserv, $view)
+	protected function setup_participants(array $event, array &$content, array &$sel_options, array  &$readonlys, array &$preserv, $view)
 	{
 		$row = 3;
 		foreach($event['participant_types'] as $type => $participants)
@@ -3504,15 +3505,15 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$content = array();
-		$this->setup_participants($event, $content, $readonlys,$preserve,true);
+		$sel_options = array(
+			'recur_type' => &$this->bo->recur_types,
+			'status'     => $this->bo->verbose_status,
+			'duration'   => $this->durations,
+			'role'       => $this->bo->roles
+		);
+		$this->setup_participants($event, $content, $sel_options, $readonlys,$preserve,true);
 		$content = array_merge($event, $content);
 
-		$sel_options = array(
-				'recur_type' => &$this->bo->recur_types,
-				'status'     => $this->bo->verbose_status,
-				'duration'   => $this->durations,
-				'role'       => $this->bo->roles
-		);
 		$readonlys = [];
 
 		$etpl = new Etemplate('calendar.notify_dialog');
