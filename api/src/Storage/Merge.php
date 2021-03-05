@@ -1213,7 +1213,7 @@ abstract class Merge
 			}
 
 			// Look for numbers, set their value if needed
-			if($this->numeric_fields || count($names))
+			if(property_exists($this,'numeric_fields') || count($names))
 			{
 				foreach((array)$this->numeric_fields as $fieldname) {
 					$names[] = preg_quote($fieldname,'/');
@@ -1573,6 +1573,10 @@ abstract class Merge
 		try
 		{
 			$classname = "{$app}_merge";
+			if(!class_exists($classname))
+			{
+				return $replacements;
+			}
 			$class = new $classname();
 			$method = $app.'_replacements';
 			if(method_exists($class,$method))
