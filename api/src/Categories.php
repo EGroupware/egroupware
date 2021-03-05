@@ -557,7 +557,7 @@ class Categories
 		$owner_grant = false;
 		foreach(explode(',',$category['owner']) as $owner)
 		{
-			$owner_grant = $owner_grant || (($this->grants[$owner] & $needed) &&
+			$owner_grant = $owner_grant || (is_array($this->grants) && ($this->grants[$owner] & $needed) &&
 				($category['access'] == 'public' ||  ($this->grants[$owner] & Acl::PRIVAT)));
 		}
 		return $acl_grant && $owner_grant;

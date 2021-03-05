@@ -1271,7 +1271,7 @@ class Contacts extends Contacts\Storage
 					$shared['shared_writable'] && $this->check_perms($needed, $contact, $deny_account_delete, $shared['shared_by'], $check_shared-1)))
 				{
 					$access = "shared";
-					error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user,$check_shared) shared=".json_encode($shared)." returning ".array2string($access));
+					//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user,$check_shared) shared=".json_encode($shared)." returning ".array2string($access));
 					break;
 				}
 			}

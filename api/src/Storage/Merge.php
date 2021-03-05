@@ -292,7 +292,7 @@ abstract class Merge
 		foreach($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
 		{
 			$name = '#'.$name;
-			if(!$contact[$name])
+			if(!array_key_exists($name, $contact) || !$contact[$name])
 			{
 				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = '';
 				continue;
