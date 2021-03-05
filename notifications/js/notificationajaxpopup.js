@@ -516,14 +516,9 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var ids = [id];
-		if (notifymessages[id]['children'])
-		{
-			ids = ids.concat(Object.keys(notifymessages[id]['children']));
-		}
 		if (notifymessages[id]['status'] !='SEEN')
 		{
-			var request = egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]);
+			var request = egw.json("notifications.notifications_ajax.update_status", [[notifymessages[id]], "SEEN"]);
 			request.sendRequest(true);
 			this.update_message_status(id, "SEEN");
 			if (notifymessages[id]['extra_data']['onSeenAction'])
@@ -537,9 +532,7 @@
 	notifications.prototype.mark_all_seen = function()
 	{
 		if (!notifymessages || Object.keys(notifymessages).length == 0) return false;
-		var ids = Object.keys(notifymessages);
-		ids = ids.concat(this.findAllChildrenIds());
-		egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]).sendRequest(true);
+		egw.json("notifications.notifications_ajax.update_status", [notifymessages, "SEEN"]).sendRequest(true);
 		for (var id in notifymessages)
 		{
 			this.update_message_status(id, "SEEN");
@@ -568,9 +561,7 @@
 
 	notifications.prototype.delete_all = function () {
 		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-		var ids = Object.keys(notifymessages);
-		ids = ids.concat(this.findAllChildrenIds());
-		egw.json("notifications.notifications_ajax.delete_message", [ids]).sendRequest(true);
+		egw.json("notifications.notifications_ajax.delete_message", [notifymessages]).sendRequest(true);
 		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		this.counterUpdate();
@@ -584,12 +575,7 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var ids = [id];
-		if (notifymessages[id]['children'])
-		{
-			ids = ids.concat(Object.keys(notifymessages[id]['children']));
-		}
-		var request = egw.json("notifications.notifications_ajax.delete_message", [ids]);
+		var request = egw.json("notifications.notifications_ajax.delete_message", [[notifymessages[id]]]);
 		request.sendRequest(true);
 		var nextNode = egwpopup_message.next();
 		var keepLoadingPrompt = false;
@@ -699,7 +685,8 @@
 				status: _rawData[i]['status'],
 				created: _rawData[i]['created'],
 				current: _rawData[i]['current'],
-				extra_data: _rawData[i]['extra_data']
+				extra_data: _rawData[i]['extra_data'],
+				id: _rawData[i]['id']
 			};
 			if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
 			// Notification API
@@ -714,7 +701,7 @@
 						// notification id
 						var id = this.tag.split(":");
 						// delete the message
-						var request = egw.json("notifications.notifications_ajax.update_status", [id[1], 'DISPLAYED']);
+						var request = egw.json("notifications.notifications_ajax.update_status", [[id[1]], 'DISPLAYED']);
 						request.sendRequest();
 					},
 					onclick:function(e){
@@ -740,7 +727,7 @@
 			}
 			if (!_rawData[i]['status'])
 			{
-				egw.json("notifications.notifications_ajax.update_status", [_rawData[i]['id'], 'DISPLAYED']);
+				egw.json("notifications.notifications_ajax.update_status", [[_rawData[i]['id']], 'DISPLAYED']);
 				hasUnseen.push(_rawData[i]['id']);
 			}
 
