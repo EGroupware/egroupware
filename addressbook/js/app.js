@@ -180,7 +180,15 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {number} pushData.account_id User that caused the notification
      */
     AddressbookApp.prototype.push = function (pushData) {
-        var _a, _b;
+        var _a, _b, _c, _d, _e;
+        // show missed calls on their CRM view
+        var et2_id = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getInstanceManager().uniqueId;
+        if (pushData.app === 'stylite' && pushData.acl.missed &&
+            et2_id && et2_id.substr(0, 17) === 'addressbook-view-' &&
+            pushData.acl.account_id == this.egw.user('account_id') &&
+            pushData.acl.contact_id == ((_b = this.et2.getArrayMgr("content")) === null || _b === void 0 ? void 0 : _b.getEntry("id"))) {
+            (_c = egw_getFramework()) === null || _c === void 0 ? void 0 : _c.notifyAppTab(et2_id.substr(17));
+        }
         // don't care about other apps data
         if (pushData.app !== this.appname)
             return;
@@ -189,7 +197,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             return _super.prototype.push.call(this, pushData);
         }
         // Update CRM view (sidebox part), if open
-        var contact_id = ((_b = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getArrayMgr("content")) === null || _b === void 0 ? void 0 : _b.getEntry("id")) || 0;
+        var contact_id = ((_e = (_d = this.et2) === null || _d === void 0 ? void 0 : _d.getArrayMgr("content")) === null || _e === void 0 ? void 0 : _e.getEntry("id")) || 0;
         if (this.et2 && contact_id && contact_id == pushData.id) {
             this.et2.getInstanceManager().submit();
         }

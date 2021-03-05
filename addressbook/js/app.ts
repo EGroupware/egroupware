@@ -203,6 +203,16 @@ class AddressbookApp extends EgwApp
 	 */
 	push(pushData : PushData)
 	{
+		// show missed calls on their CRM view
+		let et2_id = this.et2?.getInstanceManager().uniqueId;
+		if (pushData.app === 'stylite' && pushData.acl.missed &&
+			et2_id && et2_id.substr(0, 17) === 'addressbook-view-' &&
+			pushData.acl.account_id == this.egw.user('account_id') &&
+			pushData.acl.contact_id == this.et2.getArrayMgr("content")?.getEntry("id"))
+		{
+			egw_getFramework()?.notifyAppTab(et2_id.substr(17));
+		}
+
 		// don't care about other apps data
 		if(pushData.app !== this.appname) return;
 
