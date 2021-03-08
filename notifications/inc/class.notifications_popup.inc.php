@@ -131,7 +131,7 @@ class notifications_popup implements notifications_iface {
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 		$push = new Api\Json\Push($this->recipient->account_id);
 		$entries = self::read($this->recipient->account_id);
-		$push->call('app.notifications.append', [$entries['rows'], null, $entries['total']]);
+		$push->call('app.notifications.append', $entries['rows'], null, $entries['total']);
 	}
 
 
