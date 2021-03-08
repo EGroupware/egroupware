@@ -503,7 +503,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		applyFunc: function(_func, args, _context)
 		{
-			let parent = _context || window;
+			let parent = _context || _wnd;
 			let func = _func;
 
 			if (typeof _func === 'string')
@@ -524,7 +524,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						{
 							self.includeJS('/'+parts[1]+'/js/app.js', function ()
 							{
-								resolve(self.applyFunc(_func, args));
+								resolve(self.applyFunc(_func, args, _context));
 							}, self, self.webserverUrl);
 						});
 					}
