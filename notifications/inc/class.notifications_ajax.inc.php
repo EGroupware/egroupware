@@ -158,6 +158,7 @@ class notifications_ajax {
 				'notify_type' => self::_type
 			),__LINE__,__FILE__,self::_appname);
 		}
+		$this->response->data(['deleted'=>$notify_ids]);
 	}
 
 	/**
@@ -250,38 +251,10 @@ class notifications_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function get_egwpopup($browserNotify = false) {
-		$rs = $this->db->select(self::_notification_table, '*', array(
-				'account_id' => $this->recipient->account_id,
-				'notify_type' => self::_type
-			),
-			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
-		$result = array();
-		if ($rs->NumRows() > 0)	{
-			foreach ($rs as $notification) {
-				$actions = null;
-				$data = json_decode($notification['notify_data'], true);
-				if ($data['appname'] && $data['data'])
-				{
-					$_actions = Api\Hooks::process (array(
-						'location' => 'notifications_actions',
-						'data' => $data['data']
-						), $data['appname'], true);
-					$actions = $_actions[$data['appname']];
-				}
-				$result[] = array(
-					'id'		=> $notification['notify_id'],
-					'message'	=> $notification['notify_message'],
-					'status'	=> $notification['notify_status'],
-					'created'	=>  Api\DateTime::server2user($notification['notify_created']),
-					'current'		=> new Api\DateTime('now'),
-					'actions'	=> is_array($actions)?$actions:NULL,
-					'extra_data'		=> ($data['data'] ? $data['data'] : array())
-				);
-
-			}
-			$this->response->apply('app.notifications.append', array($result, $browserNotify));
-		}
+	private function get_egwpopup($browserNotify = false)
+	{
+		$entries = notifications_popup::read($this->recipient->account_id);
+		$this->response->apply('app.notifications.append', array($entries['rows'], $browserNotify, $entries['total']));
 		return true;
 	}
 

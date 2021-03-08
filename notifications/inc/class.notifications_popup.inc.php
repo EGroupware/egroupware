@@ -130,21 +130,31 @@ class notifications_popup implements notifications_iface {
 		), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 		$push = new Api\Json\Push($this->recipient->account_id);
-		$push->call('app.notifications.append', $this->read());
+		$entries = self::read($this->recipient->account_id);
+		$push->call('app.notifications.append', [$entries['rows'], null, $entries['total']]);
 	}
 
 
 	/**
-	 * read all notification messages for current recipient
-	 * @return type
+	 * read all notification messages for given recipient
+	 * @param $_account_id
+	 * @return array
 	 */
-	private function read()
+	public static function read($_account_id)
 	{
-		$rs = $this->db->select(self::_notification_table, '*', array(
-				'account_id' => $this->recipient->account_id,
+		if (!$_account_id) return [];
+
+		$rs = $GLOBALS['egw']->db->select(self::_notification_table, '*', array(
+				'account_id' => $_account_id,
 				'notify_type' => self::_type
 			),
 			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
+		// Fetch the total
+		$total =  $GLOBALS['egw']->db->select(self::_notification_table, 'COUNT(*)', array(
+			'account_id' => $_account_id,
+			'notify_type' => self::_type
+		),
+			__LINE__,__FILE__,0 ,'',self::_appname)->fetchColumn();
 		$result = array();
 		if ($rs->NumRows() > 0)	{
 			foreach ($rs as $notification) {
@@ -169,7 +179,7 @@ class notifications_popup implements notifications_iface {
 				);
 
 			}
-			return $result;
+			return ['rows' => $result, 'total'=> $total];
 		}
 	}
 
