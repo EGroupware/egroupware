@@ -417,17 +417,19 @@ class addressbook_ui extends addressbook_bo
 			),
 		);
 		// CRM view options
-		$crm_count = 0;
 		$crm_apps = array('infolog','tracker');
-		foreach($crm_apps as $app)
+		foreach($crm_apps as $crm_index => $app)
 		{
-			if ($GLOBALS['egw_info']['user']['apps'][$app]) $crm_count++;
+			if (!$GLOBALS['egw_info']['user']['apps'][$app])
+			{
+				unset($crm_apps[$crm_index]);
+			}
 		}
 		if($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
 			array_splice($crm_apps, 1, 0, 'infolog-organisation');
 		}
-		if($crm_count > 1)
+		if(count($crm_apps) > 1)
 		{
 			foreach($crm_apps as $app)
 			{
