@@ -659,7 +659,7 @@
 		// Dont process the data if they're the same as it could get very expensive to
 		// proccess html their content.
 		if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
-		_currentRawData = _rawData;
+		_currentRawData = _rawData || [];
 		var old_notifymessages = notifymessages;
 		notifymessages = {};
 		var browser_notify = _browser_notify || this.check_browser_notify();
