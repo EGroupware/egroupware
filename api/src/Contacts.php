@@ -2877,6 +2877,7 @@ class Contacts extends Contacts\Storage
 							if (($found = $tel->equals($number)))
 							{
 								$rows[$key]['tel_matching'] = $name;
+								$rows[$key]['org_order'] = $key;
 								break;
 							}
 						}
@@ -2892,6 +2893,18 @@ class Contacts extends Contacts\Storage
 			{
 				$this->total = count($rows);
 				$rows = array_values($rows);
+
+				// sort assistent phone matches to end of list
+				usort($rows, static function($a, $b)
+				{
+					$a_assistent = $a['tel_matching'] === 'tel_assistent';
+					$b_assistent = $b['tel_matching'] === 'tel_assistent';
+					if ($a_assistent !== $b_assistent)
+					{
+						return (int)$a_assistent - (int)$b_assistent;
+					}
+					return $b['org_order'] - $a['org_order'];
+				});
 				//error_log(__METHOD__."('$criteria') returning $this->total rows: ".json_encode($rows));
 				return $rows;
 			}
