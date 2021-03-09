@@ -799,9 +799,16 @@ class CalendarApp extends EgwApp
 		// Make sure it's an array, not an object
 		integration_preference = jQuery.extend([],integration_preference);
 
+		let callback = function() {};
+
 		if(action.checked)
 		{
 			integration_preference.push(app);
+
+			// After the preference change is done, get new info which should now include the app
+			callback = function() {
+				this._fetch_data(this.state);
+			}.bind(this);
 		}
 		else
 		{
@@ -809,12 +816,21 @@ class CalendarApp extends EgwApp
 			if (index > -1) {
 				integration_preference.splice(index, 1);
 			}
-		}
-		egw.set_preference("calendar","integration_toggle",integration_preference);
 
-		// Force redraw to current state with new info, but wait a bit to let preference change get there first
-		this._clear_cache();
-		window.setTimeout(function() {this.setState({state: this.state})}.bind(this),500);
+			// Clear any events from that app
+			let events = egw.dataKnownUIDs('calendar');
+			for(let i = 0; i < events.length; i++)
+			{
+				let event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || {app: "calendar"};
+				if(event_data && event_data.app === app)
+				{
+					// Remove entry, then delete it from the cache
+					egw.dataStoreUID("calendar::"+events[i], null);
+					egw.dataDeleteUID('calendar::' + events[i]);
+				}
+			}
+		}
+		egw.set_preference("calendar","integration_toggle",integration_preference, callback);
 	}
 
 	/**
