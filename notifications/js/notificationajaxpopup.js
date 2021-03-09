@@ -656,6 +656,7 @@
 	notifications.prototype.append = function(_rawData, _browser_notify, _total) {
 
 		var hasUnseen = [];
+		_rawData = _rawData || [];
 		// Dont process the data if they're the same as it could get very expensive to
 		// proccess html their content.
 		if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
