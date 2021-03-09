@@ -150,6 +150,10 @@ function read_thumbnail($src)
 	}
 	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
+	if(!file_exists($dst_dir) && !mkdir($dst_dir, 0700, true))
+	{
+		error_log(__FILE__ . " Unable to cache thumbnail.  Check $dst_dir exists and web server has write access.");
+	}
 	if(file_exists($dst_dir))
 	{
 		// Check whether the destination file already exists and is newer than
