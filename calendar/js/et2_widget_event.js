@@ -494,10 +494,13 @@ var et2_calendar_event = /** @class */ (function (_super) {
         var icons = [];
         if (this.options.value.is_private) {
             // Hide everything
-            icons.push('<img src="' + this.egw().image('private', 'calendar') + '"/>');
+            icons.push('<img src="' + this.egw().image('private', 'calendar') + '" title="' + this.egw().lang('private event') + '"/>');
         }
         else {
-            if (this.options.value.app !== 'calendar') {
+            if (this.options.value.icons) {
+                jQuery.extend(icons, this.options.value.icons);
+            }
+            else if (this.options.value.app !== 'calendar') {
                 var app_icon = "" + (egw.link_get_registry(this.options.value.app, 'icon') || (this.options.value.app + '/navbar'));
                 icons.push('<img src="' + this.egw().image(app_icon) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
             }
@@ -506,14 +509,14 @@ var et2_calendar_event = /** @class */ (function (_super) {
             }
             if (this.options.value.public == '0') {
                 // Show private flag
-                icons.push('<img src="' + this.egw().image('private', 'calendar') + '"/>');
+                icons.push('<img src="' + this.egw().image('private', 'calendar') + '" title="' + this.egw().lang('private event') + '"/>');
             }
             if (this.options.value['recur_type']) {
                 icons.push('<img src="' + this.egw().image('recur', 'calendar') + '" title="' + this.egw().lang('recurring event') + '"/>');
             }
             // icons for single user, multiple users or group(s) and resources
-            var single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + '"/>';
-            var multiple = '<img src="' + this.egw().image('users', 'calendar') + '" title="' + '"/>';
+            var single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + this.egw().lang("single participant") + '"/>';
+            var multiple = '<img src="' + this.egw().image('users', 'calendar') + '" title="' + this.egw().lang("multiple participants") + '"/>';
             for (var uid in this.options.value['participants']) {
                 // @ts-ignore
                 if (Object.keys(this.options.value.participants).length == 1 && !isNaN(uid)) {

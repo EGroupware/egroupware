@@ -627,11 +627,15 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		if(this.options.value.is_private)
 		{
 			// Hide everything
-			icons.push('<img src="'+this.egw().image('private','calendar')+'"/>');
+			icons.push('<img src="'+this.egw().image('private','calendar')+'" title="'+this.egw().lang('private event')+'"/>');
 		}
 		else
 		{
-			if(this.options.value.app !== 'calendar')
+			if(this.options.value.icons)
+			{
+				jQuery.extend(icons, this.options.value.icons);
+			}
+			else if(this.options.value.app !== 'calendar')
 			{
 				let app_icon = ""+(egw.link_get_registry(this.options.value.app,'icon') || (this.options.value.app + '/navbar'));
 				icons.push('<img src="'+this.egw().image(app_icon)+'" title="'+this.egw().lang(this.options.value.app)+'"/>');
@@ -643,15 +647,15 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			if(this.options.value.public == '0')
 			{
 				// Show private flag
-				icons.push('<img src="'+this.egw().image('private','calendar')+'"/>');
+				icons.push('<img src="'+this.egw().image('private','calendar')+'" title="'+this.egw().lang('private event')+'"/>');
 			}
 			if(this.options.value['recur_type'])
 			{
 				icons.push('<img src="'+this.egw().image('recur','calendar')+'" title="'+this.egw().lang('recurring event')+'"/>');
 			}
 			// icons for single user, multiple users or group(s) and resources
-			const single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + '"/>';
-			const multiple = '<img src="' + this.egw().image('users', 'calendar') + '" title="' + '"/>';
+			const single = '<img src="' + this.egw().image('single', 'calendar') + '" title="' + this.egw().lang("single participant") + '"/>';
+			const multiple = '<img src="' + this.egw().image('users', 'calendar') + '" title="' + this.egw().lang("multiple participants") + '"/>';
 			for(const uid in this.options.value['participants'])
 			{
 				// @ts-ignore

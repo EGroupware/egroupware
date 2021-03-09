@@ -370,6 +370,7 @@ monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly -by date
 monthly (by day)	calendar	en	Monthly -by day
 monthview	calendar	en	Month view
+multiple participants	calendar	en	Multiple participants
 multiple week view	calendar	en	Multiple week view
 name of current user, all other contact fields are valid too	calendar	en	Name of current user, all other contact fields are valid too
 name of the day of the week (ex: monday)	calendar	en	Name of the day of the week (ex: Monday)
@@ -450,6 +451,7 @@ prevent deleting of entries	admin	en	Prevent deleting of entries
 previous	calendar	en	Previous
 private and global public	calendar	en	Private and global public
 private and group public	calendar	en	Private and group public
+private event	calendar	en	Private event
 private only	calendar	en	Private only
 quantity	calendar	en	Quantity
 quick add	calendar	en	Quick add
@@ -545,6 +547,7 @@ show this month	calendar	en	Show this month
 show this week	calendar	en	Show this week
 show year and age	calendar	en	Show year and age
 single event	calendar	en	Single event
+single participant	calendar	en	Single participant
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
 start date/time	calendar	en	Start date / time

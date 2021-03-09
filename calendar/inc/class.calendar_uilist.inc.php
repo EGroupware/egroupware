@@ -450,6 +450,7 @@ class calendar_uilist extends calendar_ui
 				{
 					$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
 				}
+				$event['icons'] = $icons;
 			}
 			else
 			{
