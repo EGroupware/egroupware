@@ -219,11 +219,16 @@ body {
 		button#composeToolbar-send {
 
 		}
-		button#composeToolbar-to_infolog:hover,
-		button#composeToolbar-to_tracker:hover,
-		button#composeToolbar-disposition:hover,
-		button#composeToolbar-to_calendar:hover {
-			background-color: @color_hover_row;;
+		button#composeToolbar-to_tracker,
+		button#composeToolbar-disposition
+		{
+			&:hover{background-color: @color_hover_row;box-shadow: none;}
+			&:not(.toolbar_toggled){filter: grayscale(1) contrast(0.9999) opacity(0.9);}
+		}
+		button#composeToolbar-to_calendar,
+		button#composeToolbar-to_infolog {
+			&:hover{background-color: @color_hover_row;box-shadow: none;}
+			&:not(.toolbar_toggled){filter: grayscale(1) contrast(0.9999) opacity(0.7);}
 		}
 	} // Toolbar Ende
 
@@ -1043,7 +1048,7 @@ input[type=button] {
 	height:35px;
     // alle Buttons / drag + drop
     #toolbar-actionlist{
-        
+
     }
     /* Elemente */
 	button {

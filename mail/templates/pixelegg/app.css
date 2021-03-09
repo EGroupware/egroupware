@@ -1117,11 +1117,23 @@ body {
 #mail-compose .et2_toolbar button.toolbar_toggled:hover {
   background-color: white !important;
 }
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_infolog:hover,
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:hover,
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover,
-#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:hover {
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:hover {
   background-color: rgba(153, 204, 255, 0.4);
+  box-shadow: none;
+}
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_tracker:not(.toolbar_toggled),
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-disposition:not(.toolbar_toggled) {
+  filter: grayscale(1) contrast(0.9999) opacity(0.9);
+}
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:hover,
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_infolog:hover {
+  background-color: rgba(153, 204, 255, 0.4);
+  box-shadow: none;
+}
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_calendar:not(.toolbar_toggled),
+#mail-compose #mail-compose_composeToolbar button#composeToolbar-to_infolog:not(.toolbar_toggled) {
+  filter: grayscale(1) contrast(0.9999) opacity(0.7);
 }
 #mail-compose table.et2_grid {
   display: inline-block;

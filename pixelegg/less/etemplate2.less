@@ -988,7 +988,12 @@ span.et2_checkbox_slideSwitch:hover {
 	cursor: pointer;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container {background-color: #fafafa;}
-
+.et2_toolbar {
+	span.et2_checkbox_slideSwitch {
+		filter: grayscale(1) contrast(0.9999) opacity(0.7);
+	}
+	span.et2_checkbox_slideSwitch.switchOn {filter:none;}
+}
 /*#################################### ADMIN PART #####################################################*/
 
 iframe#admin-index_iframe{

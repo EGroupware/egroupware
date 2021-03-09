@@ -1134,6 +1134,12 @@
   span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     background-color: #fafafa;
   }
+  .et2_toolbar span.et2_checkbox_slideSwitch {
+    filter: grayscale(1) contrast(0.9999) opacity(0.7);
+  }
+  .et2_toolbar span.et2_checkbox_slideSwitch.switchOn {
+    filter: none;
+  }
   /*#################################### ADMIN PART #####################################################*/
   iframe#admin-index_iframe {
     background-color: yellow;
@@ -2354,15 +2360,15 @@ button.et2_button_text:hover,
 input[type=button]:hover {
   /*background-color: @gray_30;*/
   text-shadow: 0px 0px;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 button.et2_button_text:active,
 input[type=button]:active {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5) !important;
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 /* ########################################################################################
  * Content Element

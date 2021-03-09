@@ -1464,10 +1464,11 @@ img.calendar_print_appicon {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  filter: grayscale(1) contrast(0.1);
+  filter: grayscale(1) contrast(0.9999) opacity(0.7);
 }
 #calendar-toolbar_toolbar span[id^="toolbar-integration_"].switchOn {
   filter: none;
+  box-shadow: inset 1px 1px 1px 1px gray !important;
 }
 #calendar-toolbar_toolbar span[id^="toolbar-integration_"] span.slideSwitch_container {
   background: none;
@@ -1561,6 +1562,7 @@ img.calendar_print_appicon {
 }
 #toolbar-weekend {
   background-image: none !important;
+  filter: none;
 }
 #calendar-list_nm .nextmatch_header .header_count {
   margin-right: -4px;
