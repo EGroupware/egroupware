@@ -2903,7 +2903,7 @@ class Contacts extends Contacts\Storage
 					{
 						return (int)$a_assistent - (int)$b_assistent;
 					}
-					return $b['org_order'] - $a['org_order'];
+					return $a['org_order'] - $b['org_order'];
 				});
 				//error_log(__METHOD__."('$criteria') returning $this->total rows: ".json_encode($rows));
 				return $rows;
