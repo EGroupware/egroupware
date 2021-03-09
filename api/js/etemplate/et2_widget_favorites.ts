@@ -46,7 +46,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_dropdown_button
  */
-class et2_favorites extends et2_dropdown_button implements et2_INextmatchHeader
+export class et2_favorites extends et2_dropdown_button implements et2_INextmatchHeader
 {
 	static readonly _attributes : any = {
 		"default_pref": {

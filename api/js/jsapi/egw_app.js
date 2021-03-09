@@ -19,6 +19,7 @@ var etemplate2_1 = require("../etemplate/etemplate2");
 var et2_extension_nextmatch_1 = require("../etemplate/et2_extension_nextmatch");
 var et2_widget_dialog_1 = require("../etemplate/et2_widget_dialog");
 var et2_core_widget_1 = require("../etemplate/et2_core_widget");
+var et2_widget_favorites_1 = require("../etemplate/et2_widget_favorites");
 /**
  * Common base class for application javascript
  * Each app should extend as needed.
@@ -56,9 +57,18 @@ var EgwApp = /** @class */ (function () {
      */
     function EgwApp(appname) {
         /**
+         * PGP begin and end tags
+         */
+        this.begin_pgp_message = '-----BEGIN PGP MESSAGE-----';
+        this.end_pgp_message = '-----END PGP MESSAGE-----';
+        /**
          * Mailvelope "egroupware" Keyring
          */
         this.mailvelope_keyring = undefined;
+        /**
+         * jQuery selector for Mailvelope iframes in all browsers
+         */
+        this.mailvelope_iframe_selector = 'iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]';
         this.appname = appname;
         this.egw = egw(this.appname, window);
         // Initialize sidebox for non-popups.
@@ -330,7 +340,7 @@ var EgwApp = /** @class */ (function () {
                 if (button_id != et2_widget_dialog_1.et2_dialog.NO_BUTTON) {
                     that._do_action(action_id, _elems);
                 }
-            }, confirm_msg, egw.lang('Confirmation required'), et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+            }, confirm_msg, egw.lang('Confirmation required'), null, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
         }
         else if (typeof this._do_action == 'function') {
             this._do_action(_action.id, _elems);
@@ -674,7 +684,7 @@ var EgwApp = /** @class */ (function () {
         var add_to_popup = function (arr) {
             filter_list.push("<ul>");
             jQuery.each(arr, function (index, filter) {
-                filter_list.push("<li id='index'><span class='filter_id'>" + index + "</span>" +
+                filter_list.push("<li id='index'><span class='filter_id'>" + index.toString() + "</span>" +
                     (typeof filter != "object" ? "<span class='filter_value'>" + filter + "</span>" : ""));
                 if (typeof filter == "object" && filter != null)
                     add_to_popup(filter);
@@ -707,7 +717,7 @@ var EgwApp = /** @class */ (function () {
                 et2[i].widgetContainer.iterateOver(function (_widget) {
                     _widget.stored_filters = _widget.load_favorites(self.appname);
                     _widget.init_filters(_widget);
-                }, self, et2_favorites);
+                }, self, et2_widget_favorites_1.et2_favorites);
             }
         }
         else {
@@ -887,7 +897,7 @@ var EgwApp = /** @class */ (function () {
             }, jQuery(trash).parentsUntil("li").parent(), true, jQuery(trash).parentsUntil("li").parent());
             request.sendRequest(true);
         };
-        et2_widget_dialog_1.et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), et2_widget_dialog_1.et2_dialog.YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+        et2_widget_dialog_1.et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), null, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
         return false;
     };
     /**
@@ -1381,7 +1391,7 @@ var EgwApp = /** @class */ (function () {
                     self.egw.message(self.egw.lang('Was not able to delete the backup key because %1', _err));
                 });
             }
-        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
     };
     /**
      * Create mailvelope restore dialog

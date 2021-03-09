@@ -18,6 +18,7 @@ import {et2_container} from "../etemplate/et2_core_baseWidget";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
+import {et2_favorites} from "../etemplate/et2_widget_favorites";
 
 /**
  * Type for push-message
@@ -472,7 +473,7 @@ export abstract class EgwApp
 				{
 					that._do_action(action_id, _elems);
 				}
-			}, confirm_msg, egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+			}, confirm_msg, egw.lang('Confirmation required'),null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		}
 		else if (typeof this._do_action == 'function')
 		{
@@ -869,7 +870,7 @@ export abstract class EgwApp
 		var add_to_popup = function(arr) {
 			filter_list.push("<ul>");
 			jQuery.each(arr, function(index, filter) {
-				filter_list.push("<li id='index'><span class='filter_id'>"+index+"</span>" +
+				filter_list.push("<li id='index'><span class='filter_id'>"+index.toString()+"</span>" +
 					(typeof filter != "object" ? "<span class='filter_value'>"+filter+"</span>": "")
 				);
 				if(typeof filter == "object" && filter != null) add_to_popup(filter);
@@ -985,8 +986,8 @@ export abstract class EgwApp
 				if(name.val())
 				{
 					// Add to the list
-					name.val(name.val().replace(/(<([^>]+)>)/ig,""));
-					var safe_name = name.val().replace(/[^A-Za-z0-9-_]/g,"_");
+					name.val((<string>name.val()).replace(/(<([^>]+)>)/ig,""));
+					var safe_name = (<string>name.val()).replace(/[^A-Za-z0-9-_]/g,"_");
 					var favorite = {
 						name: name.val(),
 						group: (typeof self.favorite_popup.group != "undefined" &&
@@ -1140,7 +1141,7 @@ export abstract class EgwApp
 			request.sendRequest(true);
 		};
 		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " +name +"?"),
-			egw.lang("Delete"), et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
+			egw.lang("Delete"), null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 
 		return false;
 	}
@@ -1155,7 +1156,7 @@ export abstract class EgwApp
 		if(!this.sidebox) return;
 
 		var state = this.getState();
-		var best_match = false;
+		var best_match: any = false;
 		var best_count = 0;
 		var self = this;
 
@@ -1729,7 +1730,7 @@ export abstract class EgwApp
 		},
 		self.egw.lang('Are you sure, you would like to delete the backup key?'),
 		self.egw.lang('Delete backup key'),
-		{}, et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+		{}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
 	}
 
 	/**
@@ -1911,8 +1912,8 @@ export abstract class EgwApp
 	/**
 	 * PGP begin and end tags
 	 */
-	readonly begin_pgp_message: '-----BEGIN PGP MESSAGE-----';
-	readonly end_pgp_message: '-----END PGP MESSAGE-----';
+	readonly begin_pgp_message: string = '-----BEGIN PGP MESSAGE-----';
+	readonly end_pgp_message: string = '-----END PGP MESSAGE-----';
 
 	/**
 	 * Mailvelope "egroupware" Keyring
@@ -1922,7 +1923,7 @@ export abstract class EgwApp
 	/**
 	 * jQuery selector for Mailvelope iframes in all browsers
 	 */
-	readonly mailvelope_iframe_selector: 'iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]';
+	readonly mailvelope_iframe_selector: string = 'iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]';
 
 	/**
 	 * Open (or create) "egroupware" keyring and call callback with it

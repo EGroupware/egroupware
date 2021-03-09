@@ -23,6 +23,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_favorites = void 0;
 /*egw:uses
     et2_dropdown_button;
     et2_extension_nextmatch;
@@ -344,5 +345,6 @@ var et2_favorites = /** @class */ (function (_super) {
     et2_favorites.PREFIX = "favorite_";
     return et2_favorites;
 }(et2_widget_dropdown_button_1.et2_dropdown_button));
+exports.et2_favorites = et2_favorites;
 et2_core_widget_1.et2_register_widget(et2_favorites, ["favorites"]);
 //# sourceMappingURL=et2_widget_favorites.js.map
