@@ -480,9 +480,20 @@ class CalendarApp extends EgwApp
 					{
 						return this.push_infolog(pushData);
 					}
-					// Other integration here
-					// TODO
-					debugger;
+					else
+					{
+						// Modify the pushData so it looks like one of ours
+						let integrated_pushData = jQuery.extend(pushData, {
+							id: pushData.app+pushData.id,
+							app: this.appname
+						});
+						if(integrated_pushData.type == "delete" || egw.dataHasUID(this.uid(integrated_pushData)))
+						{
+							return super.push(integrated_pushData);
+						}
+						// Ask for the real data, we don't have it
+						this._fetch_data(this.state,undefined,0,[integrated_pushData.id]);
+					}
 				}
 		}
 	}
@@ -554,14 +565,11 @@ class CalendarApp extends EgwApp
 				{
 					return this.egw.dataStoreUID(info_uid, null);
 				}
-				// We could try to be a little smarter, but this will work
-				// Discard cache
-				this._clear_cache();
 
 				// Calendar is the current application, refresh now
 				if(framework.activeApp.appName === this.appname)
 				{
-					this.setState({state: this.state});
+					this._fetch_data(this.state,undefined,0,[pushData.app+pushData.id]);
 				}
 				// Bind once to trigger a refresh when tab is activated again
 				else if(framework.applications.calendar && framework.applications.calendar.tab &&
@@ -818,17 +826,7 @@ class CalendarApp extends EgwApp
 			}
 
 			// Clear any events from that app
-			let events = egw.dataKnownUIDs('calendar');
-			for(let i = 0; i < events.length; i++)
-			{
-				let event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || {app: "calendar"};
-				if(event_data && event_data.app === app)
-				{
-					// Remove entry, then delete it from the cache
-					egw.dataStoreUID("calendar::"+events[i], null);
-					egw.dataDeleteUID('calendar::' + events[i]);
-				}
-			}
+			this._clear_cache(app);
 		}
 		egw.set_preference("calendar","integration_toggle",integration_preference, callback);
 	}
@@ -3435,14 +3433,24 @@ class CalendarApp extends EgwApp
 	/**
 	 * Clear all calendar data from egw.data cache
 	 */
-	_clear_cache( )
+	_clear_cache( integration_app?:string )
 	{
 		// Full refresh, clear the caches
 		var events = egw.dataKnownUIDs('calendar');
 		for(var i = 0; i < events.length; i++)
 		{
-			egw.dataDeleteUID('calendar::' + events[i]);
+			let event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || {app: "calendar"};
+			if(!integration_app || integration_app && event_data && event_data.app === integration_app)
+			{
+				// Remove entry
+				egw.dataStoreUID("calendar::" + events[i], null);
+				// Delete from cache
+				egw.dataDeleteUID('calendar::' + events[i]);
+			}
 		}
+		// If just removing one app, leave the columns alone
+		if(integration_app) return;
+
 		var daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
 		for(var i = 0; i < daywise.length; i++)
 		{
@@ -3552,8 +3560,9 @@ class CalendarApp extends EgwApp
 	 * @param {etemplate2} [instance] If the full calendar app isn't loaded
 	 *	(home app), pass a different instance to use it to get the data
 	 * @param {number} [start] Result offset.  Internal use only
+	 * @param {string[]} [specific_ids] Only request the given IDs
 	 */
-	_fetch_data(state, instance, start?)
+	_fetch_data(state, instance, start?, specific_ids?)
 	{
 		if(!this.sidebox_et2 && !instance)
 		{
@@ -3613,7 +3622,7 @@ class CalendarApp extends EgwApp
 		this.egw.dataFetch(
 			instance ? instance.etemplate_exec_id :
 				this.sidebox_et2.getInstanceManager().etemplate_exec_id,
-			{start: start, num_rows:400},
+			specific_ids ? {refresh: specific_ids} : {start: start, num_rows:400},
 			query,
 			this.appname,
 			function calendar_handleResponse(data) {

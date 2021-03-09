@@ -545,9 +545,18 @@ var CalendarApp = /** @class */ (function (_super) {
                     if (pushData.app == "infolog") {
                         return this.push_infolog(pushData);
                     }
-                    // Other integration here
-                    // TODO
-                    debugger;
+                    else {
+                        // Modify the pushData so it looks like one of ours
+                        var integrated_pushData = jQuery.extend(pushData, {
+                            id: pushData.app + pushData.id,
+                            app: this.appname
+                        });
+                        if (integrated_pushData.type == "delete" || egw.dataHasUID(this.uid(integrated_pushData))) {
+                            return _super.prototype.push.call(this, integrated_pushData);
+                        }
+                        // Ask for the real data, we don't have it
+                        this._fetch_data(this.state, undefined, 0, [integrated_pushData.id]);
+                    }
                 }
         }
     };
@@ -602,12 +611,9 @@ var CalendarApp = /** @class */ (function (_super) {
                 if (pushData.type === 'delete') {
                     return this.egw.dataStoreUID(info_uid, null);
                 }
-                // We could try to be a little smarter, but this will work
-                // Discard cache
-                this._clear_cache();
                 // Calendar is the current application, refresh now
                 if (framework.activeApp.appName === this.appname) {
-                    this.setState({ state: this.state });
+                    this._fetch_data(this.state, undefined, 0, [pushData.app + pushData.id]);
                 }
                 // Bind once to trigger a refresh when tab is activated again
                 else if (framework.applications.calendar && framework.applications.calendar.tab &&
@@ -817,15 +823,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 integration_preference.splice(index, 1);
             }
             // Clear any events from that app
-            var events = egw.dataKnownUIDs('calendar');
-            for (var i = 0; i < events.length; i++) {
-                var event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || { app: "calendar" };
-                if (event_data && event_data.app === app) {
-                    // Remove entry, then delete it from the cache
-                    egw.dataStoreUID("calendar::" + events[i], null);
-                    egw.dataDeleteUID('calendar::' + events[i]);
-                }
-            }
+            this._clear_cache(app);
         }
         egw.set_preference("calendar", "integration_toggle", integration_preference, callback);
     };
@@ -2934,12 +2932,21 @@ var CalendarApp = /** @class */ (function (_super) {
     /**
      * Clear all calendar data from egw.data cache
      */
-    CalendarApp.prototype._clear_cache = function () {
+    CalendarApp.prototype._clear_cache = function (integration_app) {
         // Full refresh, clear the caches
         var events = egw.dataKnownUIDs('calendar');
         for (var i = 0; i < events.length; i++) {
-            egw.dataDeleteUID('calendar::' + events[i]);
+            var event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || { app: "calendar" };
+            if (!integration_app || integration_app && event_data && event_data.app === integration_app) {
+                // Remove entry
+                egw.dataStoreUID("calendar::" + events[i], null);
+                // Delete from cache
+                egw.dataDeleteUID('calendar::' + events[i]);
+            }
         }
+        // If just removing one app, leave the columns alone
+        if (integration_app)
+            return;
         var daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
         for (var i = 0; i < daywise.length; i++) {
             // Empty to clear existing widgets
@@ -3020,8 +3027,9 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {etemplate2} [instance] If the full calendar app isn't loaded
      *	(home app), pass a different instance to use it to get the data
      * @param {number} [start] Result offset.  Internal use only
+     * @param {string[]} [specific_ids] Only request the given IDs
      */
-    CalendarApp.prototype._fetch_data = function (state, instance, start) {
+    CalendarApp.prototype._fetch_data = function (state, instance, start, specific_ids) {
         if (!this.sidebox_et2 && !instance) {
             return;
         }
@@ -3067,7 +3075,7 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         this._queries_in_progress.push(query_string);
         this.egw.dataFetch(instance ? instance.etemplate_exec_id :
-            this.sidebox_et2.getInstanceManager().etemplate_exec_id, { start: start, num_rows: 400 }, query, this.appname, function calendar_handleResponse(data) {
+            this.sidebox_et2.getInstanceManager().etemplate_exec_id, specific_ids ? { refresh: specific_ids } : { start: start, num_rows: 400 }, query, this.appname, function calendar_handleResponse(data) {
             var idx = this._queries_in_progress.indexOf(query_string);
             if (idx >= 0) {
                 this._queries_in_progress.splice(idx, 1);

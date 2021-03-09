@@ -412,6 +412,10 @@ class calendar_uilist extends calendar_ui
 				{
 					$col_filter[$name] = $val;
 				}
+				else if ( $name == 'row_id' && (string)$val !== '')
+				{
+					$col_filter['cal_id'] = $val;
+				}
 			}
 		}
 		$rows = $js_integration_data = array();
@@ -427,7 +431,7 @@ class calendar_uilist extends calendar_ui
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
 
-			if ($params['csv_export'])
+			if ($params['csv_export'] && $params['csv_export'] !== "refresh")
 			{
 				$event['participants'] = implode(",\n",$this->bo->participants($event,true));
 			}

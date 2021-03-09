@@ -777,6 +777,12 @@ class calendar_so
 			$private_filter = '(cal_public=1 OR cal_public=0 AND '.$this->db->expression($this->cal_table, array('cal_owner' => $params['private_grants'])) . ')';
 			$where[] = $private_filter;
 		}
+		if($params['sql_filter']['cal_id'])
+		{
+			$params['query']['cal_id'] = $params['sql_filter']['cal_id'];
+			$where[] = $this->db->column_data_implode(", ", [$this->cal_table.'.cal_id' => $params['sql_filter']['cal_id']], True, False);
+			unset($params['sql_filter']['cal_id']);
+		}
 		if (!empty($params['sql_filter']))
 		{
 			if (is_string($params['sql_filter']))
@@ -1287,7 +1293,7 @@ class calendar_so
 				}
 				if (isset($app_cols[$col]))
 				{
-					$return_cols[] = $app_cols[$col];
+					$return_cols[] = $app_cols[$col] . " AS $col";
 				}
 				else
 				{
