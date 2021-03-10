@@ -3504,7 +3504,7 @@ class calendar_uiforms extends calendar_ui
 			Framework::window_close();
 		}
 
-		$content = array();
+		$content = $readonlys = $preserve = array();
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
