@@ -517,7 +517,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi._isNotTheLastTab());
 			// Do not show tab header if the app is with status 5, means run in background
-			if (_status == 5) _app.tab.hideTabHeader(true);
+			if (_status == 5 && !this.tabApps[_app.appName]) _app.tab.hideTabHeader(true);
 
 		}
 	},
