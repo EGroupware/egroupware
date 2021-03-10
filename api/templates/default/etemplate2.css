@@ -3307,3 +3307,24 @@ tr.disableIfNoEPL {
 span.et2_countdown_seconds {
     margin-right: 0px;
 }
+
+/*et2_audio widget*/
+.et2_audio.et2_audio_autohide{
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    border: 1px solid #c0c0c0;
+    border-radius: 6px;
+    transition: width 1s;
+    transition-delay: 1s;
+}
+.et2_audio.et2_audio_autohide audio {
+    margin-left: -7px;
+    height: 35px;
+}
+.et2_audio.et2_audio_autohide:hover {
+    width: 280px;
+}
+.et2_audio audio {
+    outline: none;
+}

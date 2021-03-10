@@ -54,6 +54,7 @@
 	et2_widget_ajaxSelect;
 	et2_widget_vfs;
 	et2_widget_video;
+	et2_widget_audio;
 	et2_widget_barcode;
 	et2_widget_itempicker;
 	et2_widget_script;
