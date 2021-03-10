@@ -2850,8 +2850,10 @@ class Contacts extends Contacts\Storage
 		}
 		if (empty($fields_to_search))
 		{
-			$fields_to_search = ['tel_work', 'tel_cell', 'tel_fax', 'tel_assistent',
-				'tel_car', 'tel_pager', 'tel_home', 'tel_fax_home', 'tel_cell_private', 'tel_other'];
+			$fields_to_search = ['tel_work', 'tel_cell', 'tel_fax', 'tel_car', 'tel_pager',
+				'tel_home', 'tel_fax_home', 'tel_cell_private', 'tel_other',
+				'tel_assistent', // match tel_assistent last, as it moves contacts to the end of the search result
+			];
 		}
 		foreach($patterns as $pattern)
 		{
