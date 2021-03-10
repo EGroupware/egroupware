@@ -3588,14 +3588,16 @@ app.classes.mail = AppJS.extend(
 
 		var self = this;
 		var nm = this.et2.getWidgetById(this.nm_index);
+		// Nextmatch automatically selects the next row and calls preview.
+		// Stop it for now, we'll put it back when the copy is done
+		let on_select = nm.options.onselect;
+		nm.options.onselect = null;
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
 			self.unlock_tree();
-			// Nextmatch automatically selects the next row and calls preview.
-			// Unselect it and thanks to the timeout selectionMgr uses, preview
-			// will close when the selection callback fires instead of load the
-			// next message
-			nm.controller._selectionMgr.resetSelection();
+
+			// Restore onselect handler
+			nm.options.onselect = on_select;
 
 			// Server response may contain refresh, but it's always delete
 			// Refresh list if current view is the target (happens when pasting)
