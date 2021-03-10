@@ -128,7 +128,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			this.appData = new egw_fw_class_application(this,
 				app.name, app.title, app.icon, app.url, app.sideboxwidth,
 				baseUrl, internalName);
-
+			if (app.isTabApp) this.appData['isTabApp'] = true;
 			//Create a sidebox menu entry for each application
 			if (!app.noNavbar && app.status != 5)
 			{
@@ -517,7 +517,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			//Set the tab closeable if there's more than one tab
 			this.tabsUi.setCloseable(this.tabsUi._isNotTheLastTab());
 			// Do not show tab header if the app is with status 5, means run in background
-			if (_status == 5 && !this.tabApps[_app.appName]) _app.tab.hideTabHeader(true);
+			if (_status == 5 && !_app.isTabApp) _app.tab.hideTabHeader(true);
 
 		}
 	},
@@ -746,7 +746,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				opened: this.tabsUi.tabs.length+1,
 				url: _link,
 				internalName: app.appName,
-				active: true
+				active: true,
+				isTabApp: true
 			}));
 
 			this._setTabAppsSession(this.tabApps);
@@ -863,7 +864,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			if (_app.tab)
 			{
 				this.tabsUi.showTab(_app.tab);
-				if (this.tabApps && this.tabApps[_app.appName])
+				if (this.tabApps)
 				{
 					for (let t in this.tabApps)
 					{
