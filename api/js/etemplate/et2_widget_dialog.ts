@@ -14,7 +14,7 @@
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_widget} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -431,7 +431,10 @@ export class et2_dialog extends et2_widget {
                     }
                 }
                 if (button.image) {
-                    button.style = 'background-image: url(' + this.egw().image(button.image, 'api') + ')';
+                    button.style = 'background-image: url(' +
+	                    (button.image.match('^http|\/') ?
+	                    button.image : this.egw().image(button.image, 'api'))
+	                + ')';
                     delete button.image;
                 }
             }

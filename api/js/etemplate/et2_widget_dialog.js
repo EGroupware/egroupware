@@ -23,6 +23,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dialog = void 0;
 /*egw:uses
         et2_core_widget;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -281,7 +282,10 @@ var et2_dialog = /** @class */ (function (_super) {
                     }
                 }
                 if (button.image) {
-                    button.style = 'background-image: url(' + this.egw().image(button.image, 'api') + ')';
+                    button.style = 'background-image: url(' +
+                        (button.image.match('^http|\/') ?
+                            button.image : this.egw().image(button.image, 'api'))
+                        + ')';
                     delete button.image;
                 }
             }
@@ -449,7 +453,7 @@ var et2_dialog = /** @class */ (function (_super) {
     et2_dialog.show_dialog = function (_callback, _message, _title, _value, _buttons, _type, _icon, _egw_or_appname) {
         var parent = et2_dialog._create_parent(_egw_or_appname);
         // Just pass them along, widget handles defaults & missing
-        return et2_createWidget("dialog", {
+        return et2_core_widget_1.et2_createWidget("dialog", {
             callback: _callback || function () {
             },
             message: _message,
@@ -471,7 +475,7 @@ var et2_dialog = /** @class */ (function (_super) {
      */
     et2_dialog.alert = function (_message, _title, _type) {
         var parent = et2_dialog._create_parent(et2_dialog._create_parent().egw());
-        et2_createWidget("dialog", {
+        et2_core_widget_1.et2_createWidget("dialog", {
             callback: function () {
             },
             message: _message,
@@ -493,7 +497,7 @@ var et2_dialog = /** @class */ (function (_super) {
     et2_dialog.show_prompt = function (_callback, _message, _title, _value, _buttons, _egw_or_appname) {
         var callback = _callback;
         // Just pass them along, widget handles defaults & missing
-        return et2_createWidget("dialog", {
+        return et2_core_widget_1.et2_createWidget("dialog", {
             callback: function (_button_id, _value) {
                 if (typeof callback == "function") {
                     callback.call(this, _button_id, _value.value);
@@ -583,7 +587,7 @@ var et2_dialog = /** @class */ (function (_super) {
                 }
             }
         ];
-        var dialog = et2_createWidget("dialog", {
+        var dialog = et2_core_widget_1.et2_createWidget("dialog", {
             template: egw.webserverUrl + '/api/templates/default/long_task.xet',
             value: {
                 content: {
@@ -626,7 +630,7 @@ var et2_dialog = /** @class */ (function (_super) {
                         .appendTo(log);
                     totals.failed++;
                     // Ask to retry / ignore / abort
-                    et2_createWidget("dialog", {
+                    et2_core_widget_1.et2_createWidget("dialog", {
                         callback: function (button) {
                             switch (button) {
                                 case 'dialog[cancel]':
