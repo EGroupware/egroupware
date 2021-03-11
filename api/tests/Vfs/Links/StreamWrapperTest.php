@@ -66,6 +66,10 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 	protected function allowAccess(string $test_name, string &$test_file, int $test_user, string $needed) : void
 	{
+		// Make sure user has infolog run rights
+		$command = new \admin_cmd_acl(true, $test_user,'infolog','run',Api\Acl::READ);
+		$command->run();
+
 		// We'll allow access by putting test user in responsible
 		$so = new \infolog_so();
 		$element = $so->read(Array('info_id' => $this->entries[0]));
