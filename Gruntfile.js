@@ -190,6 +190,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/vfsSelectUI.js",
 						"api/js/etemplate/et2_widget_vfs.js",
 						"api/js/etemplate/et2_widget_video.js",
+						"api/js/etemplate/et2_widget_audio.js",
 						"api/js/jquery/barcode/jquery-barcode.min.js",
 						"api/js/etemplate/et2_widget_barcode.js",
 						"api/js/etemplate/et2_extension_itempicker_actions.js",
