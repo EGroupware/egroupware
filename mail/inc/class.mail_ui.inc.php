@@ -2437,7 +2437,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['filename'] = Api\Translation::convert_jsonsafe($attachmentHTML[$key]['filename'],'utf-8');
 				//error_log(array2string($value));
 				//error_log(strtoupper($value['mimeType']) .'<->'. Api\MimeMagic::filename2mime($attachmentHTML[$key]['filename']));
-				if (strtoupper($value['mimeType']=='APPLICATION/OCTET-STREAM')) $value['mimeType'] = Api\MimeMagic::filename2mime($attachmentHTML[$key]['filename']);
+				if (strtoupper($value['mimeType']) == 'APPLICATION/OCTET-STREAM') $value['mimeType'] = Api\MimeMagic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype'] = Api\MimeMagic::mime2label($value['mimeType']);
 				$hA = self::splitRowID($rowID);
