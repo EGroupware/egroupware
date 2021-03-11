@@ -65,7 +65,11 @@ class AnonymousList extends filemanager_ui
 	 */
 	static function get_home_dir()
 	{
-		return $GLOBALS['egw']->sharing->get_root();
+		if(isset($GLOBALS['egw']->sharing))
+		{
+			return $GLOBALS['egw']->sharing->get_root();
+		}
+		return '/';
 	}
 
 	/**
@@ -79,7 +83,7 @@ class AnonymousList extends filemanager_ui
 		$group = 1;
 		// do not add edit setting action when we are in sharing
 		unset($actions['edit']);
-		if (Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
+		if (isset($GLOBALS['egw']->sharing) && Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
 		{
 			return $actions;
 		}

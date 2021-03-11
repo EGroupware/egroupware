@@ -526,6 +526,7 @@ class Sharing
 		}*/
 		if($this->use_collabora())
 		{
+			unset($GLOBALS['egw']->sharing);
 			$ui = new \EGroupware\Collabora\Ui();
 			return $ui->editor($this->share['share_path']);
 		}

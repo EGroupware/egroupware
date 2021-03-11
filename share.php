@@ -27,7 +27,7 @@ $GLOBALS['egw_info'] = array(
 
 include('./header.inc.php');
 
-if (!isset($GLOBALS['egw']->sharing))
+if (!isset($GLOBALS['egw']->sharing) || \EGroupware\Api\Sharing::get_token() !== $GLOBALS['egw']->sharing->get_token())
 {
 	Sharing::create_session(true);	// true = mount into existing session
 }
