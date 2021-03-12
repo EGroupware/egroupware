@@ -522,7 +522,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						const self = this;
 						return new Promise(function(resolve, reject)
 						{
-							self.includeJS('/'+parts[1]+'/js/app.js', function ()
+							// cache for a day, better then no invalidation
+							self.includeJS('/'+parts[1]+'/js/app.js?'+((new Date).valueOf()/86400|0).toString(), function ()
 							{
 								resolve(self.applyFunc(_func, args, _context));
 							}, self, self.webserverUrl);
