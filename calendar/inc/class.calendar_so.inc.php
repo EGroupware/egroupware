@@ -1244,10 +1244,16 @@ class calendar_so
 	/**
 	 * Get data from last 'calendar_search_union' hook call
 	 *
-	 * @return array
+	 * @param boole $try_load=false true: load if not yet loaded
+	 * @return ?array
 	 */
-	public static function get_integration_data()
+	public static function get_integration_data($try_load=false)
 	{
+		if (!isset(self::$integration_data) && $try_load)
+		{
+			$selects = [];
+			self::get_union_selects($selects, 0, 0, [$GLOBALS['egw_info']['user']['account_id']], 0, [], '', [$GLOBALS['egw_info']['user']['account_id']]);
+		}
 		return self::$integration_data;
 	}
 

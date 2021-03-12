@@ -731,13 +731,12 @@ class calendar_ui
 
 		static $sent_groups = array();
 
-		if (!$this->bo->check_perms(Acl::EDIT,$event))
+		if (!is_numeric($event['id']) || !$this->bo->check_perms(Acl::EDIT,$event))
 		{
 			$event['class'] .= 'rowNoEdit ';
 		}
 
-		// Delete disabled for other applications
-		if (!$this->bo->check_perms(Acl::DELETE,$event) || !is_numeric($event['id']))
+		if (is_numeric($event['id']) && !$this->bo->check_perms(Acl::DELETE, $event))
 		{
 			$event['class'] .= 'rowNoDelete ';
 		}
@@ -772,6 +771,11 @@ class calendar_ui
 			}
 			$event['app'] = $app;
 			$event['app_id'] = $app_id;
+			// check if integration-app allows/supports delete
+			if (!calendar_bo::integration_deletable($app, $event))
+			{
+				$event['class'] .= 'rowNoDelete';
+			}
 		}
 		else
 		{

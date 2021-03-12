@@ -731,20 +731,40 @@ class calendar_bo
 	 *
 	 * @param string $app
 	 * @param string $part
+	 * @param boole $try_load=false true: load if not yet loaded
 	 * @return array
 	 */
-	static function integration_get_data($app,$part=null)
+	static function integration_get_data($app, $part=null, $try_load=false)
 	{
 		static $integration_data=null;
 
 		if (!isset($integration_data))
 		{
-			$integration_data = calendar_so::get_integration_data();
+			$integration_data = calendar_so::get_integration_data($try_load);
 		}
 
 		if (!isset($integration_data[$app])) return null;
 
 		return $part ? $integration_data[$app][$part] : $integration_data[$app];
+	}
+
+	/**
+	 * Check if an integration event is deletable
+	 *
+	 * @param string $app
+	 * @param array $event
+	 * @return bool
+	 */
+	static function integration_deletable($app, array $event)
+	{
+		$app_data = self::integration_get_data($app,'deletable');
+
+		if (empty($app_data) || is_bool($app_data))
+		{
+			return (bool)$app_data;
+		}
+
+		return (bool)(is_callable($app_data) ? $app_data($event) : ExecMethod2($app_data, $event));
 	}
 
 	/**

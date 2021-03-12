@@ -3261,9 +3261,22 @@ class calendar_uiforms extends calendar_ui
 	 */
 	public function ajax_delete($eventId)
 	{
-		list($id, $date) = explode(':',$eventId);
-		$event=$this->bo->read($id);
 		$response = Api\Json\Response::get();
+		list($id, $date) = explode(':',$eventId);
+		// let integration take care of delete for integration-events
+		if (!is_numeric($id) && preg_match('/^([^\d]+)(\d+)$/', $id, $matches) &&
+			!empty($app_data = calendar_bo::integration_get_data($matches[1], 'delete', true)))
+		{
+			try {
+				$msg = is_callable($app_data) ? $app_data($matches[2]) : ExecMethod2($app_data, $matches[2]);
+				$response->call('egw.refresh', $msg, 'calendar', $eventId, 'delete');
+			}
+			catch (\Exception $e) {
+				$response->apply('egw.message', $e->getMessage(), 'error');
+			}
+			return;
+		}
+		$event=$this->bo->read($id);
 
 		if ($this->bo->delete($event['id'], (int)$date))
 		{
