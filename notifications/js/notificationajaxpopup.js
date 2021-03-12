@@ -92,7 +92,8 @@
 		this.run_notifications();
 
 		this.filter = '';
-
+		// total number of notifications
+		this.total = 0;
 	};
 
 	notifications.prototype.run_notifications = function ()
@@ -516,14 +517,9 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var ids = [id];
-		if (notifymessages[id]['children'])
-		{
-			ids = ids.concat(Object.keys(notifymessages[id]['children']));
-		}
 		if (notifymessages[id]['status'] !='SEEN')
 		{
-			var request = egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]);
+			var request = egw.json("notifications.notifications_ajax.update_status", [[notifymessages[id]], "SEEN"]);
 			request.sendRequest(true);
 			this.update_message_status(id, "SEEN");
 			if (notifymessages[id]['extra_data']['onSeenAction'])
@@ -537,9 +533,7 @@
 	notifications.prototype.mark_all_seen = function()
 	{
 		if (!notifymessages || Object.keys(notifymessages).length == 0) return false;
-		var ids = Object.keys(notifymessages);
-		ids = ids.concat(this.findAllChildrenIds());
-		egw.json("notifications.notifications_ajax.update_status", [ids, "SEEN"]).sendRequest(true);
+		egw.json("notifications.notifications_ajax.update_status", [notifymessages, "SEEN"]).sendRequest(true);
 		for (var id in notifymessages)
 		{
 			this.update_message_status(id, "SEEN");
@@ -568,12 +562,13 @@
 
 	notifications.prototype.delete_all = function () {
 		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-		var ids = Object.keys(notifymessages);
-		ids = ids.concat(this.findAllChildrenIds());
-		egw.json("notifications.notifications_ajax.delete_message", [ids]).sendRequest(true);
+		var self = this;
+		egw.json("notifications.notifications_ajax.delete_message", [notifymessages], function(_data){
+			if (_data && _data['deleted']) self.total -= Object.keys(_data['deleted']).length;
+			self.counterUpdate();
+		}).sendRequest(true);
 		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
-		this.counterUpdate();
 		egw.loading_prompt('popup_notifications', false);
 	};
 
@@ -584,12 +579,11 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var ids = [id];
-		if (notifymessages[id]['children'])
-		{
-			ids = ids.concat(Object.keys(notifymessages[id]['children']));
-		}
-		var request = egw.json("notifications.notifications_ajax.delete_message", [ids]);
+		var self = this;
+		var request = egw.json("notifications.notifications_ajax.delete_message", [[notifymessages[id]]],function(_data){
+			if (_data && _data['deleted'])	self.total -= Object.keys(_data['deleted']).length;
+			self.counterUpdate();
+		});
 		request.sendRequest(true);
 		var nextNode = egwpopup_message.next();
 		var keepLoadingPrompt = false;
@@ -604,8 +598,6 @@
 		if (keepLoadingPrompt && !egwIsMobile()) egw.loading_prompt('popup_notifications', true);
 		egwpopup_message.remove();
 		this.bell("inactive");
-		this.counterUpdate();
-
 	};
 
 	/**
@@ -661,16 +653,18 @@
 	 * @param _rowData
 	 * @param _browser_notify
 	 */
-	notifications.prototype.append = function(_rawData, _browser_notify) {
+	notifications.prototype.append = function(_rawData, _browser_notify, _total) {
 
 		var hasUnseen = [];
+		_rawData = _rawData || [];
 		// Dont process the data if they're the same as it could get very expensive to
 		// proccess html their content.
 		if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
-		_currentRawData = _rawData;
-		let old_notifymessages = notifymessages;
+		_currentRawData = _rawData || [];
+		var old_notifymessages = notifymessages;
 		notifymessages = {};
 		var browser_notify = _browser_notify || this.check_browser_notify();
+		this.total = _total || 0;
 		for (var i=0; i < _rawData.length; i++)
 		{
 			var data = this.getData(_rawData[i]['message'], _rawData[i]['extra_data']);
@@ -699,7 +693,8 @@
 				status: _rawData[i]['status'],
 				created: _rawData[i]['created'],
 				current: _rawData[i]['current'],
-				extra_data: _rawData[i]['extra_data']
+				extra_data: _rawData[i]['extra_data'],
+				id: _rawData[i]['id']
 			};
 			if (_rawData[i]['actions'] && _rawData[i]['actions'].length > 0) notifymessages[_rawData[i]['id']]['data']['actions'] = _rawData[i]['actions'];
 			// Notification API
@@ -714,7 +709,7 @@
 						// notification id
 						var id = this.tag.split(":");
 						// delete the message
-						var request = egw.json("notifications.notifications_ajax.update_status", [id[1], 'DISPLAYED']);
+						var request = egw.json("notifications.notifications_ajax.update_status", [[id[1]], 'DISPLAYED']);
 						request.sendRequest();
 					},
 					onclick:function(e){
@@ -740,12 +735,12 @@
 			}
 			if (!_rawData[i]['status'])
 			{
-				egw.json("notifications.notifications_ajax.update_status", [_rawData[i]['id'], 'DISPLAYED']);
+				egw.json("notifications.notifications_ajax.update_status", [[_rawData[i]['id']], 'DISPLAYED']);
 				hasUnseen.push(_rawData[i]['id']);
 			}
 
 		}
-		let egwpopup = document.getElementById('egwpopup');
+		var egwpopup = document.getElementById('egwpopup');
 		switch(egw.preference('egwpopup_verbosity', 'notifications'))
 		{
 			case 'low':
@@ -853,6 +848,10 @@
 		var $topmenu_info_notifications = jQuery('#topmenu_info_notifications');
 		var counter = 0;
 		var apps = {};
+
+		// set total number
+		document.getElementById("egwpopup_header").childNodes[0].textContent = (egw.lang("Notifications")+" ("+this.total+")");
+		document.getElementById('topmenu_info_notifications').title = egw.lang('total')+":"+this.total;
 
 		for (var id in notifymessages)
 		{

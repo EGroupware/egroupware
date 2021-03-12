@@ -145,11 +145,12 @@ class notifications_ajax {
 	/**
 	 * Remove given notification id(s) from the table
 	 *
-	 * @param array|int $notify_ids one or multiple notify_id(s)
+	 * @param array $notifymessages one or multiple notify_id(s)
 	 */
-	public function delete_message($notify_ids)
+	public function delete_message($notifymessages)
 	{
-		if ($notify_ids)
+		$notify_ids = $this->fetch_notify_ids($notifymessages);
+		if (!empty($notify_ids))
 		{
 			$this->db->delete(self::_notification_table,array(
 				'notify_id' => $notify_ids,
@@ -157,12 +158,13 @@ class notifications_ajax {
 				'notify_type' => self::_type
 			),__LINE__,__FILE__,self::_appname);
 		}
+		$this->response->data(['deleted'=>$notify_ids]);
 	}
 
 	/**
 	 * Method to update message(s) status
 	 *
-	 * @param int|array $notify_ids one or more notify_id(s)
+	 * @param array $notifymessages one or more notify_id(s)
 	 * @param string $status = SEEN, status of message:
 	 *  - SEEN: message has been seen
 	 *	- UNSEEN: message has not been seen
@@ -170,9 +172,10 @@ class notifications_ajax {
 	 *				 this status has been used more specifically for browser type
 	 *				 of notifications.
 	 */
-	public function update_status($notify_ids,$status = "SEEN")
+	public function update_status($notifymessages, $status = "SEEN")
 	{
-		if ($notify_ids)
+		$notify_ids = $this->fetch_notify_ids($notifymessages);
+		if (!empty($notify_ids))
 		{
 			$this->db->update(self::_notification_table,array('notify_status' => $status),array(
 				'notify_id' => $notify_ids,
@@ -183,42 +186,75 @@ class notifications_ajax {
 	}
 
 	/**
+	 * gets all relevant notify ids based on given notify message data
+	 * @param $notifymessages
+	 * @return array
+	 */
+	public function fetch_notify_ids ($notifymessages)
+	{
+		$notify_ids = [];
+
+		foreach ($notifymessages as $data)
+		{
+			if (is_array($data) && $data['id'])
+			{
+				array_push($notify_ids, (string)$data['id']);
+				if (is_array($data['data'])) $notify_ids = array_unique(array_merge($notify_ids, $this->search_in_notify_data($data['data']['id'], $data['data']['app'])));
+			}
+			else
+			{
+				array_push($notify_ids, (string)$data);
+			}
+
+		}
+		return $notify_ids;
+	}
+
+	/**
+	 * Fetches all notify_ids relevant to the entry
+	 * @param $_id
+	 * @param $_appname
+	 * @return array
+	 */
+	public function search_in_notify_data($_id, $_appname)
+	{
+		$ret = [];
+		if ($_id && $_appname)
+		{
+			try {
+				// mariaDB supported query
+				$ret = $this->db->select(self::_notification_table, 'notify_id', array(
+					'account_id' => $this->recipient->account_id,
+					'notify_type' => self::_type,
+					'notify_data->"$.appname"' => $_appname,
+					'notify_data->"$.data.id"' => $_id
+				),
+					__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname);
+			}
+			catch (Api\Db\Exception $e) {
+				// do it manual for all other DB
+				foreach($this->db->select(self::_notification_table, '*', array(
+					'account_id' => $this->recipient->account_id,
+					'notify_type' => self::_type
+				),
+					__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname) as $row)
+				{
+					$data = json_decode($row['notify_data'], true);
+					if ($data['appname'] == $_appname && $data['data']['id'] == $_id) $ret[] = $row['notify_id'];
+				}
+			}
+		}
+		return $ret;
+	}
+	/**
 	 * gets all egwpopup notifications for calling user
 	 *
 	 * @return boolean true or false
 	 */
-	private function get_egwpopup($browserNotify = false) {
-		$rs = $this->db->select(self::_notification_table, '*', array(
-				'account_id' => $this->recipient->account_id,
-				'notify_type' => self::_type
-			),
-			__LINE__,__FILE__,0 ,'ORDER BY notify_id DESC',self::_appname, 100);
-		$result = array();
-		if ($rs->NumRows() > 0)	{
-			foreach ($rs as $notification) {
-				$actions = null;
-				$data = json_decode($notification['notify_data'], true);
-				if ($data['appname'] && $data['data'])
-				{
-					$_actions = Api\Hooks::process (array(
-						'location' => 'notifications_actions',
-						'data' => $data['data']
-						), $data['appname'], true);
-					$actions = $_actions[$data['appname']];
-				}
-				$result[] = array(
-					'id'		=> $notification['notify_id'],
-					'message'	=> $notification['notify_message'],
-					'status'	=> $notification['notify_status'],
-					'created'	=> Api\DateTime::to($notification['notify_created']),
-					'current'		=> new DateTime(),
-					'actions'	=> is_array($actions)?$actions:NULL,
-					'extra_data'		=> ($data['data'] ? $data['data'] : array())
-				);
-
-			}
-			$this->response->apply('app.notifications.append', array($result, $browserNotify));
-		}
+	private function get_egwpopup($browserNotify = false)
+	{
+		$entries = notifications_popup::read($this->recipient->account_id);
+		$this->response->apply('app.notifications.append', array($entries['rows'], $browserNotify, $entries['total']));
 		return true;
 	}
 
