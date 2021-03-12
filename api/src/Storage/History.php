@@ -125,6 +125,11 @@ class History
 	{
 		if ($new_value != $old_value)
 		{
+			$share_with = '';
+			foreach(isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing : [] as $token => $share_obj)
+			{
+				$share_with .= $share_obj->get_share_with();
+			}
 			$this->db->insert(self::TABLE,array(
 				'history_record_id' => $record_id,
 				'history_appname'   => $this->appname,
@@ -134,7 +139,7 @@ class History
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
 				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
-				'share_email'       => isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing->get_share_with() : '',
+				'share_email'       => $share_with,
 			),false,__LINE__,__FILE__);
 		}
 	}
@@ -146,6 +151,11 @@ class History
 	{
 		if ($new_value != $old_value)
 		{
+			$share_with = '';
+			foreach(isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing : [] as $token => $share_obj)
+			{
+				$share_with .= $share_obj->get_share_with();
+			}
 			$GLOBALS['egw']->db->insert(self::TABLE,array(
 				'history_record_id' => $id,
 				'history_appname'   => $appname,
@@ -155,7 +165,7 @@ class History
 				'history_old_value' => $old_value,
 				'history_timestamp' => time(),
 				'sessionid' => $GLOBALS['egw']->session->sessionid_access_log,
-				'share_email'       => isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing->get_share_with() : '',
+				'share_email'       => $share_with,
 			),false,__LINE__,__FILE__);
 		}
 	}

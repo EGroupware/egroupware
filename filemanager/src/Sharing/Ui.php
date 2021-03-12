@@ -63,7 +63,7 @@ class Ui
 		$preserve = $content;
 		$preserve['url'] = Vfs\Sharing\StreamWrapper::share2url($share);
 
-		$template->exec('filemanager.'.__CLASS__.'.'.__FUNCTION__, $content, $sel_options, $readonlys, $preserve);
+		$template->exec('filemanager.'.__CLASS__.'.'.__FUNCTION__, $content, $sel_options, $readonlys, $preserve,2);
 	}
 
 	/**
@@ -100,6 +100,9 @@ class Ui
 						'path' => $content['share_root']
 				]),	'filemanager',false,'filemanager'
 		]);
+		// This should only be seen if they pasted the link into a new tab since we can't close the tab in that case
+		Framework::message(lang("Share mounted at %1.<br/>Please close this tab.", $content['share_root']),"info");
+
 		Api\Framework::window_close();
 	}
 }

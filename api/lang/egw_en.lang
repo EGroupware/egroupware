@@ -1381,6 +1381,7 @@ the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
 this feature is only available in epl version.	common	en	This feature is only available in EPL version.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share.  To test it, use an anonymous / incognito window.<br/>%1
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.

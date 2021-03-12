@@ -198,7 +198,7 @@ class Sharing
 
 			unset($GLOBALS['egw_info']['flags']['autocreate_session_callback']);
 			if (isset($GLOBALS['egw']->session) && $GLOBALS['egw']->session->verify()
-				&& isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->share['share_token'] === $token)
+				&& isset($GLOBALS['egw']->sharing) && array_key_exists($token, $GLOBALS['egw']->sharing))
 			{
 				return $GLOBALS['egw']->session->sessionid;
 			}
@@ -277,11 +277,15 @@ class Sharing
 		), __LINE__, __FILE__);
 
 		// store sharing object in egw object and therefore in session
-		$GLOBALS['egw']->sharing = static::factory($share);
+		if(!isset($GLOBALS['egw']->sharing))
+		{
+			$GLOBALS['egw']->sharing = Array();
+		}
+		$GLOBALS['egw']->sharing[$share['share_token']] = static::factory($share);
 
 		// we have a session we want to keep, but share owner is different from current user and we need filemanager UI, or no session
 		// --> create a new anon session
-		if ($keep_session === false && $GLOBALS['egw']->sharing->need_session() || is_null($keep_session))
+		if ($keep_session === false && $GLOBALS['egw']->sharing[$share['share_token']]->need_session() || is_null($keep_session))
 		{
 			$sessionid = static::create_new_session();
 
@@ -513,7 +517,7 @@ class Sharing
 			self::create_session($GLOBALS['egw']->session->session_flags === 'N' &&
 				$GLOBALS['egw_info']['user']['account_lid'] !== 'anonymous');
 
-			return $GLOBALS['egw']->sharing->ServeRequest();
+			return $GLOBALS['egw']->sharing[static::get_token()]->ServeRequest();
 		}
 
 		/* No extended ACL for readonly shares, disable eacl by setting session cache
@@ -526,7 +530,6 @@ class Sharing
 		}*/
 		if($this->use_collabora())
 		{
-			unset($GLOBALS['egw']->sharing);
 			$ui = new \EGroupware\Collabora\Ui();
 			return $ui->editor($this->share['share_path']);
 		}
@@ -543,6 +546,12 @@ class Sharing
 			// WebDAV always looks at the original request for a single file so make sure the file is found at the root
 			Vfs::$is_root = true;
 			unset($GLOBALS['egw_info']['server']['vfs_fstab']);
+
+			// Make SURE resolve_url is set, otherwise webdav will give full access to /
+			if(!$this->share['resolve_url'])
+			{
+				$this->share['resolve_url'] = Vfs::resolve_url($this->share['share_path'], true, true, true, true);
+			}
 			Vfs::mount($this->share['resolve_url'], '/', false, false, true);
 			Vfs::clearstatcache();
 

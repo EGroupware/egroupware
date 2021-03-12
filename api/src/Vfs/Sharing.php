@@ -14,6 +14,7 @@
 namespace EGroupware\Api\Vfs;
 
 use EGroupware\Api;
+use EGroupware\Api\Json\Response;
 use EGroupware\Api\Vfs;
 use EGroupware\Filemanager\Sharing\AnonymousList;
 use EGroupware\Filemanager\Sharing\Ui;
@@ -233,15 +234,39 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	public function get_ui()
 	{
-		// Ask about the share, if the user is not anonymous.
 		//  * Link has already been opened in a new tab by this point *
-		if($GLOBALS['egw_info']['user']['account_lid'] !== 'anonymous' && $GLOBALS['egw_info']['user']['account_id'] !== $this->share['owner'])
+
+		// User testing their own share?
+		if($GLOBALS['egw_info']['user']['account_id'] == $this->share['share_owner'])
+		{
+			Api\Framework::message(lang(
+					"This is your own share.  To test it, use an anonymous / incognito window.\n%1",
+					'<a href="'.$_SERVER['REQUEST_URI'].'">' . $this->share['share_root'] . '</a>'
+			),'info');
+		}
+
+
+		// Opened within EGroupware.  Ask about the share, if the user is not anonymous.
+		if($GLOBALS['egw_info']['user']['account_lid'] !== 'anonymous' && $GLOBALS['egw_info']['user']['account_id'] != $this->share['share_owner'])
 		{
 			// Check to see if this is already permanent mounted share
 			$mount_target = Vfs\Sharing\StreamWrapper::share2url($this->share);
+
+			// Logged in user opening someone else's share, but they've opened the URL in its own tab
+			if (!Response::isJSONResponse())
+			{
+				Api\Framework::message(lang(
+						"Share mounted.  To test it, use an anonymous / incognito window.\n%1",
+						'<a href="'.$_SERVER['REQUEST_URI'].'">' . $this->share['share_root'] . '</a>'
+				),'info');
+				Api\Framework::redirect(Api\Framework::link('/index.php',[
+						'menuaction' => 'filemanager.EGroupware\\Filemanager\\Sharing\\Ui.share_received',
+						'token' => $this->share['share_token']
+				]));
+			}
 			if(($mounted = array_search($mount_target,$GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'])))
 			{
-				Api\Json\Response::get()->apply('window.opener.egw.open_link',[
+				Response::get()->apply('window.opener.egw.open_link',[
 					Api\Framework::link('/index.php',[
 						'menuaction' => 'filemanager.filemanager_ui.index',
 						'path' => $mounted
@@ -251,7 +276,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			else
 			{
 				// New share, ask about it
-				Api\Json\Response::get()->apply('window.opener.egw.open_link',[
+				Response::get()->apply('window.opener.egw.open_link',[
 					Api\Framework::link('/index.php',[
 						'menuaction' => 'filemanager.EGroupware\\Filemanager\\Sharing\\Ui.share_received',
 						'token' => $this->share['share_token']
@@ -259,7 +284,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				]);
 			}
 
-			Api\Json\Response::get()->apply('window.close');
+			Response::get()->apply('window.close');
 			// Still need to load the list after though, since loading it processes what we just added
 			$ui = new \filemanager_ui();
 			return $ui->index();
@@ -403,12 +428,14 @@ class Sharing extends \EGroupware\Api\Sharing
 
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{
-				// Make sure we get the correct path if sharing from a share
-				if(isset($GLOBALS['egw']->sharing) && $exists)
+				// Not sure why stat puts a / on the end of files, but remove it
+				if(substr($stat['url'],-1) == '/' && !Vfs::is_dir($stat['url']))
 				{
-					/* Why not use $stat['url']
-					$resolved_stat = Vfs::parse_url($stat['url']);
-					$path = 'vfs://default'. $resolved_stat['path'];*/
+					$stat['url'] = substr($stat['url'],0,strlen($stat['url'])-1);
+				}
+				// Make sure we get the correct path if sharing from a share
+				if(isset($GLOBALS['egw']->sharing) && array_key_exists(static::get_token(), $GLOBALS['egw']->sharing) && $exists)
+				{
 					$path = $stat['url'];
 				}
 			}

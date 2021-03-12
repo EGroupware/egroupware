@@ -37,7 +37,8 @@ class HiddenUpload extends AnonymousList
 	{
 		$this->etemplate = $this->etemplate ? $this->etemplate : new Etemplate(static::LIST_TEMPLATE);
 
-		if (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload())
+		if (isset($GLOBALS['egw']->sharing) && array_key_exists(Vfs\Sharing::get_token(), $GLOBALS['egw']->sharing) &&
+				$GLOBALS['egw']->sharing[Vfs\Sharing::get_token()]->has_hidden_upload())
 		{
 			// Tell client side that the path is actually writable
 			$content['initial_path_readonly'] = false;
@@ -71,7 +72,7 @@ class HiddenUpload extends AnonymousList
 	{
 		Translation::add_app('filemanager');
 		$vfs = Vfs::mount();
-		$GLOBALS['egw']->sharing->redo();
+		$GLOBALS['egw']->sharing[Sharing::get_token()]->redo();
 		parent::handle_upload_action($action, $selected, $dir, $props, $arr);
 		$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
 		$arr['type'] = 'notice';
@@ -97,7 +98,8 @@ class HiddenUpload extends AnonymousList
 	 */
 	function get_rows(&$query, &$rows)
 	{
-		$hidden_upload = (isset($GLOBALS['egw']->sharing) && $GLOBALS['egw']->sharing->has_hidden_upload());
+		$hidden_upload = (isset($GLOBALS['egw']->sharing) && array_key_exists(Vfs\Sharing::get_token(), $GLOBALS['egw']->sharing) &&
+				$GLOBALS['egw']->sharing[Sharing::get_token()]->has_hidden_upload());
 
 		// Not allowed in hidden upload dir
 		$check_path = Sharing::HIDDEN_UPLOAD_DIR . (substr($query['path'], -1) == '/' ? '/' : '');

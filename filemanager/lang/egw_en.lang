@@ -259,6 +259,7 @@ setting for document merge saved.	filemanager	en	Setting for document merge save
 share files	filemanager	en	Share files
 share link copied into clipboard	filemanager	en	Share link copied into clipboard
 shared files	filemanager	en	Shared files
+share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.<br/>Please close this tab.
 shared with	filemanager	en	Shared with
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files

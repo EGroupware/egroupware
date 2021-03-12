@@ -27,8 +27,8 @@ $GLOBALS['egw_info'] = array(
 
 include('./header.inc.php');
 
-if (!isset($GLOBALS['egw']->sharing) || \EGroupware\Api\Sharing::get_token() !== $GLOBALS['egw']->sharing->get_token())
+if (!isset($GLOBALS['egw']->sharing) || !array_key_exists(Sharing::get_token(), $GLOBALS['egw']->sharing))
 {
 	Sharing::create_session(true);	// true = mount into existing session
 }
-$GLOBALS['egw']->sharing->ServeRequest();
+$GLOBALS['egw']->sharing[Sharing::get_token()]->ServeRequest();
