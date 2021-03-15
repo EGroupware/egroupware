@@ -3593,13 +3593,9 @@ app.classes.mail = AppJS.extend(
 		let on_select = nm.options.onselect;
 		_senders[0].parent.setAllSelected(false);
 		this.mail_preview([],nm);
-		nm.options.onselect = null;
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
 			self.unlock_tree();
-
-			// Restore onselect handler
-			nm.options.onselect = on_select;
 
 			// Server response may contain refresh, but it's always delete
 			// Refresh list if current view is the target (happens when pasting)
@@ -3609,6 +3605,14 @@ app.classes.mail = AppJS.extend(
 				// Can't trust the sorting, needs to be full refresh
 				nm.refresh();
 			}
+
+			// Need to wait on the restore, since the reply will refresh & reset the selection
+			nm.options.onselect = function() {
+				window.setTimeout(function() {
+					// Restore onselect handler
+					nm.options.onselect = on_select;
+				},100)
+			};
 		})
 			.sendRequest();
 		this.mail_setRowClass(_senders,'deleted');
