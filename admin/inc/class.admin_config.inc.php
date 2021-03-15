@@ -31,9 +31,9 @@ class admin_config
 		$path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 		$success = false;
 		$response = Api\Json\Response::get();
-		if (is_array($file) && is_writable(dirname($path)))
+		if (is_array($file) && is_writable(dirname($path)) &&
+			(is_dir($path) || mkdir($path)))
 		{
-			if (!is_dir($path)) mkdir ($path);
 			$tmp_file = array_keys($file);
 			$destination = $path.'/'.$file[$tmp_file[0]]['name'];
 			$success = rename($GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp_file[0],$destination);
