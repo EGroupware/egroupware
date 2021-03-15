@@ -3591,6 +3591,8 @@ app.classes.mail = AppJS.extend(
 		// Nextmatch automatically selects the next row and calls preview.
 		// Stop it for now, we'll put it back when the copy is done
 		let on_select = nm.options.onselect;
+		_senders[0].parent.setAllSelected(false);
+		this.mail_preview([],nm);
 		nm.options.onselect = null;
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
