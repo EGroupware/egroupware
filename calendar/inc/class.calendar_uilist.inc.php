@@ -1101,6 +1101,7 @@ class calendar_uilist extends calendar_ui
 			'onExecute' => 'javaScript:app.calendar.cal_delete',
 			'group' => $group,
 			'disableClass' => 'rowNoDelete',
+			'confirm' => lang('Delete this entry')
 		);
 		// Add in deleted for admins
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
