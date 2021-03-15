@@ -857,7 +857,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		{
 			$stat = $this->url_stat($path,0);
 		}
-		return $stat['uid'] == $this->user &&	// (current) user is the owner
+		return $stat['uid'] == $this->user ||	// (current) user is the owner
 			Vfs::$is_root ||					// class runs with root rights
 			!$stat['uid'] && $stat['gid'] && Vfs::$is_admin;	// group directory and user is an eGW admin
 	}
