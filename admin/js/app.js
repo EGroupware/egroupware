@@ -410,7 +410,18 @@ var AdminApp = /** @class */ (function (_super) {
             this.load(link);
         }
         else if (link.substr(0, 11) == 'javascript:') {
-            eval(link.substr(11));
+            var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
+            var matches = link.match(href_regexp);
+            var args = [];
+            if (matches.length > 1 && matches[2] !== undefined) {
+                try {
+                    args = JSON.parse('[' + matches[2] + ']');
+                }
+                catch (e) { // deal with '-encloded strings (JSON allows only ")
+                    args = JSON.parse('[' + matches[2].replace(/'/g, '"') + ']');
+                }
+            }
+            egw.applyFunc(matches[1], args);
         }
     };
     /**

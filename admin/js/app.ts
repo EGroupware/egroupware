@@ -454,7 +454,19 @@ class AdminApp extends EgwApp
 		}
 		else if (link.substr(0,11) == 'javascript:')
 		{
-			eval(link.substr(11));
+			const href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
+			const matches = link.match(href_regexp);
+			let args = [];
+			if (matches.length > 1 && matches[2] !== undefined)
+			{
+				try {
+					args = JSON.parse('['+matches[2]+']');
+				}
+				catch(e) {	// deal with '-encloded strings (JSON allows only ")
+					args = JSON.parse('['+matches[2].replace(/'/g, '"')+']');
+				}
+			}
+			egw.applyFunc(matches[1], args);
 		}
 	}
 
