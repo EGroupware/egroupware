@@ -93,8 +93,12 @@ class Sharing
 	/**
 	 * Get token from url
 	 */
-	public static function get_token()
+	public static function get_token($path=null)
 	{
+		if (!empty($path) && preg_match('|/share.php/([^/]+)|', $path, $matches))
+		{
+			return $matches[1];
+		}
 		// WebDAV has no concept of a query string and clients (including cadaver)
 		// seem to pass '?' unencoded, so we need to extract the path info out
 		// of the request URI ourselves

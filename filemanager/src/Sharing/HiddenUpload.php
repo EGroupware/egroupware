@@ -63,7 +63,7 @@ class HiddenUpload extends AnonymousList
 	 * @param string $action Should be 'upload'
 	 * @param $selected Array of file information
 	 * @param string $dir Target directory
-	 * @param $props
+	 * @param $props path the sharing UI is running eg. "/egroupware/share.php/<token>"
 	 * @param string[] $arr Result
 	 *
 	 * @throws Api\Exception\AssertionFailed
@@ -72,10 +72,17 @@ class HiddenUpload extends AnonymousList
 	{
 		Translation::add_app('filemanager');
 		$vfs = Vfs::mount();
-		$GLOBALS['egw']->sharing[Sharing::get_token()]->redo();
-		parent::handle_upload_action($action, $selected, $dir, $props, $arr);
-		$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
-		$arr['type'] = 'notice';
+		$GLOBALS['egw']->sharing[Sharing::get_token($props)]->redo();
+		parent::handle_upload_action($action, $selected, $dir, null, $arr);
+		if ($arr['files'])
+		{
+			$arr['msg'] .= "\n" . lang("The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.");
+			$arr['type'] = 'notice';
+		}
+		else
+		{
+			$arr['type'] = 'error';
+		}
 	}
 
 	protected function is_hidden_upload_dir($directory)
@@ -98,8 +105,8 @@ class HiddenUpload extends AnonymousList
 	 */
 	function get_rows(&$query, &$rows)
 	{
-		$hidden_upload = (isset($GLOBALS['egw']->sharing) && array_key_exists(Vfs\Sharing::get_token(), $GLOBALS['egw']->sharing) &&
-				$GLOBALS['egw']->sharing[Sharing::get_token()]->has_hidden_upload());
+		$hidden_upload = (isset($GLOBALS['egw']->sharing) && array_key_exists(Vfs\Sharing::get_token($_SERVER['HTTP_REFERER']), $GLOBALS['egw']->sharing) &&
+				$GLOBALS['egw']->sharing[Sharing::get_token($_SERVER['HTTP_REFERER'])]->has_hidden_upload());
 
 		// Not allowed in hidden upload dir
 		$check_path = Sharing::HIDDEN_UPLOAD_DIR . (substr($query['path'], -1) == '/' ? '/' : '');

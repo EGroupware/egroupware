@@ -63,11 +63,12 @@ class HiddenUploadSharing extends Sharing
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 		Vfs::clearstatcache();
 		$resolve_url = Vfs::resolve_url($share['share_path'], true, true, true, true);
-		$upload_dir = Vfs::concat($resolve_url, self::HIDDEN_UPLOAD_DIR);
 
 		// Parent mounts the root read-only
 		parent::setup_share(true, $share);
 
+		// upload dir needs the full url incl. share owner, but not readonly
+		$upload_dir = Vfs::concat(str_replace('?ro=1', '', $share['resolve_url']), self::HIDDEN_UPLOAD_DIR);
 		$upload_mount = Vfs::concat($share['share_root'], self::HIDDEN_UPLOAD_DIR);
 
 		// Mounting upload dir, has original share owner access (write)
