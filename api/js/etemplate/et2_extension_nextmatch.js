@@ -525,7 +525,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
                     this.controller.deleteRow(uid);
                 }
                 // Select & focus next row
-                if (next && next.id) {
+                if (next && next.id && !this.options.disable_selection_advance) {
                     this.controller._selectionMgr.setSelected(next.id, true);
                     this.controller._selectionMgr.setFocused(next.id, true);
                 }
@@ -2334,6 +2334,12 @@ var et2_nextmatch = /** @class */ (function (_super) {
             "name": "Disable autorefresh",
             "type": "boolean",
             "description": "Disable the ability to autorefresh the nextmatch on a regular interval.  ",
+            "default": false
+        },
+        "disable_selection_advance": {
+            "name": "Disable selection advance",
+            "type": "boolean",
+            "description": "If a refresh deletes the currently selected row, we normally advance the selection to the next row.  Set to true to stop this.",
             "default": false
         },
         "view": {
