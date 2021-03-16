@@ -103,7 +103,7 @@ function expose(Base) {
             if (!uid)
                 continue;
             var data = egw.dataGetUIDdata(uid);
-            if (data && data.data && data.data.mime && MIME_REGEX.test(data.data.mime)) {
+            if (data && data.data && data.data.mime && MIME_REGEX.test(data.data.mime) && !MIME_AUDIO_REGEX.test(data.data.mime)) {
                 var media = this.getMedia(data.data);
                 images[image_index++] = jQuery.extend({}, data.data, media[0]);
             }
