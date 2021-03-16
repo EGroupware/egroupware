@@ -3591,8 +3591,11 @@ app.classes.mail = AppJS.extend(
 		// Nextmatch automatically selects the next row and calls preview.
 		// Stop it for now, we'll put it back when the copy is done
 		let on_select = nm.options.onselect;
+		nm.options.onselect = null;
 		_senders[0].parent.setAllSelected(false);
 		this.mail_preview([],nm);
+		// Restore onselect handler
+		nm.options.onselect = on_select;
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
 			self.unlock_tree();
@@ -3605,14 +3608,6 @@ app.classes.mail = AppJS.extend(
 				// Can't trust the sorting, needs to be full refresh
 				nm.refresh();
 			}
-
-			// Need to wait on the restore, since the reply will refresh & reset the selection
-			nm.options.onselect = function() {
-				window.setTimeout(function() {
-					// Restore onselect handler
-					nm.options.onselect = on_select;
-				},100)
-			};
 		})
 			.sendRequest();
 		this.mail_setRowClass(_senders,'deleted');
