@@ -182,6 +182,7 @@ class Base
 		Config::save_value('vfs_fstab', $GLOBALS['egw_info']['server']['vfs_fstab'],'phpgwapi');
 
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'][$path]);
+		unset($_SESSION[Api\Session::EGW_INFO_CACHE]['server']['vfs_fstab'][$path]);
 		unset($_SESSION[Api\Session::EGW_INFO_CACHE]['user']['preferences']['common']['vfs_fstab'][$path]);
 		$prefs = new Api\Preferences();
 		$prefs->read_repository();
