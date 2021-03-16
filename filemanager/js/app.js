@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.filemanagerAPP = void 0;
 /*egw:uses
     /api/js/jsapi/egw_app.js;
  */
@@ -305,7 +306,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             var widget = _event.data;
             var value = widget.getValue();
             value.conflict = _conflict;
-            egw.json(_target, ['upload', value, _path], this._upload_callback, this, true, this).sendRequest();
+            egw.json(_target, ['upload', value, _path, this.egw.window.location.pathname], this._upload_callback, this, true, this).sendRequest();
             widget.set_value('');
         }
     };
@@ -929,8 +930,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {et2_widget} widget
      */
     filemanagerAPP.prototype.select_clicked = function (event, widget) {
-        var _a, _b;
-        if ((_b = (_a = widget) === null || _a === void 0 ? void 0 : _a.value) === null || _b === void 0 ? void 0 : _b.is_dir) {
+        var _a;
+        if ((_a = widget === null || widget === void 0 ? void 0 : widget.value) === null || _a === void 0 ? void 0 : _a.is_dir) {
             var path_1 = null;
             // Cannot do this, there are multiple widgets named path
             // widget.getRoot().getWidgetById("path");
@@ -1068,11 +1069,10 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * Needs to be a directory
      */
     filemanagerAPP.prototype.hidden_upload_enabled = function (_action, _senders) {
-        var _a;
         if (_senders[0].id == 'nm')
             return false;
         var data = egw.dataGetUIDdata(_senders[0].id);
-        var readonly = (((_a = data) === null || _a === void 0 ? void 0 : _a.data.class) || '').split(/ +/).indexOf('noEdit') >= 0;
+        var readonly = ((data === null || data === void 0 ? void 0 : data.data.class) || '').split(/ +/).indexOf('noEdit') >= 0;
         // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
         return (!_senders[0].id || data.data.is_dir && !readonly);
     };
