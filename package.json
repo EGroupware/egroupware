@@ -2,7 +2,7 @@
   "name": "EGroupware",
   "description": "EGroupware is a groupware suite in PHP and Javascript: https://www.egroupware.org/",
   "license": "GPL-2.0",
-  "version": "20.1.20200812",
+  "version": "21.1.20210316",
   "dependencies": {},
   "repository": {},
   "devDependencies": {
