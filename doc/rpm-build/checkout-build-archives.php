@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-docker',
-	'version' => '20.1',        // '20.1'
+	'version' => '21.1',
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
@@ -34,7 +34,7 @@ $config = array(
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'), //'$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
 	// create an extra archive for given apps
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', //'archive',
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'kanban',
 		// these apps are placed in egroupware-epl-contrib archive
 		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
 	),
