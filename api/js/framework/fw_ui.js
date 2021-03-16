@@ -669,7 +669,7 @@ egw_fw_ui_tabs.prototype.removeTab = function(_tab)
 	var lookUpTheNextTab = function(_tab){
 		for(var t in this.tabs)
 		{
-			if (_tab != this.tabs[t] && (this.tabs[t]['status'] != '5' || this.tabs[t]['tag']['isTabApp'])) return this.tabs[t];
+			if (_tab != this.tabs[t] && (this.tabs[t]['status'] != '5' || this.tabs[t]['tag']['isFrameworkTab'])) return this.tabs[t];
 		}
 	}.bind(this);
 	//Special treatement if the currently active tab gets deleted
@@ -706,7 +706,7 @@ egw_fw_ui_tabs.prototype.removeTab = function(_tab)
  */
 egw_fw_ui_tabs.prototype.showTab = function(_tab)
 {
-	if (this.activeTab != _tab && (_tab.status != '5' || _tab.tag.isTabApp))
+	if (this.activeTab != _tab && (_tab.status != '5' || _tab.tag.isFrameworkTab))
 	{
 		for (var i = 0; i < this.tabs.length; i++)
 		{
@@ -774,7 +774,7 @@ egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
 	for (var i in this.tabs)
 	{
 		//exclude open tabs with status 5, e.g. status app
-		if (this.tabs[i]['status'] != '5' || this.tabs[i]['tag']['isTabApp']) n++;
+		if (this.tabs[i]['status'] != '5' || this.tabs[i]['tag']['isFrameworkTab']) n++;
 	}
 	return n > 1 ? true : false;
 };
