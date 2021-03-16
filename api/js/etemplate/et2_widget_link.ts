@@ -1641,7 +1641,7 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 	{
 		let base_url = egw.webserverUrl.match(/^\//,'ig')?egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
 		let mediaContent = [];
-		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\//,'ig'))
+		if (_value && typeof _value.type !='undefined' && _value.type.match(/video\/|audio\//,'ig'))
 		{
 			mediaContent = [{
 					title: _value.id,
@@ -1672,9 +1672,13 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 			.click( function(e){
 				var fe = egw_get_file_editor_prefered_mimes(_link_data.type);
 				if (self.options.expose_view && typeof _link_data.type !='undefined'
-					&& _link_data.type.match(self.mime_regexp,'ig'))
+					&& _link_data.type.match(self.mime_regexp,'ig') && !_link_data.type.match(self.mime_audio_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, _link_data);
+				}
+				else if(_link_data.type.match(self.mime_audio_regexp,'ig'))
+				{
+					self._audio_player(_link_data);
 				}
 				else if(typeof _link_data.type !='undefined' && fe && fe.mime && fe.mime[_link_data.type])
 				{

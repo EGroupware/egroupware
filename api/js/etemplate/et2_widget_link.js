@@ -24,7 +24,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports.et2_link = exports.et2_link_entry = exports.et2_link_apps = exports.et2_link_to = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -1327,7 +1326,7 @@ var et2_link_string = /** @class */ (function (_super) {
         et2_link_string.prototype.getMedia = function (_value) {
             var base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
             var mediaContent = [];
-            if (_value && typeof _value.type != 'undefined' && _value.type.match(/video\//, 'ig')) {
+            if (_value && typeof _value.type != 'undefined' && _value.type.match(/video\/|audio\//, 'ig')) {
                 mediaContent = [{
                         title: _value.id,
                         type: _value.type,
@@ -1356,8 +1355,11 @@ var et2_link_string = /** @class */ (function (_super) {
                 .click(function (e) {
                 var fe = egw_get_file_editor_prefered_mimes(_link_data.type);
                 if (self.options.expose_view && typeof _link_data.type != 'undefined'
-                    && _link_data.type.match(self.mime_regexp, 'ig')) {
+                    && _link_data.type.match(self.mime_regexp, 'ig') && !_link_data.type.match(self.mime_audio_regexp, 'ig')) {
                     self._init_blueimp_gallery(e, _link_data);
+                }
+                else if (_link_data.type.match(self.mime_audio_regexp, 'ig')) {
+                    self._audio_player(_link_data);
                 }
                 else if (typeof _link_data.type != 'undefined' && fe && fe.mime && fe.mime[_link_data.type]) {
                     egw.open_link(egw.link('/index.php', {

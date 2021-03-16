@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.audio_player" template="" lang="" group="0" version="16.2">
+		<vbox>
+			<audio src="@src" autoplay="true"/>
+		</vbox>
+	</template>
+</overlay>

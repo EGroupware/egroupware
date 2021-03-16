@@ -25,6 +25,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+Object.defineProperty(exports, "__esModule", { value: true });
+var et2_core_widget_1 = require("./et2_core_widget");
+var et2_widget_dialog_1 = require("./et2_widget_dialog");
 /**
  * This function extends the given widget with blueimp gallery plugin
  *
@@ -44,8 +47,9 @@ function expose(Base) {
     // For filtering to only show things we can handle
     var MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
         // IE only supports video/mp4 mime type
-        new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))/) :
-        new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))/);
+        new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/) :
+        new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/);
+    var MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/);
     // open office document mime type currently supported by webodf editor
     var MIME_ODF_REGEX = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
     // Only one gallery
@@ -181,6 +185,7 @@ function expose(Base) {
             }
             var _this = _super.apply(this, args) || this;
             _this.mime_regexp = MIME_REGEX;
+            _this.mime_audio_regexp = MIME_AUDIO_REGEX;
             _this.mime_odf_regex = MIME_ODF_REGEX;
             var self = _this;
             _this.expose_options = {
@@ -372,8 +377,11 @@ function expose(Base) {
                 jQuery(this.node).on('click', function (event) {
                     // Do not trigger expose view if one of the operator keys are held
                     if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) {
-                        if (_value.mime.match(MIME_REGEX, 'ig')) {
+                        if (_value.mime.match(MIME_REGEX, 'ig') && !_value.mime.match(MIME_AUDIO_REGEX, 'ig')) {
                             self._init_blueimp_gallery(event, _value);
+                        }
+                        else if (_value.mime.match(MIME_AUDIO_REGEX, 'ig')) {
+                            self._audio_player(_value);
                         }
                         else if (fe && fe.mime && fe.edit && fe.mime[_value.mime]) {
                             egw.open_link(egw.link('/index.php', {
@@ -419,6 +427,40 @@ function expose(Base) {
             this.expose_options.index = current_index;
             // @ts-ignore
             gallery = blueimp.Gallery(mediaContent, this.expose_options);
+        };
+        /**
+         * audio player expose
+         * @param _value
+         * @private
+         */
+        exposable.prototype._audio_player = function (_value) {
+            var button = [
+                { "button_id": 1, "text": egw.lang('close'), id: '1', image: 'cancel', default: true }
+            ];
+            // @ts-ignore
+            var mediaContent = this.getMedia(_value)[0];
+            et2_core_widget_1.et2_createWidget("dialog", {
+                callback: function (_btn, value) {
+                    if (_btn == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                    }
+                },
+                beforeClose: function () {
+                },
+                title: mediaContent.title,
+                buttons: button,
+                minWidth: 350,
+                minHeight: 200,
+                modal: false,
+                position: "right bottom,right-50 bottom-10",
+                value: {
+                    content: {
+                        src: mediaContent.download_href
+                    }
+                },
+                resizable: false,
+                template: egw.webserverUrl + '/api/templates/default/audio_player.xet',
+                dialogClass: "audio_player"
+            });
         };
         /**
          * Check if clicked target from nm is in depth
