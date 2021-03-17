@@ -861,7 +861,7 @@ function egwPopupActionImplementation()
 			}
 
 			// Set hint to something resembling current clipboard
-			var hint = egw.lang('Clipboard') + ":\n[" + clipboard.type.join(',')+"]\n";
+			var hint = egw.lang('Clipboard') + ":\n";
 			paste_action.set_hint(hint);
 			// Add titles of entries
 			for(var i = 0; i < clipboard.selected.length; i++)
