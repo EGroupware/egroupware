@@ -509,7 +509,7 @@
 			if (_state === 'on' || _state === 'off')
 			{
 				this.activeApp.preferences['toggleMenu'] = _state;
-				egw.set_preference(this.activeApp.appName,'egw_fw_mobile',this.activeApp.preferences);
+				if ((!framework.isAnInternalApp(this.activeApp))) egw.set_preference(this.activeApp.appName,'egw_fw_mobile',this.activeApp.preferences);
 			}
 			else
 			{
@@ -652,7 +652,7 @@
 			if (serialized != this.serializedTabState)
 			{
 				this.serializedTabState = serialized;
-
+				if (this.tabApps) this._setTabAppsSession(this.tabApps);
 				egw.jsonq("EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state", [data]);
 			}
 		},
@@ -743,7 +743,7 @@
 			if (_app.tab == null)
 			{
 				//Create the tab
-				_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, function(){},
+				_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
 					_app, _pos);
 				_app.tab.setTitle(_app.displayName);
 			}
