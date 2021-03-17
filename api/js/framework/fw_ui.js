@@ -1365,7 +1365,7 @@ function egw_fw_ui_toggleSidebar (_contentDiv, _toggleCallback, _callbackContext
 	var self = this;
 	this.toggleCallback = _toggleCallback;
 	this.toggleDiv = jQuery(document.createElement('div'))
-			.attr({id:"egw_fw_toggler"})
+			.attr({id:"egw_fw_toggler", title:egw.lang("show/hide")})
 			.addClass('noPrint')
 			.click(function(){
 				self.onToggle(_callbackContext);
