@@ -7175,23 +7175,35 @@ img.et2_button_icon[src*="svg"]:hover {
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home {
-    background-image: url(../images/topmenu_items/mobile/home.svg);
+    background-image: url(../images/topmenu_items/home.svg);
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs {
-    background-image: url(../images/topmenu_items/mobile/setup.png);
+    background-image: url(../images/topmenu_items/setup.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl {
-    background-image: url(../images/topmenu_items/mobile/access.png);
+    background-image: url(../images/topmenu_items/access.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_cats {
-    background-image: url(../images/topmenu_items/mobile/category.png);
+    background-image: url(../images/topmenu_items/category.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_password {
-    background-image: url(../images/topmenu_items/mobile/password.png);
+    background-image: url(../images/topmenu_items/password.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_search {
-    background-image: url(../images/topmenu_items/mobile/search.png);
+    background-image: url(../images/topmenu_items/search.svg);
+  }
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl {
+    background-image: url(../images/topmenu_items/access.svg);
+  }
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_calls {
+    background-image: url(../images/phone.svg);
+  }
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout {
+    background-image: url(../images/logout.svg);
+  }
+  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_current_user {
+    background-image: url(../images/users.png);
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
     height: 50px;
