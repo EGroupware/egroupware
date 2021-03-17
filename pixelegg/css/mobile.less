@@ -513,7 +513,17 @@
 					background-image: url("../images/clear.png");
 					background-position: 95% -3000px;
 					background-repeat: no-repeat;
-
+					.close {
+						background-image: url(/egroupware/pixelegg/images/close.svg);
+						width: 18px;
+						height: 33px;
+						display: inline-block;
+						float: right;
+						background-size: 18px;
+						background-repeat: no-repeat;
+						background-position: center;
+						margin-right: 5px;
+					}
 					.background_color_10_gray;
 					.bordered (@gray_30, @gray_30, @gray_30, @gray_30);
 
@@ -530,7 +540,7 @@
 						.color_100_gray;
 						padding-top: 4px;
 						padding-left:25px !important;
-
+						display: inline-block;
 					}
 
 					&:hover {
@@ -588,6 +598,7 @@
 						display:none !important;
 					}
 					.egw_fw_ui_sidemenu_entry_header_active {
+						.close {display: none;}
 						&:hover {
 							border-radius:0;
 							background-image: url("../images/ajax-loader.gif");

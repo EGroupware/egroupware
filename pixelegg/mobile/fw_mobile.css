@@ -7421,6 +7421,17 @@ img.et2_button_icon[src*="svg"]:hover {
     border-bottom: none;
     height: 33px;
   }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .close {
+    background-image: url(/egroupware/pixelegg/images/close.svg);
+    width: 18px;
+    height: 33px;
+    display: inline-block;
+    float: right;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px;
+  }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active img {
     padding-left: 9px;
     padding-top: 6px;
@@ -7432,6 +7443,7 @@ img.et2_button_icon[src*="svg"]:hover {
     color: #000000;
     padding-top: 4px;
     padding-left: 25px !important;
+    display: inline-block;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -7486,6 +7498,9 @@ img.et2_button_icon[src*="svg"]:hover {
   }
   body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content {
     display: none !important;
+  }
+  body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .close {
+    display: none;
   }
   body .sidebar-toggle #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
     border-radius: 0;

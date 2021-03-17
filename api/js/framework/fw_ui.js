@@ -77,6 +77,11 @@ var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 			return true;
 		});
 
+		//close button on active header
+		this.closeButton = document.createElement('span');
+		this.closeButton.classList.add('close')
+
+
 		//Create the content div
 		this.contentDiv = document.createElement("div");
 		this.contentDiv.id = _app+'_sidebox_content';
@@ -144,6 +149,15 @@ var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 
 		jQuery(this.headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_active");
 		jQuery(this.contentDiv).hide();
+	},
+
+	setCloseButton: function(_callback)
+	{
+		if (typeof _callback == "function" && this.closeButton)
+		{
+			this.headerDiv.append(this.closeButton);
+			this.closeButton.addEventListener('click', _callback);
+		}
 	},
 
 	/**
@@ -381,8 +395,21 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	this.setTitle('');
 	jQuery(this.headerDiv).append(this.headerH1);
 
+	//Add close tab button on sidemenuentry for frameworkTabs
+	if (this.tag.isFrameworkTab)
+	{
+		this.tag.sidemenuEntry.setCloseButton(function(){
 
-	jQuery(this.headerDiv).append(this.closeButton);
+			//Only call the close callback if the tab is set closeable
+			if (this._callbackObject.context.closeable)
+			{
+				this._callbackObject.call(this);
+				return false;
+			}
+			return true;
+
+		}.bind(this.closeButton))
+	}
 
 	this.contentDiv = document.createElement("div");
 	jQuery(this.contentDiv).addClass("egw_fw_ui_tab_content");
