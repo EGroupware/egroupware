@@ -546,7 +546,7 @@
 		{
 			var restore = this._super.apply(this, arguments);
 			var activeApp = '';
-
+			if (!egwIsMobile()) _apps = this.apps;
 			/**
 			 * Check if the given app is in the navbar or not
 			 *
@@ -558,8 +558,7 @@
 				for(var i=0; i< _apps.length; i++)
 				{
 					// Do not show applications which are not suppose to be shown on nabvar, except home
-					if ((appName == _apps[i].name && !_apps[i]['noNavbar']) ||
-							(appName == _apps[i].name && _apps[i]['name'] == 'home')) return true;
+					if (appName == _apps[i].name && (!_apps[i]['noNavbar'] || _apps[i]['name'] == 'home')) return true;
 				}
 				return false;
 			};

@@ -7381,11 +7381,17 @@ img.et2_button_icon[src*="svg"]:hover {
   body #egw_fw_sidebar.avatarSubmenu {
     top: 325px;
   }
+  body #egw_fw_sidebar {
+    background-color: white;
+  }
   body #egw_fw_sidebar #egw_fw_sidemenu::-webkit-scrollbar {
     width: 1px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu {
     overflow-y: auto;
+  }
+  body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_icon {
+    filter: none;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_apps .egw_fw_ui_sidemenu_entry_header {
     margin: 0px 5px 0px 2px;
