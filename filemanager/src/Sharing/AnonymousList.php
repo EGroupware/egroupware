@@ -50,6 +50,8 @@ class AnonymousList extends filemanager_ui
 	 */
 	function listview(array $content = null, $msg = null)
 	{
+		Api\Translation::add_app("filemanager");
+
 		$this->etemplate = $this->etemplate ? $this->etemplate : new Api\Etemplate(static::LIST_TEMPLATE);
 
 		// Override and take over get_rows so we can customize
