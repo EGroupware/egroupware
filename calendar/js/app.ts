@@ -4294,6 +4294,14 @@ class CalendarApp extends EgwApp
 		}
 		if(all_loaded)
 		{
+			// Move nextmatch favourite button into toolbar
+			let fav_button = (<etemplate2><unknown>CalendarApp.views.listview.etemplates[0]).widgetContainer.getDOMWidgetById("favorite");
+			let toolbar = jQuery("#toolbar-actionbox","#calendar-toolbar_toolbar");
+			if(fav_button && toolbar)
+			{
+				toolbar.after(fav_button.getDOMNode(fav_button));
+			}
+
 			jQuery(window).trigger('resize');
 			this.setState({state:this.state});
 

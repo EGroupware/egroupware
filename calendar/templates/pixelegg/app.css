@@ -189,6 +189,14 @@ div.calendar_conflicts {
   align-items: center;
   min-height: 26px;
 }
+#calendar-toolbar #calendar-list_favorite_wrapper {
+  float: right;
+  margin-right: 5px;
+}
+#calendar-toolbar #calendar-list_favorite_wrapper #calendar-list_favorite_menu {
+  z-index: 40;
+  font-weight: normal;
+}
 /* Space for toolbar */
 #calendar-view,
 #calendar-todo,
