@@ -1,5 +1,19 @@
 egroupware-docker (20.1.20210125) hardy; urgency=low
 
+  * first beta of upcomming 21.1 release (CE already feature complete, EPL still working on firewall feature)
+  * EPL/Kanban: boards for tasks, projects, tickets or as sales-funnel for the sales department
+  * smallPART: video-based learning now with Single-, MultipleChoice or open questions for tests and exams
+  * Filemanager: complete rework of sharing allowing now to mount shares of other users or open multiple sharing links
+  * Filemanager: allow to mount WebDAV shares from other EGroupware, NAS or *cloud
+  * Dark Mode theme for EGroupware
+  * EPL/Telephony Integration: enhanced with caller ID, opening of CRM view and call history displayed also in calendar
+  * Tracker/Addressbook: using now push updates too
+  * many small enhancements in all modules
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 18 Mar 2021 07:32:10 +0100
+
+egroupware-docker (20.1.20210125) hardy; urgency=low
+
   * Admin: Context menu action to clear user credentials
   * Status/Videoconference: fix broken fullscreen mode in BBB client
   * Calendar: Fix videoconference link in event tooltip
