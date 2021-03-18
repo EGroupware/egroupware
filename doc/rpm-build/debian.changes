@@ -1,4 +1,4 @@
-egroupware-docker (20.1.20210125) hardy; urgency=low
+egroupware-docker (21.1.20210318) hardy; urgency=low
 
   * first beta of upcomming 21.1 release (CE already feature complete, EPL still working on firewall feature)
   * EPL/Kanban: boards for tasks, projects, tickets or as sales-funnel for the sales department
