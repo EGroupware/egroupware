@@ -3,7 +3,7 @@
 ## EGroupware FPM container using Ubuntu 18.04 and PHP from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
@@ -62,6 +62,7 @@ else \
 	RESULT=$?; \
 fi; \
 rm composer-setup.php; \
+composer.phar self-update 1.8.6; \
 exit $RESULT' \
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
