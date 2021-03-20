@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 18.04 and PHP from ondrej/php PPA
+## EGroupware development container using Ubuntu 20.04 and PHP from ondrej/php PPA
 ##
 ################################################################################
 FROM ubuntu:20.04
@@ -17,7 +17,9 @@ RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,json,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
+	# PHP 8.0 no longer has a separate json extension
+    && bash -c "[ ${PHP_VERSION:0:1} = 7 ] && apt-get install -y php$PHP_VERSION-json" \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
@@ -68,10 +70,10 @@ exit $RESULT' \
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 # install diverse developper tools, not installed above / in stock container
-RUN apt-get install -y php$PHP_VERSION-cli php-xdebug inetutils-ping iproute2 git vim yarn \
-	&& echo "xdebug.remote_enable=1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
-	&& echo "xdebug.remote_port=9001" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
-	&& echo "xdebug.remote_host=172.17.0.1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
+RUN apt-get install -y php$PHP_VERSION-cli php$PHP_VERSION-xdebug inetutils-ping iproute2 git vim yarn \
+	&& echo "xdebug.mode=debug" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
+	&& echo "xdebug.client_port=9001" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
+	&& echo "xdebug.client_host=172.17.0.1" >> /etc/php/$PHP_VERSION/fpm/conf.d/20-xdebug.ini \
 	&& ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
 	&& sed 	-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=1|g' \
 		-i /etc/php/$PHP_VERSION/fpm/php.ini \
