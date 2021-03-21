@@ -715,10 +715,10 @@ class Asyncservice
 				if ($this->debug) error_log(__METHOD__.'() line '.++$n.": $line");
 				$parts = explode(' ',$line,6);
 
-				if ($line{0} == '#' || count($parts) < 6 || ($parts[5]{0} != '/' && substr($parts[5],0,3) != 'php'))
+				if ($line[0] == '#' || count($parts) < 6 || ($parts[5][0] != '/' && substr($parts[5],0,3) != 'php'))
 				{
 					// ignore comments
-					if ($line{0} != '#')
+					if ($line[0] != '#')
 					{
 						$times['error'] .= $line;
 					}
