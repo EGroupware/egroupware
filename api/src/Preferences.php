@@ -136,7 +136,7 @@ class Preferences
 			$this->account_id = self::FORCED_ID;
 		}
 		// if we got instancated for a group, need to set offset of DEFAULT_ID!
-		elseif ($account_id < 0 || !is_numeric($account_id) && ($account_id = get_account_id($account_id)) < 0)
+		elseif ((int)$account_id < 0 || !is_numeric($account_id) && ($account_id = get_account_id($account_id)) < 0)
 		{
 			$this->account_id = $account_id + self::DEFAULT_ID;
 		}
