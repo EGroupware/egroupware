@@ -2833,10 +2833,17 @@ class Contacts extends Contacts\Storage
 		$rest_without_space = str_replace(' ', '', $rest);
 		/** @var Contacts\Sql */
 		$backend = $this->get_backend(null, $filter['owner']);
+		// SQL Backend supporting regexp_replace (MySQL 8.0+ or MariaDB 10.0+ or PostgreSQL)
 		if (is_a($backend, Contacts\Sql::class) && $this->db->regexp_replace('test', '', '') !== 'test')
 		{
 			$patterns = [$area.$rest_without_space];
 		}
+		// LDAP or AD backend (were EGroupware does NOT support boolean search) only search for local part hopefully stored without any formatting
+		elseif (is_a($backend, Contacts\Ldap::class))
+		{
+			$patterns = [$rest_without_space];
+		}
+		// older SQL databases
 		else
 		{
 			$patterns = [
