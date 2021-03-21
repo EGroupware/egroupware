@@ -18,6 +18,17 @@ use EGroupware\Api;
 require_once dirname(__DIR__).'/autoload.php';
 
 /**
+ * To ease PHP 8.0 migration
+ */
+if (!function_exists('get_magic_quotes_gpc'))
+{
+	function get_magic_quotes_gpc()
+	{
+		return false;
+	}
+}
+
+/**
 * applies stripslashes recursivly on each element of an array
 *
 * @param array &$var

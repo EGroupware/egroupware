@@ -69,7 +69,7 @@ class Request
 		}
 		else
 		{
-			if (get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
+			if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) $input_data = stripslashes($input_data);
 
 			if (($json_data = json_decode($input_data,true)) === null && json_last_error() !== JSON_ERROR_NONE)
 			{

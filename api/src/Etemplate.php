@@ -470,7 +470,7 @@ class Etemplate extends Etemplate\Widget\Template
 	 */
 	static public function process_exec()
 	{
-		if (get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) $_POST['value'] = stripslashes($_POST['value']);
 		$content = json_decode($_POST['value'],true);
 		//error_log(__METHOD__."(".array2string($content).")");
 

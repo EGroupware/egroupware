@@ -34,7 +34,7 @@ class Pam implements Backend
 	{
 		unset($passwd_type);	// not used but required by interface
 
-		if (pam_auth($username, get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd))
+		if (pam_auth($username, function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ? stripslashes($passwd) : $passwd))
 		{
 			// for new accounts read full name from password file and pass it to EGroupware
 			if (!$GLOBALS['egw']->accounts->name2id($username) &&

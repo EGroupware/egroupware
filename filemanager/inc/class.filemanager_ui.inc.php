@@ -58,7 +58,7 @@ class filemanager_ui
 	function __construct()
 	{
 		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
-		if (get_magic_quotes_gpc() && $_GET)
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && $_GET)
 		{
 			$_GET = array_stripslashes($_GET);
 		}

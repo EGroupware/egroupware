@@ -161,7 +161,7 @@ function check_header_form()
 	// setting the non-domain settings from the posted content
 	foreach($_POST['setting'] as $name => $value)
 	{
-		if (get_magic_quotes_gpc()) $value = stripslashes($value);
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) $value = stripslashes($value);
 
 		switch($name)
 		{
@@ -191,7 +191,7 @@ function check_header_form()
 
 		foreach($_POST['setting_'.$key] as $name => $value)
 		{
-			if (get_magic_quotes_gpc()) $value = stripslashes($value);
+			if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) $value = stripslashes($value);
 
 			if ($name == 'new_config_passwd')
 			{

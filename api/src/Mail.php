@@ -4421,7 +4421,7 @@ class Mail
 		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) Mail\Html::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		//error_log(__METHOD__.' ('.__LINE__.') '.$_html);
 
-		if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
 		// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
 		if (stripos($_html,'!doctype')!==false) Mail\Html::replaceTagsCompletley($_html,'!doctype');
 		if (stripos($_html,'?xml:namespace')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);

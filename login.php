@@ -113,7 +113,7 @@ else
 	{
 		$_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
 	}
-	$passwd = get_magic_quotes_gpc() ? stripslashes($_POST['passwd']) : $_POST['passwd'];
+	$passwd = function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ? stripslashes($_POST['passwd']) : $_POST['passwd'];
 	$passwd_type = $_POST['passwd_type'];
 
 	// forced password change

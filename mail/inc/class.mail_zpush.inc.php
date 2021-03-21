@@ -549,7 +549,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$toCount = 0;
 		//error_log(__METHOD__.__LINE__.array2string($toMailAddr));
 		foreach((array)$toMailAddr as $address) {
-			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' &&
 					calendar_boupdate::email_update_requested($emailAddress, isset($cSMRMethod) ? $cSMRMethod : 'REQUEST',
@@ -564,7 +564,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$ccCount = 0;
 		foreach((array)$ccMailAddr as $address) {
-			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddCC($emailAddress, $addressObject->personal);
@@ -573,7 +573,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$bccCount = 0;
 		foreach((array)$bccMailAddr as $address) {
-			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddBCC($emailAddress, $addressObject->personal);
@@ -800,7 +800,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			if (count($folderArray) > 0) {
 				foreach((array)$bccMailAddr as $address) {
-					foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+					foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 						$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 						$mailAddr[] = array($emailAddress, $addressObject->personal);
 					}

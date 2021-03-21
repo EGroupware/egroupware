@@ -57,7 +57,7 @@ class uiconfig
 			Api\Translation::add_app($_appname);
 		}
 
-		if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
+		if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() && is_array($_POST['newsettings']))
 		{
 			$_POST['newsettings'] = array_stripslashes($_POST['newsettings']);
 		}

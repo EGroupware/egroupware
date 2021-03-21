@@ -38,7 +38,7 @@ if(!isset($_SESSION['token'])){
 }
 
 // slashes
-if(get_magic_quotes_gpc()){
+if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){
  foreach($_POST as $k => $v){
   $_POST[$k] = stripslashes($v);
  }
