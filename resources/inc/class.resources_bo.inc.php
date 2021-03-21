@@ -783,7 +783,7 @@ class resources_bo
 					// now we are interested only on resources booked by theses events
 					if (isset($event['participants']) && is_array($event['participants'])){
 						foreach($event['participants'] as $part_key => $part_detail){
-							if ($part_key{0}=='r')
+							if ($part_key[0] === 'r')
 							{ //now we gatta resource here
 								//need to check the quantity of this resource
 								$resource_id=substr($part_key,1);
@@ -872,7 +872,7 @@ class resources_bo
 				// now we are interested only on resources booked by theses events
 				if (isset($event['participants']) && is_array($event['participants'])){
 					foreach($event['participants'] as $part_key => $part_detail){
-						if ($part_key{0}=='r')
+						if ($part_key[0] === 'r')
 						{
 							$resource_id=substr($part_key,1);
 							if ($resource_id != $_res_id) continue;

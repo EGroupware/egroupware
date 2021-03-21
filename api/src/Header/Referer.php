@@ -32,7 +32,7 @@ class Referer
 		if (!$referer) $referer = urldecode($_SERVER['HTTP_REFERER']);
 
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-		if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
+		if (empty($webserver_url) || $webserver_url[0] === '/')	// url is just a path
 		{
 			$referer = preg_replace('/^https?:\/\/[^\/]+/','',$referer);	// removing the domain part
 		}

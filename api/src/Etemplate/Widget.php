@@ -719,11 +719,11 @@ class Widget
 		$min = ord('A');
 		$max = ord('Z') - $min + 1;
 
-		$num = 1+ord($chrs{0})-$min;
+		$num = 1+ord($chrs[0])-$min;
 		if (strlen($chrs) > 1)
 		{
 			$num *= 1 + $max - $min;
-			$num += 1+ord($chrs{1})-$min;
+			$num += 1+ord($chrs[1])-$min;
 		}
 		return $num;
 	}

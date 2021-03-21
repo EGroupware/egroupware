@@ -339,7 +339,7 @@ class importexport_schedule_ui
 	*/
 	private static function is__writable($path)
 	{
-		if ($path{strlen($path)-1}=='/')
+		if ($path[strlen($path)-1] === '/')
 		{
 			// recursively return a temporary file path
 			return self::is__writable($path.uniqid(mt_rand()).'.tmp');

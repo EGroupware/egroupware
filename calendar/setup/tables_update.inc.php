@@ -1434,7 +1434,7 @@ function calendar_upgrade1_0_1_008()
 		$order = 0;
 		foreach($config_data['fields'] as $name => $data)
 		{
-			if ($name{0} == '#' && !$data['disabled'])	// real not-disabled custom field
+			if ($name[0] === '#' && !$data['disabled'])	// real not-disabled custom field
 			{
 				$customfields[substr($name,1)] = array(
 					'type'  => 'text',

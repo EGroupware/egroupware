@@ -112,7 +112,7 @@ class importexport_helper_functions {
 
 		// offset given?
 		if ( isset( $offset ) && strlen( $offset == 5 ) ) {
-			$operator = $offset{0};
+			$operator = $offset[0];
 			$ohour = 60 * 60 * (int)substr( $offset, 1, 2 );
 			$omin = 60 * (int)substr( $offset, 3, 2 );
 			if ( $operator == '+' ) $timestamp += $ohour + $omin;

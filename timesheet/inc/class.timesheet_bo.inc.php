@@ -545,7 +545,7 @@ class timesheet_bo extends Api\Storage
 			{
 				$union_order[] = 'ts_'.$type . ' ' . $sort;
 				$union_order[] = 'is_sum_'.$type;
-				$sum_extra_cols[$type]{0} = '1';
+				$sum_extra_cols[$type][0] = '1';
 				// the $type sum
 				parent::search($criteria,array(
 					(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',

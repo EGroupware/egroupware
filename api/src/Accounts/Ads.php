@@ -1595,7 +1595,10 @@ class adLDAPUsers extends \adLDAPUsers
             return mb_convert_encoding($password, 'UTF-16LE', $this->adldap->charset);
         }
         $encoded="";
-        for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password{$i}}\000"; }
+        for ($i=0; $i <strlen($password); $i++)
+        {
+        	$encoded .= $password[$i]."\000";
+        }
         return $encoded;
     }
 
