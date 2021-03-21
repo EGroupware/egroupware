@@ -152,9 +152,13 @@ class Db
 	/**
 	 * ADOdb connection
 	 *
-	 * @var ADOConnection
+	 * @var boolean
 	 */
 	var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
+	/**
+	 * Global ADOdb connection
+	 */
+	static public $ADOdb = null;
 
 	/**
 	 * Can be used to transparently convert tablenames, eg. 'mytable' => 'otherdb.othertable'
@@ -493,7 +497,7 @@ class Db
 					if ($Port) $Host .= ':'.$Port;
 					break;
 			}
-			if (!isset($GLOBALS['egw']->ADOdb) ||	// we have no connection so far
+			if (!isset(self::$ADOdb) ||	// we have no connection so far
 				(is_object($GLOBALS['egw']->db) &&	// we connect to a different db, then the global one
 					($this->Type != $GLOBALS['egw']->db->Type ||
 					$this->Database != $GLOBALS['egw']->db->Database ||
@@ -505,15 +509,15 @@ class Db
 				{
 					throw new Db\Exception\Connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 				}
-				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
+				$this->Link_ID = ADONewConnection($Type);
+				if (!isset(self::$ADOdb))	// use the global object to store the connection
 				{
-					$this->Link_ID =& $GLOBALS['egw']->ADOdb;
+					self::$ADOdb = $this->Link_ID;
 				}
 				else
 				{
 					$this->privat_Link_ID = True;	// remember that we use a privat Link_ID for disconnect
 				}
-				$this->Link_ID = ADONewConnection($Type);
 				if (!$this->Link_ID)
 				{
 					throw new Db\Exception\Connection("No ADOdb support for '$Type' ($this->Type) !!!");
@@ -547,7 +551,7 @@ class Db
 				if ($this->Debug)
 				{
 					echo function_backtrace();
-					echo "<p>new ADOdb connection to $Type://$Host/$Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>";
+					echo "<p>new ADOdb connection to $Type://$Host/$Database: Link_ID".($this->Link_ID === self::$ADOdb ? '===' : '!==')."self::\$ADOdb</p>";
 					//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 					_debug_array($this);
 					echo "\$GLOBALS[egw]->db="; _debug_array($GLOBALS[egw]->db);
@@ -567,7 +571,7 @@ class Db
 			}
 			else
 			{
-				$this->Link_ID =& $GLOBALS['egw']->ADOdb;
+				$this->Link_ID = self::ADOdb;
 			}
 		}
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
@@ -671,7 +675,7 @@ class Db
 	{
 		if (!$this->privat_Link_ID)
 		{
-			unset($GLOBALS['egw']->ADOdb);
+			self::$ADOdb = null;
 		}
 		unset($this->Link_ID);
 		$this->Link_ID = 0;
@@ -1696,7 +1700,7 @@ class Db
 	 *
 	 * @var string
 	 */
-	private $app=self::API_APPNAME;
+	protected $app=self::API_APPNAME;
 
 	/**
 	 * Sets the application in which the db-class looks for table-defintions

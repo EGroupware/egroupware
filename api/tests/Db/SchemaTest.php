@@ -64,7 +64,7 @@ class SchemaTest extends LoggedInTest {
 		parent::setUpBeforeClass();
 
 		// now we should have a valid db-connection
-		self::$adodb = $GLOBALS['egw']->ADOdb;
+		self::$adodb = $GLOBALS['egw']->db->Link_ID;
 		self::$db = $GLOBALS['egw']->db;
 
 		// Show lots of debug
