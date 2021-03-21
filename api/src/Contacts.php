@@ -2869,6 +2869,10 @@ class Contacts extends Contacts\Storage
 				$pattern = $backend->search2criteria($pattern, $wildcard, $op, null,
 					(array)$fields_to_search, false);
 			}
+			else
+			{
+				$filter['cols_to_search'] = $fields_to_search;
+			}
 			$rows = parent::search($pattern, $only_keys, $order_by, $extra_cols, $wildcard, $empty, $op, $start, $filter, $join, $ignore_acl) ?: [];
 			foreach($rows as $key => $row)
 			{
