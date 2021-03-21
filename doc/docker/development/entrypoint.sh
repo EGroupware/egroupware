@@ -11,7 +11,7 @@ test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
 
 # if XDEBUG_REMOTE_HOST is set, patch it into xdebug config
 test -n "$XDEBUG_REMOTE_HOST" && \
-	sed -e "s/^xdebug.remote_host.*/xdebug.remote_host=$XDEBUG_REMOTE_HOST/g" \
+	sed -e "s/^xdebug.client_host.*/xdebug.client_host=$XDEBUG_REMOTE_HOST/g" \
 		-i /etc/php/$PHP_VERSION/fpm/conf.d/*xdebug.ini
 
 # downgrade composer to 1.8.6, as 1.9.x does not work with "dev-master" version :(

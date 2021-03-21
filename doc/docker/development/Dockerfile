@@ -19,7 +19,7 @@ RUN apt-get update \
 	&& apt-get update \
 	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp}" \
 	# PHP 8.0 no longer has a separate json extension
-    && bash -c "[ ${PHP_VERSION:0:1} = 7 ] && apt-get install -y php$PHP_VERSION-json" \
+    && apt-get install -y php$PHP_VERSION-json || true \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
