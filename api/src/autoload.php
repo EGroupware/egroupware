@@ -85,9 +85,9 @@ spl_autoload_register(function($class)
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
-		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
-		// eGW api classes containing multiple classes in on file, eg. egw_exception
-		isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php') ||
+		defined('EGW_API_INC') && (file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
+			// eGW api classes containing multiple classes in on file, eg. egw_exception
+			isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php')) ||
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
 		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
 		// classes with an underscore in their name
