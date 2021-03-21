@@ -1142,7 +1142,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'timesheet' : 'msg-only-push-refresh';
 		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
-			$action === 'delete' ? 'delete' : 'update', $app, null, null, $failed ? 'error' : 'success');
+			($action === 'delete' ? 'delete' : 'update'), $app, null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

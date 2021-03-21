@@ -1368,7 +1368,7 @@ class infolog_ui
 		}
 		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
 		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
-			$action === 'delete' ? 'delete' : 'edit', $app, null, null, $failed ? 'error' : 'success');
+			($action === 'delete' ? 'delete' : 'edit'), $app, null, null, $failed ? 'error' : 'success');
 	}
 
 	/**
