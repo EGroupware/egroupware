@@ -253,12 +253,15 @@ var InfologApp = /** @class */ (function (_super) {
      * @return {object} Application specific map representing the current state
      */
     InfologApp.prototype.getState = function () {
-        // call parent
-        var state = _super.prototype.getState.call(this);
+        var state = {
+            action: null,
+            action_id: null
+        };
         var nm = {};
         // Get index etemplate
         var et2 = etemplate2_1.etemplate2.getById('infolog-index');
         if (et2) {
+            state = et2.widgetContainer.getWidgetById("nm").getValue();
             var content = et2.widgetContainer.getArrayMgr('content');
             nm = content && content.data && content.data.nm ? content.data.nm : {};
         }
