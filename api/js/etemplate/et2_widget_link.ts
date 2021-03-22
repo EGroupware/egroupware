@@ -1676,7 +1676,7 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 				{
 					self._init_blueimp_gallery(e, _link_data);
 				}
-				else if(_link_data.type.match(self.mime_audio_regexp,'ig'))
+				else if(_link_data.type && _link_data.type.match(self.mime_audio_regexp,'ig'))
 				{
 					self._audio_player(_link_data);
 				}

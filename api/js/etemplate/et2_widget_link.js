@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports.et2_link = exports.et2_link_entry = exports.et2_link_apps = exports.et2_link_to = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -1358,7 +1359,7 @@ var et2_link_string = /** @class */ (function (_super) {
                     && _link_data.type.match(self.mime_regexp, 'ig') && !_link_data.type.match(self.mime_audio_regexp, 'ig')) {
                     self._init_blueimp_gallery(e, _link_data);
                 }
-                else if (_link_data.type.match(self.mime_audio_regexp, 'ig')) {
+                else if (_link_data.type && _link_data.type.match(self.mime_audio_regexp, 'ig')) {
                     self._audio_player(_link_data);
                 }
                 else if (typeof _link_data.type != 'undefined' && fe && fe.mime && fe.mime[_link_data.type]) {
