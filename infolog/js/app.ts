@@ -176,15 +176,18 @@ class InfologApp extends EgwApp
 	 */
 	getState()
 	{
-		// call parent
-		var state = super.getState();
-		var nm : any = {};
+		let state = {
+			action: null,
+			action_id: null
+		};
+		let nm : any = {};
 
 		// Get index etemplate
 		var et2 = etemplate2.getById('infolog-index');
 		if(et2)
 		{
-			var content = et2.widgetContainer.getArrayMgr('content');
+			state = et2.widgetContainer.getWidgetById("nm").getValue();
+			let content = et2.widgetContainer.getArrayMgr('content');
 			nm = content && content.data && content.data.nm ? content.data.nm: {};
 		}
 
