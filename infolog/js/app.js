@@ -83,7 +83,7 @@ var InfologApp = /** @class */ (function (_super) {
                 // Show / hide descriptions according to details filter
                 var nm = this.et2.getWidgetById('nm');
                 var filter2 = nm.getWidgetById('filter2');
-                this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
+                this.show_details(filter2.get_value() == 'all', nm.getDOMNode(nm));
                 // Remove the rule added by show_details() if the template is removed
                 jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function () { egw.css(this); }, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
                 // Enable decrypt on hover
@@ -246,9 +246,9 @@ var InfologApp = /** @class */ (function (_super) {
         // favorites
         if (nm && filter2 && !nm.update_in_progress) {
             // Store selection as implicit preference
-            egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
+            egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.get_value());
             // Change preference location - widget is nextmatch
-            nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
+            nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.get_value() == 'all' ? '-details' : '');
             // Load new preferences
             var colData = nm.columns.slice();
             for (var i = 0; i < nm.columns.length; i++)

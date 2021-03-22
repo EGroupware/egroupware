@@ -22,6 +22,7 @@ import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {CRMView} from "../../addressbook/js/CRM";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 
 /**
  * UI for Infolog
@@ -79,9 +80,9 @@ class InfologApp extends EgwApp
 			case 'infolog.index':
 				this.filter_change();
 				// Show / hide descriptions according to details filter
-				var nm = this.et2.getWidgetById('nm');
-				var filter2 = nm.getWidgetById('filter2');
-				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
+				var nm = <et2_nextmatch>this.et2.getWidgetById('nm');
+				var filter2 = <et2_selectbox> nm.getWidgetById('filter2');
+				this.show_details(filter2.get_value() == 'all',nm.getDOMNode(nm));
 				// Remove the rule added by show_details() if the template is removed
 				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
 
@@ -274,10 +275,10 @@ class InfologApp extends EgwApp
 		if (nm && filter2 && !nm.update_in_progress)
 		{
 			// Store selection as implicit preference
-			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.value);
+			egw.set_preference('infolog', nm.options.settings.columnselection_pref.replace('-details','')+'-details-pref', filter2.get_value());
 
 			// Change preference location - widget is nextmatch
-			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.value == 'all' ? '-details' :'');
+			nm.options.settings.columnselection_pref = nm.options.settings.columnselection_pref.replace('-details','') + (filter2.get_value() == 'all' ? '-details' :'');
 
 			// Load new preferences
 			var colData = nm.columns.slice();
