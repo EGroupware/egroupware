@@ -197,6 +197,9 @@ div.calendar_conflicts {
   z-index: 40;
   font-weight: normal;
 }
+#calendar-toolbar .et2_dropdown button.ui-state-default {
+  background: #ffffff;
+}
 /* Space for toolbar */
 #calendar-view,
 #calendar-todo,
