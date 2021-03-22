@@ -1101,7 +1101,7 @@ var et2_nextmatch = /** @class */ (function (_super) {
         jQuery.merge(colDisplay, custom_fields);
         // Update query value, so data source can use visible columns to exclude expensive sub-queries
         var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
-        this.activeFilters.selectcols = this.sortedColumnsList ? this.sortedColumnsList : colDisplay;
+        this.activeFilters.selectcols = this.sortedColumnsList.length > 0 ? this.sortedColumnsList : colDisplay;
         // We don't need to re-query if they've removed a column
         var changed = [];
         ColLoop: for (var i = 0; i < colDisplay.length; i++) {
@@ -2016,6 +2016,10 @@ var et2_nextmatch = /** @class */ (function (_super) {
             "selected": idsArr
         };
         jQuery.extend(value, this.activeFilters, this.value);
+        if (typeof value.selectcols == "undefined" || value.selectcols.length === 0) {
+            this._updateUserPreferences();
+            value.selectcols = this.activeFilters.selectcols;
+        }
         return value;
     };
     et2_nextmatch.prototype.resetDirty = function () { };
