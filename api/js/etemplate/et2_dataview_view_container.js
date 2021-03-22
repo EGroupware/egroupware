@@ -11,6 +11,7 @@
  * @version $Id$
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_container = void 0;
 /**
  * The et2_dataview_container class is the main object each dataview consits of.
  * Each row, spacer as well as the grid itself are containers. A container is

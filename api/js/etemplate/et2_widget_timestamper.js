@@ -134,7 +134,6 @@ var et2_timestamper = /** @class */ (function (_super) {
             tab.activateTab(widget);
     };
     et2_timestamper.prototype._get_input = function (target) {
-        var _a;
         var input = null;
         var widget = null;
         if (typeof target == 'string') {
@@ -149,7 +148,7 @@ var et2_timestamper = /** @class */ (function (_super) {
         if (widget) {
             return widget;
         }
-        if ((_a = input) === null || _a === void 0 ? void 0 : _a.context) {
+        if (input === null || input === void 0 ? void 0 : input.context) {
             input = input.get(0);
         }
         return input;

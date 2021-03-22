@@ -28,6 +28,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_arrayMgrs_expand = exports.et2_readonlysArrayMgr = exports.et2_arrayMgr = void 0;
 /**
  * Manage access to various template customisation arrays passed to etemplate->exec().
  *

@@ -11,6 +11,7 @@
  * @version $Id$
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_rowProvider = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inheritance;

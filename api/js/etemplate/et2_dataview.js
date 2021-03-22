@@ -21,6 +21,7 @@
     et2_dataview_view_resizeable;
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview = void 0;
 var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
 var et2_dataview_view_resizeable_1 = require("./et2_dataview_view_resizeable");
 var et2_dataview_view_grid_1 = require("./et2_dataview_view_grid");

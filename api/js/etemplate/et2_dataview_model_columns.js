@@ -11,6 +11,7 @@
  * @version $Id$
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_columns = exports.et2_dataview_column = void 0;
 /*egw:uses
     et2_core_inheritance;
     et2_inheritance;
@@ -204,14 +205,14 @@ var et2_dataview_columns = /** @class */ (function () {
         get: function () {
             return this._totalWidth;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(et2_dataview_columns.prototype, "totalFixed", {
         get: function () {
             return this._totalFixed ? this._totalFixed : 0;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**

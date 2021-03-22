@@ -11,6 +11,7 @@
  * @version $Id$
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dynheight = void 0;
 /*egw:use
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inheritance;

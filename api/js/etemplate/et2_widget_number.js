@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_number = void 0;
 /*egw:uses
     et2_widget_textbox;
 */

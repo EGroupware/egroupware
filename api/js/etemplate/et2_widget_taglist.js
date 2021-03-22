@@ -23,6 +23,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_taglist = void 0;
 /*egw:uses
     et2_core_inputWidget;
     /vendor/egroupware/magicsuggest/magicsuggest.js;

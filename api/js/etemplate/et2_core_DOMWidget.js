@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_action_object_impl = exports.et2_DOMWidget = void 0;
 /*egw:uses
     et2_core_interfaces;
     et2_core_widget;

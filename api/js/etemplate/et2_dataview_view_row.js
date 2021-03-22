@@ -30,6 +30,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_row = void 0;
 var et2_dataview_row = /** @class */ (function (_super) {
     __extends(et2_dataview_row, _super);
     /**

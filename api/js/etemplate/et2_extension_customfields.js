@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_customfields_list = void 0;
 /*egw:uses
     lib/tooltip;
     /vendor/bower-asset/jquery/dist/jquery.js;

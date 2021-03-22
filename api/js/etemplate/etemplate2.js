@@ -75,6 +75,7 @@
     jsapi.egw_json;
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.etemplate2 = void 0;
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var egw_app_1 = require("../jsapi/egw_app");
 /**
@@ -214,21 +215,21 @@ var etemplate2 = /** @class */ (function () {
         get: function () {
             return this._widgetContainer;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(etemplate2.prototype, "DOMContainer", {
         get: function () {
             return this._DOMContainer;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(etemplate2.prototype, "etemplate_exec_id", {
         get: function () {
             return this._etemplate_exec_id;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**

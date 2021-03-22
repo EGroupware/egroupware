@@ -272,7 +272,6 @@ var et2_itempicker = /** @class */ (function (_super) {
             item.attr("id", id)
                 .html(data[id])
                 .click(function (e) {
-                var _a;
                 if (e.ctrlKey || e.metaKey) {
                     // add to selection
                     jQuery(this).addClass("selected");
@@ -280,7 +279,7 @@ var et2_itempicker = /** @class */ (function (_super) {
                 else if (e.shiftKey) {
                     // select range
                     var start = jQuery(this).siblings(".selected").first();
-                    if (((_a = start) === null || _a === void 0 ? void 0 : _a.length) == 0) {
+                    if ((start === null || start === void 0 ? void 0 : start.length) == 0) {
                         // no start item - cannot select range - select single item
                         jQuery(this).addClass("selected");
                         return true;

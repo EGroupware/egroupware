@@ -21,6 +21,7 @@
     egw_action.egw_action;
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_controller = void 0;
 var et2_dataview_controller_selection_1 = require("./et2_dataview_controller_selection");
 var et2_dataview_view_row_1 = require("./et2_dataview_view_row");
 /**

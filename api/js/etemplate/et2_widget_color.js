@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_color_ro = exports.et2_color = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inputWidget;

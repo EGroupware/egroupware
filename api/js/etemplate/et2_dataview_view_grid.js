@@ -33,6 +33,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_grid = void 0;
 var et2_dataview_view_container_1 = require("./et2_dataview_view_container");
 var et2_dataview_view_spacer_1 = require("./et2_dataview_view_spacer");
 var et2_dataview_grid = /** @class */ (function (_super_1) {

@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_html = void 0;
 /*egw:uses
     jsapi.jsapi; // Needed for egw_seperateJavaScript
     /vendor/bower-asset/jquery/dist/jquery.js;

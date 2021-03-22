@@ -24,6 +24,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_htmlarea = void 0;
 /*egw:uses
     jsapi.jsapi; // Needed for egw_seperateJavaScript
     /vendor/tinymce/tinymce/tinymce.min.js;

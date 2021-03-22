@@ -9,6 +9,7 @@
  * @author Andreas Stöckel
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ClassWithAttributes = void 0;
 /*egw:uses
     et2_core_common;
 */

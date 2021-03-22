@@ -38,6 +38,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_nextmatch_controller = void 0;
 var et2_dataview_view_row_1 = require("./et2_dataview_view_row");
 var et2_dataview_view_tile_1 = require("./et2_dataview_view_tile");
 var et2_dataview_controller_1 = require("./et2_dataview_controller");

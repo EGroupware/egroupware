@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_container = exports.et2_baseWidget = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     lib/tooltip;

@@ -11,6 +11,7 @@
  * @version $Id$
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_dataview_view_resizable = void 0;
 /**
  * This set of functions is currently only supporting resizing in ew-direction
  */
