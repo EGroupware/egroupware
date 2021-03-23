@@ -571,7 +571,7 @@ class Db
 			}
 			else
 			{
-				$this->Link_ID = self::ADOdb;
+				$this->Link_ID = self::$ADOdb;
 			}
 		}
 		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
