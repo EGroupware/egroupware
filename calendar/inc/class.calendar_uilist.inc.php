@@ -982,6 +982,7 @@ class calendar_uilist extends calendar_ui
 
 		if ($GLOBALS['egw_info']['user']['apps']['status'])
 		{
+			Api\Translation::add_app('status');
 			$actions['videoconference'] = [
 				'icon' => 'status/videoconference',
 				'caption' => 'Video Conference',

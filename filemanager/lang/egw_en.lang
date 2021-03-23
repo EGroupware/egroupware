@@ -172,6 +172,7 @@ go home	filemanager	en	Go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	Go up
+hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
 id	filemanager	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
