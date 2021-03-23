@@ -1146,7 +1146,7 @@ class Ads
 			elseif (($attr = array_search('account_'.$matches[2], $this->attributes2egw)))
 			{
 				$value = [
-					'attr' => $mapping[$matches[2]],
+					'attr' => $attr,
 					'oid' => '2.5.13.3',    // caseIgnoreMatch
 					'reverse' => strtoupper($matches[3]) === ' DESC',
 				];
@@ -1180,7 +1180,8 @@ class Ads
 	{
 		// check if we require sorting and server supports it
 		$control = [];
-		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_numeric($start) && $this->serverinfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
+		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_numeric($start) &&
+			$this->serverinfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
 			($sort_values = $this->sort_values($order_by)))
 		{
 			$control = [
@@ -1222,12 +1223,17 @@ class Ads
 			}
 			$filter .= $this->type_filter($account_type).')';
 		}
-		$sri = ldap_search($ds=$this->ldap_connection(), $context=$this->ads_context(), $filter,
-			$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control);
-		if (!$sri)
+		if (!($sri = ldap_search($ds=$this->ldap_connection(), $context=$this->ads_context(), $filter,
+			$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control)))
 		{
-			if (self::$debug) error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returned ".array2string($sri).' trying to reconnect ...');
-			$sri = ldap_search($ds=$this->ldap_connection(true), $context=$this->ads_context(), $filter,
+			if (($list_view_error = ldap_errno() === 76))	// 76: Virtual List View error --> retry without
+			{
+				$control = [];
+			}
+			error_log(__METHOD__.'('.json_encode($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returned ".array2string($sri).' '.ldap_error($ds).
+				($list_view_error ? ' retrying without virtual list view ...' : ' trying to reconnect ...'));
+
+			$sri = ldap_search($ds=$this->ldap_connection(!$list_view_error), $context=$this->ads_context(), $filter,
 				$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control);
 		}
 
@@ -1595,7 +1601,7 @@ class adLDAPUsers extends \adLDAPUsers
             return mb_convert_encoding($password, 'UTF-16LE', $this->adldap->charset);
         }
         $encoded="";
-        for ($i=0; $i <strlen($password); $i++)
+        for ($i=0, $len=strlen($password); $i < $len; $i++)
         {
         	$encoded .= $password[$i]."\000";
         }
@@ -1810,7 +1816,17 @@ class adLDAPUtils extends \adLDAPUtils
 	 */
 	public function encode8Bit(&$item, $key)
 	{
-		return $this->adldap->encode8bit($item, $key);
+		$encode = false;
+		if (is_string($item)) {
+			for ($i = 0, $len=strlen($item); $i < $len; $i++) {
+				if (ord($item[$i]) >> 7) {
+					$encode = true;
+				}
+			}
+		}
+		if ($encode === true && $key != 'password') {
+			$item = utf8_encode($item);
+		}
 	}
 
     /**
