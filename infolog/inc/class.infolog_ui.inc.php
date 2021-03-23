@@ -1073,7 +1073,7 @@ class infolog_ui
 	 * @param array $query
 	 * @return array see nextmatch_widget::get_actions()
 	 */
-	private function get_actions(array $query)
+	public function get_actions(array $query = [])
 	{
 		for($i = 0; $i <= 100; $i += 10)
 		{
