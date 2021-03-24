@@ -4527,11 +4527,17 @@ class CalendarApp extends EgwApp
 	 * @param _action
 	 * @param _sender
 	 */
-	public joinVideoConferenceAction(_action : egwAction, _sender : egwActionObject[])
+	public videoConferenceAction(_action : egwAction, _sender : egwActionObject[])
 	{
 		let data = egw.dataGetUIDdata(_sender[0].id)['data'];
-
-		return this.joinVideoConference(data['##videoconference'], data);
+		switch(_action.id)
+		{
+			case 'recordings':
+				app.status.videoconference_getRecordings(data['##videoconference'],{cal_id: data['id'], title:data['title']});
+				break;
+			case 'join':
+				return this.joinVideoConference(data['##videoconference'], data);
+		}
 	}
 
 	/**

@@ -3646,9 +3646,15 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param _action
      * @param _sender
      */
-    CalendarApp.prototype.joinVideoConferenceAction = function (_action, _sender) {
+    CalendarApp.prototype.videoConferenceAction = function (_action, _sender) {
         var data = egw.dataGetUIDdata(_sender[0].id)['data'];
-        return this.joinVideoConference(data['##videoconference'], data);
+        switch (_action.id) {
+            case 'recordings':
+                app.status.videoconference_getRecordings(data['##videoconference'], { cal_id: data['id'], title: data['title'] });
+                break;
+            case 'join':
+                return this.joinVideoConference(data['##videoconference'], data);
+        }
     };
     /**
      * Join a videoconference
