@@ -552,9 +552,13 @@ var CalendarApp = /** @class */ (function (_super) {
                             app: this.appname
                         });
                         if (integrated_pushData.type == "delete" || egw.dataHasUID(this.uid(integrated_pushData))) {
-                            return _super.prototype.push.call(this, integrated_pushData);
+                            // Super always looks at this.et2, make sure it finds listview
+                            var old_et2 = this.et2;
+                            this.et2 = CalendarApp.views.listview.etemplates[0].widgetContainer;
+                            _super.prototype.push.call(this, integrated_pushData);
+                            this.et2 = old_et2;
                         }
-                        // Ask for the real data, we don't have it
+                        // Ask for the real data, we don't have it.  This also updates views that don't use nextmatch.
                         this._fetch_data(this.state, undefined, 0, [integrated_pushData.id]);
                     }
                 }
