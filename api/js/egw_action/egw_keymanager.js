@@ -267,7 +267,7 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 	// Get the object manager and fetch the container of the currently
 	// focused object
-	var focusedObject = egw_globalObjectManager.getFocusedObject();
+	var focusedObject = egw_globalObjectManager ? egw_globalObjectManager.getFocusedObject() : null;
 	var appMgr = egw_getAppObjectManager(false);
 	if (appMgr && !focusedObject)
 	{
