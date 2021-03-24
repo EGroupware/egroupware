@@ -805,8 +805,8 @@ var EgwApp = /** @class */ (function () {
                 if (typeof favorite.state != 'undefined' && typeof state[state_key] != 'undefined' && typeof favorite.state[state_key] != 'undefined' && (state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key])) {
                     match_count++;
                 }
-                else if (state_key == 'selectcols') {
-                    // Skip, might be set, might not
+                else if (state_key == 'selectcols' && typeof favorite.state.selectcols == "undefined") {
+                    // Skip, not set in favorite
                 }
                 else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object'
                     && typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object') {

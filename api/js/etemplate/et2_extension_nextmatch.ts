@@ -2137,6 +2137,47 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	}
 
 	/**
+	 * Get the currently displayed columns
+	 * Each customfield is listed separately
+	 */
+	get_columns()
+	{
+		const colMgr = this.dataview.getColumnMgr();
+		const visibility = colMgr.getColumnVisibilitySet();
+		const colDisplay = [];
+		const custom_fields = [];
+
+		// visibility is indexed by internal ID, widget is referenced by position, preference needs name
+		for(var i = 0; i < colMgr.columns.length; i++)
+		{
+			// @ts-ignore
+			const widget = this.columns[i].widget;
+			let colName = this._getColumnName(widget);
+			if(colName)
+			{
+				// Server side wants each cf listed as a seperate column
+				if(widget.instanceOf(et2_nextmatch_customfields))
+				{
+					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
+					colName = widget.id;
+					for(let name in widget.options.fields) {
+						if(widget.options.fields[name]) custom_fields.push(et2_nextmatch_customfields.PREFIX+name);
+					}
+				}
+				if(visibility[colMgr.columns[i].id].visible)
+				{
+					colDisplay.push(colName);
+				}
+			}
+		}
+
+		// List each customfield as a seperate column
+		jQuery.merge(colDisplay, custom_fields);
+
+		return this.sortedColumnsList.length > 0 ? this.sortedColumnsList : colDisplay;
+	}
+
+	/**
 	 * Set the currently displayed columns, without updating user's preference
 	 *
 	 * @param {string[]} column_list List of column names
@@ -2717,8 +2758,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		if(typeof value.selectcols == "undefined" || value.selectcols.length === 0)
 		{
-			this._updateUserPreferences();
-			value.selectcols = this.activeFilters.selectcols;
+			value.selectcols = this.get_columns();
 		}
 		return value;
 	}
