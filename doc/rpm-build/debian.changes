@@ -1,3 +1,27 @@
+egroupware-docker (20.1.20210324) hardy; urgency=low
+
+  * Infolog: Fix details / no details filter preference was not saved
+  * Notifications: fix notification sub messages (grouped entries) would still show up even though their parent message once been deleted
+  * CalDAV/Calendar: fix weekly recurring events without explicit weekday (BYDAY) were not using start-date
+  * CalDAV/Calendar: participants without status were not imported for new events (eg. from Thunderbird)
+  * Calendar: New context menu action to manually [re]send notifications
+  * Calendar: Make resources stand out more in conflict list
+  * Calendar: Fix timespan in tooltip was wrong if event had seconds in start or end time
+  * Calendar: Fix alarm for all users had wrong timezone when user timezone was not server timezone
+  * Calendar: Fix event notifications had the wrong times in iCal attachment if user timezone was not server timezone
+  * Addressbook: Fix missing distribution lists
+  * Timesheet: Fix created time was wrong in user timezone was not the same as server timezone
+  * Preferences: Fix deleting multiple categories only removed the first
+  * RocketChat: Fix unread messages no longer get updated
+  * Status/Videoconference: fix screen sharing in videoconference dialog not working on Firefox
+  * Status/Videoconference: fix attempting to join a call event before it is created by its moderator resets the counter
+  * Tracker: Offer "Multiple changes" action to tracker admins
+  * EPL/mail: support SpamTitan REST API to manage spam, requires an API token
+  * FPM/Container: start more php processes by default and keep them running to better cope with high usage
+  * PHP: Support for PHP 7.4 (container of this maintenance release still used 7.3)
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 24 Mar 2021 07:56:15 +0100
+
 egroupware-docker (20.1.20210125) hardy; urgency=low
 
   * Admin: Context menu action to clear user credentials
