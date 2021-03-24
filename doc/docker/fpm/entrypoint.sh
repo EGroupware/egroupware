@@ -2,7 +2,7 @@
 set -e
 
 VERSION=${VERSION:-dev-master}
-PHP_VERSION=${PHP_VERSION:-7.3}
+PHP_VERSION=${PHP_VERSION:-7.4}
 
 # if EGW_APC_SHM_SIZE is set in environment, propagate value to apcu.ini, otherwise set default of 128M
 grep "apc.shm_size" /etc/php/$PHP_VERSION/fpm/conf.d/20-apcu.ini >/dev/null && \
