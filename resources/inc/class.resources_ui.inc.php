@@ -517,8 +517,11 @@ class resources_ui
 		$content['picture_original'] = $content['picture_src'] == 'own_src'?
 				'webdav.php/apps/resources/'.$content['res_id'].'/.picture.jpg': $this->bo->get_picture($content['res_id'],true);
 
-		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
-		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
+		if(!$content['res_id'])
+		{
+			$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
+			$content['useable'] = $content['useable'] ? $content['useable'] : 1;
+		}
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 
 		if($content['res_id'] && $content['accessory_of'] == -1)
