@@ -147,7 +147,7 @@ class calendar_uilist extends calendar_ui
 				'placeholder_actions' => array('add')
 			);
 		}
-		$content['nm']['favorites'] = true;
+		$content['nm']['favorites'] = false;
 		$content['nm']['actions'] = $this->get_actions();
 
 		// Skip first load if view is not listview

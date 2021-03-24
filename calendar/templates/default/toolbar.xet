@@ -17,6 +17,8 @@ Egroupware
 		<!-- Fake an app header inside the toolbar -->
 		<box class="egw_fw_ui_app_header_container">
 			<description id="app_header"/>
+			<textbox id="keywords" blur="Search" onchange="app.calendar.update_state({view: 'listview',keywords: widget.getValue()});return false;"/>
+			<favorites app="calendar"/>
 		</box>
 	</template>
 </overlay>

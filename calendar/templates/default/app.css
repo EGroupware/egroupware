@@ -181,12 +181,16 @@ div.calendar_conflicts {
 	display:flex;
 	align-items: center;
 	min-height: 26px;
+	justify-content: flex-end;
 }
-#calendar-toolbar #calendar-list_favorite_wrapper {
+#calendar-toolbar #calendar-toolbar_keywords {
+	height: 14px;
+}
+#calendar-toolbar #calendar-toolbar_favorite_wrapper {
 	float: right;
 	margin-right: 5px;
 }
-#calendar-toolbar #calendar-list_favorite_wrapper #calendar-list_favorite_menu {
+#calendar-toolbar #calendar-toolbar_favorite_wrapper #calendar-toolbar_favorite_menu {
 	z-index: 40;
 	font-weight: normal;
 }

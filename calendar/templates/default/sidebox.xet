@@ -14,7 +14,6 @@ Egroupware
 <overlay>
     <template id="calendar.sidebox">
 		<vbox parent_node="calendar-et2_target">
-			<textbox id="keywords" class="et2_fullWidth" blur="Search" onchange="app.calendar.update_state({view: 'listview',keywords: widget.getValue()});return false;"/>
 			<buttononly id="header_today" label="•" icon="nope" onclick="
 var tempDate = new Date();
 var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);

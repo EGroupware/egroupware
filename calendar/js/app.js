@@ -3457,12 +3457,6 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         if (all_loaded) {
-            // Move nextmatch favourite button into toolbar
-            var fav_button = CalendarApp.views.listview.etemplates[0].widgetContainer.getDOMWidgetById("favorite");
-            var toolbar_1 = jQuery("#toolbar-actionbox", "#calendar-toolbar_toolbar");
-            if (fav_button && toolbar_1) {
-                toolbar_1.after(fav_button.getDOMNode(fav_button));
-            }
             jQuery(window).trigger('resize');
             this.setState({ state: this.state });
             // Hide loader after 1 second as a fallback, it will also be hidden
