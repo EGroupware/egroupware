@@ -124,7 +124,8 @@ var CalendarApp = /** @class */ (function (_super) {
             owner: egw.user('account_id'),
             keywords: '',
             last: undefined,
-            first: undefined
+            first: undefined,
+            include_videocalls: false
         };
         // If you are in one of these views and select a date in the sidebox, the view
         // will change as needed to show the date.  Other views will only change the
@@ -798,11 +799,23 @@ var CalendarApp = /** @class */ (function (_super) {
         }
     };
     /**
+     * Handle the video call toggle from the toolbar
+     *
+     * @param action
+     */
+    CalendarApp.prototype.toolbar_videocall_toggle_action = function (action) {
+        var videocall_category = egw.config("status_cat_videocall", "status");
+        var callback = function () {
+            this.update_state({ include_videocalls: action.checked });
+        }.bind(this);
+        this.toolbar_integration_action(action, [], null, callback);
+    };
+    /**
      * Handle integration actions from the toolbar
      *
      * @param action {egwAction} Integration action from the toolbar
      */
-    CalendarApp.prototype.toolbar_integration_action = function (action) {
+    CalendarApp.prototype.toolbar_integration_action = function (action, selected, target, callback) {
         var app = action.id.replace("integration_", "");
         var integration_preference = egw.preference("integration_toggle", "calendar");
         if (typeof integration_preference === "undefined") {
@@ -813,11 +826,10 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Make sure it's an array, not an object
         integration_preference = jQuery.extend([], integration_preference);
-        var callback = function () { };
         if (action.checked) {
             integration_preference.push(app);
             // After the preference change is done, get new info which should now include the app
-            callback = function () {
+            callback = callback ? callback : function () {
                 this._fetch_data(this.state);
             }.bind(this);
         }
@@ -828,6 +840,9 @@ var CalendarApp = /** @class */ (function (_super) {
             }
             // Clear any events from that app
             this._clear_cache(app);
+        }
+        if (typeof callback === "undefined") {
+            callback = function () { };
         }
         egw.set_preference("calendar", "integration_toggle", integration_preference, callback);
     };
@@ -3054,8 +3069,11 @@ var CalendarApp = /** @class */ (function (_super) {
             row_id: 'row_id',
             startdate: state.first || state.date,
             enddate: state.last,
-            // Participant must be an array or it won't work
-            col_filter: { participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner) },
+            col_filter: {
+                // Participant must be an array or it won't work
+                participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner),
+                include_videocalls: state.include_videocalls
+            },
             filter: 'custom',
             status_filter: state.status_filter,
             cat_id: cat_id,

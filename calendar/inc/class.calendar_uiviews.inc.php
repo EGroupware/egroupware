@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Image;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
@@ -376,6 +377,22 @@ class calendar_uiviews extends calendar_ui
 			),
 		);
 
+		// Add toggle for video calls
+		$status_config = Api\Config::read("status");
+		if($status_config["status_cat_videocall"])
+		{
+			$actions['video_toggle'] = array(
+				'caption' => 'Video call',
+				'iconUrl' => Image::find('status', 'videoconference_call'),
+				'checkbox' => true,
+				'hint' => lang("video call"),
+				'group' => 'integration',
+				'onExecute' => 'javaScript:app.calendar.toolbar_videocall_toggle_action',
+				'checked' => in_array('video_toggle', $this->cal_prefs['integration_toggle']),
+				'data' => array('toggle_off' => '0', 'toggle_on' => '1')
+			);
+		}
+
 		// Add integrated app options
 		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
 		foreach($integration_data as $app => $app_hooks)
@@ -386,7 +403,9 @@ class calendar_uiviews extends calendar_ui
 				$app = $data['selects']['app'] ?: $app;
 
 				// Don't add if no access or app already added
-				if (!array_key_exists($app, $GLOBALS['egw_info']['user']['apps']) || array_key_exists($app, $actions['integration']['children']))
+				if (!array_key_exists($app, $GLOBALS['egw_info']['user']['apps']) ||
+						(is_array($actions['integration']['children']) && array_key_exists($app, $actions['integration']['children']))
+				)
 				{
 					continue;
 				}

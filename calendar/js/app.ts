@@ -88,7 +88,8 @@ class CalendarApp extends EgwApp
 		owner: egw.user('account_id'),
 		keywords: '',
 		last: undefined,
-		first: undefined
+		first: undefined,
+		include_videocalls: false
 	};
 
 	/**
@@ -792,11 +793,25 @@ class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * Handle the video call toggle from the toolbar
+	 *
+	 * @param action
+	 */
+	toolbar_videocall_toggle_action(action : egwAction)
+	{
+		let videocall_category = egw.config("status_cat_videocall","status");
+		let callback = function() {
+			this.update_state({include_videocalls: action.checked});
+		}.bind(this);
+		this.toolbar_integration_action(action, [],null,callback);
+	}
+
+	/**
 	 * Handle integration actions from the toolbar
 	 *
 	 * @param action {egwAction} Integration action from the toolbar
 	 */
-	toolbar_integration_action(action : egwAction)
+	toolbar_integration_action(action : egwAction, selected: egwActionObject[], target: egwActionObject, callback? : CallableFunction)
 	{
 		let app = action.id.replace("integration_","");
 		let integration_preference = <string[]> egw.preference("integration_toggle","calendar");
@@ -811,14 +826,12 @@ class CalendarApp extends EgwApp
 		// Make sure it's an array, not an object
 		integration_preference = jQuery.extend([],integration_preference);
 
-		let callback = function() {};
-
 		if(action.checked)
 		{
 			integration_preference.push(app);
 
 			// After the preference change is done, get new info which should now include the app
-			callback = function() {
+			callback = callback ? callback : function() {
 				this._fetch_data(this.state);
 			}.bind(this);
 		}
@@ -832,6 +845,11 @@ class CalendarApp extends EgwApp
 			// Clear any events from that app
 			this._clear_cache(app);
 		}
+		if(typeof callback === "undefined")
+		{
+			callback = function() {};
+		}
+
 		egw.set_preference("calendar","integration_toggle",integration_preference, callback);
 	}
 
@@ -3592,8 +3610,11 @@ class CalendarApp extends EgwApp
 			row_id:'row_id',
 			startdate:state.first ||  state.date,
 			enddate:state.last,
-			// Participant must be an array or it won't work
-			col_filter: {participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner)},
+			col_filter: {
+				// Participant must be an array or it won't work
+				participant: (typeof state.owner == 'string' || typeof state.owner == 'number' ? [state.owner] : state.owner),
+				include_videocalls: state.include_videocalls
+			},
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.status_filter,
 			cat_id: cat_id,

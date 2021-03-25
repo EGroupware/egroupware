@@ -1483,17 +1483,17 @@ img.calendar_print_appicon {
   left: 44%;
 }
 /* Integration slide switches in toolbar */
-#calendar-toolbar_toolbar span[id^="toolbar-integration_"] {
+#calendar-toolbar_toolbar span[data-group="integration"] > span {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
 }
-#calendar-toolbar_toolbar span[id^="toolbar-integration_"].switchOn {
+#calendar-toolbar_toolbar span[data-group="integration"] > span.switchOn {
   filter: none;
   box-shadow: inset 1px 1px 1px 1px gray !important;
 }
-#calendar-toolbar_toolbar span[id^="toolbar-integration_"] span.slideSwitch_container {
+#calendar-toolbar_toolbar span[data-group="integration"] > span span.slideSwitch_container {
   background: none;
   min-width: 24px;
 }

@@ -417,6 +417,16 @@ class calendar_uilist extends calendar_ui
 					$col_filter['cal_id'] = $val;
 				}
 			}
+			// Videocalls
+			if(array_key_exists('include_videocalls',$params['col_filter']))
+			{
+				$status_config = Api\Config::read("status");
+				if (!$col_filter['include_videocalls'])
+				{
+					$col_filter[] = 'cal_category != ' . $this->bo->so->db->quote( $status_config['status_cat_videocall']);
+				}
+				unset($col_filter['include_videocalls']);
+			}
 		}
 		$rows = $js_integration_data = array();
 
