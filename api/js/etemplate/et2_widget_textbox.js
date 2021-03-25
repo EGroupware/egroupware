@@ -101,7 +101,7 @@ var et2_textbox = /** @class */ (function (_super) {
     };
     et2_textbox.prototype.getValue = function () {
         // only return "" for blur-value, if browser does not support html5 placeholder
-        if (this.options && this.options.blur &&
+        if (this.options && this.options.blur && this.input &&
             !this.input[0].placeholder &&
             this.input.val() == this.options.blur) {
             return "";
@@ -492,6 +492,10 @@ var et2_searchbox = /** @class */ (function (_super) {
     et2_searchbox.prototype.change = function () {
         this._searchToggleState();
         _super.prototype.change.apply(this, arguments);
+    };
+    et2_searchbox.prototype.getInputNode = function () {
+        var _a;
+        return (_a = this.search) === null || _a === void 0 ? void 0 : _a.input.get(0);
     };
     et2_searchbox.prototype.get_value = function () {
         return this.search.input.val();

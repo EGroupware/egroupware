@@ -162,7 +162,7 @@ export class et2_textbox extends et2_inputWidget implements et2_IResizeable
 	getValue()
 	{
 		// only return "" for blur-value, if browser does not support html5 placeholder
-		if (this.options && this.options.blur &&
+		if (this.options && this.options.blur && this.input &&
 			!(<HTMLInputElement>this.input[0]).placeholder &&
 			this.input.val() == this.options.blur)
 		{
@@ -581,6 +581,10 @@ class et2_searchbox extends et2_textbox
 		super.change.apply(this,arguments);
 	}
 
+	getInputNode(): HTMLElement
+	{
+		return this.search?.input.get(0);
+	}
 
 	get_value()
 	{
