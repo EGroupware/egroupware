@@ -259,14 +259,6 @@ class calendar_uiviews extends calendar_ui
 	{
 		$group = 0;
 		$actions = array(
-			'add' => array(
-				'caption' => 'Add',
-				'icon'	=> 'add',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.calendar.toolbar_action',
-				'hint' => 'Add',
-				'toolbarDefault' => true,
-			),
 			'day_view' => array(
 				'caption' => 'Dayview',
 				'icon'	=> '1_day_view',

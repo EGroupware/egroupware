@@ -173,8 +173,11 @@ div.calendar_conflicts {
 #calendar-toolbar {
 	height: 30px;
 }
-#calendar-toolbar button#toolbar-add {
-	margin-right: -3px;
+#calendar-toolbar > div {
+	display: flex;
+}
+#calendar-toolbar .et2_toolbar {
+	background: inherit;
 }
 #calendar-toolbar .egw_fw_ui_app_header_container {
 	border: none;
@@ -184,11 +187,16 @@ div.calendar_conflicts {
 	justify-content: flex-end;
 }
 #calendar-toolbar #calendar-toolbar_keywords {
+	margin-right: 4px;
+}
+#calendar-toolbar .et2_searchbox input {
 	height: 14px;
 }
 #calendar-toolbar #calendar-toolbar_favorite_wrapper {
 	float: right;
+	white-space: nowrap;
 	margin-right: 5px;
+	margin-top: -4px;
 }
 #calendar-toolbar #calendar-toolbar_favorite_wrapper #calendar-toolbar_favorite_menu {
 	z-index: 40;
@@ -1615,3 +1623,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #toolbar-weekend {background-image: none !important; filter:none;}
 
 #calendar-list_nm .nextmatch_header .header_count {margin-right:-4px;}
+
+#calendar-list_nm .nextmatch_header .search {
+	display: none;
+}
