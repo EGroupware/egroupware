@@ -401,7 +401,10 @@ egwFnct.prototype.setValue = function(_value)
 					// cache for a day, better then no invalidation
 					egw.includeJS("/"+parts[1]+"/js/app.js?"+((new Date()).valueOf()/86400|0).toString(), function ()
 					{
-						resolve(this.setValue(_value));
+						if(typeof app.classes[parts[i]] !== "undefined")
+						{
+							resolve(this.setValue(_value));
+						}
 					}.bind(this), self, egw.webserverUrl);
 				}.bind(this));
 			}
