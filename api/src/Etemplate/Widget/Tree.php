@@ -308,7 +308,7 @@ class Tree extends Etemplate\Widget
 		{
 			// += to keep further options set by app code
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
-				$no_lang=null, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
+				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])

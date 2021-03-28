@@ -27,7 +27,7 @@
 							</row>
 							<row>
 								<description id="${row}[name]" no_lang="1"/>
-								<checkbox id="export[${row}]" no_lang="1" options="{$row_cont[field]}"/>
+								<checkbox id="export[${row}]" no_lang="1" options="$row_cont[field]"/>
 							</row>
 						</rows>
 					</grid>

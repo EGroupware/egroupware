@@ -146,11 +146,11 @@ class admin_customfields
 		// Handle incoming - types, options, etc.
 		if($this->manage_content_types)
 		{
-			if(count($this->content_types) == 0)
+			if(empty($this->content_types))
 			{
 				$this->content_types = Api\Config::get_content_types($this->appname);
 			}
-			if (count($this->content_types)==0)
+			if (empty($this->content_types))
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
 				$this->content_types = (array)Api\Link::get_registry($this->appname,'default_types');

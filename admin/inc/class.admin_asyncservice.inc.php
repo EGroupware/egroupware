@@ -31,7 +31,7 @@ class admin_asyncservice
 
 		echo $GLOBALS['egw']->framework->header();
 
-		$async = $GLOBALS['egw']->asyncservice;	// use an own instance, as we might set debug=True
+		$async = new Api\Asyncservice();	// use an own instance, as we might set debug=True
 
 		$async->debug = !!$_POST['debug'];
 

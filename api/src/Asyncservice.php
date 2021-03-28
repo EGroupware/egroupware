@@ -659,7 +659,7 @@ class Asyncservice
 							$webserver = posix_getpwuid(posix_getuid ());
 							echo '<p>'.lang("You need to add the webserver user '%1' to the group '%2'.",$webserver['name'],$group['name'])."</p>\n";							}
 					}
-					if (($fd = popen('/bin/sh -c "type -p '.$name.'"','r')))
+					if (function_exists('popen') && ($fd = popen('/bin/sh -c "type -p '.$name.'"','r')))
 					{
 						$this->$name = fgets($fd,256);
 						@pclose($fd);
@@ -707,7 +707,7 @@ class Asyncservice
 		}
 		$times = False;
 		$other_cronlines = array();
-		if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -l" 2>&1','r')) !== False)
+		if (function_exists('popen') && ($crontab = popen('/bin/sh -c "'.$this->crontab.' -l" 2>&1','r')) !== False)
 		{
 			$n = 0;
 			while ($line = fgets($crontab,256))
@@ -762,7 +762,7 @@ class Asyncservice
 		$other_cronlines = array();
 		$this->installed($other_cronlines);	// find other installed cronlines
 
-		if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -" 2>&1','w')) !== False)
+		if (function_exists('popen') && ($crontab = popen('/bin/sh -c "'.$this->crontab.' -" 2>&1','w')) !== False)
 		{
 			foreach ($other_cronlines as $cronline)
 			{

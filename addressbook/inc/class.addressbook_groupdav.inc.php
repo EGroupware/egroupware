@@ -164,7 +164,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 
 		if (isset($nresults))
 		{
-			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+			$files['files'] = $this->propfind_callback2($path, $filter, array(0, (int)$nresults));
 
 			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
 			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
@@ -184,14 +184,28 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Callback for profind iterator
+	 * Callback for propfind iterator
 	 *
 	 * @param string $path
 	 * @param array& $filter
 	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path,array &$filter,$start=false,$report_not_found_multiget_ids=true)
+	function &propfind_callback($path, array $filter, $start=false)
+	{
+		return $this->propfind_callback2($path, $filter, $start);
+	}
+
+	/**
+	 * Callback for propfind iterator with ability to skip reporting not found ids
+	 *
+	 * @param string $path
+	 * @param array& $filter
+	 * @param array|boolean $start =false false=return all or array(start,num)
+	 * @param boolean $report_not_found_multiget_ids=true
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function &propfind_callback2($path, array &$filter, $start=false, $report_not_found_multiget_ids=true)
 	{
 		//error_log(__METHOD__."('$path', ".array2string($filter).", ".array2string($start).", $report_not_found_multiget_ids)");
 		$starttime = microtime(true);
@@ -299,7 +313,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				if ($sync_collection_report) $token_was = $this->sync_collection_token;
 				self::$path_attr = 'id';
 				self::$path_extension = '.vcf';
-				$files = array_merge($files, $this->propfind_callback($path, $accounts_filter, false, false));
+				$files = array_merge($files, $this->propfind_callback2($path, $accounts_filter, false, false));
 				self::$path_attr = 'carddav_name';
 				self::$path_extension = '';
 				if ($sync_collection_report && $token_was > $this->sync_collection_token)

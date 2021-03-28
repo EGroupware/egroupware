@@ -28,12 +28,11 @@ class resources_import_csv extends importexport_basic_import_csv  {
 
 	/**
 	 * imports entries according to given definition object.
-	 * @param resource $_stream
-	 * @param string $_charset
-	 * @param definition $_definition
+	 * @param importexport_definition $definition $definition
+	 * @param ?importexport_import_csv $import_csv
 	 */
-	public function init(importexport_definition $_definition ) {
-
+	protected function init(importexport_definition $definition, importexport_import_csv $import_csv = null)
+	{
 		// fetch the resource bo
 		$this->bo = new resources_bo();
 

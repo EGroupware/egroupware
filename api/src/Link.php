@@ -1015,7 +1015,7 @@ class Link extends Link\Storage
 				$view[$name] = $id[$n];
 			}
 		}
-		else
+		elseif(is_array($view))
 		{
 			$view[$reg['view_id']] = $id;
 		}

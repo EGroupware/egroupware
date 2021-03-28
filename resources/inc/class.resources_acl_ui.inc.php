@@ -137,7 +137,7 @@ class resources_acl_ui
 				$row['icon_url'] = $GLOBALS['egw_info']['server']['webserver_url'].  resources_bo::ICON_PATH.'/'.$row['data']['icon'];
 			}
 
-			$row['subs'] = count($row['children']);
+			$row['subs'] = count($row['children'] ?? []);
 
 			$row['class'] = 'level'.$row['level'];
 

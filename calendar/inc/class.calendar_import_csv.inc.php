@@ -43,8 +43,10 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 
 	/**
 	 * Set up import
+	 * @param importexport_definition $definition
+	 * @param importexport_import_csv|null $import_csv
 	 */
-	protected function init(importexport_definition &$definition, importexport_import_csv &$import_csv=NULL)
+	protected function init(importexport_definition $definition, importexport_import_csv $import_csv=NULL)
 	{
 		// fetch the addressbook bo
 		$this->bo= new calendar_boupdate();
@@ -76,8 +78,9 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	 *
 	 * @return boolean success
 	 */
-	public function import_record(\calendar_egw_record &$record, &$import_csv)
+	public function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
+		if (!is_a($record, calendar_egw_record::class)) throw new TypeError();
 		// set eventOwner
 		$options =& $this->definition->plugin_options;
 		$options['owner'] = $options['owner'] ? $options['owner'] : $this->user;

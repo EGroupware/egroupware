@@ -3218,7 +3218,7 @@ class calendar_ical extends calendar_boupdate
 		return $event;
 	}
 
-	function search($_vcalData, $contentID=null, $relax=false, $charset=null)
+	function iCalSearch($_vcalData, $contentID=null, $relax=false, $charset=null)
 	{
 		if (($events = $this->icaltoegw($_vcalData, $charset)))
 		{

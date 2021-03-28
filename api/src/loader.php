@@ -24,10 +24,6 @@ use EGroupware\Api\Egw;
 // Declaration of <extended method> should be compatible with <parent method>, varios places where method parameters change
 // --> switching it off for now, as it makes error-log unusable
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
-if (function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
-{
-	set_magic_quotes_runtime(false);
-}
 
 $egw_min_php_version = '7.3';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)
@@ -35,7 +31,7 @@ if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_
 	die("EGroupware requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
 }
 
-if (!defined('EGW_API_INC')) define('EGW_API_INC',PHPGW_API_INC);	// this is to support the header upgrade
+if (!defined('EGW_API_INC') && defined('PHPGW_API_INC')) define('EGW_API_INC',PHPGW_API_INC);	// this is to support the header upgrade
 
 /* Make sure the header.inc.php is current. */
 if (!isset($GLOBALS['egw_domain']) || $GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
@@ -80,7 +76,7 @@ if (Session::init_handler())
 
 			if (is_object($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof Egw))	// only egw object has wakeup2, setups egw_minimal eg. has not!
 			{
-				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
+				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/environment to this request (eg. changed current app)
 
 				$GLOBALS['egw_info']['flags']['session_restore_time'] = microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time'];
 				if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment

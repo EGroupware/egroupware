@@ -204,7 +204,8 @@ class Nextmatch extends Etemplate\Widget
 			{
 				$value['options-cat_id'][''] = lang('All categories');
 			}
-			$value['options-cat_id'] += Select::typeOptions('select-cat', ',,'.$cat_app,$no_lang=true,false,$value['cat_id']);
+			$no_lang = true;
+			$value['options-cat_id'] += Select::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
 			Select::fix_encoded_options($value['options-cat_id']);
 		}
 

@@ -426,7 +426,11 @@ if (!function_exists('display_sidebox'))
 	 */
 	function display_sidebox($appname,$menu_title,$_file)
 	{
-		$file = str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $_file);
+		$file = array_map(function($item)
+		{
+			return is_array($item) ? $item :
+				str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $item);
+		}, $_file);
 		$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 	}
 }

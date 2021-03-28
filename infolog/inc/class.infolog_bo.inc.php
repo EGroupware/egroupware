@@ -1447,9 +1447,10 @@ class infolog_bo
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		foreach ($this->search($params=array(
+		$params = array(
 			'col_filter' => array('info_id' => $ids),
-		)) as $info)
+		);
+		foreach ($this->search($params) as $info)
 		{
 			$titles[$info['info_id']] = $this->link_title($info);
 		}

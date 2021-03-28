@@ -500,7 +500,7 @@ class timesheet_ui extends timesheet_bo
 	 * @param boolean $id_only if true only return (via $rows) an array of contact-ids, dont save state to session
 	 * @return int total number of contacts matching the selection
 	 */
-	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
+	function get_rrows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
 		$end_date = false;
@@ -935,7 +935,7 @@ class timesheet_ui extends timesheet_bo
 			$date_filters['custom'] = 'custom';
 
 			$content['nm'] = array(
-				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rows',
+				'get_rows'       =>	TIMESHEET_APP.'.timesheet_ui.get_rrows',
 				'options-filter' => $date_filters,
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
@@ -1170,7 +1170,7 @@ class timesheet_ui extends timesheet_bo
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
 				$readonlys = null;
-				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+				$this->get_rrows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
 		}
 		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')");

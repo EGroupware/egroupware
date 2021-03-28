@@ -220,8 +220,10 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 	/**
 	 * Stub to hook into import initialization - set lookups, etc.
+	 * @param importexport_definition $definition
+	 * @param importexport_import_csv|null $import_csv
 	 */
-	protected function init(importexport_definition &$definition, importexport_import_csv &$import_csv = null)
+	protected function init(importexport_definition $definition, importexport_import_csv $import_csv = null)
 	{
 	}
 

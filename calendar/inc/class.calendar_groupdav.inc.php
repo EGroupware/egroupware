@@ -1160,7 +1160,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
 		{
 			$handler = $this->_get_handler();
-			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
+			if (($foundEvents = $handler->iCalSearch($vCalendar, null, false, $charset)))
 			{
 				$id = array_shift($foundEvents);
 				list($eventId) = explode(':', $id);
@@ -1548,11 +1548,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param string $path
 	 * @param int|string $retval
 	 * @param boolean $path_attr_is_name =true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 * @param string $etag =null etag, to not calculate it again (if != null)
 	 */
-	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
 	{
 		$schedule_tag = null;
-		$etag = $this->get_etag($entry, $schedule_tag);
+		if (!isset($etag)) $etag = $this->get_etag($entry, $schedule_tag);
 
 		if ($this->use_schedule_tag)
 		{

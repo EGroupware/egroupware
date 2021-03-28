@@ -119,11 +119,11 @@ class calendar_merge extends Api\Storage\Merge
 	 * @param string $charset=null charset to override default set by mimetype or export charset
 	 * @return string|boolean merged document or false on error
 	 */
-	function merge_string($content,$ids,$err,$mimetype,$fix)
+	function &merge_string($content, $ids, &$err, $mimetype, array $fix=null, $charset=null)
 	{
 		$ids = $this->validate_ids((array)$ids, $content);
 
-		return parent::merge_string($content, $ids, $err, $mimetype,$fix);
+		return parent::merge_string($content, $ids, $err, $mimetype, $fix, $charset);
 	}
 
 	/**

@@ -142,7 +142,7 @@ class infolog_tracking extends Api\Storage\Tracking
 	 * @param array $old
 	 * @return string
 	 */
-	function get_subject($data,$old)
+	function get_subject($data, $old, $deleted = null, $receiver = null)
 	{
 		if ($data['prefix'])
 		{
@@ -170,7 +170,7 @@ class infolog_tracking extends Api\Storage\Tracking
 	 * @param array $old
 	 * @return string
 	 */
-	function get_message($data,$old)
+	function get_message($data, $old, $receiver = null)
 	{
 		if ($data['message']) return $data['message'];	// async notification
 

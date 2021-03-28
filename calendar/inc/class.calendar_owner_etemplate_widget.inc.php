@@ -217,7 +217,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					);
 					foreach($lists as $list_id => $list)
 					{
-						$_results[''+$list_id] = array(
+						$_results[(string)$list_id] = array(
 							'label' => $list,
 							'resources' => $bo->enum_mailing_list($type.$list_id)
 						);

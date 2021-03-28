@@ -26,7 +26,7 @@ use EGroupware\Kanban\Hooks;
 class addressbook_ui extends addressbook_bo
 {
 	public $public_functions = array(
-		'search'	=> True,
+		'extSearch'	=> True,
 		'edit'		=> True,
 		'view'		=> True,
 		'index'     => True,
@@ -3301,7 +3301,7 @@ class addressbook_ui extends addressbook_bo
 	 * @param array $_content
 	 * @return string
 	 */
-	function search($_content=array())
+	function extSearch($_content=array())
 	{
 		if(!empty($_content))
 		{
@@ -3481,7 +3481,7 @@ class addressbook_ui extends addressbook_bo
 	 * Migrate contacts to or from LDAP (called by Admin >> Addressbook >> Site configuration (Admin only)
 	 *
 	 */
-	function migrate2ldap()
+	function migrate2ldap($type=null)
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
 		echo $GLOBALS['egw']->framework->header();
@@ -3493,7 +3493,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		else
 		{
-			parent::migrate2ldap($_GET['type']);
+			parent::migrate2ldap($type ?? $_GET['type']);
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
 		}
 		echo $GLOBALS['egw']->framework->footer();

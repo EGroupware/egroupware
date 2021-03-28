@@ -552,7 +552,7 @@ class timesheet_bo extends Api\Storage
 					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
 					'0','NULL','0','0','0','0','0','0',"SUM($total_sql) AS ts_total"
 				),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
-				$sum_extra_cols[$type]{0} = '0';
+				$sum_extra_cols[$type][0] = '0';
 			}
 			$union_order[] = 'ts_start '.$sort;
 			return parent::search('','',implode(',',$union_order),'','',false,'',$start);
@@ -565,10 +565,12 @@ class timesheet_bo extends Api\Storage
 	 *
 	 * @param int $ts_id
 	 * @param boolean $ignore_acl =false should the Acl be checked
+	 * @param string $join ='' *UNSUPPORTED*
 	 * @return array|boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
-	function read($ts_id,$ignore_acl=false)
+	function read($ts_id,$ignore_acl=false,$join='')
 	{
+		if (!is_bool($ignore_acl)) throw new TypeError();
 		//error_log(__METHOD__."($ts_id,$ignore_acl) ".function_backtrace());
 		if (!(int)$ts_id || (int)$ts_id != $this->data['ts_id'] && !parent::read($ts_id))
 		{

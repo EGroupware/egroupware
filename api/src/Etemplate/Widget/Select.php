@@ -654,12 +654,12 @@ class Select extends Etemplate\Widget
 						$options[$cat['id']] += $cat['data'];
 					}
 				}
-				// preserv unavailible cats (eg. private user-cats)
-				if ($value && ($unavailible = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
+				// preserve unavailable cats (eg. private user-cats)
+				if (isset(self::$request) && $value && ($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
 				{
 					// unavailable cats need to be merged in again
 					$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
-					self::$request->preserv[$unavailable_name] = $unavailible;
+					self::$request->preserv[$unavailable_name] = $unavailable;
 				}
 				$no_lang = True;
 				break;
