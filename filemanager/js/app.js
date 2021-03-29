@@ -974,7 +974,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             switch (_action) {
                 case 'login':
                     widget.set_label('Logout');
-                    this.et2.getInstanceMgr().submit(widget);
+                    widget.getRoot().getInstanceManager().submit(widget);
                     break;
                 default:
                     widget.set_label('Superuser');
