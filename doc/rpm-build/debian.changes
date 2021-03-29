@@ -1,3 +1,14 @@
+egroupware-docker (21.1.20210329) hardy; urgency=low
+
+  * 2nd 21.1 pre-release now supporting PHP 7.4 and using it in the container
+  * Infolog: Fix details / no details filter preference was not saved
+  * Kanban: default actions of apps are now available on the cards
+  * Status/BigBlueButton: support record a meeting and play/download it via calendar
+  * Status/BigBlueButton: ad hoc (not scheduled) video calls are no longer deleted on call end and can be toggeled in calendar like cti calls
+  * Admin/ActiveDirector: fixed user list was empty
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 29 Mar 2021 14:30:54 +0200
+
 egroupware-docker (21.1.20210318) hardy; urgency=low
 
   * first beta of upcomming 21.1 release (CE already feature complete, EPL still working on firewall feature)
