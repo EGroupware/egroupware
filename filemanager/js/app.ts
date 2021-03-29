@@ -1174,7 +1174,7 @@ export class filemanagerAPP extends EgwApp
 			{
 				case 'login':
 					widget.set_label('Logout');
-					this.et2.getInstanceMgr().submit(widget);
+					widget.getRoot().getInstanceManager().submit(widget);
 					break;
 
 				default:
