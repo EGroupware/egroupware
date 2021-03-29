@@ -916,8 +916,7 @@ export class et2_date_duration extends et2_date
 		{
 			for (let i = this.options.display_format.length; --i >= 0;)
 			{
-				jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i],
-					i === this.options.display_format.length-1));
+				jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i], !i));
 			}
 			return;
 		}

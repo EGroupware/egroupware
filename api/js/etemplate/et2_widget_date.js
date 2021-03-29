@@ -741,7 +741,7 @@ var et2_date_duration = /** @class */ (function (_super) {
         this.options.value = _value;
         if (!this.options.select_unit && this.options.display_format.length > 1) {
             for (var i = this.options.display_format.length; --i >= 0;) {
-                jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i], i === this.options.display_format.length - 1));
+                jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i], !i));
             }
             return;
         }
