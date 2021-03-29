@@ -74,7 +74,6 @@ class admin_ui
 			'placeholder_actions' => array('add')
 		);
 
-		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
 		$sel_options['filter'] = array('' => lang('All groups'));
 		foreach(self::$accounts->search(array(
@@ -326,6 +325,9 @@ class admin_ui
 	 */
 	public static function get_users(array $query, array &$rows=null)
 	{
+		// release session to allow parallel requests to run
+		$GLOBALS['egw']->session->commit_session();
+
 		$params = array(
 			'type' => (int)$query['filter'] ? (int)$query['filter'] : 'accounts',
 			'start' => $query['start'],
@@ -432,6 +434,9 @@ class admin_ui
 	 */
 	public static function get_groups(&$query, &$rows)
 	{
+		// release session to allow parallel requests to run
+		$GLOBALS['egw']->session->commit_session();
+
 		$groups = $GLOBALS['egw']->accounts->search(array(
 				'type'  => 'groups',
 				'query' => $query['search'],
