@@ -57,7 +57,8 @@ namespace EGroupware\Api;
  *			),
  *			'add_app'    => 'link_app',				// name of get parameter to add links to other app
  *			'add_id'     => 'link_id',				// --------------------- " ------------------- id
- *          'add_popup' => '400x300',				// size of popup (XxY), if add is in popup
+ *			'add_popup' => '400x300',				  // size of popup (XxY), if add is in popup
+ *			'no_quick_add' => false,          // App does not want to be in quick add selectbox, defaults to false
  *			'notify' => 'app.class.method',			// method to be called if an other applications links or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights of a given user, see links_stream_wrapper class
  *													// boolean file_access(string $id,int $check,string $rel_path=null,int $user=null)
@@ -299,7 +300,7 @@ class Link extends Link\Storage
 			{
 				$to_json[$app] = array_intersect_key($data, array_flip(array(
 					'view','view_id','view_popup',
-					'add','add_app','add_id','add_popup',
+					'add','add_app','add_id','add_popup','no_quick_add',
 					'edit','edit_id','edit_popup',
 					'list','list_popup',
 					'name','icon','query',
@@ -1156,6 +1157,8 @@ class Link extends Link\Storage
 						$reg[$name] = $app.'/navbar';
 					}
 					break;
+				case 'quick_add':
+					$reg[$name] = true;
 			}
 		}
 
