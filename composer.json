@@ -96,7 +96,7 @@
 		"oomphinc/composer-installers-extender": "^1.1",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
-		"pear-pear.horde.org/horde_imap_client": "^2.29.7",
+		"egroupware/imap-client": "^2.30.2",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_mapi": "^1.0.9",

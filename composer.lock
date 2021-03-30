@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5497944e56c87a0be09e444b46a36bbe",
+    "content-hash": "af28c2a906dbe4e6cae69eff40ed3917",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -827,12 +827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "9b434a23f67189b75390aa8e2406f748c217c70a"
+                "reference": "6b8c487765f3c57bad3ebaf6dd8faba712043b6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/9b434a23f67189b75390aa8e2406f748c217c70a",
-                "reference": "9b434a23f67189b75390aa8e2406f748c217c70a",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/6b8c487765f3c57bad3ebaf6dd8faba712043b6c",
+                "reference": "6b8c487765f3c57bad3ebaf6dd8faba712043b6c",
                 "shasum": ""
             },
             "require": {
@@ -860,7 +860,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-28T08:12:54+00:00"
+            "time": "2021-02-03T07:03:40+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -922,12 +922,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "351bdd1230900b7b92dd0dcc8855f521f3d8a3ad"
+                "reference": "bae0f50dfb7907ad100c6bb99ef38042c94c28fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/351bdd1230900b7b92dd0dcc8855f521f3d8a3ad",
-                "reference": "351bdd1230900b7b92dd0dcc8855f521f3d8a3ad",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/bae0f50dfb7907ad100c6bb99ef38042c94c28fb",
+                "reference": "bae0f50dfb7907ad100c6bb99ef38042c94c28fb",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +946,7 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-06-28T08:12:58+00:00"
+            "time": "2021-03-17T20:00:46+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -954,12 +954,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "367dcdd474eaa9c77f40440666816c6c9264e48c"
+                "reference": "6aa64709622a059671a79fd2744b597e53b40508"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/367dcdd474eaa9c77f40440666816c6c9264e48c",
-                "reference": "367dcdd474eaa9c77f40440666816c6c9264e48c",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/6aa64709622a059671a79fd2744b597e53b40508",
+                "reference": "6aa64709622a059671a79fd2744b597e53b40508",
                 "shasum": ""
             },
             "require": {
@@ -986,7 +986,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-12-02T17:55:01+00:00"
+            "time": "2021-03-16T18:55:08+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -1106,6 +1106,73 @@
             "time": "2019-02-09T00:00:00+00:00"
         },
         {
+            "name": "egroupware/imap-client",
+            "version": "2.30.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Imap_Client.git",
+                "reference": "8d80312313188082733e45e6d674ecfe15b7eb8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/8d80312313188082733e45e6d674ecfe15b7eb8e",
+                "reference": "8d80312313188082733e45e6d674ecfe15b7eb8e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-hash": "*",
+                "ext-json": "*",
+                "pear-pear.horde.org/horde_exception": "^2",
+                "pear-pear.horde.org/horde_mail": "^2",
+                "pear-pear.horde.org/horde_mime": "^2.5.2",
+                "pear-pear.horde.org/horde_secret": "^2",
+                "pear-pear.horde.org/horde_socket_client": "^2",
+                "pear-pear.horde.org/horde_stream": "^1.4",
+                "pear-pear.horde.org/horde_stream_filter": "^2",
+                "pear-pear.horde.org/horde_translation": "^2.2",
+                "pear-pear.horde.org/horde_util": "^2",
+                "php": "^5.3 || ^7"
+            },
+            "replace": {
+                "pear-horde/horde_imap_client": "2.*",
+                "pear-pear.horde.org/horde_imap_client": "2.*"
+            },
+            "suggest": {
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "pear-pear.horde.org/Horde_Cache": "^2",
+                "pear-pear.horde.org/Horde_Compress_Fast": "^1",
+                "pear-pear.horde.org/Horde_Crypt_Blowfish": "^1.1",
+                "pear-pear.horde.org/Horde_Db": "^2.2",
+                "pear-pear.horde.org/Horde_HashTable": "^1",
+                "pear-pear.horde.org/Horde_Mongo": "^1",
+                "pear-pear.horde.org/Horde_Pack": "^1",
+                "pear-pear.horde.org/Horde_Stringprep": "^1",
+                "pear-pear.horde.org/Horde_Support": "^2",
+                "pear-pear.horde.org/Horde_Test": "^2.2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Imap_Client": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "lead"
+                }
+            ],
+            "description": "IMAP client library",
+            "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
+            "time": "2019-09-29T00:00:00+00:00"
+        },
+        {
             "name": "egroupware/magicsuggest",
             "version": "2.1.5",
             "source": {
@@ -1148,12 +1215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "b13811240800cecc5c30591f40aa63ad24f75569"
+                "reference": "327515fa0832f8d82733122ebe21d65c0acfccfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/b13811240800cecc5c30591f40aa63ad24f75569",
-                "reference": "b13811240800cecc5c30591f40aa63ad24f75569",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/327515fa0832f8d82733122ebe21d65c0acfccfa",
+                "reference": "327515fa0832f8d82733122ebe21d65c0acfccfa",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1239,7 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-08-18T12:52:24+00:00"
+            "time": "2021-03-28T18:36:20+00:00"
         },
         {
             "name": "egroupware/openid",
@@ -1180,12 +1247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "b17ad22c03c5b5f9b196844ecfd04d3c6a115f91"
+                "reference": "87b543ed30ac5f932f6e3804dad99582d2db6126"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/b17ad22c03c5b5f9b196844ecfd04d3c6a115f91",
-                "reference": "b17ad22c03c5b5f9b196844ecfd04d3c6a115f91",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/87b543ed30ac5f932f6e3804dad99582d2db6126",
+                "reference": "87b543ed30ac5f932f6e3804dad99582d2db6126",
                 "shasum": ""
             },
             "require": {
@@ -1221,7 +1288,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-11-20T11:37:42+00:00"
+            "time": "2021-02-25T18:25:58+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1229,12 +1296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "8daa734a55cc3bb6d784245a67ab72ebdb09060d"
+                "reference": "2a04fdafe255c0e869734199972bd3b5bd523ea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8daa734a55cc3bb6d784245a67ab72ebdb09060d",
-                "reference": "8daa734a55cc3bb6d784245a67ab72ebdb09060d",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/2a04fdafe255c0e869734199972bd3b5bd523ea1",
+                "reference": "2a04fdafe255c0e869734199972bd3b5bd523ea1",
                 "shasum": ""
             },
             "require": {
@@ -1262,7 +1329,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-01-18T17:30:06+00:00"
+            "time": "2021-03-28T18:30:25+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1270,12 +1337,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5"
+                "reference": "3759e01f8d8cc58c91695b2a36bf28b3fbf35c55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5",
-                "reference": "ce03d26f4212c07b3b0cb1d765b4d630ec6f2ce5",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/3759e01f8d8cc58c91695b2a36bf28b3fbf35c55",
+                "reference": "3759e01f8d8cc58c91695b2a36bf28b3fbf35c55",
                 "shasum": ""
             },
             "require": {
@@ -1311,7 +1378,7 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-10-28T12:52:21+00:00"
+            "time": "2021-03-26T15:09:52+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -1319,12 +1386,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "7755524e37c55aa3d296909656a02f44e7cef351"
+                "reference": "bd79b22828aba15dacd1090998fe39068c0a2ab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/7755524e37c55aa3d296909656a02f44e7cef351",
-                "reference": "7755524e37c55aa3d296909656a02f44e7cef351",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/bd79b22828aba15dacd1090998fe39068c0a2ab0",
+                "reference": "bd79b22828aba15dacd1090998fe39068c0a2ab0",
                 "shasum": ""
             },
             "require": {
@@ -1351,7 +1418,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2020-12-17T15:02:38+00:00"
+            "time": "2021-03-16T16:00:54+00:00"
         },
         {
             "name": "egroupware/smallpart",
@@ -1359,12 +1426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "4b40445279051f99432eb053bed7f047e3d5823b"
+                "reference": "49639e7a3d4fc7086ea75652df2f003a36153d60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/4b40445279051f99432eb053bed7f047e3d5823b",
-                "reference": "4b40445279051f99432eb053bed7f047e3d5823b",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/49639e7a3d4fc7086ea75652df2f003a36153d60",
+                "reference": "49639e7a3d4fc7086ea75652df2f003a36153d60",
                 "shasum": ""
             },
             "require": {
@@ -1397,7 +1464,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-01-18T18:31:14+00:00"
+            "time": "2021-03-29T18:09:27+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1405,12 +1472,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "920903fa5cad8e0e788c071dc19f55b8fa7022ea"
+                "reference": "e54787a19ae92014bef4ed026437f67f5578651b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/920903fa5cad8e0e788c071dc19f55b8fa7022ea",
-                "reference": "920903fa5cad8e0e788c071dc19f55b8fa7022ea",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/e54787a19ae92014bef4ed026437f67f5578651b",
+                "reference": "e54787a19ae92014bef4ed026437f67f5578651b",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1504,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-01-15T13:20:16+00:00"
+            "time": "2021-03-29T13:56:54+00:00"
         },
         {
             "name": "egroupware/swoolepush",
@@ -1487,12 +1554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "57bd9da6fc156bf0865adee33a3ca200d762dd5c"
+                "reference": "8eebaa74e7062c3430d0fa96f262a21c61318139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/57bd9da6fc156bf0865adee33a3ca200d762dd5c",
-                "reference": "57bd9da6fc156bf0865adee33a3ca200d762dd5c",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/8eebaa74e7062c3430d0fa96f262a21c61318139",
+                "reference": "8eebaa74e7062c3430d0fa96f262a21c61318139",
                 "shasum": ""
             },
             "require": {
@@ -1519,7 +1586,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-01-08T17:27:12+00:00"
+            "time": "2021-03-28T18:31:56+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -2747,10 +2814,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.2.tgz"
+                "url": "https://pear.horde.org/get/Horde_Compress-2.2.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2760,7 +2827,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_compress": "== 2.2.2.0"
+                "pear-horde/horde_compress": "== 2.2.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -2774,7 +2841,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "An API for various compression techniques."
+            "description": "A library to wrap various compression techniques."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
@@ -2815,10 +2882,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt_Blowfish",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz"
+                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2826,7 +2893,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_crypt_blowfish": "== 1.1.2.0"
+                "pear-horde/horde_crypt_blowfish": "== 1.1.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -2840,7 +2907,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides blowfish encryption/decryption for PHP string data."
+            "description": "A library that provides blowfish encryption/decryption for PHP string data."
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
@@ -2931,10 +2998,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Idna",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz"
+                "url": "https://pear.horde.org/get/Horde_Idna-1.1.2.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -2942,7 +3009,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_idna": "== 1.1.1.0"
+                "pear-horde/horde_idna": "== 1.1.2.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -2956,45 +3023,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "Normalized access to various backends providing IDNA (Internationalized Domain Names in Applications) support."
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.17",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.17.tgz"
-            },
-            "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
-                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
-                "pear-pear.horde.org/horde_mail": "<3.0.0.0",
-                "pear-pear.horde.org/horde_mime": "<3.0.0.0",
-                "pear-pear.horde.org/horde_secret": "<3.0.0.0",
-                "pear-pear.horde.org/horde_socket_client": "<3.0.0.0",
-                "pear-pear.horde.org/horde_stream": "<2.0.0.0",
-                "pear-pear.horde.org/horde_stream_filter": "<3.0.0.0",
-                "pear-pear.horde.org/horde_translation": "<3.0.0.0",
-                "pear-pear.horde.org/horde_util": "<3.0.0.0",
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.17.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "Interface to access IMAP4rev1 (RFC 3501) mail servers. Also supports connections to POP3 (STD 53/RFC 1939)."
+            "description": "A library that wraps various backends providing IDNA (Internationalized Domain Names in Applications) support."
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
@@ -3061,10 +3090,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_ManageSieve",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz"
+                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -3073,7 +3102,7 @@
                 "php": ">=5.4.0.0"
             },
             "replace": {
-                "pear-horde/horde_managesieve": "== 1.0.2.0"
+                "pear-horde/horde_managesieve": "== 1.0.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3085,9 +3114,9 @@
                 "/"
             ],
             "license": [
-                "BSD"
+                "BSD-2-Clause"
             ],
-            "description": "This library implements the ManageSieve protocol (RFC 5804)."
+            "description": "A library that implements the ManageSieve protocol (RFC 5804)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Mapi",
@@ -3121,10 +3150,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mime",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.11.0.tgz"
+                "url": "https://pear.horde.org/get/Horde_Mime-2.11.1.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -3139,7 +3168,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mime": "== 2.11.0.0"
+                "pear-horde/horde_mime": "== 2.11.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3153,7 +3182,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides methods for dealing with Multipurpose Internet Mail Extensions (MIME) features (RFC 2045/2046/2047)."
+            "description": "A library that provides methods for dealing with Multipurpose Internet Mail Extensions (MIME) features (RFC 2045/2046/2047)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Nls",
@@ -3217,10 +3246,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Smtp",
-            "version": "1.9.5",
+            "version": "1.9.6",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz"
+                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.6.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -3232,7 +3261,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_smtp": "== 1.9.5.0"
+                "pear-horde/horde_smtp": "== 1.9.6.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3246,21 +3275,21 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides interfaces for connecting to a SMTP (RFC 5321) server to send e-mail messages."
+            "description": "A library for connecting to a SMTP (RFC 5321) server to send e-mail messages."
         },
         {
             "name": "pear-pear.horde.org/Horde_Socket_Client",
-            "version": "2.1.2",
+            "version": "2.1.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.2.tgz"
+                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.3.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_socket_client": "== 2.1.2.0"
+                "pear-horde/horde_socket_client": "== 2.1.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3274,7 +3303,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "Provides abstract class for use in creating PHP network socket clients."
+            "description": "A library that provides an abstract PHP network socket client."
         },
         {
             "name": "pear-pear.horde.org/Horde_Stream",
@@ -3390,10 +3419,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Diff",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.0.tgz"
+                "url": "https://pear.horde.org/get/Horde_Text_Diff-2.2.1.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "<3.0.0.0",
@@ -3401,7 +3430,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_text_diff": "== 2.2.0.0"
+                "pear-horde/horde_text_diff": "== 2.2.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3415,21 +3444,21 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "A text-based diff engine and renderers for multiple diff output formats."
+            "description": "A library that provides a text-based diff engine and renderers for multiple diff output formats."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Flowed",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz"
+                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.4.tgz"
             },
             "require": {
                 "pear-pear.horde.org/horde_util": "<3.0.0.0",
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_text_flowed": "== 2.0.3.0"
+                "pear-horde/horde_text_flowed": "== 2.0.4.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3443,7 +3472,7 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "The Horde_Text_Flowed:: class provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
+            "description": "A library that provides common methods for manipulating text using the encoding described in RFC 3676 ('flowed' text)."
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
@@ -3502,17 +3531,17 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Util",
-            "version": "2.5.8",
+            "version": "2.5.9",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz"
+                "url": "https://pear.horde.org/get/Horde_Util-2.5.9.tgz"
             },
             "require": {
                 "ext-dom": "*",
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_util": "== 2.5.8.0"
+                "pear-horde/horde_util": "== 2.5.9.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -3526,20 +3555,20 @@
             "license": [
                 "LGPL-2.1"
             ],
-            "description": "These classes provide functionality useful for all kind of applications."
+            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.4.12",
+            "version": "1.4.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "19bb8e95490d3e3ad92fcac95500ca80bdcc7495"
+                "reference": "2b87b41178cc6d4ad3cba678a46a1cae49786011"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/19bb8e95490d3e3ad92fcac95500ca80bdcc7495",
-                "reference": "19bb8e95490d3e3ad92fcac95500ca80bdcc7495",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/2b87b41178cc6d4ad3cba678a46a1cae49786011",
+                "reference": "2b87b41178cc6d4ad3cba678a46a1cae49786011",
                 "shasum": ""
             },
             "require": {
@@ -3592,7 +3621,7 @@
                 "archive",
                 "tar"
             ],
-            "time": "2021-01-18T19:32:54+00:00"
+            "time": "2021-02-16T10:50:50+00:00"
         },
         {
             "name": "pear/auth_sasl",
@@ -3649,16 +3678,16 @@
         },
         {
             "name": "pear/console_getopt",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Console_Getopt.git",
-                "reference": "6c77aeb625b32bd752e89ee17972d103588b90c0"
+                "reference": "a41f8d3e668987609178c7c4a9fe48fecac53fa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Console_Getopt/zipball/6c77aeb625b32bd752e89ee17972d103588b90c0",
-                "reference": "6c77aeb625b32bd752e89ee17972d103588b90c0",
+                "url": "https://api.github.com/repos/pear/Console_Getopt/zipball/a41f8d3e668987609178c7c4a9fe48fecac53fa0",
+                "reference": "a41f8d3e668987609178c7c4a9fe48fecac53fa0",
                 "shasum": ""
             },
             "type": "library",
@@ -3676,11 +3705,6 @@
             ],
             "authors": [
                 {
-                    "name": "Greg Beaver",
-                    "email": "cellog@php.net",
-                    "role": "Helper"
-                },
-                {
                     "name": "Andrei Zmievski",
                     "email": "andrei@php.net",
                     "role": "Lead"
@@ -3689,27 +3713,32 @@
                     "name": "Stig Bakken",
                     "email": "stig@php.net",
                     "role": "Developer"
+                },
+                {
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
+                    "role": "Helper"
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/Console_Getopt",
-            "time": "2019-02-06T16:52:33+00:00"
+            "time": "2019-11-20T18:27:48+00:00"
         },
         {
             "name": "pear/log",
-            "version": "1.13.1",
+            "version": "1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Log.git",
-                "reference": "c4be9ded2353c7c231d4c35cc3da75b209453803"
+                "reference": "d8cde3dba893a36ec561bf6188fdc39f4221c4d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Log/zipball/c4be9ded2353c7c231d4c35cc3da75b209453803",
-                "reference": "c4be9ded2353c7c231d4c35cc3da75b209453803",
+                "url": "https://api.github.com/repos/pear/Log/zipball/d8cde3dba893a36ec561bf6188fdc39f4221c4d3",
+                "reference": "d8cde3dba893a36ec561bf6188fdc39f4221c4d3",
                 "shasum": ""
             },
             "require": {
-                "pear/pear_exception": "1.0.0",
+                "pear/pear_exception": "1.0.1",
                 "php": ">5.2"
             },
             "require-dev": {
@@ -3745,20 +3774,20 @@
                 "log",
                 "logging"
             ],
-            "time": "2016-04-16T00:49:33+00:00"
+            "time": "2020-06-02T00:04:03+00:00"
         },
         {
             "name": "pear/pear",
-            "version": "v1.10.9",
+            "version": "v1.10.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/pear-core.git",
-                "reference": "82be5c2eed1dde9def0a84cc3420778b8b0ab9b8"
+                "reference": "6162562db95379bcfa906b569ecd0c85d4ee7364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/pear-core/zipball/82be5c2eed1dde9def0a84cc3420778b8b0ab9b8",
-                "reference": "82be5c2eed1dde9def0a84cc3420778b8b0ab9b8",
+                "url": "https://api.github.com/repos/pear/pear-core/zipball/6162562db95379bcfa906b569ecd0c85d4ee7364",
+                "reference": "6162562db95379bcfa906b569ecd0c85d4ee7364",
                 "shasum": ""
             },
             "require": {
@@ -3794,14 +3823,14 @@
             ],
             "authors": [
                 {
-                    "name": "Helgi Thormar",
-                    "email": "dufuz@php.net",
+                    "name": "Greg Beaver",
+                    "email": "cellog@php.net",
                     "role": "Lead"
                 },
                 {
-                    "name": "Martin Jansen",
-                    "email": "mj@php.net",
-                    "role": "Helper"
+                    "name": "Pierre-Alain Joye",
+                    "email": "pierre@php.net",
+                    "role": "Lead"
                 },
                 {
                     "name": "Stig Bakken",
@@ -3809,8 +3838,13 @@
                     "role": "Lead"
                 },
                 {
-                    "name": "Pierre-Alain Joye",
-                    "email": "pierre@php.net",
+                    "name": "Tomas V.V.Cox",
+                    "email": "cox@idecnet.com",
+                    "role": "Lead"
+                },
+                {
+                    "name": "Helgi Thormar",
+                    "email": "dufuz@php.net",
                     "role": "Lead"
                 },
                 {
@@ -3829,31 +3863,26 @@
                     "role": "Helper"
                 },
                 {
-                    "name": "Greg Beaver",
-                    "email": "cellog@php.net",
-                    "role": "Lead"
-                },
-                {
-                    "name": "Tomas V.V.Cox",
-                    "email": "cox@idecnet.com",
-                    "role": "Lead"
+                    "name": "Martin Jansen",
+                    "email": "mj@php.net",
+                    "role": "Helper"
                 }
             ],
             "description": "This is the definitive source of PEAR's core files.",
-            "time": "2019-03-13T17:59:48+00:00"
+            "time": "2020-04-19T18:01:13+00:00"
         },
         {
             "name": "pear/pear_exception",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/PEAR_Exception.git",
-                "reference": "8c18719fdae000b690e3912be401c76e406dd13b"
+                "reference": "dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
-                "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7",
+                "reference": "dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7",
                 "shasum": ""
             },
             "require": {
@@ -3869,9 +3898,9 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "PEAR": ""
-                }
+                "classmap": [
+                    "PEAR/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "include-path": [
@@ -3895,7 +3924,7 @@
             "keywords": [
                 "exception"
             ],
-            "time": "2015-02-10T20:07:52+00:00"
+            "time": "2019-12-10T10:24:42+00:00"
         },
         {
             "name": "pear/structures_graph",
@@ -3983,16 +4012,16 @@
         },
         {
             "name": "pear/xml_util",
-            "version": "v1.4.3",
+            "version": "v1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/XML_Util.git",
-                "reference": "c74278d925be9c2f7d39955cdce45d8275571a1d"
+                "reference": "90052e3e7c099ffce3bc83ec4210f88a40b8419a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/XML_Util/zipball/c74278d925be9c2f7d39955cdce45d8275571a1d",
-                "reference": "c74278d925be9c2f7d39955cdce45d8275571a1d",
+                "url": "https://api.github.com/repos/pear/XML_Util/zipball/90052e3e7c099ffce3bc83ec4210f88a40b8419a",
+                "reference": "90052e3e7c099ffce3bc83ec4210f88a40b8419a",
                 "shasum": ""
             },
             "require": {
@@ -4000,7 +4029,7 @@
                 "php": ">=5.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "@stable"
+                "phpunit/phpunit": "<=7"
             },
             "type": "library",
             "autoload": {
@@ -4017,13 +4046,13 @@
             ],
             "authors": [
                 {
-                    "name": "Stephan Schmidt",
-                    "email": "schst@php-tools.net",
+                    "name": "Chuck Burgess",
+                    "email": "ashnazg@php.net",
                     "role": "Lead"
                 },
                 {
-                    "name": "Chuck Burgess",
-                    "email": "ashnazg@php.net",
+                    "name": "Stephan Schmidt",
+                    "email": "schst@php-tools.net",
                     "role": "Lead"
                 },
                 {
@@ -4034,7 +4063,7 @@
             ],
             "description": "Methods to work with XML documents",
             "homepage": "http://pear.php.net/package/XML_Util",
-            "time": "2017-06-28T19:21:19+00:00"
+            "time": "2020-04-19T15:08:27+00:00"
         },
         {
             "name": "php-middleware/log-http-messages",
