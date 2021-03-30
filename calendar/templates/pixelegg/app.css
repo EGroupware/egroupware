@@ -89,6 +89,7 @@
 }
 #calendar-sidebox_cat_id {
   width: 90%;
+  margin-bottom: 10px;
 }
 #calendar-sidebox_cat_id ~ * {
   vertical-align: top;
