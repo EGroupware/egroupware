@@ -657,7 +657,7 @@ class mail_hooks
 					// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
 					$headers = $bomail->getHeaders($notify_folder, 1, 999, 0, true, $_filter,null,false);
 					if(is_array($headers['header']) && count($headers['header']) > 0) {
-						foreach($headers['header'] as $id=>$header) {
+						foreach($headers['header'] as $header) {
 							// check if unseen mail has already been notified
 							$headerrowid = mail_ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
 						 	if(!in_array($headerrowid, $notified_mail_uidsCache[$activeProfile][$notify_folder])) {

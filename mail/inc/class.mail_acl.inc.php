@@ -162,8 +162,9 @@ class mail_acl
 				$n = 1;
 				foreach ($acl as $key => $value)
 				{
-					$virtuals = array_pop(array_values((array)$value));
-					$rights = array_shift(array_values((array)$value));
+					$parts = array_values((array)$value);
+					$virtuals = array_pop($parts);
+					$rights = array_shift($parts);
 
 					foreach ($rights as $right)
 					{

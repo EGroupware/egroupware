@@ -2803,7 +2803,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
 		$filename = ($attachment['name']?$attachment['name']:($attachment['filename']?$attachment['filename']:$mailbox.'_uid'.$uid.'_part'.$part));
-		Api\Header\Content::safe($attachment['attachment'], $filename, $attachment['type'], $size=0, True, $_GET['mode'] == "save");
+		$size = 0;
+		Api\Header\Content::safe($attachment['attachment'], $filename, $attachment['type'], $size, True, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
 		exit();
@@ -2845,18 +2846,20 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 
 		$GLOBALS['egw']->session->commit_session();
+		$headers = Horde_Mime_Headers::parseHeaders($message);
+		$subject = str_replace('$$','__',Mail::decode_header($headers['SUBJECT']));
 		if (!$display)
 		{
-			$headers = Horde_Mime_Headers::parseHeaders($message);
-			$subject = str_replace('$$','__',Mail::decode_header($headers['SUBJECT']));
 			$subject = Api\Mail::clean_subject_for_filename($subject);
-			Api\Header\Content::safe($message, $subject.".eml", $mime='message/rfc822', $size=0, true, true);
+			$mime='message/rfc822';
+			Api\Header\Content::safe($message, $subject.".eml", $mime);
 			echo $message;
 		}
 		else
 		{
 			$subject = Api\Mail::clean_subject_for_filename($subject);
-			Api\Header\Content::safe($message, $subject.".eml", $mime='text/html', $size=0, true, false);
+			$mime='text/html'; $size=0;
+			Api\Header\Content::safe($message, $subject.".eml", $mime, $size, true, false);
 			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES|ENT_SUBSTITUTE, 'utf-8') .'</pre>';
 		}
 	}
@@ -3387,7 +3390,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$body = '';
 
 		//error_log(__METHOD__.array2string($bodyParts)); //exit;
-		if (empty($bodyParts)) return "";
+		if (empty($bodyParts))
+		{
+			$ret = '';
+			return $ret;
+		}
 		foreach((array)$bodyParts as $singleBodyPart) {
 			if (!isset($singleBodyPart['body'])) {
 				$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart,$modifyURI,$useTidy);
@@ -3462,26 +3469,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 				// create links for websites
 				if ($modifyURI) $newBody = Api\Html::activate_links($newBody);
-				//error_log(__METHOD__.__LINE__.'..'.$newBody);
-				// redirect links for websites if you use no cookies
-				#if (!($GLOBALS['egw_info']['server']['usecookies']))
-				#	$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
-				#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"Mail::$displayCharset\").'\"'", $newBody);
 
 				// create links for email addresses
-				//TODO:if ($modifyURI) $this->parseEmail($newBody);
 				// create links for inline images
 				if ($modifyURI)
 				{
 					$newBody = self::resolve_inline_images($newBody, $this->mailbox, $this->uid, $this->partID, 'plain');
 				}
 
-				//TODO:$newBody	= $this->highlightQuotes($newBody);
 				// to display a mailpart of mimetype plain/text, may be better taged as preformatted
-				#$newBody	= nl2br($newBody);
-				// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
-				//error_log(__METHOD__.__LINE__.'..'.$newBody);
-				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
 				$newBody	= "<pre>".Mail::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
 			}
 			else
@@ -3503,22 +3499,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						$newBody = $cleaned;
 					}
-					if (!$preserveHTML)	// ToDo KL: $preserveHTML is NOT initialised, so always if is dead code
+					// filter only the 'body', as we only want that part, if we throw away the Api\Html
+					if (preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches) && !empty($matches[2]))
 					{
-						// filter only the 'body', as we only want that part, if we throw away the Api\Html
-						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
-						if ($matches[2])
-						{
-							$hasOther = true;
-							$newBody = $matches[2];
-						}
+						$hasOther = true;
+						$newBody = $matches[2];
 					}
 				}
 				else
 				{
 					// htmLawed filter only the 'body'
-					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches=array());
-					if ($matches[2])
+					if (preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches)&& !empty($matches[2]))
 					{
 						$hasOther = true;
 						$newBody = $matches[2];
@@ -3528,28 +3519,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					// as we switched off HTMLaweds tidy functionality
 					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
 					$newBody = $htmLawed->run($newBody,Mail::$htmLawed_config);
-					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 					$alreadyHtmlLawed=true;
 				}
 				// do the cleanup, set for the use of purifier
-				//$newBodyBuff = $newBody;
-				/* if (!$alreadyHtmlLawed)*/ Mail::getCleanHTML($newBody);
-/*
-				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-				if (strtoupper(Mail::$displayCharset) == 'UTF-8')
-				{
-					$test = @json_encode($newBody);
-					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-					if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
-					{
-						$newBody = $newBodyBuff;
-						$tv = Mail::$htmLawed_config['tidy'];
-						Mail::$htmLawed_config['tidy'] = 0;
-						Mail::getCleanHTML($newBody);
-						Mail::$htmLawed_config['tidy'] = $tv;
-					}
-				}
-*/
+				Mail::getCleanHTML($newBody);
+
 				// removes stuff between http and ?http
 				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
@@ -3558,10 +3532,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					"\\1@\\2.\\3",
 					$newBody);
 
-				// redirect links for websites if you use no cookies
-				#if (!($GLOBALS['egw_info']['server']['usecookies'])) { //do it all the time, since it does mask the mailadresses in urls
-					//TODO:if ($modifyURI) $this->parseHREF($newBody);
-				#}
 				// create links for inline images
 				if ($modifyURI)
 				{
@@ -3872,6 +3842,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		//error_log(__METHOD__.__LINE__.array2string($_formData));
 		if (empty($_formData['file'])) $_formData['file'] = $_formData['tmp_name'];
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		$alert_msg = '';
 		try
 		{
 			$tmpFileName = Mail::checkFileBasics($_formData,$importID);
@@ -4909,7 +4880,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
 
 			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
-			$fShortName =  array_pop(explode($heirarchyDelimeter, $junkFolder));
+			$parts = explode($heirarchyDelimeter, $junkFolder);
+			$fShortName = array_pop($parts);
 			$fStatus = array(
 				$icServerID.self::$delimiter.$junkFolder => lang($fShortName)
 			);
@@ -4959,7 +4931,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->mail_bo->compressFolder($trashFolder);
 
 			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
-			$fShortName =  array_pop(explode($heirarchyDelimeter, $trashFolder));
+			$parts = explode($heirarchyDelimeter, $trashFolder);
+			$fShortName = array_pop($parts);
 			$fStatus = array(
 				$icServerID.self::$delimiter.$trashFolder => lang($fShortName)
 			);
@@ -5077,8 +5050,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						if ($query['enddate']) $cutoffdate2 = Api\DateTime::to($query['enddate'],'ts');//BEFORE, startdate
 						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 						$filter = array(
-							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'filterName' => lang('subject'),
+							'type' => ($query['cat_id']?$query['cat_id']:'subject'),
 							'string' => $query['search'],
 							'status' => 'any',//this is a status change. status will be manipulated later on
 							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
@@ -5112,12 +5085,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter2toggle['status'][] = $query['filter'];
 						}
+						$reverse = 1;
+						$rByUid = true;
 						$_sRt = $this->mail_bo->getSortedList(
 							$folder,
 							$sort = 0,
-							$reverse = 1,
+							$reverse,
 							$filter2toggle,
-							$rByUid = true,
+							$rByUid,
 							false
 						);
 						$messageListForToggle = $_sRt['match']->ids;
@@ -5126,12 +5101,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter['status'][] = $query['filter'];
 						}
+						$reverse = 1;
+						$rByUid = true;
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
 							$sort = 0,
-							$reverse = 1,
+							$reverse,
 							$filter,
-							$rByUid = true,
+							$rByUid,
 							false
 						);
 						$messageList = $_sR['match']->ids;
@@ -5267,8 +5244,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						if ($query['enddate']) $cutoffdate2 = Api\DateTime::to($query['enddate'],'ts');//BEFORE, startdate
 						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 						$filter = array(
-							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'filterName' => lang('subject'),
+							'type' => ($query['cat_id']?$query['cat_id']:'subject'),
 							'string' => $query['search'],
 							'status' => (!empty($query['filter'])?$query['filter']:'any'),
 							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
@@ -5429,8 +5406,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						if ($query['enddate']) $cutoffdate2 = Api\DateTime::to($query['enddate'],'ts');//BEFORE, startdate
 						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 						$filter = array(
-							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'filterName' => lang('subject'),
+							'type' => ($query['cat_id']?$query['cat_id']:'subject'),
 							'string' => $query['search'],
 							'status' => (!empty($query['filter'])?$query['filter']:'any'),
 							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
@@ -5458,7 +5435,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$sort=0,
 						$reverse,
 						$filter,
-						$rByUid=true,
+						$rByUid,
 						false
 					);
 					$messageList = $_sR['match']->ids;

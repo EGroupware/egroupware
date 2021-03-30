@@ -400,7 +400,7 @@ class mail_integration {
 			'html_message' => $mailcontent['html_message'],
 			'date' => $mailcontent['date'],
 			'subject' => $mailcontent['subject'],
-			'entry_id' => $app_entry_id
+			'entry_id' => null,
 		);
 	}
 

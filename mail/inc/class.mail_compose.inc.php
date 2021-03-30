@@ -1073,7 +1073,8 @@ class mail_compose
 			if (($_REQUEST['mimeType']=="text" ||$_REQUEST['mimeType']=="plain") && $content['mimeType'] == 'html')
 			{
 				$_content['mimeType'] = $content['mimeType']  = 'plain';
-				$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
+				$html = str_replace(array("\n\r","\n"),' ',$content['body']);
+				$content['body'] = $this->convertHTMLToText($html);
 			}
 			if ($_REQUEST['mimeType']=="html" && $content['mimeType'] != 'html')
 			{
@@ -1092,7 +1093,8 @@ class mail_compose
 					$content['mimeType'] == 'html')
 				{
 					$_content['mimeType'] = $content['mimeType']  = 'plain';
-					$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
+					$html = str_replace(array("\n\r","\n"),' ',$content['body']);
+					$content['body'] = $this->convertHTMLToText($html);
 				}
 				if (!empty($this->mailPreferences['replyOptions']) && $this->mailPreferences['replyOptions']=="html" &&
 					$content['mimeType'] != 'html')
@@ -1553,10 +1555,10 @@ class mail_compose
 				case 'forward':
 					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asmail');
 					// this fill the session data with the values from the original email
-					foreach ($replyIds as &$mail_id)
+					foreach ($replyIds as &$m_id)
 					{
-						//error_log(__METHOD__.__LINE__.' ID:'.$mail_id.' Mode:'.$mode);
-						$hA = mail_ui::splitRowID($mail_id);
+						//error_log(__METHOD__.__LINE__.' ID:'.$m_id.' Mode:'.$mode);
+						$hA = mail_ui::splitRowID($m_id);
 						$msgUID = $hA['msgUID'];
 						$folder = $hA['folder'];
 						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
@@ -1609,13 +1611,6 @@ class mail_compose
 						$this->mail_bo->profileID.mail_ui::$delimiter.
 						base64_encode($folder).mail_ui::$delimiter.$merged_mail_id;
 					$content = $this->getComposeFrom($merged_mail_id, $part_id, 'composefromdraft', $_focusElement, $suppressSigOnTop, $isReply);
-				}
-				else
-				{
-					$success = implode(', ',$results['success']);
-					$fail = implode(', ', $results['failed']);
-					if($success) Framework::message($success, 'success');
-					Framework::window_close($fail);
 				}
 			}
 			catch (Api\Exception\WrongUserinput $e)
@@ -2116,7 +2111,8 @@ class mail_compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		Api\Header\Content::safe($attachment['attachment'], $attachment['name'], $attachment['type'], $size=0, true, $_GET['mode'] == "save");
+		$size = 0;
+		Api\Header\Content::safe($attachment['attachment'], $attachment['name'], $attachment['type'], $size, true, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
 		exit();

@@ -658,12 +658,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$this->mail->reopen($folder);
             // receive entire mail (header + body)
 			// get message headers for specified message
-			$headers	= $this->mail->getMessageEnvelope($uid, $_partID, true, $folder);
+			$headers	= $this->mail->getMessageEnvelope($uid, '', true, $folder);
 			// build a new mime message, forward entire old mail as file
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
-				$rawHeader      = $this->mail->getMessageRawHeader($smartdata->source->itemid, $_partID,$folder);
-				$rawBody        = $this->mail->getMessageRawBody($smartdata->source->itemid, $_partID,$folder);
+				$rawHeader      = $this->mail->getMessageRawHeader($smartdata->source->itemid, '',$folder);
+				$rawBody        = $this->mail->getMessageRawBody($smartdata->source->itemid, '',$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
 				$AltBody = $AltBody."</br>".lang("See Attachments for Content of the Orignial Mail").$sigTextHtml;
 				$Body = $Body."\r\n".lang("See Attachments for Content of the Orignial Mail").$sigTextPlain;
@@ -714,7 +714,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
 						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
-						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
+						$x = $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
 				}

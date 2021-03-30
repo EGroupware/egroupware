@@ -278,6 +278,7 @@ class mail_sieve
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
 			$content['ruleID'] = $ruleID = ($this->rulesByID['priority'] -1) / 2;
             $error = 0;
+            $msg = '';
 			switch ($button)
 			{
 				case 'save':
@@ -1040,14 +1041,9 @@ class mail_sieve
 				$complete .= $andor;
 			}
 			$complete .= "message " . $xthan . $rule['size'] . "KB'";
-			$started = 1;
 		}
 		if (!empty($rule['field_bodytransform']))
 		{
-			if ($started)
-			{
-				$newruletext .= ", ";
-			}
 			$btransform	= " :raw ";
 			$match = ' :contains';
 			if ($rule['bodytransform'])
@@ -1063,15 +1059,9 @@ class mail_sieve
 				$match = ':regex';
 			}
 			$complete .= " body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
-			$started = 1;
-
 		}
 		if ($rule['ctype']!= '0' && !empty($rule['ctype']))
 		{
-			if ($started)
-			{
-				$newruletext .= ", ";
-			}
 			$btransform_ctype = Mail\Script::$btransform_ctype_array[$rule['ctype']];
 			$ctype_subtype = "";
 			if ($rule['field_ctype_val'])
@@ -1079,7 +1069,6 @@ class mail_sieve
 				$ctype_subtype = "/";
 			}
 			$complete .= " body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
-			$started = 1;
 			//error_log(__CLASS__."::".__METHOD__.array2string(Mail\Script::$btransform_ctype_array));
 		}
 		if (!$rule['unconditional'])
