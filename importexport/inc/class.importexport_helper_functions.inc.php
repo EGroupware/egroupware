@@ -602,8 +602,8 @@ class importexport_helper_functions {
 	 *
 	 * Currently only supports select,select-cat,select-account,date,date-time
 	 *
-	 * @param $app_name String name of app
-	 * @param $plugin_name string Name of the plugin
+	 * @param string $app_name name of app
+	 * @param string $plugin_name Name of the plugin
 	 *
 	 * @return Array ([fieldname] => array(widget settings), ...)
 	 */
