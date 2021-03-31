@@ -88,6 +88,14 @@
 		CURRENT_INTERVAL = POLL_INTERVAL = notification_script && notification_script.getAttribute('data-poll-interval');
 		TIMEOUT = this.setTimeout(POLL_INTERVAL || 60);
 		jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
+
+		// add click handler for refreshing Notifications
+		let $egwpopup_header = jQuery('#egwpopup_header')
+			.css({cursor:'pointer'})
+			.attr('title', egw.lang('Refresh Notifications'))
+			.click(jQuery.proxy(this.run_notifications, this));
+		$egwpopup_header.children('.button_right_toggle').attr('title', egw.lang('close'));
+
 		// query notifictions now
 		this.run_notifications();
 
