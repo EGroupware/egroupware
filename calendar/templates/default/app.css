@@ -89,6 +89,10 @@
     border: none;
     box-shadow: none;
 }
+#calendar-et2_target hr {
+	display: block;
+	border-top: 1px solid #696969;
+}
 #calendar-sidebox_buttons tbody {
 	width: 100%;
 }
