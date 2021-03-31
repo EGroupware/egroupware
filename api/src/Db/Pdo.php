@@ -105,7 +105,7 @@ class Pdo
 			case 'mysql':
 				$dsn .= ';charset=utf8';
 				// switch off MySQL 5.7+ ONLY_FULL_GROUP_BY sql_mode
-				if ($egw_db->ServerInfo['version'] >= 5.7 && $egw_db->ServerInfo['version'] < 10.0)
+				if ((float)$egw_db->ServerInfo['version'] >= 5.7 && (float)$egw_db->ServerInfo['version'] < 10.0)
 				{
 					$query = "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))";
 				}

@@ -419,7 +419,7 @@ class Sql extends Api\Storage
 		);
 
 		$columns = implode(', ', $group);
-		if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+		if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 		{
 			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 		}

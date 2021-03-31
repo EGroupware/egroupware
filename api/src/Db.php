@@ -538,7 +538,7 @@ class Db
 					$this->set_capabilities($Type,$this->ServerInfo['version']);
 
 					// switch off MySQL 5.7+ ONLY_FULL_GROUP_BY sql_mode
-					if (substr($this->Type, 0, 5) == 'mysql' && $this->ServerInfo['version'] >= 5.7 && $this->ServerInfo['version'] < 10.0)
+					if (substr($this->Type, 0, 5) == 'mysql' && (float)$this->ServerInfo['version'] >= 5.7 && (float)$this->ServerInfo['version'] < 10.0)
 					{
 						$this->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", __LINE__, __FILE__);
 					}
@@ -661,7 +661,7 @@ class Db
 			case 'maxdb':	// if Lim ever changes it to maxdb ;-)
 			case 'sapdb':
 				$this->capabilities[self::CAPABILITY_DISTINCT_ON_TEXT] = false;
-				$this->capabilities[self::CAPABILITY_LIKE_ON_TEXT] = $db_version >= 7.6;
+				$this->capabilities[self::CAPABILITY_LIKE_ON_TEXT] = (float)$db_version >= 7.6;
 				$this->capabilities[self::CAPABILITY_ORDER_ON_TEXT] = false;
 				break;
 		}
@@ -1228,7 +1228,7 @@ class Db
 				break;
 
 			case 'pgsql':	// requires for Postgresql < 8.4 to have a custom ARRAY_AGG method installed!
-				if ($this->Type == 'pgsql' && $this->ServerInfo['version'] < 8.4)
+				if ($this->Type == 'pgsql' && (float)$this->ServerInfo['version'] < 8.4)
 				{
 					return false;
 				}

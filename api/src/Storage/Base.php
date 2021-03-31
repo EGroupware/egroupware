@@ -1002,7 +1002,7 @@ class Base
 			// running the union query now
 			if ($start !== false)	// need to get the total too, saved in $this->total
 			{
-				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+				if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 				{
 					$union[0]['cols'] = ($mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ').$union[0]['cols'];
 				}
@@ -1021,7 +1021,7 @@ class Base
 		{
 			if ($start !== false)	// need to get the total too, saved in $this->total
 			{
-				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+				if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 				{
 					$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 				}
