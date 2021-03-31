@@ -100,6 +100,11 @@
 				background-color: @ranking-color !important;
 			}
 		}
+		#kanban_sidebox_content {
+			.egw_fw_ui_category_active {
+				background-color: @kanban-color !important;
+			}
+		}
 	}
 }
 #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active{
@@ -284,6 +289,22 @@
 	border-top-color: @wiki-color;
 	border-top-width: 4px !important;
 }
+//Kanban
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn #kanban_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	background-color: fade(@kanban-color, 30%);
+	border-left:4px solid @kanban-color !important;
+}
+#kanban_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+	border-top:4px solid @kanban-color !important;
+	border-left: 0px !important;
+}
+#kanban_sidebox_header {border-left:4px solid @kanban-color !important;}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #kanban-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+	border-top: 4px solid;
+	border-top-color: @kanban-color;
+	border-top-width: 4px !important;
+}
+
 // Ranking
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
 	background-color: fade(@ranking-color, 30%);

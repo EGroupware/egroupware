@@ -6639,6 +6639,9 @@ span.egw_tutorial_title {
 #egw_fw_sidebar #egw_fw_sidemenu #ranking_sidebox_content .egw_fw_ui_category_active {
   background-color: #404040 !important;
 }
+#egw_fw_sidebar #egw_fw_sidemenu #kanban_sidebox_content .egw_fw_ui_category_active {
+  background-color: #4663c8 !important;
+}
 #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   border-top: 4px solid #003366 !important;
   border-left: 0px !important;
@@ -6825,6 +6828,22 @@ span.egw_tutorial_title {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #wiki-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
   border-top: 4px solid;
   border-top-color: #797979;
+  border-top-width: 4px !important;
+}
+#egw_fw_basecontainer.egw_fw_sidebar_toggleOn #kanban_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  background-color: rgba(70, 99, 200, 0.3);
+  border-left: 4px solid #4663c8 !important;
+}
+#kanban_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
+  border-top: 4px solid #4663c8 !important;
+  border-left: 0px !important;
+}
+#kanban_sidebox_header {
+  border-left: 4px solid #4663c8 !important;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #kanban-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
+  border-top: 4px solid;
+  border-top-color: #4663c8;
   border-top-width: 4px !important;
 }
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #ranking_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
@@ -7757,6 +7776,19 @@ form[id^="ranking-"] .dialogHeadbar {
 }
 #ranking_sidebox_header {
   border-left: 6px solid #404040 !important;
+}
+div[id^="kanban-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="kanban-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="kanban-"] .plus_button,
+form[id^="kanban-"] .plus_button,
+div[id^="kanban-"] .search.nm-mob-header,
+form[id^="kanban-"] .search.nm-mob-header,
+div[id^="kanban-"] .dialogHeadbar,
+form[id^="kanban-"] .dialogHeadbar {
+  background-color: #4663c8;
+}
+#kanban_sidebox_header {
+  border-left: 6px solid #4663c8 !important;
 }
 img.et2_appicon,
 .et2_appicon img,
