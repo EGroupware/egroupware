@@ -42,17 +42,17 @@ class Sieve extends Horde\ManageSieve
 	var $scriptName;
 
 	/**
-	* @var $rules containing the rules
+	* @var array $rules containing the rules
 	*/
 	var $rules;
 
 	/**
-	* @var $vacation containing the vacation
+	* @var array $vacation containing the vacation
 	*/
 	var $vacation;
 
 	/**
-	* @var $emailNotification containing the emailNotification
+	* @var array $emailNotification containing the emailNotification
 	*/
 	var $emailNotification;
 
@@ -201,7 +201,7 @@ class Sieve extends Horde\ManageSieve
 				try {
 					$this->scriptName = $this->getActive();
 				}
-				catch(Exception $e) {
+				catch(\Exception $e) {
 					unset($e);	// ignore NOTEXISTS exception
 				}
 				if (empty($this->scriptName))

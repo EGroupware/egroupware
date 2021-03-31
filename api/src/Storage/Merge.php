@@ -649,13 +649,15 @@ abstract class Merge
 		if (!($content = file_get_contents($document)))
 		{
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
-			return false;
+			$ret = false;
+			return $ret;
 		}
 
 		if (self::hasExportLimit($this->export_limit) && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
-			return false;
+			$ret = false;
+			return $ret;
 		}
 
 		// fix application/msword mimetype for rtf files
@@ -669,7 +671,8 @@ abstract class Merge
 		} catch (\Exception $e) {
 			_egw_log_exception($e);
 			$err = $e->getMessage();
-			return false;
+			$ret = false;
+			return $ret;
 		}
 		return $content;
 	}
@@ -680,7 +683,7 @@ abstract class Merge
 		{
 			$matches = null;
 			$mso_application_progid = $mimetype == 'application/xml' &&
-				preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches) ?
+				preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($content,0,200),$matches) ?
 					$matches[1] : '';
 		}
 		// Tags we can replace with the target document's version
@@ -781,7 +784,7 @@ abstract class Merge
 	{
 		$matches = null;
 		if ($mimetype == 'application/xml' &&
-			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($_content,0,200),$matches))
+			preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($_content,0,200),$matches))
 		{
 			$mso_application_progid = $matches[1];
 		}
@@ -862,7 +865,8 @@ abstract class Merge
 		if (count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
-			return false;
+			$ret = false;
+			return $ret;
 		}
 		if ($this->report_memory_usage) error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
 
@@ -899,7 +903,8 @@ abstract class Merge
 					break;
 				default:
 					$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
-					return false;
+					$ret = false;
+					return $ret;
 			}
 		}
 		foreach ((array)$ids as $n => $id)
@@ -913,14 +918,16 @@ abstract class Merge
 				if(!($replacements = $this->get_replacements($id,$content)))
 				{
 					$err = lang('Entry not found!');
-					return false;
+					$ret = false;
+					return $ret;
 				}
 			}
 			catch (Api\Exception\WrongUserinput $e)
 			{
 				// if this returns with an exeption, something failed big time
 				$err = $e->getMessage();
-				return false;
+				$ret = false;
+				return $ret;
 			}
 			if ($this->report_memory_usage) error_log(__METHOD__."() $n: $id ".Api\Vfs::hsize(memory_get_usage(true)));
 			// some general replacements: current user, date and time
@@ -934,7 +941,7 @@ abstract class Merge
 			$replacements['$$time$$'] = Api\DateTime::to('now',false);
 
 			$app = $this->get_app();
-			$replacements += $this->share_placeholder($app, $id, $prefix, $content);
+			$replacements += $this->share_placeholder($app, $id, '', $content);
 
 			// does our extending class registered table-plugins AND document contains table tags
 			if ($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s',$content,$matches,PREG_SET_ORDER))
@@ -995,32 +1002,39 @@ abstract class Merge
 			{
 				case 'application/rtf':
 				case 'text/rtf':
-					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+					$ret = $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+					break;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.text-template':
 				case 'application/vnd.oasis.opendocument.presentation-template':
-					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
+					$ret = $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
+					break;
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 				case 'application/vnd.oasis.opendocument.spreadsheet-template':
-					return $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
+					$ret = $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
+					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.ms-word.document.macroenabled.12':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.ms-excel.sheet.macroenabled.12':
-					return $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
+					$ret = $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
+					break;
 				case 'text/plain':
-					return $contentstart.implode("\r\n",$contentrep).$contentend;
+					$ret = $contentstart.implode("\r\n",$contentrep).$contentend;
+					break;
+				default:
+					$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
+					$ret = false;
 			}
-			$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
-			return false;
+			return $ret;
 		}
 
 		if ($contentrepeat)
 		{
 			fwrite($content_stream, $contentend);
 			rewind($content_stream);
-			return stream_get_contents($content_stream);
+			$content = stream_get_contents($content_stream);
 		}
 		if ($this->report_memory_usage) error_log(__METHOD__."() returning ".Api\Vfs::hsize(memory_get_peak_usage(true)));
 
@@ -1502,7 +1516,7 @@ abstract class Merge
 					$account = $GLOBALS['egw']->accounts->read($values['#'.$field]);
 					$app_replacements[$field] = $this->contact_replacements($account['person_id']);
 				}
-				else if (($list = explode('-',$cfs[$field]['type']) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps']))))
+				else if (($list = explode('-',$cfs[$field]['type'])) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
 				{
 					// Sub-type - use app
 					$field_app = $list[0];
@@ -1784,7 +1798,8 @@ abstract class Merge
 				$mail_bo->openConnection();
 				try
 				{
-					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder=($this->keep_emails ? '' : FALSE));
+					$_folder = $this->keep_emails ? '' : FALSE;
+					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder);
 				}
 				catch (Api\Exception\WrongUserinput $e)
 				{

@@ -48,7 +48,7 @@ class Sharing
 	/**
 	 * Reference to global db object
 	 *
-	 * @var Api\Db
+	 * @var Db
 	 */
 	protected static $db;
 
@@ -238,7 +238,7 @@ class Sharing
 	 * Check to see if the share needs a password, and if it does that the password
 	 * provided matches.
 	 *
-	 * @param Array $share
+	 * @param array $share
 	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
 	 * @return boolean Password OK (or not needed)
 	 */
@@ -261,7 +261,7 @@ class Sharing
 	 * to login
 	 *
 	 * @param boolean $keep_session
-	 * @param Array $share
+	 * @param array $share
 	 */
 	protected static function setup_share($keep_session, &$share) {}
 	/**
@@ -426,7 +426,7 @@ class Sharing
 
 	}
 
-	public function is_entry($share = false)
+	public static function is_entry($share = false)
 	{
 		list($app, $id) = explode('::', $share['share_path']);
 		return $share && $share['share_path'] &&

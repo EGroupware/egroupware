@@ -35,7 +35,7 @@ class Smime extends Horde_Crypt_Smime
 
 	/**
 	 * SMIME signature only types
-	 * @var type
+	 * @var string[}
 	 */
 	static $SMIME_SIGNATURE_ONLY_TYPES = array (
 		'application/x-pkcs7-signature',
@@ -165,7 +165,7 @@ class Smime extends Horde_Crypt_Smime
 		try
 		{
 			$this->checkForOpenSSL();
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			error_log(__METHOD__."() openssl extension is not enabled! $ex");
 			return false;
 		}
@@ -224,8 +224,8 @@ class Smime extends Horde_Crypt_Smime
 	/**
 	 * Verify a signature
 	 *
-	 * @param type $message
-	 * @return type
+	 * @param string $message
+	 * @return \stdClass
 	 */
 	public function verifySignature($message)
 	{
@@ -275,8 +275,8 @@ class Smime extends Horde_Crypt_Smime
 	/**
 	 * Method to extract smime related info from credential table
 	 *
-	 * @param type $acc_id acc id of mail account
-	 * @param type $passphrase = '' protect private key by passphrase
+	 * @param int $acc_id acc id of mail account
+	 * @param string $passphrase = '' protect private key by passphrase
 	 * @return mixed return array of smime info or false if fails
 	 */
 	public static function get_acc_smime($acc_id, $passphrase = '')

@@ -171,7 +171,7 @@ function php_safe_unserialize($str)
  *
  * @param string $str string with serialized array
  * @param boolean $allow_not_serialized =false true: return $str as is, if it is no serialized array
- * @return array|str|false false if content can not be unserialized (not null like json_decode!)
+ * @return array|string|false false if content can not be unserialized (not null like json_decode!)
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
 {

@@ -80,7 +80,7 @@ class Ldap
 	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
 	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
 	 * @return resource|Ldap resource from ldap_connect() or false on error
-	 * @throws Exception\AssertingFailed 'LDAP support unavailable!' (no ldap extension)
+	 * @throws Exception\AssertionFailed 'LDAP support unavailable!' (no ldap extension)
 	 * @throws Exception\NoPermission if bind fails
 	 */
 	public static function factory($ressource=true, $host='', $dn='', $passwd='')
@@ -166,7 +166,7 @@ class Ldap
 	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
 	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
 	 * @return resource|boolean resource from ldap_connect() or false on error
-	 * @throws Exception\AssertingFailed 'LDAP support unavailable!' (no ldap extension)
+	 * @throws Exception\AssertionFailed 'LDAP support unavailable!' (no ldap extension)
 	 * @throws Exception\NoPermission if bind fails
 	 */
 	function ldapConnect($host='', $dn='', $passwd='')
@@ -175,7 +175,7 @@ class Ldap
 		{
 			if ($this->exception_on_error) throw new Exception\AssertionFailed('LDAP support unavailable!');
 
-			printf('<b>Error: LDAP support unavailable</b><br>',$host);
+			printf('<b>Error: LDAP support unavailable</b><br>');
 			return False;
 		}
 		if (empty($host))

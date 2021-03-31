@@ -114,7 +114,7 @@ interface StreamWrapperIface
 	 *
 	 * If you have cached data in your stream but not yet stored it into the underlying storage, you should do so now.
 	 *
-	 * @return booelan TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
+	 * @return boolean TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
 	 */
 	function stream_flush ( );
 
@@ -188,7 +188,7 @@ interface StreamWrapperIface
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
 	 *
 	 * @param string $path URL that was passed to opendir() and that this object is expected to explore.
-	 * @return booelan
+	 * @return boolean
 	 */
 	function dir_opendir ( $path, $options );
 

@@ -123,7 +123,7 @@ class Template
 	/**
 	 * Set template/file to process
 	 *
-	 * @param string $handle handle for a filename,
+	 * @param string|string[} $handle handle for a filename,
 	 * @param string $filename ='' name of template file
 	 */
 	function set_file($handle, $filename = '')
@@ -174,7 +174,7 @@ class Template
 			$name = $handle;
 		}
 		$str = $this->get_var($parent);
-		$qhandle = preg_quote($handle);
+		$qhandle = preg_quote($handle, '/');
 		$reg = "/<!--\\s+BEGIN $qhandle\\s+-->(.*)\n\\s*<!--\\s+END $qhandle\\s+-->/s";
 		$match = null;
 		if (!preg_match($reg,$str,$match))

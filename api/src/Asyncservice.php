@@ -283,7 +283,7 @@ class Asyncservice
 		// now we have the times enumerated, lets find the first not expired one
 		//
 		$found = array();
-		$over = null;
+		$over = $next = null;
 		while (!isset($found['min']))
 		{
 			$future = False;

@@ -160,7 +160,7 @@ class Apc extends Base implements Provider
 			return false;
 		}
 		//error_log(__METHOD__."(".array2string($keys).")");
-		foreach(new \APCIterator('user', $preg='/^'.preg_quote(self::key($keys).'/')) as $item)
+		foreach(new \APCIterator('user', $preg='/^'.preg_quote(self::key($keys), '/').'/') as $item)
 		{
 			//error_log(__METHOD__."(".array2string($keys).") preg='$preg': calling apc_delete('$item[key]')");
 			apc_delete($item['key']);

@@ -734,6 +734,7 @@ class Storage extends Storage\Base
 				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
 				{
 					$_cf = explode(' ',$val);
+					$tcf_name = '';
 					foreach($_cf as $cf_np)
 					{
 						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)

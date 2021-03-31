@@ -217,7 +217,8 @@ class Vfs extends Vfs\Base
 		{
 			if ($prop['name'] == $name && $prop['ns'] == $ns) return $prop;
 		}
-		return null;
+		$ret = null;
+		return $ret;
 	}
 
 	/**
@@ -1106,9 +1107,9 @@ class Vfs extends Vfs\Base
 	static function hsize($size)
 	{
 		if ($size < 1024) return $size;
-		if ($size < 1024*1024) return sprintf('%3.1lfk',(float)$size/1024);
-		if ($size < 1024*1024*1024) return sprintf('%3.1lfM',(float)$size/(1024*1024));
-		return sprintf('%3.1lfG',(float)$size/(1024*1024*1024));
+		if ($size < 1024*1024) return sprintf('%3.1fk',(float)$size/1024);
+		if ($size < 1024*1024*1024) return sprintf('%3.1fM',(float)$size/(1024*1024));
+		return sprintf('%3.1fG',(float)$size/(1024*1024*1024));
 	}
 
 	/**

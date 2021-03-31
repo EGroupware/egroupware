@@ -2747,7 +2747,7 @@ class HTTP_WebDAV_Server
      *
      * @param array $props
      * @param string $ns
-     * @param strin $ns_defs
+     * @param string $ns_defs
      * @param array $ns_hash
      * @return string
      */

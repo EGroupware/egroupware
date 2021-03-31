@@ -15,8 +15,6 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-use EGroupware\Api\Storage\Merge;
-
 /**
  * eTemplate  Entry widget
  *
@@ -134,7 +132,7 @@ abstract class Entry extends Transformer
 	/**
 	 * Get a list of fields available for display
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	protected static function get_field_list()
 	{
@@ -144,14 +142,12 @@ abstract class Entry extends Transformer
 	/**
 	 * Using ID, field and alternate fields, find the one to use
 	 *
-	 * @param Array $attrs
-	 * @param Array $data
-	 * @return Reference into data array for value
+	 * @param array $attrs
+	 * @param array $data
+	 * @return mixed Reference into data array for value
 	 */
 	protected function &get_data_field($attrs, &$data)
 	{
-		$id = is_array($data) ? static::get_array($data, $this->id) : $data;
-
 		$value =& $data;
 		if(!is_array($value)) return $value;
 
@@ -162,7 +158,8 @@ abstract class Entry extends Transformer
 				return $value[$field];
 			}
 		}
-		return null;
+		$ret = null;
+		return $ret;
 	}
 
 	/**
@@ -173,8 +170,8 @@ abstract class Entry extends Transformer
 	 *  #infolog_cf/#addressbook_cf/n_fn
 	 *  etc.
 	 *
-	 * @param Array $attrs Current field attributes
-	 * @param Array $data Current entry data
+	 * @param array $attrs Current field attributes
+	 * @param array $data Current entry data
 	 */
 	protected function customfield($attrs, &$data)
 	{
@@ -209,13 +206,11 @@ abstract class Entry extends Transformer
 	/**
 	 * Handle regex attribute that allows modifying the value via regex replace
 	 *
-	 * @param Array $attrs Current field attributes
-	 * @param Array $data Current entry data
+	 * @param array $attrs Current field attributes
+	 * @param array $data Current entry data
 	 */
 	protected function regex($attrs, &$data)
 	{
-		$data_id = $attrs['value'] ?: $attrs['id'];
-		$id = is_array($data) ? static::get_array($data, $data_id) : $data;
 		$value =& $this->get_data_field($attrs, $data);
 		if(!$attrs['regex'] || !$value)
 		{

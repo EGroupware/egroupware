@@ -18,7 +18,7 @@ namespace EGroupware\Api\Egw;
 use EGroupware\Api;
 
 /**
- * Egw\Base object used in setup, does not instanciate anything by default
+ * Base object used in setup, does not instanciate anything by default
  *
  * Extending Egw\Base which uses now a getter method to create the usual subobject on demand,
  * to allow a quicker header include on sites not using php4-restore.
@@ -46,7 +46,7 @@ class Base
 	/**
 	 * Global ADOdb object, need to be defined here, to not call magic __get method
 	 *
-	 * @var ADOConnection
+	 * @var \ADOConnection
 	 */
 	var $ADOdb;
 

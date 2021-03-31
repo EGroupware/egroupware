@@ -486,7 +486,7 @@ class Request
 		foreach($this->data as $key => $val)
 		{
 			$len = strlen(is_array($val) ? serialize($val) : $val);
-			$len .= ' ('.sprintf('%2.1lf',($percent = 100.0 * $len / $total)).'%)';
+			$len .= ' ('.sprintf('%2.1f',($percent = 100.0 * $len / $total)).'%)';
 			if ($percent < $min_share) continue;
 			echo "<p><b>$key</b>: strlen(\$val)=$len</p>\n";
 			if ($percent >= $dump_share) _debug_array($val);
@@ -495,7 +495,7 @@ class Request
 				foreach($val as $k => $v)
 				{
 					$l = strlen(is_array($v) ? serialize($v) : $v);
-					$l .= ' ('.sprintf('%2.1lf',($p = 100.0 * $l / $total)).'%)';
+					$l .= ' ('.sprintf('%2.1f',($p = 100.0 * $l / $total)).'%)';
 					if ($p < $min_share) continue;
 					echo "<p>&nbsp;- {$key}[$k]: strlen(\$v)=$l</p>\n";
 				}
@@ -533,9 +533,17 @@ class Request
 				return false;
 			}
 			$iv_size = mcrypt_enc_get_iv_size(self::$mcrypt);
-			$iv = !isset($GLOBALS['egw_info']['server']['mcrypt_iv']) || strlen($GLOBALS['egw_info']['server']['mcrypt_iv']) < $iv_size ?
-				mcrypt_create_iv ($iv_size, MCRYPT_RAND) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
-
+			if (!isset($GLOBALS['egw_info']['server']['mcrypt_iv']) || strlen($GLOBALS['egw_info']['server']['mcrypt_iv']) < $iv_size)
+			{
+				if (!($iv = mcrypt_create_iv ($iv_size, MCRYPT_DEV_RANDOM)))
+				{
+					return self::$mcrypt = false;
+				}
+			}
+			else
+			{
+				$iv = substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
+			}
 			$key_size = mcrypt_enc_get_key_size(self::$mcrypt);
 			if (bytes($key) > $key_size) $key = cut_bytes($key,0,$key_size-1);
 

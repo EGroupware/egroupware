@@ -405,7 +405,7 @@ abstract class Handler
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param Api\CalDAV $groupdav calling class
-	 * @return groupdav_handler
+	 * @return self
 	 */
 	static function app_handler($app, Api\CalDAV $groupdav)
 	{

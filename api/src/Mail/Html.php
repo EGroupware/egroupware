@@ -83,7 +83,7 @@ class Html
 			}
 			if ($convertAtEnd) $string = self::decodeMailHeader($string, $displayCharset, $reclevel);
 		}
-		elseif(function_exists(mb_decode_mimeheader))
+		elseif(function_exists('mb_decode_mimeheader'))
 		{
 			$matches = null;
 			if(preg_match_all('/=\?.*\?Q\?.*\?=/iU', $string=$_string, $matches))
@@ -98,7 +98,7 @@ class Html
 			}
 			$string = mb_decode_mimeheader($string);
 		}
-		elseif(function_exists(iconv_mime_decode))
+		elseif(function_exists('iconv_mime_decode'))
 		{
 			// continue decoding also if an error occurs
 			$string = @iconv_mime_decode($_string, 2, $displayCharset);

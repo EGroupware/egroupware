@@ -1218,7 +1218,7 @@ tinymce.init({
 			$tree_initialised = true;
 			if (!$_folders && !$autoLoading) return null;
 		}
-		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
+		$html = self::div("\n",'id="'.$tree.'"',$_divClass);
 		$html .= "<script type='text/javascript'>\n";
 		$html .= "var $tree;";
 		$html .= "egw_LAB.wait(function() {";

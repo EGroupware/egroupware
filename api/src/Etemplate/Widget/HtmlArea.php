@@ -23,7 +23,7 @@ class HtmlArea extends Etemplate\Widget
 {
 	/**
 	 * font families
-	 * @var type array
+	 * @var array
 	 */
 	public static $font_options = array(
 		'andale mono,times' => 'Andale Mono',
@@ -49,7 +49,7 @@ class HtmlArea extends Etemplate\Widget
 
 	/**
 	 * font size options
-	 * @var type array
+	 * @var array
 	 */
 	public static $font_size_options = array(
 		8  => '8',
@@ -72,7 +72,7 @@ class HtmlArea extends Etemplate\Widget
 
 	/**
 	 * font unit options
-	 * @var type array
+	 * @var array
 	 */
 	public static $font_unit_options = array(
 		'pt' => 'pt: points (1/72 inch)',
@@ -81,7 +81,7 @@ class HtmlArea extends Etemplate\Widget
 
 	/**
 	 * List of exisitng toolbar actions
-	 * @var type array
+	 * @var array
 	 */
 	public static $toolbar_list = [
 		'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
@@ -92,7 +92,7 @@ class HtmlArea extends Etemplate\Widget
 
 	/**
 	 * Default list of toolbar actions
-	 * @var type array
+	 * @var array
 	 */
 	public static $toolbar_default_list = [
 		'undo', 'redo','formatselect', 'fontselect', 'fontsizeselect',

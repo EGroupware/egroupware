@@ -23,7 +23,7 @@ class Accountfilter extends Widget\Taglist
 	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
-	 * @param string|XMLReader $xml
+	 * @param string|\XMLReader $xml
 	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 */
 	public function set_attrs($xml, $cloned=true)

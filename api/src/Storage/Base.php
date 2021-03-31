@@ -137,7 +137,7 @@ class Base
 	/**
 	 * Current time in user timezone
 	 *
-	 * @var int|string|DateTime format depends on $this->timestamp_type
+	 * @var int|string|\DateTime format depends on $this->timestamp_type
 	 */
 	var $now;
 	/**

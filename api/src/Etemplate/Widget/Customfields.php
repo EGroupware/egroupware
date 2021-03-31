@@ -17,6 +17,8 @@ use EGroupware\Api;
 
 /**
  * Widgets for custom fields and listing custom fields
+ *
+ * @todo: fix the two undefined variables ($value and $field)
  */
 class Customfields extends Transformer
 {
@@ -127,9 +129,9 @@ class Customfields extends Transformer
 
 		if(!$app && !$customfields)
 		{
-			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
+			$app =& self::setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
 			if ($this->attrs['sub-app']) $app .= '-'.$this->attrs['sub-app'];
-			$customfields =& $this->setElementAttribute(self::GLOBAL_VALS, 'customfields', Api\Storage\Customfields::get($app));
+			$customfields =& self::setElementAttribute(self::GLOBAL_VALS, 'customfields', Api\Storage\Customfields::get($app));
 		}
 
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
@@ -137,7 +139,7 @@ class Customfields extends Transformer
 			($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields']) || !isset($customfields))
 		{
 			// app changed
-			$customfields =& Api\Storage\Customfields::get($app);
+			$customfields = Api\Storage\Customfields::get($app);
 		}
 		if($this->attrs['customfields'])
 		{
@@ -245,8 +247,8 @@ class Customfields extends Transformer
 		if($fields != $customfields)
 		{
 			// This widget has different settings from global
-			$this->setElementAttribute($form_name, 'customfields', $fields);
-			$this->setElementAttribute($form_name, 'fields', array_merge(
+			self::setElementAttribute($form_name, 'customfields', $fields);
+			self::setElementAttribute($form_name, 'fields', array_merge(
 				array_fill_keys(array_keys($customfields), false),
 				array_fill_keys(array_keys($fields), true)
 			));

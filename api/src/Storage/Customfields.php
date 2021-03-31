@@ -47,7 +47,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Iterator initialised for custom fields
 	 *
-	 * @var ADORecordSet
+	 * @var \ADORecordSet
 	 */
 	protected $iterator;
 
@@ -169,7 +169,7 @@ class Customfields implements \IteratorAggregate
 	 * @param int|boolean $account =false Filter private for given account_id,
 	 *	false for current user or true for all the private fields be returned too, default current user
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
-	 * @return boolen true: if there is a custom field useing html, false if not
+	 * @return boolean true: if there is a custom field useing html, false if not
 	 */
 	public static function use_html($app, $account=false, $only_type2=null)
 	{
@@ -553,11 +553,11 @@ class Customfields implements \IteratorAggregate
 	 *
 	 * @param string $app Current application
 	 * @param string $entry_id Application ID of the new entry
-	 * @param Array $values Array of entry data, including custom fields.
+	 * @param array $values Array of entry data, including custom fields.
 	 *	File information from the VFS widget (via self::validate()) will be found &
 	 *	dealt with.  Successful or not, the value is cleared to avoid trying to insert it into
 	 *	the database, which would generate errors.
-	 * @param Array $customfields Pass the custom field list if you have it to avoid loading it again
+	 * @param array $customfields Pass the custom field list if you have it to avoid loading it again
 	 */
 	public static function handle_files($app, $entry_id, &$values, &$customfields = array())
 	{

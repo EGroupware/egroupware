@@ -1623,9 +1623,10 @@ class Link extends Link\Storage
 		switch($type)
 		{
 			case 'title':
-				if ($app == self::VFS_APPNAME)
+				if ($app === self::VFS_APPNAME)
 				{
-					return null;	// do not cache file titles, they are just the names
+					$ret = null;	// do not cache file titles, they are just the names
+					return $ret;
 				}
 				return self::$title_cache[$app.':'.$id];
 			case 'file_access':

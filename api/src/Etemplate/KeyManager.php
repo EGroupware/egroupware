@@ -97,7 +97,7 @@ class KeyManager
 		// Function keys
 		if ($keyCode >= self::F1 && $keyCode <= self::F12)
 		{
-			return "F".($keyCode - EGW_KEY_F1 + 1);
+			return "F".($keyCode - self::F1 + 1);
 		}
 
 		// Special keys

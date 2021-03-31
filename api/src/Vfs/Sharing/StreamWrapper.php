@@ -45,7 +45,7 @@ class StreamWrapper extends Vfs\StreamWrapper
 
 			Api\Sharing::check_token(false, $share, $hash, $parts['pass'] ?? '');
 
-			return self::share2url($share);
+			return self::share2url($share, $rel_path);
 		}
 		catch (Api\Exception $e) {
 			_egw_log_exception($e);
@@ -60,7 +60,7 @@ class StreamWrapper extends Vfs\StreamWrapper
 	 * @return string
 	 * @throws Api\Exception\NotFound if sharee was not found
 	 */
-	static function share2url(array $share)
+	static function share2url(array $share, $rel_path='')
 	{
 		if (empty($share['share_owner']) || !($account_lid = Api\Accounts::id2name($share['share_owner'])))
 		{
@@ -80,7 +80,7 @@ class StreamWrapper extends Vfs\StreamWrapper
 	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($url, $do_symlink = true, $use_symlinkcache = true, $replace_user_pass_host = true, $fix_url_query = false)
+	static function resolve_url($url,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false, &$mounted=null)
 	{
 		return self::replace($url);
 	}

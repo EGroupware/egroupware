@@ -198,7 +198,7 @@ class Authenticate
 	{
 		if (self::digest_auth_available($realm))
 		{
-			$nonce = uniqid();
+			$nonce = Api\Auth::randomstring();
    			header('WWW-Authenticate: Digest realm="'.$realm.'",qop="auth",nonce="'.$nonce.'",opaque="'.md5($realm).'"');
 			if (self::ERROR_LOG) error_log(__METHOD__."() offering digest auth for realm '$realm' using nonce='$nonce'");
 		}
@@ -219,7 +219,8 @@ class Authenticate
 
 		$data = self::parse_digest($auth_digest);
 
-		if (!$data || !($A1 = self::get_digest_A1($realm,$username=$data['username'],$password=null)))
+		$password = null;
+		if (!$data || !($A1 = self::get_digest_A1($realm,$username=$data['username'],$password)))
 		{
 			error_log(__METHOD__."('$realm','$auth_digest','$username') returning FALSE");
 			return false;

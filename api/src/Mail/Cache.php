@@ -90,8 +90,6 @@ class Cache
 
     /**
      * Clears all data from the cache.
-     *
-     * @throws Horde_Cache_Exception
      */
     public function clear()
 	{

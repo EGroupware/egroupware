@@ -31,7 +31,6 @@ class Minimal extends Api\Framework
 	* Constructor
 	*
 	* @param string $template ='default' name of the template
-	* @return idots_framework
 	*/
 	function __construct($template='default')
 	{
@@ -159,7 +158,7 @@ class Minimal extends Api\Framework
 	* @param string $id unique element id
 	* @param string $icon_src src of the icon image. Make sure this nog height then 18pixels
 	* @param string $iconlink where the icon links to
-	* @param booleon $blink set true to make the icon blink
+	* @param boolean $blink set true to make the icon blink
 	* @param mixed $tooltip string containing the tooltip html, or null of no tooltip
 	* @access public
 	* @return void

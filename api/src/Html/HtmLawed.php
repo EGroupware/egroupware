@@ -26,7 +26,7 @@ class HtmLawed
 	/**
 	 * config options see constructor
 	 *
-	 * @var Configuration
+	 * @var string|array
 	 */
 	var $Configuration;
 
@@ -38,7 +38,7 @@ class HtmLawed
 	 * as a string of text containing one or more rules, with multiple rules separated from each
 	 * other by a semi-colon (;)
 	 *
-	 * @var Spec
+	 * @var string|array
 	 */
 	var $Spec;
 
@@ -101,10 +101,10 @@ class HtmLawed
 	/**
 	 * Run htmLawed
 	 *
-	 * @param varchar $html2check =text input Text to check
-	 * @param mixed $Config = text or array
-	 * @param mixed $Spec =text or array; The '$spec' argument can be used to disallow an otherwise legal attribute for an element
-	 * @return varchar cleaned/fixed html
+	 * @param string $html2check =text input Text to check
+	 * @param string|array $Config = text or array
+	 * @param string|array $Spec =text or array; The '$spec' argument can be used to disallow an otherwise legal attribute for an element
+	 * @return string cleaned/fixed html
 	 */
 	function run($html2check, $Config=null, $Spec=array())
 	{
@@ -161,7 +161,7 @@ class HtmLawed
 				$style2buffer = utf8_encode($style2buffer);
 			}
 		}
-		$style .= $style2buffer;
+		$style = $style2buffer;
 		// clean out comments and stuff
 		$search = array(
 			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions

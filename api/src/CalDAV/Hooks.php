@@ -105,7 +105,7 @@ class Hooks
 			if ($GLOBALS['type'] === 'user')
 			{
 				$logs = array();
-				$relativ_log_dir .= 'groupdav/'.Api\CalDAV::sanitize_filename(Api\Accounts::id2name($hook_data['account_id']));
+				$relativ_log_dir = 'groupdav/'.Api\CalDAV::sanitize_filename(Api\Accounts::id2name($hook_data['account_id']));
 				$log_dir = $GLOBALS['egw_info']['server']['files_dir'].'/'.$relativ_log_dir;
 				if (file_exists($log_dir) && ($files = scandir($log_dir)))
 				{

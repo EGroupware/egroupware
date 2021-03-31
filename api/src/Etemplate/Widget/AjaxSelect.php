@@ -13,6 +13,7 @@
 namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api\Etemplate;
+use EGroupware\Api;
 
 /**
  * eTemplate ajax select widget
@@ -22,7 +23,7 @@ class AjaxSelect extends Select
 	/**
 	 * Constructor
 	 *
-	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml = '')

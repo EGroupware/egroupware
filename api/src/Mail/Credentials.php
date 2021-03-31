@@ -137,14 +137,14 @@ class Credentials
 	/**
 	 * Mcrypt instance initialised with system specific key
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	static protected $system_mcrypt;
 
 	/**
 	 * Mcrypt instance initialised with user password from session
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	static protected $user_mcrypt;
 
@@ -797,12 +797,12 @@ class Credentials
 			{
 				$iv_size = mcrypt_enc_get_iv_size($mcrypt);
 				$iv = !isset($GLOBALS['egw_info']['server']['mcrypt_iv']) || strlen($GLOBALS['egw_info']['server']['mcrypt_iv']) < $iv_size ?
-					mcrypt_create_iv ($iv_size, MCRYPT_RAND) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
+					mcrypt_create_iv ($iv_size, MCRYPT_DEV_RANDOM) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
 
 				$key_size = mcrypt_enc_get_key_size($mcrypt);
 				if (bytes($key) > $key_size) $key = cut_bytes($key,0,$key_size-1);
 
-				if (mcrypt_generic_init($mcrypt, $key, $iv) < 0)
+				if (!$iv || mcrypt_generic_init($mcrypt, $key, $iv) < 0)
 				{
 					error_log(__METHOD__."() could not initialise mcrypt, passwords can be NOT encrypted!");
 					$mcrypt = false;

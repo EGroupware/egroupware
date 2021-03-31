@@ -62,7 +62,7 @@ class Tracking extends Api\Storage\Tracking
 	 * Instance of the bocontacts class calling us
 	 *
 	 * @access private
-	 * @var addressbook_bo
+	 * @var \addressbook_bo
 	 */
 	var $contacts;
 
@@ -70,7 +70,7 @@ class Tracking extends Api\Storage\Tracking
 	 * Constructor
 	 *
 	 * @param Api\Contacts $bocontacts
-	 * @return tracker_tracking
+	 * @return \tracker_tracking
 	 */
 	function __construct(Api\Contacts $bocontacts)
 	{
@@ -267,7 +267,7 @@ class Tracking extends Api\Storage\Tracking
 						}
 						$details[$name] = array(
 							'label' => $label,
-							'value' => explode(', ',$cats),
+							'value' => implode(', ',$cats),
 						);
 					}
 				case 'note':

@@ -73,7 +73,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	/**
 	 * stream / ressouce this class is opened for by stream_open
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	private $opened_stream;
 
@@ -87,7 +87,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	/**
 	 * directory-ressouce this class is opened for by dir_open
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	private $opened_dir;
 
@@ -272,7 +272,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 *
 	 * If you have cached data in your stream but not yet stored it into the underlying storage, you should do so now.
 	 *
-	 * @return booelan TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
+	 * @return boolean TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
 	 */
 	function stream_flush ( )
 	{
@@ -390,8 +390,9 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
 
 		// find the real parent (might be more then one level if $recursive!)
+		$parent = null;
 		do {
-			$parent = dirname($parent ? $parent : $path);
+			$parent = dirname($parent ?? $path);
 			$parent_url = Vfs::dirname($parent_url ? $parent_url : $url);
 		}
 		while ($recursive && $parent != '/' && !file_exists($parent));
@@ -472,7 +473,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 *
 	 * @param string $url URL that was passed to opendir() and that this object is expected to explore.
 	 * @param int $options
-	 * @return booelan
+	 * @return boolean
 	 */
 	function dir_opendir ( $url, $options )
 	{

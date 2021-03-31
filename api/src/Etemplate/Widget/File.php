@@ -50,7 +50,7 @@ class File extends Etemplate\Widget
 		// Legacy multiple - id ends in []
 		if(substr($this->id,-2) == '[]')
 		{
-			$this->setElementAttribute($this->id, 'multiple', true);
+			self::setElementAttribute($this->id, 'multiple', true);
 		}
 	}
 

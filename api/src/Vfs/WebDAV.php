@@ -577,7 +577,8 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 
 		// dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
 		// that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
-		if (($ret = Vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
+		$owner = strip_tags($options['owner']);
+		if (($ret = Vfs::lock($options['path'],$options['locktoken'],$options['timeout'],$owner,
 			$options['scope'],$options['type'],isset($options['update']))) && !isset($options['update']))
 		{
 			return $ret ? '200 OK' : '409 Conflict';
@@ -714,7 +715,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			//'DAV:sync-token' => 'sync-token',
 		);
 		$n = 0;
-		$collection_props = null;
+		$collection_props = $class = null;
 		foreach($files['files'] as $file)
 		{
 			if (!isset($collection_props))
@@ -734,7 +735,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			}
 			$props = $this->props2array($file['props']);
 			//echo $file['path']; _debug_array($props);
-			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			$class = $class === 'row_on' ? 'row_off' : 'row_on';
 
 			if (substr($file['path'],-1) == '/')
 			{
@@ -852,7 +853,8 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 			}
 			if (is_array($prop['val']))
 			{
-				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs='', $ns_hash);
+				$ns_defs = '';
+				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash);
 				// hack to show real namespaces instead of not (visibly) defined shortcuts
 				unset($ns_hash['DAV:']);
 				$value = strtr($v=$this->prop_value($prop['val']),array_flip($ns_hash));

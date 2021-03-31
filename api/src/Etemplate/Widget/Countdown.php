@@ -49,10 +49,9 @@ class Countdown extends Api\Etemplate\Widget
 	 * This is used by Nextmatch on each row to do any needed
 	 * adjustments.  If not needed, don't implement it.
 	 *
-	 * @param type $cname
+	 * @param string $cname
 	 * @param array $expand
 	 * @param array $data Row data
-	 * @return type
 	 */
 	public function set_row_value($cname, Array $expand, Array &$data)
 	{

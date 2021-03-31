@@ -77,7 +77,7 @@ class Select extends Etemplate\Widget
 	/**
 	 * Constructor
 	 *
-	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml = '')
@@ -100,7 +100,7 @@ class Select extends Etemplate\Widget
 	 *
 	 * Reimplemented to parse our differnt attributes
 	 *
-	 * @param string|XMLReader $xml
+	 * @param string|\XMLReader $xml
 	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
 	 * @return Template current object or clone, if any attribute was set
 	 * @todo Use legacy_attributes instead of leaving it to typeOptions method to parse them

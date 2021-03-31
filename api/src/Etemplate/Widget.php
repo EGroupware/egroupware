@@ -75,7 +75,7 @@ class Widget
 	 *
 	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
 	 *
-	 * @var etemplate_request
+	 * @var Request
 	 */
 	static protected $request;
 
@@ -100,7 +100,7 @@ class Widget
 	/**
 	 * Constructor
 	 *
-	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml)
@@ -862,7 +862,11 @@ class Widget
 		{
 			throw new Api\Exception\AssertionFailed(__METHOD__."(\$arr,'$_idx',$reference_into,$skip_empty) \$arr is no array!");
 		}
-		if (is_object($_idx)) return false;	// given an error in php5.2
+		if (is_object($_idx))
+		{
+			$ret = false;	// given an error in php5.2
+			return $ret;
+		}
 
 		// Make sure none of these are left
 		$idx = str_replace(array('&#x5B;','&#x5D;'), array('[',']'), $_idx);
@@ -883,9 +887,14 @@ class Widget
 			if (!is_array($pos) && (!$reference_into || $reference_into && isset($pos)))
 			{
 				//if ($reference_into) error_log(__METHOD__."(".(strlen($s=array2string($arr))>512?substr($s,0,512).'...':$s).", '$idx', ".array2string($reference_into).", ".array2string($skip_empty).") ".function_backtrace());
-				return null;
+				$ret = null;
+				return $ret;
 			}
-			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return null;
+			if($skip_empty && (!is_array($pos) || !isset($pos[$idx])))
+			{
+				$ret = null;
+				return $ret;
+			}
 			$pos = &$pos[$idx];
 		}
 		return $pos;

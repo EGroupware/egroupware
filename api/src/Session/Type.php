@@ -34,7 +34,7 @@ class Type
 	 *
 	 * @param string $request_uri
 	 * @param string $currentapp
-	 * @param bolean $nologin =false true: return self::WEBGUI instead of self::LOGIN
+	 * @param boolean $nologin =false true: return self::WEBGUI instead of self::LOGIN
 	 * @return string see above constants
 	 */
 	public static function get($request_uri, $currentapp, $nologin=false)

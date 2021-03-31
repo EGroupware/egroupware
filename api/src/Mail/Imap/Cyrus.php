@@ -178,7 +178,7 @@ class Cyrus extends Mail\Imap
 		$this->adminConnection();
 
 		// create the mailbox, with the account_lid, as it is passed from the hook values (gets transformed there if needed)
-		$mailboxName = $this->getUserMailboxString($_hookValues['account_lid'], $mailboxName);
+		$mailboxName = $this->getUserMailboxString($_hookValues['account_lid'], '');
 		// make sure we use the correct username here.
 		$username = $this->getMailBoxUserName($_hookValues['account_lid']);
 		$folderInfo = $this->getMailboxes('', $mailboxName, true);
@@ -218,7 +218,7 @@ class Cyrus extends Mail\Imap
 	 *
 	 * @param string $name
 	 * @param array $params
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function __call($name,array $params=null)
 	{

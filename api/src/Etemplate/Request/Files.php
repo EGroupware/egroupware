@@ -80,9 +80,6 @@ class Files extends Etemplate\Request
 		if (!$id) $id = self::request_id();
 
 		$this->id = $id;
-
-		// hack to quiten IDE Warning for not calling parent::__construct, which we can not!
-		if (false) parent::__construct();
 	}
 
 	/**
@@ -100,7 +97,7 @@ class Files extends Etemplate\Request
 	 * Factory method to get a new request object or the one for an existing request
 	 *
 	 * @param string $id =null
-	 * @return etemplate_request|boolean the object or false if $id is not found
+	 * @return ?Etemplate\Request|false the object or false if $id is not found
 	 */
 	static function read($id=null)
 	{

@@ -1830,7 +1830,7 @@ class Contacts extends Contacts\Storage
 			WHERE '.$this->db->expression('egw_addressbook', array($type_field => $uids));
 
 
-		$contacts =& $this->db->query($sql, __LINE__, __FILE__);
+		$contacts = $this->db->query($sql, __LINE__, __FILE__);
 
 		if (!$contacts) return array();
 
@@ -2951,7 +2951,7 @@ class Contacts extends Contacts\Storage
 			'contact_id' => (int)$contact['id'],
 			'crm_list' => $crm_list,
 			'title' => count($found) > 1 && $contact['org_name'] ?
-				$contact['org_name'] : $contact['n_fn'].' ('.lang($extras['crm_list']).')',
+				$contact['org_name'] : $contact['n_fn'].' ('.lang($crm_list).')',
 			'icon' => $contact['photo'],
 		]);
 		$arg = json_encode($arg, JSON_UNESCAPED_SLASHES);

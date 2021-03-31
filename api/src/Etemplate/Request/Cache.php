@@ -94,7 +94,7 @@ class Cache extends Etemplate\Request
 	 *
 	 * @param string $id =null
 	 * @param bool $handle_not_found =true true: handle not found by trying to redirect, false: just return null
-	 * @return Request|null null if Request not found and $handle_not_found === false
+	 * @return ?Etemplate\Request|false null if Request not found and $handle_not_found === false
 	 */
 	public static function read($id=null, $handle_not_found=true)
 	{

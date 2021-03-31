@@ -137,7 +137,7 @@ abstract class Framework extends Framework\Extra
 		return preg_match('/^[A-Z0-9_-]+$/i', $template) &&
 			file_exists(EGW_SERVER_ROOT.'/'.$template) &&
 			file_exists($file=EGW_SERVER_ROOT.'/'.$template.'/setup/setup.inc.php') &&
-			include_once($file) && !empty($GLOBALS['egw_info']['template'][$template]);
+			include($file) && !empty($GLOBALS['egw_info']['template'][$template]);
 	}
 
 	/**
@@ -367,11 +367,11 @@ abstract class Framework extends Framework\Extra
 	public static function get_page_generation_time()
 	{
 		$times = array(
-			'page_generation_time' => sprintf('%4.2lf', microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']),
+			'page_generation_time' => sprintf('%4.2f', microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']),
 		);
 		if ($GLOBALS['egw_info']['flags']['session_restore_time'])
 		{
-			$times['session_restore_time'] = sprintf('%4.2lf', $GLOBALS['egw_info']['flags']['session_restore_time']);
+			$times['session_restore_time'] = sprintf('%4.2f', $GLOBALS['egw_info']['flags']['session_restore_time']);
 		}
 		return $times;
 	}
@@ -594,8 +594,8 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Get login logo or background image base on requested config type
 	 *
-	 * @param type $type config type to fetch. e.g.: "login_logo_file"
-	 * @param type $find_type type of image to search on as alternative option. e.g.: "logo"
+	 * @param string $type config type to fetch. e.g.: "login_logo_file"
+	 * @param string $find_type type of image to search on as alternative option. e.g.: "logo"
 	 *
 	 * @return string returns full url of the image
 	 */
@@ -643,7 +643,8 @@ abstract class Framework extends Framework\Extra
 	 */
 	protected static function _user_avatar_menu()
 	{
-		$stat = array_pop(Hooks::process('framework_avatar_stat'));
+		$stats = Hooks::process('framework_avatar_stat');
+		$stat = array_pop($stats);
 
 		return '<span title="'.Accounts::format_username().'" class="avatar"><img src="'.Egw::link('/api/avatar.php', array(
 								'account_id' => $GLOBALS['egw_info']['user']['account_id'],

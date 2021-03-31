@@ -101,9 +101,8 @@ class Script
 		}
 
 		$script = $connection->getScript($this->name);
-		#print "<br>AAA: Script is ". htmlentities($script) ."<br>";
 
-		$lines = preg_split("/\n/",$script); //,PREG_SPLIT_NO_EMPTY);
+		$lines = explode("\n",$script);
 
 		$rules = array();
 		$vacation = array();

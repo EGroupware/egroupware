@@ -36,7 +36,7 @@ class Deprecated extends Api\Db
 	/**
 	 * ADOdb record set of the current query
 	 *
-	 * @var ADORecordSet
+	 * @var \ADORecordSet
 	 */
 	var $Query_ID = 0;
 
@@ -51,8 +51,8 @@ class Deprecated extends Api\Db
 	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
 	* @param int $fetchmode =self::FETCH_BOTH self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
-	* @return ADORecordSet or false, if the query fails
-	* @throws EGroupware\Api\Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
+	* @return \ADORecordSet or false, if the query fails
+	* @throws Api\Db\Exception\InvalidSql with $this->Link_ID->ErrorNo() as code
 	*/
 	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
@@ -68,7 +68,7 @@ class Deprecated extends Api\Db
 	 * Return the result-object of the last query
 	 *
 	 * @deprecated use the result-object returned by query() or select() direct, so you can use the global db-object and not a clone
-	 * @return ADORecordSet
+	 * @return \ADORecordSet
 	 */
 	function query_id()
 	{

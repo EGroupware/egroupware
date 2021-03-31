@@ -1297,16 +1297,14 @@ class Storage
 	}
 
 	/**
-	 * Check if distribution lists are availible for a given addressbook
+	 * Check if distribution lists are available for a given addressbook
 	 *
 	 * @param int|string $owner ='' addressbook (eg. 0 = accounts), default '' = "all" addressbook (uses the main backend)
 	 * @return boolean
 	 */
 	function lists_available($owner='')
 	{
-		$backend =& $this->get_backend(null,$owner);
-
-		return method_exists($backend,'read_list');
+		return method_exists($this->get_backend(null, $owner),'read_list');
 	}
 
 	/**

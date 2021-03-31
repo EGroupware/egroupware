@@ -113,7 +113,7 @@ class Tree extends Etemplate\Widget
 	/**
 	 * Constructor
 	 *
-	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml = '')
@@ -133,9 +133,9 @@ class Tree extends Etemplate\Widget
 	 *
 	 * Reimplemented to parse our differnt attributes
 	 *
-	 * @param string|XMLReader $xml
+	 * @param string|\XMLReader $xml
 	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
-	 * @return Etempalte\Widget current object or clone, if any attribute was set
+	 * @return Etemplate\Widget current object or clone, if any attribute was set
 	 */
 	public function set_attrs($xml, $cloned=true)
 	{
@@ -145,7 +145,7 @@ class Tree extends Etemplate\Widget
 		// set attrs[multiple] from attrs[options]
 		if ($this->attrs['options'] > 1)
 		{
-			$this->setElementAttribute($this->id, 'multiple', true);
+			self::setElementAttribute($this->id, 'multiple', true);
 		}
 	}
 

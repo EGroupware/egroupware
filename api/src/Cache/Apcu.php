@@ -165,12 +165,12 @@ class Apcu extends Base implements Provider
 		// APCu > 5 has APCUIterator
 		if (class_exists('APCUIterator'))
 		{
-			$iterator = new \APCUIterator($preg='/^'.preg_quote(self::key($keys).'/'));
+			$iterator = new \APCUIterator($preg='/^'.preg_quote(self::key($keys), '/').'/');
 		}
 		// APC >= 3.1.1, but also seems to be missing if apc is disabled eg. for cli
 		elseif(class_exists('APCIterator'))
 		{
-			$iterator = new \APCIterator('user', $preg='/^'.preg_quote(self::key($keys).'/'));
+			$iterator = new \APCIterator('user', $preg='/^'.preg_quote(self::key($keys), '/'), '/');
 		}
 		else
 		{

@@ -94,7 +94,7 @@ trait UserContextTrait
 		// throw exception if stat array is used insead of path, can be removed soon
 		if (is_array($path))
 		{
-			throw new Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
+			throw new Api\Exception\WrongParameter('path has to be string, use check_access($path,$check,$stat=null)!');
 		}
 
 		// if we have no $stat, delegate whole check to vfs stream-wrapper to correctly deal with shares / effective user-ids

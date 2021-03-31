@@ -136,7 +136,7 @@ abstract class Tracking
 	 * Normally, just the notification class but for testing we pass in a mocked
 	 * class
 	 *
-	 * @var notification_class
+	 * @var string class-name
 	 */
 	protected $notification_class = notifications::class;
 
@@ -205,7 +205,6 @@ abstract class Tracking
 	 * Constructor
 	 *
 	 * @param string $cf_app = null if set, custom field names get added to $field2history
-	 * @return bo_tracking
 	 */
 	function __construct($cf_app = null, $notification_class=false)
 	{

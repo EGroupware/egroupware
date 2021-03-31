@@ -144,19 +144,25 @@ class Db
 	var $query_log;
 
 	/**
+	 * @var array with values for keys "version" and "description"
+	 */
+	public $ServerInfo;
+
+	/**
 	 * ADOdb connection
 	 *
-	 * @var ADOConnection
+	 * @var \ADOConnection
 	 */
 	var $Link_ID = 0;
 	/**
-	 * ADOdb connection
+	 * ADOdb connection is private / not the global one
 	 *
 	 * @var boolean
 	 */
 	var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
 	/**
 	 * Global ADOdb connection
+	 * @var \ADOConnection
 	 */
 	static public $ADOdb = null;
 
@@ -304,7 +310,7 @@ class Db
 	 * @param string $Password password for database user (optional)
 	 * @param string $Type type of database (optional)
 	 * @throws Db\Exception\Connection
-	 * @return ADOConnection
+	 * @return \ADOConnection
 	 */
 	function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL, $Type = NULL)
 	{
@@ -379,7 +385,7 @@ class Db
 	 * require_once(EGW_INCLUDE_ROOT.'/api/src/Db.php');
 	 * EGroupware\Api\Db::$health_check = array('EGroupware\Api\Db', 'galera_cluster_health');
 	 *
-	 * @param Api\Db $db already connected Api\Db instance to check
+	 * @param Db $db already connected Db instance to check
 	 * @throws Db\Exception\Connection if node should NOT be used
 	 */
 	static function galera_cluster_health(Db $db)
@@ -429,7 +435,7 @@ class Db
 	 * Connect to given host
 	 *
 	 * @param string $Host host to connect to
-	 * @return ADOConnection
+	 * @return \ADOConnection
 	 * @throws Db\Exception\Connection
 	 */
 	protected function _connect($Host)

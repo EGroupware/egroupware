@@ -47,7 +47,7 @@ class Smtp
 	/**
 	 * Reference to global account object
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	protected $accounts;
 

@@ -56,7 +56,6 @@ class History
 	 * Constructor
 	 *
 	 * @param string $appname app name this instance operates on
-	 * @return historylog
 	 */
 	function __construct($appname='',$user=null)
 	{

@@ -23,7 +23,7 @@ class Applications
 	/**
 	 * Reference to the global db class
 	 *
-	 * @var EGroupware\Api\Db
+	 * @var Api\Db
 	 */
 	var $db;
 	var $table_name = 'egw_applications';
@@ -35,7 +35,7 @@ class Applications
 	/**
 	 * standard constructor for setting $this->account_id
 	 *
-	 * @param $account_id account id
+	 * @param int|string $account_id account-id or -lid
 	 */
 	function __construct($account_id = '')
 	{

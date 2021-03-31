@@ -811,7 +811,11 @@ class Ldap
 
 		if((int)$filter['owner'])
 		{
-			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
+			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner'])))
+			{
+				$ret = false;
+				return $ret;
+			}
 
 			$searchDN = 'cn='. Api\Ldap::quote(strtolower($accountName)) .',';
 
@@ -961,11 +965,11 @@ class Ldap
 		}
 		if(is_numeric($start) && is_numeric($offset) && $offset >= 0)
 		{
-			return array_slice($rows, $start, $offset);
+			$rows = array_slice($rows, $start, $offset);
 		}
 		elseif(is_numeric($start))
 		{
-			return array_slice($rows, $start, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
+			$rows = array_slice($rows, $start, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
 		}
 		return $rows;
 	}
@@ -1062,7 +1066,7 @@ class Ldap
 						}
 					}
 					// filter for letter-search
-					elseif (preg_match("/^([^ ]+) ".preg_quote($GLOBALS['egw']->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE])." '(.*)%'$/",$value,$matches))
+					elseif (preg_match("/^([^ ]+) ".preg_quote($GLOBALS['egw']->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE], '/')." '(.*)%'$/",$value,$matches))
 					{
 						list(,$name,$value) = $matches;
 						if (strpos($name,'.') !== false) list(,$name) = explode('.',$name);

@@ -16,6 +16,7 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Auth;
 use EGroupware\Api\Mail\Credentials;
+use EGroupware\Api;
 use XMLReader;
 
 /**

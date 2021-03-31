@@ -541,7 +541,11 @@ class Sql extends Api\Storage
 				// no grants for selected owner/addressbook
 				if (!array_intersect((array)$filter['owner'],array_keys($this->grants)))
 				{
-					if (!isset($groupmember_sql)) return false;
+					if (!isset($groupmember_sql))
+					{
+						$ret = false;
+						return $ret;
+					}
 					$filter[] = '('.substr($groupmember_sql,4)." OR $shared_sql)";
 					unset($filter['owner']);
 				}

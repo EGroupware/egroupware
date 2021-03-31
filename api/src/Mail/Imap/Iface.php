@@ -119,7 +119,7 @@ interface Iface
 	 *
 	 * @param bool $_adminConnection create admin connection if true
 	 * @param int $_timeout =null timeout in secs, if none given fmail pref or default of 20 is used
-	 * @throws Exception on error
+	 * @throws \Exception on error
 	 */
 	function openConnection($_adminConnection=false, $_timeout=null);
 
@@ -155,7 +155,7 @@ interface Iface
 	 *
 	 * @param int|string $_euser nummeric account_id or imap username
 	 * @param string $_scriptName =null
-	 * @throws Exception on connection error or authentication failure
+	 * @throws \Exception on connection error or authentication failure
 	 * @return array
 	 */
 	public function getVacationUser($_euser, $_scriptName=null);

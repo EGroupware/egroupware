@@ -30,19 +30,19 @@ class Schema
 	/**
 	 * db-object
 	 *
-	 * @var EGroupware\Api\Db\Deprecated
+	 * @var Deprecated
 	 */
 	var $m_odb;
 	/**
 	 * reference to the global ADOdb object
 	 *
-	 * @var ADOConnection
+	 * @var \ADOConnection
 	 */
 	var $adodb;
 	/**
 	 * adodb's datadictionary object for the used db-type
 	 *
-	 * @var ADODB_DataDict
+	 * @var \ADODB_DataDict
 	 */
 	var $dict;
 	/**
@@ -95,8 +95,7 @@ class Schema
 	 * Constructor of schema-processor
 	 *
 	 * @param string $dbms type of the database: 'mysql','pgsql','mssql','maxdb'
-	 * @param Db $db =null database class, if null we use $GLOBALS['egw']->db
-	 * @return schema_proc
+	 * @param Api\Db $db =null database class, if null we use $GLOBALS['egw']->db
 	 */
 	function __construct($dbms=False, Api\Db $db=null)
 	{

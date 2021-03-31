@@ -143,7 +143,7 @@ class Hooks
 					$ret[] = ExecMethod2($hook, $args);
 				}
 			}
-			catch (Api\Exception\AssertionFailed $e)
+			catch (Exception\AssertionFailed $e)
 			{
 				if (preg_match('/ file .+ not found!$/', $e->getMessage()))
 				{

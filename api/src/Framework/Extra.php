@@ -50,7 +50,7 @@ abstract class Extra
 	 * - add: requires full reload for proper sorting
 	 * - null: full reload
 	 * @param string $targetapp =null which app's window should be refreshed, default current
-	 * @param string|RegExp $replace =null regular expression to replace in url
+	 * @param string $replace =null regular expression to replace in url
 	 * @param string $with =null
 	 * @param string $msg_type =null 'error', 'warning' or 'success' (default)
 	 */

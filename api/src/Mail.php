@@ -1987,7 +1987,7 @@ class Mail
 				// possible error OR Query. But Horde gives no detailed Info :-(
 				self::$supportsORinQuery[$this->profileID]=false;
 				Cache::setCache(Cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),self::$supportsORinQuery,60*60*10);
-				if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver seems to have NO OR Capability for Search:".$sortResult->message);
+				if (self::$debug) error_log(__METHOD__.__LINE__." Mailserver seems to have NO OR Capability for Search");
 				$filter = $this->createIMAPFilter($_folderName, $_filter, self::$supportsORinQuery[$this->profileID]);
 				try
 				{
@@ -2564,7 +2564,7 @@ class Mail
 			throw new Exception(__METHOD__." failed for $oldFolderName (rename to: $newFolderName) with error:".$e->getMessage());;
 		}
 		// clear FolderExistsInfoCache
-		Cache::setCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,60*60*5);
+		Cache::setCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,60*60*5);
 
 		return $newFolderName;
 
@@ -2591,7 +2591,7 @@ class Mail
 			throw new Exception("Deleting Folder $_folderName failed! Error:".$e->getMessage());;
 		}
 		// clear FolderExistsInfoCache
-		Cache::setCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,60*60*5);
+		Cache::setCache(Cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,60*60*5);
 
 		return true;
 	}
@@ -3492,7 +3492,7 @@ class Mail
 		catch (\Exception $e)
 		{
 			// we know that outbox is not supported, but we use this here, as we autocreate expected SpecialUseFolders in this function
-			if ($_type != 'Outbox') error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve Folder'.$_folderName." for ".array2string($types[$_type]).":".$e->getMessage());
+			if ($_type != 'Outbox') error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve Folder for '.array2string($types[$_type]).":".$e->getMessage());
 			$_folderName = false;
 		}
 		// do not try to autocreate configured Archive-Folder. Return false if configured folder does not exist
@@ -6603,9 +6603,9 @@ class Mail
 		return $bytes . ' ' . $type ;
 	}
 
-	static function detect_qp(&$sting) {
-		$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
-		return preg_match("$needle",$string);
+	static function detect_qp($string)
+	{
+		return preg_match('/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/', $string);
 	}
 
 	/**
@@ -6645,7 +6645,7 @@ class Mail
 		if ($_formData['size'] == 0 && parse_url($_formData['file'], PHP_URL_SCHEME) != 'vfs' && is_dir($_formData['file']))
 		{
 			$importfailed = true;
-			$alert_msg .= lang("Empty file %1 ignored.", $_formData['name']);
+			$alert_msg = lang("Empty file %1 ignored.", $_formData['name']);
 		}
 		elseif (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs' || is_uploaded_file($_formData['file']) ||
 			realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir']))
@@ -6661,7 +6661,7 @@ class Mail
 			// if we were NOT able to create this temp directory, then make an ERROR report
 			if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
 			{
-				$alert_msg .= 'Error:'.'<br>'
+				$alert_msg = 'Error:'.'<br>'
 					.'Server is unable to access EGroupware tmp directory'.'<br>'
 					.$GLOBALS['egw_info']['server']['temp_dir'].'<br>'
 					.'Please check your configuration'.'<br>'
@@ -6738,7 +6738,7 @@ class Mail
 		} else {
 			//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
 			$importfailed = true;
-			$alert_msg .= lang("Processing of file %1 failed. Failed to meet basic restrictions.",$_formData['name']);
+			$alert_msg = lang("Processing of file %1 failed. Failed to meet basic restrictions.",$_formData['name']);
 		}
 		if ($importfailed == true)
 		{
@@ -6905,7 +6905,7 @@ class Mail
 		if (empty($SendAndMergeTocontacts))
 		{
 			$importfailed = true;
-			$alert_msg .= lang("Import of message %1 failed. No Contacts to merge and send to specified.", '');
+			$alert_msg = lang("Import of message %1 failed. No Contacts to merge and send to specified.", '');
 		}
 
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)

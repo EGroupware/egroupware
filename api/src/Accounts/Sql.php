@@ -71,7 +71,7 @@ class Sql
 	/**
 	 * Reference to our frontend
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	private $frontend;
 

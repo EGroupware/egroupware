@@ -435,9 +435,9 @@ class Session
 			}
 			$iv_size = mcrypt_enc_get_iv_size(self::$mcrypt);
 			$iv = !isset($GLOBALS['egw_info']['server']['mcrypt_iv']) || strlen($GLOBALS['egw_info']['server']['mcrypt_iv']) < $iv_size ?
-				mcrypt_create_iv ($iv_size, MCRYPT_RAND) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
+				mcrypt_create_iv ($iv_size, MCRYPT_DEV_RANDOM) : substr($GLOBALS['egw_info']['server']['mcrypt_iv'],0,$iv_size);
 
-			if (mcrypt_generic_init(self::$mcrypt,$kp3, $iv) < 0)
+			if (!$iv || mcrypt_generic_init(self::$mcrypt,$kp3, $iv) < 0)
 			{
 				error_log(__METHOD__."() could not initialise mcrypt, sessions get NOT encrypted!");
 				return self::$mcrypt = false;
@@ -1701,7 +1701,7 @@ class Session
 	 * @param bool& $secure =null on return
 	 * @return string domain-name used (either configured one or current one with a leading dot eg. ".example.org")
 	 */
-	public function getCookieDomain(&$path=null, &$secure=null)
+	public static function getCookieDomain(&$path=null, &$secure=null)
 	{
 		if (empty(self::$cookie_domain) || empty(self::$cookie_path))
 		{

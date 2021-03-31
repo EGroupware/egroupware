@@ -202,7 +202,7 @@ class Storage
 	/**
 	 * returns data of a link
 	 *
-	 * @param ing/string $app_link_id > 0 link_id of link or app-name of link
+	 * @param int|string $app_link_id > 0 link_id of link or app-name of link
 	 * @param string $id ='' id in $app, if no integer link_id given in $app_link_id
 	 * @param string $app2 ='' appname of 2. endpoint of the link, if no integer link_id given in $app_link_id
 	 * @param string $id2 ='' id in $app2, if no integer link_id given in $app_link_id
@@ -250,7 +250,7 @@ class Storage
 	/**
 	 * Remove link with $link_id or all links matching given params
 	 *
-	 * @param $link_id link-id to remove if > 0
+	 * @param int|string $link_id link-id to remove if > 0
 	 * @param string $app ='' app-name of links to remove
 	 * @param string $id ='' id in $app or '' remove all links from $app
 	 * @param int $owner =0 account_id to delete all links of a given owner, or 0

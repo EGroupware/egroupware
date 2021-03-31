@@ -199,7 +199,7 @@ class ServerInfo
 	 * @param resource $ds
 	 * @param string $host
 	 * @param int $version 2 or 3
-	 * @return ldapserverinfo
+	 * @return self
 	 */
 	public static function get($ds, $host, $version=3)
 	{

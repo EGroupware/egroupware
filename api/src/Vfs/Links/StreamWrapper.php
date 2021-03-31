@@ -231,7 +231,7 @@ class StreamWrapper extends LinksParent
 	 * Reimplemented, to NOT call the sqlfs functions, as we dont allow to modify the ACL (defined by the apps)
 	 *
 	 * @param string $path
-	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
+	 * @return array|boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
 	static function get_eacl($path)
 	{
@@ -365,7 +365,7 @@ class StreamWrapper extends LinksParent
 	 *
 	 * @param string $url URL that was passed to opendir() and that this object is expected to explore.
 	 * @param $options
-	 * @return booelan
+	 * @return boolean
 	 */
 	function dir_opendir ( $url, $options )
 	{

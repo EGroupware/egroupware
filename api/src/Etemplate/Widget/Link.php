@@ -32,7 +32,7 @@ class Link extends Etemplate\Widget
 	/**
 	 * Constructor
 	 *
-	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
+	 * @param string|\XMLReader $xml string with xml or XMLReader positioned on the element to construct
 	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml = '')
@@ -275,7 +275,8 @@ class Link extends Etemplate\Widget
 		}
 		elseif ($action == "move")
 		{
-			Api\Vfs::move_files($files, Api\Link::vfs_path($app, $id, '', true), $errs = array(), $moved = array());
+			$errs = $moved = [];
+			Api\Vfs::move_files($files, Api\Link::vfs_path($app, $id, '', true), $errs, $moved);
 		}
 		else
 		{

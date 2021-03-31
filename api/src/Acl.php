@@ -281,9 +281,9 @@ class Acl
 	/**
 	 * check required rights agains the internal repository (included rights of $this->account_id and all it's memberships)
 	 *
-	 * @param $location app location
-	 * @param $required required right to check against
-	 * @param $appname optional defaults to currentapp
+	 * @param string $location app location
+	 * @param int $required required right to check against
+	 * @param string|false $appname optional defaults to currentapp
 	 * @return boolean
 	 */
 	function check($location, $required, $appname = False)

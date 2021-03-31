@@ -379,8 +379,8 @@ class Auth
 	/**
 	 * return a random string of size $size either just alphanumeric or with special chars
 	 *
-	 * @param $size int-size of random string to return
-	 * @param $use_specialchars =false false: only letters and numbers, true: incl. special chars
+	 * @param int $size size of random string to return
+	 * @param bool $use_specialchars =false false: only letters and numbers, true: incl. special chars
 	 * @return string
 	 * @throws \Exception if it was not possible to gather sufficient entropy.
 	 */

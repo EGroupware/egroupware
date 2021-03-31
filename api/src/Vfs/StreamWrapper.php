@@ -46,7 +46,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	/**
 	 * stream / ressouce this class is opened for by stream_open
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	private $opened_stream;
 	/**
@@ -74,9 +74,9 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 */
 	private $opened_stream_is_new;
 	/**
-	 * directory-ressouce this class is opened for by dir_open
+	 * directory-resource this class is opened for by dir_open
 	 *
-	 * @var ressource
+	 * @var resource
 	 */
 	private $opened_dir;
 	/**
@@ -327,7 +327,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 *
 	 * If you have cached data in your stream but not yet stored it into the underlying storage, you should do so now.
 	 *
-	 * @return booelan TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
+	 * @return boolean TRUE if the cached data was successfully stored (or if there was no data to store), or FALSE if the data could not be stored.
 	 */
 	function stream_flush ( )
 	{
@@ -879,7 +879,8 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url'): ".function_backtrace(1));
 
-		while (($rel_path = Vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
+		$rel_path = null;
+		while (($rel_path = Vfs::basename($url).(isset($rel_path) ? '/'.$rel_path : '')) &&
 		       ($url = Vfs::dirname($url)))
 		{
 			if (($stat = $this->url_stat($url, 0, false, false)))

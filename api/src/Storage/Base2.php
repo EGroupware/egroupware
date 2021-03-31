@@ -46,12 +46,10 @@ class Base2 extends Base
 	 *
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
-	 * @param Api\Db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
+	 * @param ?Api\Db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $column_prefix ='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone =false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 *
-	 * @return so_sql2
 	 */
 	function __construct($app='',$table='',Api\Db $db=null,$column_prefix='',$no_clone=false)
 	{

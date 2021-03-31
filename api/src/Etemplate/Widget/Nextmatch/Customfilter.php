@@ -50,12 +50,12 @@ class Customfilter extends Widget\Transformer
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
+		self::setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
-		$this->setElementAttribute($form_name, 'type', $this->attrs['type']);
+		self::setElementAttribute($form_name, 'type', $this->attrs['type']);
 		if($widget_type)
 		{
-			$this->setElementAttribute($form_name, 'widget_type', $widget_type);
+			self::setElementAttribute($form_name, 'widget_type', $widget_type);
 		}
 		parent::beforeSendToClient($cname, $expand);
 	}
@@ -71,6 +71,7 @@ class Customfilter extends Widget\Transformer
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
+		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = $value_in = self::get_array($content, $form_name);
 
 		$valid =& self::get_array($validated, $form_name, true);

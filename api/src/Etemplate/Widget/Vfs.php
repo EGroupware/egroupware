@@ -49,7 +49,7 @@ class Vfs extends File
 				$path = $form_name;
 			}
 
-			$this->setElementAttribute($form_name, 'path', $path);
+			self::setElementAttribute($form_name, 'path', $path);
 			// ID maps to path - check there for any existing files
 			list($app,$id,$relpath) = explode(':',$path,3);
 			if($app && $id)

@@ -144,9 +144,9 @@ class _parse_proppatch
     /**
      * tag start handler
      *
-     * @param  resource  parser
-     * @param  string    tag name
-     * @param  array     tag attributes
+     * @param  resource $parser
+     * @param  string $name tag name
+     * @param  array $attrs tag attributes
      * @return void
      * @access private
      */
@@ -175,15 +175,13 @@ class _parse_proppatch
 
         if ($this->depth >= 4) {
             $this->current["val"] .= "<$tag";
-            if (isset($attr)) {
-                foreach ($attr as $key => $val) {
+            if (isset($attrs)) {
+                foreach ($attrs as $key => $val) {
                     $this->current["val"] .= ' '.$key.'="'.str_replace('"','&quot;', $val).'"';
                 }
             }
             $this->current["val"] .= ">";
         }
-
-
 
         $this->depth++;
     }

@@ -322,7 +322,7 @@ abstract class Ajax extends Api\Framework
 	* @param string $id unique element id
 	* @param string $icon_src src of the icon image. Make sure this nog height then 18pixels
 	* @param string $iconlink where the icon links to
-	* @param booleon $blink set true to make the icon blink
+	* @param boolean $blink set true to make the icon blink
 	* @param mixed $tooltip string containing the tooltip Api\Html, or null of no tooltip
 	* @todo implement in a reasonable way for jdots
 	* @return void
@@ -648,7 +648,7 @@ abstract class Ajax extends Api\Framework
 	 * Ajax callback which is called whenever a previously opened tab is closed or
 	 * opened.
 	 *
-	 * @param $tablist is an array which contains each tab as an associative array
+	 * @param array $tablist is an array which contains each tab as an associative array
 	 *   with the keys 'appName' and 'active'
 	 */
 	public static function ajax_tab_changed_state($tablist)
@@ -718,8 +718,8 @@ abstract class Ajax extends Api\Framework
 
 	/**
 	 * Stores the width of the sidebox menu depending on the sidebox menu settings
-	 * @param $appname the name of the application
-	 * @param $width the width set
+	 * @param string $appname the name of the application
+	 * @param int $width the width set
 	 */
 	public static function ajax_sideboxwidth($appname, $width)
 	{
@@ -1032,7 +1032,7 @@ abstract class Ajax extends Api\Framework
 		// call application menuaction
 		ob_start();
 		$obj->$method();
-		$output .= ob_get_contents();
+		$output = ob_get_contents();
 		ob_end_clean();
 
 		// add registered css and javascript to the response

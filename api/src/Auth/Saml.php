@@ -190,7 +190,7 @@ class Saml implements BackendSSO
 	/**
 	 * Update joined account, if configured
 	 *
-	 * @param $account_lid existing account_lid
+	 * @param string $account_lid existing account_lid
 	 * @param array $attrs saml attributes incl. SAML username
 	 * @return string username to use
 	 */
@@ -546,7 +546,6 @@ class Saml implements BackendSSO
 	 * @param array $attrs
 	 * @param ?array& $auto_create_acct reference to $GLOBALS['auto_create_acct'] for not existing accounts
 	 * @param array|null $config
-	 * @return mixed|string|null
 	 */
 	private function checkAffiliation($username, array $attrs, array &$auto_create_acct=null, array $config=null)
 	{

@@ -233,7 +233,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * Check admin credientials and connection (if supported)
 	 *
 	 * @param string $_username =null create an admin connection for given user or $this->acc_imap_username
-	 * @throws Horde_IMAP_Client_Exception
+	 * @throws \Horde_IMAP_Client_Exception
 	 */
 	public function checkAdminConnection($_username=true)
 	{
@@ -265,7 +265,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Login to the IMAP server.
 	 *
-	 * @throws Horde_Imap_Client_Exception
+	 * @throws \Horde_Imap_Client_Exception
 	 */
 	public function login()
 	{
@@ -282,7 +282,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * Allow read access to former public attributes
 	 *
-	 * @param type $name
+	 * @param string $name
 	 * @return mixed null for an unknown attribute
 	 */
 	public function __get($name)
@@ -413,7 +413,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 
 		// if not
 		// we can encode only from ISO 8859-1
-		return imap_utf7_encode($_folderName);
+		return function_exists('imap_utf7_encode') ? imap_utf7_encode($_folderName) : $_folderName;
 	}
 
 	/**
@@ -487,7 +487,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * getSpecialUseFolders
 	 *
-	 * @return current mailbox, or if none check on INBOX, and return upon existance
+	 * @return ?string current mailbox, or if none check on INBOX, and return upon existance
 	 */
 	function getCurrentMailbox()
 	{
@@ -534,8 +534,8 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	/**
 	 * getMailboxCounters
 	 *
-	 * @param array/string $mailbox
-	 * @return array with counters
+	 * @param array|string $mailbox
+	 * @return array|false with counters
 	 */
 	function getMailboxCounters($mailbox)
 	{
@@ -564,7 +564,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * getStatus
 	 *
 	 * @param string $mailbox
-	 * @param ignoreStatusCache bool ignore the cache used for counters
+	 * @param bool ignoreStatusCache ignore the cache used for counters
 	 * @return array with counters
 	 */
 	function getStatus($mailbox, $ignoreStatusCache=false)

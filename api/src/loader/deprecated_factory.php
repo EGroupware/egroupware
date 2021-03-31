@@ -20,8 +20,8 @@ use EGroupware\Api;
  * $GLOBALS['egw']->acl = CreateObject('phpgwapi.acl');
  *
  * @author RalfBecker@outdoor-training.de
- * @param $classname name of class
- * @param $p1,$p2,... class parameters (all optional)
+ * @param string $classname name of class
+ * @param mixed $p1,$p2,... class parameters (all optional)
  * @deprecated use autoloadable class-names and new
  * @return object reference to an object
  */
@@ -103,7 +103,7 @@ function CreateObject($class)
  * @deprecated use autoloadable class-names, instanciate and call method or use static methods
  * @return mixed reference to returnvalue of the method
  */
-function &ExecMethod2($acm)
+function ExecMethod2($acm)
 {
 	if (!is_callable($acm))
 	{
@@ -137,10 +137,10 @@ function &ExecMethod2($acm)
  * This function is used to create an instance of a class, and if the class file has not been included it will do so.
  *
  * @author seek3r
- * @param $method to execute
- * @param $functionparam function param should be an array
- * @param $loglevel developers choice of logging level
- * @param $classparams params to be sent to the contructor
+ * @param string $method to execute
+ * @param mixed $functionparam function param should be an array
+ * @param int $loglevel developers choice of logging level
+ * @param mixed $classparams params to be sent to the contructor
  * @deprecated use autoloadable class-names, instanciate and call method or use static methods
  * @return mixed returnvalue of method
  */

@@ -29,7 +29,7 @@ class Db2DataIterator implements \Iterator
 	/**
 	 * Instance of ADOdb record set to iterate
 	 *
-	 * @var \Traversible
+	 * @var \Traversable
 	 */
 	private $rs;
 

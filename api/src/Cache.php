@@ -405,7 +405,8 @@ class Cache
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
-			return null;	// can no longer store something in the session, eg. because commit_session() was called
+			$ret = null;	// can no longer store something in the session, eg. because commit_session() was called
+			return $ret;
 		}
 		// check if entry is expired and clean it up in that case
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
