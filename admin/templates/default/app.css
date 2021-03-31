@@ -179,6 +179,9 @@ select#admin-mailaccount_ident_id {
 #admin-acl {width:99%;}
 
 #admin-categories-edit_owner {overflow-y: auto;}
+#admin-categories-edit_icon_url {
+	max-width: 32px;
+}
 
 /*
 Admin command
