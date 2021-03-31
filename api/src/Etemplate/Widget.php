@@ -650,7 +650,7 @@ class Widget
 	 * This is mainly used for autorepeat, but other use is possible.
 	 * You need to be aware of the rules PHP uses to expand vars in strings, a name
 	 * of "Row$row[length]" will expand to 'Row' as $row is scalar, you need to use
-	 * "Row${row}[length]" instead. Only one indirection is allowd in a string by php !!!
+	 * "Row${row}[length]" instead. Only one indirection is allowed in a string by php !!!
 	 * Out of that reason we have now the variable $row_cont, which is $cont[$row] too.
 	 * Attention !!!
 	 * Using only number as index in field-names causes a lot trouble, as depending
@@ -686,8 +686,13 @@ class Widget
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			eval('$name = "'.str_replace('"','\\"',$name).'";');
-			unset($col_, $row_, $row_cont, $col_row_cont);	// quiten IDE warning about used vars, they might be used in above eval!
+			try {
+				eval('$name = "' . str_replace('"', '\\"', $name) . '";');
+			}
+			catch(\Throwable $e) {
+				_egw_log_exception($e);
+			}
+			unset($col_, $row_, $row_cont, $col_row_cont);	// quieten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)
 		{
