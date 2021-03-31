@@ -260,7 +260,7 @@ class admin_categories
 		if(!$content['appname']) $content['appname'] = $appname;
 		if($content['data']['icon'])
 		{
-			$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
+			$content['icon_url'] = Api\Image::find('vfs',$content['data']['icon']) ?: self::icon_url($content['data']['icon']);
 		}
 
 		$sel_options['icon'] = self::get_icons();
@@ -363,8 +363,18 @@ class admin_categories
 				}
 			}
 			$dir->close();
-			asort($icons);
 		}
+
+		// Get custom icons
+		$map = Api\Image::map();
+		if(array_key_exists('vfs', $map))
+		{
+			foreach($map['vfs'] as $name => $path)
+			{
+				$icons[$name] = $name;
+			}
+		}
+		asort($icons);
 		return $icons;
 	}
 
@@ -420,7 +430,7 @@ class admin_categories
 				$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
 			}
 
-			if ($row['data']['icon']) $row['icon_url'] = self::icon_url($row['data']['icon']);
+			if ($row['data']['icon']) $row['icon_url'] = Api\Image::find('vfs',$row['data']['icon']) ?: self::icon_url($row['data']['icon']);
 
 			$row['subs'] = $row['children'] ? count($row['children']) : 0;
 
