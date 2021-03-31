@@ -870,8 +870,8 @@ class Ads
 	/**
 	* Add seconds between 1601-01-01 and 1970-01-01 and multiply by 10000000
 	*
-	* @param long $unixTime
-	* @return long windowsTime
+	* @param int $unixTime
+	* @return int windowsTime
 	*/
 	public static function convertUnixTimeToWindowsTime($unixTime)
 	{
