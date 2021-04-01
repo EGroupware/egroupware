@@ -441,7 +441,7 @@ class StreamWrapper extends LinksParent
 		{
 			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
-		return $parent->symlink($target,$link);
+		return parent::symlink($target,$link);
 	}
 
 	/**
