@@ -1,4 +1,5 @@
 #!/bin/bash -x
+# To build PHP 8 snapshots out of master: doc/docker/fpm/build.sh 8.0 21.1.<date> master
 
 cd $(dirname $0)
 
@@ -13,18 +14,19 @@ fi
 
 DEFAULT=$(git branch|grep ^*|cut -c3-)
 TAG=${1:-$DEFAULT}
-VERSION=$TAG
+VERSION=${2:-$TAG}
 BRANCH=$(echo $VERSION|sed 's/\.[0-9]\{8\}$//')
-[ $VERSION = $BRANCH ] && VERSION="$BRANCH.x-dev"
+[ $VERSION = $BRANCH ] && VERSION="dev-$BRANCH"
 
-[ $VERSION = "$DEFAULT.x-dev" ] && {
-	grep self.version composer.json | while read pack version; do composer update $(echo $pack|cut -d'"' -f2); done
+[ $VERSION = "dev-$DEFAULT" ] && (
+  cd ../../..
+	composer update 'egroupware/*'
 	git status composer.lock|grep composer.lock && {
 		git stash; git pull --rebase; git stash pop
 		git commit -m 'updating composer.lock with latest commit hashed for egroupware/* packages' composer.lock
 		VERSION="$VERSION#$(git push|grep $DEFAULT|cut -c4-10)"
 	}
-}
+)
 
 # add PHP_VERSION to TAG, if not the default PHP version
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
@@ -39,7 +41,7 @@ docker build --no-cache --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=
 	#	docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
 	#	docker push egroupware/egroupware:latest
 	#}
-	[ "$BRANCH" != $VERSION -a "${BRANCH}.x-dev" != $VERSION ] && {
+	[ "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
 		docker tag egroupware/egroupware:$TAG egroupware/egroupware:$BRANCH
 		docker push egroupware/egroupware:$BRANCH
 	}
