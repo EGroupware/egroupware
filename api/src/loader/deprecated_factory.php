@@ -61,33 +61,8 @@ function CreateObject($class)
 		require_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 	}
 	$args = func_get_args();
-	switch(count($args))
-	{
-		case 1:
-			$obj = new $classname;
-			break;
-		case 2:
-			$obj = new $classname($args[1]);
-			break;
-		case 3:
-			$obj = new $classname($args[1],$args[2]);
-			break;
-		case 4:
-			$obj = new $classname($args[1],$args[2],$args[3]);
-			break;
-		default:
-			$code = '$obj = new ' . $classname . '(';
-			foreach(array_keys($args) as $n)
-			{
-				if ($n)
-				{
-					$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
-				}
-			}
-			$code .= ');';
-			eval($code);
-			break;
-	}
+	array_shift($args);
+	$obj = new $classname(...$args);
 	if (!is_object($obj))
 	{
 		echo "<p>CreateObject('$class'): Cant instanciate class!!!<br />\n".function_backtrace(1)."</p>\n";

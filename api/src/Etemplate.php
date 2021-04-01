@@ -616,7 +616,7 @@ class Etemplate extends Etemplate\Widget\Template
 	/**
 	 *  disables all cells with name == $name
 	 *
-	 * @param sting $name cell-name
+	 * @param string $name cell-name
 	 * @param boolean $disabled =true disable or enable a cell, default true=disable
 	 * @return reference to attribute
 	 * @deprecated use disableElement($name, $disabled=true)

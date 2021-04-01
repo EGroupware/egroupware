@@ -11,15 +11,14 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package api
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
-// this is only neccessary, if header.inc.php is not included, but api/src/autoload.php directly
+// this is only necessary, if header.inc.php is not included, but api/src/autoload.php directly
 if (!defined('EGW_SERVER_ROOT'))
 {
 	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
 	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
-	define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
+	if (file_exists(EGW_SERVER_ROOT.'/phpgwapi/inc')) define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
 	error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 }
 
