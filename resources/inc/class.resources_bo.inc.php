@@ -1016,7 +1016,7 @@ class resources_bo
 				$picture = Api\Categories::id2name($resource['cat_id'], 'data');
 				if($picture['icon'])
 				{
-					$picture = Api\Image::find('vfs',$picture['icon']) ?: self::ICON_PATH.'/'.$picture['icon'];
+					$picture = Api\Image::find('vfs',$picture['icon']) ?: $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$picture['icon'];
 					break;
 				}
 				// fall through
