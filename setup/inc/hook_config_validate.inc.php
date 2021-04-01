@@ -135,10 +135,10 @@ function _mcrypt_test_module_mode($module,$mode)
 	}
 	$key = substr($key_in, 0, mcrypt_enc_get_key_size($GLOBALS['td']));
 	$iv_size = mcrypt_enc_get_iv_size($GLOBALS['td']);
-	$iv = @mcrypt_create_iv($iv_size, MCRYPT_RAND);
+	$iv = @mcrypt_create_iv($iv_size, MCRYPT_DEV_RANDOM);
 
 	/* Initialize encryption handle */
-	if(mcrypt_generic_init($GLOBALS['td'], $key, $iv) != -1)
+	if($iv && mcrypt_generic_init($GLOBALS['td'], $key, $iv) != -1)
 	{
 		/* Encrypt data */
 		$c_t = mcrypt_generic($GLOBALS['td'], $plain_text);

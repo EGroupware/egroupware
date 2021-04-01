@@ -177,6 +177,7 @@ $completed  = $GLOBALS['egw_info']['server']['app_images'] . '/completed.png';
 $setup_tpl->set_var('img_incomplete',$incomplete);
 $setup_tpl->set_var('img_completed',$completed);
 
+$num = 0;
 $setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management', ++$num));
 $setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
 $setup_tpl->set_var('system_charset',str_replace('&amp;','&',
@@ -519,7 +520,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 }
 // Backup and restore section
 $setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore', ++$num));
-if ($GLOBALS['egw_info']['setup']['stage']['db'] == 10 && !$no_backup_dir)
+if ($GLOBALS['egw_info']['setup']['stage']['db'] == 10)
 {
 	$setup_tpl->set_var('backup_status_img',$completed);
 	$setup_tpl->set_var('backup_status_alt',lang('completed'));
@@ -533,7 +534,7 @@ else
 {
 	$setup_tpl->set_var('backup_status_img',$incomplete);
 	$setup_tpl->set_var('backup_status_alt',lang('not completed'));
-	$setup_tpl->set_var('backup_table_data',$no_backup_dir ? $no_backup_dir : lang('Not ready for this stage yet'));
+	$setup_tpl->set_var('backup_table_data',lang('Not ready for this stage yet'));
 }
 
 $setup_tpl->pparse('out','T_setup_main');

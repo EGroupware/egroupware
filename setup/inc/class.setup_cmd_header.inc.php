@@ -249,7 +249,8 @@ class setup_cmd_header extends setup_cmd
 			{
 				if (strpos($name,'/') !== false)
 				{
-					$name = array_pop($parts = explode('/',$name));
+					$parts = explode('/',$name);
+					$name = array_pop($parts);
 				}
 				if (isset($this->$name))
 				{

@@ -163,7 +163,7 @@ if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['e
 	$md5 .= ', sha1='.sha1_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
 
 	$setup_tpl->set_var('error_msg',lang("succesfully uploaded file %1",$_FILES['uploaded']['name'].', '.
-		sprintf('%3.1lf MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
+		sprintf('%3.1f MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
 }
 // delete a backup
 if ($_POST['delete'])
@@ -268,7 +268,7 @@ foreach($files as $file => $ctime)
 	$setup_tpl->set_var(array(
 		'filename'	=> $file,
 		'mod'		=> date('Y-m-d H:i',$ctime),
-		'size'		=> sprintf('%3.1lf MB (%d)',$size/(1024*1024),$size),
+		'size'		=> sprintf('%3.1f MB (%d)',$size/(1024*1024),$size),
 		'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" />&nbsp;'."\n".
 			'<input type="submit" name="delete['.$file.']" value="'.htmlspecialchars(lang('delete')).'" onclick="return confirm(\''.
 				htmlspecialchars(lang('Confirm to delete this backup?')).'\');" />&nbsp;'."\n".

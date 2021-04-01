@@ -41,8 +41,6 @@ class setup_process
 
 	/**
 	 * create schema_proc object
-	 *
-	 * @param none
 	 */
 	function init_process()
 	{

@@ -44,10 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 }
 
 /* Following to ensure windows file paths are saved correctly */
-if (function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
-{
-	set_magic_quotes_runtime(0);
-}
 $GLOBALS['egw_setup']->loaddb();
 
 /* Check api version, use correct table */

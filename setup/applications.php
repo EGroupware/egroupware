@@ -224,6 +224,7 @@ if(@$detail)
 	$setup_tpl->set_var('details', lang($setup_info[$detail]['title']));
 	$setup_tpl->pparse('out','detail');
 
+	$i = 0;
 	foreach($setup_info[$detail] as $key => $val)
 	{
 		switch($key)
@@ -505,7 +506,7 @@ else
 					$setup_tpl->set_var('instimg','dep.png');
 					$setup_tpl->set_var('instalt',lang('Dependency Failure'));
 					$setup_tpl->set_var('install','&nbsp;');
-					if ($values['currentver'])
+					if ($value['currentver'])
 					{
 						$setup_tpl->set_var('remove',$key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '">' . lang('Possible Solutions') . '</a>');

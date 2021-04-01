@@ -110,7 +110,7 @@ abstract class setup_cmd extends admin_cmd
 	static private $egw_accounts_backup;
 
 	/**
-	 * Create the setup enviroment (for running within setup or EGw)
+	 * Create the setup environment (for running within setup or EGw)
 	 */
 	static protected function _setup_enviroment($domain=null)
 	{
@@ -135,7 +135,6 @@ abstract class setup_cmd extends admin_cmd
 				self::$egw_accounts_backup = $GLOBALS['egw']->accounts;
 				unset($GLOBALS['egw']->accounts);
 			}
-			if ($this->config) self::$egw_setup->setup_account_object($this->config);
 		}
 		if (is_object($GLOBALS['egw']->db) && $domain)
 		{
@@ -165,7 +164,7 @@ abstract class setup_cmd extends admin_cmd
 			{
 				$GLOBALS['egw']->accounts = self::$egw_accounts_backup;
 				Api\Accounts::cache_invalidate();
-				unset(self::$egw_accounts_backup);
+				self::$egw_accounts_backup = null;
 			}
 		}
 	}

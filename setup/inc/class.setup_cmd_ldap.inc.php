@@ -67,7 +67,7 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Instance of ldap object
 	 *
-	 * @var ldap
+	 * @var Api\Ldap
 	 */
 	private $test_ldap;
 
@@ -773,7 +773,6 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($account_id != $account['account_id'])	// not all backends have as key the account_id
 			{
-				unset($account);
 				$account_id = $account['account_id'];
 			}
 			$account += $accounts_obj->read($account_id);
