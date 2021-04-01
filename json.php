@@ -32,6 +32,8 @@ function login_redirect(&$anon_account)
 	$response->apply('framework.callOnLogout');
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 
+	// under PHP 8 the destructor is called to late and the response is not send
+	Json\Response::sendResult();
 	exit();
 }
 
@@ -65,6 +67,8 @@ function ajax_exception_handler($e)
 	}
 	$response->alert($message);
 
+	// under PHP 8 the destructor is called to late and the response is not send
+	Json\Response::sendResult();
 	exit;
 }
 
