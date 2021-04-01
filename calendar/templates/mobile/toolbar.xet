@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package
+@subpackage
+@link http://www.egroupware.org
+@author Hadi Nategh
+@version $Id$
+-->
+
+<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+
+<overlay>
+	<template id="calendar.toolbar">
+		<hbox class="et2_nextmatch" >
+			<box class="search nm-mob-header" width="100%">
+				<searchbox id="keywords" blur="Search" overlay="false"  fix="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
+				<toolbar id="toolbar" flat_list="false"/>
+			</box>
+		</hbox>
+	</template>
+</overlay>

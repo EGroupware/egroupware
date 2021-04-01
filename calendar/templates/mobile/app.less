@@ -16,7 +16,7 @@
 /* tablets and smartphones  */
 @media all {
 	#calendar-toolbar {
-		height: 70px;
+		height: 50px;
 		width: 100%;
 		background: #0c5da5;
 		z-index: 1;
@@ -60,7 +60,7 @@
 	#calendar-toolbar {background-color: @calendar-color;}
 	#calendar-view {
 		button.plus_button {
-			bottom: 85px;
+			bottom: 15px;
 		}
 	}
 	#calendar-toolbar button#toolbar-today {
@@ -98,4 +98,25 @@
 	}
 	#calendar-toolbar_app_header {height: 17px;left:0;}
 	#calendar-toolbar .egw_fw_ui_app_header_container {min-height:20px;}
+	#calendar-toolbar .et2_searchbox input{height: 42px;}
+	#calendar-toolbar {
+		.nm-mob-header {
+			width: 100%;
+			position: absolute;
+			.ui-toolbar-menulist button {color: black;}
+			z-index: 100;
+			.et2_searchbox {
+				display: inline-block;
+				width: 50px;
+			}
+			#calendar-toolbar_toolbar{
+				width: calc(100% - 100px);
+				display: inline-block;
+				padding: 0px !important;
+				#toolbar-actionlist {
+					margin-left: 0px;
+				}
+			}
+		}
+	}
 }
