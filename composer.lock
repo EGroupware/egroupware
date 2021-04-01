@@ -1247,12 +1247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "87b543ed30ac5f932f6e3804dad99582d2db6126"
+                "reference": "1b735b7c554c0eb5c6af66590acfd2afeeefbcfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/87b543ed30ac5f932f6e3804dad99582d2db6126",
-                "reference": "87b543ed30ac5f932f6e3804dad99582d2db6126",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/1b735b7c554c0eb5c6af66590acfd2afeeefbcfe",
+                "reference": "1b735b7c554c0eb5c6af66590acfd2afeeefbcfe",
                 "shasum": ""
             },
             "require": {
@@ -1288,7 +1288,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-02-25T18:25:58+00:00"
+            "time": "2021-03-31T10:17:33+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1296,12 +1296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "2a04fdafe255c0e869734199972bd3b5bd523ea1"
+                "reference": "94d182778b2fc04c68c51e295259fa2c09548de3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/2a04fdafe255c0e869734199972bd3b5bd523ea1",
-                "reference": "2a04fdafe255c0e869734199972bd3b5bd523ea1",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/94d182778b2fc04c68c51e295259fa2c09548de3",
+                "reference": "94d182778b2fc04c68c51e295259fa2c09548de3",
                 "shasum": ""
             },
             "require": {
@@ -1329,7 +1329,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-28T18:30:25+00:00"
+            "time": "2021-03-30T17:20:21+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1426,12 +1426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "49639e7a3d4fc7086ea75652df2f003a36153d60"
+                "reference": "67d1bedf2ef4f164503af4fcc765b5038d2e0da2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/49639e7a3d4fc7086ea75652df2f003a36153d60",
-                "reference": "49639e7a3d4fc7086ea75652df2f003a36153d60",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/67d1bedf2ef4f164503af4fcc765b5038d2e0da2",
+                "reference": "67d1bedf2ef4f164503af4fcc765b5038d2e0da2",
                 "shasum": ""
             },
             "require": {
@@ -1464,7 +1464,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-03-29T18:09:27+00:00"
+            "time": "2021-03-30T16:12:48+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1472,12 +1472,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "e54787a19ae92014bef4ed026437f67f5578651b"
+                "reference": "887ce48eadfa08f35fef081e981358bce78f664d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/e54787a19ae92014bef4ed026437f67f5578651b",
-                "reference": "e54787a19ae92014bef4ed026437f67f5578651b",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/887ce48eadfa08f35fef081e981358bce78f664d",
+                "reference": "887ce48eadfa08f35fef081e981358bce78f664d",
                 "shasum": ""
             },
             "require": {
@@ -1504,7 +1504,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-29T13:56:54+00:00"
+            "time": "2021-03-30T14:00:34+00:00"
         },
         {
             "name": "egroupware/swoolepush",
