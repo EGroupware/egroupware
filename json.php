@@ -33,7 +33,7 @@ function login_redirect(&$anon_account)
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 
 	// under PHP 8 the destructor is called to late and the response is not send
-	Json\Response::sendResult();
+	$GLOBALS['egw']->__destruct();
 	exit();
 }
 
@@ -65,10 +65,10 @@ function ajax_exception_handler($e)
 	{
 		$message .= "\n\n".$e->getTraceAsString();
 	}
-	$response->alert($message);
+	$response->message($message, 'error');
 
 	// under PHP 8 the destructor is called to late and the response is not send
-	Json\Response::sendResult();
+	$GLOBALS['egw']->__destruct();
 	exit;
 }
 
