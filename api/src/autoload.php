@@ -90,7 +90,8 @@ spl_autoload_register(function($class)
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
 		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
 		// classes with an underscore in their name
-		!file_exists(EGW_INCLUDE_ROOT.'/'.$app) && file_exists(EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0]) &&
+		!file_exists(EGW_INCLUDE_ROOT.'/'.$app) && isset($components[0]) &&
+			file_exists(EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0]) &&
 			file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		// include PEAR and PSR0 classes from include_path
 		// need to use include (not include_once) as eg. a previous included EGW_API_INC/horde/Horde/String.php causes

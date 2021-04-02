@@ -162,7 +162,7 @@ class Html
 				$name .= '[]';
 			}
 		}
-		elseif($multiple < 0)
+		elseif((int)$multiple < 0)
 		{
 			$options .= ' size="'.abs($multiple).'"';
 		}
