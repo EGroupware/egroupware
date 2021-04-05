@@ -608,7 +608,7 @@ class Egw extends Egw\Base
 					$callback = array_shift($data);
 					call_user_func_array($callback, $data);
 				}
-				catch (\Exception $ex) {
+				catch (\Throwable $ex) {
 					_egw_log_exception($ex);
 				}
 			}
