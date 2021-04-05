@@ -421,7 +421,7 @@ class addressbook_hooks
 	{
 		// Add users / groups this contact is shared with
 		$entry['shared_with'] = [];
-		foreach($entry['shared'] as $id => $share)
+		foreach((array)$entry['shared'] as $id => $share)
 		{
 			$entry['shared_with'][] = $share['shared_with'];
 		}

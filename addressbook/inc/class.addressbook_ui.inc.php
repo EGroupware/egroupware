@@ -2229,7 +2229,7 @@ class addressbook_ui extends addressbook_bo
 		if (is_array($content))
 		{
 			// sync $content['shared'] with $content['shared_values']
-			foreach($content['shared'] as $key => $shared)
+			foreach((array)$content['shared'] as $key => $shared)
 			{
 				$shared_value = $shared['shared_id'].':'.$shared['shared_with'].':'.$shared['shared_by'].':'.$shared['shared_writable'];
 				if (($k = array_search($shared_value, (array)$content['shared_values'])) === false)
