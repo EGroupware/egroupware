@@ -524,7 +524,7 @@ class addressbook_vcal extends addressbook_bo
 		return $result;
 	}
 
-	function search($_vcard, $contentID=null, $relax=false, $charset=null)
+	function iCalSearch($_vcard, $contentID=null, $relax=false, $charset=null)
 	{
 		$result = array();
 

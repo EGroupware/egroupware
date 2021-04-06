@@ -39,13 +39,14 @@ class calendar_wizard_import_ical
 		);
 	}
 
+	/* fix PHP 8 error: Cannot use "parent" when current class scope has no parent
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
 		$content['msg'] .= "\n*" ;
 
 		return $result;
-	}
+	}*/
 
 	// Conditions
 	function wizard_step55(&$content, &$sel_options, &$readonlys, &$preserv)

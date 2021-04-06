@@ -58,8 +58,9 @@ class filemanager_shares extends filemanager_ui
 	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
 	 * @return int total number of rows
 	 */
-	public function get_rows($query, &$rows)
+	public function get_rows(&$query_in, &$rows)
 	{
+		$query = $query_in;
 		switch ($query['col_filter']['type'])
 		{
 			case Sharing::LINK:
@@ -160,7 +161,7 @@ class filemanager_shares extends filemanager_ui
 	 * @param array $content=null
 	 * @param string $msg=''
 	 */
-	public function index(array $content=null)
+	public function index(array $content=null, $msg = null)
 	{
 		if (!is_array($content))
 		{

@@ -121,7 +121,7 @@ class calendar_tracking extends Api\Storage\Tracking
 	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
 	 * Overrides parent to reformat participants into a format parent can handle
 	 */
-	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null, $skip_notification = false)
 	{
 		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
@@ -162,13 +162,13 @@ class calendar_tracking extends Api\Storage\Tracking
 				$data[$date] = $data[$date]->format('ts');
 			}
 		}
-		parent::track($data,$old,$user,$deleted, $changed_fields);
+		parent::track($data,$old,$user,$deleted, $changed_fields, $skip_notification);
 	}
 
 	/**
 	 * Overrides parent because calendar_boupdates handles the notifications
 	 */
-	public function do_notifications($data,$old,$deleted=null)
+	public function do_notifications($data,$old,$deleted=null, &$email_notified = null)
 	{
 		unset($data, $old, $deleted);	// unused, but required by function signature
 		return true;

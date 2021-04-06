@@ -18,10 +18,10 @@ use EGroupware\Api;
  */
 class addressbook_display extends addressbook_ui
 {
-	function get_rows(&$query,&$rows,&$readonlys)
+	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
 		$query['sitemgr_display'] = ($readonlys['sitemgr_display'] ?$readonlys['sitemgr_display']:'addressbook.display');
-		$total = parent::get_rows($query,$rows,$readonlys);
+		$total = parent::get_rows($query,$rows,$readonlys, $id_only);
 		$query['template'] = $query['sitemgr_display'].'.rows';
 
 		if (is_array($query['fields'])) foreach($query['fields'] as $name)

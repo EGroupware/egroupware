@@ -690,6 +690,7 @@ class Widget
 				eval('$name = "' . str_replace('"', '\\"', $name) . '";');
 			}
 			catch(\Throwable $e) {
+				error_log(__METHOD__."() eval('\$name = \"".str_replace('"', '\\"', $name) . "\";)");
 				_egw_log_exception($e);
 			}
 			unset($col_, $row_, $row_cont, $col_row_cont);	// quieten IDE warning about used vars, they might be used in above eval!
