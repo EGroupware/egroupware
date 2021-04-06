@@ -3406,7 +3406,7 @@ class addressbook_ui extends addressbook_bo
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		$this->tmpl->set_cell_attribute('change_org','disabled',true);
-		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(),2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.extSearch',$content,$sel_options,$readonlys,array(),2);
 	}
 
 	/**
