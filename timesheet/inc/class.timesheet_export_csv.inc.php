@@ -42,7 +42,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin
 			$query = Api\Cache::getSession(TIMESHEET_APP, 'index');
 			$query['num_rows'] = -1;	// all records
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
-			$this->ui->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+			$this->ui->get_rrows($query,$selection,$readonlys,true);	// true = only return the id's
 		}
 		elseif($options['selection'] == 'all')
 		{
@@ -50,7 +50,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin
 				'num_rows' => -1,
 				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
 			);
-			$this->ui->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+			$this->ui->get_rrows($query,$selection,$readonlys,true);	// true = only return the id's
 		}
 		else if($options['selection'] == 'filter')
 		{
@@ -78,7 +78,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin
 				if($value['to']) $query['col_filter'][] = "$field <= " . (int)$value['to'];
 				unset($query['col_filter'][$field]);
 			}
-			$this->ui->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+			$this->ui->get_rrows($query,$selection,$readonlys,true);	// true = only return the id's
 		}
 
 

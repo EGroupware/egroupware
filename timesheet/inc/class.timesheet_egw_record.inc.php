@@ -26,6 +26,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 
 	// Used in conversions
 	static $types = array(
+		'float' => array('ts_quantity','ts_unitprice'),
 		'select-account' => array('ts_owner','ts_modifier'),
 		'date-time' => array('ts_start', 'ts_created', 'ts_modified'),
 		'select-cat' => array('cat_id'),

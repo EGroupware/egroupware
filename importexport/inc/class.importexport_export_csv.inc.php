@@ -244,6 +244,9 @@ class importexport_export_csv implements importexport_iface_export_record
 		foreach($custom as $name => $c_field) {
 			$name = '#' . $name;
 			switch($c_field['type']) {
+				case 'float' :
+					$fields['float'][] = $name;
+					break;
 				case 'date':
 				case 'date-time':
 					if ($c_field['values']['format'])
@@ -296,13 +299,14 @@ class importexport_export_csv implements importexport_iface_export_record
 	}
 
 	/**
-	 * Convert system info into a format with a little more transferrable meaning
+	 * Convert system info into a format with a little more transferable meaning
 	 *
 	 * Uses the static variable $types to convert various datatypes.
 	 *
-	 * @param record Record to be converted
-	 * @parem fields List of field types => field names to be converted
-	 * @param appname Current appname if you want to do custom fields too
+	 * @param importexport_iface_egw_record $record Record to be converted
+	 * @param string[] $fields List of field types => field names to be converted
+	 * @param string $appname Current appname if you want to do custom fields too
+	 * @param array[] $selects Select box options
 	 */
 	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null, $selects = array())
 	{

@@ -24,12 +24,13 @@ class infolog_egw_record implements importexport_iface_egw_record
 
 	// Used in conversions
 	static $types = array(
+		'flaot' => array('info_price'),
 		'select' => array('info_type', 'info_status', 'info_priority', 'pl_id'),
-                'select-cat' => array('info_cat'),
-                'select-account' => array('info_owner','info_responsible','info_modifier'),
-                'date-time' => array('info_startdate', 'info_enddate','info_datecompleted', 'info_datemodified','info_created'),
+    'select-cat' => array('info_cat'),
+    'select-account' => array('info_owner','info_responsible','info_modifier'),
+    'date-time' => array('info_startdate', 'info_enddate','info_datecompleted', 'info_datemodified','info_created'),
 		'links' => array('info_link_id'),
-        );
+  );
 
 	/**
 	 * constructor
