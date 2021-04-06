@@ -22,7 +22,7 @@ accept or reject an invitation	calendar	de	Einladung zu- oder absagen
 accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
 access to calendar of %1 denied!	calendar	de	Zugriff auf den Kalender von %1 verweigert!
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: Hinzugefügt, Storniert, Zugesagt, Abgesagt
 actions	calendar	de	Befehle
 actions...	calendar	de	Aktionen...
 add alarm	calendar	de	Alarm zufügen
@@ -38,7 +38,7 @@ after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
 age:	calendar	de	Alter:
 alarm	calendar	de	Alarm
-alarm added	calendar	de	Alarm zugefügt
+alarm added	calendar	de	Alarm hinzugefügt
 alarm added automatic to new events before event start-time	calendar	de	Der Alarm wird automatisch bei neuen Termin vor dem Startdatum eingefügt
 alarm deleted	calendar	de	Alarm gelöscht
 alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
@@ -98,7 +98,7 @@ canceled	calendar	de	Abgesagt
 category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt wegen fehlender Rechte
 category acl	common	de	Kategorie-Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie-Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
-category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Veranstaltungen hinzugefügt wird.
+category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Termine hinzugefügt wird.
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
@@ -622,6 +622,7 @@ update calendar view immediately when navigation calendar in sidebox is changed	
 update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
+use event tz	calendar	de	Verwende Termin-Zeitzone
 use given criteria:	calendar	de	Kriterien benutzen:
 use quick add or full edit dialog when creating a new event	calendar	de	Wollen Sie den verkürzten Dialog zum schnellen Hinzufügen oder das vollständige Bearbeiten-Fenster verwenden, wenn Sie ein neuen Termin erstellen?
 use range-views to optimise calendar queries?	calendar	de	Sollen spezielle Bereichs-Ansichten verwendet werden, um Kalenderabfragen zu optimieren?

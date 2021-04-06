@@ -33,6 +33,7 @@ current password	preferences	en	Current password
 custom login box color, defaults to above color darkened	preferences	en	Custom login box color, defaults to above color darkened
 custom paragraph	preferences	en	Custom Paragraph
 custom sidebar menu active color, defaults to above color darkened	preferences	en	Custom sidebar menu active color, defaults to above color darkened
+dark mode theme	preferences	en	Dark mode theme
 dark moono theme	preferences	en	Dark Moono Theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format

@@ -303,8 +303,8 @@ cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 code	common	en	Code
 collection empty.	common	en	Collection empty.
 collection listing	common	en	Collection listing
-colour	common	en	Colour
 colombia	common	en	COLOMBIA
+colour	common	en	Colour
 column...	common	en	Column...
 columnname	common	en	Column name
 columns to print	common	en	Columns to print
@@ -359,6 +359,7 @@ custom javascript for onchange	common	en	Custom javascript for onChange
 cut	common	en	Cut
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
+dark mode	common	en	dark mode
 dark moono theme	common	en	dark moono theme
 data type	common	en	Data type
 database error	common	en	Database error
@@ -791,6 +792,7 @@ liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
+light mode	common	en	light mode
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	en	Link

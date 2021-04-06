@@ -106,6 +106,7 @@ confirm attach message	mail	en	Confirm attach message
 confirm move to folder	mail	en	Confirm move to folder
 connect to profile %1	mail	en	Connect to Profile %1
 connection status	mail	en	Connection Status
+contact label	mail	en	Contact label
 contains	mail	en	contains
 contains(*)	mail	en	Contains(*)
 convert mail to item and attach its attachments to this item (standard)	mail	en	convert Mail to item and attach its attachments to this item (standard)
@@ -127,6 +128,7 @@ default sorting order	mail	en	Default sorting order
 default toolbar actions shown in mail's html editor	mail	en	Functions enabled in the HTML editor toolbar when composing an email
 default value for remembering s/mime passphrase in minutes	mail	en	Default value for remembering S/MIME passphrase in minutes
 default your name and email	common	en	default your name and email
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	en	Defines what to show as contact label for added contact into To/Cc/Bcc when composing an email. Default is firstname lastname and empty means include eveything available.
 defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on mail folder header
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
@@ -322,8 +324,8 @@ later	mail	en	later
 learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spam) failed because of %1
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. Mail compose save as infolog action)
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
 mail filter	mail	en	Mail filter

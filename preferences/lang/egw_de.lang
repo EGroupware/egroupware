@@ -33,6 +33,7 @@ current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
 custom paragraph	preferences	de	Absatz schmal
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
+dark mode theme	preferences	de	Dark Mode Thema
 dark moono theme	preferences	de	Dunkles Moono Schema
 data exchange settings	preferences	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat

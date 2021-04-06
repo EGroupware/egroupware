@@ -106,6 +106,7 @@ confirm attach message	mail	de	Bestätigung beim Anhängen von E-Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
 connect to profile %1	mail	de	Verbunden zu dem Profil :%1
 connection status	mail	de	Verbindungsstatus
+contact label	mail	de	Anzeige Kontakt
 contains	mail	de	beinhaltet
 contains(*)	mail	de	enthält(*)
 convert mail to item and attach its attachments to this item (standard)	mail	de	Konvertiere E-Mail zum Eintrag und füge die E-Mail-Anhänge hinzu (Standard)
@@ -127,6 +128,7 @@ default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
+defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was als Kontaktbeschriftung für hinzugefügte Kontakte in An/Kopie/Blindkopie beim Verfassen einer E-Mail angezeigt/versendet werden soll. Standard ist Vorname Nachname und leer bedeutet, dass alles Vorhandene angezeigt wird.
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
@@ -322,8 +324,8 @@ later	mail	de	später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter-Regeln
