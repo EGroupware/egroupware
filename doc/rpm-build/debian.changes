@@ -1,3 +1,15 @@
+egroupware-docker (21.1.20210406) hardy; urgency=low
+
+  * 3rd 21.1 pre-release using PHP 7.4 by default
+  * Notifications: Add refresh handler for notifications (click on Notifications header)
+  * Calendar: Add contextmenu action for video-conference events to access recordings for BBB
+  * Calendar: move calendar search from side-menu to toolbar and add favorits (mobile theme too)
+  * API/Resources: allow custom icons for categories
+  * Kanban: allow to collapse/expand columns and swimlanes
+  * PHP 8.0: many bug fixes and separate test-containers with tags 21.1-8.0 or 21.1.20210406-8.0
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 06 Apr 2021 17:03:56 +0200
+
 egroupware-docker (21.1.20210329) hardy; urgency=low
 
   * 2nd 21.1 pre-release now supporting PHP 7.4 and using it in the container
