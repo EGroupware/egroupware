@@ -236,8 +236,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			deferred = _app.browser.browse(_url);
 			this.setActiveApp(_app);
 		}
-		// load application with status 5 as it will run in the background
-		else if (_status == 5)
+		// load application with status 5 as it will run in the background, and ignore apps with index set none
+		else if (_status == 5 && !_url.match(/menuaction\=none/))
 		{
 			deferred = _app.browser.browse(_url);
 		}
