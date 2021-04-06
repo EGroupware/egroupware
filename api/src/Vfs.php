@@ -1205,6 +1205,13 @@ class Vfs extends Vfs\Base
 			// Parse the encoded URL
 			$result = $encodedParts = parse_url($encodedURL);
 
+			// check if parsing failed because of an url like "<scheme>://<user>@/path" (no host) --> add "default"
+			// that kind of url can get constructed in VFS when adding user-context (host has no meaning in Vfs)
+			if ($result === false && strpos($encodedURL, '@/') !== false)
+			{
+				$result = $encodedParts = parse_url(str_replace('@/', '@default/', $encodedURL));
+			}
+
 			// Now, decode each value of the resulting array
 			if ($encodedParts)
 			{
