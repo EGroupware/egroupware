@@ -102,7 +102,7 @@ if (isset($_GET['tz']))
 
 // 	Check if we are using windows or normal webpage
 $windowed = false;
-$tpl_info = EGW_SERVER_ROOT . '/phpgwapi/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
+$tpl_info = EGW_SERVER_ROOT . '/api/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
 if (!file_exists($tpl_info))
 {
 	$tpl_info = EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
@@ -171,32 +171,12 @@ else
 	{
 		if(!$app || !$class || !$method || $invalid_data)
 		{
-			if(@is_object($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-BadmenuactionVariable, menuaction missing or corrupt: %1',
-					'p1'   => $menuaction,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-			}
+			error_log(__FILE__.": missing or bad menuaction '$_GET[menuaction]'!");
 		}
 
 		if(!is_array($GLOBALS[$class]->public_functions) || !$GLOBALS[$class]->public_functions[$method] && $method)
 		{
-			if(@is_object($GLOBALS['egw']->log))
-			{
-				$GLOBALS['egw']->log->message(array(
-					'text' => 'W-BadmenuactionVariable, attempted to access private method: %1',
-					'p1'   => $method,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-			}
-		}
-		if(@is_object($GLOBALS['egw']->log))
-		{
-			$GLOBALS['egw']->log->commit();
+			error_log(__FILE__.": invalid menuaction '$_GET[menuaction]', not in public_functions!");
 		}
 
 		$GLOBALS['egw']->redirect_link('/home/index.php');
