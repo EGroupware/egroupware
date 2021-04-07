@@ -388,7 +388,7 @@ class calendar_uiviews extends calendar_ui
 				'hint' => lang("video call"),
 				'group' => 'integration',
 				'onExecute' => 'javaScript:app.calendar.toolbar_videocall_toggle_action',
-				'checked' => in_array('video_toggle', $this->cal_prefs['integration_toggle']),
+				'checked' => in_array('video_toggle', (array)$this->cal_prefs['integration_toggle']),
 				'data' => array('toggle_off' => '0', 'toggle_on' => '1')
 			);
 		}
@@ -423,7 +423,7 @@ class calendar_uiviews extends calendar_ui
 					'hint' => lang("show %1 from %2",lang(Link::get_registry($app,'entries') ?: 'entries'),lang(Link::get_registry($app,'name'))),
 					'group' => 'integration',
 					'onExecute' => 'javaScript:app.calendar.toolbar_integration_action',
-					'checked' => in_array($app,$this->cal_prefs['integration_toggle']),
+					'checked' => in_array($app, (array)$this->cal_prefs['integration_toggle']),
 					'data' => array('toggle_off' => '0', 'toggle_on' => '1')
 				);
 
