@@ -18,6 +18,7 @@
 
 import {ClassWithAttributes} from './et2_core_inheritance';
 import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
+import {et2_baseWidget, et2_container} from "./et2_core_baseWidget";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -349,12 +350,12 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the base widget
 	 */
-	getRoot() : et2_widget
+	getRoot() : et2_container
 	{
 		if (this._parent != null) {
 			return this._parent.getRoot();
 		} else {
-			return this;
+			return <et2_container><unknown>this;
 		}
 	}
 
