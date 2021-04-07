@@ -409,7 +409,7 @@ class Vfs extends File
 		$response = Json\Response::get();
 		$readonlys = $sel_options = array();
 
-		if (isset($params['mime']))
+		if (!empty($params['mime']))
 		{
 			foreach((array)$params['mime'] as $key => $value)
 			{
@@ -441,7 +441,7 @@ class Vfs extends File
 			{
 				throw new Api\Exception\WrongParameter("Wrong or unset required mode parameter!");
 			}
-			if (isset($params['mime']))
+			if (!empty($params['mime']))
 			{
 				$content['showmime'] = true;
 				$content['mime'] = key($sel_options['mime']);
