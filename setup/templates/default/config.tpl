@@ -522,8 +522,9 @@
     <td>
      <select name="newsettings[saml_username]">
       <option value="eduPersonPrincipalName"{selected_saml_username_eduPersonPrincipalName}>eduPersonPrincipalName</option>
+      <option value="eduPersonUniqueId"{selected_saml_username_eduPersonUniqueId}>eduPersonUniqueId</option>
       <option value="emailAddress"{selected_saml_username_emailAddress}>emailAddress</option>
-      <option value="custom"{selected_saml_username_customOid}>{lang_custom_OID}</option>
+      <option value="customOid"{selected_saml_username_customOid}>{lang_custom_OID}</option>
      </select>
      <input name="newsettings[saml_username_oid]" value="{value_saml_username_oid}" placeholder="urn:oid:x.x.x.x" size="40" />
     </td>

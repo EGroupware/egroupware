@@ -100,6 +100,7 @@ class Saml implements BackendSSO
 	 * Some urn:oid constants for common attributes
 	 */
 	const eduPersonPricipalName = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.6';
+	const eduPersonUniqueId = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.13';
 	const emailAddress = 'urn:oid:0.9.2342.19200300.100.1.3';
 	const firstName = 'urn:oid:2.5.4.42';
 	const lastName = 'urn:oid:2.5.4.4';
@@ -526,6 +527,8 @@ class Saml implements BackendSSO
 		{
 			case 'eduPersonPrincipalName':
 				return self::eduPersonPricipalName;
+			case 'eduPersonUniqueId':
+				return self::eduPersonUniqueId;
 			case 'emailAddress':
 				return self::emailAddress;
 			case 'customOid':
