@@ -222,6 +222,9 @@ div.editInfoMarker {
 #filemanager-index_new_wrapper .ui-icon-triangle-1-s {
   background-position: 0px -192px;
 }
+button#filemanager-index_new img {
+  display: none;
+}
 /*/*****************************************************************
 // sidebar
 
