@@ -241,7 +241,7 @@ class Bundle
 		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
 		self::urls($bundles['et2'], $max_mod['et2']);
 
-		$stock_files = call_user_func_array('array_merge', $bundles);
+		$stock_files = array_merge(...array_values($bundles));
 
 		// generate template and app bundles, if installed
 		foreach(array(
