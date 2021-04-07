@@ -16,13 +16,14 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @version $Id$
  */
 
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
-//$starttime = microtime(true);
+$starttime = microtime(true);
 
 /**
  * check if the given user has access
@@ -45,33 +46,7 @@ $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'disable_Template_class' => True,
 		'noheader'  => True,
-		'currentapp' => (static function($uri)
-		{
-			if (preg_match('#/webdav.php/(etemplates|apps/([A-Za-z0-9_-]+)|home/'.
-				preg_quote($GLOBALS['egw_info']['user']['account_lid'], '#').'/.tmp)/#', $uri, $matches))
-			{
-				if (!empty($matches[2]))
-				{
-					$app = $matches[2];
-				}
-				// allow access to mounted eTemplates and temp file upload
-				else
-				{
-					return 'api';
-				}
-			}
-			else
-			{
-				$app = 'filemanager';
-			}
-			if (empty($GLOBALS['egw_info']['user']['apps'][$app]) &&
-				(!empty($GLOBALS['egw_info']['user']['apps'][$a='filemanager']) ||
-					!empty($GLOBALS['egw_info']['user']['apps'][$a='sitemgr-link'])))
-			{
-				$app = $a;
-			}
-			return $app;
-		})($_SERVER['REQUEST_URI']),
+		'currentapp' => preg_match('|/webdav.php/apps/([A-Za-z0-9_-]+)/|', $_SERVER['REQUEST_URI'], $matches) ? $matches[1] : 'filemanager',
 		'autocreate_session_callback' => 'check_access',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 		'auth_realm' => 'EGroupware WebDAV server',	// cant use Vfs\WebDAV::REALM as autoloading and include path not yet setup!
@@ -79,7 +54,31 @@ $GLOBALS['egw_info'] = array(
 );
 
 // if you move this file somewhere else, you need to adapt the path to the header!
-require_once __DIR__.'/header.inc.php';
+try
+{
+	include(dirname(__FILE__).'/header.inc.php');
+}
+catch (Api\Exception\NoPermission\App $e)
+{
+	if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'filemanager';
+	}
+	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-link']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
+	}
+	// allow access to mounted eTemplates, if there are no filemanager or sitemgr-link app rights
+	// and still allow for temp file upload.
+	elseif (preg_match("/\/webdav\.php\/etemplates\/|\/webdav.php\/home\/".$GLOBALS['egw_info']['user']['account_lid']."\/.tmp\//", $_SERVER['REQUEST_URI']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'api';
+	}
+	else
+	{
+		throw $e;
+	}
+}
 //$headertime = microtime(true);
 
 // webdav is stateless: we dont need to keep the session open, it only blocks other calls to same basic-auth session
