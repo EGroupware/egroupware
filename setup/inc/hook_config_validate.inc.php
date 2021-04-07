@@ -217,5 +217,5 @@ function ldap_search_filter(&$settings)
 {
 	$filter =& $settings['ldap_search_filter'];
 
-	if ($filter && $filter{0} != '(') $filter = '('.$filter.')';
+	if ($filter && $filter[0] != '(') $filter = '('.$filter.')';
 }
