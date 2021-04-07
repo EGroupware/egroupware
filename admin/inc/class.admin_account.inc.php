@@ -331,6 +331,7 @@ class admin_account
 			$msg = '';
 			if(count($content['account_id']) == 1)
 			{
+				$account_id = current($content['account_id']);
 				self::_deferred_delete($account_id, $content['new_owner'], $content['delete_apps'], $content['admin_cmd']);
 				if ($content['contact_id'])
 				{
@@ -387,7 +388,7 @@ class admin_account
 			}
 		}
 		// Add filemanager home directory in as special case, hook is in the API
-		if (Api\Vfs::file_exists('/home/' . $GLOBALS['egw']->accounts->id2name($content['account_id'])))
+		if (Api\Vfs::file_exists('/home/' . $GLOBALS['egw']->accounts->id2name($content['account_id'][0])))
 		{
 			$app = 'filemanager';
 			$sel_options['delete_apps'][] = array(
