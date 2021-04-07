@@ -785,6 +785,7 @@ value CDATA #IMPLIED
 size CDATA #IMPLIED
 min CDATA #IMPLIED
 max CDATA #IMPLIED
+step CDATA #IMPLIED
 precision CDATA #IMPLIED
 multiline (true|false) "false"
 maxlength CDATA #IMPLIED
@@ -827,6 +828,7 @@ value CDATA #IMPLIED
 size CDATA #IMPLIED
 min CDATA #IMPLIED
 max CDATA #IMPLIED
+step CDATA #IMPLIED
 precision CDATA #IMPLIED
 multiline (true|false) "false"
 maxlength CDATA #IMPLIED
@@ -869,6 +871,7 @@ value CDATA #IMPLIED
 size CDATA #IMPLIED
 min CDATA #IMPLIED
 max CDATA #IMPLIED
+step CDATA #IMPLIED
 precision CDATA #IMPLIED
 multiline (true|false) "false"
 maxlength CDATA #IMPLIED
@@ -907,7 +910,7 @@ attributes CDATA #IMPLIED
 >
 <!ELEMENT passwd EMPTY>
 <!ATTLIST passwd
-autocomplete CDATA "Off"
+autocomplete CDATA "off"
 viewable (true|false) "false"
 plaintext (true|false) "true"
 suggest CDATA #IMPLIED
@@ -1065,6 +1068,45 @@ span CDATA #IMPLIED
 type CDATA #IMPLIED
 attributes CDATA #IMPLIED
 >
+<!ELEMENT url-fax EMPTY>
+<!ATTLIST url-fax
+multiline (true|false) "false"
+size CDATA #IMPLIED
+maxlength CDATA #IMPLIED
+blur CDATA #IMPLIED
+rows CDATA #IMPLIED
+cols CDATA #IMPLIED
+validator CDATA #IMPLIED
+onkeypress CDATA #IMPLIED
+needed (true|false) "false"
+onchange CDATA #IMPLIED
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+value CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
 <!ELEMENT menupopup EMPTY>
 <!ATTLIST menupopup
 multiple (true|false) "false"
@@ -1149,8 +1191,11 @@ span CDATA #IMPLIED
 type CDATA #IMPLIED
 attributes CDATA #IMPLIED
 >
-<!ELEMENT select EMPTY>
-<!ATTLIST select
+<!ELEMENT select (option)>
+<!ELEMENT option EMPTY>
+<!ATTLIST option
+value CDATA #IMPLIED
+><!ATTLIST select
 multiple (true|false) "false"
 expand_multiple_rows CDATA #IMPLIED
 rows CDATA #IMPLIED
@@ -2099,6 +2144,7 @@ attributes CDATA #IMPLIED
 <!ATTLIST date-duration
 data_format CDATA "m"
 display_format CDATA "dhm"
+select_unit (true|false) "true"
 percent_allowed (true|false) "false"
 hours_per_day CDATA #IMPLIED
 empty_not_0 (true|false) "false"
@@ -2452,6 +2498,7 @@ needed CDATA #IMPLIED
 link_hook CDATA "view"
 target_app CDATA #IMPLIED
 extra_link_target CDATA #IMPLIED
+break_title CDATA #IMPLIED
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 statustext_html (true|false) "false"
@@ -2940,6 +2987,7 @@ type_filter CDATA #IMPLIED
 private (true|false) "undefined"
 sub_app CDATA #IMPLIED
 onchange CDATA #IMPLIED
+prefix CDATA "#"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 statustext_html (true|false) "false"
@@ -2972,6 +3020,7 @@ type_filter CDATA #IMPLIED
 private (true|false) "undefined"
 sub_app CDATA #IMPLIED
 onchange CDATA #IMPLIED
+prefix CDATA "#"
 label CDATA #IMPLIED
 statustext CDATA #IMPLIED
 statustext_html (true|false) "false"
@@ -3004,7 +3053,7 @@ filters CDATA #IMPLIED
 id CDATA "favorite"
 label CDATA #IMPLIED
 label_updates CDATA #IMPLIED
-image CDATA "/egroupware/etemplate/templates/pixelegg/images/fav_filter.svg"
+image CDATA "/egroupware/pixelegg/images/fav_filter.svg"
 statustext CDATA "Favorite queries"
 needed (true|false) "false"
 onchange CDATA #IMPLIED
@@ -3071,6 +3120,8 @@ images_upload_handler CDATA #IMPLIED
 menubar (true|false) "true"
 statusbar (true|false) "true"
 valid_children CDATA "+body[style]"
+toolbar CDATA #IMPLIED
+toolbar_mode CDATA "floating"
 readonly CDATA #IMPLIED
 toggle_readonly (true|false) "true"
 save_callback CDATA #IMPLIED
@@ -3102,8 +3153,17 @@ type CDATA #IMPLIED
 attributes CDATA #IMPLIED
 >
 <!ELEMENT tabbox (tabs,tabpanels)>
+<!ATTLIST tabbox
+add_tabs (true|false) "false"
+tab_height CDATA #IMPLIED
+align_tabs (v|h) "h"
+>
 <!ELEMENT tabs (tab)>
-<!ELEMENT tabpanels (template)>
+<!ELEMENT tab EMPTY*>
+<!ATTLIST tab
+id CDATA #IMPLIED
+label CDATA #IMPLIED
+><!ELEMENT tabpanels (template|%Widgets;)*>
 <!ATTLIST tabbox
 tabs CDATA #IMPLIED
 add_tabs CDATA #IMPLIED
@@ -3234,7 +3294,7 @@ onselect CDATA #IMPLIED
 oncheck CDATA #IMPLIED
 onopenstart CDATA #IMPLIED
 onopenend CDATA #IMPLIED
-image_path CDATA "/egroupware/phpgwapi/templates/default/images/dhtmlxtree/"
+image_path CDATA "/egroupware/api/templates/default/images/dhtmlxtree/"
 value CDATA #IMPLIED
 actions CDATA #IMPLIED
 autoloading CDATA #IMPLIED
@@ -3276,7 +3336,7 @@ onselect CDATA #IMPLIED
 oncheck CDATA #IMPLIED
 onopenstart CDATA #IMPLIED
 onopenend CDATA #IMPLIED
-image_path CDATA "/egroupware/phpgwapi/templates/default/images/dhtmlxtree/"
+image_path CDATA "/egroupware/api/templates/default/images/dhtmlxtree/"
 value CDATA #IMPLIED
 actions CDATA #IMPLIED
 autoloading CDATA #IMPLIED
@@ -4037,9 +4097,42 @@ video_src CDATA #IMPLIED
 src_type CDATA #IMPLIED
 muted (true|false) "false"
 autoplay (true|false) "false"
+starttime CDATA #IMPLIED
 controls (true|false) "false"
 poster CDATA #IMPLIED
 loop (true|false) "false"
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT audio EMPTY>
+<!ATTLIST audio
+src CDATA #IMPLIED
+src_type CDATA #IMPLIED
+muted (true|false) "false"
+autoplay (true|false) "false"
+controls (true|false) "true"
+loop (true|false) "false"
+autohide (true|false) "false"
+preload CDATA "auto"
 statustext CDATA #IMPLIED
 statustext_html (true|false) "false"
 align CDATA "left"
@@ -4132,6 +4225,38 @@ attributes CDATA #IMPLIED
 >
 <!ELEMENT script EMPTY>
 <!ATTLIST script
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+attributes CDATA #IMPLIED
+>
+<!ELEMENT countdown EMPTY>
+<!ATTLIST countdown
+format CDATA "s"
+onFinish CDATA #IMPLIED
+hideEmpties CDATA #IMPLIED
+precision CDATA #IMPLIED
+alarm CDATA #IMPLIED
+onAlarm CDATA #IMPLIED
+label CDATA #IMPLIED
+value CDATA #IMPLIED
+statustext CDATA #IMPLIED
+statustext_html (true|false) "false"
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
 id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
