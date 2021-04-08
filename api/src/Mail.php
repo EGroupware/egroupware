@@ -5560,6 +5560,11 @@ class Mail
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
 		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
 		//error_log(__METHOD__.' ('.__LINE__.') '.$css);
+
+		// check if the outlook style fix is there then set the initial line-height, since the fix is setting it to line-height:0
+		// which breaks all tr lines in the content.
+		if (preg_match('/Outlook 2016 Height Fix/i', $css)) $css .='<style>tr {line-height: initial} </style>';
+
 		// TODO: we may have to strip urls and maybe comments and ifs
 		return $css;
 	}
