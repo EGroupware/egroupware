@@ -4123,82 +4123,83 @@ class Mail
 				}
 				switch($_flag) {
 					case "delete":
-						$ret = $this->icServer->store($folder, array('add'=>array('\\Deleted'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('\\Deleted'), 'ids'=> $uidsToModify));
 						break;
 					case "undelete":
-						$ret = $this->icServer->store($folder, array('remove'=>array('\\Deleted'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('\\Deleted'), 'ids'=> $uidsToModify));
 						break;
 					case "flagged":
-						$ret = $this->icServer->store($folder, array('add'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('\\Flagged'), 'ids'=> $uidsToModify));
 						break;
 					case "read":
 					case "seen":
-						$ret = $this->icServer->store($folder, array('add'=>array('\\Seen'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('\\Seen'), 'ids'=> $uidsToModify));
 						break;
 					case "forwarded":
-						$ret = $this->icServer->store($folder, array('add'=>array('$Forwarded'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$Forwarded'), 'ids'=> $uidsToModify));
+						//fall through
 					case "answered":
-						$ret = $this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
 						break;
 					case "unflagged":
-						$ret = $this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
 						break;
 					case "unread":
 					case "unseen":
-						$ret = $this->icServer->store($folder, array('remove'=>array('\\Seen','\\Answered','$Forwarded'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('\\Seen','\\Answered','$Forwarded'), 'ids'=> $uidsToModify));
 						break;
 					case "mdnsent":
-						$ret = $this->icServer->store($folder, array('add'=>array('MDNSent'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('MDNSent'), 'ids'=> $uidsToModify));
 						break;
 					case "mdnnotsent":
-						$ret = $this->icServer->store($folder, array('add'=>array('MDNnotSent'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('MDNnotSent'), 'ids'=> $uidsToModify));
 						break;
 					case "label1":
 					case "labelone":
-						$ret = $this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel1":
 					case "unlabelone":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
 						break;
 					case "label2":
 					case "labeltwo":
-						$ret = $this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel2":
 					case "unlabeltwo":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
 						break;
 					case "label3":
 					case "labelthree":
-						$ret = $this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel3":
 					case "unlabelthree":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
 						break;
 					case "label4":
 					case "labelfour":
-						$ret = $this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel4":
 					case "unlabelfour":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
 						break;
 					case "label5":
 					case "labelfive":
-						$ret = $this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel5":
 					case "unlabelfive":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel":
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
-						$ret = $this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
 						break;
 				}
 			}
@@ -5580,20 +5581,20 @@ class Mail
 	 */
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
-		//TODO: caching einbauen static!
 		static $rawBody;
-		if (is_null($rawBody)) $rawBody = array();
-		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
+		$body = [];
+		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?: $this->icServer->getCurrentMailbox();
+		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
+
+		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
-			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
+			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)];
 		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uid = $_uid;
-		if (!(is_object($_uid) || is_array($_uid))) $uid = (array)$_uid;
-		$uidsToFetch->add($uid);
+
+		$uidsToFetch->add($_uid);
 
 		$fquery = new Horde_Imap_Client_Fetch_Query();
 		$fquery->fullText(array('peek'=>true));
@@ -5611,7 +5612,6 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					//_debug_array($mailStructureObject->contentTypeMap());
 					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
 					{
 						if ($mime_id==$_partID)
@@ -5622,10 +5622,11 @@ class Mail
 				}
 			}
 		}
+
 		if (!$_stream)
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '."[{$this->icServer->ImapServerId}][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
-			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
+			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)] = $body;
 		}
 		return $body;
 	}
@@ -5649,11 +5650,6 @@ class Mail
 			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-
-		if (!(is_object($_uid) || is_array($_uid)))
-		{
-			$_uid = (array)$_uid;
-		}
 
 		$uidsToFetch->add($_uid);
 
