@@ -6092,7 +6092,7 @@ class Mail
 	 * @param string $_part
 	 * @param boolean $_stream = null null do NOT fetch content, use fetchPartContents later
 	 *	true:
-	 * @return Horde_Mime_Part
+	 * @return Horde_Mime_Part|false false on error / not found
 	 */
 	function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null)
 	{
@@ -6106,6 +6106,8 @@ class Mail
 		{
 			$structure = $this->getStructure($uid=$_uid, $part=$_part);
 		}
+		if (!$structure) return false;
+
 		/** @var Horde_Mime_Part */
 		$attachment = null;
 		foreach($structure->contentTypeMap() as $mime_id => $mime_type)
