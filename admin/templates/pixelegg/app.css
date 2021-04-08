@@ -170,6 +170,7 @@ select#admin-mailaccount_ident_id {
 /**
  * new et2 site configuration
  */
+#admin-index_ajax_target > form[id$="-config"] tr.th > td,
 #admin-site-config > div > span.subHeader {
   border-bottom: 3px solid #696969;
   padding-left: 3px;
@@ -177,6 +178,7 @@ select#admin-mailaccount_ident_id {
   display: block;
   margin-bottom: 5px;
 }
+#admin-index_ajax_target > form[id$="-config"] tr.th > td,
 #admin-site-config span.subHeader {
   font-weight: bold;
   font-size: 110%;
