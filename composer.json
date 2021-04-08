@@ -104,6 +104,7 @@
 		"pear/log": "*",
 		"pear/pear": "*",
 		"pear/xml_feed_parser": "^1.0.5",
+		"phpseclib/phpseclib": "^2.0.31",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"simplesamlphp/simplesamlphp": "^1.18",
 		"tinymce/tinymce": "^5"
