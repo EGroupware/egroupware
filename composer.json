@@ -77,6 +77,7 @@
 		"egroupware/collabora": "self.version",
 		"egroupware/guzzlestream": "dev-master",
 		"egroupware/icalendar": "^2.1.9",
+		"egroupware/imap-client": "^2.30.2",
 		"egroupware/magicsuggest": "^2.1",
 		"egroupware/news_admin": "self.version",
 		"egroupware/openid": "self.version",
@@ -96,7 +97,6 @@
 		"oomphinc/composer-installers-extender": "^1.1",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
-		"egroupware/imap-client": "^2.30.2",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_mapi": "^1.0.9",
@@ -107,6 +107,7 @@
 		"pear/log": "*",
 		"pear/pear": "*",
 		"pear/xml_feed_parser": "^1.0.5",
+		"phpseclib/phpseclib": "^2.0.31",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"simplesamlphp/simplesamlphp": "^1.18",
 		"tinymce/tinymce": "^5"
