@@ -71,7 +71,7 @@ class notifications_push implements Json\PushBackend
 				//error_log(__METHOD__."() already_send=$already_send, message=".array2string($message));
 				if (is_array($message) && method_exists($response, $message['method']))
 				{
-					call_user_func_array(array($response, $message['method']), (array)$message['data']);
+					call_user_func_array(array($response, $message['method']), array_values((array)$message['data']));
 				}
 				$already_send = $row['notify_id'];
 			}

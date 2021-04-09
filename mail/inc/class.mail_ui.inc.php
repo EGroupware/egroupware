@@ -3262,7 +3262,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$GLOBALS['egw']->preferences->add('mail', 'smime_pass_exp', $_POST['smime_pass_exp']);
 					$GLOBALS['egw']->preferences->save_repository();
 				}
-				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, $_POST['smime_pass_exp'] * 60);
+				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, (int)($_POST['smime_pass_exp']?:10) * 60);
 			}
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
