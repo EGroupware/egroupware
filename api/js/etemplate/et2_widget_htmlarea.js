@@ -450,8 +450,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * @constant
      */
     et2_htmlarea.TOOLBAR_SIMPLE = "undo redo|formatselect fontselect fontsizeselect | bold italic removeformat forecolor backcolor | " +
-        "alignleft aligncenter alignright alignjustify | numlist " +
-        "bullist outdent indent| link image pastetext | table";
+        "alignleft aligncenter alignright alignjustify | bullist " +
+        "numlist outdent indent| link image pastetext | table";
     /**
      * arranged toolbars as extended mode
      * @constant
@@ -464,8 +464,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * @constant
      */
     et2_htmlarea.TOOLBAR_ADVANCED = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | " +
-        "alignleft aligncenter alignright alignjustify | numlist " +
-        "bullist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen | table";
+        "alignleft aligncenter alignright alignjustify | bullist " +
+        "numlist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen | table";
     /**
      * font size formats
      * @constant

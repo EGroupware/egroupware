@@ -113,8 +113,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	 * @constant
 	 */
 	public static readonly TOOLBAR_SIMPLE : string = "undo redo|formatselect fontselect fontsizeselect | bold italic removeformat forecolor backcolor | "+
-	"alignleft aligncenter alignright alignjustify | numlist "+
-	"bullist outdent indent| link image pastetext | table";
+	"alignleft aligncenter alignright alignjustify | bullist "+
+	"numlist outdent indent| link image pastetext | table";
 
 	/**
 	 * arranged toolbars as extended mode
@@ -129,8 +129,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	 * @constant
 	 */
 	public static readonly TOOLBAR_ADVANCED : string = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-	"alignleft aligncenter alignright alignjustify | numlist "+
-	"bullist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen | table";
+	"alignleft aligncenter alignright alignjustify | bullist "+
+	"numlist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen | table";
 
 	/**
 	 * font size formats
