@@ -240,6 +240,10 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 			//Postpone the actual "navigation" - gives some speedup with internet explorer
 			//as it does no longer blocks the complete page until all frames have loaded.
 			window.setTimeout(function() {
+				//set iframe resource permissions
+				self.iframe.setAttribute('allow', 'fullscreen');
+				self.iframe.setAttribute('allowfullscreen', true); // for older browsers
+
 				//Load the iframe content
 				self.iframe.src = _url;
 
