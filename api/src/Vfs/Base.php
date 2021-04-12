@@ -281,7 +281,7 @@ class Base
 				}
 				if (($relative = substr($parts['path'],strlen($mounted))))
 				{
-					$url = Vfs::concat($url,$relative);
+					$url = Vfs::concat($url, $relative);
 				}
 				// if url contains url parameter, eg. from filesystem streamwrapper, we need to append relative path here too
 				$matches = null;
@@ -307,7 +307,21 @@ class Base
 					}
 					$url = $replace;
 				}
-				if ($replace_user_pass_host) self::$resolve_url_cache[$path] = ['url' => $url, 'mounted' => $mounted];
+
+				// Make sure we don't cache anything with a link anywhere in the url, since it fails with eg: /apps/InfoLog/Open$/2021$.
+				// is_link() is not always right here
+				$is_link = is_link($url) || (self::symlinkCache_resolve(Vfs::parse_url($url,PHP_URL_PATH)) !== $url);
+				if($is_link)
+				{
+					$old_url = $url;
+					$_url = self::symlinkCache_resolve(Vfs::parse_url($url,PHP_URL_PATH));
+					$url = @readlink($url) ?: ($_url != $parts['path'] ? str_replace($parts['path'],$_url,$url) : null) ?:$url;
+					$is_link = $old_url == $url;
+				}
+				if ($replace_user_pass_host && !$is_link)
+				{
+					self::$resolve_url_cache[$path] = ['url' => $url, 'mounted' => $mounted];
+				}
 
 				return $url;
 			}
