@@ -3284,7 +3284,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
 			if (empty($acc_smime))
 			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'));
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
 			}
 			Framework::message($e->getMessage());
 			$configs = Api\Config::read('mail');
