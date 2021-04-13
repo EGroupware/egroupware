@@ -2678,7 +2678,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function displayImage()
 	{
-		$uid	= $_GET['uid'];
+		$uid	= base64_decode($_GET['uid']);
 		$cid	= base64_decode($_GET['cid']);
 		$partID = urldecode($_GET['partID']);
 		if (!empty($_GET['mailbox'])) $mailbox  = base64_decode($_GET['mailbox']);
@@ -3602,7 +3602,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$linkData = array (
 					'menuaction'    => 'mail.mail_ui.displayImage',
-					'uid'		=> $_uid,
+					'uid'		=> base64_encode($_uid),
 					'mailbox'	=> base64_encode($_mailbox),
 					'cid'		=> base64_encode($_cid),
 					'partID'	=> $_partID,
