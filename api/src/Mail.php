@@ -6822,7 +6822,7 @@ class Mail
 							if ($URI_params['mailbox'] && $URI_params['uid'] && $URI_params['cid'])
 							{
 								$mail_bo->reopen(base64_decode($URI_params['mailbox']));
-								$attachment = $mail_bo->getAttachmentByCID($URI_params['uid'], base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
+								$attachment = $mail_bo->getAttachmentByCID(base64_decode($URI_params['uid']), base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
 								$mail_bo->closeConnection();
 								if ($attachment)
 								{
