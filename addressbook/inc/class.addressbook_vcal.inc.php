@@ -401,6 +401,15 @@ class addressbook_vcal extends addressbook_bo
 						}
 						break;
 
+					case 'freebusy_uri':
+						// fix Freebusy URL for users
+						if (!empty($entry['account_id']) && ($user = Api\Accounts::id2name($entry['account_id'])))
+						{
+							$value = Api\Header\Http::fullUrl(Api\Framework::link('/calendar/freebusy.php', ['user' => $user]));
+						}
+						if (!empty($value)) $hasdata++;
+						break;
+
 					case 'n_fn':
 					case 'fileas_type':
 						// mark entries with fileas_type == 'org_name' as X-ABSHOWAS:COMPANY (Apple AB specific)

@@ -1204,7 +1204,7 @@ class calendar_so
 	 */
 	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query,$users_raw)
 	{
-		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php','/activesync/index.php')) ||
+		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','freebusy.php','/activesync/index.php')) ||
 			!in_array($GLOBALS['egw_info']['flags']['currentapp'],array('calendar','home')))
 		{
 			return;    // disable integration for GroupDAV, SyncML, ...

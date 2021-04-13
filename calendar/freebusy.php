@@ -19,11 +19,21 @@ $GLOBALS['egw_info'] = array(
 		'nofooter'   => True,
 	),
 );
-// check if we are loged in, by checking sessionid and kp3, as the sessionid get set automaticaly by php for php4-sessions
-if (!($loged_in = !empty($_COOKIE['sessionid'])))
+// check if we are already logged in
+require_once __DIR__.'/../api/src/autoload.php';
+if (!($logged_in = !empty(Api\Session::get_sessionid())))
 {
-	$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
-	$GLOBALS['egw_info']['flags']['noapi'] = True;
+	// support basic auth for regular user-credentials
+	if (!empty($_SERVER['PHP_AUTH_PW']) || !empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+	{
+		$GLOBALS['egw_info']['flags']['autocreate_session_callback'] = Api\Header\Authenticate::class.'::autocreate_session_callback';
+		$logged_in = true;	// header sends 401, if not authenticated
+	}
+	else
+	{
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+		$GLOBALS['egw_info']['flags']['noapi'] = True;
+	}
 }
 include ('../header.inc.php');
 
@@ -32,10 +42,11 @@ function fail_exit($msg)
 	echo "<html>\n<head>\n<title>$msg</title>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=".
 		Api\Translation::charset()."\" />\n</head>\n<body><h1>$msg</h1>\n</body>\n</html>\n";
 
-	exit();
+	http_response_code(401);
+	exit;
 }
 
-if (!$loged_in)
+if (!$logged_in)
 {
 	include ('../api/src/loader.php');
 	$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
@@ -59,7 +70,7 @@ if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 {
 	fail_exit(lang("freebusy: unknown user '%1', wrong password or not available to not logged in users !!!"." $username($user)",$_GET['user']));
 }
-if (!$loged_in)
+if (!$logged_in)
 {
 	if (empty($_GET['cred']))
 	{
@@ -68,7 +79,7 @@ if (!$loged_in)
 		$GLOBALS['egw']->preferences->account_id = $user;
 		$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		$cal_prefs = &$GLOBALS['egw_info']['user']['preferences']['calendar'];
-		$loged_in = !empty($cal_prefs['freebusy']) &&
+		$logged_in = !empty($cal_prefs['freebusy']) &&
 			(empty($cal_prefs['freebusy_pw']) || $cal_prefs['freebusy_pw'] == $_GET['password']);
 	}
 	else
@@ -86,18 +97,18 @@ if (!$loged_in)
 		}
 		if (array_key_exists($domain, $GLOBALS['egw_domain']))
 		{
-			$_POST['login'] = $authname;
+			$_POST['login'] = $authuser;
 			$_REQUEST['domain'] = $domain;
 			$GLOBALS['egw_info']['server']['default_domain'] = $domain;
 			$GLOBALS['egw_info']['user']['domain'] = $domain;
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
 			$GLOBALS['egw_info']['flags']['noapi'] = false;
-			$loged_in =  $GLOBALS['egw']->session->create($authuser, $password, 'text');
+			$logged_in =  $GLOBALS['egw']->session->create($authuser, $password, 'text');
 			session_unset();
 			session_destroy();
 		}
 	}
-	if (!$loged_in)
+	if (!$logged_in)
 	{
 		fail_exit(lang("freebusy: unknown user '%1', or not available for unauthenticated users!", $_GET['user']));
 	}
