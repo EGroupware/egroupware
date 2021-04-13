@@ -134,25 +134,23 @@
 				</row>
 				<row class="dialogOperators">
 					<description value="User" for="ts_owner"/>
-					<hbox span="2" class="et2_fullWidth">
-						<menulist>
-							<menupopup id="ts_owner" no_lang="1"/>
-						</menulist>
-						<date-time id="ts_created" readonly="true" align="left"/>
-					</hbox>
+					<select id="ts_owner" no_lang="1" span="2"/>
 					<description value="Status"  disabled="@no_ts_status"/>
 					<menulist span="3">
 						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" empty_label="please select" disabled="@no_ts_status"/>
 					</menulist>
-					<description/>
 				</row>
-				<row disabled="!@ts_modified" class="dialogOperators">
+				<row class="dialogOperators">
 					<description value="Last modified"/>
-					<hbox span="2" class="et2_fullWidth">
+					<hbox span="3" class="et2_fullWidth">
 						<menulist>
 							<menupopup type="select-account" id="ts_modifier" readonly="true"/>
 						</menulist>
-						<date-time id="ts_modified" readonly="true" align="left"/>
+						<date-time id="ts_modified" readonly="true" align="left" disabled="!@ts_modified"/>
+					</hbox>
+					<hbox>
+						<description value="Created"/>
+						<date-time id="ts_created" readonly="true" align="left"/>
 					</hbox>
 				</row>
 				<row class="dialogFooterToolbar">
