@@ -336,6 +336,7 @@ could not contact server. operation timed out!	common	en	Could not contact serve
 create	common	en	Create
 create a new table for the application	common	en	Create a new table for the application
 create link	common	en	Create link
+created	common	en	Created
 created by	common	en	Created by
 created by %1	common	en	Created by %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	en	Creates an English ('en') langfile from label and help texts (for application in Name)
