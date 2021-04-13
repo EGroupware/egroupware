@@ -452,8 +452,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
             this.icons[0].outerHTML +
             '</div>' +
             '<div class="calendar_calEventBody">' +
-            '<p style="margin: 0px;">' +
-            '<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
+            '<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br><p>' +
             egw.htmlspecialchars(this.options.value.description) + '</p>' +
             '<p style="margin: 2px 0px;">' + times + '</p>' +
             location +
