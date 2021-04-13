@@ -1,13 +1,21 @@
 <?php
 /**
- * iCal import and export via Horde iCalendar classes
+ * EGroupware - simple / non-CalDAV freebusy URL eg. exported as FBURL in vCard of users
+ *
+ * Usage:
+ * - https://egw.example.org/egroupware/calendar/freebusy.php?user=%NAME%
+ * - https://egw.example.org/egroupware/calendar/freebusy.php?email=%NAME%@%SERVER%
+ * Authentication is required unless explicitly switched off in calendar preferences of the requested user:
+ *   + EGroupware "sessionid" cookie
+ *   + basic auth credentials of an EGroupware user
+ *   + "password" GET parameter with a configured password from the requested user's preferences
+ *   + "cred" GET parameter with base64 encoded "<username>:<password>" of an EGroupware user
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
  * @subpackage export
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -54,17 +62,24 @@ if (!$logged_in)
 // fix for SOGo connector, which does not decode the = in our f/b url
 if (strpos($_SERVER['QUERY_STRING'],'=3D') !== false && substr($_GET['user'],0,2) == '3D')
 {
-	$_GET['user'] = substr($_GET['user'],2);
-	if (isset($_GET['password'])) $_GET['password'] = substr($_GET['password'],2);
-	if (isset($_GET['cred'])) $_GET['cred'] = substr($_GET['cred'],2);
+	foreach(['user', 'email', 'password', 'cred'] as $name)
+	{
+		if (isset($_GET[$name])) $_GET[$name] = substr($_GET[$name],2);
+	}
 }
-if (!is_numeric($user = $_GET['user']))
+if (isset($_GET['user']) && !is_numeric($user = $_GET['user']))
 {
 	// check if user contains the current domain --> remove it
-	list(,$domain) = explode('@',$user);
+	list(, $domain) = explode('@', $user);
 	if ($domain === $GLOBALS['egw_info']['user']['domain'])
-	list($user) = explode('@',$user);
-	$user = $GLOBALS['egw']->accounts->name2id($user,'account_lid','u');
+	{
+		list($user) = explode('@', $user);
+	}
+	$user = $GLOBALS['egw']->accounts->name2id($user, 'account_lid', 'u');
+}
+elseif (isset($_GET['email']))
+{
+	$user = $GLOBALS['egw']->accounts->name2id($_GET['email'], 'account_email', 'u');
 }
 if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 {
