@@ -1180,7 +1180,7 @@ export class et2_selectbox extends et2_inputWidget
 			if(name_parts.length > 1 && (!content_options || content_options.length == 0 ))
 			{
 				var pop_that = jQuery.extend([],name_parts);
-				while(pop_that.length > 0 && (!content_options || content_options.length == 0))
+				while(pop_that.length > 1 && (!content_options || content_options.length == 0))
 				{
 					var last = pop_that.pop();
 					content_options = widget.getArrayMgr('sel_options').getEntry(pop_that.join('['));
