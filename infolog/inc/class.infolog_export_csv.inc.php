@@ -312,6 +312,14 @@ class infolog_export_csv implements importexport_iface_export_plugin
 			'type' => 'link-entry',
 			'only_app' => ''
 		);
+
+		// Projectmanager
+		$filters['pm_id'] = array(
+			'name' => 'pm_id',
+			'label' => 'Project',
+			'type' => 'link-entry',
+			'only_app' => 'projectmanager'
+		);
 	}
 
 	/**
