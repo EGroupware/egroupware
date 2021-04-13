@@ -1379,6 +1379,19 @@ class filemanager_ui
 		$readonlys['comment'] = !Vfs::is_writable($path);
 		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
 
+		// Don't allow permission changes for these, even for root - it causes too many problems.
+		// Use the CLI if you really need to make changes
+		if(in_array($content['path'], ['/','/home','/apps']))
+		{
+			foreach($content['perms'] as $name => $value)
+			{
+				$readonlys['perms['.$name.']'] = true;
+			}
+			$readonlys['gid'] = true;
+			$readonlys['uid'] = true;
+			$readonlys['modify_subs'] = true;
+		}
+
 		// if neither owner nor is writable --> disable save&apply
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !Vfs::is_writable($path);
 
