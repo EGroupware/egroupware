@@ -110,7 +110,9 @@ abstract class StreamWrapperBase extends LoggedInTest
 		// Remove our other test user
 		if($this->account_id)
 		{
-			$GLOBALS['egw']->accounts->delete($this->account_id);
+			$command = new \admin_cmd_delete_account( $this->account_id, null, true);
+			$command->comment = 'Removing in tearDown for unit test ' . $this->getName();
+			$command->run();
 		}
 
 		// Remove any added files (as root to limit versioning issues)
@@ -126,6 +128,9 @@ abstract class StreamWrapperBase extends LoggedInTest
 		// Remove any mounts
 		foreach($this->mounts as $mount)
 		{
+			// Do not remove /apps
+			if($mount == '/apps') continue;
+
 			Vfs::umount($mount);
 		}
 

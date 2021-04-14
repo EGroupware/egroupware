@@ -43,7 +43,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	public function testSimpleReadWrite(): string
 	{
 		$info_id = $this->make_infolog();
-		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+		$this->files[] = $this->test_file = $this->getInfologFilename(null, $info_id);
 
 		return parent::testSimpleReadWrite();
 	}
@@ -51,7 +51,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	public function testNoReadAccess(): void
 	{
 		$info_id = $this->make_infolog();
-		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+		$this->files[] = $this->test_file = $this->getInfologFilename(null, $info_id);
 
 		parent::testNoReadAccess();
 	}
@@ -59,7 +59,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 	public function testWithAccess(): void
 	{
 		$info_id = $this->make_infolog();
-		$this->files[] = $this->test_file = $this->getFilename(null, $info_id);
+		$this->files[] = $this->test_file = $this->getInfologFilename(null, $info_id);
 
 		parent::testWithAccess();
 	}
@@ -101,12 +101,11 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 	/**
 	 * Make a filename that reflects the current test
-	 * @param $path
 	 * @param $info_id
 	 * @return string
 	 * @throws \ReflectionException
 	 */
-	protected function getFilename($path, $info_id)
+	protected function getInfologFilename($path, $info_id)
 	{
 		if(is_null($path)) $path = '/apps/infolog/';
 		if(substr($path,-1,1) !== '/') $path = $path . '/';

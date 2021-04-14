@@ -108,6 +108,10 @@ class SharingBase extends LoggedInTest
 		{
 			$this->fail('Tried to remove root');
 		}
+		foreach($this->files as $file)
+		{
+			Vfs::unlink($file);
+		}
 		Vfs::remove($this->files);
 
 		// Remove any mounts

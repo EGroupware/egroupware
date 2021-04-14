@@ -230,7 +230,7 @@ class SharingBackendTest extends SharingBase
 		// Make symlink
 		$this->files[] = $symlink = $target.'/symlink.txt';
 		$file = $target.'/test_file.txt';
-		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
 		$this->assertTrue(
 			Vfs::symlink($file, $symlink),
 			"Unable to create symlink $symlink => $file"
@@ -256,7 +256,7 @@ class SharingBackendTest extends SharingBase
 		// Make symlink
 		$this->files[] = $symlink = $target.'/symlinked_dir';
 		$file = $target.'/sub_dir';
-		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
 		$this->assertTrue(
 			Vfs::symlink($file, $symlink),
 			"Unable to create symlink $symlink => $file"
@@ -278,7 +278,7 @@ class SharingBackendTest extends SharingBase
 		// Make symlink
 		$this->files[] = $symlink = $target.'/symlinked_dir/';
 		$file = $symlink.'subdir_test_file.txt';
-		if(Vfs::file_exists($symlink)) Vfs::remove($symlink);
+		if(Vfs::is_link($symlink)) Vfs::unlink($symlink);
 		$this->assertTrue(
 			Vfs::symlink($target.'/sub_dir/', $symlink),
 			"Unable to create symlink $symlink => $target/sub_dir/"

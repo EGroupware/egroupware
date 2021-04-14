@@ -65,7 +65,9 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 	public function mount() : void
 	{
+		$this->files[] = Vfs::get_home_dir() . '/'. static::$test_dir;
 		Api\Vfs\Sharing::setup_share(true,$this->share);
+		Vfs::clearstatcache();
 	}
 
 	public function createShare(&$dir='', $extra = array(), $create = 'createShare')
