@@ -3138,7 +3138,7 @@ class mail_compose
 							'mail',
 							'smime_passphrase',
 							$_formData['smime_passphrase'],
-							$GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp'] * 60
+						(int)($GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp']?:10) * 60
 						);
 					}
 					$smime_success = $this->_encrypt(
