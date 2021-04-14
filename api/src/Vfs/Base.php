@@ -310,7 +310,7 @@ class Base
 
 				// Make sure we don't cache anything with a link anywhere in the url, since it fails with eg: /apps/InfoLog/Open$/2021$.
 				// is_link() is not always right here
-				$is_link = is_link($url) || (self::symlinkCache_resolve(Vfs::parse_url($url,PHP_URL_PATH)) !== $url);
+				$is_link = is_link($url) || (self::symlinkCache_resolve(Vfs::parse_url($url,PHP_URL_PATH)) !== Vfs::parse_url($url,PHP_URL_PATH));
 				if($is_link)
 				{
 					$old_url = $url;
