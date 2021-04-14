@@ -7,13 +7,12 @@
  * @author Miles Lott <milos@groupwhere.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 
-$DEBUG = @$_POST['debug'] || @$_GET['debug'];
+$DEBUG = !empty($_REQUEST['debug']);
 /*
  TODO: We allow a user to hose their setup here, need to make use
  of dependencies so they are warned that they are pulling the rug
@@ -212,9 +211,7 @@ if(@$_GET['hooks'])
 
 	echo lang('Cached cleared') . '<br />';
 }
-$detail = $_GET['detail'];
-$resolve = $_GET['resolve'];
-if(@$detail)
+if (!empty($detail = $_GET['detail']))
 {
 	@ksort($setup_info[$detail]);
 	$setup_tpl->set_var('description',lang('App details') . ':');
@@ -244,7 +241,7 @@ if(@$detail)
 				{
 					$hooks = (array)$hooks;
 				}
-				$val = str_replace('EGroupware\\', '', implode(', ', call_user_func_array('array_merge', $val)));
+				$val = str_replace('EGroupware\\', '', json_encode($val));
 				break;
 			case 'depends':
 				foreach($val as &$dep)
@@ -254,7 +251,7 @@ if(@$detail)
 				$val = implode('; ', $val);
 				break;
 			case 'check_install':
-				$val = array2string($val);
+				$val = json_encode($val, JSON_UNESCAPED_SLASHES);
 				break;
 			default:
 				if (is_array($val)) $val = implode(', ', $val);
@@ -270,13 +267,13 @@ if(@$detail)
 	$setup_tpl->pparse('out','footer');
 	exit;
 }
-elseif (@$resolve)
+elseif (!empty($resolve = $_GET['resolve']))
 {
 	$version  = $_GET['version'];
 	$notables = $_GET['notables'];
 	$setup_tpl->set_var('description',lang('Problem resolution'). ':');
 	$setup_tpl->pparse('out','header');
-	$app_title = $setup_info[$resolve]['title'] ? $setup_info[$resolve]['title'] : $setup_info[$resolve]['name'];
+	$app_title = $setup_info[$resolve]['title'] ?: $setup_info[$resolve]['name'];
 
 	if($_GET['post'])
 	{
