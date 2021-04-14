@@ -559,6 +559,7 @@ class SharingBase extends LoggedInTest
 		$curl = curl_init($link);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 3);
 		$cookie = '';
 		if($GLOBALS['egw']->session->sessionid || $share['share_with'])
 		{
