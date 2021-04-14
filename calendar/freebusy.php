@@ -50,6 +50,7 @@ function fail_exit($msg)
 	echo "<html>\n<head>\n<title>$msg</title>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=".
 		Api\Translation::charset()."\" />\n</head>\n<body><h1>$msg</h1>\n</body>\n</html>\n";
 
+	header('WWW-Authenticate: Basic realm="'.($GLOBALS['egw_info']['flags']['auth_realm'] ?: 'EGroupware').'"');
 	http_response_code(401);
 	exit;
 }
