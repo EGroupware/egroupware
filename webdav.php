@@ -9,10 +9,8 @@
  *
  * Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
  *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @link https://www.egroupware.org
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -23,63 +21,64 @@ use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
 //$starttime = microtime(true);
-
-/**
- * check if the given user has access
- *
- * Create a session or if the user has no account return authenticate header and 401 Unauthorized
- *
- * @param array &$account
- * @return int session-id
- */
-function check_access(&$account)
-{
-	if (isset($_GET['auth']))
-	{
-		list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) = explode(':',base64_decode($_GET['auth']),2);
-	}
-	return Api\Header\Authenticate::autocreate_session_callback($account);
-}
-
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'disable_Template_class' => True,
 		'noheader'  => True,
 		'currentapp' => (static function($uri)
 		{
-			if (preg_match('#/webdav.php/(etemplates|apps/([A-Za-z0-9_-]+)|home/'.
-				preg_quote($GLOBALS['egw_info']['user']['account_lid'], '#').'/.tmp)/#', $uri, $matches))
+			if (preg_match('#/webdav.php/(etemplates|apps/([A-Za-z0-9_-]+)|home/[^/]+/.tmp)/#', $uri, $matches))
 			{
 				if (!empty($matches[2]))
 				{
-					$app = $matches[2];
+					return $matches[2];
 				}
 				// allow access to mounted eTemplates and temp file upload
-				else
-				{
-					return 'api';
-				}
+				return 'api';
 			}
-			else
-			{
-				$app = 'filemanager';
-			}
-			if (empty($GLOBALS['egw_info']['user']['apps'][$app]) &&
-				(!empty($GLOBALS['egw_info']['user']['apps'][$a='filemanager']) ||
-					!empty($GLOBALS['egw_info']['user']['apps'][$a='sitemgr-link'])))
-			{
-				$app = $a;
-			}
-			return $app;
+			return 'filemanager';
 		})($_SERVER['REQUEST_URI']),
-		'autocreate_session_callback' => 'check_access',
+		/**
+		 * check if the given user has access
+		 *
+		 * Create a session or if the user has no account return authenticate header and 401 Unauthorized
+		 *
+		 * @param array &$account
+		 * @return int session-id
+		 */
+		'autocreate_session_callback' => static function(&$account)
+		{
+			if (isset($_GET['auth']))
+			{
+				list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode($_GET['auth']),2);
+			}
+			return Api\Header\Authenticate::autocreate_session_callback($account);
+		},
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 		'auth_realm' => 'EGroupware WebDAV server',	// cant use Vfs\WebDAV::REALM as autoloading and include path not yet setup!
 	)
 );
 
-// if you move this file somewhere else, you need to adapt the path to the header!
-require_once __DIR__.'/header.inc.php';
+try
+{
+	// if you move this file somewhere else, you need to adapt the path to the header!
+	require_once __DIR__.'/header.inc.php';
+}
+catch (Api\Exception\NoPermission\App $e)
+{
+	if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'filemanager';
+	}
+	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-link']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
+	}
+	else
+	{
+		throw $e;
+	}
+}
 //$headertime = microtime(true);
 
 // webdav is stateless: we dont need to keep the session open, it only blocks other calls to same basic-auth session
