@@ -439,7 +439,7 @@ class StreamWrapper extends LinksParent
 		$parent = new \EGroupware\Api\Vfs\Links\LinksParent($target);
 		if (!$parent->url_stat($dir = Vfs::dirname($link),0) && $this->check_extended_acl($dir,Vfs::WRITABLE))
 		{
-			$parent->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
+			$this->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
 		return parent::symlink($target,$link);
 	}
