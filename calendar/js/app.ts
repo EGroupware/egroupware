@@ -2158,7 +2158,7 @@ class CalendarApp extends EgwApp
 		{
 			title.set_value(title.egw().lang('Event'));
 		}
-		let options = jQuery.extend(this._add_dialog_values(widget), this.quick_add);
+		let options = jQuery.extend(this.quick_add, this._add_dialog_values(widget));
 
 		// Open regular edit
 		egw.open(null,'calendar','edit',options);
