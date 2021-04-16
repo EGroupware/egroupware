@@ -1841,7 +1841,7 @@ var CalendarApp = /** @class */ (function (_super) {
         if (title && !title.get_value()) {
             title.set_value(title.egw().lang('Event'));
         }
-        var options = jQuery.extend(this._add_dialog_values(widget), this.quick_add);
+        var options = jQuery.extend(this.quick_add, this._add_dialog_values(widget));
         // Open regular edit
         egw.open(null, 'calendar', 'edit', options);
         // Close the dialog
