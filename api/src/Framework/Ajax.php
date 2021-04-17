@@ -845,7 +845,7 @@ abstract class Ajax extends Api\Framework
 		$last_direct_url =& Api\Cache::getSession(__CLASS__, 'last_direct_url');
 		if ($last_direct_url)
 		{
-			$url = $last_direct_url;
+			$url = str_replace('%255C', '%5C', $last_direct_url);	// fix double encoding of backlash in class-names
 			$active_tab = self::app_from_url($last_direct_url);
 		}
 		else if (strpos($url, 'menuaction') > 0)
