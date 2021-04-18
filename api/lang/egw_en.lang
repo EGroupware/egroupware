@@ -149,7 +149,7 @@ applies the changes made	common	en	Applies the changes
 applies the changes to the given version of the template	common	en	Applies the changes to the given version of the template
 apply	common	en	Apply
 apply the action on the whole query, not only the shown entries	common	en	Apply the action on the whole query, NOT only the shown entries
-apps &amp; license	common	en	Apps &amp; License
+apps &amp; license	common	en	Apps & License
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries?
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry?
@@ -360,7 +360,7 @@ custom javascript for onchange	common	en	Custom javascript for onChange
 cut	common	en	Cut
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
-dark mode	common	en	dark mode
+dark mode	common	en	Dark mode
 dark moono theme	common	en	dark moono theme
 data type	common	en	Data type
 database error	common	en	Database error
@@ -793,7 +793,7 @@ liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
-light mode	common	en	light mode
+light mode	common	en	Light mode
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
 link	common	en	Link

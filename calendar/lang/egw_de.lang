@@ -98,7 +98,7 @@ canceled	calendar	de	Abgesagt
 category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt wegen fehlender Rechte
 category acl	common	de	Kategorie-Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie-Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
-category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Termine hinzugefügt wird.
+category automatically added to new events	calendar	de	Kategorie, die automatisch zu neuen Terminen hinzugefügt wird.
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
@@ -450,7 +450,7 @@ previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
-quantity	calendar	de	Menge
+quantity	calendar	de	Anzahl
 quick add	calendar	de	schnelles Hinzufügen
 range fields	calendar	de	Feldbereich
 re-edit event	calendar	de	Termin erneut bearbeiten

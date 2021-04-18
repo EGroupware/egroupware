@@ -113,8 +113,8 @@ edit settings	filemanager	de	Eigenschaften bearbeiten
 edit share	filemanager	de	Freigabe bearbeiten
 enable	filemanager	de	Einschalten
 enable versioning for given mountpoint	filemanager	de	Versionierung für angegebenen Mountpoint einschalten
-enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
-enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu erhalten
+enter setup user and password	filemanager	de	Superuser Benutzer und Passwort eingeben
+enter setup user and password to get root rights	filemanager	de	Superuser Benutzer und Passwort eingeben um Superuser-Rechte zu erhalten
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 enter your file name	filemanager	de	Dateiname
@@ -172,6 +172,7 @@ go home	filemanager	de	Gehe zum Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
+hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
 id	filemanager	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Verzeichnis angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
@@ -241,8 +242,8 @@ replaced %1	filemanager	de	%1 ersetzt
 replacements for inserting entries into documents	filemanager	de	Platzhalter zum Einfügen in ein Dokument
 rights	filemanager	de	Rechte
 root	filemanager	de	root
-root access granted.	filemanager	de	Root Zugriff gewährt
-root access stopped.	filemanager	de	Root Zugriff gestoppt
+root access granted.	filemanager	de	Superuser Zugriff gewährt
+root access stopped.	filemanager	de	Superuser Zugriff gestoppt
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
 save as zip	filemanager	de	Als ZIP-Datei speichern

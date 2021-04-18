@@ -61,10 +61,10 @@ gernal resource	resources	de	Generelle Ressource
 global categories	resources	de	Globale Kategorien
 history logging	admin	de	Protokollierung der Historie
 hours	resources	de	Stunden
-how many of the resources are useable?	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of them are useable?	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of this resource are usable	resources	de	Stückzahl der nutzbaren Ressourcen
-how many of this resource exists	resources	de	Stückzahl der existierenden Ressourcen
+how many of the resources are useable?	resources	de	Anzahl nutzbarer Ressourcen
+how many of them are useable?	resources	de	Anzahl nutzbarer Ressourcen
+how many of this resource are usable	resources	de	Anzahl nutzbarer Ressourcen
+how many of this resource exists	resources	de	Anzahl existierende Ressourcen
 if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export.
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
@@ -103,9 +103,9 @@ please choose a different time:	resources	de	Bitte wählen Sie eine andere Zeit:
 prevent deleting	admin	de	Lösch-Airbag aktivieren
 prize	resources	de	Preis
 prizeing information for booking or buying	resources	de	Preisinformation für Buchung und Kauf
-quantity	resources	de	Stückzahl
-quantity of resource	resources	de	Stückzahl der Ressource
-quantity:	resources	de	Stückzahl:
+quantity	resources	de	Anzahl
+quantity of resource	resources	de	Anzahl der Ressource
+quantity:	resources	de	Anzahl:
 read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 registration confirmed %1	resources	de	Eintragung bestätigt %1
