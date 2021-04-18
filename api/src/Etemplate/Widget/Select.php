@@ -729,19 +729,22 @@ class Select extends Etemplate\Widget
 						MCAL_M_WEEKEND	=> 'weekend',
 					);
 				}
-				$value_in = $value;
-				$value = array();
-				foreach(array_keys($options) as $val)
+				if (!is_array($value))
 				{
-					if (($value_in & $val) == $val)
+					$value_in = $value;
+					$value = array();
+					foreach (array_keys($options) as $val)
 					{
-						$value[] = $val;
-
-						if ($val == MCAL_M_ALLDAYS ||
-							$val == MCAL_M_WEEKDAYS && $value_in == MCAL_M_WEEKDAYS ||
-							$val == MCAL_M_WEEKEND && $value_in == MCAL_M_WEEKEND)
+						if (($value_in & $val) == $val)
 						{
-							break;	// dont set the others
+							$value[] = $val;
+
+							if ($val == MCAL_M_ALLDAYS ||
+								$val == MCAL_M_WEEKDAYS && $value_in == MCAL_M_WEEKDAYS ||
+								$val == MCAL_M_WEEKEND && $value_in == MCAL_M_WEEKEND)
+							{
+								break;    // dont set the others
+							}
 						}
 					}
 				}

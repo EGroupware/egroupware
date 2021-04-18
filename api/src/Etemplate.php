@@ -164,7 +164,7 @@ class Etemplate extends Etemplate\Widget\Template
 		if (empty($this->name)) throw new Exception\AssertionFailed("Template  name is not set '$this->name' !");
 		// instanciate template to fill self::$request->sel_options for select-* widgets
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
-		$template = self::instance($this->name, $this->template_set, $this->version, $this->laod_via);
+		$template = self::instance($this->name, $this->template_set, $this->version, $this->load_via);
 		if (!$template) throw new Exception\AssertionFailed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
 		$this->children = array($template);
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
@@ -504,7 +504,7 @@ class Etemplate extends Etemplate\Widget\Template
 	public $name;
 	public $template_set;
 	public $version;
-	public $laod_via;
+	public $load_via;
 
 	/**
 	 *
@@ -536,7 +536,7 @@ class Etemplate extends Etemplate\Widget\Template
 
 		unset($lang); unset($group);	// not used, but in old signature
 		$this->rel_path = self::relPath($this->name=$name, $this->template_set=$template_set,
-			$this->version=$version, $this->laod_via = $load_via);
+			$this->version=$version, $this->load_via = $load_via);
 		//error_log(__METHOD__."('$name', '$template_set', '$lang', $group, '$version', '$load_via') rel_path=".array2string($this->rel_path));
 
 		$this->dom_id = isset($_GET['fw_target']) ?	$name.'-'.$_GET['fw_target'] : $name;

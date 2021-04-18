@@ -66,7 +66,7 @@ class Template extends Etemplate\Widget
 
 		//$start = microtime(true);
 		list($name) = explode('?', $_name);	// remove optional cache-buster
-		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version)))
+		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version, $load_via)))
 		{
 			if ((!$path || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
 			{
@@ -139,13 +139,14 @@ class Template extends Etemplate\Widget
 	 * @param string $name
 	 * @param string $template_set =null default try template-set from user and if not found "default"
 	 * @param string $version =''
+	 * @param string $load_via =''
 	 * @return string path of template xml file or null if not found
 	 */
-	public static function relPath($name, $template_set=null, $version='')
+	public static function relPath($name, $template_set=null, $version='', $load_via='')
 	{
 		static $prefixes = null;
 		unset($version);	// not used currently
-		list($app, $rest) = explode('.', $name, 2);
+		list($app, $rest) = explode('.', $load_via ?: $name, 2);
 
 		if (empty($template_set))
 		{
