@@ -401,6 +401,7 @@ notification messages for uninvited participants	calendar	de	Benachrichtigungste
 notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
 notification settings	calendar	de	Benachrichtigungseinstellungen
+notify	calendar	de	Benachrichtigen
 notify all externals (non-users) about this event	calendar	de	Benachrichtigt alle Externen (Nicht-Benutzer) über diesen Termin
 notify externals	calendar	de	Externe Teilnehmer benachrichtigen
 notify non-egroupware users about event updates	calendar	de	Teilnehmer außerhalb EGroupware über Terminänderungen benachrichtigen?

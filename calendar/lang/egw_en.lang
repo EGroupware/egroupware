@@ -402,6 +402,7 @@ notification messages for uninvited participants	calendar	en	Notification messag
 notification messages for your alarms	calendar	en	Notification messages for your alarms
 notification messages for your responses	calendar	en	Notification messages for your responses
 notification settings	calendar	en	Notification settings
+notify	calendar	en	Notify
 notify all externals (non-users) about this event	calendar	en	Notify all externals (non-users) about this event
 notify externals	calendar	en	Notify externals
 notify non-egroupware users about event updates	calendar	en	Notify non-EGroupware users about event updates

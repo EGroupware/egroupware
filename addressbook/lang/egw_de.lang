@@ -157,7 +157,6 @@ country (private)	addressbook	de	Land (Privat)
 country code	addressbook	de	Länderkennung
 country code (private)	addressbook	de	Länderkennung (Privat)
 create new links	addressbook	de	Neue Verknüpfung erstellen
-create new shares writable	addressbook	de	Neue Freigaben beschreibbar erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
 crm view list	addressbook	de	CRM Ansicht
@@ -409,7 +408,7 @@ please enter a name for that field !	addressbook	de	Bitte geben Sie einen Namen 
 please select only one category	addressbook	de	Bitte nur eine Kategorie auswählen
 postal	common	de	Postanschrift
 pref	addressbook	de	bevorzugt
-preferred email address to use in distribution lists	addressbook	de	Bevorzugte E-Mailadresse für Verteilerlisten
+preferred email address to use in distribution lists	addressbook	de	Bevorzugte E-Mail-Adresse für Verteilerlisten
 preferred phone	addressbook	de	bevorzugte Telefonnummer
 preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
@@ -453,7 +452,7 @@ select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern möchten
 selected contacts	addressbook	de	ausgewählte Kontakte
 send emailcopy to receiver	addressbook	de	Versendet eine Kopie der E-Mail zu dem Empfänger
-send fax via email by replacing fax number with an email address	addressbook	de	Fax per Email senden durch ersetzen der Faxnummer mit einer Email Adresse
+send fax via email by replacing fax number with an email address	addressbook	de	Fax per E-Mail senden durch ersetzen der Faxnummer mit einer E-Mail-Adresse
 send succeeded to %1	common	de	erfolgreich versandt an
 seperator	addressbook	de	Feldtrenner
 set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
