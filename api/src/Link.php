@@ -651,7 +651,7 @@ class Link extends Link\Storage
 	 * Note: if $link_id != '' and $id is an array: unlink removes links from that array only
 	 * 	unlink has to be called with &$id to see the result (depricated) or unlink2 has to be used !!!
 	 *
-	 * @param $link_id link-id to remove if > 0
+	 * @param string $link_id link-id to remove if > 0
 	 * @param string $app ='' appname of first endpoint
 	 * @param string|array $id ='' id in $app or array with links, if 1. entry not yet created
 	 * @param int $owner =0 account_id to delete all links of a given owner, or 0
