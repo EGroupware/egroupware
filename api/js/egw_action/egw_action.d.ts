@@ -44,9 +44,10 @@ declare function egw_getObjectManager(_id: any, _create?: boolean, _search_depth
  * Returns the object manager for the current application
  *
  * @param {boolean} _create
+ * @param {string} _appName
  * @return {egwActionObjectManager}
  */
-declare function egw_getAppObjectManager(_create?: boolean): typeof egwActionObjectManager;
+declare function egw_getAppObjectManager(_create?: boolean, _appName?: string): typeof egwActionObjectManager;
 /**
  * Returns the action manager for the current application
  *

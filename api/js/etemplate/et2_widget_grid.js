@@ -740,8 +740,9 @@ var et2_grid = /** @class */ (function (_super) {
      */
     et2_grid.prototype._link_actions = function (actions) {
         // Get the top level element for the tree
+        // get appObjectManager for the actual app, it might not always be the current app(e.g. running app content under admin tab)
         // @ts-ignore
-        var objectManager = window.egw_getAppObjectManager(true);
+        var objectManager = window.egw_getAppObjectManager(true, this.getInstanceManager().app);
         objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId, 2) || objectManager;
         var widget_object = objectManager.getObjectById(this.id);
         if (widget_object == null) {
