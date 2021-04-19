@@ -99,7 +99,7 @@
   }
   html[data-darkmode='1'] #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
   html[data-darkmode='1'] #mail_sidebox_header {
-    border-color: #5db9ec!important;
+    border-color: #5db9ec !important;
   }
   html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
     border-top-color: #5db9ec !important;
@@ -1526,20 +1526,20 @@ span.ui-icon-search {
   box-shadow: -2px 1px 9px 3px #B4B4B4;
 }
 .ui-dialog .ui-dialog-buttonpane {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   padding-top: 0.7em;
 }
 .ui-dialog .ui-dialog-titlebar {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   font-size: 12pt;
   border: none;
   font-weight: normal;
   background: white;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-  right: .8em;
+  right: 0.8em;
 }
 .ui-widget-content {
   border: 1px solid #B4B4B4;
@@ -6347,7 +6347,7 @@ a.textSidebox {
   }
 }
 .egw-loading-prompt-container::before {
-  opacity: .3;
+  opacity: 0.3;
   content: "";
   background-color: #aaaaaa;
   width: 100%;
@@ -6426,7 +6426,7 @@ a.textSidebox {
   z-index: 999;
   width: 100px;
   border-radius: 5px;
-  border: solid 10px  #679FD2;
+  border: solid 10px #679FD2;
   transform: translate(-50%, -50%);
 }
 /**
@@ -6589,19 +6589,6 @@ span.egw_tutorial_title {
   background: white;
   height: 100%;
   width: 100%;
-}
-#egw_fw_firstload:before {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url(../../pixelegg/images/loading.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-animation: fw-firstload 2s infinite;
-  animation: fw-firstload 2s infinite;
-  -moz-animation: fw-firstload 2s infinite;
 }
 #egw_fw_sidebar #egw_fw_sidemenu #addressbook_sidebox_content .egw_fw_ui_category_active {
   background-color: #003366 !important;

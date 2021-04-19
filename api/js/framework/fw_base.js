@@ -39,6 +39,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		this.applications = new Object();
 		this.activeApp = null;
 
+		// keeps the firstload animation gauge in sync
+		this.firstload_animation_gauge = 0;
+
 		this.apps = null;
 
 		this.tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps')||null) || {};
@@ -520,6 +523,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			if (_status == 5 && !_app.isFrameworkTab) _app.tab.hideTabHeader(true);
 
 		}
+		if (this.activeApp && this.activeApp.appName != _app.appName) this.firstload_animation(_app.appName);
 	},
 
 	/**
@@ -1347,5 +1351,25 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		})
 		egw.setSessionItem('api', 'darkmode',state);
 		egw.json('EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag',[state]).sendRequest();
+	},
+
+	/**
+	 * firstload animation
+	 * @param string _app app name
+	 * @param int _gauge 0 - 100
+	 */
+	firstload_animation: function(_app, _gauge)
+	{
+		if (_app)
+		{
+			jQuery('.fl_app.'+_app).css({
+				opacity: 1
+			});
+		}
+		let progress = jQuery('.fl_progress');
+		let gauge = progress.children();
+
+		this.firstload_animation_gauge = _gauge ? _gauge : (this.firstload_animation_gauge == 0 ? 10 : (this.firstload_animation_gauge+5));
+		gauge.width(this.firstload_animation_gauge+"%");
 	}
 });}).call(this);

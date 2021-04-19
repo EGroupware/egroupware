@@ -165,6 +165,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		},5000);
 
 		this.loadingDeferred.always(function() {
+			framework.firstload_animation(self.app.appName);
 			if(self.ajaxLoaderDiv)
 			{
 

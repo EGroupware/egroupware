@@ -252,6 +252,11 @@ abstract class Ajax extends Api\Framework
 				$extra['check-framework'] = $_GET['cd'] !== 'no' && $GLOBALS['egw_info']['flags']['nonavbar'] !== 'popup';
 			}
 		}
+
+		//add loader animation
+		$this->tpl->set_var('firstload_animation', $this->_get_firstload_animation());
+		$this->tpl->set_var('firstload_animation_style', $this->_get_firstload_animation_style());
+
 		// allow apps to load JavaScript or CSS files, knowing we're loading the framework or not
 		Api\Hooks::process(array(
 			'location' => 'framework_header',
@@ -365,6 +370,72 @@ abstract class Ajax extends Api\Framework
 		$id = $app_data['id'] ? $app_data['id'] : ($app_data['name'] ? $app_data['name'] : $app_data['title']);
 		$title =  htmlspecialchars($alt_label ? $alt_label : $app_data['title']);
 		$this->topmenu_items[] = '<a id="topmenu_' . $id . '" href="'.htmlspecialchars($app_data['url']).'" title="'.$app_data['title'].'">'.$title.'</a>';
+	}
+
+	/**
+	 * set style for firstload animation
+	 * @return string
+	 */
+	private function _get_firstload_animation_style()
+	{
+		return '
+		#egw_fw_firstload .fl_app {
+			opacity:0.3;
+			width: 50px;
+			height:50px;
+			background-repeat: no-repeat;
+			clip-path: polygon(100% 9%, 73% 4%, 67% 3%, 63% 2%, 56% 1%, 48% 0, 41% 1%, 33% 3%, 26% 6%, 21% 9%, 16% 13%,
+			 11% 19%, 7% 24%, 4% 30%, 1% 38%, 0 46%, 0 53%, 1% 61%, 3% 67%, 5% 72%, 8% 77%, 12% 83%, 16% 87%, 21% 91%,
+			  27% 95%, 32% 97%, 39% 99%, 46% 100%, 53% 100%, 60% 99%, 67% 97%, 74% 94%, 79% 91%, 85% 86%, 90% 81%,
+			   94% 74%, 97% 67%, 98% 58%);
+			background-color: #b0dccc;
+			transition: opacity 1s  cubic-bezier(0.4, 0, 1, 1);
+		}
+		#egw_fw_firstload .fl_apps {
+			width: 100%;
+			max-width: 400px;
+			display: block;
+			background: transparent;
+			margin: 35% auto 20px;
+		}
+		#egw_fw_firstload .fl_wrapper {
+			margin:auto;
+			width:40%;
+		}
+		#egw_fw_firstload .fl_progress {
+			width: 100%;
+			height: 5px;
+			border: 1px solid #b1dccc;
+   			border-radius: 5px;
+		}
+		#egw_fw_firstload .fl_progress div{
+			width: 0%;
+			height: 5px;
+    		background-color: #005d8b;
+    		transition: width 0.2s linear;
+		}
+		';
+	}
+
+	/**
+	 * get firstload animation content
+	 * @return string
+	 */
+	private function _get_firstload_animation()
+	{
+		$content = $appsDiv = '';
+		$apps = array_filter($this->navbar_apps(), static function($a){
+			if (!in_array($a['name'], ['about', 'wiki', 'devtools', 'preferences'])) return $a;
+		});
+		foreach ($apps as $app)
+		{
+			$appsDiv .= '<div class="fl_app '.htmlspecialchars($app['name']).'"'.
+				' style="background-image:url('.htmlspecialchars($app['icon']).');'.
+				'background-position:center;background-size:32px;display:inline-block;margin:1px;"></div>';
+		}
+		$content .= '<div class="fl_wrapper" style="margin:auto;width:40%;"><div class="fl_apps">'.$appsDiv.
+			'</div><div class="fl_progress"><div></div></div></div></div>';
+		return $content;
 	}
 
 	/**
