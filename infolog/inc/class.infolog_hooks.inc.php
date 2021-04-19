@@ -165,6 +165,7 @@ class infolog_hooks
 					'no_lang' => true,
 					'link' => "javascript:app.infolog.add_link_sidemenu();"
 				),
+				['text'=>'--'],
 				'Placeholders' => Egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements')
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);

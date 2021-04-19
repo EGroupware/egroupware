@@ -77,8 +77,9 @@ class filemanager_hooks
 			{
 				$file['Startfolder']= Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
 			}
-			$file['Placeholders'] = Egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
 			$file['Shared files'] = Egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
+			$file[] = ['text'=>'--'];
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
 			display_sidebox(self::$appname,$title,$file);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);

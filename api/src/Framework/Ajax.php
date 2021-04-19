@@ -700,6 +700,12 @@ abstract class Ajax extends Api\Framework
 					$var['lang_item'] = lang($item_text);
 					$var['item_link'] = $item_link;
 				}
+				if($var['lang_item'] == '--')
+				{
+					unset($var['icon_or_star']);
+					$var['item_link'] = '';
+					$var['lang_item'] = '<hr />';
+				}
 				$current_menu['entries'][] = $var;
 			}
 

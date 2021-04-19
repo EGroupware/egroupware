@@ -61,6 +61,7 @@ class addressbook_hooks
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					Egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.extSearch'),false).
 					"','_blank',870,610,'yes')",
+				['text'=>'--'],
 				'Placeholders'    => Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);

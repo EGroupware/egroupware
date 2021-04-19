@@ -126,6 +126,7 @@ class timesheet_hooks
 					'link' => "javascript:egw.open('','$appname','add')"
 				),
 			);
+			$file[] = ['text'=>'--'];
 			$file['Placeholders'] = Egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 		}

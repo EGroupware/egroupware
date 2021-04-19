@@ -3246,6 +3246,11 @@ tr.disableIfNoEPL {
     opacity: 0.5;
     pointer-events: none;
 }
+.egw_fw_ui_sidemenu_entry_content hr {
+    /* HR in sidebox */
+    border-top: 1px solid black;
+    margin: 3px 5px 0px 5px;
+}
 .inactive_blur > * {opacity: 0.4; filter:blur(2px); pointer-events: none;}
 
 .et2_editable {
