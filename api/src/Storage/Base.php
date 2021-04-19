@@ -394,10 +394,10 @@ class Base
 		{
 			if (!isset($this->table_def))
 			{
-				$this->table_def = $this->db->get_table_definitions($this->app, $this->table);
+				$this->table_def = $this->db->get_table_definitions($this->app, $this->table_name);
 				if (!$this->table_def || !is_array($this->table_def['fd']))
 				{
-					throw new Api\Exception\WrongParameter(__METHOD__."(): No table definition for '$this->table' found !!!");
+					throw new Api\Exception\WrongParameter(__METHOD__."(): No table definition for '$this->table_name' found !!!");
 				}
 			}
 			foreach($this->table_def['fd'] as $col => $def)
@@ -1073,7 +1073,7 @@ class Base
 	 * @param string $wildcard ='' appended befor and after each criteria
 	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @return Array
+	 * @return array|string
 	 * @throws Api\Db\Exception
 	 */
 	protected function parse_search(Array $_criteria, $wildcard, $empty, $op)
@@ -1113,6 +1113,7 @@ class Base
 					{
 						$wildcard = '';
 					}
+					$table_name = $this->db_cols[$db_col] ? $this->table_name . '.' : '';
 					$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
 					$negate = false;
 					if ($criteria[$col][0] == '!')
@@ -1123,7 +1124,7 @@ class Base
 					}
 					foreach(explode(' ',$criteria[$col]) as $crit)
 					{
-						$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.
+						$query[] = ($negate ? ' ('.$table_name.$db_col.' IS NULL OR ' : '').$table_name.$db_col.$cmp_op.
 							$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
 							($negate ? ') ' : '');
 					}
