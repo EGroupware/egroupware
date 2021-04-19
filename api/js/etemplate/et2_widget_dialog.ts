@@ -699,9 +699,18 @@ export class et2_dialog extends et2_widget {
         var egw = _senders instanceof et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
         var callbackDialog = function (button_id) {
             if (button_id == et2_dialog.YES_BUTTON) {
-                if (_postSubmit) {
-                    senders.getRoot().getInstanceManager().postSubmit(buttonId);
-                } else {
+				if (_postSubmit)
+				{
+					senders.getRoot().getInstanceManager().postSubmit(buttonId);
+				}
+				else if (senders.instanceOf(et2_button) && senders.getType() !== "buttononly")
+				{
+					senders.clicked = true;
+					senders.getInstanceManager().submit(senders, false, senders.options.novalidate);
+					senders.clicked = false;
+				}
+            	else
+                {
                     senders.getRoot().getInstanceManager().submit(buttonId);
                 }
             }

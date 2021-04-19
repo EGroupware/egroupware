@@ -537,6 +537,11 @@ var et2_dialog = /** @class */ (function (_super) {
                 if (_postSubmit) {
                     senders.getRoot().getInstanceManager().postSubmit(buttonId);
                 }
+                else if (senders.instanceOf(et2_widget_button_1.et2_button) && senders.getType() !== "buttononly") {
+                    senders.clicked = true;
+                    senders.getInstanceManager().submit(senders, false, senders.options.novalidate);
+                    senders.clicked = false;
+                }
                 else {
                     senders.getRoot().getInstanceManager().submit(buttonId);
                 }
