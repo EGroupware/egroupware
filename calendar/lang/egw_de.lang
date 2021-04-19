@@ -406,6 +406,7 @@ notify all externals (non-users) about this event	calendar	de	Benachrichtigt all
 notify externals	calendar	de	Externe Teilnehmer benachrichtigen
 notify non-egroupware users about event updates	calendar	de	Teilnehmer außerhalb EGroupware über Terminänderungen benachrichtigen?
 number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)
+number of resources to be booked    calendar    de  Anzahl zu buchender Ressourcen
 number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
