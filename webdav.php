@@ -68,11 +68,11 @@ catch (Api\Exception\NoPermission\App $e)
 {
 	if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
 	{
-		$GLOBALS['egw_info']['currentapp'] = 'filemanager';
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'filemanager';
 	}
 	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-link']))
 	{
-		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'sitemgr-link';
 	}
 	else
 	{
