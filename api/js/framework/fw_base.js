@@ -131,7 +131,10 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			this.appData = new egw_fw_class_application(this,
 				app.name, app.title, app.icon, app.url, app.sideboxwidth,
 				baseUrl, internalName);
-			if (app.isFrameworkTab) this.appData['isFrameworkTab'] = true;
+			if (app.isFrameworkTab)
+			{
+				jQuery.extend(this.appData, app);
+			}
 			//Create a sidebox menu entry for each application
 			if (!app.noNavbar && (app.status != 5 || app.isFrameworkTab))
 			{
@@ -751,7 +754,9 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				url: _link,
 				internalName: app.appName,
 				active: true,
-				isFrameworkTab: true
+				isFrameworkTab: true,
+				hinthint: _extra.hint,
+				refreshCallback: _extra.refreshCallback
 			}));
 
 			this._setTabAppsSession(this.tabApps);
