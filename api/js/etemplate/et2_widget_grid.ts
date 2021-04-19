@@ -998,8 +998,9 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	_link_actions(actions : object[])
 	{
 		 // Get the top level element for the tree
+		// get appObjectManager for the actual app, it might not always be the current app(e.g. running app content under admin tab)
 		// @ts-ignore
-		let objectManager = window.egw_getAppObjectManager(true);
+		let objectManager = window.egw_getAppObjectManager(true, this.getInstanceManager().app);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
 		let widget_object = objectManager.getObjectById(this.id);
 		if (widget_object == null) {

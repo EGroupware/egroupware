@@ -103,10 +103,11 @@ function egw_getObjectManager(_id, _create, _search_depth) {
  * Returns the object manager for the current application
  *
  * @param {boolean} _create
+ * @param {string} _appName //appname might not always be the current app, e.g. running app content under admin tab
  * @return {egwActionObjectManager}
  */
-function egw_getAppObjectManager(_create) {
-	return egw_getObjectManager(egw_getAppName(), _create,1);
+function egw_getAppObjectManager(_create, _appName) {
+	return egw_getObjectManager(_appName ?? egw_getAppName(), _create,1);
 }
 
 /**
