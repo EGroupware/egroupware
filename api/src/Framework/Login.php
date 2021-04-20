@@ -385,6 +385,8 @@ class Login
 				$GLOBALS['egw']->session->egw_setcookie('kp3');
 				$GLOBALS['egw']->session->egw_setcookie('domain');
 				return lang('Your session timed out, please log in again');
+			case 100:
+				return lang('Login rejected by EPL firewall, please contact your administrator');
 			default:
 				if (!$code)
 				{

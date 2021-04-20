@@ -177,7 +177,7 @@ class Session
 	const CD_SECOND_FACTOR_REQUIRED = 96;
 	const CD_FORCE_PASSWORD_CHANGE = 97;
 	const CD_ACCOUNT_EXPIRED = 98;
-	const CD_BLOCKED = 99;	// to many failed attempts to loing
+	const CD_BLOCKED = 99;	// to many failed attempts to login
 
 	/**
 	 * Verbose reason why session creation failed
@@ -593,7 +593,7 @@ class Session
 				catch(\Exception $e) {
 					$this->cd_reason = $e->getCode();
 					$this->reason = $e->getMessage();
-					$this->log_access($this->reason, $login, $user_ip, 0);	// log unsuccessfull login
+					$this->log_access($this->reason, $login, $user_ip, 0);	// log unsuccessful login
 					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check,$fail_on_forced_password_change,'$check_2fa') UNSUCCESSFULL ($this->reason)");
 					return false;
 				}
@@ -804,7 +804,7 @@ class Session
 			'errors' => &$errors,
 			'2fa_code' => $code,
 			'remember_me_token' => $token,
-		], [], true);
+		], ['webauthn'], true);
 
 		if (!count($factors) && (count($errors) ||
 			$GLOBALS['egw_info']['server']['2fa_required'] === 'strict'))
