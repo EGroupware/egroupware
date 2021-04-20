@@ -865,6 +865,12 @@ class calendar_ical extends calendar_boupdate
 				{
 					if (substr($name, 0, 2) == '##')
 					{
+						$attr_name = substr($name, 2);
+						// Apply prefix to our stuff
+						if(in_array($attr_name,['videoconference','notify_externals']))
+						{
+							$attr_name = 'X-EGROUPWARE-'.$attr_name;
+						}
 						if ($value[0] === '{' && ($attr = json_decode($value, true)) && is_array($attr))
 						{
 							// check if attribute was stored compressed --> uncompress it
@@ -873,11 +879,11 @@ class calendar_ical extends calendar_boupdate
 								$attr = json_decode(gzuncompress(base64_decode($attr['gzcompress'])), true);
 								if (!is_array($attr)) continue;
 							}
-							$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
+							$vevent->setAttribute($attr_name, $attr['value'], $attr['params'], true, $attr['values']);
 						}
 						else
 						{
-							$vevent->setAttribute(substr($name, 2), $value);
+							$vevent->setAttribute($attr_name, $value);
 						}
 					}
 				}
@@ -3037,6 +3043,13 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'STATUS':	// currently no EGroupware event column, but needed as Android uses it to delete single recurrences
 					$event['status'] = $attributes['value'];
+					break;
+
+				case 'X-EGROUPWARE-NOTIFY_EXTERNALS':
+					$event['##notify_externals'] = $attributes['value'];
+					break;
+				case 'X-EGROUPWARE-VIDEOCONFERENCE':
+					$event['##videoconference'] = $attributes['value'];
 					break;
 
 				// ignore all PROPS, we dont want to store like X-properties or unsupported props
