@@ -755,7 +755,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				internalName: app.appName,
 				active: true,
 				isFrameworkTab: true,
-				hinthint: _extra.hint,
+				hint: _extra.hint,
 				refreshCallback: _extra.refreshCallback
 			}));
 
@@ -1368,7 +1368,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		if (_app)
 		{
 			jQuery('.fl_app.'+_app).css({
-				opacity: 1
+				opacity: 1,
+				animation:"anim 1s"
 			});
 		}
 		let progress = jQuery('.fl_progress');
