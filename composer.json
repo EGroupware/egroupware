@@ -116,7 +116,7 @@
 	},
 	"require-dev": {
 		"guzzlehttp/guzzle": "^6.5",
-		"phpunit/phpunit": "~8"
+		"phpunit/phpunit": "^9"
 	},
 	"suggest": {
 		"ext-opcache": "Opcode cache to speed up PHP",
