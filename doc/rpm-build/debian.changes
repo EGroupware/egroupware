@@ -1,3 +1,21 @@
+egroupware-docker (21.1.20210420) hardy; urgency=low
+
+  * 4th and now feature-complete 21.1 pre-release
+  * EPL: new application firewall allowing to restrict login based on IP address, time, user or group-membership and 2-Factor-Auth
+  * EPL/Kanban: allow to collapse, expand and move columns and swimlanes
+  * Login: new start animation / throbber
+  * SAML/Shibboleth: update phpSimpleSAML to 1.19.0 to support Shibboleth v4.0
+  * SAML/Shibboleth: fix metadata-URL to container eduPersonUniqueId or a custom OID, if specified
+  * SAML/Shibboleth: fix not stored custome OID and added eduPersonUniqueId
+  * Calendar: Fix quick-add did not pass changes to start time on to edit dialog
+  * Calendar: Fix missing line breaks in event tooltip
+  * Timesheet: Fix created was overlapping with status
+  * CalDAV/CardDAV: fix freebusy-URL for users and support basic auth with regular user credentials too
+  * Mail: fix losing inline images after being re-saved as draft or created as new
+  * All apps: many small fixes and improved PHP 8.0 support
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 20 Apr 2021 17:51:50 +0200
+
 egroupware-docker (21.1.20210406) hardy; urgency=low
 
   * 3rd 21.1 pre-release using PHP 7.4 by default
