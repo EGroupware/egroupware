@@ -180,7 +180,7 @@ var et2_dialog = /** @class */ (function (_super) {
             // Un-dialog the dialog
             this.div.dialog("destroy");
             if (this.template) {
-                this.template.clear();
+                this.template.clear(true);
                 this.template = null;
             }
             this.div = null;

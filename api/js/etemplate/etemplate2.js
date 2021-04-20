@@ -173,8 +173,9 @@ var etemplate2 = /** @class */ (function () {
     ;
     /**
      * Clears the current instance.
+     * @param _keep_app_object keep app object
      */
-    etemplate2.prototype.clear = function () {
+    etemplate2.prototype.clear = function (_keep_app_object) {
         jQuery(this._DOMContainer).trigger('clear');
         // Remove any handlers on window (resize)
         if (this.uniqueId) {
@@ -203,7 +204,7 @@ var etemplate2 = /** @class */ (function () {
             }
         }
         // If using a private app object, remove all of them
-        if (this.app_obj !== window.app) {
+        if (!_keep_app_object && this.app_obj !== window.app) {
             for (var app_name in this.app_obj) {
                 if (this.app_obj[app_name] instanceof egw_app_1.EgwApp) {
                     this.app_obj[app_name].destroy();

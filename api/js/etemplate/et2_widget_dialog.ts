@@ -286,7 +286,7 @@ export class et2_dialog extends et2_widget {
     public static NO_BUTTON: number = 3;
 
     div: JQuery = null;
-    template: any = null;
+    template: etemplate2 = null;
 
     constructor(_parent?, _attrs? : WidgetConfig, _child? : object) {
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_dialog._attributes, _child || {}));
@@ -322,7 +322,7 @@ export class et2_dialog extends et2_widget {
             this.div.dialog("destroy");
 
             if (this.template) {
-                this.template.clear();
+                this.template.clear(true);
                 this.template = null;
             }
 

@@ -13,6 +13,8 @@
  * @author Andreas Stöckel
  */
 
+import {EgwApp} from "./egw_app";
+
 /**
  * Global egw object (for now created by the diverse JavaScript files) with a TypeScript interface
  */
@@ -1297,7 +1299,7 @@ declare interface IegwAppLocal extends IegwWndLocal
 declare function egw_getFramework() : any;
 declare var chrome : any;
 declare var InstallTrigger : any;
-declare var app : {classes: any, [propName: string]: any};
+declare var app : {classes: any, [propName: string]: EgwApp};
 declare var egw_globalObjectManager : any;
 declare var framework : any;
 declare var egw_LAB : any;

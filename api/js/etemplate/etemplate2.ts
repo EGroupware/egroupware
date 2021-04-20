@@ -224,8 +224,9 @@ export class etemplate2
 
 	/**
 	 * Clears the current instance.
+	 * @param _keep_app_object keep app object
 	 */
-	public clear()
+	public clear(_keep_app_object?:boolean)
 	{
 		jQuery(this._DOMContainer).trigger('clear');
 
@@ -265,7 +266,7 @@ export class etemplate2
 		}
 
 		// If using a private app object, remove all of them
-		if(this.app_obj !== window.app)
+		if(!_keep_app_object && this.app_obj !== window.app)
 		{
 			for(const app_name in this.app_obj)
 			{
