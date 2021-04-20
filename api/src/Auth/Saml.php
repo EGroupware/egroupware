@@ -463,6 +463,17 @@ class Saml implements BackendSSO
 		$GLOBALS['egw_info']['server']['usecookies'] = true;
 		$config['baseurlpath'] = Api\Framework::getUrl(Api\Egw::link('/saml/'));
 		$config['username_oid'] = [self::usernameOid($config)];
+		$config['attribute_oids'] = [
+			'eduPersonPricipalName' => self::eduPersonPricipalName,
+			'eduPersonUniqueId' => self::eduPersonUniqueId,
+			'emailAddress' => self::emailAddress,
+			'firstName' => self::firstName,
+			'lastName' => self::lastName,
+		];
+		if (!in_array(self::usernameOid($config), $config['attribute_oids']))
+		{
+			$config['attribute_oids']['customOid'] = self::usernameOid($config);
+		}
 		// if multiple IdP's are configured, do NOT specify one to let user select
 		if (count(self::splitIdP($config['saml_idp'])) > 1)
 		{
@@ -477,6 +488,7 @@ class Saml implements BackendSSO
 			'authsources.php' => [
 				'saml_idp' => "/('default-sp' => *\\[.*?'idp' => *).*?$/ms",
 				'saml_sp'  => "/('default-sp' => *\\[.*?'name' => *\\[.*?'en' => *).*?$/ms",
+				'attribute_oids' => "/('default-sp' => *\\[.*?'attributes' => *)\\[.*?\\],$/ms",
 				'username_oid' => "/('default-sp' => *\\[.*?'attributes.required' => *)\\[.*?\\],$/ms",
 			],
 			'config.php' => [
@@ -492,8 +504,7 @@ class Saml implements BackendSSO
 				foreach($replacements as $conf => $reg_exp)
 				{
 					$content = preg_replace($reg_exp, '$1' . (is_array($config[$conf]) ?
-						"[".implode(',', array_map(self::class.'::quote', $config[$conf]))."]" :
-						self::quote($config[$conf])) . ',', $content);
+						self::quoteArray($config[$conf]) : self::quote($config[$conf])) . ',', $content);
 				}
 				if (!file_put_contents($path, $content))
 				{
@@ -511,6 +522,24 @@ class Saml implements BackendSSO
 	private static function quote($str, $empty=null)
 	{
 		return $str || isset($empty) ? "'".addslashes($str ?: $empty)."'" : 'null';
+	}
+
+	/**
+	 * @param array $arr
+	 * @param null $empty
+	 * @return string
+	 */
+	private static function quoteArray($arr, $empty=null)
+	{
+		$str = "[\n";
+		foreach($arr as $key => $val)
+		{
+			$str .= "\t\t";
+			if (!is_int($key)) $str .= self::quote($key).'=>';
+			$str .= self::quote($val, $empty).",\n";
+		}
+		$str .= "\t]";
+		return $str;
 	}
 
 	/**
@@ -532,7 +561,7 @@ class Saml implements BackendSSO
 			case 'emailAddress':
 				return self::emailAddress;
 			case 'customOid':
-				return $config['saml_username_oid'] ?: self::emailAddress;
+				return 'urn:oid:'.$config['saml_username_oid'] ?: self::emailAddress;
 		}
 		return self::emailAddress;
 	}
@@ -724,6 +753,7 @@ EOF
 								"\t],\n\n".
 								"\t'attributes' => [\n".
 								"\t\t'eduPersonPricipalName' => '".self::eduPersonPricipalName."',\n".
+								"\t\t'eduPersonUniqueId' => '".self::eduPersonUniqueId."',\n".
 								"\t\t'emailAddress' => '".self::emailAddress."',\n".
 								"\t\t'firstName' => '".self::firstName."',\n".
 								"\t\t'lastName' => '".self::lastName."',\n".
