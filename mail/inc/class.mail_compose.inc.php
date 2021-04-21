@@ -2304,7 +2304,7 @@ class mail_compose
 			$this->sessionData['body']	= /*"<br>".*//*"&nbsp;".*/"<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
 				@htmlspecialchars(lang("from")).": ".$fromAddress."<br>".
 				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."<br>".
+				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."<br>".
 				'----------------------------------------------------------'."</div>";
 			$this->sessionData['mimeType'] 	= 'html';
 			if (!empty($styles)) $this->sessionData['body'] .= $styles;
@@ -2336,7 +2336,7 @@ class mail_compose
             $this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
                 @htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
 				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
+				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true), ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
                 '-------------------------------------------------'."\r\n \r\n ";
 			$this->sessionData['mimeType']	= 'plain';
 
