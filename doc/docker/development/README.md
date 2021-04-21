@@ -64,5 +64,13 @@ service:
 * db volume must NOT be a directory, as the networked access from Docker VM to Windows is to slow!
 
 ### Docker on Linux
-* permissions of sources and data directory must be readable (sources writable) by www-data user (#33)
+* to run docker(-compose) commands with your regular user either
+  - prefix them with ```sudo``` or
+  - add yourself to the ```docker``` group: ```sudo usermod -aG docker $USER``` and then run ```newgrp docker``` everytime you open a terminal
+* permissions of sources directory need to be changed after install: ```chown -R $USER sources```
+* permissions of data directory must be readable and writable by www-data user (#33)
+* do not use ```http://localhost/egroupware/```, as push, Collabora and Rocket.Chat will not be able to communicate
+  - localhost in each container is NOT the host system, but the container itself!
+  - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
+  - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which as a commented out extra_host
 

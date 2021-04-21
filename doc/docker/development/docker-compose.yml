@@ -141,6 +141,7 @@ services:
     - "4443:443"
     depends_on:
     - egroupware
+    - push
     - collabora-key
     - rocketchat
     container_name: egroupware-nginx
@@ -166,6 +167,8 @@ services:
     - sessions:/var/lib/php/sessions
     - push-config:/var/lib/egroupware-push
     container_name: egroupware-push
+    depends_on:
+      - egroupware
 
   # automatic updates of all containers daily at 4am
   # see https://containrrr.github.io/watchtower for more information
