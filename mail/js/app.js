@@ -1922,7 +1922,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']));
+			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']), 'success');
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			ftree.setStyle(i, 'font-weight: '+(_status[i]['desc'].match(this._unseen_regexp) ? 'bold' : 'normal'));
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -1947,7 +1947,7 @@ app.classes.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Removed Folder %1 ",_status[i]));
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Removed Folder %1 ",_status[i]), 'success');
 			ftree.deleteItem(i,(selectedNode.id==i));
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -1976,7 +1976,7 @@ app.classes.mail = AppJS.extend(
 			{
 					this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined'? "Reloaded Folder %1" : "Reloaded Account %1") ,
 					(typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') :
-							(_status[i].text ? _status[i].text.replace(this._unseen_regexp, '') : _status[i].id))));
+							(_status[i].text ? _status[i].text.replace(this._unseen_regexp, '') : _status[i].id))), 'success');
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
@@ -2186,7 +2186,7 @@ app.classes.mail = AppJS.extend(
 			.sendRequest(true);
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
-		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))));
+		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))), 'success');
 	},
 
 	/**
@@ -2233,7 +2233,7 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			this.egw.message(this.egw.lang('canceled deletion due to user interaction'));
+			this.egw.message(this.egw.lang('canceled deletion due to user interaction'), 'success');
 			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();
@@ -2260,7 +2260,7 @@ app.classes.mail = AppJS.extend(
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
-		this.egw.message(this.egw.lang('empty junk'));
+		this.egw.message(this.egw.lang('empty junk'), 'success');
 		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
 			.sendRequest(true);
 
@@ -2292,7 +2292,7 @@ app.classes.mail = AppJS.extend(
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
-		this.egw.message(this.egw.lang('empty trash'));
+		this.egw.message(this.egw.lang('empty trash'), 'success');
 		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
 			.sendRequest(true);
 
@@ -2321,7 +2321,7 @@ app.classes.mail = AppJS.extend(
 	 *
 	 */
 	mail_compressFolder: function(action,_senders) {
-		this.egw.message(this.egw.lang('compress folder'));
+		this.egw.message(this.egw.lang('compress folder'), 'success');
 		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id]);
 		//	.sendRequest(true);
 		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
@@ -2344,7 +2344,7 @@ app.classes.mail = AppJS.extend(
 			getFolders = true;
 		}
 	//	alert(folder);
-		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')));
+		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')), 'success');
 
 		//Open unloaded tree to get loaded
 		_widget.openItem(folder, true);
@@ -2410,7 +2410,7 @@ app.classes.mail = AppJS.extend(
 		{
 			var displayname = _widget.getSelectedLabel();
 			var myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
-			this.egw.message(myMsg);
+			this.egw.message(myMsg, 'success');
 		}
 
 		// Update non-grid
@@ -4462,7 +4462,7 @@ app.classes.mail = AppJS.extend(
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
+		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
 			.sendRequest();
 	},
@@ -4478,7 +4478,7 @@ app.classes.mail = AppJS.extend(
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')));
+		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
 			.sendRequest();
 	},
@@ -4890,7 +4890,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_display_print: function ()
 	{
-		this.egw.message(this.egw.lang('Printing')+' ...');
+		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){
@@ -5802,7 +5802,7 @@ app.classes.mail = AppJS.extend(
 		var selected = _widget.input.getAllChecked();
 		if (selected && selected.split(_widget.input.dlmtr).length > 5)
 		{
-			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'));
+			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'), 'success');
 		}
 	},
 
