@@ -110,6 +110,9 @@ class timesheet_merge extends Api\Storage\Merge
 
 		// Convert to human friendly values
 		$types = timesheet_egw_record::$types;
+		// We have specific requirements for floats, we'll do them in Merge
+		unset($types['float']);
+
 		$_selects = array('status' => $this->bo->status_labels);
 		foreach($_selects['status'] as &$status)
 		{
