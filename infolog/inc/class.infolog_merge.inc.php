@@ -86,6 +86,9 @@ class infolog_merge extends Api\Storage\Merge
 
 		// Convert to human friendly values
 		$types = infolog_egw_record::$types;
+		// We have specific requirements for floats, we'll do them in Merge
+		unset($types['float']);
+
 		$_selects = $this->bo->enums + array('status' => $this->bo->status[$record->info_type]);
 		foreach($_selects as $name => $value)
 		{
@@ -101,6 +104,10 @@ class infolog_merge extends Api\Storage\Merge
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
 
 		$array = $record->get_record_array();
+		foreach(array('info_price') as $key)
+		{
+			$array[$key] = self::number_format($array[$key],2,$this->mimetype);
+		}
 		if($record->info_contact)
 		{
 			$array['info_contact'] = $array['info_link']['title'];
