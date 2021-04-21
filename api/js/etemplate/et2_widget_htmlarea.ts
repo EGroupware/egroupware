@@ -469,7 +469,14 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	{
 		if (this.editor)
 		{
-			this.editor.destroy();
+			try
+			{
+				this.editor.destroy();
+			}
+			catch(e)
+			{
+				egw().debug("Error destroying editor",e);
+			}
 		}
 		this.editor = null;
 		this.tinymce = null;

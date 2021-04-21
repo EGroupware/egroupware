@@ -307,7 +307,12 @@ var et2_htmlarea = /** @class */ (function (_super) {
     };
     et2_htmlarea.prototype.destroy = function () {
         if (this.editor) {
-            this.editor.destroy();
+            try {
+                this.editor.destroy();
+            }
+            catch (e) {
+                egw().debug("Error destroying editor", e);
+            }
         }
         this.editor = null;
         this.tinymce = null;
