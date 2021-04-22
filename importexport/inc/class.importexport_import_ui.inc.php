@@ -217,7 +217,7 @@ use EGroupware\Api\Etemplate;
 			}
 
 			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
-			$data['definition'] = $definition;
+			$data['definition'] = is_numeric($definition) ?  ($definition_obj ? $definition_obj->get_title() : '') : $definition;
 			$data['delimiter'] = $definition_obj->plugin_options['delimiter'];
 			$data['no_notifications'] = true;	// switch notifications off by default
 
