@@ -23,6 +23,9 @@
 		<style type="text/css">
 			{app_css}
 		</style>
+		<style type="text/css">
+			{firstload_animation_style}
+		</style>
 		{java_script}
 	</head>
 	<body {body_tags}>
@@ -66,6 +69,6 @@
 				</div>
 			</div>
 		</div>
-		<div id="egw_fw_firstload"></div>
+		<div id="egw_fw_firstload">{firstload_animation}</div>
 		<div id="egw_fw_footer">{powered_by}</div>
 <!-- END framework -->

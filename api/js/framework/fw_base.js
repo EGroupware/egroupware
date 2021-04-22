@@ -1377,5 +1377,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 		this.firstload_animation_gauge = _gauge ? _gauge : (this.firstload_animation_gauge == 0 ? 10 : (this.firstload_animation_gauge+5));
 		gauge.width(this.firstload_animation_gauge+"%");
+		if (_gauge == 100) window.setTimeout(function(){jQuery('#egw_fw_firstload').remove();},1000);
 	}
 });}).call(this);

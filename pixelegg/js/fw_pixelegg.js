@@ -71,7 +71,6 @@
 		et2_loadingFinished: function() {
 			this._super.apply(this, arguments);
 			framework.firstload_animation('', 100);
-			setTimeout(function(){jQuery('#egw_fw_firstload').remove();}, 1000);
 		},
 
 		/**

@@ -379,6 +379,39 @@ abstract class Ajax extends Api\Framework
 	private function _get_firstload_animation_style()
 	{
 		return '
+		@keyframes anim {
+			0% {
+				-webkit-transform: perspective(400px) rotateX(90deg);
+				transform: perspective(400px) rotateX(90deg);
+				-webkit-animation-timing-function: ease-in;
+				animation-timing-function: ease-in;
+				opacity: 0
+			}
+		
+			40% {
+				-webkit-transform: perspective(400px) rotateX(-20deg);
+				transform: perspective(400px) rotateX(-20deg);
+				-webkit-animation-timing-function: ease-in;
+				animation-timing-function: ease-in
+			}
+		
+			60% {
+				-webkit-transform: perspective(400px) rotateX(10deg);
+				transform: perspective(400px) rotateX(10deg);
+				opacity: 1
+			}
+		
+			80% {
+				-webkit-transform: perspective(400px) rotateX(-5deg);
+				transform: perspective(400px) rotateX(-5deg)
+			}
+		
+			to {
+				-webkit-transform: perspective(400px);
+				transform: perspective(400px)
+			}
+		}
+
 		#egw_fw_firstload .fl_app {
 			opacity:0.3;
 			width: 50px;
@@ -396,17 +429,19 @@ abstract class Ajax extends Api\Framework
 			max-width: 400px;
 			display: block;
 			background: transparent;
-			margin: 35% auto 20px;
+			margin: 20% auto 20px;
 		}
 		#egw_fw_firstload .fl_wrapper {
 			margin:auto;
-			width:40%;
+			width:80%;
 		}
 		#egw_fw_firstload .fl_progress {
 			width: 100%;
+			max-width:400px;
 			height: 5px;
 			border: 1px solid #b1dccc;
    			border-radius: 5px;
+   			margin:auto;
 		}
 		#egw_fw_firstload .fl_progress div{
 			width: 0%;
@@ -433,7 +468,7 @@ abstract class Ajax extends Api\Framework
 				' style="background-image:url('.htmlspecialchars($app['icon']).');'.
 				'background-position:center;background-size:32px;display:inline-block;margin:1px;"></div>';
 		}
-		$content .= '<div class="fl_wrapper" style="margin:auto;width:40%;"><div class="fl_apps">'.$appsDiv.
+		$content .= '<div class="fl_wrapper" style="margin:auto;"><div class="fl_apps">'.$appsDiv.
 			'</div><div class="fl_progress"><div></div></div></div></div>';
 		return $content;
 	}

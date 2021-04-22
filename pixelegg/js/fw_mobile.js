@@ -478,7 +478,6 @@
 			//Audio effect for toggleMenu
 			var audio = jQuery('#egw_fw_menuAudioTag');
 			if (egw.preference('audio_effect','common') == '1')	audio[0].play();
-			jQuery('#egw_fw_firstload').remove();
 		},
 
 		/**
@@ -748,6 +747,7 @@
 					_app, _pos);
 				_app.tab.setTitle(_app.displayName);
 			}
+			if (this.activeApp && this.activeApp.appName != _app.appName) this.firstload_animation(_app.appName);
 		},
 
 		/**
@@ -944,6 +944,7 @@
 					window.framework.popups[i].$iFrame.trigger('onpopupload');
 				}
 			}
+			framework.firstload_animation('', 100);
 		},
 
 		/**
