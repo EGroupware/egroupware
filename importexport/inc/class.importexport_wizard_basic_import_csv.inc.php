@@ -455,6 +455,10 @@ class importexport_wizard_basic_import_csv
 		// return from step65
 		if ($content['step'] == 'wizard_step65')
 		{
+			foreach($content['override_values'] as $key => &$field)
+			{
+				if(!$field['value']) unset($content['override_values'][$key]);
+			}
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -472,12 +476,14 @@ class importexport_wizard_basic_import_csv
 		$content['text'] = $this->steps['wizard_step65'];
 		$content['step'] = 'wizard_step65';
 
-		if(!$content['override_values'] && $content['plugin_options']['override_values']) {
+		if(!$content['override_values'] && $content['plugin_options']['override_values'])
+		{
 			$content['override_values'] = $content['plugin_options']['override_values'];
 		}
 		$preserv = $content;
 
-		foreach($content['field_mapping'] as $field) {
+		foreach($content['field_mapping'] as $field)
+		{
 			$sel_options['string'][$field] = $this->mapping_fields[$field];
 			if(!$sel_options['string'][$field])
 			{
