@@ -3580,6 +3580,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		$sel_options['status'] = $this->contact_fields;
 
-		// custom fields no longer need to be added, historylog-widget "knows" about them
+		// Addressbook also has an 'owner' field, which has different options.
+		// If we don't put something here (just empty won't work), history log will use
+		// those options instead of the select-account options.
+		$sel_options['history']['owner'] = ['ignore' => 'me'];
 	}
 }
