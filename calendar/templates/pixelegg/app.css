@@ -1491,7 +1491,7 @@ img.calendar_print_appicon {
 #calendar-toolbar_toolbar span[data-group="integration"] > span,
 #toolbar-menulist span[id^="toolbar-integration"],
 #toolbar-menulist span[id^="toolbar-video_toggle"] {
-  background-size: contain;
+  background-size: 16px;
   background-repeat: no-repeat;
   background-position: center;
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
