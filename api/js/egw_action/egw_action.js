@@ -107,7 +107,7 @@ function egw_getObjectManager(_id, _create, _search_depth) {
  * @return {egwActionObjectManager}
  */
 function egw_getAppObjectManager(_create, _appName) {
-	return egw_getObjectManager(_appName ?? egw_getAppName(), _create,1);
+	return egw_getObjectManager(_appName ? _appName : egw_getAppName(), _create,1);
 }
 
 /**
