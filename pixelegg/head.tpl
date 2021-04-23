@@ -32,7 +32,7 @@
 <!-- END head -->
 <!-- BEGIN framework -->
 		{hook_after_navbar}
-		<div id="egw_fw_basecontainer">
+		<div id="egw_fw_basecontainer" lang="{lang_code}">
 			<div id="egw_fw_header">
 				<div id="egw_divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="EGroupware"/></a></div>
 				<div id="egw_fw_topmenu">

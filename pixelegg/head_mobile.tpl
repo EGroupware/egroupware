@@ -33,7 +33,7 @@
 <!-- END head -->
 <!-- BEGIN framework -->
 		{hook_after_navbar}
-		<div id="egw_fw_basecontainer">
+		<div id="egw_fw_basecontainer" lang="{lang_code}">
 			<div id="egw_fw_top_toolbar">
 
 					<div id="egw_fw_toggler">
