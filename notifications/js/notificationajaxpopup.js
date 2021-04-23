@@ -578,6 +578,7 @@
 		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		egw.loading_prompt('popup_notifications', false);
+		this.bell("inactive");
 	};
 
 	/**
@@ -752,7 +753,10 @@
 		switch(egw.preference('egwpopup_verbosity', 'notifications'))
 		{
 			case 'low':
-				this.bell('active');
+				if (Object.keys(notifymessages).length>0 && this.counterUpdate()>0)
+				{
+					this.bell('active');
+				}
 				break;
 			case 'high':
 				if (hasUnseen.length > 0)
@@ -850,6 +854,7 @@
 
 	/**
 	 * Set new state of notifications counter
+	 * @return number of new messages
 	 */
 	notifications.prototype.counterUpdate = function ()
 	{
@@ -890,6 +895,7 @@
 		{
 			framework.topmenu_info_notify('notifications', false);
 		}
+		return counter;
 	};
 
 	var lab = egw_LAB || $LAB;
