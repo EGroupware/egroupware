@@ -615,7 +615,7 @@ class mail_ui
 		}
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
-
+		$content['no_vfs'] = !$GLOBALS['egw_info']['user']['apps']['filemanager'];
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -2570,6 +2570,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				{
 					$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
 				}
+				if (!$GLOBALS['egw_info']['user']['apps']['filemanager']) $attachmentHTML[$key]['no_vfs'] = true;
 			}
 			$attachmentHTMLBlock="<table width='100%'>";
 			foreach ((array)$attachmentHTML as $row)
