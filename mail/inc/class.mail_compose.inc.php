@@ -278,6 +278,18 @@ class mail_compose
 			unset($actions['save2vfs']);
 			unset($actions['selectFromVFSForCompose']);
 		}
+		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
+		{
+			unset($actions['to_infolog']);
+		}
+		if (!isset($GLOBALS['egw_info']['user']['apps']['tracker']))
+		{
+			unset($actions['to_tracker']);
+		}
+		if (!isset($GLOBALS['egw_info']['user']['apps']['calendar']))
+		{
+			unset($actions['to_calendar']);
+		}
 		return $actions;
 	}
 
