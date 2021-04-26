@@ -764,7 +764,14 @@
 					alert(egw.lang('EGroupware has notifications for you'));
 					egw.json("notifications.notifications_ajax.update_status", [hasUnseen, 'DISPLAYED']).sendRequest();
 				}
-				if (egwpopup.style.display != 'none') this.display();
+				if (egwpopup.style.display != 'none')
+				{
+					this.display();
+				}
+				else
+				{
+					this.counterUpdate();
+				}
 				break;
 			case 'medium':
 				if (egwpopup.style.display != 'none' && Object.keys(old_notifymessages).length != Object.keys(notifymessages).length)
