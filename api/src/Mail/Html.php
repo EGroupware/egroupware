@@ -491,13 +491,14 @@ class Html
 		{
 			return $html;
 		}
+		// try to cleanup not encoded ampersands used possibily in urls
+		$html =  preg_replace('/&(?!#?[a-zA-Z0-9]+;)/', '&amp;', $html);
 
 		$dom = new \DOMDocument('1.0','UTF-8');
-		$dom->loadHTML(
-				'<?xml encoding="UTF-8">'. Api\Translation::convert($html,false, 'utf8'),
-				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS
-		);
-		if(!$dom)
+		if(!$dom->loadHTML(
+			'<?xml encoding="UTF-8">'. Api\Translation::convert($html,preg_match('/<meta[^>]+content="[^>"]+charset=([^;"]+)/i', $html, $matches) ? $matches[1] : false, 'utf8'),
+			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS
+		))
 		{
 			// Failed to parse
 			return $html;
