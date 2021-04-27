@@ -5595,6 +5595,11 @@ app.classes.mail = AppJS.extend(
 				return true;
 			}
 		}
+		// the to_tracker action might not be presented because lack of app permissions
+		else if(integApps[index] == "to_tracker" && !toolbar.options.actions[integApps[index]])
+		{
+			return false;
+		}
 		else if(index<integApps.length)
 		{
 			this.compose_integrate_submit(++index);
