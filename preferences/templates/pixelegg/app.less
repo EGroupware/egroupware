@@ -12,6 +12,7 @@
  * @version $Id$
  */
 
+
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
 @import (less) "../default/app.css";
@@ -37,6 +38,7 @@
 #            #                               #
 ##############################################*/
 
+
 /*app.css Stylite*/
 
 table.prefTable {
@@ -44,12 +46,6 @@ table.prefTable {
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
 	background-image:url(../../../pixelegg/images/dialog_info.png);
-}
-td.prefName {
-	width: 50%;
-}
-tr.prefRow > td {
-	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
 	position: absolute;
@@ -67,9 +63,6 @@ tr.prefRow > td {
 tr.prefRow:hover .prefHelp {
 	display: block;
 	z-index: 10;	/* FF: displays it under next prefName without */
-}
-.prefDefault, .prefValue {
-	float: left;
 }
 .prefValue {
 	margin-right: 5px;

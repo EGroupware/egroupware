@@ -18,11 +18,14 @@ table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
     height: 99%;
 }
 tr.prefRow:hover {background-color:#f0f0ff}
-td.prefName {
-	width: 50%;
+.prefName .et2_label:first-child {
+    padding-top: 2px;
 }
 tr.prefRow > td {
-	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+	vertical-align: top;
+}
+tr.prefRow > td.prefValueColumn {
+	vertical-align: middle;
 }
 /*.prefValueColumn {border-right:none !important;}*/
 .prefHelpColumn {
@@ -51,14 +54,13 @@ tr.prefRow:hover .prefHelp {
 }
 .prefValue {
 	margin-right: 5px;
-	width:49%;
+	width:99%;
 }
-.prefDefault {
-	float: right;
-	width:48%;
+span.prefDefault {
 	overflow-x: hidden;
 	text-overflow: ellipsis;
-	max-width: 300px;
+	padding-bottom: 5px;
+	color: silver;
 }
 .prefValue textarea, textarea.prefValue {
 	width: 99%;
