@@ -1480,7 +1480,10 @@ class calendar_boupdate extends calendar_bo
 			$this->enum_groups($expanded);
 			foreach($event['alarm'] as $id => &$alarm)
 			{
-				$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
+				if($alarm['time'])
+				{
+					$alarm['time'] = $this->date2ts($alarm['time'], true);    // user to server-time
+				}
 
 				// remove alarms belonging to not longer existing or rejected participants
 				if ($alarm['owner'] && isset($expanded['participants']))
@@ -1495,6 +1498,10 @@ class calendar_boupdate extends calendar_bo
 						$this->so->delete_alarm($id);
 						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
+				}
+				else if (!$alarm['owner'])
+				{
+					$alarm['owner'] = $event['owner'];
 				}
 			}
 		}
