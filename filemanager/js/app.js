@@ -306,7 +306,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             var widget = _event.data;
             var value = widget.getValue();
             value.conflict = _conflict;
-            egw.json(_target, ['upload', value, _path, this.egw.window.location.pathname], this._upload_callback, this, true, this).sendRequest();
+            egw.json(_target, ['upload', value, _path, { ui_path: this.egw.window.location.pathname }], this._upload_callback, this, true, this).sendRequest();
             widget.set_value('');
         }
     };

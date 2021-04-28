@@ -349,7 +349,7 @@ export class filemanagerAPP extends EgwApp
 			let widget = _event.data;
 			let value = widget.getValue();
 			value.conflict = _conflict;
-			egw.json(_target, ['upload', value, _path, this.egw.window.location.pathname],
+			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');

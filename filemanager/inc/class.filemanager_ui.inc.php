@@ -1558,6 +1558,7 @@ class filemanager_ui
 	 * @param string $action eg. 'delete', ...
 	 * @param array $selected selected path(s)
 	 * @param string $dir=null current directory
+	 * @param string[] $props Properties for the file, eg: [comment => 'Latest from Ralf']
 	 * @see static::action()
 	 */
 	public static function ajax_action($action, $selected, $dir=null, $props=null)

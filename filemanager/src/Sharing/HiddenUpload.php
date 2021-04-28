@@ -63,7 +63,7 @@ class HiddenUpload extends AnonymousList
 	 * @param string $action Should be 'upload'
 	 * @param $selected Array of file information
 	 * @param string $dir Target directory
-	 * @param $props path the sharing UI is running eg. "/egroupware/share.php/<token>"
+	 * @param string[] $props ui_path=>path the sharing UI is running eg. "/egroupware/share.php/<token>"
 	 * @param string[] $arr Result
 	 *
 	 * @throws Api\Exception\AssertionFailed
@@ -72,7 +72,7 @@ class HiddenUpload extends AnonymousList
 	{
 		Translation::add_app('filemanager');
 		$vfs = Vfs::mount();
-		$GLOBALS['egw']->sharing[Sharing::get_token($props)]->redo();
+		$GLOBALS['egw']->sharing[Sharing::get_token($props['ui_path'])]->redo();
 		parent::handle_upload_action($action, $selected, $dir, null, $arr);
 		if ($arr['files'])
 		{
