@@ -412,6 +412,8 @@ var et2_avatar = /** @class */ (function (_super) {
     et2_avatar.prototype._buildEditableLayer = function (_noDelete) {
         var self = this;
         // editable mask layer (eml)
+        var wrapper = jQuery(document.createElement('div')).addClass('avatar').insertAfter(this.image);
+        this.image.appendTo(wrapper);
         var eml = jQuery(document.createElement('div'))
             .addClass('eml')
             .insertAfter(this.image);
@@ -448,7 +450,7 @@ var et2_avatar = /** @class */ (function (_super) {
                     template: egw.webserverUrl + '/api/templates/default/avatar_edit.xet?2'
                 }, et2_dialog._create_parent(_egw_or_appname));
             };
-            dialog(egw.lang('Edit avatar'), { photo: self.options.contact_id }, buttons, null);
+            dialog(egw.lang('Edit avatar'), self.options, buttons, null);
         })
             .appendTo(eml);
         // delete button

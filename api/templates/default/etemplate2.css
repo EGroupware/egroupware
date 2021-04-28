@@ -3134,7 +3134,15 @@ a.chzn-single.et2_country-select span.img {
 	padding-top: 0;
 }
 .et2_avatar {
+    overflow: hidden;
     width: 40px;
+    height: 40px;
+    background-image: url(images/photo.png);
+    background-size: 35px 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom:25%;
+    top:25%;
 }
 
 .tox-tbtn.tox-tbtn--select.tox-tbtn--bespoke:nth-child(2) {width: 60px;}

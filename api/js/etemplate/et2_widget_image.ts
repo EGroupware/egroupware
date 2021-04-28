@@ -531,6 +531,8 @@ class et2_avatar extends et2_image
 	{
 		let self = this;
 		// editable mask layer (eml)
+		let wrapper = jQuery(document.createElement('div')).addClass('avatar').insertAfter(this.image);
+		this.image.appendTo(wrapper);
 		let eml = jQuery(document.createElement('div'))
 			.addClass('eml')
 			.insertAfter(this.image);
@@ -577,7 +579,7 @@ class et2_avatar extends et2_image
 						}, et2_dialog._create_parent(_egw_or_appname));
 				};
 
-				dialog(egw.lang('Edit avatar'),{photo:self.options.contact_id}, buttons, null);
+				dialog(egw.lang('Edit avatar'),self.options, buttons, null);
 			})
 			.appendTo(eml);
 
