@@ -156,7 +156,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				image = this.link('/api/thumbnail.php', params);
 			}
 			// for svg return image itself
-			else if (type[0] == 'image' && type[1] == 'svg+xml')
+			else if (type[0] == 'image' && type[1] == 'svg+xml' && typeof _path == "string")
 			{
 				image = this.webserverUrl+'/webdav.php'+_path;
 			}
