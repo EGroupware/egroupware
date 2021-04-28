@@ -1388,6 +1388,9 @@ div.et2_vfsPath li img {
 table.egwGridView_grid .et2_taglist_thumbnail .et2_taglist_thumbnail_img {
 	height:70px;
 }
+table.egwGridView_grid img.et2_avatar {
+    height: auto;
+}
 /* Toggle single / multiple */
 .et2_taglist_toggle {
 	position: relative;
@@ -2251,6 +2254,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
  */
 div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
   float: left;
+  width: 100%;
 }
 div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   float: left;
@@ -2258,6 +2262,9 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   background-position: 3px;
   padding-left: 15px;
   outline: none;
+}
+div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
+    float: right;
 }
 .et2_prompt #message {
   white-space: pre-wrap;
