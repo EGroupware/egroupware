@@ -133,6 +133,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 * 		}
 		 * @param {function} _callback called after loading, if not given ready event will be postponed instead
 		 * @param {object} _context for callback
+		 * @return Promise if no _callback specified
 		 */
 		langRequire: function(_window, _apps, _callback, _context) {
 			// Get the ready and the files module for the given window
@@ -171,10 +172,14 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 					// Require a "ready postpone token"
 					var token = ready.readyWaitFor();
 
-					// Call "readyDone" once all js files have been included.
-					files.includeJS(jss, function () {
-						ready.readyDone(token);
-					}, this);
+					return new Promise(function(resolve)
+					{
+						// Call "readyDone" once all js files have been included.
+						files.includeJS(jss, function () {
+							ready.readyDone(token);
+							resolve();
+						}, this);
+					});
 				}
 			}
 			else if (typeof _callback == 'function')
