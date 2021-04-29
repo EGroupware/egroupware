@@ -114,7 +114,7 @@
   }
   html[data-darkmode='1'] #mail_sidebox_header.egw_fw_ui_sidemenu_entry_header_active,
   html[data-darkmode='1'] #mail_sidebox_header {
-    border-color: #5db9ec!important;
+    border-color: #5db9ec !important;
   }
   html[data-darkmode='1'] #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header #mail-egw_fw_ui_tab_header.egw_fw_ui_tab_header_active {
     border-top-color: #5db9ec !important;
@@ -1495,20 +1495,20 @@ span.ui-icon-search {
   box-shadow: -2px 1px 9px 3px #B4B4B4;
 }
 .ui-dialog .ui-dialog-buttonpane {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   padding-top: 0.7em;
 }
 .ui-dialog .ui-dialog-titlebar {
-  padding-left: .8em;
-  padding-right: .8em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
   font-size: 12pt;
   border: none;
   font-weight: normal;
   background: white;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-  right: .8em;
+  right: 0.8em;
 }
 .ui-widget-content {
   border: 1px solid #B4B4B4;
@@ -1904,17 +1904,19 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-radius: 0 !important;
 }
 #socialBox {
-  position: absolute;
-  bottom: 10px;
   display: inline-block;
-  left: 0;
-  width: 27%;
+  width: 100%;
 }
-#socialMedia a {
+#socialBox #socialMedia {
+  margin: 0 auto;
+  width: 200px;
+}
+#socialBox #socialMedia a {
   margin-left: 10px;
 }
-#socialMedia a img {
+#socialBox #socialMedia a img {
   width: 24px;
+  filter: contrast(0.6);
 }
 /* ##################################################################################
  *       login page
@@ -2008,15 +2010,29 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   bottom: 0;
   display: inline-block;
   right: 0;
-  width: 22%;
-}
-#loginMainDiv div#login_footer a.logo_footer {
-  float: right;
-  margin: 10px;
-}
-#loginMainDiv div#login_footer a.logo_footer img {
+  width: 100%;
   height: 40px;
-  width: 40px;
+  background: #1865aa;
+}
+#loginMainDiv div#login_footer .apps {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  overflow: hidden;
+}
+#loginMainDiv div#login_footer .apps .app {
+  width: 30px;
+  height: 30px;
+  margin: 5px 20px auto 20px;
+  display: flex;
+}
+#loginMainDiv div#login_footer .apps .app img {
+  width: 30px;
+  filter: brightness(0) invert(1);
+  height: 30px;
+}
+#loginMainDiv div#login_footer .apps .app span {
+  display: none;
 }
 #loginMainDiv div#centerBox {
   margin: 0 auto -20px;
@@ -2026,10 +2042,25 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   padding: 0;
   width: 280px;
 }
+#loginMainDiv div#centerBox .egw_logo {
+  width: 100%;
+  height: 24px;
+  margin: 15px auto;
+}
+#loginMainDiv div#centerBox .egw_logo a.logo_footer {
+  margin: auto;
+  width: 24px;
+  display: block;
+}
+#loginMainDiv div#centerBox .egw_logo a.logo_footer img {
+  height: 24px;
+  width: 24px;
+}
 #loginMainDiv div#centerBox form {
   opacity: 0.94;
   background-color: white;
   padding: 1em;
+  border: 1px solid #cdcdce;
 }
 #loginMainDiv div#centerBox form .hiddenCredential {
   display: none;
@@ -6316,7 +6347,7 @@ a.textSidebox {
   }
 }
 .egw-loading-prompt-container::before {
-  opacity: .3;
+  opacity: 0.3;
   content: "";
   background-color: #aaaaaa;
   width: 100%;
@@ -6395,7 +6426,7 @@ a.textSidebox {
   z-index: 999;
   width: 100px;
   border-radius: 5px;
-  border: solid 10px  #679FD2;
+  border: solid 10px #679FD2;
   transform: translate(-50%, -50%);
 }
 /**

@@ -106,14 +106,24 @@
                     </td>
                 </tr>
                 <!-- END registration -->
+	            <tr>
+		            <td>
+			            <div id="socialBox"></div>
+		            </td>
+	            </tr>
             </table>
         </form>
+	    <div class="egw_logo">
+		    <a href="https://www.egroupware.org" class="logo_footer" target="_blank">
+			    <img src="api/templates/default/images/login_logo.png">
+		    </a>
+	    </div>
     </div>
-	<div id="socialBox"></div>
+
 	<div id="login_footer">
-		<a href="https://www.egroupware.org" class="logo_footer" target="_blank">
-			<img src="api/templates/default/images/login_logo.png">
-		</a>
+		<div class="apps">
+			{footer_apps}
+		</div>
 	</div>
 
 </div>

@@ -280,6 +280,7 @@ class Login
 		}
 		$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
+		$tmpl->set_var('footer_apps', self::get_apps_node());
 		if (Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 12)
 		{
 			$tmpl->set_var('cd', lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!',Api\Header\UserAgent::type(), Api\Header\UserAgent::version()));
@@ -295,6 +296,27 @@ class Login
 		], [], true);
 
 		$this->framework->render($tmpl->fp('loginout','login_form'),false,false);
+	}
+
+	/**
+	 * Build dom nodes for login applications footer banner
+	 * @return string
+	 */
+	static function get_apps_node()
+	{
+		$object = json_decode(file_get_contents('https://laklak.egroupware.org/egroupware/login_feed.json'), true);
+		$apps = []; //TODO: set what we want to dispaly for instances with no access to outside
+		$nodes = '';
+		if (is_array($object))
+		{
+			$apps = (is_array($object['apps'])) ? $object['apps'] : $apps;
+		}
+		foreach ($apps as $app)
+		{
+			$nodes .= '<a class="app" href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars(lang($app['title'])).'">'
+				.'<img src="'.htmlspecialchars($app['icon']).'"/><span>'.htmlspecialchars($app['desc']).'</span></a>';
+		}
+		return $nodes;
 	}
 
 	/**

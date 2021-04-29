@@ -51,18 +51,21 @@ div#loginMainDiv.stockLoginBackground {
 //##############################################################################################################
 
 #socialBox {
-	position: absolute;
-	bottom: 10px;
 	display: inline-block;
-	left: 0;
-	width: 27%;
+	width: 100%;
+	#socialMedia {
+		margin: 0 auto;
+		width: 200px;
+		a {
+			margin-left: 10px;
+			img {
+				width: 24px;
+				filter:contrast(0.6);
+			}
+		}
+	}
 }
-#socialMedia a {
-	margin-left: 10px;
-}
-#socialMedia a img{
-	width: 24px;
-}
+
 
 /* ##################################################################################
  *       login page
@@ -163,16 +166,29 @@ div#loginMainDiv.stockLoginBackground {
 		bottom: 0;
 		display: inline-block;
 		right: 0;
-		width: 22%;
-		a.logo_footer {
-			float:right;
-			margin: 10px;
-			img {
-				height: 40px;
-				width: 40px;
+		width: 100%;
+		height: 40px;
+		background: #1865aa;
+		.apps {
+			width: 50%;
+			margin: auto;
+			display: flex;
+			overflow: hidden;
+			.app {
+				width: 30px;
+				height: 30px;
+				margin: 5px 20px auto 20px;
+				display: flex;
+				img {
+					width: 30px;
+					filter: brightness(0) invert(1);
+					height: 30px;
+				}
+				span {display:none;}
 			}
 		}
 	}
+
 	// Anmeldefenster / Box mit Mesaage + Form
 	div#centerBox {
 		margin: 0 auto -20px;
@@ -182,6 +198,20 @@ div#loginMainDiv.stockLoginBackground {
 		padding: 0;
 		width: 280px;
 
+		.egw_logo {
+			width: 100%;
+			height: 24px;
+			margin: 15px auto;
+			a.logo_footer {
+				margin: auto;
+				width: 24px;
+				display: block;
+				img {
+					height: 24px;
+					width: 24px;
+				}
+			}
+		}
 
 
 		// Formular
@@ -189,6 +219,7 @@ div#loginMainDiv.stockLoginBackground {
 			opacity:0.94;
 			background-color: white;
 			padding:1em;
+			border: 1px solid #cdcdce;
 			.hiddenCredential {display: none;}
 			// Table
 			table.divLoginbox {

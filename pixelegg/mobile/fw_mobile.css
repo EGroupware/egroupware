@@ -1935,17 +1935,19 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-radius: 0 !important;
 }
 #socialBox {
-  position: absolute;
-  bottom: 10px;
   display: inline-block;
-  left: 0;
-  width: 27%;
+  width: 100%;
 }
-#socialMedia a {
+#socialBox #socialMedia {
+  margin: 0 auto;
+  width: 200px;
+}
+#socialBox #socialMedia a {
   margin-left: 10px;
 }
-#socialMedia a img {
+#socialBox #socialMedia a img {
   width: 24px;
+  filter: contrast(0.6);
 }
 /* ##################################################################################
  *       login page
@@ -2039,15 +2041,29 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   bottom: 0;
   display: inline-block;
   right: 0;
-  width: 22%;
-}
-#loginMainDiv div#login_footer a.logo_footer {
-  float: right;
-  margin: 10px;
-}
-#loginMainDiv div#login_footer a.logo_footer img {
+  width: 100%;
   height: 40px;
-  width: 40px;
+  background: #1865aa;
+}
+#loginMainDiv div#login_footer .apps {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  overflow: hidden;
+}
+#loginMainDiv div#login_footer .apps .app {
+  width: 30px;
+  height: 30px;
+  margin: 5px 20px auto 20px;
+  display: flex;
+}
+#loginMainDiv div#login_footer .apps .app img {
+  width: 30px;
+  filter: brightness(0) invert(1);
+  height: 30px;
+}
+#loginMainDiv div#login_footer .apps .app span {
+  display: none;
 }
 #loginMainDiv div#centerBox {
   margin: 0 auto -20px;
@@ -2057,10 +2073,25 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   padding: 0;
   width: 280px;
 }
+#loginMainDiv div#centerBox .egw_logo {
+  width: 100%;
+  height: 24px;
+  margin: 15px auto;
+}
+#loginMainDiv div#centerBox .egw_logo a.logo_footer {
+  margin: auto;
+  width: 24px;
+  display: block;
+}
+#loginMainDiv div#centerBox .egw_logo a.logo_footer img {
+  height: 24px;
+  width: 24px;
+}
 #loginMainDiv div#centerBox form {
   opacity: 0.94;
   background-color: white;
   padding: 1em;
+  border: 1px solid #cdcdce;
 }
 #loginMainDiv div#centerBox form .hiddenCredential {
   display: none;
