@@ -304,17 +304,25 @@ class Login
 	 */
 	static function get_apps_node()
 	{
-		$object = json_decode(file_get_contents('https://laklak.egroupware.org/egroupware/login_feed.json'), true);
-		$apps = []; //TODO: set what we want to dispaly for instances with no access to outside
-		$nodes = '';
-		if (is_array($object))
+		if (!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_login_json')))
 		{
-			$apps = (is_array($object['apps'])) ? $object['apps'] : $apps;
+			$json = file_get_contents('https://www.egroupware.org/egw_login_feed.json',
+				false, Api\Framework::proxy_context());
+			// Fallback login.json
+			if (!$json) $json = file_get_contents('api/setup/login.json');
+			// Cache the json object for a day
+			Api\Cache::setCache(Api\Cache::TREE, __CLASS__, 'egw_login_json', $json, 86400);
 		}
-		foreach ($apps as $app)
+		$data = json_decode($json, true);
+		$nodes = '';
+		if (is_array($data))
 		{
-			$nodes .= '<a class="app" href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars(lang($app['title'])).'">'
-				.'<img src="'.htmlspecialchars($app['icon']).'"/><span>'.htmlspecialchars($app['desc']).'</span></a>';
+			foreach ($data['apps'] as $app)
+			{
+				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
+				$nodes .= '<a class="app" href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars(lang($app['title'])).'">'
+					.'<img src="'.htmlspecialchars($icon).'"/><span>'.htmlspecialchars($app['desc']).'</span></a>';
+			}
 		}
 		return $nodes;
 	}

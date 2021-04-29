@@ -1,0 +1,16 @@
+{
+	"apps": {
+		"admin": {"title":"Admin","icon":"/admin/templates/pixelegg/images/navbar.svg","desc":""},
+		"mail": {"title":"Mail","icon":"/mail/templates/pixelegg/images/navbar.svg","desc":""},
+		"kanban": {"title":"Kanban","icon":"/kanban/templates/default/images/navbar.svg","desc":""},
+		"timesheet": {"title":"Timesheet","icon":"/timesheet/templates/pixelegg/images/navbar.svg","desc":""},
+		"calendar": {"title":"Calendar","icon":"/calendar/templates/pixelegg/images/navbar.svg","desc":""},
+		"smallpart": {"title":"SmallPart","icon":"/smallpart/templates/default/images/navbar.svg","desc":""},
+		"infolog": {"title":"Infolog","icon":"/infolog/templates/pixelegg/images/navbar.svg","desc":""},
+		"tracker": {"title":"Tracker","icon":"/tracker/templates/pixelegg/images/navbar.svg","desc":""},
+		"rocketchat": {"title":"Rocket.Chat","icon":"/rocketchat/templates/default/images/navbar.svg","desc":""},
+		"videoconference": {"title":"Videoconference","icon":"/status/templates/pixelegg/images/videoconference.svg","desc":""},
+		"addressbook": {"title":"Addressbook","icon":"/addressbook/templates/pixelegg/images/navbar.svg","desc":""},
+		"projectmanager": {"title":"Projectmanager","icon":"/projectmanager/templates/pixelegg/images/navbar.svg","desc":""}
+	}
+}
