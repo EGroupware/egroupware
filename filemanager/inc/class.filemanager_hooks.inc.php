@@ -262,6 +262,25 @@ class filemanager_hooks
 			)
 		);
 
+		if($GLOBALS['egw_info']['user']['apps']['collabora'])
+		{
+			$settings += array(
+				'sections.collabora' => array(
+					'type'  => 'section',
+					'title' => lang('Collabora'),
+					'no_lang'=> true,
+					'xmlrpc' => False,
+					'admin'  => False
+				),
+				'ui_mode' => array(
+					'type' => 'select',
+					'label' => lang('UI mode'),
+					'name' => 'ui_mode',
+					'values' => ['classic','notebookbar'],
+					'default' => 'notebookbar'
+				)
+			);
+		}
 		return $settings;
 	}
 
