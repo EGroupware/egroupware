@@ -667,7 +667,19 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		elseif ($contactId > 0)
 		{
-			$contact['cat_id'] = null;
+			switch(Api\CalDAV\Handler::get_agent())
+			{
+				case 'davx5':
+					// DAVx5 does not always give us our categories back (Seems to depend on client)
+					if(is_null($contact['cat_id']) && $oldContact['cat_id'])
+					{
+						$contact['cat_id'] = $oldContact['cat_id'];
+					}
+					break;
+				default:
+					//
+					$contact['cat_id'] = null;
+			}
 		}
 		if (is_array($oldContact))
 		{
