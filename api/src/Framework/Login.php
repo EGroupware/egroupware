@@ -320,8 +320,16 @@ class Login
 			foreach ($data['apps'] as $app)
 			{
 				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
-				$nodes .= '<a class="app" href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars(lang($app['title'])).'">'
-					.'<img src="'.htmlspecialchars($icon).'"/><span>'.htmlspecialchars($app['desc']).'</span></a>';
+				$title = lang($app['title']);
+				$nodes .= '<div class="app">'
+					.'<img class="icon" src="'.htmlspecialchars($icon).'"/>'
+					.'<div class="tooltip">'
+					.'<div class="content">'
+					.'<h3><a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'">'
+					.htmlspecialchars($title).'</a></h3>'
+					.'<img class="icon-bg" src="'.htmlspecialchars($icon).'"/>'
+					.'<p>'.htmlspecialchars($app['desc']).'</p><div class="arrow"></div>'
+					.'</div></div></div>';
 			}
 		}
 		return $nodes;

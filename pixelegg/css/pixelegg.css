@@ -2036,13 +2036,77 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   margin: 5px 20px auto 20px;
   display: flex;
 }
-#loginMainDiv div#login_footer .apps .app img {
+#loginMainDiv div#login_footer .apps .app img.icon {
   width: 30px;
   filter: brightness(0) invert(1);
   height: 30px;
 }
 #loginMainDiv div#login_footer .apps .app span {
   display: none;
+}
+#loginMainDiv div#login_footer .apps .tooltip {
+  display: inline-flex;
+  position: absolute;
+  text-align: left;
+  height: 34px;
+  width: 30px;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content {
+  min-width: 300px;
+  top: -10px;
+  left: 50%;
+  height: 190px;
+  max-height: 190px;
+  transform: translate(-50%, -100%);
+  padding: 10px 20px;
+  color: #444444;
+  background-color: #fafafa;
+  font-weight: normal;
+  font-size: 13px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 99999999;
+  box-sizing: border-box;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.8s;
+  border: 1px solid #1865aa;
+  border-bottom: 6px solid #1865aa;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content img.icon-bg {
+  width: 35px;
+  position: absolute;
+  margin: 0 auto;
+  right: 15px;
+  top: 15px;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content h3 {
+  height: 30px;
+  border-bottom: 1px solid #d9e4ed;
+}
+#loginMainDiv div#login_footer .apps .tooltip:hover .content {
+  visibility: visible;
+  opacity: 1;
+}
+#loginMainDiv div#login_footer .apps .tooltip:hover .content:hover {
+  visibility: visible;
+  opacity: 1;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content .arrow {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -21px;
+  height: 15px;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content .arrow::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-color: #1865aa;
 }
 #loginMainDiv div#centerBox {
   margin: 0 auto -20px;
