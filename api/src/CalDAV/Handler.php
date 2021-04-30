@@ -457,6 +457,7 @@ abstract class Handler
 				'evolution'         => 'evolution',	// Evolution
 				'thunderbird'       => 'thunderbird',	// SOGo connector for addressbook, no Lightning installed
 				'caldavsynchronizer'=> 'caldavsynchronizer',	// Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
+				'davx5'             => 'davx5',     // DAVx5 (https://www.davx5.com/)
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
