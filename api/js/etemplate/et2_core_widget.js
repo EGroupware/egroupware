@@ -483,14 +483,28 @@ var et2_widget = /** @class */ (function (_super) {
                 }
             }
         }
-        // Translate the attributes
-        for (var key in _attrs) {
-            if (_attrs[key] && typeof this.attributes[key] != "undefined") {
-                if (this.attributes[key].translate === true ||
-                    (this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"])) {
-                    _attrs[key] = this.egw().lang(_attrs[key]);
+        var _loop_1 = function () {
+            if (_attrs[key] && typeof this_1.attributes[key] != "undefined") {
+                if (this_1.attributes[key].translate === true ||
+                    (this_1.attributes[key].translate === "!no_lang" && !_attrs["no_lang"])) {
+                    var value = _attrs[key];
+                    // allow statustext to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
+                    if (value.indexOf('{') !== -1) {
+                        var egw_1 = this_1.egw();
+                        _attrs[key] = value.replace(/{([^}]+)}/g, function (str, p1) {
+                            return egw_1.lang(p1);
+                        });
+                    }
+                    else {
+                        _attrs[key] = this_1.egw().lang(value);
+                    }
                 }
             }
+        };
+        var this_1 = this;
+        // Translate the attributes
+        for (var key in _attrs) {
+            _loop_1();
         }
     };
     /**
