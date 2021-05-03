@@ -223,10 +223,11 @@ class filemanager_hooks
 		}
 		if (!$GLOBALS['egw_info']['user']['apps']['collabeditor']) unset($document_doubleclick_action['collabeditor']);
 		asort($mimes);
+
 		$settings += array (
 			'sections.2' => array(
 				'type'  => 'section',
-				'title' => lang('Collab Editor settings'),
+				'title' => lang('Collabora Online'),
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
@@ -265,13 +266,6 @@ class filemanager_hooks
 		if($GLOBALS['egw_info']['user']['apps']['collabora'])
 		{
 			$settings += array(
-				'sections.collabora' => array(
-					'type'  => 'section',
-					'title' => lang('Collabora'),
-					'no_lang'=> true,
-					'xmlrpc' => False,
-					'admin'  => False
-				),
 				'ui_mode' => array(
 					'type' => 'select',
 					'label' => lang('UI mode'),
