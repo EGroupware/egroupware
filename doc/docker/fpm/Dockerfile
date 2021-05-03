@@ -7,7 +7,7 @@ FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=7.3
+ARG PHP_VERSION=7.4
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
