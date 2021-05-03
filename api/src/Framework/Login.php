@@ -306,10 +306,10 @@ class Login
 	{
 		if (!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_login_json')))
 		{
-			$json = file_get_contents('https://www.egroupware.org/egw_login_feed.json',
+			$json = file_get_contents('https://www.egroupware.org/pixelegg/login/login.json',
 				false, Api\Framework::proxy_context());
 			// Fallback login.json
-			if (!$json) $json = file_get_contents('api/setup/login.json');
+			if (!$json) $json = file_get_contents('pixelegg/login/login.json');
 			// Cache the json object for a day
 			Api\Cache::setCache(Api\Cache::TREE, __CLASS__, 'egw_login_json', $json, 86400);
 		}
