@@ -2052,7 +2052,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 30px;
 }
 #loginMainDiv div#login_footer .apps .tooltip .content {
-  min-width: 300px;
+  min-width: 350px;
   top: -10px;
   left: 50%;
   height: 190px;

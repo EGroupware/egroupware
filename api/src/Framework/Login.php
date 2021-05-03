@@ -325,7 +325,7 @@ class Login
 					.'<img class="icon" src="'.htmlspecialchars($icon).'"/>'
 					.'<div class="tooltip">'
 					.'<div class="content">'
-					.'<h3><a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'">'
+					.'<h3><a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" target="blank">'
 					.htmlspecialchars($title).'</a></h3>'
 					.'<img class="icon-bg" src="'.htmlspecialchars($icon).'"/>'
 					.'<p>'.htmlspecialchars($app['desc']).'</p><div class="arrow"></div>'
