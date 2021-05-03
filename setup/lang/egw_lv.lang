@@ -73,7 +73,6 @@ check ip address of all sessions	setup	lv	pārbaudīt IP adresi visām sesijām
 checking extension %1 is loaded or loadable	setup	lv	Pārbauda attiecināšanu %1 ir ielādēta vai ielādējama
 checking file-permissions of %1 for %2 %3: %4	setup	lv	Pārbauda faila atļaujas no %1 priekš %2%3:%4
 checking for gd support...	setup	lv	Pārbauda GD atbalstu...
-checking pear%1 is installed	setup	lv	Pārbauda vai PEAR %1 ir iestatīts
 checking php.ini	setup	lv	Pārbauda php.ini
 checking the egroupware installation	setup	lv	Parbauda EGroupware instalāciju
 click <a href="index.php">here</a> to return to setup.	setup	lv	Noklikšķini <a href="index.php">šeit</a> lai atgrieztos uz iestatīšanu
@@ -230,6 +229,7 @@ mcrypt algorithm (default tripledes)	setup	lv	Mcrypt algoritms (noklusējums TRI
 mcrypt initialization vector	setup	lv	MCrypt inicializācijas vektors
 mcrypt mode (default cbc)	setup	lv	Mcrypt režīms (noklusētais CBC)
 mcrypt settings (requires mcrypt php extension)	setup	lv	Mcrypt uzstādījumi (pieprasa mcrypt PHP attiecināšana )
+min backup count	setup	lv	Maksimālais saglabājamo dublējumu skaits (nulle: visi)
 minimum account id (e.g. 500 or 100, etc.)	setup	lv	Minimālais kontu id (piem.500vai 100)
 minute	setup	lv	minūte
 modifications have been completed!	setup	lv	Modifikācijas pabeigtas!

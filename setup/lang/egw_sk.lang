@@ -416,7 +416,7 @@ mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia MCrypt (vyž
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sk	pamäťový limit je nastavený na menej než %1; niektoré aplikácie v EGroupware potrebujú viac než odporúčaných 8M, okrem výnimočných zlyhaní
 migration between egroupware account repositories	setup	sk	Migrácia medzi zdrojmi EGroupware účtov
 migration of group will fail, as sql does not allow identical ids.	setup	sk	Migácia skupín sa nepodarí, pretože SQL NEdovolí rovnaké ID.
-min backup count	setup	sk	Minimálny počet uchovaných záloh (0: všetky / bez limitu)
+min backup count	setup	sk	Maximálny počet uchovávaných záloh (nula: všetky)
 minimum account id (e.g. 500 or 100, etc.)	setup	sk	Najmenšie ID účtu (napr. 500 alebo 100, atď.)
 minute	setup	sk	Minúta
 missing or uncomplete mailserver configuration	setup	sk	Chýbajúce alebo neúplné nastavenie poštového servera

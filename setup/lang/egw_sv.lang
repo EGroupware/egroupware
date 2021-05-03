@@ -108,7 +108,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	sv	Kontrollerar filsystems r
 checking for gd support...	setup	sv	Kontrollerar GD support...
 checking function %1 exists	setup	sv	Kontrollerar att funktion %1 finns
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sv	Kontrollerar om php.ini inställning session.save_path='%1' är skrivbar av webbservern
-checking pear%1 is installed	setup	sv	Kontrollerar att PEAR%1 är installerad
 checking php.ini	setup	sv	Kontrollerar php.ini
 checking required php version %1 (recommended %2)	setup	sv	Kontrollerar PHP version %1 (recommenderar %2)
 checking the egroupware installation	setup	sv	Kontrollerar EGroupware installationen
@@ -334,6 +333,7 @@ mcrypt mode (default cbc)	setup	sv	MCrypt (standard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sv	MCrypt alternativ (kräver MCrypt PHP utökning)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än %1B. En del applikationer i EGroupware kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 migration between egroupware account repositories	setup	sv	Migrering mellan EGroupware kontodatabaser
+min backup count	setup	sv	Maximalt antal säkerhetskopior som sparas (noll: alla)
 minimum account id (e.g. 500 or 100, etc.)	setup	sv	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	sv	Minut
 missing or uncomplete mailserver configuration	setup	sv	E-postserver inställningar saknas eller är felaktiga
@@ -385,8 +385,6 @@ path information	setup	sv	Sökvägsinformation
 path of egroupware install directory (default auto-detected)	setup	sv	Sökväg till EGroupware installationskatalog (standard)
 path to user and group files has to be outside of the webservers document-root!!!	setup	sv	Sökväg till användar- och gruppfiler MÅSTE LIGGA UTANFÖR webbserverns dokumentrot.
 path to various directories: have to exist and be writeable by the webserver	setup	sv	Sökväg till olika kataloger: måste vara befintliga och skrivbara av webbservern
-pear (%1) is a php repository and is usually in a package called %2.	setup	sv	PEAR (%1) är ett PHP bibloitek och finns oftast i paketet %2.
-pear%1 is needed by: %2.	setup	sv	PEAR%1 behövs för: %2.
 persistent connections	setup	sv	Ständig koppling (Persistent connections)
 please check for sql scripts within the application's directory	setup	sv	Var god och kontrollera efter sqlskript i applikationens katalog
 please check read/write permissions on directories, or back up and use another option.	setup	sv	Var god och kontrollera läs/skrivrättigheter på katalogerna, eller ta backup och använd ett annat alternativ

@@ -145,7 +145,6 @@ checking for jpgraph in %1	setup	ru	Проверка наличия JPGraph в %
 checking for tnef application	setup	ru	Проверка на наличие tnef
 checking function %1 exists	setup	ru	Проверка функции %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	ru	Проверка доступности на запись веб-сервером пути, указанного в php.ini параметром session.save_path='%1'
-checking pear%1 is installed	setup	ru	Проверка наличия установленного PEAR %1
 checking php.ini	setup	ru	Проверка php.ini
 checking required php version %1 (recommended %2)	setup	ru	Проверка наличия PHP требуемой версии %1 (рекомендовано %2)
 checking the egroupware installation	setup	ru	Проверка установки EGroupware
@@ -399,7 +398,7 @@ mcrypt settings (requires mcrypt php extension)	setup	ru	Настройки MCry
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ru	паараметр ограничения памяти (memory_limit) установлен менее чем на %1: некоторым приложениям EGroupware требуется больше чем рекомендованные 8М, за исключением случающихся сбоев
 migration between egroupware account repositories	setup	ru	Перемещение между хранилищами учетных записей EGroupware
 migration of group will fail, as sql does not allow identical ids.	setup	ru	Миграция группы не удалась, поскольку SQL не позволяет записям иметь идентичные ID
-min backup count	setup	ru	Число резервных копий для сохранения (ноль: все/без ограничений)
+min backup count	setup	ru	Максимальное количество сохраняемых резервных копий (ноль: все)
 minimum account id (e.g. 500 or 100, etc.)	setup	ru	Минимальныйидентификатор учетных записей (напр.500 или 100, и т.п.)
 minute	setup	ru	минута
 missing or uncomplete mailserver configuration	setup	ru	Неверная или неполная настройка сервера почты
@@ -454,9 +453,6 @@ path information	setup	ru	Информация о пути
 path of egroupware install directory (default auto-detected)	setup	ru	путь к папке установки EGroupware (по умолчанию определяется автоматчески)
 path to user and group files has to be outside of the webservers document-root!!!	setup	ru	Путь к файлам пользователей и групп ДОЛЖЕН БЫТЬ ВНЕ корневой папки веб-сервера !!!
 path to various directories: have to exist and be writeable by the webserver	setup	ru	путь к различным папкам: должен существовать и веб-сервер должен иметь возможность записи туда
-pear (%1) is a php repository and is usually in a package called %2.	setup	ru	PEAR (%1) - храниличе PHP и обычно идет в пакете называемом %2
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	ru	Расширения PEAR требуются многим приложениям EGroupware, а сам PEAR требуется каждому из расширений!
-pear%1 is needed by: %2.	setup	ru	%2 нуждается в PEAR%1
 pem certificate	setup	ru	Сертификат PEM
 persistent connections	setup	ru	Постоянные соединения
 php client	setup	ru	PHP клиент

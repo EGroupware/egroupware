@@ -147,7 +147,6 @@ checking for jpgraph in %1	setup	cs	Kontroluji přítomnost JPGraph v %1
 checking for tnef application	setup	cs	Kontroluji aplikaci tnef
 checking function %1 exists	setup	cs	Kontroluji existenci funkce %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	cs	Kontroluji zda do umístění nastaveného v php.ini parametrem session.save_path='%1' může zapisovat webový server
-checking pear%1 is installed	setup	cs	Kontroluji, zda je instalaván PEAR%1
 checking php.ini	setup	cs	Kontroluji php.ini
 checking required php version %1 (recommended %2)	setup	cs	Kontroluji požadovanou verzi PHP %1 (doporučeno %2)
 checking the egroupware installation	setup	cs	Kontroluji instalaci EGroupware
@@ -408,7 +407,7 @@ mcrypt settings (requires mcrypt php extension)	setup	cs	Nastavení mcyrpt (vyž
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na méně než %1: některé aplikace eGroupWaru vyžadují více paměti než doporučených 8M, můžete proto očekávat, že bude docházet k náhodným chybám.
 migration between egroupware account repositories	setup	cs	Migrace mezi databázemi EGroupware účtů
 migration of group will fail, as sql does not allow identical ids.	setup	cs	Migrace skupiny nebude úspěšná, protože SQL nedovoluje použít shodné ID.
-min backup count	setup	cs	Minimální počet záloh, které by měly zůstat zachovány (nula znamená žádné / bez limitu)
+min backup count	setup	cs	Maximální počet uchovávaných záloh (nula: všechny)
 minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id účtu (např. 500 nebo 100, atp.)
 minute	setup	cs	minuta
 missing or uncomplete mailserver configuration	setup	cs	Chybějící nebo nekompletní konfigurace poštovního serveru
@@ -465,9 +464,6 @@ path information	setup	cs	Informace o cestě
 path of egroupware install directory (default auto-detected)	setup	cs	cesta k instalačnímu adresáři eGroupWaru (výchozí je autodetekce)
 path to user and group files has to be outside of the webservers document-root!!!	setup	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 path to various directories: have to exist and be writeable by the webserver	setup	cs	cesta k nejrůznějším adresářům: musí existovat a webový server pro ně musí mít oprávnění k zápisu
-pear (%1) is a php repository and is usually in a package called %2.	setup	cs	PEAR (%1) je PHP repositář a je obvykle obsažen v balíčku s názvem %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	cs	PEAR rozšíření (extensions) jsou zapotřebí pro mnohé aplikace eGroupWaru. PEAR jako takový je nutným základem pro všechna PEAR rozšíření.
-pear%1 is needed by: %2.	setup	cs	PEAR%1 je potřeba pro: %2.
 pem certificate	setup	cs	PEM certifikát
 persistent connections	setup	cs	Trvalá spojení
 php client	setup	cs	PHP klient

@@ -120,7 +120,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	pt-br	Verificando permissõe
 checking for gd support...	setup	pt-br	Verificando suporte à biblioteca GD...
 checking function %1 exists	setup	pt-br	Verificando se função %1 existe
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt-br	Verificando se session.save_path='%1', do arquivo php.ini, é gravável pelo servidor web
-checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 está instalado
 checking php.ini	setup	pt-br	Verificando php.ini
 checking required php version %1 (recommended %2)	setup	pt-br	Verificando versão do PHP requerida %1 (recomandada %2)
 checking the egroupware installation	setup	pt-br	Verificando a instalação do EGroupware
@@ -356,6 +355,7 @@ mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padrão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt-br	Configurações para Mcrypt (requer extensão mcrypt do PHP)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memória está menor que %1. Alguns aplicativos do EGroupware necessitam mais que os 8M recomendados. É possível que ocorram problemas.
 migration between egroupware account repositories	setup	pt-br	Migração entre respositórios de contas do EGroupware
+min backup count	setup	pt-br	Número máximo de backups mantidos (zero: todos)
 minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt-br	minuto
 missing or uncomplete mailserver configuration	setup	pt-br	Configuração do servidor de e-mail está faltando
@@ -408,9 +408,6 @@ path information	setup	pt-br	Informação de Caminho do sistema (Path)
 path of egroupware install directory (default auto-detected)	setup	pt-br	caminho para o diretório de instalação do EGroupware (padrão auto-dectável)
 path to user and group files has to be outside of the webservers document-root!!!	setup	pt-br	Caminho para ser usado para arquivos de usuários e grupos. TEM QUE ESTAR FORA do diretório de documentos do servidor web.
 path to various directories: have to exist and be writeable by the webserver	setup	pt-br	caminho para vários diretórios: devem existir e o servidor web deve ter permissão de escrita neles
-pear (%1) is a php repository and is usually in a package called %2.	setup	pt-br	PEAR (%1) é um repositório PHP e normalmente está em um pacote chamado %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pt-br	Extensões PEAR são requeridas por muitos aplicativos EGroupware, o próprio PEAR é requerimento básico para cada extensão!
-pear%1 is needed by: %2.	setup	pt-br	PEAR %1 é requerido por: %2.
 persistent connections	setup	pt-br	Conexões Persistentes
 please check for sql scripts within the application's directory	setup	pt-br	Por favor verifique os scripts SQL no diretório da aplicação
 please check read/write permissions on directories, or back up and use another option.	setup	pt-br	Porfavor verifique os direitos de escrita/leitura. ou faça uma cópia de segurança e use outra opção.

@@ -126,7 +126,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	sl	Preverjam pravice datotek
 checking for gd support...	setup	sl	Preverjam GD podporo
 checking function %1 exists	setup	sl	Preverjam obstoj funkcije %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sl	Preverjam, če je nastavitev session.save_path='%1' v php.ini zapisljiva s strani spletnega strežnika
-checking pear%1 is installed	setup	sl	Preverjam, če je nameščen PEAR%1
 checking php.ini	setup	sl	Preverjam php.ini
 checking required php version %1 (recommended %2)	setup	sl	Preverjam zahtevano različico PHP %1 (priporočena je %2)
 checking the egroupware installation	setup	sl	Preverjam EGroupware namestitev
@@ -364,6 +363,7 @@ mcrypt mode (default cbc)	setup	sl	Mcrypt način (privzeto CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sl	Mcrypt nastavitve (zahteva mcrypt razširitev PHPja)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v EGw potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
 migration between egroupware account repositories	setup	sl	Migracija med repozitoriji uporabniških računov EGroupware
+min backup count	setup	sl	Največje število shranjenih varnostnih kopij (nič: vse)
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 500 ali 100)
 minute	setup	sl	minuta
 missing or uncomplete mailserver configuration	setup	sl	Manjkajoča ali nepopolna konfiguracija poštnega strežnika
@@ -416,9 +416,6 @@ path information	setup	sl	Podatki o poti
 path of egroupware install directory (default auto-detected)	setup	sl	Pot do namestitvene mape EGroupware (privzeto je samodejna zaznava)
 path to user and group files has to be outside of the webservers document-root!!!	setup	sl	Pot do uporabnikovih in skupinskih datotek <b>mora biti zunaj</b> strežnikovega spletnega področja!
 path to various directories: have to exist and be writeable by the webserver	setup	sl	Pot do več map: morajo obstojati in biti zapisljive s strani spletnega strežnika.
-pear (%1) is a php repository and is usually in a package called %2.	setup	sl	PEAR (%1) je v repozitoriju PHP in je ponavadi del paketa %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	sl	Razširitve PEAR so zahtevane za več aplikacij EGroupware, PEAR je zahtevana osnova za vse razširitve.
-pear%1 is needed by: %2.	setup	sl	EAR%1 je potreben za: %2.
 pem certificate	setup	sl	Certifikat PEM
 persistent connections	setup	sl	Trajne povezave
 php client	setup	sl	Odjemalec PHP

@@ -128,7 +128,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	fi	Tarkistetaan tiedostojen 
 checking for gd support...	setup	fi	Tarkistetaan GD-tuki...
 checking function %1 exists	setup	fi	Tarkistetaan fuction %1 olemassaolo
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fi	Tarkistetaan että php.ini asetuksissa session.save_path='%1' on palvelimen kirjoitettavissa.
-checking pear%1 is installed	setup	fi	Tarkistetaan onko PEAR%1 asennettu
 checking php.ini	setup	fi	Tarkistetaan tiedostoa php.ini
 checking required php version %1 (recommended %2)	setup	fi	Tarkistetaan tarvittava PHP versio %1 (suositellaan %2)
 checking the egroupware installation	setup	fi	EGroupwaren asennuksen tarkistus
@@ -342,6 +341,7 @@ mcrypt initialization vector	setup	fi	MCryptin alustusvektori
 mcrypt mode (default cbc)	setup	fi	Mcrypt-tila (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fi	Mcrypt-asetukset (tarvitaan PHP:n mcrypt-laajennus)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fi	memory_limit-asetus on alle %1: jotkin sovellukset tarvitsevat muistia enemmän kuin PHP:n oletus 8m, voit odottaa ongelmia.
+min backup count	setup	fi	Säilytettävien varmuuskopioiden enimmäismäärä (nolla: kaikki)
 minimum account id (e.g. 500 or 100, etc.)	setup	fi	Käyttäjätunnisteen minimiarvo (esim. 500 tai 100, jne.)
 minute	setup	fi	minuutti
 missing or uncomplete mailserver configuration	setup	fi	Postipalvelimen asetukset puuttuvat tai ovat vajaat

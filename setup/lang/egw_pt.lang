@@ -87,7 +87,6 @@ checking extension %1 is loaded or loadable	setup	pt	A verificar se a extensão 
 checking file-permissions of %1 for %2 %3: %4	setup	pt	A verificar ficheiro de permissões de %1 para %2 %3: %4
 checking for gd support...	setup	pt	A verificar a existência de suporte de GD...
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt	A verificar se configuração session.save_path='%1' do php.ini é editável pelo servidor Web
-checking pear%1 is installed	setup	pt	A verificar se PEAR%1 está instalado
 checking php.ini	setup	pt	A verificar php.ini
 checking required php version %1 (recommended %2)	setup	pt	A verificar a versão %1 do PHP necessária (%2 recomendada)
 checking the egroupware installation	setup	pt	A verificar a instalação EGroupware
@@ -267,6 +266,7 @@ mcrypt initialization vector	setup	pt	Vector de inicialização MCrypt
 mcrypt mode (default cbc)	setup	pt	Modo Mcrypt (por omissão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcrypt (requer extensão mcrypt do PHP)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt	O limite de memória (memory_limit) está configurado para menos de %1: algumas aplicações do EGroupware necessitam de mais de 8M. Espere falhas ocasionais.
+min backup count	setup	pt	Número máximo de cópias de segurança mantidas (zero: todas)
 minimum account id (e.g. 500 or 100, etc.)	setup	pt	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt	Minuto
 missing or uncomplete mailserver configuration	setup	pt	Configuração do servidor de correio electrónico em falta ou por concluir

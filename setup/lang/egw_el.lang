@@ -42,6 +42,7 @@ ldap root password	setup	el	LDAP root συνθηματικό
 ldap rootdn	setup	el	LDAP rootdn
 mail server login type	setup	el	Τύπος εισόδου μηνύματος server
 maximum account id (e.g. 65535 or 1000000)	setup	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
+min backup count	setup	el	Μέγιστος αριθμός διατηρούμενων αντιγράφων ασφαλείας (μηδέν: όλα)
 minimum account id (e.g. 500 or 100, etc.)	setup	el	Μίνιμουμ id λογαριασμού (π.χ. 500 ή 100, κ.λ.π)
 modified	setup	el	Τροποποιήθηκε
 month	setup	el	Μήνας

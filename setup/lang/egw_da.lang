@@ -39,6 +39,7 @@ ldap root password	setup	da	LDAP root adgangskode
 ldap rootdn	setup	da	LDAP rootdn
 mail server login type	setup	da	Post server login type
 maximum account id (e.g. 65535 or 1000000)	setup	da	Maksimum konto id (f.eks. 65535 eller 10000000)
+min backup count	setup	da	Maksimalt antal sikkerhedskopier, der bevares (nul: alle)
 minimum account id (e.g. 500 or 100, etc.)	setup	da	Minimum konto id (f.eks 500 eller 100, osv.)
 minute	setup	da	Minut
 modified	setup	da	Modificeret
