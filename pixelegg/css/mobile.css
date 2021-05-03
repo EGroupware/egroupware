@@ -1896,6 +1896,17 @@ body {
  * @package pixelegg
  * @version $Id$
  */
+@keyframes login-apps {
+  0% {
+    transform: translateY(30px);
+  }
+  60% {
+    transform: translateY(45px);
+  }
+  100% {
+    transform: none;
+  }
+}
 /**
  * 19.1 Login page with stock background image
  */

@@ -315,13 +315,14 @@ class Login
 		}
 		$data = json_decode($json, true);
 		$nodes = '';
+		$counter = 1;
 		if (is_array($data))
 		{
 			foreach ($data['apps'] as $app)
 			{
 				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
 				$title = lang($app['title']);
-				$nodes .= '<div class="app">'
+				$nodes .= '<div class="app" style="animation:login-apps '.$counter*0.1.'s ease-out">'
 					.'<img class="icon" src="'.htmlspecialchars($icon).'"/>'
 					.'<div class="tooltip">'
 					.'<div class="content">'
@@ -330,6 +331,7 @@ class Login
 					.'<img class="icon-bg" src="'.htmlspecialchars($icon).'"/>'
 					.'<p>'.htmlspecialchars($app['desc']).'</p><div class="arrow"></div>'
 					.'</div></div></div>';
+				$counter++;
 			}
 		}
 		return $nodes;
