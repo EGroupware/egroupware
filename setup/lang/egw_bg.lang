@@ -66,6 +66,7 @@ mail server login type	setup	bg	Тип на влизане (login) в Mail съ�
 manage applications	setup	bg	Управление на приложенията
 manage languages	setup	bg	Управление на езиците
 may be broken	setup	bg	може да е повредено
+min backup count	setup	bg	Максимален брой запазени резервни копия (нула: всички)
 modified	setup	bg	Редактирано
 modify	setup	bg	Промяна
 name of database	setup	bg	Име на базата данни

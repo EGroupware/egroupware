@@ -140,7 +140,6 @@ checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking for jpgraph in %1	setup	es-es	Comprobando JPGraph en %1
 checking function %1 exists	setup	es-es	Comprobando si existe la función %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	es-es	Comprobando si el valor de php.ini session.save_path='%1' tiene permiso de escritura para el servidor web
-checking pear%1 is installed	setup	es-es	Comprobando si PEAR %1 está instalado
 checking php.ini	setup	es-es	Comprobando php.ini
 checking required php version %1 (recommended %2)	setup	es-es	Comprobando la versión necesaria de PHP: %1 (recomendada: %2)
 checking the egroupware installation	setup	es-es	Comprobando la instalación de EGroupware
@@ -395,7 +394,7 @@ mcrypt mode (default cbc)	setup	es-es	Modo de MCrypt (predeterminado CBC)
 mcrypt settings (requires mcrypt php extension)	setup	es-es	Configuración de MCrypt (necesita la extensión PHP mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de EGroupware necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
 migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de EGroupware
-min backup count	setup	es-es	Número ḿínimo de copias de seguridad que mantener (cero: todas / sin límite)
+min backup count	setup	es-es	Número máximo de copias de seguridad conservadas (cero: todas)
 minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta (p. ej. 500 ó 100, etc)
 minute	setup	es-es	minuto
 missing or uncomplete mailserver configuration	setup	es-es	La configuración del servidor de correo falta o está incompleta
@@ -450,9 +449,6 @@ path information	setup	es-es	Información de la ruta
 path of egroupware install directory (default auto-detected)	setup	es-es	Ruta al directorio de instalación de EGroupware (por defecto se detecta automáticamente)
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 path to various directories: have to exist and be writeable by the webserver	setup	es-es	ruta a varios directorios: tienen que existir y tener permiso de escritura para el servidor web
-pear (%1) is a php repository and is usually in a package called %2.	setup	es-es	PEAR (%1) es un repositorio PHP y normalmente está en un paquete llamado %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	es-es	Muchas aplicaciones EGroupware requieren las extensiones PEAR, por lo que PEAR es una base requerida para cada extensión.
-pear%1 is needed by: %2.	setup	es-es	Se necesita PEAR para: %2.
 pem certificate	setup	es-es	Certificado PEM
 persistent connections	setup	es-es	Conexiones persistentes
 php client	setup	es-es	Cliente PHP

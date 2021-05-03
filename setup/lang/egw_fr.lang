@@ -418,7 +418,7 @@ mcrypt settings (requires mcrypt php extension)	setup	fr	Réglages Mcrypt (néce
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fr	L'option memory_limit est positionnée en dessous de %1: <br/>certaines applications ont requièrent plus de 8M, ceci peut entraîner des problèmes.
 migration between egroupware account repositories	setup	fr	Migration entre les dépôts de comptes EGroupware
 migration of group will fail, as sql does not allow identical ids.	setup	fr	La migration des groupes va échouer car SQL n'autorise pas d'avoir des ID identiques.
-min backup count	setup	fr	Nombre de sauvegardes à garder au moins (0: tout et pas de limite)
+min backup count	setup	fr	Nombre maximum de sauvegardes conservées (zéro : toutes)
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
 minute	setup	fr	minute
 missing or uncomplete mailserver configuration	setup	fr	Configuration du serveur de messagerie manquante ou incomplète
@@ -678,7 +678,6 @@ user	setup	fr	utilisateur
 user "%1" not found!	setup	fr	Utilisateur "%1" non trouvé !
 user account prefix	setup	fr	Préfixe des comptes utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	setup	fr	Utilisateur pour l'authentification SMTP (laisser vide si aucune authentification n'est requise)
-username (standard)	setup	fr	code utilisateur (standard)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	fr	Liste séparée par des virgules des utilisateurs pouvant accéder au VFS en root (en plus de l'utilisateur du setup)
 usernames are casesensitive	setup	fr	Les identifiants sont sensibles à la casse
 users choice	setup	fr	Choix des utilisateurs

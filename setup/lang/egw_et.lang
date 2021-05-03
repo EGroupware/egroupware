@@ -44,7 +44,6 @@ charset	setup	et	utf-8
 charset to convert to	setup	et	Charset millesse konvertida
 charsets used by the different languages	setup	et	charset-id kasutatud erinevatel keeltel
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	et	Kontrollin kas php.ini seadistus session.save_path='%1' on kirjutatav veebiserveri jaoks
-checking pear%1 is installed	setup	et	Kontrollin kas PEAR%1 on installeritud
 checking php.ini	setup	et	Kontrollin php.ini
 click here	setup	et	Vajuta siia
 completed	setup	et	Lõpetatud
@@ -142,6 +141,7 @@ manual / help	setup	et	Manual / Abi
 may be broken	setup	et	võibolla katki
 mcrypt algorithm (default tripledes)	setup	et	Mcrypt algoritm (vaikimisi TRIPLEDES)
 mcrypt settings (requires mcrypt php extension)	setup	et	Mcrypt Seadistused (nõutav mcrypt PHP laiendus)
+min backup count	setup	et	Säilitatavate varukoopiate maksimaalne arv (null: kõik)
 modified	setup	et	Muudetud
 modify	setup	et	Muuda
 month	setup	et	kuu

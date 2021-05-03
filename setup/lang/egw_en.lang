@@ -448,7 +448,7 @@ metadata	setup	en	Metadata
 metadata url	setup	en	Metadata URL
 migration between egroupware account repositories	setup	en	Migration between EGroupware account repositories
 migration of group will fail, as sql does not allow identical ids.	setup	en	Migration of group will fail, as SQL does NOT allow identical IDs.
-min backup count	setup	en	Number of backups to keep at least (zero: all / no limit)
+min backup count	setup	en	Maximum number of backups kept (zero: all)
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	en	Minute
 missing or uncomplete mailserver configuration	setup	en	Missing or uncomplete mail server configuration

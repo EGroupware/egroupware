@@ -255,6 +255,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	it	Gestione Applicazioni
 manage languages	setup	it	Gestione Lingue
 maximum account id (e.g. 65535 or 1000000)	setup	it	ID massimo per l'account (es. 65535 or 100000, etc.)
+min backup count	setup	it	Numero massimo di backup conservati (zero: tutti)
 minimum account id (e.g. 500 or 100, etc.)	setup	it	Minimo ID account (es. 500 o 100, ecc.)
 modifications have been completed!	setup	it	Le modifiche sono state completate
 modified	setup	it	Modificato

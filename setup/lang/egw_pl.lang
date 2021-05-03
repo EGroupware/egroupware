@@ -139,7 +139,6 @@ checking for gd support...	setup	pl	Sprawdzam wsparcie dla modułu GD...
 checking for jpgraph in %1	setup	pl	Sprawdzam JPGraph w %1
 checking function %1 exists	setup	pl	Sprawdzam, czy funkcja '%1' istnieje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pl	Sprawdzam czy ustawienia w php.ini  session.save_path='%1' - czy web serwer jest uprawniony do zapisu dla tego pliku.
-checking pear%1 is installed	setup	pl	Sprawdzam czy PEAR%1 jest zainstalowany
 checking php.ini	setup	pl	Sprawdzam plik php.ini
 checking required php version %1 (recommended %2)	setup	pl	Sprawdzam wersje PHP (wymana %1, pożądana %2)
 checking the egroupware installation	setup	pl	Sprawdzam instalację EGroupware
@@ -382,7 +381,7 @@ mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pl	memory_limit jest ustawiony na mniej niż 5!: niektóre aplikacje EGw wymagają więcej niż zalecane 8M - mogą powstać błędy.
 migration between egroupware account repositories	setup	pl	Migracja międzu repozytoriami kont EGroupware
-min backup count	setup	pl	Liczba kopi bezpieczeństwa do przechowywania (zero: wszystkie/ bez limitu)
+min backup count	setup	pl	Maksymalna liczba przechowywanych kopii zapasowych (zero: wszystkie)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
 missing or uncomplete mailserver configuration	setup	pl	Konfiguracja serwera mail nieobecna lub niekompletna
 modifications have been completed!	setup	pl	Zmiany zostały wprowadzone!
@@ -434,9 +433,6 @@ path (not url!) to your egroupware installation.	setup	pl	Ścieżka (nie URL!) d
 path information	setup	pl	Ścieżki
 path of egroupware install directory (default auto-detected)	setup	pl	ścieżka do katalogu instalacji EGroupware (domyślnie auto wykrywanie)
 path to various directories: have to exist and be writeable by the webserver	setup	pl	ścieżka do różnych katalogów: musi istnieć i mieć prawa zapisu dla serwera WEB
-pear (%1) is a php repository and is usually in a package called %2.	setup	pl	Pear (%1) jest repozytorium PHP i zawiera się w pakiecie %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pl	Rozszerzenia PEAR są wymagane przez wiele różnych aplikacji EGroupware, PEAR sam w sobie jest podstawą wymogów dla każdego rozszerzenia!
-pear%1 is needed by: %2.	setup	pl	PEAR %1 jest wymagany przez: %2.
 pem certificate	setup	pl	Certyfikat PEM
 persistent connections	setup	pl	Stałe połączenie
 php client	setup	pl	Klient PHP

@@ -126,7 +126,6 @@ checking file-permissions of %1 for %2 %3: %4	setup	nl	Controleert bestandsrecht
 checking for gd support...	setup	nl	Controleert op GD ondersteuning...
 checking function %1 exists	setup	nl	Controleert of functie %1 bestaat
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	nl	Gecontroleerd wordt of php.ini instelling session.save_path='%1' beschrijfbaar is voor de webserver
-checking pear%1 is installed	setup	nl	Controleert of PEAR%1 is geinstalleerd
 checking php.ini	setup	nl	Controleert php.ini
 checking required php version %1 (recommended %2)	setup	nl	Controleerrt de ereiste PHP versie %1 (%2 aanbevolen)
 checking the egroupware installation	setup	nl	Controleert de EGroupware installatie
@@ -365,6 +364,7 @@ mcrypt mode (default cbc)	setup	nl	MCrypt modus (standaard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	nl	MCrypt instellingen (vereist de mcrypt PHP extensie)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan %1; sommige toepassingen van EGroupware hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
 migration between egroupware account repositories	setup	nl	Migratie tussen EGroupware account repositories
+min backup count	setup	nl	Maximum aantal bewaarde back-ups (nul: alle)
 minimum account id (e.g. 500 or 100, etc.)	setup	nl	Minimum account ID (voorbeeld: 500 of 100, enz.)
 minute	setup	nl	minuut
 missing or uncomplete mailserver configuration	setup	nl	Ontbrekende of incomplete mailserver configuratie
@@ -417,9 +417,6 @@ path information	setup	nl	Pad informatie
 path of egroupware install directory (default auto-detected)	setup	nl	pad van de EGroupware installatie directory (standaard wordt deze automatisch gedetecteerd)
 path to user and group files has to be outside of the webservers document-root!!!	setup	nl	Pad naar gebruikers- en groepsbestanden MOETEN BUITEN de webserver's document-root liggen!!!
 path to various directories: have to exist and be writeable by the webserver	setup	nl	pad naar verschillende directories: moeten bestaan en schrijfbaar zijn voor de webserver
-pear (%1) is a php repository and is usually in a package called %2.	setup	nl	PEAR (%1) is een PHP repository en is nomaliter aanwezig in een package genaamd %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	nl	PEAR extensies zijn vereist voor veel EGroupware toepassingen, PEAR zelf is de vereiste basis voor iedere extensie!
-pear%1 is needed by: %2.	setup	nl	PEAR %1 wordt vereist door: %2.
 pem certificate	setup	nl	PEM certificaat
 persistent connections	setup	nl	Persistente connecties
 php client	setup	nl	PHP client
@@ -602,7 +599,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	nl	Gebru
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	nl	Gebruikersnamen (komma gescheiden) welke VFS root toegang kunnen krijgen (afgezien van de installatie gebruiker)
 usernames are casesensitive	setup	nl	Gebruikersnamen zijn hoofdlettergevoelig
 users choice	setup	nl	Gebruikerskeuze
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	nl	Meestal nog meer irritant<br />Beheerders kunnen Admin gebruiken &gt;&gt; Beheer accounts of groepen om toegang tot verdere toepassingen te geven.
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	nl	Meestal nog meer irritant<br />Beheerders kunnen Admin gebruiken >> Beheer accounts of groepen om toegang tot verdere toepassingen te geven.
 utf-8 (unicode)	setup	nl	UTF-8 (Unicode)
 validation errors	setup	nl	Validatie fouten
 version	setup	nl	versie

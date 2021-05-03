@@ -59,6 +59,7 @@ ldap root password	setup	hu	LDAP root jelszava
 ldap rootdn	setup	hu	LDAP rootdn
 mail server login type	setup	hu	Mail szerver bejelentkezés típusa
 maximum account id (e.g. 65535 or 1000000)	setup	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
+min backup count	setup	hu	A mentések maximális száma (nulla: minden)
 minimum account id (e.g. 500 or 100, etc.)	setup	hu	Legkisebb felhasználói azonosító (pl. 500 vagy 100)
 modified	setup	hu	Módosított
 month	setup	hu	Hónap
