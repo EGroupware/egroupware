@@ -56,7 +56,6 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
-		$content['msg'] .= "\n*" ;
 
 		return $result;
 	}
