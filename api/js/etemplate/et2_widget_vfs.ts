@@ -1340,16 +1340,18 @@ export class et2_vfsSelect extends et2_inputWidget
 		// Try to fetch et2 from its template name.
 		let etemplate = jQuery('form').data('etemplate');
 		let et2;
-		if (etemplate && etemplate.name && !app[egw(window).app_name()])
+		let currentApp = egw(window).app_name();
+		if (etemplate && etemplate.name && !app[currentApp])
 		{
 			et2 = etemplate2.getByTemplate(etemplate.name)[0];
+			currentApp = et2.name.split('.')[0];
 		}
 		else
 		{
-			et2 = etemplate2.getByApplication(egw(window).app_name())[0];
+			et2 = etemplate2.getByApplication(currentApp)[0];
 		}
 
-		let data = jQuery.extend(_data, {'currentapp': egw(window).app_name(), etemplate_exec_id: et2.etemplate_exec_id});
+		let data = jQuery.extend(_data, {'currentapp': currentApp, etemplate_exec_id: et2.etemplate_exec_id});
 
 		// define a mini app object for vfs select UI
 		app.vfsSelectUI = new app.classes.vfsSelectUI;
