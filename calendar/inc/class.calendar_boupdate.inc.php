@@ -567,7 +567,6 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
-	 * @todo check if there is a real change, not assume every save is a change
 	 */
 	function check4update($new_event,$old_event)
 	{
@@ -575,15 +574,23 @@ class calendar_boupdate extends calendar_bo
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
+		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location'] as $field)
+		{
+			if($new_event[$field] !== $old_event[$field])
+			{
+				$modified = array_keys($new_event['participants']);
+				break;
+			}
+		}
 
 		// Find modified and deleted participants ...
 		foreach ((array)$old_event['participants'] as $old_userid => $old_status)
 		{
-			if (isset($new_event['participants'][$old_userid]))
+			if (isset($new_event['participants'][$old_userid]) && $old_status !== $new_event['participants'][$old_userid])
 			{
 				$modified[$old_userid] = $new_event['participants'][$old_userid];
 			}
-			else
+			else if (!isset($new_event['participants'][$old_userid]))
 			{
 				$deleted[$old_userid] = $old_status;
 			}
