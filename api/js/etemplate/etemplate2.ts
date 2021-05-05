@@ -858,12 +858,17 @@ export class etemplate2
 
 		// Trigger the submit event
 		let canSubmit = true;
+		let invalid = null;
 		if (!no_validation)
 		{
 			container.iterateOver(function (_widget)
 			{
 				if (_widget.submit(values) === false)
 				{
+					if(!invalid && !_widget.isValid())
+					{
+						invalid = _widget;
+					}
 					canSubmit = false;
 				}
 			}, this, et2_ISubmitListener);
@@ -899,6 +904,13 @@ export class etemplate2
 			{
 				this._widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
 			}
+		}
+		else if (invalid !== null)
+		{
+			// Show the first invalid widget, not the last
+			let messages = [];
+			let valid = invalid.isValid(messages);
+			invalid.set_validation_error(messages);
 		}
 		return canSubmit;
 	}

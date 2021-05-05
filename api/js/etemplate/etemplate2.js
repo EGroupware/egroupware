@@ -675,9 +675,13 @@ var etemplate2 = /** @class */ (function () {
         var values = this.getValues(container);
         // Trigger the submit event
         var canSubmit = true;
+        var invalid = null;
         if (!no_validation) {
             container.iterateOver(function (_widget) {
                 if (_widget.submit(values) === false) {
+                    if (!invalid && !_widget.isValid()) {
+                        invalid = _widget;
+                    }
                     canSubmit = false;
                 }
             }, this, et2_ISubmitListener);
@@ -703,6 +707,12 @@ var etemplate2 = /** @class */ (function () {
             else {
                 this._widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
             }
+        }
+        else if (invalid !== null) {
+            // Show the first invalid widget, not the last
+            var messages = [];
+            var valid = invalid.isValid(messages);
+            invalid.set_validation_error(messages);
         }
         return canSubmit;
     };
