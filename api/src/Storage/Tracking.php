@@ -781,7 +781,8 @@ abstract class Tracking
 			// Cache message body to not have to re-generate it every time
 			$lang = Api\Translation::$userlang;
 			$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
-				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
+				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'].
+				$GLOBALS['egw_info']['user']['preferences']['common']['tz'];
 
 			// Cache text body, if there's no private custom fields we might reveal
 			if($can_cache)
