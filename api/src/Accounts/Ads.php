@@ -1090,6 +1090,7 @@ class Ads
 				}
 				// for non-admins and account_selection "groupmembers" we have to filter by memberOf attribute
 				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'groupmembers' &&
+					isset($GLOBALS['egw_info']['user']['account_id']) &&	// only use groupmembers, if we have a user context (stalls login otherwise!)
 					(!isset($GLOBALS['egw_info']['user']['apps']['admin'])))
 				{
 					$type_filter .= '(|';
