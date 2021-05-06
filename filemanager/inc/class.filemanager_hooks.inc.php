@@ -270,7 +270,7 @@ class filemanager_hooks
 					'type' => 'select',
 					'label' => lang('UI mode'),
 					'name' => 'ui_mode',
-					'values' => ['classic','notebookbar'],
+					'values' => ['classic' => lang('classic'),'notebookbar' => lang('notebookbar')],
 					'default' => 'notebookbar'
 				)
 			);
