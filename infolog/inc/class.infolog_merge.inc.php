@@ -241,6 +241,7 @@ class infolog_merge extends Api\Storage\Merge
 			if ($i&1) echo "</tr>\n";
 			$i++;
 		}
+		echo '<tr><td colspan="4">'.lang('Owner contact fields also available under info_owner/...').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
 		foreach($this->contacts->customfields as $name => $field)
