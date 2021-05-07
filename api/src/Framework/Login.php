@@ -304,12 +304,9 @@ class Login
 	 */
 	static function get_apps_node()
 	{
-		if (!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_login_json')))
+		if (true||!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_login_json')))
 		{
-			$json = file_get_contents('https://www.egroupware.org/pixelegg/login/login.json',
-				false, Api\Framework::proxy_context());
-			// Fallback login.json
-			if (!$json) $json = file_get_contents('pixelegg/login/login.json');
+			$json = file_get_contents('pixelegg/login/login.json');
 			// Cache the json object for a day
 			Api\Cache::setCache(Api\Cache::TREE, __CLASS__, 'egw_login_json', $json, 86400);
 		}
@@ -321,14 +318,19 @@ class Login
 			foreach ($data['apps'] as $app)
 			{
 				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
+				$icon2 = strpos($app['icon2'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon2'] : $app['icon2'];
+				$icon3 = strpos($app['icon3'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon3'] : $app['icon3'];
 				$title = lang($app['title']);
 				$nodes .= '<div class="app" style="animation:login-apps '.$counter*0.1.'s ease-out">'
-					.'<img class="icon" src="'.htmlspecialchars($icon).'"/>'
+					.'<a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" class="" target="blank">'
+					.'<img class="icon" src="'.htmlspecialchars($icon).'"/></a>'
 					.'<div class="tooltip">'
 					.'<div class="content">'
 					.'<h3><a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" target="blank">'
 					.htmlspecialchars($title).'</a></h3>'
 					.'<img class="icon-bg" src="'.htmlspecialchars($icon).'"/>'
+					.'<img class="icon-bg icon2-bg" src="'.htmlspecialchars($icon2).'"/>'
+					.'<img class="icon-bg icon3-bg" src="'.htmlspecialchars($icon3).'"/>'
 					.'<p>'.htmlspecialchars($app['desc']).'</p><div class="arrow"></div>'
 					.'</div></div></div>';
 				$counter++;
