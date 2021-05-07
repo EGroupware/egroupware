@@ -910,8 +910,10 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-			Api\Cache::setSession('filemanager', 'index',
-				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
+			$store_query = array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions')));
+			// Don't store mime filter from expose, just in case user reloads and the UI can't remove it
+			unset($store_query['col_filter']['mime']);
+			Api\Cache::setSession('filemanager', 'index', $store_query);
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
