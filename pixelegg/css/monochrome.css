@@ -2055,6 +2055,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   text-align: left;
   height: 34px;
   width: 30px;
+  cursor: pointer;
 }
 #loginMainDiv div#login_footer .apps .tooltip .content {
   min-width: 350px;
@@ -2077,6 +2078,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   transition: opacity 0.8s;
   border: 1px solid #1865aa;
   border-bottom: 6px solid #1865aa;
+  cursor: default;
 }
 #loginMainDiv div#login_footer .apps .tooltip .content img.icon-bg {
   width: 35px;
@@ -2084,6 +2086,12 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   margin: 0 auto;
   right: 15px;
   top: 15px;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content img.icon2-bg {
+  right: 55px;
+}
+#loginMainDiv div#login_footer .apps .tooltip .content img.icon3-bg {
+  right: 90px;
 }
 #loginMainDiv div#login_footer .apps .tooltip .content h3 {
   height: 30px;

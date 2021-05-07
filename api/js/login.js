@@ -74,6 +74,10 @@ egw_LAB.wait(function()
 		});
 		//cleanup darkmode session value
 		egw.setSessionItem('api', 'darkmode','');
+
+		jQuery(".tooltip", "#login_footer").on('click', function(e){
+			if (e.target == this) window.open(this.getElementsByTagName('a')[0].href, 'blank');
+		});
 	});
 });
 
