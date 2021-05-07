@@ -83,6 +83,8 @@ class infolog_merge extends Api\Storage\Merge
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
+		// Keep original value for further processing
+		$info_owner = $record->info_owner;
 
 		// Convert to human friendly values
 		$types = infolog_egw_record::$types;
@@ -165,6 +167,8 @@ class infolog_merge extends Api\Storage\Merge
 		{
 			$info+=$this->get_app_replacements($array['info_link']['app'], $array['info_link']['id'], $content, 'info_contact');
 		}
+		// Add owner fields
+		$info += $this->contact_replacements(Accounts::id2name($info_owner,'person_id'),'info_owner');
 
 		// Add parent
 		if($record->info_id_parent)
