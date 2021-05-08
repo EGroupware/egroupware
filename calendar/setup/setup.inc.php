@@ -9,7 +9,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '20.1';
+$setup_info['calendar']['version'] = '21.1';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index&ajax=true';
@@ -50,6 +50,6 @@ $setup_info['calendar']['hooks']['notifications_actions'] = 'calendar_hooks::not
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('20.1')
+	 'versions' => Array('21.1')
 );
 

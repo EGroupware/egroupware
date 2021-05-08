@@ -428,3 +428,13 @@ function resources_upgrade19_1_001()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '20.1';
 }
+
+/**
+ * Bump version to 21.1
+ *
+ * @return string
+ */
+function resources_upgrade20_1()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '21.1';
+}

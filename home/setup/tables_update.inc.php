@@ -134,3 +134,13 @@ function home_upgrade19_1()
 {
 	return $GLOBALS['setup_info']['home']['currentver'] = '20.1';
 }
+
+/**
+ * Bump version to 21.1
+ *
+ * @return string
+ */
+function home_upgrade20_1()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '21.1';
+}
