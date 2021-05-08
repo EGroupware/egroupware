@@ -155,3 +155,13 @@ function importexport_upgrade19_1()
 {
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '20.1';
 }
+
+/**
+ * Bump version to 21.1
+ *
+ * @return string
+ */
+function importexport_upgrade20_1()
+{
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '21.1';
+}

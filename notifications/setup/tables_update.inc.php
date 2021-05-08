@@ -182,3 +182,13 @@ function notifications_upgrade19_1()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '20.1';
 }
+
+/**
+ * Bump version to 21.1
+ *
+ * @return string
+ */
+function notifications_upgrade20_1()
+{
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '21.1';
+}
