@@ -58,15 +58,14 @@ div#loginMainDiv.stockLoginBackground {
 
 #socialBox {
 	display: inline-block;
-	width: 100%;
+	width: ~"calc(100% - 24px)";
 	#socialMedia {
-		margin: 0 auto;
 		width: 200px;
 		a {
-			margin-left: 10px;
+			margin-right: 10px;
 			img {
 				width: 24px;
-				filter:contrast(0.6);
+				filter:contrast(0.3);
 			}
 		}
 	}
@@ -88,7 +87,18 @@ div#loginMainDiv.stockLoginBackground {
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: cover;
-
+	.egw_message_wrapper {
+		box-shadow: 2px 1px 6px #bbbbbb;
+		-moz-box-shadow: 2px 1px 6px #bbbbbb;
+		-webkit-box-shadow: 2px 1px 6px #bbbbbb;
+		-khtml-box-shadow: 2px 1px 6px #bbbbbb;
+		#egw_message{
+			&:not(.error_message):not(.warning_message) {
+				display: none;
+			}
+			font-size: 9pt;
+		}
+    }
 	.loginMessageBox {
 		width: 100%;
 		position: absolute;
@@ -134,7 +144,7 @@ div#loginMainDiv.stockLoginBackground {
 		background: transparent;
 		width: 100%;
 		text-align: center;
-		height: 40%;
+		height: 30%;
 		display: block;
 		max-height: 40%;
 		#divLogo {
@@ -276,9 +286,9 @@ div#loginMainDiv.stockLoginBackground {
 		width: 280px;
 
 		.egw_logo {
-			width: 100%;
+			width: 24px;
 			height: 24px;
-			margin: 15px auto;
+			float: right;
 			a.logo_footer {
 				margin: auto;
 				width: 24px;
@@ -377,14 +387,14 @@ div#loginMainDiv.stockLoginBackground {
 					width: auto;
 				}
 				input[type="submit"], select.onChangeSubmit {
-					background-color: #0a5ca5;
+					background-color: #3b7aa4;
 					.color_0_gray;
 					.fontsize_xxl;
 					padding-left:0;
 					width: 250px;
 					&:hover{}
 					&:focus {}
-					margin-top: 25px;
+					margin-top: 15px;
 				}
 				select.onChangeSubmit {
 					padding-left: 25px;
