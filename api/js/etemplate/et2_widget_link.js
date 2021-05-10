@@ -1144,8 +1144,6 @@ var et2_link = /** @class */ (function (_super) {
                 _value.title = "";
             }
         }
-        if (this.options.break_title && _value.title)
-            _value.title = _value.title.replace(this.options.break_title, "\r\n");
         this.set_title(this.link, _value.title);
     };
     /**
@@ -1158,6 +1156,13 @@ var et2_link = /** @class */ (function (_super) {
     et2_link.prototype.set_title = function (node, _value) {
         if (_value === false || _value === null)
             _value = "";
+        if (this.options.break_title) {
+            // Set up title to optionally break on the provided character - replace all space with nbsp, add a
+            // zero-width space after the break string
+            _value = _value
+                .replace(this.options.break_title, this.options.break_title + "\u200B")
+                .replace(/ /g, '\u00a0');
+        }
         jQuery(node).text(_value + "");
     };
     /**
