@@ -1694,10 +1694,13 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 				e.stopImmediatePropagation();
 			});
 
-		if(_link_data.title) link.text(_link_data.title);
-
+		if(_link_data.title)
+		{
+			link.text(_link_data.title)
+				.removeClass("loading");
+		}
 		// Now that link is created, get title from server & update
-		if(!_link_data.title)
+		else
 		{
 			this.egw().link_title(_link_data.app, _link_data.id, function(title) {
 				if (title)
