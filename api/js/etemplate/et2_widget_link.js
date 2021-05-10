@@ -1373,10 +1373,12 @@ var et2_link_string = /** @class */ (function (_super) {
                 }
                 e.stopImmediatePropagation();
             });
-            if (_link_data.title)
-                link.text(_link_data.title);
+            if (_link_data.title) {
+                link.text(_link_data.title)
+                    .removeClass("loading");
+            }
             // Now that link is created, get title from server & update
-            if (!_link_data.title) {
+            else {
                 this.egw().link_title(_link_data.app, _link_data.id, function (title) {
                     if (title)
                         this.removeClass("loading").text(title);
