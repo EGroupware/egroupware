@@ -1465,7 +1465,7 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 			// Set up title to optionally break on the provided character - replace all space with nbsp, add a
 			// zero-width space after the break string
 			_value = _value
-				.replace(this.options.break_title, this.options.break_title+"\u200B")
+				.replace(this.options.break_title, this.options.break_title.trimEnd()+"\u200B")
 				.replace(/ /g, '\u00a0');
 		}
 		jQuery(node).text(_value+"");
