@@ -115,7 +115,7 @@ class Login
 			}
 			$tmpl->set_var('cd', $cd_msg);
 			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ||
-				!empty($GLOBALS['egw_info']['server']['login_message']) ? 'error' : '');
+				!empty($GLOBALS['egw_info']['server']['login_message']) ? 'error_message' : '');
 
 			$last_loginid = $_COOKIE['last_loginid'];
 			$last_domain  = $_COOKIE['last_domain'];
@@ -128,7 +128,7 @@ class Login
 			$tmpl->set_var('lang_new_password',lang('New password'));
 			$tmpl->set_var('lang_repeat_password',lang('Repeat password'));
 			$tmpl->set_var('cd', $change_passwd);
-			$tmpl->set_var('cd_class', 'error');
+			$tmpl->set_var('cd_class', 'error_message');
 			$last_loginid = $_POST['login'];
 			$last_domain  = $_POST['domain'];
 			$tmpl->set_var('passwd', $_POST['passwd']);
@@ -284,7 +284,7 @@ class Login
 		if (Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 12)
 		{
 			$tmpl->set_var('cd', lang('Browser %1 %2 is not recommended. You may experience issues and not working features. Please use the latest version of Chrome, Firefox or Edge. Thank You!',Api\Header\UserAgent::type(), Api\Header\UserAgent::version()));
-			$tmpl->set_var('cd_class', 'error');
+			$tmpl->set_var('cd_class', 'warning_message');
 		}
 		// load jquery for login screen too
 		Api\Framework::includeJS('jquery', 'jquery');

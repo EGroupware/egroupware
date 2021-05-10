@@ -1947,18 +1947,17 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 }
 #socialBox {
   display: inline-block;
-  width: 100%;
+  width: calc(100% - 24px);
 }
 #socialBox #socialMedia {
-  margin: 0 auto;
   width: 200px;
 }
 #socialBox #socialMedia a {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 #socialBox #socialMedia a img {
   width: 24px;
-  filter: contrast(0.6);
+  filter: contrast(0.3);
 }
 /* ##################################################################################
  *       login page
@@ -1974,6 +1973,18 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
+}
+#loginMainDiv .egw_message_wrapper {
+  box-shadow: 2px 1px 6px #bbbbbb;
+  -moz-box-shadow: 2px 1px 6px #bbbbbb;
+  -webkit-box-shadow: 2px 1px 6px #bbbbbb;
+  -khtml-box-shadow: 2px 1px 6px #bbbbbb;
+}
+#loginMainDiv .egw_message_wrapper #egw_message {
+  font-size: 9pt;
+}
+#loginMainDiv .egw_message_wrapper #egw_message:not(.error_message):not(.warning_message) {
+  display: none;
 }
 #loginMainDiv .loginMessageBox {
   width: 100%;
@@ -2017,7 +2028,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background: transparent;
   width: 100%;
   text-align: center;
-  height: 40%;
+  height: 30%;
   display: block;
   max-height: 40%;
 }
@@ -2161,9 +2172,9 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   width: 280px;
 }
 #loginMainDiv div#centerBox .egw_logo {
-  width: 100%;
+  width: 24px;
   height: 24px;
-  margin: 15px auto;
+  float: right;
 }
 #loginMainDiv div#centerBox .egw_logo a.logo_footer {
   margin: auto;
@@ -2298,12 +2309,12 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"],
 #loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
-  background-color: #0a5ca5;
+  background-color: #3b7aa4;
   color: #ffffff;
   font-size: 20px;
   padding-left: 0;
   width: 250px;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
   padding-left: 25px;

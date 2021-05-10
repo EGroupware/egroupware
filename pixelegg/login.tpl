@@ -2,9 +2,9 @@
 
 
 <div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">
-	<div class="loginMessageBox">
-		<div id="loginCdMessage" class="{cd_class}">{cd}
-		<span class="closeBtn">X</span></div>
+	<div class="egw_message_wrapper">
+		<div id="egw_message" class="{cd_class}">{cd}
+		<span class="close"></span></div>
 	</div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
@@ -109,15 +109,15 @@
 	            <tr>
 		            <td>
 			            <div id="socialBox"></div>
+			            <div class="egw_logo">
+				            <a href="https://www.egroupware.org" class="logo_footer" target="_blank">
+					            <img src="api/templates/default/images/login_logo.png">
+				            </a>
+			            </div>
 		            </td>
 	            </tr>
             </table>
         </form>
-	    <div class="egw_logo">
-		    <a href="https://www.egroupware.org" class="logo_footer" target="_blank">
-			    <img src="api/templates/default/images/login_logo.png">
-		    </a>
-	    </div>
     </div>
 
 	<div id="login_footer">
