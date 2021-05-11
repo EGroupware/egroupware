@@ -1992,44 +1992,6 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 #loginMainDiv .egw_message_wrapper #egw_message:not(.error_message):not(.warning_message) {
   display: none;
 }
-#loginMainDiv .loginMessageBox {
-  width: 100%;
-  position: absolute;
-  z-index: 100;
-}
-#loginMainDiv .loginMessageBox #loginCdMessage:not(.error) {
-  display: none;
-}
-#loginMainDiv .loginMessageBox #loginCdMessage.error {
-  border: 3px solid #7ab7ec;
-  color: red;
-  text-align: center;
-  font-size: 12pt;
-  white-space: pre-wrap;
-  height: auto;
-  background: white;
-  opacity: 0.94;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 20px;
-  margin-top: 20px;
-}
-#loginMainDiv .loginMessageBox .closeBtn {
-  position: absolute;
-  right: 30px;
-  border-radius: 100%;
-  width: 25px;
-  height: 25px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 15px;
-  top: 30px;
-  color: #b6b7bb;
-}
-#loginMainDiv .loginMessageBox .closeBtn:hover {
-  color: #5e6063;
-  cursor: pointer;
-}
 #loginMainDiv #divAppIconBar {
   background: transparent;
   width: 100%;
@@ -7928,6 +7890,11 @@ table.egwGridView_grid img.et2_appicon {
   background-size: 24px 24px !important;
   border: none;
 }
+@media only screen and (max-device-width : 1024px) and (min-width: 736px) and (orientation : portrait), only screen and (max-device-width : 1024px) and (min-width: 736px) and (orientation : landscape) {
+  body div#loginMainDiv .egw_message_wrapper {
+    position: relative;
+  }
+}
 @media only screen and (max-device-width : 1024px) {
   #egw_fw_print {
     display: none;
@@ -7936,50 +7903,9 @@ table.egwGridView_grid img.et2_appicon {
     background-color: #486F93;
     overflow: auto;
   }
-  div#loginMainDiv .loginMessageBox {
-    width: 100%;
-    position: absolute;
-    z-index: 100;
-  }
-  div#loginMainDiv .loginMessageBox #loginCdMessage:not(.error) {
-    display: none;
-  }
-  div#loginMainDiv .loginMessageBox #loginCdMessage.error {
-    border: 3px solid #7ab7ec;
-    color: red;
-    text-align: center;
-    font-size: 12pt;
-    white-space: pre-wrap;
-    height: auto;
-    background: white;
-    opacity: 0.94;
-    margin-left: 20px;
-    border-radius: 5px;
-    margin-right: 20px;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  div#loginMainDiv .loginMessageBox .closeBtn {
-    position: absolute;
-    right: 30px;
-    border: 2px solid #7ab7ec;
-    border-radius: 100%;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 13pt;
-    font-weight: bold;
-    top: 30px;
-  }
-  div#loginMainDiv .loginMessageBox .closeBtn:hover {
-    color: white;
-    background: black;
-    cursor: pointer;
-  }
   div#loginMainDiv #divAppIconBar {
     max-height: 35%;
-    height: 35%;
+    height: 20%;
   }
   div#loginMainDiv #divAppIconBar #divLogo .login_logo_container {
     width: 200px;
@@ -8046,6 +7972,9 @@ table.egwGridView_grid img.et2_appicon {
     background: none;
     font-weight: normal !important;
     word-break: break-all;
+  }
+  div#loginMainDiv div#login_footer {
+    background-color: transparent;
   }
 }
 @media only screen and (max-device-width : 1024px) and (orientation : portrait) {
