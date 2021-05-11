@@ -51,6 +51,7 @@ cannot create directory because it begins or ends in a space	filemanager	de	Die 
 cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Verzeichnisses '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
+classic	filemanager	de	Symbolleisten
 clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
 collab editor settings	filemanager	de	Collabora Online Einstellungen
@@ -210,6 +211,7 @@ no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis
 no preview available	filemanager	de	Keine Vorschau verfügbar
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
+notebookbar	filemanager	de	In Registern
 noone	filemanager	de	Niemand
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
@@ -289,6 +291,7 @@ there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei
 tile view	filemanager	de	Kachelansicht
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
+ui mode	filemanager	de	Benutzeroberfläche
 under directory	filemanager	de	unter dem Verzeichnis
 unmount	filemanager	de	Unmount
 unused space	filemanager	de	Nicht benutzter Platz
