@@ -51,6 +51,7 @@ cannot create directory because it begins or ends in a space	filemanager	en	Can 
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
 check virtual filesystem	common	en	Check virtual filesystem
+classic	filemanager	en	Standard Toolbar
 clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
 collab editor settings	filemanager	en	Collab Editor settings
@@ -211,6 +212,7 @@ no files in this directory.	filemanager	en	No files in this directory.
 no preview available	filemanager	en	No preview available.
 no version history for this file/directory	filemanager	en	No version history for this file/directory.
 noone	filemanager	en	Noone
+notebookbar	filemanager	en	Tabbed
 older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
@@ -290,6 +292,7 @@ there's already a file with that name!	filemanager	en	There's already a file wit
 tile view	filemanager	en	Tile view
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
 total files	filemanager	en	Total files
+ui mode	filemanager	en	Standard Toolbar
 under directory	filemanager	en	under directory
 unmount	filemanager	en	Unmount
 unused space	filemanager	en	Unused space
