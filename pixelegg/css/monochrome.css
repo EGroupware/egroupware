@@ -1948,8 +1948,14 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   -moz-box-shadow: 2px 1px 6px #bbbbbb;
   -webkit-box-shadow: 2px 1px 6px #bbbbbb;
   -khtml-box-shadow: 2px 1px 6px #bbbbbb;
+  min-width: 280px;
+  width: max-content;
+  margin: auto;
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
+  white-space: normal;
+  background-image: none;
+  border-left-width: 12px !important;
   font-size: 9pt;
 }
 #loginMainDiv .egw_message_wrapper #egw_message:not(.error_message):not(.warning_message) {
