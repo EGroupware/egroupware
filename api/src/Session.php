@@ -1125,7 +1125,7 @@ class Session
 				$GLOBALS['egw_info']['server']['unsuccessful_ip_whitelist'], $matches) &&
 			($key=array_search($ip, $matches[1])) !== false)
 		{
-			$blocked = !empty($matches[3][$key]) && $false_ip > $matches[3][$key];
+			$blocked = !empty($matches[2][$key]) && $false_ip > $matches[2][$key];
 		}
 		else	// else check with general number
 		{
