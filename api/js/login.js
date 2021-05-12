@@ -51,6 +51,7 @@ egw_LAB.wait(function()
 		}
 
 		do_social([
+			{ "svg": egw_webserverUrl+"/api/templates/default/images/logo164x164.svg", "url": "https://www.egroupware.org/en", "lang": { "de": "https://www.egroupware.org/de/" }},
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
 			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_twitter.svg", "url": "https://twitter.com/egroupware" },
