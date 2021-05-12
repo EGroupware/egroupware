@@ -102,18 +102,14 @@
                 <!-- BEGIN registration -->
                 <tr>
                     <td colspan="3" height="20" align="center" class="registration">
-                        {lostpassword_link}{lostid_link}{register_link}
+                        {lostpassword_link}{lostid_link}
                     </td>
                 </tr>
                 <!-- END registration -->
 	            <tr>
-		            <td>
+		            <td align="center">
 			            <div id="socialBox"></div>
-			            <div class="egw_logo">
-				            <a href="https://www.egroupware.org" class="logo_footer" target="_blank">
-					            <img src="api/templates/default/images/login_logo.png">
-				            </a>
-			            </div>
+                        {register_link}
 		            </td>
 	            </tr>
             </table>
