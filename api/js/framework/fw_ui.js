@@ -79,13 +79,15 @@ var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 
 		//close button on active header
 		this.closeButton = document.createElement('span');
-		this.closeButton.classList.add('close')
+		this.closeButton.classList.add('close');
 
 
 		//Create the content div
 		this.contentDiv = document.createElement("div");
 		this.contentDiv.id = _app+'_sidebox_content';
-		jQuery(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content");
+		jQuery(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content")
+			.attr("role","menu")
+			.attr("aria-label",this.entryName);
 		jQuery(this.contentDiv).hide();
 
 		//Add in invisible marker to store the original position of this element in the DOM tree
@@ -408,12 +410,13 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 			}
 			return true;
 
-		}.bind(this.closeButton))
+		}.bind(this.closeButton));
 	}
 
 	this.contentDiv = document.createElement("div");
-	jQuery(this.contentDiv).addClass("egw_fw_ui_tab_content");
-	jQuery(this.contentDiv).hide();
+	jQuery(this.contentDiv).addClass("egw_fw_ui_tab_content")
+		.attr("role","application")
+		.hide();
 
 	//Sort the element in at the given position
 	var _this = this;
@@ -846,17 +849,26 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 	this.animationCallback = _animationCallback;
 	this.tag = _tag;
 
+	// Unique ID for accessibility
+	let uid = "sidebox_nav_"+egw.uid();
+
 	//Create the ui divs
-	this.headerDiv = document.createElement('div');
-	jQuery(this.headerDiv).addClass('egw_fw_ui_category');
+	this.headerDiv = document.createElement('nav');
+	jQuery(this.headerDiv).addClass('egw_fw_ui_category')
+		.attr("aria-haspopup",true)
+		.attr("aria-labelledby",uid)
+		.attr("role","section")
+		.attr("tabindex",0);
 
 	//Add the text
-	var entryH1 = document.createElement('h1');
-	jQuery(entryH1).append(_title);
-	jQuery(this.headerDiv).append(entryH1);
+	var entryH2 = document.createElement('h2');
+	jQuery(entryH2)
+		.attr("id",uid)
+		.append(_title);
+	jQuery(this.headerDiv).append(entryH2);
 
 	//Add the content
-	this.contentDiv = document.createElement('div');
+	this.contentDiv = document.createElement('ul');
 	this.contentDiv._parent = this;
 	jQuery(this.contentDiv).addClass('egw_fw_ui_category_content');
 	jQuery(this.contentDiv).append(_content);
@@ -864,8 +876,9 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 
 	//Add content and header to the content div, add some magic jQuery code in order to make it foldable
 	this.headerDiv._parent = this;
-	jQuery(this.headerDiv).click(
-		function() {
+	jQuery(this.headerDiv).on("click keydown",
+		function(e) {
+			if([EGW_KEY_ENTER, EGW_KEY_SPACE].indexOf(e.which) == -1) return;
 			if (!jQuery(this).hasClass('egw_fw_ui_category_active'))
 			{
 				this._parent.open(false);
@@ -874,15 +887,17 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 			{
 				this._parent.close(false);
 			}
+			e.stopPropagation();
 		});
 	jQuery(this.contDiv).append(this.headerDiv);
-	jQuery(this.contDiv).append(this.contentDiv);
+	jQuery(this.headerDiv).append(this.contentDiv);
 }
 
 egw_fw_ui_category.prototype.open = function(_instantly)
 {
 	this.callback.call(this, true);
-	jQuery(this.headerDiv).addClass('egw_fw_ui_category_active');
+	jQuery(this.headerDiv).addClass('egw_fw_ui_category_active')
+		.attr("aria-expanded",true);
 
 	if (_instantly)
 	{
@@ -895,12 +910,14 @@ egw_fw_ui_category.prototype.open = function(_instantly)
 			this._parent.animationCallback.call(this._parent);
 		});
 	}
+	jQuery("li:first-child", this.headerDiv).eq(0).focus();
 };
 
 egw_fw_ui_category.prototype.close = function(_instantly)
 {
 	this.callback.call(this, false);
-	jQuery(this.headerDiv).removeClass('egw_fw_ui_category_active');
+	jQuery(this.headerDiv).removeClass('egw_fw_ui_category_active')
+		.attr("aria-expanded", false);
 
 	if (_instantly)
 	{

@@ -303,7 +303,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 						if (_data[i].entries[j].icon_or_star)
 						{
 							var disableIfNoEPL = _data[i].entries[j].disableIfNoEPL ? ' disableIfNoEPL" title="'+egw.lang("This feature is only available in EPL version.") : "";
-							catContent += '<div class="egw_fw_ui_sidemenu_listitem'+disableIfNoEPL+
+							catContent += '<li class="egw_fw_ui_sidemenu_listitem'+disableIfNoEPL+
 									'"><img class="egw_fw_ui_sidemenu_listitem_icon" src="' + _data[i].entries[j].icon_or_star + '" />';
 						}
 						if (_data[i].entries[j].item_link == '')

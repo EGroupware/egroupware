@@ -83,7 +83,7 @@ class Favorites
 				continue;
 			}
 			$li = "<li data-id='$name' data-group='{$filter['group']}' class='ui-menu-item' role='menuitem'>\n";
-			$li .= '<a href="#" class="ui-corner-all" tabindex="-1">';
+			$li .= '<a href="#" class="ui-corner-all">';
 			$li .= "<div class='" . ((string)$name === (string)$default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
 				$filter['name'];
 			$li .= ($filter['group'] != false && !$is_admin || $name === 'blank' ? "" :

@@ -191,7 +191,7 @@
 				.background_color_0_gray;
 				border-color: @gray_30;
 				border-right: 0px;
-				margin-bottom: 10px;
+				margin-bottom: 0px;
 				border-top-color: white;
 				padding-top: 0px;
 			}
@@ -218,15 +218,20 @@
 
 				/*background-color: @egw_color_2_d;*/
 
-				h1 {
+				h1,h2 {
 					margin: 5px 0px 3px 5px;
 					padding: 0px 0px 0px 24px;
 					line-height: 1em;
 					.fontsize_l;
+					font-weight: normal;
 					background-image:url(../images/arrow_right.svg);
 					background-repeat:no-repeat;
 					background-position:left center;
 					background-size: 12px;
+				}
+
+				h2 {
+					padding-bottom: 2px;
 				}
 
 				div.egw_fw_ui_category:nth-last-of-type(-n+3) {
@@ -255,7 +260,7 @@
 				margin-top: 4px;
 				background-color: @egw_color_2_a;
 				.color_5_gray;
-				h1 {
+				h1,h2 {
 					background-image:url(../images/arrow_down.svg);
 					line-height: 1em;
 					font-size: 12px;
@@ -491,19 +496,18 @@
     border-top-width: 0;
     border-left: 0px solid;
     border-bottom: 0px solid;
-    margin-left: 4px;
+    margin-left: 0px;
     margin-top: 0px;
     padding-bottom: 5px;
     padding-left: 0px;
     padding-top: 3px;
-    margin-right: 5px;
+    margin-right: 0px;
     /*min-height: 50px;*/
 
-            // Last Element rounded
-                    &:last-of-type{
-                    .border_radius (0, 0, 10px, 0);
+            // Last Element
+				&:last-of-type{
                     border-color: @gray_30;
-					margin-bottom: 5px;
+					margin-bottom: -2px;
                 }
 
                 img { .dimension_height_s; vertical-align: middle;}
