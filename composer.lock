@@ -380,19 +380,20 @@
         },
         {
             "name": "celtic/lti",
-            "version": "v3.3.0",
+            "version": "v4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/celtic-project/LTI-PHP.git",
-                "reference": "8805e25dcd5bfa559ac876684d153ef4bc2e0166"
+                "reference": "b2c675187597c3bf2b6bdc82c5f549ea1400ca22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/celtic-project/LTI-PHP/zipball/8805e25dcd5bfa559ac876684d153ef4bc2e0166",
-                "reference": "8805e25dcd5bfa559ac876684d153ef4bc2e0166",
+                "url": "https://api.github.com/repos/celtic-project/LTI-PHP/zipball/b2c675187597c3bf2b6bdc82c5f549ea1400ca22",
+                "reference": "b2c675187597c3bf2b6bdc82c5f549ea1400ca22",
                 "shasum": ""
             },
             "require": {
+                "firebase/php-jwt": "^5.0.0",
                 "php": ">=5.6.0"
             },
             "type": "library",
@@ -416,7 +417,7 @@
             "keywords": [
                 "LTI"
             ],
-            "time": "2020-06-25T14:21:48+00:00"
+            "time": "2021-04-26T18:12:27+00:00"
         },
         {
             "name": "components/bootstrap",
@@ -1426,17 +1427,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "67d1bedf2ef4f164503af4fcc765b5038d2e0da2"
+                "reference": "1189949"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/67d1bedf2ef4f164503af4fcc765b5038d2e0da2",
-                "reference": "67d1bedf2ef4f164503af4fcc765b5038d2e0da2",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/1189949",
+                "reference": "1189949",
                 "shasum": ""
             },
             "require": {
-                "celtic/lti": "^3.0.0",
-                "imsglobal/lti-1p3-tool": "dev-master"
+                "celtic/lti": "^4.4.1"
             },
             "type": "egroupware-app",
             "autoload": {
@@ -1464,7 +1464,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-03-30T16:12:48+00:00"
+            "time": "2021-05-12T16:36:47+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1667,24 +1667,24 @@
             "time": "2015-09-02T00:00:00+00:00"
         },
         {
-            "name": "fproject/php-jwt",
-            "version": "4.0.5",
+            "name": "firebase/php-jwt",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fproject/php-jwt.git",
-                "reference": "91047b202bbe7d966e8fce67ab16ebca8bdcb6b7"
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fproject/php-jwt/zipball/91047b202bbe7d966e8fce67ab16ebca8bdcb6b7",
-                "reference": "91047b202bbe7d966e8fce67ab16ebca8bdcb6b7",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
+                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.8.36"
+                "phpunit/phpunit": ">=4.8 <=9"
             },
             "type": "library",
             "autoload": {
@@ -1706,16 +1706,15 @@
                     "name": "Anant Narayanan",
                     "email": "anant@php.net",
                     "role": "Developer"
-                },
-                {
-                    "name": "Bui Sy Nguyen",
-                    "email": "nguyenbs@gmail.com",
-                    "role": "Developer"
                 }
             ],
-            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Support several key types including JWK.",
-            "homepage": "https://github.com/fproject/php-jwt",
-            "time": "2018-04-02T10:36:30+00:00"
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "time": "2021-02-12T00:02:00+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -2163,42 +2162,6 @@
             ],
             "abandoned": "guzzle/guzzle",
             "time": "2014-02-05T18:29:46+00:00"
-        },
-        {
-            "name": "imsglobal/lti-1p3-tool",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/IMSGlobal/lti-1-3-php-library.git",
-                "reference": "3a192de99f3783d76caea462b0d04db28569c123"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/IMSGlobal/lti-1-3-php-library/zipball/3a192de99f3783d76caea462b0d04db28569c123",
-                "reference": "3a192de99f3783d76caea462b0d04db28569c123",
-                "shasum": ""
-            },
-            "require": {
-                "fproject/php-jwt": "^4.0",
-                "phpseclib/phpseclib": "^2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "IMSGlobal\\LTI\\": "src/lti"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Martin Lenord",
-                    "email": "ims.m@rtin.dev"
-                }
-            ],
-            "support": {
-                "source": "https://github.com/IMSGlobal/lti-1-3-php-library/tree/master",
-                "issues": "https://github.com/IMSGlobal/lti-1-3-php-library/issues"
-            },
-            "time": "2020-06-03T16:10:05+00:00"
         },
         {
             "name": "lcobucci/jwt",
