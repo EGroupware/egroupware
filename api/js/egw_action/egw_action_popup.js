@@ -755,9 +755,13 @@ function egwPopupActionImplementation()
 				},true);
 				clipboard_action.group = 2.5;
 			}
-			var os_clipboard_caption = this._context.event.originalEvent.target.innerText.trim();
-			clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length>20 ? os_clipboard_caption.substring(0,20)+'...':os_clipboard_caption));
-			clipboard_action.data.target = this._context.event.originalEvent.target;
+			let os_clipboard_caption = "";
+			if(this._context.event)
+			{
+				os_clipboard_caption = this._context.event.originalEvent.target.innerText.trim();
+				clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
+				clipboard_action.data.target = this._context.event.originalEvent.target;
+			}
 			jQuery(clipboard_action.data.target).off('copy').on('copy', function(event) {
 				// Cancel any no-select css
 				var target = jQuery(clipboard_action.data.target);
