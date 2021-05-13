@@ -2510,6 +2510,7 @@ var et2_nextmatch_header_bar = /** @class */ (function (_super) {
         // Set activeFilters to current value
         this.nextmatch.activeFilters.search = settings.search;
         this.et2_searchbox.set_value(settings.search);
+        jQuery(this.et2_searchbox.getInputNode()).attr("aria-label", egw.lang("search"));
         /**
          *  Mobile theme specific part for nm header
          *  nm header has very different behaivior for mobile theme and basically

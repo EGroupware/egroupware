@@ -244,7 +244,6 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 			noSuggestionText: this.egw().lang("No suggestions"),
 			required: this.options.required,
 			allowFreeEntries: this.options.allowFreeEntries,
-			useTabKey: true,
 			useCommaKey: this.options.useCommaKey,
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
@@ -278,6 +277,7 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
 		this.$taglist = jQuery(this.taglist);
+		this.div.find("input").attr("id",this.dom_id);
 		if(this.options.value)
 		{
 			this.taglist.addToSelection(this.options.value,true);
@@ -572,6 +572,11 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 			return wrapper;
 		}
 		return label;
+	}
+
+	getInputNode(): HTMLElement
+	{
+		return this.div ? this.div.filter("input")[0] : null;
 	}
 
 	set_autocomplete_url(source)

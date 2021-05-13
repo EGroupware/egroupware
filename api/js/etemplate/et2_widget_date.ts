@@ -210,7 +210,12 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		}
 	}
 
-	set_type(_type) 
+	getInputNode(): HTMLElement
+	{
+		return this.input_date[0];
+	}
+
+	set_type(_type)
 	{
 		if(_type != this.getType())
 		{

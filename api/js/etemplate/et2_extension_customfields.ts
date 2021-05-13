@@ -18,7 +18,7 @@
 	et2_core_inputWidget;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 
@@ -173,9 +173,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	{
 
 		// Check whether the _sender object exists inside the management array
-		if(this.rows && _sender.id && this.rows[_sender.id])
-		{
+		if (this.rows && _sender.id && this.rows[_sender.id]) {
 			return this.rows[_sender.id];
+		}
+		if (this.rows && _sender.id && _sender.id.indexOf("_label") && this.rows[_sender.id.replace("_label", "")])
+		{
+			return jQuery(this.rows[_sender.id.replace("_label","")]).prev("td")[0] || null;
 		}
 
 		return super.getDOMNode(_sender);
@@ -251,6 +254,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					const no_skip = this[setup_function].call(this, field_name, field, attrs);
 					if(!no_skip) continue;
 				}
+				this.rows[id] = cf[0];
 
 				if(this.getType() == 'customfields-list') {
 					// No label, cust widget
@@ -267,11 +271,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				else
 				{
 					// Label in first column, widget in 2nd
-					cf.text(field.label + "");
-					cf = jQuery(document.createElement("td"))
-						.appendTo(row);
+					jQuery(document.createElement("td"))
+						.prependTo(row);
+					et2_createWidget("label",{id: id + "_label", value: field.label,for: id},this);
 				}
-				this.rows[id] = cf[0];
 
 				// Set any additional attributes set in options, but not for widgets that pass actual options
 				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values))

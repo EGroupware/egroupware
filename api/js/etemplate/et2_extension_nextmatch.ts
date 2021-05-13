@@ -3240,7 +3240,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
 			.addClass('search')
-			.prependTo(egwIsMobile()?this.nextmatch.getDOMNode():this.row_div);
+			.prependTo(egwIsMobile()?this.nextmatch.getDOMNode():this.row_div)
 
 		// searchbox widget options
 		const searchbox_options = {
@@ -3259,6 +3259,7 @@ class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHe
 		this.nextmatch.activeFilters.search = settings.search;
 
 		this.et2_searchbox.set_value(settings.search);
+		jQuery(this.et2_searchbox.getInputNode()).attr("aria-label",egw.lang("search"));
 		/**
 		 *  Mobile theme specific part for nm header
 		 *  nm header has very different behaivior for mobile theme and basically

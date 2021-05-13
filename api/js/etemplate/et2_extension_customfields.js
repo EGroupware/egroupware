@@ -111,6 +111,9 @@ var et2_customfields_list = /** @class */ (function (_super) {
         if (this.rows && _sender.id && this.rows[_sender.id]) {
             return this.rows[_sender.id];
         }
+        if (this.rows && _sender.id && _sender.id.indexOf("_label") && this.rows[_sender.id.replace("_label", "")]) {
+            return jQuery(this.rows[_sender.id.replace("_label", "")]).prev("td")[0] || null;
+        }
         return _super.prototype.getDOMNode.call(this, _sender);
     };
     /**
@@ -173,6 +176,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                     if (!no_skip)
                         continue;
                 }
+                this.rows[id] = cf[0];
                 if (this.getType() == 'customfields-list') {
                     // No label, cust widget
                     attrs.readonly = true;
@@ -187,11 +191,10 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 }
                 else {
                     // Label in first column, widget in 2nd
-                    cf.text(field.label + "");
-                    cf = jQuery(document.createElement("td"))
-                        .appendTo(row);
+                    jQuery(document.createElement("td"))
+                        .prependTo(row);
+                    et2_core_widget_1.et2_createWidget("label", { id: id + "_label", value: field.label, for: id }, this);
                 }
-                this.rows[id] = cf[0];
                 // Set any additional attributes set in options, but not for widgets that pass actual options
                 if (['select', 'radio', 'radiogroup', 'checkbox', 'button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values)) {
                     var w = et2_registry[attrs.type ? attrs.type : field.type];
@@ -202,7 +205,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                     }
                 }
                 // Create widget
-                var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+                var widget = this.widgets[field_name] = et2_core_widget_1.et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
             }
             // Field is not to be shown
             if (!this.options.fields || jQuery.isEmptyObject(this.options.fields) || this.options.fields[field_name] == true) {
@@ -492,7 +495,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                 // This controls where the button is placed in the DOM
                 this.rows[button_attrs.id] = cf[0];
                 // Do not store in the widgets list, one name for multiple widgets would cause problems
-                /*this.widgets[field_name] = */ et2_createWidget(attrs.type ? attrs.type : field.type, button_attrs, this);
+                /*this.widgets[field_name] = */ et2_core_widget_1.et2_createWidget(attrs.type ? attrs.type : field.type, button_attrs, this);
             }
             return false;
         }
@@ -524,7 +527,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             cf = jQuery(document.createElement("td"))
                 .appendTo(row);
             // Create upload widget
-            var widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+            var widget = this.widgets[field_name] = et2_core_widget_1.et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
             // This controls where the widget is placed in the DOM
             this.rows[attrs.id] = cf[0];
             jQuery(widget.getDOMNode(widget)).css('vertical-align', 'top');
@@ -542,7 +545,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
             // This controls where the button is placed in the DOM
             this.rows[select_attrs.id] = cf[0];
             // Do not store in the widgets list, one name for multiple widgets would cause problems
-            widget = et2_createWidget(select_attrs.type, select_attrs, this);
+            widget = et2_core_widget_1.et2_createWidget(select_attrs.type, select_attrs, this);
             jQuery(widget.getDOMNode(widget)).css('vertical-align', 'top').prependTo(cf);
         }
         return false;

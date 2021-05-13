@@ -122,7 +122,6 @@ var et2_taglist = /** @class */ (function (_super) {
             noSuggestionText: this.egw().lang("No suggestions"),
             required: this.options.required,
             allowFreeEntries: this.options.allowFreeEntries,
-            useTabKey: true,
             useCommaKey: this.options.useCommaKey,
             disabled: this.options.disabled || this.options.readonly,
             editable: !(this.options.disabled || this.options.readonly),
@@ -152,6 +151,7 @@ var et2_taglist = /** @class */ (function (_super) {
         }
         this.taglist = this.taglist.magicSuggest(this.taglist_options);
         this.$taglist = jQuery(this.taglist);
+        this.div.find("input").attr("id", this.dom_id);
         if (this.options.value) {
             this.taglist.addToSelection(this.options.value, true);
         }
@@ -398,6 +398,9 @@ var et2_taglist = /** @class */ (function (_super) {
             return wrapper;
         }
         return label;
+    };
+    et2_taglist.prototype.getInputNode = function () {
+        return this.div ? this.div.filter("input")[0] : null;
     };
     et2_taglist.prototype.set_autocomplete_url = function (source) {
         if (source && source[0] != '/' && source.indexOf('http') != 0) {

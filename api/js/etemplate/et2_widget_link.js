@@ -557,7 +557,8 @@ var et2_link_entry = /** @class */ (function (_super) {
             if (typeof self.options.value != 'object')
                 self.options.value = {};
             self.options.value.app = self.app_select.val();
-        });
+        })
+            .attr("aria-label", egw.lang("linkapps"));
         var opt_count = 0;
         for (var key in this.options.select_options) {
             opt_count++;
@@ -611,6 +612,8 @@ var et2_link_entry = /** @class */ (function (_super) {
                 }
             }
         })
+            .attr("aria-label", egw.lang("Link search"))
+            .attr("role", "searchbox")
             .appendTo(this.div);
         this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
         // Autocomplete

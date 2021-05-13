@@ -859,6 +859,9 @@ export class et2_selectbox extends et2_inputWidget
 				allow_single_deselect: this.options.allow_single_deselect,
 				no_results_text: this.egw().lang('No results match')
 			});
+			this.input.siblings().filter(".chzn-container")
+				.attr("role","combobox")
+				.attr("tabindex",this.options.tabindex || "0");
 			// set autocomplete for search input field to an arbitary value in order to stop it.
 			this.input.siblings().find('.chzn-search input').attr('autocomplete', 'new-password');
 			if (this.getType() == 'select-country') {

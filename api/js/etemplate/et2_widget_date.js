@@ -142,6 +142,9 @@ var et2_date = /** @class */ (function (_super) {
             this.set_value(null);
         }
     };
+    et2_date.prototype.getInputNode = function () {
+        return this.input_date[0];
+    };
     et2_date.prototype.set_type = function (_type) {
         if (_type != this.getType()) {
             _super.prototype.setType.call(this, _type);

@@ -159,6 +159,9 @@ jQuery(document).ready(function() {
 		// Only go on if this is a valid key code - call the key handler
 		if (keyCode != -1)
 		{
+			// Check whether the event came from the sidebox - if yes, ignore
+			if(jQuery(e.target).parents("#egw_fw_sidemenu").length > 0) return;
+
 			// Check whether the event came from an input field - if yes, only
 			// allow function keys (like F1) to be captured by our code
 			var inInput = _egw_nodeIsInInput(e.target);

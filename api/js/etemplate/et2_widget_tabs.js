@@ -53,8 +53,9 @@ var et2_tabbox = /** @class */ (function (_super) {
         _this.container = jQuery(document.createElement("div"))
             .addClass("et2_tabbox");
         // Create the upper container for the tab flags
-        _this.flagContainer = jQuery(document.createElement("div"))
+        _this.flagContainer = jQuery(document.createElement("ul"))
             .addClass("et2_tabheader")
+            .attr("role", "tablist")
             .appendTo(_this.container);
         // Create the lower tab container
         _this.tabContainer = jQuery(document.createElement("div"))
@@ -275,14 +276,14 @@ var et2_tabbox = /** @class */ (function (_super) {
         this.flagContainer.empty();
         for (var i = 0; i < this.tabData.length; i++) {
             var entry = this.tabData[i];
-            entry.flagDiv = jQuery(document.createElement("span"))
+            entry.flagDiv = jQuery(document.createElement("li"))
                 .addClass("et2_tabflag")
                 .appendTo(this.flagContainer);
             // Class to tab's div container
             if (entry.widget_options && typeof entry.widget_options.class != 'undefined') {
                 entry.flagDiv.addClass(entry.widget_options.class);
             }
-            entry.flagDiv.text(entry.label || "Tab");
+            entry.flagDiv.html("<a href=\"#\" role='tab'>" + (entry.label || "Tab") + "</a>");
             if (entry.hidden || this.tabData.length === 1) {
                 entry.flagDiv.hide();
             }
@@ -293,6 +294,7 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             entry.contentDiv = jQuery(document.createElement("div"))
                 .addClass("et2_tabcntr")
+                .attr("role", "tabpanel")
                 .appendTo(this.tabContainer);
             if (this.options.align_tabs == 'v') {
                 entry.flagDiv.unbind('click');
@@ -341,12 +343,15 @@ var et2_tabbox = /** @class */ (function (_super) {
     et2_tabbox.prototype.setActiveTab = function (_idx) {
         this.selected_index = _idx;
         // Remove the "active" flag from all tabs-flags
-        jQuery(".et2_tabflag", this.flagContainer).removeClass("active");
+        jQuery(".et2_tabflag", this.flagContainer).removeClass("active")
+            .attr("aria-selected", "false");
         // Hide all tab containers
         this.tabContainer.children().hide();
         // Set the tab flag with the given index active and show the corresponding
         // container
-        this.flagContainer.children(":eq(" + _idx + ")").addClass("active");
+        this.flagContainer.children(":eq(" + _idx + ")")
+            .addClass("active")
+            .attr("aria-selected", "true");
         this.tabContainer.children(":eq(" + _idx + ")").show();
         // lookup for nm children and trigger a resize, since nm inside inactive
         // tabs are not getting render due to tab's deffer loading.

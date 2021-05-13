@@ -74,8 +74,9 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			.addClass("et2_tabbox");
 
 		// Create the upper container for the tab flags
-		this.flagContainer = jQuery(document.createElement("div"))
+		this.flagContainer = jQuery(document.createElement("ul"))
 			.addClass("et2_tabheader")
+			.attr("role","tablist")
 			.appendTo(this.container);
 
 		// Create the lower tab container
@@ -350,7 +351,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 		for (var i = 0; i < this.tabData.length; i++)
 		{
 			var entry = this.tabData[i];
-			entry.flagDiv = jQuery(document.createElement("span"))
+			entry.flagDiv = jQuery(document.createElement("li"))
 				.addClass("et2_tabflag")
 				.appendTo(this.flagContainer);
 			// Class to tab's div container
@@ -358,7 +359,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			{
 				entry.flagDiv.addClass(entry.widget_options.class);
 			}
-			entry.flagDiv.text(entry.label || "Tab");
+			entry.flagDiv.html("<a href=\"#\" role='tab'>" + (entry.label || "Tab") + "</a>");
 			if(entry.hidden || this.tabData.length === 1)
 			{
 				entry.flagDiv.hide();
@@ -371,6 +372,7 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 			}
 			entry.contentDiv = jQuery(document.createElement("div"))
 				.addClass("et2_tabcntr")
+				.attr("role","tabpanel")
 				.appendTo(this.tabContainer);
 			if (this.options.align_tabs == 'v') {
 				entry.flagDiv.unbind('click');
@@ -429,14 +431,17 @@ class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,e
 		this.selected_index = _idx;
 
 		// Remove the "active" flag from all tabs-flags
-		jQuery(".et2_tabflag", this.flagContainer).removeClass("active");
+		jQuery(".et2_tabflag", this.flagContainer).removeClass("active")
+			.attr("aria-selected","false");
 
 		// Hide all tab containers
 		this.tabContainer.children().hide();
 
 		// Set the tab flag with the given index active and show the corresponding
 		// container
-		this.flagContainer.children(":eq(" + _idx + ")").addClass("active");
+		this.flagContainer.children(":eq(" + _idx + ")")
+			.addClass("active")
+			.attr("aria-selected","true");
 		this.tabContainer.children(":eq(" + _idx + ")").show();
 
 		// lookup for nm children and trigger a resize, since nm inside inactive

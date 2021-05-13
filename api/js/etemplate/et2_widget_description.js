@@ -33,6 +33,7 @@ require("./et2_core_common");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
+var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
 /**
  * Class which implements the "description" XET-Tag
  */
@@ -72,16 +73,26 @@ var et2_description = /** @class */ (function (_super) {
             _super.prototype.doLoadingFinished.call(this);
             // Get the real id of the 'for' widget
             var for_widget = null;
+            var for_id = "";
             if (this.options["for"] && ((for_widget = this.getParent().getWidgetById(this.options.for)) ||
                 (for_widget = this.getRoot().getWidgetById(this.options.for))) && for_widget && for_widget.id) {
                 if (for_widget.dom_id) {
-                    this.span.attr("for", for_widget.dom_id);
+                    for_id = for_widget.dom_id;
+                    if (for_widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode().id) {
+                        for_id = for_widget.getInputNode().id;
+                    }
+                    this.span.attr("for", for_id);
                 }
                 else {
                     // Target widget is not done yet, need to wait
                     var tab_deferred = jQuery.Deferred();
                     window.setTimeout(function () {
-                        this.span.attr("for", for_widget.dom_id);
+                        var _a;
+                        for_id = for_widget.dom_id;
+                        if (for_widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== ((_a = for_widget.getInputNode()) === null || _a === void 0 ? void 0 : _a.id)) {
+                            for_id = for_widget.getInputNode().id;
+                        }
+                        this.span.attr("for", for_id);
                         tab_deferred.resolve();
                     }.bind(this), 0);
                     return tab_deferred.promise();

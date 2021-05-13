@@ -18,6 +18,7 @@ import './et2_core_common';
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from './et2_core_baseWidget'
+import {et2_inputWidget} from "./et2_core_inputWidget";
 
 /**
  * Class which implements the "description" XET-Tag
@@ -158,6 +159,7 @@ export class et2_description extends expose(class et2_description extends et2_ba
 
 		// Get the real id of the 'for' widget
 		var for_widget = null;
+		let for_id = "";
 		if (this.options["for"] && (
 				(for_widget = this.getParent().getWidgetById(this.options.for)) ||
 				(for_widget = this.getRoot().getWidgetById(this.options.for))
@@ -165,14 +167,24 @@ export class et2_description extends expose(class et2_description extends et2_ba
 		{
 			if(for_widget.dom_id)
 			{
-				this.span.attr("for", for_widget.dom_id);
+				for_id = for_widget.dom_id;
+				if(for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode().id)
+				{
+					for_id = for_widget.getInputNode().id;
+				}
+				this.span.attr("for", for_id);
 			}
 			else
 			{
 				// Target widget is not done yet, need to wait
 				var tab_deferred = jQuery.Deferred();
 				window.setTimeout(function() {
-					this.span.attr("for", for_widget.dom_id);
+					for_id = for_widget.dom_id;
+					if(for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode()?.id)
+					{
+						for_id = for_widget.getInputNode().id;
+					}
+					this.span.attr("for", for_id);
 					tab_deferred.resolve();
 				}.bind(this),0);
 
