@@ -162,6 +162,12 @@ jQuery(document).ready(function() {
 			// Check whether the event came from the sidebox - if yes, ignore
 			if(jQuery(e.target).parents("#egw_fw_sidemenu").length > 0) return;
 
+			// If a context menu is open, give the keyboard to it
+			if(_egw_active_menu !== null && _egw_active_menu.keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+			{
+				e.preventDefault();
+				return;
+			}
 			// Check whether the event came from an input field - if yes, only
 			// allow function keys (like F1) to be captured by our code
 			var inInput = _egw_nodeIsInInput(e.target);

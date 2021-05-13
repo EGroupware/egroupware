@@ -195,6 +195,101 @@ egwMenu.prototype.showAt = function(_x, _y, _force)
 }
 
 /**
+ * Keyhandler to allow keyboard navigation of menu
+ *
+ * @return boolean true if we dealt with the keypress
+ */
+egwMenu.prototype.keyHandler = function(_keyCode, _shift, _ctrl, _alt)
+{
+	// Let main keyhandler deal with shortcuts
+	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
+	if (typeof egw_registeredShortcuts[idx] !== "undefined")
+	{
+		return false;
+	}
+
+	let current = this.instance.dhtmlxmenu.menuSelected;
+	if(current !== -1)
+	{
+		let find_func = function(child) {
+			if( child.id === current.replace(this.instance.dhtmlxmenu.idPrefix, ""))
+			{
+				return child;
+			}
+			else if (child.children)
+			{
+				for(let i = 0; i < child.children.length; i++)
+				{
+					result = find_func(child.children[i]);
+					if(result) return result;
+				}
+			}
+			return null;
+		}.bind(this);
+		current = find_func(this);
+	}
+	else
+	{
+		current = this.children[0];
+		jQuery("#"+this.instance.dhtmlxmenu.idPrefix + current.id).trigger("mouseover");
+		return true;
+	}
+
+	switch (_keyCode) {
+		case EGW_KEY_ENTER:
+			jQuery("#"+this.instance.dhtmlxmenu.idPrefix + current.id).trigger("click");
+			return true;
+		case EGW_KEY_ESCAPE:
+			this.hide();
+			return true;
+		case EGW_KEY_ARROW_RIGHT:
+			if(current.children)
+			{
+				current = current.children[0];
+			}
+			break;
+		case EGW_KEY_ARROW_LEFT:
+			if(current.parent && current.parent !== this)
+			{
+				current = current.parent;
+			}
+			break;
+		case EGW_KEY_ARROW_UP:
+		case EGW_KEY_ARROW_DOWN:
+			direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
+			let parent = current.parent;
+			let index = parent.children.indexOf(current);
+			let cont = false;
+
+			// Don't run off ends, skip disabled
+			do
+			{
+				index += direction;
+				cont = !parent.children[index] || !parent.children[index].enabled || !parent.children[index].id;
+			} while (cont && index + direction < parent.children.length && index + direction >= 0);
+			if(index > parent.children.length - 1)
+			{
+				index = parent.children.length-1;
+			}
+			if(index < 0)
+			{
+				index = 0;
+			}
+			current = parent.children[index];
+			break;
+		default:
+			return false;
+	}
+
+	if(current)
+	{
+		jQuery("#" + this.instance.dhtmlxmenu.idPrefix + current.id).trigger("mouseover");
+		this.instance.dhtmlxmenu._redistribSubLevelSelection(this.instance.dhtmlxmenu.idPrefix + current.id,this.instance.dhtmlxmenu.idPrefix + ( current.parent ? current.parent.id : this.instance.dhtmlxmenu.topId));
+	}
+	return true;
+};
+
+/**
  * Hides the menu if it is currently opened. Otherwise nothing happenes.
  */
 egwMenu.prototype.hide = function()
