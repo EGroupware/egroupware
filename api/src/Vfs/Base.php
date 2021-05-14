@@ -315,7 +315,8 @@ class Base
 				{
 					$old_url = $url;
 					$_url = self::symlinkCache_resolve(Vfs::parse_url($url,PHP_URL_PATH));
-					$url = @readlink($url) ?: ($_url != $parts['path'] ? str_replace($parts['path'],$_url,$url) : null) ?:$url;
+					$url = @readlink($url) ?: ($_url != $parts['path'] ?
+						str_replace([$parts['path'],Vfs::parse_url($old_url,PHP_URL_SCHEME)],[$_url,Vfs::parse_url(Vfs::resolve_url($_url),PHP_URL_SCHEME)],$url) : null) ?:$url;
 					$is_link = $old_url == $url;
 				}
 				if ($replace_user_pass_host && !$is_link)
