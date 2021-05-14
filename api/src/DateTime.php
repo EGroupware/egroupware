@@ -143,6 +143,12 @@ class DateTime extends \DateTime
 				break;
 
 			case 'array':
+				// JSON serialized DateTime object
+				if (isset($time['timezone_type']) && !empty($time['date']) && !empty($time['timezone']))
+				{
+					parent::__construct($time['date'], new DateTimeZone($time['timezone']));
+					break;
+				}
 				parent::__construct('now',$tz);
 				if (isset($time['Y']))	// array format used in eTemplate
 				{
