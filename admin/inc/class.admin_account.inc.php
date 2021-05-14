@@ -358,7 +358,7 @@ class admin_account
 		// Get a count of entries owned by the user
 		if(count($content['account_id']) == 1)
 		{
-			$_counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id']);
+			$_counts = $GLOBALS['egw']->accounts->get_account_entry_counts($content['account_id'][0]);
 		}
 		else
 		{
