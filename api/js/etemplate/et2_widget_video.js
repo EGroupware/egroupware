@@ -70,14 +70,23 @@ var et2_video = /** @class */ (function (_super) {
          * @private
          */
         _this._previousTime = 0;
+        _this.set_src_type(_this.options.src_type);
+        return _this;
+    }
+    et2_video.prototype.set_src_type = function (_type) {
+        this.options.src_type = _type;
+        if (this.video && this._isYoutube() === (this.video[0].tagName === 'DIV')) {
+            return;
+        }
         //Create Video tag
-        _this.video = jQuery(document.createElement(_this._isYoutube() ? "div" : "video")).addClass('et2_video');
-        if (_this._isYoutube()) {
+        this.video = jQuery(document.createElement(this._isYoutube() ? "div" : "video"))
+            .addClass('et2_video')
+            .attr('id', this.dom_id);
+        if (this._isYoutube()) {
             // this div will be replaced by youtube iframe api when youtube gets ready
-            _this.youtubeFrame = jQuery(document.createElement('div'))
-                .appendTo(_this.video)
-                .attr('id', et2_video.youtubePrefixId + _this.id);
-            _this.video.attr('id', _this.id);
+            this.youtubeFrame = jQuery(document.createElement('div'))
+                .appendTo(this.video)
+                .attr('id', et2_video.youtubePrefixId + this.id);
             if (!document.getElementById('youtube-api-script')) {
                 //Load youtube iframe api
                 var tag = document.createElement('script');
@@ -87,24 +96,25 @@ var et2_video = /** @class */ (function (_super) {
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             }
         }
-        if (!_this._isYoutube() && _this.options.controls) {
-            _this.video.attr("controls", 1);
+        if (!this._isYoutube() && this.options.controls) {
+            this.video.attr("controls", 1);
         }
-        if (!_this._isYoutube() && _this.options.autoplay) {
-            _this.video.attr("autoplay", 1);
+        if (!this._isYoutube() && this.options.autoplay) {
+            this.video.attr("autoplay", 1);
         }
-        if (_this.options.muted) {
-            _this.video.attr("muted", 1);
+        if (this.options.muted) {
+            this.video.attr("muted", 1);
         }
-        if (_this.options.video_src) {
-            _this.set_src(_this.options.video_src);
+        if (this.options.video_src) {
+            this.set_src(this.options.video_src);
         }
-        if (_this.options.loop) {
-            _this.video.attr("loop", 1);
+        if (this.options.loop) {
+            this.video.attr("loop", 1);
         }
-        _this.setDOMNode(_this.video[0]);
-        return _this;
-    }
+        this.setDOMNode(this.video[0]);
+        this.set_width(this.options.width || 'auto');
+        this.set_height(this.options.height || 'auto');
+    };
     /**
      * Set video src
      *
@@ -112,22 +122,24 @@ var et2_video = /** @class */ (function (_super) {
      */
     et2_video.prototype.set_src = function (_value) {
         var self = this;
+        this.options.video_src = _value;
         if (_value && !this._isYoutube()) {
-            var source = jQuery(document.createElement('source'))
-                .attr('src', _value)
-                .appendTo(this.video);
+            this.video.attr('src', _value);
             if (this.options.src_type) {
-                source.attr('type', this.options.src_type);
+                this.video.attr('type', this.options.src_type);
             }
         }
         else if (_value) {
             if (typeof YT == 'undefined') {
                 //initiate youtube Api object, it gets called automatically by iframe_api script from the api
                 window.onYouTubeIframeAPIReady = this._onYoutubeIframeAPIReady;
+                window.addEventListener('et2_video.onYoutubeIframeAPIReady', function () {
+                    self._createYoutubePlayer(self.options.video_src);
+                });
             }
-            window.addEventListener('et2_video.onYoutubeIframeAPIReady', function () {
+            else {
                 self._createYoutubePlayer(self.options.video_src);
-            });
+            }
         }
     };
     /**
@@ -373,7 +385,8 @@ var et2_video = /** @class */ (function (_super) {
      * @param _value
      */
     et2_video.prototype._createYoutubePlayer = function (_value) {
-        if (typeof YT != 'undefined') {
+        var matches = _value === null || _value === void 0 ? void 0 : _value.match(et2_video.youtubeRegexp);
+        if (matches && typeof YT != 'undefined') {
             this.youtube = new YT.Player(et2_video.youtubePrefixId + this.id, {
                 height: this.options.height || '400',
                 width: '100%',
@@ -387,7 +400,7 @@ var et2_video = /** @class */ (function (_super) {
                     'iv_load_policy': 0,
                     'cc_load_policy': 0
                 },
-                videoId: _value.match(et2_video.youtubeRegexp)[4],
+                videoId: matches[4],
                 events: {
                     'onReady': jQuery.proxy(this._onReady, this),
                     'onStateChange': jQuery.proxy(this._onStateChangeYoutube, this)

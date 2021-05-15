@@ -143,8 +143,20 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     {
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
+        this.set_src_type(this.options.src_type);
+    }
+
+    set_src_type(_type)
+    {
+        this.options.src_type = _type;
+        if (this.video && this._isYoutube() === (this.video[0].tagName === 'DIV'))
+        {
+            return;
+        }
         //Create Video tag
-		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video")).addClass('et2_video');
+		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video"))
+            .addClass('et2_video')
+            .attr('id', this.dom_id);
 
 		if (this._isYoutube())
         {
@@ -153,7 +165,6 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
                 .appendTo(this.video)
                 .attr('id', et2_video.youtubePrefixId+this.id);
 
-            this.video.attr('id', this.id);
 			if (!document.getElementById('youtube-api-script'))
 			{
 				//Load youtube iframe api
@@ -186,6 +197,9 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             this.video.attr("loop", 1);
         }
         this.setDOMNode(this.video[0]);
+
+        this.set_width(this.options.width || 'auto');
+        this.set_height(this.options.height || 'auto');
     }
 
     /**
@@ -195,15 +209,14 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     set_src(_value: string) {
         let self = this;
+        this.options.video_src = _value;
         if (_value && !this._isYoutube())
         {
-            let source  = jQuery(document.createElement('source'))
-                .attr('src',_value)
-                .appendTo(this.video);
+            this.video.attr('src',_value);
 
             if (this.options.src_type)
             {
-                source.attr('type', this.options.src_type);
+                this.video.attr('type', this.options.src_type);
             }
         }
         else if(_value)
@@ -212,10 +225,15 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 			{
 				//initiate youtube Api object, it gets called automatically by iframe_api script from the api
 				window.onYouTubeIframeAPIReady = this._onYoutubeIframeAPIReady;
+
+                window.addEventListener('et2_video.onYoutubeIframeAPIReady', function(){
+                    self._createYoutubePlayer(self.options.video_src);
+                });
 			}
-			window.addEventListener('et2_video.onYoutubeIframeAPIReady', function(){
-				self._createYoutubePlayer(self.options.video_src);
-			});
+			else
+            {
+                self._createYoutubePlayer(self.options.video_src);
+            }
         }
     }
 
@@ -521,7 +539,8 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 	 */
 	private _createYoutubePlayer(_value:string)
 	{
-		if (typeof YT != 'undefined')
+	    const matches = _value?.match(et2_video.youtubeRegexp);
+		if (matches && typeof YT != 'undefined')
 		{
 			this.youtube = new YT.Player( et2_video.youtubePrefixId+this.id, {
 				height: this.options.height || '400',
@@ -536,7 +555,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 					'iv_load_policy': 0,
 					'cc_load_policy': 0
 				},
-				videoId: _value.match(et2_video.youtubeRegexp)[4],
+				videoId: matches[4],
 				events: {
 					'onReady': jQuery.proxy(this._onReady, this),
 					'onStateChange': jQuery.proxy(this._onStateChangeYoutube, this)
