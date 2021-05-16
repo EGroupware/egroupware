@@ -679,7 +679,7 @@ class Ldap
 		$account_search =& Api\Accounts::$cache['account_search'];
 
 		// check if the query is cached
-		$serial = serialize($param);
+		$serial = Api\Accounts::cacheKey($param, $unl_serial);
 		if (isset($account_search[$serial]))
 		{
 			$this->total = $account_search[$serial]['total'];
@@ -691,7 +691,7 @@ class Ldap
 		if (!($offset = $param['offset'])) $offset = $maxmatchs;
 		unset($param['start']);
 		unset($param['offset']);
-		$unl_serial = serialize($param);
+
 		if (isset($account_search[$unl_serial]))
 		{
 			$this->total = $account_search[$unl_serial]['total'];

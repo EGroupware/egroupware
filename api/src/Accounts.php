@@ -169,6 +169,25 @@ class Accounts
 	}
 
 	/**
+	 * Get cache-key for search parameters
+	 *
+	 * @param array $params
+	 * @param ?string& $unlimited on return key for unlimited search
+	 * @return string
+	 */
+	public static function cacheKey(array $params, string &$unlimited=null)
+	{
+		// normalize our cache-key by not storing anything, plus adding default the default sort (if none requested)
+		$keys = array_filter($params)+['order' => 'account_lid', 'sort' => 'ASC'];
+		// sort keys
+		ksort($keys);
+		$key = json_encode($keys);
+		unset($keys['start'], $keys['offset']);
+		$unlimited = json_encode($keys);
+		return $key;
+	}
+
+	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
 	 * @ToDo improve and limit caching:
@@ -201,6 +220,7 @@ class Accounts
 	{
 		//error_log(__METHOD__.'('.array2string($param).') '.function_backtrace());
 		if (!isset($param['active'])) $param['active'] = true;	// default is true = only return active accounts
+		if (!empty($param['offset']) && !isset($param['start'])) $param['start'] = 0;
 
 		// Check for lang(Group) in search - if there, we search all groups
 		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'])));
@@ -224,11 +244,17 @@ class Accounts
 		}
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
-		$serial = serialize($param);
+		$serial = self::cacheKey($param, $serial_unlimited);
 
 		if (isset($account_search[$serial]))
 		{
 			$this->total = $account_search[$serial]['total'];
+		}
+		// if we already have an unlimited search, we can always return only a part of it
+		elseif (isset($account_search[$serial_unlimited]))
+		{
+			$this->total = $account_search[$serial]['total'];
+			return array_slice($account_search[$serial]['total']['data'], $param['start'], $param['offset']);
 		}
 		// no backend understands $param['app'], only sql understands type owngroups or groupmemember[+memberships]
 		// --> do an full search first and then filter and limit that search
@@ -297,8 +323,18 @@ class Accounts
 		// direct search via backend
 		else
 		{
-			$account_search[$serial]['data'] = $this->backend->search($param);
-			if ($param['type'] !== 'accounts')
+			$account_search[$serial] = [
+				'data'  => $this->backend->search($param),
+				'total' => $this->total = $this->backend->total,
+			];
+			// check if all rows have been returned --> cache as unlimited query
+			if ($serial !== $serial_unlimited && count($account_search[$serial]['data']) === (int)$this->backend->total)
+			{
+				$account_search[$serial_unlimited] = $account_search[$serial];
+				unset($account_search[$serial]);
+				$serial = $serial_unlimited;
+			}
+			if ($param['type'] !== 'accounts' && !is_numeric($param['type']))
 			{
 				foreach($account_search[$serial]['data'] as &$account)
 				{
@@ -309,7 +345,6 @@ class Accounts
 					}
 				}
 			}
-			$account_search[$serial]['total'] = $this->total = $this->backend->total;
 		}
 		return $account_search[$serial]['data'];
 	}
