@@ -907,7 +907,7 @@ class Ads
 		$account_search = [];	// disabled, we have sorted&limited queries now &$this->cache['account_search'];
 
 		// check if the query is cached
-		$serial = serialize($param);
+		$serial = Api\Accounts::cacheKey($param, $unl_serial);
 		if (isset($account_search[$serial]))
 		{
 			$this->total = $account_search[$serial]['total'];
@@ -919,7 +919,7 @@ class Ads
 		if (!($offset = $param['offset'])) $offset = $maxmatchs;
 		unset($param['start']);
 		unset($param['offset']);
-		$unl_serial = serialize($param);
+
 		if (isset($account_search[$unl_serial]))
 		{
 			$this->total = $account_search[$unl_serial]['total'];
@@ -1261,7 +1261,7 @@ class Ads
 		}
 		else if (self::$debug) error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter')=$sri allValues=".array2string($allValues));
 
-		//error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returning ".array2string($accounts).' '.function_backtrace());
+		//error_log(date('Y-m-d H:i:s ').__METHOD__.'('.array2string($attr_filter).", '$account_type', ".json_encode($attrs).", ..., expired=$filter_expired, order_by=$order_by, start=$start, num_rows=$num_rows) ldap_search($ds, '$context', '$filter')\n==> returning ".count($accounts)."/$total ".substr(array2string($accounts), 0, 1024)."\n--> ".function_backtrace()."\n\n", 3, '/var/lib/egroupware/ads.log');
 		return $accounts;
 	}
 
