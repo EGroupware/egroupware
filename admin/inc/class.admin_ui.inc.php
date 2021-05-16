@@ -325,9 +325,6 @@ class admin_ui
 	 */
 	public static function get_users(array $query, array &$rows=null)
 	{
-		// release session to allow parallel requests to run
-		$GLOBALS['egw']->session->commit_session();
-
 		$params = array(
 			'type' => (int)$query['filter'] ? (int)$query['filter'] : 'accounts',
 			'start' => $query['start'],
@@ -373,6 +370,9 @@ class admin_ui
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
 		$total = self::$accounts->total;
+
+		// release session (after query got cached!) to allow parallel requests to run
+		$GLOBALS['egw']->session->commit_session();
 
 		foreach($rows as $key => &$row)
 		{
@@ -434,9 +434,6 @@ class admin_ui
 	 */
 	public static function get_groups(&$query, &$rows)
 	{
-		// release session to allow parallel requests to run
-		$GLOBALS['egw']->session->commit_session();
-
 		$groups = $GLOBALS['egw']->accounts->search(array(
 				'type'  => 'groups',
 				'query' => $query['search'],
@@ -445,6 +442,9 @@ class admin_ui
 				'start' => (int)$query['start'],
 				'offset' => (int)$query['num_rows']
 			));
+
+		// release session (after query got cached!) to allow parallel requests to run
+		$GLOBALS['egw']->session->commit_session();
 
 		$apps = array();
 		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
