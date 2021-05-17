@@ -378,7 +378,8 @@ class calendar_uiviews extends calendar_ui
 		);
 
 		// Don't show videoconference action if videoconference is disabled or BBB is not configured
-		if (\EGroupware\Status\Hooks::isVCRecordingSupported() && !EGroupware\Status\Hooks::isVideoconferenceDisabled())
+		if (calendar_hooks::isVCRecordingSupported()
+			&& !calendar_hooks::isVideoconferenceDisabled())
 		{
 			// Add toggle for video calls
 			$status_config = Api\Config::read("status");

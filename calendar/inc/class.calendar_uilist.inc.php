@@ -1005,15 +1005,15 @@ class calendar_uilist extends calendar_ui
 						'caption' => 'Join',
 						'icon' => 'status/videoconference_join',
 						'onExecute' => 'javaScript:app.calendar.videoConferenceAction',
-						'enabled' => !EGroupware\Status\Hooks::isVideoconferenceDisabled(),
+						'enabled' => !calendar_hooks::isVideoconferenceDisabled(),
 						'allowOnMultiple' => false,
 					],
 					'recordings' => [
 						'caption' => 'Recordings',
 						'icon' => 'status/videoconference_recordings',
 						'onExecute' => 'javaScript:app.calendar.videoConferenceAction',
-						'enabled' => !EGroupware\Status\Hooks::isVideoconferenceDisabled()
-							|| EGroupware\Status\Hooks::isVCRecordingSupported(),
+						'enabled' => !calendar_hooks::isVideoconferenceDisabled()
+							|| calendar_hooks::isVCRecordingSupported(),
 						'allowOnMultiple' => false,
 					]
 				]

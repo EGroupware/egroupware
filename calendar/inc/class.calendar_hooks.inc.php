@@ -904,7 +904,7 @@ END:VALARM';
 		if ($params['data']['type'] == 6)
 		{
 			if (!empty($params['data']['videoconference'])
-				&& $GLOBALS['egw_info']['user']['apps']['status'] && !EGroupware\Status\Hooks::isVideoconferenceDisabled())
+				&& !self::isVideoconferenceDisabled())
 			{
 				return [
 					array(
@@ -938,6 +938,39 @@ END:VALARM';
 			)
 		);
 	}
+
+	/**
+	 * Wrapper function to check Status app videoconference status
+	 * it makes sure first the Status app is there before calling its method.
+	 *
+	 * @return false|mixed
+	 */
+	public static function isVideoconferenceDisabled()
+	{
+		if ($GLOBALS['egw_info']['user']['apps']['status'] && class_exists(\EGroupware\Status\Hooks::class)
+			&& method_exists(\EGroupware\Status\Hooks::class, 'isVideoconferenceDisabled'))
+		{
+			return EGroupware\Status\Hooks::isVideoconferenceDisabled();
+		}
+		return true;
+	}
+
+	/**
+	 * Wrapper function to check Status app videoConference recording status
+	 * it makes sure first the Status app is there before calling its method.
+	 *
+	 * @return bool
+	 */
+	public static function isVCRecordingSupported()
+	{
+		if ($GLOBALS['egw_info']['user']['apps']['status'] && class_exists(\EGroupware\Status\Hooks::class)
+			&& method_exists(\EGroupware\Status\Hooks::class, 'isVCRecordingSupported'))
+		{
+			return EGroupware\Status\Hooks::isVCRecordingSupported();
+		}
+		return false;
+	}
+
 }
 
 // Not part of the class, since config hooks are still using the old style
