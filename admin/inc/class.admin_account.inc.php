@@ -370,7 +370,7 @@ class admin_account
 			{
 				$entry = lang('Entries');
 			}
-			if (is_array($counts) && $counts['total'] && Api\Hooks::exists('deleteaccount', $app))
+			if (Api\Hooks::exists('deleteaccount', $app))
 			{
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
