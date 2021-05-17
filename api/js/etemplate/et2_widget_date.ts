@@ -210,9 +210,33 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		}
 	}
 
+	/**
+	 * Calendar popup sets the ID of the input, we can't change that like other inputWidgets can
+	 *
+	 * @param _value
+	 */
+	set_id(_value)
+	{
+		this.id = _value;
+		this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId+'_'+this.id : _value;
+
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			if (_value != "")
+			{
+				node.setAttribute("id", this.dom_id);
+			}
+			else
+			{
+				node.removeAttribute("id");
+			}
+		}
+	}
+
 	getInputNode(): HTMLElement
 	{
-		return this.input_date[0];
+		return this.options.inline ? super.getInputNode() : this.input_date[0];
 	}
 
 	set_type(_type)

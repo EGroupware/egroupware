@@ -142,8 +142,26 @@ var et2_date = /** @class */ (function (_super) {
             this.set_value(null);
         }
     };
+    /**
+     * Calendar popup sets the ID of the input, we can't change that like other inputWidgets can
+     *
+     * @param _value
+     */
+    et2_date.prototype.set_id = function (_value) {
+        this.id = _value;
+        this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId + '_' + this.id : _value;
+        var node = this.getDOMNode(this);
+        if (node) {
+            if (_value != "") {
+                node.setAttribute("id", this.dom_id);
+            }
+            else {
+                node.removeAttribute("id");
+            }
+        }
+    };
     et2_date.prototype.getInputNode = function () {
-        return this.input_date[0];
+        return this.options.inline ? _super.prototype.getInputNode.call(this) : this.input_date[0];
     };
     et2_date.prototype.set_type = function (_type) {
         if (_type != this.getType()) {
