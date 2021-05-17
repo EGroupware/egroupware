@@ -229,7 +229,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
         content.data.files["filemode"] = params['preset[filemode]'];
         // always open compose in html mode, as attachment links look a lot nicer in html
         params["mimeType"] = 'html';
-        return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
+        return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
     };
     /**
      * Mail files action: open compose with already attached files

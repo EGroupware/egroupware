@@ -1120,8 +1120,9 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {object} _content content to be passed to method
 	 * @param {string|object} _extra url or object of extra
 	 * @param {regexp} _regexp regular expression to get specific popup with matched url
+	 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 	 */
-	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp) : void;
+	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean) : void;
 
 	/**
 	 * implemented in egw_ready.js

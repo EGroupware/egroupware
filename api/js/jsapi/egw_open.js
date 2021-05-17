@@ -514,8 +514,9 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {object} _content content to be passed to method
 		 * @param {string|object} _extra url or object of extra
 		 * @param {regex} _regexp regular expression to get specific popup with matched url
+		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 		 */
-		openWithinWindow: function (_app, _method, _content, _extra, _regexp)
+		openWithinWindow: function (_app, _method, _content, _extra, _regexp, _check_popup_blocker)
 		{
 			var popups = window.framework.popups_get(_app, _regexp);
 
@@ -554,7 +555,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
 				if (len > 2083)
 				{
-					var popup = egw.open('','mail','add','','compose__','mail');
+					var popup = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
 					var $tmpForm = jQuery(document.createElement('form'));
 					var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
 					for (var i in _extra)
@@ -578,7 +579,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				else
 				{
-					egw.open('', _app, 'add', _extra, _app, _app);
+					egw.open('', _app, 'add', _extra, _app, _app, _check_popup_blocker);
 				}
 			};
 			for(var i = 0; i < popups.length; i++)
