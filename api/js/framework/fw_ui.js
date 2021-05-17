@@ -876,10 +876,23 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 
 	//Add content and header to the content div, add some magic jQuery code in order to make it foldable
 	this.headerDiv._parent = this;
-	jQuery(this.headerDiv).on("click keydown",
+	entryH2._parent = this;
+	jQuery(this.headerDiv).on("keydown",
 		function(e) {
 			if(e.type == "keydown" && [EGW_KEY_ENTER, EGW_KEY_SPACE].indexOf(e.which) == -1) return;
-			if (!jQuery(this).hasClass('egw_fw_ui_category_active'))
+			if (!jQuery(this).hasClass("egw_fw_ui_category_active"))
+			{
+				this._parent.open(false);
+			}
+			else
+			{
+				this._parent.close(false);
+			}
+			e.stopPropagation();
+		});
+	jQuery(entryH2).on("click",
+		function(e) {
+			if (!jQuery(this).parent().hasClass("egw_fw_ui_category_active"))
 			{
 				this._parent.open(false);
 			}
