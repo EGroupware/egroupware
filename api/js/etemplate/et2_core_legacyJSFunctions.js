@@ -150,7 +150,7 @@
 			// Code is app.appname.function, add the arguments so it can be executed
 			if (typeof _code == 'string' && _code.indexOf('app') == 0 && _code.split('.').length >= 3 && _code.indexOf('(') == -1)
 			{
-				return function(ev)
+				return function(ev, widget)
 				{
 					const app = widget.getInstanceManager().app_obj;
 					return egw.applyFunc(_code, [ev, _widget], context);
