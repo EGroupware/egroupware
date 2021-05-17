@@ -235,8 +235,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// generate a video-room-url, if we need one and not already have one
-		if ($event['videoconference'] && empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
-			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled())
+		if ($event['videoconference'] && empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
 		{
 			$event['##videoconference'] = EGroupware\Status\Videoconference\Call::genUniqueRoomID();
 		}
@@ -245,8 +244,8 @@ class calendar_boupdate extends calendar_bo
 			$event['##videoconference'] = '';
 		}
 		// update videoconference resource amounts based on number of participants
-		if ($event['videoconference'] && !empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
-			&& !EGroupware\Status\Hooks::isVideoconferenceDisabled() && ($videoconferenceResId = \EGroupware\Status\Hooks::getVideoconferenceResourceId()))
+		if ($event['videoconference'] && !empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled()
+			&& ($videoconferenceResId = \EGroupware\Status\Hooks::getVideoconferenceResourceId()))
 		{
 			$participant_total = 0;
 			foreach(['u','e','c'] as $p_type)
@@ -1114,8 +1113,7 @@ class calendar_boupdate extends calendar_bo
 					$details['olddate'] = $olddate->format($timeformat);
 				}
 				// generate a personal videoconference url, if we need one
-				if (!empty($event['##videoconference']) && class_exists('EGroupware\\Status\\Videoconference\\Call')
-					&& !EGroupware\Status\Hooks::isVideoconferenceDisabled())
+				if (!empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
 				{
 					$avatar = new Api\Contacts\Photo(is_numeric($userid) ? "account:$userid" :
 						(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid),

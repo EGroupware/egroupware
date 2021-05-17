@@ -1957,7 +1957,7 @@ class calendar_uiforms extends calendar_ui
 		if (!empty($preserved['lock_token'])) $content['lock_token'] = $preserved['lock_token'];
 
 		//Disable videoconference if the module is not enabled
-		$etpl->disableElement('videoconference', $GLOBALS['egw_info']['user']['apps']['status'] && EGroupware\Status\Hooks::isVideoconferenceDisabled());
+		$etpl->disableElement('videoconference', calendar_hooks::isVideoconferenceDisabled());
 
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
