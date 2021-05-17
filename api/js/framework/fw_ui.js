@@ -878,7 +878,7 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 	this.headerDiv._parent = this;
 	jQuery(this.headerDiv).on("click keydown",
 		function(e) {
-			if([EGW_KEY_ENTER, EGW_KEY_SPACE].indexOf(e.which) == -1) return;
+			if(e.type == "keydown" && [EGW_KEY_ENTER, EGW_KEY_SPACE].indexOf(e.which) == -1) return;
 			if (!jQuery(this).hasClass('egw_fw_ui_category_active'))
 			{
 				this._parent.open(false);
