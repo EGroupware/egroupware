@@ -359,34 +359,27 @@ class infolog_bo
 		if (!isset($access))
 		{
 			// handle delete for the various history modes
-			if ($this->history)
-			{
-				if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
+			if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
 
-				if ($info['info_status'] == 'deleted' &&
-					($required_rights == Acl::EDIT ||		// no edit rights for deleted entries
-					 $required_rights == Acl::ADD  ||		// no add rights for deleted entries
-					 $required_rights == Acl::DELETE && ($this->history == 'history_no_delete' || // no delete at all!
-					 $this->history == 'history_admin_delete' && (!isset($GLOBALS['egw_info']['user']['apps']['admin']) || $user!=$this->user))))	// delete only for admins
-				{
-					$access = false;
-				}
-				elseif ($required_rights == self::ACL_UNDELETE)
-				{
-					if ($info['info_status'] != 'deleted')
-					{
-						$access = false;	// can only undelete deleted items
-					}
-					else
-					{
-						// undelete requires edit rights
-						$access = $this->so->check_access( $info,Acl::EDIT,$this->implicit_rights == 'edit',$grants,$user );
-					}
-				}
+			if ($info['info_status'] == 'deleted' &&
+				($required_rights == Acl::EDIT ||		// no edit rights for deleted entries
+				 $required_rights == Acl::ADD  ||		// no add rights for deleted entries
+				 $required_rights == Acl::DELETE && ($this->history == 'history_no_delete' || // no delete at all!
+				 $this->history == 'history_admin_delete' && (!isset($GLOBALS['egw_info']['user']['apps']['admin']) || $user!=$this->user))))	// delete only for admins
+			{
+				$access = false;
 			}
 			elseif ($required_rights == self::ACL_UNDELETE)
 			{
-				$access = false;
+				if ($info['info_status'] != 'deleted')
+				{
+					$access = false;	// can only undelete deleted items
+				}
+				else
+				{
+					// undelete requires edit rights
+					$access = $this->so->check_access( $info,Acl::EDIT,$this->implicit_rights == 'edit',$grants,$user );
+				}
 			}
 			if (!isset($access))
 			{
@@ -705,10 +698,8 @@ class infolog_bo
 		$deleted['info_modifier'] = $this->user;
 
 		// if we have history switched on and not an already deleted item --> set only status deleted
-		if ($this->history && $info['info_status'] != 'deleted')
+		if ($info['info_status'] != 'deleted')
 		{
-			if ($info['info_status'] == 'deleted') return false;	// entry already deleted
-
 			$this->so->write($deleted);
 
 			Link::unlink(0,'infolog',$info_id,'','!file','',true);	// keep the file attachments, hide the rest
