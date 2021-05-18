@@ -1960,6 +1960,8 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   min-width: 280px;
   width: max-content;
   margin: auto;
+  padding-top: 2px;
+  background-color: transparent;
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
   white-space: normal;
