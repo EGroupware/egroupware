@@ -2564,7 +2564,6 @@ class infolog_ui
 			'copy_excludefields' => $excludefields,
 			'sub_excludefields' => $sub_excludefields,
 			'history'     => array(
-				'' => lang('No'),
 				'history' => lang('Yes, with purging of deleted items possible'),
 				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
 				'history_no_delete' => lang('Yes, noone can purge deleted items'),
