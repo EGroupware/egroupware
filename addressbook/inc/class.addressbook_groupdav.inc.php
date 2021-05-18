@@ -920,14 +920,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			'addressbook-multiget' => Api\CalDAV::mkprop('supported-report',array(
 				Api\CalDAV::mkprop('report',array(
 					Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-multiget',''))))),
+			'sync-collection' => Api\CalDAV::mkprop('supported-report',array(
+		Api\CalDAV::mkprop('report',array(
+			Api\CalDAV::mkprop('sync-collection',''))))),
 		);
-		// only advertice rfc 6578 sync-collection report, if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
-		if ($GLOBALS['egw_info']['server']['history'])
-		{
-			$props['supported-report-set']['sync-collection'] = Api\CalDAV::mkprop('supported-report',array(
-				Api\CalDAV::mkprop('report',array(
-					Api\CalDAV::mkprop('sync-collection','')))));
-		}
 		return $props;
 	}
 

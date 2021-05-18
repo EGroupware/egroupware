@@ -101,8 +101,7 @@
 				<row>
 					<description value="Prevent deleting of contacts"/>
 					<select id="newsettings[history]">
-						<option value="">No</option>
-						<option value="history">Yes, only admins can purge deleted items</option>
+						<option value="">Yes, only admins can purge deleted items</option>
 						<option value="userpurge">Yes, users can purge their deleted items</option>
 					</select>
 				</row>
