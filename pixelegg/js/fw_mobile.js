@@ -249,6 +249,13 @@
 					var $appHeader = jQuery(popupWindow.document).find('#divAppboxHeader');
 					var $et2_container = jQuery(popupWindow.document).find('.et2_container');
 					jQuery(popupWindow.document.body).css({'overflow-y':'auto'});
+
+					var darkmode = egw.getSessionItem('api', 'darkmode');
+					if (darkmode == '0' || darkmode == '1')
+					{
+						// set darkmode for iframe popup content
+						jQuery(popupWindow.document.body.parentElement).attr('data-darkmode', darkmode == 0?'':'1');
+					}
 					if ($appHeader.length > 0)
 					{
 						// Extend the dialog to 100% width
