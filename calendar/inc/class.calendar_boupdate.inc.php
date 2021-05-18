@@ -1899,7 +1899,7 @@ class calendar_boupdate extends calendar_bo
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			$config = Api\Config::read('phpgwapi');
-			if(!$config['calendar_delete_history'] || $event['deleted'])
+			if ($event['deleted'])
 			{
 				$this->so->delete($cal_id);
 

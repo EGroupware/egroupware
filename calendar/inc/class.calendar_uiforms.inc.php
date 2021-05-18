@@ -1935,7 +1935,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		// Allow admins to restore deleted events
-		if($GLOBALS['egw_info']['server']['calendar_delete_history'] && $event['deleted'] )
+		if ($event['deleted'])
 		{
 			$content['deleted'] = $preserved['deleted'] = null;
 			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
