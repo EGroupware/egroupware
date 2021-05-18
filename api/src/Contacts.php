@@ -848,10 +848,9 @@ class Contacts extends Contacts\Storage
 			if ($this->check_perms(Acl::DELETE,$c,$deny_account_delete))
 			{
 				if (!($old = $this->read($id))) return false;
-				// check if we only mark contacts as deleted, or really delete them
 				// already marked as deleted item and accounts are always really deleted
 				// we cant mark accounts as deleted, as no such thing exists for accounts!
-				if ($old['owner'] && $this->delete_history != '' && $old['tid'] != self::DELETED_TYPE)
+				if ($old['owner'] && $old['tid'] !== self::DELETED_TYPE)
 				{
 					$delete = $old;
 					$delete['tid'] = self::DELETED_TYPE;
