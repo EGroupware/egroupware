@@ -1621,7 +1621,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		);
 		// rfc 6578 sync-collection report for everything but outbox
 		// only if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
-		if (strpos($path, '/outbox/') === false && $GLOBALS['egw_info']['server']['calendar_delete_history'])
+		if (strpos($path, '/outbox/') === false)
 		{
 			$props['supported-report-set']['sync-collection'] = Api\CalDAV::mkprop('supported-report',array(
 				Api\CalDAV::mkprop('report',array(

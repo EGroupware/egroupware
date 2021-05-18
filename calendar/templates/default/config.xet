@@ -65,8 +65,7 @@
 				<row>
 					<description value="Prevent deleting of entries"/>
 					<select id="newsettings[calendar_delete_history]">
-						<option value="">No</option>
-						<option value="history">Yes, only admins can purge deleted items</option>
+						<option value="">Yes, only admins can purge deleted items</option>
 						<option value="userpurge">Yes, users can purge their deleted items</option>
 					</select>
 				</row>

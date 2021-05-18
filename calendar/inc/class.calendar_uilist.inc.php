@@ -1123,18 +1123,15 @@ class calendar_uilist extends calendar_ui
 			'confirm' => lang('Delete this entry')
 		);
 		// Add in deleted for admins
-		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
-		{
-			$actions['undelete'] = array(
-				'caption' => 'Un-delete',
-				'onExecute' => 'javaScript:app.calendar.cal_delete',
-				'icon' => 'revert',
-				'hint' => 'Recover this event',
-				'group' => $group,
-				'enableClass' => 'rowDeleted',
-				'hideOnDisabled' => true,
-			);
-		}
+		$actions['undelete'] = array(
+			'caption' => 'Un-delete',
+			'onExecute' => 'javaScript:app.calendar.cal_delete',
+			'icon' => 'revert',
+			'hint' => 'Recover this event',
+			'group' => $group,
+			'enableClass' => 'rowDeleted',
+			'hideOnDisabled' => true,
+		);
 
 		//_debug_array($actions);
 		return $actions;

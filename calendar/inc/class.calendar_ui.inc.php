@@ -583,10 +583,7 @@ class calendar_ui
 			array('value' => 'no-enum-groups', 'label' => lang('only group-events'),'title' => lang('Do not include events of group members')),
 			array('value' => 'not-unknown', 'label' => lang('No meeting requests'),'title' => lang('Show all status, but unknown')),
 		);
-		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
-		{
-			$sel_options['status_filter'][] = array('value' => 'deleted', 'label' => lang('Deleted'), 'title' => lang('Show events that have been deleted'));
-		}
+		$sel_options['status_filter'][] = array('value' => 'deleted', 'label' => lang('Deleted'), 'title' => lang('Show events that have been deleted'));
 
 		// Merge print
 		try {
