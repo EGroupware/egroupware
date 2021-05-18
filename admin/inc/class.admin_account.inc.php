@@ -353,6 +353,7 @@ class admin_account
 
 		$sel_options = array();
 		$preserve = $content;
+		static $blacklist_apps = ['preferences','notifications','esyncpro','api'];
 
 		// Get a count of entries owned by the user
 		if(count($content['account_id']) == 1)
@@ -370,7 +371,7 @@ class admin_account
 			{
 				$entry = lang('Entries');
 			}
-			if (Api\Hooks::exists('deleteaccount', $app))
+			if (Api\Hooks::exists('deleteaccount', $app) && !in_array($app, $blacklist_apps))
 			{
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
