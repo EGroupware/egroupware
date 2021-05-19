@@ -881,8 +881,6 @@ class Ads
 	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
-	 * @todo sort and limit query on AD, PHP5.4 and AD support it
-	 *
 	 * @param array with the following keys:
 	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
 	 *	or integer group-id for a list of members of that group
@@ -904,122 +902,99 @@ class Ads
 	function search($param)
 	{
 		//error_log(__METHOD__.'('.json_encode($param).') '.function_backtrace());
-		$account_search = [];	// disabled, we have sorted&limited queries now &$this->cache['account_search'];
-
-		// check if the query is cached
-		$serial = Api\Accounts::cacheKey($param, $unl_serial);
-		if (isset($account_search[$serial]))
-		{
-			$this->total = $account_search[$serial]['total'];
-			return $account_search[$serial]['data'];
-		}
-		// if it's a limited query, check if the unlimited query is cached
 		$start = $param['start'];
 		if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
 		if (!($offset = $param['offset'])) $offset = $maxmatchs;
-		unset($param['start']);
-		unset($param['offset']);
 
-		if (isset($account_search[$unl_serial]))
+		$this->total = null;
+		$query = Api\Ldap::quote(strtolower($param['query']));
+
+		$accounts = array();
+		if($param['type'] !== 'groups')
 		{
-			$this->total = $account_search[$unl_serial]['total'];
-			$sortedAccounts = $account_search[$unl_serial]['data'];
+			if (!empty($query) && $query != '*')
+			{
+				switch($param['query_type'])
+				{
+					case 'all':
+					default:
+						$query = '*'.$query;
+						// fall-through
+					case 'start':
+						$query .= '*';
+						// fall-through
+					case 'exact':
+						$filter = "(|(samaccountname=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
+						break;
+					case 'firstname':
+					case 'lastname':
+					case 'lid':
+					case 'email':
+						static $to_ldap = array(
+							'firstname' => 'givenname',
+							'lastname'  => 'sn',
+							'lid'       => 'samaccountname',
+							'email'     => 'mail',
+						);
+						$filter = '('.$to_ldap[$param['query_type']].'=*'.$query.'*)';
+						break;
+				}
+			}
+			if (is_numeric($param['type']))
+			{
+				$membership_filter = '(|(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')(PrimaryGroupId='.abs($param['type']).'))';
+				$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
+			}
+			foreach($this->filter($filter, 'u', self::$user_attributes, [], $param['active'], $param['order'].' '.$param['sort'], $start, $offset, $this->total) as $account_id => $data)
+			{
+				$account = $this->_ldap2user($data);
+				$account['account_fullname'] = Api\Accounts::format_username($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$account['account_id']);
+				$accounts[$account_id] = $account;
+			}
 		}
-		else	// we need to run the unlimited query
+		if ($param['type'] === 'groups' || $param['type'] === 'both')
 		{
-			$this->total = null;
 			$query = Api\Ldap::quote(strtolower($param['query']));
 
-			$accounts = array();
-			if($param['type'] !== 'groups')
+			$filter = null;
+			if(!empty($query) && $query != '*')
 			{
-				if (!empty($query) && $query != '*')
+				switch($param['query_type'])
 				{
-					switch($param['query_type'])
-					{
-						case 'all':
-						default:
-							$query = '*'.$query;
-							// fall-through
-						case 'start':
-							$query .= '*';
-							// fall-through
-						case 'exact':
-							$filter = "(|(samaccountname=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
-							break;
-						case 'firstname':
-						case 'lastname':
-						case 'lid':
-						case 'email':
-							static $to_ldap = array(
-								'firstname' => 'givenname',
-								'lastname'  => 'sn',
-								'lid'       => 'samaccountname',
-								'email'     => 'mail',
-							);
-							$filter = '('.$to_ldap[$param['query_type']].'=*'.$query.'*)';
-							break;
-					}
+					case 'all':
+					default:
+						$query = '*'.$query;
+						// fall-through
+					case 'start':
+						$query .= '*';
+						// fall-through
+					case 'exact':
+						break;
 				}
-				if (is_numeric($param['type']))
-				{
-					$membership_filter = '(|(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')(PrimaryGroupId='.abs($param['type']).'))';
-					$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
-				}
-				foreach($this->filter($filter, 'u', self::$user_attributes, [], $param['active'], $param['order'].' '.$param['sort'], $start, $offset, $this->total) as $account_id => $data)
-				{
-					$account = $this->_ldap2user($data);
-					$account['account_fullname'] = Api\Accounts::format_username($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$account['account_id']);
-					$accounts[$account_id] = $account;
-				}
+				$filter = "(|(cn=$query)(description=$query))";
 			}
-			if ($param['type'] === 'groups' || $param['type'] === 'both')
+			foreach($this->filter($filter, 'g', self::$group_attributes) as $account_id => $data)
 			{
-				$query = Api\Ldap::quote(strtolower($param['query']));
-
-				$filter = null;
-				if(!empty($query) && $query != '*')
-				{
-					switch($param['query_type'])
-					{
-						case 'all':
-						default:
-							$query = '*'.$query;
-							// fall-through
-						case 'start':
-							$query .= '*';
-							// fall-through
-						case 'exact':
-							break;
-					}
-					$filter = "(|(cn=$query)(description=$query))";
-				}
-				foreach($this->filter($filter, 'g', self::$group_attributes) as $account_id => $data)
-				{
-					$accounts[$account_id] = $this->_ldap2group($data);
-				}
+				$accounts[$account_id] = $this->_ldap2group($data);
 			}
-			// sort the array
-			$this->_callback_sort = strtoupper($param['sort']);
-			$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
-			foreach($this->_callback_order as &$col)
-			{
-				if (substr($col, 0, 8) !== 'account_') $col = 'account_'.$col;
-			}
-			$sortedAccounts = $accounts;
-			uasort($sortedAccounts,array($this,'_sort_callback'));
-			$account_search[$unl_serial]['data'] = $sortedAccounts;
-
-			$account_search[$unl_serial]['total'] = $this->total = $this->total ?? count($accounts);
 		}
+		// sort the array
+		$this->_callback_sort = strtoupper($param['sort']);
+		$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
+		foreach($this->_callback_order as &$col)
+		{
+			if (substr($col, 0, 8) !== 'account_') $col = 'account_'.$col;
+		}
+		$sortedAccounts = $accounts;
+		uasort($sortedAccounts,array($this,'_sort_callback'));
+
+		$this->total = $this->total ?? count($accounts);
+
 		// return only the wanted accounts
 		reset($sortedAccounts);
 		if(is_numeric($start) && is_numeric($offset))
 		{
-			$account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
-			$account_search[$serial]['total'] = $this->total;
-			//error_log(__METHOD__.'('.array2string($param).") returning $offset/$this->total entries from $start ".array2string($account_search[$serial]['data']));
-			return $account_search[$serial]['data'];
+			return array_slice($sortedAccounts, $start, $offset);
 		}
 		//error_log(__METHOD__.'('.array2string($param).') returning all '.array2string($sortedAccounts));
 		return $sortedAccounts;
@@ -1093,15 +1068,39 @@ class Ads
 					isset($GLOBALS['egw_info']['user']['account_id']) &&	// only use groupmembers, if we have a user context (stalls login otherwise!)
 					(!isset($GLOBALS['egw_info']['user']['apps']['admin'])))
 				{
-					$type_filter .= '(|';
-					foreach($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $group_id)
+					// generate groupmembers filter once per session without any external calls (but groups) to NOT generate a deep recursion!
+					$type_filter .= Api\Cache::getSession(__CLASS__, 'groupmembers_filter', function()
 					{
-						if (!in_array($group_id, $this->ignore_membership) && ($dn = Api\Accounts::id2name($group_id, 'account_dn')))
+						$account_id = $GLOBALS['egw_info']['user']['account_id'];
+						$account = $this->filter(['objectSid' => $this->get_sid($account_id)],
+							false, ['memberOf','primaryGroupID','objectSid','samAccountType'])[$account_id];
+						$filter = '(|';
+						$primary_ignored = in_array(-$account['primarygroupid'][0], $this->ignore_membership);
+						foreach($account['memberof'] as $key => $dn)
 						{
-							$type_filter .= '(memberOf='.$dn.')(primaryGroupID='.abs($group_id).')';
+							if ($key === 'count') continue;
+							// if the primary group of the user is ignored (=Domain Users), we assume it's the case for everyone
+							if ($primary_ignored)
+							{
+								$filter .= '(memberOf='.$dn.')';
+								continue;
+							}
+							if (!isset($groups))
+							{
+								$groups = $this->frontend->search(['type' => 'groups']);
+							}
+							foreach($groups as $gid => $group)
+							{
+								if (($gid == -$account['primarygroupid'][0] || $dn === $group['account_dn']) &&
+									!in_array($gid, $this->ignore_membership))
+								{
+									$filter .= '(memberOf='.$group['account_dn'].')(primaryGroupID='.(-$gid).')';
+									break;
+								}
+							}
 						}
-					}
-					$type_filter .= ')';
+						return $filter.')';
+					});
 				}
 				$type_filter .= ')';
 				if ($account_type === 'u') break;
@@ -1167,7 +1166,7 @@ class Ads
 	 * All reading ADS queries are done throught this methods.
 	 *
 	 * @param string|array $attr_filter array with attribute => value pairs or filter string or empty
-	 * @param string $account_type u = user, g = group, default null = try both
+	 * @param string|false $account_type u = user, g = group, default null = try both, false: no type_filter!
 	 * @param array $attrs =null default return account_lid, else return raw values from ldap-query
 	 * @param array $accounts =array() array to add filtered accounts too, default empty array
 	 * @param bool $filter_expired =false true: filter out expired users
@@ -1222,7 +1221,11 @@ class Ads
 					$filter .= '('.$attr.'='.$this->adldap->utilities()->ldapSlashes($value).')';
 				}
 			}
-			$filter .= $this->type_filter($account_type).')';
+			if ($account_type !== false)
+			{
+				$filter .= $this->type_filter($account_type);
+			}
+			$filter .= ')';
 		}
 		if (!($sri = ldap_search($ds=$this->ldap_connection(), $context=$this->ads_context(), $filter,
 			$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control)))
@@ -1305,9 +1308,9 @@ class Ads
 	 *
 	 * Calls frontend which uses (cached) read method to fetch all data by account_id.
 	 *
-	 * @param int $account_id numerica account_id
+	 * @param int $account_id numeric account_id
 	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
-	 * @return string/false converted value or false on error ($account_id not found)
+	 * @return string|false converted value or false on error ($account_id not found)
 	 */
 	public function id2name($account_id, $which='account_lid')
 	{

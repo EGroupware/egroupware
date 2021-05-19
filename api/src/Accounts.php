@@ -246,7 +246,21 @@ class Accounts
 		$account_search = &self::$cache['account_search'];
 		$serial = self::cacheKey($param, $serial_unlimited);
 
-		if (isset($account_search[$serial]))
+		// cache list of all groups on instance level (not session)
+		if ($serial_unlimited === self::cacheKey(['type'=>'groups','active'=>true]))
+		{
+			$result = Cache::getCache($this->config['install_id'], __CLASS__, 'groups', function() use ($param)
+			{
+				return $this->backend->search($param);
+			}, [], self::READ_CACHE_TIMEOUT);
+			$this->total = count($result);
+			if (!empty($param['offset']))
+			{
+				return array_slice($result, $param['start'], $param['offset']);
+			}
+			return $result;
+		}
+		elseif (isset($account_search[$serial]))
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
@@ -840,7 +854,7 @@ class Accounts
 		self::setup_cache();
 		$name_list = &self::$cache['name_list'];
 
-		if(@isset($name_list[$which][$name]) && $name_list[$which][$name])
+		if (isset($name_list[$which][$name]))
 		{
 			return $name_list[$which][$name];
 		}
@@ -1353,21 +1367,29 @@ class Accounts
 	{
 		//error_log(__METHOD__.'('.array2string($account_ids).')');
 
+		$instance = self::getInstance();
+
 		// instance-wide cache
+		$invalidate_groups = !$account_ids;
 		if ($account_ids)
 		{
-			$instance = self::getInstance();
-
 			foreach((array)$account_ids as $account_id)
 			{
 				Cache::unsetCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id);
 
 				unset(self::$request_cache[$account_id]);
+
+				if ($account_id < 0) $invalidate_groups = true;
 			}
 		}
 		else
 		{
 			self::$request_cache = array();
+		}
+		// invalidate instance-wide all-groups cache
+		if ($invalidate_groups)
+		{
+			Cache::unsetCache($instance->config['install_id'], __CLASS__, 'groups');
 		}
 
 		// session-cache
@@ -1397,10 +1419,11 @@ class Accounts
 	 *
 	 * @param int $account_id
 	 * @param boolean $need_active =false true = 'members-active' required
-	 * @return array
+	 * @param boolean $return_not_cached =false true: return null if nothing is cached
+	 * @return array or null if nothing is cached
 	 * @throws Exception\WrongParameter if no integer was passed as $account_id
 	 */
-	static function cache_read($account_id, $need_active=false)
+	static function cache_read($account_id, bool $need_active=false, bool $return_not_cached=false)
 	{
 		if (!is_numeric($account_id)) throw new Exception\WrongParameter('Not an integer!');
 
@@ -1414,6 +1437,10 @@ class Accounts
 
 			if (!isset($account))	// not in instance cache --> read from backend
 			{
+				if ($return_not_cached)
+				{
+					return null;
+				}
 				if (($account = $instance->backend->read($account_id)))
 				{
 					if ($instance->get_type($account_id) == 'u')
@@ -1424,7 +1451,7 @@ class Accounts
 					{
 						if (!isset($account['members'])) $account['members'] = $instance->backend->members($account_id);
 					}
-					Cache::setCache($instance->config['install_id'], __CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
+					$instance->cache_data($account_id, $account);
 				}
 				//error_log(__METHOD__."($account_id) read from backend ".array2string($account));
 			}
@@ -1443,6 +1470,20 @@ class Accounts
 		}
 		//error_log(__METHOD__."($account_id, $need_active) returning ".array2string($account));
 		return $account;
+	}
+
+	/**
+	 * Cache account read by backend (incl. members or memberships!)
+	 *
+	 * Can be used by backends too, to inject accounts into the cache.
+	 *
+	 * @param int $account_id
+	 * @param array $account
+	 * @throws Exception\WrongParameter
+	 */
+	public function cache_data(int $account_id, array $account)
+	{
+		Cache::setCache($this->config['install_id'], __CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
 	}
 
 	/**
