@@ -1317,6 +1317,12 @@ declare function egw_getWindowInnerWidth() : number;
 declare function egw_getWindowInnerHeight() : number;
 declare function egw_getWindowOuterWidth() : number;
 declare function egw_getWindowOuterHeight() : number;
+/**
+ *
+ * @param {string} _mime current mime type
+ * @returns {object|null} returns object of filemanager editor hook
+ */
+declare function egw_get_file_editor_prefered_mimes(_mime : string) : {mime:string,edit:any,edit_popup?:any}|null;
 
 // Youtube API golbal vars
 declare var YT : any;
