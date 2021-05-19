@@ -114,6 +114,17 @@ var et2_valueWidget = /** @class */ (function (_super) {
         // Copy the given value
         this.label = _value;
     };
+    et2_valueWidget.prototype.get_value = function () {
+        return this.value;
+    };
+    /**
+     * Set value of widget
+     *
+     * @param {string} _value value to set
+     */
+    et2_valueWidget.prototype.set_value = function (_value) {
+        this.value = _value;
+    };
     et2_valueWidget._attributes = {
         "label": {
             "name": "Label",

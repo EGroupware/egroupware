@@ -44,6 +44,7 @@ export class et2_valueWidget extends et2_baseWidget
 	};
 
 	label: string = '';
+	value: string|number|Object;
 	protected _labelContainer: JQuery = null;
 
 	/**
@@ -142,6 +143,21 @@ export class et2_valueWidget extends et2_baseWidget
 
 		// Copy the given value
 		this.label = _value;
+	}
+
+	get_value()
+	{
+		return this.value;
+	}
+
+	/**
+	 * Set value of widget
+	 *
+	 * @param {string} _value value to set
+	 */
+	set_value(_value : any | null)
+	{
+		this.value = _value;
 	}
 }
 
