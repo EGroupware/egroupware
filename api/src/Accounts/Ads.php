@@ -8,7 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
- * @version $Id$
  */
 
 namespace EGroupware\Api\Accounts;
@@ -22,15 +21,15 @@ use adLDAPException;
 /**
  * Active directory backend for accounts
  *
- * RID (realtive id / last part of string-SID) is used as nummeric account-id (negativ for groups).
+ * RID (relative id / last part of string-SID) is used as numeric account-id (negativ for groups).
  * SID for queries get reconstructed from account_id by prepending domain-SID.
  *
  * Easiest way to enable SSL on a win2008r2 DC is to install role "Active Director Certificate Services"
- * or in German "Active Directory-Zertificatsdienste" AND reboot.
+ * or in German "Active Directory-Zertifikatsdienste" AND reboot.
  *
  * Changing passwords require ldap_modify_batch method available in PHP 5.4 >= 5.4.26,
  * PHP 5.5 >= 5.5.10 or PHP 5.6+. In earlier PHP versions ads_admin user (configured in setup)
- * has to have "Reset Password" priveledges!
+ * has to have "Reset Password" privileges!
  *
  * @access internal only use the interface provided by the accounts class
  * @link http://www.selfadsi.org/user-attributes-w2k8.htm
