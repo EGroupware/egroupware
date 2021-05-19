@@ -44,7 +44,7 @@ export class et2_valueWidget extends et2_baseWidget
 	};
 
 	label: string = '';
-	value: string|number|Object;
+	protected value: string|number|Object;
 	protected _labelContainer: JQuery = null;
 
 	/**

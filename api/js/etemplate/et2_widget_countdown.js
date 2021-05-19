@@ -70,6 +70,7 @@ var et2_countdown = /** @class */ (function (_super) {
     et2_countdown.prototype.set_value = function (_time) {
         if (isNaN(_time))
             return;
+        _super.prototype.set_value.call(this, _time);
         this.time = new Date();
         this.time.setSeconds(this.time.getSeconds() + parseInt(_time));
         var self = this;

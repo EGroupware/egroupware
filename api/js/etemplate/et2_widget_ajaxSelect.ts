@@ -87,7 +87,6 @@ class et2_ajaxSelect extends et2_inputWidget
 		}
 	};
 	private input: JQuery = null;
-	private value : any;
 	/**
 	 * Constructor
 	 *
@@ -215,7 +214,6 @@ class et2_ajaxSelect_ro extends et2_valueWidget implements et2_IDetachedDOM
 			"ignore": true
 		}
 	};
-	private value: string;
 	private span: JQuery;
 
 	/**

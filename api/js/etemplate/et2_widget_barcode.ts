@@ -112,7 +112,6 @@ export class et2_barcode extends et2_valueWidget
 		},
 	};
 	private div: JQuery;
-	private value: string;
 	private settings: { output: string; barWidth: string; barHeight: string; bgColor: string; color: string };
 
 	/**
@@ -156,11 +155,6 @@ export class et2_barcode extends et2_valueWidget
 			this.value = _val;
 			this.createWidget();
 		}
-	}
-
-	get_value()
-	{
-		return this.value;
 	}
 }
 et2_register_widget(et2_barcode, ["barcode"]);

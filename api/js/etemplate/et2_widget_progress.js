@@ -69,6 +69,7 @@ var et2_progress = /** @class */ (function (_super) {
     };
     // setting the value as width of the progress-bar
     et2_progress.prototype.set_value = function (_value) {
+        _super.prototype.set_value.call(this, _value);
         _value = parseInt(_value) + "%"; // make sure we have percent attached
         this.progress.style.width = _value;
         if (!this.options.label)

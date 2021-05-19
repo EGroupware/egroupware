@@ -96,7 +96,7 @@ et2_register_widget(et2_color, ["colorpicker"]);
  */
 export class et2_color_ro extends et2_valueWidget implements et2_IDetachedDOM
 {
-	private value: string;
+	protected value: string;
 	private $node: JQuery;
 	/**
 	 * Constructor
@@ -115,7 +115,7 @@ export class et2_color_ro extends et2_valueWidget implements et2_IDetachedDOM
 		this.setDOMNode(this.$node[0]);
 	}
 
-	set_value( _value)
+	set_value( _value : string)
 	{
 		this.value = _value;
 

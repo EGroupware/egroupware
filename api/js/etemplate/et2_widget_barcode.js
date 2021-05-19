@@ -94,9 +94,6 @@ var et2_barcode = /** @class */ (function (_super) {
             this.createWidget();
         }
     };
-    et2_barcode.prototype.get_value = function () {
-        return this.value;
-    };
     // Class Constants
     /*
      * type const

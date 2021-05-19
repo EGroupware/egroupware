@@ -94,6 +94,7 @@ class et2_progress extends et2_valueWidget implements et2_IDetachedDOM
 	// setting the value as width of the progress-bar
 	set_value(_value)
 	{
+		super.set_value(_value);
 		_value = parseInt(_value)+"%";	// make sure we have percent attached
 		this.progress.style.width = _value;
 		if (!this.options.label) this.set_label(_value);

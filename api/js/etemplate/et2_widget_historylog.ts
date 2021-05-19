@@ -88,7 +88,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 	private controller: et2_dataview_controller;
 	private fields: any;
 	private diff: et2_diff;
-	private value: any;
 
 	/**
 	 * Constructor

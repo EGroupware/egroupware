@@ -124,7 +124,6 @@ export class et2_tree extends et2_inputWidget
 	 * Regexp used by _htmlencode
 	 */
 	_lt_regexp : RegExp = /</g;
-	private value: any;
 
 	/**
 	 * Constructor
