@@ -239,7 +239,7 @@
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {
-			if ((popup || window.opener && window.opener.framework) && window.name != '') {
+			if ((window.opener && window.opener.framework || popup) && window.name != '') {
 				// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
 				window.setInterval(function () {
 					if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
