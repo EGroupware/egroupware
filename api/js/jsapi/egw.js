@@ -238,18 +238,20 @@
 		gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
 
 		// Make sure opener knows when we close - start a heartbeat
-		if((popup || window.opener) && window.name != '')
-		{
-			// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
-			window.setInterval(function() {
-				if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile())
-				{
-					window.opener.framework.popups.push(window);
-				}
-				egw().storeWindow(this.egw_appName, this);
-			}, 2000);
+		try {
+			if ((popup || window.opener && window.opener.framework) && window.name != '') {
+				// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
+				window.setInterval(function () {
+					if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
+						window.opener.framework.popups.push(window);
+					}
+					egw().storeWindow(this.egw_appName, this);
+				}, 2000);
+			}
 		}
-
+		catch(e) {
+			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
 		// instanciate app object
 		var appname = window.egw_appName;
 		if (app && typeof app[appname] != 'object' && typeof app.classes[appname] == 'function')
