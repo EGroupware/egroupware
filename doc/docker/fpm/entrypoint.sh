@@ -20,6 +20,11 @@ test -n "$EGW_MEMORY_LIMIT" && \
 	sed -e "s/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit]=$EGW_MEMORY_LIMIT/g" \
 		-i /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
 
+# if EGW_MAX_EXECUTION_TIME is set in environment, propagate value to php.ini
+test -n "$EGW_MAX_EXECUTION_TIME" && test "$EGW_MAX_EXECUTION_TIME" -ge 90 && \
+	sed -e "s/^;\?max_execution_time.*/max_execution_time=$EGW_MAX_EXECUTION_TIME/g" \
+		-i /etc/php/$PHP_VERSION/fpm/php.ini
+
 # ToDo check version before copy
 rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/
 
