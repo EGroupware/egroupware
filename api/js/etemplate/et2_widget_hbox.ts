@@ -14,15 +14,16 @@
 */
 
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
+import {et2_grid} from "./et2_widget_grid";
 
 /**
  * Class which implements hbox tag
  *
  * @augments et2_baseWidget
  */
-class et2_hbox extends et2_baseWidget
+export class et2_hbox extends et2_baseWidget
 {
 	alignData : any = {
 		"hasAlign": false,
@@ -156,7 +157,7 @@ class et2_hbox extends et2_baseWidget
 		super.assign(_obj);
 	}
 
-	getDOMNode(_sender) {
+	getDOMNode(_sender? : et2_widget) {
 		// Return a special align container if this hbox needs it
 		if (_sender != this && this.alignData.hasAlign)
 		{

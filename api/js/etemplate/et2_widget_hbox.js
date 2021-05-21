@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.et2_hbox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_baseWidget;
@@ -29,6 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
+var et2_widget_grid_1 = require("./et2_widget_grid");
 /**
  * Class which implements hbox tag
  *
@@ -162,11 +164,12 @@ var et2_hbox = /** @class */ (function (_super) {
      */
     et2_hbox.prototype.addChild = function (child) {
         _super.prototype.addChild.call(this, child);
-        if (child.instanceOf && child.instanceOf(et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached()) {
+        if (child.instanceOf && child.instanceOf(et2_widget_grid_1.et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached()) {
             jQuery(child.getDOMNode(child)).css("display", "inline-table");
         }
     };
     return et2_hbox;
 }(et2_core_baseWidget_1.et2_baseWidget));
+exports.et2_hbox = et2_hbox;
 et2_core_widget_1.et2_register_widget(et2_hbox, ["hbox"]);
 //# sourceMappingURL=et2_widget_hbox.js.map
