@@ -348,9 +348,11 @@ class Sharing
 	/**
 	 * Get the namespaced class for the given share
 	 *
-	 * @param string $share
+	 * @param array $share
+	 * @return string
+	 * @throws Exception
 	 */
-	protected static function get_share_class($share)
+	protected static function get_share_class(array $share)
 	{
 		try
 		{
@@ -698,7 +700,7 @@ class Sharing
 	 * @param String $path
 	 * @param boolean $writable Allow editing the shared entry / folder / file
 	 * @param boolean $files For sharing an application entry, allow access to the linked files
-	 * @param $extra Additional extra parameters
+	 * @param array $extra Additional extra parameters
 	 */
 	public static function ajax_create($action, $path, $writable = false, $files = false, $extra = array())
 	{
@@ -721,7 +723,7 @@ class Sharing
 		);
 
 		// Store share in session so Merge can find this one and not create a read-only one
-		\EGroupware\Api\Cache::setSession(__CLASS__, $path, $share);
+		Cache::setSession(__CLASS__, $path, $share);
 		$arr = array(
 			'action'		=> $action,
 			'writable'      => $writable,
@@ -745,7 +747,7 @@ class Sharing
 	/**
 	 * Api\Storage\Base instance for egw_sharing table
 	 *
-	 * @var Api\Storage\Base
+	 * @var Storage\Base
 	 */
 	protected static $so;
 
@@ -884,7 +886,7 @@ class Sharing
 	 * Check that the share path is still valid, and if not, delete it.
 	 * This should be overridden.
 	 *
-	 * @param Array share
+	 * @param array share
 	 *
 	 * @return boolean Is the share still valid
 	 */
@@ -913,7 +915,7 @@ class Sharing
 	 *
 	 * @param string $path
 	 *
-	 * @throws WrongParameter if you try to share a path that needs a password
+	 * @throws Exception\WrongParameter if you try to share a path that needs a password
 	 */
 	public static function path_needs_password($path)
 	{

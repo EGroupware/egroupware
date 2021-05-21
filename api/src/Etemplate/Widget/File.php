@@ -204,6 +204,7 @@ class File extends Etemplate\Widget
 				);
 			}
 		}
+		return true;
 	}
 
 	/**
@@ -247,7 +248,7 @@ class File extends Etemplate\Widget
 				}
 				fclose($fp);
 			} else {
-				_log('cannot create the destination file');
+				error_log(__METHOD__ . ' cannot create the destination file "'.$new_file.'"');
 				return false;
 			}
 
@@ -307,7 +308,7 @@ class File extends Etemplate\Widget
 
 		if (!$this->is_readonly($cname, $form_name))
 		{
-			$value = $value_in = self::get_array($content, $form_name);
+			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
 			if(!is_array($value)) $value = array();
@@ -317,7 +318,7 @@ class File extends Etemplate\Widget
 
 			foreach($value as $tmp => $file)
 			{
-				if(!$file) continue;
+				if(!$file || !is_array($file)) continue;
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;

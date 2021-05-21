@@ -754,7 +754,7 @@ class TestSharing extends Api\Vfs\Sharing {
 		return $sessionid;
 	}
 
-	public static function get_share_class($share)
+	public static function get_share_class(array $share)
 	{
 		return __CLASS__;
 	}
@@ -781,7 +781,7 @@ if(!class_exists('TestHiddenSharing'))
 			return $sessionid;
 		}
 
-		public static function get_share_class($share)
+		public static function get_share_class(array $share)
 		{
 			return __CLASS__;
 		}
