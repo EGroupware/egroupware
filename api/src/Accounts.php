@@ -256,7 +256,7 @@ class Accounts
 			$this->total = count($result);
 			if (!empty($param['offset']))
 			{
-				return array_slice($result, $param['start'], $param['offset']);
+				return array_slice($result, $param['start'], $param['offset'], true);
 			}
 			return $result;
 		}
@@ -267,8 +267,8 @@ class Accounts
 		// if we already have an unlimited search, we can always return only a part of it
 		elseif (isset($account_search[$serial_unlimited]))
 		{
-			$this->total = $account_search[$serial]['total'];
-			return array_slice($account_search[$serial]['total']['data'], $param['start'], $param['offset']);
+			$this->total = $account_search[$serial_unlimited]['total'];
+			return array_slice($account_search[$serial_unlimited]['data'], $param['start'], $param['offset'], true);
 		}
 		// no backend understands $param['app'], only sql understands type owngroups or groupmemember[+memberships]
 		// --> do an full search first and then filter and limit that search

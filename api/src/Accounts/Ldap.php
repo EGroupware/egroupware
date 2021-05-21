@@ -884,7 +884,7 @@ class Ldap
 		if(is_numeric($start) && is_numeric($offset))
 		{
 			$account_search[$serial]['total'] = $this->total;
-			return $account_search[$serial]['data'] = isset($totalcount) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset);
+			return $account_search[$serial]['data'] = isset($totalcount) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset, true);
 		}
 		return $sortedAccounts;
 	}
