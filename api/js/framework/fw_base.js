@@ -910,7 +910,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 			if (appEntry && appEntry.browser == null)
 			{
 				navigate = true;
-				framework.applicationTabNavigate(appEntry, 'about:blank');
+				framework.applicationTabNavigate(appEntry, appEntry.indexUrl);
 			}
 		}
 		else
