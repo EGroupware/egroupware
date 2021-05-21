@@ -1990,6 +1990,8 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   min-width: 280px;
   width: max-content;
   margin: auto;
+  padding-top: 2px;
+  background-color: transparent;
 }
 #loginMainDiv .egw_message_wrapper #egw_message {
   white-space: normal;
@@ -2066,6 +2068,9 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 }
 #loginMainDiv div#login_footer .apps .app span {
   display: none;
+}
+#loginMainDiv div#login_footer .apps .app[data-id="guacamole"] .content img.icon2-bg {
+  right: 15px;
 }
 #loginMainDiv div#login_footer .apps .tooltip {
   display: inline-flex;
@@ -2146,6 +2151,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   z-index: 100;
   padding: 0;
   width: 280px;
+  border-radius: 5px;
 }
 #loginMainDiv div#centerBox .egw_logo {
   width: 24px;
@@ -2166,6 +2172,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-color: white;
   padding: 1em;
   border: 1px solid #cdcdce;
+  border-radius: 5px;
 }
 #loginMainDiv div#centerBox form .hiddenCredential {
   display: none;

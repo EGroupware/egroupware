@@ -315,13 +315,13 @@ class Login
 		$counter = 1;
 		if (is_array($data))
 		{
-			foreach ($data['apps'] as $app)
+			foreach ($data['apps'] as $id => $app)
 			{
 				$icon = strpos($app['icon'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon'] : $app['icon'];
 				$icon2 = strpos($app['icon2'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon2'] : $app['icon2'];
 				$icon3 = strpos($app['icon3'], "/") === 0 ? $GLOBALS['egw_info']['server']['webserver_url'].$app['icon3'] : $app['icon3'];
 				$title = lang($app['title']);
-				$nodes .= '<div class="app" style="animation:login-apps '.$counter*0.1.'s ease-out">'
+				$nodes .= '<div class="app" style="animation:login-apps '.$counter*0.1.'s ease-out" data-id="'.$id.'">'
 					.'<a href="'.htmlspecialchars($app['url']).'" title="'.htmlspecialchars($title).'" class="" target="blank">'
 					.'<img class="icon" src="'.htmlspecialchars($icon).'"/></a>'
 					.'<div class="tooltip">'
