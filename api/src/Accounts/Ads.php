@@ -993,7 +993,7 @@ class Ads
 		reset($sortedAccounts);
 		if(is_numeric($start) && is_numeric($offset))
 		{
-			return array_slice($sortedAccounts, $start, $offset);
+			return array_slice($sortedAccounts, $start, $offset, true);
 		}
 		//error_log(__METHOD__.'('.array2string($param).') returning all '.array2string($sortedAccounts));
 		return $sortedAccounts;
