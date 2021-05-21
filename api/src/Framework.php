@@ -860,9 +860,9 @@ abstract class Framework extends Framework\Extra
 		unset($newarray);
 
 		$apps = array();
-		foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+		foreach((array)$GLOBALS['egw_info']['user']['apps'] as $app => $data)
 		{
-			if (is_long($app))
+			if (is_int($app))
 			{
 				continue;
 			}
