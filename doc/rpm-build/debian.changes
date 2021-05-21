@@ -1,3 +1,33 @@
+egroupware-docker (21.1.20210521) hardy; urgency=low
+
+  * last 21.1 release candidate incl. new login background, probably identical to release on 25th May
+  * CalDAV/Calendar: fix broken sync in last RC
+  * AD: fix account-selection type "groupmembers" caused high load on AD
+  * AD: fix login always reports "account is expired", if account-selection "group-members" is set for AD
+  * ADS/LDAP: improve caching of searching/listing
+  * Infolog: Add info_owner/... merge placeholders
+  * SmallPART: allow to interactive choose a course and video via LTI 1.3
+  * SmallPART: automatic registration from Moodle 3.10+
+  * SmallPART: using now ceLTIc/LTI for LTI 1.3 too
+  * SmallPART: automatic use SameSite=None cookie attribute when embedding via LTI
+  * SmallPART: fix failed opening of courses from course-list via LTI
+  * SmallPART: allow to configure "Moodle username" for checking or creating an EGroupware user
+  * EPL/CTI/Placetel: allow to download preconfigured Windows softphone
+  * EPL/CTI/Placetel: automatic create API token and enable notify-API
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 21 May 2021 17:54:03 +0200
+
+egroupware-docker (21.1.20210504) hardy; urgency=low
+
+  * 5th and last 21.1 release candidate
+  * EPL/Placetel: create Placetel users, VoIP destinations and IP devices / autoconfigurable phones from EGroupware
+  * EPL/Placetel: allow users to reset Placetel password, view SIP credentials and configure function keys / BLF of their phones
+  * SmallPART: fix wrongly "fixed" regular expression causing eg. Panopto video-url giving an error
+  * Push: allow setting EGW_MAX_PUSH_USERS to support more then default 1024 user (current/highest usage is reported in logs)
+  * Login: new icon-bar showcasing available applications (new login image yet to come)
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 04 May 2021 09:55:21 +0200
+
 egroupware-docker (21.1.20210420) hardy; urgency=low
 
   * 4th and now feature-complete 21.1 pre-release
