@@ -562,7 +562,7 @@ class Nextmatch extends Etemplate\Widget
 	 * @param Etemplate\Widget $widget =null instanciated nextmatch widget to let it's widgets transform each row
 	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
 	 */
-	private static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, Etemplate\Widget $widget=null)
+	protected static function call_get_rows(array &$value,array &$rows,array &$readonlys=null,$obj=null,$method=null, Etemplate\Widget $widget=null)
 	{
 		if (is_null($method)) $method = $value['get_rows'];
 
