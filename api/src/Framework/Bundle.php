@@ -252,6 +252,7 @@ class Bundle
 			'mail' => '/mail/js/app.js',
 			'projectmanager' => '/projectmanager/js/app.js',
 			'messenger' => '/messenger/js/app.js',
+			'smallpart' => '/smallpart/js/app.js',
 		) as $bundle => $file)
 		{
 			if (@file_exists(EGW_SERVER_ROOT.$file))

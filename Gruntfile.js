@@ -125,7 +125,6 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_core_valueWidget.js",
 						"api/js/etemplate/et2_core_inputWidget.js",
 						"api/js/etemplate/et2_widget_color.js",
-						"api/js/etemplate/et2_widget_countdown.js",
 						"api/js/jquery/blueimp/js/blueimp-gallery.min.js",
 						"api/js/etemplate/expose.js",
 						"api/js/etemplate/et2_widget_description.js",
@@ -196,6 +195,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_extension_itempicker_actions.js",
 						"api/js/etemplate/et2_widget_itempicker.js",
 						"api/js/etemplate/et2_widget_script.js",
+						"api/js/etemplate/et2_widget_countdown.js",
 						"api/js/etemplate/et2_core_legacyJSFunctions.js",
 						"api/js/etemplate/etemplate2.js"
 					]
@@ -277,6 +277,25 @@ module.exports = function (grunt) {
 						"vendor/npm-asset/dhtmlx-gantt/codebase/ext/dhtmlxgantt_marker.js",
 						"projectmanager/js/et2_widget_gantt.js",
 						"projectmanager/js/app.js"
+					]
+				}
+			},
+			smallpart: {
+				files: {
+					"smallpart/js/app.min.js": [
+						"smallpart/js/et2_widget_videobar.js",
+						"smallpart/js/et2_videooverlay_interface.js",
+						"smallpart/js/overlay_plugins/et2_smallpart_overlay_html.js",
+						"smallpart/js/overlay_plugins/et2_smallpart_question_multiplechoice.js",
+						"smallpart/js/overlay_plugins/et2_smallpart_question_singlechoice.js",
+						"smallpart/js/overlay_plugins/et2_smallpart_question_text.js",
+						"smallpart/js/et2_widget_videooverlay.js",
+						"smallpart/js/et2_widget_videooverlay_slider_controller.js",
+						"smallpart/js/et2_widget_videotime.js",
+						"smallpart/js/et2_widget_comment.js",
+						"smallpart/js/et2_widget_color_radiobox.js",
+						"smallpart/js/et2_widget_filter_participants.js",
+						"smallpart/js/app.js"
 					]
 				}
 			}
