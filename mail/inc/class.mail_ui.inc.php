@@ -1558,12 +1558,12 @@ class mail_ui
 			}
 			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
 		}
-		// enable push notifications, if supported (and konfigured) by the server
+		// enable push notifications, if supported (and configured) by the server
 		if ($mail_ui->mail_bo->icServer instanceof Api\Mail\Imap\PushIface &&
 			$mail_ui->mail_bo->icServer->pushAvailable())
 		{
-			$mail_ui->mail_bo->icServer->enablePush();
-			Api\Json\Response::get()->call('app.mail.disable_autorefresh', true);
+			Api\Json\Response::get()->call('app.mail.disable_autorefresh',
+				$mail_ui->mail_bo->icServer->enablePush());
 		}
 		else
 		{
