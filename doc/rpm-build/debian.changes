@@ -1,6 +1,6 @@
 egroupware-docker (21.1.20210521) hardy; urgency=low
 
-  * last 21.1 release candidate incl. new login background, probably identical to release on 25th May
+  * final 21.1 release from 25th May incl. new login background
   * CalDAV/Calendar: fix broken sync in last RC
   * AD: fix account-selection type "groupmembers" caused high load on AD
   * AD: fix login always reports "account is expired", if account-selection "group-members" is set for AD
