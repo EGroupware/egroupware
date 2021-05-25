@@ -2984,7 +2984,7 @@ class addressbook_ui extends addressbook_bo
 
 		if(is_array($content))
 		{
-			$button = key($content['button']);
+			$button = is_array($content['button']) ? key($content['button']) : "";
 			switch ($button)
 			{
 				case 'vcard':
