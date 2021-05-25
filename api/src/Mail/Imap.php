@@ -1518,7 +1518,17 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				self::METADATA_NAME => self::METADATA_PREFIX.implode(self::METADATA_SEPARATOR, $metadata),
 			]);
 		}
-		catch (Horde_Imap_Client_Exception $e) {
+		catch (\Horde_Imap_Client_Exception $e) {
+			if (Api\Json\Response::isJSONResponse())
+			{
+				// report error to user once per session
+				Api\Cache::getSession(__CLASS__, __FUNCTION__, static function() use ($e)
+				{
+					Api\Json\Response::get()->message(lang("Error enabling push")."\n".
+						$e->getMessage().(!empty($e->details) ? "\n".$e->details : ''), 'error');
+					return false;
+				});
+			}
 			_egw_log_exception($e);
 			return false;
 		}
