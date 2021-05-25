@@ -150,11 +150,18 @@
 			// Code is app.appname.function, add the arguments so it can be executed
 			if (typeof _code == 'string' && _code.indexOf('app') == 0 && _code.split('.').length >= 3 && _code.indexOf('(') == -1)
 			{
-				return function(ev, widget)
+				const parts = _code.split('.');
+				const app = _widget.getInstanceManager().app_obj;
+				// check if we need to load the object
+				if (parts.length === 3 && typeof app[parts[1]] === 'undefined')
 				{
-					const app = widget.getInstanceManager().app_obj;
-					return egw.applyFunc(_code, [ev, _widget], context);
+					return function (ev, widget)
+					{
+						return egw.applyFunc(_code, [ev, widget]);
+					}
 				}
+				// Code is app.appname.function, add the arguments so it can be executed
+				_code += '(ev,widget)';
 			}
 			// use app object from etemplate2, which might be private and not just window.app
 			_code = _code.replace(/(window\.)?app\./, 'widget.getInstanceManager().app_obj.');
