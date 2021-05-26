@@ -16,7 +16,7 @@ namespace EGroupware\Api\Cache;
 /**
  * Interface for a caching provider being able to retrieve multiple entires
  */
-interface ProviderMultiple
+interface ProviderMultiple extends Provider
 {
 	/**
 	 * Get multiple data from the cache

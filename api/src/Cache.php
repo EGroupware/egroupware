@@ -28,10 +28,10 @@ namespace EGroupware\Api;
  * getXXX($app,$location,$callback=null,array $callback_params,$expiration=0)
  * has three optional parameters allowing to specify:
  * 3. a callback if requested data is not yes stored. In that case the callback is called
- *    and it's value is stored in the cache AND retured
+ *    and it's value is stored in the cache AND returned
  * 4. parameters to pass to the callback as array, see call_user_func_array
  * 5. an expiration time in seconds to specify how long data should be cached,
- *    default 0 means infinit (this time is not supported for request level!)
+ *    default 0 means infinite (this time is not supported for request level!)
  *
  * Data is stored under an application name and a location, like egw_session::appsession().
  * In fact data stored at cache level Api\Cache::SESSION, is stored in the same way as
@@ -42,14 +42,23 @@ namespace EGroupware\Api;
  * The tree and instance wide cache uses a certain provider class, to store the data
  * eg. in memcached or if there's nothing else configured in the filesystem (eGW's temp_dir).
  *
- * "Admin >> clear cache and register hooks" allways only clears instance level cache of
+ * "Admin >> clear cache and register hooks" always only clears instance level cache of
  * calling instance. It never clears tree level cache, which makes it important to set
- * resonable expiry times or think about an other means of clearing that particular item.
+ * reasonable expiry times or think about an other means of clearing that particular item.
  * (Not clearing of tree-level cache is important, as regenerating it is an expensive
  * operation for a huge scale EGroupware hosting operation.)
  *
- * Apps needing to talk to multiple EGroupware instances (eg. Stylite Managementserver)
+ * Apps needing to talk to multiple EGroupware instances (eg. EGroupware Managementserver)
  * can use install_id of instance as $level parameter to (set|get|unset)Cache method.
+ *
+ * If a callback is used to calculate the data, in case it's not found in the cache, e.g.:
+ * $data = Api\Cache::getCache(Api\Cache::(TREE|INSTANCE), $app, $location, function($params)
+ * {
+ * 		// code to calculate / query $data
+ * 		return $data;
+ * }, $params, $expiration);
+ * then we lock the $app:$location by storing some specific data, so only one callback is used
+ * to calculate the data, and other processes sleep until the data is calculate to avoid races.
  */
 class Cache
 {
@@ -108,7 +117,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise incl. key already existed
 	 */
-	static public function addCache($level,$app,$location,$data,$expiration=0)
+	public static function addCache($level,$app,$location,$data,$expiration=0)
 	{
 		//error_log(__METHOD__."('$level','$app','$location',".array2string($data).",$expiration)");
 		switch($level)
@@ -144,7 +153,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
-	static public function setCache($level,$app,$location,$data,$expiration=0)
+	public static function setCache($level,$app,$location,$data,$expiration=0)
 	{
 		//error_log(__METHOD__."('$level','$app','$location',".array2string($data).",$expiration)");
 		switch($level)
@@ -171,6 +180,19 @@ class Cache
 	}
 
 	/**
+	 * Content stored to signal one callback is already running and calculating the data, to not run it multiple times
+	 */
+	const CALLBACK_LOCK = '***LOCKED***';
+	/**
+	 * Maximum time an item is locked, to recover from eg. a crash while the lock is set
+	 */
+	const CALLBACL_LOCK_TIMEOUT = 10;	// 10s
+	/**
+	 * Time other processes sleep to wait for one callback to calculate the data
+	 */
+	const CALLBACK_LOCK_USLEEP = 50000;	// 50ms
+
+	/**
 	 * Get some data from the cache
 	 *
 	 * @param string $level use Api\Cache::(TREE|INSTANCE|SESSION|REQUEST)
@@ -182,7 +204,7 @@ class Cache
 	 * @return mixed NULL if data not found in cache (and no callback specified) or
 	 * 	if $location is an array: location => data pairs for existing location-data, non-existing is not returned
 	 */
-	static public function getCache($level,$app,$location,$callback=null,array $callback_params=array(),$expiration=0)
+	public static function getCache($level,$app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		switch($level)
 		{
@@ -224,16 +246,39 @@ class Cache
 					}
 					else
 					{
-						$data = $provider->get($keys=self::keys($level,$app,$location));
-						if (is_null($data) && !is_null($callback))
+						// try reading cached data and, if not found AND a callback to do so given, calculate it
+						// only allow one process to do the (heavy) calculation by storing some lock-data
+						// other processes reading the lock-data sleep for a short time, before try reading it again
+						for($n=10+self::CALLBACL_LOCK_TIMEOUT*1000000/self::CALLBACK_LOCK_USLEEP; $n >= 0; $n--)
 						{
-							$data = call_user_func_array($callback,$callback_params);
-							// limit expiration to configured maximum time
-							if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+							$data = $provider->get($keys=self::keys($level,$app,$location));
+							if ($data === self::CALLBACK_LOCK)
 							{
-								$expiration = self::$max_expiration;
+								usleep(self::CALLBACK_LOCK_USLEEP);
 							}
-							$provider->set($keys,$data,$expiration);
+							elseif($data === null && isset($callback))
+							{
+								$provider->set($keys, self::CALLBACK_LOCK, self::CALLBACL_LOCK_TIMEOUT);
+								try {
+									$data = call_user_func_array($callback, $callback_params);
+								}
+								catch(\Throwable $e) {
+									// remove lock, before re-throwing the exception/error
+									$provider->delete($keys);
+									throw $e;
+								}
+								// limit expiration to configured maximum time
+								if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+								{
+									$expiration = self::$max_expiration;
+								}
+								$provider->set($keys, $data, $expiration);
+								break;
+							}
+							else
+							{
+								break;
+							}
 						}
 					}
 				}
@@ -254,7 +299,7 @@ class Cache
 	 * @param string $location location name for data
 	 * @return boolean true if data was set, false if not (like isset())
 	 */
-	static public function unsetCache($level,$app,$location)
+	public static function unsetCache($level,$app,$location)
 	{
 		switch($level)
 		{
@@ -283,7 +328,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
-	static public function setTree($app,$location,$data,$expiration=0)
+	public static function setTree($app,$location,$data,$expiration=0)
 	{
 		//error_log(__METHOD__."('$app','$location',".array2string($data).",$expiration)");
 		return self::setCache(self::TREE,$app,$location,$data,$expiration);
@@ -299,7 +344,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getTree($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
+	public static function getTree($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		return self::getCache(self::TREE,$app,$location,$callback,$callback_params,$expiration);
 	}
@@ -311,7 +356,7 @@ class Cache
 	 * @param string $location location name for data
 	 * @return boolean true if data was set, false if not (like isset())
 	 */
-	static public function unsetTree($app,$location)
+	public static function unsetTree($app,$location)
 	{
 		return self::unsetCache(self::TREE,$app,$location);
 	}
@@ -325,7 +370,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
-	static public function setInstance($app,$location,$data,$expiration=0)
+	public static function setInstance($app,$location,$data,$expiration=0)
 	{
 		return self::setCache(self::INSTANCE,$app,$location,$data,$expiration);
 	}
@@ -340,7 +385,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getInstance($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
+	public static function getInstance($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		return self::getCache(self::INSTANCE,$app,$location,$callback,$callback_params,$expiration);
 	}
@@ -352,7 +397,7 @@ class Cache
 	 * @param string $location location name for data
 	 * @return boolean true if data was set, false if not (like isset())
 	 */
-	static public function unsetInstance($app,$location)
+	public static function unsetInstance($app,$location)
 	{
 		return self::unsetCache(self::INSTANCE,$app,$location);
 	}
@@ -371,7 +416,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return boolean true if data could be stored, false otherwise
 	 */
-	static public function setSession($app,$location,$data,$expiration=0)
+	public static function setSession($app,$location,$data,$expiration=0)
 	{
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
@@ -400,7 +445,7 @@ class Cache
 	 * @param int $expiration =0 expiration time in seconds, default 0 = never
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
+	public static function &getSession($app, $location, $callback=null, array $callback_params=array(), $expiration=0)
 	{
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
@@ -429,7 +474,7 @@ class Cache
 	 * @param string $location location name for data
 	 * @return boolean true if data was set, false if not (like isset())
 	 */
-	static public function unsetSession($app,$location)
+	public static function unsetSession($app,$location)
 	{
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
@@ -468,7 +513,7 @@ class Cache
 	 * @param int $expiration =0 expiration time is NOT used for REQUEST!
 	 * @return boolean true if data could be stored, false otherwise
 	 */
-	static public function setRequest($app,$location,$data,$expiration=0)
+	public static function setRequest($app,$location,$data,$expiration=0)
 	{
 		unset($expiration);	// not used, but required by function signature
 		self::$request_cache[$app][$location] = $data;
@@ -486,7 +531,7 @@ class Cache
 	 * @param int $expiration =0 expiration time is NOT used for REQUEST!
 	 * @return mixed NULL if data not found in cache (and no callback specified)
 	 */
-	static public function getRequest($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
+	public static function getRequest($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
 		unset($expiration);	// not used, but required by function signature
 		if (!isset(self::$request_cache[$app][$location]) && !is_null($callback))
@@ -503,7 +548,7 @@ class Cache
 	 * @param string $location location name for data
 	 * @return boolean true if data was set, false if not (like isset())
 	 */
-	static public function unsetRequest($app,$location)
+	public static function unsetRequest($app,$location)
 	{
 		if (!isset(self::$request_cache[$app][$location]))
 		{
@@ -521,7 +566,7 @@ class Cache
 	 *
 	 * @param string $level Api\Cache::(TREE|INSTANCE) or install_id
 	 * @param boolean $log_not_found =true false do not log if no provider found, used eg. to supress error via unsetCache during installation
-	 * @return Api\Cache\Provider
+	 * @return Cache\Provider|Cache\ProviderMultiple
 	 */
 	static protected function get_provider($level, $log_not_found=true)
 	{
@@ -602,7 +647,7 @@ class Cache
 	 * @param boolean $throw =true throw an exception, if we can't retriev the value
 	 * @return string|boolean string with config or false if not found and !$throw
 	 */
-	static public function get_system_config($name,$throw=true)
+	public static function get_system_config($name, $throw=true)
 	{
 		if(!isset($GLOBALS['egw_info']['server'][$name]))
 		{
@@ -642,7 +687,7 @@ class Cache
 	 * @param string $level =self::INSTANCE
 	 * @param string $app =null app-name or "all" to empty complete cache
 	 */
-	static public function flush($level=self::INSTANCE, $app=null)
+	public static function flush($level=self::INSTANCE, $app=null)
 	{
 		$ret = true;
 		if (!($provider = self::get_provider($level)))
@@ -670,7 +715,7 @@ class Cache
 	/**
 	 * Unset instance key, so it get read again and re-read install_id from database
 	 */
-	static public function unset_instance_key()
+	public static function unset_instance_key()
 	{
 		self::$instance_key = null;
 		$GLOBALS['egw_info']['server']['install_id'] = self::get_system_config('install_id', false);
@@ -689,7 +734,7 @@ class Cache
 	 * @param string $install_id =null default use install_id of current instance
 	 * @return string new key also stored in self::$instance_key
 	 */
-	static public function generate_instance_key($install_id=null)
+	public static function generate_instance_key($install_id=null)
 	{
 		if (!isset($install_id))
 		{
@@ -711,7 +756,7 @@ class Cache
 	 * @param string $location =null
 	 * @return array
 	 */
-	static public function keys($level, $app=null, $location=null)
+	public static function keys($level, $app=null, $location=null)
 	{
 		static $tree_key = null;
 
