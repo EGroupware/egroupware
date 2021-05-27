@@ -59,6 +59,30 @@ interface Provider
 	function get(array $keys);
 
 	/**
+	 * Increments value in cache
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to use if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function increment(array $keys, int $offset=1, int $intial_value=0, int $expiration=0);
+
+	/**
+	 * Decrements value in cache, but never below 0
+	 *
+	 * If new value would be below 0, 0 will be set as new value!
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to use if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function decrement(array $keys, int $offset=1, int $intial_value=0, int $expiration=0);
+
+	/**
 	 * Delete some data from the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)

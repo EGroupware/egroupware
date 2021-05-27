@@ -45,7 +45,7 @@ class Memcached extends Base implements ProviderMultiple
 	/**
 	 * Use Libketama consistent hashing
 	 *
-	 * Off by default as for just 2 Memcached servers it creates an extrem
+	 * Off by default as for just 2 Memcached servers it creates an extreme
 	 * unbalanced distribution favoring the 2. server and has no benefits
 	 * as requests to the failed node can only go to the other one anyway.
 	 *
@@ -54,7 +54,7 @@ class Memcached extends Base implements ProviderMultiple
 	private $consistent = false;
 
 	/**
-	 * Retry on node failure: 0: no retry, 1: retry on set/add/delete, 2: allways retry
+	 * Retry on node failure: 0: no retry, 1: retry on set/add/delete, 2: always retry
 	 *
 	 * @var retry
 	 */
@@ -243,6 +243,48 @@ class Memcached extends Base implements ProviderMultiple
 		return $this->memcache->delete(self::key($keys)) ||
 			$this->retry > 0 && $this->memcache->getResultCode() !== \Memcached::RES_NOTFOUND &&
 			$this->memcache->delete(self::key($keys));
+	}
+
+	/**
+	 * Increments value in cache
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function increment(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		$ret = $this->memcache->increment($key=self::key($keys), $offset, $intial_value, $expiration);
+		if ($ret === false && $this->retry > 0)
+		{
+			$ret = $this->memcache->increment($key, $offset, $intial_value, $expiration);
+		}
+		// fix memcached returning strings
+		return $ret !== false ? (int)$ret : $ret;
+	}
+
+	/**
+	 * Decrements value in cache, but never below 0
+	 *
+	 * If new value would be below 0, 0 will be set as new value!
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function decrement(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		$ret = $this->memcache->decrement($key=self::key($keys), $offset, $intial_value, $expiration);
+		if ($ret === false && $this->retry > 0)
+		{
+			$ret = $this->memcache->decrement($key, $offset, $intial_value, $expiration);
+		}
+		// fix memcached returning strings
+		return $ret !== false ? (int)$ret : $ret;
 	}
 
 	/**

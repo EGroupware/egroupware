@@ -13,7 +13,7 @@
 
 namespace EGroupware\Api\Cache;
 
-/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) === __FILE__)
 {
 	require_once dirname(__DIR__).'/loader/common.php';
 }*/
@@ -104,7 +104,7 @@ abstract class Base implements Provider
 						++$failed;
 					}
 				}
-				elseif (!is_null($data))	// emulation can NOT distinquish between null and not set
+				elseif (!is_null($data))	// emulation can NOT distinguish between null and not set
 				{
 					$locations[$location] = $data;
 				}
@@ -149,6 +149,61 @@ abstract class Base implements Provider
 					++$failed;
 				}
 			}
+
+			// test increment
+			$keys = [$level, __CLASS__, 'increment'];
+			$this->delete($keys);
+
+			if (($val=$this->increment($keys, 3, 8)) !== 8)
+			{
+				if ($verbose) echo "$label: increment(\$keys, 3, 8)=".array2string($val)." !== 8 for initial/unset \$keys\n";
+				++$failed;
+			}
+			if (($val=$this->get($keys)) != 8)	// get always returns string!
+			{
+				if ($verbose) echo "$label: get(\$keys)=".array2string($val)." != 8 for reading back incremented value\n";
+				++$failed;
+			}
+			if (($val=$this->increment($keys, 2, 5)) !== 10)
+			{
+				if ($verbose) echo "$label: increment(\$keys, 2, 5)=".array2string($val)." !== 10 for current \$keys === 8\n";
+				++$failed;
+			}
+			if (($val=$this->get($keys)) != 10)
+			{
+				if ($verbose) echo "$label: get(\$keys)=".array2string($val)." != 10 for reading back incremented value\n";
+				++$failed;
+			}
+
+			// test decrement
+			$keys = [$level, __CLASS__, 'decrement'];
+			$this->delete($keys);
+
+			if (($val=$this->decrement($keys, 3, 2)) !== 2)
+			{
+				if ($verbose) echo "$label: decrement(\$keys, 3, 2)=".array2string($val)." !== 2 for initial/unset \$keys\n";
+				++$failed;
+			}
+			if (($val=$this->get($keys)) != 2)
+			{
+				if ($verbose) echo "$label: get(\$keys)=".array2string($val)." != 2 for reading back decremented value\n";
+				++$failed;
+			}
+			if (($val=$this->decrement($keys, 2, 5)) !== 0)
+			{
+				if ($verbose) echo "$label: decrement(\$keys, 2, 5)=".array2string($val)." !== 0 for current \$keys === 2\n";
+				++$failed;
+			}
+			if (($val=$this->get($keys)) != 0)
+			{
+				if ($verbose) echo "$label: get(\$keys)=".array2string($val)." != 0 for reading back decremented value\n";
+				++$failed;
+			}
+			if (($val=$this->decrement($keys, 2, 5)) !== 0)
+			{
+				if ($verbose) echo "$label: decrement(\$keys, 2, 5)=".array2string($val)." !== 0 for current \$keys === 0 (value never less then 0!)\n";
+				++$failed;
+			}
 		}
 
 		return $failed;
@@ -167,15 +222,90 @@ abstract class Base implements Provider
 		unset($keys);	// required by function signature
 		return false;
 	}
+
+	/**
+	 * Stores some data in the cache
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @param mixed $data
+	 * @param int $expiration =0
+	 * @return boolean true on success, false on error
+	 */
+	abstract function set(array $keys, $data, $expiration=0);
+
+	/**
+	 * Get some data from the cache
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @return mixed data stored or NULL if not found in cache
+	 */
+	abstract function get(array $keys);
+
+	/**
+	 * Increments value in cache
+	 *
+	 * Default implementation emulating increment using get & set.
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function increment(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		if (($value = $this->get($keys)) === false)
+		{
+			return $value;
+		}
+		if (!isset($value))
+		{
+			$value = $intial_value;
+		}
+		else
+		{
+			$value += $offset;
+		}
+		return $this->set($keys, $value, $expiration) ? $value : false;
+	}
+
+	/**
+	 * Decrements value in cache, but never below 0
+	 *
+	 * If new value would be below 0, 0 will be set as new value!
+	 * Default implementation emulating decrement using get & set.
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function decrement(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		if (($value = $this->get($keys)) === false)
+		{
+			return $value;
+		}
+		if (!isset($value))
+		{
+			$value = $intial_value;
+		}
+		else
+		{
+			if (($value -= $offset) < 0) $value = 0;
+		}
+		return $this->set($keys, $value, $expiration) ? $value : false;
+	}
 }
 
 // some testcode, if this file is called via it's URL
 // can be run on command-line: sudo php -d apc.enable_cli=1 -f api/src/Cache/Base.php
-/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) === __FILE__)
 {
 	if (!isset($_SERVER['HTTP_HOST']))
 	{
-		chdir(dirname(__FILE__));	// to enable our relative pathes to work
+		chdir(__DIR__);	// to enable our relative pathes to work
 	}
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(

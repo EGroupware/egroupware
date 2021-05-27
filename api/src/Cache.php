@@ -180,6 +180,82 @@ class Cache
 	}
 
 	/**
+	 * Increment some value in the cache
+	 *
+	 * @param string $level use Cache::(TREE|INSTANCE), Cache::(SESSION|REQUEST) are NOT supported!
+	 * @param string $app application storing data
+	 * @param string $location location name for data
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	public static function incrementCache(string $level, string $app, string $location, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		//error_log(__METHOD__."('$level', '$app', '$location', $offset, $inital_value, $expiration)");
+		switch($level)
+		{
+			case self::SESSION:
+			case self::REQUEST:
+				break;
+
+			case self::INSTANCE:
+			case self::TREE:
+			default:
+				if (!($provider = self::get_provider($level)))
+				{
+					return false;
+				}
+				// limit expiration to configured maximum time
+				if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+				{
+					$expiration = self::$max_expiration;
+				}
+				return $provider->increment(self::keys($level, $app, $location), $offset, $intial_value, $expiration);
+		}
+		throw new Exception\WrongParameter(__METHOD__."() unsupported level '$level'!");
+	}
+
+	/**
+	 * Decrements value in cache, but never below 0
+	 *
+	 * If new value would be below 0, 0 will be set as new value!
+	 *
+	 * @param string $level use Cache::(TREE|INSTANCE), Cache::(SESSION|REQUEST) are NOT supported!
+	 * @param string $app application storing data
+	 * @param string $location location name for data
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	public static function decrementCache(string $level, string $app, string $location, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		//error_log(__METHOD__."('$level', '$app', '$location', $offset, $inital_value, $expiration)");
+		switch($level)
+		{
+			case self::SESSION:
+			case self::REQUEST:
+				break;
+
+			case self::INSTANCE:
+			case self::TREE:
+			default:
+				if (!($provider = self::get_provider($level)))
+				{
+					return false;
+				}
+				// limit expiration to configured maximum time
+				if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+				{
+					$expiration = self::$max_expiration;
+				}
+				return $provider->decrement(self::keys($level, $app, $location), $offset, $intial_value, $expiration);
+		}
+		throw new Exception\WrongParameter(__METHOD__."() unsupported level '$level'!");
+	}
+
+	/**
 	 * Content stored to signal one callback is already running and calculating the data, to not run it multiple times
 	 */
 	const CALLBACK_LOCK = '***LOCKED***';
