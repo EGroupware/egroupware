@@ -858,9 +858,10 @@ class Backup
 	 * @param resource $f file opened with fopen for writing
 	 * @param boolean $lock_table =null true: allways, false: never, null: if no primary key
 	 *	default of null limits memory usage if there is no primary key, by locking table and use ROW_CHUCK
+	 * @param bool $skip_files_backup =false true: do not backup files, even if config / $this->backup_files is set (used by upgrade)
 	 * @todo use https://github.com/maennchen/ZipStream-PHP to not assemble all files in memmory
 	 */
-	function backup($f, $lock_table=null)
+	function backup($f, $lock_table=null, bool $skip_files_backup=false)
 	{
 		//echo "function backup($f)<br>";	// !
 		@set_time_limit(0);
@@ -876,7 +877,7 @@ class Backup
 		$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 		$filename = $name.'.zip';
 		$zippresent = false;
-		if(class_exists('ZipArchive') && $this->backup_files)
+		if(class_exists('ZipArchive') && $this->backup_files && !$skip_files_backup)
 		{
 			$zip = new ZipArchive;
 			if(is_object($zip))
@@ -952,7 +953,7 @@ class Backup
 
 		if(!$zippresent)  // save without files
 		{
-			if ($this->backup_files)
+			if ($this->backup_files && !$skip_files_backup)
 			{
 				echo '<center>'.lang("Cant open %1, needs ZipArchive", $name)."<br>\n".'</center>';
 			}

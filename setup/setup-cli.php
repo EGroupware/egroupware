@@ -257,7 +257,7 @@ function do_backup($arg,$quite_check=false)
 			if (is_resource($f = $db_backup->fopen_backup($backup)))
 			{
 				echo lang('Backup started, this might take a few minutes ...')."\n";
-				$db_backup->backup($f);
+				$db_backup->backup($f, null, true);  // true: skip (configured) files backup
 				echo lang('Backup finished')."\n";
 			}
 			else	// backup failed ==> dont start the upgrade
