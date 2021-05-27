@@ -130,6 +130,53 @@ class Apcu extends Base implements Provider
 	}
 
 	/**
+	 * Increments value in cache
+	 *
+	 * Default implementation emulating increment using get & set.
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function increment(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		$key = self::key($keys);
+		if ($intial_value !== 0 && !apcu_exists($key))
+		{
+			return apcu_store($key, $intial_value, $expiration) ? $intial_value : false;
+		}
+		return apcu_inc($key, $offset, $success, $expiration);
+	}
+
+	/**
+	 * Decrements value in cache, but never below 0
+	 *
+	 * If new value would be below 0, 0 will be set as new value!
+	 * Default implementation emulating decrement using get & set.
+	 *
+	 * @param array $keys
+	 * @param int $offset =1 how much to increment by
+	 * @param int $intial_value =0 value to set and return, if not in cache
+	 * @param int $expiration =0
+	 * @return false|int new value on success, false on error
+	 */
+	function decrement(array $keys, int $offset=1, int $intial_value=0, int $expiration=0)
+	{
+		$key = self::key($keys);
+		if ($intial_value !== 0 && !apcu_exists($key))
+		{
+			return apcu_store($key, $intial_value, $expiration) ? $intial_value : false;
+		}
+		if (($value = apcu_dec($key, $offset, $success, $expiration)) < 0)
+		{
+			$value = apcu_store($key, 0, $expiration) ? 0 : false;
+		}
+		return $value;
+	}
+
+	/**
 	 * Delete some data from the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
