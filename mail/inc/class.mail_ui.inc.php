@@ -3509,12 +3509,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				else
 				{
-					// htmLawed filter only the 'body'
-					if (preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches)&& !empty($matches[2]))
-					{
-						$hasOther = true;
-						$newBody = $matches[2];
-					}
 					$htmLawed = new Api\Html\HtmLawed();
 					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
 					// as we switched off HTMLaweds tidy functionality
