@@ -71,6 +71,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {string} _name template name
      */
     InfologApp.prototype.et2_ready = function (_et2, _name) {
+        var _a;
         // call parent
         _super.prototype.et2_ready.call(this, _et2, _name);
         // CRM View
@@ -91,7 +92,7 @@ var InfologApp = /** @class */ (function (_super) {
                     this._get_stylite(function () { this.mailvelopeAvailable(function () { var _a; (_a = app.stylite) === null || _a === void 0 ? void 0 : _a.decrypt_hover(nm); }); });
                 }
                 // blur count, if limit modified optimization used
-                if ((nm === null || nm === void 0 ? void 0 : nm.getValue()).total == 9999) {
+                if (((_a = nm.getController()) === null || _a === void 0 ? void 0 : _a.getTotalCount()) === 9999) {
                     this.blurCount(true);
                 }
                 break;
@@ -737,7 +738,8 @@ var InfologApp = /** @class */ (function (_super) {
      * @param blur
      */
     InfologApp.prototype.blurCount = function (blur) {
-        document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count').classList.toggle('blur_count', blur);
+        var _a;
+        (_a = document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count')) === null || _a === void 0 ? void 0 : _a.classList.toggle('blur_count', blur);
     };
     return InfologApp;
 }(egw_app_1.EgwApp));

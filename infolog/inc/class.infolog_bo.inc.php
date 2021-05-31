@@ -1273,8 +1273,9 @@ class infolog_bo
 		unset($q['limit_modified_n_month']);
 		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
 		{
-			// apply modified limit only if requested AND we're sorting by modified AND NOT searching
-			if (!empty($query['limit_modified_n_month']) && empty($query['search']) &&
+			// apply modified limit only if requested AND we're sorting by modified AND NOT (searching, CRM-view, ...)
+			if (!empty($query['limit_modified_n_month']) && empty($query['search']) &&	// no search
+				empty($query['action']) && empty($query['action_id']) && empty($query['info_id']) && // no CRM view
 				$query['order'] === 'info_datemodified' && $query['sort'] === 'DESC' &&
 				isset($query['start']))
 			{
@@ -1282,12 +1283,12 @@ class infolog_bo
 					(new Api\DateTime((-$n*$query['limit_modified_n_month']).' month'))->format('server');
 			}
 			$ret = $this->so->search($q, $no_acl);
-			$this->total = $q['total'];
+			$this->total = $query['total'] = $q['total'];
 			if (!isset($q['col_filter'][99]) || count($ret) >= $query['num_rows'])
 			{
 				if (isset($q['col_filter'][99]))
 				{
-					$this->total = self::LIMIT_MODIFIED_TOTAL;
+					$this->total = $query['total'] = self::LIMIT_MODIFIED_TOTAL;
 				}
 				break;	// --> no modified limit, or got enough rows
 			}
