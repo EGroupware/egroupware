@@ -5068,7 +5068,7 @@ app.classes.mail = AppJS.extend(
 				var emails, distLists = [];
 				var fromWidget = {};
 
-				var parentWidgetDOM = ui.draggable.parentsUntil('div[id^="mail-compoe_"]','.ui-droppable');
+				var parentWidgetDOM = ui.draggable.siblings().filter('input');
 				if (parentWidgetDOM != 'undefined' && parentWidgetDOM.length > 0)
 				{
 					fromWidget = self.et2.getWidgetById(parentWidgetDOM.attr('name'));
