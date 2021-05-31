@@ -273,6 +273,8 @@ var et2_taglist = /** @class */ (function (_super) {
                 widget.onfocus.call(widget.taglist, e, widget);
             });
         }
+        // Input widget was not created when ID was set, re-set now to make sure input gets name attribute
+        this.set_id(this.id);
         // Do size limit checks
         this.resize();
         // Make sure magicsuggest loses focus class to prevent issues with
@@ -400,7 +402,7 @@ var et2_taglist = /** @class */ (function (_super) {
         return label;
     };
     et2_taglist.prototype.getInputNode = function () {
-        return this.div ? this.div.filter("input")[0] : null;
+        return this.div ? this.div.find("input")[0] : null;
     };
     et2_taglist.prototype.set_autocomplete_url = function (source) {
         if (source && source[0] != '/' && source.indexOf('http') != 0) {

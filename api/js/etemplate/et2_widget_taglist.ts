@@ -422,6 +422,9 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 			});
 		}
 
+		// Input widget was not created when ID was set, re-set now to make sure input gets name attribute
+		this.set_id(this.id);
+
 		// Do size limit checks
 		this.resize();
 
@@ -576,7 +579,7 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 
 	getInputNode(): HTMLElement
 	{
-		return this.div ? this.div.filter("input")[0] : null;
+		return this.div ? this.div.find("input")[0] : null;
 	}
 
 	set_autocomplete_url(source)
