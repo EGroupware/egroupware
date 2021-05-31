@@ -90,6 +90,10 @@ var InfologApp = /** @class */ (function (_super) {
                 if (this.egw.user('apps').stylite) {
                     this._get_stylite(function () { this.mailvelopeAvailable(function () { var _a; (_a = app.stylite) === null || _a === void 0 ? void 0 : _a.decrypt_hover(nm); }); });
                 }
+                // blur count, if limit modified optimization used
+                if ((nm === null || nm === void 0 ? void 0 : nm.getValue()).total == 9999) {
+                    this.blurCount(true);
+                }
                 break;
             case 'infolog.edit.print':
                 if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1) {
@@ -726,6 +730,14 @@ var InfologApp = /** @class */ (function (_super) {
         }, function (_err) {
             self.egw.message(_err, 'error');
         });
+    };
+    /**
+     * Blur NM count (used for limit modified optimization not returning (an exact) count
+     *
+     * @param blur
+     */
+    InfologApp.prototype.blurCount = function (blur) {
+        document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count').classList.toggle('blur_count', blur);
     };
     return InfologApp;
 }(egw_app_1.EgwApp));

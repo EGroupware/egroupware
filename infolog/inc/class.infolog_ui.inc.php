@@ -423,7 +423,13 @@ class infolog_ui
 		// do we need to query the cf's
 		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
 
+		$query['limit_modified_n_month'] = $this->bo->limit_modified_n_month;
 		$infos = $this->bo->search($query);
+		// if limit modified optimization has been used, blur the wrong/not exact total
+		if (!empty($query['limit_modified_n_month']))
+		{
+			Api\Json\Response::get()->call('app.infolog.blurCount', $this->bo->total === infolog_bo::LIMIT_MODIFIED_TOTAL);
+		}
 		$query['col_filter'] = $orginal_colfilter;
 		if (!is_array($infos))
 		{
@@ -2514,6 +2520,7 @@ class infolog_ui
 				Api\Config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
 				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 				Api\Config::save_value('allow_past_due_date', $content['allow_past_due_date'], 'infolog');
+				Api\Config::save_value('limit_modified_n_month', $content['limit_modified_n_month'], 'infolog');
 				// Notifications
 				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
 				$notifications[$content['notification_type']] = $content['notification'];

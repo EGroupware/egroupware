@@ -72,6 +72,7 @@ billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	de	Kann dazu benutzt werden um weitere InfoLog-Typen im Kalender anzuzeigen oder zu begrenzen dass z.B. nur noch Aufgaben angezeigt werden.
+can not return an exact number of rows and therefore hides the count.	admin	de	Kann keine exakte Anzahl Zeilen liefern und verbirgt deswegen den Zähler.
 cancel	infolog	de	Abbruch
 cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
@@ -276,6 +277,7 @@ leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbruch ohne speichern
 length	infolog	de	Länge
+limit list to last n month, if ordering by last-modified and not searching.	admin	de	Begrenze die Liste auf die letzten N Monate, wenn nach zuletzt geändert sortiert und nicht nach etwas gesucht wird.
 limit number of description lines (default 5, 0 for no limit)	infolog	de	Begrenze Anzahl Beschreibungszeilen (Vorgabe 5, 0 für keine Grenze)
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	de	Beschränkt die Breite der Spalte Beschreibung. Setzten Sie den Wert 0, für kein Limit.
 link	infolog	de	Verknüpfung
@@ -354,6 +356,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
 percent completed	infolog	de	Prozent erledigt
+performance optimization for huge infolog tables	admin	de	Performance Optimierung für sehr große InfoLog Tabellen
 permission denied	infolog	de	Zugriff verweigert
 permissions error - %1 could not %2	infolog	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 phone	infolog	de	Anruf
@@ -461,8 +464,8 @@ startdate must be before enddate!!!	infolog	de	Startdatum muss vor dem Fälligke
 starting %1	infolog	de	%1 startet
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
-status, percent and date completed are always allowed.	infolog	de	Status, Prozent und Datum erledigt sind immer erlaubt.
 status ...	infolog	de	Status ...
+status, percent and date completed are always allowed.	infolog	de	Status, Prozent und Datum erledigt sind immer erlaubt.
 sub	infolog	de	Unter-<br />einträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
 sub-entries will not be closed	infolog	de	Untereinträge werden nicht geschlossen

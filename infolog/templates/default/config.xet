@@ -60,6 +60,20 @@
 						<option value="0">No</option>
 					</select>
 				</row>
+				<row>
+					<vbox>
+						<description value="Performance optimization for huge InfoLog tables" label="%s:"/>
+						<description value="Limit list to last N month, if ordering by last-modified and not searching."/>
+						<description value="Can not return an exact number of rows and therefore hides the count."/>
+					</vbox>
+					<select id="limit_modified_n_month">
+						<option value="">{Disabled} ({Default})</option>
+						<option value="1">1 {Month}</option>
+						<option value="3">3 {Month}</option>
+						<option value="6">6 {Month}</option>
+						<option value="12">12 {Month}</option>
+					</select>
+				</row>
 			</rows>
 		</grid>
 	</template>
