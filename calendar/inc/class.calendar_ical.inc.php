@@ -578,7 +578,7 @@ class calendar_ical extends calendar_boupdate
 							$organizerUID = $event['owner'];
 						}
 						// do NOT use ORGANIZER for events without further participants or a different organizer
-						if (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']]) || $event['owner'] != $this->user)
+						if (is_array($event['participants']) && (count($event['participants']) > 1 || !isset($event['participants'][$event['owner']])) || $event['owner'] != $this->user)
 						{
 							$attributes['ORGANIZER'] = $organizerURL;
 							$parameters['ORGANIZER']['CN'] = $organizerCN;
