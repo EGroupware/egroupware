@@ -92,7 +92,7 @@ class InfologApp extends EgwApp
 					this._get_stylite(function() {this.mailvelopeAvailable(function() {app.stylite?.decrypt_hover(nm);});});
 				}
 				// blur count, if limit modified optimization used
-				if ((<any>nm?.getValue()).total == 9999)
+				if (nm.getController()?.getTotalCount() === 9999)
 				{
 					this.blurCount(true);
 				}
@@ -884,7 +884,7 @@ class InfologApp extends EgwApp
 	 */
 	blurCount(blur : boolean)
 	{
-		document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count').classList.toggle('blur_count', blur);
+		document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count')?.classList.toggle('blur_count', blur);
 	}
 }
 
