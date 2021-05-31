@@ -107,3 +107,7 @@ div#infolog-edit_infolog-edit-description {
 	min-width: auto;
 	width: 40% !important;
 }
+.header_count.blur_count > span {
+	color: transparent;
+	text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}

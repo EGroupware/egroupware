@@ -138,6 +138,10 @@ class infolog_bo
 	 * @var int
 	 */
 	var $max_line_chars = 40;
+	/**
+	 * Limit rows ordered by last modified to last N month to improve performance on huge sites
+	 */
+	public $limit_modified_n_month;
 
 	/**
 	 * Available filters
@@ -281,6 +285,8 @@ class infolog_bo
 				$this->implicit_rights = 'edit';
 			}
 			$this->history = $config_data['history'];
+
+			$this->limit_modified_n_month = $config_data['limit_modified_n_month'];
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
@@ -1209,6 +1215,15 @@ class infolog_bo
 	}
 
 	/**
+	 * Total returned, if search used limit modified optimization
+	 */
+	const LIMIT_MODIFIED_TOTAL = 9999;
+	/**
+	 * Set 2^N to automatic retry N times, if limit modified optimization did not return enough rows
+	 */
+	const LIMIT_MODIFIED_RETRY = 8;
+
+	/**
 	 * searches InfoLog for a certain pattern in $query
 	 *
 	 * @param $query[order] column-name to sort after
@@ -1254,8 +1269,34 @@ class infolog_bo
 			}
 		}
 
-		$ret = $this->so->search($query, $no_acl);
-		$this->total = $query['total'];
+		$q = $query;
+		unset($q['limit_modified_n_month']);
+		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
+		{
+			// apply modified limit only if requested AND we're sorting by modified AND NOT searching
+			if (!empty($query['limit_modified_n_month']) && empty($query['search']) &&
+				$query['order'] === 'info_datemodified' && $query['sort'] === 'DESC' &&
+				isset($query['start']))
+			{
+				$q['col_filter'][99] = 'info_datemodified > '.
+					(new Api\DateTime((-$n*$query['limit_modified_n_month']).' month'))->format('server');
+			}
+			$ret = $this->so->search($q, $no_acl);
+			$this->total = $q['total'];
+			if (!isset($q['col_filter'][99]) || count($ret) >= $query['num_rows'])
+			{
+				if (isset($q['col_filter'][99]))
+				{
+					$this->total = self::LIMIT_MODIFIED_TOTAL;
+				}
+				break;	// --> no modified limit, or got enough rows
+			}
+			// last retry without limit
+			if (2*$n === self::LIMIT_MODIFIED_RETRY)
+			{
+				unset($q['col_filter'][99], $query['limit_modified_n_month']);
+			}
+		}
 
 		if (is_array($ret))
 		{

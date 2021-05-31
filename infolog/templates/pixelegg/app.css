@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package infolog
- * @version $Id$
  */
 /* $Id$ */
 /* Minimum width for first column */
@@ -173,6 +172,10 @@ div#infolog-edit_infolog-edit-description {
 #infolog_index_cat_id_chzn {
   min-width: auto;
   width: 40% !important;
+}
+.header_count.blur_count > span {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 /*###########################################
 #                                           #

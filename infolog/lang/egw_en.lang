@@ -72,6 +72,7 @@ billed	infolog	en	Billed
 both	infolog	en	Both
 call	infolog	en	Call
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show e.g. only tasks.
+can not return an exact number of rows and therefore hides the count.	admin	en	Can not return an exact number of rows and therefore hides the count.
 cancel	infolog	en	Cancel
 cancelled	infolog	en	Cancelled.
 categories	infolog	en	Categories
@@ -276,6 +277,7 @@ leave it empty for a full week	infolog	en	Leave it empty for a full week
 leave without saveing the entry	infolog	en	Leave without saving the entry
 leaves without saveing	infolog	en	Leaves without saving
 length	infolog	en	Length
+limit list to last n month, if ordering by last-modified and not searching.	admin	en	Limit list to last N month, if ordering by last-modified and not searching.
 limit number of description lines (default 5, 0 for no limit)	infolog	en	Limit number of description lines. Default = 5, 0 = no limit.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	en	Limit width of description column. Effective only if lines limit is set. 0 = no limit.
 link	infolog	en	Link
@@ -354,6 +356,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	en	Pattern for search in Address book
 pattern for search in projects	infolog	en	Pattern for search in Projects
 percent completed	infolog	en	Percent completed
+performance optimization for huge infolog tables	admin	en	Performance optimization for huge InfoLog tables
 permission denied	infolog	en	Permission denied!
 permissions error - %1 could not %2	infolog	en	Permissions error - %1 could not %2
 phone	infolog	en	Phone call

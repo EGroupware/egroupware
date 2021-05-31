@@ -91,6 +91,11 @@ class InfologApp extends EgwApp
 				{
 					this._get_stylite(function() {this.mailvelopeAvailable(function() {app.stylite?.decrypt_hover(nm);});});
 				}
+				// blur count, if limit modified optimization used
+				if ((<any>nm?.getValue()).total == 9999)
+				{
+					this.blurCount(true);
+				}
 				break;
 			case 'infolog.edit.print':
 				if (this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
@@ -872,6 +877,15 @@ class InfologApp extends EgwApp
 		});
 	}
 
+	/**
+	 * Blur NM count (used for limit modified optimization not returning (an exact) count
+	 *
+	 * @param blur
+	 */
+	blurCount(blur : boolean)
+	{
+		document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count').classList.toggle('blur_count', blur);
+	}
 }
 
 app.classes.infolog = InfologApp;
