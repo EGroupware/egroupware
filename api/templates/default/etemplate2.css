@@ -527,10 +527,10 @@ span.et2_date span {
 span.et2_date_duration {
     border: 1px solid gray;
     border-radius: 3px;
-    display: inline-block;
+    display: flex;
 }
 span.et2_date_duration .et2_date_duration {
-	width: 3em;
+	width: 4.5em;
     text-align: right;
     border: none;
     outline: none;
