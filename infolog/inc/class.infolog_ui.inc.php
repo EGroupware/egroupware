@@ -1777,7 +1777,7 @@ class infolog_ui
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
 
-			$button = @key($content['button']);
+			$button = @key((array)$content['button']);
 			if (!$button && $action) $button = $action;	// action selectbox
 			//info_cc expects an comma separated string
 			//error_log(__METHOD__.__LINE__.array2string($content));
