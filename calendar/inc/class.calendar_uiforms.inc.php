@@ -303,7 +303,7 @@ class calendar_uiforms extends calendar_ui
 		// (add, edit, update, delete)
 		$update_type = $content['id'] ? ($content['recur_type'] == MCAL_RECUR_NONE ? 'update' : 'edit') : 'add';
 
-		$button = @key($content['button']);
+		$button = @key((array)$content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
 
