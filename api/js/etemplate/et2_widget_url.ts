@@ -353,6 +353,20 @@ export class et2_url_ro extends et2_valueWidget
 		this.setDOMNode(this.span[0]);
 	}
 
+	/**
+	 * Set the text of the link to the label
+	 *
+	 * @param _value
+	 */
+	set_label(_value)
+	{
+		this.options.label = _value;
+		if(this.span)
+		{
+			this.span.text(_value);
+		}
+	}
+
 	set_value(_value)
 	{
 		this.value = _value;
@@ -365,7 +379,7 @@ export class et2_url_ro extends et2_valueWidget
 			this.span.removeAttr("href");
 			return;
 		}
-		this.span.text(_value);
+		this.span.text(this.options.label || _value);
 		switch(this.getType())
 		{
 			case "url":

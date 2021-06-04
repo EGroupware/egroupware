@@ -318,6 +318,17 @@ var et2_url_ro = /** @class */ (function (_super_1) {
         _this.setDOMNode(_this.span[0]);
         return _this;
     }
+    /**
+     * Set the text of the link to the label
+     *
+     * @param _value
+     */
+    et2_url_ro.prototype.set_label = function (_value) {
+        this.options.label = _value;
+        if (this.span) {
+            this.span.text(_value);
+        }
+    };
     et2_url_ro.prototype.set_value = function (_value) {
         this.value = _value;
         var link = et2_url.prototype.get_link(this.getType(), _value);
@@ -326,7 +337,7 @@ var et2_url_ro = /** @class */ (function (_super_1) {
             this.span.removeAttr("href");
             return;
         }
-        this.span.text(_value);
+        this.span.text(this.options.label || _value);
         switch (this.getType()) {
             case "url":
                 this.span.attr("href", link).attr("target", "_blank");

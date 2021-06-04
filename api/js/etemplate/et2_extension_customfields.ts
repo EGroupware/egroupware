@@ -21,6 +21,7 @@
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
+import {et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -236,7 +237,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					'id': id,
 					'statustext': field.help,
 					'needed': field.needed,
-					'readonly': this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
+					'readonly':( <et2_readonlysArrayMgr> this.getArrayMgr("readonlys")).isReadOnly(id, ""+this.options.readonly),
 					'value': this.options.value[this.options.prefix + field_name]
 				});
 				// Can't have a required readonly, it will warn & be removed later, so avoid the warning
@@ -736,6 +737,22 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;
+	}
+
+	/**
+	 * Display links in list as CF name
+	 * @param field_name
+	 * @param field
+	 * @param attrs
+	 */
+	_setup_url( field_name, field, attrs)
+	{
+		if(this.getType() == 'customfields-list')
+		{
+			attrs.label = field.label;
+		}
+
+		return true;
 	}
 
 	/**
