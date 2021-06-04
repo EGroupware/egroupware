@@ -450,6 +450,7 @@ class Asyncservice
 						}
 						// set VFS user for vfs access rights
 						Vfs::$user = $job['account_id'];
+						Vfs\StreamWrapper::init_static();
 						Vfs::clearstatcache();
 					}
 					else
