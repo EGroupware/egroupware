@@ -162,7 +162,7 @@ var et2_customfields_list = /** @class */ (function (_super) {
                     'id': id,
                     'statustext': field.help,
                     'needed': field.needed,
-                    'readonly': this.getArrayMgr("readonlys").isReadOnly(id, null, this.options.readonly),
+                    'readonly': this.getArrayMgr("readonlys").isReadOnly(id, "" + this.options.readonly),
                     'value': this.options.value[this.options.prefix + field_name]
                 });
                 // Can't have a required readonly, it will warn & be removed later, so avoid the warning
@@ -549,6 +549,18 @@ var et2_customfields_list = /** @class */ (function (_super) {
             jQuery(widget.getDOMNode(widget)).css('vertical-align', 'top').prependTo(cf);
         }
         return false;
+    };
+    /**
+     * Display links in list as CF name
+     * @param field_name
+     * @param field
+     * @param attrs
+     */
+    et2_customfields_list.prototype._setup_url = function (field_name, field, attrs) {
+        if (this.getType() == 'customfields-list') {
+            attrs.label = field.label;
+        }
+        return true;
     };
     /**
      * Set which fields are visible, by name
