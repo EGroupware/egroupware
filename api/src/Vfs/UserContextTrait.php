@@ -210,6 +210,10 @@ trait UserContextTrait
 						$this->context = stream_context_create($options);
 					}
 				}
+				else
+				{
+					$this->context = stream_context_create();
+				}
 				break;
 		}
 	}
