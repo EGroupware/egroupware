@@ -500,9 +500,12 @@ class Html
 			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS
 		))
 		{
+			// do not sent possible xml errors in buffer further otherwise it may get caught as et2 template error in Widget
+			libxml_clear_errors();
 			// Failed to parse
 			return $html;
 		}
+
 		$dom->normalizeDocument();
 
 		foreach(array('ol','ul') as $list_type)
@@ -530,6 +533,9 @@ class Html
 			}
 		}
 		$dom->removeChild($dom->firstChild);
+
+		// do not sent possible xml errors in buffer further otherwise it may get caught as et2 template error in Widget
+		libxml_clear_errors();
 
 		return $dom->saveHTML();
 	}
