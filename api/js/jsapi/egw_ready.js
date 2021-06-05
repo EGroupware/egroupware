@@ -14,6 +14,7 @@
 	egw_utils;
 	egw_debug;
 */
+import './egw_core.js';
 
 /**
  * @augments Class

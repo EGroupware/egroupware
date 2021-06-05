@@ -15,6 +15,7 @@
 	egw_inheritance;
 	/api/js/es6-promise.min.js;
 */
+import './egw_inheritance.js';
 
 /**
  * Object to collect instanciated appliction objects
@@ -28,7 +29,7 @@
  *
  * @type object
  */
-app = {classes: {}};
+window.app = {classes: {}};
 
 /**
  * Common base class for application javascript

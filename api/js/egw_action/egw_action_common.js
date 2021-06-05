@@ -451,7 +451,7 @@ egwFnct.prototype.exec = function()
  */
 var _egw_mobileBrowser = null;
 
-function egwIsMobile() {
+window.egwIsMobile = function() {
 
 	if (_egw_mobileBrowser == null)
 	{

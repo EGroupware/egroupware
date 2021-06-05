@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware clientside Application javascript base object
  *
@@ -10,16 +9,13 @@
  * @author Hadi Nategh <hn@groupware.org>
  * @author Nathan Gray <ng@groupware.org>
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EgwApp = void 0;
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-var etemplate2_1 = require("../etemplate/etemplate2");
-var et2_extension_nextmatch_1 = require("../etemplate/et2_extension_nextmatch");
-var et2_widget_dialog_1 = require("../etemplate/et2_widget_dialog");
-var et2_core_widget_1 = require("../etemplate/et2_core_widget");
-var et2_widget_favorites_1 = require("../etemplate/et2_widget_favorites");
+import 'jquery';
+import 'jqueryui';
+import { etemplate2 } from "../etemplate/etemplate2";
+import { et2_nextmatch } from "../etemplate/et2_extension_nextmatch";
+import { et2_dialog } from "../etemplate/et2_widget_dialog";
+import { et2_createWidget } from "../etemplate/et2_core_widget";
+import { et2_favorites } from "../etemplate/et2_widget_favorites";
 /**
  * Common base class for application javascript
  * Each app should extend as needed.
@@ -50,12 +46,12 @@ var et2_widget_favorites_1 = require("../etemplate/et2_widget_favorites");
  *	}
  * });
  */
-var EgwApp = /** @class */ (function () {
+export class EgwApp {
     /**
      * Initialization and setup goes here, but the etemplate2 object
      * is not yet ready.
      */
-    function EgwApp(appname) {
+    constructor(appname) {
         /**
          * PGP begin and end tags
          */
@@ -97,18 +93,18 @@ var EgwApp = /** @class */ (function () {
      * Clean up any created objects & references
      * @param {object} _app local app object
      */
-    EgwApp.prototype.destroy = function (_app) {
+    destroy(_app) {
         delete this.et2;
         if (this.sidebox)
             this.sidebox.off();
         delete this.sidebox;
         if (!_app)
             delete app[this.appname];
-        var index = -1;
+        let index = -1;
         if ((index = EgwApp._instances.indexOf(this)) >= 0) {
             EgwApp._instances.splice(index, 1);
         }
-    };
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -118,7 +114,7 @@ var EgwApp = /** @class */ (function () {
      * @param {etemplate2} et2
      * @param {string} name template name
      */
-    EgwApp.prototype.et2_ready = function (et2, name) {
+    et2_ready(et2, name) {
         if (this.et2 !== null) {
             egw.debug('log', "Changed et2 object");
         }
@@ -129,7 +125,7 @@ var EgwApp = /** @class */ (function () {
         }
         // Highlights the favorite based on initial list state
         this.highlight_favorite();
-    };
+    }
     /**
      * Observer method receives update notifications from all applications
      *
@@ -149,8 +145,8 @@ var EgwApp = /** @class */ (function () {
      * or null, if not triggered on server-side, which adds that info
      * @return {false|*} false to stop regular refresh, thought all observers are run
      */
-    EgwApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _links) {
-    };
+    observer(_msg, _app, _id, _type, _msg_type, _links) {
+    }
     /**
      * Handle a push notification about entry changes from the websocket
      *
@@ -169,7 +165,7 @@ var EgwApp = /** @class */ (function () {
      * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
      * @param {number} pushData.account_id User that caused the notification
      */
-    EgwApp.prototype.push = function (pushData) {
+    push(pushData) {
         var _a;
         // don't care about other apps data, reimplement if your app does care eg. calendar
         if (pushData.app !== this.appname)
@@ -191,7 +187,7 @@ var EgwApp = /** @class */ (function () {
             return;
         }
         // Nextmatch does the hard part of updating.  Try to find one.
-        var nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getDOMWidgetById('nm');
+        let nm = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getDOMWidgetById('nm');
         if (!nm) {
             return;
         }
@@ -202,7 +198,7 @@ var EgwApp = /** @class */ (function () {
         }
         // Pass actual refresh on to just nextmatch
         nm.refresh(pushData.id, pushData.type);
-    };
+    }
     /**
      * Check grants to see if we can quickly tell if this entry is not for us
      *
@@ -214,31 +210,27 @@ var EgwApp = /** @class */ (function () {
      *
      * @return boolean Entry has ACL access
      */
-    EgwApp.prototype._push_grant_check = function (pushData, grant_fields, appname) {
-        var grants = egw.grants(appname || this.appname);
+    _push_grant_check(pushData, grant_fields, appname) {
+        let grants = egw.grants(appname || this.appname);
         // No grants known
         if (!grants)
             return true;
-        var _loop_1 = function (i) {
-            var grant_field = pushData.acl[grant_fields[i]];
+        // check user has a grant from owner or something
+        for (let i = 0; i < grant_fields.length; i++) {
+            let grant_field = pushData.acl[grant_fields[i]];
             if (["number", "string"].indexOf(typeof grant_field) >= 0 && grants[grant_field] !== 'undefined') {
-                return { value: true };
+                // ACL access
+                return true;
             }
             else if (!Object.keys(grants).filter(function (grant_account) {
                 return grant_field.indexOf(grant_account) >= 0 ||
                     grant_field.indexOf(parseInt(grant_account)).length;
             })) {
-                return { value: false };
+                return false;
             }
-        };
-        // check user has a grant from owner or something
-        for (var i = 0; i < grant_fields.length; i++) {
-            var state_1 = _loop_1(i);
-            if (typeof state_1 === "object")
-                return state_1.value;
         }
         return false;
-    };
+    }
     /**
      * Check pushData.acl values against a list of fields to see if we care about this entry based on current nextmatch
      * filter values.  This is not a definitive yes or no (the server will tell us when we ask), we just want to cheaply
@@ -248,59 +240,52 @@ var EgwApp = /** @class */ (function () {
      * @param filter_fields List of filter field names eg: [owner, cat_id]
      * @return boolean True if the nextmatch filters might include the entry, false if not
      */
-    EgwApp.prototype._push_field_filter = function (pushData, nm, filter_fields) {
-        var filters = {};
-        for (var i = 0; i < filter_fields.length; i++) {
+    _push_field_filter(pushData, nm, filter_fields) {
+        let filters = {};
+        for (let i = 0; i < filter_fields.length; i++) {
             filters[filter_fields[i]] = {
                 col: filter_fields[i],
                 filter_values: []
             };
         }
         // Get current filter values
-        var value = nm.getValue();
+        let value = nm.getValue();
         if (!value || !value.col_filter)
             return false;
-        for (var _i = 0, _a = Object.values(filters); _i < _a.length; _i++) {
-            var field_filter = _a[_i];
-            var val = value.col_filter[field_filter.col];
+        for (let field_filter of Object.values(filters)) {
+            let val = value.col_filter[field_filter.col];
             if (val && (typeof val == "string" && val.trim().length > 0 ||
                 typeof val == "object" && !jQuery.isEmptyObject(val))) {
                 field_filter.filter_values.push(val);
             }
         }
-        var _loop_2 = function (field_filter) {
+        // check filters against pushData.acl data
+        for (let field_filter of Object.values(filters)) {
             // no filter set
             if (field_filter.filter_values.length == 0)
-                return "continue";
+                continue;
             // acl value is a scalar (not array) --> check contained in filter
             if (pushData.acl && typeof pushData.acl[field_filter.col] !== 'object') {
                 if (field_filter.filter_values.indexOf(pushData.acl[field_filter.col]) < 0) {
-                    return { value: false };
+                    return false;
                 }
-                return "continue";
+                continue;
             }
             // acl value is an array (eg. tr_assigned) --> check intersection with filter
-            if (!field_filter.filter_values.filter(function (account) { return pushData.acl[field_filter.col].indexOf(account) >= 0; }).length) {
-                return { value: false };
+            if (!field_filter.filter_values.filter(account => pushData.acl[field_filter.col].indexOf(account) >= 0).length) {
+                return false;
             }
-        };
-        // check filters against pushData.acl data
-        for (var _b = 0, _c = Object.values(filters); _b < _c.length; _b++) {
-            var field_filter = _c[_b];
-            var state_2 = _loop_2(field_filter);
-            if (typeof state_2 === "object")
-                return state_2.value;
         }
         return true;
-    };
+    }
     /**
      * Get (possible) app-specific uid
      *
      * @param {object} pushData see push method for individual attributes
      */
-    EgwApp.prototype.uid = function (pushData) {
+    uid(pushData) {
         return pushData.app + '::' + pushData.id;
-    };
+    }
     /**
      * Open an entry.
      *
@@ -310,12 +295,12 @@ var EgwApp = /** @class */ (function () {
      * @param _action
      * @param _senders
      */
-    EgwApp.prototype.open = function (_action, _senders) {
+    open(_action, _senders) {
         var id_app = _senders[0].id.split('::');
         egw.open(id_app[1], this.appname);
-    };
-    EgwApp.prototype._do_action = function (action_id, selected) {
-    };
+    }
+    _do_action(action_id, selected) {
+    }
     /**
      * A generic method to action to server asynchronously
      *
@@ -327,7 +312,7 @@ var EgwApp = /** @class */ (function () {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _elems
      */
-    EgwApp.prototype.action = function (_action, _elems) {
+    action(_action, _elems) {
         // let user confirm select-all
         var select_all = _action.getManager().getActionById("select_all");
         var confirm_msg = (_elems.length > 1 || select_all && select_all.checked) &&
@@ -336,11 +321,11 @@ var EgwApp = /** @class */ (function () {
         if (typeof confirm_msg != 'undefined') {
             var that = this;
             var action_id = _action.id;
-            et2_widget_dialog_1.et2_dialog.show_dialog(function (button_id, value) {
-                if (button_id != et2_widget_dialog_1.et2_dialog.NO_BUTTON) {
+            et2_dialog.show_dialog(function (button_id, value) {
+                if (button_id != et2_dialog.NO_BUTTON) {
                     that._do_action(action_id, _elems);
                 }
-            }, confirm_msg, egw.lang('Confirmation required'), null, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+            }, confirm_msg, egw.lang('Confirmation required'), null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
         }
         else if (typeof this._do_action == 'function') {
             this._do_action(_action.id, _elems);
@@ -361,7 +346,7 @@ var EgwApp = /** @class */ (function () {
                 nm.getInstanceManager().submit();
             }
         }
-    };
+    }
     /**
      * Set the application's state to the given state.
      *
@@ -376,7 +361,7 @@ var EgwApp = /** @class */ (function () {
      * @param {string} template template name to check, instead of trying all templates of current app
      * @return {boolean} false - Returns false to stop event propagation
      */
-    EgwApp.prototype.setState = function (state, template) {
+    setState(state, template) {
         var _a;
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
@@ -397,7 +382,7 @@ var EgwApp = /** @class */ (function () {
         }
         // Try and find a nextmatch widget, and set its filters
         var nextmatched = false;
-        var et2 = template ? etemplate2_1.etemplate2.getByTemplate(template) : etemplate2_1.etemplate2.getByApplication(this.appname);
+        var et2 = template ? etemplate2.getByTemplate(template) : etemplate2.getByApplication(this.appname);
         for (var i = 0; i < et2.length; i++) {
             et2[i].widgetContainer.iterateOver(function (_widget) {
                 // Firefox has trouble with spaces in search
@@ -417,7 +402,7 @@ var EgwApp = /** @class */ (function () {
                 }
                 _widget.applyFilters(state.state || state.filter || {});
                 nextmatched = true;
-            }, this, et2_extension_nextmatch_1.et2_nextmatch);
+            }, this, et2_nextmatch);
             if (nextmatched)
                 return false;
         }
@@ -434,7 +419,7 @@ var EgwApp = /** @class */ (function () {
         }
         egw.open_link(url, undefined, undefined, this.appname);
         return false;
-    };
+    }
     /**
      * Retrieve the current state of the application for future restoration
      *
@@ -447,17 +432,17 @@ var EgwApp = /** @class */ (function () {
      *
      * @return {object} Application specific map representing the current state
      */
-    EgwApp.prototype.getState = function () {
+    getState() {
         var state = {};
         // Try and find a nextmatch widget, and set its filters
-        var et2 = etemplate2_1.etemplate2.getByApplication(this.appname);
+        var et2 = etemplate2.getByApplication(this.appname);
         for (var i = 0; i < et2.length; i++) {
             et2[i].widgetContainer.iterateOver(function (_widget) {
                 state = _widget.getValue();
-            }, this, et2_extension_nextmatch_1.et2_nextmatch);
+            }, this, et2_nextmatch);
         }
         return state;
-    };
+    }
     /**
      * Function to load selected row from nm into a template view
      *
@@ -466,7 +451,7 @@ var EgwApp = /** @class */ (function () {
      * @param {boolean} _noEdit defines whether to set edit button or not default is false
      * @param {function} et2_callback function to run after et2 is loaded
      */
-    EgwApp.prototype.viewEntry = function (_action, _senders, _noEdit, et2_callback) {
+    viewEntry(_action, _senders, _noEdit, et2_callback) {
         //full id in nm
         var id = _senders[0].id;
         // flag for edit button
@@ -551,7 +536,7 @@ var EgwApp = /** @class */ (function () {
             'validation_errors': this.et2.getArrayMgr('validation_errors').data
         };
         // etemplate2 object for view
-        this.et2_view = new etemplate2_1.etemplate2(this.viewTemplate[0], '');
+        this.et2_view = new etemplate2(this.viewTemplate[0], '');
         framework.pushState('view');
         if (templateName) {
             this.et2_view.load(this.appname + '.' + templateName, templateURL, data, typeof et2_callback == 'function' ? et2_callback : function () { }, app);
@@ -559,13 +544,13 @@ var EgwApp = /** @class */ (function () {
         // define a global close function for view template
         // in order to be able to destroy view on action
         this.et2_view.close = destroy;
-    };
+    }
     /**
      * Initializes actions and handlers on sidebox (delete)
      *
      * @param {jQuery} sidebox jQuery of DOM node
      */
-    EgwApp.prototype._init_sidebox = function (sidebox) {
+    _init_sidebox(sidebox) {
         // Initialize egw tutorial sidebox, but only for non-popups, as calendar edit app.js has this.et2 set to tutorial et2 object
         if (!this.egw.is_popup()) {
             var egw_fw = egw_getFramework();
@@ -638,7 +623,7 @@ var EgwApp = /** @class */ (function () {
             return true;
         }
         return false;
-    };
+    }
     /**
      * Add a new favorite
      *
@@ -648,7 +633,7 @@ var EgwApp = /** @class */ (function () {
      *
      * @param {object} [state] State settings to be merged into the application state
      */
-    EgwApp.prototype.add_favorite = function (state) {
+    add_favorite(state) {
         if (typeof this.favorite_popup == "undefined" || // Create popup if it's not defined yet
             (this.favorite_popup && typeof this.favorite_popup.group != "undefined"
                 && !this.favorite_popup.group.isAttached())) // recreate the favorite popup if the group selectbox is not attached (eg. after et2 submit)
@@ -704,30 +689,30 @@ var EgwApp = /** @class */ (function () {
         console.log(this);
         // Stop the normal bubbling if this is called on click
         return false;
-    };
+    }
     /**
      * Update favorite items in nm fav. menu
      *
      */
-    EgwApp.prototype._refresh_fav_nm = function () {
+    _refresh_fav_nm() {
         var self = this;
-        if (etemplate2_1.etemplate2 && etemplate2_1.etemplate2.getByApplication) {
-            var et2 = etemplate2_1.etemplate2.getByApplication(self.appname);
+        if (etemplate2 && etemplate2.getByApplication) {
+            var et2 = etemplate2.getByApplication(self.appname);
             for (var i = 0; i < et2.length; i++) {
                 et2[i].widgetContainer.iterateOver(function (_widget) {
                     _widget.stored_filters = _widget.load_favorites(self.appname);
                     _widget.init_filters(_widget);
-                }, self, et2_widget_favorites_1.et2_favorites);
+                }, self, et2_favorites);
             }
         }
         else {
             throw new Error("_refresh_fav_nm():Either et2 is  not ready/ not there yet. Make sure that etemplate2 is ready before call this method.");
         }
-    };
+    }
     /**
      * Create the "Add new" popup dialog
      */
-    EgwApp.prototype._create_favorite_popup = function () {
+    _create_favorite_popup() {
         var self = this;
         var favorite_prefix = 'favorite_';
         // Clear old, if existing
@@ -758,7 +743,7 @@ var EgwApp = /** @class */ (function () {
         var apps = egw().user('apps');
         var is_admin = (typeof apps['admin'] != "undefined");
         if (is_admin) {
-            this.favorite_popup.group = et2_core_widget_1.et2_createWidget("select-account", {
+            this.favorite_popup.group = et2_createWidget("select-account", {
                 id: "favorite[group]",
                 account_type: "groups",
                 empty_label: "Groups",
@@ -855,14 +840,14 @@ var EgwApp = /** @class */ (function () {
             }
         }, this));
         return false;
-    };
+    }
     /**
      * Delete a favorite from the list and update preferences
      * Registered as a handler on the delete icons
      *
      * @param {jQuery.event} event event object
      */
-    EgwApp.prototype.delete_favorite = function (event) {
+    delete_favorite(event) {
         // Don't do the menu
         event.stopImmediatePropagation();
         var app = event.data;
@@ -874,7 +859,7 @@ var EgwApp = /** @class */ (function () {
         line.addClass('loading');
         // Make sure first
         var do_delete = function (button_id) {
-            if (button_id != et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
+            if (button_id != et2_dialog.YES_BUTTON) {
                 line.removeClass('loading');
                 return;
             }
@@ -897,16 +882,16 @@ var EgwApp = /** @class */ (function () {
             }, jQuery(trash).parentsUntil("li").parent(), true, jQuery(trash).parentsUntil("li").parent());
             request.sendRequest(true);
         };
-        et2_widget_dialog_1.et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), null, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+        et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"), egw.lang("Delete"), null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
         return false;
-    };
+    }
     /**
      * Mark the favorite closest matching the current state
      *
      * Closest matching takes into account not set values, so we pick the favorite
      * with the most matching values without a value that differs.
      */
-    EgwApp.prototype.highlight_favorite = function () {
+    highlight_favorite() {
         if (!this.sidebox)
             return;
         var state = this.getState();
@@ -992,11 +977,11 @@ var EgwApp = /** @class */ (function () {
         if (best_match) {
             jQuery('li[data-id="' + best_match + '"]', this.sidebox).addClass('ui-state-highlight');
         }
-    };
+    }
     /**
      * Fix scrolling iframe browsed by iPhone/iPod/iPad touch devices
      */
-    EgwApp.prototype._fix_iFrameScrolling = function () {
+    _fix_iFrameScrolling() {
         if (/iPhone|iPod|iPad/.test(navigator.userAgent)) {
             jQuery("iframe").on({
                 load: function () {
@@ -1014,24 +999,24 @@ var EgwApp = /** @class */ (function () {
                 }
             });
         }
-    };
+    }
     /**
      * Set document title, uses getWindowTitle to get the correct title,
      * otherwise set it with uniqueID as default title
      */
-    EgwApp.prototype._set_Window_title = function () {
+    _set_Window_title() {
         var title = this.getWindowTitle();
         if (title) {
             document.title = this.et2._inst.uniqueId + ": " + title;
         }
-    };
+    }
     /**
      * Window title getter function in order to set the window title
      * this can be overridden on each application app.js file to customize the title value
      *
      * @returns {string} window title
      */
-    EgwApp.prototype.getWindowTitle = function () {
+    getWindowTitle() {
         var titleWidget = this.et2.getWidgetById('title');
         if (titleWidget) {
             return titleWidget.options.value;
@@ -1039,7 +1024,7 @@ var EgwApp = /** @class */ (function () {
         else {
             return this.et2._inst.uniqueId;
         }
-    };
+    }
     /**
      * Handler for drag and drop when dragging nextmatch rows from mail app
      * and dropped on a row in the current application.  We copy the mail into
@@ -1062,7 +1047,7 @@ var EgwApp = /** @class */ (function () {
      * @param {egwActionObject[]} _selected Dragged mail rows
      * @param {egwActionObject} _target Current application's nextmatch row the mail was dropped on
      */
-    EgwApp.prototype.handle_dropped_mail = function (_action, _selected, _target) {
+    handle_dropped_mail(_action, _selected, _target) {
         /**
          * Mail doesn't support link system, so we copy it to VFS
          */
@@ -1081,13 +1066,13 @@ var EgwApp = /** @class */ (function () {
                 egw.refresh(data.msg || '', ids[0], ids[1], 'update');
             }).sendRequest(true);
         }
-    };
+    }
     /**
      * Get json data for videos from the given url
      *
      * @return {Promise, object} return Promise, json object as resolved result and error message in case of failure
      */
-    EgwApp.prototype.egwTutorialGetData = function () {
+    egwTutorialGetData() {
         var self = this;
         return new Promise(function (_resolve, _reject) {
             var resolve = _resolve;
@@ -1099,7 +1084,7 @@ var EgwApp = /** @class */ (function () {
                 }).sendRequest();
             }, 0);
         });
-    };
+    }
     /**
      * Create and Render etemplate2 for egroupware tutorial
      * sidebox option. The .xet file is stored in api/templates/default/egw_tutorials
@@ -1132,9 +1117,9 @@ var EgwApp = /** @class */ (function () {
      *
      * @param {DOMNode} div
      */
-    EgwApp.prototype.egwTutorial_init = function (div) {
+    egwTutorial_init(div) {
         // et2 object
-        var etemplate = new etemplate2_1.etemplate2(div, '');
+        var etemplate = new etemplate2(div, '');
         var template = egw.webserverUrl + '/api/templates/default/egw_tutorial.xet?1';
         this.egwTutorialGetData().then(function (_data) {
             var lang = egw.preference('lang');
@@ -1160,27 +1145,27 @@ var EgwApp = /** @class */ (function () {
         }, function (_err) {
             console.log(_err);
         });
-    };
+    }
     /**
      * Open popup to show given tutorial id
      * @param {string} _tuid tutorial object id
      *	- tuid: appname-lang-index
      */
-    EgwApp.prototype.egwTutorialPopup = function (_tuid) {
+    egwTutorialPopup(_tuid) {
         var url = egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid=' + _tuid);
         egw.open_link(url, '_blank', '960x580');
-    };
+    }
     /**
      * Function to set video iframe base on selected tutorial from tutorials box
      *
      * @param {string} _url
      */
-    EgwApp.prototype.tutorial_videoOnClick = function (_url) {
-        var frame = etemplate2_1.etemplate2.getByApplication('api')[0].widgetContainer.getWidgetById('src');
+    tutorial_videoOnClick(_url) {
+        var frame = etemplate2.getByApplication('api')[0].widgetContainer.getWidgetById('src');
         if (frame) {
             frame.set_value(_url);
         }
-    };
+    }
     /**
      * Function calls on discard checkbox and will set
      * the egw_tutorial_noautoload preference
@@ -1188,17 +1173,17 @@ var EgwApp = /** @class */ (function () {
      * @param {type} egw
      * @param {type} widget
      */
-    EgwApp.prototype.tutorial_autoloadDiscard = function (egw, widget) {
+    tutorial_autoloadDiscard(egw, widget) {
         if (widget) {
             this.egw.set_preference('common', 'egw_tutorial_noautoload', widget.get_value());
         }
-    };
+    }
     /**
      * Check if Mailvelope is available, open (or create) "egroupware" keyring and call callback with it
      *
      * @param {function} _callback called if and only if mailvelope is available (context is this!)
      */
-    EgwApp.prototype.mailvelopeAvailable = function (_callback) {
+    mailvelopeAvailable(_callback) {
         var self = this;
         var callback = jQuery.proxy(_callback, this);
         if (typeof mailvelope !== 'undefined') {
@@ -1209,7 +1194,7 @@ var EgwApp = /** @class */ (function () {
                 self.mailvelopeOpenKeyring().then(callback);
             });
         }
-    };
+    }
     /**
      * mailvelope object contains SyncHandlers
      *
@@ -1218,7 +1203,7 @@ var EgwApp = /** @class */ (function () {
      * @property {function} backup function called by Mailvelope to upload a public keyring backup
      * @property {function} restore function called by Mailvelope to restore a public keyring backup
      */
-    EgwApp.prototype.mailvelopeSyncHandler = function () {
+    mailvelopeSyncHandler() {
         return {
             /**
              * function called by Mailvelope to upload a public keyring
@@ -1304,7 +1289,7 @@ var EgwApp = /** @class */ (function () {
                 });
             }
         };
-    };
+    }
     /**
      * Function for backup file operations
      *
@@ -1318,7 +1303,7 @@ var EgwApp = /** @class */ (function () {
      * @param {type} _errorCallback function called when the operation fails
      * @param {type} _data data which needs to be stored in file via PUT command
      */
-    EgwApp.prototype._mailvelopeBackupFileOperator = function (_url, _cmd, _successCallback, _errorCallback, _data) {
+    _mailvelopeBackupFileOperator(_url, _cmd, _successCallback, _errorCallback, _data) {
         var ajaxObj = {
             url: _url || egw.webserverUrl + '/webdav.php/home/' + egw.user('account_lid') + '/.PGP-Key-Backup',
             method: _cmd,
@@ -1341,7 +1326,7 @@ var EgwApp = /** @class */ (function () {
                 break;
         }
         jQuery.ajax(ajaxObj);
-    };
+    }
     /**
      * Create backup dialog
      * @param {string} _selector DOM selector to attach backupDialog
@@ -1349,7 +1334,7 @@ var EgwApp = /** @class */ (function () {
      *
      * @returns {Promise.<backupPopupId, Error>}
      */
-    EgwApp.prototype.mailvelopeCreateBackupDialog = function (_selector, _initSetup) {
+    mailvelopeCreateBackupDialog(_selector, _initSetup) {
         var self = this;
         var selector = _selector || 'body';
         var initSetup = _initSetup;
@@ -1377,22 +1362,22 @@ var EgwApp = /** @class */ (function () {
                 reject(_err);
             });
         });
-    };
+    }
     /**
      * Delete backup key from filesystem
      */
-    EgwApp.prototype.mailvelopeDeleteBackup = function () {
+    mailvelopeDeleteBackup() {
         var self = this;
-        et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
-            if (_button_id == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
+        et2_dialog.show_dialog(function (_button_id) {
+            if (_button_id == et2_dialog.YES_BUTTON) {
                 self._mailvelopeBackupFileOperator(undefined, 'DELETE', function () {
                     self.egw.message(self.egw.lang('The backup key has been deleted.'));
                 }, function (_err) {
                     self.egw.message(self.egw.lang('Was not able to delete the backup key because %1', _err));
                 });
             }
-        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_YES_NO_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
-    };
+        }, self.egw.lang('Are you sure, you would like to delete the backup key?'), self.egw.lang('Delete backup key'), {}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+    }
     /**
      * Create mailvelope restore dialog
      * @param {string} _selector DOM selector to attach restorDialog
@@ -1400,7 +1385,7 @@ var EgwApp = /** @class */ (function () {
      *
      * @returns {Promise}
      */
-    EgwApp.prototype.mailvelopeCreateRestoreDialog = function (_selector, _restorePassword) {
+    mailvelopeCreateRestoreDialog(_selector, _restorePassword) {
         var self = this;
         var restorePassword = _restorePassword;
         var selector = _selector || 'body';
@@ -1425,13 +1410,13 @@ var EgwApp = /** @class */ (function () {
                 reject(_err);
             });
         });
-    };
+    }
     /**
      * Create a dialog to show all backup/restore options
      *
      * @returns {undefined}
      */
-    EgwApp.prototype.mailvelopeCreateBackupRestoreDialog = function () {
+    mailvelopeCreateBackupRestoreDialog() {
         var self = this;
         var appname = egw.app_name();
         var menu = [
@@ -1447,7 +1432,7 @@ var EgwApp = /** @class */ (function () {
             { label: "Backup Key", image: "save", onclick: "app." + appname + ".mailvelopeCreateBackupDialog('#_mvelo', false)" }
         ];
         var dialog = function (_content, _callback) {
-            return et2_core_widget_1.et2_createWidget("dialog", {
+            return et2_createWidget("dialog", {
                 callback: function (_button_id, _value) {
                     if (typeof _callback == "function") {
                         _callback.call(this, _button_id, _value.value);
@@ -1482,18 +1467,18 @@ var EgwApp = /** @class */ (function () {
         else {
             this.mailvelopeInstallationOffer();
         }
-    };
+    }
     /**
      * Create a dialog and offers installation option for installing mailvelope plugin
      * plus it offers a video tutorials to get the user morte familiar with mailvelope
      */
-    EgwApp.prototype.mailvelopeInstallationOffer = function () {
+    mailvelopeInstallationOffer() {
         var buttons = [
             { "text": egw.lang('Install'), id: 'install', image: 'check', "default": true },
             { "text": egw.lang('Close'), id: 'close', image: 'cancelled' }
         ];
         var dialog = function (_content, _callback) {
-            return et2_core_widget_1.et2_createWidget("dialog", {
+            return et2_createWidget("dialog", {
                 callback: function (_button_id, _value) {
                     if (typeof _callback == "function") {
                         _callback.call(this, _button_id, _value.value);
@@ -1528,23 +1513,23 @@ var EgwApp = /** @class */ (function () {
                 else if (typeof InstallTrigger != 'undefined' && InstallTrigger.enabled()) {
                     InstallTrigger.install({ mailvelope: "https://download.mailvelope.com/releases/latest/mailvelope.firefox.xpi" }, function (_url, _status) {
                         if (_status == 0) {
-                            et2_widget_dialog_1.et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+                            et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
                             return;
                         }
                         else {
-                            et2_widget_dialog_1.et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
+                            et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
                         }
                     });
                 }
             }
         });
-    };
+    }
     /**
      * Open (or create) "egroupware" keyring and call callback with it
      *
      * @returns {Promise.<Keyring, Error>} Keyring or Error with message
      */
-    EgwApp.prototype.mailvelopeOpenKeyring = function () {
+    mailvelopeOpenKeyring() {
         var self = this;
         return new Promise(function (_resolve, _reject) {
             if (self.mailvelope_keyring)
@@ -1595,16 +1580,16 @@ var EgwApp = /** @class */ (function () {
                                     });
                                     delete buttons[1].default;
                                 }
-                                et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
-                                    if (_button_id != et2_widget_dialog_1.et2_dialog.NO_BUTTON) {
+                                et2_dialog.show_dialog(function (_button_id) {
+                                    if (_button_id != et2_dialog.NO_BUTTON) {
                                         var keys = {};
                                         keys[self.egw.user('account_id')] = _pubKey;
-                                        self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys', [keys, _button_id != et2_widget_dialog_1.et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
+                                        self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys', [keys, _button_id != et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
                                             .then(function (_data) {
                                             self.egw.message(_data.response['0'].data);
                                         });
                                     }
-                                }, self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'), self.egw.lang('Store your public key in Addressbook?'), {}, buttons, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+                                }, self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'), self.egw.lang('Store your public key in Addressbook?'), {}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
                             }, function (_err) {
                                 self.egw.message(_err.message + "\n\n" +
                                     self.egw.lang("You will NOT be able to send or receive encrypted mails before completing that step!"), 'error');
@@ -1618,25 +1603,25 @@ var EgwApp = /** @class */ (function () {
                 });
             });
         });
-    };
+    }
     /**
      * Mailvelope uses Domain without first part: eg. "stylite.de" for "egw.stylite.de"
      *
      * @returns {string}
      */
-    EgwApp.prototype._mailvelopeDomain = function () {
+    _mailvelopeDomain() {
         var parts = document.location.hostname.split('.');
         if (parts.length > 1)
             parts.shift();
         return parts.join('.');
-    };
+    }
     /**
      * Check if we have a key for all recipients
      *
      * @param {Array} _recipients
      * @returns {Promise.<Array, Error>} Array of recipients or Error with recipients without key
      */
-    EgwApp.prototype.mailvelopeGetCheckRecipients = function (_recipients) {
+    mailvelopeGetCheckRecipients(_recipients) {
         // replace rfc822 addresses with raw email, as Mailvelop does not like them and lowercase all email
         var rfc822_preg = /<([^'" <>]+)>$/;
         var recipients = _recipients.map(function (_recipient) {
@@ -1686,7 +1671,7 @@ var EgwApp = /** @class */ (function () {
                 reject(_err);
             });
         });
-    };
+    }
     /**
      * Check if the share action is enabled for this entry
      *
@@ -1695,9 +1680,9 @@ var EgwApp = /** @class */ (function () {
      * @param {egwActionObject} _target
      * @returns {boolean} if action is enabled
      */
-    EgwApp.prototype.is_share_enabled = function (_action, _entries, _target) {
+    is_share_enabled(_action, _entries, _target) {
         return true;
-    };
+    }
     /**
      * create a share-link for the given entry
      *
@@ -1710,7 +1695,7 @@ var EgwApp = /** @class */ (function () {
      * @param {Object} _extra Additional (app-specific or special) parameters
      * @returns {Boolean} returns false if not successful
      */
-    EgwApp.prototype.share_link = function (_action, _senders, _target, _writable, _files, _callback, _extra) {
+    share_link(_action, _senders, _target, _writable, _files, _callback, _extra) {
         var path = _senders[0].id;
         if (!path) {
             return this.egw.message(this.egw.lang('Missing share path.  Unable to create share.'), 'error');
@@ -1731,8 +1716,8 @@ var EgwApp = /** @class */ (function () {
             _extra = {};
         }
         return egw.json('EGroupware\\Api\\Sharing::ajax_create', [_action.id, path, _writable, _files, _extra], _callback ? _callback : this._share_link_callback, this, true, this).sendRequest();
-    };
-    EgwApp.prototype.share_merge = function (_action, _senders, _target) {
+    }
+    share_merge(_action, _senders, _target) {
         var parent = _action.parent.parent;
         var _writable = false;
         var _files = false;
@@ -1755,12 +1740,12 @@ var EgwApp = /** @class */ (function () {
             // Process document after all shares created
             return nm_action(_action, _senders, _target);
         });
-    };
+    }
     /**
      * Share-link callback
      * @param {object} _data
      */
-    EgwApp.prototype._share_link_callback = function (_data) {
+    _share_link_callback(_data) {
         if (_data.msg || _data.share_link)
             window.egw_refresh(_data.msg, this.appname);
         var copy_link_to_clipboard = function (evt) {
@@ -1777,7 +1762,7 @@ var EgwApp = /** @class */ (function () {
             egw.message('Failed to copy the link!');
         };
         jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-        et2_core_widget_1.et2_createWidget("dialog", {
+        et2_createWidget("dialog", {
             callback: function (button_id, value) {
                 jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
                 return true;
@@ -1787,7 +1772,7 @@ var EgwApp = /** @class */ (function () {
             width: 450,
             value: { content: { "share_link": _data.share_link } }
         });
-    };
+    }
     /**
      * Keep a list of all EgwApp instances
      *
@@ -1796,27 +1781,25 @@ var EgwApp = /** @class */ (function () {
      * @private
      * @param app_obj
      */
-    EgwApp._register_instance = function (app_obj) {
+    static _register_instance(app_obj) {
         // Reject improper objects
         if (!app_obj.appname)
             return;
         EgwApp._instances.push(app_obj);
-    };
+    }
     /**
      * Iterator over all app instances
      *
      * Use for(const app of EgwApp) {...} to iterate over all app objects.
      */
-    EgwApp[Symbol.iterator] = function () {
+    static [Symbol.iterator]() {
         return EgwApp._instances[Symbol.iterator]();
-    };
-    /**
-     * In some cases (CRM) a private, disconnected app instance is created instead of
-     * using the global.  We want to be able to access them for observer() & push(), so
-     * we track all instances.
-     */
-    EgwApp._instances = [];
-    return EgwApp;
-}());
-exports.EgwApp = EgwApp;
+    }
+}
+/**
+ * In some cases (CRM) a private, disconnected app instance is created instead of
+ * using the global.  We want to be able to access them for observer() & push(), so
+ * we track all instances.
+ */
+EgwApp._instances = [];
 //# sourceMappingURL=egw_app.js.map

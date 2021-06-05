@@ -58,7 +58,7 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Application specific template directories to try in given order for CSS
 	 *
-	 * @var string
+	 * @var string[]
 	 */
 	var $template_dirs = array();
 
@@ -1053,7 +1053,7 @@ abstract class Framework extends Framework\Extra
 		{
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
 		}
-		// add configuration, link-registry, images, user-data and -perferences for non-popup windows
+		// add configuration, link-registry, images, user-data and -preferences for non-popup windows
 		// specifying etag in url to force reload, as we send expires header
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'] || isset($_GET['cd']) && $_GET['cd'] === 'popup')
 		{
@@ -1074,13 +1074,19 @@ abstract class Framework extends Framework\Extra
 		}
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
-		$extra['include'] = array_map(function($str){return substr($str,1);}, self::get_script_links(true), array(1));
+		$map = null;
+		$extra['include'] = array_map(static function($str){
+			return substr($str,1);
+		}, self::get_script_links(true, false, $map), array(1));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		// Load LABjs ONCE here
-		$java_script .= '<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				'/api/js/labjs/LAB.src.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/labjs/LAB.src.js')."\"></script>\n".
-			'<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+		// add import-map before (!) first module
+		$java_script .= '<script type="importmap" nonce="'.htmlspecialchars(ContentSecurityPolicy::addNonce('script-src')).'">'."\n".
+			json_encode(['imports' => self::addUrlPrefix($map)], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
+			"</script>\n";
+
+		// load our clientside entrypoint egw.js
+		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				'/api/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.js').'" id="egw_script_id"';
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
@@ -1112,6 +1118,27 @@ abstract class Framework extends Framework\Extra
 		}
 
 		return $java_script;
+	}
+
+	/**
+	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
+	 *
+	 * @param array $map
+	 * @return array
+	 */
+	protected static function addUrlPrefix(array $map)
+	{
+		if (substr($prefix = $GLOBALS['egw_info']['server']['webserver_url'], 0, 4) === 'http')
+		{
+			$prefix = parse_url($prefix, PHP_URL_PATH);
+		}
+		$ret = [];
+		foreach($map as $file => $bundle)
+		{
+			$ret[$prefix.$file] = $prefix.$bundle;
+		}
+		$ret['jsapi/egw_json'] = $ret['/egw-test/api/js/jsapi/egw_json.js'];
+		return $ret;
 	}
 
 	/**
@@ -1466,11 +1493,12 @@ abstract class Framework extends Framework\Extra
 	 *
 	 * @param boolean $return_pathes =false false: return Html script tags, true: return array of file pathes relative to webserver_url
 	 * @param boolean $clear_files =false true clear files after returning them
+	 * @param array& $map on return map file => bundle
 	 * @return string|array see $return_pathes parameter
 	 */
-	static public function get_script_links($return_pathes=false, $clear_files=false)
+	static public function get_script_links($return_pathes=false, $clear_files=false, array &$map=null)
 	{
-		$to_include = Framework\Bundle::js_includes(self::$js_include_mgr->get_included_files($clear_files));
+		$to_include = Framework\Bundle::js_includes(self::$js_include_mgr->get_included_files($clear_files), $map);
 
 		if ($return_pathes)
 		{

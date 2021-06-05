@@ -14,6 +14,7 @@
 	vendor.bower-asset.jquery.dist.jquery;
 	egw_core;
 */
+import './egw_core.js';
 
 /**
  *

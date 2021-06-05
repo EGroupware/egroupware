@@ -13,6 +13,7 @@
 /*egw:uses
 	egw_core;
 */
+import './egw_core.js';
 
 /**
  * Log debug messages to browser console and persistent html5 localStorage

@@ -14,6 +14,7 @@
 	egw_core;
 	egw_links;
 */
+import './egw_core.js';
 
 /**
  * @augments Class

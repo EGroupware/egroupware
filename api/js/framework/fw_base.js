@@ -11,8 +11,10 @@
 	vendor.bower-asset.jquery.dist.jquery;
 	egw_inheritance.js;
 */
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import '../jsapi/egw_inheritance.js';
 
-var fw_base = (function(){ "use strict"; return Class.extend(
+window.fw_base = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Framework base class constructor sets up basic initialization

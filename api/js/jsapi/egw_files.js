@@ -15,6 +15,7 @@
 	egw_ready;
 	egw_debug;
 */
+import './egw_core.js';
 
 /**
  * @augments Class
@@ -146,17 +147,19 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {function} _callback called after JS files are loaded and executed
 		 * @param {object} _context
 		 * @param {string} _prefix prefix for _jsFiles
+		 * @return Promise
 		 */
 		includeJS: function(_jsFiles, _callback, _context, _prefix)
 		{
-			// use egw_LAB object of correct window, not always the main window
-			var egw_LAB = (this.window || window).egw_LAB;
-
 			// Also allow including a single javascript file
 			if (typeof _jsFiles === 'string')
 			{
 				_jsFiles = [_jsFiles];
 			}
+			const promise = import(_prefix ? _jsFiles.map((src) => _prefix+src) : _jsFiles);
+			return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
+
+			// @todo check the prefix stuff
 			// LABjs uses prefix only if url is not absolute, so removing leading / if necessary and add it to prefix
 			if (_prefix)
 			{

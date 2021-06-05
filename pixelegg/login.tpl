@@ -1,4 +1,4 @@
-<script src="./api/js/login.js" type="text/javascript"></script>
+<script src="./api/js/login.js" type="module"></script>
 
 
 <div id="loginMainDiv" style="background-image:url({background_file})" class="{stock_background_class}">

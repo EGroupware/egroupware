@@ -183,8 +183,6 @@ abstract class Ajax extends Api\Framework
 		if (self::$header_done) return '';
 		self::$header_done = true;
 
-		$this->send_headers();
-
 		// catch error echo'ed before the header, ob_start'ed in the header.inc.php
 		$content = ob_get_contents();
 		ob_end_clean();
@@ -266,6 +264,8 @@ abstract class Ajax extends Api\Framework
 
 		$this->tpl->set_var($this->_get_header($extra));
 		$content = $this->tpl->fp('out','head').$content;
+
+		$this->send_headers();
 
 		if (!$do_framework)
 		{

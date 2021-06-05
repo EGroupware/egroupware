@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import './egw_json.js';
 
 jQuery(function()
 {
@@ -73,7 +75,7 @@ jQuery(function()
 	jQuery('input[id^="empty_log"]').on('click',function(){
 		button_log(this.getAttribute('id'));
 	});
-	egw_LAB.wait(function() {
+	//egw_LAB.wait(function() {
 		jQuery(document).ready(function()
 		{
 			if (typeof filename !='undefined' && filename.length > 0)
@@ -83,5 +85,5 @@ jQuery(function()
 			}
 		});
 		jQuery(window).resize(resize_log);
-	});
+	//});
 });

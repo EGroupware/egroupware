@@ -16,6 +16,12 @@
 	framework.fw_classes;
 	egw_inheritance.js;
 */
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import './fw_base.js';
+import './fw_browser.js';
+import './fw_ui.js';
+import './fw_classes.js';
+import '../jsapi/egw_inheritance.js';
 
 /**
  *
@@ -29,8 +35,8 @@
 	 *
 	 * @type @exp;fw_ui_sidemenu_entry@call;extend
 	 */
-	var desktop_ui_sidemenu_entry = fw_ui_sidemenu_entry.extend({
-
+	window.desktop_ui_sidemenu_entry = fw_ui_sidemenu_entry.extend(
+	{
 		/**
 		 * Override fw_ui_sidemenu_entry class constructor
 		 *
@@ -91,7 +97,7 @@
 	 *
 	 * @type @exp;fw_ui_sidemenu@call;extend
 	 */
-	var desktop_ui_sidemenu = fw_ui_sidemenu.extend(
+	window.desktop_ui_sidemenu = fw_ui_sidemenu.extend(
 	{
 		init: function(_baseDiv, _sortCallback)
 		{

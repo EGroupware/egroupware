@@ -12,5 +12,6 @@
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
 */
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 
 jQuery.noConflict();

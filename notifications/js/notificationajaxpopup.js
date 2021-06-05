@@ -9,11 +9,17 @@
  * @version $Id$
  */
 
+'use strict';
+
+import '../../vendor/bower-asset/jquery/dist/jquery.js';
+
 /**
  * Installs app.notifications used to poll notifications from server and display them
  */
 (function()
 {
+	const egw = window.egw;	// fix undefined egw
+
 	var notifymessages = {};
 
 	var _currentRawData = [];
@@ -905,9 +911,9 @@
 		return counter;
 	};
 
-	var lab = egw_LAB || $LAB;
 	var self = notifications;
-	lab.wait(function(){
+	window.egw_ready.then(function()
+	{
 		var langRequire = jQuery('#notifications_script_id').attr('data-langRequire');
 		egw.langRequire(window, [JSON.parse(langRequire)], function()
 		{

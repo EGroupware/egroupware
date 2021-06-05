@@ -39,9 +39,10 @@ class Bundle
 	 * Devide js-includes in bundles of javascript files to include eg. api or etemplate2, if minifying is enabled
 	 *
 	 * @param array $js_includes files to include with egw relative url
+	 * @param array& $to_include on return map file => bundle
 	 * @return array egw relative urls to include incl. bundels/minify urls, if enabled
 	 */
-	public static function js_includes(array $js_includes)
+	public static function js_includes(array $js_includes, array &$to_include=null)
 	{
 		$file2bundle = array();
 		if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True')

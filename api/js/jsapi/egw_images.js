@@ -13,6 +13,7 @@
 /*egw:uses
 	egw_core;
 */
+import './egw_core.js';
 
 egw.extend('images', egw.MODULE_GLOBAL, function()
 {

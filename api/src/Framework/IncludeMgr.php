@@ -1,7 +1,7 @@
 <?php
 /**
  * EGroupware: Class which manages including js files and modules
- * (lateron this might be extended to css)
+ * (later on this might be extended to css)
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -9,7 +9,6 @@
  * @subpackage framework
  * @author Andreas Stöckel
  * @copyright (c) 2011 Stylite
- * @version $Id$
  */
 
 namespace EGroupware\Api\Framework;
@@ -18,8 +17,15 @@ namespace EGroupware\Api\Framework;
  * Syntax for including JS files form others
  * -----------------------------------------
  *
- * Write a comment starting with "/*egw:uses". A linebreak has to follow.
- * Then write all files which have to be included seperated by ";". A JS file
+ * a) ES5 or TypeScript module imports: import {...} from '<relative path or EGroupware absolute path>'
+ *
+ * - import './egw_core.js';
+ * - import { something } from '../../vendor/class.js';
+ * - import { something } from './other';	(in TS without extension!)
+ * @ToDo import { something } from 'module/sub'
+ *
+ * b) Write a comment starting with "/*egw:uses". A linebreak has to follow.
+ * Then write all files which have to be included separated by ";". A JS file
  * include may have the following syntax:
  *
  * 1) File in the same directory as the current file. Simply write the filename
@@ -77,6 +83,11 @@ class IncludeMgr
 	private $debug_processing_file = false;
 
 	/**
+	 * @var bool true: echo out debug info, for direct call see end of this file
+	 */
+	private $debug_parsing_imports = false;
+
+	/**
 	 * Parses the js file for includes and returns all required files
 	 */
 	private function parse_file($file)
@@ -87,68 +98,58 @@ class IncludeMgr
 		// Mark the file as parsed
 		$this->parsed_files[$file] = true;
 
+		// extension to add, if dependency has none
+		$extension = substr($file, -3) === '.ts' ? '.ts' : '.js';
+
+		$modules = $modules2 = [];
 		// Try to open the given file
-		$f = fopen(EGW_SERVER_ROOT.$file, "r");
-		if ($f !== false)
+		if (($header = file_get_contents(EGW_SERVER_ROOT.$file, false, null, 0, 2048)))
 		{
-			// Only read a maximum of 32 lines until the comment occurs.
-			$cnt = 0;
-			$in_uses = false;
-			$uses = "";
-
-			// Read a line
-			$line = fgets($f);
-			while ($cnt < 32 && $line !== false)
+			if ($this->debug_parsing_imports) echo "<p>$file</p>\n";
+			$matches = null;
+			if (preg_match_all('/import\s+({[^}]+}\s*from\s+)?["\']([^;\s]+)["\']/', $header, $matches))
 			{
-				// Remove everything behind "//"
-				$pos = strpos($line, "//");
-				if ($pos !== false)
-				{
-					$line = substr($line, 0, $pos);
-				}
-
-				if (!$in_uses)
-				{
-					$cnt++;
-					$in_uses = strpos($line, "/*egw:uses") !== false;
-				}
-				else
-				{
-					// Check whether we are at the end of the comment
-					$pos = strpos($line, "*/");
-
-					if ($pos === false)
-					{
-						$uses .= $line;
-					}
-					else
-					{
-						$uses .= substr($line, 0, $pos);
-						break;
-					}
-				}
-
-				$line = fgets($f);
+				if ($this->debug_parsing_imports) echo "imports:<div style='white-space: pre'>".json_encode($matches, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."</div>\n";
+				$modules = $matches[2];
 			}
-
-			// Close the file again
-			fclose($f);
-
-			// Split the "require" string at ";"
-			$modules = explode(";", $uses);
-			$modules2 = array();
-
+			// either use es5 import or old /*egw:uses */ annotation
+			elseif (preg_match('#/\*egw:uses(.*);\s+\*/#sU', $header, $matches) &&
+				($matches = array_filter(preg_split('/;[^\n]*\n\s*/', trim($matches[1])), static function($use)
+				{
+					return !preg_match('#^\s*//#', $use);	// filter out commented out ones
+				})))
+			{
+				if ($this->debug_parsing_imports) echo "egw:uses:<div style='white-space: pre'>".json_encode($matches, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."</div>\n";
+				$modules = array_merge($modules, $matches);
+			}
 			// Split all modules at "." and remove entries with empty parts
 			foreach ($modules as $mod)
 			{
-				// Remove trailing space characters
-				$mod = trim($mod);
-
 				if ($mod)
 				{
+					if ($mod !== trim($mod))
+					{
+						throw new \Exception("'$mod' contains whitespace!");
+					}
 					// Split the given module string at the dot, if this isn't
-					// an absolute path (initialized by "/").
-					if ($mod[0] != '/')
+					// an relative (starting ./) or absolute path (initialized by "/").
+					if (substr($mod, 0, 2) === './')
+					{
+						if (!preg_match('/\.(js|ts)$/', $mod)) $mod .= $extension;
+						$mod = [dirname($file).substr($mod, 1)];
+					}
+					elseif (substr($mod, 0, 3) === '../')
+					{
+						if (!preg_match('/\.(js|ts)$/', $mod)) $mod .= $extension;
+						$dir = dirname($file);
+						while(substr($mod, 0, 3) === '../')
+						{
+							$mod = substr($mod, 3);
+							$dir = dirname($dir);
+						}
+						$mod = [($dir !== '/' ? $dir : '').'/'.$mod];
+					}
+					elseif ($mod[0] != '/')
 					{
 						$mod = explode(".", $mod, 3);
 					}
@@ -420,12 +421,28 @@ class IncludeMgr
 	}
 
 	/**
+	 * Get importMap for browser
+	 */
+	public function getImportMap()
+	{
+		$files = $this->get_included_files();
+		$imports = array_combine(array_map(static function($url)
+		{
+			return parse_url($url, PHP_URL_PATH);
+		}, $files), $files);
+
+		return ['imports' => $imports];
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $files =null optional files to include as for include_files method
+	 * @param bool $debug_parsing_imports =false true: echo out debug infos
 	 */
-	public function __construct(array $files = null)
+	public function __construct(array $files = null, bool $debug_parsing_imports=false)
 	{
+		$this->debug_parsing_imports = $debug_parsing_imports;
 		if (isset($files) && is_array($files))
 		{
 			$this->include_files($files);
@@ -438,9 +455,10 @@ class IncludeMgr
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
 	define('EGW_SERVER_ROOT', dirname(dirname(dirname(__DIR__))));
-	include_once(EGW_SERVER_ROOT.'/phpgwapi/inc/common_functions.inc.php');
+	define('EGW_INCLUDE_ROOT', dirname(dirname(dirname(__DIR__))));
+	include_once(EGW_SERVER_ROOT.'/api/src/loader/common.php');
 
-	$mgr = new IncludeMgr();
+	$mgr = new IncludeMgr(null, true);
 	echo "<html>\n<head>\n\t<title>Dependencies</title>\n</head>\n<body>\n";
 
 	$paths = !empty($_GET['path']) ? (array)$_GET['path'] : (array)'/stylite/js/filemanager/filemanager.js';

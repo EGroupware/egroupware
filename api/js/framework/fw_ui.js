@@ -12,6 +12,10 @@
 	/api/js/jquery/mousewheel/mousewheel.js;
 	egw_inheritance.js;
 */
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import '../../../vendor/bower-asset/jquery-ui/jquery-ui.js';
+import '../jquery/mousewheel/mousewheel.js';
+import '../jsapi/egw_inheritance.js';
 
 /**
  * ui siemenu entry class
@@ -19,7 +23,7 @@
  *
  * @type @exp;Class@call;extend
  */
-var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
+window.fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Framework ui sidemenu entry class constructor
@@ -194,7 +198,7 @@ var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
  *
  * @type @exp;Class@call;extend
  */
-var fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
+window.fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	* The constructor of the egw_fw_ui_sidemenu.
@@ -310,7 +314,7 @@ var fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
  * @param {int} _pos is the position where the tab will be inserted
  * @param {string} application status (e.g. status="5")
  */
-function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
+window.egw_fw_ui_tab = function(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	_closeCallback,	_tag, _pos, _status)
 {
 	this.parent = _parent;
@@ -452,7 +456,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
  * @param {int} _value if set to 0 the notification gets reset if nothing set
  * it will increase the notification value by one
  */
-egw_fw_ui_tab.prototype.setNotification = function(_value)
+window.egw_fw_ui_tab.prototype.setNotification = function(_value)
 {
 	this.notification = typeof _value != 'undefined' ? _value : this.notification+1;
 	jQuery(this.notificationDiv).text(this.notification).toggle(this.notification > 0);
@@ -463,7 +467,7 @@ egw_fw_ui_tab.prototype.setNotification = function(_value)
  *
  * @param {string} _title HTML/Text which should be displayed.
  */
-egw_fw_ui_tab.prototype.setTitle = function(_title)
+window.egw_fw_ui_tab.prototype.setTitle = function(_title)
 {
 	this.title = _title;
 	jQuery(this.headerH1).empty();
@@ -475,7 +479,7 @@ egw_fw_ui_tab.prototype.setTitle = function(_title)
  *
  * @param {string} _hint Text which should be displayed.
  */
-egw_fw_ui_tab.prototype.setHint = function(_hint)
+window.egw_fw_ui_tab.prototype.setHint = function(_hint)
 {
 	this.hint = _hint;
 	egw().tooltipBind(jQuery(this.headerDiv), _hint);
@@ -486,7 +490,7 @@ egw_fw_ui_tab.prototype.setHint = function(_hint)
  *
  * @param {string} _content HTML/Text which should be displayed.
  */
-egw_fw_ui_tab.prototype.setContent = function(_content)
+window.egw_fw_ui_tab.prototype.setContent = function(_content)
 {
 	jQuery(this.contentDiv).empty();
 	jQuery(this.contentDiv).append(_content);
@@ -496,7 +500,7 @@ egw_fw_ui_tab.prototype.setContent = function(_content)
  * Shows the content of the tab. Only one tab should be displayed at once. By using egw_fw_ui_tabs.showTab
  * you can assure this.
  */
-egw_fw_ui_tab.prototype.show = function()
+window.egw_fw_ui_tab.prototype.show = function()
 {
 	jQuery(this.headerDiv).addClass("egw_fw_ui_tab_header_active");
 	var content = jQuery(this.contentDiv);
@@ -519,7 +523,7 @@ egw_fw_ui_tab.prototype.show = function()
 /**
  * Hides the content of this tab.
  */
-egw_fw_ui_tab.prototype.hide = function()
+window.egw_fw_ui_tab.prototype.hide = function()
 {
 	jQuery(this.headerDiv).removeClass("egw_fw_ui_tab_header_active");
 	var content = jQuery(this.contentDiv);
@@ -538,7 +542,7 @@ egw_fw_ui_tab.prototype.hide = function()
 /**
  * hide tab header only
  */
-egw_fw_ui_tab.prototype.hideTabHeader = function()
+window.egw_fw_ui_tab.prototype.hideTabHeader = function()
 {
 	jQuery(this.headerDiv).hide();
 };
@@ -546,7 +550,7 @@ egw_fw_ui_tab.prototype.hideTabHeader = function()
 /**
  * Removes this tab and all its content.
  */
-egw_fw_ui_tab.prototype.remove = function()
+window.egw_fw_ui_tab.prototype.remove = function()
 {
 	this.hide();
 	jQuery(this.contentDiv).remove();
@@ -558,7 +562,7 @@ egw_fw_ui_tab.prototype.remove = function()
  *
  * @param {boolean} _closeable if true, the close button is shown, if false, the close button is hidden. default is true.
  */
-egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
+window.egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
 {
 	this.closeable = _closeable;
 	if (_closeable)
@@ -579,7 +583,7 @@ egw_fw_ui_tab.prototype.setCloseable = function(_closeable)
  *
  * @param {object} _contDiv specifies "div" element the tab ui element should be displayed in.
  */
-function egw_fw_ui_tabs(_contDiv)
+window.egw_fw_ui_tabs = function(_contDiv)
 {
 	this.contDiv = _contDiv;
 
@@ -609,7 +613,7 @@ function egw_fw_ui_tabs(_contDiv)
  * @param {string} _text is the text which will be seen in the appHeader.
  * @param {string} _msg_class css class for message
  */
-egw_fw_ui_tabs.prototype.setAppHeader = function(_text, _msg_class)
+window.egw_fw_ui_tabs.prototype.setAppHeader = function(_text, _msg_class)
 {
 	this.appHeader.text(_text);
 	this.appHeader.prop('class', "egw_fw_ui_app_header");
@@ -623,7 +627,7 @@ egw_fw_ui_tabs.prototype.setAppHeader = function(_text, _msg_class)
  * to switch back to the last tab when a tab is closed. Double entries in the tab history
  * may appear whenever a tab is deleted.
  */
-egw_fw_ui_tabs.prototype.cleanHistory = function()
+window.egw_fw_ui_tabs.prototype.cleanHistory = function()
 {
 	for (var i = this.tabHistory.length - 1; i >= 0; i--)
 	{
@@ -643,7 +647,7 @@ egw_fw_ui_tabs.prototype.cleanHistory = function()
  * @param {int} _pos specifies the position in the tab list. If _pos is -1, the tab will be added to the end of the tab list
  * @param {string} application status
  */
-egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _tag, _pos, _status)
+window.egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _tag, _pos, _status)
 {
 	var pos = -1;
 	if (typeof _pos != 'undefined')
@@ -684,7 +688,7 @@ egw_fw_ui_tabs.prototype.addTab = function(_icon, _callback, _closeCallback, _ta
  *
  * @param {object} _tab is the object which should be closed.
  */
-egw_fw_ui_tabs.prototype.removeTab = function(_tab)
+window.egw_fw_ui_tabs.prototype.removeTab = function(_tab)
 {
 	//Delete the deleted tab from the history
 	for (var i = this.tabHistory.length - 1; i >= 0; i--)
@@ -734,7 +738,7 @@ egw_fw_ui_tabs.prototype.removeTab = function(_tab)
  *
  * @param {object} _tab is the object which should be opened.
  */
-egw_fw_ui_tabs.prototype.showTab = function(_tab)
+window.egw_fw_ui_tabs.prototype.showTab = function(_tab)
 {
 	if (this.activeTab != _tab && (_tab.status != '5' || _tab.tag.isFrameworkTab))
 	{
@@ -765,7 +769,7 @@ egw_fw_ui_tabs.prototype.showTab = function(_tab)
  *
  * @param {boolean} _closeable
  */
-egw_fw_ui_tabs.prototype.setCloseable = function(_closeable)
+window.egw_fw_ui_tabs.prototype.setCloseable = function(_closeable)
 {
 	for (var i = 0; i < this.tabs.length; i++)
 	{
@@ -777,7 +781,7 @@ egw_fw_ui_tabs.prototype.setCloseable = function(_closeable)
  * Clears all data, removes all tabs, independently from the question, whether they may be closed or
  * not.
  */
-egw_fw_ui_tabs.prototype.clean = function()
+window.egw_fw_ui_tabs.prototype.clean = function()
 {
 	//Remove all tabs, clean the tabs array
 	for (var i = 0; i < this.tabs.length; i++)
@@ -798,7 +802,7 @@ egw_fw_ui_tabs.prototype.clean = function()
  *
  * @return {boolean} returns true if the open tab is not the last visible tab otherwise false
  */
-egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
+window.egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
 {
 	var n = 0;
 	for (var i in this.tabs)
@@ -815,7 +819,7 @@ egw_fw_ui_tabs.prototype._isNotTheLastTab = function()
  * @param {string} _appname
  * @returns {object|boolean} returns tab object, returns false if no tab found
  */
-egw_fw_ui_tabs.prototype.getTab = function(_appname)
+window.egw_fw_ui_tabs.prototype.getTab = function(_appname)
 {
 	for (var i = 0; i < this.tabs.length; i++)
 	{
@@ -840,7 +844,7 @@ egw_fw_ui_tabs.prototype.getTab = function(_appname)
  * @param {object} _tag
  */
 
-function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _animationCallback, _tag)
+window.egw_fw_ui_category = function(_contDiv, _name, _title, _content, _callback, _animationCallback, _tag)
 {
 	//Copy the parameters
 	this.contDiv = _contDiv;
@@ -906,7 +910,7 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 	jQuery(this.headerDiv).append(this.contentDiv);
 }
 
-egw_fw_ui_category.prototype.open = function(_instantly)
+window.egw_fw_ui_category.prototype.open = function(_instantly)
 {
 	this.callback.call(this, true);
 	jQuery(this.headerDiv).addClass('egw_fw_ui_category_active')
@@ -926,7 +930,7 @@ egw_fw_ui_category.prototype.open = function(_instantly)
 	jQuery("li:first-child", this.headerDiv).eq(0).focus();
 };
 
-egw_fw_ui_category.prototype.close = function(_instantly)
+window.egw_fw_ui_category.prototype.close = function(_instantly)
 {
 	this.callback.call(this, false);
 	jQuery(this.headerDiv).removeClass('egw_fw_ui_category_active')
@@ -945,7 +949,7 @@ egw_fw_ui_category.prototype.close = function(_instantly)
 	}
 };
 
-egw_fw_ui_category.prototype.remove = function()
+window.egw_fw_ui_category.prototype.remove = function()
 {
 	//Delete the content and header div
 	jQuery(this.contDiv).remove();
@@ -958,7 +962,7 @@ egw_fw_ui_category.prototype.remove = function()
  * @param {object} _contDiv
  */
 
-function egw_fw_ui_scrollarea(_contDiv)
+window.egw_fw_ui_scrollarea = function(_contDiv)
 {
 	this.startScrollSpeed = 50.0; //in px/sec
 	this.endScrollSpeed = 250.0; //in px/sec
@@ -1059,7 +1063,7 @@ function egw_fw_ui_scrollarea(_contDiv)
 	this.update();
 }
 
-egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
+window.egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 {
 	var scrollArea = egw.preference('scroll_area', 'common') == 1 ? true : false;
 	if (this.buttonsVisible)
@@ -1116,12 +1120,12 @@ egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
 	}
 };
 
-egw_fw_ui_scrollarea.prototype.scrollDelta = function(_delta)
+window.egw_fw_ui_scrollarea.prototype.scrollDelta = function(_delta)
 {
 	this.setScrollPos(this.scrollPos + _delta);
 };
 
-egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
+window.egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 {
 	if (_visible)
 	{
@@ -1141,7 +1145,7 @@ egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
 	this.buttonsVisible = _visible;
 };
 
-egw_fw_ui_scrollarea.prototype.update = function()
+window.egw_fw_ui_scrollarea.prototype.update = function()
 {
 	//Get the height of the content and the outer box
 	this.contHeight = jQuery(this.scrollDiv).outerHeight();
@@ -1151,7 +1155,7 @@ egw_fw_ui_scrollarea.prototype.update = function()
 	this.setScrollPos(this.scrollPos);
 };
 
-egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
+window.egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
 {
 	//Calculate the current scroll speed
 	var curScrollSpeed = this.startScrollSpeed + this.scrollSpeedAccel * this.scrollTime;
@@ -1167,7 +1171,7 @@ egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
 	return curScrollSpeed * _timeGap;
 };
 
-egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
+window.egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
 {
 	//Do the scrolling
 	_context.scrollDelta(_context.getScrollDelta(_context.timerInterval) *
@@ -1181,7 +1185,7 @@ egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
 	}
 };
 
-egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
+window.egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
 {
 	this.mouseOver = _over;
 	this.dir = _dir;
@@ -1202,10 +1206,10 @@ egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
  * egw_fw_ui_splitter class
  */
 
-var EGW_SPLITTER_HORIZONTAL = 0;
-var EGW_SPLITTER_VERTICAL = 1;
+window.EGW_SPLITTER_HORIZONTAL = 0;
+window.EGW_SPLITTER_VERTICAL = 1;
 
-function egw_fw_ui_splitter(_contDiv, _orientation, _resizeCallback, _constraints, _tag)
+window.egw_fw_ui_splitter = function(_contDiv, _orientation, _resizeCallback, _constraints, _tag)
 {
 	//Copy the parameters
 	this.tag = _tag;
@@ -1293,7 +1297,7 @@ function egw_fw_ui_splitter(_contDiv, _orientation, _resizeCallback, _constraint
 	jQuery(this.contDiv).append(this.splitterDiv);
 }
 
-egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
+window.egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
 {
 	var result = _delta;
 
@@ -1319,7 +1323,7 @@ egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
 	return result;
 };
 
-egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
+window.egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
 {
 	switch (this.orientation)
 	{
@@ -1332,7 +1336,7 @@ egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
 	}
 };
 
-egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
+window.egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
 {
 /*	var delta = 0;
 	switch (this.orientation)
@@ -1351,7 +1355,7 @@ egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
 };
 
 
-egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
+window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
 {
 	var delta = 0;
 	switch (this.orientation)
@@ -1377,7 +1381,7 @@ egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
  * Disable/Enable drabbale splitter
  * @param {type} _state
  */
-egw_fw_ui_splitter.prototype.set_disable = function (_state)
+window.egw_fw_ui_splitter.prototype.set_disable = function (_state)
 {
 	jQuery(this.splitterDiv).draggable(_state?'disable':'enable');
 };
@@ -1390,7 +1394,7 @@ egw_fw_ui_splitter.prototype.set_disable = function (_state)
  * @param {object} _callbackContext context of the toggleCallback
  * @returns {egw_fw_ui_toggleSidebar}
  */
-function egw_fw_ui_toggleSidebar (_contentDiv, _toggleCallback, _callbackContext)
+window.egw_fw_ui_toggleSidebar = function(_contentDiv, _toggleCallback, _callbackContext)
 {
 	var self = this;
 	this.toggleCallback = _toggleCallback;
@@ -1416,7 +1420,7 @@ function egw_fw_ui_toggleSidebar (_contentDiv, _toggleCallback, _callbackContext
  * Toggle menu on/off
  * @param {object} _callbackContext context of the toggleCallback
  */
-egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
+window.egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
 {
 	if (typeof this.toggleAudio != 'undefined') this.toggleAudio[0].play();
 	if (this.contDiv.hasClass('egw_fw_sidebar_toggleOn'))
@@ -1444,7 +1448,7 @@ egw_fw_ui_toggleSidebar.prototype.onToggle = function(_callbackContext)
  * @param {type} _toggleCallback callback function to handle toggle preference and resize
  * @param {type} _context context of callback function
  */
-egw_fw_ui_toggleSidebar.prototype.set_toggle = function (_state, _toggleCallback, _context)
+window.egw_fw_ui_toggleSidebar.prototype.set_toggle = function (_state, _toggleCallback, _context)
 {
 	this.contDiv.toggleClass('egw_fw_sidebar_toggleOn',_state === 'on'?true:false);
 	_context.splitterUi.set_disable(_state === 'on'?true:false);

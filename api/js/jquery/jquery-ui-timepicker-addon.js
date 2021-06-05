@@ -1,6 +1,8 @@
 /*! jQuery Timepicker Addon - v1.6.1 - 2015-11-14
 * http://trentrichardson.com/examples/timepicker
 * Copyright (c) 2015 Trent Richardson; Licensed MIT */
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import '../../../vendor/bower-asset/jquery-ui/jquery-ui.js';
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery', 'jquery-ui'], factory);

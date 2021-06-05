@@ -17,6 +17,8 @@
 	egw_files;
 	egw_debug;
 */
+import './egw_core.js';
+import './egw_utils.js';
 
 /**
  * Module sending json requests
@@ -57,7 +59,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {object} _sender
 	 * @param {egw} _egw
 	 */
-	function json_request(_menuaction, _parameters, _callback, _context,
+	window.json_request = function(_menuaction, _parameters, _callback, _context,
 		_async, _sender, _egw)
 	{
 		// Copy the parameters
@@ -103,7 +105,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {function} error option error callback(_msg) used instead our default this.error
 	 * @param {int} reconnect timeout in ms (internal)
 	 */
-	json_request.prototype.openWebSocket = function(url, tokens, account_id, error, reconnect)
+	window.json_request.prototype.openWebSocket = function(url, tokens, account_id, error, reconnect)
 	{
 		const min_reconnect_time = 1000;
 		const max_reconnect_time = 300000;
@@ -191,7 +193,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 *
 	 * @return {jqXHR|boolean} jQuery jqXHR request object or for async==="keepalive" boolean is returned
 	 */
-	json_request.prototype.sendRequest = function(async, method, error)
+	window.json_request.prototype.sendRequest = function(async, method, error)
 	{
 		if(typeof async != "undefined")
 		{
@@ -242,7 +244,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {XMLHTTP} _xmlhttp
 	 * @param {string} _err
 	 */
-	json_request.prototype.handleError = function(_xmlhttp, _err) {
+	window.json_request.prototype.handleError = function(_xmlhttp, _err) {
 		// Don't error about an abort
 		if(_err !== 'abort')
 		{
@@ -269,7 +271,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	};
 
-	json_request.prototype.handleResponse = function(data) {
+	window.json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
 		{
 			if (egw.preference('show_generation_time', 'common', false) == "1")

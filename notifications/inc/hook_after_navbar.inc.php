@@ -28,7 +28,7 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 	$minjs = $GLOBALS['egw_info']['server']['debug_minify'] === 'True' ? '' : '.min';
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup'.$minjs.'.js?'.
 		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup'.$minjs.'.js').
-		'" type="text/javascript" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.
+		'" type="module" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.
 		'" data-langRequire="'. htmlspecialchars(json_encode($langRequire)).'"></script>';
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">

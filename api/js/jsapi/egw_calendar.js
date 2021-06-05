@@ -19,6 +19,7 @@
 //	egw_jquery;
 	egw_css;
 */
+import './egw_core.js';
 
 /**
  * Date and timepicker

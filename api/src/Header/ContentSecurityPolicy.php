@@ -100,6 +100,24 @@ class ContentSecurityPolicy
 	}
 
 	/**
+	 * Add a nonce to a given source
+	 *
+	 * @param string $source
+	 * @return string
+	 * @throws \Exception
+	 */
+	public static function addNonce($source='script-src')
+	{
+		static $nonce=null;
+		if (!isset($nonce))
+		{
+			$nonce = base64_encode(random_bytes(16));
+			self::add($source, "'nonce-$nonce'");
+		}
+		return $nonce;
+	}
+
+	/**
 	 * Set Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
 	 *
 	 * Old pre-et2 apps might need to call Api\Headers::script_src_attrs(array('unsafe-eval','unsafe-inline'))

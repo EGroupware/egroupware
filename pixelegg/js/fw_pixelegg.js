@@ -13,6 +13,10 @@
 	framework.fw_desktop;
 	/pixelegg/js/slider.js;
 */
+import '../../vendor/bower-asset/jquery/dist/jquery.js';
+import '../../api/js/framework/fw_desktop.js';
+import './slider.js';
+
 (function(window){
 	"use strict";
 
@@ -20,7 +24,7 @@
 	 * jdots framework object defenition
 	 * here we can add framework methods and also override fw_desktop methods if it is neccessary
 	 */
-	var fw_pixelegg = fw_desktop.extend(
+	window.fw_pixelegg = fw_desktop.extend(
 	{
 		/**
 		 * Callback to calculate height of browser iframe or div
@@ -111,7 +115,7 @@
 	/**
 	* Initialise framework
 	*/
-	egw_LAB.wait(function() {
+	window.egw_ready.then(function() {
 		function egw_setSideboxSize(_size)
 		{
 			document.getElementById('egw_fw_main').style.marginLeft = _size + 'px';

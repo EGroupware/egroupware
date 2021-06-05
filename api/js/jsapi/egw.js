@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -165,8 +164,40 @@
 		window.focus();
 	}
 
-	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
-	window.egw_LAB.script(include).wait(function()
+	/**
+	 * Import JavaScript legacy code: global scope, non-strict and executed in order
+	 *
+	 * @param String|Array _src
+	 * @param String|undefined _baseurl
+	 * @return {Promise<Promise<unknown>[]>}
+	 */
+	async function legacy_js_import(_src, _baseurl)
+	{
+		if (!Array.isArray(_src)) _src = [].concat(_src);
+		return Promise.all(_src.map(src => {
+			return new Promise(function(_resolve, _reject)
+			{
+				const script = document.createElement('script');
+				script.src = (_baseurl ? _baseurl+'/' : '')+src;
+				script.async = _src.length === 1;
+				script.onload = _resolve;
+				script.onerror = _reject;
+				document.head.appendChild(script);
+			})
+				// catch and display, but not stop execution
+			.catch((err) => { alert(src+":\n\n"+err.message)});
+		}));
+	}
+
+	// split includes in legacy js and modules
+	const legacy_regexp = /dhtmlx/;
+	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
+	window.egw_LAB = window.egw_ready = Promise.all(
+		[legacy_js_import(include.filter((src) => src.match(legacy_regexp) !== null), window.egw_webserverUrl)]
+			.concat(include.filter((src) => src.match(legacy_regexp) === null)
+				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
+					.catch((err) => { alert(rel_src+":\n\n"+err.message)})
+	))).then(() =>
 	{
 		// We need to override the globalEval to mitigate potential execution of
 		// script tag. This issue is relevant to jQuery 1.12.4, we need to check
@@ -252,7 +283,7 @@
 		catch(e) {
 			// ignore SecurityError exception if opener is different security context / cross-origin
 		}
-		// instanciate app object
+		// instantiate app object
 		var appname = window.egw_appName;
 		if (app && typeof app[appname] != 'object' && typeof app.classes[appname] == 'function')
 		{
@@ -444,7 +475,9 @@
 				// ignore SecurityError exception if top is different security context / cross-origin
 			}
 		});
-	});
+	}, (e) => alert(e.message+"\n\n"+e.stack));
+	//
+	window.egw_LAB.wait = window.egw_ready.then;
 
 	/**
 	 *
@@ -459,7 +492,7 @@
 })();
 
 // get TypeScript modules working with our loader
-function require(_file)
+window.require = function(_file)
 {
 	switch(_file)
 	{
@@ -468,7 +501,7 @@ function require(_file)
 	}
 	return window.exports;
 }
-var exports = {};
+window.exports = {};
 
 /**
  * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
@@ -478,7 +511,7 @@ var exports = {};
  * @returns {Mixed|Promise}
  * @deprecated use egw.callFunc(_func, ...) or egw.applyFunc(_func, args)
  */
-function et2_call(_func)
+window.et2_call = function(_func)
 {
 	return egw.applyFunc(_func, [].slice.call(arguments, 1), window);
 }

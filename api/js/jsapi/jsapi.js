@@ -11,35 +11,9 @@
  * @version $Id$
  */
 
-/***********************************************\
-*               INITIALIZATION                  *
-\***********************************************/
-if (document.all)
-{
-	navigator.userAgent.toLowerCase().indexOf('msie 5') != -1 ? is_ie5 = true : is_ie5 = false;
-	is_ie = true;
-	is_moz1_6 = false;
-	is_mozilla = false;
-	is_ns4 = false;
-}
-else if (document.getElementById)
-{
-	navigator.userAgent.toLowerCase().match('mozilla.*rv[:]1\.6.*gecko') ? is_moz1_6 = true : is_moz1_6 = false;
-	is_ie = false;
-	is_ie5 = false;
-	is_mozilla = true;
-	is_ns4 = false;
-}
-else if (document.layers)
-{
-	is_ie = false;
-	is_ie5 = false;
-	is_moz1_6 = false;
-	is_mozilla = false;
-	is_ns4 = true;
-}
+'use strict';
 
-//console.log('is_ie='+is_ie+', is_ie5='+is_ie5+', is_mozilla='+is_mozilla+', is_moz1_6='+is_moz1_6+', is_ns4='+is_ns4);
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 
 /**
  * Check whether the console object is defined - if not, define one
@@ -67,7 +41,7 @@ if (typeof window.console == 'undefined')
  *	the result js will be written to _html.js.
  */
 
-egw_seperateJavaScript = function(_html)
+window.egw_seperateJavaScript = function(_html)
 {
 	var html = typeof _html.html == 'string'?_html.html:'';
 
@@ -95,7 +69,7 @@ egw_seperateJavaScript = function(_html)
 /**
  * Inserts the script tags inside the given html into the dom tree
  */
-function egw_insertJS(_html)
+window.egw_insertJS = function(_html)
 {
 	// Insert each script element seperately
 	if (_html)
@@ -147,7 +121,7 @@ function egw_insertJS(_html)
 /**
  * Returns the top window which contains the current egw_instance, even for popup windows
  */
-function egw_topWindow()
+window.egw_topWindow = function()
 {
 	return egw.top;
 }
@@ -156,7 +130,7 @@ function egw_topWindow()
  * Returns the window object of the current application
  * @param string _app is the name of the application which requests the window object
  */
-function egw_appWindow(_app)
+window.egw_appWindow = function(_app)
 {
 	var framework = egw_getFramework();
 	if(framework && framework.egw_appWindow) return framework.egw_appWindow(_app);
@@ -168,7 +142,7 @@ function egw_appWindow(_app)
  * @param _app
  * @param _url
  */
-function egw_appWindowOpen(_app, _url)
+window.egw_appWindowOpen = function(_app, _url)
 {
 	if (typeof _url == "undefined") {
 		_url = "about:blank";
@@ -180,7 +154,7 @@ function egw_appWindowOpen(_app, _url)
  * Returns the current egw application
  * @param string _name is only used for fallback, if an onlder version of jdots is used.
  */
-function egw_getApp(_name)
+window.egw_getApp = function(_name)
 {
 	return window.parent.framework.getApplicationByName(_name);
 }
@@ -190,7 +164,7 @@ function egw_getApp(_name)
  *
  * @deprecated use egw(window).app_name()
  */
-function egw_getAppName()
+window.egw_getAppName = function()
 {
 	if (typeof egw_appName == 'undefined')
 	{
@@ -222,7 +196,7 @@ function egw_getAppName()
  * @param {string} _msg_type 'error', 'warning' or 'success' (default)
   * @deprecated use egw(window).refresh() instead
  */
-function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
+window.egw_refresh = function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 {
 	egw(window).refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type);
 }
@@ -234,7 +208,7 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
  * @param {string} _type 'error', 'warning' or 'success' (default)
  * @deprecated use egw(window).message(_msg, _type)
  */
-function egw_message(_msg, _type)
+window.egw_message = function(_msg, _type)
 {
 	egw(window).message(_msg, _type);
 }
@@ -246,7 +220,7 @@ function egw_message(_msg, _type)
  * @param {string} _app Application name, if not for the current app
    @deprecated use egw(window).app_header(_header, _app)
 */
-function egw_app_header(_header,_app)
+window.egw_app_header = function(_header,_app)
 {
 	egw(window).app_header(_header, _app);
 }
@@ -267,7 +241,7 @@ function egw_app_header(_header,_app)
  * @param string target target of window to open
  * @deprecated use egw.open()
  */
-function egw_open(id, app, type, extra, target)
+window.egw_open = function(id, app, type, extra, target)
 {
 	window.egw.open(id, app, type, extra, target);
 }
@@ -332,7 +306,7 @@ window.register_app_refresh = function(appname, refresh_func)
 }
 
 
-function egw_set_checkbox_multiselect_enabled(_id, _enabled)
+window.egw_set_checkbox_multiselect_enabled = function(_id, _enabled)
 {
 	//Retrieve the checkbox_multiselect base div
 	var ms = document.getElementById('exec['+_id+']');
@@ -381,7 +355,7 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
  * @returns {DOMWindow|undefined}
  * @deprecated use egw.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status)
  */
-function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _app, _returnID)
+window.egw_openWindowCentered2 = function(_url, _windowName, _width, _height, _status, _app, _returnID)
 {
 	return egw(window).openPopup(_url, _width, _height, _windowName, _app, _returnID, _status);
 }
@@ -389,17 +363,17 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 /**
  * @deprecated use egw.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status)
  */
-function egw_openWindowCentered(_url, _windowName, _width, _height)
+window.egw_openWindowCentered = function(_url, _windowName, _width, _height)
 {
 	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no', false, true);
 }
 
 // return the left position of the window
-function egw_getWindowLeft()
+window.egw_getWindowLeft = function()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if(is_mozilla) return window.screenX;
+		return window.screenX;
 	}
 	catch (e) {}
 
@@ -407,11 +381,11 @@ function egw_getWindowLeft()
 }
 
 // return the left position of the window
-function egw_getWindowTop()
+window.egw_getWindowTop = function()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if(is_mozilla) return window.screenY;
+		return window.screenY;
 	}
 	catch (e) {}
 
@@ -419,43 +393,23 @@ function egw_getWindowTop()
 }
 
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
-function egw_getWindowInnerWidth()
+window.egw_getWindowInnerWidth = function()
 {
-	if (is_mozilla)
-	{
-		return window.innerWidth;
-	}
-	else
-	{
-		// works only after the body has parsed
-		//return document.body.offsetWidth;
-		return document.body.clientWidth;
-		//return document.documentElement.clientWidth;
-	}
+	return window.innerWidth;
 }
 
 // get the outerHeight of the browser window. For IE we simply return the innerHeight
-function egw_getWindowInnerHeight()
+window.egw_getWindowInnerHeight = function()
 {
-	if (is_mozilla)
-	{
-		return window.innerHeight;
-	}
-	else
-	{
-		// works only after the body has parsed
-		//return document.body.offsetHeight;
-		//return document.body.clientHeight;
-		return document.documentElement.clientHeight;
-	}
+	return window.innerHeight;
 }
 
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
-function egw_getWindowOuterWidth()
+window.egw_getWindowOuterWidth = function()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if (is_mozilla) return window.outerWidth;
+		return window.outerWidth;
 	}
 	catch (e) {}
 
@@ -463,11 +417,11 @@ function egw_getWindowOuterWidth()
 }
 
 // get the outerHeight of the browser window. For IE we simply return the innerHeight
-function egw_getWindowOuterHeight()
+window.egw_getWindowOuterHeight = function()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if (is_mozilla) return window.outerHeight;
+		return window.outerHeight;
 	}
 	catch (e) {}
 
@@ -477,7 +431,7 @@ function egw_getWindowOuterHeight()
 // ie selectbox dropdown menu hack. as ie is not able to resize dropdown menus from selectboxes, we
 // read the content of the dropdown menu and present it as popup resized for the user. if the user
 // clicks/seleckts a value, the selection is posted back to the origial selectbox
-function dropdown_menu_hack(el)
+window.dropdown_menu_hack = function(el)
 {
 	if(el.runtimeStyle)
 	{
@@ -536,14 +490,13 @@ function dropdown_menu_hack(el)
 					}
 
 
-					f_hide = function(e)
+					f.hide = function(e)
 					{
 						if(window.event && window.event.srcElement && window.event.srcElement.tagName && window.event.srcElement.tagName.toLowerCase()=="select"){return true;}
 						fwin.style.display="none";
 					}
-					f.hide = f_hide;
-					document.attachEvent("onclick",f_hide);
-					document.attachEvent("onkeydown",f_hide);
+					document.attachEvent("onclick",f.hide);
+					document.attachEvent("onkeydown",f.hide);
 
 				}
 				return f;
@@ -654,7 +607,6 @@ function dropdown_menu_hack(el)
 			}
 			self.focus();
 			el.menu.show( mx , my , mw, mh , el);
-			sync=null;
 			if(mb.options.selected)
 			{
 				mb.scrollTop = mb.options.selected.offsetTop;
@@ -718,7 +670,7 @@ function dropdown_menu_hack(el)
  * @param _app
  * @deprecated use egw(window).link_handler(_link, _app) instead
  */
-function egw_link_handler(_link, _app)
+window.egw_link_handler = function(_link, _app)
 {
 	egw(window).link_handler(_link, _app);
 }
@@ -728,9 +680,9 @@ function egw_link_handler(_link, _app)
  *
  * @ToDo: should be removed if uiaccountsel class is no longer in use
  */
-function addOption(id,label,value,do_onchange)
+window.addOption = function(id,label,value,do_onchange)
 {
-	selectBox = document.getElementById(id);
+	let selectBox = document.getElementById(id);
 	for (var i=0; i < selectBox.length; i++) {
 	//		check existing entries if they're already there and only select them in that case
 		if (selectBox.options[i].value == value) {
@@ -754,7 +706,7 @@ function addOption(id,label,value,do_onchange)
  * @param {string} _mime current mime type
  * @returns {object|null} returns object of filemanager editor hook
  */
-function egw_get_file_editor_prefered_mimes(_mime)
+window.egw_get_file_editor_prefered_mimes = function(_mime)
 {
 	var fe = jQuery.extend(true, {},egw.link_get_registry('filemanager-editor'));
 	var ex_mimes = egw.preference('collab_excluded_mimes', 'filemanager');

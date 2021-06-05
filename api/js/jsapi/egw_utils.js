@@ -12,6 +12,7 @@
 /*egw:uses
 	egw_core;
 */
+import './egw_core.js';
 
 egw.extend('utils', egw.MODULE_GLOBAL, function()
 {

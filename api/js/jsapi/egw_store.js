@@ -14,6 +14,7 @@
 	egw_ready;
 	egw_debug;
 */
+import './egw_core.js';
 
 /**
  * Store is a wrapper around browser based, persistant storage.
