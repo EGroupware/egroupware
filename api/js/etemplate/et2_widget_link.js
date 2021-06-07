@@ -1,30 +1,14 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Link object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright 2011 Nathan Gray
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports.et2_link = exports.et2_link_entry = exports.et2_link_apps = exports.et2_link_to = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -36,33 +20,35 @@ exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports
     // Include menu system for list context menu
     egw_action.egw_menu_dhtmlx;
 */
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
-var et2_widget_dialog_1 = require("./et2_widget_dialog");
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_valueWidget } from "./et2_core_valueWidget";
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { et2_selectbox } from "./et2_widget_selectbox";
+import { et2_dialog } from "./et2_widget_dialog";
+import { egw, egw_get_file_editor_prefered_mimes } from "../jsapi/egw_global";
+import { et2_csvSplit, et2_no_init } from "./et2_core_common";
+import { expose } from "./expose";
+import { egwMenu } from "../egw_action/egw_menu.js";
 /**
  * UI widgets for Egroupware linking system
  */
-var et2_link_to = /** @class */ (function (_super) {
-    __extends(et2_link_to, _super);
+export class et2_link_to extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_link_to
      */
-    function et2_link_to(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {})) || this;
-        _this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
-        _this.link_button = null;
-        _this.status_span = null;
-        _this.link_entry = null;
-        _this.file_upload = null;
-        _this.createInputWidget();
-        return _this;
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_to._attributes, _child || {}));
+        this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
+        this.link_button = null;
+        this.status_span = null;
+        this.link_entry = null;
+        this.file_upload = null;
+        this.createInputWidget();
     }
-    et2_link_to.prototype.destroy = function () {
+    destroy() {
         this.link_button = null;
         this.status_span = null;
         if (this.link_entry) {
@@ -74,14 +60,14 @@ var et2_link_to = /** @class */ (function (_super) {
             this.file_upload = null;
         }
         this.div = null;
-        _super.prototype.destroy.apply(this, arguments);
-    };
+        super.destroy.apply(this, arguments);
+    }
     /**
      * Override to provide proper node for sub widgets to go in
      *
      * @param {Object} _sender
      */
-    et2_link_to.prototype.getDOMNode = function (_sender) {
+    getDOMNode(_sender) {
         if (_sender == this) {
             return this.div[0];
         }
@@ -94,8 +80,8 @@ var et2_link_to = /** @class */ (function (_super) {
         else if (_sender._type == 'vfs-select') {
             return this.filemanager_button[0];
         }
-    };
-    et2_link_to.prototype.createInputWidget = function () {
+    }
+    createInputWidget() {
         // Need a div for file upload widget
         this.file_div = jQuery(document.createElement("div")).css({ display: 'inline-block' }).appendTo(this.div);
         // Filemanager link popup
@@ -117,9 +103,9 @@ var et2_link_to = /** @class */ (function (_super) {
                 .appendTo(this.div).addClass("status").hide();
         }
         this.setDOMNode(this.div[0]);
-    };
-    et2_link_to.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.apply(this, arguments);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished.apply(this, arguments);
         var self = this;
         if (this.link_entry && this.vfs_select && this.file_upload) {
             // Already done
@@ -135,7 +121,7 @@ var et2_link_to = /** @class */ (function (_super) {
             select: function () { self.link_button.show(); return true; },
             readonly: this.options.readonly
         };
-        this.link_entry = et2_core_widget_1.et2_createWidget("link-entry", link_entry_attrs, this);
+        this.link_entry = et2_createWidget("link-entry", link_entry_attrs, this);
         // Filemanager select
         var select_attrs = {
             button_label: egw.lang('Link'),
@@ -173,7 +159,7 @@ var et2_link_to = /** @class */ (function (_super) {
             select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
             select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
         }
-        this.vfs_select = et2_core_widget_1.et2_createWidget("vfs-select", select_attrs, this);
+        this.vfs_select = et2_createWidget("vfs-select", select_attrs, this);
         this.vfs_select.set_readonly(this.options.readonly);
         // File upload
         var file_attrs = {
@@ -202,23 +188,23 @@ var et2_link_to = /** @class */ (function (_super) {
                 self.createLink(event);
             }
         };
-        this.file_upload = et2_core_widget_1.et2_createWidget("file", file_attrs, this);
+        this.file_upload = et2_createWidget("file", file_attrs, this);
         this.file_upload.set_readonly(this.options.readonly);
         return true;
-    };
-    et2_link_to.prototype.getValue = function () {
+    }
+    getValue() {
         return this.options.value;
-    };
-    et2_link_to.prototype.filesUploaded = function (event) {
+    }
+    filesUploaded(event) {
         var self = this;
         this.link_button.show();
-    };
+    }
     /**
      * Create a link using the current internal values
      *
      * @param {Object} event
      */
-    et2_link_to.prototype.createLink = function (event) {
+    createLink(event) {
         // Disable link button
         event.data.link_button.attr("disabled", true);
         var values = event.data.options.value;
@@ -245,13 +231,13 @@ var et2_link_to = /** @class */ (function (_super) {
         }
         var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link", [values.to_app, values.to_id, links], self._link_result, self, true, self);
         request.sendRequest();
-    };
+    }
     /**
      * Sent some links, server has a result
      *
      * @param {Object} success
      */
-    et2_link_to.prototype._link_result = function (success) {
+    _link_result(success) {
         if (success) {
             this.link_button.hide().attr("disabled", false);
             this.status_span.removeClass("error").addClass("success");
@@ -270,7 +256,7 @@ var et2_link_to = /** @class */ (function (_super) {
                     this.options.value = {};
                 }
                 this.options.value.to_id = success;
-                for (var link in success) {
+                for (let link in success) {
                     // Icon should be in registry
                     if (typeof success[link].icon == 'undefined') {
                         success[link].icon = egw.link_get_registry(success[link].app, 'icon');
@@ -303,8 +289,9 @@ var et2_link_to = /** @class */ (function (_super) {
             if (list_widget && success) {
                 // Clear list
                 list_widget.set_value(null);
-                var _loop_1 = function () {
-                    var link = success[link_id];
+                // Add temp links in
+                for (var link_id in success) {
+                    let link = success[link_id];
                     if (typeof link.title == 'undefined') {
                         // Callback to server for title
                         egw.link_title(link.app, link.id, function (title) {
@@ -316,10 +303,6 @@ var et2_link_to = /** @class */ (function (_super) {
                         // Add direct
                         list_widget._add_link(link);
                     }
-                };
-                // Add temp links in
-                for (var link_id in success) {
-                    _loop_1();
                 }
             }
         }
@@ -328,8 +311,8 @@ var et2_link_to = /** @class */ (function (_super) {
                 .fadeIn();
         }
         this.div.trigger('link.et2_link_to', success);
-    };
-    et2_link_to.prototype.set_no_files = function (no_files) {
+    }
+    set_no_files(no_files) {
         if (this.options.readonly)
             return;
         if (no_files) {
@@ -341,86 +324,82 @@ var et2_link_to = /** @class */ (function (_super) {
             this.filemanager_button.show();
         }
         this.options.no_files = no_files;
-    };
-    et2_link_to._attributes = {
-        "only_app": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Limit to just this one application - hides app selection"
-        },
-        "application_list": {
-            "name": "Application list",
-            "type": "any",
-            "default": "",
-            "description": "Limit to the listed application or applications (comma seperated)"
-        },
-        "blur": {
-            "name": "Placeholder",
-            "type": "string",
-            "default": "",
-            "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
-            translate: true
-        },
-        "no_files": {
-            "name": "No files",
-            "type": "boolean",
-            "default": false,
-            "description": "Suppress attach-files"
-        },
-        "search_label": {
-            "name": "Search label",
-            "type": "string",
-            "default": "",
-            "description": "Label to use for search"
-        },
-        "link_label": {
-            "name": "Link label",
-            "type": "string",
-            "default": "Link",
-            "description": "Label for the link button"
-        },
-        "value": {
-            // Could be string or int if application is provided, or an Object
-            "type": "any"
-        }
-    };
-    return et2_link_to;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_link_to = et2_link_to;
-et2_core_widget_1.et2_register_widget(et2_link_to, ["link-to"]);
+    }
+}
+et2_link_to._attributes = {
+    "only_app": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Limit to just this one application - hides app selection"
+    },
+    "application_list": {
+        "name": "Application list",
+        "type": "any",
+        "default": "",
+        "description": "Limit to the listed application or applications (comma seperated)"
+    },
+    "blur": {
+        "name": "Placeholder",
+        "type": "string",
+        "default": "",
+        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
+        translate: true
+    },
+    "no_files": {
+        "name": "No files",
+        "type": "boolean",
+        "default": false,
+        "description": "Suppress attach-files"
+    },
+    "search_label": {
+        "name": "Search label",
+        "type": "string",
+        "default": "",
+        "description": "Label to use for search"
+    },
+    "link_label": {
+        "name": "Link label",
+        "type": "string",
+        "default": "Link",
+        "description": "Label for the link button"
+    },
+    "value": {
+        // Could be string or int if application is provided, or an Object
+        "type": "any"
+    }
+};
+et2_register_widget(et2_link_to, ["link-to"]);
 /**
  * List of applications that support link
  */
-var et2_link_apps = /** @class */ (function (_super) {
-    __extends(et2_link_apps, _super);
+export class et2_link_apps extends et2_selectbox {
     /**
      * Constructor
      *
      */
-    function et2_link_apps(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {})) || this;
-        if (_this.options.select_options != null) {
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_apps._attributes, _child || {}));
+        if (this.options.select_options != null) {
             // Preset to last application
-            if (!_this.options.value) {
-                _this.set_value(egw.preference('link_app', _this.egw().getAppName()));
+            if (!this.options.value) {
+                this.set_value(egw.preference('link_app', this.egw().getAppName()));
             }
             // Register to update preference
-            var self = _this;
-            _this.input.bind("click", function () {
+            var self = this;
+            this.input.bind("click", function () {
                 if (typeof self.options.value != 'undefined')
                     var appname = self.options.value.to_app;
                 egw.set_preference(appname || self.egw().getAppName(), 'link_app', self.getValue());
             });
         }
-        return _this;
     }
     /**
      * We get some minor speedups by overriding parent searching and directly setting select options
      *
      * @param {Array} _attrs an array of attributes
      */
-    et2_link_apps.prototype.transformAttributes = function (_attrs) {
+    transformAttributes(_attrs) {
         var select_options = {};
         // Limit to one app
         if (_attrs.only_app) {
@@ -436,63 +415,59 @@ var et2_link_apps = /** @class */ (function (_super) {
             }
         }
         _attrs.select_options = select_options;
-        _super.prototype.transformAttributes.call(this, _attrs);
-    };
-    et2_link_apps._attributes = {
-        "only_app": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Limit to just this one application - hides app selection"
-        },
-        "application_list": {
-            "name": "Application list",
-            "type": "any",
-            "default": "",
-            "description": "Limit to the listed application or applications (comma seperated)"
-        }
-    };
-    return et2_link_apps;
-}(et2_widget_selectbox_1.et2_selectbox));
-exports.et2_link_apps = et2_link_apps;
-et2_core_widget_1.et2_register_widget(et2_link_apps, ["link-apps"]);
+        super.transformAttributes(_attrs);
+    }
+}
+et2_link_apps._attributes = {
+    "only_app": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Limit to just this one application - hides app selection"
+    },
+    "application_list": {
+        "name": "Application list",
+        "type": "any",
+        "default": "",
+        "description": "Limit to the listed application or applications (comma seperated)"
+    }
+};
+et2_register_widget(et2_link_apps, ["link-apps"]);
 /**
  * Search and select an entry for linking
  */
-var et2_link_entry = /** @class */ (function (_super) {
-    __extends(et2_link_entry, _super);
+export class et2_link_entry extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_link_entry
      */
-    function et2_link_entry(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {})) || this;
-        _this.cache = {};
-        _this.processing = false;
-        _this.search = null;
-        _this.clear = null;
-        _this.app_select = null;
-        _this._oldValue = {
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_entry._attributes, _child || {}));
+        this.cache = {};
+        this.processing = false;
+        this.search = null;
+        this.clear = null;
+        this.app_select = null;
+        this._oldValue = {
             id: null,
-            app: _this.options.value && _this.options.value.app ? _this.options.value.app : _this.options.only_app
+            app: this.options.value && this.options.value.app ? this.options.value.app : this.options.only_app
         };
-        if (typeof _this.options.value == 'undefined' || _this.options.value == null) {
-            _this.options.value = {};
+        if (typeof this.options.value == 'undefined' || this.options.value == null) {
+            this.options.value = {};
         }
-        _this.cache = {};
-        _this.request = null;
-        _this.createInputWidget();
-        var self = _this;
-        jQuery(_this.getInstanceManager().DOMContainer).on('clear', function () {
+        this.cache = {};
+        this.request = null;
+        this.createInputWidget();
+        var self = this;
+        jQuery(this.getInstanceManager().DOMContainer).on('clear', function () {
             // We need to unbind events to prevent a second triggerd event handler
             // (eg. setting a project in infolog edit dialog) when the widget gets cleared.
             jQuery(self.getDOMNode()).off();
         });
-        return _this;
     }
-    et2_link_entry.prototype.destroy = function () {
-        _super.prototype.destroy.apply(this, arguments);
+    destroy() {
+        super.destroy.apply(this, arguments);
         this.div = null;
         if (this.search.data("ui-autocomplete")) {
             this.search.autocomplete("destroy");
@@ -501,8 +476,8 @@ var et2_link_entry = /** @class */ (function (_super) {
         this.clear = null;
         this.app_select = null;
         this.request = null;
-    };
-    et2_link_entry.prototype.createInputWidget = function () {
+    }
+    createInputWidget() {
         var self = this;
         this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
         // Application selection
@@ -707,12 +682,12 @@ var et2_link_entry = /** @class */ (function (_super) {
             .appendTo(this.div)
             .hide();
         this.setDOMNode(this.div[0]);
-    };
-    et2_link_entry.prototype.getDOMNode = function () {
+    }
+    getDOMNode() {
         return this.div ? this.div[0] : null;
-    };
-    et2_link_entry.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.apply(this, arguments);
+    }
+    transformAttributes(_attrs) {
+        super.transformAttributes.apply(this, arguments);
         _attrs["select_options"] = {};
         if (_attrs["application_list"]) {
             var apps = (typeof _attrs["application_list"] == "string") ? et2_csvSplit(_attrs["application_list"], null, ",") : _attrs["application_list"];
@@ -735,8 +710,8 @@ var et2_link_entry = /** @class */ (function (_super) {
         if (_attrs["select_options"] == null) {
             _attrs["select_options"] = {};
         }
-    };
-    et2_link_entry.prototype.doLoadingFinished = function () {
+    }
+    doLoadingFinished() {
         if (typeof this.options.value == 'object' && !this.options.value.app) {
             this.options.value.app = egw.preference('link_app', this.options.value.to_app || this.egw().getAppName());
             // If there's no value set for app, then take the first one from the selectbox
@@ -759,16 +734,16 @@ var et2_link_entry = /** @class */ (function (_super) {
                 .iconselectmenu("menuWidget");
             this.app_select.iconselectmenu('widget').hide();
         }
-        return _super.prototype.doLoadingFinished.apply(this, arguments);
-    };
-    et2_link_entry.prototype.getValue = function () {
+        return super.doLoadingFinished.apply(this, arguments);
+    }
+    getValue() {
         var value = this.options && this.options.only_app ? this.options.value.id : this.options ? this.options.value : null;
         if (this.options && !this.options.only_app && this.search) {
             value.search = this.search.val();
         }
         return value;
-    };
-    et2_link_entry.prototype.set_value = function (_value) {
+    }
+    set_value(_value) {
         if (typeof _value == 'string' || typeof _value == 'number') {
             if (typeof _value == 'string' && _value.indexOf(",") > 0)
                 _value = _value.replace(",", ":");
@@ -833,8 +808,8 @@ var et2_link_entry = /** @class */ (function (_super) {
             this.app_select.iconselectmenu('widget').hide();
         }
         this.div.addClass("no_app");
-    };
-    et2_link_entry.prototype.set_blur = function (_value, input) {
+    }
+    set_blur(_value, input) {
         if (typeof input == 'undefined')
             input = this.search;
         if (_value) {
@@ -860,30 +835,30 @@ var et2_link_entry = /** @class */ (function (_super) {
         else {
             this.search.removeAttr("placeholder");
         }
-    };
+    }
     /**
      * Set the query callback
      *
      * @param {function} f
      */
-    et2_link_entry.prototype.set_query = function (f) {
+    set_query(f) {
         this.options.query = f;
-    };
+    }
     /**
      * Set the select callback
      *
      * @param {function} f
      */
-    et2_link_entry.prototype.set_select = function (f) {
+    set_select(f) {
         this.options.select = f;
-    };
+    }
     /**
      * Ask server for entries matching selected app/type and filtered by search string
      *
      * @param {Object} request
      * @param {Object} response
      */
-    et2_link_entry.prototype.query = function (request, response) {
+    query(request, response) {
         // If there is a pending request, abort it
         if (this.request) {
             this.request.abort();
@@ -906,7 +881,7 @@ var et2_link_entry = /** @class */ (function (_super) {
         // show() would use inline, should be inline-block
         this.clear.css('display', '');
         this.request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search", [this.app_select.val(), '', request.term, request.options], this._results, this, true, this).sendRequest();
-    };
+    }
     /**
      * User selected a value
      *
@@ -914,7 +889,7 @@ var et2_link_entry = /** @class */ (function (_super) {
      * @param {Object} selected
      *
      */
-    et2_link_entry.prototype.select = function (event, selected) {
+    select(event, selected) {
         if (selected.item.value !== null && typeof selected.item.value == "string") {
             // Correct changed value from server
             selected.item.value = selected.item.value.trim();
@@ -937,13 +912,13 @@ var et2_link_entry = /** @class */ (function (_super) {
         this.search.change();
         // Turn off processing flag when done
         window.setTimeout(jQuery.proxy(function () { delete this.processing; }, event.data));
-    };
+    }
     /**
      * Server found some results
      *
      * @param {Array} data
      */
-    et2_link_entry.prototype._results = function (data) {
+    _results(data) {
         if (this.request) {
             this.request = null;
         }
@@ -954,14 +929,14 @@ var et2_link_entry = /** @class */ (function (_super) {
         }
         this.cache[this.search.val()] = result;
         this.response(result);
-    };
+    }
     /**
      * Create a link using the current internal values
      *
      * @param {Object} event
      * @param {Object} _links
      */
-    et2_link_entry.prototype.createLink = function (event, _links) {
+    createLink(event, _links) {
         var values = event.data.options.value;
         var self = event.data;
         var links = [];
@@ -984,100 +959,96 @@ var et2_link_entry = /** @class */ (function (_super) {
             var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link", [values.to_app, values.to_id, links], self._link_result, this, true);
             request.sendRequest();
         }
-    };
+    }
     /**
      * Sent some links, server has a result
      *
      * @param {Object} success
      *
      */
-    et2_link_entry.prototype._link_result = function (success) {
+    _link_result(success) {
         if (success) {
             this.status_span.fadeIn().delay(1000).fadeOut();
             delete this.options.value.app;
             delete this.options.value.id;
         }
-    };
-    et2_link_entry._attributes = {
-        "value": {
-            "type": "any",
-            "default": {}
-        },
-        "only_app": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Limit to just this one application - hides app selection"
-        },
-        "application_list": {
-            "name": "Application list",
-            "type": "any",
-            "default": "",
-            "description": "Limit to the listed applications (comma seperated)"
-        },
-        "app_icons": {
-            "name": "Application icons",
-            "type": "boolean",
-            "default": false,
-            "description": "Show application icons instead of names"
-        },
-        "blur": {
-            "name": "Placeholder",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
-            translate: true
-        },
-        "query": {
-            "name": "Query callback",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Callback before query to server.  It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query."
-        },
-        "select": {
-            "name": "Select callback",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Callback when user selects an option.  Must return true, or false to abort normal action."
-        }
-    };
-    et2_link_entry.legacyOptions = ["only_app", "application_list"];
-    et2_link_entry.search_timeout = 500; //ms after change to send query
-    et2_link_entry.minimum_characters = 4; // Don't send query unless there's at least this many chars
-    return et2_link_entry;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_link_entry = et2_link_entry;
-et2_core_widget_1.et2_register_widget(et2_link_entry, ["link-entry"]);
+    }
+}
+et2_link_entry._attributes = {
+    "value": {
+        "type": "any",
+        "default": {}
+    },
+    "only_app": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Limit to just this one application - hides app selection"
+    },
+    "application_list": {
+        "name": "Application list",
+        "type": "any",
+        "default": "",
+        "description": "Limit to the listed applications (comma seperated)"
+    },
+    "app_icons": {
+        "name": "Application icons",
+        "type": "boolean",
+        "default": false,
+        "description": "Show application icons instead of names"
+    },
+    "blur": {
+        "name": "Placeholder",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text.",
+        translate: true
+    },
+    "query": {
+        "name": "Query callback",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Callback before query to server.  It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query."
+    },
+    "select": {
+        "name": "Select callback",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Callback when user selects an option.  Must return true, or false to abort normal action."
+    }
+};
+et2_link_entry.legacyOptions = ["only_app", "application_list"];
+et2_link_entry.search_timeout = 500; //ms after change to send query
+et2_link_entry.minimum_characters = 4; // Don't send query unless there's at least this many chars
+et2_register_widget(et2_link_entry, ["link-entry"]);
 /**
  * UI widget for a single (read-only) link
  *
  */
-var et2_link = /** @class */ (function (_super) {
-    __extends(et2_link, _super);
+export class et2_link extends et2_valueWidget {
     /**
      * Constructor
      *
      * @memberOf et2_link
      */
-    function et2_link(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {})) || this;
-        _this.label_span = jQuery(document.createElement("label"))
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link._attributes, _child || {}));
+        this.label_span = jQuery(document.createElement("label"))
             .addClass("et2_label");
-        _this.link = jQuery(document.createElement("span"))
+        this.link = jQuery(document.createElement("span"))
             .addClass("et2_link")
-            .appendTo(_this.label_span);
-        if (_this.options['class'])
-            _this.label_span.addClass(_this.options['class']);
-        _this.setDOMNode(_this.label_span[0]);
-        return _this;
+            .appendTo(this.label_span);
+        if (this.options['class'])
+            this.label_span.addClass(this.options['class']);
+        this.setDOMNode(this.label_span[0]);
     }
-    et2_link.prototype.destroy = function () {
+    destroy() {
         if (this.link)
             this.link.unbind();
         this.link = null;
-        _super.prototype.destroy.apply(this, arguments);
-    };
-    et2_link.prototype.set_label = function (label) {
+        super.destroy.apply(this, arguments);
+    }
+    set_label(label) {
         // Remove current label
         this.label_span.contents()
             .filter(function () { return this.nodeType == 3; }).remove();
@@ -1087,8 +1058,8 @@ var et2_link = /** @class */ (function (_super) {
         this.label = label;
         // add class if label is empty
         this.label_span.toggleClass('et2_label_empty', !label || !parts[0]);
-    };
-    et2_link.prototype.set_value = function (_value) {
+    }
+    set_value(_value) {
         if (typeof _value != 'object' && _value && !this.options.only_app) {
             if (_value.indexOf(':') >= 0) {
                 var app = _value.split(':', 1);
@@ -1122,7 +1093,7 @@ var et2_link = /** @class */ (function (_super) {
                 if (!self.options.target_app) {
                     self.options.target_app = _value.app;
                 }
-                var target = self.options.extra_link_target || _value.app;
+                const target = self.options.extra_link_target || _value.app;
                 self.egw().open(_value, "", self.options.link_hook, _value.extra_args, target, self.options.target_app);
                 e.stopImmediatePropagation();
             });
@@ -1148,7 +1119,7 @@ var et2_link = /** @class */ (function (_super) {
             }
         }
         this.set_title(this.link, _value.title);
-    };
+    }
     /**
      * Sets the text to be displayed.
      * Used as a callback, so node is provided to make sure we get the right one
@@ -1156,7 +1127,7 @@ var et2_link = /** @class */ (function (_super) {
      * @param {Object} node
      * @param {String} _value description
      */
-    et2_link.prototype.set_title = function (node, _value) {
+    set_title(node, _value) {
         if (_value === false || _value === null)
             _value = "";
         if (this.options.break_title) {
@@ -1167,7 +1138,7 @@ var et2_link = /** @class */ (function (_super) {
                 .replace(/ /g, '\u00a0');
         }
         jQuery(node).text(_value + "");
-    };
+    }
     /**
      * Creates a list of attributes which can be set when working in the
      * "detached" mode. The result is stored in the _attrs array which is provided
@@ -1175,16 +1146,16 @@ var et2_link = /** @class */ (function (_super) {
      *
      * @param {Array} _attrs an array of attributes
      */
-    et2_link.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("label", "value");
-    };
+    }
     /**
      * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
      * passed to the "setDetachedAttributes" function in the same order.
      */
-    et2_link.prototype.getDetachedNodes = function () {
+    getDetachedNodes() {
         return [this.node, this.link[0]];
-    };
+    }
     /**
      * Sets the given associative attribute->value array and applies the
      * attributes to the given DOM-Node.
@@ -1195,7 +1166,7 @@ var et2_link = /** @class */ (function (_super) {
      *      returned by the "getDetachedAttributes" function and sets them to the
      *      given values.
      */
-    et2_link.prototype.setDetachedAttributes = function (_nodes, _values) {
+    setDetachedAttributes(_nodes, _values) {
         this.node = _nodes[0];
         this.label_span = jQuery(_nodes[0]);
         this.link = jQuery(_nodes[1]);
@@ -1205,85 +1176,75 @@ var et2_link = /** @class */ (function (_super) {
             this.set_label(_values['label']);
         if (typeof _values["value"] !== "undefined")
             this.set_value(_values["value"]);
-    };
-    et2_link._attributes = {
-        "only_app": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Use the given application, so you can pass just the ID for value"
-        },
-        "value": {
-            description: "Array with keys app, id, and optionally title",
-            type: "any"
-        },
-        "needed": {
-            "ignore": true
-        },
-        "link_hook": {
-            "name": "Type",
-            "type": "string",
-            "default": "view",
-            "description": "Hook used for displaying link (view/edit/add)"
-        },
-        "target_app": {
-            "name": "Target application",
-            "type": "string",
-            "default": "",
-            "description": "Optional parameter to be passed to egw().open in order to open links in specified application"
-        },
-        "extra_link_target": {
-            "name": "Link target",
-            "type": "string",
-            "default": null,
-            "description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
-        },
-        "break_title": {
-            "name": "break title",
-            "type": "string",
-            "default": null,
-            "description": "Breaks title into multiple lines based on selected delimiter by replacing it with '\r\n'"
-        }
-    };
-    et2_link.legacyOptions = ["only_app"];
-    return et2_link;
-}(et2_core_valueWidget_1.et2_valueWidget));
-exports.et2_link = et2_link;
-et2_core_widget_1.et2_register_widget(et2_link, ["link", "link-entry_ro"]);
+    }
+}
+et2_link._attributes = {
+    "only_app": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Use the given application, so you can pass just the ID for value"
+    },
+    "value": {
+        description: "Array with keys app, id, and optionally title",
+        type: "any"
+    },
+    "needed": {
+        "ignore": true
+    },
+    "link_hook": {
+        "name": "Type",
+        "type": "string",
+        "default": "view",
+        "description": "Hook used for displaying link (view/edit/add)"
+    },
+    "target_app": {
+        "name": "Target application",
+        "type": "string",
+        "default": "",
+        "description": "Optional parameter to be passed to egw().open in order to open links in specified application"
+    },
+    "extra_link_target": {
+        "name": "Link target",
+        "type": "string",
+        "default": null,
+        "description": "Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank"
+    },
+    "break_title": {
+        "name": "break title",
+        "type": "string",
+        "default": null,
+        "description": "Breaks title into multiple lines based on selected delimiter by replacing it with '\r\n'"
+    }
+};
+et2_link.legacyOptions = ["only_app"];
+et2_register_widget(et2_link, ["link", "link-entry_ro"]);
 /**
  * UI widget for one or more links, comma separated
  *
  * TODO: This one used to have expose
  */
-var et2_link_string = /** @class */ (function (_super) {
-    __extends(et2_link_string, _super);
-    function et2_link_string() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return et2_link_string;
-}(expose((_a = /** @class */ (function (_super) {
-        __extends(et2_link_string, _super);
+export class et2_link_string extends expose((_a = class et2_link_string extends et2_valueWidget {
         /**
          * Constructor
          *
          * @memberOf et2_link_string
          */
-        function et2_link_string(_parent, _attrs, _child) {
-            var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {})) || this;
-            _this.list = jQuery(document.createElement("ul"))
+        constructor(_parent, _attrs, _child) {
+            super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_string._attributes, _child || {}));
+            this.list = jQuery(document.createElement("ul"))
                 .addClass("et2_link_string");
-            if (_this.options['class'])
-                _this.list.addClass(_this.options['class']);
-            _this.setDOMNode(_this.list[0]);
-            return _this;
+            if (this.options['class'])
+                this.list.addClass(this.options['class']);
+            this.setDOMNode(this.list[0]);
         }
-        et2_link_string.prototype.destroy = function () {
-            _super.prototype.destroy.apply(this, arguments);
+        destroy() {
+            super.destroy.apply(this, arguments);
             if (this.node != null) {
                 jQuery(this.node).children().unbind();
             }
-        };
-        et2_link_string.prototype.set_value = function (_value) {
+        }
+        set_value(_value) {
             // Get data
             if (!_value || _value == null || !this.list) {
                 // List can be missing if the AJAX call returns after the form is destroyed
@@ -1317,8 +1278,8 @@ var et2_link_string = /** @class */ (function (_super) {
             else if (this.options.application) {
                 this._add_link({ id: _value, app: this.options.application });
             }
-        };
-        et2_link_string.prototype._get_links = function () {
+        }
+        _get_links() {
             var _value = this.value;
             // Just IDs - get from server
             if (this.options.only_app) {
@@ -1326,15 +1287,15 @@ var et2_link_string = /** @class */ (function (_super) {
             }
             this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
             return;
-        };
+        }
         /**
          * Function to get media content to feed the expose
          * @param {type} _value
          * @returns {Array|Array.getMedia.mediaContent}
          */
-        et2_link_string.prototype.getMedia = function (_value) {
-            var base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
-            var mediaContent = [];
+        getMedia(_value) {
+            let base_url = egw.webserverUrl.match(/^\//, 'ig') ? egw(window).window.location.origin + egw.webserverUrl : egw.webserverUrl;
+            let mediaContent = [];
             if (_value && typeof _value.type != 'undefined' && _value.type.match(/video\/|audio\//, 'ig')) {
                 mediaContent = [{
                         title: _value.id,
@@ -1355,8 +1316,8 @@ var et2_link_string = /** @class */ (function (_super) {
             if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/, 'ig'))
                 mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
             return mediaContent;
-        };
-        et2_link_string.prototype._add_link = function (_link_data) {
+        }
+        _add_link(_link_data) {
             var self = this;
             var link = jQuery(document.createElement("li"))
                 .appendTo(this.list)
@@ -1394,7 +1355,7 @@ var et2_link_string = /** @class */ (function (_super) {
                         this.remove(); // no rights or not found
                 }, link);
             }
-        };
+        }
         /**
          * Creates a list of attributes which can be set when working in the
          * "detached" mode. The result is stored in the _attrs array which is provided
@@ -1402,7 +1363,7 @@ var et2_link_string = /** @class */ (function (_super) {
          *
          * @param {Array} _attrs an array of attributes
          */
-        et2_link_string.prototype.getDetachedAttributes = function (_attrs) {
+        getDetachedAttributes(_attrs) {
             // Create the label container if it didn't exist yet
             if (this._labelContainer == null) {
                 this._labelContainer = jQuery(document.createElement("label"))
@@ -1411,12 +1372,12 @@ var et2_link_string = /** @class */ (function (_super) {
                 this.getSurroundings().update();
             }
             _attrs.push("value", "label");
-        };
+        }
         /**
          * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
          * passed to the "setDetachedAttributes" function in the same order.
          */
-        et2_link_string.prototype.getDetachedNodes = function () {
+        getDetachedNodes() {
             // Create the label container if it didn't exist yet
             if (this._labelContainer == null) {
                 this._labelContainer = jQuery(document.createElement("label"))
@@ -1424,7 +1385,7 @@ var et2_link_string = /** @class */ (function (_super) {
                 this.getSurroundings().insertDOMNode(this._labelContainer[0]);
             }
             return [this.list[0], this._labelContainer[0]];
-        };
+        }
         /**
          * Sets the given associative attribute->value array and applies the
          * attributes to the given DOM-Node.
@@ -1435,7 +1396,7 @@ var et2_link_string = /** @class */ (function (_super) {
          *      returned by the "getDetachedAttributes" function and sets them to the
          *      given values.
          */
-        et2_link_string.prototype.setDetachedAttributes = function (_nodes, _values) {
+        setDetachedAttributes(_nodes, _values) {
             this.list = jQuery(_nodes[0]);
             this.set_value(_values["value"]);
             // Special detached, to prevent DOM node modification of the normal method
@@ -1446,9 +1407,8 @@ var et2_link_string = /** @class */ (function (_super) {
             else if (this._labelContainer) {
                 this._labelContainer.contents().not(this.list).remove();
             }
-        };
-        return et2_link_string;
-    }(et2_core_valueWidget_1.et2_valueWidget)),
+        }
+    },
     _a._attributes = {
         "application": {
             "name": "Application",
@@ -1479,33 +1439,32 @@ var et2_link_string = /** @class */ (function (_super) {
             description: "Clicking on description with href value would popup an expose view, and will show content referenced by href."
         }
     },
-    _a))));
-exports.et2_link_string = et2_link_string;
+    _a)) {
+}
 ;
-et2_core_widget_1.et2_register_widget(et2_link_string, ["link-string"]);
+et2_register_widget(et2_link_string, ["link-string"]);
 /**
  * UI widget for one or more links in a list (table)
  */
-var et2_link_list = /** @class */ (function (_super) {
-    __extends(et2_link_list, _super);
+export class et2_link_list extends et2_link_string {
     /**
      * Constructor
      *
      */
-    function et2_link_list(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {})) || this;
-        _this.list = jQuery(document.createElement("table"))
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_list._attributes, _child || {}));
+        this.list = jQuery(document.createElement("table"))
             .addClass("et2_link_list");
-        if (_this.options['class'])
-            _this.list.addClass(_this.options['class']);
-        _this.setDOMNode(_this.list[0]);
+        if (this.options['class'])
+            this.list.addClass(this.options['class']);
+        this.setDOMNode(this.list[0]);
         // Set up context menu
-        var self = _this;
-        _this.context = new egwMenu();
-        _this.context.addItem("comment", _this.egw().lang("Comment"), "", function () {
+        var self = this;
+        this.context = new egwMenu();
+        this.context.addItem("comment", this.egw().lang("Comment"), "", function () {
             var link_id = typeof self.context.data.link_id == 'number' ? self.context.data.link_id : self.context.data.link_id.replace(/[:\.]/g, '_');
-            et2_widget_dialog_1.et2_dialog.show_prompt(function (button, comment) {
-                if (button != et2_widget_dialog_1.et2_dialog.OK_BUTTON)
+            et2_dialog.show_prompt(function (button, comment) {
+                if (button != et2_dialog.OK_BUTTON)
                     return;
                 var remark = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
                 if (isNaN(self.context.data.link_id)) // new entry, not yet stored
@@ -1537,7 +1496,7 @@ var et2_link_list = /** @class */ (function (_super) {
                 }, this, true).sendRequest();
             }, '', self.egw().lang("Comment"), self.context.data.remark || '');
         });
-        _this.context.addItem("file_info", _this.egw().lang("File information"), _this.egw().image("edit"), function (menu_item) {
+        this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function (menu_item) {
             var link_data = self.context.data;
             if (link_data.app == 'file') {
                 // File info is always the same
@@ -1549,15 +1508,15 @@ var et2_link_list = /** @class */ (function (_super) {
                 self.egw().open(url, "filemanager", "edit");
             }
         });
-        _this.context.addItem("-", "-");
-        _this.context.addItem("save", _this.egw().lang("Save as"), _this.egw().image('save'), function (menu_item) {
+        this.context.addItem("-", "-");
+        this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), function (menu_item) {
             var link_data = self.context.data;
             // Download file
             if (link_data.download_url) {
                 var url = link_data.download_url;
                 if (url[0] == '/')
                     url = egw.link(url);
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 if (typeof a.download == "undefined") {
                     window.location.href = url + "?download";
                     return false;
@@ -1575,7 +1534,7 @@ var et2_link_list = /** @class */ (function (_super) {
             }
             self.egw().open(link_data, "", "view", 'download', link_data.target ? link_data.target : link_data.app, link_data.app);
         });
-        _this.context.addItem("zip", _this.egw().lang("Save as Zip"), _this.egw().image('save_zip'), function (menu_item) {
+        this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function (menu_item) {
             // Highlight files for nice UI indicating what will be in the zip.
             // Files have negative IDs.
             jQuery('[id^="link_-"]', this.list).effect('highlight', {}, 2000);
@@ -1588,7 +1547,7 @@ var et2_link_list = /** @class */ (function (_super) {
         });
         // Only allow this option if the entry has been saved, and has a real ID
         if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object') {
-            _this.context.addItem("copy_to", _this.egw().lang("Copy to"), _this.egw().image('copy'), function (menu_item) {
+            this.context.addItem("copy_to", this.egw().lang("Copy to"), this.egw().image('copy'), function (menu_item) {
                 // Highlight files for nice UI indicating what will be copied
                 jQuery('[id="link_' + self.context.data.link_id + ']', this.list).effect('highlight', {}, 2000);
                 // Get target
@@ -1602,32 +1561,31 @@ var et2_link_list = /** @class */ (function (_super) {
                     method: "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_copy_to",
                     method_id: self.context.data
                 };
-                var vfs_select = et2_core_widget_1.et2_createWidget("vfs-select", select_attrs, self);
+                let vfs_select = et2_createWidget("vfs-select", select_attrs, self);
                 // No button, just open it
                 vfs_select.button.hide();
                 vfs_select.click(null);
             });
         }
-        _this.context.addItem("-", "-");
-        _this.context.addItem("delete", _this.egw().lang("Delete link"), _this.egw().image("delete"), function (menu_item) {
+        this.context.addItem("-", "-");
+        this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), function (menu_item) {
             var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
             var row = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
-            et2_widget_dialog_1.et2_dialog.show_dialog(function (button) { if (button == et2_widget_dialog_1.et2_dialog.YES_BUTTON)
+            et2_dialog.show_dialog(function (button) { if (button == et2_dialog.YES_BUTTON)
                 self._delete_link(link_id, row); }, egw.lang('Delete link?'));
         });
         // Native DnD - Doesn't play nice with jQueryUI Sortable
         // Tell jQuery to include this property
         jQuery.event.props.push('dataTransfer');
-        return _this;
     }
-    et2_link_list.prototype.destroy = function () {
-        _super.prototype.destroy.apply(this, arguments);
+    destroy() {
+        super.destroy.apply(this, arguments);
         if (this.context) {
             this.context.clear();
             delete this.context;
         }
-    };
-    et2_link_list.prototype.set_value = function (_value) {
+    }
+    set_value(_value) {
         this.list.empty();
         // Handle server passed a list of links that aren't ready yet
         if (_value && typeof _value == "object") {
@@ -1665,11 +1623,11 @@ var et2_link_list = /** @class */ (function (_super) {
                 }
             }
             else {
-                _super.prototype.set_value.call(this, _value);
+                super.set_value(_value);
             }
         }
-    };
-    et2_link_list.prototype._add_link = function (_link_data) {
+    }
+    _add_link(_link_data) {
         var row = jQuery(document.createElement("tr"))
             .attr("id", "link_" + (_link_data.dom_id ? _link_data.dom_id : (typeof _link_data.link_id == "string" ? _link_data.link_id.replace(/[:\.]/g, '_') : _link_data.link_id || _link_data.id)))
             .attr("draggable", _link_data.app == 'file' ? "true" : "")
@@ -1684,12 +1642,12 @@ var et2_link_list = /** @class */ (function (_super) {
             .appendTo(row)
             .addClass("icon");
         if (_link_data.icon) {
-            var icon_widget = et2_core_widget_1.et2_createWidget("image", {});
+            var icon_widget = et2_createWidget("image", {});
             var src = '';
             // Creat a mime widget if the link has type
             if (_link_data.type) {
                 // VFS - file
-                var vfs_widget = et2_core_widget_1.et2_createWidget('vfs-mime', {});
+                var vfs_widget = et2_createWidget('vfs-mime', {});
                 vfs_widget.set_value({
                     download_url: _link_data.download_url,
                     name: _link_data.title,
@@ -1764,8 +1722,8 @@ var et2_link_list = /** @class */ (function (_super) {
                 // We don't use ui-icon because it assigns a bg image
                 .addClass("delete icon")
                 .bind('click', function () {
-                et2_widget_dialog_1.et2_dialog.show_dialog(function (button) {
-                    if (button == et2_widget_dialog_1.et2_dialog.YES_BUTTON) {
+                et2_dialog.show_dialog(function (button) {
+                    if (button == et2_dialog.YES_BUTTON) {
                         self._delete_link(self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id : _link_data, row);
                     }
                 }, egw.lang('Delete link?'));
@@ -1834,8 +1792,8 @@ var et2_link_list = /** @class */ (function (_super) {
                 jQuery('#drag_helper', self.list).remove();
             });
         }
-    };
-    et2_link_list.prototype._delete_link = function (link_id, row) {
+    }
+    _delete_link(link_id, row) {
         if (row) {
             var delete_button = jQuery('.delete', row);
             delete_button.removeClass("delete").addClass("loading");
@@ -1869,7 +1827,7 @@ var et2_link_list = /** @class */ (function (_super) {
                 }
             }
         }
-    };
+    }
     /**
      * When the link is to a VFS file, we do some special formatting.
      *
@@ -1883,7 +1841,7 @@ var et2_link_list = /** @class */ (function (_super) {
      * @param {String[]} _link_data Data for the egw_link
      * @returns {undefined}
      */
-    et2_link_list.prototype._format_vfs = function ($td, dirs, _link_data) {
+    _format_vfs($td, dirs, _link_data) {
         // Keep it here for matching next row
         $td.attr('data-title', _link_data['title']);
         // VFS link - check for same dir as above, and hide dir
@@ -1915,68 +1873,64 @@ var et2_link_list = /** @class */ (function (_super) {
             span_size += dirs.join('/').length + 1;
             $td.html('<span style="display: inline-block; text-align: right; width:' + span_size + 'ex;">' + dirs.join('/') + ':</span> - ' + filename);
         }
-    };
-    et2_link_list._attributes = {
-        "show_deleted": {
-            "name": "Show deleted",
-            "type": "boolean",
-            "default": false,
-            "description": "Show links that are marked as deleted, being held for purge"
-        },
-        "onchange": {
-            "name": "onchange",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when the links change."
-        },
-        readonly: {
-            name: "readonly",
-            type: "boolean",
-            "default": false,
-            description: "Does NOT allow user to enter data, just displays existing data"
-        },
-        "target_app": {
-            "name": "Target application",
-            "type": "string",
-            "default": "",
-            "description": "Optional parameter to be passed to egw().open in order to open links in specified application "
-        }
-    };
-    return et2_link_list;
-}(et2_link_string));
-exports.et2_link_list = et2_link_list;
-et2_core_widget_1.et2_register_widget(et2_link_list, ["link-list"]);
+    }
+}
+et2_link_list._attributes = {
+    "show_deleted": {
+        "name": "Show deleted",
+        "type": "boolean",
+        "default": false,
+        "description": "Show links that are marked as deleted, being held for purge"
+    },
+    "onchange": {
+        "name": "onchange",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when the links change."
+    },
+    readonly: {
+        name: "readonly",
+        type: "boolean",
+        "default": false,
+        description: "Does NOT allow user to enter data, just displays existing data"
+    },
+    "target_app": {
+        "name": "Target application",
+        "type": "string",
+        "default": "",
+        "description": "Optional parameter to be passed to egw().open in order to open links in specified application "
+    }
+};
+et2_register_widget(et2_link_list, ["link-list"]);
 /**
  *
  *
  */
-var et2_link_add = /** @class */ (function (_super) {
-    __extends(et2_link_add, _super);
+export class et2_link_add extends et2_inputWidget {
     /**
      * Constructor
      */
-    function et2_link_add(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {})) || this;
-        _this.span = jQuery(document.createElement("span"))
-            .text(_this.egw().lang("Add new"))
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_link_add._attributes, _child || {}));
+        this.span = jQuery(document.createElement("span"))
+            .text(this.egw().lang("Add new"))
             .addClass('et2_link_add_span');
-        _this.div = jQuery(document.createElement("div")).append(_this.span);
-        _this.setDOMNode(_this.div[0]);
-        return _this;
+        this.div = jQuery(document.createElement("div")).append(this.span);
+        this.setDOMNode(this.div[0]);
     }
-    et2_link_add.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.apply(this, arguments);
+    doLoadingFinished() {
+        super.doLoadingFinished.apply(this, arguments);
         if (this.app_select && this.button) {
             // Already done
             return false;
         }
-        this.app_select = et2_core_widget_1.et2_createWidget("link-apps", jQuery.extend({}, this.options, {
+        this.app_select = et2_createWidget("link-apps", jQuery.extend({}, this.options, {
             'id': this.options.id + 'app',
             value: this.options.application ? this.options.application : this.options.value && this.options.value.add_app ? this.options.value.add_app : null,
             application_list: this.options.application ? this.options.application : null
         }), this);
         this.div.append(this.app_select.getDOMNode());
-        this.button = et2_core_widget_1.et2_createWidget("button", { id: this.options.id + "_add", label: this.egw().lang("add") }, this);
+        this.button = et2_createWidget("button", { id: this.options.id + "_add", label: this.egw().lang("add") }, this);
         this.button.set_label(this.egw().lang("add"));
         var self = this;
         this.button.click = function () {
@@ -1985,28 +1939,26 @@ var et2_link_add = /** @class */ (function (_super) {
         };
         this.div.append(this.button.getDOMNode());
         return true;
-    };
+    }
     /**
      * Should be handled client side.
      * Return null to avoid overwriting other link values, in case designer used the same ID for multiple widgets
      */
-    et2_link_add.prototype.getValue = function () {
+    getValue() {
         return null;
-    };
-    et2_link_add._attributes = {
-        "value": {
-            "description": "Either an array of link information (see egw_link::link()) or array with keys to_app and to_id",
-            "type": "any"
-        },
-        "application": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Limit to the listed application or applications (comma seperated)"
-        }
-    };
-    return et2_link_add;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_link_add = et2_link_add;
-et2_core_widget_1.et2_register_widget(et2_link_add, ["link-add"]);
+    }
+}
+et2_link_add._attributes = {
+    "value": {
+        "description": "Either an array of link information (see egw_link::link()) or array with keys to_app and to_id",
+        "type": "any"
+    },
+    "application": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Limit to the listed application or applications (comma seperated)"
+    }
+};
+et2_register_widget(et2_link_add, ["link-add"]);
 //# sourceMappingURL=et2_widget_link.js.map

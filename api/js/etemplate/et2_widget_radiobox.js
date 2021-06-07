@@ -1,38 +1,21 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Radiobox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_radiobox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inputWidget;
 */
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { et2_valueWidget } from './et2_core_valueWidget';
 /**
  * Class which implements the "radiobox" XET-Tag
  *
@@ -42,77 +25,75 @@ var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
  *
  * @augments et2_inputWidget
  */
-var et2_radiobox = /** @class */ (function (_super) {
-    __extends(et2_radiobox, _super);
+export class et2_radiobox extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_radiobox
      */
-    function et2_radiobox(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radiobox._attributes, _child || {})) || this;
-        _this.input = null;
-        _this.id = "";
-        _this.createInputWidget();
-        return _this;
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_radiobox._attributes, _child || {}));
+        this.input = null;
+        this.id = "";
+        this.createInputWidget();
     }
-    et2_radiobox.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
-        var readonly = this.getArrayMgr('readonlys').getEntry(this.id);
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
+        let readonly = this.getArrayMgr('readonlys').getEntry(this.id);
         if (readonly && readonly.hasOwnProperty(_attrs.set_value)) {
             _attrs.readonly = readonly[_attrs.set_value];
         }
-    };
-    et2_radiobox.prototype.createInputWidget = function () {
+    }
+    createInputWidget() {
         this.input = jQuery(document.createElement("input"))
             .val(this.options.set_value)
             .attr("type", "radio")
             .attr("disabled", this.options.readonly);
         this.input.addClass("et2_radiobox");
         this.setDOMNode(this.input[0]);
-    };
+    }
     /**
      * Overwritten to set different DOM level ids by appending set_value
      *
      * @param _id
      */
-    et2_radiobox.prototype.set_id = function (_id) {
-        _super.prototype.set_id.call(this, _id);
+    set_id(_id) {
+        super.set_id(_id);
         this.dom_id = this.dom_id.replace('[]', '') + '-' + this.options.set_value;
         if (this.input)
             this.input.attr('id', this.dom_id);
-    };
+    }
     /**
      * Default for radio buttons is label after button
      *
      * @param _label String New label for radio button.  Use %s to locate the radio button somewhere else in the label
      */
-    et2_radiobox.prototype.set_label = function (_label) {
+    set_label(_label) {
         if (_label.length > 0 && _label.indexOf('%s') == -1) {
             _label = '%s' + _label;
         }
-        _super.prototype.set_label.call(this, _label);
-    };
+        super.set_label(_label);
+    }
     /**
      * Override default to match against set/unset value AND iterate over all siblings with same id
      *
      * @param {string} _value
      */
-    et2_radiobox.prototype.set_value = function (_value) {
+    set_value(_value) {
         this.getRoot().iterateOver(function (radio) {
             if (radio.id == this.id) {
                 radio.input.prop('checked', _value == radio.options.set_value);
             }
         }, this, et2_radiobox);
-    };
+    }
     /**
      * Override default to iterate over all siblings with same id
      *
      * @return {string}
      */
-    et2_radiobox.prototype.getValue = function () {
-        var val = this.options.value; // initial value, when form is loaded
-        var values = [];
+    getValue() {
+        let val = this.options.value; // initial value, when form is loaded
+        let values = [];
         this.getRoot().iterateOver(function (radio) {
             values.push(radio.options.set_value);
             if (radio.id == this.id && radio.input && radio.input.prop('checked')) {
@@ -120,15 +101,15 @@ var et2_radiobox = /** @class */ (function (_super) {
             }
         }, this, et2_radiobox);
         return val && val.indexOf(values) ? val : null;
-    };
+    }
     /**
      * Overridden from parent so if it's required, only 1 in a group needs a value
      *
      * @param {array} messages
      * @returns {Boolean}
      */
-    et2_radiobox.prototype.isValid = function (messages) {
-        var ok = true;
+    isValid(messages) {
+        let ok = true;
         // Check for required
         if (this.options && this.options.needed && !this.options.readonly && !this.disabled &&
             (this.getValue() == null || this.getValue().valueOf() == '')) {
@@ -138,72 +119,67 @@ var et2_radiobox = /** @class */ (function (_super) {
             }
         }
         return ok;
-    };
+    }
     /**
      * Set radio readonly attribute.
      *
      * @param _readonly Boolean
      */
-    et2_radiobox.prototype.set_readonly = function (_readonly) {
+    set_readonly(_readonly) {
         this.options.readonly = _readonly;
         this.getRoot().iterateOver(function (radio) {
             if (radio.id == this.id) {
                 radio.input.prop('disabled', _readonly);
             }
         }, this, et2_radiobox);
-    };
-    et2_radiobox._attributes = {
-        "set_value": {
-            "name": "Set value",
-            "type": "string",
-            "default": "true",
-            "description": "Value when selected"
-        },
-        "ro_true": {
-            "name": "Read only selected",
-            "type": "string",
-            "default": "x",
-            "description": "What should be displayed when readonly and selected"
-        },
-        "ro_false": {
-            "name": "Read only unselected",
-            "type": "string",
-            "default": "",
-            "description": "What should be displayed when readonly and not selected"
-        }
-    };
-    et2_radiobox.legacyOptions = ["set_value", "ro_true", "ro_false"];
-    return et2_radiobox;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_radiobox = et2_radiobox;
-et2_core_widget_1.et2_register_widget(et2_radiobox, ["radio"]);
+    }
+}
+et2_radiobox._attributes = {
+    "set_value": {
+        "name": "Set value",
+        "type": "string",
+        "default": "true",
+        "description": "Value when selected"
+    },
+    "ro_true": {
+        "name": "Read only selected",
+        "type": "string",
+        "default": "x",
+        "description": "What should be displayed when readonly and selected"
+    },
+    "ro_false": {
+        "name": "Read only unselected",
+        "type": "string",
+        "default": "",
+        "description": "What should be displayed when readonly and not selected"
+    }
+};
+et2_radiobox.legacyOptions = ["set_value", "ro_true", "ro_false"];
+et2_register_widget(et2_radiobox, ["radio"]);
 /**
  * @augments et2_valueWidget
  */
-var et2_radiobox_ro = /** @class */ (function (_super) {
-    __extends(et2_radiobox_ro, _super);
+export class et2_radiobox_ro extends et2_valueWidget {
     /**
      * Constructor
      *
      * @memberOf et2_radiobox_ro
      */
-    function et2_radiobox_ro(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radiobox_ro._attributes, _child || {})) || this;
-        _this.value = "";
-        _this.span = null;
-        _this.span = jQuery(document.createElement("span"))
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_radiobox_ro._attributes, _child || {}));
+        this.value = "";
+        this.span = null;
+        this.span = jQuery(document.createElement("span"))
             .addClass("et2_radiobox");
-        _this.setDOMNode(_this.span[0]);
-        return _this;
+        this.setDOMNode(this.span[0]);
     }
     /**
      * Override default to match against set/unset value
      *
      * @param {string} _value
      */
-    et2_radiobox_ro.prototype.set_value = function (_value) {
+    set_value(_value) {
         this.value = _value;
         if (_value == this.options.set_value) {
             this.span.text(this.options.ro_true);
@@ -211,67 +187,65 @@ var et2_radiobox_ro = /** @class */ (function (_super) {
         else {
             this.span.text(this.options.ro_false);
         }
-    };
-    et2_radiobox_ro.prototype.set_label = function (_label) {
+    }
+    set_label(_label) {
         // no label for ro radio, we show label of checked option as content, unless it's x
         // then we need the label for things to make sense
         if (this.options.ro_true == "x") {
-            return _super.prototype.set_label.call(this, _label);
+            return super.set_label(_label);
         }
-    };
+    }
     /**
      * Code for implementing et2_IDetachedDOM
      *
      * @param {array} _attrs
      */
-    et2_radiobox_ro.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         // Show label in nextmatch instead of just x
         this.options.ro_true = this.options.label;
         _attrs.push("value");
-    };
-    et2_radiobox_ro.prototype.getDetachedNodes = function () {
+    }
+    getDetachedNodes() {
         return [this.span[0]];
-    };
-    et2_radiobox_ro.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         this.span = jQuery(_nodes[0]);
         this.set_value(_values["value"]);
-    };
-    et2_radiobox_ro._attributes = {
-        "set_value": {
-            "name": "Set value",
-            "type": "string",
-            "default": "true",
-            "description": "Value when selected"
-        },
-        "ro_true": {
-            "name": "Read only selected",
-            "type": "string",
-            "default": "x",
-            "description": "What should be displayed when readonly and selected"
-        },
-        "ro_false": {
-            "name": "Read only unselected",
-            "type": "string",
-            "default": "",
-            "description": "What should be displayed when readonly and not selected"
-        },
-        "label": {
-            "name": "Label",
-            "default": "",
-            "type": "string"
-        }
-    };
-    et2_radiobox_ro.legacyOptions = ["set_value", "ro_true", "ro_false"];
-    return et2_radiobox_ro;
-}(et2_core_valueWidget_1.et2_valueWidget));
-et2_core_widget_1.et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
+    }
+}
+et2_radiobox_ro._attributes = {
+    "set_value": {
+        "name": "Set value",
+        "type": "string",
+        "default": "true",
+        "description": "Value when selected"
+    },
+    "ro_true": {
+        "name": "Read only selected",
+        "type": "string",
+        "default": "x",
+        "description": "What should be displayed when readonly and selected"
+    },
+    "ro_false": {
+        "name": "Read only unselected",
+        "type": "string",
+        "default": "",
+        "description": "What should be displayed when readonly and not selected"
+    },
+    "label": {
+        "name": "Label",
+        "default": "",
+        "type": "string"
+    }
+};
+et2_radiobox_ro.legacyOptions = ["set_value", "ro_true", "ro_false"];
+et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
 /**
  * A group of radio buttons
  *
  * @augments et2_valueWidget
  */
-var et2_radioGroup = /** @class */ (function (_super) {
-    __extends(et2_radioGroup, _super);
+export class et2_radioGroup extends et2_valueWidget {
     /**
      * Constructor
      *
@@ -279,49 +253,47 @@ var et2_radioGroup = /** @class */ (function (_super) {
      * @param attrs
      * @memberOf et2_radioGroup
      */
-    function et2_radioGroup(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_radioGroup._attributes, _child || {})) || this;
-        _this.node = null;
-        _this.value = null;
-        _this.node = jQuery(document.createElement("div"))
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_radioGroup._attributes, _child || {}));
+        this.node = null;
+        this.value = null;
+        this.node = jQuery(document.createElement("div"))
             .addClass("et2_vbox")
             .addClass("et2_box_widget");
-        if (_this.options.needed) {
+        if (this.options.needed) {
             // This isn't strictly allowed, but it works
-            _this.node.attr("required", "required");
+            this.node.attr("required", "required");
         }
-        _this.setDOMNode(_this.node[0]);
+        this.setDOMNode(this.node[0]);
         // The supported widget classes array defines a whitelist for all widget
         // classes or interfaces child widgets have to support.
-        _this.supportedWidgetClasses = [et2_radiobox, et2_radiobox_ro];
-        return _this;
+        this.supportedWidgetClasses = [et2_radiobox, et2_radiobox_ro];
     }
-    et2_radioGroup.prototype.set_value = function (_value) {
+    set_value(_value) {
         this.value = _value;
-        for (var i = 0; i < this._children.length; i++) {
-            var radio = this._children[i];
+        for (let i = 0; i < this._children.length; i++) {
+            let radio = this._children[i];
             radio.set_value(_value);
         }
-    };
-    et2_radioGroup.prototype.getValue = function () {
+    }
+    getValue() {
         return jQuery("input:checked", this.getDOMNode()).val();
-    };
+    }
     /**
      * Set a bunch of radio buttons
      *
      * @param {object} _options object with value: label pairs
      */
-    et2_radioGroup.prototype.set_options = function (_options) {
+    set_options(_options) {
         // Call the destructor of all children
-        for (var i = this._children.length - 1; i >= 0; i--) {
+        for (let i = this._children.length - 1; i >= 0; i--) {
             this._children[i].destroy();
         }
         this._children = [];
         // create radio buttons for each option
-        for (var key in _options) {
-            var attrs = {
+        for (let key in _options) {
+            let attrs = {
                 // Add index so radios work properly
                 "id": (this.options.readonly ? this.id : this.id + "[" + "]"),
                 set_value: key,
@@ -341,13 +313,13 @@ var et2_radioGroup = /** @class */ (function (_super) {
             et2_createWidget("radio", attrs, this);
         }
         this.set_value(this.value);
-    };
+    }
     /**
      * Set a label on the group of radio buttons
      *
      * @param {string} _value
      */
-    et2_radioGroup.prototype.set_label = function (_value) {
+    set_label(_value) {
         // Abort if ther was no change in the label
         if (_value == this.label) {
             return;
@@ -374,7 +346,7 @@ var et2_radioGroup = /** @class */ (function (_super) {
             }
             this._labelContainer = null;
         }
-    };
+    }
     /**
      * Code for implementing et2_IDetachedDOM
      * This doesn't need to be implemented.
@@ -382,54 +354,53 @@ var et2_radioGroup = /** @class */ (function (_super) {
      *
      * @param {object} _attrs
      */
-    et2_radioGroup.prototype.getDetachedAttributes = function (_attrs) {
-    };
-    et2_radioGroup.prototype.getDetachedNodes = function () {
+    getDetachedAttributes(_attrs) {
+    }
+    getDetachedNodes() {
         return [this.getDOMNode()];
-    };
-    et2_radioGroup.prototype.setDetachedAttributes = function (_nodes, _values) {
-    };
-    et2_radioGroup._attributes = {
-        "label": {
-            "name": "Label",
-            "default": "",
-            "type": "string",
-            "description": "The label is displayed above the list of radio buttons. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
-            "translate": true
-        },
-        "value": {
-            "name": "Value",
-            "type": "string",
-            "default": "true",
-            "description": "Value for each radio button"
-        },
-        "ro_true": {
-            "name": "Read only selected",
-            "type": "string",
-            "default": "x",
-            "description": "What should be displayed when readonly and selected"
-        },
-        "ro_false": {
-            "name": "Read only unselected",
-            "type": "string",
-            "default": "",
-            "description": "What should be displayed when readonly and not selected"
-        },
-        "options": {
-            "name": "Radio options",
-            "type": "any",
-            "default": {},
-            "description": "Options for radio buttons.  Should be {value: label, ...}"
-        },
-        "needed": {
-            "name": "Required",
-            "default": false,
-            "type": "boolean",
-            "description": "If required, the user must select one of the options before the form can be submitted"
-        }
-    };
-    return et2_radioGroup;
-}(et2_core_valueWidget_1.et2_valueWidget));
+    }
+    setDetachedAttributes(_nodes, _values) {
+    }
+}
+et2_radioGroup._attributes = {
+    "label": {
+        "name": "Label",
+        "default": "",
+        "type": "string",
+        "description": "The label is displayed above the list of radio buttons. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+        "translate": true
+    },
+    "value": {
+        "name": "Value",
+        "type": "string",
+        "default": "true",
+        "description": "Value for each radio button"
+    },
+    "ro_true": {
+        "name": "Read only selected",
+        "type": "string",
+        "default": "x",
+        "description": "What should be displayed when readonly and selected"
+    },
+    "ro_false": {
+        "name": "Read only unselected",
+        "type": "string",
+        "default": "",
+        "description": "What should be displayed when readonly and not selected"
+    },
+    "options": {
+        "name": "Radio options",
+        "type": "any",
+        "default": {},
+        "description": "Options for radio buttons.  Should be {value: label, ...}"
+    },
+    "needed": {
+        "name": "Required",
+        "default": false,
+        "type": "boolean",
+        "description": "If required, the user must select one of the options before the form can be submitted"
+    }
+};
 // No such tag as 'radiogroup', but it needs something
-et2_core_widget_1.et2_register_widget(et2_radioGroup, ["radiogroup"]);
+et2_register_widget(et2_radioGroup, ["radiogroup"]);
 //# sourceMappingURL=et2_widget_radiobox.js.map

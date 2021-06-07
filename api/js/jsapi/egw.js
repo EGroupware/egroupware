@@ -344,9 +344,9 @@
 		};
 
 		// rest needs DOM to be ready
-		jQuery(function() {
+		jQuery(function() {import('../etemplate/etemplate2.js').then(function(module){
 			// load etemplate2 template(s)
-			jQuery('form.et2_container[data-etemplate]').each(function(index, node){
+			jQuery('form.et2_container[data-etemplate]').each( function(index, node){
 				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				var currentapp = data.data.currentapp || window.egw_appName;
 				if(popup || window.opener && !egwIsMobile())
@@ -366,7 +366,7 @@
 						}
 					});
 				}
-				var et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
+				const et2 = new module.etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
 				et2.load(data.name,data.url,data.data);
 				if (typeof data.response != 'undefined')
 				{
@@ -379,7 +379,7 @@
 			if (typeof window.Offline != 'undefined')
 			{
 				Offline.options = {
-					// Should we check the connection status immediatly on page load.
+					// Should we check the connection status immediately on page load.
 					checkOnLoad: false,
 
 					// Should we monitor AJAX requests to help decide if we have a connection.
@@ -474,7 +474,7 @@
 			catch(e) {
 				// ignore SecurityError exception if top is different security context / cross-origin
 			}
-		});
+		})});
 	}, (e) => alert(e.message+"\n\n"+e.stack));
 	//
 	window.egw_LAB.wait = window.egw_ready.then;

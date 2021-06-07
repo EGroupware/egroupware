@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Tree object
  *
@@ -6,26 +5,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @author Ralf Becker
  * @copyright Nathan Gray 2011
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_tree = void 0;
 /*egw:uses
     et2_core_inputWidget;
     /api/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
@@ -35,9 +19,11 @@ exports.et2_tree = void 0;
     /api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js;
 //	/api/js/dhtmlxtree/sources/ext/dhtmlxtree_start.js;
 */
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_no_init } from "./et2_core_common";
+import { egw, framework } from "../jsapi/egw_global";
 /**
  * Tree widget
  *
@@ -45,50 +31,47 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
  *
  * @augments et2_inputWidget
  */
-var et2_tree = /** @class */ (function (_super) {
-    __extends(et2_tree, _super);
+export class et2_tree extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_tree
      */
-    function et2_tree(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_tree._attributes, _child || {})) || this;
-        _this.input = null;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_tree._attributes, _child || {}));
+        this.input = null;
         /**
          * Regexp used by _htmlencode
          */
-        _this._lt_regexp = /</g;
-        _this.input = null;
-        _this.div = jQuery(document.createElement("div")).addClass("dhtmlxTree");
-        _this.setDOMNode(_this.div[0]);
-        return _this;
+        this._lt_regexp = /</g;
+        this.input = null;
+        this.div = jQuery(document.createElement("div")).addClass("dhtmlxTree");
+        this.setDOMNode(this.div[0]);
     }
-    et2_tree.prototype.destroy = function () {
+    destroy() {
         if (this.input) {
             this.input.destructor();
         }
         this.input = null;
-        _super.prototype.destroy.call(this);
-    };
+        super.destroy();
+    }
     /**
      * Get tree items from the sel_options data array
      *
      * @param {object} _attrs
      */
-    et2_tree.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
         // If select_options are already known, skip the rest
         if (this.options && this.options.select_options && !jQuery.isEmptyObject(this.options.select_options)) {
             return;
         }
-        var name_parts = this.id.replace(/]/g, '').split('[');
+        let name_parts = this.id.replace(/]/g, '').split('[');
         // Try to find the options inside the "sel-options" array
         if (this.getArrayMgr("sel_options")) {
             // Select options tend to be defined once, at the top level, so try that first
-            var content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length - 1]);
+            let content_options = this.getArrayMgr("sel_options").getRoot().getEntry(name_parts[name_parts.length - 1]);
             // Try again according to ID
             if (!content_options)
                 content_options = this.getArrayMgr("sel_options").getEntry(this.id);
@@ -103,7 +86,7 @@ var et2_tree = /** @class */ (function (_super) {
         // content array.
         if (_attrs["select_options"] == null) {
             // Again, try last name part at top level
-            var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length - 1]);
+            let content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length - 1]);
             // If that didn't work, check according to ID
             _attrs["select_options"] = content_options ? content_options : this.getArrayMgr('content')
                 .getEntry("options-" + this.id);
@@ -112,10 +95,10 @@ var et2_tree = /** @class */ (function (_super) {
         if (_attrs["select_options"] == null) {
             _attrs["select_options"] = {};
         }
-    };
+    }
     // overwrite default onclick to do nothing, as we install onclick via dhtmlxtree
-    et2_tree.prototype.click = function (_node) { };
-    et2_tree.prototype.createTree = function (widget) {
+    click(_node) { }
+    createTree(widget) {
         widget.input = new dhtmlXTreeObject({
             parent: widget.div[0],
             width: '100%',
@@ -141,7 +124,7 @@ var et2_tree = /** @class */ (function (_super) {
             }
         };
         if (widget.options.autoloading) {
-            var url = widget.options.autoloading;
+            let url = widget.options.autoloading;
             //Set escaping mode to utf8, as url in
             //autoloading needs to be utf8 encoded.
             //For instance item id with umlaut.
@@ -159,8 +142,8 @@ var et2_tree = /** @class */ (function (_super) {
         // Enable/Disable highlighting
         widget.input.enableHighlighting(!!widget.options.highlighting);
         // if templates supplies open/close right/down arrows, show no more lines and use them instead of plus/minus
-        var open = egw.image('dhtmlxtree/open');
-        var close = egw.image('dhtmlxtree/close');
+        let open = egw.image('dhtmlxtree/open');
+        let close = egw.image('dhtmlxtree/close');
         if (open && close) {
             widget.input.enableTreeLines(false);
             open = this._rel_url(open);
@@ -171,52 +154,52 @@ var et2_tree = /** @class */ (function (_super) {
         this._install_handler('onBeforeCheck', function () {
             return !this.options.readonly;
         }.bind(this));
-    };
+    }
     /**
      * Install event handlers on tree
      *
      * @param _name
      * @param _handler
      */
-    et2_tree.prototype._install_handler = function (_name, _handler) {
+    _install_handler(_name, _handler) {
         if (typeof _handler == 'function') {
             if (this.input == null)
                 this.createTree(this);
             // automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
             if (_name == 'onchange')
                 _name = this.options.multiple ? 'oncheck' : 'onselect';
-            var handler_1 = _handler;
-            var widget_1 = this;
+            let handler = _handler;
+            let widget = this;
             this.input.attachEvent(_name, function (_id) {
-                var args = jQuery.makeArray(arguments);
+                let args = jQuery.makeArray(arguments);
                 // splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
-                args.splice(1, 0, widget_1);
+                args.splice(1, 0, widget);
                 // try to close mobile sidemenu after clicking on node
                 if (egwIsMobile() && typeof args[2] == 'string')
                     framework.toggleMenu('on');
-                return handler_1.apply(this, args);
+                return handler.apply(this, args);
             });
         }
-    };
-    et2_tree.prototype.set_onchange = function (_handler) { this._install_handler('onchange', _handler); };
-    et2_tree.prototype.set_onclick = function (_handler) { this._install_handler('onclick', _handler); };
-    et2_tree.prototype.set_onselect = function (_handler) { this._install_handler('onselect', _handler); };
-    et2_tree.prototype.set_onopenstart = function (_handler) { this._install_handler('onOpenStart', _handler); };
-    et2_tree.prototype.set_onopenend = function (_handler) { this._install_handler('onOpenEnd', _handler); };
-    et2_tree.prototype.set_select_options = function (options) {
-        var custom_images = false;
+    }
+    set_onchange(_handler) { this._install_handler('onchange', _handler); }
+    set_onclick(_handler) { this._install_handler('onclick', _handler); }
+    set_onselect(_handler) { this._install_handler('onselect', _handler); }
+    set_onopenstart(_handler) { this._install_handler('onOpenStart', _handler); }
+    set_onopenend(_handler) { this._install_handler('onOpenEnd', _handler); }
+    set_select_options(options) {
+        let custom_images = false;
         this.options.select_options = options;
         if (this.input == null) {
             this.createTree(this);
         }
         // Structure data for category tree
         if (this.getType() == 'tree-cat') {
-            var data = { id: 0, item: [] };
-            var stack_1 = {};
-            for (var key = 0; key < options.length; key++) {
+            let data = { id: 0, item: [] };
+            let stack = {};
+            for (let key = 0; key < options.length; key++) {
                 // See if item has an icon
                 if (options[key].data && typeof options[key].data.icon !== 'undefined' && options[key].data.icon) {
-                    var img = this.egw().image(options[key].data.icon, options[key].appname);
+                    let img = this.egw().image(options[key].data.icon, options[key].appname);
                     if (img) {
                         custom_images = true;
                         options[key].im0 = options[key].im1 = options[key].im2 = img;
@@ -230,28 +213,28 @@ var et2_tree = /** @class */ (function (_super) {
                 if (options[key].description && !options[key].tooltip) {
                     options[key].tooltip = options[key].description;
                 }
-                var parent_id = parseInt(options[key]['parent']);
+                let parent_id = parseInt(options[key]['parent']);
                 if (isNaN(parent_id))
                     parent_id = 0;
-                if (!stack_1[parent_id])
-                    stack_1[parent_id] = [];
-                stack_1[parent_id].push(options[key]);
+                if (!stack[parent_id])
+                    stack[parent_id] = [];
+                stack[parent_id].push(options[key]);
             }
             if (custom_images) {
-                var path = this.input.iconURL;
+                let path = this.input.iconURL;
                 this.input.setIconPath("");
-                for (var k = 0; k < this.input.imageArray.length; k++)
+                for (let k = 0; k < this.input.imageArray.length; k++)
                     this.input.imageArray[k] = path + this.input.imageArray[k];
             }
-            var f_1 = function (data, _f) {
-                if (stack_1[data.id]) {
-                    data.item = stack_1[data.id];
-                    for (var j = 0; j < data.item.length; j++) {
-                        f_1(data.item[j], _f);
+            let f = function (data, _f) {
+                if (stack[data.id]) {
+                    data.item = stack[data.id];
+                    for (let j = 0; j < data.item.length; j++) {
+                        f(data.item[j], _f);
                     }
                 }
             };
-            f_1(data, f_1);
+            f(data, f);
             options = data;
         }
         // if no options given, but autoloading url, use that to load initial nodes
@@ -259,7 +242,7 @@ var et2_tree = /** @class */ (function (_super) {
             this.input.loadJSON(this.input.XMLsource);
         else
             this.input.loadJSONObject(this._htmlencode_node(options));
-    };
+    }
     /**
      * html encoding of text of node
      *
@@ -269,39 +252,39 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} _text text to encode
      * @return {string}
      */
-    et2_tree.prototype._htmlencode = function (_text) {
+    _htmlencode(_text) {
         if (_text && _text.indexOf('<') >= 0) {
             _text = _text.replace(this._lt_regexp, '&lt;');
         }
         return _text;
-    };
+    }
     /**
      * html encoding of text of node incl. all children
      *
      * @param {object} _item with required attributes text, id and optional tooltip and item
      * @return {object} encoded node
      */
-    et2_tree.prototype._htmlencode_node = function (_item) {
+    _htmlencode_node(_item) {
         _item.text = this._htmlencode(_item.text);
         if (_item.item && jQuery.isArray(_item.item)) {
-            for (var i = 0; i < _item.item.length; ++i) {
+            for (let i = 0; i < _item.item.length; ++i) {
                 this._htmlencode_node(_item.item[i]);
             }
         }
         return _item;
-    };
-    et2_tree.prototype.set_value = function (new_value) {
+    }
+    set_value(new_value) {
         this.value = this._oldValue = (typeof new_value === 'string' && this.options.multiple ? new_value.split(',') : new_value);
         if (this.input == null)
             return;
         if (this.options.multiple) {
             // Clear all checked
-            var checked = this.input.getAllChecked().split(this.input.dlmtr);
-            for (var i = 0; i < checked.length; i++) {
+            let checked = this.input.getAllChecked().split(this.input.dlmtr);
+            for (let i = 0; i < checked.length; i++) {
                 this.input.setCheck(checked[i], false);
             }
             // Check selected
-            for (var i = 0; i < this.value.length; i++) {
+            for (let i = 0; i < this.value.length; i++) {
                 this.input.setCheck(this.value[i], true);
                 // autoloading openning needs to be absolutely based on user interaction
                 // or open flag in folder structure, therefore, We should
@@ -315,17 +298,17 @@ var et2_tree = /** @class */ (function (_super) {
             this.input.focusItem(this.value);
             this.input.openItem(this.value);
         }
-    };
+    }
     /**
      * Links actions to tree nodes
      *
      * @param {object} actions [ {ID: attributes..}+] as for set_actions
      */
-    et2_tree.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         // Get the top level element for the tree
         // Only look 1 level deep for application object manager
-        var objectManager = egw_getObjectManager(this.egw().app_name(), true, 1);
-        var treeObj = objectManager.getObjectById(this.id);
+        let objectManager = egw_getObjectManager(this.egw().app_name(), true, 1);
+        let treeObj = objectManager.getObjectById(this.id);
         if (treeObj == null) {
             // Add a new container to the object manager which will hold the tree
             // objects
@@ -334,39 +317,39 @@ var et2_tree = /** @class */ (function (_super) {
         // Delete all old objects
         treeObj.clear();
         // Go over the tree parts & add links
-        var action_links = this._get_action_links(actions);
+        let action_links = this._get_action_links(actions);
         if (typeof this.options.select_options != 'undefined') {
             // Iterate over the options (leaves) and add action to each one
-            var apply_actions_1 = function (treeObj, option) {
+            let apply_actions = function (treeObj, option) {
                 // Add a new action object to the object manager
                 // @ts-ignore
-                var obj = treeObj.addObject((typeof option.id == 'number' ? String(option.id) : option.id), new dhtmlxtreeItemAOI(this.input, option.id));
+                let obj = treeObj.addObject((typeof option.id == 'number' ? String(option.id) : option.id), new dhtmlxtreeItemAOI(this.input, option.id));
                 obj.updateActionLinks(action_links);
                 if (option.item && option.item.length > 0) {
-                    for (var i = 0; i < option.item.length; i++) {
-                        apply_actions_1.call(this, treeObj, option.item[i]);
+                    for (let i = 0; i < option.item.length; i++) {
+                        apply_actions.call(this, treeObj, option.item[i]);
                     }
                 }
             };
-            apply_actions_1.call(this, treeObj, this.options.select_options);
+            apply_actions.call(this, treeObj, this.options.select_options);
         }
-    };
+    }
     /**
      * getValue, retrieves the Id of the selected Item
      * @return string or object or null
      */
-    et2_tree.prototype.getValue = function () {
+    getValue() {
         if (this.input == null)
             return null;
         if (this.options.multiple) {
-            var allChecked = this.input.getAllChecked().split(this.input.dlmtr);
-            var allUnchecked = this.input.getAllUnchecked().split(this.input.dlmtr);
+            let allChecked = this.input.getAllChecked().split(this.input.dlmtr);
+            let allUnchecked = this.input.getAllUnchecked().split(this.input.dlmtr);
             if (this.options.autoloading) {
-                var res = {};
-                for (var i = 0; i < allChecked.length; i++) {
+                let res = {};
+                for (let i = 0; i < allChecked.length; i++) {
                     res[allChecked[i]] = { value: true };
                 }
-                for (var i = 0; i < allUnchecked.length; i++) {
+                for (let i = 0; i < allUnchecked.length; i++) {
                     res[allUnchecked[i]] = { value: false };
                 }
                 return res;
@@ -376,12 +359,12 @@ var et2_tree = /** @class */ (function (_super) {
             }
         }
         return this.input.getSelectedItemId();
-    };
+    }
     /**
      * getSelectedLabel, retrieves the Label of the selected Item
      * @return string or null
      */
-    et2_tree.prototype.getSelectedLabel = function () {
+    getSelectedLabel() {
         if (this.input == null)
             return null;
         if (this.options.multiple) {
@@ -399,7 +382,7 @@ var et2_tree = /** @class */ (function (_super) {
         else {
             return this.input.getSelectedItemText();
         }
-    };
+    }
     /**
      * renameItem, renames an item by id
      *
@@ -407,7 +390,7 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} _newItemId ID of the node
      * @param {string} _label label to set
      */
-    et2_tree.prototype.renameItem = function (_id, _newItemId, _label) {
+    renameItem(_id, _newItemId, _label) {
         if (this.input == null)
             return null;
         this.input.changeItemId(_id, _newItemId);
@@ -424,26 +407,26 @@ var et2_tree = /** @class */ (function (_super) {
         }
         if (typeof _label != 'undefined')
             this.setLabel(_newItemId, _label);
-    };
+    }
     /**
      * deleteItem, deletes an item by id
      * @param _id ID of the node
      * @param _selectParent select the parent node true/false
      * @return void
      */
-    et2_tree.prototype.deleteItem = function (_id, _selectParent) {
+    deleteItem(_id, _selectParent) {
         if (this.input == null)
             return null;
         this.input.deleteItem(_id, _selectParent);
         // Update action
         // since the action ID has to = this.id, getObjectById() won't work
-        var treeObj = egw_getAppObjectManager().getObjectById(this.id);
-        for (var i = 0; i < treeObj.children.length; i++) {
+        let treeObj = egw_getAppObjectManager().getObjectById(this.id);
+        for (let i = 0; i < treeObj.children.length; i++) {
             if (treeObj.children[i].id == _id) {
                 treeObj.children.splice(i, 1);
             }
         }
-    };
+    }
     /**
      * Updates a leaf of the tree by requesting new information from the server using the
      * autoloading attribute.
@@ -453,7 +436,7 @@ var et2_tree = /** @class */ (function (_super) {
      *	the provided data instead of asking the server
      * @return void
      */
-    et2_tree.prototype.refreshItem = function (_id, data) {
+    refreshItem(_id, data) {
         if (this.input == null)
             return null;
         this.input.deleteChildItems(_id);
@@ -461,36 +444,36 @@ var et2_tree = /** @class */ (function (_super) {
         /* Can't use this, it doesn't allow a callback
         this.input.refreshItem(_id);
         */
-        var self = this;
+        let self = this;
         if (typeof data != 'undefined' && data != null) {
             this.input.loadJSONObject(data, function () { self._dhtmlxtree_json_callback(data, _id); });
         }
         else {
             this.input.loadJSON(this.egw().link(this.autoloading_url, { id: _id }), function (dxmlObject) { self._dhtmlxtree_json_callback(JSON.parse(dxmlObject.xmlDoc.responseText), _id); });
         }
-    };
+    }
     /**
      * focus the item, and scrolls it into view
      *
      * @param _id ID of the node
      * @return void
      */
-    et2_tree.prototype.focusItem = function (_id) {
+    focusItem(_id) {
         if (this.input == null)
             return null;
         this.input.focusItem(_id);
-    };
+    }
     /**
      * hasChildren
      *
      * @param _id ID of the node
      * @return the number of childelements
      */
-    et2_tree.prototype.hasChildren = function (_id) {
+    hasChildren(_id) {
         if (this.input == null)
             return null;
         return this.input.hasChildren(_id);
-    };
+    }
     /**
      * Callback for after using dhtmlxtree's AJAX loading
      * The tree has visually already been updated at this point, we just need
@@ -501,11 +484,11 @@ var et2_tree = /** @class */ (function (_super) {
      *	provided data instead of the whole thing.  Allows for partial updates.
      * @return void
      */
-    et2_tree.prototype._dhtmlxtree_json_callback = function (new_data, update_option_id) {
+    _dhtmlxtree_json_callback(new_data, update_option_id) {
         // not sure if it makes sense to try update_option_id, so far I only seen it to be -1
-        var parent_id = typeof update_option_id != 'undefined' && update_option_id != -1 ? update_option_id : new_data.id;
+        let parent_id = typeof update_option_id != 'undefined' && update_option_id != -1 ? update_option_id : new_data.id;
         // find root of loaded data to merge it there
-        var option = this._find_in_item(parent_id, this.options.select_options);
+        let option = this._find_in_item(parent_id, this.options.select_options);
         // if we found it, merge it
         if (option) {
             jQuery.extend(option, new_data || {});
@@ -516,7 +499,7 @@ var et2_tree = /** @class */ (function (_super) {
         }
         // Update actions by just re-setting them
         this.set_actions(this.options.actions || {});
-    };
+    }
     /**
      * Recursive search item object for given id
      *
@@ -524,28 +507,28 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {object} _item
      * @returns
      */
-    et2_tree.prototype._find_in_item = function (_id, _item) {
+    _find_in_item(_id, _item) {
         if (_item && _item.id == _id) {
             return _item;
         }
         if (_item && typeof _item.item != 'undefined') {
-            for (var i = 0; i < _item.item.length; ++i) {
-                var found = this._find_in_item(_id, _item.item[i]);
+            for (let i = 0; i < _item.item.length; ++i) {
+                let found = this._find_in_item(_id, _item.item[i]);
                 if (found)
                     return found;
             }
         }
         return null;
-    };
+    }
     /**
      * Get node data by id
      *
      * @param {string} _id id of node
      * @return {object} object with attributes id, im0-2, text, tooltip, ... as set via select_options or autoload url
      */
-    et2_tree.prototype.getNode = function (_id) {
+    getNode(_id) {
         return this._find_in_item(_id, this.options.select_options);
-    };
+    }
     /**
      * Sets label of an item by id
      *
@@ -554,13 +537,13 @@ var et2_tree = /** @class */ (function (_super) {
      * @param _tooltip new tooltip, default is previous set tooltip
      * @return void
      */
-    et2_tree.prototype.setLabel = function (_id, _label, _tooltip) {
+    setLabel(_id, _label, _tooltip) {
         if (this.input == null)
             return null;
-        var tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ?
+        let tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ?
             this.getNode(_id).tooltip : "");
         this.input.setItemText(_id, this._htmlencode(_label), tooltip);
-    };
+    }
     /**
      * Sets a style for an item by id
      *
@@ -568,32 +551,32 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} _style style to set
      * @return void
      */
-    et2_tree.prototype.setStyle = function (_id, _style) {
+    setStyle(_id, _style) {
         if (this.input == null)
             return null;
         this.input.setItemStyle(_id, _style);
-    };
+    }
     /**
      * getLabel, gets the Label of of an item by id
      * @param _id ID of the node
      * @return _label
      */
-    et2_tree.prototype.getLabel = function (_id) {
+    getLabel(_id) {
         if (this.input == null)
             return null;
         return this.input.getItemText(_id);
-    };
+    }
     /**
      * getSelectedNode, retrieves the full node of the selected Item
      * @return string or null
      */
-    et2_tree.prototype.getSelectedNode = function () {
+    getSelectedNode() {
         if (this.input == null)
             return null;
         // no support for multiple selections
         // as there is no get Method to return the full selected node, we use this
         return this.options.multiple ? null : this.input._selected[0];
-    };
+    }
     /**
      * getTreeNodeOpenItems
      *
@@ -601,15 +584,15 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} mode the mode to run in: "forced" fakes the initial node openState to be open
      * @return {object} structured array of node ids: array(message-ids)
      */
-    et2_tree.prototype.getTreeNodeOpenItems = function (_nodeID, mode) {
+    getTreeNodeOpenItems(_nodeID, mode) {
         if (this.input == null)
             return null;
-        var z = this.input.getSubItems(_nodeID).split(this.input.dlmtr);
-        var oS;
-        var PoS;
-        var rv;
-        var returnValue = [_nodeID];
-        var modetorun = "none";
+        let z = this.input.getSubItems(_nodeID).split(this.input.dlmtr);
+        let oS;
+        let PoS;
+        let rv;
+        let returnValue = [_nodeID];
+        let modetorun = "none";
         if (mode) {
             modetorun = mode;
         }
@@ -617,7 +600,7 @@ var et2_tree = /** @class */ (function (_super) {
         if (modetorun == "forced")
             PoS = 1;
         if (PoS == 1) {
-            for (var i = 0; i < z.length; i++) {
+            for (let i = 0; i < z.length; i++) {
                 oS = this.input.getOpenState(z[i]);
                 //alert(z[i]+' OpenState:'+oS);
                 if (oS == -1) {
@@ -630,7 +613,7 @@ var et2_tree = /** @class */ (function (_super) {
                     //alert("got here")
                     rv = this.getTreeNodeOpenItems(z[i]);
                     //returnValue.concat(rv); // not working as expected; the following does
-                    for (var j = 0; j < rv.length; j++) {
+                    for (let j = 0; j < rv.length; j++) {
                         returnValue.push(rv[j]);
                     }
                 }
@@ -638,7 +621,7 @@ var et2_tree = /** @class */ (function (_super) {
         }
         //alert(returnValue.join('#,#'));
         return returnValue;
-    };
+    }
     /**
      * Fetch user-data stored in specified node under given name
      *
@@ -652,11 +635,11 @@ var et2_tree = /** @class */ (function (_super) {
      * @param _name
      * @returns
      */
-    et2_tree.prototype.getUserData = function (_nodeId, _name) {
+    getUserData(_nodeId, _name) {
         if (this.input == null)
             return null;
         return this.input.getUserData(_nodeId, _name);
-    };
+    }
     /**
      * Stores / updates user-data in specified node and name
      *
@@ -665,11 +648,11 @@ var et2_tree = /** @class */ (function (_super) {
      * @param _value
      * @returns
      */
-    et2_tree.prototype.setUserData = function (_nodeId, _name, _value) {
+    setUserData(_nodeId, _name, _value) {
         if (this.input == null)
             return null;
         return this.input.setUserData(_nodeId, _name, _value);
-    };
+    }
     /**
      * Query nodes open state and optinal change it
      *
@@ -677,10 +660,10 @@ var et2_tree = /** @class */ (function (_super) {
      * @param _open specify to change true: open, false: close, everything else toggle
      * @returns true if open, false if closed
      */
-    et2_tree.prototype.openItem = function (_id, _open) {
+    openItem(_id, _open) {
         if (this.input == null)
             return null;
-        var is_open = this.input.getOpenState(_id) == 1;
+        let is_open = this.input.getOpenState(_id) == 1;
         if (typeof _open != 'undefined' && is_open !== _open) {
             if (is_open) {
                 this.input.closeItem(_id);
@@ -690,16 +673,16 @@ var et2_tree = /** @class */ (function (_super) {
             }
         }
         return is_open;
-    };
+    }
     /**
      * reSelectItem, reselects an item by id
      * @param _id ID of the node
      */
-    et2_tree.prototype.reSelectItem = function (_id) {
+    reSelectItem(_id) {
         if (this.input == null)
             return null;
         this.input.selectItem(_id, false, false);
-    };
+    }
     /**
      * Set images for a specific node or all new nodes (default)
      *
@@ -711,11 +694,11 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} _open opened folder image, default "folderOpen"
      * @param {string} _id if not given, standard images for new nodes are set
      */
-    et2_tree.prototype.setImages = function (_leaf, _closed, _open, _id) {
-        var images = [_leaf || 'dhtmlxtree/leaf', _closed || 'dhtmlxtree/folderClosed', _open || 'dhtmlxtree/folderOpen'];
-        var image_extensions = /\.(gif|png|jpe?g|svg)/i;
-        for (var i = 0; i < 3; ++i) {
-            var image = images[i];
+    setImages(_leaf, _closed, _open, _id) {
+        let images = [_leaf || 'dhtmlxtree/leaf', _closed || 'dhtmlxtree/folderClosed', _open || 'dhtmlxtree/folderOpen'];
+        let image_extensions = /\.(gif|png|jpe?g|svg)/i;
+        for (let i = 0; i < 3; ++i) {
+            let image = images[i];
             if (!image.match(image_extensions)) {
                 images[i] = this._rel_url(this.egw().image(image) || image);
             }
@@ -727,18 +710,18 @@ var et2_tree = /** @class */ (function (_super) {
             images.unshift(_id);
             this.input.setItemImage2.apply(this.input, images);
         }
-    };
+    }
     /**
      * Set state of node incl. it's children
      *
      * @param {string} _id id of node
      * @param {boolean|string} _state or "toggle" to toggle state
      */
-    et2_tree.prototype.setSubChecked = function (_id, _state) {
+    setSubChecked(_id, _state) {
         if (_state === "toggle")
             _state = !this.input.isItemChecked(_id);
         this.input.setSubChecked(_id, _state);
-    };
+    }
     /**
      * Get URL relative to image_path option
      *
@@ -747,12 +730,12 @@ var et2_tree = /** @class */ (function (_super) {
      * @param {string} _url
      * @return {string} relativ url
      */
-    et2_tree.prototype._rel_url = function (_url) {
-        var path_parts = this.options.image_path.split(this.egw().webserverUrl);
+    _rel_url(_url) {
+        let path_parts = this.options.image_path.split(this.egw().webserverUrl);
         path_parts = path_parts[1].split('/');
-        var url_parts = _url.split(this.egw().webserverUrl);
+        let url_parts = _url.split(this.egw().webserverUrl);
         url_parts = url_parts[1].split('/');
-        for (var i = 0; i < path_parts.length; ++i) {
+        for (let i = 0; i < path_parts.length; ++i) {
             if (path_parts[i] != url_parts[i]) {
                 while (++i < path_parts.length)
                     url_parts.unshift('..');
@@ -761,91 +744,89 @@ var et2_tree = /** @class */ (function (_super) {
             url_parts.shift();
         }
         return url_parts.join('/');
-    };
-    et2_tree._attributes = {
-        "multiple": {
-            "name": "multiple",
-            "type": "boolean",
-            "default": false,
-            "description": "Allow selecting multiple options"
-        },
-        "select_options": {
-            "type": "any",
-            "name": "Select options",
-            "default": {},
-            "description": "Used to set the tree options."
-        },
-        "onclick": {
-            "description": "JS code which gets executed when clicks on text of a node"
-        },
-        "onselect": {
-            "name": "onSelect",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Javascript executed when user selects a node"
-        },
-        "oncheck": {
-            "name": "onCheck",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Javascript executed when user checks a node"
-        },
-        // onChange event is mapped depending on multiple to onCheck or onSelect
-        onopenstart: {
-            "name": "onOpenStart",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
-        },
-        onopenend: {
-            "name": "onOpenEnd",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
-        },
-        "image_path": {
-            "name": "Image directory",
-            "type": "string",
-            "default": egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",
-            "description": "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
-        },
-        "value": {
-            "type": "any",
-            "default": {}
-        },
-        "actions": {
-            "name": "Actions array",
-            "type": "any",
-            "default": et2_no_init,
-            "description": "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
-        },
-        "autoloading": {
-            "name": "Autoloading",
-            "type": "string",
-            "default": "",
-            "description": "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
-        },
-        "std_images": {
-            "name": "Standard images",
-            "type": "string",
-            "default": "",
-            "description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.png,folderClosed.png,folderOpen.png), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
-        },
-        "multimarking": {
-            "name": "multimarking",
-            "type": "any",
-            "default": false,
-            "description": "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strick to only same level marking"
-        },
-        highlighting: {
-            "name": "highlighting",
-            "type": "boolean",
-            "default": false,
-            "description": "Add highlighting class on hovered over item, highlighting is disabled by default"
-        }
-    };
-    return et2_tree;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_tree = et2_tree;
-et2_core_widget_1.et2_register_widget(et2_tree, ["tree", "tree-cat"]);
+    }
+}
+et2_tree._attributes = {
+    "multiple": {
+        "name": "multiple",
+        "type": "boolean",
+        "default": false,
+        "description": "Allow selecting multiple options"
+    },
+    "select_options": {
+        "type": "any",
+        "name": "Select options",
+        "default": {},
+        "description": "Used to set the tree options."
+    },
+    "onclick": {
+        "description": "JS code which gets executed when clicks on text of a node"
+    },
+    "onselect": {
+        "name": "onSelect",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Javascript executed when user selects a node"
+    },
+    "oncheck": {
+        "name": "onCheck",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Javascript executed when user checks a node"
+    },
+    // onChange event is mapped depending on multiple to onCheck or onSelect
+    onopenstart: {
+        "name": "onOpenStart",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
+    },
+    onopenend: {
+        "name": "onOpenEnd",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
+    },
+    "image_path": {
+        "name": "Image directory",
+        "type": "string",
+        "default": egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",
+        "description": "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
+    },
+    "value": {
+        "type": "any",
+        "default": {}
+    },
+    "actions": {
+        "name": "Actions array",
+        "type": "any",
+        "default": et2_no_init,
+        "description": "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+    },
+    "autoloading": {
+        "name": "Autoloading",
+        "type": "string",
+        "default": "",
+        "description": "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
+    },
+    "std_images": {
+        "name": "Standard images",
+        "type": "string",
+        "default": "",
+        "description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.png,folderClosed.png,folderOpen.png), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
+    },
+    "multimarking": {
+        "name": "multimarking",
+        "type": "any",
+        "default": false,
+        "description": "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strick to only same level marking"
+    },
+    highlighting: {
+        "name": "highlighting",
+        "type": "boolean",
+        "default": false,
+        "description": "Add highlighting class on hovered over item, highlighting is disabled by default"
+    }
+};
+et2_register_widget(et2_tree, ["tree", "tree-cat"]);
 //# sourceMappingURL=et2_widget_tree.js.map

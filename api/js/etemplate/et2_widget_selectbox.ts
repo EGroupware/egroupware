@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @author Andreas Stöckel
  * @copyright Nathan Gray 2011
@@ -18,11 +18,14 @@
 	et2_core_inputWidget;
 */
 
-import './et2_core_common';
+import {et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {et2_directChildrenByTagName, et2_readAttrWithDefault} from "./et2_core_xml";
+import {egw} from "../jsapi/egw_global";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 
 // all calls to Chosen jQuery plugin as jQuery.(un)chosen() give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/chosen-js did NOT help :(
@@ -1465,9 +1468,11 @@ export class et2_selectbox extends et2_inputWidget
 
 		var cache_id = widget._type+'_'+options_string;
 		var cache_owner = (
-			egw.window.et2_selectbox ?
+			// Todo: @new-js-loader et2_selectbox is no longer instanciated globaly --> caching needs to be fixed
+			et2_selectbox
+			/*egw.window.et2_selectbox ?
 				egw.window.et2_selectbox :
-				egw(window).window.et2_selectbox
+				egw(window).window.et2_selectbox*/
 		).type_cache;
 		var cache = cache_owner[cache_id];
 

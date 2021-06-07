@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2017
  */
@@ -16,6 +16,9 @@
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
+import {et2_IInput} from "./et2_core_interfaces";
 
 /**
  * Class which implements the "button-timestamper" XET-Tag
@@ -25,7 +28,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_button
  */
-class et2_timestamper extends et2_button
+export class et2_timestamper extends et2_button
 {
 	static readonly _attributes : any = {
 		target: {

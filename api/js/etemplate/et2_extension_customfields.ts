@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
@@ -18,10 +17,14 @@
 	et2_core_inputWidget;
 */
 
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
+import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
+import {et2_cloneObject, et2_no_init} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
+import {et2_DOMWidget} from "./et2_core_DOMWidget";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -80,7 +83,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	private tbody: JQuery;
 	private table: JQuery;
 	private rows = {};
-	private widgets = {};
+	widgets = {};
 	private detachedNodes = [];
 
 	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
@@ -713,7 +716,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				.appendTo(row);
 
 			// Create upload widget
-			let widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
@@ -736,7 +739,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			this.rows[select_attrs.id] = cf[0];
 
 			// Do not store in the widgets list, one name for multiple widgets would cause problems
-			widget = et2_createWidget(select_attrs.type, select_attrs, this);
+			widget = <et2_DOMWidget>et2_createWidget(select_attrs.type, select_attrs, this);
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;

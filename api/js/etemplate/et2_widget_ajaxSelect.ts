@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
  */
@@ -22,6 +22,7 @@ import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 
 /**
  * Using AJAX, this widget allows a type-ahead find similar to a ComboBox, where as the user enters information,
@@ -32,7 +33,7 @@ import {et2_selectbox} from "./et2_widget_selectbox";
  * This widget can get data from any function that can provide data to a nextmatch widget.
  * @augments et2_inputWidget
  */
-class et2_ajaxSelect extends et2_inputWidget
+export class et2_ajaxSelect extends et2_inputWidget
 {
 	static readonly _attributes : any = {
 		'get_rows': {
@@ -204,7 +205,7 @@ et2_register_widget(et2_ajaxSelect, ["ajax_select"]);
 * et2_textbox_ro is the dummy readonly implementation of the textbox.
 * @augments et2_valueWidget
 */
-class et2_ajaxSelect_ro extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_ajaxSelect_ro extends et2_valueWidget implements et2_IDetachedDOM
 {
 	/**
 	 * Ignore all more advanced attributes.

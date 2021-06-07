@@ -1,38 +1,23 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS DOM Widget class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_action_object_impl = exports.et2_DOMWidget = void 0;
 /*egw:uses
     et2_core_interfaces;
     et2_core_widget;
     /api/js/egw_action/egw_action.js;
 */
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-require("./et2_core_interfaces");
-require("./et2_core_common");
-var et2_core_widget_1 = require("./et2_core_widget");
-require("../egw_action/egw_action.js");
+import { ClassWithAttributes } from './et2_core_inheritance';
+import { et2_IDOMNode } from "./et2_core_interfaces";
+import { et2_hasChild, et2_no_init } from "./et2_core_common";
+import { et2_widget } from "./et2_core_widget";
+import '../egw_action/egw_action.js';
+import { egw } from "../jsapi/egw_global";
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
  * deriving from this class have to care about implementing the "getDOMNode"
@@ -40,32 +25,29 @@ require("../egw_action/egw_action.js");
  *
  * @augments et2_widget
  */
-var et2_DOMWidget = /** @class */ (function (_super) {
-    __extends(et2_DOMWidget, _super);
+export class et2_DOMWidget extends et2_widget {
     /**
      * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
      * object (if available) and passes it to its own "createDOMNode" function
      *
      * @memberOf et2_DOMWidget
      */
-    function et2_DOMWidget(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {})) || this;
-        _this.parentNode = null;
-        _this.disabled = false;
-        _this._attachSet = {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_DOMWidget._attributes, _child || {}));
+        this.parentNode = null;
+        this.disabled = false;
+        this._attachSet = {
             "node": null,
             "parent": null
         };
-        _this._surroundingsMgr = null;
-        return _this;
+        this._surroundingsMgr = null;
     }
     /**
      * Detatches the node from the DOM and clears all references to the parent
      * node or the dom node of this widget.
      */
-    et2_DOMWidget.prototype.destroy = function () {
+    destroy() {
         this.detachFromDOM();
         this.parentNode = null;
         this._attachSet = {};
@@ -83,12 +65,12 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             this._surroundingsMgr.destroy();
             this._surroundingsMgr = null;
         }
-        _super.prototype.destroy.call(this);
-    };
+        super.destroy();
+    }
     /**
      * Attaches the container node of this widget to the DOM-Tree
      */
-    et2_DOMWidget.prototype.doLoadingFinished = function () {
+    doLoadingFinished() {
         // Check whether the parent implements the et2_IDOMNode interface. If
         // yes, grab the DOM node and create our own.
         if (this.getParent() && this.getParent().implements(et2_IDOMNode)) {
@@ -100,12 +82,12 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             }
         }
         return true;
-    };
+    }
     /**
      * Detaches the widget from the DOM tree, if it had been attached to the
      * DOM-Tree using the attachToDOM method.
      */
-    et2_DOMWidget.prototype.detachFromDOM = function () {
+    detachFromDOM() {
         if (this._attachSet && this._attachSet.node && this._attachSet.parent) {
             // Remove the current node from the parent node
             try {
@@ -122,13 +104,13 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             return true;
         }
         return false;
-    };
+    }
     /**
      * Attaches the widget to the DOM tree. Fails if the widget is already
      * attached to the tree or no parent node or no node for this widget is
      * defined.
      */
-    et2_DOMWidget.prototype.attachToDOM = function () {
+    attachToDOM() {
         // Attach the DOM node of this widget (if existing) to the new parent
         var node = this.getDOMNode(this);
         if (node && this.parentNode &&
@@ -155,7 +137,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             return true;
         }
         return false;
-    };
+    }
     /**
      * Inserts a child at the given index.
      *
@@ -163,8 +145,8 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      * 	of et2_widget
      * @param _idx is the position at which the element should be added.
      */
-    et2_DOMWidget.prototype.insertChild = function (_node, _idx) {
-        _super.prototype.insertChild.call(this, _node, _idx);
+    insertChild(_node, _idx) {
+        super.insertChild(_node, _idx);
         if (_node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this)) {
             try {
                 _node.setParentDOMNode(this.getDOMNode(_node));
@@ -174,16 +156,16 @@ var et2_DOMWidget = /** @class */ (function (_super) {
                 // will probably try again in doLoadingFinished()
             }
         }
-    };
-    et2_DOMWidget.prototype.isAttached = function () {
+    }
+    isAttached() {
         return this.parentNode != null;
-    };
-    et2_DOMWidget.prototype.getSurroundings = function () {
+    }
+    getSurroundings() {
         if (!this._surroundingsMgr) {
             this._surroundingsMgr = new et2_surroundingsMgr(this);
         }
         return this._surroundingsMgr;
-    };
+    }
     /**
      * Get data for the tab this widget is on.
      *
@@ -195,7 +177,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      *
      * @returns {Object|null} Data for tab the widget is on
      */
-    et2_DOMWidget.prototype.get_tab_info = function () {
+    get_tab_info() {
         var parent = this;
         do {
             parent = parent.getParent();
@@ -204,7 +186,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         if (parent === this.getRoot()) {
             return null;
         }
-        var tabbox = parent;
+        let tabbox = parent;
         // Find the tab index
         for (var i = 0; i < tabbox.tabData.length; i++) {
             // Find the tab by DOM heritage
@@ -226,19 +208,19 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             }
         }
         // Fallback
-        var fallback = this.getParent();
+        let fallback = this.getParent();
         if (typeof fallback.get_tab_info === 'function') {
             return fallback.get_tab_info();
         }
         return null;
-    };
+    }
     /**
      * Set the parent DOM node of this element.  Takes a wider variety of types
      * than setParentDOMNode(), and matches the set_<attribute> naming convention.
      *
      * @param _node String|DOMNode DOM node to contain the widget, or the ID of the DOM node.
      */
-    et2_DOMWidget.prototype.set_parent_node = function (_node) {
+    set_parent_node(_node) {
         if (typeof _node == "string") {
             var parent = jQuery('#' + _node);
             if (parent.length === 0 && window.parent) {
@@ -256,14 +238,14 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         else {
             this.setParentDOMNode(_node);
         }
-    };
+    }
     /**
      * Set the parent DOM node of this element. If another parent node is already
      * set, this widget removes itself from the DOM tree
      *
      * @param _node
      */
-    et2_DOMWidget.prototype.setParentDOMNode = function (_node) {
+    setParentDOMNode(_node) {
         if (_node != this.parentNode) {
             // Detatch this element from the DOM tree
             this.detachFromDOM();
@@ -271,17 +253,17 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             // And attatch the element to the DOM tree
             this.attachToDOM();
         }
-    };
+    }
     /**
      * Returns the parent node.
      */
-    et2_DOMWidget.prototype.getParentDOMNode = function () {
+    getParentDOMNode() {
         return this.parentNode;
-    };
+    }
     /**
      * Returns the index of this element in the DOM tree
      */
-    et2_DOMWidget.prototype.getDOMIndex = function () {
+    getDOMIndex() {
         if (this.getParent()) {
             var idx = 0;
             var children = this.getParent().getChildren();
@@ -298,7 +280,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             }
         }
         return -1;
-    };
+    }
     /**
      * Sets the id of the DOM-Node.
      *
@@ -306,7 +288,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      *
      * @param {string} _value id to set
      */
-    et2_DOMWidget.prototype.set_id = function (_value) {
+    set_id(_value) {
         this.id = _value;
         this.dom_id = _value ? this.getInstanceManager().uniqueId + '_' + _value.replace(/\./g, '-') : _value;
         var node = this.getDOMNode(this);
@@ -318,8 +300,8 @@ var et2_DOMWidget = /** @class */ (function (_super) {
                 node.removeAttribute("id");
             }
         }
-    };
-    et2_DOMWidget.prototype.set_disabled = function (_value) {
+    }
+    set_disabled(_value) {
         var node = this._surroundingsMgr != null ? this._surroundingsMgr.getDOMNode(this.getDOMNode(this)) : this.getDOMNode(this);
         if (node && this.disabled != _value) {
             this.disabled = _value;
@@ -330,22 +312,22 @@ var et2_DOMWidget = /** @class */ (function (_super) {
                 jQuery(node).show();
             }
         }
-    };
-    et2_DOMWidget.prototype.set_width = function (_value) {
+    }
+    set_width(_value) {
         this.width = _value;
         var node = this.getDOMNode(this);
         if (node) {
             jQuery(node).css("width", _value);
         }
-    };
-    et2_DOMWidget.prototype.set_height = function (_value) {
+    }
+    set_height(_value) {
         this.height = _value;
         var node = this.getDOMNode(this);
         if (node) {
             jQuery(node).css("height", _value);
         }
-    };
-    et2_DOMWidget.prototype.set_class = function (_value) {
+    }
+    set_class(_value) {
         var node = this.getDOMNode(this);
         if (node) {
             if (this["class"]) {
@@ -354,15 +336,15 @@ var et2_DOMWidget = /** @class */ (function (_super) {
             jQuery(node).addClass(_value);
         }
         this["class"] = _value;
-    };
-    et2_DOMWidget.prototype.set_overflow = function (_value) {
+    }
+    set_overflow(_value) {
         this.overflow = _value;
         var node = this.getDOMNode(this);
         if (node) {
             jQuery(node).css("overflow", _value);
         }
-    };
-    et2_DOMWidget.prototype.set_data = function (_value) {
+    }
+    set_data(_value) {
         var node = this.getDOMNode(this);
         if (node && _value) {
             var pairs = _value.split(/,/g);
@@ -371,8 +353,8 @@ var et2_DOMWidget = /** @class */ (function (_super) {
                 jQuery(node).attr('data-' + name_value[0], name_value[1]);
             }
         }
-    };
-    et2_DOMWidget.prototype.set_background = function (_value) {
+    }
+    set_background(_value) {
         var node = this.getDOMNode(this);
         var values = '';
         if (_value && node) {
@@ -384,7 +366,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
                 "background-scale": values[3]
             });
         }
-    };
+    }
     /**
      * Set Actions on the widget
      *
@@ -411,7 +393,7 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      * @param {object} actions {ID: {attributes..}+} map of egw action information
      * @see api/src/Etemplate/Widget/Nextmatch.php egw_actions() method
      */
-    et2_DOMWidget.prototype.set_actions = function (actions) {
+    set_actions(actions) {
         if (this.id == "" || typeof this.id == "undefined") {
             this.egw().debug("warn", "Widget should have an ID if you want actions", this);
             return;
@@ -438,12 +420,12 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         this._actionManager.data = { widget: this };
         // Link the actions to the DOM
         this._link_actions(actions);
-    };
-    et2_DOMWidget.prototype.set_default_execute = function (_default_execute) {
+    }
+    set_default_execute(_default_execute) {
         this.options.default_execute = _default_execute;
         if (this._actionManager)
             this._actionManager.setDefaultExecute(null, _default_execute);
-    };
+    }
     /**
      * Get all action-links / id's of 1.-level actions from a given action object
      *
@@ -452,20 +434,20 @@ var et2_DOMWidget = /** @class */ (function (_super) {
      * @param actions
      * @returns {Array}
      */
-    et2_DOMWidget.prototype._get_action_links = function (actions) {
+    _get_action_links(actions) {
         var action_links = [];
         for (var i in actions) {
             var action = actions[i];
             action_links.push(typeof action.id != 'undefined' ? action.id : i);
         }
         return action_links;
-    };
+    }
     /**
      * Link the actions to the DOM nodes / widget bits.
      *
      * @param {object} actions {ID: {attributes..}+} map of egw action information
      */
-    et2_DOMWidget.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         // Get the top level element for the tree
         var objectManager = egw_getAppObjectManager(true);
         var widget_object = objectManager.getObjectById(this.id);
@@ -484,112 +466,108 @@ var et2_DOMWidget = /** @class */ (function (_super) {
         // 'allowed' for this widget at this time
         var action_links = this._get_action_links(actions);
         widget_object.updateActionLinks(action_links);
-    };
-    et2_DOMWidget._attributes = {
-        "disabled": {
-            "name": "Disabled",
-            "type": "boolean",
-            "description": "Defines whether this widget is visible.  Not to be confused with an input widget's HTML attribute 'disabled'.",
-            "default": false
-        },
-        "width": {
-            "name": "Width",
-            "type": "dimension",
-            "default": et2_no_init,
-            "description": "Width of the element in pixels, percentage or 'auto'"
-        },
-        "height": {
-            "name": "Height",
-            "type": "dimension",
-            "default": et2_no_init,
-            "description": "Height of the element in pixels, percentage or 'auto'"
-        },
-        "class": {
-            "name": "CSS Class",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "CSS Class which is applied to the dom element of this node"
-        },
-        "overflow": {
-            "name": "Overflow",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "If set, the css-overflow attribute is set to that value"
-        },
-        "parent_node": {
-            "name": "DOM parent",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "Insert into the target DOM node instead of the normal location"
-        },
-        "actions": {
-            "name": "Actions list",
-            "type": "any",
-            "default": et2_no_init,
-            "description": "List of egw actions that can be done on the widget.  This includes context menu, drag and drop.  TODO: Link to action documentation"
-        },
-        default_execute: {
-            name: "Default onExecute for actions",
-            type: "js",
-            default: et2_no_init,
-            description: "Set default onExecute javascript method for action not specifying their own"
-        },
-        resize_ratio: {
-            name: "Resize height of the widget on callback resize",
-            type: "string",
-            default: '',
-            description: "Allow Resize height of the widget based on exess height and given ratio"
-        },
-        data: {
-            name: "comma-separated name:value pairs set as data attributes on DOM node",
-            type: "string",
-            default: '',
-            description: 'data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent'
-        },
-        background: {
-            name: "Add background image",
-            type: "string",
-            default: '',
-            description: "Sets background image, left, right and scale on DOM",
-        }
-    };
-    return et2_DOMWidget;
-}(et2_core_widget_1.et2_widget));
-exports.et2_DOMWidget = et2_DOMWidget;
+    }
+}
+et2_DOMWidget._attributes = {
+    "disabled": {
+        "name": "Disabled",
+        "type": "boolean",
+        "description": "Defines whether this widget is visible.  Not to be confused with an input widget's HTML attribute 'disabled'.",
+        "default": false
+    },
+    "width": {
+        "name": "Width",
+        "type": "dimension",
+        "default": et2_no_init,
+        "description": "Width of the element in pixels, percentage or 'auto'"
+    },
+    "height": {
+        "name": "Height",
+        "type": "dimension",
+        "default": et2_no_init,
+        "description": "Height of the element in pixels, percentage or 'auto'"
+    },
+    "class": {
+        "name": "CSS Class",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "CSS Class which is applied to the dom element of this node"
+    },
+    "overflow": {
+        "name": "Overflow",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "If set, the css-overflow attribute is set to that value"
+    },
+    "parent_node": {
+        "name": "DOM parent",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "Insert into the target DOM node instead of the normal location"
+    },
+    "actions": {
+        "name": "Actions list",
+        "type": "any",
+        "default": et2_no_init,
+        "description": "List of egw actions that can be done on the widget.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+    },
+    default_execute: {
+        name: "Default onExecute for actions",
+        type: "js",
+        default: et2_no_init,
+        description: "Set default onExecute javascript method for action not specifying their own"
+    },
+    resize_ratio: {
+        name: "Resize height of the widget on callback resize",
+        type: "string",
+        default: '',
+        description: "Allow Resize height of the widget based on exess height and given ratio"
+    },
+    data: {
+        name: "comma-separated name:value pairs set as data attributes on DOM node",
+        type: "string",
+        default: '',
+        description: 'data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent'
+    },
+    background: {
+        name: "Add background image",
+        type: "string",
+        default: '',
+        description: "Sets background image, left, right and scale on DOM",
+    }
+};
 /**
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.
  */
-var et2_surroundingsMgr = /** @class */ (function (_super) {
-    __extends(et2_surroundingsMgr, _super);
+export class et2_surroundingsMgr extends ClassWithAttributes {
     /**
      * Constructor
      *
      * @memberOf et2_surroundingsMgr
      * @param _widget
      */
-    function et2_surroundingsMgr(_widget) {
-        var _this = _super.call(this) || this;
-        _this._widgetContainer = null;
-        _this._widgetSurroundings = [];
-        _this._widgetPlaceholder = null;
-        _this._widgetNode = null;
-        _this._ownPlaceholder = true;
-        _this._surroundingsUpdated = false;
-        _this.widget = _widget;
-        return _this;
+    constructor(_widget) {
+        super();
+        this._widgetContainer = null;
+        this._widgetSurroundings = [];
+        this._widgetPlaceholder = null;
+        this._widgetNode = null;
+        this._ownPlaceholder = true;
+        this._surroundingsUpdated = false;
+        this.widget = _widget;
     }
-    et2_surroundingsMgr.prototype.destroy = function () {
+    destroy() {
         this._widgetContainer = null;
         this._widgetSurroundings = null;
         this._widgetPlaceholder = null;
         this._widgetNode = null;
-    };
-    et2_surroundingsMgr.prototype.prependDOMNode = function (_node) {
+    }
+    prependDOMNode(_node) {
         this._widgetSurroundings.unshift(_node);
         this._surroundingsUpdated = true;
-    };
-    et2_surroundingsMgr.prototype.appendDOMNode = function (_node) {
+    }
+    appendDOMNode(_node) {
         // Append an placeholder first if none is existing yet
         if (this._ownPlaceholder && this._widgetPlaceholder == null) {
             this._widgetPlaceholder = document.createElement("span");
@@ -598,8 +576,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
         // Append the given node
         this._widgetSurroundings.push(_node);
         this._surroundingsUpdated = true;
-    };
-    et2_surroundingsMgr.prototype.insertDOMNode = function (_node) {
+    }
+    insertDOMNode(_node) {
         if (!this._ownPlaceholder || this._widgetPlaceholder == null) {
             this.appendDOMNode(_node);
             return;
@@ -611,8 +589,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
         // Delete the reference to the own placeholder
         this._widgetPlaceholder = null;
         this._ownPlaceholder = false;
-    };
-    et2_surroundingsMgr.prototype.removeDOMNode = function (_node) {
+    }
+    removeDOMNode(_node) {
         for (var i = 0; this._widgetSurroundings && i < this._widgetSurroundings.length; i++) {
             if (this._widgetSurroundings[i] == _node) {
                 this._widgetSurroundings.splice(i, 1);
@@ -620,8 +598,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
                 break;
             }
         }
-    };
-    et2_surroundingsMgr.prototype.setWidgetPlaceholder = function (_node) {
+    }
+    setWidgetPlaceholder(_node) {
         if (_node != this._widgetPlaceholder) {
             if (_node != null && this._ownPlaceholder && this._widgetPlaceholder != null) {
                 // Delete the current placeholder which was created by the
@@ -637,8 +615,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
             this._widgetPlaceholder = _node;
             this._surroundingsUpdated = true;
         }
-    };
-    et2_surroundingsMgr.prototype._rebuildContainer = function () {
+    }
+    _rebuildContainer() {
         // Return if there has been no change in the "surroundings-data"
         if (!this._surroundingsUpdated) {
             return false;
@@ -679,8 +657,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
         }
         this._surroundingsUpdated = false;
         return true;
-    };
-    et2_surroundingsMgr.prototype.update = function () {
+    }
+    update() {
         if (this._surroundingsUpdated) {
             var attached = this.widget ? this.widget.isAttached() : false;
             // Reattach the widget - this will call the "getDOMNode" function
@@ -690,8 +668,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
                 this.widget.attachToDOM();
             }
         }
-    };
-    et2_surroundingsMgr.prototype.getDOMNode = function (_widgetNode) {
+    }
+    getDOMNode(_widgetNode) {
         // Update the whole widgetContainer if this is not the first time this
         // function has been called but the widget node has changed.
         if (this._widgetNode != null && this._widgetNode != _widgetNode) {
@@ -716,12 +694,11 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
         }
         // Return the widget container
         return this._widgetContainer;
-    };
-    et2_surroundingsMgr.prototype.getWidgetSurroundings = function () {
+    }
+    getWidgetSurroundings() {
         return this._widgetSurroundings;
-    };
-    return et2_surroundingsMgr;
-}(et2_core_inheritance_1.ClassWithAttributes));
+    }
+}
 /**
  * The egw_action system requires an egwActionObjectInterface Interface implementation
  * to tie actions to DOM nodes.  This one can be used by any widget.
@@ -732,8 +709,8 @@ var et2_surroundingsMgr = /** @class */ (function (_super) {
  * @param {Object} node
  *
  */
-var et2_action_object_impl = /** @class */ (function () {
-    function et2_action_object_impl(_widget, _node) {
+export class et2_action_object_impl {
+    constructor(_widget, _node) {
         var widget = _widget;
         var objectNode = _node;
         this.aoi = new egwActionObjectInterface();
@@ -762,10 +739,8 @@ var et2_action_object_impl = /** @class */ (function () {
             }
         };
     }
-    et2_action_object_impl.prototype.getAOI = function () {
+    getAOI() {
         return this.aoi;
-    };
-    return et2_action_object_impl;
-}());
-exports.et2_action_object_impl = et2_action_object_impl;
+    }
+}
 //# sourceMappingURL=et2_core_DOMWidget.js.map

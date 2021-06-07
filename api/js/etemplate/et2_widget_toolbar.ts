@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
- * @version $Id$
  */
 
 /*egw:uses
@@ -23,12 +22,14 @@ import '../egw_action/egw_action.js';
 import {et2_dialog} from "./et2_widget_dialog";
 import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {et2_checkbox} from "./et2_widget_checkbox";
+import {et2_IInput} from "./et2_core_interfaces";
+import {egw} from "../jsapi/egw_global";
 /**
  * This toolbar gets its contents from its actions
  *
  * @augments et2_valueWidget
  */
-class et2_toolbar extends et2_DOMWidget implements et2_IInput
+export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 {
 	static readonly	_attributes : any = {
 		"view_range": {
@@ -524,7 +525,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	{
 		let button_options = {
 		};
-		let button = jQuery(document.createElement('button'))
+		let button  = jQuery(document.createElement('button'))
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
 			.attr('type', 'button')

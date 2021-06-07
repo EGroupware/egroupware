@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
  */
@@ -17,13 +17,16 @@
 	et2_core_valueWidget;
 */
 
-import './et2_core_common';
+import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_selectbox} from './et2_widget_selectbox'
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {egw} from "../jsapi/egw_global";
+import {date} from "./lib/date.js";
 
 // lib/date.js:
 declare function date (format : string, timestamp? : string | number | Date);

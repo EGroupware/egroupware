@@ -3,7 +3,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  */
 
@@ -12,9 +12,10 @@
 	et2_core_valueWidget;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
 
 /**
  * A widget to display a value from an entry
@@ -30,7 +31,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_valueWidget
  */
-class et2_entry extends et2_valueWidget
+export class et2_entry extends et2_valueWidget
 {
 	static readonly _attributes : any = {
 		field: {

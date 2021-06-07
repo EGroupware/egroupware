@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
  */
@@ -28,6 +28,10 @@ import {et2_selectAccount_ro} from "./et2_widget_selectAccount";
 import {et2_file} from "./et2_widget_file";
 import {et2_dialog} from "./et2_widget_dialog";
 import {et2_inputWidget} from "./et2_core_inputWidget";
+import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
+import {et2_no_init} from "./et2_core_common";
+import {app, egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
+import {expose} from "./expose";
 
 /**
  * Class which implements the "vfs" XET-Tag
@@ -241,7 +245,7 @@ et2_register_widget(et2_vfs, ["vfs"]);
 *
 * @augments et2_textbox
 */
-class et2_vfsName extends et2_textbox
+export class et2_vfsName extends et2_textbox
 {
 	/**
 	 * Constructor
@@ -430,7 +434,7 @@ et2_register_widget(et2_vfsPath, ["vfs-path"]);
 *
 * @augments et2_textbox_ro
 */
-class et2_vfsName_ro extends et2_textbox_ro
+export class et2_vfsName_ro extends et2_textbox_ro
 {
 	/**
 	 * Constructor
@@ -484,7 +488,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 * span.overlayContainer is optional and only generated for symlinks
 * @augments et2_valueWidget
 */
-class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
+export class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -701,7 +705,7 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 *
 * @augments et2_description
 */
-class et2_vfsSize extends et2_description
+export class et2_vfsSize extends et2_description
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -767,7 +771,7 @@ et2_register_widget(et2_vfsSize, ["vfs-size"]);
 *
 * @augments et2_description
 */
-class et2_vfsMode extends et2_description
+export class et2_vfsMode extends et2_description
 {
 	// Masks for file types
 	static readonly types : {l : number, s : number, p : number, c : number, d : number, b: number, '-' : number} = {
@@ -890,7 +894,7 @@ et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 *
 * @augments et2_selectAccount_ro
 */
-class et2_vfsUid extends et2_selectAccount_ro
+export class et2_vfsUid extends et2_selectAccount_ro
 {
 	/**
 	 * @memberOf et2_vfsUid
@@ -918,7 +922,7 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
 *
 * @augments et2_file
 */
-class et2_vfsUpload extends et2_file
+export class et2_vfsUpload extends et2_file
 {
 	static readonly _attributes : any = {
 		"value": {

@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
  */
@@ -19,6 +19,8 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_textbox} from "./et2_widget_textbox";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
+import {et2_no_init} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Class which implements the "url" XET-Tag, which covers URLs, email & phone

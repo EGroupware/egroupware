@@ -1,4 +1,4 @@
-function date (format, timestamp) {
+export function date (format, timestamp) {
     // http://kevin.vanzonneveld.net
     // +   original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
     // +      parts by: Peter-Paul Koch (http://www.quirksmode.org/js/beat.html)

@@ -1,30 +1,14 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Selectbox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @author Andreas Stöckel
  * @copyright Nathan Gray 2011
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_menulist = exports.et2_selectbox_ro = exports.et2_selectbox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /api/js/jquery/chosen/chosen.jquery.js;
@@ -32,70 +16,69 @@ exports.et2_menulist = exports.et2_selectbox_ro = exports.et2_selectbox = void 0
     et2_core_DOMWidget;
     et2_core_inputWidget;
 */
-require("./et2_core_common");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
+import { et2_no_init } from "./et2_core_common";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_inputWidget } from './et2_core_inputWidget';
+import { et2_DOMWidget } from "./et2_core_DOMWidget";
+import { et2_directChildrenByTagName, et2_readAttrWithDefault } from "./et2_core_xml";
+import { egw } from "../jsapi/egw_global";
 // all calls to Chosen jQuery plugin as jQuery.(un)chosen() give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/chosen-js did NOT help :(
 /**
  * et2 select(box) widget
  */
-var et2_selectbox = /** @class */ (function (_super) {
-    __extends(et2_selectbox, _super);
+export class et2_selectbox extends et2_inputWidget {
     /**
      * Constructor
      */
-    function et2_selectbox(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectbox._attributes, _child || {})) || this;
-        _this.input = null;
-        _this.value = '';
-        _this.selected_first = true;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectbox._attributes, _child || {}));
+        this.input = null;
+        this.value = '';
+        this.selected_first = true;
         /**
          * Regular expression, to check string-value contains multiple comma-separated values
          */
-        _this._is_multiple_regexp = /^[,0-9A-Za-z/_ -]+$/;
+        this._is_multiple_regexp = /^[,0-9A-Za-z/_ -]+$/;
         /**
          * Regular expression and replace value for escaping values in jQuery selectors used to find options
          */
-        _this._escape_value_replace = /\\/g;
-        _this._escape_value_with = '\\\\';
-        _this.input = null;
+        this._escape_value_replace = /\\/g;
+        this._escape_value_with = '\\\\';
+        this.input = null;
         // Start at '' to avoid infinite loops while setting value/select options
-        _this.value = '';
+        this.value = '';
         // Allow no other widgets inside this one
-        _this.supportedWidgetClasses = [];
+        this.supportedWidgetClasses = [];
         // Legacy options could have row count or empty label in first slot
-        if (typeof _this.options.rows == "string") {
-            if (isNaN(_this.options.rows)) {
-                _this.options.empty_label = _this.egw().lang(_this.options.rows);
-                _this.options.rows = 1;
+        if (typeof this.options.rows == "string") {
+            if (isNaN(this.options.rows)) {
+                this.options.empty_label = this.egw().lang(this.options.rows);
+                this.options.rows = 1;
             }
             else {
-                _this.options.rows = parseInt(_this.options.rows);
+                this.options.rows = parseInt(this.options.rows);
             }
         }
-        if (_this.options.rows > 1) {
-            _this.options.multiple = true;
-            if (_this.options.tags) {
-                _this.createInputWidget();
+        if (this.options.rows > 1) {
+            this.options.multiple = true;
+            if (this.options.tags) {
+                this.createInputWidget();
             }
             else {
-                _this.createMultiSelect();
+                this.createMultiSelect();
             }
         }
         else {
-            _this.createInputWidget();
+            this.createInputWidget();
         }
-        if (!_this.options.empty_label && !_this.options.readonly && _this.options.multiple) {
-            _this.options.empty_label = _this.egw().lang('Select some options');
+        if (!this.options.empty_label && !this.options.readonly && this.options.multiple) {
+            this.options.empty_label = this.egw().lang('Select some options');
         }
-        return _this;
     }
-    et2_selectbox.prototype.destroy = function () {
+    destroy() {
         if (this.input != null) {
             // @ts-ignore
             this.input.unchosen();
@@ -105,11 +88,11 @@ var et2_selectbox = /** @class */ (function (_super) {
             this.expand_button.remove();
             this.expand_button = null;
         }
-        _super.prototype.destroy.call(this);
+        super.destroy();
         this.input = null;
-    };
-    et2_selectbox.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
+    }
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
         // If select_options are already known, skip the rest
         if (this.options && this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ||
             _attrs.select_options && !jQuery.isEmptyObject(_attrs.select_options) ||
@@ -124,7 +107,7 @@ var et2_selectbox = /** @class */ (function (_super) {
         if (!jQuery.isEmptyObject(sel_options)) {
             _attrs['select_options'] = sel_options;
         }
-    };
+    }
     /**
      * Switch instanciated widget to multi-selection and back, optionally enabeling tags too
      *
@@ -133,7 +116,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {boolean} _multiple
      * @param {integer} _size default=3
      */
-    et2_selectbox.prototype.set_multiple = function (_multiple, _size) {
+    set_multiple(_multiple, _size) {
         this.options.multiple = _multiple;
         if (this.input) {
             if (_multiple) {
@@ -161,9 +144,9 @@ var et2_selectbox = /** @class */ (function (_super) {
                 }
             }
         }
-    };
-    et2_selectbox.prototype.change = function (_node, _widget, _value) {
-        var valid = _super.prototype.change.apply(this, arguments);
+    }
+    change(_node, _widget, _value) {
+        var valid = super.change.apply(this, arguments);
         if (!this.input)
             return valid;
         var selected = this.input.siblings().find('a.chzn-single');
@@ -184,17 +167,17 @@ var et2_selectbox = /** @class */ (function (_super) {
                 break;
         }
         return valid;
-    };
+    }
     /**
      * Overridden from parent to make sure tooltip handler is bound to the correct element
      * if tags is on.
      */
-    et2_selectbox.prototype.getTooltipElement = function () {
+    getTooltipElement() {
         if (this.input && (this.options.tags || this.options.search)) {
             return jQuery(this.input.siblings()).get(0);
         }
         return this.getDOMNode(this);
-    };
+    }
     /**
      * Add an option to regular drop-down select
      *
@@ -204,7 +187,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {node} dom_element parent of new option
      * @param {string} _class specify classes of option
      */
-    et2_selectbox.prototype._appendOptionElement = function (_value, _label, _title, dom_element, _class) {
+    _appendOptionElement(_value, _label, _title, dom_element, _class) {
         if (_value == "" && (_label == null || _label == "")) {
             return; // empty_label is added in set_select_options anyway, ignoring it here to not add it twice
         }
@@ -238,7 +221,7 @@ var et2_selectbox = /** @class */ (function (_super) {
         else {
             option.appendTo(dom_element || this.input);
         }
-    };
+    }
     /**
      * Append a value to multi-select
      *
@@ -247,7 +230,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {string} _title title attribute of option
      * @param {node} dom_element parent of new option
      */
-    et2_selectbox.prototype._appendMultiOption = function (_value, _label, _title, dom_element) {
+    _appendMultiOption(_value, _label, _title, dom_element) {
         var option_data = null;
         if (typeof _label == "object") {
             option_data = _label;
@@ -291,11 +274,11 @@ var et2_selectbox = /** @class */ (function (_super) {
         if (this.options.value_class != '')
             li.addClass(this.options.value_class + _value);
         li.appendTo(dom_element || this.multiOptions);
-    };
+    }
     /**
      * Create a regular drop-down select box
      */
-    et2_selectbox.prototype.createInputWidget = function () {
+    createInputWidget() {
         // Create the base input widget
         this.input = jQuery(document.createElement("select"))
             .addClass("et2_selectbox")
@@ -309,11 +292,11 @@ var et2_selectbox = /** @class */ (function (_super) {
         if (this.options.multiple) {
             this.input.attr("multiple", "multiple");
         }
-    };
+    }
     /**
      * Create a list of checkboxes
      */
-    et2_selectbox.prototype.createMultiSelect = function () {
+    createMultiSelect() {
         var node = jQuery(document.createElement("div"))
             .addClass("et2_selectbox");
         var header = jQuery(document.createElement("div"))
@@ -337,7 +320,7 @@ var et2_selectbox = /** @class */ (function (_super) {
                 check: {
                     icon_class: 'ui-icon-check',
                     label: this.egw().lang('Check all'),
-                    click: function (e) {
+                    click(e) {
                         var all_off = false;
                         jQuery("input[type='checkbox']", e.data).each(function () {
                             if (!jQuery(this).prop("checked"))
@@ -357,16 +340,16 @@ var et2_selectbox = /** @class */ (function (_super) {
             }
         }
         this.setDOMNode(node[0]);
-    };
-    et2_selectbox.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
         this.set_tags(this.options.tags, this.options.width);
         // Reset dirty again here.  super.doLoadingFinished() does it too, but set_tags() & others
         // change things.  Moving set_tags() before super.doLoadingFinished() breaks tag widgets
         this.resetDirty();
         return true;
-    };
-    et2_selectbox.prototype.loadFromXML = function (_node) {
+    }
+    loadFromXML(_node) {
         // Handle special case where legacy option for empty label is used (conflicts with rows), and rows is set as an attribute
         var legacy = _node.getAttribute("options");
         if (legacy) {
@@ -393,7 +376,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             });
         }
         this.set_select_options(this.options.select_options);
-    };
+    }
     /**
      * Find an option by it's value
      *
@@ -402,9 +385,9 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {string} _value
      * @return {array}
      */
-    et2_selectbox.prototype.find_option = function (_value) {
+    find_option(_value) {
         return jQuery("option[value='" + (typeof _value === 'string' ? _value.replace(this._escape_value_replace, this._escape_value_with) : _value) + "']", this.input);
-    };
+    }
     /**
      * Set value
      *
@@ -413,7 +396,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      *		(which would go into an infinit loop)
      */
     // @ts-ignore for 2nd parameter
-    et2_selectbox.prototype.set_value = function (_value, _dont_try_set_options) {
+    set_value(_value, _dont_try_set_options) {
         if (typeof _value == "number")
             _value = "" + _value; // convert to string for consitent matching
         if (typeof _value == "string" && (this.options.multiple || this.options.expand_multiple_rows) && _value.match(this._is_multiple_regexp) !== null) {
@@ -513,7 +496,7 @@ var et2_selectbox = /** @class */ (function (_super) {
         if (this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value) {
             this.input.change();
         }
-    };
+    }
     /**
      * Find an option by it's value
      *
@@ -522,12 +505,12 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {string} _value
      * @return {array}
      */
-    et2_selectbox.prototype.find_multi_option = function (_value) {
+    find_multi_option(_value) {
         return jQuery("input[value='" +
             (typeof _value === 'string' ? _value.replace(this._escape_value_replace, this._escape_value_with) : _value) +
             "']", this.multiOptions);
-    };
-    et2_selectbox.prototype.set_multi_value = function (_value) {
+    }
+    set_multi_value(_value) {
         jQuery("input", this.multiOptions).prop("checked", false);
         if (typeof _value == "object") {
             for (var i in _value) {
@@ -547,22 +530,22 @@ var et2_selectbox = /** @class */ (function (_super) {
             this.multiOptions.find("li:has(input:checked)").prependTo(this.multiOptions);
         }
         this.value = _value;
-    };
+    }
     /**
      * Method to check all options of a multi-select, if not all are selected, or none if all where selected
      *
      * @todo: add an attribute to automatic add a button calling this method
      */
-    et2_selectbox.prototype.select_all_toggle = function () {
+    select_all_toggle() {
         var all = jQuery("input", this.multiOptions);
         all.prop("checked", jQuery("input:checked", this.multiOptions).length == all.length ? false : true);
-    };
+    }
     /**
      * Add a button to toggle between single select and multi select.
      *
      * @param {number} _rows How many rows for multi-select
      */
-    et2_selectbox.prototype.set_expand_multiple_rows = function (_rows) {
+    set_expand_multiple_rows(_rows) {
         this.options.expand_multiple_rows = _rows;
         var surroundings = this.getSurroundings();
         if (_rows <= 1 && this.expand_button) {
@@ -588,7 +571,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             surroundings.appendDOMNode(this.expand_button.get(0));
         }
         surroundings.update();
-    };
+    }
     /**
      * Turn tag style on and off
      *
@@ -597,7 +580,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {boolean} _tags
      * @param {string} _width width to use, default width of selectbox
      */
-    et2_selectbox.prototype.set_tags = function (_tags, _width) {
+    set_tags(_tags, _width) {
         this.options.tags = _tags;
         // Can't actually do chosen until attached, loadingFinished should call again
         if (!this.isAttached())
@@ -691,14 +674,14 @@ var et2_selectbox = /** @class */ (function (_super) {
                 });
             }
         }
-    };
+    }
     /**
      * The set_select_options function is added, as the select options have to be
      * added after the "option"-widgets were added to selectbox.
      *
      * @param {(array|object)} _options array or object with options
      */
-    et2_selectbox.prototype.set_select_options = function (_options) {
+    set_select_options(_options) {
         // Empty current options
         if (this.input) {
             this.input.empty();
@@ -781,28 +764,28 @@ var et2_selectbox = /** @class */ (function (_super) {
         else if (this.value || (this.options.empty_label && !this.options.multiple) || this.value === '' && this.input && this.input.children('[value=""]').length === 1) {
             this.set_value(this.value, true); // true = dont try to set_options, to avoid an infinit recursion
         }
-    };
-    et2_selectbox.prototype.getValue = function () {
-        var value = [];
+    }
+    getValue() {
+        let value = [];
         if (this.input == null) {
             jQuery("input:checked", this.multiOptions).each(function () { value.push(this.value); });
             // we need to return null for no value instead of empty array, which gets overwritten by preserved value on server-side
         }
         else {
-            value = _super.prototype.getValue.call(this);
+            value = super.getValue();
             if (value === null)
                 value = this.options.multiple ? [] : ""; // do NOT return null, as it does not get transmitted to server
         }
         return value;
-    };
-    et2_selectbox.prototype.isDirty = function () {
+    }
+    isDirty() {
         if (this.input == null) {
             var value = this.getValue();
             // Array comparison
             return !(jQuery(this._oldValue).not(value).length == 0 && jQuery(value).not(this._oldValue).length == 0);
         }
-        return _super.prototype.isDirty.call(this);
-    };
+        return super.isDirty();
+    }
     /**
      * override set disabled for tags as the tags using
      * chosen dom and need to be treated different
@@ -810,8 +793,8 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {type} _disable
      * @returns {undefined}
      */
-    et2_selectbox.prototype.set_disabled = function (_disable) {
-        _super.prototype.set_disabled.call(this, _disable);
+    set_disabled(_disable) {
+        super.set_disabled(_disable);
         if (this.options.tags) {
             // Always hide input options
             if (this.input) {
@@ -824,7 +807,7 @@ var et2_selectbox = /** @class */ (function (_super) {
                 jQuery(this.node.nextElementSibling).show();
             }
         }
-    };
+    }
     /**
      * Find the select options for a widget, out of the many places they could be.
      * @param {et2_widget} widget to check for.  Should be some sort of select widget.
@@ -832,7 +815,7 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {object} attrs Widget attributes
      * @return {object} Select options, or empty object
      */
-    et2_selectbox.find_select_options = function (widget, attr_options, attrs) {
+    static find_select_options(widget, attr_options, attrs) {
         var name_parts = widget.id.replace(/&#x5B;/g, '[').replace(/]|&#x5D;/g, '').split('[');
         var type_options = {};
         var content_options = {};
@@ -913,7 +896,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             // Maybe in a row, and options got stuck in ${row} instead of top level
             // not sure this code is still needed, as server-side no longer creates ${row} or {$row} for select-options
             var row_stuck = ['${row}', '{$row}'];
-            for (var i = 0; i < row_stuck.length && (!content_options || content_options.length == 0); i++) {
+            for (let i = 0; i < row_stuck.length && (!content_options || content_options.length == 0); i++) {
                 // perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
                 if (widget.getArrayMgr("sel_options").perspectiveData.row || widget.getArrayMgr("sel_options").data[row_stuck[i]]) {
                     var row_id = widget.id.replace(/[0-9]+/, row_stuck[i]);
@@ -948,7 +931,7 @@ var et2_selectbox = /** @class */ (function (_super) {
         }
         // Include type options, preferring any content options
         if (type_options.length || !jQuery.isEmptyObject(type_options)) {
-            for (var i in content_options) {
+            for (let i in content_options) {
                 var value = typeof content_options[i] == 'object' && typeof content_options[i].value !== 'undefined' ? content_options[i].value : i;
                 var added = false;
                 // Override any existing
@@ -966,7 +949,7 @@ var et2_selectbox = /** @class */ (function (_super) {
             content_options = type_options;
         }
         return content_options;
-    };
+    }
     /**
      * Some static options, no need to transfer them over and over.
      * We still need the same thing on the server side to validate, so they
@@ -975,21 +958,21 @@ var et2_selectbox = /** @class */ (function (_super) {
      *
      * @param {type} widget
      */
-    et2_selectbox.priority_options = function (widget) {
+    static priority_options(widget) {
         return [
             { value: 1, label: 'low' },
             { value: 2, label: 'normal' },
             { value: 3, label: 'high' },
             { value: 0, label: 'undefined' }
         ];
-    };
-    et2_selectbox.bool_options = function (widget) {
+    }
+    static bool_options(widget) {
         return [
             { value: 0, label: 'no' },
             { value: 1, label: 'yes' }
         ];
-    };
-    et2_selectbox.month_options = function (widget) {
+    }
+    static month_options(widget) {
         return [
             { value: 1, label: 'January' },
             { value: 2, label: 'February' },
@@ -1004,8 +987,8 @@ var et2_selectbox = /** @class */ (function (_super) {
             { value: 11, label: 'November' },
             { value: 12, label: 'December' }
         ];
-    };
-    et2_selectbox.number_options = function (widget, attrs) {
+    }
+    static number_options(widget, attrs) {
         if (typeof attrs.other != 'object') {
             attrs.other = [];
         }
@@ -1030,8 +1013,8 @@ var et2_selectbox = /** @class */ (function (_super) {
             options.push({ value: n, label: sprintf(format, n) });
         }
         return options;
-    };
-    et2_selectbox.percent_options = function (widget, attrs) {
+    }
+    static percent_options(widget, attrs) {
         if (typeof attrs.other != 'object') {
             attrs.other = [];
         }
@@ -1040,8 +1023,8 @@ var et2_selectbox = /** @class */ (function (_super) {
         attrs.other[2] = typeof (attrs.other[2]) == 'undefined' ? 10 : parseInt(attrs.other[2]);
         attrs.other[3] = '%%';
         return this.number_options(widget, attrs);
-    };
-    et2_selectbox.year_options = function (widget, attrs) {
+    }
+    static year_options(widget, attrs) {
         if (typeof attrs.other != 'object') {
             attrs.other = [];
         }
@@ -1050,12 +1033,12 @@ var et2_selectbox = /** @class */ (function (_super) {
         attrs.other[1] = t.getFullYear() + (typeof (attrs.other[1]) == 'undefined' ? 2 : parseInt(attrs.other[1]));
         attrs.other[2] = typeof (attrs.other[2]) == 'undefined' ? 1 : parseInt(attrs.other[2]);
         return this.number_options(widget, attrs);
-    };
-    et2_selectbox.day_options = function (widget, attrs) {
+    }
+    static day_options(widget, attrs) {
         attrs.other = [1, 31, 1];
         return this.number_options(widget, attrs);
-    };
-    et2_selectbox.hour_options = function (widget, attrs) {
+    }
+    static hour_options(widget, attrs) {
         var options = [];
         var timeformat = egw.preference('common', 'timeformat');
         for (var h = 0; h <= 23; ++h) {
@@ -1067,12 +1050,12 @@ var et2_selectbox = /** @class */ (function (_super) {
             });
         }
         return options;
-    };
-    et2_selectbox.app_options = function (widget, attrs) {
+    }
+    static app_options(widget, attrs) {
         var options = ',' + (attrs.other || []).join(',');
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.cat_options = function (widget, attrs) {
+    }
+    static cat_options(widget, attrs) {
         // Add in application, if not there
         if (typeof attrs.other == 'undefined') {
             attrs.other = new Array(4);
@@ -1082,27 +1065,27 @@ var et2_selectbox = /** @class */ (function (_super) {
         }
         var options = (attrs.other || []).join(',');
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.country_options = function (widget, attrs) {
+    }
+    static country_options(widget, attrs) {
         var options = ',';
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.state_options = function (widget, attrs) {
+    }
+    static state_options(widget, attrs) {
         var options = attrs.country_code ? attrs.country_code : 'de';
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.dow_options = function (widget, attrs) {
+    }
+    static dow_options(widget, attrs) {
         var options = ',' + (attrs.other || []).join(',');
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.lang_options = function (widget, attrs) {
+    }
+    static lang_options(widget, attrs) {
         var options = ',' + (attrs.other || []).join(',');
         return this.cached_server_side_options(widget, options, attrs);
-    };
-    et2_selectbox.timezone_options = function (widget, attrs) {
+    }
+    static timezone_options(widget, attrs) {
         var options = ',' + (attrs.other || []).join(',');
         return this.cached_server_side_options(widget, options, attrs);
-    };
+    }
     /**
      * Some options change, or are too complicated to have twice, so we get the
      * options from the server once, then keep them to use if they're needed again.
@@ -1114,13 +1097,17 @@ var et2_selectbox = /** @class */ (function (_super) {
      * @param {Object} attrs Widget attributes (not yet fully set)
      * @returns {Object} Array of options, or empty and they'll get filled in later
      */
-    et2_selectbox.cached_server_side_options = function (widget, options_string, attrs) {
+    static cached_server_side_options(widget, options_string, attrs) {
         // normalize options by removing trailing commas
         options_string = options_string.replace(/,+$/, '');
         var cache_id = widget._type + '_' + options_string;
-        var cache_owner = (egw.window.et2_selectbox ?
+        var cache_owner = (
+        // Todo: @new-js-loader et2_selectbox is no longer instanciated globaly --> caching needs to be fixed
+        et2_selectbox
+        /*egw.window.et2_selectbox ?
             egw.window.et2_selectbox :
-            egw(window).window.et2_selectbox).type_cache;
+            egw(window).window.et2_selectbox*/
+        ).type_cache;
         var cache = cache_owner[cache_id];
         // Options for a selectbox in a nextmatch must be returned now, as the
         // widget we have is not enough to set the options later.
@@ -1188,90 +1175,88 @@ var et2_selectbox = /** @class */ (function (_super) {
             }
             return cache;
         }
-    };
-    et2_selectbox._attributes = {
-        // todo fully implement attr[multiple] === "dynamic" to render widget with a button to switch to multiple
-        //	as it is used in account_id selection in admin >> mailaccount (app.admin.edit_multiple method client-side)
-        "multiple": {
-            "name": "multiple",
-            "type": "boolean",
-            "default": false,
-            "description": "Allow selecting multiple options"
-        },
-        "expand_multiple_rows": {
-            "name": "Expand multiple",
-            "type": "integer",
-            "default": et2_no_init,
-            "description": "Shows single select widget, with a button.  If the " +
-                "user clicks the button, the input will toggle to a multiselect," +
-                "with this many rows.  "
-        },
-        "rows": {
-            "name": "Rows",
-            "type": "any",
-            "default": 1,
-            "description": "Number of rows to display"
-        },
-        "empty_label": {
-            "name": "Empty label",
-            "type": "string",
-            "default": "",
-            "description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
-            translate: true
-        },
-        "select_options": {
-            "type": "any",
-            "name": "Select options",
-            "default": {},
-            "description": "Internaly used to hold the select options."
-        },
-        "selected_first": {
-            "name": "Selected options first",
-            "type": "boolean",
-            "default": true,
-            "description": "For multi-selects, put the selected options at the top of the list when first loaded"
-        },
-        // Chosen options
-        "search": {
-            "name": "Search",
-            "type": "boolean",
-            "default": false,
-            "description": "For single selects, add a search box to the drop-down list"
-        },
-        "tags": {
-            "name": "Tag style",
-            "type": "boolean",
-            "default": false,
-            "description": "For multi-selects, displays selected as a list of tags instead of a big list"
-        },
-        "allow_single_deselect": {
-            "name": "Allow Single Deselect",
-            "type": "boolean",
-            "default": true,
-            "description": "Allow user to unset current selected value"
-        },
-        // Value can be string or integer
-        "value": {
-            "type": "any"
-        },
-        // Type specific legacy options.  Avoid using.
-        "other": {
-            "ignore": true,
-            "type": "any"
-        },
-        value_class: {
-            name: "Value class",
-            type: "string",
-            default: "",
-            description: "Allow to set a custom css class combined with selected value. (e.g. cat_23)"
-        }
-    };
-    et2_selectbox.legacyOptions = ["rows", "other"]; // Other is sub-type specific
-    et2_selectbox.type_cache = {};
-    return et2_selectbox;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_selectbox = et2_selectbox;
-et2_core_widget_1.et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
+    }
+}
+et2_selectbox._attributes = {
+    // todo fully implement attr[multiple] === "dynamic" to render widget with a button to switch to multiple
+    //	as it is used in account_id selection in admin >> mailaccount (app.admin.edit_multiple method client-side)
+    "multiple": {
+        "name": "multiple",
+        "type": "boolean",
+        "default": false,
+        "description": "Allow selecting multiple options"
+    },
+    "expand_multiple_rows": {
+        "name": "Expand multiple",
+        "type": "integer",
+        "default": et2_no_init,
+        "description": "Shows single select widget, with a button.  If the " +
+            "user clicks the button, the input will toggle to a multiselect," +
+            "with this many rows.  "
+    },
+    "rows": {
+        "name": "Rows",
+        "type": "any",
+        "default": 1,
+        "description": "Number of rows to display"
+    },
+    "empty_label": {
+        "name": "Empty label",
+        "type": "string",
+        "default": "",
+        "description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
+        translate: true
+    },
+    "select_options": {
+        "type": "any",
+        "name": "Select options",
+        "default": {},
+        "description": "Internaly used to hold the select options."
+    },
+    "selected_first": {
+        "name": "Selected options first",
+        "type": "boolean",
+        "default": true,
+        "description": "For multi-selects, put the selected options at the top of the list when first loaded"
+    },
+    // Chosen options
+    "search": {
+        "name": "Search",
+        "type": "boolean",
+        "default": false,
+        "description": "For single selects, add a search box to the drop-down list"
+    },
+    "tags": {
+        "name": "Tag style",
+        "type": "boolean",
+        "default": false,
+        "description": "For multi-selects, displays selected as a list of tags instead of a big list"
+    },
+    "allow_single_deselect": {
+        "name": "Allow Single Deselect",
+        "type": "boolean",
+        "default": true,
+        "description": "Allow user to unset current selected value"
+    },
+    // Value can be string or integer
+    "value": {
+        "type": "any"
+    },
+    // Type specific legacy options.  Avoid using.
+    "other": {
+        "ignore": true,
+        "type": "any"
+    },
+    value_class: {
+        name: "Value class",
+        type: "string",
+        default: "",
+        description: "Allow to set a custom css class combined with selected value. (e.g. cat_23)"
+    }
+};
+et2_selectbox.legacyOptions = ["rows", "other"]; // Other is sub-type specific
+et2_selectbox.type_cache = {};
+et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
     "select-percent", 'select-priority',
     'select-country', 'select-state', 'select-year', 'select-month',
     'select-day', 'select-dow', 'select-hour', 'select-number', 'select-app',
@@ -1279,35 +1264,32 @@ et2_core_widget_1.et2_register_widget(et2_selectbox, ["menupopup", "listbox", "s
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.
  */
-var et2_selectbox_ro = /** @class */ (function (_super) {
-    __extends(et2_selectbox_ro, _super);
+export class et2_selectbox_ro extends et2_selectbox {
     /**
      * Constructor
      */
-    function et2_selectbox_ro(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectbox_ro._attributes, _child || {})) || this;
-        _this.optionValues = {};
-        _this.supportedWidgetClasses = [];
-        _this.optionValues = {};
-        if (_this.options.select_options)
-            _this.set_select_options(_this.options.select_options);
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectbox_ro._attributes, _child || {}));
+        this.optionValues = {};
+        this.supportedWidgetClasses = [];
+        this.optionValues = {};
+        if (this.options.select_options)
+            this.set_select_options(this.options.select_options);
     }
-    et2_selectbox_ro.prototype.createInputWidget = function () {
+    createInputWidget() {
         this.span = jQuery(document.createElement("span"))
             .addClass("et2_selectbox readonly")
             .text(this.options.empty_label);
         this.setDOMNode(this.span[0]);
-    };
+    }
     // Handle read-only multiselects in the same way
-    et2_selectbox_ro.prototype.createMultiSelect = function () {
+    createMultiSelect() {
         this.span = jQuery(document.createElement("ul"))
             .addClass("et2_selectbox readonly");
         this.setDOMNode(this.span[0]);
-    };
-    et2_selectbox_ro.prototype.loadFromXML = function (_node) {
+    }
+    loadFromXML(_node) {
         // Read the option-tags
         var options = et2_directChildrenByTagName(_node, "options");
         for (var i = 0; i < options.length; i++) {
@@ -1317,8 +1299,8 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
                     "title": et2_readAttrWithDefault(options[i], "title", "")
                 };
         }
-    };
-    et2_selectbox_ro.prototype.set_select_options = function (_options) {
+    }
+    set_select_options(_options) {
         for (var key in _options) {
             // Translate the options
             if (!this.options.no_lang) {
@@ -1334,8 +1316,8 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
             }
         }
         this.optionValues = _options;
-    };
-    et2_selectbox_ro.prototype.set_value = function (_value) {
+    }
+    set_value(_value) {
         this.value = _value;
         if (this.getType() == "select-bitwise" && _value && !isNaN(_value) && this.options.select_options) {
             var new_value = [];
@@ -1383,19 +1365,19 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
         else if (this.options.empty_label) {
             this.span.text(this.options.empty_label);
         }
-    };
+    }
     /**
      * Override parent to return null - no value, not node value
      */
-    et2_selectbox_ro.prototype.getValue = function () {
+    getValue() {
         return null;
-    };
+    }
     /**
      * Readonly selectbox can't be dirty
      */
-    et2_selectbox_ro.prototype.isDirty = function () {
+    isDirty() {
         return false;
-    };
+    }
     /**
      * Functions for et2_IDetachedDOM
      */
@@ -1406,18 +1388,18 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
     *
     * @param {array} _attrs array to add further attributes to
     */
-    et2_selectbox_ro.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("value", 'select_options');
-    };
+    }
     /**
      * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
      * passed to the "setDetachedAttributes" function in the same order.
      *
      * @return {array}
      */
-    et2_selectbox_ro.prototype.getDetachedNodes = function () {
+    getDetachedNodes() {
         return [this.span[0]];
-    };
+    }
     /**
      * Sets the given associative attribute->value array and applies the
      * attributes to the given DOM-Node.
@@ -1428,17 +1410,15 @@ var et2_selectbox_ro = /** @class */ (function (_super) {
      *      returned by the "getDetachedAttributes" function and sets them to the
      *      given values.
      */
-    et2_selectbox_ro.prototype.setDetachedAttributes = function (_nodes, _values) {
+    setDetachedAttributes(_nodes, _values) {
         this.span = jQuery(_nodes[0]);
         if (typeof _values.select_options != 'undefined') {
             this.set_select_options(_values.select_options);
         }
         this.set_value(_values["value"]);
-    };
-    return et2_selectbox_ro;
-}(et2_selectbox));
-exports.et2_selectbox_ro = et2_selectbox_ro;
-et2_core_widget_1.et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",
+    }
+}
+et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",
     "select-percent_ro", 'select-priority_ro', 'select-access_ro',
     'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
     'select-day_ro', 'select-dow_ro', 'select-hour_ro', 'select-number_ro', 'select-app_ro',
@@ -1509,32 +1489,27 @@ et2_core_widget_1.et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbo
 /**
  * Class which just implements the menulist container
  */
-var et2_menulist = /** @class */ (function (_super) {
-    __extends(et2_menulist, _super);
+export class et2_menulist extends et2_DOMWidget {
     /**
      * Constructor
      */
-    function et2_menulist(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_menulist._attributes, _child || {})) || this;
-        _this.supportedWidgetClasses = [et2_selectbox, et2_selectbox_ro];
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_menulist._attributes, _child || {}));
+        this.supportedWidgetClasses = [et2_selectbox, et2_selectbox_ro];
     }
     // Just pass the parent DOM node through
-    et2_menulist.prototype.getDOMNode = function (_sender) {
+    getDOMNode(_sender) {
         if (_sender != this) {
             return this.getParent().getDOMNode(this);
         }
         return null;
-    };
+    }
     // Also need to pass through parent's children
-    et2_menulist.prototype.getChildren = function () {
+    getChildren() {
         return this.getParent().getChildren();
-    };
-    et2_menulist._attributes = {};
-    return et2_menulist;
-}(et2_core_DOMWidget_1.et2_DOMWidget));
-exports.et2_menulist = et2_menulist;
-et2_core_widget_1.et2_register_widget(et2_menulist, ["menulist"]);
+    }
+}
+et2_menulist._attributes = {};
+et2_register_widget(et2_menulist, ["menulist"]);
 //# sourceMappingURL=et2_widget_selectbox.js.map

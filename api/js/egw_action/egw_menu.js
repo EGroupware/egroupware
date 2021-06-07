@@ -6,7 +6,8 @@
  * @copyright 2011 by Andreas Stöckel
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
- * @version $Id$
+ *
+ * @Todo: @new-js-loader port to TypeScript
  */
 
 //Global variable which is used to store the currently active menu so that it
@@ -125,7 +126,7 @@ function _egwSetMenuOnClick(_elements, _onClick)
  * The currently available implementation is the "egwDhtmlxMenu.js" which is based
  * upon the dhtmlxmenu component.
  */
-function egwMenu()
+export function egwMenu()
 {
 	//The "items" variable contains all menu items of the menu
 	this.children = [];
@@ -373,7 +374,7 @@ egwMenu.prototype.setGlobalOnClick = function(_onClick)
  * Constructor for the egwMenuItem. Each entry in a menu (including seperators)
  * is represented by a menu item.
  */
-function egwMenuItem(_parent, _id)
+export function egwMenuItem(_parent, _id)
 {
 	this.id = _id;
 	this.caption = "";

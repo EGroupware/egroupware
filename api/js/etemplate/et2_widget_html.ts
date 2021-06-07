@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -17,6 +17,8 @@
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {et2_no_init} from "./et2_core_common";
 
 /**
  * @augments et2_valueWidget
@@ -75,7 +77,7 @@ export class et2_html extends et2_valueWidget implements et2_IDetachedDOM
 		// Create an object containg the given value and an empty js string
 		let html = {html: _data ? _data : '', js: ''};
 
-		// Seperate the javascript from the given html. The js code will be
+		// Separate the javascript from the given html. The js code will be
 		// written to the previously created empty js string
 		egw_seperateJavaScript(html);
 

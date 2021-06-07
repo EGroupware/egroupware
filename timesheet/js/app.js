@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware - Timesheet - Javascript UI
  *
@@ -8,41 +7,24 @@
  * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /api/js/jsapi/egw_app.js
  */
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
+import 'jquery';
+import 'jqueryui';
+import '../../api/js/jsapi/egw_global';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
 /**
  * UI for timesheet
  *
  * @augments AppJS
  */
-var TimesheetApp = /** @class */ (function (_super) {
-    __extends(TimesheetApp, _super);
-    function TimesheetApp() {
-        var _this = _super.call(this, 'timesheet') || this;
+class TimesheetApp extends EgwApp {
+    constructor() {
+        super('timesheet');
         // These fields help with push filtering & access control to see if we care about a push message
-        _this.push_grant_fields = ["ts_owner"];
-        _this.push_filter_fields = ["ts_owner"];
-        return _this;
+        this.push_grant_fields = ["ts_owner"];
+        this.push_filter_fields = ["ts_owner"];
     }
     /**
      * This function is called when the etemplate2 object is loaded
@@ -52,21 +34,21 @@ var TimesheetApp = /** @class */ (function (_super) {
      * @param et2 etemplate2 Newly ready object
      * @param string name
      */
-    TimesheetApp.prototype.et2_ready = function (et2, name) {
+    et2_ready(et2, name) {
         // call parent
-        _super.prototype.et2_ready.call(this, et2, name);
+        super.et2_ready(et2, name);
         if (name == 'timesheet.index') {
             this.filter_change();
             this.filter2_change();
         }
-    };
+    }
     /**
      *
      */
-    TimesheetApp.prototype.filter_change = function () {
+    filter_change() {
         var filter = this.et2.getWidgetById('filter');
         var dates = this.et2.getWidgetById('timesheet.index.dates');
-        var nm = this.et2.getDOMWidgetById('nm');
+        let nm = this.et2.getDOMWidgetById('nm');
         if (filter && dates) {
             dates.set_disabled(filter.get_value() !== "custom");
             if (filter.get_value() == 0)
@@ -76,13 +58,13 @@ var TimesheetApp = /** @class */ (function (_super) {
             }
         }
         return true;
-    };
+    }
     /**
      * show or hide the details of rows by selecting the filter2 option
      * either 'all' for details or 'no_description' for no details
      *
      */
-    TimesheetApp.prototype.filter2_change = function () {
+    filter2_change() {
         var nm = this.et2.getWidgetById('nm');
         var filter2 = this.et2.getWidgetById('filter2');
         if (nm && filter2) {
@@ -90,7 +72,7 @@ var TimesheetApp = /** @class */ (function (_super) {
             // Show / hide descriptions
             egw.css(".et2_label.ts_description", "display:" + (filter2.getValue() == '1' ? "block;" : "none;"));
         }
-    };
+    }
     /**
      * Wrapper so add action in the context menu can pass current
      * filter values into new edit dialog
@@ -100,19 +82,19 @@ var TimesheetApp = /** @class */ (function (_super) {
      * @param {egwAction} action
      * @param {egwActionObject[]} selected
      */
-    TimesheetApp.prototype.add_action_handler = function (action, selected) {
+    add_action_handler(action, selected) {
         var nm = action.getManager().data.nextmatch || false;
         if (nm) {
             this.add_with_extras(nm);
         }
-    };
+    }
     /**
      * Opens a new edit dialog with some extra url parameters pulled from
      * nextmatch filters.
      *
      * @param {et2_widget} widget Originating/calling widget
      */
-    TimesheetApp.prototype.add_with_extras = function (widget) {
+    add_with_extras(widget) {
         var nm = widget.getRoot().getWidgetById('nm');
         var nm_value = nm.getValue() || {};
         var extras = {};
@@ -132,7 +114,7 @@ var TimesheetApp = /** @class */ (function (_super) {
             extras.ts_project = nm_value.col_filter.ts_project;
         }
         egw.open('', 'timesheet', 'add', extras);
-    };
+    }
     /**
      * Change handler for project selection to set empty ts_project string, if project get deleted
      *
@@ -140,7 +122,7 @@ var TimesheetApp = /** @class */ (function (_super) {
      * @param {et2_widget_link_entry} _widget
      * @returns {undefined}
      */
-    TimesheetApp.prototype.pm_id_changed = function (_egw, _widget) {
+    pm_id_changed(_egw, _widget) {
         // Update price list
         var ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
         egw.json('projectmanager_widget::ajax_get_pricelist', [_widget.getValue()], function (value) {
@@ -150,11 +132,11 @@ var TimesheetApp = /** @class */ (function (_super) {
         if (ts_project) {
             ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
         }
-    };
+    }
     /**
      * Update custom filter timespan, without triggering a change
      */
-    TimesheetApp.prototype.update_timespan = function (start, end) {
+    update_timespan(start, end) {
         if (this && this.et2) {
             var nm = this.et2.getWidgetById('nm');
             if (nm) {
@@ -167,32 +149,31 @@ var TimesheetApp = /** @class */ (function (_super) {
                 nm.update_in_progress = false;
             }
         }
-    };
+    }
     /**
      * Get title in order to set it as document title
      * @returns {string}
      */
-    TimesheetApp.prototype.getWindowTitle = function () {
+    getWindowTitle() {
         var widget = this.et2.getWidgetById('ts_title');
         if (widget)
             return widget.options.value;
-    };
+    }
     /**
      * Run action via ajax
      *
      * @param _action
      * @param _senders
      */
-    TimesheetApp.prototype.ajax_action = function (_action, _senders) {
+    ajax_action(_action, _senders) {
         var _a;
-        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
-        var ids = [];
-        for (var i = 0; i < _senders.length; i++) {
+        let all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        let ids = [];
+        for (let i = 0; i < _senders.length; i++) {
             ids.push(_senders[i].id.split("::").pop());
         }
         egw.json("timesheet.timesheet_ui.ajax_action", [_action.id, ids, all]).sendRequest(true);
-    };
-    return TimesheetApp;
-}(egw_app_1.EgwApp));
+    }
+}
 app.classes.timesheet = TimesheetApp;
 //# sourceMappingURL=app.js.map

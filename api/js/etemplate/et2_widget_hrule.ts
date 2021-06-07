@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -21,7 +21,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_baseWidget
  */
-class et2_hrule extends et2_baseWidget
+export class et2_hrule extends et2_baseWidget
 {
 	/**
 	 * Constructor

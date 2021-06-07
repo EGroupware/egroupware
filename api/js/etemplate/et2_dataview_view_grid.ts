@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
@@ -23,6 +22,8 @@ import {et2_dataview_IViewRange} from "./et2_dataview_interfaces";
 import {et2_dataview_container} from "./et2_dataview_view_container";
 import {et2_dataview_spacer} from "./et2_dataview_view_spacer";
 import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider";
+import {et2_bounds, et2_range, et2_rangeEqual, et2_rangeIntersect} from "./et2_core_common";
+import { egw } from "../jsapi/egw_global";
 
 export class et2_dataview_grid extends et2_dataview_container implements et2_dataview_IViewRange
 {
@@ -65,16 +66,16 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 	private _invalidateTimeout: number;
 	private _invalidateCallback: Function;
 	private _invalidateContext: null;
-	private doInvalidate : boolean;
+	doInvalidate : boolean;
 
 	private _map: any[];
 	private _viewRange: { top: any; bottom: any };
-	private _total: number;
+	_total: number;
 	private _avgHeight: number | boolean;
 	private _avgCount: number;
 
 	private scrollarea: any;
-	private innerTbody: any;
+	innerTbody: any;
 	private outerCell: JQuery;
 
 
@@ -545,7 +546,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		const self = this;
 		const _super = super.invalidate();
 		this._invalidateTimeout = window.setTimeout(function() {
-			egw.debug("log","Dataview grid timed invalidate");
+			this.egw.debug("log","Dataview grid timed invalidate");
 			// Clear the "_avgHeight"
 			self._avgHeight = false;
 			self._avgCount = -1;
@@ -794,8 +795,7 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 
 			// Check which type the container object has
 			const isSpacer = container instanceof et2_dataview_spacer;
-			const hasIViewRange = !isSpacer
-				&& implements_et2_dataview_IViewRange(container);
+			const hasIViewRange = !isSpacer && container.implements(et2_dataview_IViewRange);
 
 			// If the container has one of those special types, calculate the
 			// view range and use that to update the view range of the element

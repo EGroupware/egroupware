@@ -4,22 +4,24 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
 
 /*egw:uses
 	et2_core_inheritance;
 */
 
+import {implements_methods,et2_implements_registry} from "./et2_core_interfaces";
+import type {et2_widget} from "./et2_core_widget";
+
 export interface et2_dataview_IInvalidatable
 {
 	invalidate()
 }
-var et2_dataviewIInvalidatable = "et2_dataview_IInvalidatable";
-function implements_et2_dataview_IInvalidatable(obj : et2_widget)
+export const et2_dataviewIInvalidatable = "et2_dataview_IInvalidatable";
+et2_implements_registry.et2_dataview_IInvalidatable = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["invalidate"]);
 }
@@ -27,8 +29,8 @@ export interface et2_dataview_IViewRange
 {
 	setViewRange(_range)
 }
-var et2_dataview_IViewRange = "et2_dataview_IViewRange";
-function implements_et2_dataview_IViewRange(obj : et2_widget)
+export const et2_dataview_IViewRange = "et2_dataview_IViewRange";
+et2_implements_registry.et2_dataview_IViewRange = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["setViewRange"]);
 }
@@ -101,8 +103,8 @@ export interface et2_IDataProvider
 	dataUnregisterUID (_uid : string, _callback : Function, _context : object)
 
 }
-var et2_IDataProvider = "et2_IDataProvider";
-function implements_et2_IDataProvider(obj : et2_widget)
+export const et2_IDataProvider = "et2_IDataProvider";
+et2_implements_registry.et2_IDataProvider = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["dataFetch", "dataRegisterUID", "dataUnregisterUID"]);
 }

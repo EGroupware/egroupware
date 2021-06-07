@@ -1,75 +1,58 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Tabs object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     jsapi.egw;
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_valueWidget;
 */
-require("./et2_core_common");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
-var et2_extension_nextmatch_1 = require("./et2_extension_nextmatch");
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { et2_valueWidget } from './et2_core_valueWidget';
+import { et2_nextmatch } from "./et2_extension_nextmatch";
+import { et2_no_init } from "./et2_core_common";
+import { et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault } from "./et2_core_xml";
 /**
  * Class which implements the tabbox-tag
  */
-var et2_tabbox = /** @class */ (function (_super) {
-    __extends(et2_tabbox, _super);
+export class et2_tabbox extends et2_valueWidget {
     /**
      * Constructor
      */
-    function et2_tabbox(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_tabbox._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_tabbox._attributes, _child || {}));
         /**
          * Currently selected tab
          */
-        _this.selected_index = 0;
-        _this.tabData = [];
+        this.selected_index = 0;
+        this.tabData = [];
         // Create the outer tabbox container
-        _this.container = jQuery(document.createElement("div"))
+        this.container = jQuery(document.createElement("div"))
             .addClass("et2_tabbox");
         // Create the upper container for the tab flags
-        _this.flagContainer = jQuery(document.createElement("ul"))
+        this.flagContainer = jQuery(document.createElement("ul"))
             .addClass("et2_tabheader")
             .attr("role", "tablist")
-            .appendTo(_this.container);
+            .appendTo(this.container);
         // Create the lower tab container
-        _this.tabContainer = jQuery(document.createElement("div"))
+        this.tabContainer = jQuery(document.createElement("div"))
             .addClass("et2_tabs")
-            .appendTo(_this.container);
-        return _this;
+            .appendTo(this.container);
     }
-    et2_tabbox.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    destroy() {
+        super.destroy();
         this.container = null;
         this.flagContainer = null;
         this.tabData = [];
-    };
-    et2_tabbox.prototype._readTabs = function (tabData, tabs) {
+    }
+    _readTabs(tabData, tabs) {
         var selected = "";
         this.selected_index = false;
         var hidden = {};
@@ -93,7 +76,7 @@ var et2_tabbox = /** @class */ (function (_super) {
         var i = 0;
         et2_filteredNodeIterator(tabs, function (node, nodeName) {
             if (nodeName == "tab") {
-                var index_name = et2_readAttrWithDefault(node, "id", '');
+                const index_name = et2_readAttrWithDefault(node, "id", '');
                 var hide = false;
                 var widget_options = {};
                 if (index_name) {
@@ -103,7 +86,7 @@ var et2_tabbox = /** @class */ (function (_super) {
                         hide = true;
                     }
                     // Get the class attribute and add it as widget_options
-                    var classAttr = et2_readAttrWithDefault(node, "class", '');
+                    const classAttr = et2_readAttrWithDefault(node, "class", '');
                     if (classAttr) {
                         widget_options = { 'class': classAttr };
                     }
@@ -131,8 +114,8 @@ var et2_tabbox = /** @class */ (function (_super) {
             if (!tabData[i].hidden)
                 this.selected_index = i;
         }
-    };
-    et2_tabbox.prototype._readTabPanels = function (tabData, tabpanels) {
+    }
+    _readTabPanels(tabData, tabpanels) {
         var i = 0;
         et2_filteredNodeIterator(tabpanels, function (node, nodeName) {
             if (i < tabData.length) {
@@ -144,8 +127,8 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             i++;
         }, this);
-    };
-    et2_tabbox.prototype.loadFromXML = function (_node) {
+    }
+    loadFromXML(_node) {
         // Get the tabs and tabpanels tags
         var tabsElems = et2_directChildrenByTagName(_node, "tabs");
         var tabpanelsElems = et2_directChildrenByTagName(_node, "tabpanels");
@@ -193,11 +176,11 @@ var et2_tabbox = /** @class */ (function (_super) {
         }
         // Create the tab DOM-Nodes
         this.createTabs(tabData);
-    };
+    }
     /**
      * Load is finished, set up tabs to load on their own
      */
-    et2_tabbox.prototype.doLoadingFinished = function () {
+    doLoadingFinished() {
         var tab_deferred = jQuery.Deferred();
         var promises = [];
         var tabs = this;
@@ -209,7 +192,7 @@ var et2_tabbox = /** @class */ (function (_super) {
         // Apply parent now, which actually puts into the DOM
         // This has to be before loading the child, so the dom sub-tree is not
         // disconnected, which causes problems for things like CKEditor
-        _super.prototype.doLoadingFinished.call(this);
+        super.doLoadingFinished();
         // We can do this and not wind up with 2 because child is a template,
         // which has special handling
         this._children[0].loadingFinished(promises);
@@ -226,14 +209,14 @@ var et2_tabbox = /** @class */ (function (_super) {
             });
         }, 0);
         return tab_deferred.promise();
-    };
+    }
     /**
      * Load & render a tab's content
      *
      * @param {number} index numerical index of tab in this.tabData array
      * @param {array} promises
      */
-    et2_tabbox.prototype._loadTab = function (index, promises) {
+    _loadTab(index, promises) {
         var tabData = this.tabData[index];
         if (!tabData || tabData.loaded)
             return;
@@ -251,26 +234,26 @@ var et2_tabbox = /** @class */ (function (_super) {
             tabData.XMLNode = null;
         }
         else if (tabData.widget_options) {
-            tabData.widget = et2_core_widget_1.et2_createWidget('template', tabData.widget_options, this);
+            tabData.widget = et2_createWidget('template', tabData.widget_options, this);
         }
         // loadingFinished() will be called either when the promise from doLoadingFinished is resolved,
         // or during the normal execution
-    };
+    }
     /**
      * Check for custom tabs
      *
      * @param {object} _attrs
      */
-    et2_tabbox.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
         // Add in settings that are objects
         var data = this.getArrayMgr("modifications").getEntry(this.id);
         for (var key in data) {
             if (typeof data[key] === 'object' && !_attrs[key])
                 _attrs[key] = data[key];
         }
-    };
-    et2_tabbox.prototype.createTabs = function (tabData) {
+    }
+    createTabs(tabData) {
         this.tabData = tabData;
         this.tabContainer.empty();
         this.flagContainer.empty();
@@ -326,21 +309,21 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
         }
         this.setActiveTab(this.selected_index);
-    };
+    }
     /**
      * Gets the index of the currently active tab
      *
      * @returns {number}
      */
-    et2_tabbox.prototype.get_active_tab = function () {
+    get_active_tab() {
         return this.selected_index;
-    };
+    }
     /**
      * Sets the currently active tab by index
      *
      * @param {number} _idx
      */
-    et2_tabbox.prototype.setActiveTab = function (_idx) {
+    setActiveTab(_idx) {
         this.selected_index = _idx;
         // Remove the "active" flag from all tabs-flags
         jQuery(".et2_tabflag", this.flagContainer).removeClass("active")
@@ -359,16 +342,16 @@ var et2_tabbox = /** @class */ (function (_super) {
             this.tabData[_idx]['widget'].iterateOver(function (nm) {
                 if (nm && nm._type == 'nextmatch')
                     nm.resize();
-            }, this.tabData[_idx]['widget'], et2_extension_nextmatch_1.et2_nextmatch);
+            }, this.tabData[_idx]['widget'], et2_nextmatch);
         }
-    };
+    }
     /**
      * Activate the tab containing the given widget
      *
      * @param {et2_widget} widget
      * @return {bool} widget was found in a tab
      */
-    et2_tabbox.prototype.activateTab = function (widget) {
+    activateTab(widget) {
         var tab = widget;
         while (tab._parent && tab._parent._type != 'tabbox') {
             tab = tab._parent;
@@ -381,8 +364,8 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
         }
         return false;
-    };
-    et2_tabbox.prototype.getDOMNode = function (_sender) {
+    }
+    getDOMNode(_sender) {
         if (_sender === this || typeof _sender === 'undefined') {
             return this.container[0];
         }
@@ -394,39 +377,39 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             return null;
         }
-    };
-    et2_tabbox.prototype.set_tab_height = function (_height) {
+    }
+    set_tab_height(_height) {
         this.tab_height = _height;
         this.tabContainer.css("height", _height);
-    };
-    et2_tabbox.prototype.set_height = function (_value) {
+    }
+    set_height(_value) {
         this.height = _value;
         this.tabContainer.css("height", _value);
-    };
+    }
     /**
      * getValue has to return the value of the input widget
      */
-    et2_tabbox.prototype.getValue = function () {
+    getValue() {
         return this.selected_index !== false ? this.tabData[this.selected_index].id : undefined;
-    };
+    }
     /**
      * Is dirty returns true if the value of the widget has changed since it
      * was loaded.
      */
-    et2_tabbox.prototype.isDirty = function () {
+    isDirty() {
         // We consider tab changes are not real changes
         return false;
-    };
+    }
     /**
      * Causes the dirty flag to be reseted.
      */
-    et2_tabbox.prototype.resetDirty = function () {
+    resetDirty() {
         this.value = this.selected_index;
-    };
-    et2_tabbox.prototype.isValid = function (messages) {
+    }
+    isValid(messages) {
         return true;
-    };
-    et2_tabbox.prototype.resize = function (_height) {
+    }
+    resize(_height) {
         if (_height) {
             this.set_height(this.tabContainer.height() + _height);
         }
@@ -434,14 +417,14 @@ var et2_tabbox = /** @class */ (function (_super) {
         else if (_height === 0) {
             this.set_height(this.tabContainer.height());
         }
-    };
+    }
     /**
      * Set up for printing
      *
      * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
      *  (waiting for data)
      */
-    et2_tabbox.prototype.beforePrint = function () {
+    beforePrint() {
         // Remove the "active" flag from all tabs-flags
         jQuery(".et2_tabflag", this.flagContainer).removeClass("active");
         // Remove height limit
@@ -454,41 +437,40 @@ var et2_tabbox = /** @class */ (function (_super) {
             entry.flagDiv.insertBefore(entry.contentDiv);
             entry.contentDiv.show();
         }
-    };
+    }
     /**
      * Reset after printing
      */
-    et2_tabbox.prototype.afterPrint = function () {
+    afterPrint() {
         for (var i = 0; i < this.tabData.length; i++) {
             var entry = this.tabData[i];
             entry.flagDiv.appendTo(this.flagContainer);
         }
         this.setActiveTab(this.get_active_tab());
-    };
-    et2_tabbox._attributes = {
-        'tabs': {
-            'name': 'Tabs',
-            'default': et2_no_init,
-            'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are prepend, hidden and id, for access into content array"
-        },
-        'add_tabs': {
-            'name': 'Add tabs',
-            'default': false,
-            'description': 'Set to true if tabs should be added to tabs from read from template, default false if not'
-        },
-        'tab_height': {
-            name: 'Tabs innerHeight',
-            default: '',
-            description: 'Set the innerHeight for the tab content'
-        },
-        'align_tabs': {
-            name: 'Tabs alignment',
-            type: 'string',
-            default: 'h',
-            description: 'Set tabs and their headers arrangment either horizental (h) or vertical (v). Default value is horizental.'
-        }
-    };
-    return et2_tabbox;
-}(et2_core_valueWidget_1.et2_valueWidget));
-et2_core_widget_1.et2_register_widget(et2_tabbox, ["tabbox"]);
+    }
+}
+et2_tabbox._attributes = {
+    'tabs': {
+        'name': 'Tabs',
+        'default': et2_no_init,
+        'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are prepend, hidden and id, for access into content array"
+    },
+    'add_tabs': {
+        'name': 'Add tabs',
+        'default': false,
+        'description': 'Set to true if tabs should be added to tabs from read from template, default false if not'
+    },
+    'tab_height': {
+        name: 'Tabs innerHeight',
+        default: '',
+        description: 'Set the innerHeight for the tab content'
+    },
+    'align_tabs': {
+        name: 'Tabs alignment',
+        type: 'string',
+        default: 'h',
+        description: 'Set tabs and their headers arrangment either horizental (h) or vertical (v). Default value is horizental.'
+    }
+};
+et2_register_widget(et2_tabbox, ["tabbox"]);
 //# sourceMappingURL=et2_widget_tabs.js.map

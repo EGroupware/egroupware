@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Itempicker object
  * derived from et2_link_entry widget @copyright 2011 Nathan Gray
@@ -6,26 +5,12 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Christian Binder
  * @author Nathan Gray
  * @copyright 2012 Christian Binder
  * @copyright 2011 Nathan Gray
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inputWidget;
@@ -33,61 +18,60 @@ Object.defineProperty(exports, "__esModule", { value: true });
     et2_extension_itempicker_actions;
     egw_action.egw_action_common;
 */
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_csvSplit, et2_no_init } from "./et2_core_common";
+import { egw } from "../jsapi/egw_global";
 /**
  * Class which implements the "itempicker" XET-Tag
  *
  * @augments et2_inputWidget
  */
-var et2_itempicker = /** @class */ (function (_super) {
-    __extends(et2_itempicker, _super);
+export class et2_itempicker extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_itempicker
      */
-    function et2_itempicker(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_itempicker._attributes, _child || {})) || this;
-        _this.last_search = ""; // Remember last search value
-        _this.action = null; // Action function for button
-        _this.current_app = ""; // Remember currently chosen application
-        _this.div = null;
-        _this.left = null;
-        _this.right = null;
-        _this.right_container = null;
-        _this.app_select = null;
-        _this.search = null;
-        _this.button_action = null;
-        _this.itemlist = null;
-        _this.div = null;
-        _this.left = null;
-        _this.right = null;
-        _this.right_container = null;
-        _this.app_select = null;
-        _this.search = null;
-        _this.button_action = null;
-        _this.itemlist = null;
-        if (_this.options.action !== null && typeof _this.options.action == "string") {
-            _this.action = new egwFnct(_this, "javaScript:" + _this.options.action);
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_itempicker._attributes, _child || {}));
+        this.last_search = ""; // Remember last search value
+        this.action = null; // Action function for button
+        this.current_app = ""; // Remember currently chosen application
+        this.div = null;
+        this.left = null;
+        this.right = null;
+        this.right_container = null;
+        this.app_select = null;
+        this.search = null;
+        this.button_action = null;
+        this.itemlist = null;
+        this.div = null;
+        this.left = null;
+        this.right = null;
+        this.right_container = null;
+        this.app_select = null;
+        this.search = null;
+        this.button_action = null;
+        this.itemlist = null;
+        if (this.options.action !== null && typeof this.options.action == "string") {
+            this.action = new egwFnct(this, "javaScript:" + this.options.action);
         }
         else {
             console.log("itempicker widget: no action provided for button");
         }
-        _this.createInputWidget();
-        return _this;
+        this.createInputWidget();
     }
-    et2_itempicker.prototype.clearSearchResults = function () {
+    clearSearchResults() {
         this.search.val("");
         this.itemlist.html("");
         this.search.focus();
         this.clear.hide();
-    };
-    et2_itempicker.prototype.createInputWidget = function () {
-        var _self = this;
+    }
+    createInputWidget() {
+        let _self = this;
         this.div = jQuery(document.createElement("div"));
         this.left = jQuery(document.createElement("div"));
         this.right = jQuery(document.createElement("div"));
@@ -103,15 +87,15 @@ var et2_itempicker = /** @class */ (function (_super) {
         this.right_container.addClass("et2_itempicker_right_container");
         // Application select
         this.app_select.addClass("et2_itempicker_app_select");
-        var item_count = 0;
-        for (var key in this.options.select_options) {
-            var img_icon = this.egw().image(key + "/navbar");
+        let item_count = 0;
+        for (let key in this.options.select_options) {
+            let img_icon = this.egw().image(key + "/navbar");
             if (img_icon === null) {
                 continue;
             }
-            var img = jQuery(document.createElement("img"));
+            let img = jQuery(document.createElement("img"));
             img.attr("src", img_icon);
-            var item = jQuery(document.createElement("li"));
+            let item = jQuery(document.createElement("li"));
             item.attr("id", key)
                 .click(function () {
                 _self.selectApplication(jQuery(this));
@@ -126,7 +110,7 @@ var et2_itempicker = /** @class */ (function (_super) {
         // Search input field
         this.search.addClass("et2_itempicker_search");
         this.search.keyup(function () {
-            var request = {};
+            let request = {};
             request.term = jQuery(this).val();
             _self.query(request);
         });
@@ -139,7 +123,7 @@ var et2_itempicker = /** @class */ (function (_super) {
         })
             .hide();
         // Action button
-        this.button_action = et2_createWidget("button");
+        this.button_action = et2_createWidget("button", {});
         jQuery(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
         this.button_action.set_label(this.egw().lang(this.options.action_label));
         this.button_action.click = function () { _self.doAction(); };
@@ -156,28 +140,28 @@ var et2_itempicker = /** @class */ (function (_super) {
         this.div.append(this.right); // right before left to have a natural
         this.div.append(this.left); // z-index for left div over right div
         this.setDOMNode(this.div[0]);
-    };
-    et2_itempicker.prototype.doAction = function () {
+    }
+    doAction() {
         if (this.action !== null) {
-            var data = {};
+            let data = {};
             data.app = this.current_app;
             data.value = this.options.value;
             data.checked = this.getSelectedItems();
             return this.action.exec(this, data);
         }
         return false;
-    };
-    et2_itempicker.prototype.getSelectedItems = function () {
-        var items = [];
+    }
+    getSelectedItems() {
+        let items = [];
         jQuery(this.itemlist).children("ul").children("li.selected").each(function (index) {
             items[index] = jQuery(this).attr("id");
         });
         return items;
-    };
+    }
     /**
      * Ask server for entries matching selected app/type and filtered by search string
      */
-    et2_itempicker.prototype.query = function (request) {
+    query(request) {
         if (request.term.length < 3) {
             return true;
         }
@@ -194,22 +178,22 @@ var et2_itempicker = /** @class */ (function (_super) {
         this.itemlist.addClass("loading");
         this.clear.css("display", "inline-block");
         egw.json("EGroupware\\Api\\Etemplate\\Widget\\ItemPicker::ajax_item_search", [this.current_app, '', request.term, request.options], this.queryResults, this, true, this).sendRequest();
-    };
+    }
     /**
      * Server found some results for query
      */
-    et2_itempicker.prototype.queryResults = function (data) {
+    queryResults(data) {
         this.itemlist.removeClass("loading");
         this.updateItemList(data);
-    };
-    et2_itempicker.prototype.selectApplication = function (app) {
+    }
+    selectApplication(app) {
         this.clearSearchResults();
         jQuery(".et2_itempicker_app_select li").removeClass("selected");
         app.addClass("selected");
         this.current_app = app.attr("id");
         return true;
-    };
-    et2_itempicker.prototype.set_blur = function (_value, input) {
+    }
+    set_blur(_value, input) {
         if (typeof input == 'undefined')
             input = this.search;
         if (_value) {
@@ -219,11 +203,11 @@ var et2_itempicker = /** @class */ (function (_super) {
                 if (input.val() == "")
                     input.val(_value);
                 input.focus(input, function (e) {
-                    var placeholder = _value;
+                    let placeholder = _value;
                     if (e.data.val() == placeholder)
                         e.data.val("");
                 }).blur(input, function (e) {
-                    var placeholder = _value;
+                    let placeholder = _value;
                     if (e.data.val() == "")
                         e.data.val(placeholder);
                 });
@@ -234,13 +218,13 @@ var et2_itempicker = /** @class */ (function (_super) {
         else {
             this.search.removeAttr("placeholder");
         }
-    };
-    et2_itempicker.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
+    }
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
         _attrs["select_options"] = {};
         if (_attrs["application"]) {
-            var apps = et2_csvSplit(_attrs["application"], null, ",");
-            for (var i = 0; i < apps.length; i++) {
+            let apps = et2_csvSplit(_attrs["application"], null, ",");
+            for (let i = 0; i < apps.length; i++) {
                 _attrs["select_options"][apps[i]] = this.egw().lang(apps[i]);
             }
         }
@@ -257,12 +241,12 @@ var et2_itempicker = /** @class */ (function (_super) {
         if (_attrs["select_options"] == null) {
             _attrs["select_options"] = {};
         }
-    };
-    et2_itempicker.prototype.updateItemList = function (data) {
-        var list = jQuery(document.createElement("ul"));
-        var item_count = 0;
-        for (var id in data) {
-            var item = jQuery(document.createElement("li"));
+    }
+    updateItemList(data) {
+        let list = jQuery(document.createElement("ul"));
+        let item_count = 0;
+        for (let id in data) {
+            let item = jQuery(document.createElement("li"));
             if (item_count % 2 == 0) {
                 item.addClass("row_on");
             }
@@ -278,16 +262,16 @@ var et2_itempicker = /** @class */ (function (_super) {
                 }
                 else if (e.shiftKey) {
                     // select range
-                    var start = jQuery(this).siblings(".selected").first();
+                    let start = jQuery(this).siblings(".selected").first();
                     if ((start === null || start === void 0 ? void 0 : start.length) == 0) {
                         // no start item - cannot select range - select single item
                         jQuery(this).addClass("selected");
                         return true;
                     }
-                    var end = jQuery(this);
+                    let end = jQuery(this);
                     // swap start and end if start appears after end in dom hierarchy
                     if (start.index() > end.index()) {
-                        var startOld = start;
+                        let startOld = start;
                         start = end;
                         end = startOld;
                     }
@@ -306,47 +290,46 @@ var et2_itempicker = /** @class */ (function (_super) {
             item_count++;
         }
         this.itemlist.html(list);
-    };
-    et2_itempicker._attributes = {
-        "action": {
-            "name": "Action callback",
-            "type": "string",
-            "default": false,
-            "description": "Callback for action.  Must be a function(context, data)"
-        },
-        "action_label": {
-            "name": "Action label",
-            "type": "string",
-            "default": "Action",
-            "description": "Label for action button"
-        },
-        "application": {
-            "name": "Application",
-            "type": "string",
-            "default": "",
-            "description": "Limit to the listed application or applications (comma separated)"
-        },
-        "blur": {
-            "name": "Placeholder",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
-        },
-        "value": {
-            "name": "value",
-            "type": "any",
-            "default": "",
-            "description": "Optional itempicker value(s) - can be used for e.g. environmental information"
-        },
-        "query": {
-            "name": "Query callback",
-            "type": "any",
-            "default": false,
-            "description": "Callback before query to server.  Must return true, or false to abort query."
-        }
-    };
-    et2_itempicker.legacyOptions = ["application"];
-    return et2_itempicker;
-}(et2_core_inputWidget_1.et2_inputWidget));
-et2_core_widget_1.et2_register_widget(et2_itempicker, ["itempicker"]);
+    }
+}
+et2_itempicker._attributes = {
+    "action": {
+        "name": "Action callback",
+        "type": "string",
+        "default": false,
+        "description": "Callback for action.  Must be a function(context, data)"
+    },
+    "action_label": {
+        "name": "Action label",
+        "type": "string",
+        "default": "Action",
+        "description": "Label for action button"
+    },
+    "application": {
+        "name": "Application",
+        "type": "string",
+        "default": "",
+        "description": "Limit to the listed application or applications (comma separated)"
+    },
+    "blur": {
+        "name": "Placeholder",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+    },
+    "value": {
+        "name": "value",
+        "type": "any",
+        "default": "",
+        "description": "Optional itempicker value(s) - can be used for e.g. environmental information"
+    },
+    "query": {
+        "name": "Query callback",
+        "type": "any",
+        "default": false,
+        "description": "Callback before query to server.  Must return true, or false to abort query."
+    }
+};
+et2_itempicker.legacyOptions = ["application"];
+et2_register_widget(et2_itempicker, ["itempicker"]);
 //# sourceMappingURL=et2_widget_itempicker.js.map

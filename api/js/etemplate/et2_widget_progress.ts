@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Ralf Becker
  */
 
@@ -17,13 +17,15 @@
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Class which implements the "progress" XET-Tag
  *
  * @augments et2_valueWidget
  */
-class et2_progress extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_progress extends et2_valueWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"href": {

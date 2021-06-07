@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Christian Binder
  * @author Nathan Gray
  * @copyright 2012 Christian Binder

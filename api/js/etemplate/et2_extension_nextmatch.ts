@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 
@@ -41,8 +40,8 @@
 
 */
 
-import './et2_core_common';
-import './et2_core_interfaces';
+import {et2_csvSplit, et2_no_init} from "./et2_core_common";
+import {et2_IInput, et2_IPrint, et2_IResizeable, implements_methods, et2_implements_registry} from "./et2_core_interfaces";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
@@ -65,6 +64,8 @@ import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_button} from "./et2_widget_button";
 import {et2_searchbox} from "./et2_widget_textbox";
 import {et2_template} from "./et2_widget_template";
+import {app, egw} from "../jsapi/egw_global";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
@@ -82,8 +83,8 @@ export interface et2_INextmatchHeader {
 	 */
 	setNextmatch(nextmatch : et2_nextmatch) : void
 }
-var et2_INextmatchHeader = "et2_INextmatchHeader";
-function implements_et2_INextmatchHeader(obj : et2_widget)
+export const et2_INextmatchHeader = "et2_INextmatchHeader";
+et2_implements_registry.et2_INextmatchHeader = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["setNextmatch"]);
 }
@@ -93,9 +94,8 @@ export interface et2_INextmatchSortable
 	setSortmode(_sort_mode): void
 }
 
-var et2_INextmatchSortable = "et2_INextmatchSortable";
-
-function implements_et2_INextmatchSortable(obj: et2_widget)
+export const et2_INextmatchSortable = "et2_INextmatchSortable";
+et2_implements_registry.et2_INextmatchSortable = function(obj: et2_widget)
 {
 	return implements_methods(obj, ["setSortmode"]);
 }
@@ -3105,7 +3105,7 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  * actually load templates from the server.
  * @augments et2_DOMWidget
  */
-class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHeader
+export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INextmatchHeader
 {
 	static readonly _attributes: any = {
 		"filter_label": {
@@ -4298,7 +4298,7 @@ et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter
  *
  * @augments et2_taglist
  */
-class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
+export class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
 {
 	static readonly _attributes : any = {
 		autocomplete_url: { default: ''},
@@ -4386,7 +4386,7 @@ et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
 /**
  * Nextmatch filter that can filter for a selected entry
  */
-class et2_nextmatch_entryheader extends et2_link_entry implements et2_INextmatchHeader
+export class et2_nextmatch_entryheader extends et2_link_entry implements et2_INextmatchHeader
 {
 	/**
 	 * Override to add change handler
@@ -4461,7 +4461,7 @@ et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
 /**
  * @augments et2_nextmatch_filterheader
  */
-class et2_nextmatch_customfilter extends et2_nextmatch_filterheader
+export class et2_nextmatch_customfilter extends et2_nextmatch_filterheader
 {
 	static readonly _attributes: any = {
 		"widget_type": {

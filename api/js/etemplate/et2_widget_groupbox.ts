@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
- * @version $Id$
  */
 
 /*egw:uses
@@ -23,7 +22,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
  *
  * @augments et2_baseWidget
  */
-class et2_groupbox extends et2_baseWidget
+export class et2_groupbox extends et2_baseWidget
 {
 	/**
 	 * Constructor
@@ -43,7 +42,7 @@ et2_register_widget(et2_groupbox, ["groupbox"]);
 /**
  * @augments et2_baseWidget
  */
-class et2_groupbox_legend extends et2_baseWidget
+export class et2_groupbox_legend extends et2_baseWidget
 {
 	static readonly _attributes : any = {
 		"label": {

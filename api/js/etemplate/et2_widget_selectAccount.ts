@@ -7,10 +7,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
- * @version $Id$
  */
 
 /*egw:uses
@@ -18,10 +17,11 @@
 */
 
 import {et2_selectbox} from "./et2_widget_selectbox";
-import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_link_entry, et2_link_string} from "./et2_widget_link";
 import {et2_dialog} from "./et2_widget_dialog";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Account selection widget
@@ -434,7 +434,7 @@ export class et2_selectAccount extends et2_selectbox
 	_create_dialog( widgets, update_function)
 	{
 		this.widgets = widgets;
-		this.dialog = et2_dialog.show_dialog(false,
+		this.dialog = et2_dialog.show_dialog(undefined,
 			'',
 			this.options.label ? this.options.label : this.egw().lang('Select'),
 			{},
@@ -463,7 +463,7 @@ export class et2_selectAccount extends et2_selectbox
 		var self = this;
 		var search = this.search = jQuery(document.createElement("div"));
 
-		var search_widget = this.search_widget = et2_createWidget('link-entry', {
+		var search_widget = this.search_widget = <et2_link_entry>et2_createWidget('link-entry', {
 				'only_app': 'api-accounts',
 				'query'( request, response)
 	{

@@ -4,9 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- *
+ */
 
 /*egw:uses
 	et2_core_common;
@@ -14,7 +14,9 @@
 	et2_core_phpExpressionCompiler;
 */
 
-import {et2_widget} from "./et2_core_widget";
+import {et2_evalBool} from "./et2_core_common";
+import type {et2_widget} from "./et2_core_widget";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Manage access to various template customisation arrays passed to etemplate->exec().

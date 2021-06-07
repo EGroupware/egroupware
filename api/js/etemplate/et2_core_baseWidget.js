@@ -1,38 +1,16 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Widget base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_container = exports.et2_baseWidget = void 0;
-/*egw:uses
-    /vendor/bower-asset/jquery/dist/jquery.js;
-    lib/tooltip;
-    et2_core_DOMWidget;
-*/
-require("./et2_core_interfaces");
-require("./et2_core_common");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
+import { et2_DOMWidget } from './et2_core_DOMWidget';
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_no_init } from "./et2_core_common";
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
@@ -40,27 +18,24 @@ var et2_core_widget_1 = require("./et2_core_widget");
  *
  * @augments et2_DOMWidget
  */
-var et2_baseWidget = /** @class */ (function (_super) {
-    __extends(et2_baseWidget, _super);
+export class et2_baseWidget extends et2_DOMWidget {
     /**
      * Constructor
      */
-    function et2_baseWidget(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_baseWidget._attributes, _child || {})) || this;
-        _this.align = 'left';
-        _this.node = null;
-        _this.statustext = '';
-        _this._messageDiv = null;
-        _this._tooltipElem = null;
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_baseWidget._attributes, _child || {}));
+        this.align = 'left';
+        this.node = null;
+        this.statustext = '';
+        this._messageDiv = null;
+        this._tooltipElem = null;
     }
-    et2_baseWidget.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    destroy() {
+        super.destroy();
         this.node = null;
         this._messageDiv = null;
-    };
+    }
     /**
      * The setMessage function can be used to attach a small message box to the
      * widget. This is e.g. used to display validation errors or success messages
@@ -74,7 +49,7 @@ var et2_baseWidget = /** @class */ (function (_super) {
      * @param _prepend if set, the message is displayed behind the widget node
      * 	instead of before. Defaults to false.
      */
-    et2_baseWidget.prototype.showMessage = function (_text, _type, _floating, _prepend) {
+    showMessage(_text, _type, _floating, _prepend) {
         // Preset the parameters
         if (typeof _type == "undefined") {
             _type = "hint";
@@ -103,7 +78,7 @@ var et2_baseWidget = /** @class */ (function (_super) {
             surr.appendDOMNode(this._messageDiv[0]);
         }
         surr.update();
-    };
+    }
     /**
      * The hideMessage function can be used to hide a previously shown message.
      *
@@ -112,7 +87,7 @@ var et2_baseWidget = /** @class */ (function (_super) {
      * @param _noUpdate is used internally to prevent an update of the surroundings
      * 	manager.
      */
-    et2_baseWidget.prototype.hideMessage = function (_fade, _noUpdate) {
+    hideMessage(_fade, _noUpdate) {
         if (typeof _fade == "undefined") {
             _fade = true;
         }
@@ -141,8 +116,8 @@ var et2_baseWidget = /** @class */ (function (_super) {
                 _done();
             }
         }
-    };
-    et2_baseWidget.prototype.detachFromDOM = function () {
+    }
+    detachFromDOM() {
         // Detach this node from the tooltip node
         if (this._tooltipElem) {
             this.egw().tooltipUnbind(this._tooltipElem);
@@ -152,10 +127,10 @@ var et2_baseWidget = /** @class */ (function (_super) {
         if (this.node) {
             jQuery(this.node).unbind("click.et2_baseWidget");
         }
-        return _super.prototype.detachFromDOM.call(this);
-    };
-    et2_baseWidget.prototype.attachToDOM = function () {
-        var ret = _super.prototype.attachToDOM.call(this);
+        return super.detachFromDOM();
+    }
+    attachToDOM() {
+        let ret = super.attachToDOM();
         // Add the binding for the click handler
         if (this.node) {
             jQuery(this.node).bind("click.et2_baseWidget", this, function (e) {
@@ -167,8 +142,8 @@ var et2_baseWidget = /** @class */ (function (_super) {
         // Update the statustext
         this.set_statustext(this.statustext);
         return ret;
-    };
-    et2_baseWidget.prototype.setDOMNode = function (_node) {
+    }
+    setDOMNode(_node) {
         if (_node != this.node) {
             // Deatch the old node from the DOM
             this.detachFromDOM();
@@ -178,20 +153,20 @@ var et2_baseWidget = /** @class */ (function (_super) {
             return this.attachToDOM();
         }
         return false;
-    };
-    et2_baseWidget.prototype.getDOMNode = function (_sender) {
+    }
+    getDOMNode(_sender) {
         return this.node;
-    };
-    et2_baseWidget.prototype.getTooltipElement = function () {
+    }
+    getTooltipElement() {
         return this.getDOMNode(this);
-    };
+    }
     /**
      * Click handler calling custom handler set via onclick attribute to this.onclick
      *
      * @param _ev
      * @returns
      */
-    et2_baseWidget.prototype.click = function (_ev) {
+    click(_ev) {
         if (typeof this.onclick == 'function') {
             // Make sure function gets a reference to the widget, splice it in as 2. argument if not
             var args = Array.prototype.slice.call(arguments);
@@ -200,8 +175,8 @@ var et2_baseWidget = /** @class */ (function (_super) {
             return this.onclick.apply(this, args);
         }
         return true;
-    };
-    et2_baseWidget.prototype.set_statustext = function (_value) {
+    }
+    set_statustext(_value) {
         // Tooltip should not be shown in mobile view
         if (egwIsMobile())
             return;
@@ -223,66 +198,61 @@ var et2_baseWidget = /** @class */ (function (_super) {
                 this._tooltipElem = elem;
             }
         }
-    };
-    et2_baseWidget.prototype.set_align = function (_value) {
+    }
+    set_align(_value) {
         this.align = _value;
-    };
-    et2_baseWidget.prototype.get_align = function () {
+    }
+    get_align() {
         return this.align;
-    };
-    et2_baseWidget._attributes = {
-        "statustext": {
-            "name": "Tooltip",
-            "type": "string",
-            "description": "Tooltip which is shown for this element",
-            "translate": true
-        },
-        "statustext_html": {
-            "name": "Tooltip is html",
-            "type": "boolean",
-            "description": "Flag to allow html content in tooltip",
-            "default": false
-        },
-        "align": {
-            "name": "Align",
-            "type": "string",
-            "default": "left",
-            "description": "Position of this element in the parent hbox"
-        },
-        "onclick": {
-            "name": "onclick",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when the element is clicked."
-        }
-    };
-    return et2_baseWidget;
-}(et2_core_DOMWidget_1.et2_DOMWidget));
-exports.et2_baseWidget = et2_baseWidget;
+    }
+}
+et2_baseWidget._attributes = {
+    "statustext": {
+        "name": "Tooltip",
+        "type": "string",
+        "description": "Tooltip which is shown for this element",
+        "translate": true
+    },
+    "statustext_html": {
+        "name": "Tooltip is html",
+        "type": "boolean",
+        "description": "Flag to allow html content in tooltip",
+        "default": false
+    },
+    "align": {
+        "name": "Align",
+        "type": "string",
+        "default": "left",
+        "description": "Position of this element in the parent hbox"
+    },
+    "onclick": {
+        "name": "onclick",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when the element is clicked."
+    }
+};
 /**
  * Simple container object
  *
  * There is no tag to put this in a template.  By convention we only make one of these per etemplate,
  * and it's the top level object.
  */
-var et2_container = /** @class */ (function (_super) {
-    __extends(et2_container, _super);
+export class et2_container extends et2_baseWidget {
     /**
      * Constructor
      */
-    function et2_container(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_container._attributes, _child || {})) || this;
-        _this.setDOMNode(document.createElement("div"));
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_container._attributes, _child || {}));
+        this.setDOMNode(document.createElement("div"));
     }
     /**
      * The destroy function destroys all children of the widget, removes itself
      * from the parents children list.
      * Overriden to not try to remove self from parent, as that's not possible.
      */
-    et2_container.prototype.destroy = function () {
+    destroy() {
         // Call the destructor of all children
         for (var i = this._children.length - 1; i >= 0; i--) {
             this._children[i].destroy();
@@ -293,31 +263,31 @@ var et2_container = /** @class */ (function (_super) {
                 this._mgrs[key].destroy();
             }
         }
-    };
+    }
     /**
      * Searches for a DOM widget by id in the tree, descending into the child levels.
      *
      * @param _id is the id you're searching for
      */
-    et2_container.prototype.getDOMWidgetById = function (_id) {
-        var widget = this.getWidgetById(_id);
-        if (widget && widget.instanceOf(et2_core_DOMWidget_1.et2_DOMWidget)) {
+    getDOMWidgetById(_id) {
+        let widget = this.getWidgetById(_id);
+        if (widget && widget.instanceOf(et2_DOMWidget)) {
             return widget;
         }
         return null;
-    };
+    }
     /**
      * Searches for a Value widget by id in the tree, descending into the child levels.
      *
      * @param _id is the id you're searching for
      */
-    et2_container.prototype.getInputWidgetById = function (_id) {
-        var widget = this.getWidgetById(_id);
+    getInputWidgetById(_id) {
+        let widget = this.getWidgetById(_id);
         if (widget && widget.instanceOf(et2_valueWidget)) {
             return widget;
         }
         return null;
-    };
+    }
     /**
      * Set the value for a child widget, specified by the given ID
      *
@@ -328,8 +298,8 @@ var et2_container = /** @class */ (function (_super) {
      *
      * @throws Error If the widget cannot be found or it does not have a set_value() function
      */
-    et2_container.prototype.setValueById = function (id, value) {
-        var widget = this.getWidgetById(id);
+    setValueById(id, value) {
+        let widget = this.getWidgetById(id);
         if (!widget)
             throw 'Could not find widget ' + id;
         // Don't care about what class it is, just that it has the function
@@ -339,7 +309,7 @@ var et2_container = /** @class */ (function (_super) {
         }
         // @ts-ignore
         return widget.set_value(value);
-    };
+    }
     /**
      * Get the current value of a child widget, specified by the given ID
      *
@@ -348,8 +318,8 @@ var et2_container = /** @class */ (function (_super) {
      * @param id  string The ID you're searching for
      * @throws Error If the widget cannot be found or it does not have a set_value() function
      */
-    et2_container.prototype.getValueById = function (id) {
-        var widget = this.getWidgetById(id);
+    getValueById(id) {
+        let widget = this.getWidgetById(id);
         if (!widget)
             throw 'Could not find widget ' + id;
         // Don't care about what class it is, just that it has the function
@@ -359,15 +329,15 @@ var et2_container = /** @class */ (function (_super) {
         }
         // @ts-ignore
         return widget.get_value();
-    };
+    }
     /**
      * Set the value for a child widget, specified by the given ID
      *
      * @param id  string The ID you're searching for
      * @throws Error If the widget cannot be found or it does not have a set_value() function
      */
-    et2_container.prototype.setDisabledById = function (id, value) {
-        var widget = this.getWidgetById(id);
+    setDisabledById(id, value) {
+        let widget = this.getWidgetById(id);
         if (!widget)
             throw 'Could not find widget ' + id;
         // Don't care about what class it is, just that it has the function
@@ -377,39 +347,35 @@ var et2_container = /** @class */ (function (_super) {
         }
         // @ts-ignore
         return widget.set_disabled(value);
-    };
-    return et2_container;
-}(et2_baseWidget));
-exports.et2_container = et2_container;
+    }
+}
 // Register widget for attributes, but not for any xml tags
-et2_core_widget_1.et2_register_widget(et2_container, []);
+et2_register_widget(et2_container, []);
 /**
  * Container object for not-yet supported widgets
  *
  * @augments et2_baseWidget
  */
-var et2_placeholder = /** @class */ (function (_super) {
-    __extends(et2_placeholder, _super);
+export class et2_placeholder extends et2_baseWidget {
     /**
      * Constructor
      */
-    function et2_placeholder(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_placeholder._attributes, _child || {})) || this;
-        _this.visible = false;
-        _this.attrNodes = {};
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_placeholder._attributes, _child || {}));
+        this.visible = false;
+        this.attrNodes = {};
         // Create the placeholder div
-        _this.placeDiv = jQuery(document.createElement("span"))
+        this.placeDiv = jQuery(document.createElement("span"))
             .addClass("et2_placeholder");
         var headerNode = jQuery(document.createElement("span"))
-            .text(_this.getType() || "")
+            .text(this.getType() || "")
             .addClass("et2_caption")
-            .appendTo(_this.placeDiv);
+            .appendTo(this.placeDiv);
         var attrsCntr = jQuery(document.createElement("span"))
-            .appendTo(_this.placeDiv)
+            .appendTo(this.placeDiv)
             .hide();
-        headerNode.click(_this, function (e) {
+        headerNode.click(this, function (e) {
             e.data.visible = !e.data.visible;
             if (e.data.visible) {
                 attrsCntr.show();
@@ -418,30 +384,28 @@ var et2_placeholder = /** @class */ (function (_super) {
                 attrsCntr.hide();
             }
         });
-        for (var key in _this.options) {
-            if (typeof _this.options[key] != "undefined") {
-                if (typeof _this.attrNodes[key] == "undefined") {
-                    _this.attrNodes[key] = jQuery(document.createElement("span"))
+        for (var key in this.options) {
+            if (typeof this.options[key] != "undefined") {
+                if (typeof this.attrNodes[key] == "undefined") {
+                    this.attrNodes[key] = jQuery(document.createElement("span"))
                         .addClass("et2_attr");
-                    attrsCntr.append(_this.attrNodes[key]);
+                    attrsCntr.append(this.attrNodes[key]);
                 }
-                _this.attrNodes[key].text(key + "=" + _this.options[key]);
+                this.attrNodes[key].text(key + "=" + this.options[key]);
             }
         }
-        _this.setDOMNode(_this.placeDiv[0]);
-        return _this;
+        this.setDOMNode(this.placeDiv[0]);
     }
-    et2_placeholder.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("value");
-    };
-    et2_placeholder.prototype.getDetachedNodes = function () {
+    }
+    getDetachedNodes() {
         return [this.placeDiv[0]];
-    };
-    et2_placeholder.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         this.placeDiv = jQuery(_nodes[0]);
-    };
-    return et2_placeholder;
-}(et2_baseWidget));
+    }
+}
 // Register widget, but no tags
-et2_core_widget_1.et2_register_widget(et2_placeholder, []);
+et2_register_widget(et2_placeholder, ['placeholder', 'placeholder_ro']);
 //# sourceMappingURL=et2_core_baseWidget.js.map

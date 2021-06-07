@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -14,11 +14,14 @@
 	et2_core_DOMWidget;
 */
 
-import './et2_core_interfaces';
-import './et2_core_common';
+import {et2_IAligned, et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_DOMWidget} from './et2_core_DOMWidget';
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_no_init} from "./et2_core_common";
+// fixing circular dependencies by only importing type
+import type {et2_inputWidget} from "./et2_core_inputWidget";
+import type {et2_valueWidget} from "./et2_core_valueWidget";
 
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
@@ -467,7 +470,7 @@ et2_register_widget(et2_container, []);
  *
  * @augments et2_baseWidget
  */
-class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
+export class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
 {
 	/**
 	 *  he attrNodes object will hold the DOM nodes which represent the
@@ -546,4 +549,4 @@ class et2_placeholder extends et2_baseWidget implements et2_IDetachedDOM
 	}
 }
 // Register widget, but no tags
-et2_register_widget(et2_placeholder, []);
+et2_register_widget(et2_placeholder, ['placeholder', 'placeholder_ro']);

@@ -88,6 +88,13 @@ class IncludeMgr
 	private $debug_parsing_imports = false;
 
 	/**
+	 * Size of file parsed, must include all /*egw:uses and include statements
+	 *
+	 * etemplate2.js is ~3900 currently
+	 */
+	const PARSE_SIZE = 4096;
+
+	/**
 	 * Parses the js file for includes and returns all required files
 	 */
 	private function parse_file($file)
@@ -103,7 +110,7 @@ class IncludeMgr
 
 		$modules = $modules2 = [];
 		// Try to open the given file
-		if (($header = file_get_contents(EGW_SERVER_ROOT.$file, false, null, 0, 2048)))
+		if (($header = file_get_contents(EGW_SERVER_ROOT.$file, false, null, 0, self::PARSE_SIZE)))
 		{
 			if ($this->debug_parsing_imports) echo "<p>$file</p>\n";
 			$matches = null;

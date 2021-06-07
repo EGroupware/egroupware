@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -14,18 +14,24 @@
 	et2_core_valueWidget;
 */
 
-import './et2_core_common';
+import {et2_no_init} from "./et2_core_common";
 import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_DOMWidget } from './et2_core_DOMWidget'
+import { et2_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_valueWidget } from './et2_core_valueWidget'
+import {et2_IInput, et2_ISubmitListener} from "./et2_core_interfaces";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+// fixing circular dependencies by only importing the type (not in compiled .js)
+import type {et2_tabbox} from "./et2_widget_tabs";
 
+export interface et2_input {
+	getInputNode() : HTMLInputElement|HTMLElement;
+}
 /**
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput
  * interface. When derriving from this class, call setDOMNode with an input
  * DOMNode.
  */
-export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_ISubmitListener
+export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_ISubmitListener, et2_input
 {
 	static readonly _attributes : any = {
 		"needed": {

@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
 
 /*egw:uses
@@ -16,12 +15,14 @@
 	et2_core_xml;
 */
 
-import './et2_core_common';
-import './et2_core_interfaces';
+import {et2_no_init} from "./et2_core_common";
+import {et2_IAligned, et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
 import '../egw_action/egw_action.js';
+import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
+import {egw} from "../jsapi/egw_global";
 
 
 /**

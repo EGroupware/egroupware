@@ -4,16 +4,21 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	et2_dataview_view_aoi;
 
 	egw_action.egw_keymanager;
 */
+
+import {egw} from "../jsapi/egw_global";
+import {et2_bounds} from "./et2_core_common";
+import {et2_dialog} from "./et2_widget_dialog";
+import {et2_createWidget} from "./et2_core_widget";
 
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
@@ -41,8 +46,8 @@ export class et2_dataview_selectionManager
 	private select_callback: null;
 
 	private _context: any;
-	private _registeredRows: {};
-	private _focusedEntry: null;
+	_registeredRows: {};
+	_focusedEntry: null;
 	private _invertSelection: boolean;
 	private _selectAll: boolean;
 	private _inUpdate: boolean;

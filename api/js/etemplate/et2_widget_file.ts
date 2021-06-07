@@ -4,20 +4,23 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
 	et2_core_inputWidget;
-	phpgwapi.Resumable.resumable;
+	api.Resumable.resumable;
 */
 
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
+import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {et2_vfsSize} from "./et2_widget_vfs";
+import "../Resumable/resumable.js";
 
 /**
  * Class which implements file upload
@@ -293,7 +296,7 @@ export class et2_file extends et2_inputWidget
 		if(!this.options.drop_target) return;
 
 		// Set up new drop target
-		let widget = this.getRoot().getWidgetById(this.options.drop_target);
+		let widget = <et2_DOMWidget>this.getRoot().getWidgetById(this.options.drop_target);
 		let drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
 		if(drop_target)
 		{
@@ -603,7 +606,7 @@ export class et2_file extends et2_inputWidget
 
 		if(this.options.progress)
 		{
-			var widget = this.getRoot().getWidgetById(this.options.progress);
+			var widget = <et2_DOMWidget>this.getRoot().getWidgetById(this.options.progress);
 			if(widget)
 			{
 				this.progress = jQuery(widget.getDOMNode());

@@ -4,21 +4,21 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Ralf Becker <rb@egroupware.org>
  * @author Hadi Nategh <hn@groupware.org>
  * @author Nathan Gray <ng@groupware.org>
  */
 
-import 'jquery';
-import 'jqueryui';
-import '../jsapi/egw_global';
+import '../../../vendor/bower-asset/jquery/dist/jquery.js';
+import '../../../vendor/bower-asset/jquery-ui/jquery-ui.js';
 import {etemplate2} from "../etemplate/etemplate2";
-import {et2_container} from "../etemplate/et2_core_baseWidget";
+import type {et2_container} from "../etemplate/et2_core_baseWidget";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {et2_favorites} from "../etemplate/et2_widget_favorites";
+import type {IegwAppLocal} from "./egw_global";
 
 /**
  * Type for push-message

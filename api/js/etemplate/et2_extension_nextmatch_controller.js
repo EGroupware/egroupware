@@ -1,53 +1,22 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - Class which contains a the data model for nextmatch widgets
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
- * @version $Id$
- *
-
-/*egw:uses
-    et2_core_common;
-    et2_core_inheritance;
-
-    et2_dataview_view_row;
-    et2_dataview_controller;
-    et2_dataview_interfaces;
-    et2_dataview_view_tile;
-
-    et2_extension_nextmatch_actions; // Contains nm_action
-
-    egw_data;
-*/
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_nextmatch_controller = void 0;
-var et2_dataview_view_row_1 = require("./et2_dataview_view_row");
-var et2_dataview_view_tile_1 = require("./et2_dataview_view_tile");
-var et2_dataview_controller_1 = require("./et2_dataview_controller");
-var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
+ * @copyright EGroupware GmbH 2011-2021
+ */
+import { et2_dataview_row } from "./et2_dataview_view_row";
+import { et2_dataview_tile } from "./et2_dataview_view_tile";
+import { et2_dataview_controller } from "./et2_dataview_controller";
+import { et2_dataview_column } from "./et2_dataview_model_columns";
+import { framework } from "../jsapi/egw_global";
 /**
  * @augments et2_dataview_controller
  */
-var et2_nextmatch_controller = /** @class */ (function (_super) {
-    __extends(et2_nextmatch_controller, _super);
+export class et2_nextmatch_controller extends et2_dataview_controller {
     /**
      * Initializes the nextmatch controller.
      *
@@ -64,62 +33,60 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
      * is given.
      * @memberOf et2_nextmatch_controller
      */
-    function et2_nextmatch_controller(_parentController, _egw, _execId, _widget, _parentId, _grid, _rowProvider, _actionLinks, _objectManager, _actions) {
-        var _this = 
+    constructor(_parentController, _egw, _execId, _widget, _parentId, _grid, _rowProvider, _actionLinks, _objectManager, _actions) {
         // Call the parent et2_dataview_controller constructor
-        _super.call(this, _parentController, _grid) || this;
-        _this.setDataProvider(_this);
-        _this.setRowCallback(_this._rowCallback);
-        _this.setLinkCallback(_this._linkCallback);
-        _this.setContext(_this);
+        super(_parentController, _grid);
+        this.setDataProvider(this);
+        this.setRowCallback(this._rowCallback);
+        this.setLinkCallback(this._linkCallback);
+        this.setContext(this);
         // Copy the egw reference
-        _this.egw = _egw;
+        this.egw = _egw;
         // Keep a reference to the widget
-        _this._widget = _widget;
+        this._widget = _widget;
         // Copy the given parameters
-        _this._actionLinks = _actionLinks;
-        _this._execId = _execId;
+        this._actionLinks = _actionLinks;
+        this._execId = _execId;
         // Get full widget ID, including path
         var id = _widget.getArrayMgr('content').getPath();
         if (typeof id == 'string') {
-            _this._widgetId = id;
+            this._widgetId = id;
         }
         else if (id.length === 1) {
-            _this._widgetId = id[0];
+            this._widgetId = id[0];
         }
         else {
-            _this._widgetId = id.shift() + '[' + id.join('][') + ']';
+            this._widgetId = id.shift() + '[' + id.join('][') + ']';
         }
-        _this._parentId = _parentId;
-        _this._rowProvider = _rowProvider;
+        this._parentId = _parentId;
+        this._rowProvider = _rowProvider;
         // Initialize the action and the object manager
         // _initActions calls _init_link_dnd, which uses this._actionLinks,
         // so this must happen after the above parameter copying
         if (!_objectManager) {
-            _this._initActions(_actions);
+            this._initActions(_actions);
         }
         else {
-            _this._actionManager = null;
-            _this._objectManager = _objectManager;
+            this._actionManager = null;
+            this._objectManager = _objectManager;
         }
-        _this.setActionObjectManager(_this._objectManager);
+        this.setActionObjectManager(this._objectManager);
         // Add our selection callback to selection manager
-        var self = _this;
-        _this._objectManager.setSelectedCallback = function () { self._selectCallback.apply(self, [this, arguments]); };
+        var self = this;
+        this._objectManager.setSelectedCallback = function () { self._selectCallback.apply(self, [this, arguments]); };
         // We start with no filters
-        _this._filters = {};
+        this._filters = {};
         // Keep selection across filter changes
-        _this.kept_selection = null;
-        _this.kept_focus = null;
-        _this.kept_expansion = [];
+        this.kept_selection = null;
+        this.kept_focus = null;
+        this.kept_expansion = [];
         // Directly use the API-Implementation of dataRegisterUID and
         // dataUnregisterUID
-        _this.dataUnregisterUID = _egw.dataUnregisterUID;
+        this.dataUnregisterUID = _egw.dataUnregisterUID;
         // Default to rows
-        _this._view = et2_nextmatch_controller.VIEW_ROW;
-        return _this;
+        this._view = et2_nextmatch_controller.VIEW_ROW;
     }
-    et2_nextmatch_controller.prototype.destroy = function () {
+    destroy() {
         // If the actionManager variable is set, the object- and actionManager
         // were created by this instance -- clear them
         if (this._actionManager) {
@@ -127,20 +94,20 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             this._actionManager.remove();
         }
         this._widget = null;
-        _super.prototype.destroy.call(this);
-    };
+        super.destroy();
+    }
     /**
      * Updates the filter instance.
      */
-    et2_nextmatch_controller.prototype.setFilters = function (_filters) {
+    setFilters(_filters) {
         // Update the filters
         this._filters = _filters;
-    };
+    }
     /**
      * Keep the selection, if possible, across a data fetch and restore it
      * after
      */
-    et2_nextmatch_controller.prototype.keepSelection = function () {
+    keepSelection() {
         this.kept_selection = this._selectionMgr ? this._selectionMgr.getSelected() : null;
         this.kept_focus = this._selectionMgr && this._selectionMgr._focusedEntry ?
             this._selectionMgr._focusedEntry.uid || null : null;
@@ -153,17 +120,17 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                 controller.kept_expansion.push(entry.uid);
             }
         });
-    };
-    et2_nextmatch_controller.prototype.getObjectManager = function () {
+    }
+    getObjectManager() {
         return this._objectManager;
-    };
+    }
     /**
      * Deletes a row from the grid
      *
      * @param {string} uid
      */
-    et2_nextmatch_controller.prototype.deleteRow = function (uid) {
-        var entry = Object.values(this._indexMap).find(function (entry) { return entry.uid == uid; });
+    deleteRow(uid) {
+        var entry = Object.values(this._indexMap).find(entry => entry.uid == uid);
         // Unselect
         this._selectionMgr.setSelected(uid, false);
         if (entry && entry.idx !== null) {
@@ -192,11 +159,10 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             // Not needed, they share by reference
             // this._selectionMgr.setIndexMap(this._indexMap);
         }
-        for (var _i = 0, _a = this._children; _i < _a.length; _i++) {
-            var child = _a[_i];
+        for (let child of this._children) {
             child.deleteRow(uid);
         }
-    };
+    }
     /** -- PRIVATE FUNCTIONS -- **/
     /**
      * Create a new row, either normal or tiled
@@ -204,10 +170,10 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
      * @param {type} ctx
      * @returns {et2_dataview_container}
      */
-    et2_nextmatch_controller.prototype._createRow = function (ctx) {
+    _createRow(ctx) {
         switch (this._view) {
             case et2_nextmatch_controller.VIEW_TILE:
-                var row = new et2_dataview_view_tile_1.et2_dataview_tile(this._grid);
+                var row = new et2_dataview_tile(this._grid);
                 // Try to overcome chrome rendering issue where float is not
                 // applied properly, leading to incomplete rows
                 window.setTimeout(function () {
@@ -223,13 +189,13 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                 return row;
             case et2_nextmatch_controller.VIEW_ROW:
             default:
-                return new et2_dataview_view_row_1.et2_dataview_row(this._grid);
+                return new et2_dataview_row(this._grid);
         }
-    };
+    }
     /**
      * Initializes the action and the object manager.
      */
-    et2_nextmatch_controller.prototype._initActions = function (_actions) {
+    _initActions(_actions) {
         // Generate a uid for the action and object manager
         var uid = this._widget.id || this.egw.uid();
         if (_actions == null)
@@ -303,11 +269,11 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                 }
             }
         }
-    };
+    }
     /**
      * Automatically add dnd support for linking
      */
-    et2_nextmatch_controller.prototype._init_links_dnd = function () {
+    _init_links_dnd() {
         var mgr = this._actionManager;
         var self = this;
         var drop_action = mgr.getActionById('egw_link_drop');
@@ -403,29 +369,29 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             this._actionLinks.push(drag_action.id);
         }
         drag_action.set_dragType('link');
-    };
+    }
     /**
      * Set the data cache prefix
      * Overridden from the parent to re-check automatically the added link dnd
      * since the prefix is used in support detection.
      */
-    et2_nextmatch_controller.prototype.setPrefix = function (prefix) {
-        _super.prototype.setPrefix.call(this, prefix);
+    setPrefix(prefix) {
+        super.setPrefix(prefix);
         this._init_links_dnd();
-    };
+    }
     /**
      * Overwrites the inherited _destroyCallback function in order to be able
      * to free the "rowWidget".
      */
-    et2_nextmatch_controller.prototype._destroyCallback = function (_row) {
+    _destroyCallback(_row) {
         // Destroy any widget associated to the row
         if (this.entry.widget) {
             this.entry.widget.destroy();
             this.entry.widget = null;
         }
         // Call the inherited function
-        _super.prototype._destroyCallback.call(this, _row);
-    };
+        super._destroyCallback(_row);
+    }
     /**
      * Creates the actual data row.
      *
@@ -436,11 +402,11 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
      * this special case used to store the rowWidget reference, so that it can
      * be properly freed.
      */
-    et2_nextmatch_controller.prototype._rowCallback = function (_data, _tr, _idx, _entry) {
+    _rowCallback(_data, _tr, _idx, _entry) {
         // Let the row provider fill in the data row -- store the returned
         // rowWidget inside the _entry
         _entry.widget = this._rowProvider.getDataRow({ "content": _data }, _tr, _idx, this);
-    };
+    }
     /**
      * Returns the names of action links for a given data row -- currently these are
      * always the same links, as we controll enabled/disabled over the row
@@ -458,7 +424,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
      *
      * @return Array List of action names that valid for the row
      */
-    et2_nextmatch_controller.prototype._linkCallback = function (_data, _idx, _uid) {
+    _linkCallback(_data, _idx, _uid) {
         if (_uid.trim() != "") {
             return this._actionLinks;
         }
@@ -486,13 +452,13 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         catch (e) {
         }
         return links;
-    };
+    }
     /**
      * Overridden from the parent to also process any additional data that
      * the data source adds, such as readonlys and additonal content.
      * For example, non-numeric IDs in rows are added to the content manager
      */
-    et2_nextmatch_controller.prototype._fetchCallback = function (_response) {
+    _fetchCallback(_response) {
         var nm = this.self._widget;
         if (!nm) {
             // Nextmatch either not connected, or it tried to destroy this
@@ -542,7 +508,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
                 col_refresh = true;
                 nm.dataview.columnMgr.getColumnById('col_' + column_index)
                     .set_visibility(nm.getArrayMgr('content').parseBoolExpression(nm.columns[column_index].disabled) ?
-                    et2_dataview_model_columns_1.et2_dataview_column.ET2_COL_VISIBILITY_DISABLED :
+                    et2_dataview_column.ET2_COL_VISIBILITY_DISABLED :
                     nm.columns[column_index].visible);
             }
         }
@@ -558,7 +524,7 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             this.self.keepSelection();
         }
         // Call the inherited function
-        _super.prototype._fetchCallback.apply(this, arguments);
+        super._fetchCallback.apply(this, arguments);
         // Restore selection, if passed
         if (this.self && this.self.kept_selection && this.self._selectionMgr) {
             if (this.self.kept_selection.all) {
@@ -584,11 +550,11 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
             }
             this.self.kept_focus = null;
         }
-    };
+    }
     /**
      * Execute the select callback when the row selection changes
      */
-    et2_nextmatch_controller.prototype._selectCallback = function (action, senders) {
+    _selectCallback(action, senders) {
         if (typeof senders == "undefined") {
             senders = [];
         }
@@ -598,9 +564,9 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         if (egwIsMobile())
             framework.nm_onselect_ctrl(this._widget, action, senders);
         this._widget.onselect.call(this._widget, action, senders);
-    };
+    }
     /** -- Implementation of et2_IDataProvider -- **/
-    et2_nextmatch_controller.prototype.dataFetch = function (_queriedRange, _callback, _context) {
+    dataFetch(_queriedRange, _callback, _context) {
         // Merge the parent id into the _queriedRange if it is set
         if (this._parentId !== null) {
             _queriedRange["parent_id"] = this._parentId;
@@ -613,21 +579,19 @@ var et2_nextmatch_controller = /** @class */ (function (_super) {
         // Pass the fetch call to the API, multiplex the data about the
         // nextmatch instance into the call.
         this.egw.dataFetch(this._widget.getInstanceManager().etemplate_exec_id || this._execId, _queriedRange, obj._filters, this._widgetId, _callback, _context);
-    };
-    et2_nextmatch_controller.prototype.dataRegisterUID = function (_uid, _callback, _context) {
+    }
+    dataRegisterUID(_uid, _callback, _context) {
         // Make sure we use correct prefix when data comes back
         if (this._widget && this._widget._get_appname() != this.egw.getAppName()) {
             _context.prefix = _uid.split('::')[0];
         }
         this.egw.dataRegisterUID(_uid, _callback, _context, this._widget.getInstanceManager().etemplate_exec_id || this._execId, this._widgetId);
-    };
-    et2_nextmatch_controller.prototype.dataUnregisterUID = function () {
+    }
+    dataUnregisterUID() {
         // Overwritten in the constructor
-    };
-    // Display constants
-    et2_nextmatch_controller.VIEW_ROW = 'row';
-    et2_nextmatch_controller.VIEW_TILE = 'tile';
-    return et2_nextmatch_controller;
-}(et2_dataview_controller_1.et2_dataview_controller));
-exports.et2_nextmatch_controller = et2_nextmatch_controller;
+    }
+}
+// Display constants
+et2_nextmatch_controller.VIEW_ROW = 'row';
+et2_nextmatch_controller.VIEW_TILE = 'tile';
 //# sourceMappingURL=et2_extension_nextmatch_controller.js.map

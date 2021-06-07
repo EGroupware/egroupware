@@ -4,9 +4,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
+
+// fixing circular dependencies
+import type {et2_widget} from "./et2_core_widget";
+
+export var et2_implements_registry : any = {};
 
 /**
  * Checks if an object / et2_widget implements given methods
@@ -14,7 +19,7 @@
  * @param obj
  * @param methods
  */
-function implements_methods(obj : et2_widget, methods : string[]) : boolean
+export function implements_methods(obj : et2_widget, methods : string[]) : boolean
 {
 	for(let i=0; i < methods.length; ++i)
 	{
@@ -29,7 +34,7 @@ function implements_methods(obj : et2_widget, methods : string[]) : boolean
 /**
  * Interface for all widget classes, which are based on a DOM node.
  */
-interface et2_IDOMNode
+export interface et2_IDOMNode
 {
 	/**
 	 * Returns the DOM-Node of the current widget. The return value has to be
@@ -49,16 +54,29 @@ interface et2_IDOMNode
 	 */
 	getDOMNode(_sender? : et2_widget) : HTMLElement
 }
-var et2_IDOMNode = "et2_IDOMNode";
-function implements_et2_IDOMNode(obj : et2_widget)
+export const et2_IDOMNode = "et2_IDOMNode";
+et2_implements_registry.et2_IDOMNode = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["getDOMNode"]);
 }
 
 /**
+ * Interface for all et2_inputWidgets
+ */
+export interface  et2_IInputNode
+{
+	getInputNode(_sender? : et2_widget) : HTMLInputElement|HTMLElement
+}
+export const et2_IInputNode = "et2_IInputNode";
+et2_implements_registry.et2_IInputNode = function(obj : et2_widget)
+{
+	return implements_methods(obj, ["getInputNode"]);
+}
+
+/**
  * Interface for all widgets which support returning a value
  */
-interface et2_IInput
+export interface et2_IInput
 {
 	/**
 	 * getValue has to return the value of the input widget
@@ -92,8 +110,8 @@ interface et2_IInput
 	 */
 	isValid(messages) : boolean
 }
-var et2_IInput = "et2_IInput";
-function implements_et2_IInput(obj : et2_widget)
+export const et2_IInput = "et2_IInput";
+et2_implements_registry.et2_IInput = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["getValue", "isDirty", "resetDirty", "isValid"]);
 }
@@ -101,15 +119,15 @@ function implements_et2_IInput(obj : et2_widget)
 /**
  * Interface for widgets which should be automatically resized
  */
-interface et2_IResizeable
+export interface et2_IResizeable
 {
 	/**
 	 * Called whenever the window is resized
 	 */
 	resize(number) : void
 }
-var et2_IResizeable = "et2_IResizeable";
-function implements_et2_IResizeable(obj : et2_widget)
+export const et2_IResizeable = "et2_IResizeable";
+et2_implements_registry.et2_IResizeable = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["resize"]);
 }
@@ -117,12 +135,12 @@ function implements_et2_IResizeable(obj : et2_widget)
 /**
  * Interface for widgets which have the align attribute
  */
-interface et2_IAligned
+export interface et2_IAligned
 {
 	get_align() : string
 }
-var et2_IAligned = "et2_IAligned";
-function implements_et2_IAligned(obj : et2_widget)
+export const et2_IAligned = "et2_IAligned";
+et2_implements_registry.et2_IAligned = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["get_align"]);
 }
@@ -131,7 +149,7 @@ function implements_et2_IAligned(obj : et2_widget)
  * Interface for widgets which want to e.g. perform clientside validation before
  * the form is submitted.
  */
-interface et2_ISubmitListener
+export interface et2_ISubmitListener
 {
 	/**
 	 * Called whenever the template gets submitted. Return false if you want to
@@ -142,8 +160,8 @@ interface et2_ISubmitListener
 	 */
 	submit(_values) : void
 }
-var et2_ISubmitListener = "et2_ISubmitListener";
-function implements_et2_ISubmitListener(obj : et2_widget)
+export const et2_ISubmitListener = "et2_ISubmitListener";
+et2_implements_registry.et2_ISubmitListener = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["submit"]);
 }
@@ -153,7 +171,7 @@ function implements_et2_ISubmitListener(obj : et2_widget)
  * is used in grid lists, when only a single row gets really stored in the widget
  * tree and this instance has to work on multiple copies of the DOM-Tree elements.
  */
-interface et2_IDetachedDOM
+export interface et2_IDetachedDOM
 {
 	/**
 	 * Creates a list of attributes which can be set when working in the
@@ -182,8 +200,8 @@ interface et2_IDetachedDOM
 	 */
 	setDetachedAttributes(_nodes : HTMLElement[], _values : object, _data?) : void
 }
-var et2_IDetachedDOM = "et2_IDetachedDOM";
-function implements_et2_IDetachedDOM(obj : et2_widget)
+export const et2_IDetachedDOM = "et2_IDetachedDOM";
+et2_implements_registry.et2_IDetachedDOM = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["getDetachedAttributes", "getDetachedNodes", "setDetachedAttributes"]);
 }
@@ -191,7 +209,7 @@ function implements_et2_IDetachedDOM(obj : et2_widget)
 /**
  * Interface for widgets that need to do something special before printing
  */
-interface et2_IPrint
+export interface et2_IPrint
 {
 	/**
 	 * Set up for printing
@@ -206,8 +224,8 @@ interface et2_IPrint
 	 */
 	afterPrint() : void
 }
-var et2_IPrint = "et2_IPrint";
-function implements_et2_IPrint(obj : et2_widget)
+export const et2_IPrint = "et2_IPrint";
+et2_implements_registry.et2_IPrint = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["beforePrint", "afterPrint"]);
 }
@@ -215,7 +233,7 @@ function implements_et2_IPrint(obj : et2_widget)
 /**
  * Interface all exposed widget must support in order to getMedia for the blueimp Gallery.
  */
-interface et2_IExposable
+export interface et2_IExposable
 {
 	/**
 	 * get media an array of media objects to pass to blueimp Gallery
@@ -223,8 +241,8 @@ interface et2_IExposable
 	 */
 	getMedia(_attrs) : void;
 }
-var et2_IExposable = "et2_IExposable";
-function implements_et2_IExposable(obj : et2_widget)
+export const et2_IExposable = "et2_IExposable";
+et2_implements_registry.et2_IExposable = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["getMedia"]);
 }

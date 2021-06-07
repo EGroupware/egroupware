@@ -4,9 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	et2_core_common;
@@ -24,14 +25,16 @@ import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_dataview_selectionManager} from "./et2_dataview_controller_selection";
 import {et2_dataview_row} from "./et2_dataview_view_row";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
+import {et2_arrayIntKeys, et2_bounds} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * The fetch timeout specifies the time during which the controller tries to
  * consolidate requests for rows.
  */
-var ET2_DATAVIEW_FETCH_TIMEOUT = 50;
+export const ET2_DATAVIEW_FETCH_TIMEOUT = 50;
 
-var ET2_DATAVIEW_STEPSIZE = 50;
+export const ET2_DATAVIEW_STEPSIZE = 50;
 
 /**
  * The et2_dataview_controller class is the intermediate layer between a grid
@@ -43,24 +46,25 @@ export class et2_dataview_controller
 	// Maximum concurrent data requests.  Additional ones are held in the queue.
 	public static readonly CONCURRENT_REQUESTS = 5;
 
-	private _parentController: any;
-	private _grid: et2_dataview_grid;
-	private dataStorePrefix: any;
+	protected _parentController: any;
+	protected _grid: et2_dataview_grid;
+	protected dataStorePrefix: any;
 	private _dataProvider: any;
-	private _rowCallback: any;
-	private _linkCallback: any;
+	protected _rowCallback: any;
+	protected _linkCallback: any;
 	private _context: any;
 
-	private _children: any[];
-	private _indexMap: any = {};
+	protected _children: any[];
+	protected _indexMap: any = {};
 
 	private _queueTimer: number;
 	private _lastModification: number;
 	private _queue: {};
 	private _request_queue: any[];
-	private _selectionMgr: et2_dataview_selectionManager;
+	protected _selectionMgr: et2_dataview_selectionManager;
 
-	private _objectManager: any;
+	protected _objectManager: any;
+	private hasData: boolean;
 
 	/**
 	 * Constructor of the et2_dataview_controller, connects to the grid
@@ -679,7 +683,8 @@ export class et2_dataview_controller
 					"self": this,
 					"start": query.start,
 					"count": query.num_rows,
-					"lastModification": this._lastModification
+					"lastModification": this._lastModification,
+				prefix: undefined
 			};
 			if(this.dataStorePrefix)
 			{

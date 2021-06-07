@@ -4,9 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
+ * @copyright EGroupware GmbH 2011-2021
  * @version $Id$
  */
 
@@ -16,6 +16,7 @@
 */
 
 import {et2_dataview_IInvalidatable} from "./et2_dataview_interfaces";
+import {et2_bounds} from "./et2_core_common";
 
 /**
  * The et2_dataview_container class is the main object each dataview consits of.

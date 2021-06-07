@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
@@ -19,6 +18,7 @@
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 
 /**
  * Class which implements the "checkbox" XET-Tag
@@ -214,7 +214,7 @@ et2_register_widget(et2_checkbox, ["checkbox"]);
 * et2_checkbox_ro is the dummy readonly implementation of the checkbox
 * @augments et2_checkbox
 */
-class et2_checkbox_ro extends et2_checkbox implements et2_IDetachedDOM
+export class et2_checkbox_ro extends et2_checkbox implements et2_IDetachedDOM
 {
 	/**
 	 * Ignore unset value

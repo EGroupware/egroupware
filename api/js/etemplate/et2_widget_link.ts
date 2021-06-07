@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright 2011 Nathan Gray
  */
@@ -30,6 +30,12 @@ import {et2_button} from "./et2_widget_button";
 import {et2_dialog} from "./et2_widget_dialog";
 import {et2_file} from "./et2_widget_file";
 import {et2_vfsSelect} from "./et2_widget_vfs";
+import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
+import {et2_tabbox} from "./et2_widget_tabs";
+import {et2_csvSplit, et2_no_init} from "./et2_core_common";
+import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
+import {expose} from "./expose";
+import {egwMenu} from "../egw_action/egw_menu.js";
 
 /**
  * UI widgets for Egroupware linking system
@@ -87,7 +93,7 @@ export class et2_link_to extends et2_inputWidget
 	private file_div: JQuery;
 	private status_span: JQuery;
 	private link_entry: et2_link_entry;
-	private vfs_select: et2_vfs_select;
+	private vfs_select: et2_vfsSelect;
 	private file_upload: et2_file;
 
 
@@ -201,7 +207,7 @@ export class et2_link_to extends et2_inputWidget
 			select: function() {self.link_button.show(); return true;},
 			readonly: this.options.readonly
 		};
-		this.link_entry = et2_createWidget("link-entry", link_entry_attrs,this);
+		this.link_entry = <et2_link_entry>et2_createWidget("link-entry", link_entry_attrs,this);
 
 		// Filemanager select
 		var select_attrs : any = {
@@ -244,7 +250,7 @@ export class et2_link_to extends et2_inputWidget
 			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
 		}
-		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
+		this.vfs_select = <et2_vfsSelect>et2_createWidget("vfs-select", select_attrs,this);
 		this.vfs_select.set_readonly(this.options.readonly);
 
 		// File upload
@@ -280,7 +286,7 @@ export class et2_link_to extends et2_inputWidget
 			}
 		};
 
-		this.file_upload = et2_createWidget("file", file_attrs,this);
+		this.file_upload = <et2_file>et2_createWidget("file", file_attrs,this);
 		this.file_upload.set_readonly(this.options.readonly);
 		return true;
 	}
@@ -2420,13 +2426,13 @@ export class et2_link_add extends et2_inputWidget
 			// Already done
 			return false;
 		}
-		this.app_select = et2_createWidget("link-apps", jQuery.extend({},this.options,{
+		this.app_select = <et2_link_apps>et2_createWidget("link-apps", jQuery.extend({},this.options,{
 			'id': this.options.id + 'app',
 			value: this.options.application ? this.options.application : this.options.value && this.options.value.add_app ? this.options.value.add_app : null,
 			application_list: this.options.application ? this.options.application : null
 		}) ,this);
 		this.div.append(this.app_select.getDOMNode());
-		this.button = et2_createWidget("button", {id:this.options.id+"_add",label: this.egw().lang("add")}, this);
+		this.button = <et2_button>et2_createWidget("button", {id:this.options.id+"_add",label: this.egw().lang("add")}, this);
 		this.button.set_label(this.egw().lang("add"));
 		var self = this;
 		this.button.click = function()

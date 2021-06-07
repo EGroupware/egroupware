@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @author Ralf Becker
  * @copyright Nathan Gray 2011
@@ -24,6 +24,8 @@
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
+import {egw, framework} from "../jsapi/egw_global";
 
 /**
  * Tree widget

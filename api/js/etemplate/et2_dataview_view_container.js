@@ -1,17 +1,15 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - dataview code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
+ * @copyright EGroupware GmbH 2011-2021
  * @version $Id$
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_dataview_container = void 0;
+import { et2_bounds } from "./et2_core_common";
 /**
  * The et2_dataview_container class is the main object each dataview consits of.
  * Each row, spacer as well as the grid itself are containers. A container is
@@ -28,7 +26,7 @@ exports.et2_dataview_container = void 0;
  *
  * @augments Class
  */
-var et2_dataview_container = /** @class */ (function () {
+export class et2_dataview_container {
     /**
      * Initializes the container object.
      *
@@ -36,7 +34,7 @@ var et2_dataview_container = /** @class */ (function () {
      * 	interface. _parent may not be null.
      * @memberOf et2_dataview_container
      */
-    function et2_dataview_container(_parent) {
+    constructor(_parent) {
         // Copy the given invalidation element
         this._parent = _parent;
         this._nodes = [];
@@ -53,14 +51,14 @@ var et2_dataview_container = /** @class */ (function () {
      * should override this method and take care of unregistering all event
      * handlers etc.
      */
-    et2_dataview_container.prototype.destroy = function () {
+    destroy() {
         // Remove the nodes from the tree
         this.removeFromTree();
         // Call the callback function (if one is registered)
         if (this._destroyCallback) {
             this._destroyCallback.call(this._destroyContext, this);
         }
-    };
+    }
     /**
      * Sets the "destroyCallback" -- the given function gets called whenever
      * the container is destroyed. This instance is passed as an parameter to
@@ -69,10 +67,10 @@ var et2_dataview_container = /** @class */ (function () {
      * @param {function} _callback
      * @param {object} _context
      */
-    et2_dataview_container.prototype.setDestroyCallback = function (_callback, _context) {
+    setDestroyCallback(_callback, _context) {
         this._destroyCallback = _callback;
         this._destroyContext = _context;
-    };
+    }
     /**
      * Inserts all container nodes into the DOM tree after or before the given
      * element.
@@ -83,13 +81,13 @@ var et2_dataview_container = /** @class */ (function () {
      * or after the given node. Inserting before is needed for inserting the
      * first element in front of an spacer.
      */
-    et2_dataview_container.prototype.insertIntoTree = function (_node, _prepend) {
+    insertIntoTree(_node, _prepend) {
         if (!this._inTree && _node != null && this._nodes.length > 0) {
             // Store the parent node and indicate that this element is now in
             // the tree.
             this._attachData = { node: _node, prepend: _prepend };
             this._inTree = true;
-            for (var i = 0; i < this._nodes.length; i++) {
+            for (let i = 0; i < this._nodes.length; i++) {
                 if (i == 0) {
                     if (_prepend) {
                         _node.before(this._nodes[0]);
@@ -107,28 +105,28 @@ var et2_dataview_container = /** @class */ (function () {
             // parent
             this.invalidate();
         }
-    };
+    }
     /**
      * Removes all container nodes from the tree.
      */
-    et2_dataview_container.prototype.removeFromTree = function () {
+    removeFromTree() {
         if (this._inTree) {
             // Call the jQuery remove function to remove all nodes from the tree
             // again.
-            for (var i = 0; i < this._nodes.length; i++) {
+            for (let i = 0; i < this._nodes.length; i++) {
                 this._nodes[i].remove();
             }
             // Reset the "attachData"
             this._inTree = false;
             this._attachData = { "node": null, "prepend": false };
         }
-    };
+    }
     /**
      * Appends a node to the container.
      *
      * @param _node is the DOM-Node which should be appended.
      */
-    et2_dataview_container.prototype.appendNode = function (_node) {
+    appendNode(_node) {
         // Add the given node to the "nodes" array
         this._nodes.push(_node);
         // If the container is already in the tree, attach the given node to the
@@ -147,15 +145,15 @@ var et2_dataview_container = /** @class */ (function () {
             }
             this.invalidate();
         }
-    };
+    }
     /**
      * Removes a certain node from the container
      *
      * @param {HTMLElement} _node
      */
-    et2_dataview_container.prototype.removeNode = function (_node) {
+    removeNode(_node) {
         // Get the index of the node in the nodes array
-        var idx = this._nodes.indexOf(_node);
+        const idx = this._nodes.indexOf(_node);
         if (idx >= 0) {
             // Remove the node if the container is currently attached
             if (this._inTree) {
@@ -164,35 +162,35 @@ var et2_dataview_container = /** @class */ (function () {
             // Remove the node from the nodes array
             this._nodes.splice(idx, 1);
         }
-    };
+    }
     /**
      * Returns the last node of the container - new nodes have to be appended
      * after it.
      */
-    et2_dataview_container.prototype.getLastNode = function () {
+    getLastNode() {
         if (this._nodes.length > 0) {
             return this._nodes[this._nodes.length - 1];
         }
         return null;
-    };
+    }
     /**
      * Returns the first node of the container.
      */
-    et2_dataview_container.prototype.getFirstNode = function () {
+    getFirstNode() {
         return this._nodes.length > 0 ? this._nodes[0] : null;
-    };
+    }
     /**
      * Returns the accumulated height of all container nodes. Only visible nodes
      * (without "display: none" etc.) are taken into account.
      */
-    et2_dataview_container.prototype.getHeight = function () {
+    getHeight() {
         if (this._height === -1 && this._inTree) {
             this._height = 0;
             // Setting this before measuring height helps with issues getting the
             // wrong height due to margins & collapsed borders
             this.tr.css('display', 'block');
             // Increment the height value for each visible container node
-            for (var i = 0; i < this._nodes.length; i++) {
+            for (let i = 0; i < this._nodes.length; i++) {
                 if (et2_dataview_container._isVisible(this._nodes[i][0])) {
                     this._height += et2_dataview_container._nodeHeight(this._nodes[i][0]);
                 }
@@ -200,7 +198,7 @@ var et2_dataview_container = /** @class */ (function () {
             this.tr.css('display', '');
         }
         return (this._height === -1) ? 0 : this._height;
-    };
+    }
     /**
      * Returns a datastructure containing information used for calculating the
      * average row height of a grid.
@@ -210,64 +208,64 @@ var et2_dataview_container = /** @class */ (function () {
      *     avgCount: <the element count this calculation was based on>
      * }
      */
-    et2_dataview_container.prototype.getAvgHeightData = function () {
+    getAvgHeightData() {
         return {
             "avgHeight": this.getHeight(),
             "avgCount": 1
         };
-    };
+    }
     /**
      * Returns the previously set "pixel top" of the container.
      */
-    et2_dataview_container.prototype.getTop = function () {
+    getTop() {
         return this._top;
-    };
+    }
     /**
      * Returns the "pixel bottom" of the container.
      */
-    et2_dataview_container.prototype.getBottom = function () {
+    getBottom() {
         return this._top + this.getHeight();
-    };
+    }
     /**
      * Returns the range of the element.
      */
-    et2_dataview_container.prototype.getRange = function () {
+    getRange() {
         return et2_bounds(this.getTop(), this.getBottom());
-    };
+    }
     /**
      * Returns the index of the element.
      */
-    et2_dataview_container.prototype.getIndex = function () {
+    getIndex() {
         return this._index;
-    };
+    }
     /**
      * Returns how many elements this container represents.
      */
-    et2_dataview_container.prototype.getCount = function () {
+    getCount() {
         return 1;
-    };
+    }
     /**
      * Sets the top of the element.
      *
      * @param {number} _value
      */
-    et2_dataview_container.prototype.setTop = function (_value) {
+    setTop(_value) {
         this._top = _value;
-    };
+    }
     /**
      * Sets the index of the element.
      *
      * @param {number} _value
      */
-    et2_dataview_container.prototype.setIndex = function (_value) {
+    setIndex(_value) {
         this._index = _value;
-    };
+    }
     /* -- et2_dataview_IInvalidatable -- */
     /**
      * Broadcasts an invalidation through the container tree. Marks the own
      * height as invalid.
      */
-    et2_dataview_container.prototype.invalidate = function () {
+    invalidate() {
         // Abort if this element is already marked as invalid.
         if (this._height !== -1) {
             // Delete the own, probably computed height
@@ -275,7 +273,7 @@ var et2_dataview_container = /** @class */ (function () {
             // Broadcast the invalidation to the parent element
             this._parent.invalidate();
         }
-    };
+    }
     /* -- PRIVATE FUNCTIONS -- */
     /**
      * Used to check whether an element is visible or not (non recursive).
@@ -284,31 +282,29 @@ var et2_dataview_container = /** @class */ (function () {
      * only checked whether some stylesheet makes the element invisible, not if
      * the given object is actually inside the DOM.
      */
-    et2_dataview_container._isVisible = function (_obj) {
+    static _isVisible(_obj) {
         // Check whether the element is localy invisible
         if (_obj.style && (_obj.style.display === "none"
             || _obj.style.visibility === "none")) {
             return false;
         }
         // Get the computed style of the element
-        var style = window.getComputedStyle ? window.getComputedStyle(_obj, null)
+        const style = window.getComputedStyle ? window.getComputedStyle(_obj, null)
             // @ts-ignore
             : _obj.currentStyle;
         if (style.display === "none" || style.visibility === "none") {
             return false;
         }
         return true;
-    };
+    }
     /**
      * Returns the height of a node in pixels and zero if the element is not
      * visible. The height is clamped to positive values.
      *
      * @param {HTMLElement} _node
      */
-    et2_dataview_container._nodeHeight = function (_node) {
+    static _nodeHeight(_node) {
         return _node.offsetHeight;
-    };
-    return et2_dataview_container;
-}());
-exports.et2_dataview_container = et2_dataview_container;
+    }
+}
 //# sourceMappingURL=et2_dataview_view_container.js.map

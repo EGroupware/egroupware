@@ -1,84 +1,61 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_description = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_baseWidget;
     expose;
 */
-require("./et2_core_common");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
+import { et2_activateLinks, et2_csvSplit, et2_insertLinkText, et2_no_init } from "./et2_core_common";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_baseWidget } from './et2_core_baseWidget';
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { expose } from "./expose";
+import { egw } from "../jsapi/egw_global";
 /**
  * Class which implements the "description" XET-Tag
  */
-var et2_description = /** @class */ (function (_super) {
-    __extends(et2_description, _super);
-    function et2_description() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return et2_description;
-}(expose((_a = /** @class */ (function (_super) {
-        __extends(et2_description, _super);
+export class et2_description extends expose((_a = class et2_description extends et2_baseWidget {
         /**
          * Constructor
          */
-        function et2_description(_parent, _attrs, _child) {
-            var _this = 
+        constructor(_parent, _attrs, _child) {
             // Call the inherited constructor
-            _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_description._attributes, _child || {})) || this;
-            _this._labelContainer = null;
+            super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_description._attributes, _child || {}));
+            this._labelContainer = null;
             // Create the span/label tag which contains the label text
-            _this.span = jQuery(document.createElement(_this.options["for"] ? "label" : "span"))
+            this.span = jQuery(document.createElement(this.options["for"] ? "label" : "span"))
                 .addClass("et2_label");
-            et2_insertLinkText(_this._parseText(_this.options.value), _this.span[0], _this.options.href ? _this.options.extra_link_target : '_blank');
-            _this.setDOMNode(_this.span[0]);
-            return _this;
+            et2_insertLinkText(this._parseText(this.options.value), this.span[0], this.options.href ? this.options.extra_link_target : '_blank');
+            this.setDOMNode(this.span[0]);
         }
-        et2_description.prototype.transformAttributes = function (_attrs) {
-            _super.prototype.transformAttributes.call(this, _attrs);
+        transformAttributes(_attrs) {
+            super.transformAttributes(_attrs);
             if (this.id) {
                 var val = this.getArrayMgr("content").getEntry(this.id);
                 if (val) {
                     _attrs["value"] = val;
                 }
             }
-        };
-        et2_description.prototype.doLoadingFinished = function () {
-            _super.prototype.doLoadingFinished.call(this);
+        }
+        doLoadingFinished() {
+            super.doLoadingFinished();
             // Get the real id of the 'for' widget
             var for_widget = null;
-            var for_id = "";
+            let for_id = "";
             if (this.options["for"] && ((for_widget = this.getParent().getWidgetById(this.options.for)) ||
                 (for_widget = this.getRoot().getWidgetById(this.options.for))) && for_widget && for_widget.id) {
                 if (for_widget.dom_id) {
                     for_id = for_widget.dom_id;
-                    if (for_widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode().id) {
+                    if (for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode().id) {
                         for_id = for_widget.getInputNode().id;
                     }
                     this.span.attr("for", for_id);
@@ -89,7 +66,7 @@ var et2_description = /** @class */ (function (_super) {
                     window.setTimeout(function () {
                         var _a;
                         for_id = for_widget.dom_id;
-                        if (for_widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== ((_a = for_widget.getInputNode()) === null || _a === void 0 ? void 0 : _a.id)) {
+                        if (for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== ((_a = for_widget.getInputNode()) === null || _a === void 0 ? void 0 : _a.id)) {
                             for_id = for_widget.getInputNode().id;
                         }
                         this.span.attr("for", for_id);
@@ -99,8 +76,8 @@ var et2_description = /** @class */ (function (_super) {
                 }
             }
             return true;
-        };
-        et2_description.prototype.set_label = function (_value) {
+        }
+        set_label(_value) {
             // Abort if ther was no change in the label
             if (_value == this.label) {
                 return;
@@ -142,15 +119,15 @@ var et2_description = /** @class */ (function (_super) {
             this.getSurroundings().update();
             // Copy the given value
             this.label = _value;
-        };
+        }
         /**
          * Function to get media content to feed the expose
          * @param {type} _value
          * @returns {Array|Array.getMedia.mediaContent}
          */
-        et2_description.prototype.getMedia = function (_value) {
-            var base_url = egw.webserverUrl.match(new RegExp(/^\//, 'ig')) ? egw(window).window.location.origin : '';
-            var mediaContent = [];
+        getMedia(_value) {
+            let base_url = egw.webserverUrl.match(new RegExp(/^\//, 'ig')) ? egw(window).window.location.origin : '';
+            let mediaContent = [];
             if (_value) {
                 mediaContent = [{
                         title: this.options.label,
@@ -162,8 +139,8 @@ var et2_description = /** @class */ (function (_super) {
                     mediaContent[0]["download_href"] = base_url + _value + '?download';
             }
             return mediaContent;
-        };
-        et2_description.prototype.set_value = function (_value) {
+        }
+        set_value(_value) {
             if (!_value)
                 _value = "";
             if (!this.options.no_lang)
@@ -192,8 +169,8 @@ var et2_description = /** @class */ (function (_super) {
                     return false;
                 });
             }
-        };
-        et2_description.prototype._parseText = function (_value) {
+        }
+        _parseText(_value) {
             if (this.options.href) {
                 var href = this.options.href;
                 if (href.indexOf('/') == -1 && href.split('.').length >= 3 &&
@@ -215,24 +192,24 @@ var et2_description = /** @class */ (function (_super) {
             else {
                 return [_value];
             }
-        };
-        et2_description.prototype.set_font_style = function (_value) {
+        }
+        set_font_style(_value) {
             this.font_style = _value;
             this.span.toggleClass("et2_bold", _value.indexOf("b") >= 0);
             this.span.toggleClass("et2_italic", _value.indexOf("i") >= 0);
-        };
+        }
         /**
          * Code for implementing et2_IDetachedDOM
          *
          * @param {array} _attrs
          */
-        et2_description.prototype.getDetachedAttributes = function (_attrs) {
+        getDetachedAttributes(_attrs) {
             _attrs.push("value", "class", "href");
-        };
-        et2_description.prototype.getDetachedNodes = function () {
+        }
+        getDetachedNodes() {
             return [this.span[0]];
-        };
-        et2_description.prototype.setDetachedAttributes = function (_nodes, _values, _data) {
+        }
+        setDetachedAttributes(_nodes, _values, _data) {
             // Update the properties
             var updateLink = false;
             if (typeof _values["href"] != "undefined") {
@@ -250,12 +227,12 @@ var et2_description = /** @class */ (function (_super) {
             if (this.options.hover_action) {
                 this._build_hover_action(_data);
             }
-        };
+        }
         /**
          * Builds button for hover action
          * @param {object} _data
          */
-        et2_description.prototype._build_hover_action = function (_data) {
+        _build_hover_action(_data) {
             var content = _data && _data.content ? _data.content : undefined;
             var widget = this;
             this.span.off().on('mouseenter', jQuery.proxy(function (event) {
@@ -265,14 +242,14 @@ var et2_description = /** @class */ (function (_super) {
                     items: 'span.et2_label',
                     position: { my: "right top", at: "left top", collision: "flipfit" },
                     tooltipClass: "et2_email_popup",
-                    content: function () {
+                    content() {
                         return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="' + widget.egw().lang(widget.options.hover_action_title) + '"><img src="'
                             + egw.image("edit") + '"/></a>')
                             .on('click', function () {
                             widget.options.hover_action.call(self, self.widget, content);
                         });
                     },
-                    close: function (event, ui) {
+                    close(event, ui) {
                         ui.tooltip.hover(function () {
                             jQuery(this).stop(true).fadeTo(400, 1);
                         }, function () {
@@ -282,9 +259,8 @@ var et2_description = /** @class */ (function (_super) {
                 })
                     .tooltip("open");
             }, { widget: this, span: this.span }));
-        };
-        return et2_description;
-    }(et2_core_baseWidget_1.et2_baseWidget)),
+        }
+    },
     _a._attributes = {
         "label": {
             "name": "Label",
@@ -370,8 +346,8 @@ var et2_description = /** @class */ (function (_super) {
     },
     _a.legacyOptions = ["font_style", "href", "activate_links", "for",
         "extra_link_target", "extra_link_popup", "statustext"],
-    _a))));
-exports.et2_description = et2_description;
+    _a)) {
+}
 ;
-et2_core_widget_1.et2_register_widget(et2_description, ["description", "label"]);
+et2_register_widget(et2_description, ["description", "label"]);
 //# sourceMappingURL=et2_widget_description.js.map

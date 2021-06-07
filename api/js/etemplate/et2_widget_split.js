@@ -1,37 +1,24 @@
-"use strict";
 /**
 * EGroupware eTemplate2 - Split panel
 *
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @package etemplate
 * @subpackage api
-* @link http://www.egroupware.org
+* @link https://www.egroupware.org
 * @author Nathan Gray
 * @copyright Nathan Gray 2013
-* @version $Id$
 */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
 /vendor/bower-asset/jquery/dist/jquery.js;
 jquery.splitter;
     et2_core_baseWidget;
 */
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_DOMWidget } from "./et2_core_DOMWidget";
+import { et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_IResizeable } from "./et2_core_interfaces";
+import { et2_no_init } from "./et2_core_common";
+import { et2_dynheight } from "./et2_widget_dynheight";
 /**
 * A container widget that accepts 2 children, and puts a resize bar between them.
 *
@@ -42,48 +29,45 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
 * @see http://methvin.com/splitter/ Uses Splitter
 * @augments et2_DOMWidget
 */
-var et2_split = /** @class */ (function (_super) {
-    __extends(et2_split, _super);
-    function et2_split(_parent, _attrs, _child) {
-        var _this = 
+export class et2_split extends et2_DOMWidget {
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_split._attributes, _child || {})) || this;
-        _this.div = null;
-        _this.dynheight = null;
-        _this.div = jQuery(document.createElement("div"))
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_split._attributes, _child || {}));
+        this.div = null;
+        this.dynheight = null;
+        this.div = jQuery(document.createElement("div"))
             .addClass('et2_split');
         // Create the dynheight component which dynamically scales the inner
         // container.
-        _this.dynheight = new et2_dynheight(_this.getParent().getDOMNode() || _this.getInstanceManager().DOMContainer, _this.div, 100);
+        this.dynheight = new et2_dynheight(this.getParent().getDOMNode() || this.getInstanceManager().DOMContainer, this.div, 100);
         // Add something so we can see it - will be replaced if there's children
-        _this.left = jQuery("<div>Top / Left</div>").appendTo(_this.div);
-        _this.right = jQuery("<div>Bottom / Right</div>").appendTo(_this.div);
+        this.left = jQuery("<div>Top / Left</div>").appendTo(this.div);
+        this.right = jQuery("<div>Bottom / Right</div>").appendTo(this.div);
         // Deferred object so we can wait for children
-        _this.loading = jQuery.Deferred();
+        this.loading = jQuery.Deferred();
         // Flag to temporarily ignore resizing
-        _this.stop_resize = false;
-        return _this;
+        this.stop_resize = false;
     }
-    et2_split.prototype.destroy = function () {
+    destroy() {
         // Stop listening
         this.left.next().off("mouseup");
         // Destroy splitter, restore children
         this.div.trigger("destroy");
         // Destroy dynamic full-height
         this.dynheight.destroy();
-        _super.prototype.destroy.call(this);
+        super.destroy();
         // Remove placeholder children
         if (this._children.length == 0) {
             this.div.empty();
         }
         this.div.remove();
-    };
+    }
     /**
      * Tap in here to check if we have real children, because all children should be created
      * by this point.  If there are, replace the placeholders.
      */
-    et2_split.prototype.loadFromXML = function (_node) {
-        _super.prototype.loadFromXML.call(this, _node);
+    loadFromXML(_node) {
+        super.loadFromXML(_node);
         if (this._children.length > 0) {
             if (this._children[0]) {
                 this.left.detach();
@@ -104,9 +88,9 @@ var et2_split = /** @class */ (function (_super) {
                 this._children[i].dynheight.initialized = false;
             }
         }
-    };
-    et2_split.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
         // Use a timeout to give the children a chance to finish
         var self = this;
         window.setTimeout(function () {
@@ -114,19 +98,19 @@ var et2_split = /** @class */ (function (_super) {
         }, 1);
         // Not done yet, but widget will let you know
         return this.loading.promise();
-    };
+    }
     /**
      * Initialize the splitter UI
      * Internal.
      */
-    et2_split.prototype._init_splitter = function () {
+    _init_splitter() {
         if (!this.isAttached())
             return;
         // Avoid trying to do anything while hidden - it ruins all the calculations
         // Try again in resize()
         if (!this.div.is(':visible'))
             return;
-        var options = {
+        let options = {
             type: this.orientation,
             dock: this.dock_side,
             splitterClass: "et2_split",
@@ -138,10 +122,10 @@ var et2_split = /** @class */ (function (_super) {
             sizeTop: this.dynheight.outerNode.height() / 2,
             sizeLeft: this.dynheight.outerNode.width() / 2
         };
-        var widget = this;
+        let widget = this;
         //Convert pixel size to percent
-        var pix2per = function (_size) {
-            var per;
+        let pix2per = function (_size) {
+            let per;
             if (widget.orientation == "v") {
                 per = _size * 100 / widget.dynheight.outerNode.width();
             }
@@ -152,7 +136,7 @@ var et2_split = /** @class */ (function (_super) {
         };
         // Check for position preference, load it in
         if (this.id) {
-            var pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
+            let pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
             if (pref) {
                 if (this.orientation == "v" && pref['sizeLeft'] < this.dynheight.outerNode.width() ||
                     this.orientation == "h" && pref['sizeTop'] < this.dynheight.outerNode.height()) {
@@ -183,7 +167,7 @@ var et2_split = /** @class */ (function (_super) {
             }
         }
         // Add icon to splitter bar
-        var icon = "ui-icon-grip-"
+        let icon = "ui-icon-grip-"
             + (this.dock_side ? "solid" : "dotted") + "-"
             + (this.orientation == "h" ? "horizontal" : "vertical");
         jQuery(document.createElement("div"))
@@ -192,7 +176,7 @@ var et2_split = /** @class */ (function (_super) {
             .appendTo(this.left.next());
         // Save preference when size changed
         if (this.id && this.egw().getAppName()) {
-            var self_1 = this;
+            let self = this;
             this.left.on("resize" + options.eventNamespace, function (e) {
                 // Force immediate layout, so proper layout & sizes are available
                 // for resize().  Chrome defers layout, so current DOM node sizes
@@ -201,17 +185,17 @@ var et2_split = /** @class */ (function (_super) {
                 this.style.display = 'none';
                 this.offsetHeight;
                 this.style.display = display;
-                if (e.namespace == options.eventNamespace.substr(1) && !self_1.isDocked()) {
+                if (e.namespace == options.eventNamespace.substr(1) && !self.isDocked()) {
                     // Store current position in preferences
-                    var size = self_1.orientation == "v" ? { sizeLeft: self_1.left.width() } : { sizeTop: self_1.left.height() };
-                    self_1.prefSize = size[self_1.orientation == "v" ? 'sizeLeft' : 'sizeTop'];
-                    var prefInPercent = self_1.orientation == "v" ? { sizeLeft: pix2per(size.sizeLeft) } : { sizeTop: pix2per(size.sizeTop) };
-                    if (parseInt(self_1.orientation == 'v' ? prefInPercent.sizeLeft : prefInPercent.sizeTop) < 100) {
-                        self_1.egw().set_preference(self_1.egw().getAppName(), 'splitter-size-' + self_1.id, prefInPercent);
+                    var size = self.orientation == "v" ? { sizeLeft: self.left.width() } : { sizeTop: self.left.height() };
+                    self.prefSize = size[self.orientation == "v" ? 'sizeLeft' : 'sizeTop'];
+                    var prefInPercent = self.orientation == "v" ? { sizeLeft: pix2per(size.sizeLeft) } : { sizeTop: pix2per(size.sizeTop) };
+                    if (parseInt(self.orientation == 'v' ? prefInPercent.sizeLeft : prefInPercent.sizeTop) < 100) {
+                        self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, prefInPercent);
                     }
                 }
                 // Ok, update children
-                self_1.iterateOver(function (widget) {
+                self.iterateOver(function (widget) {
                     // Extra resize would cause stalling chrome
                     // as resize might confilict with bottom download bar
                     // in chrome which does a window resize, so better to not
@@ -219,21 +203,21 @@ var et2_split = /** @class */ (function (_super) {
                     // if it is neccessary.
                     // Above forcing is not enough for Firefox, defer
                     window.setTimeout(jQuery.proxy(function () { this.resize(); }, widget), 200);
-                }, self_1, et2_IResizeable);
+                }, self, et2_IResizeable);
             });
         }
         this.loading.resolve();
-    };
+    }
     /**
      * Implement the et2_IResizable interface to resize
      */
-    et2_split.prototype.resize = function () {
+    resize() {
         // Avoid doing anything while hidden - check here, and init if needed
         if (this.div.children().length <= 2) {
             this._init_splitter();
         }
         if (this.dynheight && !this.stop_resize) {
-            var old_1 = { w: this.div.width(), h: this.div.height() };
+            let old = { w: this.div.width(), h: this.div.height() };
             this.dynheight.update(function (w, h) {
                 if (this.orientation == "v") {
                     this.left.height(h);
@@ -256,119 +240,118 @@ var et2_split = /** @class */ (function (_super) {
                         }
                     }
                 }
-                if (w != old_1.w || h != old_1.h) {
+                if (w != old.w || h != old.h) {
                     this.div.trigger('resize.et2_split.' + this.id, this.prefSize);
                 }
             }, this);
         }
-    };
-    et2_split.prototype.getDOMNode = function () {
+    }
+    getDOMNode() {
         return this.div[0];
-    };
+    }
     /**
      * Set splitter orientation
      *
      * @param orient String "v" or "h"
      */
-    et2_split.prototype.set_orientation = function (orient) {
+    set_orientation(orient) {
         this.orientation = orient;
         this._init_splitter();
-    };
+    }
     /**
      * Set the side for docking
      *
      * @param dock String One of leftDock, rightDock, topDock, bottomDock
      */
-    et2_split.prototype.set_dock_side = function (dock) {
+    set_dock_side(dock) {
         this.dock_side = dock;
         this._init_splitter();
-    };
+    }
     /**
      * Turn on or off resizing while dragging
      *
      * @param outline boolean
      */
-    et2_split.prototype.set_outline = function (outline) {
+    set_outline(outline) {
         this.outline = outline;
         this._init_splitter();
-    };
+    }
     /**
      * If the splitter has a dock direction set, dock it.
      * Docking requires the dock attribute to be set.
      */
-    et2_split.prototype.dock = function () {
+    dock() {
         if (this.isDocked())
             return;
         this.div.trigger("dock");
-    };
+    }
     /**
      * If the splitter is docked, restore it to previous size
      * Docking requires the dock attribute to be set.
      */
-    et2_split.prototype.undock = function () {
+    undock() {
         this.div.trigger("undock");
-    };
+    }
     /**
      * Determine if the splitter is docked
      * @return boolean
      */
-    et2_split.prototype.isDocked = function () {
+    isDocked() {
         var bar = jQuery('.splitter-bar', this.div);
         return bar.hasClass('splitter-bar-horizontal-docked') || bar.hasClass('splitter-bar-vertical-docked');
-    };
+    }
     /**
      * Toggle the splitter's docked state.
      * Docking requires the dock attribute to be set.
      */
-    et2_split.prototype.toggleDock = function () {
+    toggleDock() {
         this.div.trigger("toggleDock");
-    };
+    }
     // Printing
     /**
      * Prepare for printing by stopping all the fuss
      *
      */
-    et2_split.prototype.beforePrint = function () {
+    beforePrint() {
         // Resizing causes preference changes & relayouts.  Don't do it.
         this.stop_resize = true;
         // Add the class, if needed
         this.div.addClass('print');
         // Don't return anything, just work normally
-    };
-    et2_split.prototype.afterPrint = function () {
+    }
+    afterPrint() {
         this.div.removeClass('print');
         this.stop_resize = false;
-    };
-    et2_split._attributes = {
-        "orientation": {
-            "name": "Orientation",
-            "description": "Horizontal or vertical (v or h)",
-            "default": "v",
-            "type": "string"
-        },
-        "outline": {
-            "name": "Outline",
-            "description": "Use a 'ghosted' copy of the splitbar and does not resize the panes until the mouse button is released.  Reduces flickering or unwanted re-layout during resize",
-            "default": false,
-            "type": "boolean"
-        },
-        "dock_side": {
-            "name": "Dock",
-            "description": "Allow the user to 'Dock' the splitbar to one side of the splitter, essentially hiding one pane and using the entire splitter area for the other pane.  One of leftDock, rightDock, topDock, bottomDock.",
-            "default": et2_no_init,
-            "type": "string"
-        },
-        "width": {
-            "default": "100%"
-        },
-        // Not needed
-        "overflow": { "ignore": true },
-        "no_lang": { "ignore": true },
-        "rows": { "ignore": true },
-        "cols": { "ignore": true }
-    };
-    et2_split.DOCK_TOLERANCE = 15;
-    return et2_split;
-}(et2_core_DOMWidget_1.et2_DOMWidget));
-et2_core_widget_1.et2_register_widget(et2_split, ["split"]);
+    }
+}
+et2_split._attributes = {
+    "orientation": {
+        "name": "Orientation",
+        "description": "Horizontal or vertical (v or h)",
+        "default": "v",
+        "type": "string"
+    },
+    "outline": {
+        "name": "Outline",
+        "description": "Use a 'ghosted' copy of the splitbar and does not resize the panes until the mouse button is released.  Reduces flickering or unwanted re-layout during resize",
+        "default": false,
+        "type": "boolean"
+    },
+    "dock_side": {
+        "name": "Dock",
+        "description": "Allow the user to 'Dock' the splitbar to one side of the splitter, essentially hiding one pane and using the entire splitter area for the other pane.  One of leftDock, rightDock, topDock, bottomDock.",
+        "default": et2_no_init,
+        "type": "string"
+    },
+    "width": {
+        "default": "100%"
+    },
+    // Not needed
+    "overflow": { "ignore": true },
+    "no_lang": { "ignore": true },
+    "rows": { "ignore": true },
+    "cols": { "ignore": true }
+};
+et2_split.DOCK_TOLERANCE = 15;
+et2_register_widget(et2_split, ["split"]);
 //# sourceMappingURL=et2_widget_split.js.map

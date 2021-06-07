@@ -1,22 +1,22 @@
-"use strict";
 /**
  * EGroupware eTemplate2
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
- *
-
+ * @copyright EGroupware GmbH 2011-2021
+ */
 /*egw:uses
     et2_dataview_view_aoi;
 
     egw_action.egw_keymanager;
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_dataview_selectionManager = void 0;
+import { egw } from "../jsapi/egw_global";
+import { et2_bounds } from "./et2_core_common";
+import { et2_dialog } from "./et2_widget_dialog";
+import { et2_createWidget } from "./et2_core_widget";
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
  * to manage the row selection.
@@ -28,7 +28,7 @@ exports.et2_dataview_selectionManager = void 0;
  *
  * @augments Class
  */
-var et2_dataview_selectionManager = /** @class */ (function () {
+export class et2_dataview_selectionManager {
     /**
      * Constructor
      *
@@ -40,7 +40,7 @@ var et2_dataview_selectionManager = /** @class */ (function () {
      * @param _context
      * @memberOf et2_dataview_selectionManager
      */
-    function et2_dataview_selectionManager(_parent, _indexMap, _actionObjectManager, _queryRangeCallback, _makeVisibleCallback, _context) {
+    constructor(_parent, _indexMap, _actionObjectManager, _queryRangeCallback, _makeVisibleCallback, _context) {
         // Copy the arguments
         this._parent = _parent;
         this._indexMap = _indexMap;
@@ -68,7 +68,7 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         // Callback for when the selection changes
         this.select_callback = null;
     }
-    et2_dataview_selectionManager.prototype.destroy = function () {
+    destroy() {
         // If we have a parent, unregister from that
         if (this._parent) {
             var idx = this._parent._children.indexOf(this);
@@ -83,8 +83,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             this.unregisterRow(key, this._registeredRows[key].tr);
         }
         this.select_callback = null;
-    };
-    et2_dataview_selectionManager.prototype.clear = function () {
+    }
+    clear() {
         for (var key in this._registeredRows) {
             this.unregisterRow(key, this._registeredRows[key].tr);
             delete this._registeredRows[key];
@@ -100,14 +100,14 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         this._invertSelection = false;
         this._selectAll = false;
         this._inUpdate = false;
-    };
-    et2_dataview_selectionManager.prototype.setIndexMap = function (_indexMap) {
+    }
+    setIndexMap(_indexMap) {
         this._indexMap = _indexMap;
-    };
-    et2_dataview_selectionManager.prototype.setTotalCount = function (_total) {
+    }
+    setTotalCount(_total) {
         this._total = _total;
-    };
-    et2_dataview_selectionManager.prototype.registerRow = function (_uid, _idx, _tr, _links) {
+    }
+    registerRow(_uid, _idx, _tr, _links) {
         // Get the corresponding entry from the registered rows array
         var entry = this._getRegisteredRowsEntry(_uid);
         // If the row has changed unregister the old one and do not delete
@@ -127,8 +127,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         entry.tr = _tr;
         // Update the visible state of the _tr
         this._updateEntryState(entry, entry.state);
-    };
-    et2_dataview_selectionManager.prototype.unregisterRow = function (_uid, _tr, _noDelete) {
+    }
+    unregisterRow(_uid, _tr, _noDelete) {
         // _noDelete defaults to false
         _noDelete = _noDelete ? true : false;
         if (typeof this._registeredRows[_uid] !== "undefined"
@@ -152,8 +152,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             }
             this._inUpdate = false;
         }
-    };
-    et2_dataview_selectionManager.prototype.resetSelection = function () {
+    }
+    resetSelection() {
         this._invertSelection = false;
         this._selectAll = false;
         this._actionObjectManager.setAllSelected(false);
@@ -163,17 +163,17 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         for (var i = 0; i < this._children.length; i++) {
             this._children[i].resetSelection();
         }
-    };
-    et2_dataview_selectionManager.prototype.setSelected = function (_uid, _selected) {
+    }
+    setSelected(_uid, _selected) {
         this._selectAll = false;
         var entry = this._getRegisteredRowsEntry(_uid);
         this._updateEntryState(entry, egwSetBit(entry.state, EGW_AO_STATE_SELECTED, _selected));
-    };
-    et2_dataview_selectionManager.prototype.getAllSelected = function () {
+    }
+    getAllSelected() {
         var selected = this.getSelected();
         return selected.all || (selected.ids.length === this._total);
-    };
-    et2_dataview_selectionManager.prototype.setFocused = function (_uid, _focused) {
+    }
+    setFocused(_uid, _focused) {
         // Reset the state of the currently focused entry
         if (this._focusedEntry) {
             this._updateEntryState(this._focusedEntry, egwSetBit(this._focusedEntry.state, EGW_AO_STATE_FOCUSED, false));
@@ -185,8 +185,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             var entry = this._focusedEntry = this._getRegisteredRowsEntry(_uid);
             this._updateEntryState(entry, egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
         }
-    };
-    et2_dataview_selectionManager.prototype.selectAll = function () {
+    }
+    selectAll() {
         // Reset the selection
         this.resetSelection();
         this._selectAll = true;
@@ -203,8 +203,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             this._updateEntryState(entry, entry.state);
         }
         this._selectAll = true;
-    };
-    et2_dataview_selectionManager.prototype.getSelected = function () {
+    }
+    getSelected() {
         // Collect all currently selected ids
         var ids = [];
         for (var key in this._registeredRows) {
@@ -223,9 +223,9 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             "all": this._selectAll,
             "ids": ids
         };
-    };
+    }
     /** -- PRIVATE FUNCTIONS -- **/
-    et2_dataview_selectionManager.prototype._attachActionObjectInterface = function (_entry, _tr, _uid) {
+    _attachActionObjectInterface(_entry, _tr, _uid) {
         // Create the AOI which is used internally in the selection manager
         // this AOI is not connected to the AO, as the selection manager
         // cares about selection etc.
@@ -236,8 +236,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
                 this._handleSelect(_uid, _entry, egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK), egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI));
             }
         }, this);
-    };
-    et2_dataview_selectionManager.prototype._getDummyAOI = function (_entry, _tr, _uid, _idx) {
+    }
+    _getDummyAOI(_entry, _tr, _uid, _idx) {
         // Create AOI
         var dummyAOI = new egwActionObjectInterface();
         var self = this;
@@ -261,8 +261,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         // handlers can be properly bound
         dummyAOI.getDOMNode = function () { return _tr; };
         return dummyAOI;
-    };
-    et2_dataview_selectionManager.prototype._attachActionObject = function (_entry, _tr, _uid, _links, _idx) {
+    }
+    _attachActionObject(_entry, _tr, _uid, _links, _idx) {
         // Get the dummyAOI which connects the action object to the tr but
         // does no selection handling
         var dummyAOI = this._getDummyAOI(_entry, _tr, _uid, _idx);
@@ -322,13 +322,13 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             }
             return result;
         };
-    };
-    et2_dataview_selectionManager.prototype._updateState = function (_uid, _state) {
+    }
+    _updateState(_uid, _state) {
         var entry = this._getRegisteredRowsEntry(_uid);
         this._updateEntryState(entry, _state);
         return entry;
-    };
-    et2_dataview_selectionManager.prototype._updateEntryState = function (_entry, _state) {
+    }
+    _updateEntryState(_entry, _state) {
         if (this._selectAll) {
             _state |= EGW_AO_STATE_SELECTED;
         }
@@ -371,8 +371,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         }
         // Update the state of the entry
         _entry.state = _state;
-    };
-    et2_dataview_selectionManager.prototype._getRegisteredRowsEntry = function (_uid) {
+    }
+    _getRegisteredRowsEntry(_uid) {
         if (typeof this._registeredRows[_uid] === "undefined") {
             this._registeredRows[_uid] = {
                 "uid": _uid,
@@ -384,8 +384,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
             };
         }
         return this._registeredRows[_uid];
-    };
-    et2_dataview_selectionManager.prototype._handleSelect = function (_uid, _entry, _shift, _ctrl) {
+    }
+    _handleSelect(_uid, _entry, _shift, _ctrl) {
         // If not "_ctrl" is set, reset the selection
         if (!_ctrl) {
             var top = this;
@@ -408,8 +408,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         if (this.select_callback && typeof this.select_callback == "function") {
             this.select_callback.apply(this._context, arguments);
         }
-    };
-    et2_dataview_selectionManager.prototype._selectRange = function (_start, _stop) {
+    }
+    _selectRange(_start, _stop) {
         // Contains ranges that are not currently in the index map and that have
         // to be queried
         var queryRanges = [];
@@ -455,8 +455,8 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         if (queryRanges.length > 0) {
             this._query_ranges(queryRanges);
         }
-    };
-    et2_dataview_selectionManager.prototype._query_ranges = function (queryRanges) {
+    }
+    _query_ranges(queryRanges) {
         var that = this;
         var record_count = 0;
         var range_index = 0;
@@ -513,11 +513,9 @@ var et2_dataview_selectionManager = /** @class */ (function () {
         fetchPromise.finally(function () {
             dialog.destroy();
         });
-    };
-    // Maximum number of rows we can safely fetch for selection
-    // Actual selection may have more rows if we already have some
-    et2_dataview_selectionManager.MAX_SELECTION = 1000;
-    return et2_dataview_selectionManager;
-}());
-exports.et2_dataview_selectionManager = et2_dataview_selectionManager;
+    }
+}
+// Maximum number of rows we can safely fetch for selection
+// Actual selection may have more rows if we already have some
+et2_dataview_selectionManager.MAX_SELECTION = 1000;
 //# sourceMappingURL=et2_dataview_controller_selection.js.map

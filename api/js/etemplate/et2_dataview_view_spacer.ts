@@ -4,16 +4,17 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_dataview_view_container;
 */
+
+import {et2_dataview_container} from "./et2_dataview_view_container";
 
 /**
  * @augments et2_dataview_container

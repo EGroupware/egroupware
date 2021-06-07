@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Ralf Becker
  */
 
@@ -20,7 +20,7 @@ import {et2_widget} from "./et2_core_widget";
  *
  * This should only be used for customization and NOT for regular EGroupware code!
  *
- * We can NOT create a script tag containing the content, as this violoates our CSP policy!
+ * We can NOT create a script tag containing the content, as this violates our CSP policy!
  *
  * We use new Function(_content) instead. Therefore you have to use window to address global context:
  *
@@ -32,7 +32,7 @@ import {et2_widget} from "./et2_core_widget";
  *
  * @augments et2_widget
  */
-class et2_script extends et2_widget
+export class et2_script extends et2_widget
 {
 	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
 	{

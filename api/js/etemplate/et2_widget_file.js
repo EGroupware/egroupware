@@ -1,103 +1,86 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Number object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_file = void 0;
 /*egw:uses
     et2_core_inputWidget;
-    phpgwapi.Resumable.resumable;
+    api.Resumable.resumable;
 */
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_inputWidget } from "./et2_core_inputWidget";
+import { et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_no_init } from "./et2_core_common";
+import { et2_vfsSize } from "./et2_widget_vfs";
+import "../Resumable/resumable.js";
 /**
  * Class which implements file upload
  *
  * @augments et2_inputWidget
  */
-var et2_file = /** @class */ (function (_super) {
-    __extends(et2_file, _super);
+export class et2_file extends et2_inputWidget {
     /**
      * Constructor
      *
      * @memberOf et2_file
      */
-    function et2_file(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_file._attributes, _child || {})) || this;
-        _this.asyncOptions = {};
-        _this.input = null;
-        _this.progress = null;
-        _this.span = null;
-        _this.node = null;
-        _this.input = null;
-        _this.progress = null;
-        _this.span = null;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_file._attributes, _child || {}));
+        this.asyncOptions = {};
+        this.input = null;
+        this.progress = null;
+        this.span = null;
+        this.node = null;
+        this.input = null;
+        this.progress = null;
+        this.span = null;
         // Contains all submit buttons need to be disabled during upload process
-        _this.disabled_buttons = jQuery("input[type='submit'], button");
+        this.disabled_buttons = jQuery("input[type='submit'], button");
         // Make sure it's an object, not an array, or values get lost when sent to server
-        _this.options.value = jQuery.extend({}, _this.options.value);
-        if (!_this.options.id) {
+        this.options.value = jQuery.extend({}, this.options.value);
+        if (!this.options.id) {
             console.warn("File widget needs an ID.  Used 'file_widget'.");
-            _this.options.id = "file_widget";
+            this.options.id = "file_widget";
         }
         // Legacy - id ending in [] means multiple
-        if (_this.options.id.substr(-2) == "[]") {
-            _this.options.multiple = true;
+        if (this.options.id.substr(-2) == "[]") {
+            this.options.multiple = true;
         }
         // If ID ends in /, it's a directory - allow multiple
-        else if (_this.options.id.substr(-1) === "/") {
-            _this.options.multiple = true;
+        else if (this.options.id.substr(-1) === "/") {
+            this.options.multiple = true;
             _attrs.multiple = true;
         }
         // Set up the URL to have the request ID & the widget ID
-        var instance = _this.getInstanceManager();
-        var self = _this;
-        _this.asyncOptions = jQuery.extend({}, _this.getAsyncOptions(_this));
-        _this.asyncOptions.fieldName = _this.options.id;
-        _this.createInputWidget();
-        _this.set_readonly(_this.options.readonly);
-        return _this;
+        var instance = this.getInstanceManager();
+        let self = this;
+        this.asyncOptions = jQuery.extend({}, this.getAsyncOptions(this));
+        this.asyncOptions.fieldName = this.options.id;
+        this.createInputWidget();
+        this.set_readonly(this.options.readonly);
     }
-    et2_file.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    destroy() {
+        super.destroy();
         this.set_drop_target(null);
         this.node = null;
         this.input = null;
         this.span = null;
         this.progress = null;
-    };
-    et2_file.prototype.createInputWidget = function () {
+    }
+    createInputWidget() {
         this.node = jQuery(document.createElement("div")).addClass("et2_file");
         this.span = jQuery(document.createElement("span"))
             .addClass('et2_file_span et2_button')
             .appendTo(this.node);
         if (this.options.label != '')
             this.span.addClass('et2_button_text');
-        var span = this.span;
+        let span = this.span;
         this.input = jQuery(document.createElement("input"))
             .attr("type", "file").attr("placeholder", this.options.blur)
             .addClass("et2_file_upload")
@@ -116,7 +99,7 @@ var et2_file = /** @class */ (function (_super) {
         });
         if (this.options.accept)
             this.input.attr('accept', this.options.accept);
-        var self = this;
+        let self = this;
         // trigger native input upload file
         if (!this.options.readonly)
             this.span.click(function () { self.input.click(); });
@@ -133,7 +116,7 @@ var et2_file = /** @class */ (function (_super) {
             // This may be a problem submitting via ajax
         }
         if (this.options.progress) {
-            var widget = this.getRoot().getWidgetById(this.options.progress);
+            let widget = this.getRoot().getWidgetById(this.options.progress);
             if (widget) {
                 //may be not available at createInputWidget time
                 this.progress = jQuery(widget.getDOMNode());
@@ -150,11 +133,11 @@ var et2_file = /** @class */ (function (_super) {
         // set drop target to widget dom node if no target option is specified
         if (!this.options.drop_target)
             this.resumable.assignDrop([this.getDOMNode()]);
-    };
+    }
     /**
      * Get any specific async upload options
      */
-    et2_file.prototype.getAsyncOptions = function (self) {
+    getAsyncOptions(self) {
         return {
             // Callbacks
             onStart: function (event, file_count) {
@@ -175,43 +158,43 @@ var et2_file = /** @class */ (function (_super) {
             // Disable checking for already uploaded chunks
             testChunks: false
         };
-    };
+    }
     /**
      * Set a widget or DOM node as a HTML5 file drop target
      *
      * @param {string} new_target widget ID or DOM node ID to be used as a new target
      */
-    et2_file.prototype.set_drop_target = function (new_target) {
+    set_drop_target(new_target) {
         // Cancel old drop target
         if (this.options.drop_target) {
-            var widget_1 = this.getRoot().getWidgetById(this.options.drop_target);
-            var drop_target_1 = widget_1 && widget_1.getDOMNode() || document.getElementById(this.options.drop_target);
-            if (drop_target_1) {
-                this.resumable.unAssignDrop(drop_target_1);
+            let widget = this.getRoot().getWidgetById(this.options.drop_target);
+            let drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
+            if (drop_target) {
+                this.resumable.unAssignDrop(drop_target);
             }
         }
         this.options.drop_target = new_target;
         if (!this.options.drop_target)
             return;
         // Set up new drop target
-        var widget = this.getRoot().getWidgetById(this.options.drop_target);
-        var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
+        let widget = this.getRoot().getWidgetById(this.options.drop_target);
+        let drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
         if (drop_target) {
             this.resumable.assignDrop([drop_target]);
         }
         else {
             this.egw().debug("warn", "Did not find file drop target %s", this.options.drop_target);
         }
-    };
-    et2_file.prototype.attachToDOM = function () {
-        var res = _super.prototype.attachToDOM.call(this);
+    }
+    attachToDOM() {
+        let res = super.attachToDOM();
         // Override parent's change, file widget will fire change when finished uploading
         this.input.unbind("change.et2_inputWidget");
         return res;
-    };
-    et2_file.prototype.getValue = function () {
+    }
+    getValue() {
         return this.options.value ? this.options.value : this.input.val();
-    };
+    }
     /**
      * Set the value of the file widget.
      *
@@ -221,7 +204,7 @@ var et2_file = /** @class */ (function (_super) {
      * @param {Event} event Most browsers require the user to initiate file transfers in some way.
      *	Pass the event in, if you have it.
      */
-    et2_file.prototype.set_value = function (value, event) {
+    set_value(value, event) {
         if (!value || typeof value == "undefined") {
             value = {};
         }
@@ -234,7 +217,7 @@ var et2_file = /** @class */ (function (_super) {
             this.input.unwrap();
             return;
         }
-        var addFile = jQuery.proxy(function (i, file) {
+        let addFile = jQuery.proxy(function (i, file) {
             this.resumable.addFile(file, event);
         }, this);
         if (typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name) {
@@ -248,24 +231,24 @@ var et2_file = /** @class */ (function (_super) {
                 jQuery.each(value, addFile);
             }
         }
-    };
+    }
     /**
      * Set the value for label
      * The label is used as caption for span tag which customize the HTML file upload styling
      *
      * @param {string} value text value of label
      */
-    et2_file.prototype.set_label = function (value) {
+    set_label(value) {
         if (this.span != null && value != null) {
             this.span.text(value);
         }
-    };
-    et2_file.prototype.getInputNode = function () {
+    }
+    getInputNode() {
         if (typeof this.input == 'undefined')
             return false;
         return this.input[0];
-    };
-    et2_file.prototype.set_mime = function (mime) {
+    }
+    set_mime(mime) {
         if (!mime) {
             this.options.mime = null;
         }
@@ -276,24 +259,24 @@ var et2_file = /** @class */ (function (_super) {
         else {
             this.options.mime = mime;
         }
-    };
-    et2_file.prototype.set_multiple = function (_multiple) {
+    }
+    set_multiple(_multiple) {
         this.options.multiple = _multiple;
         if (_multiple) {
             return this.input.attr("multiple", "multiple");
         }
         return this.input.removeAttr("multiple");
-    };
+    }
     /**
      * Check to see if the provided file's mimetype matches
      *
      * @param f File object
      * @return boolean
      */
-    et2_file.prototype.checkMime = function (f) {
+    checkMime(f) {
         if (!this.options.mime)
             return true;
-        var mime = '';
+        let mime = '';
         if (this.options.mime.indexOf("/") != 0) {
             // Lower case it now, if it's not a regex
             mime = this.options.mime.toLowerCase();
@@ -312,8 +295,8 @@ var et2_file = /** @class */ (function (_super) {
         }
         // Not right mime
         return false;
-    };
-    et2_file.prototype._fileAdded = function (file, event) {
+    }
+    _fileAdded(file, event) {
         // Manual additions have no event
         if (typeof event == 'undefined') {
             event = {};
@@ -341,21 +324,21 @@ var et2_file = /** @class */ (function (_super) {
             // Wrong mime type - show in the list of files
             return this.createStatus(this.egw().lang("File is of wrong type (%1 != %2)!", file.file.type, this.options.mime), file);
         }
-    };
+    }
     /**
      * Add in the request id
      */
-    et2_file.prototype.beforeSend = function (form) {
+    beforeSend(form) {
         var instance = this.getInstanceManager();
         return {
             request_id: instance.etemplate_exec_id,
             widget_id: this.id
         };
-    };
+    }
     /**
      * Disables submit buttons while uploading
      */
-    et2_file.prototype.onStart = function (event, file_count) {
+    onStart(event, file_count) {
         // Hide any previous errors
         this.hideMessage();
         event.data = this;
@@ -367,11 +350,11 @@ var et2_file = /** @class */ (function (_super) {
         if (this.options.onStart)
             return et2_call(this.options.onStart, event, file_count);
         return true;
-    };
+    }
     /**
      * Re-enables submit buttons when done
      */
-    et2_file.prototype.onFinish = function () {
+    onFinish() {
         this.disabled_buttons.removeAttr("disabled").css('cursor', 'pointer').removeClass('et2_button_ro');
         var file_count = this.resumable.files.length;
         // Remove files from list
@@ -397,13 +380,13 @@ var et2_file = /** @class */ (function (_super) {
             // Fire legacy change action when done
             this.change(this.input);
         }
-    };
+    }
     /**
      * Build up dropdown progress with total count indicator
      *
      * @todo Implement totalProgress bar instead of ajax-loader, in order to show how much percent of uploading is completed
      */
-    et2_file.prototype._build_progressDropDownList = function () {
+    _build_progressDropDownList() {
         this.progress.addClass("progress_dropDown_fileList");
         //Add uploading indicator and bind hover handler on it
         jQuery(this.node).find('span').addClass('totalProgress_loader');
@@ -416,14 +399,14 @@ var et2_file = /** @class */ (function (_super) {
                 jQuery('.progress_dropDown_fileList').hide();
             }
         });
-    };
+    }
     /**
      * Creates the elements used for displaying the file, and it's upload status, and
      * attaches them to the DOM
      *
      * @param _event Either the event, or an error message
      */
-    et2_file.prototype.createStatus = function (_event, file) {
+    createStatus(_event, file) {
         var error = (typeof _event == "object" ? "" : _event);
         if (this.options.max_file_size && file.size > this.options.max_file_size) {
             error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
@@ -448,20 +431,20 @@ var et2_file = /** @class */ (function (_super) {
             }
         }
         return error == "";
-    };
-    et2_file.prototype._fileProgress = function (file) {
+    }
+    _fileProgress(file) {
         if (this.progress) {
             jQuery("li[data-file='" + file.fileName.replace(/'/g, '&quot') + "'] > span.progressBar > p").css("width", Math.ceil(file.progress() * 100) + "%");
         }
         return true;
-    };
-    et2_file.prototype.onError = function (event, name, error) {
+    }
+    onError(event, name, error) {
         console.warn(event, name, error);
-    };
+    }
     /**
      * A file upload is finished, update the UI
      */
-    et2_file.prototype.finishUpload = function (file, response) {
+    finishUpload(file, response) {
         var name = file.fileName || 'file';
         if (typeof response == 'string')
             response = jQuery.parseJSON(response);
@@ -502,13 +485,13 @@ var et2_file = /** @class */ (function (_super) {
             this.onFinishOne(event, response, name);
         }
         return true;
-    };
+    }
     /**
      * Remove a file from the list of values
      *
      * @param {File|string} File object, or file name, to remove
      */
-    et2_file.prototype.remove_file = function (file) {
+    remove_file(file) {
         //console.info(filename);
         if (typeof file == 'string') {
             file = { fileName: file };
@@ -522,11 +505,11 @@ var et2_file = /** @class */ (function (_super) {
         }
         if (file.isComplete && !file.isComplete() && file.cancel)
             file.cancel();
-    };
+    }
     /**
      * Cancel a file - event callback
      */
-    et2_file.prototype.cancel = function (e) {
+    cancel(e) {
         e.preventDefault();
         // Look for file name in list
         var target = jQuery(e.target).parents("li");
@@ -534,13 +517,13 @@ var et2_file = /** @class */ (function (_super) {
         // In case it didn't make it to the list (error)
         target.remove();
         jQuery(e.target).remove();
-    };
+    }
     /**
      * Set readonly
      *
      * @param {boolean} _ro boolean readonly state, true means readonly
      */
-    et2_file.prototype.set_readonly = function (_ro) {
+    set_readonly(_ro) {
         if (typeof _ro != "undefined") {
             this.options.readonly = _ro;
             this.span.toggleClass('et2_file_ro', _ro);
@@ -552,89 +535,87 @@ var et2_file = /** @class */ (function (_super) {
                 this.span.off().bind('click', function () { self.input.click(); });
             }
         }
-    };
-    et2_file._attributes = {
-        "multiple": {
-            "name": "Multiple files",
-            "type": "boolean",
-            "default": false,
-            "description": "Allow the user to select more than one file to upload at a time.  Subject to browser support."
-        },
-        "max_file_size": {
-            "name": "Maximum file size",
-            "type": "integer",
-            "default": 0,
-            "description": "Largest file accepted, in bytes.  Subject to server limitations.  8MB = 8388608"
-        },
-        "mime": {
-            "name": "Allowed file types",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "Mime type (eg: image/png) or regex (eg: /^text\//i) for allowed file types"
-        },
-        "blur": {
-            "name": "Placeholder",
-            "type": "string",
-            "default": "",
-            "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
-        },
-        "progress": {
-            "name": "Progress node",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "The ID of an alternate node (div) to display progress and results.  The Node is fetched with et2 getWidgetById so you MUST use the id assigned in XET-File (it may not be available at creation time, so we (re)check on createStatus time)"
-        },
-        "onStart": {
-            "name": "Start event handler",
-            "type": "any",
-            "default": et2_no_init,
-            "description": "A (js) function called when an upload starts.  Return true to continue with upload, false to cancel."
-        },
-        "onFinish": {
-            "name": "Finish event handler",
-            "type": "any",
-            "default": et2_no_init,
-            "description": "A (js) function called when all files to be uploaded are finished."
-        },
-        drop_target: {
-            "name": "Optional, additional drop target for HTML5 uploads",
-            "type": "string",
-            "default": et2_no_init,
-            "description": "The ID of an additional drop target for HTML5 drag-n-drop file uploads"
-        },
-        label: {
-            "name": "Label of file upload",
-            "type": "string",
-            "default": "Choose file...",
-            "description": "String caption to be displayed on file upload span"
-        },
-        progress_dropdownlist: {
-            "name": "List on files in progress like dropdown",
-            "type": "boolean",
-            "default": false,
-            "description": "Style list of files in uploading progress like dropdown list with a total upload progress indicator"
-        },
-        onFinishOne: {
-            "name": "Finish event handler for each one",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "A (js) function called when a file to be uploaded is finished."
-        },
-        accept: {
-            "name": "Acceptable extensions",
-            "type": "string",
-            "default": '',
-            "description": "Define types of files that the server accepts. Multiple types can be seperated by comma and the default is to accept everything."
-        },
-        chunk_size: {
-            "name": "Chunk size",
-            "type": "integer",
-            "default": 1024 * 1024,
-            "description": "Max chunk size, gets set from server-side PHP (max_upload_size-1M)/2" // last chunk can be up to 2*chunk_size!
-        }
-    };
-    return et2_file;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_file = et2_file;
-et2_core_widget_1.et2_register_widget(et2_file, ["file"]);
+    }
+}
+et2_file._attributes = {
+    "multiple": {
+        "name": "Multiple files",
+        "type": "boolean",
+        "default": false,
+        "description": "Allow the user to select more than one file to upload at a time.  Subject to browser support."
+    },
+    "max_file_size": {
+        "name": "Maximum file size",
+        "type": "integer",
+        "default": 0,
+        "description": "Largest file accepted, in bytes.  Subject to server limitations.  8MB = 8388608"
+    },
+    "mime": {
+        "name": "Allowed file types",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "Mime type (eg: image/png) or regex (eg: /^text\//i) for allowed file types"
+    },
+    "blur": {
+        "name": "Placeholder",
+        "type": "string",
+        "default": "",
+        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+    },
+    "progress": {
+        "name": "Progress node",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "The ID of an alternate node (div) to display progress and results.  The Node is fetched with et2 getWidgetById so you MUST use the id assigned in XET-File (it may not be available at creation time, so we (re)check on createStatus time)"
+    },
+    "onStart": {
+        "name": "Start event handler",
+        "type": "any",
+        "default": et2_no_init,
+        "description": "A (js) function called when an upload starts.  Return true to continue with upload, false to cancel."
+    },
+    "onFinish": {
+        "name": "Finish event handler",
+        "type": "any",
+        "default": et2_no_init,
+        "description": "A (js) function called when all files to be uploaded are finished."
+    },
+    drop_target: {
+        "name": "Optional, additional drop target for HTML5 uploads",
+        "type": "string",
+        "default": et2_no_init,
+        "description": "The ID of an additional drop target for HTML5 drag-n-drop file uploads"
+    },
+    label: {
+        "name": "Label of file upload",
+        "type": "string",
+        "default": "Choose file...",
+        "description": "String caption to be displayed on file upload span"
+    },
+    progress_dropdownlist: {
+        "name": "List on files in progress like dropdown",
+        "type": "boolean",
+        "default": false,
+        "description": "Style list of files in uploading progress like dropdown list with a total upload progress indicator"
+    },
+    onFinishOne: {
+        "name": "Finish event handler for each one",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "A (js) function called when a file to be uploaded is finished."
+    },
+    accept: {
+        "name": "Acceptable extensions",
+        "type": "string",
+        "default": '',
+        "description": "Define types of files that the server accepts. Multiple types can be seperated by comma and the default is to accept everything."
+    },
+    chunk_size: {
+        "name": "Chunk size",
+        "type": "integer",
+        "default": 1024 * 1024,
+        "description": "Max chunk size, gets set from server-side PHP (max_upload_size-1M)/2" // last chunk can be up to 2*chunk_size!
+    }
+};
+et2_register_widget(et2_file, ["file"]);
 //# sourceMappingURL=et2_widget_file.js.map

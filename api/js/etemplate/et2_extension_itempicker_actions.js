@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Christian Binder
  * @author Nathan Gray
  * @copyright 2012 Christian Binder
@@ -13,8 +13,8 @@
  */
 function itempickerDocumentAction(context, data) {
     "use strict";
-    var formid = "itempicker_action_form";
-    var form = "<form id='" + formid + "' action='index.php?menuaction=" + data.app + "." + data.app + "_merge.download_by_request' method='POST'>"
+    let formid = "itempicker_action_form";
+    let form = "<form id='" + formid + "' action='index.php?menuaction=" + data.app + "." + data.app + "_merge.download_by_request' method='POST'>"
         + "<input type='hidden' name='data_document_name' value='" + data.value.name + "' />"
         + "<input type='hidden' name='data_document_dir' value='" + data.value.dir + "' />"
         + "<input type='hidden' name='data_checked' value='" + data.checked.join(',') + "' />"

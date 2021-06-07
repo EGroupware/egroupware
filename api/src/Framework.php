@@ -1082,7 +1082,7 @@ abstract class Framework extends Framework\Extra
 
 		// add import-map before (!) first module
 		$java_script .= '<script type="importmap" nonce="'.htmlspecialchars(ContentSecurityPolicy::addNonce('script-src')).'">'."\n".
-			json_encode(['imports' => self::addUrlPrefix($map)], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
+			json_encode(self::getImportMap($map), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
 			"</script>\n";
 
 		// load our clientside entrypoint egw.js
@@ -1126,19 +1126,39 @@ abstract class Framework extends Framework\Extra
 	 * @param array $map
 	 * @return array
 	 */
-	protected static function addUrlPrefix(array $map)
+	protected static function getImportMap(array $map)
 	{
 		if (substr($prefix = $GLOBALS['egw_info']['server']['webserver_url'], 0, 4) === 'http')
 		{
 			$prefix = parse_url($prefix, PHP_URL_PATH);
 		}
-		$ret = [];
+		$imports = [];
 		foreach($map as $file => $bundle)
 		{
-			$ret[$prefix.$file] = $prefix.$bundle;
+			$imports[$prefix.$file] = $prefix.$bundle;
+
+			// typescript unfortunately has currently no option to add ".js" to it's es6 import statements
+			// therefore we add extra entries without .js extension to the map
+			if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3).'.ts'))
+			{
+				$imports[$prefix.substr($file, 0, -3)] = $prefix.$bundle;
+			}
 		}
-		$ret['jsapi/egw_json'] = $ret['/egw-test/api/js/jsapi/egw_json.js'];
-		return $ret;
+		// adding some extra mappings
+		$imports['jquery'] = $imports[$prefix.'/vendor/bower-asset/jquery/dist/jquery.js'];
+		$imports['jqueryui'] = $imports[$prefix.'/vendor/bower-asset/jquery-ui/jquery-ui.js'];
+
+		// fix egw_global(.d.ts) import
+		$imports[$prefix.'/api/js/jsapi/egw_global'] = $prefix.'/api/js/jsapi/egw_global.js?'.
+			filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw_global.js');
+
+		// @todo: add all node_modules as bare imports
+
+		// debug-output to tmp dir
+		file_put_contents($GLOBALS['egw_info']['server']['temp_dir'].'/'.str_replace(['/', '.php'], ['-', '.json'], $_SERVER['PHP_SELF']),
+			json_encode(['imports' => $imports], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+
+		return ['imports' => $imports];
 	}
 
 	/**

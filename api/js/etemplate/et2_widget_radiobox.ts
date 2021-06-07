@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
@@ -16,8 +15,9 @@
 */
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from './et2_core_valueWidget';
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 
 /**
  * Class which implements the "radiobox" XET-Tag
@@ -195,7 +195,7 @@ et2_register_widget(et2_radiobox, ["radio"]);
 /**
  * @augments et2_valueWidget
  */
-class et2_radiobox_ro extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_radiobox_ro extends et2_valueWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"set_value": {
@@ -296,7 +296,7 @@ et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
  *
  * @augments et2_valueWidget
  */
-class et2_radioGroup extends et2_valueWidget implements et2_IDetachedDOM
+export class et2_radioGroup extends et2_valueWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"label": {

@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
- * @version $Id$
  */
 
 /*egw:uses
@@ -19,6 +18,8 @@
 import {et2_inputWidget} from './et2_core_inputWidget';
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * A split button - a button with a dropdown list

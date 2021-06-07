@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
@@ -20,7 +19,7 @@
 	et2_dataview_view_resizeable;
 */
 
-import {et2_dataview_columns} from './et2_dataview_model_columns';
+import {et2_dataview_column, et2_dataview_columns} from './et2_dataview_model_columns';
 import {et2_dataview_view_resizable} from "./et2_dataview_view_resizeable";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dataview_rowProvider} from "./et2_dataview_view_rowProvider"
@@ -67,9 +66,9 @@ export class et2_dataview
 	private columnNodes: any[];
 	private columns: any[];
 	private columnMgr: et2_dataview_columns;
-	private rowProvider: et2_dataview_rowProvider;
+	rowProvider: et2_dataview_rowProvider;
 
-	private grid: et2_dataview_grid;
+	grid: et2_dataview_grid;
 
 	// DOM stuff
 	private selectColIcon: JQuery;
@@ -667,6 +666,4 @@ export class et2_dataview
 
 		return width;
 	}
-
 }
-

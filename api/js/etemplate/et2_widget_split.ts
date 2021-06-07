@@ -4,10 +4,9 @@
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @package etemplate
 * @subpackage api
-* @link http://www.egroupware.org
+* @link https://www.egroupware.org
 * @author Nathan Gray
 * @copyright Nathan Gray 2013
-* @version $Id$
 */
 
 /*egw:uses
@@ -19,6 +18,9 @@ jquery.splitter;
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IPrint, et2_IResizeable} from "./et2_core_interfaces";
+import {et2_no_init} from "./et2_core_common";
+import {et2_dynheight} from "./et2_widget_dynheight";
 
 /**
 * A container widget that accepts 2 children, and puts a resize bar between them.
@@ -30,7 +32,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 * @see http://methvin.com/splitter/ Uses Splitter
 * @augments et2_DOMWidget
 */
-class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPrint
+export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPrint
 {
 	static readonly _attributes : any = {
 		"orientation": {

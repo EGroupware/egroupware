@@ -1,41 +1,29 @@
-"use strict";
 /**
  * EGroupware eTemplate2
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
-
-/*egw:uses
-    et2_core_common;
-    et2_core_inheritance;
-
-    et2_dataview_interfaces;
-    et2_dataview_controller_selection;
-    et2_dataview_view_row;
-    et2_dataview_view_tile;
-
-    egw_action.egw_action;
-*/
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_dataview_controller = void 0;
-var et2_dataview_controller_selection_1 = require("./et2_dataview_controller_selection");
-var et2_dataview_view_row_1 = require("./et2_dataview_view_row");
+ * @copyright EGroupware GmbH 2011-2021
+ */
+import { et2_dataview_selectionManager } from "./et2_dataview_controller_selection";
+import { et2_dataview_row } from "./et2_dataview_view_row";
+import { et2_arrayIntKeys, et2_bounds } from "./et2_core_common";
+import { egw } from "../jsapi/egw_global";
 /**
  * The fetch timeout specifies the time during which the controller tries to
  * consolidate requests for rows.
  */
-var ET2_DATAVIEW_FETCH_TIMEOUT = 50;
-var ET2_DATAVIEW_STEPSIZE = 50;
+export const ET2_DATAVIEW_FETCH_TIMEOUT = 50;
+export const ET2_DATAVIEW_STEPSIZE = 50;
 /**
  * The et2_dataview_controller class is the intermediate layer between a grid
  * instance and the corresponding data source. It manages updating the grid,
  * as well as inserting and deleting rows.
  */
-var et2_dataview_controller = /** @class */ (function () {
+export class et2_dataview_controller {
     /**
      * Constructor of the et2_dataview_controller, connects to the grid
      * callback.
@@ -50,7 +38,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * @param _actionObjectManager is the object that manages the action
      * objects.
      */
-    function et2_dataview_controller(_parentController, _grid) {
+    constructor(_parentController, _grid) {
         this._indexMap = {};
         // Copy the given arguments
         this._parentController = _parentController;
@@ -74,7 +62,7 @@ var et2_dataview_controller = /** @class */ (function () {
             this._parentController._children.push(this);
         }
     }
-    et2_dataview_controller.prototype.destroy = function () {
+    destroy() {
         // Destroy the selection manager
         this._selectionMgr.destroy();
         // Clear the selection timeout
@@ -89,34 +77,34 @@ var et2_dataview_controller = /** @class */ (function () {
             }
         }
         this._grid = null;
-    };
+    }
     /**
      * @param value is an object implementing the et2_IDataProvider
      * interface
      */
-    et2_dataview_controller.prototype.setDataProvider = function (value) {
+    setDataProvider(value) {
         this._dataProvider = value;
-    };
-    et2_dataview_controller.prototype.setRowCallback = function (value) {
+    }
+    setRowCallback(value) {
         this._rowCallback = value;
-    };
-    et2_dataview_controller.prototype.setLinkCallback = function (value) {
+    }
+    setLinkCallback(value) {
         this._linkCallback = value;
-    };
+    }
     /**
      * @param value is the context in which the _rowCallback and the
      * _linkCallback are called.
      */
-    et2_dataview_controller.prototype.setContext = function (value) {
+    setContext(value) {
         this._context = value;
-    };
-    et2_dataview_controller.prototype.setActionObjectManager = function (_actionObjectManager) {
+    }
+    setActionObjectManager(_actionObjectManager) {
         if (this._selectionMgr) {
             this._selectionMgr.destroy();
         }
         // Create the selection manager
-        this._selectionMgr = new et2_dataview_controller_selection_1.et2_dataview_selectionManager(this._parentController ? this._parentController._selectionMgr : null, this._indexMap, _actionObjectManager, this._selectionFetchRange, this._makeIndexVisible, this);
-    };
+        this._selectionMgr = new et2_dataview_selectionManager(this._parentController ? this._parentController._selectionMgr : null, this._indexMap, _actionObjectManager, this._selectionFetchRange, this._makeIndexVisible, this);
+    }
     /**
      * The update function queries the server for changes in the currently
      * managed index range -- those changes are then merged into the current
@@ -125,7 +113,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * @param {boolean} clear Skip the fancy stuff, dump everything and start again.
      *		Completely clears the grid and selection.
      */
-    et2_dataview_controller.prototype.update = function (clear) {
+    update(clear) {
         // Avoid update after destroy
         // Happens sometimes if AJAX response comes after etemplate unload
         if (!this._grid)
@@ -163,11 +151,11 @@ var et2_dataview_controller = /** @class */ (function () {
         this._request_queue = [];
         // Require that range from the server
         this._queueFetch(et2_bounds(range.top, clear ? 0 : range.bottom + 1), 0, true);
-    };
+    }
     /**
      * Rebuilds the complete grid.
      */
-    et2_dataview_controller.prototype.reset = function () {
+    reset() {
         // Throw away all internal mappings and reset the timestamp
         this._indexMap = {};
         // Update selection manager, it uses this by reference
@@ -180,22 +168,22 @@ var et2_dataview_controller = /** @class */ (function () {
         this._request_queue = [];
         // Update the data
         this.update();
-    };
+    }
     /**
      * Loads the initial order. Do not call multiple times.
      */
-    et2_dataview_controller.prototype.loadInitialOrder = function (order) {
+    loadInitialOrder(order) {
         for (var i = 0; i < order.length; i++) {
             this._getIndexEntry(i).uid = order[i];
         }
-    };
+    }
     /**
      * Load initial data
      *
      * @param {string} uid_key Name of the unique row identifier field
      * @param {Object} data Key / Value mapping of initial data.
      */
-    et2_dataview_controller.prototype.loadInitialData = function (uid_prefix, uid_key, data) {
+    loadInitialData(uid_prefix, uid_key, data) {
         var idx = 0;
         for (var key in data) {
             // Skip any extra keys
@@ -216,32 +204,32 @@ var et2_dataview_controller = /** @class */ (function () {
             this._selectionMgr.clear();
             this._emptyRow(this._grid._total == 0);
         }
-    };
+    }
     /**
      * Returns the depth of the controller instance.
      */
-    et2_dataview_controller.prototype.getDepth = function () {
+    getDepth() {
         if (this._parentController) {
             return this._parentController.getDepth() + 1;
         }
         return 0;
-    };
+    }
     /**
      * Set the data cache prefix
      * The default is to use appname, but if you need to set it explicitly to
      * something else to avoid conflicts.  Use the same prefix everywhere for
      * each type of data.  eg. infolog for infolog entries, even if accessed via addressbook
      */
-    et2_dataview_controller.prototype.setPrefix = function (prefix) {
+    setPrefix(prefix) {
         this.dataStorePrefix = prefix;
-    };
+    }
     /**
      * Returns the row information of the passed node, or null if not available
      *
      * @param {DOMNode} node
      * @return {string|false} UID, or false if not found
      */
-    et2_dataview_controller.prototype.getRowByNode = function (node) {
+    getRowByNode(node) {
         // Whatever the node, find a TR
         var row_node = jQuery(node).closest('tr');
         var row = null;
@@ -270,15 +258,15 @@ var et2_dataview_controller = /** @class */ (function () {
             row.controller = this;
         }
         return row;
-    };
+    }
     /**
      * Returns the current "total" count.
      */
-    et2_dataview_controller.prototype.getTotalCount = function () {
+    getTotalCount() {
         return this._grid.getTotalCount();
-    };
+    }
     /* -- PRIVATE FUNCTIONS -- */
-    et2_dataview_controller.prototype._getIndexEntry = function (_idx) {
+    _getIndexEntry(_idx) {
         // Create an entry in the index map if it does not exist yet
         if (typeof this._indexMap[_idx] === "undefined") {
             this._indexMap[_idx] = {
@@ -291,7 +279,7 @@ var et2_dataview_controller = /** @class */ (function () {
         // index does not get updated any further
         this._indexMap[_idx]["idx"] = _idx;
         return this._indexMap[_idx];
-    };
+    }
     /**
      * Inserts a new data row into the grid. index and uid are derived from the
      * given management entry. If the data for the given uid does not exist yet,
@@ -306,8 +294,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * @return true, if all data for the row has been available, false
      * otherwise.
      */
-    et2_dataview_controller.prototype._insertDataRow = function (_entry, _update) {
-        var _this = this;
+    _insertDataRow(_entry, _update) {
         // Abort if the entry already has a row but the _insert flag is not set
         if (_entry.row && !_update) {
             return true;
@@ -350,9 +337,9 @@ var et2_dataview_controller = /** @class */ (function () {
         }
         // Update index map only for push (autorefresh disabled)
         if (this._indexMap[_entry.idx] && this._indexMap[_entry.idx].uid !== _entry.uid) {
-            var max = parseInt(Object.keys(this._indexMap).reduce(function (a, b) { return _this._indexMap[a] > _this._indexMap[b] ? a : b; }));
-            for (var idx = max; idx >= _entry.idx; idx--) {
-                var entry = this._indexMap[idx];
+            let max = parseInt(Object.keys(this._indexMap).reduce((a, b) => this._indexMap[a] > this._indexMap[b] ? a : b));
+            for (let idx = max; idx >= _entry.idx; idx--) {
+                let entry = this._indexMap[idx];
                 this._indexMap[idx].idx = idx + 1;
                 this._indexMap[this._indexMap[idx].idx] = this._indexMap[idx];
                 if (this._selectionMgr && this._selectionMgr._registeredRows[entry.uid]) {
@@ -362,16 +349,16 @@ var et2_dataview_controller = /** @class */ (function () {
         }
         this._indexMap[_entry.idx] = _entry;
         return this.hasData;
-    };
+    }
     /**
      * Create a new row.
      *
      * @param {type} ctx
      * @returns {et2_dataview_container}
      */
-    et2_dataview_controller.prototype._createRow = function (ctx) {
-        return new et2_dataview_view_row_1.et2_dataview_row(this._grid);
-    };
+    _createRow(ctx) {
+        return new et2_dataview_row(this._grid);
+    }
     /**
      * Function which gets called by the grid when data is requested.
      *
@@ -379,7 +366,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * requested.
      * @param _idxEnd is the index of the last requested row.
      */
-    et2_dataview_controller.prototype._gridCallback = function (_idxStart, _idxEnd) {
+    _gridCallback(_idxStart, _idxEnd) {
         var needsData = false;
         // Iterate over all elements the dataview requested and create a row
         // which indicates that we are currently loading data
@@ -395,12 +382,12 @@ var et2_dataview_controller = /** @class */ (function () {
         if (needsData !== false) {
             this._queueFetch(et2_bounds(needsData, _idxEnd + 1), needsData == _idxStart ? 0 : needsData > _idxStart ? 1 : -1, false);
         }
-    };
+    }
     /**
      * The _queueFetch function is used to queue a fetch request.
      * TODO: Refresh is currently not used
      */
-    et2_dataview_controller.prototype._queueFetch = function (_range, _direction, _isUpdate) {
+    _queueFetch(_range, _direction, _isUpdate) {
         // Force immediate to be false
         _isUpdate = _isUpdate ? _isUpdate : false;
         // Push the requests onto the request queue
@@ -422,11 +409,11 @@ var et2_dataview_controller = /** @class */ (function () {
         if (_isUpdate) {
             this._flushQueue(true);
         }
-    };
+    }
     /**
      * Flushes the queue.
      */
-    et2_dataview_controller.prototype._flushQueue = function (_isUpdate) {
+    _flushQueue(_isUpdate) {
         // Clear any still existing timer
         this._clearTimer();
         // Mark all elements in a radius of ET2_DATAVIEW_STEPSIZE
@@ -496,20 +483,21 @@ var et2_dataview_controller = /** @class */ (function () {
                 "self": this,
                 "start": query.start,
                 "count": query.num_rows,
-                "lastModification": this._lastModification
+                "lastModification": this._lastModification,
+                prefix: undefined
             };
             if (this.dataStorePrefix) {
                 ctx.prefix = this.dataStorePrefix;
             }
             this._queueRequest(query, ctx);
         }
-    };
+    }
     /**
      * Queue a request for data
      * @param {Object} query
      * @param {Object} ctx
      */
-    et2_dataview_controller.prototype._queueRequest = function (query, ctx) {
+    _queueRequest(query, ctx) {
         this._request_queue.push({
             query: query,
             context: ctx,
@@ -517,11 +505,11 @@ var et2_dataview_controller = /** @class */ (function () {
             status: 0
         });
         this._fetchQueuedRequest();
-    };
+    }
     /**
      * Fetch data for a queued request, subject to rate limit
      */
-    et2_dataview_controller.prototype._fetchQueuedRequest = function () {
+    _fetchQueuedRequest() {
         // Check to see if there's room
         var count = 0;
         for (var i = 0; i < this._request_queue.length; i++) {
@@ -558,20 +546,20 @@ var et2_dataview_controller = /** @class */ (function () {
         request.status = 1;
         // Call the callback
         this._dataProvider.dataFetch(request.query, this._fetchCallback, request.context);
-    };
-    et2_dataview_controller.prototype._clearTimer = function () {
+    }
+    _clearTimer() {
         // Reset the queue timer upon destruction
         if (this._queueTimer) {
             window.clearTimeout(this._queueTimer);
             this._queueTimer = null;
         }
-    };
+    }
     /**
      * Called by the data source when the data changes
      *
      * @param _data Object|null New data, or null.  Null will remove the row.
      */
-    et2_dataview_controller.prototype._dataCallback = function (_data) {
+    _dataCallback(_data) {
         // Set the "hasData" flag
         this.self.hasData = true;
         // Call the row callback with the new data -- the row callback then
@@ -617,11 +605,11 @@ var et2_dataview_controller = /** @class */ (function () {
             // Invalidate the current row entry
             this.entry.row.invalidate();
         }
-    };
+    }
     /**
      *
      */
-    et2_dataview_controller.prototype._destroyCallback = function (_row) {
+    _destroyCallback(_row) {
         // Unregister the row from the selection manager, if not selected
         // If it is selected, leave it there - allows selecting rows and scrolling
         var selection = this.self._selectionMgr._getRegisteredRowsEntry(this.entry.uid);
@@ -634,18 +622,18 @@ var et2_dataview_controller = /** @class */ (function () {
         this.entry.row = null;
         // Unregister the data callback
         this.self._dataProvider.dataUnregisterUID(this.entry.uid, this.self._dataCallback, this);
-    };
+    }
     /**
      * Returns an array containing "_count" index mapping entries starting from
      * the index given in "_start".
      */
-    et2_dataview_controller.prototype._getIndexMapping = function (_start, _count) {
+    _getIndexMapping(_start, _count) {
         var result = [];
         for (var i = _start; i < _start + _count; i++) {
             result.push(this._getIndexEntry(i));
         }
         return result;
-    };
+    }
     /**
      * Updates the grid according to the new order. The function simply does the
      * following: It iterates along the new order (given in _order) and the old
@@ -665,7 +653,7 @@ var et2_dataview_controller = /** @class */ (function () {
      * newly created index entries are returned. This function does not update
      * the internal mapping in _idxMap.
      */
-    et2_dataview_controller.prototype._updateOrder = function (_start, _count, _idxMap, _order) {
+    _updateOrder(_start, _count, _idxMap, _order) {
         // The result contains the newly created index map entries which have to
         // be merged with the result
         var result = [];
@@ -712,8 +700,8 @@ var et2_dataview_controller = /** @class */ (function () {
             }
         }
         return result;
-    };
-    et2_dataview_controller.prototype._mergeResult = function (_newEntries, _invalidStartIdx, _diff, _total) {
+    }
+    _mergeResult(_newEntries, _invalidStartIdx, _diff, _total) {
         if (_newEntries.length > 0 || _diff > 0) {
             // Create a new index map
             var newMap = {};
@@ -744,8 +732,8 @@ var et2_dataview_controller = /** @class */ (function () {
             this._indexMap = newMap;
             this._selectionMgr.setIndexMap(newMap);
         }
-    };
-    et2_dataview_controller.prototype._fetchCallback = function (_response) {
+    }
+    _fetchCallback(_response) {
         // Remove answered request from queue
         var request = null;
         for (var i = 0; i < this.self._request_queue.length; i++) {
@@ -798,11 +786,11 @@ var et2_dataview_controller = /** @class */ (function () {
         this.self._grid.invalidate();
         // Check if requests are waiting
         this.self._fetchQueuedRequest();
-    };
+    }
     /**
      * Insert an empty / placeholder row when there is no data to display
      */
-    et2_dataview_controller.prototype._emptyRow = function (_noRows) {
+    _emptyRow(_noRows) {
         var noRows = !_noRows ? false : true;
         jQuery(".egwGridView_empty", this._grid.innerTbody).remove();
         if (typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty")) {
@@ -821,26 +809,24 @@ var et2_dataview_controller = /** @class */ (function () {
                 this._selectionMgr.registerRow("", 0, placeholder.get(0), links);
             }
         }
-    };
+    }
     /**
      * Callback function used by the selection manager to translate the selected
      * range to uids.
      */
-    et2_dataview_controller.prototype._selectionFetchRange = function (_range, _callback, _context) {
+    _selectionFetchRange(_range, _callback, _context) {
         this._dataProvider.dataFetch({ "start": _range.top, "num_rows": _range.bottom - _range.top + 1,
             "no_data": true }, function (_response) {
             _callback.call(_context, _response.order);
         }, _context);
-    };
+    }
     /**
      * Tells the grid to make the given index visible.
      */
-    et2_dataview_controller.prototype._makeIndexVisible = function (_idx) {
+    _makeIndexVisible(_idx) {
         this._grid.makeIndexVisible(_idx);
-    };
-    // Maximum concurrent data requests.  Additional ones are held in the queue.
-    et2_dataview_controller.CONCURRENT_REQUESTS = 5;
-    return et2_dataview_controller;
-}());
-exports.et2_dataview_controller = et2_dataview_controller;
+    }
+}
+// Maximum concurrent data requests.  Additional ones are held in the queue.
+et2_dataview_controller.CONCURRENT_REQUESTS = 5;
 //# sourceMappingURL=et2_dataview_controller.js.map

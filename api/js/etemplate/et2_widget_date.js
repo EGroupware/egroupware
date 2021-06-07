@@ -1,29 +1,13 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Date object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_date_range = exports.et2_date_ro = exports.et2_date_duration_ro = exports.et2_date_duration = exports.et2_date = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
@@ -31,12 +15,13 @@ exports.et2_date_range = exports.et2_date_ro = exports.et2_date_duration_ro = ex
     et2_core_inputWidget;
     et2_core_valueWidget;
 */
-require("./et2_core_common");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
-var et2_core_inputWidget_1 = require("./et2_core_inputWidget");
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
+import { et2_csvSplit, et2_no_init } from "./et2_core_common";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_createWidget, et2_register_widget, et2_widget } from "./et2_core_widget";
+import { et2_valueWidget } from './et2_core_valueWidget';
+import { et2_inputWidget } from './et2_core_inputWidget';
+import { et2_DOMWidget } from "./et2_core_DOMWidget";
+import { egw } from "../jsapi/egw_global";
 // all calls to jQueryUI.datetimepicker as jQuery.datepicker give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/jquery.ui.datetimepicker did NOT help :(
 /**
@@ -48,25 +33,22 @@ var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
  * Widgets uses jQuery date- and time-picker for desktop browsers and
  * HTML5 input fields for mobile devices to get their native UI for date/time entry.
  */
-var et2_date = /** @class */ (function (_super) {
-    __extends(et2_date, _super);
+export class et2_date extends et2_inputWidget {
     /**
      * Constructor
      */
-    function et2_date(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date._attributes, _child || {})) || this;
-        _this.input_date = null;
-        _this.is_mobile = false;
-        _this.date = new Date();
-        _this.date.setUTCHours(0);
-        _this.date.setMinutes(0);
-        _this.date.setSeconds(0);
-        _this.createInputWidget();
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date._attributes, _child || {}));
+        this.input_date = null;
+        this.is_mobile = false;
+        this.date = new Date();
+        this.date.setUTCHours(0);
+        this.date.setMinutes(0);
+        this.date.setSeconds(0);
+        this.createInputWidget();
     }
-    et2_date.prototype.createInputWidget = function () {
+    createInputWidget() {
         this.span = jQuery(document.createElement(this.options.inline ? 'div' : "span")).addClass("et2_date");
         this.input_date = jQuery(document.createElement(this.options.inline ? "div" : "input"));
         if (this.options.blur)
@@ -141,13 +123,13 @@ var et2_date = /** @class */ (function (_super) {
         if (this.options.value == null) {
             this.set_value(null);
         }
-    };
+    }
     /**
      * Calendar popup sets the ID of the input, we can't change that like other inputWidgets can
      *
      * @param _value
      */
-    et2_date.prototype.set_id = function (_value) {
+    set_id(_value) {
         this.id = _value;
         this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId + '_' + this.id : _value;
         var node = this.getDOMNode(this);
@@ -159,112 +141,112 @@ var et2_date = /** @class */ (function (_super) {
                 node.removeAttribute("id");
             }
         }
-    };
-    et2_date.prototype.getInputNode = function () {
-        return this.options.inline ? _super.prototype.getInputNode.call(this) : this.input_date[0];
-    };
-    et2_date.prototype.set_type = function (_type) {
+    }
+    getInputNode() {
+        return this.options.inline ? super.getInputNode() : this.input_date[0];
+    }
+    set_type(_type) {
         if (_type != this.getType()) {
-            _super.prototype.setType.call(this, _type);
+            super.setType(_type);
             this.createInputWidget();
         }
-    };
+    }
     /**
      * Dynamic disable or enable datepicker
      *
      * @param {boolean} _ro
      */
-    et2_date.prototype.set_readonly = function (_ro) {
+    set_readonly(_ro) {
         if (this.input_date && !this.input_date.attr('disabled') != !_ro) {
             this.input_date.prop('disabled', !!_ro)
                 .datepicker('option', 'disabled', !!_ro);
         }
-    };
+    }
     /**
      * Set (full) year of current date
      *
      * @param {number} _value 4-digit year
      */
-    et2_date.prototype.set_year = function (_value) {
+    set_year(_value) {
         this.date.setUTCFullYear(_value);
         this.set_value(this.date);
-    };
+    }
     /**
      * Set month (1..12) of current date
      *
      * @param {number} _value 1..12
      */
-    et2_date.prototype.set_month = function (_value) {
+    set_month(_value) {
         this.date.setUTCMonth(_value - 1);
         this.set_value(this.date);
-    };
+    }
     /**
      * Set day of current date
      *
      * @param {number} _value 1..31
      */
-    et2_date.prototype.set_date = function (_value) {
+    set_date(_value) {
         this.date.setUTCDate(_value);
         this.set_value(this.date);
-    };
+    }
     /**
      * Set hour (0..23) of current date
      *
      * @param {number} _value 0..23
      */
-    et2_date.prototype.set_hours = function (_value) {
+    set_hours(_value) {
         this.date.setUTCHours(_value);
         this.set_value(this.date);
-    };
+    }
     /**
      * Set minute (0..59) of current date
      *
      * @param {number} _value 0..59
      */
-    et2_date.prototype.set_minutes = function (_value) {
+    set_minutes(_value) {
         this.date.setUTCMinutes(_value);
         this.set_value(this.date);
-    };
+    }
     /**
      * Get (full) year of current date
      *
      * @return {number|null} 4-digit year or null for empty
      */
-    et2_date.prototype.get_year = function () {
+    get_year() {
         return this.input_date.val() == "" ? null : this.date.getUTCFullYear();
-    };
+    }
     /**
      * Get month (1..12) of current date
      *
      * @return {number|null} 1..12 or null for empty
      */
-    et2_date.prototype.get_month = function () {
+    get_month() {
         return this.input_date.val() == "" ? null : this.date.getUTCMonth() + 1;
-    };
+    }
     /**
      * Get day of current date
      *
      * @return {number|null} 1..31 or null for empty
      */
-    et2_date.prototype.get_date = function () {
+    get_date() {
         return this.input_date.val() == "" ? null : this.date.getUTCDate();
-    };
+    }
     /**
      * Get hour (0..23) of current date
      *
      * @return {number|null} 0..23 or null for empty
      */
-    et2_date.prototype.get_hours = function () {
+    get_hours() {
         return this.input_date.val() == "" ? null : this.date.getUTCHours();
-    };
+    }
     /**
      * Get minute (0..59) of current date
      *
      * @return {number|null} 0..59 or null for empty
      */
-    et2_date.prototype.get_minutes = function () {
+    get_minutes() {
         return this.input_date.val() == "" ? null : this.date.getUTCMinutes();
-    };
+    }
     /**
      * Get timestamp
      *
@@ -272,9 +254,9 @@ var et2_date = /** @class */ (function (_super) {
      *
      * @return {number|null} timestamp (seconds since 1970-01-01)
      */
-    et2_date.prototype.get_time = function () {
+    get_time() {
         return this.input_date.val() == "" ? null : this.date.getTime();
-    };
+    }
     /**
      * The range of years displayed in the year drop-down: either relative
      * to today's year ("-nn:+nn"), relative to the currently selected year
@@ -284,12 +266,12 @@ var et2_date = /** @class */ (function (_super) {
      * and/or max_date options.
      * @param {string} _value
      */
-    et2_date.prototype.set_year_range = function (_value) {
+    set_year_range(_value) {
         if (this.input_date && this.getType() == 'date' && !this.is_mobile) {
             this.input_date.datepicker('option', 'yearRange', _value);
         }
         this.options.year_range = _value;
-    };
+    }
     /**
      * Set the minimum allowed date
      *
@@ -305,7 +287,7 @@ var et2_date = /** @class */ (function (_super) {
      *		days from today.
      * @param {Date|Number|String} _value
      */
-    et2_date.prototype.set_min = function (_value) {
+    set_min(_value) {
         if (this.input_date) {
             if (this.is_mobile) {
                 this.input_date.attr('min', this._relativeDate(_value));
@@ -324,18 +306,18 @@ var et2_date = /** @class */ (function (_super) {
             }
         }
         this.options.min = _value;
-    };
+    }
     /**
      * Convert non html5 min or max attributes described above to timestamps
      *
      * @param {string|Date} _value
      */
-    et2_date.prototype._relativeDate = function (_value) {
+    _relativeDate(_value) {
         if (typeof _value == 'string' && _value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/))
             return _value;
         // @ts-ignore
         return jQuery.datepicker._determineDate(jQuery.datepicker, _value, this.date).toJSON();
-    };
+    }
     /**
      * Set the maximum allowed date
      *
@@ -351,7 +333,7 @@ var et2_date = /** @class */ (function (_super) {
      *		days from today.
      * @param {Date|Number|String} _value
      */
-    et2_date.prototype.set_max = function (_value) {
+    set_max(_value) {
         if (this.input_date) {
             if (this.is_mobile) {
                 this.input_date.attr('max', this._relativeDate(_value));
@@ -370,7 +352,7 @@ var et2_date = /** @class */ (function (_super) {
             }
         }
         this.options.max = _value;
-    };
+    }
     /**
      * Setting date
      *
@@ -380,7 +362,7 @@ var et2_date = /** @class */ (function (_super) {
      * - string or number with timestamp in usertime like server-side uses it
      * - string starting with + or - to add/substract given number of seconds from current value, "+600" to add 10 minutes
      */
-    et2_date.prototype.set_value = function (_value) {
+    set_value(_value) {
         var old_value = this._oldValue;
         if (_value === null || _value === "" || _value === undefined ||
             // allow 0 as empty-value for date and date-time widgets, as that is used a lot eg. in InfoLog
@@ -522,8 +504,8 @@ var et2_date = /** @class */ (function (_super) {
             this.change(this.input_date);
         }
         this._oldValue = _value;
-    };
-    et2_date.prototype.getValue = function () {
+    }
+    getValue() {
         if (this.input_date.val() == "") {
             // User blanked the box
             return null;
@@ -541,105 +523,100 @@ var et2_date = /** @class */ (function (_super) {
         // Convert to timestamp - no seconds
         this.date.setSeconds(0, 0);
         return (this.date && typeof this.date.toJSON != 'undefined' && this.date.toJSON()) ? this.date.toJSON().replace(/\.\d{3}Z$/, 'Z') : this.date;
-    };
-    et2_date._attributes = {
-        "value": {
-            "type": "any"
-        },
-        "type": {
-            "ignore": false
-        },
-        "blur": {
-            "name": "Placeholder",
-            "type": "string",
-            "default": "",
-            "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
-        },
-        "data_format": {
-            "ignore": true,
-            "description": "Date/Time format. Can be set as an options to date widget",
-            "default": ''
-        },
-        year_range: {
-            name: "Year range",
-            type: "string",
-            default: "c-10:c+10",
-            description: "The range of years displayed in the year drop-down: either relative to today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of these formats (\"nnnn:-nn\"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the min and/or max options."
-        },
-        min: {
-            "name": "Minimum",
-            "type": "any",
-            "default": et2_no_init,
-            "description": 'Minimum allowed date.  Multiple types supported:\
+    }
+}
+et2_date._attributes = {
+    "value": {
+        "type": "any"
+    },
+    "type": {
+        "ignore": false
+    },
+    "blur": {
+        "name": "Placeholder",
+        "type": "string",
+        "default": "",
+        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+    },
+    "data_format": {
+        "ignore": true,
+        "description": "Date/Time format. Can be set as an options to date widget",
+        "default": ''
+    },
+    year_range: {
+        name: "Year range",
+        type: "string",
+        default: "c-10:c+10",
+        description: "The range of years displayed in the year drop-down: either relative to today's year (\"-nn:+nn\"), relative to the currently selected year (\"c-nn:c+nn\"), absolute (\"nnnn:nnnn\"), or combinations of these formats (\"nnnn:-nn\"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the min and/or max options."
+    },
+    min: {
+        "name": "Minimum",
+        "type": "any",
+        "default": et2_no_init,
+        "description": 'Minimum allowed date.  Multiple types supported:\
 Date: A date object containing the minimum date.\
 Number: A number of days from today. For example 2 represents two days from today and -1 represents yesterday.\
 String: A string in the user\'s date format, or a relative date. Relative dates must contain value and period pairs; valid periods are "y" for years, "m" for months, "w" for weeks, and "d" for days. For example, "+1m +7d" represents one month and seven days from today.'
-        },
-        max: {
-            "name": "Maximum",
-            "type": "any",
-            "default": et2_no_init,
-            "description": 'Maximum allowed date.   Multiple types supported:\
+    },
+    max: {
+        "name": "Maximum",
+        "type": "any",
+        "default": et2_no_init,
+        "description": 'Maximum allowed date.   Multiple types supported:\
 Date: A date object containing the maximum date.\
 Number: A number of days from today. For example 2 represents two days from today and -1 represents yesterday.\
 String: A string in the user\'s date format, or a relative date. Relative dates must contain value and period pairs; valid periods are "y" for years, "m" for months, "w" for weeks, and "d" for days. For example, "+1m +7d" represents one month and seven days from today.'
-        },
-        inline: {
-            "name": "Inline",
-            "type": "boolean",
-            "default": false,
-            "description": "Instead of an input field with a popup calendar, the calendar is displayed inline, with no input field"
-        }
-    };
-    et2_date.legacyOptions = ["data_format"];
-    return et2_date;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_date = et2_date;
-et2_core_widget_1.et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
+    },
+    inline: {
+        "name": "Inline",
+        "type": "boolean",
+        "default": false,
+        "description": "Instead of an input field with a popup calendar, the calendar is displayed inline, with no input field"
+    }
+};
+et2_date.legacyOptions = ["data_format"];
+et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
 /**
  * Class which implements the "date-duration" XET-Tag
  */
-var et2_date_duration = /** @class */ (function (_super) {
-    __extends(et2_date_duration, _super);
+export class et2_date_duration extends et2_date {
     /**
      * Constructor
      */
-    function et2_date_duration(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {})) || this;
-        _this.format = null;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_duration._attributes, _child || {}));
+        this.format = null;
         // Legacy option put percent in with display format
-        if (_this.options.display_format.indexOf("%") != -1) {
-            _this.options.percent_allowed = true;
-            _this.options.display_format = _this.options.display_format.replace("%", "");
+        if (this.options.display_format.indexOf("%") != -1) {
+            this.options.percent_allowed = true;
+            this.options.display_format = this.options.display_format.replace("%", "");
         }
         // Clean formats
-        _this.options.display_format = _this.options.display_format.replace(/[^dhms]/, '');
-        if (!_this.options.display_format) {
+        this.options.display_format = this.options.display_format.replace(/[^dhms]/, '');
+        if (!this.options.display_format) {
             // @ts-ignore
-            _this.options.display_format = _this.attributes.display_format["default"];
+            this.options.display_format = this.attributes.display_format["default"];
         }
         // Get translations
-        _this.time_formats = {
-            d: _this.options.short_labels ? _this.egw().lang("d") : _this.egw().lang("Days"),
-            h: _this.options.short_labels ? _this.egw().lang("h") : _this.egw().lang("Hours"),
-            m: _this.options.short_labels ? _this.egw().lang("m") : _this.egw().lang("Minutes"),
-            s: _this.options.short_labels ? _this.egw().lang("s") : _this.egw().lang("Seconds")
+        this.time_formats = {
+            d: this.options.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
+            h: this.options.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
+            m: this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes"),
+            s: this.options.short_labels ? this.egw().lang("s") : this.egw().lang("Seconds")
         },
-            _this.createInputWidget();
-        return _this;
+            this.createInputWidget();
     }
-    et2_date_duration.prototype.createInputWidget = function () {
+    createInputWidget() {
         // Create nodes
         this.node = jQuery(document.createElement("span"))
             .addClass('et2_date_duration');
-        var inputs = [];
-        for (var i = this.options.select_unit ? 1 : this.options.display_format.length; i > 0; --i) {
-            var input = document.createElement("input");
+        let inputs = [];
+        for (let i = this.options.select_unit ? 1 : this.options.display_format.length; i > 0; --i) {
+            let input = document.createElement("input");
             inputs.push(input);
             if (!this.options.select_unit) {
-                var attr = { min: 0 };
+                let attr = { min: 0 };
                 switch (this.options.display_format[this.options.display_format.length - i]) {
                     case 's':
                         attr.max = 60;
@@ -677,16 +654,16 @@ var et2_date_duration = /** @class */ (function (_super) {
             if (!self.duration[0].checkValidity())
                 return self.duration.change();
         });
-    };
+    }
     /**
      * Clientside validation
      *
      * @param {array} _messages
      */
-    et2_date_duration.prototype.isValid = function (_messages) {
+    isValid(_messages) {
         var ok = true;
         // if we have a html5 validation error, show it, as this.input.val() will be empty!
-        for (var i = 0; this.duration && i < this.duration.length; ++i) {
+        for (let i = 0; this.duration && i < this.duration.length; ++i) {
             if (this.duration[i] &&
                 this.duration[i].validationMessage &&
                 !this.duration[i].validity.stepMismatch) {
@@ -694,31 +671,31 @@ var et2_date_duration = /** @class */ (function (_super) {
                 ok = false;
             }
         }
-        return _super.prototype.isValid.call(this, _messages) && ok;
-    };
-    et2_date_duration.prototype.attachToDOM = function () {
+        return super.isValid(_messages) && ok;
+    }
+    attachToDOM() {
         if (this.duration) {
-            for (var i = 0; i < this.duration.length; ++i) {
-                var node = this.duration[i];
+            for (let i = 0; i < this.duration.length; ++i) {
+                let node = this.duration[i];
                 jQuery(node).bind("change.et2_inputWidget", this, function (e) {
                     e.data.change(this);
                 });
             }
         }
-        return et2_core_DOMWidget_1.et2_DOMWidget.prototype.attachToDOM.apply(this, arguments);
-    };
-    et2_date_duration.prototype.getDOMNode = function () {
+        return et2_DOMWidget.prototype.attachToDOM.apply(this, arguments);
+    }
+    getDOMNode() {
         return this.node[0];
-    };
-    et2_date_duration.prototype.getInputNode = function () {
+    }
+    getInputNode() {
         return this.duration[0];
-    };
+    }
     /**
      * Use id on node, same as DOMWidget
      *
      * @param {string} _value id to set
      */
-    et2_date_duration.prototype.set_id = function (_value) {
+    set_id(_value) {
         this.id = _value;
         var node = this.getDOMNode();
         if (node) {
@@ -729,8 +706,8 @@ var et2_date_duration = /** @class */ (function (_super) {
                 node.removeAttribute("id");
             }
         }
-    };
-    et2_date_duration.prototype._unit2seconds = function (_unit) {
+    }
+    _unit2seconds(_unit) {
         switch (_unit) {
             case 's':
                 return 1;
@@ -741,8 +718,8 @@ var et2_date_duration = /** @class */ (function (_super) {
             case 'd':
                 return 3600 * this.options.hours_per_day;
         }
-    };
-    et2_date_duration.prototype._unit_from_value = function (_value, _unit, _highest) {
+    }
+    _unit_from_value(_value, _unit, _highest) {
         _value *= this._unit2seconds(this.data_format);
         // get value for given _unit
         switch (_unit) {
@@ -757,11 +734,11 @@ var et2_date_duration = /** @class */ (function (_super) {
             case 'd':
                 return Math.floor(_value / 3600 * this.options.hours_per_day);
         }
-    };
-    et2_date_duration.prototype.set_value = function (_value) {
+    }
+    set_value(_value) {
         this.options.value = _value;
         if (!this.options.select_unit && this.options.display_format.length > 1) {
-            for (var i = this.options.display_format.length; --i >= 0;) {
+            for (let i = this.options.display_format.length; --i >= 0;) {
                 jQuery(this.duration[i]).val(this._unit_from_value(_value, this.options.display_format[i], !i));
             }
             return;
@@ -783,8 +760,8 @@ var et2_date_duration = /** @class */ (function (_super) {
                 this.format.text(display.unit ? this.time_formats[display.unit] : '');
             }
         }
-    };
-    et2_date_duration.prototype.set_display_format = function (format) {
+    }
+    set_display_format(format) {
         if (format.length < 1) {
             this.node.remove('select.et2_date_duration');
             this.format.remove();
@@ -823,7 +800,7 @@ var et2_date_duration = /** @class */ (function (_super) {
         else {
             this.format.text(this.time_formats["m"]);
         }
-    };
+    }
     /**
      * Converts the value in data format into value in display format.
      *
@@ -831,12 +808,12 @@ var et2_date_duration = /** @class */ (function (_super) {
      *
      * @return Object {value: Value in display format, unit: unit for display}
      */
-    et2_date_duration.prototype._convert_to_display = function (_value) {
+    _convert_to_display(_value) {
         if (!this.options.select_unit) {
-            var vals = [];
-            for (var i = 0; i < this.options.display_format.length; ++i) {
-                var unit = this.options.display_format[i];
-                var val = this._unit_from_value(_value, unit, i === 0);
+            let vals = [];
+            for (let i = 0; i < this.options.display_format.length; ++i) {
+                let unit = this.options.display_format[i];
+                let val = this._unit_from_value(_value, unit, i === 0);
                 if (unit === 's' || unit === 'm' || unit === 'h' && this.options.display_format[0] === 'd') {
                     vals.push(sprintf('%02d', val));
                 }
@@ -879,20 +856,20 @@ var et2_date_duration = /** @class */ (function (_super) {
             _value = _value.replace('.', sep);
         }
         return { value: _value, unit: _unit };
-    };
+    }
     /**
      * Change displayed value into storage value and return
      */
-    et2_date_duration.prototype.getValue = function () {
+    getValue() {
         if (!this.options.select_unit && this.options.display_format.length > 1) {
-            var value_1 = 0;
-            for (var i = this.options.display_format.length; --i >= 0;) {
-                value_1 += parseInt(jQuery(this.duration[i]).val()) * this._unit2seconds(this.options.display_format[i]);
+            let value = 0;
+            for (let i = this.options.display_format.length; --i >= 0;) {
+                value += parseInt(jQuery(this.duration[i]).val()) * this._unit2seconds(this.options.display_format[i]);
             }
             if (this.options.data_format !== 's') {
-                value_1 /= this._unit2seconds(this.options.data_format);
+                value /= this._unit2seconds(this.options.data_format);
             }
-            return this.options.data_format === 'm' ? Math.round(value_1) : value_1;
+            return this.options.data_format === 'm' ? Math.round(value) : value;
         }
         var value = this.duration.val().replace(',', '.');
         if (value === '') {
@@ -923,75 +900,69 @@ var et2_date_duration = /** @class */ (function (_super) {
                 break;
         }
         return value;
-    };
-    et2_date_duration._attributes = {
-        "data_format": {
-            "name": "Data format",
-            "default": "m",
-            "type": "string",
-            "description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int)."
-        },
-        "display_format": {
-            "name": "Display format",
-            "default": "dhm",
-            "type": "string",
-            "description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
-        },
-        "select_unit": {
-            "name": "Select unit or input per unit",
-            "default": true,
-            "type": "boolean",
-            "description": "Display a unit-selection for multiple units, or an input field per unit."
-        },
-        "percent_allowed": {
-            "name": "Percent allowed",
-            "default": false,
-            "type": "boolean",
-            "description": "Allows to enter a percentage."
-        },
-        "hours_per_day": {
-            "name": "Hours per day",
-            "default": 8,
-            "type": "integer",
-            "description": "Number of hours in a day, for converting between hours and (working) days."
-        },
-        "empty_not_0": {
-            "name": "0 or empty",
-            "default": false,
-            "type": "boolean",
-            "description": "Should the widget differ between 0 and empty, which get then returned as NULL"
-        },
-        "short_labels": {
-            "name": "Short labels",
-            "default": false,
-            "type": "boolean",
-            "description": "use d/h/m instead of day/hour/minute"
-        },
-        "step": {
-            "name": "Step limit",
-            "default": 'any',
-            "type": "string",
-            "description": "Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set."
-        }
-    };
-    et2_date_duration.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
-    return et2_date_duration;
-}(et2_date));
-exports.et2_date_duration = et2_date_duration;
-et2_core_widget_1.et2_register_widget(et2_date_duration, ["date-duration"]);
+    }
+}
+et2_date_duration._attributes = {
+    "data_format": {
+        "name": "Data format",
+        "default": "m",
+        "type": "string",
+        "description": "Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int)."
+    },
+    "display_format": {
+        "name": "Display format",
+        "default": "dhm",
+        "type": "string",
+        "description": "Permitted units for displaying the data.  'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.  Default is 'dh' = days or hours with selectbox."
+    },
+    "select_unit": {
+        "name": "Select unit or input per unit",
+        "default": true,
+        "type": "boolean",
+        "description": "Display a unit-selection for multiple units, or an input field per unit."
+    },
+    "percent_allowed": {
+        "name": "Percent allowed",
+        "default": false,
+        "type": "boolean",
+        "description": "Allows to enter a percentage."
+    },
+    "hours_per_day": {
+        "name": "Hours per day",
+        "default": 8,
+        "type": "integer",
+        "description": "Number of hours in a day, for converting between hours and (working) days."
+    },
+    "empty_not_0": {
+        "name": "0 or empty",
+        "default": false,
+        "type": "boolean",
+        "description": "Should the widget differ between 0 and empty, which get then returned as NULL"
+    },
+    "short_labels": {
+        "name": "Short labels",
+        "default": false,
+        "type": "boolean",
+        "description": "use d/h/m instead of day/hour/minute"
+    },
+    "step": {
+        "name": "Step limit",
+        "default": 'any',
+        "type": "string",
+        "description": "Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set."
+    }
+};
+et2_date_duration.legacyOptions = ["data_format", "display_format", "hours_per_day", "empty_not_0", "short_labels"];
+et2_register_widget(et2_date_duration, ["date-duration"]);
 /**
  * r/o date-duration
  */
-var et2_date_duration_ro = /** @class */ (function (_super) {
-    __extends(et2_date_duration_ro, _super);
-    function et2_date_duration_ro() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    et2_date_duration_ro.prototype.createInputWidget = function () {
+export class et2_date_duration_ro extends et2_date_duration {
+    createInputWidget() {
         this.node = jQuery(document.createElement("span"));
         this.duration = jQuery(document.createElement("span")).appendTo(this.node);
         this.format = jQuery(document.createElement("span")).appendTo(this.node);
-    };
+    }
     /**
      * Code for implementing et2_IDetachedDOM
      * Fast-clonable read-only widget that only deals with DOM nodes, not the widget tree
@@ -1003,18 +974,18 @@ var et2_date_duration_ro = /** @class */ (function (_super) {
      *
      * @param {array} _attrs array to add further attributes to
      */
-    et2_date_duration_ro.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("value");
-    };
+    }
     /**
      * Returns an array of DOM nodes. The (relativly) same DOM-Nodes have to be
      * passed to the "setDetachedAttributes" function in the same order.
      *
      * @return {array}
      */
-    et2_date_duration_ro.prototype.getDetachedNodes = function () {
+    getDetachedNodes() {
         return [this.duration[0], this.format[0]];
-    };
+    }
     /**
      * Sets the given associative attribute->value array and applies the
      * attributes to the given DOM-Node.
@@ -1025,7 +996,7 @@ var et2_date_duration_ro = /** @class */ (function (_super) {
      *      returned by the "getDetachedAttributes" function and sets them to the
      *      given values.
      */
-    et2_date_duration_ro.prototype.setDetachedAttributes = function (_nodes, _values) {
+    setDetachedAttributes(_nodes, _values) {
         for (var i = 0; i < _nodes.length; i++) {
             // Clear the node
             for (var j = _nodes[i].childNodes.length - 1; j >= 0; j--) {
@@ -1040,37 +1011,32 @@ var et2_date_duration_ro = /** @class */ (function (_super) {
             _nodes[0].appendChild(document.createTextNode(display.value));
             _nodes[1].appendChild(document.createTextNode(display.unit));
         }
-    };
-    return et2_date_duration_ro;
-}(et2_date_duration));
-exports.et2_date_duration_ro = et2_date_duration_ro;
-et2_core_widget_1.et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
+    }
+}
+et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 /**
  * et2_date_ro is the readonly implementation of some date widget.
  */
-var et2_date_ro = /** @class */ (function (_super) {
-    __extends(et2_date_ro, _super);
+export class et2_date_ro extends et2_valueWidget {
     /**
      * Constructor
      */
-    function et2_date_ro(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_ro._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_ro._attributes, _child || {}));
         /**
          * Internal container for working easily with dates
          */
-        _this.date = new Date();
-        _this.value = "";
-        _this._labelContainer = jQuery(document.createElement("label"))
+        this.date = new Date();
+        this.value = "";
+        this._labelContainer = jQuery(document.createElement("label"))
             .addClass("et2_label");
-        _this.span = jQuery(document.createElement(_this.getType() == "date-since" || _this.getType() == "date-time_today" ? "span" : "time"))
+        this.span = jQuery(document.createElement(this.getType() == "date-since" || this.getType() == "date-time_today" ? "span" : "time"))
             .addClass("et2_date_ro et2_label")
-            .appendTo(_this._labelContainer);
-        _this.setDOMNode(_this._labelContainer[0]);
-        return _this;
+            .appendTo(this._labelContainer);
+        this.setDOMNode(this._labelContainer[0]);
     }
-    et2_date_ro.prototype.set_value = function (_value) {
+    set_value(_value) {
         if (typeof _value == 'undefined')
             _value = 0;
         this.value = _value;
@@ -1177,8 +1143,8 @@ var et2_date_ro = /** @class */ (function (_super) {
                 break;
         }
         this.span.attr("datetime", date("Y-m-d H:i:s", this.date)).text(display);
-    };
-    et2_date_ro.prototype.set_label = function (label) {
+    }
+    set_label(label) {
         // Remove current label
         this._labelContainer.contents()
             .filter(function () { return this.nodeType == 3; }).remove();
@@ -1188,7 +1154,7 @@ var et2_date_ro = /** @class */ (function (_super) {
         this.label = label;
         // add class if label is empty
         this._labelContainer.toggleClass('et2_label_empty', !label || !parts[0]);
-    };
+    }
     /**
      * Creates a list of attributes which can be set when working in the
      * "detached" mode. The result is stored in the _attrs array which is provided
@@ -1196,18 +1162,18 @@ var et2_date_ro = /** @class */ (function (_super) {
      *
      * @param {array} _attrs array to add further attributes to
      */
-    et2_date_ro.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("label", "value", "class");
-    };
+    }
     /**
      * Returns an array of DOM nodes. The (relatively) same DOM-Nodes have to be
      * passed to the "setDetachedAttributes" function in the same order.
      *
      * @return {array}
      */
-    et2_date_ro.prototype.getDetachedNodes = function () {
+    getDetachedNodes() {
         return [this._labelContainer[0], this.span[0]];
-    };
+    }
     /**
      * Sets the given associative attribute->value array and applies the
      * attributes to the given DOM-Node.
@@ -1218,7 +1184,7 @@ var et2_date_ro = /** @class */ (function (_super) {
      *      returned by the "getDetachedAttributes" function and sets them to the
      *      given values.
      */
-    et2_date_ro.prototype.setDetachedAttributes = function (_nodes, _values) {
+    setDetachedAttributes(_nodes, _values) {
         this._labelContainer = jQuery(_nodes[0]);
         this.span = jQuery(_nodes[1]);
         this.set_value(_values["value"]);
@@ -1228,72 +1194,67 @@ var et2_date_ro = /** @class */ (function (_super) {
         if (_values["class"]) {
             this.span.addClass(_values["class"]);
         }
-    };
-    /**
-     * Ignore all more advanced attributes.
-     */
-    et2_date_ro._attributes = {
-        "value": {
-            "type": "string"
-        },
-        "type": {
-            "ignore": false
-        },
-        "data_format": {
-            "ignore": true,
-            "description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
-        },
-        min: { ignore: true },
-        max: { ignore: true },
-        year_range: { ignore: true }
-    };
-    return et2_date_ro;
-}(et2_core_valueWidget_1.et2_valueWidget));
-exports.et2_date_ro = et2_date_ro;
-et2_core_widget_1.et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
+    }
+}
+/**
+ * Ignore all more advanced attributes.
+ */
+et2_date_ro._attributes = {
+    "value": {
+        "type": "string"
+    },
+    "type": {
+        "ignore": false
+    },
+    "data_format": {
+        "ignore": true,
+        "description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
+    },
+    min: { ignore: true },
+    max: { ignore: true },
+    year_range: { ignore: true }
+};
+et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today", "time_or_date", "date-timeonly_ro"]);
 /**
  * Widget for selecting a date range
  */
-var et2_date_range = /** @class */ (function (_super) {
-    __extends(et2_date_range, _super);
+export class et2_date_range extends et2_inputWidget {
     /**
      * Constructor
      */
-    function et2_date_range(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_date_range._attributes, _child || {})) || this;
-        _this.div = jQuery(document.createElement('div'))
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_date_range._attributes, _child || {}));
+        this.div = jQuery(document.createElement('div'))
             .attr({ class: 'et2_date_range' });
-        _this.from = null;
-        _this.to = null;
-        _this.select = null;
+        this.from = null;
+        this.to = null;
+        this.select = null;
         // Set domid
-        _this.set_id(_this.id);
-        _this.setDOMNode(_this.div[0]);
-        _this._createWidget();
-        _this.set_relative(_this.options.relative || false);
-        return _this;
+        this.set_id(this.id);
+        this.setDOMNode(this.div[0]);
+        this._createWidget();
+        this.set_relative(this.options.relative || false);
     }
-    et2_date_range.prototype._createWidget = function () {
+    _createWidget() {
         var widget = this;
-        this.from = et2_core_widget_1.et2_createWidget('date', {
+        this.from = et2_createWidget('date', {
             id: this.id + '[from]',
             blur: egw.lang('From'),
-            onchange: function () { widget.to.set_min(widget.from.getValue()); }
+            onchange() { widget.to.set_min(widget.from.getValue()); }
         }, this);
-        this.to = et2_core_widget_1.et2_createWidget('date', {
+        this.to = et2_createWidget('date', {
             id: this.id + '[to]',
             blur: egw.lang('To'),
-            onchange: function () { widget.from.set_max(widget.to.getValue()); }
+            onchange() { widget.from.set_max(widget.to.getValue()); }
         }, this);
-        this.select = et2_core_widget_1.et2_createWidget('select', {
+        this.select = et2_createWidget('select', {
             id: this.id + '[relative]',
             select_options: et2_date_range.relative_dates,
             empty_label: this.options.blur || 'All'
         }, this);
         this.select.loadingFinished();
-    };
+    }
     /**
      * Function which allows iterating over the complete widget tree.
      * Overridden here to avoid problems with children when getting value
@@ -1303,20 +1264,20 @@ var et2_date_range = /** @class */ (function (_super) {
      * @param _type is an optional parameter which specifies a class/interface
      * 	the elements have to be instanceOf.
      */
-    et2_date_range.prototype.iterateOver = function (_callback, _context, _type) {
+    iterateOver(_callback, _context, _type) {
         if (typeof _type == "undefined") {
-            _type = et2_core_widget_1.et2_widget;
+            _type = et2_widget;
         }
         if (this.isInTree() && this.instanceOf(_type)) {
             _callback.call(_context, this);
         }
-    };
+    }
     /**
      * Toggles relative or absolute dates
      *
      * @param {boolean} _value
      */
-    et2_date_range.prototype.set_relative = function (_value) {
+    set_relative(_value) {
         this.options.relative = _value;
         if (this.options.relative) {
             jQuery(this.from.getDOMNode()).hide();
@@ -1325,8 +1286,8 @@ var et2_date_range = /** @class */ (function (_super) {
         else {
             jQuery(this.select.getDOMNode()).hide();
         }
-    };
-    et2_date_range.prototype.set_value = function (value) {
+    }
+    set_value(value) {
         // @ts-ignore
         if (!value || typeof value == 'null') {
             this.select.set_value('');
@@ -1347,13 +1308,13 @@ var et2_date_range = /** @class */ (function (_super) {
             this.from.set_value(value.from);
             this.to.set_value(value.to);
         }
-    };
-    et2_date_range.prototype.getValue = function () {
+    }
+    getValue() {
         return this.options.relative ?
             this.select.getValue() :
             { from: this.from.getValue(), to: this.to.getValue() };
-    };
-    et2_date_range.prototype._set_relative_value = function (_value) {
+    }
+    _set_relative_value(_value) {
         if (this.options.relative) {
             jQuery(this.select.getDOMNode()).show();
         }
@@ -1385,141 +1346,139 @@ var et2_date_range = /** @class */ (function (_super) {
                 this[date].set_value(value);
             }
         }
-    };
-    et2_date_range._attributes = {
-        value: {
-            "type": "any",
-            "description": "An object with keys 'from' and 'to' for absolute ranges, or a relative range string"
+    }
+}
+et2_date_range._attributes = {
+    value: {
+        "type": "any",
+        "description": "An object with keys 'from' and 'to' for absolute ranges, or a relative range string"
+    },
+    relative: {
+        name: 'Relative',
+        type: 'boolean',
+        description: 'Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.'
+    }
+};
+// Class Constants
+et2_date_range.relative_dates = [
+    // Start and end are relative offsets, see et2_date.set_min()
+    // or Date objects
+    {
+        value: 'Today',
+        label: egw.lang('Today'),
+        from(date) { return date; },
+        to(date) { return date; }
+    },
+    {
+        label: egw.lang('Yesterday'),
+        value: 'Yesterday',
+        from(date) {
+            date.setUTCDate(date.getUTCDate() - 1);
+            return date;
         },
-        relative: {
-            name: 'Relative',
-            type: 'boolean',
-            description: 'Is the date range relative (this week) or absolute (2016-02-15 - 2016-02-21).  This will affect the value returned.'
+        to: ''
+    },
+    {
+        label: egw.lang('This week'),
+        value: 'This week',
+        from(date) { return egw.week_start(date); },
+        to(date) {
+            date.setUTCDate(date.getUTCDate() + 6);
+            return date;
         }
-    };
-    // Class Constants
-    et2_date_range.relative_dates = [
-        // Start and end are relative offsets, see et2_date.set_min()
-        // or Date objects
-        {
-            value: 'Today',
-            label: egw.lang('Today'),
-            from: function (date) { return date; },
-            to: function (date) { return date; }
+    },
+    {
+        label: egw.lang('Last week'),
+        value: 'Last week',
+        from(date) {
+            var d = egw.week_start(date);
+            d.setUTCDate(d.getUTCDate() - 7);
+            return d;
         },
-        {
-            label: egw.lang('Yesterday'),
-            value: 'Yesterday',
-            from: function (date) {
-                date.setUTCDate(date.getUTCDate() - 1);
-                return date;
-            },
-            to: ''
-        },
-        {
-            label: egw.lang('This week'),
-            value: 'This week',
-            from: function (date) { return egw.week_start(date); },
-            to: function (date) {
-                date.setUTCDate(date.getUTCDate() + 6);
-                return date;
-            }
-        },
-        {
-            label: egw.lang('Last week'),
-            value: 'Last week',
-            from: function (date) {
-                var d = egw.week_start(date);
-                d.setUTCDate(d.getUTCDate() - 7);
-                return d;
-            },
-            to: function (date) {
-                date.setUTCDate(date.getUTCDate() + 6);
-                return date;
-            }
-        },
-        {
-            label: egw.lang('This month'),
-            value: 'This month',
-            from: function (date) {
-                date.setUTCDate(1);
-                return date;
-            },
-            to: function (date) {
-                date.setUTCMonth(date.getUTCMonth() + 1);
-                date.setUTCDate(0);
-                return date;
-            }
-        },
-        {
-            label: egw.lang('Last month'),
-            value: 'Last month',
-            from: function (date) {
-                date.setUTCMonth(date.getUTCMonth() - 1);
-                date.setUTCDate(1);
-                return date;
-            },
-            to: function (date) {
-                date.setUTCMonth(date.getUTCMonth() + 1);
-                date.setUTCDate(0);
-                return date;
-            }
-        },
-        {
-            label: egw.lang('Last 3 months'),
-            value: 'Last 3 months',
-            from: function (date) {
-                date.setUTCMonth(date.getUTCMonth() - 2);
-                date.setUTCDate(1);
-                return date;
-            },
-            to: function (date) {
-                date.setUTCMonth(date.getUTCMonth() + 3);
-                date.setUTCDate(0);
-                return date;
-            }
-        },
-        /*
-        'This quarter'=> array(0,0,0,0,  0,0,0,0),      // Just a marker, needs special handling
-        'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
-        */
-        {
-            label: egw.lang('This year'),
-            value: 'This year',
-            from: function (d) {
-                d.setUTCMonth(0);
-                d.setUTCDate(1);
-                return d;
-            },
-            to: function (d) {
-                d.setUTCMonth(11);
-                d.setUTCDate(31);
-                return d;
-            }
-        },
-        {
-            label: egw.lang('Last year'),
-            value: 'Last year',
-            from: function (d) {
-                d.setUTCMonth(0);
-                d.setUTCDate(1);
-                d.setUTCYear(d.getUTCYear() - 1);
-                return d;
-            },
-            to: function (d) {
-                d.setUTCMonth(11);
-                d.setUTCDate(31);
-                d.setUTCYear(d.getUTCYear() - 1);
-                return d;
-            }
+        to(date) {
+            date.setUTCDate(date.getUTCDate() + 6);
+            return date;
         }
-        /* Still needed?
-        '2 years ago' => array(-2,0,0,0, -1,0,0,0),
-        '3 years ago' => array(-3,0,0,0, -2,0,0,0),
-        */
-    ];
-    return et2_date_range;
-}(et2_core_inputWidget_1.et2_inputWidget));
-exports.et2_date_range = et2_date_range;
-et2_core_widget_1.et2_register_widget(et2_date_range, ["date-range"]);
+    },
+    {
+        label: egw.lang('This month'),
+        value: 'This month',
+        from(date) {
+            date.setUTCDate(1);
+            return date;
+        },
+        to(date) {
+            date.setUTCMonth(date.getUTCMonth() + 1);
+            date.setUTCDate(0);
+            return date;
+        }
+    },
+    {
+        label: egw.lang('Last month'),
+        value: 'Last month',
+        from(date) {
+            date.setUTCMonth(date.getUTCMonth() - 1);
+            date.setUTCDate(1);
+            return date;
+        },
+        to(date) {
+            date.setUTCMonth(date.getUTCMonth() + 1);
+            date.setUTCDate(0);
+            return date;
+        }
+    },
+    {
+        label: egw.lang('Last 3 months'),
+        value: 'Last 3 months',
+        from(date) {
+            date.setUTCMonth(date.getUTCMonth() - 2);
+            date.setUTCDate(1);
+            return date;
+        },
+        to(date) {
+            date.setUTCMonth(date.getUTCMonth() + 3);
+            date.setUTCDate(0);
+            return date;
+        }
+    },
+    /*
+    'This quarter'=> array(0,0,0,0,  0,0,0,0),      // Just a marker, needs special handling
+    'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
+    */
+    {
+        label: egw.lang('This year'),
+        value: 'This year',
+        from(d) {
+            d.setUTCMonth(0);
+            d.setUTCDate(1);
+            return d;
+        },
+        to(d) {
+            d.setUTCMonth(11);
+            d.setUTCDate(31);
+            return d;
+        }
+    },
+    {
+        label: egw.lang('Last year'),
+        value: 'Last year',
+        from(d) {
+            d.setUTCMonth(0);
+            d.setUTCDate(1);
+            d.setUTCYear(d.getUTCYear() - 1);
+            return d;
+        },
+        to(d) {
+            d.setUTCMonth(11);
+            d.setUTCDate(31);
+            d.setUTCYear(d.getUTCYear() - 1);
+            return d;
+        }
+    }
+    /* Still needed?
+    '2 years ago' => array(-2,0,0,0, -1,0,0,0),
+    '3 years ago' => array(-3,0,0,0, -2,0,0,0),
+    */
+];
+et2_register_widget(et2_date_range, ["date-range"]);
 //# sourceMappingURL=et2_widget_date.js.map

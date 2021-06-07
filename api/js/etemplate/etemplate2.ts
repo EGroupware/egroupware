@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	// Include all widget classes here
@@ -77,6 +76,67 @@
 import {et2_widget} from "./et2_core_widget";
 import {et2_baseWidget, et2_container} from "./et2_core_baseWidget";
 import {EgwApp} from "../jsapi/egw_app";
+import {et2_IInput, et2_IPrint, et2_IResizeable, et2_ISubmitListener} from "./et2_core_interfaces";
+import {egw} from "../jsapi/egw_global";
+import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
+import {et2_checkType} from "./et2_core_common";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+import {et2_loadXMLFromURL} from "./et2_core_xml";
+import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
+import {et2_tabbox} from "./et2_widget_tabs";
+import '../jsapi/egw_json.js';
+
+/* Include all widget classes here, we only care about them registering, not importing anything
+import './et2_widget_template';
+import './et2_widget_grid';
+import './et2_widget_box';
+import './et2_widget_hbox';
+import './et2_widget_groupbox';
+import './et2_widget_split';
+import './et2_widget_button';
+import './et2_widget_color';
+import './et2_widget_description';
+import './et2_widget_entry';
+import './et2_widget_textbox';
+import './et2_widget_number';
+import './et2_widget_password';
+import './et2_widget_url';
+import './et2_widget_selectbox';
+import './et2_widget_checkbox';
+import './et2_widget_radiobox';
+import './et2_widget_date';
+import './et2_widget_dialog';
+import './et2_widget_diff';
+import './et2_widget_dropdown_button';
+import './et2_widget_styles';
+import './et2_widget_favorites';
+import './et2_widget_html';
+import './et2_widget_htmlarea';
+import './et2_widget_tabs';
+import './et2_widget_taglist';
+import './et2_widget_timestamper';
+import './et2_widget_toolbar';
+import './et2_widget_tree';
+import './et2_widget_historylog';
+import './et2_widget_hrule';
+import './et2_widget_image';
+import './et2_widget_iframe';
+import './et2_widget_file';
+import './et2_widget_link';
+import './et2_widget_progress';
+import './et2_widget_portlet';
+import './et2_widget_selectAccount';
+import './et2_widget_ajaxSelect';
+import './et2_widget_vfs';
+import './et2_widget_video';
+import './et2_widget_audio';
+import './et2_widget_barcode';
+import './et2_widget_itempicker';
+import './et2_widget_script';
+import './et2_widget_countdown';
+import './et2_extension_nextmatch';
+import './et2_extension_customfields';
+*/
 
 /**
  * The etemplate2 class manages a certain etemplate2 instance.

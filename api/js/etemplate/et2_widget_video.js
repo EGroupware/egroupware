@@ -1,38 +1,21 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
- * @copyright Stylite AG
- * @version $Id$
+ * @copyright EGroupware GmbH 2020-2021
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_video = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
     et2_core_baseWidget;
 */
-var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
+import { et2_baseWidget } from './et2_core_baseWidget';
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_register_widget } from "./et2_core_widget";
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
  *
@@ -60,20 +43,18 @@ var et2_core_widget_1 = require("./et2_core_widget");
  *
  * @augments et2_baseWidget
  */
-var et2_video = /** @class */ (function (_super) {
-    __extends(et2_video, _super);
-    function et2_video(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {})) || this;
-        _this.video = null;
+export class et2_video extends et2_baseWidget {
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
+        this.video = null;
         /**
          * keeps internal state of previousTime video played
          * @private
          */
-        _this._previousTime = 0;
-        _this.set_src_type(_this.options.src_type);
-        return _this;
+        this._previousTime = 0;
+        this.set_src_type(this.options.src_type);
     }
-    et2_video.prototype.set_src_type = function (_type) {
+    set_src_type(_type) {
         this.options.src_type = _type;
         if (this.video && this._isYoutube() === (this.video[0].tagName === 'DIV')) {
             return;
@@ -89,10 +70,10 @@ var et2_video = /** @class */ (function (_super) {
                 .attr('id', et2_video.youtubePrefixId + this.id);
             if (!document.getElementById('youtube-api-script')) {
                 //Load youtube iframe api
-                var tag = document.createElement('script');
+                let tag = document.createElement('script');
                 tag.id = 'youtube-api-script';
                 tag.src = "https://www.youtube.com/iframe_api";
-                var firstScriptTag = document.getElementsByTagName('script')[0];
+                let firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             }
         }
@@ -114,14 +95,14 @@ var et2_video = /** @class */ (function (_super) {
         this.setDOMNode(this.video[0]);
         this.set_width(this.options.width || 'auto');
         this.set_height(this.options.height || 'auto');
-    };
+    }
     /**
      * Set video src
      *
      * @param {string} _value url
      */
-    et2_video.prototype.set_src = function (_value) {
-        var self = this;
+    set_src(_value) {
+        let self = this;
         this.options.video_src = _value;
         if (_value && !this._isYoutube()) {
             this.video.attr('src', _value);
@@ -141,48 +122,48 @@ var et2_video = /** @class */ (function (_super) {
                 self._createYoutubePlayer(self.options.video_src);
             }
         }
-    };
+    }
     /**
      * Set autoplay option for video
      * -If autoplay is set, video would be played automatically after the page is loaded
      *
      * @param {string} _value true set the autoplay and false not to set
      */
-    et2_video.prototype.set_autoplay = function (_value) {
+    set_autoplay(_value) {
         if (_value && !this._isYoutube()) {
             this.video.attr("autoplay", _value);
         }
-    };
+    }
     /**
      * Set controls option for video
      *
      * @param {string} _value true set the autoplay and false not to set
      */
-    et2_video.prototype.set_controls = function (_value) {
+    set_controls(_value) {
         if (_value && !this._isYoutube()) {
             this.video.attr("controls", _value);
         }
-    };
+    }
     /**
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
      *
      * @param {string} _url url or image spec like "api/mime128_video"
      */
-    et2_video.prototype.set_poster = function (_url) {
+    set_poster(_url) {
         if (_url) {
             if (_url[0] !== '/' && !_url.match(/^https?:\/\//)) {
                 _url = this.egw().image(_url);
             }
             this.video.attr("poster", _url);
         }
-    };
+    }
     /**
      * Seek to a time / position
      *
      * @param _vtime in seconds
      */
-    et2_video.prototype.seek_video = function (_vtime) {
+    seek_video(_vtime) {
         if (this._isYoutube()) {
             if (this.youtube.seekTo) {
                 this.youtube.seekTo(_vtime, true);
@@ -192,26 +173,26 @@ var et2_video = /** @class */ (function (_super) {
         else {
             this.video[0].currentTime = _vtime;
         }
-    };
+    }
     /**
      * Play video
      */
-    et2_video.prototype.play_video = function () {
+    play_video() {
         if (this._isYoutube()) {
-            var self_1 = this;
+            let self = this;
             return new Promise(function (resolve) {
-                if (self_1.youtube.playVideo) {
-                    self_1.youtube.playVideo();
+                if (self.youtube.playVideo) {
+                    self.youtube.playVideo();
                     resolve();
                 }
             });
         }
         return this.video[0].play();
-    };
+    }
     /**
      * Pause video
      */
-    et2_video.prototype.pause_video = function () {
+    pause_video() {
         if (this._isYoutube()) {
             if (this.youtube.pauseVideo) {
                 this.youtube.pauseVideo();
@@ -221,20 +202,20 @@ var et2_video = /** @class */ (function (_super) {
         else {
             this.video[0].pause();
         }
-    };
+    }
     /**
      * play video
      * ***Internal use and should not be overriden in its extended class***
      */
-    et2_video.prototype.play = function () {
+    play() {
         var _a;
         return this._isYoutube() && ((_a = this.youtube) === null || _a === void 0 ? void 0 : _a.playVideo) ? this.youtube.playVideo() : this.video[0].play();
-    };
+    }
     /**
      * Get/set current video time / position in seconds
      * @return returns currentTime
      */
-    et2_video.prototype.currentTime = function (_time) {
+    currentTime(_time) {
         var _a;
         if (_time) {
             if (this._isYoutube()) {
@@ -254,12 +235,12 @@ var et2_video = /** @class */ (function (_super) {
         else {
             return this.video[0].currentTime;
         }
-    };
+    }
     /**
      * get duration time
      * @return returns duration time
      */
-    et2_video.prototype.duration = function () {
+    duration() {
         var _a;
         if (this._isYoutube()) {
             return ((_a = this.youtube) === null || _a === void 0 ? void 0 : _a.getDuration) ? this.youtube.getDuration() : 0;
@@ -267,40 +248,40 @@ var et2_video = /** @class */ (function (_super) {
         else {
             return this.video[0].duration;
         }
-    };
+    }
     /**
      * get pasued
      * @return returns paused flag
      */
-    et2_video.prototype.paused = function () {
+    paused() {
         if (this._isYoutube()) {
             return this.youtube.getPlayerState() == et2_video.youtube_player_states.paused;
         }
         return this.video[0].paused;
-    };
+    }
     /**
      * get ended
      * @return returns ended flag
      */
-    et2_video.prototype.ended = function () {
+    ended() {
         if (this._isYoutube()) {
             return this.youtube.getPlayerState() == et2_video.youtube_player_states.ended;
         }
         return this.video[0].ended;
-    };
+    }
     /**
      * get/set priviousTime
      * @param _time
      * @return returns time
      */
-    et2_video.prototype.previousTime = function (_time) {
+    previousTime(_time) {
         if (_time)
             this._previousTime = _time;
         return this._previousTime;
-    };
-    et2_video.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
-        var self = this;
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
+        let self = this;
         if (!this._isYoutube()) {
             this.video[0].addEventListener("loadedmetadata", function () {
                 self._onReady();
@@ -315,8 +296,8 @@ var et2_video = /** @class */ (function (_super) {
                 this._createYoutubePlayer(this.options.video_src);
         }
         return false;
-    };
-    et2_video.prototype.videoLoadnigIsFinished = function () {
+    }
+    videoLoadnigIsFinished() {
         if (this.options.starttime) {
             this.seek_video(this.options.starttime);
             // unfortunately, youtube api autoplays the video after seekTo on initiation
@@ -333,32 +314,32 @@ var et2_video = /** @class */ (function (_super) {
                     ;
                 }.bind(this), 1000);
         }
-    };
-    et2_video.prototype._onReady = function () {
+    }
+    _onReady() {
         // need to set the video dom to transformed iframe
         if (this._isYoutube() && this.youtube.getIframe)
             this.youtubeFrame = jQuery(this.youtube.getIframe());
-        var event = document.createEvent("Event");
+        let event = document.createEvent("Event");
         event.initEvent('et2_video.onReady.' + this.id, true, true);
         this.video[0].dispatchEvent(event);
-    };
-    et2_video.prototype._onTimeUpdate = function () {
+    }
+    _onTimeUpdate() {
         // update currentTime manually since youtube currentTime might be updated due to the loading
         if (this._isYoutube() && this.youtube.getCurrentTime)
             this._currentTime = this.youtube.getCurrentTime();
-        var event = document.createEvent("Event");
+        let event = document.createEvent("Event");
         event.initEvent('et2_video.onTimeUpdate.' + this.id, true, true);
         this.video[0].dispatchEvent(event);
-    };
+    }
     /**
      * check if the video is a youtube type
      * @return return true if it's a youtube type video
      * @private
      */
-    et2_video.prototype._isYoutube = function () {
+    _isYoutube() {
         return !!this.options.src_type.match('youtube');
-    };
-    et2_video.prototype._onStateChangeYoutube = function (_data) {
+    }
+    _onStateChangeYoutube(_data) {
         switch (_data.data) {
             case et2_video.youtube_player_states.unstarted:
                 // do nothing
@@ -370,22 +351,22 @@ var et2_video = /** @class */ (function (_super) {
                 window.clearInterval(this._youtubeOntimeUpdateIntrv);
         }
         console.log(_data);
-    };
+    }
     /**
      * youtube on IframeAPI ready event
      */
-    et2_video.prototype._onYoutubeIframeAPIReady = function () {
-        var event = document.createEvent("Event");
+    _onYoutubeIframeAPIReady() {
+        let event = document.createEvent("Event");
         event.initEvent('et2_video.onYoutubeIframeAPIReady', true, true);
         window.dispatchEvent(event);
-    };
+    }
     /**
      * create youtube player
      *
      * @param _value
      */
-    et2_video.prototype._createYoutubePlayer = function (_value) {
-        var matches = _value === null || _value === void 0 ? void 0 : _value.match(et2_video.youtubeRegexp);
+    _createYoutubePlayer(_value) {
+        const matches = _value === null || _value === void 0 ? void 0 : _value.match(et2_video.youtubeRegexp);
         if (matches && typeof YT != 'undefined') {
             this.youtube = new YT.Player(et2_video.youtubePrefixId + this.id, {
                 height: this.options.height || '400',
@@ -407,71 +388,69 @@ var et2_video = /** @class */ (function (_super) {
                 }
             });
         }
-    };
-    et2_video._attributes = {
-        "video_src": {
-            "name": "Video",
-            "type": "string",
-            "description": "Source of video to display"
-        },
-        "src_type": {
-            "name": "Source type",
-            "type": "string",
-            "description": "Defines the type the stream source provided"
-        },
-        "muted": {
-            "name": "Audio control",
-            "type": "boolean",
-            "default": false,
-            "description": "Defines that the audio output of the video should be muted"
-        },
-        "autoplay": {
-            "name": "Autoplay",
-            "type": "boolean",
-            "default": false,
-            "description": "Defines if Video will start playing as soon as it is ready"
-        },
-        starttime: {
-            "name": "Inital position of video",
-            "type": "float",
-            "default": 0,
-            "description": "Set initial position of video"
-        },
-        "controls": {
-            "name": "Control buttons",
-            "type": "boolean",
-            "default": false,
-            "description": "Defines if Video controls, play/pause buttons should be displayed"
-        },
-        "poster": {
-            "name": "Video Poster",
-            "type": "string",
-            "default": "",
-            "description": "Specifies an image to be shown while video is loading or before user play it"
-        },
-        "loop": {
-            "name": "Video loop",
-            "type": "boolean",
-            "default": false,
-            "description": "Defines if the video should be played repeatedly"
-        }
-    };
-    et2_video.youtube_player_states = {
-        unstarted: -1,
-        ended: 0,
-        playing: 1,
-        paused: 2,
-        buffering: 3,
-        video_cued: 5
-    };
-    /**
-     * prefix id used for addressing youtube player dom
-     * @private
-     */
-    et2_video.youtubePrefixId = "frame-";
-    et2_video.youtubeRegexp = new RegExp(/^https:\/\/((www\.|m\.)?youtube(-nocookie)?\.com|youtu\.be)\/.*(?:\/|%3D|v=|vi=)([0-9A-z-_]{11})(?:[%#?&]|$)/m);
-    return et2_video;
-}(et2_core_baseWidget_1.et2_baseWidget));
-exports.et2_video = et2_video;
-et2_core_widget_1.et2_register_widget(et2_video, ["video"]);
+    }
+}
+et2_video._attributes = {
+    "video_src": {
+        "name": "Video",
+        "type": "string",
+        "description": "Source of video to display"
+    },
+    "src_type": {
+        "name": "Source type",
+        "type": "string",
+        "description": "Defines the type the stream source provided"
+    },
+    "muted": {
+        "name": "Audio control",
+        "type": "boolean",
+        "default": false,
+        "description": "Defines that the audio output of the video should be muted"
+    },
+    "autoplay": {
+        "name": "Autoplay",
+        "type": "boolean",
+        "default": false,
+        "description": "Defines if Video will start playing as soon as it is ready"
+    },
+    starttime: {
+        "name": "Inital position of video",
+        "type": "float",
+        "default": 0,
+        "description": "Set initial position of video"
+    },
+    "controls": {
+        "name": "Control buttons",
+        "type": "boolean",
+        "default": false,
+        "description": "Defines if Video controls, play/pause buttons should be displayed"
+    },
+    "poster": {
+        "name": "Video Poster",
+        "type": "string",
+        "default": "",
+        "description": "Specifies an image to be shown while video is loading or before user play it"
+    },
+    "loop": {
+        "name": "Video loop",
+        "type": "boolean",
+        "default": false,
+        "description": "Defines if the video should be played repeatedly"
+    }
+};
+et2_video.youtube_player_states = {
+    unstarted: -1,
+    ended: 0,
+    playing: 1,
+    paused: 2,
+    buffering: 3,
+    video_cued: 5
+};
+/**
+ * prefix id used for addressing youtube player dom
+ * @private
+ */
+et2_video.youtubePrefixId = "frame-";
+et2_video.youtubeRegexp = new RegExp(/^https:\/\/((www\.|m\.)?youtube(-nocookie)?\.com|youtu\.be)\/.*(?:\/|%3D|v=|vi=)([0-9A-z-_]{11})(?:[%#?&]|$)/m);
+et2_register_widget(et2_video, ["video"]);
 //# sourceMappingURL=et2_widget_video.js.map

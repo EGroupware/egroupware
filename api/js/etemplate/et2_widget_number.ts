@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  */
 
@@ -12,9 +12,10 @@
 	et2_widget_textbox;
 */
 
-import {et2_textbox} from "./et2_widget_textbox";
+import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_no_init} from "./et2_core_common";
 
 /**
  * Class which implements the "int" and textbox type=float XET-Tags
@@ -176,7 +177,7 @@ et2_register_widget(et2_number, ["int", "integer", "float"]);
  * @augments et2_textbox_ro
  * @class
  */
-class et2_number_ro extends et2_textbox_ro
+export class et2_number_ro extends et2_textbox_ro
 {
 	static readonly _attributes : any = {
 		min: { ignore: true},

@@ -1,30 +1,13 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_appicon = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
@@ -32,53 +15,53 @@ exports.et2_appicon = void 0;
     expose;
     /vendor/bower-asset/cropper/dist/cropper.min.js;
 */
-var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_baseWidget } from './et2_core_baseWidget';
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_no_init } from "./et2_core_common";
+import { egw } from "../jsapi/egw_global";
+import { et2_dialog } from "./et2_widget_dialog";
 /**
  * Class which implements the "image" XET-Tag
  *
  * @augments et2_baseWidget
  */
-var et2_image = /** @class */ (function (_super) {
-    __extends(et2_image, _super);
+export class et2_image extends et2_baseWidget {
     /**
      * Constructor
      */
-    function et2_image(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_image._attributes, _child || {})) || this;
-        _this.image = null;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_image._attributes, _child || {}));
+        this.image = null;
         // Create the image or a/image tag
-        _this.image = jQuery(document.createElement("img"));
-        if (_this.options.label) {
-            _this.image.attr("alt", _this.options.label).attr("title", _this.options.label);
+        this.image = jQuery(document.createElement("img"));
+        if (this.options.label) {
+            this.image.attr("alt", this.options.label).attr("title", this.options.label);
         }
-        if (_this.options.href) {
-            _this.image.addClass('et2_clickable');
+        if (this.options.href) {
+            this.image.addClass('et2_clickable');
         }
-        if (_this.options["class"]) {
-            _this.image.addClass(_this.options["class"]);
+        if (this.options["class"]) {
+            this.image.addClass(this.options["class"]);
         }
-        _this.setDOMNode(_this.image[0]);
-        return _this;
+        this.setDOMNode(this.image[0]);
     }
-    et2_image.prototype.click = function (_ev) {
+    click(_ev) {
         if (this.options.href) {
             this.egw().open_link(this.options.href, this.options.extra_link_target, this.options.extra_link_popup);
         }
         else {
-            _super.prototype.click.call(this, _ev);
+            super.click(_ev);
         }
-    };
-    et2_image.prototype.transformAttributes = function (_attrs) {
-        _super.prototype.transformAttributes.call(this, _attrs);
+    }
+    transformAttributes(_attrs) {
+        super.transformAttributes(_attrs);
         // Check to expand name
         if (typeof _attrs["src"] != "undefined") {
-            var manager = this.getArrayMgr("content");
+            let manager = this.getArrayMgr("content");
             if (manager && _attrs["src"]) {
-                var src = manager.getEntry(_attrs["src"], false, true);
+                let src = manager.getEntry(_attrs["src"], false, true);
                 if (typeof src != "undefined" && src !== null) {
                     if (typeof src == "object") {
                         src = egw().link('/index.php', src);
@@ -87,27 +70,27 @@ var et2_image = /** @class */ (function (_super) {
                 }
             }
         }
-    };
-    et2_image.prototype.set_label = function (_value) {
+    }
+    set_label(_value) {
         this.options.label = _value;
         _value = this.egw().lang(_value);
         // label is NOT the alt attribute in eTemplate, but the title/tooltip
         this.image.attr("alt", _value).attr("title", _value);
-    };
-    et2_image.prototype.setValue = function (_value) {
+    }
+    setValue(_value) {
         // Value is src, images don't get IDs
         this.set_src(_value);
-    };
-    et2_image.prototype.set_href = function (_value) {
+    }
+    set_href(_value) {
         if (!this.isInTree()) {
             return false;
         }
         this.options.href = _value;
         this.image.wrapAll('<a href="' + _value + '"></a>"');
-        var href = this.options.href;
-        var popup = this.options.extra_link_popup;
-        var target = this.options.extra_link_target;
-        var self = this;
+        let href = this.options.href;
+        let popup = this.options.extra_link_popup;
+        let target = this.options.extra_link_target;
+        let self = this;
         this.image.click(function (e) {
             if (self.options.expose_view) {
                 /*
@@ -123,14 +106,14 @@ var et2_image = /** @class */ (function (_super) {
             return false;
         });
         return true;
-    };
+    }
     /**
      * Set image src
      *
      * @param {string} _value image, app/image or url
      * @return {boolean} true if image was found, false if not (image is either not displayed or default_src is used)
      */
-    et2_image.prototype.set_src = function (_value) {
+    set_src(_value) {
         if (!this.isInTree()) {
             return false;
         }
@@ -140,7 +123,7 @@ var et2_image = /** @class */ (function (_super) {
             this.image.attr('src', _value).show();
             return true;
         }
-        var src = this.egw().image(_value);
+        let src = this.egw().image(_value);
         if (src) {
             this.image.attr("src", src).show();
             return true;
@@ -156,14 +139,14 @@ var et2_image = /** @class */ (function (_super) {
             this.image.css("display", "none");
         }
         return false;
-    };
+    }
     /**
      * Function to get media content to feed the expose
      * @param {type} _value
      */
-    et2_image.prototype.getMedia = function (_value) {
-        var base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
-        var mediaContent = [];
+    getMedia(_value) {
+        let base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
+        let mediaContent = [];
         if (_value) {
             mediaContent = [{
                     title: this.options.label,
@@ -173,19 +156,19 @@ var et2_image = /** @class */ (function (_super) {
                 }];
         }
         return mediaContent;
-    };
+    }
     /**
      * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
      *
      * @param {array} _attrs
      */
-    et2_image.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("src", "label", "href");
-    };
-    et2_image.prototype.getDetachedNodes = function () {
+    }
+    getDetachedNodes() {
         return [this.image[0]];
-    };
-    et2_image.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         // Set the given DOM-Nodes
         this.image = jQuery(_nodes[0]);
         // Set the attributes
@@ -203,101 +186,91 @@ var et2_image = /** @class */ (function (_super) {
             this.image.addClass('et2_clickable');
             this.set_href(_values["href"]);
         }
-    };
-    et2_image._attributes = {
-        "src": {
-            "name": "Image",
-            "type": "string",
-            "description": "Displayed image"
-        },
-        default_src: {
-            name: "Default image",
-            type: "string",
-            description: "Image to use if src is not found"
-        },
-        "href": {
-            "name": "Link Target",
-            "type": "string",
-            "description": "Link URL, empty if you don't wan't to display a link.",
-            "default": et2_no_init
-        },
-        "extra_link_target": {
-            "name": "Link target",
-            "type": "string",
-            "default": "_self",
-            "description": "Link target descriptor"
-        },
-        "extra_link_popup": {
-            "name": "Popup",
-            "type": "string",
-            "description": "widthxheight, if popup should be used, eg. 640x480"
-        },
-        "imagemap": {
-            // TODO: Do something with this
-            "name": "Image map",
-            "description": "Currently not implemented"
-        },
-        "label": {
-            "name": "Label",
-            "type": "string",
-            "description": "Label for image"
-        },
-        "expose_view": {
-            name: "Expose view",
-            type: "boolean",
-            default: false,
-            description: "Clicking on an image with href value would popup an expose view, and will show image referenced by href."
-        }
-    };
-    et2_image.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
-    return et2_image;
-}(et2_core_baseWidget_1.et2_baseWidget));
-et2_core_widget_1.et2_register_widget(et2_image, ["image"]);
+    }
+}
+et2_image._attributes = {
+    "src": {
+        "name": "Image",
+        "type": "string",
+        "description": "Displayed image"
+    },
+    default_src: {
+        name: "Default image",
+        type: "string",
+        description: "Image to use if src is not found"
+    },
+    "href": {
+        "name": "Link Target",
+        "type": "string",
+        "description": "Link URL, empty if you don't wan't to display a link.",
+        "default": et2_no_init
+    },
+    "extra_link_target": {
+        "name": "Link target",
+        "type": "string",
+        "default": "_self",
+        "description": "Link target descriptor"
+    },
+    "extra_link_popup": {
+        "name": "Popup",
+        "type": "string",
+        "description": "widthxheight, if popup should be used, eg. 640x480"
+    },
+    "imagemap": {
+        // TODO: Do something with this
+        "name": "Image map",
+        "description": "Currently not implemented"
+    },
+    "label": {
+        "name": "Label",
+        "type": "string",
+        "description": "Label for image"
+    },
+    "expose_view": {
+        name: "Expose view",
+        type: "boolean",
+        default: false,
+        description: "Clicking on an image with href value would popup an expose view, and will show image referenced by href."
+    }
+};
+et2_image.legacyOptions = ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"];
+et2_register_widget(et2_image, ["image"]);
 /**
 * Widget displaying an application icon
 */
-var et2_appicon = /** @class */ (function (_super) {
-    __extends(et2_appicon, _super);
-    function et2_appicon() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    et2_appicon.prototype.set_src = function (_app) {
+export class et2_appicon extends et2_image {
+    set_src(_app) {
         if (!_app)
             _app = this.egw().app_name();
         this.image.addClass('et2_appicon');
-        return _super.prototype.set_src.call(this, _app == 'sitemgr-link' ? 'sitemgr/sitemgr-link' : // got removed from jdots
+        return super.set_src(_app == 'sitemgr-link' ? 'sitemgr/sitemgr-link' : // got removed from jdots
             (this.egw().app(_app, 'icon_app') || _app) + '/' + (this.egw().app(_app, 'icon') || 'navbar'));
-    };
-    et2_appicon._attributes = {
-        default_src: {
-            name: "Default image",
-            type: "string",
-            default: "nonav",
-            description: "Image to use if there is no application icon"
-        }
-    };
-    return et2_appicon;
-}(et2_image));
-exports.et2_appicon = et2_appicon;
-et2_core_widget_1.et2_register_widget(et2_appicon, ["appicon"]);
+    }
+}
+et2_appicon._attributes = {
+    default_src: {
+        name: "Default image",
+        type: "string",
+        default: "nonav",
+        description: "Image to use if there is no application icon"
+    }
+};
+et2_register_widget(et2_appicon, ["appicon"]);
 /**
 * Avatar widget to display user profile picture or
 * user letter avatar based on user's firstname lastname.
 *
 * @augments et2_baseWidget
 */
-var et2_avatar = /** @class */ (function (_super) {
-    __extends(et2_avatar, _super);
-    function et2_avatar(_parent, _attrs, _child) {
-        var _this = 
+export class et2_avatar extends et2_image {
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_avatar._attributes, _child || {})) || this;
-        if (_this.options.frame == 'circle') {
-            _this.image.attr('style', 'border-radius:50%');
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_avatar._attributes, _child || {}));
+        if (this.options.frame == 'circle') {
+            this.image.attr('style', 'border-radius:50%');
         }
-        if (_this.options.contact_id)
-            _this.setValue(_this.options.contact_id);
-        return _this;
+        if (this.options.contact_id)
+            this.setValue(this.options.contact_id);
     }
     /**
      * Generate letter avatar with given data
@@ -306,46 +279,46 @@ var et2_avatar = /** @class */ (function (_super) {
      * @param {type} _id
      * @returns {string} return data url
      */
-    et2_avatar.lavatar = function (_fname, _lname, _id) {
-        var str = _fname + _lname + _id;
-        var getBgColor = function (_str) {
-            var hash = 0;
-            for (var i = 0; i < _str.length; i++) {
+    static lavatar(_fname, _lname, _id) {
+        let str = _fname + _lname + _id;
+        let getBgColor = function (_str) {
+            let hash = 0;
+            for (let i = 0; i < _str.length; i++) {
                 hash = _str[i].charCodeAt(0) + hash;
             }
             return et2_avatar.LAVATAR_BG_COLORS[hash % et2_avatar.LAVATAR_BG_COLORS.length];
         };
-        var bg = getBgColor(str);
-        var size = et2_avatar.LAVATAR_SIZE * (window.devicePixelRatio ? window.devicePixelRatio : 1);
-        var text = (_fname ? _fname[0].toUpperCase() : "") + (_lname ? _lname[0].toUpperCase() : "");
-        var canvas = document.createElement('canvas');
+        let bg = getBgColor(str);
+        let size = et2_avatar.LAVATAR_SIZE * (window.devicePixelRatio ? window.devicePixelRatio : 1);
+        let text = (_fname ? _fname[0].toUpperCase() : "") + (_lname ? _lname[0].toUpperCase() : "");
+        let canvas = document.createElement('canvas');
         canvas.width = size;
         canvas.height = size;
-        var context = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
         context.fillStyle = bg;
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = Math.round(canvas.width / 2) + "px Arial";
         context.textAlign = "center";
         context.fillStyle = et2_avatar.LAVATAR_TEXT_COLOR;
         context.fillText(text, size / 2, size / 1.5);
-        var dataURL = canvas.toDataURL();
+        let dataURL = canvas.toDataURL();
         canvas.remove();
         return dataURL;
-    };
+    }
     /**
      * Function runs after uplaod in avatar dialog is finished and it tries to
      * update image and cropper container.
      * @param {type} e
      */
-    et2_avatar.uploadAvatar_onFinish = function (e) {
-        var file = e.data.resumable.files[0].file;
-        var reader = new FileReader();
+    static uploadAvatar_onFinish(e) {
+        let file = e.data.resumable.files[0].file;
+        let reader = new FileReader();
         reader.onload = function (e) {
             jQuery('#_cropper_image').attr('src', e.target.result);
             jQuery('#_cropper_image').cropper('replace', e.target.result);
         };
         reader.readAsDataURL(file);
-    };
+    }
     /**
      * Function to set contact id
      * contact id could be in one of these formats:
@@ -356,9 +329,9 @@ var et2_avatar = /** @class */ (function (_super) {
      *
      * @param {string} _contact_id contact id could be as above mentioned formats
      */
-    et2_avatar.prototype.set_contact_id = function (_contact_id) {
-        var params = {};
-        var id = 'contact_id';
+    set_contact_id(_contact_id) {
+        let params = {};
+        let id = 'contact_id';
         this.image.addClass('et2_avatar');
         if (!_contact_id) {
             _contact_id = this.egw().user('account_id');
@@ -377,20 +350,20 @@ var et2_avatar = /** @class */ (function (_super) {
         }
         params[id] = _contact_id;
         this.set_src(egw.link('/api/avatar.php', params));
-    };
+    }
     /**
      * Function to set value
      */
-    et2_avatar.prototype.setValue = function (_value) {
+    setValue(_value) {
         this.set_contact_id(_value);
-    };
+    }
     /**
      * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
      */
-    et2_avatar.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push("contact_id", "label", "href");
-    };
-    et2_avatar.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         // Set the given DOM-Nodes
         this.image = jQuery(_nodes[0]);
         if (_values["contact_id"]) {
@@ -403,33 +376,33 @@ var et2_avatar = /** @class */ (function (_super) {
             this.image.addClass('et2_clickable');
             this.set_href(_values["href"]);
         }
-    };
+    }
     /**
      * Build Editable Mask Layer (EML) in order to show edit/delete actions
      * on top of profile picture.
      * @param {boolean} _noDelete disable delete button in initialization
      */
-    et2_avatar.prototype._buildEditableLayer = function (_noDelete) {
-        var self = this;
+    _buildEditableLayer(_noDelete) {
+        let self = this;
         // editable mask layer (eml)
-        var wrapper = jQuery(document.createElement('div')).addClass('avatar').insertAfter(this.image);
+        let wrapper = jQuery(document.createElement('div')).addClass('avatar').insertAfter(this.image);
         this.image.appendTo(wrapper);
-        var eml = jQuery(document.createElement('div'))
+        let eml = jQuery(document.createElement('div'))
             .addClass('eml')
             .insertAfter(this.image);
         // edit button
         jQuery(document.createElement('div'))
             .addClass('emlEdit')
             .click(function () {
-            var buttons = [
+            let buttons = [
                 { "button_id": 1, "text": self.egw().lang('save'), id: 'save', image: 'check', "default": true },
                 { "button_id": 0, "text": self.egw().lang('cancel'), id: 'cancel', image: 'cancelled' }
             ];
-            var dialog = function (_title, _value, _buttons, _egw_or_appname) {
+            let dialog = function (_title, _value, _buttons, _egw_or_appname) {
                 return et2_createWidget("dialog", {
                     callback: function (_buttons, _value) {
                         if (_buttons == 'save') {
-                            var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
+                            let canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
                             self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
                             self.egw().json('addressbook.addressbook_ui.ajax_update_photo', [self.getInstanceManager().etemplate_exec_id, canvas.toDataURL('image/jpeg', 1.0)], function (res) {
                                 if (res) {
@@ -480,13 +453,13 @@ var et2_avatar = /** @class */ (function (_super) {
             mouseover: function () { eml.css('opacity', '0.9'); },
             mouseout: function () { eml.css('opacity', '0'); }
         });
-    };
+    }
     /**
      * We need to build the Editable Mask Layer after widget gets loaded
      */
-    et2_avatar.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
-        var self = this;
+    doLoadingFinished() {
+        super.doLoadingFinished();
+        let self = this;
         if (this.options.contact_id && this.options.editable) {
             egw(window).json('addressbook.addressbook_ui.ajax_noPhotoExists', [this.options.contact_id], function (noPhotoExists) {
                 if (noPhotoExists)
@@ -503,73 +476,68 @@ var et2_avatar = /** @class */ (function (_super) {
             });
         }
         return true;
-    };
-    et2_avatar._attributes = {
-        "contact_id": {
-            name: "Contact id",
-            type: "string",
-            default: "",
-            description: "Contact id should be either user account_id {account:number} or contact_id {contact:number or number}"
-        },
-        "default_src": {
-            "ignore": true
-        },
-        "frame": {
-            name: "Avatar frame",
-            type: "string",
-            default: "circle",
-            description: "Define the shape of frame that avatar will be shown inside it. it can get {circle,rectangle} values which default value is cicle."
-        },
-        editable: {
-            name: "Edit avatar",
-            type: "boolean",
-            default: false,
-            description: "Make avatar widget editable to be able to crop profile picture or upload a new photo"
-        },
-        crop: {
-            name: "Crop avatar",
-            type: "boolean",
-            default: false,
-            description: "Create crop container and cropping feature"
-        }
-    };
-    /**
-     * background oolor codes
-     */
-    et2_avatar.LAVATAR_BG_COLORS = [
-        '#5a8770', '#b2b7bb', '#6fa9ab', '#f5af29',
-        '#0088b9', '#f18636', '#d93a37', '#a6b12e',
-        '#0088b9', '#f18636', '#d93a37', '#a6b12e',
-        '#5c9bbc', '#f5888d', '#9a89b5', '#407887',
-        '#9a89b5', '#5a8770', '#d33f33', '#a2b01f',
-        '#f0b126', '#0087bf', '#f18636', '#0087bf',
-        '#b2b7bb', '#72acae', '#9c8ab4', '#5a8770',
-        '#eeb424', '#407887'
-    ];
-    /**
-     * Text color
-     */
-    et2_avatar.LAVATAR_TEXT_COLOR = '#ffffff';
-    et2_avatar.LAVATAR_SIZE = 128;
-    return et2_avatar;
-}(et2_image));
-et2_core_widget_1.et2_register_widget(et2_avatar, ["avatar"]);
+    }
+}
+et2_avatar._attributes = {
+    "contact_id": {
+        name: "Contact id",
+        type: "string",
+        default: "",
+        description: "Contact id should be either user account_id {account:number} or contact_id {contact:number or number}"
+    },
+    "default_src": {
+        "ignore": true
+    },
+    "frame": {
+        name: "Avatar frame",
+        type: "string",
+        default: "circle",
+        description: "Define the shape of frame that avatar will be shown inside it. it can get {circle,rectangle} values which default value is cicle."
+    },
+    editable: {
+        name: "Edit avatar",
+        type: "boolean",
+        default: false,
+        description: "Make avatar widget editable to be able to crop profile picture or upload a new photo"
+    },
+    crop: {
+        name: "Crop avatar",
+        type: "boolean",
+        default: false,
+        description: "Create crop container and cropping feature"
+    }
+};
+/**
+ * background oolor codes
+ */
+et2_avatar.LAVATAR_BG_COLORS = [
+    '#5a8770', '#b2b7bb', '#6fa9ab', '#f5af29',
+    '#0088b9', '#f18636', '#d93a37', '#a6b12e',
+    '#0088b9', '#f18636', '#d93a37', '#a6b12e',
+    '#5c9bbc', '#f5888d', '#9a89b5', '#407887',
+    '#9a89b5', '#5a8770', '#d33f33', '#a2b01f',
+    '#f0b126', '#0087bf', '#f18636', '#0087bf',
+    '#b2b7bb', '#72acae', '#9c8ab4', '#5a8770',
+    '#eeb424', '#407887'
+];
+/**
+ * Text color
+ */
+et2_avatar.LAVATAR_TEXT_COLOR = '#ffffff';
+et2_avatar.LAVATAR_SIZE = 128;
+et2_register_widget(et2_avatar, ["avatar"]);
 /**
 * Avatar readonly widget to only display user profile picture or
 * user letter avatar based on user's firstname lastname.
 */
-var et2_avatar_ro = /** @class */ (function (_super) {
-    __extends(et2_avatar_ro, _super);
-    function et2_avatar_ro(_parent, _attrs, _child) {
-        var _this = 
+export class et2_avatar_ro extends et2_avatar {
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_avatar_ro._attributes, _child || {})) || this;
-        _this.options.editable = false;
-        return _this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_avatar_ro._attributes, _child || {}));
+        this.options.editable = false;
     }
-    return et2_avatar_ro;
-}(et2_avatar));
-et2_core_widget_1.et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
+}
+et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
 /**
 * Letter Avatar widget to display user profile picture (given url) or
 * user letter avatar based on user's firstname lastname.
@@ -581,40 +549,38 @@ et2_core_widget_1.et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
 *
 * @augments et2_baseWidget
 */
-var et2_lavatar = /** @class */ (function (_super) {
-    __extends(et2_lavatar, _super);
-    function et2_lavatar(_parent, _attrs, _child) {
+export class et2_lavatar extends et2_image {
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        return _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_lavatar._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_lavatar._attributes, _child || {}));
     }
-    et2_lavatar.prototype.set_src = function (_url) {
+    set_src(_url) {
         if (_url && decodeURIComponent(_url).match("lavatar=1") && (this.options.fname || this.options.lname) && this.options.contact_id) {
             this.set_src(et2_avatar.lavatar(this.options.fname, this.options.lname, this.options.contact_id));
             return false;
         }
-        _super.prototype.set_src.call(this, _url);
-    };
-    et2_lavatar._attributes = {
-        lname: {
-            name: "last name",
-            type: "string",
-            default: "",
-            description: ""
-        },
-        fname: {
-            name: "first name",
-            type: "string",
-            default: "",
-            description: ""
-        },
-        contact_id: {
-            name: "contact id",
-            type: "string",
-            default: "",
-            description: ""
-        }
-    };
-    return et2_lavatar;
-}(et2_image));
-et2_core_widget_1.et2_register_widget(et2_lavatar, ["lavatar"]);
+        super.set_src(_url);
+    }
+}
+et2_lavatar._attributes = {
+    lname: {
+        name: "last name",
+        type: "string",
+        default: "",
+        description: ""
+    },
+    fname: {
+        name: "first name",
+        type: "string",
+        default: "",
+        description: ""
+    },
+    contact_id: {
+        name: "contact id",
+        type: "string",
+        default: "",
+        description: ""
+    }
+};
+et2_register_widget(et2_lavatar, ["lavatar"]);
 //# sourceMappingURL=et2_widget_image.js.map

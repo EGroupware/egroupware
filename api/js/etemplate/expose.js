@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
  */
 /*egw:uses
@@ -12,32 +12,20 @@
     /api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_widget_dialog_1 = require("./et2_widget_dialog");
+import { et2_createWidget } from "./et2_core_widget";
+import { et2_dialog } from "./et2_widget_dialog";
+import { egw, egw_get_file_editor_prefered_mimes } from "../jsapi/egw_global";
+import { ET2_DATAVIEW_STEPSIZE } from "./et2_dataview_controller";
 /**
  * This function extends the given widget with blueimp gallery plugin
  *
  * @param {type} widget
  * @returns {widget}
  */
-function expose(Base) {
+export function expose(Base) {
     "use strict";
     // Minimum data to qualify as an image and not cause errors
-    var IMAGE_DEFAULT = {
+    const IMAGE_DEFAULT = {
         title: egw.lang('loading'),
         href: '',
         type: 'image/png',
@@ -45,13 +33,13 @@ function expose(Base) {
         loading: true
     };
     // For filtering to only show things we can handle
-    var MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
+    const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
         // IE only supports video/mp4 mime type
         new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/) :
         new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/);
-    var MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/);
+    const MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/);
     // open office document mime type currently supported by webodf editor
-    var MIME_ODF_REGEX = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
+    const MIME_ODF_REGEX = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
     // Only one gallery
     var gallery = null;
     /**
@@ -62,8 +50,8 @@ function expose(Base) {
      * @returns {et2_nextmatch | null}
      */
     var find_nextmatch = function (widget) {
-        var current = widget;
-        var nextmatch = null;
+        let current = widget;
+        let nextmatch = null;
         while (nextmatch == null && current) {
             current = current.getParent();
             if (typeof current != 'undefined' && current.instanceOf(et2_nextmatch)) {
@@ -89,9 +77,9 @@ function expose(Base) {
     var read_from_nextmatch = function (nm, images, start_at) {
         if (!start_at)
             start_at = 0;
-        var image_index = start_at;
-        var stop = Math.max.apply(null, Object.keys(nm.controller._indexMap));
-        for (var i = start_at; i <= stop; i++) {
+        let image_index = start_at;
+        let stop = Math.max.apply(null, Object.keys(nm.controller._indexMap));
+        for (let i = start_at; i <= stop; i++) {
             if (!nm.controller._indexMap[i] || !nm.controller._indexMap[i].uid) {
                 // Returning instead of using IMAGE_DEFAULT means we stop as
                 // soon as a hole is found, instead of getting everything that is
@@ -99,12 +87,12 @@ function expose(Base) {
                 images[image_index++] = IMAGE_DEFAULT;
                 continue;
             }
-            var uid = nm.controller._indexMap[i].uid;
+            let uid = nm.controller._indexMap[i].uid;
             if (!uid)
                 continue;
-            var data = egw.dataGetUIDdata(uid);
+            let data = egw.dataGetUIDdata(uid);
             if (data && data.data && data.data.mime && MIME_REGEX.test(data.data.mime) && !MIME_AUDIO_REGEX.test(data.data.mime)) {
-                var media = this.getMedia(data.data);
+                let media = this.getMedia(data.data);
                 images[image_index++] = jQuery.extend({}, data.data, media[0]);
             }
         }
@@ -118,7 +106,7 @@ function expose(Base) {
      * @returns {undefined}
      */
     var set_slide = function (index, image) {
-        var active = (index == gallery.index);
+        let active = (index == gallery.index);
         // Pad with blanks until length is right
         while (index > gallery.getNumber()) {
             gallery.add([jQuery.extend({}, IMAGE_DEFAULT)]);
@@ -137,7 +125,7 @@ function expose(Base) {
             jQuery(gallery.slides[index]).removeClass(gallery.options.slideLoadingClass);
         }
         // Just use add to let gallery create everything it needs
-        var new_index = gallery.num;
+        let new_index = gallery.num;
         gallery.add([image]);
         // Move it to where we want it.
         // Gallery uses arrays and indexes and has several internal variables
@@ -147,15 +135,15 @@ function expose(Base) {
         gallery.list[index] = gallery.list[new_index];
         gallery.list.splice(new_index, 1);
         // indicators & slides
-        var dom_nodes = ['indicators', 'slides'];
-        for (var i in dom_nodes) {
-            var var_name = dom_nodes[i];
+        let dom_nodes = ['indicators', 'slides'];
+        for (let i in dom_nodes) {
+            let var_name = dom_nodes[i];
             // Remove old one from DOM
             jQuery(gallery[var_name][index]).remove();
             // Move new one into it's place in gallery
             gallery[var_name][index] = gallery[var_name][new_index];
             // Move into place in DOM
-            var node = jQuery(gallery[var_name][index]);
+            let node = jQuery(gallery[var_name][index]);
             node.attr('data-index', index)
                 .insertAfter(jQuery("[data-index='" + (index - 1) + "']", node.parent()));
             if (active)
@@ -176,19 +164,15 @@ function expose(Base) {
         // Remove the one we just added
         gallery.num -= 1;
     };
-    return /** @class */ (function (_super) {
-        __extends(exposable, _super);
-        function exposable() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var _this = _super.apply(this, args) || this;
-            _this.mime_regexp = MIME_REGEX;
-            _this.mime_audio_regexp = MIME_AUDIO_REGEX;
-            _this.mime_odf_regex = MIME_ODF_REGEX;
-            var self = _this;
-            _this.expose_options = {
+    return class exposable extends Base {
+        constructor(...args) {
+            // Call the inherited constructor
+            super(...args);
+            this.mime_regexp = MIME_REGEX;
+            this.mime_audio_regexp = MIME_AUDIO_REGEX;
+            this.mime_odf_regex = MIME_ODF_REGEX;
+            let self = this;
+            this.expose_options = {
                 // The Id, element or querySelector of the gallery widget:
                 container: '#blueimp-gallery',
                 // The tag name, Id, element or querySelector of the slides container:
@@ -304,11 +288,11 @@ function expose(Base) {
                 thumbnailWithImgTag: true,
                 // Callback function executed when the Gallery is initialized.
                 // Is called with the gallery instance as "this" object:
-                onopen: jQuery.proxy(_this.expose_onopen, _this),
+                onopen: jQuery.proxy(this.expose_onopen, this),
                 // Callback function executed when the Gallery has been initialized
                 // and the initialization transition has been completed.
                 // Is called with the gallery instance as "this" object:
-                onopened: jQuery.proxy(_this.expose_onopened, _this),
+                onopened: jQuery.proxy(this.expose_onopened, this),
                 // Callback function executed on slide change.
                 // Is called with the gallery instance as "this" object and the
                 // current index and slide as arguments:
@@ -332,16 +316,16 @@ function expose(Base) {
                 },
                 //// Callback function executed when the Gallery is about to be closed.
                 // Is called with the gallery instance as "this" object:
-                onclose: jQuery.proxy(_this.expose_onclose, _this),
+                onclose: jQuery.proxy(this.expose_onclose, this),
                 // Callback function executed when the Gallery has been closed
                 // and the closing transition has been completed.
                 // Is called with the gallery instance as "this" object:
-                onclosed: jQuery.proxy(_this.expose_onclosed, _this)
+                onclosed: jQuery.proxy(this.expose_onclosed, this)
             };
-            var $body = jQuery('body');
+            let $body = jQuery('body');
             if ($body.find('#blueimp-gallery').length == 0) {
                 // Gallery Main DIV container
-                var $expose_node = jQuery(document.createElement('div')).attr({
+                let $expose_node = jQuery(document.createElement('div')).attr({
                     id: "blueimp-gallery",
                     class: "blueimp-gallery"
                 });
@@ -350,13 +334,12 @@ function expose(Base) {
                 // Append the gallery Node to DOM
                 $body.append($expose_node);
             }
-            return _this;
         }
-        exposable.prototype.set_value = function (_value) {
+        set_value(_value) {
             //todo: not sure if we need that with the new construction
             //if (typeof this._super == 'undefined') return;
             // @ts-ignore
-            _super.prototype.set_value.call(this, _value);
+            super.set_value(_value);
             // Do not run set value of expose if expose_view is not set
             // it causes a wired error on nested image widgets which
             // seems the expose is not its child widget
@@ -364,8 +347,8 @@ function expose(Base) {
             if (!this.options.expose_view) {
                 return;
             }
-            var fe = egw_get_file_editor_prefered_mimes();
-            var self = this;
+            let fe = egw_get_file_editor_prefered_mimes();
+            let self = this;
             // If the media type is not supported do not bind the click handler
             if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(MIME_REGEX, 'ig')
                 && (!fe || fe.mime && !fe.mime[_value.mime])) || typeof _value.download_url == 'undefined') {
@@ -394,18 +377,18 @@ function expose(Base) {
                     event.stopImmediatePropagation();
                 }).addClass('et2_clickable');
             }
-        };
-        exposable.prototype._init_blueimp_gallery = function (event, _value) {
-            var mediaContent = [];
-            var nm = find_nextmatch(this);
-            var current_index = 0;
+        }
+        _init_blueimp_gallery(event, _value) {
+            let mediaContent = [];
+            let nm = find_nextmatch(this);
+            let current_index = 0;
             if (nm && !this._is_target_indepth(nm, event.target)) {
                 // Get the row that was clicked, find its index in the list
-                var current_entry = nm.controller.getRowByNode(event.target);
+                let current_entry = nm.controller.getRowByNode(event.target);
                 // But before it goes, we'll pull everything we can
                 read_from_nextmatch.call(this, nm, mediaContent);
                 // find current_entry in array and set it's array-index
-                for (var i = 0; i < mediaContent.length; i++) {
+                for (let i = 0; i < mediaContent.length; i++) {
                     if ('filemanager::' + mediaContent[i].path == current_entry.uid) {
                         current_index = i;
                         break;
@@ -427,21 +410,21 @@ function expose(Base) {
             this.expose_options.index = current_index;
             // @ts-ignore
             gallery = blueimp.Gallery(mediaContent, this.expose_options);
-        };
+        }
         /**
          * audio player expose
          * @param _value
          * @private
          */
-        exposable.prototype._audio_player = function (_value) {
-            var button = [
+        _audio_player(_value) {
+            let button = [
                 { "button_id": 1, "text": egw.lang('close'), id: '1', image: 'cancel', default: true }
             ];
             // @ts-ignore
-            var mediaContent = this.getMedia(_value)[0];
-            et2_core_widget_1.et2_createWidget("dialog", {
+            let mediaContent = this.getMedia(_value)[0];
+            et2_createWidget("dialog", {
                 callback: function (_btn, value) {
-                    if (_btn == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                    if (_btn == et2_dialog.OK_BUTTON) {
                     }
                 },
                 beforeClose: function () {
@@ -461,7 +444,7 @@ function expose(Base) {
                 template: egw.webserverUrl + '/api/templates/default/audio_player.xet',
                 dialogClass: "audio_player"
             });
-        };
+        }
         /**
          * Check if clicked target from nm is in depth
          *
@@ -470,30 +453,30 @@ function expose(Base) {
          *
          *  @return {boolean} returns false if target is not in depth otherwise True
          */
-        exposable.prototype._is_target_indepth = function (nm, target) {
-            var res = false;
+        _is_target_indepth(nm, target) {
+            let res = false;
             if (nm) {
                 if (!target) {
                     // @ts-ignore
-                    var target_1 = this.getDOMNode();
+                    let target = this.getDOMNode();
                 }
-                var entry = nm.controller.getRowByNode(target);
+                let entry = nm.controller.getRowByNode(target);
                 if (entry && entry.controller.getDepth() > 0) {
                     res = true;
                 }
             }
             return res;
-        };
-        exposable.prototype.expose_onopen = function (event) { };
-        exposable.prototype.expose_onopened = function () {
+        }
+        expose_onopen(event) { }
+        expose_onopened() {
             // Check to see if we're in a nextmatch, do magic
-            var nm = find_nextmatch(this);
-            var self = this;
+            let nm = find_nextmatch(this);
+            let self = this;
             if (nm) {
                 // Add scrolling to the indicator list
-                var total_count = nm.controller._grid.getTotalCount();
+                let total_count = nm.controller._grid.getTotalCount();
                 if (total_count >= gallery.num) {
-                    var $indicator = gallery.container.find('.indicator');
+                    let $indicator = gallery.container.find('.indicator');
                     $indicator.off()
                         .addClass('paginating')
                         .swipe(function (event, direction, distance) {
@@ -508,7 +491,7 @@ function expose(Base) {
                         else {
                             return;
                         }
-                        jQuery(this).css('left', min(0, parseInt(jQuery(this).css('left')) - (distance * 30)) + 'px');
+                        jQuery(this).css('left', Math.min(0, parseInt(jQuery(this).css('left')) - (distance * 30)) + 'px');
                     });
                     // Bind the mousewheel handler for FF (DOMMousewheel), and other browsers (mousewheel)
                     $indicator.bind('mousewheel DOMMousewheel', function (event, _delta) {
@@ -528,38 +511,38 @@ function expose(Base) {
                     });
                 }
             }
-        };
+        }
         /**
          * Trigger on slide left/right
          */
-        exposable.prototype.expose_onslide = function (gallery, index, slide) {
+        expose_onslide(gallery, index, slide) {
             //todo
             //if (typeof this._super == 'undefined') return;
             // First let parent try
-            _super.prototype.expose_onslide.call(this, gallery, index, slide);
-            var nm = find_nextmatch(this);
+            super.expose_onslide(gallery, index, slide);
+            let nm = find_nextmatch(this);
             if (nm) {
                 // See if we need to move the indicator
-                var indicator = gallery.container.find('.indicator');
-                var current = jQuery('.active', indicator).position();
+                let indicator = gallery.container.find('.indicator');
+                let current = jQuery('.active', indicator).position();
                 if (current) {
                     indicator.animate({ left: (gallery.container.width() / 2) - current.left }, 10);
                 }
             }
-        };
-        exposable.prototype.expose_onslideend = function (gallery, index) {
+        }
+        expose_onslideend(gallery, index) {
             // Check to see if we're in a nextmatch, do magic
-            var nm = find_nextmatch(this);
+            let nm = find_nextmatch(this);
             if (nm) {
                 // Check to see if we're near the end, or maybe some pagination
                 // would be good.
-                var total_count = nm.controller._grid.getTotalCount();
+                let total_count = nm.controller._grid.getTotalCount();
                 // Already at the end, don't bother
                 if (index == total_count - 1 || index == 0)
                     return;
                 // Try to determine direction from state of next & previous slides
-                var direction = 1;
-                for (var i in gallery.elements) {
+                let direction = 1;
+                for (let i in gallery.elements) {
                     // Loading or error
                     if (gallery.elements[i] == 1 || gallery.elements[i] == 3 || gallery.list[i].loading) {
                         direction = i >= index ? 1 : -1;
@@ -569,24 +552,24 @@ function expose(Base) {
                 if (!gallery.list[index + direction] || gallery.list[index + direction].loading ||
                     total_count > gallery.getNumber() && index + ET2_DATAVIEW_STEPSIZE > gallery.getNumber()) {
                     // This will get the next batch of rows
-                    var start = Math.max(0, direction > 0 ? index : index - ET2_DATAVIEW_STEPSIZE);
-                    var end = Math.min(total_count - 1, start + ET2_DATAVIEW_STEPSIZE);
+                    let start = Math.max(0, direction > 0 ? index : index - ET2_DATAVIEW_STEPSIZE);
+                    let end = Math.min(total_count - 1, start + ET2_DATAVIEW_STEPSIZE);
                     nm.controller._gridCallback(start, end);
-                    var images = [];
+                    let images = [];
                     read_from_nextmatch.call(this, nm, images, start);
                     // Gallery always adds to the end, causing problems with pagination
-                    for (var i in images) {
+                    for (let i in images) {
                         //if(i == index || i < gallery.num) continue;
                         set_slide(i, images[i]);
                         //gallery.add([images[i]]);
                     }
                 }
             }
-        };
-        exposable.prototype.expose_onslidecomplete = function () { };
-        exposable.prototype.expose_onclose = function () {
+        }
+        expose_onslidecomplete() { }
+        expose_onclose() {
             // Check to see if we're in a nextmatch, remove magic
-            var nm = find_nextmatch(this);
+            let nm = find_nextmatch(this);
             if (nm && !this._is_target_indepth(nm)) {
                 // Remove scrolling from thumbnails
                 gallery.container.find('.indicator')
@@ -596,9 +579,8 @@ function expose(Base) {
                 // Remove applied mime filter
                 nm.applyFilters({ col_filter: { mime: '' } });
             }
-        };
-        exposable.prototype.expose_onclosed = function () { };
-        return exposable;
-    }(Base));
+        }
+        expose_onclosed() { }
+    };
 }
 //# sourceMappingURL=expose.js.map

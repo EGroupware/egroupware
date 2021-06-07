@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -17,6 +17,9 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_grid} from "./et2_widget_grid";
+import {et2_filteredNodeIterator} from "./et2_core_xml";
+import {et2_cloneObject} from "./et2_core_common";
+import {et2_IAligned} from "./et2_core_interfaces";
 
 /**
  * Class which implements hbox tag
@@ -109,9 +112,11 @@ export class et2_hbox extends et2_baseWidget
 	 *
 	 * @param {object} _node
 	 */
-	loadFromXML(_node) {
+	loadFromXML(_node)
+	{
 		// Check whether any child node has an alignment tag
-		et2_filteredNodeIterator(_node, function(_node) {
+		et2_filteredNodeIterator(_node, function(_node)
+		{
 			let align = _node.getAttribute("align");
 
 			if (!align)
@@ -147,7 +152,8 @@ export class et2_hbox extends et2_baseWidget
 		super.loadFromXML(_node);
 	}
 
-	assign(_obj) {
+	assign(_obj)
+	{
 		// Copy the align data and the cells from the object which should be
 		// assigned
 		this.alignData = et2_cloneObject(_obj.alignData);

@@ -4,9 +4,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
+
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Loads the given URL asynchronously from the server
@@ -19,7 +21,7 @@
  * @param {object} _context for _callback
  * @param {function} _fail_callback function(_xml)
  */
-function et2_loadXMLFromURL(_url : string, _callback : Function, _context : object, _fail_callback? : Function)
+export function et2_loadXMLFromURL(_url : string, _callback : Function, _context : object, _fail_callback? : Function)
 {
 	if (typeof _context == "undefined")
 	{
@@ -62,7 +64,7 @@ function et2_loadXMLFromURL(_url : string, _callback : Function, _context : obje
 	});
 }
 
-function et2_directChildrenByTagName(_node : HTMLElement, _tagName : String) : HTMLElement[]
+export function et2_directChildrenByTagName(_node : HTMLElement, _tagName : String) : HTMLElement[]
 {
 	// Normalize the tag name
 	_tagName = _tagName.toLowerCase();
@@ -79,7 +81,7 @@ function et2_directChildrenByTagName(_node : HTMLElement, _tagName : String) : H
 	return result;
 }
 
-function et2_filteredNodeIterator(_node : HTMLElement, _callback : Function, _context : object)
+export function et2_filteredNodeIterator(_node : HTMLElement, _callback : Function, _context : object)
 {
 	for (let i = 0; i < _node.childNodes.length; i++)
 	{
@@ -92,7 +94,7 @@ function et2_filteredNodeIterator(_node : HTMLElement, _callback : Function, _co
 	}
 }
 
-function et2_readAttrWithDefault(_node : HTMLElement, _name : string, _default : string) : string
+export function et2_readAttrWithDefault(_node : HTMLElement, _name : string, _default : string) : string
 {
 	let val = _node.getAttribute(_name);
 

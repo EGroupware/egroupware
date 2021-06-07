@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Select account widget
  *
@@ -8,34 +7,19 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2012
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_selectAccount_ro = exports.et2_selectAccount = void 0;
 /*egw:uses
     et2_widget_link;
 */
-var et2_widget_selectbox_1 = require("./et2_widget_selectbox");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_widget_link_1 = require("./et2_widget_link");
-var et2_widget_dialog_1 = require("./et2_widget_dialog");
+import { et2_selectbox } from "./et2_widget_selectbox";
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_link_entry, et2_link_string } from "./et2_widget_link";
+import { et2_dialog } from "./et2_widget_dialog";
+import { egw } from "../jsapi/egw_global";
 /**
  * Account selection widget
  * Changes according to the user's account_selection preference
@@ -47,43 +31,41 @@ var et2_widget_dialog_1 = require("./et2_widget_dialog");
  * Only primary_group and popup need anything different from a normal selectbox
  *
  */
-var et2_selectAccount = /** @class */ (function (_super) {
-    __extends(et2_selectAccount, _super);
+export class et2_selectAccount extends et2_selectbox {
     /**
      * Constructor
      *
      */
-    function et2_selectAccount(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount._attributes, _child || {})) || this;
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectAccount._attributes, _child || {}));
         // Type in rows or somewhere else?
-        if (et2_selectAccount.account_types.indexOf(_this.options.empty_label) >= 0 && (et2_selectAccount.account_types.indexOf(_this.options.account_type) < 0 ||
-            _this.options.account_type == et2_selectAccount._attributes.account_type.default)) {
-            _this.options.account_type = _attrs['empty_label'];
-            _this.options.empty_label = '';
+        if (et2_selectAccount.account_types.indexOf(this.options.empty_label) >= 0 && (et2_selectAccount.account_types.indexOf(this.options.account_type) < 0 ||
+            this.options.account_type == et2_selectAccount._attributes.account_type.default)) {
+            this.options.account_type = _attrs['empty_label'];
+            this.options.empty_label = '';
         }
         if (jQuery.inArray(_attrs['account_type'], et2_selectAccount.account_types) < 0) {
-            _this.egw().debug("warn", "Invalid account_type: %s Valid options:", _attrs['account_type'], et2_selectAccount.account_types);
+            this.egw().debug("warn", "Invalid account_type: %s Valid options:", _attrs['account_type'], et2_selectAccount.account_types);
         }
         // Holder for search jQuery nodes
-        _this.search = null;
+        this.search = null;
         // Reference to dialog
-        _this.dialog = null;
+        this.dialog = null;
         // Reference to widget within dialog
-        _this.widgets = null;
-        if (!_this.options.empty_label && !_this.options.readonly && _this.options.multiple) {
-            _this.options.empty_label = _this.egw().lang('Select user or group');
+        this.widgets = null;
+        if (!this.options.empty_label && !this.options.readonly && this.options.multiple) {
+            this.options.empty_label = this.egw().lang('Select user or group');
         }
         // Allow certain widgets inside this one
-        _this.supportedWidgetClasses = [et2_widget_link_1.et2_link_entry];
-        return _this;
+        this.supportedWidgetClasses = [et2_link_entry];
     }
-    et2_selectAccount.prototype.destroy = function () {
-        _super.prototype.destroy.apply(this, arguments);
-    };
+    destroy() {
+        super.destroy.apply(this, arguments);
+    }
     /**
      *  Single selection - override to add search button
      */
-    et2_selectAccount.prototype.createInputWidget = function () {
+    createInputWidget() {
         var type = this.egw().preference('account_selection', 'common');
         switch (type) {
             case 'none':
@@ -97,7 +79,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
                 this.options.select_options = this._get_accounts();
                 break;
         }
-        _super.prototype.createInputWidget.call(this);
+        super.createInputWidget();
         // Add search button
         if (type == 'primary_group') {
             var button = jQuery(document.createElement("span"))
@@ -118,19 +100,19 @@ var et2_selectAccount = /** @class */ (function (_super) {
                 .append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
             this.getSurroundings().insertDOMNode(button[0]);
         }
-    };
+    }
     /**
      * Multiple selection - override to add search button
      */
-    et2_selectAccount.prototype.createMultiSelect = function () {
+    createMultiSelect() {
         var type = this.egw().preference('account_selection', 'common');
         if (type == 'none' && typeof egw.user('apps').admin == 'undefined')
             return;
-        _super.prototype.createMultiSelect.call(this);
+        super.createMultiSelect();
         this.options.select_options = this._get_accounts();
         if (type == 'primary_group') {
             // Allow search 'inside' this widget
-            this.supportedWidgetClasses = [et2_widget_link_1.et2_link_entry];
+            this.supportedWidgetClasses = [et2_link_entry];
             // Add quick search - turn off multiple to get normal result list
             this.options.multiple = false;
             this._create_search();
@@ -170,7 +152,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
             this.multiOptions.prev().find('ul')
                 .append(button);
         }
-    };
+    }
     /**
      * Override parent to make sure accounts are there as options.
      *
@@ -183,7 +165,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
      *
      * @param {string|array} _value
      */
-    et2_selectAccount.prototype.set_value = function (_value) {
+    set_value(_value) {
         if (typeof _value == "string" && this.options.multiple && _value.match(this._is_multiple_regexp) !== null) {
             _value = _value.split(',');
         }
@@ -246,14 +228,14 @@ var et2_selectAccount = /** @class */ (function (_super) {
                 this.set_select_options(this.options.select_options);
             }
         }
-        _super.prototype.set_value.call(this, _value);
-    };
+        super.set_value(_value);
+    }
     /**
      * Get account info for select options from common client-side account cache
      *
      * @return {Array} select options
      */
-    et2_selectAccount.prototype._get_accounts = function () {
+    _get_accounts() {
         if (!jQuery.isArray(this.options.select_options)) {
             var options = jQuery.extend({}, this.options.select_options);
             this.options.select_options = [];
@@ -282,14 +264,14 @@ var et2_selectAccount = /** @class */ (function (_super) {
             accounts = this.egw().accounts(this.options.account_type);
         }
         return this.options.select_options.concat(accounts);
-    };
+    }
     /**
      * Create & display a way to search & select a single account / group
      * Single selection is just link widget
      *
      * @param e event
      */
-    et2_selectAccount.prototype._open_search = function (e) {
+    _open_search(e) {
         var widget = e.data;
         var search = widget._create_search();
         // Selecting a single user closes the dialog, this only used if user cleared
@@ -301,13 +283,13 @@ var et2_selectAccount = /** @class */ (function (_super) {
             jQuery(this).dialog("close");
         };
         widget._create_dialog(search, ok_click);
-    };
+    }
     /**
      * Create & display a way to search & select multiple accounts / groups
      *
      * @param e event
      */
-    et2_selectAccount.prototype._open_multi_search = function (e) {
+    _open_multi_search(e) {
         var widget = e && e.data ? e.data : this;
         var table = widget.search = jQuery('<table><tbody><tr valign="top"><td id="search_col"/><td id="selection_col"/></tr></tbody></table>');
         table.css("width", "100%").css("height", "100%");
@@ -341,16 +323,16 @@ var et2_selectAccount = /** @class */ (function (_super) {
         };
         var container = jQuery(document.createElement("div")).append(table);
         return widget._create_dialog(container, ok_click);
-    };
+    }
     /**
      * Create / display popup with search / selection widgets
      *
      * @param {et2_dialog} widgets
      * @param {function} update_function
      */
-    et2_selectAccount.prototype._create_dialog = function (widgets, update_function) {
+    _create_dialog(widgets, update_function) {
         this.widgets = widgets;
-        this.dialog = et2_widget_dialog_1.et2_dialog.show_dialog(false, '', this.options.label ? this.options.label : this.egw().lang('Select'), {}, [{
+        this.dialog = et2_dialog.show_dialog(undefined, '', this.options.label ? this.options.label : this.egw().lang('Select'), {}, [{
                 text: this.egw().lang("ok"),
                 image: 'check',
                 click: update_function
@@ -363,16 +345,16 @@ var et2_selectAccount = /** @class */ (function (_super) {
         this.dialog.div.dialog({ width: "500", height: "370" });
         this.dialog.div.append(widgets.width('100%'));
         return widgets;
-    };
+    }
     /**
      * Search is a link-entry widget, with some special display for multi-select
      */
-    et2_selectAccount.prototype._create_search = function () {
+    _create_search() {
         var self = this;
         var search = this.search = jQuery(document.createElement("div"));
         var search_widget = this.search_widget = et2_createWidget('link-entry', {
             'only_app': 'api-accounts',
-            'query': function (request, response) {
+            'query'(request, response) {
                 // Clear previous search results for multi-select
                 if (!request.options) {
                     search.find('#search_results').empty();
@@ -383,7 +365,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
                 }
                 return true;
             },
-            'select': function (e, selected) {
+            'select'(e, selected) {
                 // Make sure option is there
                 var already_there = false;
                 var last_key = null;
@@ -430,14 +412,14 @@ var et2_selectAccount = /** @class */ (function (_super) {
             });
         };
         return search;
-    };
+    }
     /**
      * Add the selected result to the list of search results
      *
      * @param list
      * @param item
      */
-    et2_selectAccount.prototype._add_search_result = function (list, item) {
+    _add_search_result(list, item) {
         var node = null;
         var self = this;
         // Make sure value is numeric
@@ -520,8 +502,8 @@ var et2_selectAccount = /** @class */ (function (_super) {
             label.text(name).removeClass("loading");
         }, label);
         node.appendTo(list);
-    };
-    et2_selectAccount.prototype._create_selected = function () {
+    }
+    _create_selected() {
         var node = jQuery(document.createElement("div"))
             .addClass("et2_selectbox");
         var header = jQuery(document.createElement("div"))
@@ -552,7 +534,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
             }
         }
         return node;
-    };
+    }
     /**
      * Add an option to the list of selected accounts
      * value is the account / group ID
@@ -560,7 +542,7 @@ var et2_selectAccount = /** @class */ (function (_super) {
      * @param list
      * @param value
      */
-    et2_selectAccount.prototype._add_selected = function (list, value) {
+    _add_selected(list, value) {
         // Each option only once
         var there = jQuery('[data-id="' + value + '"]', list);
         if (there.length) {
@@ -585,33 +567,31 @@ var et2_selectAccount = /** @class */ (function (_super) {
             .addClass("loading")
             .appendTo(option);
         this.egw().link_title('api-accounts', value, function (name) { this.text(name).removeClass("loading"); }, label);
-    };
+    }
     /**
      * Overwritten attachToDOM method to modify attachToDOM
      */
-    et2_selectAccount.prototype.attachToDOM = function () {
-        var result = _super.prototype.attachToDOM.call(this);
+    attachToDOM() {
+        let result = super.attachToDOM();
         //Chosen needs to be set after widget dettached from DOM (eg. validation_error), because chosen is not part of the widget node
         if (this.egw().preference('account_selection', 'common') == 'primary_group') {
             jQuery(this.node).removeClass('chzn-done');
             this.set_tags(this.options.tags, this.options.width);
         }
         return result;
-    };
-    et2_selectAccount._attributes = {
-        'account_type': {
-            'name': 'Account type',
-            'default': 'accounts',
-            'type': 'string',
-            'description': 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
-        }
-    };
-    et2_selectAccount.legacyOptions = ['empty_label', 'account_type'];
-    et2_selectAccount.account_types = ['accounts', 'groups', 'both', 'owngroups'];
-    return et2_selectAccount;
-}(et2_widget_selectbox_1.et2_selectbox));
-exports.et2_selectAccount = et2_selectAccount;
-et2_core_widget_1.et2_register_widget(et2_selectAccount, ["select-account"]);
+    }
+}
+et2_selectAccount._attributes = {
+    'account_type': {
+        'name': 'Account type',
+        'default': 'accounts',
+        'type': 'string',
+        'description': 'Limit type of accounts.  One of {accounts,groups,both,owngroups}.'
+    }
+};
+et2_selectAccount.legacyOptions = ['empty_label', 'account_type'];
+et2_selectAccount.account_types = ['accounts', 'groups', 'both', 'owngroups'];
+et2_register_widget(et2_selectAccount, ["select-account"]);
 /**
  * et2_selectAccount_ro is the readonly implementation of select account
  * It extends et2_link to avoid needing the whole user list on the client.
@@ -619,13 +599,11 @@ et2_core_widget_1.et2_register_widget(et2_selectAccount, ["select-account"]);
  *
  * @augments et2_link_string
  */
-var et2_selectAccount_ro = /** @class */ (function (_super) {
-    __extends(et2_selectAccount_ro, _super);
+export class et2_selectAccount_ro extends et2_link_string {
     /**
      * Constructor
      */
-    function et2_selectAccount_ro(_parent, _attrs, _child) {
-        var _this = this;
+    constructor(_parent, _attrs, _child) {
         /**
        Resolve some circular dependency problems here
        selectAccount extends link, link is in a file that needs select,
@@ -634,37 +612,36 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         if (_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) < 0) {
             _parent.supportedWidgetClasses.push(et2_selectAccount_ro);
         }
-        _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_selectAccount_ro._attributes, _child || {}));
         if (_parent.supportedWidgetClasses.indexOf(et2_selectAccount_ro) > 0) {
-            _parent.addChild(_this);
+            _parent.addChild(this);
         }
         // Legacy options could have row count or empty label in first slot
-        if (typeof _this.options.empty_label == "string") {
-            if (isNaN(_this.options.empty_label)) {
-                _this.options.empty_label = _this.egw().lang(_this.options.empty_label);
+        if (typeof this.options.empty_label == "string") {
+            if (isNaN(this.options.empty_label)) {
+                this.options.empty_label = this.egw().lang(this.options.empty_label);
             }
         }
-        _this.options.application = 'api-accounts';
+        this.options.application = 'api-accounts';
         // Editable version allows app to set options that aren't accounts, so allow for them
-        var options = et2_widget_selectbox_1.et2_selectbox.find_select_options(_this, _attrs['select_options'], _this.options);
+        let options = et2_selectbox.find_select_options(this, _attrs['select_options'], this.options);
         if (!jQuery.isEmptyObject(options)) {
-            _this.options.select_options = options;
+            this.options.select_options = options;
         }
         // Don't make it look like a link though
-        _this.list.removeClass("et2_link_string").addClass("et2_selectbox");
-        return _this;
+        this.list.removeClass("et2_link_string").addClass("et2_selectbox");
     }
-    et2_selectAccount_ro.prototype.transformAttributes = function (_attrs) {
-        et2_widget_selectbox_1.et2_selectbox.prototype.transformAttributes.apply(this, arguments);
-    };
-    et2_selectAccount_ro.prototype.set_value = function (_value) {
+    transformAttributes(_attrs) {
+        et2_selectbox.prototype.transformAttributes.apply(this, arguments);
+    }
+    set_value(_value) {
         // Explode csv
         if (typeof _value == 'string' && _value.indexOf(',') > 0) {
             _value = _value.split(',');
         }
         // pass objects to link widget right away, as following code can't deal with objects
         if (typeof _value == 'object') {
-            _super.prototype.set_value.call(this, _value);
+            super.set_value(_value);
             // Don't make it look like a link though
             jQuery('li', this.list).removeClass("et2_link et2_link_string")
                 // No clicks either
@@ -673,7 +650,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         }
         // Empty it before we fill it
         jQuery('li', this.list).remove();
-        var found = false;
+        let found = false;
         if (this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) || this.options.empty_label) {
             if (!_value) {
                 // Empty label from selectbox
@@ -682,7 +659,7 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
             }
             else if (typeof _value == 'object') {
                 // An array with 0 / empty in it?
-                for (var i = 0; i < _value.length; i++) {
+                for (let i = 0; i < _value.length; i++) {
                     if (!_value[i] || !parseInt(_value[i])) {
                         this.list.append("<li>" + this.options.empty_label + "</li>");
                         return;
@@ -699,11 +676,11 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
                 if (!jQuery.isArray(search)) {
                     search = [_value];
                 }
-                for (var j = 0; j < search.length; j++) {
+                for (let j = 0; j < search.length; j++) {
                     // Not having a value to look up causes an infinite loop
                     if (!search[j])
                         continue;
-                    for (var i in this.options.select_options) {
+                    for (let i in this.options.select_options) {
                         if (this.options.select_options[i].value == search[j]) {
                             this.list.append("<li>" + this.options.select_options[i].label + "</li>");
                             found = true;
@@ -715,26 +692,24 @@ var et2_selectAccount_ro = /** @class */ (function (_super) {
         }
         // if nothing found in select-options let link widget try
         if (!found && !isNaN(_value)) {
-            _super.prototype.set_value.call(this, _value);
+            super.set_value(_value);
             // Don't make it look like a link though
             jQuery('li', this.list).removeClass("et2_link et2_link_string")
                 // No clicks either
                 .off();
             return;
         }
-    };
-    et2_selectAccount_ro._attributes = {
-        "empty_label": {
-            "name": "Empty label",
-            "type": "string",
-            "default": "",
-            "description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
-            translate: true
-        }
-    };
-    et2_selectAccount_ro.legacyOptions = ["empty_label"];
-    return et2_selectAccount_ro;
-}(et2_widget_link_1.et2_link_string));
-exports.et2_selectAccount_ro = et2_selectAccount_ro;
-et2_core_widget_1.et2_register_widget(et2_selectAccount_ro, ["select-account_ro"]);
+    }
+}
+et2_selectAccount_ro._attributes = {
+    "empty_label": {
+        "name": "Empty label",
+        "type": "string",
+        "default": "",
+        "description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
+        translate: true
+    }
+};
+et2_selectAccount_ro.legacyOptions = ["empty_label"];
+et2_register_widget(et2_selectAccount_ro, ["select-account_ro"]);
 //# sourceMappingURL=et2_widget_selectAccount.js.map

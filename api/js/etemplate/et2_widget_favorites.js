@@ -1,36 +1,21 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Favorite widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_favorites = void 0;
 /*egw:uses
     et2_dropdown_button;
     et2_extension_nextmatch;
 */
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_widget_dropdown_button_1 = require("./et2_widget_dropdown_button");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_dropdown_button } from "./et2_widget_dropdown_button";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { app, egw, egw_getFramework } from "../jsapi/egw_global";
 /**
  * Favorites widget, designed for use with a nextmatch widget
  *
@@ -58,49 +43,48 @@ var et2_core_inheritance_1 = require("./et2_core_inheritance");
  *
  * @augments et2_dropdown_button
  */
-var et2_favorites = /** @class */ (function (_super) {
-    __extends(et2_favorites, _super);
+export class et2_favorites extends et2_dropdown_button {
     /**
      * Constructor
      *
      * @memberOf et2_favorites
      */
-    function et2_favorites(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_favorites._attributes, _child || {})) || this;
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_favorites._attributes, _child || {}));
         // Some convenient variables, used in closures / event handlers
-        _this.header = null;
-        _this.nextmatch = null;
-        _this.favSortedList = null;
-        _this.sidebox_target = null;
+        this.header = null;
+        this.nextmatch = null;
+        this.favSortedList = null;
+        this.sidebox_target = null;
         // If filter was set server side, we need to remember it until nm is created
-        _this.nm_filter = false;
-        _this.sidebox_target = jQuery("#" + _this.options.sidebox_target);
-        if (_this.sidebox_target.length == 0 && egw_getFramework() != null) {
-            var egw_fw = egw_getFramework();
-            _this.sidebox_target = jQuery("#" + _this.options.sidebox_target, egw_fw.sidemenuDiv);
+        this.nm_filter = false;
+        this.sidebox_target = jQuery("#" + this.options.sidebox_target);
+        if (this.sidebox_target.length == 0 && egw_getFramework() != null) {
+            let egw_fw = egw_getFramework();
+            this.sidebox_target = jQuery("#" + this.options.sidebox_target, egw_fw.sidemenuDiv);
         }
         // Store array of sorted items
-        _this.favSortedList = ['blank'];
-        var apps = egw().user('apps');
+        this.favSortedList = ['blank'];
+        let apps = egw().user('apps');
         et2_favorites.is_admin = (typeof apps['admin'] != "undefined");
         // Make sure we have an app
-        if (!_this.options.app) {
-            _this.options.app = _this.getInstanceManager().app;
+        if (!this.options.app) {
+            this.options.app = this.getInstanceManager().app;
         }
-        _this.stored_filters = _this.load_favorites(_this.options.app);
-        _this.preferred = egw.preference(_this.options.default_pref, _this.options.app);
-        if (!_this.preferred || typeof _this.stored_filters[_this.preferred] == "undefined") {
-            _this.preferred = "blank";
+        this.stored_filters = this.load_favorites(this.options.app);
+        this.preferred = egw.preference(this.options.default_pref, this.options.app);
+        if (!this.preferred || typeof this.stored_filters[this.preferred] == "undefined") {
+            this.preferred = "blank";
         }
         // It helps to have the ID properly set before we get too far
-        _this.set_id(_this.id);
-        _this.init_filters(_this);
-        _this.menu.addClass("favorites");
+        this.set_id(this.id);
+        this.init_filters(this);
+        this.menu.addClass("favorites");
         // Set the default (button) value
-        _this.set_value(_this.preferred, true);
-        var self = _this;
+        this.set_value(this.preferred, true);
+        let self = this;
         // Add a listener on the radio buttons to set default filter
-        jQuery(_this.menu).on("click", "input:radio", function (event) {
+        jQuery(this.menu).on("click", "input:radio", function (event) {
             // Don't do the menu
             event.stopImmediatePropagation();
             // Save as default favorite - used when you click the button
@@ -121,14 +105,14 @@ var et2_favorites = /** @class */ (function (_super) {
             });
         });
         //Sort DomNodes of sidebox fav. menu
-        var sideBoxDOMNodeSort = function (_favSList) {
-            var favS = jQuery.isArray(_favSList) ? _favSList.slice(0).reverse() : [];
-            for (var i = 0; i < favS.length; i++) {
+        let sideBoxDOMNodeSort = function (_favSList) {
+            let favS = jQuery.isArray(_favSList) ? _favSList.slice(0).reverse() : [];
+            for (let i = 0; i < favS.length; i++) {
                 self.sidebox_target.children().find('[data-id$="' + favS[i] + '"]').prependTo(self.sidebox_target.children());
             }
         };
         //Add Sortable handler to nm fav. menu
-        jQuery(_this.menu).sortable({
+        jQuery(this.menu).sortable({
             items: 'li:not([data-id$="add"])',
             placeholder: 'ui-fav-sortable-placeholder',
             delay: 250,
@@ -139,7 +123,7 @@ var et2_favorites = /** @class */ (function (_super) {
             }
         });
         // Add a listener on the delete to remove
-        _this.menu.on("click", "div.ui-icon-trash", app[self.options.app], function () {
+        this.menu.on("click", "div.ui-icon-trash", app[self.options.app], function () {
             // App instance might not be ready yet, so don't bind directly
             app[self.options.app].delete_favorite.apply(this, arguments);
         })
@@ -149,30 +133,29 @@ var et2_favorites = /** @class */ (function (_super) {
             .on("mouseleave", "div.ui-icon-trash", function () { jQuery(this).unwrap(); });
         // Trigger refresh of menu options now that events are registered
         // to update sidebox
-        if (_this.sidebox_target.length > 0) {
-            _this.init_filters(_this);
+        if (this.sidebox_target.length > 0) {
+            this.init_filters(this);
         }
-        return _this;
     }
     /**
      * Load favorites from preferences
      *
      * @param app String Load favorites from this application
      */
-    et2_favorites.prototype.load_favorites = function (app) {
+    load_favorites(app) {
         // Default blank filter
-        var stored_filters = {
+        let stored_filters = {
             'blank': {
                 name: this.egw().lang("No filters"),
                 state: {}
             }
         };
         // Load saved favorites
-        var preferences = egw.preference("*", app);
-        for (var pref_name in preferences) {
+        let preferences = egw.preference("*", app);
+        for (let pref_name in preferences) {
             if (pref_name.indexOf(et2_favorites.PREFIX) == 0 && typeof preferences[pref_name] == 'object') {
-                var name_1 = pref_name.substr(et2_favorites.PREFIX.length);
-                stored_filters[name_1] = preferences[pref_name];
+                let name = pref_name.substr(et2_favorites.PREFIX.length);
+                stored_filters[name] = preferences[pref_name];
                 // Keep older favorites working - they used to store nm filters in 'filters',not state
                 if (preferences[pref_name]["filters"]) {
                     stored_filters[pref_name]["state"] = preferences[pref_name]["filters"];
@@ -189,15 +172,15 @@ var et2_favorites = /** @class */ (function (_super) {
             stored_filters = {};
         }
         else {
-            for (var name_2 in stored_filters) {
-                if (this.favSortedList.indexOf(name_2) < 0) {
-                    this.favSortedList.push(name_2);
+            for (let name in stored_filters) {
+                if (this.favSortedList.indexOf(name) < 0) {
+                    this.favSortedList.push(name);
                 }
             }
             this.egw().set_preference(this.options.app, 'fav_sort_pref', this.favSortedList);
             if (this.favSortedList.length > 0) {
-                var sortedListObj = {};
-                for (var i = 0; i < this.favSortedList.length; i++) {
+                let sortedListObj = {};
+                for (let i = 0; i < this.favSortedList.length; i++) {
                     if (typeof stored_filters[this.favSortedList[i]] != 'undefined') {
                         sortedListObj[this.favSortedList[i]] = stored_filters[this.favSortedList[i]];
                     }
@@ -210,18 +193,18 @@ var et2_favorites = /** @class */ (function (_super) {
             }
         }
         return stored_filters;
-    };
+    }
     // Create & set filter options for dropdown menu
-    et2_favorites.prototype.init_filters = function (widget, filters) {
+    init_filters(widget, filters) {
         if (typeof filters == "undefined") {
             filters = this.stored_filters;
         }
-        var options = {};
-        for (var name_3 in filters) {
-            options[name_3] = "<input type='radio' name='" + this.internal_ids.menu + "[button][favorite]' value='" + name_3 + "' title='" +
+        let options = {};
+        for (let name in filters) {
+            options[name] = "<input type='radio' name='" + this.internal_ids.menu + "[button][favorite]' value='" + name + "' title='" +
                 this.egw().lang('Set as default') + "'/>" +
-                (filters[name_3].name != undefined ? filters[name_3].name : name_3) +
-                (filters[name_3].group != false && !et2_favorites.is_admin || name_3 == 'blank' ? "" :
+                (filters[name].name != undefined ? filters[name].name : name) +
+                (filters[name].group != false && !et2_favorites.is_admin || name == 'blank' ? "" :
                     "<div class='ui-icon ui-icon-trash' title='" + this.egw().lang('Delete') + "'/>");
         }
         // Only add 'Add current' if we have a nextmatch
@@ -231,16 +214,16 @@ var et2_favorites = /** @class */ (function (_super) {
         widget.set_select_options.call(widget, options);
         // Set radio to current value
         jQuery("input[value='" + this.preferred + "']:radio", this.menu).attr("checked", 1);
-    };
-    et2_favorites.prototype.set_nm_filters = function (filters) {
+    }
+    set_nm_filters(filters) {
         if (this.nextmatch) {
             this.nextmatch.applyFilters(filters);
         }
         else {
             console.log(filters);
         }
-    };
-    et2_favorites.prototype.onclick = function (node) {
+    }
+    onclick(node) {
         // Apply preferred filter - make sure it's an object, and not a reference
         if (this.preferred && this.stored_filters[this.preferred]) {
             // use app[appname].setState if available to allow app to overwrite it (eg. change to non-listview in calendar)
@@ -254,15 +237,15 @@ var et2_favorites = /** @class */ (function (_super) {
         else {
             alert(this.egw().lang("No default set"));
         }
-    };
+    }
     // Apply the favorite when you pick from the list
-    et2_favorites.prototype.change = function (selected_node) {
+    change(selected_node) {
         this.value = jQuery(selected_node).attr("data-id");
         if (this.value == "add" && this.nextmatch) {
             // Get current filters
-            var current_filters = jQuery.extend({}, this.nextmatch.activeFilters);
+            let current_filters = jQuery.extend({}, this.nextmatch.activeFilters);
             // Add in extras
-            for (var extra in this.options.filters) {
+            for (let extra in this.options.filters) {
                 // Don't overwrite what nm has, chances are nm has more up-to-date value
                 if (typeof current_filters == 'undefined') {
                     current_filters[extra] = this.nextmatch.options.settings[extra];
@@ -272,7 +255,7 @@ var et2_favorites = /** @class */ (function (_super) {
             delete current_filters.selcolumns;
             // Add in application's settings
             if (this.filters != true) {
-                for (var i = 0; i < this.filters.length; i++) {
+                for (let i = 0; i < this.filters.length; i++) {
                     current_filters[this.options.filters[i]] = this.nextmatch.options.settings[this.options.filters[i]];
                 }
             }
@@ -285,26 +268,26 @@ var et2_favorites = /** @class */ (function (_super) {
             // Reset filters when select no filters
             this.set_nm_filters({});
         }
-    };
-    et2_favorites.prototype.set_value = function (filter_name, parent) {
+    }
+    set_value(filter_name, parent) {
         if (parent) {
-            return _super.prototype.set_value.call(this, filter_name);
+            return super.set_value(filter_name);
         }
         if (filter_name == 'add')
             return false;
         app[this.options.app].setState(this.stored_filters[filter_name]);
         return false;
-    };
-    et2_favorites.prototype.getValue = function () {
+    }
+    getValue() {
         return null;
-    };
+    }
     /**
      * Set the nextmatch to filter
      * From et2_INextmatchHeader interface
      *
      * @param {et2_nextmatch} nextmatch
      */
-    et2_favorites.prototype.setNextmatch = function (nextmatch) {
+    setNextmatch(nextmatch) {
         this.nextmatch = nextmatch;
         if (this.nm_filter) {
             this.set_value(this.nm_filter);
@@ -312,39 +295,37 @@ var et2_favorites = /** @class */ (function (_super) {
         }
         // Re-generate filter list so we can add 'Add current'
         this.init_filters(this);
-    };
-    et2_favorites._attributes = {
-        "default_pref": {
-            "name": "Default preference key",
-            "type": "string",
-            "description": "The preference key where default favorite is stored (not the value)"
-        },
-        "sidebox_target": {
-            "name": "Sidebox target",
-            "type": "string",
-            "description": "ID of element to insert favorite list into",
-            "default": "favorite_sidebox"
-        },
-        "app": {
-            "name": "Application",
-            "type": "string",
-            "description": "Application to show favorites for"
-        },
-        "filters": {
-            "name": "Extra filters",
-            "type": "any",
-            "description": "Array of extra filters to include in the saved favorite"
-        },
-        // These are particular to favorites
-        id: { "default": "favorite" },
-        label: { "default": "" },
-        label_updates: { "default": false },
-        image: { "default": egw().image('fav_filter') },
-        statustext: { "default": "Favorite queries", "type": "string" }
-    };
-    et2_favorites.PREFIX = "favorite_";
-    return et2_favorites;
-}(et2_widget_dropdown_button_1.et2_dropdown_button));
-exports.et2_favorites = et2_favorites;
-et2_core_widget_1.et2_register_widget(et2_favorites, ["favorites"]);
+    }
+}
+et2_favorites._attributes = {
+    "default_pref": {
+        "name": "Default preference key",
+        "type": "string",
+        "description": "The preference key where default favorite is stored (not the value)"
+    },
+    "sidebox_target": {
+        "name": "Sidebox target",
+        "type": "string",
+        "description": "ID of element to insert favorite list into",
+        "default": "favorite_sidebox"
+    },
+    "app": {
+        "name": "Application",
+        "type": "string",
+        "description": "Application to show favorites for"
+    },
+    "filters": {
+        "name": "Extra filters",
+        "type": "any",
+        "description": "Array of extra filters to include in the saved favorite"
+    },
+    // These are particular to favorites
+    id: { "default": "favorite" },
+    label: { "default": "" },
+    label_updates: { "default": false },
+    image: { "default": egw().image('fav_filter') },
+    statustext: { "default": "Favorite queries", "type": "string" }
+};
+et2_favorites.PREFIX = "favorite_";
+et2_register_widget(et2_favorites, ["favorites"]);
 //# sourceMappingURL=et2_widget_favorites.js.map

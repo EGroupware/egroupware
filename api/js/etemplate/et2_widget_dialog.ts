@@ -3,10 +3,9 @@
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
- * @version $Id$
  */
 
 /*egw:uses
@@ -18,8 +17,9 @@ import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_wi
 import {et2_widget} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {etemplate2} from "./etemplate2";
+import {egw, IegwAppLocal} from "../jsapi/egw_global";
+import {et2_no_init} from "./et2_core_common";
 
 /**
  * A common dialog widget that makes it easy to imform users or prompt for information.
@@ -479,7 +479,7 @@ export class et2_dialog extends et2_widget {
             this.template.clear();
         }
 
-        this.template = new etemplate2(this.div[0], false);
+        this.template = new etemplate2(this.div[0]);
         if (template.indexOf('.xet') > 0) {
             // File name provided, fetch from server
             this.template.load("", template, this.options.value || {content: {}}, jQuery.proxy(function () {
@@ -612,11 +612,12 @@ export class et2_dialog extends et2_widget {
      * @param {string} _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
      * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
      */
-    static show_dialog(_callback? : Function, _message? : string, _title? : string, _value? : object, _buttons?, _type? : number, _icon? : string, _egw_or_appname? : string | IegwAppLocal) {
+    static show_dialog(_callback? : Function, _message? : string, _title? : string, _value? : object, _buttons?, _type? : number, _icon? : string, _egw_or_appname? : string | IegwAppLocal)
+	{
         let parent = et2_dialog._create_parent(_egw_or_appname);
 
         // Just pass them along, widget handles defaults & missing
-        return et2_createWidget("dialog", {
+        return <et2_dialog>et2_createWidget("dialog", {
             callback: _callback || function () {
             },
             message: _message,
@@ -636,7 +637,8 @@ export class et2_dialog extends et2_widget {
      * @param {string} _title Text in the top bar of the dialog.
      * @param {integer} _type One of the message constants.  This defines the style of the message.
      */
-    static alert(_message? : string, _title? : string, _type?) {
+    static alert(_message? : string, _title? : string, _type?)
+	{
         let parent = et2_dialog._create_parent(et2_dialog._create_parent().egw());
         et2_createWidget("dialog", {
             callback: function () {

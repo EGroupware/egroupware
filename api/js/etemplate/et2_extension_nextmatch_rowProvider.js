@@ -1,30 +1,13 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - Class which contains a factory method for rows
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_nextmatch_rowProvider = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_inheritance;
@@ -33,14 +16,17 @@ exports.et2_nextmatch_rowProvider = void 0;
     et2_core_widget;
     et2_dataview_view_rowProvider;
 */
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_arrayMgr_1 = require("./et2_core_arrayMgr");
+import { et2_widget } from "./et2_core_widget";
+import { et2_arrayMgrs_expand } from "./et2_core_arrayMgr";
+import { et2_dataview_grid } from "./et2_dataview_view_grid";
+import { egw } from "../jsapi/egw_global";
+import { et2_IDetachedDOM, et2_IDOMNode } from "./et2_core_interfaces";
 /**
  * The row provider contains prototypes (full clonable dom-trees)
  * for all registered row types.
  *
  */
-var et2_nextmatch_rowProvider = /** @class */ (function () {
+export class et2_nextmatch_rowProvider {
     /**
      * Creates the nextmatch row provider.
      *
@@ -49,7 +35,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      * @param {object} _context
      * @memberOf et2_nextmatch_rowProvider
      */
-    function et2_nextmatch_rowProvider(_rowProvider, _subgridCallback, _context) {
+    constructor(_rowProvider, _subgridCallback, _context) {
         /**
          * Match category-ids from class attribute eg. "cat_15" or "123,456,789 "
          *
@@ -68,12 +54,12 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
         this._context = _context;
         this._createEmptyPrototype();
     }
-    et2_nextmatch_rowProvider.prototype.destroy = function () {
+    destroy() {
         this._rowProvider.destroy();
         this._subgridCallback = null;
         this._context = null;
         this._dataRow = null;
-    };
+    }
     /**
      * Creates the data row prototype.
      *
@@ -82,7 +68,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      * @param _rootWidget is the parent widget of the data rows (i.e.
      * the nextmatch)
      */
-    et2_nextmatch_rowProvider.prototype.setDataRowTemplate = function (_widgets, _rowData, _rootWidget) {
+    setDataRowTemplate(_widgets, _rowData, _rootWidget) {
         // Copy the root widget
         this._rootWidget = _rootWidget;
         // Create the base row
@@ -118,12 +104,12 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
         row.children().each(function () { tmpl.appendChild(this); });
         this._dataRow = tmpl;
         this._template = rowTemplate;
-    };
-    et2_nextmatch_rowProvider.prototype.getDataRow = function (_data, _row, _idx, _controller) {
+    }
+    getDataRow(_data, _row, _idx, _controller) {
         // Clone the row template
         var row = this._dataRow.cloneNode(true);
         // Create array managers with the given data merged in
-        var mgrs = et2_core_arrayMgr_1.et2_arrayMgrs_expand(rowWidget, this._template.mgrs, _data, _idx);
+        var mgrs = et2_arrayMgrs_expand(rowWidget, this._template.mgrs, _data, _idx);
         // Insert the widgets into the row which do not provide the functions
         // to set the _data directly
         var rowWidget = null;
@@ -200,7 +186,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
         // Set the row data
         this._setRowData(this._template.rowData, tr, mgrs);
         return rowWidget;
-    };
+    }
     /**
      * Placeholder for empty row
      *
@@ -208,7 +194,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      * This allows the user to still have a drop target, or use actions that
      * do not require a row ID, such as 'Add new'.
      */
-    et2_nextmatch_rowProvider.prototype._createEmptyPrototype = function () {
+    _createEmptyPrototype() {
         var label = this._context && this._context.options && this._context.options.settings.placeholder;
         var placeholder = jQuery(document.createElement("td"))
             .attr("colspan", this._rowProvider.getColumnCount())
@@ -217,16 +203,16 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
         this._rowProvider._prototypes["empty"] = jQuery(document.createElement("tr"))
             .addClass("egwGridView_empty")
             .append(placeholder);
-    };
+    }
     /** -- PRIVATE FUNCTIONS -- **/
     /**
      * Returns an array containing objects which have variable attributes
      *
      * @param {et2_widget} _widget
      */
-    et2_nextmatch_rowProvider.prototype._getVariableAttributeSet = function (_widget) {
-        var variableAttributes = [];
-        var process = function (_widget) {
+    _getVariableAttributeSet(_widget) {
+        let variableAttributes = [];
+        const process = function (_widget) {
             // Create the attribtues
             var hasAttr = false;
             var widgetData = {
@@ -234,10 +220,10 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
                 "data": []
             };
             // Get all attribute values
-            for (var key in _widget.attributes) {
+            for (const key in _widget.attributes) {
                 if (!_widget.attributes[key].ignore &&
                     typeof _widget.options[key] != "undefined") {
-                    var val = _widget.options[key];
+                    const val = _widget.options[key];
                     // TODO: Improve detection
                     if (typeof val == "string" && val.indexOf("$") >= 0) {
                         hasAttr = true;
@@ -254,7 +240,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             }
         };
         // Check each column
-        var columns = _widget._widgets;
+        const columns = _widget._widgets;
         for (var i = 0; i < columns.length; i++) {
             // If column is hidden, don't process it
             if (typeof columns[i] === 'undefined' || this._context && this._context.columns && this._context.columns[i] && !this._context.columns[i].visible) {
@@ -263,8 +249,8 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             columns[i].iterateOver(process, this);
         }
         return variableAttributes;
-    };
-    et2_nextmatch_rowProvider.prototype._seperateWidgets = function (_varAttrs) {
+    }
+    _seperateWidgets(_varAttrs) {
         // The detachable array contains all widgets which implement the
         // et2_IDetachedDOM interface for all needed attributes
         var detachable = [];
@@ -324,13 +310,13 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             "detachable": detachable,
             "remaining": remaining
         };
-    };
+    }
     /**
      * Removes to DOM code for all widgets in the "remaining" slot
      *
      * @param {object} _rowTemplate
      */
-    et2_nextmatch_rowProvider.prototype._stripTemplateRow = function (_rowTemplate) {
+    _stripTemplateRow(_rowTemplate) {
         _rowTemplate.placeholders = [];
         for (var i = 0; i < _rowTemplate.seperated.remaining.length; i++) {
             var entry = _rowTemplate.seperated.remaining[i];
@@ -354,8 +340,8 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
                 }
             }
         }
-    };
-    et2_nextmatch_rowProvider.prototype._nodeIndex = function (_node) {
+    }
+    _nodeIndex(_node) {
         if (_node.parentNode == null) {
             return 0;
         }
@@ -365,14 +351,14 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             }
         }
         return -1;
-    };
+    }
     /**
      * Returns a function which does a relative access on the given DOM-Node
      *
      * @param {DOMElement} _root
      * @param {DOMElement} _target
      */
-    et2_nextmatch_rowProvider.prototype._compileDOMAccessFunc = function (_root, _target) {
+    _compileDOMAccessFunc(_root, _target) {
         function recordPath(_root, _target, _path) {
             if (typeof _path == "undefined") {
                 _path = [];
@@ -394,13 +380,13 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             }
         }
         return new Function("_node", recordPath.call(this, _root, _target));
-    };
+    }
     /**
      * Builds relative paths to the DOM-Nodes and compiles fast-access functions
      *
      * @param {object} _rowTemplate
      */
-    et2_nextmatch_rowProvider.prototype._buildNodeAccessFuncs = function (_rowTemplate) {
+    _buildNodeAccessFuncs(_rowTemplate) {
         for (var i = 0; i < _rowTemplate.seperated.detachable.length; i++) {
             var entry = _rowTemplate.seperated.detachable[i];
             // Get all needed nodes from the widget
@@ -411,7 +397,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
                 nodeFuncs[j] = this._compileDOMAccessFunc(_rowTemplate.row, nodes[j]);
             }
         }
-    };
+    }
     /**
      * Applies additional row data (like the class) to the tr
      *
@@ -419,7 +405,7 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
      * @param {DOMElement} _tr
      * @param {object} _mgrs
      */
-    et2_nextmatch_rowProvider.prototype._setRowData = function (_data, _tr, _mgrs) {
+    _setRowData(_data, _tr, _mgrs) {
         // TODO: Implement other fields than "class"
         if (_data["class"]) {
             var classes = _mgrs["content"].expandName(_data["class"]);
@@ -449,15 +435,12 @@ var et2_nextmatch_rowProvider = /** @class */ (function () {
             var align = _mgrs["content"].expandName(_data["valign"]);
             _tr.setAttribute("valign", align);
         }
-    };
-    return et2_nextmatch_rowProvider;
-}());
-exports.et2_nextmatch_rowProvider = et2_nextmatch_rowProvider;
+    }
+}
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
-    __extends(et2_nextmatch_rowWidget, _super);
+export class et2_nextmatch_rowWidget extends et2_widget {
     /**
      * Constructor
      *
@@ -465,16 +448,14 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
      * @param _row
      * @memberOf et2_nextmatch_rowWidget
      */
-    function et2_nextmatch_rowWidget(_mgrs, _row) {
-        var _this = 
+    constructor(_mgrs, _row) {
         // Call the parent constructor with some dummy attributes
-        _super.call(this, null, { "id": "", "type": "rowWidget" }) || this;
+        super(null, { "id": "", "type": "rowWidget" });
         // Initialize some variables
-        _this._widgets = [];
+        this._widgets = [];
         // Copy the given DOM node and the content arrays
-        _this._mgrs = _mgrs;
-        _this._row = _row;
-        return _this;
+        this._mgrs = _mgrs;
+        this._row = _row;
     }
     /**
      * Copies the given array manager and clones the given widgets and inserts
@@ -482,10 +463,10 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
      *
      * @param {array} _widgets
      */
-    et2_nextmatch_rowWidget.prototype.createWidgets = function (_widgets) {
+    createWidgets(_widgets) {
         // Clone the given the widgets with this element as parent
         this._widgets = [];
-        var row_id = 0;
+        let row_id = 0;
         for (var i = 0; i < _widgets.length; i++) {
             // Disabled columns might be missing widget - skip it
             if (!_widgets[i])
@@ -498,14 +479,14 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
             }
             row_id++;
         }
-    };
+    }
     /**
      * Returns the column node for the given sender
      *
      * @param {et2_widget} _sender
      * @return {DOMElement}
      */
-    et2_nextmatch_rowWidget.prototype.getDOMNode = function (_sender) {
+    getDOMNode(_sender) {
         var row_id = 0;
         for (var i = 0; i < this._widgets.length; i++) {
             // Disabled columns might be missing widget - skip it
@@ -517,14 +498,12 @@ var et2_nextmatch_rowWidget = /** @class */ (function (_super) {
             row_id++;
         }
         return null;
-    };
-    return et2_nextmatch_rowWidget;
-}(et2_core_widget_1.et2_widget));
+    }
+}
 /**
  * @augments et2_widget
  */
-var et2_nextmatch_rowTemplateWidget = /** @class */ (function (_super) {
-    __extends(et2_nextmatch_rowTemplateWidget, _super);
+export class et2_nextmatch_rowTemplateWidget extends et2_widget {
     /**
      * Constructor
      *
@@ -532,20 +511,18 @@ var et2_nextmatch_rowTemplateWidget = /** @class */ (function (_super) {
      * @param _row
      * @memberOf et2_nextmatch_rowTemplateWidget
      */
-    function et2_nextmatch_rowTemplateWidget(_root, _row) {
-        var _this = 
+    constructor(_root, _row) {
         // Call the parent constructor with some dummy attributes
-        _super.call(this, null, { "id": "", "type": "rowTemplateWidget" }) || this;
-        _this._root = _root;
-        _this._mgrs = {};
-        _this._row = _row;
+        super(null, { "id": "", "type": "rowTemplateWidget" });
+        this._root = _root;
+        this._mgrs = {};
+        this._row = _row;
         // Set parent to root widget, so sub-widget calls still work
-        _this._parent = _root;
+        this._parent = _root;
         // Clone the widgets inside the placeholders array
-        _this._widgets = [];
-        return _this;
+        this._widgets = [];
     }
-    et2_nextmatch_rowTemplateWidget.prototype.createWidgets = function (_mgrs, _widgets) {
+    createWidgets(_mgrs, _widgets) {
         // Set the array managers - don't use setArrayMgrs here as this creates
         // an unnecessary copy of the object
         this._mgrs = _mgrs;
@@ -558,21 +535,20 @@ var et2_nextmatch_rowTemplateWidget = /** @class */ (function (_super) {
             };
             this._widgets[i].widget.loadingFinished();
         }
-    };
+    }
     /**
      * Returns the column node for the given sender
      *
      * @param {et2_widget} _sender
      * @return {DOMElement}
      */
-    et2_nextmatch_rowTemplateWidget.prototype.getDOMNode = function (_sender) {
+    getDOMNode(_sender) {
         for (var i = 0; i < this._widgets.length; i++) {
             if (this._widgets[i].widget == _sender) {
                 return this._widgets[i].node;
             }
         }
         return null;
-    };
-    return et2_nextmatch_rowTemplateWidget;
-}(et2_core_widget_1.et2_widget));
+    }
+}
 //# sourceMappingURL=et2_extension_nextmatch_rowProvider.js.map

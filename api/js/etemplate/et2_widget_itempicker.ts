@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Christian Binder
  * @author Nathan Gray
  * @copyright 2012 Christian Binder
@@ -20,16 +20,19 @@
 	egw_action.egw_action_common;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_csvSplit, et2_no_init} from "./et2_core_common";
+import {et2_button} from "./et2_widget_button";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Class which implements the "itempicker" XET-Tag
  *
  * @augments et2_inputWidget
  */
-class et2_itempicker extends et2_inputWidget
+export class et2_itempicker extends et2_inputWidget
 {
 	static readonly _attributes : any = {
 		"action": {
@@ -184,7 +187,7 @@ class et2_itempicker extends et2_inputWidget
 			.hide();
 
 		// Action button
-		this.button_action = et2_createWidget("button");
+		this.button_action = <et2_button>et2_createWidget("button", {});
 		jQuery(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
 		this.button_action.set_label(this.egw().lang(this.options.action_label));
 		this.button_action.click = function() { _self.doAction(); };
@@ -396,5 +399,3 @@ class et2_itempicker extends et2_inputWidget
 	}
 }
 et2_register_widget(et2_itempicker, ["itempicker"]);
-
-

@@ -1,75 +1,60 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS HBox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_hbox = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_baseWidget;
 */
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
-var et2_widget_grid_1 = require("./et2_widget_grid");
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_register_widget } from "./et2_core_widget";
+import { et2_baseWidget } from "./et2_core_baseWidget";
+import { et2_grid } from "./et2_widget_grid";
+import { et2_filteredNodeIterator } from "./et2_core_xml";
+import { et2_cloneObject } from "./et2_core_common";
+import { et2_IAligned } from "./et2_core_interfaces";
 /**
  * Class which implements hbox tag
  *
  * @augments et2_baseWidget
  */
-var et2_hbox = /** @class */ (function (_super) {
-    __extends(et2_hbox, _super);
+export class et2_hbox extends et2_baseWidget {
     /**
      * Constructor
      *
      * @memberOf et2_hbox
      */
-    function et2_hbox(_parent, _attrs, _child) {
-        var _this = _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_hbox._attributes, _child || {})) || this;
-        _this.alignData = {
+    constructor(_parent, _attrs, _child) {
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_hbox._attributes, _child || {}));
+        this.alignData = {
             "hasAlign": false,
             "hasLeft": false,
             "hasCenter": false,
             "hasRight": false,
             "lastAlign": "left"
         };
-        _this.leftDiv = null;
-        _this.rightDiv = null;
-        _this.div = null;
-        _this.leftDiv = null;
-        _this.rightDiv = null;
-        _this.div = jQuery(document.createElement("div"))
-            .addClass("et2_" + _super.prototype.getType.call(_this))
+        this.leftDiv = null;
+        this.rightDiv = null;
+        this.div = null;
+        this.leftDiv = null;
+        this.rightDiv = null;
+        this.div = jQuery(document.createElement("div"))
+            .addClass("et2_" + super.getType())
             .addClass("et2_box_widget");
-        _super.prototype.setDOMNode.call(_this, _this.div[0]);
-        return _this;
+        super.setDOMNode(this.div[0]);
     }
-    et2_hbox.prototype._createNamespace = function () {
+    _createNamespace() {
         return true;
-    };
-    et2_hbox.prototype._buildAlignCells = function () {
+    }
+    _buildAlignCells() {
         if (this.alignData.hasAlign) {
             // Check whether we have more than one type of align
-            var mto = (this.alignData.hasLeft && this.alignData.hasRight) ||
+            let mto = (this.alignData.hasLeft && this.alignData.hasRight) ||
                 (this.alignData.hasLeft && this.alignData.hasCenter) ||
                 (this.alignData.hasCenter && this.alignData.hasRight);
             if (!mto) {
@@ -98,17 +83,17 @@ var et2_hbox = /** @class */ (function (_super) {
                 }
             }
         }
-    };
+    }
     /**
      * The overwritten loadFromXML function checks whether any child element has
      * a special align value.
      *
      * @param {object} _node
      */
-    et2_hbox.prototype.loadFromXML = function (_node) {
+    loadFromXML(_node) {
         // Check whether any child node has an alignment tag
         et2_filteredNodeIterator(_node, function (_node) {
-            var align = _node.getAttribute("align");
+            let align = _node.getAttribute("align");
             if (!align) {
                 align = "left";
             }
@@ -131,21 +116,21 @@ var et2_hbox = /** @class */ (function (_super) {
         // Build the align cells
         this._buildAlignCells();
         // Load the nodes as usual
-        _super.prototype.loadFromXML.call(this, _node);
-    };
-    et2_hbox.prototype.assign = function (_obj) {
+        super.loadFromXML(_node);
+    }
+    assign(_obj) {
         // Copy the align data and the cells from the object which should be
         // assigned
         this.alignData = et2_cloneObject(_obj.alignData);
         this._buildAlignCells();
         // Call the inherited assign function
-        _super.prototype.assign.call(this, _obj);
-    };
-    et2_hbox.prototype.getDOMNode = function (_sender) {
+        super.assign(_obj);
+    }
+    getDOMNode(_sender) {
         // Return a special align container if this hbox needs it
         if (_sender != this && this.alignData.hasAlign) {
             // Check whether we've create a special container for the widget
-            var align = (_sender.implements(et2_IAligned) ?
+            let align = (_sender.implements(et2_IAligned) ?
                 _sender.get_align() : "left");
             if (align == "left" && this.leftDiv != null) {
                 return this.leftDiv[0];
@@ -155,21 +140,19 @@ var et2_hbox = /** @class */ (function (_super) {
             }
         }
         // Normally simply return the hbox-div
-        return _super.prototype.getDOMNode.call(this, _sender);
-    };
+        return super.getDOMNode(_sender);
+    }
     /**
      * Tables added to the root node need to be inline instead of blocks
      *
      * @param {et2_widget} child child-widget to add
      */
-    et2_hbox.prototype.addChild = function (child) {
-        _super.prototype.addChild.call(this, child);
-        if (child.instanceOf && child.instanceOf(et2_widget_grid_1.et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached()) {
+    addChild(child) {
+        super.addChild(child);
+        if (child.instanceOf && child.instanceOf(et2_grid) && this.isAttached() || child._type == 'et2_grid' && this.isAttached()) {
             jQuery(child.getDOMNode(child)).css("display", "inline-table");
         }
-    };
-    return et2_hbox;
-}(et2_core_baseWidget_1.et2_baseWidget));
-exports.et2_hbox = et2_hbox;
-et2_core_widget_1.et2_register_widget(et2_hbox, ["hbox"]);
+    }
+}
+et2_register_widget(et2_hbox, ["hbox"]);
 //# sourceMappingURL=et2_widget_hbox.js.map

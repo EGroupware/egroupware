@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
  */
@@ -20,7 +20,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 /**
  * @augments et2_valueWidget
  */
-class et2_iframe extends et2_valueWidget
+export class et2_iframe extends et2_valueWidget
 {
 	static readonly _attributes : any = {
 		'label': {

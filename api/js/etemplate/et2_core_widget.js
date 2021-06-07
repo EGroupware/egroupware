@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS Widget base class
  *
@@ -8,21 +7,6 @@
  * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_widget = exports.et2_createWidget = exports.et2_register_widget = void 0;
 /*egw:uses
     jsapi.egw;
     et2_core_xml;
@@ -30,14 +14,18 @@ exports.et2_widget = exports.et2_createWidget = exports.et2_register_widget = vo
     et2_core_inheritance;
     et2_core_arrayMgr;
 */
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-var et2_core_arrayMgr_1 = require("./et2_core_arrayMgr");
+import { ClassWithAttributes } from './et2_core_inheritance';
+import { et2_arrayMgr } from "./et2_core_arrayMgr";
+import { egw } from "../jsapi/egw_global";
+import { et2_cloneObject, et2_csvSplit } from "./et2_core_common";
+import { et2_compileLegacyJS } from "./et2_core_legacyJSFunctions";
+import { et2_IDOMNode, et2_IInputNode } from "./et2_core_interfaces";
 /**
  * The registry contains all XML tag names and the corresponding widget
  * constructor.
  */
-var et2_registry = {};
-var et2_attribute_registry = {};
+export var et2_registry = {};
+export var et2_attribute_registry = {};
 /**
  * Registers the widget class defined by the given constructor, registers all its class attributes, and associates it
  * with the types in the _types array.
@@ -45,9 +33,9 @@ var et2_attribute_registry = {};
  * @param {function} _constructor constructor
  * @param {array} _types widget types _constructor wants to register for
  */
-function et2_register_widget(_constructor, _types) {
+export function et2_register_widget(_constructor, _types) {
     "use strict";
-    et2_attribute_registry[_constructor.name] = et2_core_inheritance_1.ClassWithAttributes.buildAttributes(_constructor);
+    et2_attribute_registry[_constructor.name] = ClassWithAttributes.buildAttributes(_constructor);
     // Iterate over all given types and register those
     for (var i = 0; i < _types.length; i++) {
         var type = _types[i].toLowerCase();
@@ -60,7 +48,6 @@ function et2_register_widget(_constructor, _types) {
         et2_registry[type] = _constructor;
     }
 }
-exports.et2_register_widget = et2_register_widget;
 /**
  * Creates a widget registered for the given tag-name. If "readonly" is listed
  * inside the attributes, et2_createWidget will try to use the "_ro" type of the
@@ -74,7 +61,7 @@ exports.et2_register_widget = et2_register_widget;
  * 	is not passed, it will default to null. Then you have to attach the element
  * 	to a parent using the addChild or insertChild method.
  */
-function et2_createWidget(_name, _attrs, _parent) {
+export function et2_createWidget(_name, _attrs, _parent) {
     "use strict";
     if (typeof _attrs == "undefined") {
         _attrs = {};
@@ -92,24 +79,21 @@ function et2_createWidget(_name, _attrs, _parent) {
         typeof _attrs["readonly"] == "undefined" ? false : _attrs["readonly"];
     // Get the constructor - if the widget is readonly, use the special "_ro"
     // constructor if it is available
-    var constructor = typeof et2_registry[nodeName] == "undefined" ?
-        et2_placeholder : et2_registry[nodeName];
+    let constructor = et2_registry[typeof et2_registry[nodeName] == "undefined" ? 'placeholder' : nodeName];
     if (readonly && typeof et2_registry[nodeName + "_ro"] != "undefined") {
         constructor = et2_registry[nodeName + "_ro"];
     }
     // Do an sanity check for the attributes
-    et2_core_inheritance_1.ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], _attrs);
+    ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], _attrs);
     // Create the new widget and return it
     return new constructor(_parent, _attrs);
 }
-exports.et2_createWidget = et2_createWidget;
 /**
  * The et2 widget base class.
  *
  * @augments ClassWithAttributes
  */
-var et2_widget = /** @class */ (function (_super) {
-    __extends(et2_widget, _super);
+export class et2_widget extends ClassWithAttributes {
     /**
      * Widget constructor
      *
@@ -123,17 +107,17 @@ var et2_widget = /** @class */ (function (_super) {
      * @param _attrs is an associative array of attributes.
      * @param _child attributes object from the child
      */
-    function et2_widget(_parent, _attrs, _child) {
-        var _this = _super.call(this) || this;
-        _this._children = [];
-        _this._mgrs = {};
+    constructor(_parent, _attrs, _child) {
+        super(); // because we in the top of the widget hierarchy
+        this._children = [];
+        this._mgrs = {};
         /**
          * This is used and therefore it we can not (yet) make it private
          *
          * @deprecated use this.getInstanceMgr()
          */
-        _this._inst = null;
-        _this.attributes = et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_widget._attributes, _child || {});
+        this._inst = null;
+        this.attributes = ClassWithAttributes.extendAttributes(et2_widget._attributes, _child || {});
         // Check whether all attributes are available
         if (typeof _parent == "undefined") {
             _parent = null;
@@ -145,33 +129,32 @@ var et2_widget = /** @class */ (function (_super) {
             jQuery.extend(_attrs, _attrs.attributes);
         }
         // Initialize all important parameters
-        _this._mgrs = {};
-        _this._inst = null;
-        _this._children = [];
-        _this._type = _attrs["type"];
-        _this.id = _attrs["id"];
+        this._mgrs = {};
+        this._inst = null;
+        this._children = [];
+        this._type = _attrs["type"];
+        this.id = _attrs["id"];
         // Add this widget to the given parent widget
         if (_parent != null) {
-            _parent.addChild(_this);
+            _parent.addChild(this);
         }
         // The supported widget classes array defines a whitelist for all widget
         // classes or interfaces child widgets have to support.
-        _this.supportedWidgetClasses = [et2_widget];
+        this.supportedWidgetClasses = [et2_widget];
         if (_attrs["id"]) {
             // Create a namespace for this object
-            if (_this._createNamespace()) {
-                _this.checkCreateNamespace(_attrs);
+            if (this._createNamespace()) {
+                this.checkCreateNamespace(_attrs);
             }
         }
-        if (_this.id) {
+        if (this.id) {
             //this.id = this.id.replace(/\[/g,'&#x5B;').replace(/]/g,'&#x5D;');
         }
         // Add all attributes hidden in the content arrays to the attributes
         // parameter
-        _this.transformAttributes(_attrs);
+        this.transformAttributes(_attrs);
         // Create a local copy of the options object
-        _this.options = et2_cloneObject(_attrs);
-        return _this;
+        this.options = et2_cloneObject(_attrs);
     }
     /**
      * The destroy function destroys all children of the widget, removes itself
@@ -181,7 +164,7 @@ var et2_widget = /** @class */ (function (_super) {
      * unbind ANY event this widget created and to remove all DOM-Nodes it
      * created.
      */
-    et2_widget.prototype.destroy = function () {
+    destroy() {
         // Call the destructor of all children
         for (var i = this._children.length - 1; i >= 0; i--) {
             this._children[i].destroy();
@@ -196,13 +179,13 @@ var et2_widget = /** @class */ (function (_super) {
                 this._mgrs[key].destroy();
             }
         }
-    };
-    et2_widget.prototype.getType = function () {
+    }
+    getType() {
         return this._type;
-    };
-    et2_widget.prototype.setType = function (_type) {
+    }
+    setType(_type) {
         this._type = _type;
-    };
+    }
     /**
      * Creates a copy of this widget. The parameters given are passed to the
      * constructor of the copied object. If the parameters are omitted, _parent
@@ -210,7 +193,7 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @param {et2_widget} _parent parent to set for clone, default null
      */
-    et2_widget.prototype.clone = function (_parent) {
+    clone(_parent) {
         // Default _parent to null
         if (typeof _parent == "undefined") {
             _parent = null;
@@ -220,8 +203,8 @@ var et2_widget = /** @class */ (function (_super) {
         // Assign this element to the copy
         copy.assign(this);
         return copy;
-    };
-    et2_widget.prototype.assign = function (_obj) {
+    }
+    assign(_obj) {
         if (typeof _obj._children == "undefined") {
             this.egw().debug("log", "Foo!");
         }
@@ -231,39 +214,39 @@ var et2_widget = /** @class */ (function (_super) {
         }
         // Copy a reference to the content array manager
         this.setArrayMgrs(_obj.mgrs);
-    };
+    }
     /**
      * Returns the parent widget of this widget
      */
-    et2_widget.prototype.getParent = function () {
+    getParent() {
         return this._parent;
-    };
+    }
     /**
      * Returns the list of children of this widget.
      */
-    et2_widget.prototype.getChildren = function () {
+    getChildren() {
         return this._children;
-    };
+    }
     /**
      * Returns the base widget
      */
-    et2_widget.prototype.getRoot = function () {
+    getRoot() {
         if (this._parent != null) {
             return this._parent.getRoot();
         }
         else {
             return this;
         }
-    };
+    }
     /**
      * Inserts an child at the end of the list.
      *
      * @param _node is the node which should be added. It has to be an instance
      * 	of et2_widget
      */
-    et2_widget.prototype.addChild = function (_node) {
+    addChild(_node) {
         this.insertChild(_node, this._children.length);
-    };
+    }
     /**
      * Inserts a child at the given index.
      *
@@ -271,7 +254,7 @@ var et2_widget = /** @class */ (function (_super) {
      * 	of et2_widget
      * @param _idx is the position at which the element should be added.
      */
-    et2_widget.prototype.insertChild = function (_node, _idx) {
+    insertChild(_node, _idx) {
         // Check whether the node is one of the supported widget classes.
         if (this.isOfSupportedWidgetClass(_node)) {
             // Remove the node from its original parent
@@ -285,13 +268,13 @@ var et2_widget = /** @class */ (function (_super) {
             this.egw().debug("error", "Widget " + _node._type + " is not supported by this widget class", this);
             //			throw("Widget is not supported by this widget class!");
         }
-    };
+    }
     /**
      * Removes the child but does not destroy it.
      *
      * @param {et2_widget} _node child to remove
      */
-    et2_widget.prototype.removeChild = function (_node) {
+    removeChild(_node) {
         // Retrieve the child from the child list
         var idx = this._children.indexOf(_node);
         if (idx >= 0) {
@@ -299,13 +282,13 @@ var et2_widget = /** @class */ (function (_super) {
             _node._parent = null;
             this._children.splice(idx, 1);
         }
-    };
+    }
     /**
      * Searches an element by id in the tree, descending into the child levels.
      *
      * @param _id is the id you're searching for
      */
-    et2_widget.prototype.getWidgetById = function (_id) {
+    getWidgetById(_id) {
         if (this.id == _id) {
             return this;
         }
@@ -318,7 +301,7 @@ var et2_widget = /** @class */ (function (_super) {
             }
         }
         if (this.id && _id.indexOf('[') > -1 && this._children.length) {
-            var ids = (new et2_core_arrayMgr_1.et2_arrayMgr()).explodeKey(_id);
+            var ids = (new et2_arrayMgr()).explodeKey(_id);
             var widget = this;
             for (var i = 0; i < ids.length && widget !== null; i++) {
                 widget = widget.getWidgetById(ids[i]);
@@ -326,7 +309,7 @@ var et2_widget = /** @class */ (function (_super) {
             return widget;
         }
         return null;
-    };
+    }
     /**
      * Function which allows iterating over the complete widget tree.
      *
@@ -335,7 +318,7 @@ var et2_widget = /** @class */ (function (_super) {
      * @param _type is an optional parameter which specifies a class/interface
      * 	the elements have to be instanceOf.
      */
-    et2_widget.prototype.iterateOver = function (_callback, _context, _type) {
+    iterateOver(_callback, _context, _type) {
         if (typeof _type == "undefined") {
             _type = et2_widget;
         }
@@ -345,7 +328,7 @@ var et2_widget = /** @class */ (function (_super) {
         for (var i = 0; i < this._children.length; i++) {
             this._children[i].iterateOver(_callback, _context, _type);
         }
-    };
+    }
     /**
      * Returns true if the widget currently resides in the visible part of the
      * widget tree. E.g. Templates which have been cloned are not in the visible
@@ -357,7 +340,7 @@ var et2_widget = /** @class */ (function (_super) {
      * 		return this._super(inTree);
      *	when calling this function the _vis parameter does not have to be supplied.
      */
-    et2_widget.prototype.isInTree = function (_sender, _vis) {
+    isInTree(_sender, _vis) {
         if (typeof _vis == "undefined") {
             _vis = true;
         }
@@ -365,15 +348,15 @@ var et2_widget = /** @class */ (function (_super) {
             return _vis && this._parent.isInTree(this);
         }
         return _vis;
-    };
-    et2_widget.prototype.isOfSupportedWidgetClass = function (_obj) {
+    }
+    isOfSupportedWidgetClass(_obj) {
         for (var i = 0; i < this.supportedWidgetClasses.length; i++) {
             if (_obj instanceof this.supportedWidgetClasses[i]) {
                 return true;
             }
         }
         return false;
-    };
+    }
     /**
      * The parseXMLAttrs function takes an XML DOM attributes object
      * and adds the given attributes to the _target associative array. This
@@ -383,7 +366,7 @@ var et2_widget = /** @class */ (function (_super) {
      * @param {object} _target is the object to which the attributes should be written.
      * @param {et2_widget} _proto prototype with attributes and legacyOptions attribute
      */
-    et2_widget.prototype.parseXMLAttrs = function (_attrsObj, _target, _proto) {
+    parseXMLAttrs(_attrsObj, _target, _proto) {
         // Check whether the attributes object is really existing, if not abort
         if (typeof _attrsObj == "undefined") {
             return;
@@ -395,8 +378,8 @@ var et2_widget = /** @class */ (function (_super) {
             var attrValue = _attrsObj[i].value;
             // Special handling for the legacy options
             if (attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0) {
-                var legacy = _proto.constructor.legacyOptions || [];
-                var attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
+                let legacy = _proto.constructor.legacyOptions || [];
+                let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
                 // Check for modifications on legacy options here.  Normal modifications
                 // are handled in widget constructor, but it's too late for legacy options then
                 if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {
@@ -441,7 +424,7 @@ var et2_widget = /** @class */ (function (_super) {
                 // do NOT overwrite already evaluated readonly attribute
             }
             else {
-                var attrs = et2_attribute_registry[_proto.constructor.name] || {};
+                let attrs = et2_attribute_registry[_proto.constructor.name] || {};
                 if (mgr != null && typeof attrs[attrName] != "undefined") {
                     var attr = attrs[attrName];
                     // If the attribute is marked as boolean, parse the
@@ -457,14 +440,14 @@ var et2_widget = /** @class */ (function (_super) {
                 _target[attrName] = attrValue;
             }
         }
-    };
+    }
     /**
      * Apply the "modifications" to the element and translate attributes marked
      * with "translate: true"
      *
      * @param {object} _attrs
      */
-    et2_widget.prototype.transformAttributes = function (_attrs) {
+    transformAttributes(_attrs) {
         // Apply the content of the modifications array
         if (this.id) {
             if (typeof this.id != "string") {
@@ -483,30 +466,26 @@ var et2_widget = /** @class */ (function (_super) {
                 }
             }
         }
-        var _loop_1 = function () {
-            if (_attrs[key] && typeof this_1.attributes[key] != "undefined") {
-                if (this_1.attributes[key].translate === true ||
-                    (this_1.attributes[key].translate === "!no_lang" && !_attrs["no_lang"])) {
-                    var value = _attrs[key];
+        // Translate the attributes
+        for (var key in _attrs) {
+            if (_attrs[key] && typeof this.attributes[key] != "undefined") {
+                if (this.attributes[key].translate === true ||
+                    (this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"])) {
+                    let value = _attrs[key];
                     // allow statustext to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
                     if (value.indexOf('{') !== -1) {
-                        var egw_1 = this_1.egw();
+                        const egw = this.egw();
                         _attrs[key] = value.replace(/{([^}]+)}/g, function (str, p1) {
-                            return egw_1.lang(p1);
+                            return egw.lang(p1);
                         });
                     }
                     else {
-                        _attrs[key] = this_1.egw().lang(value);
+                        _attrs[key] = this.egw().lang(value);
                     }
                 }
             }
-        };
-        var this_1 = this;
-        // Translate the attributes
-        for (var key in _attrs) {
-            _loop_1();
         }
-    };
+    }
     /**
      * Create a et2_widget from an XML node.
      *
@@ -521,7 +500,7 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @return et2_widget
      */
-    et2_widget.prototype.createElementFromNode = function (_node, _name) {
+    createElementFromNode(_node, _name) {
         var attributes = {};
         // Parse the "readonly" and "type" flag for this element here, as they
         // determine which constructor is used
@@ -557,28 +536,27 @@ var et2_widget = /** @class */ (function (_super) {
         }
         // Get the constructor - if the widget is readonly, use the special "_ro"
         // constructor if it is available
-        var constructor = typeof et2_registry[_nodeName] == "undefined" ?
-            et2_placeholder : et2_registry[_nodeName];
+        var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
         if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined") {
             constructor = et2_registry[_nodeName + "_ro"];
         }
         // Parse the attributes from the given XML attributes object
         this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
         // Do an sanity check for the attributes
-        et2_core_inheritance_1.ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
+        ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
         // Creates the new widget, passes this widget as an instance and
         // passes the widgetType. Then it goes on loading the XML for it.
         var widget = new constructor(this, attributes);
         // Load the widget itself from XML
         widget.loadFromXML(_node);
         return widget;
-    };
+    }
     /**
      * Loads the widget tree from an XML node
      *
      * @param _node xml node
      */
-    et2_widget.prototype.loadFromXML = function (_node) {
+    loadFromXML(_node) {
         // Load the child nodes.
         for (var i = 0; i < _node.childNodes.length; i++) {
             var node = _node.childNodes[i];
@@ -595,14 +573,14 @@ var et2_widget = /** @class */ (function (_super) {
             // Create the new element
             this.createElementFromNode(node);
         }
-    };
+    }
     /**
      * Called whenever textNodes are loaded from the XML tree
      *
      * @param _content
      */
-    et2_widget.prototype.loadContent = function (_content) {
-    };
+    loadContent(_content) {
+    }
     /**
      * Called when loading the widget (sub-tree) is finished. First when this
      * function is called, the DOM-Tree is created. loadingFinished is
@@ -624,7 +602,7 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
      */
-    et2_widget.prototype.loadingFinished = function (promises) {
+    loadingFinished(promises) {
         // Call all availble setters
         this.initAttributes(this.options);
         // Make sure promises is defined to avoid errors.
@@ -660,7 +638,7 @@ var et2_widget = /** @class */ (function (_super) {
             // Fihish loading when it's finished
             result.done(jQuery.proxy(loadChildren, this));
         }
-    };
+    }
     /**
      * The initAttributes function sets the attributes to their default
      * values. The attributes are not overwritten, which means, that the
@@ -671,19 +649,19 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @param {object} _attrs
      */
-    et2_widget.prototype.initAttributes = function (_attrs) {
+    initAttributes(_attrs) {
         for (var key in _attrs) {
             if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined)) {
                 var val = _attrs[key];
                 // compile string values of attribute type "js" to functions
                 if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string') {
-                    val = et2_compileLegacyJS(val, this, this.instanceOf(et2_inputWidget) ? this.getInputNode() :
+                    val = et2_compileLegacyJS(val, this, this.implements(et2_IInputNode) ? this.getInputNode() :
                         (this.implements(et2_IDOMNode) ? this.getDOMNode() : null));
                 }
                 this.setAttribute(key, val, false);
             }
         }
-    };
+    }
     /**
      * Does specific post-processing after the widget is loaded.  Most widgets should not
      * need to do anything here, it should all be done before.
@@ -693,15 +671,15 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @see {@link http://api.jquery.com/deferred.promise/|jQuery Promise}
      */
-    et2_widget.prototype.doLoadingFinished = function () {
+    doLoadingFinished() {
         return true;
-    };
+    }
     /**
      * The egw function returns the instance of the client side api belonging
      * to this widget tree. The api instance can be set in the "container"
      * widget using the setApiInstance function.
      */
-    et2_widget.prototype.egw = function () {
+    egw() {
         // The _egw property is not set
         if (typeof this._egw === 'undefined') {
             if (this._parent != null) {
@@ -719,31 +697,31 @@ var et2_widget = /** @class */ (function (_super) {
             return egw('phpgwapi', wnd);
         }
         return this._egw;
-    };
+    }
     /**
      * Sets the client side api instance. It can be retrieved by the widget tree
      * by using the "egw()" function.
      *
      * @param {IegwAppLocal} _egw egw object to set
      */
-    et2_widget.prototype.setApiInstance = function (_egw) {
+    setApiInstance(_egw) {
         this._egw = _egw;
-    };
+    }
     /**
      * Sets all array manager objects - this function can be used to set the
      * root array managers of the container object.
      *
      * @param {object} _mgrs
      */
-    et2_widget.prototype.setArrayMgrs = function (_mgrs) {
+    setArrayMgrs(_mgrs) {
         this._mgrs = et2_cloneObject(_mgrs);
-    };
+    }
     /**
      * Returns an associative array containing the top-most array managers.
      *
      * @param _mgrs is used internally and should not be supplied.
      */
-    et2_widget.prototype.getArrayMgrs = function (_mgrs) {
+    getArrayMgrs(_mgrs) {
         if (typeof _mgrs == "undefined") {
             _mgrs = {};
         }
@@ -759,22 +737,22 @@ var et2_widget = /** @class */ (function (_super) {
             this._parent.getArrayMgrs(_mgrs);
         }
         return _mgrs;
-    };
+    }
     /**
      * Sets the array manager for the given part
      *
      * @param {string} _part which array mgr to set
      * @param {object} _mgr
      */
-    et2_widget.prototype.setArrayMgr = function (_part, _mgr) {
+    setArrayMgr(_part, _mgr) {
         this._mgrs[_part] = _mgr;
-    };
+    }
     /**
      * Returns the array manager object for the given part
      *
      * @param {string} managed_array_type name of array mgr to return
      */
-    et2_widget.prototype.getArrayMgr = function (managed_array_type) {
+    getArrayMgr(managed_array_type) {
         if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
             return this._mgrs[managed_array_type];
         }
@@ -782,7 +760,7 @@ var et2_widget = /** @class */ (function (_super) {
             return this._parent.getArrayMgr(managed_array_type);
         }
         return null;
-    };
+    }
     /**
      * Checks whether a namespace exists for this element in the content array.
      * If yes, an own perspective of the content array is created. If not, the
@@ -790,7 +768,7 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * Constructor attributes are passed in case a child needs to make decisions
      */
-    et2_widget.prototype.checkCreateNamespace = function (_attrs) {
+    checkCreateNamespace(_attrs) {
         // Get the content manager
         var mgrs = this.getArrayMgrs();
         for (var key in mgrs) {
@@ -813,7 +791,7 @@ var et2_widget = /** @class */ (function (_super) {
                 delete (this._mgrs[key]);
             }
         }
-    };
+    }
     /**
      * Widgets that do support a namespace should override and return true.
      *
@@ -822,23 +800,23 @@ var et2_widget = /** @class */ (function (_super) {
      *
      * @private
      */
-    et2_widget.prototype._createNamespace = function () {
+    _createNamespace() {
         return false;
-    };
+    }
     /**
      * Sets the instance manager object (of type etemplate2, see etemplate2.js)
      *
      * @param {etemplate2} _inst
      */
-    et2_widget.prototype.setInstanceManager = function (_inst) {
+    setInstanceManager(_inst) {
         this._inst = _inst;
-    };
+    }
     /**
      * Returns the instance manager
      *
      * @return {etemplate2}
      */
-    et2_widget.prototype.getInstanceManager = function () {
+    getInstanceManager() {
         if (this._inst != null) {
             return this._inst;
         }
@@ -846,68 +824,66 @@ var et2_widget = /** @class */ (function (_super) {
             return this._parent.getInstanceManager();
         }
         return null;
-    };
+    }
     /**
      * Returns the path into the data array.  By default, array manager takes care of
      * this, but some extensions need to override this
      */
-    et2_widget.prototype.getPath = function () {
+    getPath() {
         var path = this.getArrayMgr("content").getPath();
         // Prevent namespaced widgets with value from going an extra layer deep
         if (this.id && this._createNamespace() && path[path.length - 1] == this.id)
             path.pop();
         return path;
-    };
-    et2_widget._attributes = {
-        "id": {
-            "name": "ID",
-            "type": "string",
-            "description": "Unique identifier of the widget"
-        },
-        "no_lang": {
-            "name": "No translation",
-            "type": "boolean",
-            "default": false,
-            "description": "If true, no translations are made for this widget"
-        },
-        /**
-         * Ignore the "span" property by default - it is read by the grid and
-         * other widgets.
-         */
-        "span": {
-            "ignore": true
-        },
-        /**
-         * Ignore the "type" tag - it is read by the "createElementFromNode"
-         * function and passed as second parameter of the widget constructor
-         */
-        "type": {
-            "name": "Widget type",
-            "type": "string",
-            "ignore": true,
-            "description": "What kind of widget this is"
-        },
-        /**
-         * Ignore the readonly tag by default - its also read by the
-         * "createElementFromNode" function.
-         */
-        "readonly": {
-            "ignore": true
-        },
-        /**
-         * Widget's attributes
-         */
-        attributes: {
-            "name": "Widget attributes",
-            "type": "any",
-            "ignore": true,
-            "description": "Object of widget attributes"
-        }
-    };
-    // Set the legacyOptions array to the names of the properties the "options"
-    // attribute defines.
-    et2_widget.legacyOptions = [];
-    return et2_widget;
-}(et2_core_inheritance_1.ClassWithAttributes));
-exports.et2_widget = et2_widget;
+    }
+}
+et2_widget._attributes = {
+    "id": {
+        "name": "ID",
+        "type": "string",
+        "description": "Unique identifier of the widget"
+    },
+    "no_lang": {
+        "name": "No translation",
+        "type": "boolean",
+        "default": false,
+        "description": "If true, no translations are made for this widget"
+    },
+    /**
+     * Ignore the "span" property by default - it is read by the grid and
+     * other widgets.
+     */
+    "span": {
+        "ignore": true
+    },
+    /**
+     * Ignore the "type" tag - it is read by the "createElementFromNode"
+     * function and passed as second parameter of the widget constructor
+     */
+    "type": {
+        "name": "Widget type",
+        "type": "string",
+        "ignore": true,
+        "description": "What kind of widget this is"
+    },
+    /**
+     * Ignore the readonly tag by default - its also read by the
+     * "createElementFromNode" function.
+     */
+    "readonly": {
+        "ignore": true
+    },
+    /**
+     * Widget's attributes
+     */
+    attributes: {
+        "name": "Widget attributes",
+        "type": "any",
+        "ignore": true,
+        "description": "Object of widget attributes"
+    }
+};
+// Set the legacyOptions array to the names of the properties the "options"
+// attribute defines.
+et2_widget.legacyOptions = [];
 //# sourceMappingURL=et2_core_widget.js.map

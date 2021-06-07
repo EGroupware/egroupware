@@ -1,12 +1,11 @@
 /**
  * EGroupware - VFS SELECT Widget UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package et2_vfsSelect
  * @author Hadi Nategh <hn@egroupware.org>
- * @copyright (c) 2013-2017 by Hadi Nategh <hn@egroupware.org>
+ * @copyright (c) 2013-2021 by Hadi Nategh <hn@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,7 +14,7 @@
 
 import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
-import '../jsapi/egw_global';
+import {app, egw} from "../jsapi/egw_global";
 import {et2_dialog} from "./et2_widget_dialog";
 import {et2_file} from "./et2_widget_file";
 import {et2_textbox} from "./et2_widget_textbox";

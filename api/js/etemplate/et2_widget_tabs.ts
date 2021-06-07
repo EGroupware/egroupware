@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -14,17 +14,19 @@
 	et2_core_valueWidget;
 */
 
-import './et2_core_common';
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_DOMWidget } from './et2_core_DOMWidget'
 import { et2_valueWidget } from './et2_core_valueWidget'
 import {et2_nextmatch} from "./et2_extension_nextmatch";
+import {et2_no_init} from "./et2_core_common";
+import {et2_IInput, et2_IPrint, et2_IResizeable} from "./et2_core_interfaces";
+import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 
 /**
  * Class which implements the tabbox-tag
  */
-class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,et2_IPrint
+export class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,et2_IPrint
 {
 	static readonly _attributes : any = {
 		'tabs': {

@@ -1,31 +1,28 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - Class which contains a the columns model
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_dataview_columns = exports.et2_dataview_column = void 0;
 /*egw:uses
     et2_core_inheritance;
     et2_inheritance;
 */
+import { egw } from "../jsapi/egw_global";
 /**
  * Class which stores the data of a single column.
  *
  * @augments Class
  */
-var et2_dataview_column = /** @class */ (function () {
+export class et2_dataview_column {
     /**
      * Constructor
      */
-    function et2_dataview_column(_attrs) {
+    constructor(_attrs) {
         /**
          * Defines the visibility state of this column.
          */
@@ -78,7 +75,7 @@ var et2_dataview_column = /** @class */ (function () {
      *
      * @param {float|string} _value
      */
-    et2_dataview_column.prototype.set_width = function (_value) {
+    set_width(_value) {
         // Parse the width parameter.
         this.relativeWidth = false;
         this.fixedWidth = false;
@@ -99,8 +96,8 @@ var et2_dataview_column = /** @class */ (function () {
         else if (typeof w == 'string' && !isNaN(parseFloat(w))) {
             this.fixedWidth = parseInt(w);
         }
-    };
-    et2_dataview_column.prototype.set_visibility = function (_value) {
+    }
+    set_visibility(_value) {
         // If visibility is always, don't turn it off
         if (this.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS || this.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
             return;
@@ -116,68 +113,66 @@ var et2_dataview_column = /** @class */ (function () {
         else {
             egw().debug("warn", "Invalid visibility option for column: ", _value);
         }
-    };
-    et2_dataview_column.ET2_COL_TYPE_DEFAULT = 0;
-    et2_dataview_column.ET2_COL_TYPE_NAME_ICON_FIXED = 1;
-    et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS = 0;
-    et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE = 1;
-    et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE = 2;
-    et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
-    et2_dataview_column.ET2_COL_VISIBILITY_DISABLED = 4;
-    et2_dataview_column._attributes = {
-        "id": {
-            "name": "ID",
-            "type": "string",
-            "description": "Unique identifier for this column. It is used to " +
-                "store changed column widths or visibilities."
-        },
-        "visibility": {
-            "name": "Visibility",
-            "type": "integer",
-            "default": et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE,
-            "description": "Defines the visibility state of this column."
-        },
-        "caption": {
-            "name": "Caption",
-            "type": "string",
-            "description": "Caption of the column as it is displayed in the " +
-                "select columns popup."
-        },
-        "type": {
-            "name": "Column type",
-            "type": "integer",
-            "default": et2_dataview_column.ET2_COL_TYPE_DEFAULT,
-            "description": "Type of the column"
-        },
-        "width": {
-            "name": "Width",
-            "type": "dimension",
-            "default": "80px",
-            "description": "Width of the column."
-        },
-        "minWidth": {
-            "name": "Minimum width",
-            "type": "integer",
-            "default": 20,
-            "description": "Minimum width of the column, in pixels.  Values below this are rejected."
-        },
-        "maxWidth": {
-            "name": "Maximum width",
-            "type": "integer",
-            "default": 0,
-            "description": "Maximum width of the column"
-        }
-    };
-    return et2_dataview_column;
-}());
-exports.et2_dataview_column = et2_dataview_column;
+    }
+}
+et2_dataview_column.ET2_COL_TYPE_DEFAULT = 0;
+et2_dataview_column.ET2_COL_TYPE_NAME_ICON_FIXED = 1;
+et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS = 0;
+et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE = 1;
+et2_dataview_column.ET2_COL_VISIBILITY_INVISIBLE = 2;
+et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
+et2_dataview_column.ET2_COL_VISIBILITY_DISABLED = 4;
+et2_dataview_column._attributes = {
+    "id": {
+        "name": "ID",
+        "type": "string",
+        "description": "Unique identifier for this column. It is used to " +
+            "store changed column widths or visibilities."
+    },
+    "visibility": {
+        "name": "Visibility",
+        "type": "integer",
+        "default": et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE,
+        "description": "Defines the visibility state of this column."
+    },
+    "caption": {
+        "name": "Caption",
+        "type": "string",
+        "description": "Caption of the column as it is displayed in the " +
+            "select columns popup."
+    },
+    "type": {
+        "name": "Column type",
+        "type": "integer",
+        "default": et2_dataview_column.ET2_COL_TYPE_DEFAULT,
+        "description": "Type of the column"
+    },
+    "width": {
+        "name": "Width",
+        "type": "dimension",
+        "default": "80px",
+        "description": "Width of the column."
+    },
+    "minWidth": {
+        "name": "Minimum width",
+        "type": "integer",
+        "default": 20,
+        "description": "Minimum width of the column, in pixels.  Values below this are rejected."
+    },
+    "maxWidth": {
+        "name": "Maximum width",
+        "type": "integer",
+        "default": 0,
+        "description": "Maximum width of the column"
+    }
+};
 /**
  * Contains logic for the columns class. The columns class represents the unique set
  * of columns a grid view owns. The parameters of the columns (except for visibility)
  * do normaly not change.
  */
-var et2_dataview_columns = /** @class */ (function () {
-    function et2_dataview_columns(_columnData) {
+export class et2_dataview_columns {
+    constructor(_columnData) {
         // Initialize some variables
         this._totalWidth = 0;
         this._totalFixed = 0;
@@ -189,71 +184,63 @@ var et2_dataview_columns = /** @class */ (function () {
         }
         this._updated = true;
     }
-    et2_dataview_columns.prototype.destroy = function () {
+    destroy() {
         // Free all column objects
         for (var i = 0; i < this.columns.length; i++) {
             this.columns[i] = null;
         }
-    };
-    et2_dataview_columns.prototype.updated = function () {
+    }
+    updated() {
         this._updated = true;
-    };
-    et2_dataview_columns.prototype.columnCount = function () {
+    }
+    columnCount() {
         return this.columns.length;
-    };
-    Object.defineProperty(et2_dataview_columns.prototype, "totalWidth", {
-        get: function () {
-            return this._totalWidth;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(et2_dataview_columns.prototype, "totalFixed", {
-        get: function () {
-            return this._totalFixed ? this._totalFixed : 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
+    }
+    get totalWidth() {
+        return this._totalWidth;
+    }
+    get totalFixed() {
+        return this._totalFixed ? this._totalFixed : 0;
+    }
     /**
      * Set the total width of the header row
      *
      * @param {(string|number)} _width
      */
-    et2_dataview_columns.prototype.setTotalWidth = function (_width) {
+    setTotalWidth(_width) {
         if (_width != this._totalWidth && _width > 0) {
             this._totalWidth = _width;
             this._updated = true;
         }
-    };
+    }
     /**
      * Returns the index of the colum with the given id
      *
      * @param {string} _id
      */
-    et2_dataview_columns.prototype.getColumnIndexById = function (_id) {
+    getColumnIndexById(_id) {
         for (var i = 0; i < this.columns.length; i++) {
             if (this.columns[i].id == _id) {
                 return i;
             }
         }
         return -1;
-    };
+    }
     /**
      * Returns the column with the given id
      *
      * @param {string} _id
      */
-    et2_dataview_columns.prototype.getColumnById = function (_id) {
+    getColumnById(_id) {
         var idx = this.getColumnIndexById(_id);
         return (idx == -1) ? null : this.columns[idx];
-    };
+    }
     /**
      * Returns the width of the column with the given index
      *
      * @param {number} _idx
      */
-    et2_dataview_columns.prototype.getColumnWidth = function (_idx) {
+    getColumnWidth(_idx) {
         if (this._totalWidth > 0 && _idx >= 0 && _idx < this.columns.length) {
             // Recalculate the column widths if something has changed.
             if (this._updated) {
@@ -264,12 +251,12 @@ var et2_dataview_columns = /** @class */ (function () {
             return this.columnWidths[_idx];
         }
         return 0;
-    };
+    }
     /**
      * Returns an array containing the width of the column and its visibility
      * state.
      */
-    et2_dataview_columns.prototype.getColumnData = function () {
+    getColumnData() {
         var result = [];
         for (var i = 0; i < this.columns.length; i++) {
             result.push({
@@ -280,12 +267,12 @@ var et2_dataview_columns = /** @class */ (function () {
             });
         }
         return result;
-    };
+    }
     /**
      * Returns an associative array which contains data about the visibility
      * state of the columns.
      */
-    et2_dataview_columns.prototype.getColumnVisibilitySet = function () {
+    getColumnVisibilitySet() {
         var result = {};
         for (var i = 0; i < this.columns.length; i++) {
             if (this.columns[i].visibility != et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
@@ -299,13 +286,13 @@ var et2_dataview_columns = /** @class */ (function () {
             }
         }
         return result;
-    };
+    }
     /**
      * Sets a column visiblity set
      *
      * @param {object} _set
      */
-    et2_dataview_columns.prototype.setColumnVisibilitySet = function (_set) {
+    setColumnVisibilitySet(_set) {
         for (var k in _set) {
             var col = this.getColumnById(k);
             if (col) {
@@ -314,16 +301,16 @@ var et2_dataview_columns = /** @class */ (function () {
             }
         }
         this._updated = true;
-    };
+    }
     /* ---- PRIVATE FUNCTIONS ---- */
     /**
      * Calculates the absolute column width depending on the previously set
      * "totalWidth" value. The calculated values are stored in the columnWidths
      * array.
      */
-    et2_dataview_columns.prototype._calculateWidths = function () {
+    _calculateWidths() {
         // Reset some values which are used during the calculation
-        var _larger = Array(this.columns.length);
+        let _larger = Array(this.columns.length);
         for (var i = 0; i < this.columns.length; i++) {
             _larger[i] = false;
         }
@@ -424,8 +411,6 @@ var et2_dataview_columns = /** @class */ (function () {
                 this.columnWidths[columnIndex] = Math.max(column.minWidth, this.columnWidths[columnIndex] - remaining_width);
             }
         }
-    };
-    return et2_dataview_columns;
-}());
-exports.et2_dataview_columns = et2_dataview_columns;
+    }
+}
 //# sourceMappingURL=et2_dataview_model_columns.js.map

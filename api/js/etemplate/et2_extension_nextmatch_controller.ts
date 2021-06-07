@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	et2_core_common;
@@ -30,6 +29,7 @@ import {et2_dataview_tile} from "./et2_dataview_view_tile";
 import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
+import {framework, Iegw} from "../jsapi/egw_global";
 
 /**
  * @augments et2_dataview_controller
@@ -41,6 +41,18 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	public static readonly VIEW_TILE: string = 'tile';
 
 	private _widget: et2_nextmatch;
+	private egw: Iegw;
+	private _actionLinks: any;
+	private _execId: string;
+	private _widgetId: string;
+	private _parentId: string;
+	private _rowProvider: any;
+	private _actionManager: any;
+	private _filters: any;
+	private kept_selection: any;
+	private kept_focus: any;
+	private kept_expansion: any[];
+	private _view: string;
 
 	/**
 	 * Initializes the nextmatch controller.

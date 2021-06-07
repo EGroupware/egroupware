@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
- * @version $Id$
- *
+ * @copyright EGroupware GmbH 2011-2021
+ */
 
 /*egw:uses
 	egw_action.egw_action;
@@ -17,6 +16,7 @@
 */
 
 import {et2_dataview_IViewRange} from "./et2_dataview_interfaces";
+import {et2_dataview_container} from "./et2_dataview_view_container";
 
 export class et2_dataview_row extends et2_dataview_container implements et2_dataview_IViewRange
 {
@@ -189,7 +189,7 @@ export class et2_dataview_row extends et2_dataview_container implements et2_data
 	setViewRange( _range)
 	{
 		if (this.expansionContainer && this.expansionVisible
-			&& implements_et2_dataview_IViewRange(this.expansionContainer))
+			&& this.expansionContainer.implements(et2_dataview_IViewRange))
 		{
 			// Substract the height of the own row from the container
 			var oh = jQuery(this._nodes[0]).height();

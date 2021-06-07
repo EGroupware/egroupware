@@ -14,9 +14,13 @@
 	/vendor/egroupware/magicsuggest/magicsuggest.js;
 */
 
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {et2_selectbox, et2_selectbox_ro} from "./et2_widget_selectbox";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IResizeable} from "./et2_core_interfaces";
+import {et2_evalBool, et2_no_init} from "./et2_core_common";
+import {et2_url} from "./et2_widget_url";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Tag list widget
@@ -921,7 +925,7 @@ et2_register_widget(et2_taglist, ["taglist"]);
  * free entries are allowed
  *
  */
-class et2_taglist_account extends et2_taglist
+export class et2_taglist_account extends et2_taglist
 {
 	static readonly _attributes : any = {
 		"autocomplete_url": {
@@ -1129,7 +1133,7 @@ et2_register_widget(et2_taglist_account, ["taglist-account"]);
  *
  * @augments et2_taglist
  */
-class et2_taglist_email extends et2_taglist
+export class et2_taglist_email extends et2_taglist
 {
 	static readonly _attributes : any = {
 		"autocomplete_url": {
@@ -1295,7 +1299,7 @@ et2_register_widget(et2_taglist_email, ["taglist-email"]);
  *
  * @augments et2_taglist
  */
-class et2_taglist_category extends et2_taglist
+export class et2_taglist_category extends et2_taglist
 {
 	static readonly _attributes : any = {
 		"minChars": {
@@ -1381,7 +1385,7 @@ et2_register_widget(et2_taglist_category, ["taglist-cat"]);
  * Taglist customized specificlly for image url shown as thumbnail,
  *
  */
-class et2_taglist_thumbnail extends et2_taglist
+export class et2_taglist_thumbnail extends et2_taglist
 {
 	static readonly _attributes : any = {
 		"minChars": {
@@ -1416,7 +1420,7 @@ et2_register_widget(et2_taglist_thumbnail, ["taglist-thumbnail"]);
  * Taglist represents list of states of a country,
  *
  */
-class et2_taglist_state extends et2_taglist
+export class et2_taglist_state extends et2_taglist
 {
 	static readonly _attributes : any = {
 		"minChars": {
@@ -1507,7 +1511,7 @@ et2_register_widget(et2_taglist_state, ["taglist-state"]);
  *
  * @augments et2_selectbox
  */
-class et2_taglist_ro extends et2_selectbox_ro
+export class et2_taglist_ro extends et2_selectbox_ro
 {
 	/**
 	 * Constructor

@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -14,11 +14,13 @@
 */
 
 import './et2_core_interfaces';
-import './et2_core_common';
 import {et2_DOMWidget} from './et2_core_DOMWidget';
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {etemplate2} from "./etemplate2";
+import {et2_cloneObject, et2_no_init} from "./et2_core_common";
+import {et2_loadXMLFromURL} from "./et2_core_xml";
+import {egw} from "../jsapi/egw_global";
 
 /**
  * Class which implements the "template" XET-Tag. When the id parameter is set,

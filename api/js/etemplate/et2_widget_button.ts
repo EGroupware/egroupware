@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -14,10 +14,11 @@
 	et2_core_baseWidget;
 */
 
-import './et2_core_common';
+import {et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from './et2_core_baseWidget'
+import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
 
 /**
  * Class which implements the "button" XET-Tag

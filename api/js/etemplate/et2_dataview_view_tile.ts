@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2014
  * @version $Id: et2_dataview_view_container_1.js 46338 2014-03-20 09:40:37Z ralfbecker $
@@ -15,6 +15,8 @@
 	et2_dataview_interfaces;
 */
 
+import {et2_dataview_row} from "./et2_dataview_view_row";
+
 /**
  * Displays tiles or thumbnails (squares) instead of full rows.
  *
@@ -22,7 +24,8 @@
  * so that the rows and columns work out properly.
  *
  */
-export class et2_dataview_tile extends et2_dataview_row {
+export class et2_dataview_tile extends et2_dataview_row
+{
 	columns: number = 4;
 
 	/**

@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2011
- * @version $Id$
  */
 
 /*egw:uses
@@ -19,15 +18,19 @@
 */
 
 import {et2_baseWidget} from './et2_core_baseWidget';
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {et2_no_init} from "./et2_core_common";
+import {egw} from "../jsapi/egw_global";
+import {et2_dialog} from "./et2_widget_dialog";
 
 /**
  * Class which implements the "image" XET-Tag
  *
  * @augments et2_baseWidget
  */
-class et2_image extends et2_baseWidget implements et2_IDetachedDOM
+export class et2_image extends et2_baseWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"src": {
@@ -326,7 +329,7 @@ et2_register_widget(et2_appicon, ["appicon"]);
 * @augments et2_baseWidget
 */
 
-class et2_avatar extends et2_image
+export class et2_avatar extends et2_image
 {
 	static readonly _attributes : any = {
 		"contact_id": {
@@ -655,7 +658,7 @@ et2_register_widget(et2_avatar, ["avatar"]);
 * Avatar readonly widget to only display user profile picture or
 * user letter avatar based on user's firstname lastname.
 */
-class et2_avatar_ro extends et2_avatar
+export class et2_avatar_ro extends et2_avatar
 {
 	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
@@ -677,7 +680,7 @@ et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
 *
 * @augments et2_baseWidget
 */
-class et2_lavatar extends et2_image
+export class et2_lavatar extends et2_image
 {
 	static readonly _attributes : any = {
 		lname: {

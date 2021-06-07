@@ -1,85 +1,67 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS toolbar object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray 2013
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     /vendor/bower-asset/jquery-ui/jquery-ui.js;
     et2_DOMWidget;
 */
-var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");
-var et2_core_widget_1 = require("./et2_core_widget");
-var et2_core_inheritance_1 = require("./et2_core_inheritance");
-require("../egw_action/egw_action.js");
-var et2_widget_dialog_1 = require("./et2_widget_dialog");
+import { et2_DOMWidget } from "./et2_core_DOMWidget";
+import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import '../egw_action/egw_action.js';
+import { et2_dialog } from "./et2_widget_dialog";
+import { egw } from "../jsapi/egw_global";
 /**
  * This toolbar gets its contents from its actions
  *
  * @augments et2_valueWidget
  */
-var et2_toolbar = /** @class */ (function (_super) {
-    __extends(et2_toolbar, _super);
-    function et2_toolbar(_parent, _attrs, _child) {
-        var _this = 
+export class et2_toolbar extends et2_DOMWidget {
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_toolbar._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_toolbar._attributes, _child || {}));
         /**
          * id of last action executed / value of toolbar if submitted
          */
-        _this.value = null;
+        this.value = null;
         /**
          * actionbox is a div for stored actions
          */
-        _this.actionbox = null;
+        this.actionbox = null;
         /**
          * actionlist is a div for active actions
          */
-        _this.actionlist = null;
-        _this.div = null;
-        _this.countActions = 0;
-        _this.dropdowns = {};
-        _this.preference = {};
-        _this.menu = null;
-        _this._objectManager = null;
-        _this.div = jQuery(document.createElement('div'))
+        this.actionlist = null;
+        this.div = null;
+        this.countActions = 0;
+        this.dropdowns = {};
+        this.preference = {};
+        this.menu = null;
+        this._objectManager = null;
+        this.div = jQuery(document.createElement('div'))
             .addClass('et2_toolbar ui-widget-header ui-corner-all');
         // Set proper id and dom_id for the widget
-        _this.set_id(_this.id);
-        _this.actionbox = jQuery(document.createElement('div'))
+        this.set_id(this.id);
+        this.actionbox = jQuery(document.createElement('div'))
             .addClass("et2_toolbar_more")
-            .attr('id', _this.id + '-' + 'actionbox');
-        _this.actionlist = jQuery(document.createElement('div'))
+            .attr('id', this.id + '-' + 'actionbox');
+        this.actionlist = jQuery(document.createElement('div'))
             .addClass("et2_toolbar_actionlist")
-            .attr('id', _this.id + '-' + 'actionlist');
-        _this.countActions = 0;
-        _this.dropdowns = {};
-        _this.preference = {};
-        _this._build_menu(et2_toolbar.default_toolbar, true);
-        return _this;
+            .attr('id', this.id + '-' + 'actionlist');
+        this.countActions = 0;
+        this.dropdowns = {};
+        this.preference = {};
+        this._build_menu(et2_toolbar.default_toolbar, true);
     }
-    et2_toolbar.prototype.destroy = function () {
+    destroy() {
         // Destroy widget
         if (this.div && this.div.data('ui-menu'))
             this.menu.menu("destroy");
@@ -88,13 +70,13 @@ var et2_toolbar = /** @class */ (function (_super) {
         this.div.empty().remove();
         this.actionbox.empty().remove();
         this.actionlist.empty().remove();
-    };
+    }
     /**
      * Fix function in order to fix toolbar preferences with the new preference structure
      * @param {action object} _action
      * @todo ** SEE IMPORTANT TODO **
      */
-    et2_toolbar.prototype._fix_preference = function (_action) {
+    _fix_preference(_action) {
         // ** IMPORTANT TODO: This switch case should be removed for new release **
         // This is an ugly hack but we need to add this switch becuase to update and fix
         // current users toolbar preferences with the new structure which is:
@@ -127,19 +109,19 @@ var et2_toolbar = /** @class */ (function (_super) {
             // has been removed.
             this.set_prefered(_action.id, false /*!toolbarDefault*/);
         }
-    };
+    }
     /**
      * Count number of actions including their children
      * @param {object} actions
      * @return {number} return total number of actions
      */
-    et2_toolbar.prototype._countActions = function (actions) {
-        var totalCount = 0;
-        var childCounter = function (action, count) {
-            var children = action.children || 0, returnCounter = count || 0;
+    _countActions(actions) {
+        let totalCount = 0;
+        let childCounter = function (action, count) {
+            let children = action.children || 0, returnCounter = count || 0;
             if (children) {
                 returnCounter -= 1;
-                for (var nChild in children) {
+                for (let nChild in children) {
                     returnCounter += 1;
                     returnCounter = childCounter(children[nChild], returnCounter);
                 }
@@ -149,7 +131,7 @@ var et2_toolbar = /** @class */ (function (_super) {
             }
             return returnCounter;
         };
-        for (var nAction in actions) {
+        for (let nAction in actions) {
             if (this.options.flat_list) {
                 totalCount += childCounter(actions[nAction], 1);
             }
@@ -158,7 +140,7 @@ var et2_toolbar = /** @class */ (function (_super) {
             }
         }
         return totalCount;
-    };
+    }
     /**
      * Go through actions and build buttons for the toolbar
      *
@@ -167,21 +149,21 @@ var et2_toolbar = /** @class */ (function (_super) {
      *  avoid actions get into the preferences, for instandce, first
      *  time toolbar_default actions initialization.
      */
-    et2_toolbar.prototype._build_menu = function (actions, isDefault) {
+    _build_menu(actions, isDefault) {
         // Clear existing
         this.div.empty();
         this.actionbox.empty();
         this.actionlist.empty();
-        var admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="' + egw.lang('Admin settings') + ' ..."></span>' : '';
+        let admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="' + egw.lang('Admin settings') + ' ..."></span>' : '';
         this.actionbox.append('<h class="ui-toolbar-menulistHeader">' + egw.lang('more') + ' ...' + admin_setting + '</h>');
         this.actionbox.append('<div id="' + this.id + '-menulist' + '" class="ui-toolbar-menulist" ></div>');
-        var that = this;
+        let that = this;
         if (this.options.is_admin) {
             this.actionbox.find('.toolbar-admin-pref').click(function (e) {
                 e.stopImmediatePropagation();
                 egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_get_default_prefs', [egw.app_name(), that.dom_id], function (_prefs) {
-                    var prefs = [];
-                    for (var p in _prefs) {
+                    let prefs = [];
+                    for (let p in _prefs) {
                         if (_prefs[p] === false)
                             prefs.push(p);
                     }
@@ -189,7 +171,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 }).sendRequest(true);
             });
         }
-        var pref = (!egwIsMobile()) ? egw.preference(this.dom_id, this.egw().app_name()) : undefined;
+        let pref = (!egwIsMobile()) ? egw.preference(this.dom_id, this.egw().app_name()) : undefined;
         if (pref && !jQuery.isArray(pref))
             this.preference = pref;
         //Set the default actions for the first time
@@ -211,46 +193,46 @@ var et2_toolbar = /** @class */ (function (_super) {
                 }
             }
         }
-        var menuLen = 0;
-        for (var key in this.preference) {
+        let menuLen = 0;
+        for (let key in this.preference) {
             if (this.preference[key])
                 menuLen++;
         }
         this.countActions = this._countActions(actions) - menuLen;
-        var last_group = null;
-        var last_group_id = null;
-        var _loop_1 = function (name_1) {
-            var action = actions[name_1];
+        let last_group = null;
+        let last_group_id = null;
+        for (let name in actions) {
+            let action = actions[name];
             if (typeof action == 'string')
-                action = { id: name_1, caption: action };
+                action = { id: name, caption: action };
             if (typeof action.group == 'undefined') {
                 action.group = 'default';
             }
             // Add in divider
             if (last_group_id != action.group) {
-                last_group = jQuery('[data-group="' + action.group + '"]', this_1.actionlist);
+                last_group = jQuery('[data-group="' + action.group + '"]', this.actionlist);
                 if (last_group.length == 0) {
-                    jQuery('<span data-group="' + action.group + '">').appendTo(this_1.actionlist);
+                    jQuery('<span data-group="' + action.group + '">').appendTo(this.actionlist);
                 }
                 last_group_id = action.group;
             }
             // Make sure there's something to display
             if (!action.caption && !action.icon && !action.iconUrl)
-                return "continue";
+                continue;
             if (action.children) {
-                var children = {};
-                var add_children_1 = function (root, children) {
-                    for (var id in root.children) {
-                        var info = {
+                let children = {};
+                let add_children = function (root, children) {
+                    for (let id in root.children) {
+                        let info = {
                             id: id || root.children[id].id,
                             label: root.children[id].caption
                         };
-                        var childaction = {};
+                        let childaction = {};
                         if (root.children[id].iconUrl) {
                             info['icon'] = root.children[id].iconUrl;
                         }
                         if (root.children[id].children) {
-                            add_children_1(root.children[id], info);
+                            add_children(root.children[id], info);
                         }
                         children[id] = info;
                         if (that.options.flat_list) {
@@ -276,18 +258,18 @@ var et2_toolbar = /** @class */ (function (_super) {
                         }
                     }
                 };
-                add_children_1(action, children);
-                if (this_1.options.flat_list && children) {
-                    return "continue";
+                add_children(action, children);
+                if (this.options.flat_list && children) {
+                    continue;
                 }
-                var dropdown = et2_core_widget_1.et2_createWidget("dropdown_button", {
+                let dropdown = et2_createWidget("dropdown_button", {
                     id: action.id
-                }, this_1);
+                }, this);
                 dropdown.set_select_options(children);
                 dropdown.set_label(action.caption);
                 //Set default selected action
                 if (typeof action.children != 'undefined') {
-                    for (var child in action.children) {
+                    for (let child in action.children) {
                         if (action.children[child].default) {
                             dropdown.set_label(action.children[child].caption);
                         }
@@ -295,7 +277,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 }
                 dropdown.set_image(action.iconUrl || '');
                 dropdown.onchange = jQuery.proxy(function (selected, dropdown) {
-                    var action = that._actionManager.getActionById(selected.attr('data-id'));
+                    let action = that._actionManager.getActionById(selected.attr('data-id'));
                     dropdown.set_label(action.caption);
                     if (action) {
                         this.value = action.id;
@@ -304,7 +286,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                     //console.debug(selected, this, action);
                 }, action);
                 dropdown.onclick = jQuery.proxy(function (selected, dropdown) {
-                    var action = that._actionManager.getActionById(this.getValue());
+                    let action = that._actionManager.getActionById(this.getValue());
                     if (action) {
                         this.value = action.id;
                         action.execute([]);
@@ -312,17 +294,13 @@ var et2_toolbar = /** @class */ (function (_super) {
                     //console.debug(selected, this, action);
                 }, dropdown);
                 jQuery(dropdown.getDOMNode())
-                    .attr('id', this_1.id + '-' + dropdown.id)
-                    .addClass(this_1.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown')
-                    .appendTo(this_1.preference[action.id] ? this_1.actionbox.children()[1] : jQuery('[data-group=' + action.group + ']', this_1.actionlist));
+                    .attr('id', this.id + '-' + dropdown.id)
+                    .addClass(this.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown')
+                    .appendTo(this.preference[action.id] ? this.actionbox.children()[1] : jQuery('[data-group=' + action.group + ']', this.actionlist));
             }
             else {
-                this_1._make_button(action);
+                this._make_button(action);
             }
-        };
-        var this_1 = this;
-        for (var name_1 in actions) {
-            _loop_1(name_1);
         }
         // ************** Drag and Drop feature for toolbar *****
         this.actionlist.find('span[data-group]').sort(function (lg, g) {
@@ -330,7 +308,7 @@ var et2_toolbar = /** @class */ (function (_super) {
         }).appendTo(this.actionlist);
         this.actionlist.appendTo(this.div);
         this.actionbox.appendTo(this.div);
-        var toolbar = this.actionlist.find('span[data-group]').children(), toolbox = this.actionbox, menulist = jQuery(this.actionbox.children()[1]);
+        let toolbar = this.actionlist.find('span[data-group]').children(), toolbox = this.actionbox, menulist = jQuery(this.actionbox.children()[1]);
         toolbar.draggable({
             cancel: '',
             zIndex: 1000,
@@ -408,7 +386,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                     return false;
             }
         });
-    };
+    }
     /**
      * Add/Or remove an action from prefence
      *
@@ -416,27 +394,27 @@ var et2_toolbar = /** @class */ (function (_super) {
      * @param {boolean} _state if set to true action will be set to actionbox, false will set it to actionlist
      *
      */
-    et2_toolbar.prototype.set_prefered = function (_action, _state) {
+    set_prefered(_action, _state) {
         this.preference[_action] = _state;
         if (egwIsMobile())
             return;
         egw.set_preference(this.egw().app_name(), this.dom_id, this.preference);
-    };
+    }
     /**
      * Make a button based on the given action
      *
      * @param {Object} action action object with attributes icon, caption, ...
      */
-    et2_toolbar.prototype._make_button = function (action) {
-        var button_options = {};
-        var button = jQuery(document.createElement('button'))
+    _make_button(action) {
+        let button_options = {};
+        let button = jQuery(document.createElement('button'))
             .addClass("et2_button et2_button_text et2_button_with_image")
             .attr('id', this.id + '-' + action.id)
             .attr('type', 'button')
             .appendTo(this.preference[action.id] ? this.actionbox.children()[1] : jQuery('[data-group=' + action.group + ']', this.actionlist));
         if (action && action.checkbox) {
             if (action.data.toggle_on || action.data.toggle_off) {
-                var toggle = et2_core_widget_1.et2_createWidget('checkbox', {
+                let toggle = et2_createWidget('checkbox', {
                     id: this.id + '-' + action.id,
                     toggle_on: action.data.toggle_on,
                     toggle_off: action.data.toggle_off
@@ -444,7 +422,7 @@ var et2_toolbar = /** @class */ (function (_super) {
                 toggle.doLoadingFinished();
                 toggle.set_value(action.checked);
                 action.data.widget = toggle;
-                var toggle_div = toggle.toggle;
+                let toggle_div = toggle.toggle;
                 toggle_div.appendTo(button.parent())
                     .attr('id', this.id + '-' + action.id);
                 button.remove();
@@ -475,10 +453,10 @@ var et2_toolbar = /** @class */ (function (_super) {
         if (!jQuery.isEmptyObject(button_options)) {
             button.button(button_options);
         }
-        var self = this;
+        let self = this;
         // Set up the click action
-        var click = function (e) {
-            var action = this._actionManager.getActionById(e.data);
+        let click = function (e) {
+            let action = this._actionManager.getActionById(e.data);
             if (action) {
                 if (action.checkbox) {
                     self.checkbox(action.id, !action.checked);
@@ -489,21 +467,21 @@ var et2_toolbar = /** @class */ (function (_super) {
             }
         };
         button.click(action.id, jQuery.proxy(click, this));
-    };
+    }
     /**
      * Link the actions to the DOM nodes / widget bits.
      *
      * @param {Object} actions egw-actions to build menu from
      */
-    et2_toolbar.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         this._build_menu(actions);
-        var self = this;
-        var gom = egw_getObjectManager(this.egw().app_name(), true, 1);
+        let self = this;
+        let gom = egw_getObjectManager(this.egw().app_name(), true, 1);
         if (this._objectManager == null) {
             this._objectManager = gom.addObject(new egwActionObjectManager(this.id, this._actionManager));
             this._objectManager.handleKeyPress = function (_keyCode, _shift, _ctrl, _alt) {
-                for (var i = 0; i < self._actionManager.children.length; i++) {
-                    var action = self._actionManager.children[i];
+                for (let i = 0; i < self._actionManager.children.length; i++) {
+                    let action = self._actionManager.children[i];
                     if (typeof action.shortcut === 'object' &&
                         action.shortcut &&
                         _keyCode == action.shortcut.keyCode &&
@@ -519,7 +497,7 @@ var et2_toolbar = /** @class */ (function (_super) {
             };
             this._objectManager.parent.updateFocusedChild(this._objectManager, true);
         }
-    };
+    }
     /**
      * Set/Get the checkbox toolbar action
      *
@@ -530,10 +508,10 @@ var et2_toolbar = /** @class */ (function (_super) {
      * @returns {boolean} returns boolean result of get checkbox value
      * or returns undefined as Set result or failure
      */
-    et2_toolbar.prototype.checkbox = function (_action, _value) {
+    checkbox(_action, _value) {
         if (!_action || typeof this._actionManager == 'undefined')
             return undefined;
-        var action_event = this._actionManager.getActionById(_action);
+        let action_event = this._actionManager.getActionById(_action);
         if (action_event && typeof _value != 'undefined') {
             action_event.set_checked(_value);
             var btn = jQuery('#' + this.id + '-' + _action);
@@ -550,29 +528,29 @@ var et2_toolbar = /** @class */ (function (_super) {
         else {
             return undefined;
         }
-    };
-    et2_toolbar.prototype.getDOMNode = function () {
+    }
+    getDOMNode() {
         return this.div[0];
-    };
+    }
     /**
      * getValue has to return the value of the input widget
      */
-    et2_toolbar.prototype.getValue = function () {
+    getValue() {
         return this.value;
-    };
+    }
     /**
      * Is dirty returns true if the value of the widget has changed since it
      * was loaded.  We don't consider toolbars as dirtyable
      */
-    et2_toolbar.prototype.isDirty = function () {
+    isDirty() {
         return false;
-    };
+    }
     /**
      * Causes the dirty flag to be reseted.
      */
-    et2_toolbar.prototype.resetDirty = function () {
+    resetDirty() {
         this.value = null;
-    };
+    }
     /**
      * Checks the data to see if it is valid, as far as the client side can tell.
      * Return true if it's not possible to tell on the client side, because the server
@@ -587,34 +565,34 @@ var et2_toolbar = /** @class */ (function (_super) {
      *
      * @return {boolean} True if the value is valid (enough), false to fail
      */
-    et2_toolbar.prototype.isValid = function (messages) {
+    isValid(messages) {
         return true;
-    };
+    }
     /**
      * Attach the container node of the widget to DOM-Tree
      * @returns {Boolean}
      */
-    et2_toolbar.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    doLoadingFinished() {
+        super.doLoadingFinished();
         return false;
-    };
+    }
     /**
      * Builds dialog for possible admin settings (e.g. default actions pref)
      *
      * @param {type} _actions
      * @param {object} _default_prefs
      */
-    et2_toolbar.prototype._admin_settings_dialog = function (_actions, _default_prefs) {
-        var buttons = [
+    _admin_settings_dialog(_actions, _default_prefs) {
+        let buttons = [
             { text: egw.lang("Save"), id: "save" },
             { text: egw.lang("Close"), id: "close" }
         ];
-        var self = this;
-        var sel_options = { actions: [] };
-        var content = { actions: [], reset: false };
-        for (var key in _actions) {
+        let self = this;
+        let sel_options = { actions: [] };
+        let content = { actions: [], reset: false };
+        for (let key in _actions) {
             if (_actions[key]['children'] && this.options.flat_list) {
-                for (var child in _actions[key]['children']) {
+                for (let child in _actions[key]['children']) {
                     sel_options.actions.push({
                         id: child,
                         value: child,
@@ -638,12 +616,12 @@ var et2_toolbar = /** @class */ (function (_super) {
         }
         if (_default_prefs && _default_prefs.length > 0)
             content.actions = _default_prefs;
-        et2_core_widget_1.et2_createWidget("dialog", {
+        et2_createWidget("dialog", {
             callback: function (_button_id, _value) {
                 if (_button_id == 'save' && _value) {
                     if (_value.actions) {
-                        var pref = jQuery.extend({}, self.preference);
-                        for (var i in pref) {
+                        let pref = jQuery.extend({}, self.preference);
+                        for (let i in pref) {
                             pref[i] = true;
                             if (_value.actions.includes(i))
                                 pref[i] = false;
@@ -662,31 +640,30 @@ var et2_toolbar = /** @class */ (function (_super) {
             value: { content: content, sel_options: sel_options },
             template: egw.webserverUrl + '/api/templates/default/toolbarAdminSettings.xet?1',
             resizable: false
-        }, et2_widget_dialog_1.et2_dialog._create_parent('api'));
-    };
-    et2_toolbar._attributes = {
-        "view_range": {
-            "name": "View range",
-            "type": "string",
-            "default": "5",
-            "description": "Define minimum action view range to show actions by both icons and caption"
-        },
-        "flat_list": {
-            "name": "Flat list",
-            "type": "boolean",
-            "default": true,
-            "description": "Define whether the actions with children should be shown as dropdown or flat list"
-        }
-    };
-    /**
-     * Default buttons, so there is something for the widget browser / editor to show
-     */
-    et2_toolbar.default_toolbar = {
-        view: { caption: 'View', icons: { primary: 'ui-icon-check' }, group: 1, toolbarDefault: true },
-        edit: { caption: 'Edit', group: 1, toolbarDefault: true },
-        save: { caption: 'Save', group: 2, toolbarDefault: true }
-    };
-    return et2_toolbar;
-}(et2_core_DOMWidget_1.et2_DOMWidget));
-et2_core_widget_1.et2_register_widget(et2_toolbar, ["toolbar"]);
+        }, et2_dialog._create_parent('api'));
+    }
+}
+et2_toolbar._attributes = {
+    "view_range": {
+        "name": "View range",
+        "type": "string",
+        "default": "5",
+        "description": "Define minimum action view range to show actions by both icons and caption"
+    },
+    "flat_list": {
+        "name": "Flat list",
+        "type": "boolean",
+        "default": true,
+        "description": "Define whether the actions with children should be shown as dropdown or flat list"
+    }
+};
+/**
+ * Default buttons, so there is something for the widget browser / editor to show
+ */
+et2_toolbar.default_toolbar = {
+    view: { caption: 'View', icons: { primary: 'ui-icon-check' }, group: 1, toolbarDefault: true },
+    edit: { caption: 'Edit', group: 1, toolbarDefault: true },
+    save: { caption: 'Save', group: 2, toolbarDefault: true }
+};
+et2_register_widget(et2_toolbar, ["toolbar"]);
 //# sourceMappingURL=et2_widget_toolbar.js.map

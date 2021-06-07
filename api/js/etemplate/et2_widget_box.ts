@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
 
 /*egw:uses
@@ -18,6 +17,8 @@
 
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {et2_readAttrWithDefault} from "./et2_core_xml";
 
 /**
  * Class which implements box and vbox tag

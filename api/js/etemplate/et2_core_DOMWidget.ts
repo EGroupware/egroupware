@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  */
 
@@ -15,11 +15,13 @@
 */
 
 import {ClassWithAttributes} from './et2_core_inheritance';
-import './et2_core_interfaces';
-import './et2_core_common';
+import {et2_IDOMNode} from "./et2_core_interfaces";
+import {et2_hasChild, et2_no_init} from "./et2_core_common";
 import {et2_widget, WidgetConfig} from "./et2_core_widget";
 import '../egw_action/egw_action.js';
-
+import {egw} from "../jsapi/egw_global";
+// fixing circular dependencies by only importing type
+import type {et2_tabbox} from "./et2_widget_tabs";
 
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
@@ -683,7 +685,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.
  */
-class et2_surroundingsMgr extends ClassWithAttributes
+export class et2_surroundingsMgr extends ClassWithAttributes
 {
     widget: et2_DOMWidget;
 	private _widgetContainer: any = null;

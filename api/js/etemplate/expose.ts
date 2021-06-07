@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
  */
 
@@ -18,6 +18,9 @@
 
 import {et2_createWidget} from "./et2_core_widget";
 import {et2_dialog} from "./et2_widget_dialog";
+import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
+import type {et2_nextmatch} from "./et2_extension_nextmatch";
+import {ET2_DATAVIEW_STEPSIZE} from "./et2_dataview_controller";
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
@@ -27,7 +30,8 @@ type Constructor<T = {}> = new (...args: any[]) => T;
  * @param {type} widget
  * @returns {widget}
  */
-function expose<TBase extends Constructor>(Base: TBase) {
+export function expose<TBase extends Constructor>(Base: TBase)
+{
 	"use strict";
 
 	// Minimum data to qualify as an image and not cause errors
@@ -183,8 +187,9 @@ function expose<TBase extends Constructor>(Base: TBase) {
 		gallery.num -= 1;
 	};
 
-	return class exposable extends Base {
-		private mime_regexp: RegExp;
+	return class exposable extends Base
+	{
+		public mime_regexp: RegExp;
 		private mime_odf_regex: RegExp;
 		private expose_options: {
 			container: string; toggleControlsOnReturn: boolean; closeOnSwipeUpOrDown: boolean; clearSlides: boolean; onopen: any; emulateTouchEvents: boolean; onslideend: (index, slide) => void; rightEdgeClass: string; thumbnailWithImgTag: boolean; onslidecomplete: (index, slide) => void; continuous: boolean; startSlideshow: boolean; fullscreenClass: string; onslide: (index, slide) => void; playingClass: string; slideClass: string; urlProperty: string; closeOnEscape: boolean; singleClass: string; slideErrorClass: string; index: number; preloadRange: number; slideContentClass: string; onclosed: any; hidePageScrollbars: boolean; displayTransition: boolean; indicatorContainer: string; disableScroll: boolean; unloadElements: boolean; nextClass: string; stopTouchEventsPropagation: boolean; transitionSpeed: number; carousel: boolean; titleProperty: string; prevClass: string; typeProperty: string; enableKeyboardNavigation: boolean; slidesContainer: string; closeOnSlideClick: boolean; stretchImages: boolean; onclose: any; onopened: any; playPauseClass: string; thumbnailProperty: string; titleElement: string; slideLoadingClass: string; toggleSlideshowOnSpace: boolean; thumbnailIndicators: boolean; activeIndicatorClass: string; displayClass: string; closeClass: string; slideshowInterval: number; toggleClass: string; hideControlsOnSlideshow: boolean; controlsClass: string; toggleFullscreenOnSlideShow: boolean; leftEdgeClass: string; slideshowTransitionSpeed: undefined
@@ -538,7 +543,7 @@ function expose<TBase extends Constructor>(Base: TBase) {
 							{
 								return;
 							}
-							jQuery(this).css('left', min(0, parseInt(jQuery(this).css('left')) - (distance * 30)) + 'px');
+							jQuery(this).css('left', Math.min(0, parseInt(jQuery(this).css('left')) - (distance * 30)) + 'px');
 						});
 					// Bind the mousewheel handler for FF (DOMMousewheel), and other browsers (mousewheel)
 					$indicator.bind('mousewheel DOMMousewheel', function (event, _delta) {

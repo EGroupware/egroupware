@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh <hn@egroupware.org>
  * @copyright Hadi Nategh <hn@egroupware.org>
  * @version $Id$
@@ -18,7 +18,11 @@
 
 import {et2_editableWidget} from "./et2_core_editableWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {WidgetConfig, et2_register_widget, et2_createWidget} from "./et2_core_widget";
+import {et2_IResizeable} from "./et2_core_interfaces";
+import {et2_no_init} from "./et2_core_common";
+import {app, egw} from "../jsapi/egw_global";
+import {et2_vfsSelect} from "./et2_widget_vfs";
 
 /**
  * @augments et2_inputWidget
@@ -374,7 +378,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			et2 = app[egw(window).app_name()].et2;
 		}
 
-		let vfsSelect = et2_createWidget('vfs-select', {
+		let vfsSelect = <et2_vfsSelect>et2_createWidget('vfs-select', {
 			id:'upload',
 			mode: 'open',
 			name: '',

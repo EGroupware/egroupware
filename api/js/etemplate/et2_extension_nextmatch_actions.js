@@ -4,11 +4,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright Stylite AG 2012-14
- * @version $Id$
+ * @copyright EGroupware GmbH 2012-2021
  */
 
 /**

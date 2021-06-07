@@ -17,15 +17,21 @@
 */
 
 import {ClassWithAttributes} from './et2_core_inheritance';
-import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
-import {et2_baseWidget, et2_container} from "./et2_core_baseWidget";
+import {et2_arrayMgr} from "./et2_core_arrayMgr";
+import {egw, IegwAppLocal} from "../jsapi/egw_global";
+import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
+// fixing circular dependencies by only importing type
+import type {et2_container} from "./et2_core_baseWidget";
+import type {et2_inputWidget, et2_input} from "./et2_core_inputWidget";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
  * constructor.
  */
-var et2_registry = {};
-var et2_attribute_registry = {};
+export var et2_registry = {};
+export var et2_attribute_registry = {};
 
 
 /**
@@ -97,8 +103,7 @@ export function et2_createWidget(_name : string, _attrs : object, _parent? : any
 
 	// Get the constructor - if the widget is readonly, use the special "_ro"
 	// constructor if it is available
-	var constructor = typeof et2_registry[nodeName] == "undefined" ?
-		et2_placeholder : et2_registry[nodeName];
+	let constructor = et2_registry[typeof et2_registry[nodeName] == "undefined" ? 'placeholder' : nodeName];
 	if (readonly && typeof et2_registry[nodeName + "_ro"] != "undefined")
 	{
 		constructor = et2_registry[nodeName + "_ro"];
@@ -327,7 +332,7 @@ export class et2_widget extends ClassWithAttributes
 		this.setArrayMgrs(_obj.mgrs);
 	}
 
-	private _parent: et2_widget;
+	_parent: et2_widget;
 
 	/**
 	 * Returns the parent widget of this widget
@@ -700,8 +705,7 @@ export class et2_widget extends ClassWithAttributes
 
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
-		var constructor = typeof et2_registry[_nodeName] == "undefined" ?
-			et2_placeholder : et2_registry[_nodeName];
+		var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
 		if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined") {
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
@@ -838,7 +842,7 @@ export class et2_widget extends ClassWithAttributes
 				// compile string values of attribute type "js" to functions
 				if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string') {
 					val = et2_compileLegacyJS(val, this,
-						this.instanceOf(et2_inputWidget) ? (<et2_inputWidget><unknown>this).getInputNode() :
+						this.implements(et2_IInputNode) ? (<et2_inputWidget><unknown>this).getInputNode() :
 							(this.implements(et2_IDOMNode) ? (<et2_IDOMNode><unknown>this).getDOMNode() : null));
 				}
 				this.setAttribute(key, val, false);

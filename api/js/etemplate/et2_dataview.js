@@ -1,16 +1,13 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - dataview code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage dataview
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011-2012
- * @version $Id$
- *
-
+ * @copyright EGroupware GmbH 2011-2021
+ */
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_common;
@@ -20,12 +17,10 @@
     et2_dataview_view_rowProvider;
     et2_dataview_view_resizeable;
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_dataview = void 0;
-var et2_dataview_model_columns_1 = require("./et2_dataview_model_columns");
-var et2_dataview_view_resizeable_1 = require("./et2_dataview_view_resizeable");
-var et2_dataview_view_grid_1 = require("./et2_dataview_view_grid");
-var et2_dataview_view_rowProvider_1 = require("./et2_dataview_view_rowProvider");
+import { et2_dataview_column, et2_dataview_columns } from './et2_dataview_model_columns';
+import { et2_dataview_view_resizable } from "./et2_dataview_view_resizeable";
+import { et2_dataview_grid } from "./et2_dataview_view_grid";
+import { et2_dataview_rowProvider } from "./et2_dataview_view_rowProvider";
 /**
  * The et2_dataview class is the main class for displaying a dataview. The
  * dataview class manages the creation of the outer html nodes (like the table,
@@ -35,7 +30,7 @@ var et2_dataview_view_rowProvider_1 = require("./et2_dataview_view_rowProvider")
  *
  * @augments Class
  */
-var et2_dataview = /** @class */ (function () {
+export class et2_dataview {
     /**
      * Constructor for the grid container
      *
@@ -43,7 +38,7 @@ var et2_dataview = /** @class */ (function () {
      * @param {egw} _egw
      * @memberOf et2_dataview
      */
-    function et2_dataview(_parentNode, _egw) {
+    constructor(_parentNode, _egw) {
         // Copy the arguments
         this.parentNode = jQuery(_parentNode);
         this.egw = _egw;
@@ -63,7 +58,7 @@ var et2_dataview = /** @class */ (function () {
     /**
      * Destroys the object, removes all dom nodes and clears all references.
      */
-    et2_dataview.prototype.destroy = function () {
+    destroy() {
         // Clear the columns
         this._clearHeader();
         // Free the grid
@@ -76,46 +71,46 @@ var et2_dataview = /** @class */ (function () {
         }
         // Detatch the outer element
         this.table.remove();
-    };
+    }
     /**
      * Clears all data rows and reloads them
      */
-    et2_dataview.prototype.clear = function () {
+    clear() {
         if (this.grid) {
             this.grid.clear();
         }
-    };
+    }
     /**
      * Returns the column container node for the given column index
      *
      * @param _columnIdx the integer column index
      */
-    et2_dataview.prototype.getHeaderContainerNode = function (_columnIdx) {
+    getHeaderContainerNode(_columnIdx) {
         if (typeof this.columnNodes[_columnIdx] != "undefined") {
             return this.columnNodes[_columnIdx].container[0];
         }
         return null;
-    };
+    }
     /**
      * Sets the column descriptors and creates the column header according to it.
      * The inner grid will be emptied if it has already been built.
      */
-    et2_dataview.prototype.setColumns = function (_columnData) {
+    setColumns(_columnData) {
         // Free all column objects which have been created till this moment
         this._clearHeader();
         // Copy the given column data
-        this.columnMgr = new et2_dataview_model_columns_1.et2_dataview_columns(_columnData);
+        this.columnMgr = new et2_dataview_columns(_columnData);
         // Create the stylesheets
         this.updateColumns();
         // Build the header row
         this._buildHeader();
         // Build the grid
         this._buildGrid();
-    };
+    }
     /**
      * Resizes the grid
      */
-    et2_dataview.prototype.resize = function (_w, _h) {
+    resize(_w, _h) {
         // Not fully initialized yet...
         if (!this.columnMgr)
             return;
@@ -137,22 +132,21 @@ var et2_dataview = /** @class */ (function () {
                     this.headTr.outerHeight(true));
             }
         }
-    };
+    }
     /**
      * Returns the column manager object. You can use it to set the visibility
      * of columns etc. Call "updateHeader" if you did any changes.
      */
-    et2_dataview.prototype.getColumnMgr = function () {
+    getColumnMgr() {
         return this.columnMgr;
-    };
+    }
     /**
      * Recalculates the stylesheets which determine the column visibility and
      * width.
      *
      * @param setDefault boolean Allow admins to save current settings as default for all users
      */
-    et2_dataview.prototype.updateColumns = function (setDefault) {
-        if (setDefault === void 0) { setDefault = false; }
+    updateColumns(setDefault = false) {
         if (this.columnMgr) {
             this._updateColumns();
         }
@@ -160,13 +154,13 @@ var et2_dataview = /** @class */ (function () {
         if (this.onUpdateColumns) {
             this.onUpdateColumns(setDefault);
         }
-    };
+    }
     /* --- PRIVATE FUNCTIONS --- */
     /* --- Code for building the grid container DOM-Tree elements ---- */
     /**
      * Builds the base DOM-Tree elements
      */
-    et2_dataview.prototype._createElements = function () {
+    _createElements() {
         /*
             Structure:
             <table class="egwGridView_outer">
@@ -188,12 +182,12 @@ var et2_dataview = /** @class */ (function () {
             .addClass("egwGridView_outer")
             .append(this.thead, this.tbody)
             .appendTo(this.parentNode);
-    };
+    }
     /* --- Code for building the header row --- */
     /**
      * Clears the header row
      */
-    et2_dataview.prototype._clearHeader = function () {
+    _clearHeader() {
         if (this.columnMgr) {
             this.columnMgr.destroy();
             this.columnMgr = null;
@@ -216,12 +210,12 @@ var et2_dataview = /** @class */ (function () {
         this.columnNodes = [];
         this.columns = [];
         this.headTr.empty();
-    };
+    }
     /**
      * Sets the column data which is retrieved by calling egwGridColumns.getColumnData.
      * The columns will be updated.
      */
-    et2_dataview.prototype._updateColumns = function () {
+    _updateColumns() {
         // Copy the columns data
         this.columns = this.columnMgr.getColumnData();
         // Count the visible rows
@@ -292,11 +286,11 @@ var et2_dataview = /** @class */ (function () {
         this.egw.css(".egwGridView_grid ." + this.uniqueId + "_div_fullRow", "width: " + (totalWidth - this.columnBorderWidth - 2) + "px; border-right-width: 0 !important;");
         this.egw.css(".egwGridView_outer ." + this.uniqueId + "_td_fullRow", "border-right-width: 0 !important;");
         this.egw.css(".egwGridView_outer ." + this.uniqueId + "_spacer_fullRow", "width: " + (totalWidth - 1) + "px; border-right-width: 0 !important;");
-    };
+    }
     /**
      * Builds the containers for the header row
      */
-    et2_dataview.prototype._buildHeader = function () {
+    _buildHeader() {
         var self = this;
         var handler = function (event) {
         };
@@ -320,7 +314,7 @@ var et2_dataview = /** @class */ (function () {
             // make column resizable
             var enc_column = self.columnMgr.getColumnById(col.id);
             if (enc_column.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT) {
-                et2_dataview_view_resizeable_1.et2_dataview_view_resizable.makeResizeable(column, function (_w) {
+                et2_dataview_view_resizable.makeResizeable(column, function (_w) {
                     // User wants the column to stay where they put it, even for relative
                     // width columns, so set it explicitly first and adjust other relative
                     // columns to match.
@@ -356,11 +350,11 @@ var et2_dataview = /** @class */ (function () {
             });
         }
         this._buildSelectCol();
-    };
+    }
     /**
      * Builds the select cols column
      */
-    et2_dataview.prototype._buildSelectCol = function () {
+    _buildSelectCol() {
         // Build the "select columns" icon
         this.selectColIcon = jQuery(document.createElement("span"))
             .addClass("selectcols")
@@ -375,11 +369,11 @@ var et2_dataview = /** @class */ (function () {
             .appendTo(this.headTr);
         this.selectCol.css("width", this.scrollbarWidth - this.selectCol.outerWidth()
             + this.selectCol.width() + 1);
-    };
+    }
     /**
      * Builds the inner grid class
      */
-    et2_dataview.prototype._buildGrid = function () {
+    _buildGrid() {
         // Create the collection of column ids
         var colIds = [];
         for (var i = 0; i < this.columns.length; i++) {
@@ -391,19 +385,19 @@ var et2_dataview = /** @class */ (function () {
         if (this.rowProvider) {
             this.rowProvider.destroy();
         }
-        this.rowProvider = new et2_dataview_view_rowProvider_1.et2_dataview_rowProvider(this.uniqueId, colIds);
+        this.rowProvider = new et2_dataview_rowProvider(this.uniqueId, colIds);
         // Create the grid class and pass "19" as the starting average row height
-        this.grid = new et2_dataview_view_grid_1.et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
+        this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
         // Insert the grid into the DOM-Tree
         var tr = jQuery(this.grid.getFirstNode());
         this.containerTr.replaceWith(tr);
         this.containerTr = tr;
-    };
+    }
     /* --- Code for calculating the browser/css depending widths --- */
     /**
      * Reads the browser dependant variables
      */
-    et2_dataview.prototype._getDepVars = function () {
+    _getDepVars() {
         if (typeof this.scrollbarWidth === 'undefined') {
             // Clone the table and attach it to the outer body tag
             var clone = this.table.clone();
@@ -421,11 +415,11 @@ var et2_dataview = /** @class */ (function () {
             // Remove the cloned DOM-Node again from the outer body
             clone.remove();
         }
-    };
+    }
     /**
      * Reads the scrollbar width
      */
-    et2_dataview.prototype._getScrollbarWidth = function (_table) {
+    _getScrollbarWidth(_table) {
         // Create a temporary td and two divs, which are inserted into the
         // DOM-Tree. The outer div has a fixed size and "overflow" set to auto.
         // When the second div is inserted, it will be forced to display a scrollbar.
@@ -444,11 +438,11 @@ var et2_dataview = /** @class */ (function () {
         // Remove the elements again
         div_outer.remove();
         return width;
-    };
+    }
     /**
      * Calculates the total width of the header column border
      */
-    et2_dataview.prototype._getHeaderBorderWidth = function (_table) {
+    _getHeaderBorderWidth(_table) {
         // Create a temporary th which is appended to the outer thead row
         var cont = jQuery(document.createElement("div"))
             .addClass("innerContainer");
@@ -461,11 +455,11 @@ var et2_dataview = /** @class */ (function () {
         // Remove the appended element again
         th.remove();
         return width;
-    };
+    }
     /**
      * Calculates the total width of the column border
      */
-    et2_dataview.prototype._getColumnBorderWidth = function (_table) {
+    _getColumnBorderWidth(_table) {
         // Create a temporary th which is appended to the outer thead row
         var cont = jQuery(document.createElement("div"))
             .addClass("innerContainer");
@@ -479,8 +473,6 @@ var et2_dataview = /** @class */ (function () {
         // Remove the appended element again
         td.remove();
         return width;
-    };
-    return et2_dataview;
-}());
-exports.et2_dataview = et2_dataview;
+    }
+}
 //# sourceMappingURL=et2_dataview.js.map

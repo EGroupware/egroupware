@@ -5,9 +5,8 @@
  * @package home
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,10 +14,14 @@
         et2_core_baseWidget;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
+import {egw} from "../jsapi/egw_global";
+import {et2_no_init} from "./et2_core_common";
+import {et2_IResizeable} from "./et2_core_interfaces";
+import {et2_dialog} from "./et2_widget_dialog";
 
 /**
  * Class which implements the UI of a Portlet
@@ -31,7 +34,7 @@ import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
  * @link http://docs.oasis-open.org/wsrp/v2/wsrp-2.0-spec-os-01.html
  * @augments et2_baseWidget
  */
-class et2_portlet extends et2_valueWidget
+export class et2_portlet extends et2_valueWidget
 {
 	static readonly _attributes : any = {
 		"title": {
@@ -264,7 +267,7 @@ class et2_portlet extends et2_valueWidget
 	 */
 	edit_settings()
 	{
-		let dialog = et2_createWidget("dialog", {
+		let dialog = <et2_dialog>et2_createWidget("dialog", {
 			callback: jQuery.proxy(this._process_edit, this),
 			template: this.options.edit_template,
 			value: {

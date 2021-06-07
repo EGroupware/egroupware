@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware eTemplate2 - JS code for implementing inheritance with attributes
  *
@@ -8,16 +7,13 @@
  * @link: https://www.egroupware.org
  * @author Andreas Stöckel
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClassWithAttributes = void 0;
 /*egw:uses
     et2_core_common;
 */
-require("../jsapi/egw_global");
-require("et2_core_common");
-var ClassWithAttributes = /** @class */ (function () {
-    function ClassWithAttributes() {
-    }
+import { egw } from "../jsapi/egw_global";
+import { et2_checkType, et2_no_init, et2_validateAttrib } from "./et2_core_common";
+import { et2_implements_registry } from "./et2_core_interfaces";
+export class ClassWithAttributes {
     /**
      * Returns the value of the given attribute. If the property does not
      * exist, an error message is issued.
@@ -25,7 +21,7 @@ var ClassWithAttributes = /** @class */ (function () {
      * @param {string} _name
      * @return {*}
      */
-    ClassWithAttributes.prototype.getAttribute = function (_name) {
+    getAttribute(_name) {
         if (typeof this.attributes[_name] != "undefined" &&
             !this.attributes[_name].ignore) {
             if (typeof this["get_" + _name] == "function") {
@@ -38,7 +34,7 @@ var ClassWithAttributes = /** @class */ (function () {
         else {
             egw.debug("error", this, "Attribute '" + _name + "' does not exist!");
         }
-    };
+    }
     /**
      * The setAttribute function sets the attribute with the given name to
      * the given value. _override defines, whether this[_name] will be set,
@@ -49,7 +45,7 @@ var ClassWithAttributes = /** @class */ (function () {
      * @param {*} _value
      * @param {boolean} _override
      */
-    ClassWithAttributes.prototype.setAttribute = function (_name, _value, _override) {
+    setAttribute(_name, _value, _override) {
         if (typeof this.attributes[_name] != "undefined") {
             if (!this.attributes[_name].ignore) {
                 if (typeof _override == "undefined") {
@@ -67,7 +63,7 @@ var ClassWithAttributes = /** @class */ (function () {
         else {
             egw.debug("warn", this, "Attribute '" + _name + "' does not exist!");
         }
-    };
+    }
     /**
      * generateAttributeSet sanitizes the given associative array of attributes
      * (by passing each entry to "et2_checkType" and checking for existance of
@@ -75,7 +71,7 @@ var ClassWithAttributes = /** @class */ (function () {
      *
      * @param {object} _attrs is the associative array containing the attributes.
      */
-    ClassWithAttributes.generateAttributeSet = function (widget, _attrs) {
+    static generateAttributeSet(widget, _attrs) {
         // Sanity check and validation
         for (var key in _attrs) {
             if (typeof widget[key] != "undefined") {
@@ -101,7 +97,7 @@ var ClassWithAttributes = /** @class */ (function () {
             }
         }
         return _attrs;
-    };
+    }
     /**
      * The initAttributes function sets the attributes to their default
      * values. The attributes are not overwritten, which means, that the
@@ -110,27 +106,27 @@ var ClassWithAttributes = /** @class */ (function () {
      *
      * @param {object} _attrs is the associative array containing the attributes.
      */
-    ClassWithAttributes.prototype.initAttributes = function (_attrs) {
+    initAttributes(_attrs) {
         for (var key in _attrs) {
             if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined)) {
                 this.setAttribute(key, _attrs[key], false);
             }
         }
-    };
-    ClassWithAttributes.buildAttributes = function (class_prototype) {
-        var class_tree = [];
-        var attributes = {};
-        var n = 0;
+    }
+    static buildAttributes(class_prototype) {
+        let class_tree = [];
+        let attributes = {};
+        let n = 0;
         do {
             n++;
             class_tree.push(class_prototype);
             class_prototype = Object.getPrototypeOf(class_prototype);
         } while (class_prototype !== ClassWithAttributes && n < 50);
-        for (var i = class_tree.length - 1; i >= 0; i--) {
+        for (let i = class_tree.length - 1; i >= 0; i--) {
             attributes = ClassWithAttributes.extendAttributes(attributes, class_tree[i]._attributes);
         }
         return attributes;
-    };
+    }
     /**
      * Extend current _attributes with the one from the parent class
      *
@@ -139,7 +135,7 @@ var ClassWithAttributes = /** @class */ (function () {
      * @param _attributes
      * @param _parent
      */
-    ClassWithAttributes.extendAttributes = function (_parent, _attributes) {
+    static extendAttributes(_parent, _attributes) {
         function _copyMerge(_new, _old) {
             var result = {};
             // Copy the new object
@@ -172,7 +168,7 @@ var ClassWithAttributes = /** @class */ (function () {
             et2_validateAttrib(key, attributes[key]);
         }
         return attributes;
-    };
+    }
     /**
      * The implements function can be used to check whether the object
      * implements the given interface.
@@ -183,25 +179,23 @@ var ClassWithAttributes = /** @class */ (function () {
      *
      * @param _iface name of interface to check
      */
-    ClassWithAttributes.prototype.implements = function (_iface_name) {
-        if (typeof window['implements_' + _iface_name] === 'function' &&
-            window['implements_' + _iface_name](this)) {
+    implements(_iface_name) {
+        if (typeof et2_implements_registry[_iface_name] === 'function' &&
+            et2_implements_registry[_iface_name](this)) {
             return true;
         }
         return false;
-    };
+    }
     /**
      * Check if object is an instance of a class or implements an interface (specified by the interfaces name)
      *
      * @param _class_or_interfacename class(-name) or string with name of interface
      */
-    ClassWithAttributes.prototype.instanceOf = function (_class_or_interfacename) {
+    instanceOf(_class_or_interfacename) {
         if (typeof _class_or_interfacename === 'string') {
             return this.implements(_class_or_interfacename);
         }
         return this instanceof _class_or_interfacename;
-    };
-    return ClassWithAttributes;
-}());
-exports.ClassWithAttributes = ClassWithAttributes;
+    }
+}
 //# sourceMappingURL=et2_core_inheritance.js.map

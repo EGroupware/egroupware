@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh <hn[at]stylite.de>
- * @copyright Stylite AG
- * @version $Id$
+ * @copyright EGroupware GmbH 2020-2021
  */
 
 /*egw:uses
@@ -19,6 +18,7 @@
 import { et2_baseWidget } from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
+import {et2_IDOMNode} from "./et2_core_interfaces";
 
 /**
  * This widget represents the HTML5 video tag with all its optional attributes

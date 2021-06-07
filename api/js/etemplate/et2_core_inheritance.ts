@@ -12,8 +12,9 @@
 	et2_core_common;
 */
 
-import '../jsapi/egw_global';
-import 'et2_core_common';
+import {egw} from "../jsapi/egw_global";
+import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
+import {et2_implements_registry} from "./et2_core_interfaces";
 
 export class ClassWithAttributes
 {
@@ -245,8 +246,8 @@ export class ClassWithAttributes
 	 */
 	implements (_iface_name : string)
 	{
-		if (typeof window['implements_'+_iface_name] === 'function' &&
-			window['implements_'+_iface_name](this))
+		if (typeof et2_implements_registry[_iface_name] === 'function' &&
+			et2_implements_registry[_iface_name](this))
 		{
 			return true
 		}

@@ -4,7 +4,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Nathan Gray
  * @copyright 2012 Nathan Gray
  */
@@ -19,13 +19,17 @@
 */
 
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_diff} from "./et2_widget_diff";
+import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
+import {et2_dynheight} from "./et2_widget_dynheight";
+import {et2_customfields_list} from "./et2_extension_customfields";
+import {et2_selectbox} from "./et2_widget_selectbox";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -333,7 +337,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		let labels = et2_historylog.columns[et2_historylog.FIELD].widget.optionValues;
 
 		// Custom fields - Need to create one that's all read-only for proper display
-		let cf_widget = et2_createWidget('customfields', {'readonly':true}, this);
+		let cf_widget = <et2_customfields_list>et2_createWidget('customfields', {'readonly':true}, this);
 		cf_widget.loadFields();
 		// Override this or it may damage the real values
 		cf_widget.getValue = function() {return null;};

@@ -4,10 +4,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2012
- * @version $Id$
+ * @copyright EGroupware GmbH 2011-2021
  */
 
 /*egw:uses
@@ -21,6 +20,9 @@
 
 import {et2_widget} from "./et2_core_widget";
 import {et2_arrayMgrs_expand} from "./et2_core_arrayMgr";
+import {et2_dataview_grid} from "./et2_dataview_view_grid";
+import {egw} from "../jsapi/egw_global";
+import {et2_IDetachedDOM, et2_IDOMNode} from "./et2_core_interfaces";
 
 /**
  * The row provider contains prototypes (full clonable dom-trees)
@@ -590,7 +592,7 @@ export class et2_nextmatch_rowProvider
 /**
  * @augments et2_widget
  */
-class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
+export class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 {
 	private _widgets: any[];
 	private _row: any;
@@ -669,7 +671,7 @@ class et2_nextmatch_rowWidget extends et2_widget implements et2_IDOMNode
 /**
  * @augments et2_widget
  */
-class et2_nextmatch_rowTemplateWidget extends et2_widget implements et2_IDOMNode
+export class et2_nextmatch_rowTemplateWidget extends et2_widget implements et2_IDOMNode
 {
 	private _root: any;
 	private _row: any;

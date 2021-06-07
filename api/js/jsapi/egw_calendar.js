@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -20,6 +19,8 @@
 	egw_css;
 */
 import './egw_core.js';
+import 'jqueryui';
+import '../jquery/jquery-ui-timepicker-addon.js';
 
 /**
  * Date and timepicker
