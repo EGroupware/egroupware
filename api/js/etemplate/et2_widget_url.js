@@ -324,8 +324,8 @@ var et2_url_ro = /** @class */ (function (_super_1) {
      * @param _value
      */
     et2_url_ro.prototype.set_label = function (_value) {
-        this.options.label = _value;
-        if (this.span) {
+        if (this.span && this.options.label !== _value) {
+            this.options.label = _value;
             this.span.text(_value);
         }
     };
