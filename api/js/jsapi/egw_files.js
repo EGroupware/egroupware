@@ -156,7 +156,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				_jsFiles = [_jsFiles];
 			}
-			const promise = import(_prefix ? _jsFiles.map((src) => _prefix+src) : _jsFiles);
+			const promise = Promise.all(_jsFiles.map((src) => import(_prefix ? _prefix+src : src)));
 			return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
 
 			// @todo check the prefix stuff

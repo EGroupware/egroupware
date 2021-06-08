@@ -1,15 +1,16 @@
 /**
- * EGroupware: Stylite Pixelegg template: hiding/showing header
+ * EGroupware: Pixelegg template: hiding/showing header
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Wolfgang Ott <wolfgang.ott@pixelegg.de>
  * @package pixelegg
- * @version $Id: class.pixelegg_framework.inc.php 2741 2013-11-14 13:53:24Z ralfbecker $
  */
 
-egw_LAB.wait(function() {
+import '../../api/js/jquery/chosen/chosen.jquery.js';
 
+egw_ready.then(function()
+{
 	/**
 	 * replace [+] on mouseover with quick-add selectbox
 	 *

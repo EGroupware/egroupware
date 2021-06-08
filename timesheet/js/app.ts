@@ -17,7 +17,6 @@ import 'jqueryui';
 import '../../api/js/jsapi/egw_global';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-import {etemplate2} from "../../api/js/etemplate/etemplate2";
 
 /**
  * UI for timesheet
