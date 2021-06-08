@@ -15,6 +15,10 @@
 	/api/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
 */
 
+import {egwAction, egwActionImplementation} from './egw_action.js';
+import {egwMenu, _egw_active_menu} from "./egw_menu.js";
+import '../jquery/jquery-tap-and-hold/jquery.tapandhold.js';
+
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
 _egwActionClasses["popup"] = {
@@ -22,7 +26,7 @@ _egwActionClasses["popup"] = {
 	"implementation": getPopupImplementation
 };
 
-function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
+export function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
 	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 	action.type = "popup";
@@ -126,7 +130,7 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 var
 	_popupActionImpl = null;
 
-function getPopupImplementation()
+export function getPopupImplementation()
 {
 	if (!_popupActionImpl)
 	{
@@ -135,7 +139,7 @@ function getPopupImplementation()
 	return _popupActionImpl;
 }
 
-function egwPopupActionImplementation()
+export function egwPopupActionImplementation()
 {
 	var ai = new egwActionImplementation();
 

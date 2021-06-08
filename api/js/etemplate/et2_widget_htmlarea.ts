@@ -21,7 +21,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {WidgetConfig, et2_register_widget, et2_createWidget} from "./et2_core_widget";
 import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
-import {app, egw} from "../jsapi/egw_global";
+import {egw} from "../jsapi/egw_global";
 import {et2_vfsSelect} from "./et2_widget_vfs";
 
 /**

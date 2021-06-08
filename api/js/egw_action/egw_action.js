@@ -13,6 +13,11 @@
 	egw_action_common;
 */
 
+import {egwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength} from './egw_action_common.js';
+import './egw_action_popup.js';
+import "./egw_action_dragdrop.js";
+import "./egw_menu_dhtmlx.js";
+
 /**
  * Getter functions for the global egwActionManager and egwObjectManager objects
  */
@@ -33,7 +38,7 @@ var egw_globalObjectManager = null;
  * @param {number} [_search_depth=Infinite] How deep into existing action children
  *	to search.
  */
-function egw_getActionManager(_id, _create,_search_depth) {
+export function egw_getActionManager(_id, _create,_search_depth) {
 	if (typeof _create == 'undefined') {
 		_create = true;
 	}
@@ -70,7 +75,7 @@ function egw_getActionManager(_id, _create,_search_depth) {
  * @param {number} [_search_depth=Infinite] How deep into existing action children
  *	to search.
  */
-function egw_getObjectManager(_id, _create, _search_depth) {
+export function egw_getObjectManager(_id, _create, _search_depth) {
 	if (typeof _create == "undefined") {
 		_create = true;
 	}
@@ -106,7 +111,7 @@ function egw_getObjectManager(_id, _create, _search_depth) {
  * @param {string} _appName //appname might not always be the current app, e.g. running app content under admin tab
  * @return {egwActionObjectManager}
  */
-function egw_getAppObjectManager(_create, _appName) {
+export function egw_getAppObjectManager(_create, _appName) {
 	return egw_getObjectManager(_appName ? _appName : egw_getAppName(), _create,1);
 }
 
@@ -116,7 +121,7 @@ function egw_getAppObjectManager(_create, _appName) {
  * @param {boolean} _create
  * @return {egwActionManager}
  */
-function egw_getAppActionManager(_create) {
+export function egw_getAppActionManager(_create) {
 	return egw_getActionManager(egw_getAppName(), _create,1);
 }
 
@@ -131,7 +136,7 @@ function egw_getAppActionManager(_create) {
  * @param {function} _executeEvent
  * @return {egwActionHandler}
  */
-function egwActionHandler(_executeEvent)
+export function egwActionHandler(_executeEvent)
 {
 	//Copy the executeEvent parameter
 	this.execute = _executeEvent;
@@ -166,7 +171,7 @@ _egwActionClasses["actionManager"] = {
  * @param {boolean} _allowOnMultiple
  * @returns {egwAction}
  */
-function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
+export function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultiple)
 {
 	//Default and check the values
 	if (_parent && (typeof _id != "string" || !_id) && _parent.type != "actionManager")
@@ -813,6 +818,7 @@ function _egwActionTreeContains(_tree, _elem)
  */
 egwAction.prototype.appendToTree = function(_tree, _addChildren)
 {
+	let _addParent = false;
 	if (typeof _addChildren == "undefined")
 	{
 		_addChildren = true;
@@ -914,7 +920,7 @@ egwAction.prototype.getManager = function() {
  * @param {string} _id
  * @return {egwActionManager}
  */
-function egwActionManager(_parent, _id)
+export function egwActionManager(_parent, _id)
 {
 	if (typeof _parent == 'undefined') {
 		_parent = null;
@@ -946,7 +952,7 @@ function egwActionManager(_parent, _id)
  *
  * @return {egwActionImplementation}
  */
-function egwActionImplementation()
+export function egwActionImplementation()
 {
 	this.doRegisterAction = function() {throw "Abstract function call: registerAction";};
 	this.doUnregisterAction = function() {throw "Abstract function call: unregisterAction";};
@@ -1005,7 +1011,7 @@ egwActionImplementation.prototype.executeImplementation = function(_context, _se
  * @param _manager is a reference to the egwActionManager whic contains the action
  * 	the object wants to link to.
  */
-function egwActionLink(_manager)
+export function egwActionLink(_manager)
 {
 	this.enabled = true;
 	this.visible = true;
@@ -1041,28 +1047,28 @@ egwActionLink.prototype.set_actionId = function(_value)
 /** egwActionObject Object **/
 
 //State bitmask (only use powers of two for new states!)
-var EGW_AO_STATE_NORMAL = 0x00;
-var EGW_AO_STATE_SELECTED = 0x01;
-var EGW_AO_STATE_FOCUSED = 0x02;
-var EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
+export const EGW_AO_STATE_NORMAL = 0x00;
+export const EGW_AO_STATE_SELECTED = 0x01;
+export const EGW_AO_STATE_FOCUSED = 0x02;
+export const EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
 
-var EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
-var EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
+export const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
+export const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
 
 // No shift key is pressed
-var EGW_AO_SHIFT_STATE_NONE = 0x00;
+export const EGW_AO_SHIFT_STATE_NONE = 0x00;
 // A shift key, which allows multiselection is pressed (usually CTRL on a PC keyboard)
-var EGW_AO_SHIFT_STATE_MULTI = 0x01;
+export const EGW_AO_SHIFT_STATE_MULTI = 0x01;
 // A shift key is pressed, which forces blockwise selection (SHIFT on a PC keyboard)
-var EGW_AO_SHIFT_STATE_BLOCK = 0x02;
+export const EGW_AO_SHIFT_STATE_BLOCK = 0x02;
 
 // If this flag is set, this object will not be returned as "focused". If this
 // flag is not applied to container objects, it may lead to some strange behaviour.
-var EGW_AO_FLAG_IS_CONTAINER = 0x01;
+export const EGW_AO_FLAG_IS_CONTAINER = 0x01;
 
 // If this flag is set, the object will gets its focus when no other object is
 // selected and e.g. a key is pressed.
-var EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
+export const EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
 
 /**
  * The egwActionObject represents an abstract object to which actions may be
@@ -1080,7 +1086,7 @@ var EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
  * @param {number} _flags a set of additional flags being applied to the object,
  * 	defaults to 0
  */
-function egwActionObject(_id, _parent, _iface, _manager, _flags)
+export function egwActionObject(_id, _parent, _iface, _manager, _flags)
 {
 	//Preset some parameters
 	if (typeof _manager == "undefined" && typeof _parent == "object" && _parent)
@@ -2065,8 +2071,8 @@ egwActionObject.prototype.makeVisible = function()
 	this.iface.makeVisible();
 };
 
-var EGW_AO_EXEC_SELECTED = 0;
-var EGW_AO_EXEC_THIS = 1;
+export const EGW_AO_EXEC_SELECTED = 0;
+export const EGW_AO_EXEC_THIS = 1;
 
 /**
  * Executes the action implementation which is associated to the given action type.
@@ -2353,7 +2359,7 @@ egwActionObject.prototype.isSelection = function (_event)
  *
  * @return {egwActionObjectInterface}
  */
-function egwActionObjectInterface()
+export function egwActionObjectInterface()
 {
 	//Preset the interface functions
 
@@ -2521,7 +2527,7 @@ var egwActionObjectDummyInterface = egwActionObjectInterface;
  * @param {string} _manager
  * @return {egwActionObjectManager}
  */
-function egwActionObjectManager(_id, _manager)
+export function egwActionObjectManager(_id, _manager)
 {
 	var ao = new egwActionObject(_id, null, new egwActionObjectInterface(),
 		_manager, EGW_AO_FLAG_IS_CONTAINER);

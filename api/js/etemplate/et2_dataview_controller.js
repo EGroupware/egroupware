@@ -12,6 +12,8 @@ import { et2_dataview_selectionManager } from "./et2_dataview_controller_selecti
 import { et2_dataview_row } from "./et2_dataview_view_row";
 import { et2_arrayIntKeys, et2_bounds } from "./et2_core_common";
 import { egw } from "../jsapi/egw_global";
+import { egwBitIsSet } from "../egw_action/egw_action_common.js";
+import { EGW_AO_STATE_NORMAL, EGW_AO_STATE_SELECTED } from "../egw_action/egw_action.js";
 /**
  * The fetch timeout specifies the time during which the controller tries to
  * consolidate requests for rows.

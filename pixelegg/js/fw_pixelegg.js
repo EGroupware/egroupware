@@ -1,11 +1,11 @@
 /**
- * EGroupware jDots / Stylite template
+ * EGroupware Pixelegg template
  *
  * @package framework
  * @author Hadi Nategh <hn@stylite.de>
  * @author Andreas Stoeckel <as@stylite.de>
- * @copyright Stylite AG 2014
- * @description Create jdots framework
+ * @copyright EGroupware GmbH 2014-2021
+ * @description Create Pixelegg framework
  */
 
 /*egw:uses
@@ -21,7 +21,7 @@ import './slider.js';
 	"use strict";
 
 	/**
-	 * jdots framework object defenition
+	 * jdots framework object definition
 	 * here we can add framework methods and also override fw_desktop methods if it is neccessary
 	 */
 	window.fw_pixelegg = fw_desktop.extend(

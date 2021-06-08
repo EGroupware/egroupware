@@ -8,7 +8,7 @@
  * @author Andreas Stöckel
  * @copyright EGroupware GmbH 2011-2021
  */
-import { app, egw } from "../jsapi/egw_global";
+import { egw } from "../jsapi/egw_global";
 /**
  * IE Fix for array.indexOf
  */

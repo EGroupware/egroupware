@@ -185,7 +185,7 @@
 				document.head.appendChild(script);
 			})
 				// catch and display, but not stop execution
-			.catch((err) => { alert(src+":\n\n"+err.message)});
+			.catch((err) => { console.log(src+":\n\n"+err.message)});
 		}));
 	}
 
@@ -196,7 +196,7 @@
 		[legacy_js_import(include.filter((src) => src.match(legacy_regexp) !== null), window.egw_webserverUrl)]
 			.concat(include.filter((src) => src.match(legacy_regexp) === null)
 				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
-					.catch((err) => { alert(rel_src+":\n\n"+err.message)})
+					.catch((err) => { console.log(rel_src+":\n\n"+err.message)})
 	))).then(() =>
 	{
 		// We need to override the globalEval to mitigate potential execution of
@@ -490,18 +490,6 @@
 		}
 	};
 })();
-
-// get TypeScript modules working with our loader
-window.require = function(_file)
-{
-	switch(_file)
-	{
-		case 'jquery':	// cropper mistakes this for commonJS (typeof exports === 'object')
-			return window.jQuery;
-	}
-	return window.exports;
-}
-window.exports = {};
 
 /**
  * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")

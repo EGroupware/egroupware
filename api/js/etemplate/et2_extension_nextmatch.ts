@@ -64,7 +64,7 @@ import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_button} from "./et2_widget_button";
 import {et2_searchbox} from "./et2_widget_textbox";
 import {et2_template} from "./et2_widget_template";
-import {app, egw} from "../jsapi/egw_global";
+import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";

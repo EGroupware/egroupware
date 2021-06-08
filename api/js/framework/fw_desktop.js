@@ -4,8 +4,8 @@
  * @package framework
  * @author Hadi Nategh <hn@stylite.de>
  * @author Andreas Stoeckel <as@stylite.de>
- * @copyright Stylite AG 2014
- * @description Create jdots framework
+ * @copyright EGroupware GmbH 2014-2021
+ * @description Create desktop framework
  */
 
 /*egw:uses

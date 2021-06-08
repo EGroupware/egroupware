@@ -19,7 +19,7 @@
  * @param object _obj is the object where the data will be stored.
  * @param mixed _setterOnly false: store everything, true: only store when setter exists, "data" store rest in data property
  */
-function egwActionStoreJSON(_data, _obj, _setterOnly)
+export function egwActionStoreJSON(_data, _obj, _setterOnly)
 {
 	for (var key in _data)
 	{
@@ -52,7 +52,7 @@ function egwActionStoreJSON(_data, _obj, _setterOnly)
  * @param boolean _state is whether the bit should be switched on or off
  * @returns the new set
  */
-function egwSetBit(_set, _bit, _state)
+export function egwSetBit(_set, _bit, _state)
 {
 	if (_state)
 		return _set |= _bit;
@@ -63,12 +63,12 @@ function egwSetBit(_set, _bit, _state)
 /**
  * Returns whether the given bit is set in the set.
  */
-function egwBitIsSet(_set, _bit)
+export function egwBitIsSet(_set, _bit)
 {
 	return (_set & _bit) > 0;
 }
 
-function egwObjectLength(_obj)
+export function egwObjectLength(_obj)
 {
 	var len = 0;
 	for (var k in _obj) len++;
@@ -93,7 +93,7 @@ if (typeof Array.prototype.indexOf == "undefined")
 /**
  * Isolates the shift state from an event object
  */
-function egwGetShiftState(e)
+export function egwGetShiftState(e)
 {
 	var state = EGW_AO_SHIFT_STATE_NONE;
 	state = egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, e.ctrlKey || e.metaKey);
@@ -102,7 +102,7 @@ function egwGetShiftState(e)
 	return state;
 }
 
-function egwPreventSelect(e)
+export function egwPreventSelect(e)
 {
 	if (egwGetShiftState(e) > EGW_AO_SHIFT_STATE_NONE)
 	{
@@ -116,11 +116,11 @@ function egwPreventSelect(e)
 	return true;
 }
 
-function egwResetPreventSelect(elem)
+export function egwResetPreventSelect(elem)
 {
 }
 
-function egwUnfocus()
+export function egwUnfocus()
 {
 	if (document.activeElement)
 	{
@@ -129,7 +129,7 @@ function egwUnfocus()
 }
 
 
-function egwCallAbstract(_obj, _fn, _args)
+export function egwCallAbstract(_obj, _fn, _args)
 {
 	if (_fn)
 	{
@@ -143,7 +143,7 @@ function egwCallAbstract(_obj, _fn, _args)
 	return false;
 }
 
-function egwArraysEqual(_ar1, _ar2)
+export function egwArraysEqual(_ar1, _ar2)
 {
 	var result = _ar1.length == _ar2.length;
 
@@ -156,7 +156,7 @@ function egwArraysEqual(_ar1, _ar2)
 }
 
 var _egwQueuedCallbacks = {};
-function egwQueueCallback(_proc, _args, _context, _id)
+export function egwQueueCallback(_proc, _args, _context, _id)
 {
 	if (_proc)
 	{
@@ -191,7 +191,7 @@ function egwQueueCallback(_proc, _args, _context, _id)
  * Constructor for the egwEventQueue class. Initializes the queue object and the
  * internal data structures such as the internal key.
  */
-function egwEventQueue()
+export function egwEventQueue()
 {
 	this.events = {};
 	this.key_id = 0;
@@ -322,7 +322,7 @@ egwEventQueue.prototype.queueTimeout = function(_proc, _context, _args, _id, _ti
  * @param array _acceptedTypes is an array of types which contains the "typeof"
  * 	strings of accepted non-functions in setValue
  */
-function egwFnct(_context, _default, _acceptedTypes)
+export function egwFnct(_context, _default, _acceptedTypes)
 {
 	if (typeof _context == "undefined")
 	{
@@ -451,7 +451,7 @@ egwFnct.prototype.exec = function()
  */
 var _egw_mobileBrowser = null;
 
-window.egwIsMobile = function() {
+export function egwIsMobile() {
 
 	if (_egw_mobileBrowser == null)
 	{
@@ -464,6 +464,7 @@ window.egwIsMobile = function() {
 
 	return _egw_mobileBrowser;
 }
+window.egwIsMobile = egwIsMobile;
 
 
 /**
@@ -516,12 +517,12 @@ Changelog:
  a regress. I appologize for that.
 **/
 
-function str_repeat(i, m) {
+export function str_repeat(i, m) {
 	for (var o = []; m > 0; o[--m] = i);
 	return o.join('');
 }
 
-function sprintf() {
+export function sprintf() {
 	var i = 0, a, f = arguments[i++], o = [], m, p, c, x, s = '';
 	while (f) {
 		if (m = /^[^\x25]+/.exec(f)) {

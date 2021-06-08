@@ -12,7 +12,7 @@
 
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu openes
-var _egw_active_menu = null;
+export var _egw_active_menu = null;
 
 /**
  * Internal function which generates a menu item with the given parameters as used

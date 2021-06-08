@@ -6,7 +6,6 @@
  * @copyright 2011 by Andreas Stöckel
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
- * @version $Id$
  */
 
 /*egw:uses
@@ -16,6 +15,8 @@
 	vendor.bower-asset.jquery.dist.jquery;
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 */
+
+import {egwAction,egwActionImplementation} from "./egw_action.js";
 
 /**
  * Register the drag and drop handlers
@@ -45,7 +46,7 @@ _egwActionClasses["drop"] = {
  * @param {bool} _allowOnMultiple
  * @returns {egwDragAction}
  */
-function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
+export function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
 	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
@@ -64,7 +65,7 @@ function egwDragAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMulti
 var
 	_dragActionImpl = null;
 
-function getDragImplementation()
+export function getDragImplementation()
 {
 	if (!_dragActionImpl)
 	{
@@ -73,7 +74,7 @@ function getDragImplementation()
 	return _dragActionImpl;
 }
 
-function egwDragActionImplementation()
+export function egwDragActionImplementation()
 {
 	var ai = new egwActionImplementation();
 
@@ -479,7 +480,7 @@ function egwDragActionImplementation()
  * @param {bool} _allowOnMultiple
  * @returns {egwDropAction}
  */
-function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
+export function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 {
 	var action = new egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple);
 
@@ -525,7 +526,7 @@ function egwDropAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMulti
 var
 	_dropActionImpl = null;
 
-function getDropImplementation()
+export function getDropImplementation()
 {
 	if (!_dropActionImpl)
 	{
@@ -538,7 +539,7 @@ var EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is 
 var EGW_AI_DRAG_OUT = EGW_AI_DRAG | 0x01;
 var EGW_AI_DRAG_OVER = EGW_AI_DRAG | 0x02;
 
-function egwDropActionImplementation()
+export function egwDropActionImplementation()
 {
 	var ai = new egwActionImplementation();
 

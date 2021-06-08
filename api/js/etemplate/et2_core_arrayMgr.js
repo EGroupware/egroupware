@@ -14,6 +14,7 @@
 */
 import { et2_evalBool } from "./et2_core_common";
 import { egw } from "../jsapi/egw_global";
+import { et2_compilePHPExpression } from "./et2_core_phpExpressionCompiler";
 /**
  * Manage access to various template customisation arrays passed to etemplate->exec().
  *

@@ -17,6 +17,9 @@ import { egw } from "../jsapi/egw_global";
 import { et2_bounds } from "./et2_core_common";
 import { et2_dialog } from "./et2_widget_dialog";
 import { et2_createWidget } from "./et2_core_widget";
+import { et2_dataview_rowAOI } from "./et2_dataview_view_aoi";
+import { EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_NORMAL, EGW_AO_STATE_SELECTED, egwActionObjectInterface } from "../egw_action/egw_action.js";
+import { egwBitIsSet, egwSetBit } from "../egw_action/egw_action_common.js";
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
  * to manage the row selection.

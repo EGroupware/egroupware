@@ -51,7 +51,7 @@ export class et2_dataview_container implements et2_dataview_IInvalidatable
 	private _index: number;
 	private _top: number;
 
-	protected tr: any;
+	tr: any;
 	/**
 	 * Initializes the container object.
 	 *

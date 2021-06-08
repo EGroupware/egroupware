@@ -18,7 +18,7 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_INextmatchHeader} from "./et2_extension_nextmatch";
 import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {app, egw, egw_getFramework} from "../jsapi/egw_global";
+import {egw, egw_getFramework} from "../jsapi/egw_global";
 
 /**
  * Favorites widget, designed for use with a nextmatch widget

@@ -28,7 +28,7 @@ import { et2_file } from "./et2_widget_file";
 import { et2_dialog } from "./et2_widget_dialog";
 import { et2_inputWidget } from "./et2_core_inputWidget";
 import { et2_no_init } from "./et2_core_common";
-import { app, egw, egw_get_file_editor_prefered_mimes } from "../jsapi/egw_global";
+import { egw, egw_get_file_editor_prefered_mimes } from "../jsapi/egw_global";
 import { expose } from "./expose";
 /**
  * Class which implements the "vfs" XET-Tag

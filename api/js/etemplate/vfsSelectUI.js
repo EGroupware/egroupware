@@ -11,7 +11,7 @@
     /api/js/jsapi/egw_app.js
  */
 import { EgwApp } from "../jsapi/egw_app";
-import { app, egw } from "../jsapi/egw_global";
+import { egw } from "../jsapi/egw_global";
 import { et2_dialog } from "./et2_widget_dialog";
 import { et2_file } from "./et2_widget_file";
 import { et2_textbox } from "./et2_widget_textbox";

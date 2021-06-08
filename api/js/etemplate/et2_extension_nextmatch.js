@@ -59,7 +59,7 @@ import { et2_taglist } from "./et2_widget_taglist";
 import { et2_selectAccount } from "./et2_widget_selectAccount";
 import { et2_dynheight } from "./et2_widget_dynheight";
 import { et2_arrayMgr } from "./et2_core_arrayMgr";
-import { app, egw } from "../jsapi/egw_global";
+import { egw } from "../jsapi/egw_global";
 import { et2_compileLegacyJS } from "./et2_core_legacyJSFunctions";
 export const et2_INextmatchHeader = "et2_INextmatchHeader";
 et2_implements_registry.et2_INextmatchHeader = function (obj) {

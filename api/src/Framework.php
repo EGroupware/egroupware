@@ -1155,7 +1155,7 @@ abstract class Framework extends Framework\Extra
 		// @todo: add all node_modules as bare imports
 
 		// debug-output to tmp dir
-		file_put_contents($GLOBALS['egw_info']['server']['temp_dir'].'/'.str_replace(['/', '.php'], ['-', '.json'], $_SERVER['PHP_SELF']),
+		file_put_contents($GLOBALS['egw_info']['server']['temp_dir'].'/'.substr(str_replace(['/', '.php'], ['-', '.json'], $_SERVER['PHP_SELF']), 1),
 			json_encode(['imports' => $imports], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 
 		return ['imports' => $imports];
