@@ -215,6 +215,14 @@ class notifications {
 	 * it's an int with the account id or the e-mail address of a non-eGW user
 	 */
 	public function set_sender($_sender) {
+		// Check configured sender first - that overrides all
+		$config = Api\Config::read('notifications');
+		if($config && ($config['async_account' || $config['async_email']]))
+		{
+			$send_user = $config['async_account'];
+			$email = $config['async_email'] ?: $GLOBALS['egw']->accounts->id2name($send_user,'account_email');
+		}
+
 		if(is_object($_sender)) {
 			$this->sender = $_sender;
 			return true;
