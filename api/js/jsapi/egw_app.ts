@@ -384,11 +384,14 @@ export abstract class EgwApp
 		{
 			let val = value.col_filter[field_filter.col];
 			if(val && (
-				typeof val == "string" && val.trim().length > 0 ||
-				typeof val == "object" && !jQuery.isEmptyObject(val)
+				typeof val == "string" && val.trim().length > 0
 			))
 			{
 				field_filter.filter_values.push(val);
+			}
+			else if (val && typeof val == "object" && !jQuery.isEmptyObject(val))
+			{
+				field_filter.filter_values = field_filter.filter_values.concat(Object.values(val))
 			}
 		}
 
