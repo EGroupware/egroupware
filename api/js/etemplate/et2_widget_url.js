@@ -13,12 +13,10 @@
     et2_valueWidget;
     /api/js/jquery/jquery.base64.js;
 */
-import { et2_register_widget } from "./et2_core_widget";
-import { et2_textbox } from "./et2_widget_textbox";
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_valueWidget } from "./et2_core_valueWidget";
-import { et2_no_init } from "./et2_core_common";
-import { egw } from "../jsapi/egw_global";
+var et2_core_widget_1 = require("./et2_core_widget");
+var et2_widget_textbox_1 = require("./et2_widget_textbox");
+var et2_core_inheritance_1 = require("./et2_core_inheritance");
+var et2_core_valueWidget_1 = require("./et2_core_valueWidget");
 /**
  * Class which implements the "url" XET-Tag, which covers URLs, email & phone
  *
