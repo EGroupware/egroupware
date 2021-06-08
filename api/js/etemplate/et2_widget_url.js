@@ -303,8 +303,8 @@ export class et2_url_ro extends et2_valueWidget {
      * @param _value
      */
     set_label(_value) {
-        this.options.label = _value;
-        if (this.span) {
+        if (this.span && this.options.label !== _value) {
+            this.options.label = _value;
             this.span.text(_value);
         }
     }
