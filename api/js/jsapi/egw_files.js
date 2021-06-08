@@ -156,52 +156,22 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				_jsFiles = [_jsFiles];
 			}
-			const promise = Promise.all(_jsFiles.map((src) => import(_prefix ? _prefix+src : src)));
-			return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
-
-			// @todo check the prefix stuff
-			// LABjs uses prefix only if url is not absolute, so removing leading / if necessary and add it to prefix
-			if (_prefix)
+			let promise;
+			if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
 			{
-				for(var i=0; i < _jsFiles.length; ++i)
-				{
-					if (_jsFiles[i].charAt(0) == '/') _jsFiles[i] = _jsFiles[i].substr(1);
-				}
+				const src = _jsFiles[0];
+				promise = import(_prefix ? _prefix+src : src);
 			}
-			// as all our included checks use egw relative url strip off egw-url and use it as prefix
 			else
 			{
-				_jsFiles = strip_egw_url(_jsFiles);
-				_prefix = egw.webserverUrl;
+				promise = Promise.all(_jsFiles.map((src) => {
+					import(_prefix ? _prefix+src : src)
+						.catch((err) => {
+							console.log(src+":\n\n"+err.message);
+						})
+				}));
 			}
-			if (_prefix.charAt(_prefix.length-1) != '/')
-			{
-				_prefix += '/';
-			}
-
-			// search and NOT load files already included as part of a bundle
-			for(var i=0; i < _jsFiles.length; ++i)
-			{
-				var file = _jsFiles[i];
-				if (this.included(file, true))	// check if included and marks as such if not
-				{
-					_jsFiles.splice(i, 1);
-					i--;	// as index will be incr by for!
-				}
-			}
-			// check if all files already included or sheduled to be included --> call callback via egw_LAB.wait
-			if (!_jsFiles.length)
-			{
-				egw_LAB.wait(function(){
-					_callback.call(_context);
-				});
-				return;
-			}
-
-			// setting AlwaysPreserverOrder: true, 'til we have some other means of ensuring dependency resolution
-			(egw_LAB || $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:_prefix})).script(_jsFiles).wait(function(){
-				_callback.call(_context);
-			});
+			return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
 		},
 
 		/**

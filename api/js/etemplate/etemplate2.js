@@ -374,10 +374,15 @@ export class etemplate2 {
             }
             var start_time = (new Date).getTime();
         }
-        // require necessary translations from server, if not already loaded
+        // require necessary translations from server AND the app.js file, if not already loaded
         if (!jQuery.isArray(_data.langRequire))
             _data.langRequire = [];
-        egw(currentapp, window).langRequire(window, _data.langRequire, function () {
+        Promise.all([
+            egw(currentapp, window).langRequire(window, _data.langRequire),
+            egw(currentapp, window).includeJS('/' + appname + '/js/app.js', undefined, undefined, egw.webserverUrl)
+        ]).catch((err) => {
+            console.log("et2.load(): error loading lang-files and app.js: " + err.message);
+        }).then(() => {
             this.clear();
             // Initialize application js
             let app_callback = null;
@@ -546,7 +551,7 @@ export class etemplate2 {
             // Split the given data into array manager objects and pass those to the
             // widget container - do this here because file is loaded async
             this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-        }, this);
+        });
     }
     /**
      * Check if template contains any dirty (unsaved) content

@@ -854,7 +854,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {object} _context
 	 * @param {string} _prefix prefix for _jsFiles
 	 */
-	includeJS(_jsFiles : string|string[], _callback : Function, _context? : object, _prefix? : string);
+	includeJS(_jsFiles : string|string[], _callback? : Function, _context? : object, _prefix? : string);
 	/**
 	 * Check if file is already included and optional mark it as included if not yet included
 	 *
