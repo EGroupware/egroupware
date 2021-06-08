@@ -323,6 +323,10 @@ class infolog_tracking extends Api\Storage\Tracking
 		unset($old);	// not used, but required function signature
 		switch($name)
 		{
+			case 'sender':
+				// Use infolog owner as the notification sender
+				$config = $data['info_owner'];
+				break;
 			case 'copy':	// include the info_cc addresses
 				if ($data['info_access'] == 'private') return array();	// no copies for private entries
 				if ($data['info_cc'])
