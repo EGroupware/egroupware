@@ -18,7 +18,7 @@
  * @param {object} _target
  * @param {object} _ids attributs all and ids (array of string)
  */
-function nm_action(_action, _senders, _target, _ids)
+export function nm_action(_action, _senders, _target, _ids)
 {
 	// ignore checkboxes, unless they have an explicit defined nm_action
 	if (_action.checkbox && (!_action.data || typeof _action.data.nm_action == 'undefined')) return;
@@ -119,8 +119,7 @@ function nm_action(_action, _senders, _target, _ids)
 			break;
 
 		case 'popup':
-
-			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
+			// According to microsoft, IE 10/11 can only accept a url with 2083 characters
 			// therefore we need to send request to compose window with POST method
 			// instead of GET. We create a temporary <Form> and will post emails.
 			// ** WebServers and other browsers also have url length limit:
@@ -285,7 +284,7 @@ function nm_action(_action, _senders, _target, _ids)
  * @param {function} callback Callback function
  * @returns {Boolean}
  */
-function fetchAll(ids, nextmatch, callback)
+export function fetchAll(ids, nextmatch, callback)
 {
 	if(!nextmatch || !nextmatch.controller) return false;
 	var selection = nextmatch.getSelection();
@@ -345,7 +344,7 @@ function fetchAll(ids, nextmatch, callback)
  * @param {et2_nextmatch} nextmatch
  * @returns {Boolean}
  */
-function doLongTask(idsArr, all, _action, nextmatch)
+export function doLongTask(idsArr, all, _action, nextmatch)
 {
 	if(all || idsArr.length > 1 || typeof _action.data.egw_open == 'undefined')
 	{
@@ -372,7 +371,7 @@ function doLongTask(idsArr, all, _action, nextmatch)
  * @param _target egwActionObject object, get's called for every object in _senders
  * @returns boolean true if field found and has specified value, false otherwise
  */
-function nm_compare_field(_action, _senders, _target)
+export function nm_compare_field(_action, _senders, _target)
 {
 	var value = false;
 
@@ -418,7 +417,7 @@ var nm_popup_action, nm_popup_ids = null;
  * @param {egwAction} _action
  * @param {egwActionObject[]} _selected
  */
-function nm_open_popup(_action, _selected)
+export function nm_open_popup(_action, _selected)
 {
 	//Check if there is nextmatch on _action otherwise gets the uniqueid from _ids
 	var uid;
@@ -523,7 +522,7 @@ function nm_open_popup(_action, _selected)
  *
  * @param {DOMNode} button DOM node of button
  */
-function nm_submit_popup(button)
+export function nm_submit_popup(button)
 {
 	if (nm_popup_action.data.nextmatch)
 	{
@@ -558,7 +557,7 @@ function nm_submit_popup(button)
  * @param {string} div_id
  * @returns {Boolean}
  */
-function nm_hide_popup(element, div_id)
+export function nm_hide_popup(element, div_id)
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
 	var popup = div_id ? document.getElementById(div_id) : jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
@@ -579,7 +578,7 @@ function nm_hide_popup(element, div_id)
  * @param {egwAction} _action
  * @param {array} _senders of egwActionObject
  */
-function nm_activate_link(_action, _senders)
+export function nm_activate_link(_action, _senders)
 {
 	jQuery(_senders[0].iface.getDOMNode()).find('.et2_clickable:first').trigger('click');
 }
