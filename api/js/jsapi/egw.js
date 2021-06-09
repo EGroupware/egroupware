@@ -26,14 +26,12 @@
 	egw_tooltip;
 	egw_css;
 	egw_calendar;
-	egw_ready;
 	egw_data;
 	egw_tail;
 	egw_inheritance;
 	egw_message;
 	egw_notification;
 	app_base;
-	egw_app;
 */
 
 (function()
@@ -344,35 +342,24 @@
 		};
 
 		// rest needs DOM to be ready
-		jQuery(function() {import('../etemplate/etemplate2.js').then(function(module){
+		jQuery(function()
+		{
 			// load etemplate2 template(s)
-			jQuery('form.et2_container[data-etemplate]').each( function(index, node){
-				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
-				var currentapp = data.data.currentapp || window.egw_appName;
-				if(popup || window.opener && !egwIsMobile())
-				{
-					// Resize popup when et2 load is done
-					jQuery(node).on('load', function() {
-						if(typeof CKEDITOR !== 'undefined' && Object.keys(CKEDITOR.instances).length)
-						{
-							CKEDITOR.once('instanceReady',function() {
-								// Trigger a resize again once CKEDITOR is ready
-								window.resizeTo(egw_getWindowOuterWidth(), egw_getWindowOuterHeight() );
-							});
-						}
-						else
-						{
-							window.setTimeout(resize_popup, 50);
-						}
-					});
-				}
-				const et2 = new module.etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
-				et2.load(data.name,data.url,data.data);
-				if (typeof data.response != 'undefined')
-				{
-					var json_request = egw(window).json("");
-					json_request.handleResponse({response: data.response});
-				}
+			jQuery('form.et2_container[data-etemplate]').each(  function(index, node)
+			{
+				import('../etemplate/etemplate2.js').then((module) => {
+					const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
+					if (popup || window.opener && !egwIsMobile()) {
+						// Resize popup when et2 load is done
+						jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
+					}
+					const et2 = new module.etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
+					et2.load(data.name, data.url, data.data);
+					if (typeof data.response !== 'undefined') {
+						const json_request = egw(window).json("");
+						json_request.handleResponse({response: data.response});
+					}
+				}).catch((e) => alert(e.message+"\n\n"+e.stack));
 			});
 
 			// Offline/Online checking part
@@ -474,8 +461,8 @@
 			catch(e) {
 				// ignore SecurityError exception if top is different security context / cross-origin
 			}
-		})});
-	}, (e) => alert(e.message+"\n\n"+e.stack));
+		});
+	});
 	//
 	window.egw_LAB.wait = window.egw_ready.then;
 
