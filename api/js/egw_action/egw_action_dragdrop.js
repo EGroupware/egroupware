@@ -535,10 +535,6 @@ export function getDropImplementation()
 	return _dropActionImpl;
 }
 
-var EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is for events used with drag stuff
-var EGW_AI_DRAG_OUT = EGW_AI_DRAG | 0x01;
-var EGW_AI_DRAG_OVER = EGW_AI_DRAG | 0x02;
-
 export function egwDropActionImplementation()
 {
 	var ai = new egwActionImplementation();

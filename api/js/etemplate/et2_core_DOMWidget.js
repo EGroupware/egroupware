@@ -16,7 +16,7 @@ import { ClassWithAttributes } from './et2_core_inheritance';
 import { et2_IDOMNode } from "./et2_core_interfaces";
 import { et2_hasChild, et2_no_init } from "./et2_core_common";
 import { et2_widget } from "./et2_core_widget";
-import '../egw_action/egw_action.js';
+import { egw_getActionManager, egwActionObject, egwActionObjectInterface, egw_getAppObjectManager, EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT } from '../egw_action/egw_action.js';
 import { egw } from "../jsapi/egw_global";
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
@@ -400,7 +400,7 @@ export class et2_DOMWidget extends et2_widget {
         }
         // Initialize the action manager and add some actions to it
         // Only look 1 level deep
-        var gam = window.egw_getActionManager(this.egw().appName, true, 1);
+        var gam = egw_getActionManager(this.egw().appName, true, 1);
         if (typeof this._actionManager != "object") {
             if (gam.getActionById(this.getInstanceManager().uniqueId, 1) !== null) {
                 gam = gam.getActionById(this.getInstanceManager().uniqueId, 1);

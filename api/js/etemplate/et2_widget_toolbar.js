@@ -16,9 +16,10 @@
 import { et2_DOMWidget } from "./et2_core_DOMWidget";
 import { et2_createWidget, et2_register_widget } from "./et2_core_widget";
 import { ClassWithAttributes } from "./et2_core_inheritance";
-import '../egw_action/egw_action.js';
+import { egwActionObject, egw_getObjectManager, egwActionObjectManager } from '../egw_action/egw_action.js';
 import { et2_dialog } from "./et2_widget_dialog";
 import { egw } from "../jsapi/egw_global";
+import { egwIsMobile } from "../egw_action/egw_action_common.js";
 /**
  * This toolbar gets its contents from its actions
  *

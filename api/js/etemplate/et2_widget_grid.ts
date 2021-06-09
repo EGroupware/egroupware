@@ -20,7 +20,7 @@ import {et2_IAligned, et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interf
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
-import '../egw_action/egw_action.js';
+import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action.js';
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 
@@ -1005,7 +1005,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		 // Get the top level element for the tree
 		// get appObjectManager for the actual app, it might not always be the current app(e.g. running app content under admin tab)
 		// @ts-ignore
-		let objectManager = window.egw_getAppObjectManager(true, this.getInstanceManager().app);
+		let objectManager = egw_getAppObjectManager(true, this.getInstanceManager().app);
 		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
 		let widget_object = objectManager.getObjectById(this.id);
 		if (widget_object == null) {
