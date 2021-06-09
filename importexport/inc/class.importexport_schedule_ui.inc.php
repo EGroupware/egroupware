@@ -286,15 +286,24 @@ class importexport_schedule_ui
 	*
 	* $data should contain target & type
 	*/
-	public static function check_target(Array $data) {
+	public static function check_target(Array &$data) {
 		$scheme = parse_url($data['target'], PHP_URL_SCHEME);
-		if($scheme == '' || $scheme == 'file')
+		if($scheme == 'file')
 		{
 			return 'Direct file access not allowed';
+		}
+		else if ($scheme == '')
+		{
+			$data['target'] = Vfs::PREFIX.$data['target'];
+			return static::check_target($data);
 		}
 
 		if($scheme == Vfs::SCHEME  && !in_array(Vfs::SCHEME, stream_get_wrappers())) {
 			stream_wrapper_register(Vfs::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
+		}
+		else if (!in_array($scheme, stream_get_wrappers()))
+		{
+			return lang("Unable to access files with '%1'",$scheme);
 		}
 
 		if ($data['type'] == 'import' && ($scheme == Vfs::SCHEME && !Vfs::is_readable($data['target'])))
@@ -398,7 +407,7 @@ class importexport_schedule_ui
 		$data['last_run'] = time();
 
 		// Lock job for an hour to prevent multiples overlapping
-		$data['lock'] = time() + 3600;
+	//	$data['lock'] = time() + 3600;
 		self::update_job($data, true);
 
 		// check file
