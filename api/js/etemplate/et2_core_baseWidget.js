@@ -213,6 +213,8 @@ var et2_baseWidget = /** @class */ (function (_super) {
         //Get the domnode the tooltip should be attached to
         var elem = jQuery(this.getTooltipElement());
         if (elem) {
+            // Make readable by screenreader
+            elem.attr("aria-description", this.statustext);
             //If a tooltip is already attached to the element, remove it first
             if (this._tooltipElem) {
                 this.egw().tooltipUnbind(this._tooltipElem);

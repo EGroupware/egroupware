@@ -289,6 +289,9 @@ export class et2_baseWidget extends et2_DOMWidget implements et2_IAligned
 
 		if (elem)
 		{
+			// Make readable by screenreader
+			elem.attr("aria-description",this.statustext);
+
 			//If a tooltip is already attached to the element, remove it first
 			if (this._tooltipElem)
 			{
