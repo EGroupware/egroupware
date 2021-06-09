@@ -23,6 +23,7 @@ import {
 } from "../egw_action/egw_action.js";
 import {egwBitIsSet, egwGetShiftState, egwPreventSelect, egwSetBit, egwUnfocus, egwIsMobile} from "../egw_action/egw_action_common.js";
 import {_egw_active_menu} from "../egw_action/egw_menu.js";
+import '../../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js';
 
 /**
  * Contains the action object interface implementation for the nextmatch widget
