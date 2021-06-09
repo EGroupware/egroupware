@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Framework\Bundle;
 use EGroupware\Api\Header\ContentSecurityPolicy;
 
 /**
@@ -164,7 +165,7 @@ abstract class Framework extends Framework\Extra
 			// We need LABjs, but putting it through Framework\IncludeMgr causes it to re-load itself
 			//'/api/js/labjs/LAB.src.js',
 
-			// allways load jquery (not -ui) first
+			// always load jquery (not -ui) first
 			'/vendor/bower-asset/jquery/dist/jquery.js',
 			'/api/js/jquery/jquery.noconflict.js',
 			// always include javascript helper functions
@@ -1082,7 +1083,7 @@ abstract class Framework extends Framework\Extra
 
 		// add import-map before (!) first module
 		$java_script .= '<script type="importmap" nonce="'.htmlspecialchars(ContentSecurityPolicy::addNonce('script-src')).'">'."\n".
-			json_encode(self::getImportMap($map), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
+			json_encode(self::getImportMap(), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
 			"</script>\n";
 
 		// load our clientside entrypoint egw.js
@@ -1123,28 +1124,14 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
 	 *
-	 * @param array $map
 	 * @return array
 	 */
-	protected static function getImportMap(array $map)
+	public static function getImportMap()
 	{
-		if (substr($prefix = $GLOBALS['egw_info']['server']['webserver_url'], 0, 4) === 'http')
-		{
-			$prefix = parse_url($prefix, PHP_URL_PATH);
-		}
-		$imports = [];
-		foreach($map as $file => $bundle)
-		{
-			$imports[$prefix.$file] = $prefix.$bundle;
+		$imports = Bundle::getImportMap();
 
-			// typescript unfortunately has currently no option to add ".js" to it's es6 import statements
-			// therefore we add extra entries without .js extension to the map
-			if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3).'.ts'))
-			{
-				$imports[$prefix.substr($file, 0, -3)] = $prefix.$bundle;
-			}
-		}
 		// adding some extra mappings
+		if (($prefix = parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH)) === '/') $prefix = '';
 		$imports['jquery'] = $imports[$prefix.'/vendor/bower-asset/jquery/dist/jquery.js'];
 		$imports['jqueryui'] = $imports[$prefix.'/vendor/bower-asset/jquery-ui/jquery-ui.js'];
 
@@ -1153,10 +1140,6 @@ abstract class Framework extends Framework\Extra
 			filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw_global.js');
 
 		// @todo: add all node_modules as bare imports
-
-		// debug-output to tmp dir
-		file_put_contents($GLOBALS['egw_info']['server']['temp_dir'].'/'.substr(str_replace(['/', '.php'], ['-', '.json'], $_SERVER['PHP_SELF']), 1),
-			json_encode(['imports' => $imports], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 
 		return ['imports' => $imports];
 	}

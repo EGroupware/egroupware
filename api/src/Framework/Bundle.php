@@ -200,13 +200,21 @@ class Bundle
 	const MAX_BUNDLE_FILES = 50;
 
 	/**
+	 * Apps which should be their own bundle:
+	 * - own eT2 widgets
+	 * - not just an app.js or a huge one
+	 */
+	const BUNDLE_APPS = ['calendar', 'mail', 'projectmanager', 'smallpart'];
+
+	/**
 	 * Return all bundels we use:
 	 * - api stuff phpgwapi/js/jsapi/* and it's dependencies incl. jquery
 	 * - etemplate2 stuff not including api bundle, but jquery-ui
 	 *
+	 * @param bool $all_apps=false true: return bundle for every app with an app.js/ts
 	 * @return array bundle-url => array of contained files
 	 */
-	public static function all()
+	public static function all(bool $all_apps = false)
 	{
 		$inc_mgr = new IncludeMgr();
 		$bundles = array();
@@ -245,17 +253,17 @@ class Bundle
 		$stock_files = array_merge(...array_values($bundles));
 
 		// generate template and app bundles, if installed
-		foreach(array(
+		foreach([
 			'jdots' => '/jdots/js/fw_jdots.js',
 			'mobile' => '/pixelegg/js/fw_mobile.js',
 			'pixelegg' => '/pixelegg/js/fw_pixelegg.js',
-			'calendar' => '/calendar/js/app.js',
-			'mail' => '/mail/js/app.js',
-			'projectmanager' => '/projectmanager/js/app.js',
-			'messenger' => '/messenger/js/app.js',
-			'smallpart' => '/smallpart/js/app.js',
-		) as $bundle => $file)
+		]+($all_apps ? scandir(EGW_SERVER_ROOT) : self::BUNDLE_APPS) as $bundle => $file)
 		{
+			if (is_int($bundle))
+			{
+				$bundle = $file;
+				$file = "/$bundle/js/app.js";
+			}
 			if (@file_exists(EGW_SERVER_ROOT.$file))
 			{
 				$inc_mgr = new IncludeMgr($stock_files);	// reset loaded files to stock files
@@ -281,5 +289,104 @@ class Bundle
 
 		//error_log(__METHOD__."() returning ".array2string($bundles));
 		return $bundles;
+	}
+
+	/**
+	 * some files are not in a bundle, because loaded otherwise or are big enough themselves
+	 *
+	 * @var array
+	 */
+	static public $exclude = [
+		// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
+		'api/js/jsapi/egw.js',
+		// TinyMCE is loaded separate before the bundle
+		'vendor/tinymce/tinymce/tinymce.min.js',
+		// CRM.js from addressbook is also used in infolog, so it can't be bundled with either!
+		'addressbook/js/CRM.js',
+	];
+
+	/**
+	 * Generate importmap for whole instance
+	 *
+	 * It need to be for the whole instance incl. all app.js, as it does not get reloaded, when we execute
+	 * apps via ajax!
+	 *
+	 * @ToDo new-js-loader: use static file in filesystem updated when js-files get minified (for minified only!)
+	 *
+	 * @return array
+	 */
+	public static function getImportMap()
+	{
+		$minified = empty($GLOBALS['egw_info']['server']['debug_minify']);
+
+		// cache map for the whole tree to use
+		return Cache::getTree('api', 'importmap'.($minified?'-minified':''), static function()
+		{
+			$gruntfile = EGW_SERVER_ROOT . '/Gruntfile.js';
+			if (!($content = @file_get_contents($gruntfile)))
+			{
+				die("\nFile '$gruntfile' not found!\n\n");
+			}
+
+			if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
+				!($json = preg_replace('/^(\s*)([a-z0-9_-]+):/mi', '$1"$2":', $matches[1])) ||
+				!($config = json_decode($json, true)))
+			{
+				die("\nCan't parse $gruntfile!\n\n");
+			}
+
+			if (($prefix = parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH)) === '/') $prefix = '';
+			$uglify = $config['terser'];
+			unset($config, $uglify['options']);
+			$map = [];
+			foreach (self::all(true) as $name => $files)
+			{
+				if ($name == '.ts') continue;    // ignore timestamp
+
+				// some files are not in a bundle, because they are big enough themselves or otherwise excluded
+				foreach (self::$exclude as $file)
+				{
+					if (($key = array_search($file, $files)))
+					{
+						$map[$prefix . $file] = $prefix . $file . '?' . filemtime(EGW_SERVER_ROOT . $file);
+						unset($files[$key]);
+					}
+				}
+
+				if (isset($uglify[$name]))
+				{
+					$target = key($uglify[$name]['files']);
+					$uglify[$name]['files'][$target] = array_values($files);
+				}
+				elseif (isset($uglify[$append = substr($name, 0, -1)]))
+				{
+					reset($uglify[$append]['files']);
+					$target = key($uglify[$append]['files']);
+					$uglify[$append]['files'][$target] = array_merge($uglify[$append]['files'][$target], array_values($files));
+				}
+				else    // create new bundle using last file as target
+				{
+					$target = str_replace('.js', '.min.js', end($files));
+					$uglify[$name]['files'][$target] = array_values($files);
+				}
+				if ($target[0] !== '/') $target = '/' . $target;
+
+				$use_bundle = in_array($name, array_merge(['api', 'et2'], Bundle::BUNDLE_APPS)) &&
+					empty($GLOBALS['egw_info']['server']['debug_minify']);
+
+				foreach ($files as $file)
+				{
+					// use bundle / minified url as target or not
+					if (!$use_bundle) $target = $file;
+					$map[$prefix . $file] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
+					// typescript unfortunately has currently no option to add ".js" to it's es6 import statements
+					// therefore we add extra entries without .js extension to the map					if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3) . '.ts'))
+					{
+						$map[$prefix . substr($file, 0, -3)] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
+					}
+				}
+			}
+			return $map;
+		}, [], 30);
 	}
 }

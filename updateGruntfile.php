@@ -23,7 +23,7 @@ $GLOBALS['egw_info'] = array(
 );
 include(__DIR__.'/header.inc.php');
 
-$gruntfile = __DIR__.'/Gruntfile.js';
+$gruntfile = EGW_SERVER_ROOT.'/Gruntfile.js';
 if (!($content = @file_get_contents($gruntfile)))
 {
 	die("\nFile '$gruntfile' not found!\n\n");
@@ -33,19 +33,11 @@ if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
 	!($json = preg_replace('/^(\s*)([a-z0-9_-]+):/mi', '$1"$2":', $matches[1])) ||
 	!($config = json_decode($json, true)))
 {
-	die("\nCan't parse $path!\n\n");
+	die("\nCan't parse $gruntfile!\n\n");
 }
 //print_r($config); exit;
 
 $uglify =& $config['terser'];
-
-// some files are not in a bundle, because loaded otherwise or are big enough themselfs
-$exclude = array(
-	// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
-	'api/js/jsapi/egw.js',
-	// TinyMCE is loaded separate before the bundle
-	'vendor/tinymce/tinymce/tinymce.min.js',
-);
 
 foreach(Bundle::all() as $name => $files)
 {
@@ -57,8 +49,8 @@ foreach(Bundle::all() as $name => $files)
 		if ($path[0] == '/') $path = substr($path, 1);
 	});
 
-	// some files are not in a bundle, because they are big enough themselfs
-	foreach($exclude as $file)
+	// some files are not in a bundle, because they are big enough themselves
+	foreach(Bundle::$exclude as $file)
 	{
 		if (($key = array_search($file, $files))) unset($files[$key]);
 	}
@@ -66,13 +58,13 @@ foreach(Bundle::all() as $name => $files)
 	//var_dump($name, $files);
 	if (isset($uglify[$name]))
 	{
-		list($target) = each($uglify[$name]['files']);
+		$target = key($uglify[$name]['files']);
 		$uglify[$name]['files'][$target] = array_values($files);
 	}
 	elseif (isset($uglify[$append = substr($name, 0, -1)]))
 	{
 		reset($uglify[$append]['files']);
-		list($target) = each($uglify[$append]['files']);
+		$target = key($uglify[$append]['files']);
 		$uglify[$append]['files'][$target] = array_merge($uglify[$append]['files'][$target], array_values($files));
 	}
 	else	// create new bundle using last file as target
