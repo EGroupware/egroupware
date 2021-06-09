@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware - Infolog - Javascript UI
  *
@@ -8,60 +7,41 @@
  * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /api/js/jsapi/egw_app.js
  */
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
-var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
-var CRM_1 = require("../../addressbook/js/CRM");
+import 'jquery';
+import 'jqueryui';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
+import { etemplate2 } from "../../api/js/etemplate/etemplate2";
+import { CRMView } from "../../addressbook/js/CRM";
 /**
  * UI for Infolog
  *
  * @augments AppJS
  */
-var InfologApp = /** @class */ (function (_super) {
-    __extends(InfologApp, _super);
+class InfologApp extends EgwApp {
     /**
      * Constructor
      *
      * @memberOf app.infolog
      */
-    function InfologApp() {
-        var _this = 
+    constructor() {
         // call parent
-        _super.call(this, 'infolog') || this;
+        super('infolog');
         // These fields help with push filtering & access control to see if we care about a push message
-        _this.push_grant_fields = ["info_owner", "info_responsible"];
-        _this.push_filter_fields = ["info_owner", "info_responsible"];
-        _this._action_ids = [];
-        _this._action_all = false;
-        return _this;
+        this.push_grant_fields = ["info_owner", "info_responsible"];
+        this.push_filter_fields = ["info_owner", "info_responsible"];
+        this._action_ids = [];
+        this._action_all = false;
     }
     /**
      * Destructor
      */
-    InfologApp.prototype.destroy = function (_app) {
+    destroy(_app) {
         // call parent
-        _super.prototype.destroy.call(this, _app);
-    };
+        super.destroy(_app);
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -70,13 +50,13 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {etemplate2} _et2 newly ready object
      * @param {string} _name template name
      */
-    InfologApp.prototype.et2_ready = function (_et2, _name) {
+    et2_ready(_et2, _name) {
         var _a;
         // call parent
-        _super.prototype.et2_ready.call(this, _et2, _name);
+        super.et2_ready(_et2, _name);
         // CRM View
-        if (typeof CRM_1.CRMView !== "undefined") {
-            CRM_1.CRMView.view_ready(_et2, this);
+        if (typeof CRMView !== "undefined") {
+            CRMView.view_ready(_et2, this);
         }
         switch (_name) {
             case 'infolog.index':
@@ -124,7 +104,7 @@ var InfologApp = /** @class */ (function (_super) {
                 }
                 break;
         }
-    };
+    }
     /**
      * Observer method receives update notifications from all applications
      *
@@ -144,7 +124,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {object|null} _links app => array of ids of linked entries
      * or null, if not triggered on server-side, which adds that info
      */
-    InfologApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _links) {
+    observer(_msg, _app, _id, _type, _msg_type, _links) {
         if (typeof _links != 'undefined') {
             if (typeof _links.infolog != 'undefined') {
                 switch (_app) {
@@ -160,7 +140,7 @@ var InfologApp = /** @class */ (function (_super) {
         if (_app == 'infolog' && this.et2.getInstanceManager() && this.et2.getInstanceManager().app == 'addressbook' && this.et2.getInstanceManager().name == 'infolog.index') {
             this.et2._inst.refresh(_msg, _app, _id, _type);
         }
-    };
+    }
     /**
      * Retrieve the current state of the application for future restoration
      *
@@ -169,23 +149,23 @@ var InfologApp = /** @class */ (function (_super) {
      *
      * @return {object} Application specific map representing the current state
      */
-    InfologApp.prototype.getState = function () {
-        var state = {
+    getState() {
+        let state = {
             action: null,
             action_id: null
         };
-        var nm = {};
+        let nm = {};
         // Get index etemplate
-        var et2 = etemplate2_1.etemplate2.getById('infolog-index');
+        var et2 = etemplate2.getById('infolog-index');
         if (et2) {
             state = et2.widgetContainer.getWidgetById("nm").getValue();
-            var content = et2.widgetContainer.getArrayMgr('content');
+            let content = et2.widgetContainer.getArrayMgr('content');
             nm = content && content.data && content.data.nm ? content.data.nm : {};
         }
         state.action = nm.action || null;
         state.action_id = nm.action_id || null;
         return state;
-    };
+    }
     /**
      * Set the application's state to the given state.
      *
@@ -196,7 +176,7 @@ var InfologApp = /** @class */ (function (_super) {
      *
      * @return {boolean} false - Returns false to stop event propagation
      */
-    InfologApp.prototype.setState = function (state) {
+    setState(state) {
         // as we have to set state.state.action, we have to set all other
         // for "No filter" favorite to work as expected
         var to_set = { col_filter: null, filter: '', filter2: '', cat_id: '', search: '', action: null };
@@ -206,15 +186,15 @@ var InfologApp = /** @class */ (function (_super) {
             if (typeof state.state[name] == 'undefined')
                 state.state[name] = to_set[name];
         }
-        return _super.prototype.setState.call(this, state);
-    };
+        return super.setState(state);
+    }
     /**
      * Enable or disable the date filter
      *
      * If the filter is set to something that needs dates, we enable the
      * header_left template.  Otherwise, it is disabled.
      */
-    InfologApp.prototype.filter_change = function () {
+    filter_change() {
         var filter = this.et2.getWidgetById('filter');
         var nm = this.et2.getWidgetById('nm');
         var dates = this.et2.getWidgetById('infolog.index.dates');
@@ -236,7 +216,7 @@ var InfologApp = /** @class */ (function (_super) {
                     break;
             }
         }
-    };
+    }
     /**
      * show or hide the details of rows by selecting the filter2 option
      * either 'all' for details or 'no_description' for no details
@@ -244,7 +224,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {Event} event Change event
      * @param {et2_nextmatch} nm The nextmatch widget that owns the filter
      */
-    InfologApp.prototype.filter2_change = function (event, nm) {
+    filter2_change(event, nm) {
         var filter2 = nm.getWidgetById('filter2');
         if (nm && filter2) {
             // Show / hide descriptions
@@ -282,21 +262,21 @@ var InfologApp = /** @class */ (function (_super) {
             nm.update_in_progress = in_progress;
         }
         return false;
-    };
+    }
     /**
      * Show or hide details by changing the CSS class
      *
      * @param {boolean} show
      * @param {DOMNode} dom_node
      */
-    InfologApp.prototype.show_details = function (show, dom_node) {
+    show_details(show, dom_node) {
         // Show / hide descriptions
         egw.css((dom_node && dom_node.id ? "#" + dom_node.id + ' ' : '') + ".et2_box.infoDes", "display:" + (show ? "block;" : "none;"));
         if (egwIsMobile()) {
             var $select = jQuery('.infoDetails');
             (show) ? $select.each(function (i, e) { jQuery(e).hide(); }) : $select.each(function (i, e) { jQuery(e).show(); });
         }
-    };
+    }
     /**
      * Confirm delete
      * If entry has children, asks if you want to delete children too
@@ -304,14 +284,14 @@ var InfologApp = /** @class */ (function (_super) {
      *@param _action
      *@param _senders
      */
-    InfologApp.prototype.confirm_delete = function (_action, _senders) {
+    confirm_delete(_action, _senders) {
         var _a;
-        var children = false;
-        var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+        let children = false;
+        let child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
         this._action_all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
         this._action_ids = [];
         if (child_button) {
-            for (var i = 0; i < _senders.length; i++) {
+            for (let i = 0; i < _senders.length; i++) {
                 this._action_ids.push(_senders[i].id.split("::").pop());
                 if (jQuery(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs')) {
                     children = true;
@@ -321,22 +301,22 @@ var InfologApp = /** @class */ (function (_super) {
             child_button.style.display = children ? 'block' : 'none';
         }
         nm_open_popup(_action, _senders);
-    };
+    }
     /**
      * Callback for action using ids set(!) in this._action_ids and this._action_all
      *
      * @param _action
      */
-    InfologApp.prototype.actionCallback = function (_action) {
+    actionCallback(_action) {
         egw.json("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]).sendRequest(true);
-    };
+    }
     /**
      * Add email from addressbook
      *
      * @param ab_id
      * @param info_cc
      */
-    InfologApp.prototype.add_email_from_ab = function (ab_id, info_cc) {
+    add_email_from_ab(ab_id, info_cc) {
         var ab = document.getElementById(ab_id);
         if (!ab || !ab.value) {
             jQuery("tr.hiddenRow").css("display", "table-row");
@@ -354,7 +334,7 @@ var InfologApp = /** @class */ (function (_super) {
             }
         }
         return false;
-    };
+    }
     /**
     * If one of info_status, info_percent or info_datecompleted changed --> set others to reasonable values
     *
@@ -363,7 +343,7 @@ var InfologApp = /** @class */ (function (_super) {
     * @param {string} percent_id
     * @param {string} datecompleted_id
     */
-    InfologApp.prototype.status_changed = function (changed_id, status_id, percent_id, datecompleted_id) {
+    status_changed(changed_id, status_id, percent_id, datecompleted_id) {
         // Make sure this doesn't get executed while template is loading
         if (this.et2 == null || this.et2.getInstanceManager() == null)
             return;
@@ -415,13 +395,13 @@ var InfologApp = /** @class */ (function (_super) {
         else if (completed && datecompleted && datecompleted.value == '') {
             // todo: set current date in correct format
         }
-    };
+    }
     /**
      * handle "print" action from "Actions" selectbox in edit infolog window.
      * check if the template is dirty then submit the template otherwise just open new window as print.
      *
      */
-    InfologApp.prototype.edit_actions = function () {
+    edit_actions() {
         var widget = this.et2.getWidgetById('action');
         var template = this.et2._inst;
         if (template) {
@@ -442,21 +422,21 @@ var InfologApp = /** @class */ (function (_super) {
                     template.submit();
             }
         }
-    };
+    }
     /**
      * Open infolog entry for printing
      *
      * @param {aciton object} _action
      * @param {object} _selected
      */
-    InfologApp.prototype.infolog_menu_print = function (_action, _selected) {
+    infolog_menu_print(_action, _selected) {
         var id = _selected[0].id.replace(/^infolog::/g, '');
         egw.open(id, 'infolog', 'edit', { print: 1 });
-    };
+    }
     /**
      * Trigger print() onload window
      */
-    InfologApp.prototype.infolog_print_preview_onload = function () {
+    infolog_print_preview_onload() {
         var that = this;
         jQuery('#infolog-edit-print').bind('load', function () {
             var isLoadingCompleted = true;
@@ -474,20 +454,20 @@ var InfologApp = /** @class */ (function (_super) {
                 }
             }, 100);
         });
-    };
+    }
     /**
      * Trigger print() function to print the current window
      */
-    InfologApp.prototype.infolog_print_preview = function () {
+    infolog_print_preview() {
         this.egw.message(this.egw.lang('Printing...'));
         this.egw.window.print();
-    };
+    }
     /**
      *
      */
-    InfologApp.prototype.add_link_sidemenu = function () {
+    add_link_sidemenu() {
         egw.open('', 'infolog', 'add');
-    };
+    }
     /**
      * Wrapper so add -> New actions in the context menu can pass current
      * filter values into new edit dialog
@@ -497,12 +477,12 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {egwAction} action
      * @param {egwActionObject[]} selected
      */
-    InfologApp.prototype.add_action_handler = function (action, selected) {
+    add_action_handler(action, selected) {
         var nm = action.getManager().data.nextmatch || false;
         if (nm) {
             this.add_with_extras(nm, action.id, nm.getArrayMgr('content').getEntry('action'), nm.getArrayMgr('content').getEntry('action_id'));
         }
-    };
+    }
     /**
      * Opens a new edit dialog with some extra url parameters pulled from
      * standard locations.  Done with a function instead of hardcoding so
@@ -513,7 +493,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param _action string Special action for new infolog entry
      * @param _action_id string ID for special action
      */
-    InfologApp.prototype.add_with_extras = function (widget, _type, _action, _action_id) {
+    add_with_extras(widget, _type, _action, _action_id) {
         // We use widget.getRoot() instead of this.et2 for the case when the
         // addressbook tab is viewing a contact + infolog list, there's 2 infolog
         // etemplates
@@ -542,23 +522,23 @@ var InfologApp = /** @class */ (function (_super) {
             action_id: typeof action_id.join != "undefined" ? action_id.join(',') : action_id
         };
         egw.open('', 'infolog', 'add', extras);
-    };
+    }
     /**
      * Get title in order to set it as document title
      * @returns {string}
      */
-    InfologApp.prototype.getWindowTitle = function () {
+    getWindowTitle() {
         var widget = this.et2.getWidgetById('info_subject');
         if (widget)
             return widget.options.value;
-    };
+    }
     /**
      * View parent entry with all children
      *
      * @param {aciton object} _action
      * @param {object} _selected
      */
-    InfologApp.prototype.view_parent = function (_action, _selected) {
+    view_parent(_action, _selected) {
         var data = egw.dataGetUIDdata(_selected[0].id);
         if (data && data.data && data.data.info_id_parent) {
             egw.link_handler(egw.link('/index.php', {
@@ -568,7 +548,7 @@ var InfologApp = /** @class */ (function (_super) {
                 ajax: "true"
             }), "infolog");
         }
-    };
+    }
     /**
      * Mess with the query for parent widget to exclude self
      *
@@ -576,7 +556,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {et2_link_entry} widget
      * @returns {boolean}
      */
-    InfologApp.prototype.parent_query = function (request, widget) {
+    parent_query(request, widget) {
         // No ID yet, no need to filter
         if (!widget.getRoot().getArrayMgr('content').getEntry('info_id')) {
             return true;
@@ -587,7 +567,7 @@ var InfologApp = /** @class */ (function (_super) {
         // Exclude self from results - no app needed since it's just one app
         request.options.exclude = [widget.getRoot().getArrayMgr('content').getEntry('info_id')];
         return true;
-    };
+    }
     /**
      * View a list of timesheets for the linked infolog entry
      *
@@ -596,7 +576,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _selected
      */
-    InfologApp.prototype.timesheet_list = function (_action, _selected) {
+    timesheet_list(_action, _selected) {
         var extras = {
             link_app: 'infolog',
             link_id: false
@@ -610,17 +590,17 @@ var InfologApp = /** @class */ (function (_super) {
             break;
         }
         egw.open("", "timesheet", "list", extras, 'timesheet');
-    };
+    }
     /**
      * Go to parent entry
      *
      * @param {aciton object} _action
      * @param {object} _selected
      */
-    InfologApp.prototype.has_parent = function (_action, _selected) {
+    has_parent(_action, _selected) {
         var data = egw.dataGetUIDdata(_selected[0].id);
         return data && data.data && data.data.info_id_parent > 0;
-    };
+    }
     /**
      * Submit template if widget has a value
      *
@@ -629,10 +609,10 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {DOMNode} _node
      * @param {et2_widget} _widget
      */
-    InfologApp.prototype.submit_if_not_empty = function (_node, _widget) {
+    submit_if_not_empty(_node, _widget) {
         if (_widget.get_value())
             this.et2._inst.submit();
-    };
+    }
     /**
      * Toggle encryption
      *
@@ -640,13 +620,13 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {et2_button} _widget
      * @param {DOMNode} _node
      */
-    InfologApp.prototype.toggleEncrypt = function (_event, _widget, _node) {
+    toggleEncrypt(_event, _widget, _node) {
         if (!this.egw.user('apps').stylite) {
             this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription') + ': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
             return;
         }
         this._get_stylite(function () { app.stylite.toggleEncrypt.call(app.stylite, _event, _widget, _node); });
-    };
+    }
     /**
      * Make sure stylite javascript is loaded, and call the given callback when it is
      *
@@ -654,11 +634,12 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {object} attrs
      *
      */
-    InfologApp.prototype._get_stylite = function (callback, attrs) {
+    _get_stylite(callback, attrs) {
         // use app object from etemplate2, which might be private and not just window.app
         var app = this.et2.getInstanceManager().app_obj;
         if (!app.stylite) {
             var self = this;
+            // @ToDo: @new-js-loader
             egw_LAB.script('stylite/js/app.js?' + this.et2.getArrayMgr('content').getEntry('encryption_ts')).wait(function () {
                 app.stylite = new app.classes.stylite;
                 app.stylite.et2 = self.et2;
@@ -671,18 +652,18 @@ var InfologApp = /** @class */ (function (_super) {
             app.stylite.et2 = this.et2;
             callback.apply(app.stylite, attrs);
         }
-    };
+    }
     /**
      * OnChange callback for responsible
      *
      * @param {jQuery.Event} _event
      * @param {et2_widget} _widget
      */
-    InfologApp.prototype.onchangeResponsible = function (_event, _widget) {
+    onchangeResponsible(_event, _widget) {
         if (app.stylite && app.stylite.onchangeResponsible) {
             app.stylite.onchangeResponsible.call(app.stylite, _event, _widget);
         }
-    };
+    }
     /**
      * Action handler for context menu change responsible action
      *
@@ -691,7 +672,7 @@ var InfologApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _selected
      */
-    InfologApp.prototype.change_responsible = function (_action, _selected) {
+    change_responsible(_action, _selected) {
         var et2 = _selected[0].manager.data.nextmatch.getInstanceManager();
         var responsible = et2.widgetContainer.getWidgetById('responsible');
         if (responsible) {
@@ -711,14 +692,14 @@ var InfologApp = /** @class */ (function (_super) {
             }
         }
         nm_open_popup(_action, _selected);
-    };
+    }
     /**
      * Handle encrypted info_desc for print purpose
      * and triggers print action after decryption
      *
      * @param {Keyring} _keyring Mailvelope keyring to use
      */
-    InfologApp.prototype.printEncrypt = function (_keyring) {
+    printEncrypt(_keyring) {
         //this.mailvelopeAvailable(this.toggleEncrypt);
         var info_desc = this.et2.getWidgetById('info_des');
         var self = this;
@@ -731,17 +712,16 @@ var InfologApp = /** @class */ (function (_super) {
         }, function (_err) {
             self.egw.message(_err, 'error');
         });
-    };
+    }
     /**
      * Blur NM count (used for limit modified optimization not returning (an exact) count
      *
      * @param blur
      */
-    InfologApp.prototype.blurCount = function (blur) {
+    blurCount(blur) {
         var _a;
         (_a = document.querySelector('div#infolog-index_nm.et2_nextmatch .header_count')) === null || _a === void 0 ? void 0 : _a.classList.toggle('blur_count', blur);
-    };
-    return InfologApp;
-}(egw_app_1.EgwApp));
+    }
+}
 app.classes.infolog = InfologApp;
 //# sourceMappingURL=app.js.map

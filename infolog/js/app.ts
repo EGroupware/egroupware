@@ -14,11 +14,8 @@
 
 import 'jquery';
 import 'jqueryui';
-import '../jsapi/egw_global';
-import '../etemplate/et2_types';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {CRMView} from "../../addressbook/js/CRM";
@@ -783,6 +780,7 @@ class InfologApp extends EgwApp
 		if (!app.stylite)
 		{
 			var self = this;
+			// @ToDo: @new-js-loader
 			egw_LAB.script('stylite/js/app.js?'+this.et2.getArrayMgr('content').getEntry('encryption_ts')).wait(function()
 			{
 				app.stylite = new app.classes.stylite;

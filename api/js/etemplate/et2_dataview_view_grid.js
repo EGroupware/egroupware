@@ -16,6 +16,7 @@
     et2_dataview_view_container;
     et2_dataview_view_spacer;
 */
+import { et2_implements_registry } from "./et2_core_interfaces";
 import { et2_dataview_IViewRange } from "./et2_dataview_interfaces";
 import { et2_dataview_container } from "./et2_dataview_view_container";
 import { et2_dataview_spacer } from "./et2_dataview_view_spacer";
@@ -551,7 +552,7 @@ export class et2_dataview_grid extends et2_dataview_container {
             const container = this._map[i];
             // Check which type the container object has
             const isSpacer = container instanceof et2_dataview_spacer;
-            const hasIViewRange = !isSpacer && container.implements(et2_dataview_IViewRange);
+            const hasIViewRange = !isSpacer && et2_implements_registry.et2_dataview_IViewRange(container, et2_dataview_IViewRange);
             // If the container has one of those special types, calculate the
             // view range and use that to update the view range of the element
             // or to request new elements for the spacer

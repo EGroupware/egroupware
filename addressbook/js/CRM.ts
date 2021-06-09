@@ -4,7 +4,8 @@
  * @link: https://www.egroupware.org
  * @package addressbook
  * @author Hadi Nategh	<hn-AT-stylite.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Ralf Becker <rb-AT-egroupware.org>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -14,8 +15,6 @@
 
 import 'jquery';
 import 'jqueryui';
-import '../jsapi/egw_global';
-import '../etemplate/et2_types';
 
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
@@ -277,6 +276,5 @@ export class CRMView extends EgwApp
 		app_obj.push = function(pushData) {return false;};
 	}
 }
-
 
 app.classes.crm = CRMView;

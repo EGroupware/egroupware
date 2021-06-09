@@ -1,64 +1,46 @@
-"use strict";
 /**
  * EGroupware - Addressbook - Javascript UI
  *
  * @link: https://www.egroupware.org
  * @package addressbook
- * @author Hadi Nategh	<hn-AT-stylite.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Hadi Nategh <hn-AT-egroupware.org>
+ * @author Ralf Becker <rb-AT-egroupware.org>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /api/js/jsapi/egw_app.js
  */
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
-var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
+import 'jquery';
+import 'jqueryui';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
+import { etemplate2 } from "../../api/js/etemplate/etemplate2";
+import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
 /**
  * UI for Addressbook
  *
  * @augments AppJS
  */
-var AddressbookApp = /** @class */ (function (_super) {
-    __extends(AddressbookApp, _super);
+class AddressbookApp extends EgwApp {
     /**
      * Constructor
      *
      * @memberOf app.addressbook
      */
-    function AddressbookApp() {
-        var _this = 
+    constructor() {
         // call parent
-        _super.call(this, 'addressbook') || this;
+        super('addressbook');
         // These fields help with push
-        _this.push_grant_fields = ["owner", "shared_with"];
-        _this.push_filter_fields = ["tid", "owner", "cat_id"];
-        return _this;
+        this.push_grant_fields = ["owner", "shared_with"];
+        this.push_filter_fields = ["tid", "owner", "cat_id"];
     }
     /**
      * Destructor
      */
-    AddressbookApp.prototype.destroy = function (_app) {
+    destroy(_app) {
         // call parent
-        _super.prototype.destroy.call(this, _app);
-    };
+        super.destroy(_app);
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -67,14 +49,14 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {etemplate2} et2 newly ready object
      * @param {string} name
      */
-    AddressbookApp.prototype.et2_ready = function (et2, name) {
+    et2_ready(et2, name) {
         // r49769 let's CRM view run under currentapp == "addressbook", which causes
         // app.addressbook.et2_ready called before app.infolog.et2_ready and therefore
         // app.addressbook.et2 would point to infolog template, if we not stop here
         if (name.match(/^infolog|tracker\./))
             return;
         // call parent
-        _super.prototype.et2_ready.call(this, et2, name);
+        super.et2_ready(et2, name);
         switch (name) {
             case 'addressbook.edit':
                 var content = this.et2.getArrayMgr('content').data;
@@ -102,7 +84,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             if (app.addressbook)
                 app.addressbook.show_custom_country(this);
         });
-    };
+    }
     /**
      * Observer method receives update notifications from all applications
      *
@@ -125,13 +107,13 @@ var AddressbookApp = /** @class */ (function (_super) {
      * or null, if not triggered on server-side, which adds that info
      * @return {false|*} false to stop regular refresh, thought all observers are run
      */
-    AddressbookApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _links) {
+    observer(_msg, _app, _id, _type, _msg_type, _links) {
         // Edit to the current entry
         var state = this.getState();
         if (_app === 'addressbook' && state && state.type && state.type === 'view' && state.id === _id) {
             var content = egw.dataGetUIDdata('addressbook::' + _id);
             if (content.data) {
-                var view = etemplate2_1.etemplate2.getById('addressbook-view');
+                var view = etemplate2.getById('addressbook-view');
                 if (view) {
                     view.widgetContainer._children[0].set_value({ content: content.data });
                 }
@@ -152,7 +134,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             else if (!content) {
                 // No data on the event, we'll have to reload if calendar column is visible
                 // to get the updated information
-                var nm = etemplate2_1.etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
+                var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
                 var pref = nm ? nm._getPreferences() : false;
                 if (pref && pref.visible.indexOf('calendar_calendar') > -1) {
                     nm.refresh(null, 'update');
@@ -160,7 +142,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
         }
         return true;
-    };
+    }
     /**
      * Handle a push notification about entry changes from the websocket
      *
@@ -179,10 +161,10 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
      * @param {number} pushData.account_id User that caused the notification
      */
-    AddressbookApp.prototype.push = function (pushData) {
+    push(pushData) {
         var _a, _b, _c, _d, _e;
         // show missed calls on their CRM view
-        var et2_id = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getInstanceManager().uniqueId;
+        let et2_id = (_a = this.et2) === null || _a === void 0 ? void 0 : _a.getInstanceManager().uniqueId;
         if (pushData.app === 'stylite' && pushData.acl.missed &&
             et2_id && et2_id.substr(0, 17) === 'addressbook-view-' &&
             pushData.acl.account_id == this.egw.user('account_id') &&
@@ -194,14 +176,14 @@ var AddressbookApp = /** @class */ (function (_super) {
             return;
         // Update the contact list
         if (this.et2 && this.et2.getInstanceManager().name == "addressbook.index") {
-            return _super.prototype.push.call(this, pushData);
+            return super.push(pushData);
         }
         // Update CRM view (sidebox part), if open
-        var contact_id = ((_e = (_d = this.et2) === null || _d === void 0 ? void 0 : _d.getArrayMgr("content")) === null || _e === void 0 ? void 0 : _e.getEntry("id")) || 0;
+        let contact_id = ((_e = (_d = this.et2) === null || _d === void 0 ? void 0 : _d.getArrayMgr("content")) === null || _e === void 0 ? void 0 : _e.getEntry("id")) || 0;
         if (this.et2 && contact_id && contact_id == pushData.id) {
             this.et2.getInstanceManager().submit();
         }
-    };
+    }
     /**
      * Change handler for contact / org selectbox
      *
@@ -209,9 +191,9 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {et2_extension_nextmatch} nm
      * @param {et2_selectbox} widget
      */
-    AddressbookApp.prototype.change_grouped_view = function (node, nm, widget) {
-        var template = "addressbook.index.rows";
-        var value = {};
+    change_grouped_view(node, nm, widget) {
+        let template = "addressbook.index.rows";
+        let value = {};
         if (nm.activeFilters.sitemgr_display) {
             template = nm.activeFilters.sitemgr_display + '.rows';
         }
@@ -225,7 +207,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             template = widget.getValue().indexOf('duplicate') === 0 ?
                 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
         }
-        var promise = nm.set_template(template);
+        let promise = nm.set_template(template);
         value[widget.id] = widget.getValue();
         if (promise) {
             jQuery.when.apply(null, promise).done(function () {
@@ -233,19 +215,19 @@ var AddressbookApp = /** @class */ (function (_super) {
             });
         }
         return !promise;
-    };
+    }
     /**
      * Open CRM view from addressbook index itself
      *
      * @param _action
      * @param _senders
      */
-    AddressbookApp.prototype.view = function (_action, _senders) {
-        var extras = {
+    view(_action, _senders) {
+        let extras = {
             contact_id: _senders[0].id.split('::').pop(),
             index: _senders[0]._index
         };
-        var data = egw.dataGetUIDdata(_senders[0].id)['data'];
+        let data = egw.dataGetUIDdata(_senders[0].id)['data'];
         // CRM list
         if (_action.id != 'view') {
             extras.crm_list = _action.id.replace('view-', '');
@@ -256,37 +238,37 @@ var AddressbookApp = /** @class */ (function (_super) {
             : data.n_fn + " (" + egw.lang(extras.crm_list) + ")";
         extras.icon = data.photo;
         return this.openCRMview(extras);
-    };
+    }
     /**
      * Open a CRM view for a contact: callback for link-registry / egw.open / other apps
      *
      * @param {CrmParams} _params object with attribute "contact_id" and optional "title", "crm_list", "icon"
      * @param {object} _senders use egw.dataGetUIDdata to get contact_id
      */
-    AddressbookApp.prototype.openCRMview = function (_params, _senders) {
-        var contact_id = typeof _params === 'object' ? _params.contact_id : _params;
+    openCRMview(_params, _senders) {
+        let contact_id = typeof _params === 'object' ? _params.contact_id : _params;
         if (typeof _senders === 'object') {
-            var data = egw.dataGetUIDdata(_senders[0].id);
+            let data = egw.dataGetUIDdata(_senders[0].id);
             contact_id = data.data.contact_id;
         }
         if (typeof contact_id !== 'undefined') {
-            var crm_list_1 = _params.crm_list || egw.preference('crm_list', 'addressbook');
-            if (!crm_list_1 || crm_list_1 === '~edit~')
-                crm_list_1 = 'infolog';
-            var url_1 = this.egw.link('/index.php', {
+            let crm_list = _params.crm_list || egw.preference('crm_list', 'addressbook');
+            if (!crm_list || crm_list === '~edit~')
+                crm_list = 'infolog';
+            let url = this.egw.link('/index.php', {
                 menuaction: 'addressbook.addressbook_ui.view',
                 ajax: 'true',
                 contact_id: contact_id,
-                crm_list: crm_list_1
+                crm_list: crm_list
             });
             // no framework, just open the url
             if (typeof this.egw.window.framework === 'undefined') {
-                return this.egw.open_link(url_1);
+                return this.egw.open_link(url);
             }
-            var open_1 = function (_title) {
-                var title = _title || this.egw.link_title('addressbook', contact_id, open_1);
+            let open = function (_title) {
+                let title = _title || this.egw.link_title('addressbook', contact_id, open);
                 if (title) {
-                    this.egw.window.framework.tabLinkHandler(url_1, {
+                    this.egw.window.framework.tabLinkHandler(url, {
                         displayName: title,
                         icon: _params.icon || this.egw.link('/api/avatar.php', {
                             contact_id: contact_id,
@@ -294,36 +276,36 @@ var AddressbookApp = /** @class */ (function (_super) {
                         }),
                         refreshCallback: function () {
                             var _a;
-                            (_a = etemplate2_1.etemplate2.getById("addressbook-view-" + this.appName)) === null || _a === void 0 ? void 0 : _a.app_obj.addressbook.view_set_list();
+                            (_a = etemplate2.getById("addressbook-view-" + this.appName)) === null || _a === void 0 ? void 0 : _a.app_obj.addressbook.view_set_list();
                         },
-                        id: contact_id + '-' + crm_list_1
+                        id: contact_id + '-' + crm_list
                     });
                 }
             }.bind(this);
-            open_1(_params.title);
+            open(_params.title);
         }
-    };
+    }
     /**
      * Set link filter for the already open & rendered  list
      *
      * @param {Object} filter Object with key / value pairs of filters to set
      */
-    AddressbookApp.prototype.view_set_list = function (filter) {
+    view_set_list(filter) {
         // Find the infolog list
-        var list = etemplate2_1.etemplate2.getById(jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id'));
+        var list = etemplate2.getById(jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id'));
         var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
         if (nm) {
             nm.applyFilters(filter);
         }
-    };
+    }
     /**
      * Run an action from CRM view toolbar
      *
      * @param {object} _action
      */
-    AddressbookApp.prototype.view_actions = function (_action, _widget) {
+    view_actions(_action, _widget) {
         var app_id = _widget.dom_id.split('_');
-        var et2 = etemplate2_1.etemplate2.getById(app_id[0]);
+        var et2 = etemplate2.getById(app_id[0]);
         var id = et2.widgetContainer.getArrayMgr('content').data.id;
         switch (_widget.id) {
             case 'button[edit]':
@@ -342,13 +324,13 @@ var AddressbookApp = /** @class */ (function (_super) {
                 et2.widgetContainer._inst.submit();
                 break;
         }
-    };
+    }
     /**
      * Open the calender to view the selected contacts
      * @param {egwAction} _action
      * @param {egwActionObject[]} _senders
      */
-    AddressbookApp.prototype.view_calendar = function (_action, _senders) {
+    view_calendar(_action, _senders) {
         var extras = {
             filter: 'all',
             cat_id: '',
@@ -390,14 +372,14 @@ var AddressbookApp = /** @class */ (function (_super) {
             extras.owner = extras.owner.join(',');
             egw.open('', 'calendar', 'list', extras, 'calendar');
         }
-    };
+    }
     /**
      * Add appointment or show calendar for selected contacts, call default nm_action after some checks
      *
      * @param _action
      * @param _senders
      */
-    AddressbookApp.prototype.add_cal = function (_action, _senders) {
+    add_cal(_action, _senders) {
         if (!_senders[0].id.match(/^(?:addressbook::)?[0-9]+$/)) {
             // send org-view requests to server
             _action.data.nm_action = "submit";
@@ -417,13 +399,13 @@ var AddressbookApp = /** @class */ (function (_super) {
             // Use framework to add calendar entry
             egw.open('', 'calendar', 'add', extra);
         }
-    };
+    }
     /**
      * View infolog entries linked to selected contact
      * @param {egwAction} _action Select action
      * @param {egwActionObject[]} _senders Selected contact(s)
      */
-    AddressbookApp.prototype.view_infolog = function (_action, _senders) {
+    view_infolog(_action, _senders) {
         var extras = {
             action: 'addressbook',
             action_id: [],
@@ -453,14 +435,14 @@ var AddressbookApp = /** @class */ (function (_super) {
         else {
             egw.open('', 'infolog', 'list', extras, 'infolog');
         }
-    };
+    }
     /**
      * Add task for selected contacts, call default nm_action after some checks
      *
      * @param _action
      * @param _senders
      */
-    AddressbookApp.prototype.add_task = function (_action, _senders) {
+    add_task(_action, _senders) {
         if (!_senders[0].id.match(/^(addressbook::)?[0-9]+$/)) {
             // send org-view requests to server
             _action.data.nm_action = "submit";
@@ -470,18 +452,18 @@ var AddressbookApp = /** @class */ (function (_super) {
             _action.data.nm_action = "popup";
         }
         nm_action(_action, _senders);
-    };
+    }
     /**
     * Actions via ajax
     *
     * @param {egwAction} _action
     * @param {egwActionObject[]} _selected
     */
-    AddressbookApp.prototype.action = function (_action, _selected) {
+    action(_action, _selected) {
         var _a, _b;
-        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
-        var no_notifications = ((_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked) || false;
-        var ids = [];
+        let all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        let no_notifications = ((_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked) || false;
+        let ids = [];
         // Loop so we get just the app's ID
         for (var i = 0; i < _selected.length; i++) {
             var id = _selected[i].id;
@@ -492,14 +474,14 @@ var AddressbookApp = /** @class */ (function (_super) {
                 egw.json("addressbook.addressbook_ui.ajax_action", [_action.id, ids, all, no_notifications]).sendRequest(true);
                 break;
         }
-    };
+    }
     /**
      * [More...] in phones clicked: copy allways shown phone numbers to phone popup
      *
      * @param {jQuery.event} _event
      * @param {et2_widget} _widget
      */
-    AddressbookApp.prototype.showphones = function (_event, _widget) {
+    showphones(_event, _widget) {
         this._copyvalues({
             tel_home: 'tel_home2',
             tel_work: 'tel_work2',
@@ -509,14 +491,14 @@ var AddressbookApp = /** @class */ (function (_super) {
         jQuery('table.editphones').css('display', 'inline');
         _event.stopPropagation();
         return false;
-    };
+    }
     /**
      * [OK] in phone popup clicked: copy phone numbers back to always shown ones
      *
      * @param {jQuery.event} _event
      * @param {et2_widget} _widget
      */
-    AddressbookApp.prototype.hidephones = function (_event, _widget) {
+    hidephones(_event, _widget) {
         this._copyvalues({
             tel_home2: 'tel_home',
             tel_work2: 'tel_work',
@@ -526,13 +508,13 @@ var AddressbookApp = /** @class */ (function (_super) {
         jQuery('table.editphones').css('display', 'none');
         _event.stopPropagation();
         return false;
-    };
+    }
     /**
      * Copy content of multiple fields
      *
      * @param {object} what object with src: dst pairs
      */
-    AddressbookApp.prototype._copyvalues = function (what) {
+    _copyvalues(what) {
         for (var name in what) {
             var src = this.et2.getWidgetById(name);
             var dst = this.et2.getWidgetById(what[name]);
@@ -546,17 +528,17 @@ var AddressbookApp = /** @class */ (function (_super) {
             if (typeof what[val] != 'undefined')
                 tel_prefer.set_value(what[val]);
         }
-    };
+    }
     /**
      * Callback function to create confirm dialog for duplicates contacts
      *
      * @param {object} _data includes duplicates contacts information
      *
      */
-    AddressbookApp.prototype._confirmdialog_callback = function (_data) {
+    _confirmdialog_callback(_data) {
         var confirmdialog = function (_title, _value, _buttons, _egw_or_appname) {
             return et2_createWidget("dialog", {
-                callback: function (_buttons, _value) {
+                callback(_buttons, _value) {
                     if (_buttons == et2_dialog.OK_BUTTON) {
                         var id = '';
                         var content = this.template.widgetContainer.getArrayMgr('content').data;
@@ -583,7 +565,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             for (var id in _data.doublicates) {
                 content.push({ "confirm": id, "name": _data.doublicates[id] });
             }
-            confirmdialog(this.egw.lang('Duplicate warning'), content, et2_dialog.BUTTONs_OK_CANCEL);
+            confirmdialog(this.egw.lang('Duplicate warning'), content, et2_dialog.BUTTONS_OK_CANCEL);
         }
         if (typeof _data.fileas_options == 'object' && this.et2) {
             var selbox = this.et2.getWidgetById('fileas_type');
@@ -591,14 +573,14 @@ var AddressbookApp = /** @class */ (function (_super) {
                 selbox.set_select_options(_data.fileas_sel_options);
             }
         }
-    };
+    }
     /**
      * Callback if certain fields get changed
      *
      * @param {widget} widget widget
      * @param {string} own_id Current AB id
      */
-    AddressbookApp.prototype.check_value = function (widget, own_id) {
+    check_value(widget, own_id) {
         // if we edit an account, call account_change to let it do it's stuff too
         if (this.et2.getWidgetById('account_lid')) {
             this.account_change(null, widget);
@@ -621,8 +603,8 @@ var AddressbookApp = /** @class */ (function (_super) {
                 name.set_value(value);
         }
         egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id], this._confirmdialog_callback, this, true, this).sendRequest();
-    };
-    AddressbookApp.prototype.show_custom_country = function (selectbox) {
+    }
+    show_custom_country(selectbox) {
         if (!selectbox)
             return;
         var custom_field_name = selectbox.id.replace("countrycode", "countryname");
@@ -645,14 +627,14 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (region) {
             region.set_country_code(selectbox.value);
         }
-    };
+    }
     /**
      * Add a new mailing list.  If any contacts are selected, they will be added.
      *
      * @param {egwAction} owner
      * @param {egwActionObject[]} selected
      */
-    AddressbookApp.prototype.add_new_list = function (owner, selected) {
+    add_new_list(owner, selected) {
         if (!owner || typeof owner == 'object') {
             var filter = this.et2.getWidgetById('filter');
             owner = filter.getValue() || egw.preference('add_default', 'addressbook');
@@ -676,7 +658,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
         }
         this._add_new_list_prompt(owner, contacts);
-    };
+    }
     /**
      * Ask the user for a name, then create a new list with the provided contacts
      * in it.
@@ -684,10 +666,10 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {int} owner
      * @param {String[]} contacts
      */
-    AddressbookApp.prototype._add_new_list_prompt = function (owner, contacts) {
+    _add_new_list_prompt(owner, contacts) {
         var lists = this.et2.getWidgetById('filter2');
-        var owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
-        var callback = function (button, values) {
+        let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
+        let callback = function (button, values) {
             if (button == et2_dialog.OK_BUTTON) {
                 egw.json('addressbook.addressbook_ui.ajax_set_list', [0, values.name, values.owner, contacts], function (result) {
                     if (typeof result == 'object')
@@ -714,7 +696,7 @@ var AddressbookApp = /** @class */ (function (_super) {
                 }).sendRequest(true);
             }
         };
-        var dialog = et2_createWidget("dialog", {
+        let dialog = et2_createWidget("dialog", {
             callback: callback,
             title: this.egw.lang('Add a new list'),
             buttons: et2_dialog.BUTTONS_OK_CANCEL,
@@ -730,7 +712,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             class: "et2_prompt",
             minWidth: 400
         }, this.et2);
-    };
+    }
     /**
      * Rename the current distribution list selected in the nextmatch filter2
      *
@@ -740,7 +722,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {egwAction} action Action selected in context menu (rename)
      * @param {egwActionObject[]} selected The selected row(s).  Not used for this.
      */
-    AddressbookApp.prototype.rename_list = function (action, selected) {
+    rename_list(action, selected) {
         var lists = this.et2.getWidgetById('filter2');
         var list = lists.getValue() || 0;
         var value = null;
@@ -762,11 +744,11 @@ var AddressbookApp = /** @class */ (function (_super) {
                 }).sendRequest(true);
             }
         }, this.egw.lang('Name for the distribution list'), this.egw.lang('Rename list'), value.label);
-    };
+    }
     /**
      * OnChange for distribution list selectbox
      */
-    AddressbookApp.prototype.filter2_onchange = function () {
+    filter2_onchange() {
         var filter = this.et2.getWidgetById('filter');
         var filter2 = this.et2.getWidgetById('filter2');
         var widget = this.et2.getWidgetById('nm');
@@ -786,11 +768,11 @@ var AddressbookApp = /** @class */ (function (_super) {
             return false;
         }
         return true;
-    };
+    }
     /**
      * Method to enable actions by comparing a field with given value
      */
-    AddressbookApp.prototype.nm_compare_field = function () {
+    nm_compare_field() {
         var field = this.et2.getWidgetById('filter2');
         if (field)
             var val = field.get_value();
@@ -800,13 +782,13 @@ var AddressbookApp = /** @class */ (function (_super) {
         else {
             return false;
         }
-    };
+    }
     /**
      * Apply advanced search filters to index nextmatch
      *
      * @param {object} filters
      */
-    AddressbookApp.prototype.adv_search = function (filters) {
+    adv_search(filters) {
         var index = window.opener.etemplate2.getById('addressbook-index');
         if (!index) {
             alert('Could not find index');
@@ -823,14 +805,14 @@ var AddressbookApp = /** @class */ (function (_super) {
         nm.activeFilters = {};
         nm.applyFilters(filters);
         return false;
-    };
+    }
     /**
      * Mail vCard
      *
      * @param {object} _action
      * @param {array} _elems
      */
-    AddressbookApp.prototype.adb_mail_vcard = function (_action, _elems) {
+    adb_mail_vcard(_action, _elems) {
         var link = { 'preset[type]': [], 'preset[file]': [] };
         var content = { data: { files: { file: [], type: [] } } };
         var nm = this.et2.getWidgetById('nm');
@@ -855,19 +837,19 @@ var AddressbookApp = /** @class */ (function (_super) {
                 return;
             }
         }
-    };
+    }
     /**
      * Action function to set business or private mail checkboxes to user preferences
      *
      * @param {egwAction} action Action user selected.
      */
-    AddressbookApp.prototype.mailCheckbox = function (action) {
+    mailCheckbox(action) {
         var preferences = {
             business: action.getManager().getActionById('email_business').checked ? true : false,
             private: action.getManager().getActionById('email_home').checked ? true : false
         };
         this.egw.set_preference('addressbook', 'preferredMail', preferences);
-    };
+    }
     /**
      * Action function to add the email address (business or home) of the selected
      * contacts to a compose email popup window.
@@ -878,7 +860,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      *  'email_business' or 'email_home', from server side definition of actions.
      * @param {egwActionObject[]} selected Selected rows
      */
-    AddressbookApp.prototype.addEmail = function (action, selected) {
+    addEmail(action, selected) {
         // Check for all selected.
         var nm = this.et2.getWidgetById('nm');
         if (fetchAll(selected, nm, jQuery.proxy(function (ids) {
@@ -921,7 +903,7 @@ var AddressbookApp = /** @class */ (function (_super) {
                 break;
         }
         return false;
-    };
+    }
     /**
      * Merge the selected contacts into the target document.
      *
@@ -931,7 +913,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {egwAction} action - The document they clicked
      * @param {egwActionObject[]} selected - Rows selected
      */
-    AddressbookApp.prototype.merge_mail = function (action, selected, target) {
+    merge_mail(action, selected, target) {
         // Special processing for email documents - ask about infolog
         if (action && action.data && selected.length > 1) {
             var callback = function (button, value) {
@@ -956,7 +938,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             // Normal processing for only one contact selected
             return nm_action(action, selected, target);
         }
-    };
+    }
     /**
      * Retrieve the current state of the application for future restoration
      *
@@ -965,12 +947,12 @@ var AddressbookApp = /** @class */ (function (_super) {
      *
      * @return {object} Application specific map representing the current state
      */
-    AddressbookApp.prototype.getState = function () {
+    getState() {
         // Most likely we're in the list view
-        var state = _super.prototype.getState.call(this);
+        var state = super.getState();
         if (jQuery.isEmptyObject(state)) {
             // Not in a list view.  Try to find contact ID
-            var etemplates = etemplate2_1.etemplate2.getByApplication('addressbook');
+            var etemplates = etemplate2.getByApplication('addressbook');
             for (var i = 0; i < etemplates.length; i++) {
                 var content = etemplates[i].widgetContainer.getArrayMgr("content");
                 if (content && content.getEntry('id')) {
@@ -980,7 +962,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
         }
         return state;
-    };
+    }
     /**
      * Set the application's state to the given state.
      *
@@ -992,7 +974,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      *
      * @return {boolean} false - Returns false to stop event propagation
      */
-    AddressbookApp.prototype.setState = function (state, template) {
+    setState(state, template) {
         var current_state = this.getState();
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
@@ -1010,11 +992,11 @@ var AddressbookApp = /** @class */ (function (_super) {
         }
         else if (jQuery.isEmptyObject(state)) {
             // Regular handling first to clear everything but advanced search
-            _super.prototype.setState.call(this, state);
+            super.setState(state);
             // Clear advanced search, which is in session and etemplate
             egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search', [], function () {
                 framework.setWebsiteTitle('addressbook', '');
-                var index = etemplate2_1.etemplate2.getById('addressbook-index');
+                var index = etemplate2.getById('addressbook-index');
                 if (index && index.widgetContainer) {
                     var nm = index.widgetContainer.getWidgetById('nm');
                     if (nm) {
@@ -1029,7 +1011,7 @@ var AddressbookApp = /** @class */ (function (_super) {
         else if (state.state.grouped_view) {
             // Deal with grouped views that are not valid (not in list of options)
             // by faking viewing that organisation
-            var index = etemplate2_1.etemplate2.getById('addressbook-index');
+            var index = etemplate2.getById('addressbook-index');
             if (index && index.widgetContainer) {
                 var grouped = index.widgetContainer.getWidgetById('grouped_view');
                 var options;
@@ -1055,15 +1037,15 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (typeof state.state.advanced_search === 'undefined') {
             state.state.advanced_search = false;
         }
-        return _super.prototype.setState.call(this, state);
-    };
+        return super.setState(state);
+    }
     /**
      * Field changed, call server validation
      *
      * @param {jQuery.Event} _ev
      * @param {et2_button} _widget
      */
-    AddressbookApp.prototype.account_change = function (_ev, _widget) {
+    account_change(_ev, _widget) {
         switch (_widget.id) {
             case 'account_passwd':
             case 'account_lid':
@@ -1089,16 +1071,16 @@ var AddressbookApp = /** @class */ (function (_super) {
                 }, this).sendRequest();
                 break;
         }
-    };
+    }
     /**
      * Get title in order to set it as document title
      * @returns {string}
      */
-    AddressbookApp.prototype.getWindowTitle = function () {
+    getWindowTitle() {
         var widget = this.et2.getWidgetById('n_fn');
         if (widget)
             return widget.options.value;
-    };
+    }
     /**
      * Enable/Disable geolocation action items in contextmenu base on address availabilty
      *
@@ -1106,7 +1088,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {egwActionObject[]} _selected selected rows
      * @returns {boolean} return false if no address found
      */
-    AddressbookApp.prototype.geoLocation_enabled = function (_action, _selected) {
+    geoLocation_enabled(_action, _selected) {
         // multiple selection is not supported
         if (_selected.length > 1)
             return false;
@@ -1132,7 +1114,7 @@ var AddressbookApp = /** @class */ (function (_super) {
             fields += addrs[i] ? addrs[i] : '';
         }
         return (url !== '' && fields !== '') ? true : false;
-    };
+    }
     /**
      * Generate a geo location URL based on geolocation_url in
      * site configuration
@@ -1143,7 +1125,7 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {string} _src_type type of source address ('browser'|'one'|'two')
      * @returns {Boolean|string} return url and return false if no address
      */
-    AddressbookApp.prototype.geoLocationUrl = function (_dest_data, _dest_type, _src_data, _src_type) {
+    geoLocationUrl(_dest_data, _dest_type, _src_data, _src_type) {
         var dest_type = _dest_type || 'one';
         var url = this.getGeolocationConfig();
         // exit if no url or invalide url given
@@ -1185,14 +1167,14 @@ var AddressbookApp = /** @class */ (function (_super) {
             }
         }
         return url !== '' ? url : false;
-    };
+    }
     /**
      * Open a popup base on selected address in provided map
      *
      * @param {object} _action
      * @param {object} _selected
      */
-    AddressbookApp.prototype.geoLocationExec = function (_action, _selected) {
+    geoLocationExec(_action, _selected) {
         var content = egw.dataGetUIDdata(_selected[0].id);
         var geolocation_src = egw.preference('geolocation_src', 'addressbook');
         var self = this;
@@ -1210,13 +1192,13 @@ var AddressbookApp = /** @class */ (function (_super) {
                 window.open(url, '_blank');
             }).sendRequest();
         }
-    };
+    }
     /**
      * Get geolocation_url stored in config|default url
      *
      * @returns {String}
      */
-    AddressbookApp.prototype.getGeolocationConfig = function () {
+    getGeolocationConfig() {
         // This default url should be identical to the first value of geolocation_url array
         // defined in addressbook_hooks::config
         var default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
@@ -1224,19 +1206,19 @@ var AddressbookApp = /** @class */ (function (_super) {
         if (geo_url)
             geo_url = geo_url[0];
         return geo_url || default_url;
-    };
+    }
     /**
      * Check to see if the selection contains at most one account
      *
      * @param {egwAction} action
      * @param {egwActionObject[]} selected Selected rows
      */
-    AddressbookApp.prototype.can_merge = function (action, selected) {
+    can_merge(action, selected) {
         return selected.filter(function (row) {
             var data = egw.dataGetUIDdata(row.id);
             return data && data.data.account_id;
         }).length <= 1;
-    };
+    }
     /**
      * Check if the share action is enabled for this entry
      * This only works for single contacts
@@ -1246,29 +1228,29 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param {egwActionObject} _target
      * @returns {boolean} if action is enabled
      */
-    AddressbookApp.prototype.is_share_enabled = function (_action, _entries, _target) {
+    is_share_enabled(_action, _entries, _target) {
         var enabled = true;
         for (var i = 0; i < _entries.length; i++) {
-            var id = _entries[i].id.split('::');
+            let id = _entries[i].id.split('::');
             if (isNaN(id[1])) {
                 return false;
             }
         }
         return enabled;
-    };
+    }
     /**
      * Check if selected user(s) is online then enable action
      * @param _action
      * @param _selected
      */
-    AddressbookApp.prototype.videoconference_isUserOnline = function (_action, _selected) {
-        var list = app.status ? app.status.getEntireList() : {};
-        for (var sel in _selected) {
+    videoconference_isUserOnline(_action, _selected) {
+        let list = app.status ? app.status.getEntireList() : {};
+        for (let sel in _selected) {
             if (sel == '0' && _selected[sel]['id'] == 'nm')
                 continue;
-            var row = egw.dataGetUIDdata(_selected[sel]['id']);
-            var enabled = false;
-            for (var entry in list) {
+            let row = egw.dataGetUIDdata(_selected[sel]['id']);
+            let enabled = false;
+            for (let entry in list) {
                 if (row.data && row.data.account_id && row.data.account_id == list[entry]['account_id']) {
                     enabled = list[entry]['data']['status']['active'];
                 }
@@ -1277,19 +1259,19 @@ var AddressbookApp = /** @class */ (function (_super) {
                 return false;
         }
         return true;
-    };
-    AddressbookApp.prototype.videoconference_isThereAnyCall = function (_action, _selected) {
+    }
+    videoconference_isThereAnyCall(_action, _selected) {
         return this.videoconference_isUserOnline(_action, _selected) && egw.getSessionItem('status', 'videoconference-session');
-    };
+    }
     /**
      * Call action
      * @param _action
      * @param _selected
      */
-    AddressbookApp.prototype.videoconference_actionCall = function (_action, _selected) {
-        var data = [];
-        for (var sel in _selected) {
-            var row = egw.dataGetUIDdata(_selected[sel]['id']);
+    videoconference_actionCall(_action, _selected) {
+        let data = [];
+        for (let sel in _selected) {
+            let row = egw.dataGetUIDdata(_selected[sel]['id']);
             data.push({
                 id: row.data.account_id,
                 name: row.data.n_fn,
@@ -1303,29 +1285,28 @@ var AddressbookApp = /** @class */ (function (_super) {
         else {
             app.status.makeCall(data);
         }
-    };
+    }
     /**
      * Check if new shared_with value is allowed / user has rights to share into that AB
      *
      * Remove the entry again, if user is not allowed
      */
-    AddressbookApp.prototype.shared_changed = function () {
-        var shared = this.et2.getInputWidgetById('shared_values');
-        var value = shared === null || shared === void 0 ? void 0 : shared.get_value();
+    shared_changed() {
+        let shared = this.et2.getInputWidgetById('shared_values');
+        let value = shared === null || shared === void 0 ? void 0 : shared.get_value();
         if (value) {
             this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
                     contact: this.et2.getInstanceManager().getValues(this.et2),
                     shared_values: value,
                     shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
-                }], function (_data) {
+                }], _data => {
                 if (Array.isArray(_data) && _data.length) {
                     // remove not allowed entries
-                    shared.set_value(value.filter(function (val) { return _data.indexOf(val) === -1; }));
+                    shared.set_value(value.filter(val => _data.indexOf(val) === -1));
                 }
             }).sendRequest();
         }
-    };
-    return AddressbookApp;
-}(egw_app_1.EgwApp));
+    }
+}
 app.classes.addressbook = AddressbookApp;
 //# sourceMappingURL=app.js.map

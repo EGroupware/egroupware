@@ -160,7 +160,10 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
 			{
 				const src = _jsFiles[0];
-				promise = import(_prefix ? _prefix+src : src);
+				promise = import(_prefix ? _prefix+src : src)
+					.catch((err) => {
+						console.log(src+":\n\n"+err.message);
+					});
 			}
 			else
 			{

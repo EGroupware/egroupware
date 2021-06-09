@@ -269,7 +269,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	// Sub-objects used for actual work
 	private readonly header: et2_nextmatch_header_bar;
 	dataview: any;
-	private controller: any;
+	controller: any;
 	private rowProvider: any;
 
 
