@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Exception\WrongParameter;
 
 /**
  * class definition
@@ -80,6 +81,14 @@ class importexport_definition implements importexport_iface_egw_record {
 			if ( !( importexport_definitions_bo::is_permitted($this->get_record_array()) || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
+			set_error_handler(function($errorno, $errorstr, $errorfile, $errorline)
+			{
+				if(0=== error_reporting())
+				{
+					return false;
+				}
+				throw new WrongParameter($errorstr);
+			});
 			try
 			{
 				$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
@@ -87,10 +96,13 @@ class importexport_definition implements importexport_iface_egw_record {
 				if($this->definition['filter']) $filter = importexport_arrayxml::xml2array( $this->definition['filter']  );
 				$this->definition['filter'] = $filter['root'];
 			}
-			catch (Exception $e)
+			catch (Throwable $e)
 			{
+				error_log(__METHOD__ . " Error constructing definition " .
+					($this->definition && $this->definition['name'] ? $this->definition['name'] : $_identifier));
 				error_log($e->getMessage());
 			}
+			restore_error_handler();
 		}
 	}
 
@@ -326,7 +338,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 */
 	public function move ( $_dst_identifier ) {
 		if ($this->user != $this->get_owner() && !$this->is_admin) {
-			throw('Error: User '. $this->user. 'does not have permissions to move definition '.$this->get_identifier());
+			throw new Api\Exception('Error: User '. $this->user. 'does not have permissions to move definition '.$this->get_identifier());
 		}
 		$old_object = clone $this;
 		try {
@@ -348,10 +360,10 @@ class importexport_definition implements importexport_iface_egw_record {
 	 */
 	public function delete () {
 		if($this->user != $this->get_owner() && !$this->is_admin) {
-			throw('Error: User '. $this->user. 'does not have permissions to delete definition '.$this->get_identifier());
+			throw new Api\Exception('Error: User '. $this->user. 'does not have permissions to delete definition '.$this->get_identifier());
 		}
 		if(!$this->so_sql->delete()) {
-			throw('Error: Api\Storage\Base was not able to delete definition: '.$this->get_identifier());
+			throw new Api\Exception('Error: Api\Storage\Base was not able to delete definition: '.$this->get_identifier());
 		}
 	}
 
