@@ -32,6 +32,9 @@ import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
 import {expose} from "./expose";
+import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
+import {EGW_KEY_ENTER, egw_keyHandler} from '../egw_action/egw_keymanager.js';
+import {etemplate2} from "./etemplate2";
 
 /**
  * Class which implements the "vfs" XET-Tag

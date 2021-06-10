@@ -19,7 +19,7 @@
 import {et2_createWidget} from "./et2_core_widget";
 import {et2_dialog} from "./et2_widget_dialog";
 import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
-import type {et2_nextmatch} from "./et2_extension_nextmatch";
+import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {ET2_DATAVIEW_STEPSIZE} from "./et2_dataview_controller";
 
 type Constructor<T = {}> = new (...args: any[]) => T;
