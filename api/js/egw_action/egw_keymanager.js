@@ -261,7 +261,7 @@ function egw_unregisterGlobalShortcut(_keyCode, _shift, _ctrl, _alt) {
  * _shift, _ctrl, _alt values have been translated into platform independent
  * values (for apple devices).
  */
-function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
+export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 
 	// Check whether there is a global shortcut waiting for the keypress event
 	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);

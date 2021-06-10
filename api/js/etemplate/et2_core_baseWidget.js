@@ -11,6 +11,7 @@ import { et2_DOMWidget } from './et2_core_DOMWidget';
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_register_widget } from "./et2_core_widget";
 import { et2_no_init } from "./et2_core_common";
+import { egwIsMobile } from "../egw_action/egw_action_common.js";
 /**
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode

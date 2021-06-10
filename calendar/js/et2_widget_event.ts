@@ -13,12 +13,19 @@
 	/etemplate/js/et2_core_valueWidget;
 */
 
-import {et2_register_widget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_calendar_daycol} from "./et2_widget_daycol";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
+import {et2_IDetachedDOM} from "../../api/js/etemplate/et2_core_interfaces";
+import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
+import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/egw_action.js';
+import {egw} from "../../api/js/jsapi/egw_global";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
+import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view

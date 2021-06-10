@@ -29,7 +29,7 @@ import {et2_dataview_tile} from "./et2_dataview_view_tile";
 import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
-import {framework, Iegw} from "../jsapi/egw_global";
+import {framework, Iegw, egw} from "../jsapi/egw_global";
 import {
 	egw_getActionManager,
 	egw_getObjectManager,

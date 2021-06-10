@@ -19,6 +19,7 @@ import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import "./CRM.js";
+import {egw} from "../../api/js/jsapi/egw_global";
 
 /**
  * Object to call app.addressbook.openCRMview with

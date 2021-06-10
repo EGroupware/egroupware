@@ -9,6 +9,7 @@
  */
 import { EgwApp } from "../../api/js/jsapi/egw_app";
 import { fetchAll } from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * UI for resources
  */

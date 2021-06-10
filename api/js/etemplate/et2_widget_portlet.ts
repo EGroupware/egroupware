@@ -22,6 +22,7 @@ import {egw} from "../jsapi/egw_global";
 import {et2_no_init} from "./et2_core_common";
 import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_dialog} from "./et2_widget_dialog";
+import {egw_getAppObjectManager, egwActionObject, egwAction, egwActionObjectInterface} from "../egw_action/egw_action.js";
 
 /**
  * Class which implements the UI of a Portlet

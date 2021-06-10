@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -8,129 +7,113 @@
  * @author Nathan Gray
  * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_calendar_planner_row = void 0;
 /*egw:uses
     /calendar/js/et2_widget_view.js;
     /calendar/js/et2_widget_daycol.js;
     /calendar/js/et2_widget_event.js;
 */
-var et2_core_widget_1 = require("../../api/js/etemplate/et2_core_widget");
-var et2_core_valueWidget_1 = require("../../api/js/etemplate/et2_core_valueWidget");
-var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritance");
-var et2_core_DOMWidget_1 = require("../../api/js/etemplate/et2_core_DOMWidget");
+import { et2_createWidget, et2_register_widget } from "../../api/js/etemplate/et2_core_widget";
+import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
+import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
+import { et2_action_object_impl } from "../../api/js/etemplate/et2_core_DOMWidget";
+import { EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, egw_getObjectManager, egwActionObject } from "../../api/js/egw_action/egw_action.js";
+import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * Class for one row of a planner
  *
  * This widget is responsible for the label on the side
  *
  */
-var et2_calendar_planner_row = /** @class */ (function (_super) {
-    __extends(et2_calendar_planner_row, _super);
+export class et2_calendar_planner_row extends et2_valueWidget {
     /**
      * Constructor
      */
-    function et2_calendar_planner_row(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_calendar_planner_row._attributes, _child || {})) || this;
-        _this._row_height = 20;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_planner_row._attributes, _child || {}));
+        this._row_height = 20;
         // Main container
-        _this.div = jQuery(document.createElement("div"))
+        this.div = jQuery(document.createElement("div"))
             .addClass("calendar_plannerRowWidget")
-            .css('width', _this.options.width);
-        _this.title = jQuery(document.createElement('div'))
+            .css('width', this.options.width);
+        this.title = jQuery(document.createElement('div'))
             .addClass("calendar_plannerRowHeader")
-            .appendTo(_this.div);
-        _this.rows = jQuery(document.createElement('div'))
+            .appendTo(this.div);
+        this.rows = jQuery(document.createElement('div'))
             .addClass("calendar_eventRows")
-            .appendTo(_this.div);
-        _this.setDOMNode(_this.div[0]);
+            .appendTo(this.div);
+        this.setDOMNode(this.div[0]);
         // Used for its date calculations
-        _this._date_helper = et2_createWidget('date-time', {}, null);
-        _this._date_helper.loadingFinished();
-        _this.set_start_date(_this.options.start_date);
-        _this.set_end_date(_this.options.end_date);
-        _this._cached_rows = [];
-        return _this;
+        this._date_helper = et2_createWidget('date-time', {}, null);
+        this._date_helper.loadingFinished();
+        this.set_start_date(this.options.start_date);
+        this.set_end_date(this.options.end_date);
+        this._cached_rows = [];
     }
-    et2_calendar_planner_row.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    doLoadingFinished() {
+        super.doLoadingFinished();
         this.set_label(this.options.label);
         this._draw();
         // Actions are set on the parent, so we need to explicitly get in here
         // and get ours
         this._link_actions(this.getParent().options.actions || []);
         return true;
-    };
-    et2_calendar_planner_row.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    }
+    destroy() {
+        super.destroy();
         // date_helper has no parent, so we must explicitly remove it
         this._date_helper.destroy();
         this._date_helper = null;
-    };
-    et2_calendar_planner_row.prototype.getDOMNode = function (_sender) {
+    }
+    getDOMNode(_sender) {
         if (_sender === this || !_sender) {
             return this.div[0];
         }
         if (_sender._parent === this) {
             return this.rows[0];
         }
-    };
+    }
     /**
      * Link the actions to the DOM nodes / widget bits.
      *
      * @param {object} actions {ID: {attributes..}+} map of egw action information
      */
-    et2_calendar_planner_row.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         // Get the parent?  Might be a grid row, might not.  Either way, it is
         // just a container with no valid actions
-        var objectManager = egw_getObjectManager(this.getInstanceManager().app, true, 1);
+        let objectManager = egw_getObjectManager(this.getInstanceManager().app, true, 1);
         objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId, 2) || objectManager;
-        var parent = objectManager.getObjectById(this.id, 1) || objectManager.getObjectById(this.getParent().id, 1) || objectManager;
+        let parent = objectManager.getObjectById(this.id, 1) || objectManager.getObjectById(this.getParent().id, 1) || objectManager;
         if (!parent) {
             egw.debug('error', 'No parent objectManager found');
             return;
         }
         // This binds into the egw action system.  Most user interactions (drag to move, resize)
         // are handled internally using jQuery directly.
-        var widget_object = this._actionObject || parent.getObjectById(this.id);
-        var aoi = new et2_core_DOMWidget_1.et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
-        var planner = this.getParent();
-        for (var i = 0; i < parent.children.length; i++) {
-            var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
+        let widget_object = this._actionObject || parent.getObjectById(this.id);
+        const aoi = new et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
+        const planner = this.getParent();
+        for (let i = 0; i < parent.children.length; i++) {
+            const parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
             if (parent_finder.length > 0) {
                 parent = parent.children[i];
                 break;
             }
         }
         // Determine if we allow a dropped event to use the invite/change actions
-        var _invite_enabled = function (action, event, target) {
+        const _invite_enabled = function (action, event, target) {
             var event = event.iface.getWidget();
-            var row = target.iface.getWidget() || false;
+            const row = target.iface.getWidget() || false;
             if (event === row || !event || !row ||
                 !event.options || !event.options.value.participants) {
                 return false;
             }
-            var owner_match = false;
-            var own_row = event.getParent() === row;
-            for (var id in event.options.value.participants) {
+            let owner_match = false;
+            const own_row = event.getParent() === row;
+            for (let id in event.options.value.participants) {
                 owner_match = owner_match || row.node.dataset.participants === '' + id;
             }
-            var enabled = !owner_match &&
+            const enabled = !owner_match &&
                 // Not inside its own timegrid
                 !own_row;
             widget_object.getActionLink('invite').enabled = enabled;
@@ -152,7 +135,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             if (event.type === 'drop' && widget_object.getActionLink('egw_link_drop').enabled) {
                 this.getWidget().getParent()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], this.getWidget().getParent(), event, _data.ui, this.getWidget());
             }
-            var drag_listener = function (_event, ui) {
+            const drag_listener = function (_event, ui) {
                 if (planner.options.group_by === 'month') {
                     var position = { left: _event.clientX, top: _event.clientY };
                 }
@@ -160,7 +143,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
                     var position = { top: ui.position.top, left: ui.position.left - jQuery(this).parent().offset().left };
                 }
                 aoi.getWidget().getParent()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', ui.helper)[0], position, 0);
-                var event = _data.ui.draggable.data('selected')[0];
+                let event = _data.ui.draggable.data('selected')[0];
                 if (!event || event.id && event.id.indexOf('calendar') !== 0) {
                     event = false;
                 }
@@ -168,7 +151,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
                     _invite_enabled(widget_object.getActionLink('invite').actionObj, event, widget_object);
                 }
             };
-            var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
+            const time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
             switch (_event) {
                 // Triggered once, when something is dragged into the timegrid's div
                 case EGW_AI_DRAG_OVER:
@@ -223,10 +206,10 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         widget_object.unregisterActions();
         // Go over the widget & add links - this is where we decide which actions are
         // 'allowed' for this widget at this time
-        var action_links = this._get_action_links(actions);
+        const action_links = this._get_action_links(actions);
         this.getParent()._init_links_dnd(widget_object.manager, action_links);
         widget_object.updateActionLinks(action_links);
-    };
+    }
     /**
      * Get all action-links / id's of 1.-level actions from a given action object
      *
@@ -235,30 +218,30 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
      * @param actions
      * @returns {Array}
      */
-    et2_calendar_planner_row.prototype._get_action_links = function (actions) {
-        var action_links = [];
+    _get_action_links(actions) {
+        const action_links = [];
         // Only these actions are allowed without a selection (empty actions)
-        var empty_actions = ['add'];
-        for (var i in actions) {
-            var action = actions[i];
+        const empty_actions = ['add'];
+        for (let i in actions) {
+            const action = actions[i];
             if (empty_actions.indexOf(action.id) !== -1 || action.type == 'drop') {
                 action_links.push(typeof action.id != 'undefined' ? action.id : i);
             }
         }
         return action_links;
-    };
+    }
     /**
      * Draw the individual divs for weekends and events
      */
-    et2_calendar_planner_row.prototype._draw = function () {
+    _draw() {
         // Remove any existing
         this.rows.remove('.calendar_eventRowsMarkedDay,.calendar_eventRowsFiller').nextAll().remove();
-        var days = 31;
-        var width = '100';
+        let days = 31;
+        let width = '100';
         if (this.getParent().options.group_by === 'month') {
             days = this.options.end_date.getUTCDate();
             if (days < 31) {
-                var diff = 31 - days;
+                const diff = 31 - days;
                 width = 'calc(' + (diff * 3.23) + '% - ' + (diff * 7) + 'px)';
             }
         }
@@ -271,8 +254,8 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             this.rows.after('<div class="calendar_eventRowsFiller"' +
                 ' style="width:' + width + ';" ></div>');
         }
-    };
-    et2_calendar_planner_row.prototype.set_label = function (label) {
+    }
+    set_label(label) {
         this.options.label = label;
         this.title.text(label);
         if (this.getParent().options.group_by === 'month') {
@@ -284,14 +267,14 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             this.title.attr('data-date', '');
             this.title.removeClass('et2_clickable');
         }
-    };
+    }
     /**
      * Change the start date
      *
      * @param {Date} new_date New end date
      * @returns {undefined}
      */
-    et2_calendar_planner_row.prototype.set_start_date = function (new_date) {
+    set_start_date(new_date) {
         if (!new_date || new_date === null) {
             throw new TypeError('Invalid end date. ' + new_date.toString());
         }
@@ -299,14 +282,14 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         this.options.start_date.setUTCHours(0);
         this.options.start_date.setUTCMinutes(0);
         this.options.start_date.setUTCSeconds(0);
-    };
+    }
     /**
      * Change the end date
      *
      * @param {string|number|Date} new_date New end date
      * @returns {undefined}
      */
-    et2_calendar_planner_row.prototype.set_end_date = function (new_date) {
+    set_end_date(new_date) {
         if (!new_date || new_date === null) {
             throw new TypeError('Invalid end date. ' + new_date.toString());
         }
@@ -314,21 +297,21 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         this.options.end_date.setUTCHours(23);
         this.options.end_date.setUTCMinutes(59);
         this.options.end_date.setUTCSeconds(59);
-    };
+    }
     /**
      * Mark special days (birthdays, holidays) on the planner
      *
      * @param {Date} start Start of the month
      * @param {number} days How many days in the month
      */
-    et2_calendar_planner_row.prototype._yearlyPlannerMarkDays = function (start, days) {
-        var day_width = 3.23;
-        var t = new Date(start);
-        var content = '';
-        for (var i = 0; i < days; i++) {
-            var holidays = [];
+    _yearlyPlannerMarkDays(start, days) {
+        const day_width = 3.23;
+        const t = new Date(start);
+        let content = '';
+        for (let i = 0; i < days; i++) {
+            const holidays = [];
             // TODO: implement this, pull / copy data from et2_widget_timegrid
-            var day_class = this.getParent().day_class_holiday(t, holidays);
+            const day_class = this.getParent().day_class_holiday(t, holidays);
             if (day_class) // no regular weekday
              {
                 content += '<div class="calendar_eventRowsMarkedDay ' + day_class +
@@ -339,7 +322,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             t.setUTCDate(t.getUTCDate() + 1);
         }
         return content;
-    };
+    }
     /**
      * Callback used when the daywise data changes
      *
@@ -349,17 +332,17 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
      * @param {String[]} event_ids
      * @returns {undefined}
      */
-    et2_calendar_planner_row.prototype._data_callback = function (event_ids) {
-        var events = [];
+    _data_callback(event_ids) {
+        const events = [];
         if (event_ids == null || typeof event_ids.length == 'undefined')
             event_ids = [];
-        for (var i = 0; i < event_ids.length; i++) {
-            var event_1 = egw.dataGetUIDdata('calendar::' + event_ids[i]);
-            event_1 = event_1 && event_1.data || false;
-            if (event_1 && event_1.date) {
-                events.push(event_1);
+        for (let i = 0; i < event_ids.length; i++) {
+            let event = egw.dataGetUIDdata('calendar::' + event_ids[i]);
+            event = event && event.data || false;
+            if (event && event.date) {
+                events.push(event);
             }
-            else if (event_1) {
+            else if (event) {
                 // Got an ID that doesn't belong
                 event_ids.splice(i--, 1);
             }
@@ -368,14 +351,10 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             this.resize();
             this._update_events(events);
         }
-    };
-    Object.defineProperty(et2_calendar_planner_row.prototype, "date_helper", {
-        get: function () {
-            return this._date_helper;
-        },
-        enumerable: false,
-        configurable: true
-    });
+    }
+    get date_helper() {
+        return this._date_helper;
+    }
     /**
      * Load the event data for this day and create event widgets for each.
      *
@@ -383,10 +362,10 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
      *
      * @param {Object[]} [events] Array of event information, one per event.
      */
-    et2_calendar_planner_row.prototype._update_events = function (events) {
+    _update_events(events) {
         // Remove all events
         while (this._children.length > 0) {
-            var node = this._children[this._children.length - 1];
+            const node = this._children[this._children.length - 1];
             this.removeChild(node);
             node.destroy();
         }
@@ -400,38 +379,38 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         }
         // Seperate loop so column sorting finds all children in the right place
         for (var c = 0; c < events.length; c++) {
-            var event_2 = this.getWidgetById('event_' + events[c].row_id);
-            if (!event_2)
+            let event = this.getWidgetById('event_' + events[c].row_id);
+            if (!event)
                 continue;
             if (this.isInTree()) {
-                event_2.doLoadingFinished();
+                event.doLoadingFinished();
             }
         }
-    };
+    }
     /**
      * Position the event according to it's time and how this widget is laid
      * out.
      *
      * @param {undefined|Object|et2_calendar_event} event
      */
-    et2_calendar_planner_row.prototype.position_event = function (event) {
-        var rows = this._spread_events();
-        var height = rows.length * this._row_height;
-        var row_width = this.rows.width();
+    position_event(event) {
+        const rows = this._spread_events();
+        const height = rows.length * this._row_height;
+        let row_width = this.rows.width();
         if (row_width == 0) {
             // Not rendered yet or something
             row_width = this.getParent().gridHeader.width() - this.title.width();
         }
         row_width -= 15;
-        for (var c = 0; c < rows.length; c++) {
+        for (let c = 0; c < rows.length; c++) {
             // Calculate vertical positioning
-            var top_1 = c * (100.0 / rows.length);
-            for (var i = 0; (rows[c].indexOf(event) >= 0 || !event) && i < rows[c].length; i++) {
+            const top = c * (100.0 / rows.length);
+            for (let i = 0; (rows[c].indexOf(event) >= 0 || !event) && i < rows[c].length; i++) {
                 // Calculate horizontal positioning
-                var left = this._time_to_position(rows[c][i].options.value.start);
-                var width = this._time_to_position(rows[c][i].options.value.end) - left;
+                const left = this._time_to_position(rows[c][i].options.value.start);
+                const width = this._time_to_position(rows[c][i].options.value.end) - left;
                 // Position the event
-                rows[c][i].div.css('top', top_1 + '%');
+                rows[c][i].div.css('top', top + '%');
                 rows[c][i].div.css('height', (100 / rows.length) + '%');
                 rows[c][i].div.css('left', left.toFixed(1) + '%');
                 rows[c][i].div.outerWidth((width / 100 * row_width) + 'px');
@@ -440,30 +419,30 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         if (height) {
             this.div.height(height + 'px');
         }
-    };
+    }
     /**
      * Sort a day's events into non-overlapping rows
      *
      * @returns {Array[]} Events sorted into rows
      */
-    et2_calendar_planner_row.prototype._spread_events = function () {
+    _spread_events() {
         // Keep it so we don't have to re-do it when the next event asks
-        var cached_length = 0;
+        let cached_length = 0;
         this._cached_rows.map(function (row) { cached_length += row.length; });
         if (cached_length === this._children.length) {
             return this._cached_rows;
         }
         // sorting the events in non-overlapping rows
-        var rows = [];
-        var row_end = [0];
+        const rows = [];
+        const row_end = [0];
         // Sort in chronological order, so earliest ones are at the top
         this._children.sort(function (a, b) {
-            var start = new Date(a.options.value.start) - new Date(b.options.value.start);
-            var end = new Date(a.options.value.end) - new Date(b.options.value.end);
+            const start = new Date(a.options.value.start) - new Date(b.options.value.start);
+            const end = new Date(a.options.value.end) - new Date(b.options.value.end);
             // Whole day events sorted by ID, normal events by start / end time
             if (a.options.value.whole_day && b.options.value.whole_day) {
                 // Longer duration comes first so we have nicer bars across the top
-                var duration = (new Date(b.options.value.end) - new Date(b.options.value.start)) -
+                const duration = (new Date(b.options.value.end) - new Date(b.options.value.start)) -
                     (new Date(a.options.value.end) - new Date(a.options.value.start));
                 return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
             }
@@ -472,64 +451,64 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             }
             return start ? start : end;
         });
-        for (var n = 0; n < this._children.length; n++) {
-            var event_3 = this._children[n].options.value || false;
-            if (typeof event_3.start !== 'object') {
-                this._date_helper.set_value(event_3.start);
-                event_3.start = new Date(this._date_helper.getValue());
+        for (let n = 0; n < this._children.length; n++) {
+            const event = this._children[n].options.value || false;
+            if (typeof event.start !== 'object') {
+                this._date_helper.set_value(event.start);
+                event.start = new Date(this._date_helper.getValue());
             }
-            if (typeof event_3.end !== 'object') {
-                this._date_helper.set_value(event_3.end);
-                event_3.end = new Date(this._date_helper.getValue());
+            if (typeof event.end !== 'object') {
+                this._date_helper.set_value(event.end);
+                event.end = new Date(this._date_helper.getValue());
             }
-            if (typeof event_3['start_m'] === 'undefined') {
-                var day_start = event_3.start.valueOf() / 1000;
-                var dst_check = new Date(event_3.start);
+            if (typeof event['start_m'] === 'undefined') {
+                let day_start = event.start.valueOf() / 1000;
+                const dst_check = new Date(event.start);
                 dst_check.setUTCHours(12);
                 // if daylight saving is switched on or off, correct $day_start
                 // gives correct times after 2am, times between 0am and 2am are wrong
-                var daylight_diff = day_start + 12 * 60 * 60 - (dst_check.valueOf() / 1000);
+                const daylight_diff = day_start + 12 * 60 * 60 - (dst_check.valueOf() / 1000);
                 if (daylight_diff) {
                     day_start -= daylight_diff;
                 }
-                event_3['start_m'] = event_3.start.getUTCHours() * 60 + event_3.start.getUTCMinutes();
-                if (event_3['start_m'] < 0) {
-                    event_3['start_m'] = 0;
-                    event_3['multiday'] = true;
+                event['start_m'] = event.start.getUTCHours() * 60 + event.start.getUTCMinutes();
+                if (event['start_m'] < 0) {
+                    event['start_m'] = 0;
+                    event['multiday'] = true;
                 }
-                event_3['end_m'] = event_3.end.getUTCHours() * 60 + event_3.end.getUTCMinutes();
-                if (event_3['end_m'] >= 24 * 60) {
-                    event_3['end_m'] = 24 * 60 - 1;
-                    event_3['multiday'] = true;
+                event['end_m'] = event.end.getUTCHours() * 60 + event.end.getUTCMinutes();
+                if (event['end_m'] >= 24 * 60) {
+                    event['end_m'] = 24 * 60 - 1;
+                    event['multiday'] = true;
                 }
-                if (!event_3.start.getUTCHours() && !event_3.start.getUTCMinutes() && event_3.end.getUTCHours() == 23 && event_3.end.getUTCMinutes() == 59) {
-                    event_3.whole_day_on_top = (event_3.non_blocking && event_3.non_blocking != '0');
+                if (!event.start.getUTCHours() && !event.start.getUTCMinutes() && event.end.getUTCHours() == 23 && event.end.getUTCMinutes() == 59) {
+                    event.whole_day_on_top = (event.non_blocking && event.non_blocking != '0');
                 }
             }
             // Skip events entirely on hidden weekends
-            if (this._hidden_weekend_event(event_3)) {
-                var node = this._children[n];
+            if (this._hidden_weekend_event(event)) {
+                const node = this._children[n];
                 this.removeChild(n--);
                 node.destroy();
                 continue;
             }
-            var event_start = new Date(event_3.start).valueOf();
+            const event_start = new Date(event.start).valueOf();
             for (var row = 0; row_end[row] > event_start; ++row)
                 ; // find a "free" row (no other event)
             if (typeof rows[row] === 'undefined')
                 rows[row] = [];
             rows[row].push(this._children[n]);
-            row_end[row] = new Date(event_3['end']).valueOf();
+            row_end[row] = new Date(event['end']).valueOf();
         }
         this._cached_rows = rows;
         return rows;
-    };
+    }
     /**
      * Check to see if the event is entirely on a hidden weekend
      *
      * @param values Array of event values, not an et2_widget_event
      */
-    et2_calendar_planner_row.prototype._hidden_weekend_event = function (values) {
+    _hidden_weekend_event(values) {
         if (!this.getParent() || this.getParent().options.group_by == 'month' || this.getParent().options.show_weekend) {
             return false;
         }
@@ -539,7 +518,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             return true;
         }
         return false;
-    };
+    }
     /**
      * Calculates the horizontal position based on the time given, as a percentage
      * between the start and end times
@@ -549,8 +528,8 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
      * @param {int|Date|string} end Latest possible time (100%)
      * @return {float} position in percent
      */
-    et2_calendar_planner_row.prototype._time_to_position = function (time, start, end) {
-        var pos = 0.0;
+    _time_to_position(time, start, end) {
+        let pos = 0.0;
         // Handle the different value types
         start = this.options.start_date;
         end = this.options.end_date;
@@ -558,9 +537,9 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
             start = new Date(start);
             end = new Date(end);
         }
-        var wd_start = 60 * (parseInt('' + egw.preference('workdaystarts', 'calendar')) || 9);
-        var wd_end = 60 * (parseInt('' + egw.preference('workdayends', 'calendar')) || 17);
-        var t = time;
+        const wd_start = 60 * (parseInt('' + egw.preference('workdaystarts', 'calendar')) || 9);
+        const wd_end = 60 * (parseInt('' + egw.preference('workdayends', 'calendar')) || 17);
+        let t = time;
         if (typeof time === 'number' && time < 3600) {
             t = new Date(start.valueOf() + wd_start * 3600 * 1000);
         }
@@ -573,11 +552,11 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         if (t >= end)
             return 100; // We are right of our scale
         // Remove space for weekends, if hidden
-        var weekend_count = 0;
-        var weekend_before = 0;
-        var partial_weekend = 0;
+        let weekend_count = 0;
+        let weekend_before = 0;
+        let partial_weekend = 0;
         if (this.getParent().options.group_by !== 'month' && this.getParent() && !this.getParent().options.show_weekend) {
-            var counter_date = new Date(start);
+            const counter_date = new Date(start);
             do {
                 if ([0, 6].indexOf(counter_date.getUTCDay()) !== -1) {
                     if (counter_date.getUTCDate() === t.getUTCDate() && counter_date.getUTCMonth() === t.getUTCMonth()) {
@@ -633,7 +612,7 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
         }
         pos = 100 * pos;
         return pos;
-    };
+    }
     // Resizable interface
     /**
      * Resize
@@ -641,31 +620,29 @@ var et2_calendar_planner_row = /** @class */ (function (_super) {
      * Parent takes care of setting proper width & height for the containing div
      * here we just need to adjust the events to fit the new size.
      */
-    et2_calendar_planner_row.prototype.resize = function () {
+    resize() {
         if (this.disabled || !this.div.is(':visible') || this.getParent().disabled) {
             return;
         }
-        var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
+        const row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
         this._row_height = (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
         row.remove();
         // Resize & position all events
         this.position_event();
-    };
-    et2_calendar_planner_row._attributes = {
-        start_date: {
-            name: "Start date",
-            type: "any"
-        },
-        end_date: {
-            name: "End date",
-            type: "any"
-        },
-        value: {
-            type: "any"
-        }
-    };
-    return et2_calendar_planner_row;
-}(et2_core_valueWidget_1.et2_valueWidget));
-exports.et2_calendar_planner_row = et2_calendar_planner_row;
-et2_core_widget_1.et2_register_widget(et2_calendar_planner_row, ["calendar-planner_row"]);
+    }
+}
+et2_calendar_planner_row._attributes = {
+    start_date: {
+        name: "Start date",
+        type: "any"
+    },
+    end_date: {
+        name: "End date",
+        type: "any"
+    },
+    value: {
+        type: "any"
+    }
+};
+et2_register_widget(et2_calendar_planner_row, ["calendar-planner_row"]);
 //# sourceMappingURL=et2_widget_planner_row.js.map

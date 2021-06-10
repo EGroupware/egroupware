@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Egroupware Calendar timegrid
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -8,30 +7,21 @@
  * @author Nathan Gray
  * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_calendar_timegrid = void 0;
 /*egw:uses
     /calendar/js/et2_widget_view.js;
 */
-var et2_core_widget_1 = require("../../api/js/etemplate/et2_core_widget");
-var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritance");
-var et2_widget_view_1 = require("./et2_widget_view");
-var et2_core_DOMWidget_1 = require("../../api/js/etemplate/et2_core_DOMWidget");
-var et2_dataview_view_grid_1 = require("../../api/js/etemplate/et2_dataview_view_grid");
-var et2_widget_daycol_1 = require("./et2_widget_daycol");
+import { et2_createWidget, et2_register_widget } from "../../api/js/etemplate/et2_core_widget";
+import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
+import { et2_calendar_view } from "./et2_widget_view";
+import { et2_action_object_impl } from "../../api/js/etemplate/et2_core_DOMWidget";
+import { et2_dataview_grid } from "../../api/js/etemplate/et2_dataview_view_grid";
+import { et2_calendar_daycol } from "./et2_widget_daycol";
+import { egw } from "../../api/js/jsapi/egw_global";
+import { et2_no_init } from "../../api/js/etemplate/et2_core_common";
+import { et2_IResizeable } from "../../api/js/etemplate/et2_core_interfaces";
+import { et2_calendar_event } from "./et2_widget_event";
+import { EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT, egwActionObject, egw_getObjectManager } from "../../api/js/egw_action/egw_action.js";
+import { et2_compileLegacyJS } from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
  *
@@ -46,58 +36,55 @@ var et2_widget_daycol_1 = require("./et2_widget_daycol");
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_timegrid = /** @class */ (function (_super) {
-    __extends(et2_calendar_timegrid, _super);
+export class et2_calendar_timegrid extends et2_calendar_view {
     /**
      * Constructor
      *
      * @memberOf et2_calendar_timegrid
      */
-    function et2_calendar_timegrid(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_calendar_timegrid._attributes, _child || {})) || this;
-        _this.daily_owner = false;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_timegrid._attributes, _child || {}));
+        this.daily_owner = false;
         // Main container
-        _this.div = jQuery(document.createElement("div"))
+        this.div = jQuery(document.createElement("div"))
             .addClass("calendar_calTimeGrid")
             .addClass("calendar_TimeGridNoLabel");
         // Headers
-        _this.gridHeader = jQuery(document.createElement("div"))
+        this.gridHeader = jQuery(document.createElement("div"))
             .addClass("calendar_calGridHeader")
-            .appendTo(_this.div);
-        _this.dayHeader = jQuery(document.createElement("div"))
-            .appendTo(_this.gridHeader);
+            .appendTo(this.div);
+        this.dayHeader = jQuery(document.createElement("div"))
+            .appendTo(this.gridHeader);
         // Contains times / rows
-        _this.scrolling = jQuery(document.createElement('div'))
+        this.scrolling = jQuery(document.createElement('div'))
             .addClass("calendar_calTimeGridScroll")
-            .appendTo(_this.div)
+            .appendTo(this.div)
             .append('<div class="calendar_calTimeLabels"></div>');
         // Contains days / columns
-        _this.days = jQuery(document.createElement("div"))
+        this.days = jQuery(document.createElement("div"))
             .addClass("calendar_calDayCols")
-            .appendTo(_this.scrolling);
+            .appendTo(this.scrolling);
         // Used for owners
-        _this.owner = et2_createWidget('description', {}, _this);
-        _this._labelContainer = jQuery(document.createElement("label"))
+        this.owner = et2_createWidget('description', {}, this);
+        this._labelContainer = jQuery(document.createElement("label"))
             .addClass("et2_label et2_link")
-            .appendTo(_this.gridHeader);
-        _this.gridHover = jQuery('<div style="height:5px;" class="calendar_calAddEvent drop-hover">');
+            .appendTo(this.gridHeader);
+        this.gridHover = jQuery('<div style="height:5px;" class="calendar_calAddEvent drop-hover">');
         // List of dates in Ymd
         // The first one should be start_date, last should be end_date
-        _this.day_list = [];
-        _this.day_widgets = [];
+        this.day_list = [];
+        this.day_widgets = [];
         // Timer to re-scale time to fit
-        _this.resize_timer = null;
-        _this.setDOMNode(_this.div[0]);
-        return _this;
+        this.resize_timer = null;
+        this.setDOMNode(this.div[0]);
     }
-    et2_calendar_timegrid.prototype.destroy = function () {
+    destroy() {
         // Stop listening to tab changes
         if (typeof framework !== 'undefined' && framework.getApplicationByName('calendar').tab) {
             jQuery(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
         }
-        _super.prototype.destroy.call(this);
+        super.destroy();
         // Delete all old objects
         this._actionObject.clear();
         this._actionObject.unregisterActions();
@@ -114,9 +101,9 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         if (this.resize_timer) {
             window.clearTimeout(this.resize_timer);
         }
-    };
-    et2_calendar_timegrid.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
         // Listen to tab show to make sure we scroll to the day start, not top
         if (typeof framework !== 'undefined' && framework.getApplicationByName('calendar').tab) {
             jQuery(framework.getApplicationByName('calendar').tab.contentDiv)
@@ -260,10 +247,10 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             .on('mousedown', jQuery.proxy(this._mouse_down, this))
             .on('mouseup', jQuery.proxy(this._mouse_up, this));
         return true;
-    };
-    et2_calendar_timegrid.prototype._createNamespace = function () {
+    }
+    _createNamespace() {
         return true;
-    };
+    }
     /**
      * Show the current time while dragging
      * Used for resizing as well as drag & drop
@@ -272,7 +259,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param {type} helper
      * @param {type} height
      */
-    et2_calendar_timegrid.prototype._drag_helper = function (element, helper, height) {
+    _drag_helper(element, helper, height) {
         if (!element)
             return;
         element.dropEnd = this.gridHover;
@@ -314,7 +301,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         }
         jQuery(element).width(jQuery(helper).width());
         return element.dropEnd;
-    };
+    }
     /**
      * Handler for dropping an event on the timegrid
      *
@@ -323,7 +310,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param {type} ui
      * @param {type} dropEnd
      */
-    et2_calendar_timegrid.prototype._event_drop = function (timegrid, event, ui, dropEnd) {
+    _event_drop(timegrid, event, ui, dropEnd) {
         var e = new jQuery.Event('change');
         e.originalEvent = event;
         e.data = { start: 0 };
@@ -371,7 +358,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                         loading.remove();
                         return;
                     }
-                    var duration;
+                    let duration;
                     //Get infologID if in case if it's an integrated infolog event
                     if (event_data.app === 'infolog') {
                         // Duration - infologs are always non-blocking
@@ -418,7 +405,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 });
             }
         }
-    };
+    }
     /**
      * Something changed, and the days need to be re-drawn.  We wait a bit to
      * avoid re-drawing twice if start and end date both changed, then recreate
@@ -430,7 +417,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      *	Waiting until invalidate completes prevents 2 updates when changing the date range.
      * @returns {undefined}
      */
-    et2_calendar_timegrid.prototype.invalidate = function (trigger) {
+    invalidate(trigger) {
         // Reset the list of days
         this.day_list = [];
         // Wait a bit to see if anything else changes, then re-draw the days
@@ -455,15 +442,15 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             this.widget._updateNow();
             // Hide loader
             window.setTimeout(jQuery.proxy(function () { this.loader.hide(); }, this.widget), 200);
-        }, { widget: this, "trigger": trigger }), et2_dataview_view_grid_1.et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
-    };
-    et2_calendar_timegrid.prototype.detachFromDOM = function () {
+        }, { widget: this, "trigger": trigger }), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+    }
+    detachFromDOM() {
         // Remove the binding to the change handler
         jQuery(this.div).off(".et2_calendar_timegrid");
-        return _super.prototype.detachFromDOM.call(this);
-    };
-    et2_calendar_timegrid.prototype.attachToDOM = function () {
-        var result = _super.prototype.attachToDOM.call(this);
+        return super.detachFromDOM();
+    }
+    attachToDOM() {
+        let result = super.attachToDOM();
         // Add the binding for the event change handler
         jQuery(this.div).on("change.et2_calendar_timegrid", '.calendar_calEvent', this, function (e) {
             // Make sure function gets a reference to the widget
@@ -482,21 +469,21 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             e.stopPropagation();
         });
         return result;
-    };
-    et2_calendar_timegrid.prototype.getDOMNode = function (_sender) {
+    }
+    getDOMNode(_sender) {
         if (_sender === this || !_sender) {
             return this.div ? this.div[0] : null;
         }
-        else if (_sender.instanceOf(et2_widget_daycol_1.et2_calendar_daycol)) {
+        else if (_sender.instanceOf(et2_calendar_daycol)) {
             return this.days ? this.days[0] : null;
         }
         else if (_sender) {
             return this.gridHeader ? this.gridHeader[0] : null;
         }
-    };
-    et2_calendar_timegrid.prototype.set_disabled = function (disabled) {
+    }
+    set_disabled(disabled) {
         var old_value = this.options.disabled;
-        _super.prototype.set_disabled.call(this, disabled);
+        super.set_disabled(disabled);
         if (disabled) {
             this.loader.show();
         }
@@ -506,35 +493,35 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             // to the top, so add 2px;
             this.scrolling.scrollTop(this._top_time + 2);
         }
-    };
+    }
     /**
      * Update the 'now' line
      * @private
      */
     // @ts-ignore
-    et2_calendar_timegrid.prototype._updateNow = function () {
-        var now = _super.prototype._updateNow.call(this);
+    _updateNow() {
+        let now = super._updateNow();
         if (now === false || this.options.granularity == 0 || !this.div.is(':visible')) {
             this.now_div.hide();
             return false;
         }
         // Position & show line
-        var set_line = function (line, now, day) {
+        let set_line = function (line, now, day) {
             line.appendTo(day.getDOMNode()).show();
-            var pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
+            let pos = day._time_to_position(now.getUTCHours() * 60 + now.getUTCMinutes());
             //this.now_div.position({my: 'left', at: 'left', of: day.getDOMNode()});
             line.css('top', pos + '%');
         };
         // Showing just 1 day, multiple owners - span all
         if (this.daily_owner && this.day_list.length == 1) {
-            var day = this.day_widgets[0];
+            let day = this.day_widgets[0];
             set_line(this.now_div, now, day);
             this.now_div.css('width', (this.day_widgets.length * 100) + '%');
             return true;
         }
         // Find the day of the week
         for (var i = 0; i < this.day_widgets.length; i++) {
-            var day = this.day_widgets[i];
+            let day = this.day_widgets[i];
             if (day.getDate() >= now) {
                 day = this.day_widgets[i - 1];
                 set_line(this.now_div, now, day);
@@ -543,11 +530,11 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }
         }
         return true;
-    };
+    }
     /**
      * Clear everything, and redraw the whole grid
      */
-    et2_calendar_timegrid.prototype._drawGrid = function () {
+    _drawGrid() {
         this.div.css('height', this.options.height)
             .empty();
         this.loader.prependTo(this.div).show();
@@ -555,12 +542,12 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         this._drawTimes();
         // Draw in the vertical - the days
         this.invalidate();
-    };
+    }
     /**
      * Creates the DOM nodes for the times in the left column, and the horizontal
      * lines (mostly via CSS) that span the whole date range.
      */
-    et2_calendar_timegrid.prototype._drawTimes = function () {
+    _drawTimes() {
         jQuery('.calendar_calTimeRow', this.div).remove();
         this.div.toggleClass('calendar_calTimeGridList', this.options.granularity === 0);
         this.gridHeader
@@ -581,7 +568,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             this.days.css('height', '100%');
             this.iterateOver(function (day) {
                 day.resize();
-            }, this, et2_widget_daycol_1.et2_calendar_daycol);
+            }, this, et2_calendar_daycol);
             return;
         }
         var wd_start = 60 * this.options.day_start;
@@ -643,14 +630,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         this.gridHover.css('height', this.rowHeight);
         // Scroll to start of day
         this.scrolling.scrollTop(this._top_time);
-    };
+    }
     /**
      * As window size and number of all day non-blocking events change, we need
      * to re-scale the time grid to make sure the full working day is shown.
      *
      * We use a timeout to avoid doing it multiple times if redrawing or resizing.
      */
-    et2_calendar_timegrid.prototype.resizeTimes = function () {
+    resizeTimes() {
         // Hide resizing from user
         this.loader.show();
         // Wait a bit to see if anything else changes, then re-draw the times
@@ -666,12 +653,12 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 this._resizeTimes();
             }
         }, this), 1);
-    };
+    }
     /**
      * Re-scale the time grid to make sure the full working day is shown.
      * This is the timeout callback that does the actual re-size immediately.
      */
-    et2_calendar_timegrid.prototype._resizeTimes = function () {
+    _resizeTimes() {
         if (!this.div.is(':visible')) {
             return;
         }
@@ -700,13 +687,13 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }, this, et2_IResizeable);
         }
         this.loader.hide();
-    };
+    }
     /**
      * Set up the needed day widgets to correctly display the selected date
      * range.  First we calculate the needed dates, then we create any needed
      * widgets.  Existing widgets are recycled rather than discarded.
      */
-    et2_calendar_timegrid.prototype._drawDays = function () {
+    _drawDays() {
         this.scrolling.append(this.days);
         // If day list is still empty, recalculate it from start & end date
         if (this.day_list.length === 0 && this.options.start_date && this.options.end_date) {
@@ -822,14 +809,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             this.day_col.setDetachedAttributes(nodes.clone(),)
         }
         */
-    };
+    }
     /**
      * Set header classes
      *
      */
-    et2_calendar_timegrid.prototype.set_header_classes = function () {
+    set_header_classes() {
         var day;
-        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+        let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
         for (var i = 0; i < this.day_widgets.length; i++) {
             day = this.day_widgets[i];
             // Classes
@@ -841,21 +828,21 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 day.set_class('');
             }
         }
-    };
+    }
     /**
      * Update UI while scrolling within the selected time
      *
      * Toggles out of view indicators and adjusts not visible headers
      * @param {Event} event Scroll event
      */
-    et2_calendar_timegrid.prototype._scroll = function (event) {
+    _scroll(event) {
         if (!this.day_widgets)
             return;
         // Loop through days, let them deal with it
         for (var day = 0; day < this.day_widgets.length; day++) {
             this.day_widgets[day]._out_of_view();
         }
-    };
+    }
     /**
      * Calculate a list of days between start and end date, skipping weekends if
      * desired.
@@ -867,7 +854,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      *
      * @returns {string[]} List of days in Ymd format
      */
-    et2_calendar_timegrid.prototype._calculate_day_list = function (start_date, end_date, show_weekend) {
+    _calculate_day_list(start_date, end_date, show_weekend) {
         var day_list = [];
         this.date_helper.set_value(end_date);
         var end = this.date_helper.date.getTime();
@@ -883,13 +870,13 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         // though the limit is more based on how wide the screen is
         while (end >= this.date_helper.date.getTime() && i++ <= 14);
         return day_list;
-    };
+    }
     /**
      * Link the actions to the DOM nodes / widget bits.
      *
      * @param {object} actions {ID: {attributes..}+} map of egw action information
      */
-    et2_calendar_timegrid.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         // Get the parent?  Might be a grid row, might not.  Either way, it is
         // just a container with no valid actions
         var objectManager = egw_getObjectManager(this.getInstanceManager().app, true, 1);
@@ -903,7 +890,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         // This binds into the egw action system.  Most user interactions (drag to move, resize)
         // are handled internally using jQuery directly.
         var widget_object = this._actionObject || parent.getObjectById(this.id);
-        var aoi = new et2_core_DOMWidget_1.et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
+        var aoi = new et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
         for (var i = 0; i < parent.children.length; i++) {
             var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
             if (parent_finder.length > 0) {
@@ -912,7 +899,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }
         }
         // Determine if we allow a dropped event to use the invite/change actions
-        var _invite_enabled = function (action, event, target) {
+        let _invite_enabled = function (action, event, target) {
             var event = event.iface.getWidget();
             var timegrid = target.iface.getWidget() || false;
             if (event === timegrid || !event || !timegrid ||
@@ -936,7 +923,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                             owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
                             own_timegrid = (col === event.getParent());
                         }
-                    }, this, et2_widget_daycol_1.et2_calendar_daycol);
+                    }, this, et2_calendar_daycol);
                 }
             }
             var enabled = !owner_match &&
@@ -1035,14 +1022,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         var action_links = this._get_action_links(actions);
         this._init_links_dnd(widget_object.manager, action_links);
         widget_object.updateActionLinks(action_links);
-    };
+    }
     /**
      * Automatically add dnd support for linking
      *
      * @param {type} mgr
      * @param {type} actionLinks
      */
-    et2_calendar_timegrid.prototype._init_links_dnd = function (mgr, actionLinks) {
+    _init_links_dnd(mgr, actionLinks) {
         if (this.options.readonly)
             return;
         var self = this;
@@ -1155,7 +1142,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                                     if (col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length) {
                                         add_owner = col.options.owner;
                                     }
-                                }, this, et2_widget_daycol_1.et2_calendar_daycol);
+                                }, this, et2_calendar_daycol);
                             }
                             egw().json('calendar.calendar_uiforms.ajax_invite', [
                                 button_id === 'series' ? event_data.id : event_data.app_id,
@@ -1199,7 +1186,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             actionLinks.push(drag_action.id);
         }
         drag_action.set_dragType(['link', 'calendar']);
-    };
+    }
     /**
      * Get all action-links / id's of 1.-level actions from a given action object
      *
@@ -1208,7 +1195,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param actions
      * @returns {Array}
      */
-    et2_calendar_timegrid.prototype._get_action_links = function (actions) {
+    _get_action_links(actions) {
         var action_links = [];
         // TODO: determine which actions are allowed without an action (empty actions)
         for (var i in actions) {
@@ -1218,7 +1205,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }
         }
         return action_links;
-    };
+    }
     /**
      * Provide specific data to be displayed.
      * This is a way to set start and end dates, owner and event data in one call.
@@ -1239,7 +1226,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      *	necessarily an entry from the resource app), or a list containing a
      *	combination of both.
      */
-    et2_calendar_timegrid.prototype.set_value = function (events) {
+    set_value(events) {
         if (typeof events !== 'object')
             return false;
         var use_days_sent = true;
@@ -1249,7 +1236,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         if (events.end_date) {
             use_days_sent = false;
         }
-        _super.prototype.set_value.call(this, events);
+        super.set_value(events);
         if (use_days_sent) {
             var day_list = Object.keys(events);
             if (day_list.length) {
@@ -1258,18 +1245,18 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }
             // Sub widgets actually get their own data from egw.data, so we'll
             // stick it there
-            var consolidated = et2_widget_view_1.et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
+            var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
             for (var day in events) {
-                var day_list_1 = [];
+                let day_list = [];
                 for (var i = 0; i < events[day].length; i++) {
-                    day_list_1.push(events[day][i].row_id);
+                    day_list.push(events[day][i].row_id);
                     egw.dataStoreUID('calendar::' + events[day][i].row_id, events[day][i]);
                 }
                 // Might be split by user, so we have to check that too
                 for (var i = 0; i < this.options.owner.length; i++) {
                     var owner = consolidated ? this.options.owner : this.options.owner[i];
                     var day_id = CalendarApp._daywise_cache_id(day, owner);
-                    egw.dataStoreUID(day_id, day_list_1);
+                    egw.dataStoreUID(day_id, day_list);
                     if (consolidated)
                         break;
                 }
@@ -1281,7 +1268,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         if (!this.update_timer) {
             window.setTimeout(jQuery.proxy(function () { this.loader.hide(); }, this), 200);
         }
-    };
+    }
     /**
      * Set which user owns this.  Owner is passed along to the individual
      * days.
@@ -1289,9 +1276,9 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param {number|number[]} _owner Account ID
      * @returns {undefined}
      */
-    et2_calendar_timegrid.prototype.set_owner = function (_owner) {
+    set_owner(_owner) {
         var old = this.options.owner || 0;
-        _super.prototype.set_owner.call(this, _owner);
+        super.set_owner(_owner);
         this.owner.set_label('');
         this.div.removeClass('calendar_TimeGridNoLabel');
         // Check to see if it's our own calendar, with just us showing
@@ -1337,7 +1324,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             typeof old === 'string' && '' + old !== '' + this.options.owner)) {
             this.invalidate(true);
         }
-    };
+    }
     /**
      * Set a label for this week
      *
@@ -1345,7 +1332,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      *
      * @param {string} label
      */
-    et2_calendar_timegrid.prototype.set_label = function (label) {
+    set_label(label) {
         this.options.label = label;
         this._labelContainer.html(label);
         this.gridHeader.prepend(this._labelContainer);
@@ -1353,7 +1340,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         // but is empty, but give extra space for a single owner name
         this.div.toggleClass('calendar_TimeGridNoLabel', label.trim().length > 0 && label.trim().length <= 6 ||
             this.options.owner.length > 1);
-    };
+    }
     /**
      * Set how big the time divisions are
      *
@@ -1363,7 +1350,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      *
      * @param {number} minutes
      */
-    et2_calendar_timegrid.prototype.set_granularity = function (minutes) {
+    set_granularity(minutes) {
         // Avoid  < 0
         minutes = Math.max(0, minutes);
         if (this.options.granularity !== minutes) {
@@ -1380,13 +1367,13 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         else if (!this.update_timer) {
             this.resizeTimes();
         }
-    };
+    }
     /**
      * Turn on or off the visibility of weekends
      *
      * @param {boolean} weekends
      */
-    et2_calendar_timegrid.prototype.set_show_weekend = function (weekends) {
+    set_show_weekend(weekends) {
         weekends = weekends ? true : false;
         if (this.options.show_weekend !== weekends) {
             this.options.show_weekend = weekends;
@@ -1394,11 +1381,11 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 this.invalidate();
             }
         }
-    };
+    }
     /**
      * Call change handler, if set
      */
-    et2_calendar_timegrid.prototype.change = function () {
+    change() {
         if (this.onchange) {
             if (typeof this.onchange == 'function') {
                 // Make sure function gets a reference to the widget
@@ -1411,14 +1398,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 return (et2_compileLegacyJS(this.options.onchange, this, _node))();
             }
         }
-    };
+    }
     /**
      * Call event change handler, if set
      *
      * @param {type} event
      * @param {type} dom_node
      */
-    et2_calendar_timegrid.prototype.event_change = function (event, dom_node) {
+    event_change(event, dom_node) {
         if (this.onevent_change) {
             var event_data = this._get_event_info(dom_node);
             var event_widget = this.getWidgetById(event_data.widget_id);
@@ -1441,14 +1428,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             }, this));
         }
         return false;
-    };
-    et2_calendar_timegrid.prototype.get_granularity = function () {
+    }
+    get_granularity() {
         // get option, or user's preference
         if (typeof this.options.granularity === 'undefined') {
             this.options.granularity = egw.preference('interval', 'calendar') || 30;
         }
         return parseInt(this.options.granularity);
-    };
+    }
     /**
      * Click handler calling custom handler set via onclick attribute to this.onclick
      *
@@ -1459,7 +1446,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param {Event} _ev
      * @returns {boolean} Continue processing event (true) or stop (false)
      */
-    et2_calendar_timegrid.prototype.click = function (_ev) {
+    click(_ev) {
         var result = true;
         if (this.options.readonly)
             return;
@@ -1524,13 +1511,13 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             app.calendar.add(options);
             return false;
         }
-    };
+    }
     /**
      * Mousedown handler to support drag to create
      *
      * @param {jQuery.Event} event
      */
-    et2_calendar_timegrid.prototype._mouse_down = function (event) {
+    _mouse_down(event) {
         if (event.which !== 1)
             return;
         if (this.options.readonly)
@@ -1591,13 +1578,13 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             });
         }
         return this._drag_create_start(start);
-    };
+    }
     /**
      * Mouseup handler to support drag to create
      *
      * @param {jQuery.Event} event
      */
-    et2_calendar_timegrid.prototype._mouse_up = function (event) {
+    _mouse_up(event) {
         if (this.options.readonly)
             return;
         var end = jQuery.extend({}, this.gridHover[0].dataset);
@@ -1616,7 +1603,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         this.div.off('mousemove.dragcreate');
         this.gridHover.css('cursor', '');
         return this._drag_create_end(this.drag_create.event ? end : undefined);
-    };
+    }
     /**
      * Get time from position for drag and drop
      *
@@ -1627,7 +1614,7 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
      * @param {number} y
      * @returns {DOMNode[]} time node(s) for the given position
      */
-    et2_calendar_timegrid.prototype._get_time_from_position = function (x, y) {
+    _get_time_from_position(x, y) {
         x = Math.round(x);
         y = Math.round(y);
         var path = [];
@@ -1699,19 +1686,19 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         }
         this.gridHover.css('left', '');
         return this.gridHover;
-    };
+    }
     /**
      * Code for implementing et2_IDetachedDOM
      *
      * @param {array} _attrs array to add further attributes to
      */
-    et2_calendar_timegrid.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push('start_date', 'end_date');
-    };
-    et2_calendar_timegrid.prototype.getDetachedNodes = function () {
+    }
+    getDetachedNodes() {
         return [this.getDOMNode(this)];
-    };
-    et2_calendar_timegrid.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         this.div = jQuery(_nodes[0]);
         if (_values.start_date) {
             this.set_start_date(_values.start_date);
@@ -1719,12 +1706,12 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
         if (_values.end_date) {
             this.set_end_date(_values.end_date);
         }
-    };
+    }
     // Resizable interface
     /**
      * @param {boolean} [_too_small=null] Force the widget to act as if it was too small
      */
-    et2_calendar_timegrid.prototype.resize = function (_too_small) {
+    resize(_too_small) {
         if (this.disabled || !this.div.is(':visible')) {
             return;
         }
@@ -1810,14 +1797,14 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             day.set_left((day_width * i) + 'px');
             day.set_width(day_width + 'px');
         }
-    };
+    }
     /**
      * Set up for printing
      *
      * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
      *  (waiting for data)
      */
-    et2_calendar_timegrid.prototype.beforePrint = function () {
+    beforePrint() {
         if (this.disabled || !this.div.is(':visible')) {
             return;
         }
@@ -1856,11 +1843,11 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
             });
             this.div.css({ 'height': '', 'max-height': '' });
         }
-    };
+    }
     /**
      * Reset after printing
      */
-    et2_calendar_timegrid.prototype.afterPrint = function () {
+    afterPrint() {
         this.div.css('maxHeight', '');
         this.scrolling.children().css({ 'transform': '', 'overflow': '' });
         this.div.height(this.options.height);
@@ -1872,55 +1859,53 @@ var et2_calendar_timegrid = /** @class */ (function (_super) {
                 // Remove translation
                 .css({ 'transform': '', 'margin-bottom': '' });
         }
-    };
-    et2_calendar_timegrid._attributes = {
-        value: {
-            type: "any",
-            description: "An array of events, indexed by date (Ymd format)."
-        },
-        day_start: {
-            name: "Day start time",
-            type: "string",
-            default: parseInt('' + egw.preference('workdaystarts', 'calendar')) || 9,
-            description: "Work day start time.  If unset, this will default to the current user's preference"
-        },
-        day_end: {
-            name: "Day end time",
-            type: "string",
-            default: parseInt('' + egw.preference('workdayends', 'calendar')) || 17,
-            description: "Work day end time.  If unset, this will default to the current user's preference"
-        },
-        show_weekend: {
-            name: "Weekends",
-            type: "boolean",
-            // @ts-ignore
-            default: egw.preference('days_in_weekview', 'calendar') != 5,
-            description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
-        },
-        granularity: {
-            name: "Granularity",
-            type: "integer",
-            default: parseInt('' + egw.preference('interval', 'calendar')) || 30,
-            description: "How many minutes per row, or 0 to display events as a list"
-        },
-        "onchange": {
-            "name": "onchange",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when the date range changes."
-        },
-        "onevent_change": {
-            "name": "onevent_change",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when an event changes."
-        },
-        height: {
-            "default": '100%'
-        }
-    };
-    return et2_calendar_timegrid;
-}(et2_widget_view_1.et2_calendar_view));
-exports.et2_calendar_timegrid = et2_calendar_timegrid;
-et2_core_widget_1.et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);
+    }
+}
+et2_calendar_timegrid._attributes = {
+    value: {
+        type: "any",
+        description: "An array of events, indexed by date (Ymd format)."
+    },
+    day_start: {
+        name: "Day start time",
+        type: "string",
+        default: parseInt('' + egw.preference('workdaystarts', 'calendar')) || 9,
+        description: "Work day start time.  If unset, this will default to the current user's preference"
+    },
+    day_end: {
+        name: "Day end time",
+        type: "string",
+        default: parseInt('' + egw.preference('workdayends', 'calendar')) || 17,
+        description: "Work day end time.  If unset, this will default to the current user's preference"
+    },
+    show_weekend: {
+        name: "Weekends",
+        type: "boolean",
+        // @ts-ignore
+        default: egw.preference('days_in_weekview', 'calendar') != 5,
+        description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
+    },
+    granularity: {
+        name: "Granularity",
+        type: "integer",
+        default: parseInt('' + egw.preference('interval', 'calendar')) || 30,
+        description: "How many minutes per row, or 0 to display events as a list"
+    },
+    "onchange": {
+        "name": "onchange",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when the date range changes."
+    },
+    "onevent_change": {
+        "name": "onevent_change",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when an event changes."
+    },
+    height: {
+        "default": '100%'
+    }
+};
+et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);
 //# sourceMappingURL=et2_widget_timegrid.js.map

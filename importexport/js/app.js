@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware - Import/Export - Javascript UI
  *
@@ -9,48 +8,34 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
+import 'jquery';
+import 'jqueryui';
+import '../jsapi/egw_global';
+import '../etemplate/et2_types';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
+import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * JS for Import/Export
  *
  * @augments AppJS
  */
-var ImportExportApp = /** @class */ (function (_super) {
-    __extends(ImportExportApp, _super);
+class ImportExportApp extends EgwApp {
     /**
      * Constructor
      *
      * @memberOf app.infolog
      */
-    function ImportExportApp() {
+    constructor() {
         // call parent
-        return _super.call(this, 'importexport') || this;
+        super('importexport');
     }
     /**
      * Destructor
      */
-    ImportExportApp.prototype.destroy = function (_app) {
+    destroy(_app) {
         // call parent
-        _super.prototype.destroy.call(this, _app);
-    };
+        super.destroy(_app);
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -59,9 +44,9 @@ var ImportExportApp = /** @class */ (function (_super) {
      * @param {etemplate2} _et2 newly ready object
      * @param {string} _name template name
      */
-    ImportExportApp.prototype.et2_ready = function (_et2, _name) {
+    et2_ready(_et2, _name) {
         // call parent
-        _super.prototype.et2_ready.call(this, _et2, _name);
+        super.et2_ready(_et2, _name);
         if (this.et2.getWidgetById('export')) {
             if (!this.et2.getArrayMgr("content").getEntry("definition")) {
                 // et2 doesn't understand a disabled button in the normal sense
@@ -76,15 +61,15 @@ var ImportExportApp = /** @class */ (function (_super) {
                 jQuery('div.filters').hide();
             }
         }
-    };
+    }
     /**
      * Callback to download the file without destroying the etemplate request
      *
      * @param data URL to get the export file
      */
-    ImportExportApp.prototype.download = function (data) {
+    download(data) {
         // Try to get the file to download in the parent window
-        var app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp.appName);
+        let app_templates = this.egw.top.etemplate2.getByApplication(framework.activeApp.appName);
         if (app_templates.length > 0) {
             app_templates[0].download(data);
         }
@@ -92,8 +77,8 @@ var ImportExportApp = /** @class */ (function (_super) {
             // Couldn't download in opener, download here before popup closes
             this.et2.getInstanceManager().download(data);
         }
-    };
-    ImportExportApp.prototype.export_preview = function (event, widget) {
+    }
+    export_preview(event, widget) {
         var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
         jQuery('.content', preview).empty()
             .append('<div class="loading" style="width:100%;height:100%"></div>');
@@ -104,8 +89,8 @@ var ImportExportApp = /** @class */ (function (_super) {
             widget.clicked = false;
         }, this));
         return false;
-    };
-    ImportExportApp.prototype.import_preview = function (event, widget) {
+    }
+    import_preview(event, widget) {
         var test = widget.getRoot().getWidgetById('dry-run');
         if (test.getValue() == test.options.unselected_value)
             return true;
@@ -122,14 +107,14 @@ var ImportExportApp = /** @class */ (function (_super) {
                 .removeClass('loading');
         }, this));
         return false;
-    };
+    }
     /**
      * Open a popup to run a given definition
      *
      * @param {egwAction} action
      * @param {egwActionObject[]} selected
      */
-    ImportExportApp.prototype.run_definition = function (action, selected) {
+    run_definition(action, selected) {
         if (!selected || selected.length != 1)
             return;
         var id = selected[0].id || null;
@@ -141,12 +126,12 @@ var ImportExportApp = /** @class */ (function (_super) {
             appname: data.application,
             definition: data.definition_id
         }), "", '850x440', data.application);
-    };
+    }
     /**
      * Allowed users widget has been changed, if 'All users' or 'Just me'
      * was selected, turn off any other options.
      */
-    ImportExportApp.prototype.allowed_users_change = function (node, widget) {
+    allowed_users_change(node, widget) {
         var value = widget.getValue();
         // Only 1 selected, no checking needed
         if (value == null || value.length <= 1)
@@ -174,8 +159,7 @@ var ImportExportApp = /** @class */ (function (_super) {
         if (index >= 0) {
             widget.set_value(value);
         }
-    };
-    return ImportExportApp;
-}(egw_app_1.EgwApp));
+    }
+}
 app.classes.importexport = ImportExportApp;
 //# sourceMappingURL=app.js.map

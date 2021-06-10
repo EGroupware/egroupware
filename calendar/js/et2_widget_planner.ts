@@ -21,6 +21,10 @@ import {et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_calendar_event} from "./et2_widget_event";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
+import {egw} from "../../api/js/jsapi/egw_global";
+import {EGW_AI_DRAG_OVER, EGW_AO_FLAG_IS_CONTAINER, egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
+import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
+import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer

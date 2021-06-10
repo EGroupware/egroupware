@@ -18,7 +18,7 @@ import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
-import {egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
+import {egw, egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 
 /**

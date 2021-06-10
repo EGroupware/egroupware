@@ -16,6 +16,7 @@ import { etemplate2 } from "../../api/js/etemplate/etemplate2";
 import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
 import { fetchAll } from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import "./CRM.js";
+import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * UI for Addressbook
  *

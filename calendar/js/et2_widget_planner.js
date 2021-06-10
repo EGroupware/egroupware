@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Egroupware Calendar timegrid
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -8,32 +7,20 @@
  * @author Nathan Gray
  * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_calendar_planner = void 0;
 /*egw:uses
     /calendar/js/et2_widget_view.js;
     /calendar/js/et2_widget_planner_row.js;
     /calendar/js/et2_widget_event.js;
 */
-var et2_core_widget_1 = require("../../api/js/etemplate/et2_core_widget");
-var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritance");
-var et2_widget_view_1 = require("./et2_widget_view");
-var et2_core_DOMWidget_1 = require("../../api/js/etemplate/et2_core_DOMWidget");
-var et2_widget_event_1 = require("./et2_widget_event");
-var et2_widget_planner_row_1 = require("./et2_widget_planner_row");
+import { et2_register_widget } from "../../api/js/etemplate/et2_core_widget";
+import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
+import { et2_calendar_view } from "./et2_widget_view";
+import { et2_action_object_impl } from "../../api/js/etemplate/et2_core_DOMWidget";
+import { et2_calendar_event } from "./et2_widget_event";
+import { et2_calendar_planner_row } from "./et2_widget_planner_row";
+import { egw } from "../../api/js/jsapi/egw_global";
+import { EGW_AI_DRAG_OVER, EGW_AO_FLAG_IS_CONTAINER, egw_getObjectManager, egwActionObject } from "../../api/js/egw_action/egw_action.js";
+import { et2_compileLegacyJS } from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
  * ( > 10 days) span of time.  Events can be grouped into rows by either user,
@@ -42,20 +29,18 @@ var et2_widget_planner_row_1 = require("./et2_widget_planner_row");
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_planner = /** @class */ (function (_super) {
-    __extends(et2_calendar_planner, _super);
+export class et2_calendar_planner extends et2_calendar_view {
     /**
      * Constructor
      */
-    function et2_calendar_planner(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_calendar_planner._attributes, _child || {})) || this;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_planner._attributes, _child || {}));
         /**
          * These handle the differences between the different group types.
          * They provide the different titles, labels and grouping
          */
-        _this.groupers = {
+        this.groupers = {
             // Group by user has one row for each user
             user: {
                 // Title in top left corner
@@ -288,9 +273,9 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                     key = sprintf('%04d-%02d', year, month);
                     do {
                         var end_label_index = typeof label_index == "boolean" ? 0 : label_index;
-                        for (var i_1 = end_label_index; i_1 < labels.length; i_1++) {
-                            if (labels[i_1].id == key) {
-                                end_label_index = i_1;
+                        for (let i = end_label_index; i < labels.length; i++) {
+                            if (labels[i].id == key) {
+                                end_label_index = i;
                                 if (typeof rows[end_label_index] === 'undefined') {
                                     rows[end_label_index] = [];
                                 }
@@ -357,7 +342,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                         getInstanceManager: function () { return im; }
                     }, { application: 'calendar' });
                     var labels = [];
-                    var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+                    let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
                     if (!app_calendar.state.cat_id ||
                         app_calendar.state.cat_id.toString() === '' ||
                         app_calendar.state.cat_id.toString() == '0') {
@@ -399,7 +384,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 },
                 group: function (labels, rows, event) {
                     var cats = event.category;
-                    var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+                    let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
                     if (typeof event.category === 'string') {
                         cats = cats.split(',');
                     }
@@ -442,46 +427,45 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             }
         };
         // Main container
-        _this.div = jQuery(document.createElement("div"))
+        this.div = jQuery(document.createElement("div"))
             .addClass("calendar_plannerWidget");
         // Header
-        _this.gridHeader = jQuery(document.createElement("div"))
+        this.gridHeader = jQuery(document.createElement("div"))
             .addClass("calendar_plannerHeader")
-            .appendTo(_this.div);
-        _this.headerTitle = jQuery(document.createElement("div"))
+            .appendTo(this.div);
+        this.headerTitle = jQuery(document.createElement("div"))
             .addClass("calendar_plannerHeaderTitle")
-            .appendTo(_this.gridHeader);
-        _this.headers = jQuery(document.createElement("div"))
+            .appendTo(this.gridHeader);
+        this.headers = jQuery(document.createElement("div"))
             .addClass("calendar_plannerHeaderRows")
-            .appendTo(_this.gridHeader);
-        _this.rows = jQuery(document.createElement("div"))
+            .appendTo(this.gridHeader);
+        this.rows = jQuery(document.createElement("div"))
             .addClass("calendar_plannerRows")
-            .appendTo(_this.div);
-        _this.grid = jQuery(document.createElement("div"))
+            .appendTo(this.div);
+        this.grid = jQuery(document.createElement("div"))
             .addClass("calendar_plannerGrid")
-            .appendTo(_this.div);
-        _this.vertical_bar = jQuery(document.createElement("div"))
+            .appendTo(this.div);
+        this.vertical_bar = jQuery(document.createElement("div"))
             .addClass('verticalBar')
-            .appendTo(_this.div);
-        _this.value = [];
+            .appendTo(this.div);
+        this.value = [];
         // Update timer, to avoid redrawing twice when changing start & end date
-        _this.update_timer = null;
-        _this.doInvalidate = true;
-        _this.setDOMNode(_this.div[0]);
-        _this.registeredCallbacks = [];
-        _this.cache = {};
-        _this._deferred_row_updates = {};
-        return _this;
+        this.update_timer = null;
+        this.doInvalidate = true;
+        this.setDOMNode(this.div[0]);
+        this.registeredCallbacks = [];
+        this.cache = {};
+        this._deferred_row_updates = {};
     }
-    et2_calendar_planner.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    destroy() {
+        super.destroy();
         this.div.off();
         for (var i = 0; i < this.registeredCallbacks.length; i++) {
             egw.dataUnregisterUID(this.registeredCallbacks[i], null, this);
         }
-    };
-    et2_calendar_planner.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
         // Don't bother to draw anything if there's no date yet
         if (this.options.start_date) {
             this._drawGrid();
@@ -573,7 +557,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                  * @param {Object} ui
                  */
                 resize: function (event, ui) {
-                    var position;
+                    let position;
                     if (planner.options.group_by == 'month') {
                         position = { left: event.clientX, top: event.clientY };
                     }
@@ -610,7 +594,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             }
             // Passing to formatter, cancel out timezone
             if (time) {
-                var formatDate = new Date(time.valueOf() + time.getTimezoneOffset() * 60 * 1000);
+                const formatDate = new Date(time.valueOf() + time.getTimezoneOffset() * 60 * 1000);
                 planner.vertical_bar
                     .html('<span>' + date(egw.preference('timeformat', 'calendar') == 12 ? 'h:ia' : 'H:i', formatDate) + '</span>')
                     .show();
@@ -645,10 +629,10 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             planner._drag_create_end();
         });
         return true;
-    };
-    et2_calendar_planner.prototype._createNamespace = function () {
+    }
+    _createNamespace() {
         return true;
-    };
+    }
     /**
      * Something changed, and the planner needs to be re-drawn.  We wait a bit to
      * avoid re-drawing twice if start and end date both changed, then recreate.
@@ -657,7 +641,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      *	Waiting until invalidate completes prevents 2 updates when changing the date range.
      * @returns {undefined}
      */
-    et2_calendar_planner.prototype.invalidate = function (trigger) {
+    invalidate(trigger) {
         // Busy
         if (!this.doInvalidate)
             return;
@@ -685,14 +669,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             window.setTimeout(jQuery.proxy(function () { if (this.loader)
                 this.loader.hide(); }, this.widget), 500);
         }, { widget: this, "trigger": trigger }), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
-    };
-    et2_calendar_planner.prototype.detachFromDOM = function () {
+    }
+    detachFromDOM() {
         // Remove the binding to the change handler
         jQuery(this.div).off("change.et2_calendar_timegrid");
-        return _super.prototype.detachFromDOM.call(this);
-    };
-    et2_calendar_planner.prototype.attachToDOM = function () {
-        var result = _super.prototype.attachToDOM.call(this);
+        return super.detachFromDOM();
+    }
+    attachToDOM() {
+        let result = super.attachToDOM();
         // Add the binding for the event change handler
         jQuery(this.div).on("change.et2_calendar_timegrid", '.calendar_calEvent', this, function (e) {
             // Make sure function gets a reference to the widget
@@ -706,15 +690,15 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             return e.data.change.call(e.data, e, this);
         });
         return result;
-    };
-    et2_calendar_planner.prototype.getDOMNode = function (_sender) {
+    }
+    getDOMNode(_sender) {
         if (_sender === this || !_sender) {
             return this.div[0];
         }
         if (_sender._parent === this) {
             return this.rows[0];
         }
-    };
+    }
     /**
      * Creates all the DOM nodes for the planner grid
      *
@@ -726,7 +710,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @private
      *
      */
-    et2_calendar_planner.prototype._drawGrid = function () {
+    _drawGrid() {
         this.div.css('height', this.options.height);
         // Clear old events
         var delete_index = this._children.length - 1;
@@ -758,7 +742,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         // Set height for rows
         this.rows.height(this.div.height() - this.headers.outerHeight());
         // Draw the rows
-        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+        let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
         for (var key in labels) {
             if (!labels.hasOwnProperty(key))
                 continue;
@@ -788,7 +772,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             this._deferred_row_update();
         }, this), et2_calendar_planner.DEFERRED_ROW_TIME);
         this.value = [];
-    };
+    }
     /**
      * Draw a single row of the planner
      *
@@ -798,8 +782,8 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {Date} start
      * @param {Date} end
      */
-    et2_calendar_planner.prototype._drawRow = function (key, label, events, start, end) {
-        var row = et2_createWidget('calendar-planner_row', {
+    _drawRow(key, label, events, start, end) {
+        let row = et2_createWidget('calendar-planner_row', {
             id: 'planner_row_' + key,
             label: label,
             start_date: start,
@@ -811,9 +795,9 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             row.doLoadingFinished();
         }
         return row;
-    };
-    et2_calendar_planner.prototype._header_day_of_month = function () {
-        var day_width = 3.23; // 100.0 / 31;
+    }
+    _header_day_of_month() {
+        let day_width = 3.23; // 100.0 / 31;
         // month scale with navigation
         var content = '<div class="calendar_plannerScale">';
         var start = new Date(this.options.start_date);
@@ -833,20 +817,20 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>\n";
         return content;
-    };
+    }
     /**
      * Update the 'now' line
      * @private
      */
-    et2_calendar_planner.prototype._updateNow = function () {
-        var now = _super.prototype._updateNow.call(this);
+    _updateNow() {
+        let now = super._updateNow();
         if (now === false || this.grouper == this.groupers.month) {
             this.now_div.hide();
             return false;
         }
-        var row = null;
-        for (var i = 0; i < this._children.length && row == null; i++) {
-            if (this._children[i].instanceOf(et2_widget_planner_row_1.et2_calendar_planner_row)) {
+        let row = null;
+        for (let i = 0; i < this._children.length && row == null; i++) {
+            if (this._children[i].instanceOf(et2_calendar_planner_row)) {
                 row = this._children[i];
             }
         }
@@ -857,14 +841,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         this.now_div.appendTo(this.grid)
             .show()
             .css('left', row._time_to_position(now) + '%');
-    };
+    }
     /**
      * Make a header showing the months
      * @param {Date} start
      * @param {number} days
      * @returns {string} HTML snippet
      */
-    et2_calendar_planner.prototype._header_months = function (start, days) {
+    _header_months(start, days) {
         var content = '<div class="calendar_plannerScale">';
         var days_in_month = 0;
         var day_width = 100 / days;
@@ -894,7 +878,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>"; // end of plannerScale
         return content;
-    };
+    }
     /**
      * Make a header showing the week numbers
      *
@@ -902,13 +886,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {number} days
      * @returns {string} HTML snippet
      */
-    et2_calendar_planner.prototype._header_weeks = function (start, days) {
+    _header_weeks(start, days) {
         var content = '<div class="calendar_plannerScale" data-planner_view="week">';
         var state = '';
         // we're not using UTC so date() formatting function works
         var t = new Date(start.valueOf());
         // Make sure we're lining up on the week
-        var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+        let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
         var week_end = app_calendar.date.end_of_week(start);
         var days_in_week = Math.floor(((week_end - start) / (24 * 3600 * 1000)) + 1);
         var week_width = 100 / days * (days <= 7 ? days : days_in_week);
@@ -943,7 +927,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>"; // end of plannerScale
         return content;
-    };
+    }
     /**
      * Make a header for some days
      *
@@ -951,7 +935,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {number} days
      * @returns {string} HTML snippet
      */
-    et2_calendar_planner.prototype._header_days = function (start, days) {
+    _header_days(start, days) {
         var day_width = 100 / days;
         var content = '<div class="calendar_plannerScale' + (days > 3 ? 'Day' : '') + '" data-planner_view="day" >';
         // we're not using UTC so date() formatting function works
@@ -963,7 +947,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             var tempDate = new Date(t);
             tempDate.setMinutes(tempDate.getMinutes() - tempDate.getTimezoneOffset());
             var title = '';
-            var state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
+            let state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
             var day_class = this.day_class_holiday(state, holidays, days);
             if (days <= 3) {
                 title = this.egw().lang(date('l', t)) + ', ' + date('j', t) + '. ' + this.egw().lang(date('F', t));
@@ -980,7 +964,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>"; // end of plannerScale
         return content;
-    };
+    }
     /**
      * Create a header with hours
      *
@@ -988,7 +972,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {number} days
      * @returns {string} HTML snippet for the header
      */
-    et2_calendar_planner.prototype._header_hours = function (start, days) {
+    _header_hours(start, days) {
         var divisors = [1, 2, 3, 4, 6, 8, 12];
         var decr = 1;
         for (var i = 0; i < divisors.length; i++) // numbers dividing 24 without rest
@@ -1020,7 +1004,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }
         content += "</div>"; // end of plannerScale
         return content;
-    };
+    }
     /**
      * Applies class for today, and any holidays for current day
      *
@@ -1030,12 +1014,12 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      *
      * @return {string} CSS Classes for the day.  calendar_calBirthday, calendar_calHoliday, calendar_calToday and calendar_weekend as appropriate
      */
-    et2_calendar_planner.prototype.day_class_holiday = function (date, holiday_list, days) {
+    day_class_holiday(date, holiday_list, days) {
         if (!date)
             return '';
         var day_class = '';
         // Holidays and birthdays
-        var holidays = et2_widget_view_1.et2_calendar_view.get_holidays(this, date.getUTCFullYear());
+        var holidays = et2_calendar_view.get_holidays(this, date.getUTCFullYear());
         // Pass a string rather than the date object, to make sure it doesn't get changed
         this.date_helper.set_value(date.toJSON());
         var date_key = '' + this.date_helper.get_year() + sprintf('%02d', this.date_helper.get_month()) + sprintf('%02d', this.date_helper.get_date());
@@ -1066,14 +1050,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             day_class += "calendar_weekend ";
         }
         return day_class;
-    };
+    }
     /**
      * Link the actions to the DOM nodes / widget bits.
      *
      * @todo This currently does nothing
      * @param {object} actions {ID: {attributes..}+} map of egw action information
      */
-    et2_calendar_planner.prototype._link_actions = function (actions) {
+    _link_actions(actions) {
         if (!this._actionObject) {
             // Get the parent?  Might be a grid row, might not.  Either way, it is
             // just a container with no valid actions
@@ -1096,7 +1080,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         // This binds into the egw action system.  Most user interactions (drag to move, resize)
         // are handled internally using jQuery directly.
         var widget_object = this._actionObject || parent.getObjectById(this.id);
-        var aoi = new et2_core_DOMWidget_1.et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
+        var aoi = new et2_action_object_impl(this, this.getDOMNode(this)).getAOI();
         /**
          * Determine if we allow a dropped event to use the invite/change actions,
          * and enable or disable them appropriately
@@ -1122,7 +1106,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                         owner_match = owner_match || row.node.dataset[planner.options.group_by] === '' + id;
                         own_row = (row === event.getParent());
                     }
-                }, this, et2_widget_planner_row_1.et2_calendar_planner_row);
+                }, this, et2_calendar_planner_row);
             }
             var enabled = !owner_match &&
                 // Not inside its own row
@@ -1198,14 +1182,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         this._init_links_dnd(widget_object.manager, action_links);
         widget_object.updateActionLinks(action_links);
         this._actionObject = widget_object;
-    };
+    }
     /**
      * Automatically add dnd support for linking
      *
      * @param {type} mgr
      * @param {type} actionLinks
      */
-    et2_calendar_planner.prototype._init_links_dnd = function (mgr, actionLinks) {
+    _init_links_dnd(mgr, actionLinks) {
         if (this.options.readonly)
             return;
         var self = this;
@@ -1252,7 +1236,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 if (!links.length) {
                     return;
                 }
-                if (links.length && dropped && dropped.iface.getWidget() && dropped.iface.getWidget().instanceOf(et2_widget_event_1.et2_calendar_event)) {
+                if (links.length && dropped && dropped.iface.getWidget() && dropped.iface.getWidget().instanceOf(et2_calendar_event)) {
                     // Link the entries
                     egw.json(self.egw().getAppName() + ".etemplate_widget_link.ajax_link.etemplate", dropped.id.split('::').concat([links]), function (result) {
                         if (result) {
@@ -1275,7 +1259,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                     if (source[i].manager === target.manager) {
                         // Find the row, could have dropped on an event
                         var row = target.iface.getWidget();
-                        while (target.parent && row.instanceOf && !row.instanceOf(et2_widget_planner_row_1.et2_calendar_planner_row)) {
+                        while (target.parent && row.instanceOf && !row.instanceOf(et2_calendar_planner_row)) {
                             target = target.parent;
                             row = target.iface.getWidget();
                         }
@@ -1289,7 +1273,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                             jQuery('.calendar_timeDemo', loading).after('<div class="loading"></div>');
                         }
                         var event_data = egw.dataGetUIDdata(source[i].id).data;
-                        et2_widget_event_1.et2_calendar_event.recur_prompt(event_data, function (button_id) {
+                        et2_calendar_event.recur_prompt(event_data, function (button_id) {
                             if (button_id === 'cancel' || !button_id) {
                                 return;
                             }
@@ -1340,7 +1324,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             actionLinks.push(drag_action.id);
         }
         drag_action.set_dragType(['link', 'calendar']);
-    };
+    }
     /**
      * Get all action-links / id's of 1.-level actions from a given action object
      *
@@ -1349,7 +1333,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param actions
      * @returns {Array}
      */
-    et2_calendar_planner.prototype._get_action_links = function (actions) {
+    _get_action_links(actions) {
         var action_links = [];
         // Only these actions are allowed without a selection (empty actions)
         var empty_actions = ['add'];
@@ -1366,7 +1350,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             "visible": false
         });
         return action_links;
-    };
+    }
     /**
      * Show the current time while dragging
      * Used for resizing as well as drag & drop
@@ -1375,7 +1359,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {type} position
      * @param {type} height
      */
-    et2_calendar_planner.prototype._drag_helper = function (element, position, height) {
+    _drag_helper(element, position, height) {
         var time = this._get_time_from_position(position.left, position.top);
         element.dropEnd = time;
         var formatted_time = jQuery.datepicker.formatTime(egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm", {
@@ -1386,7 +1370,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         }, { "ampm": (egw.preference("timeformat") === "12") });
         element.innerHTML = '<div class="calendar_d-n-d_timeCounter"><span class="calendar_timeDemo" >' + formatted_time + '</span></div>';
         //jQuery(element).width(jQuery(helper).width());
-    };
+    }
     /**
      * Handler for dropping an event on the timegrid
      *
@@ -1394,7 +1378,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {type} event
      * @param {type} ui
      */
-    et2_calendar_planner.prototype._event_drop = function (planner, event, ui) {
+    _event_drop(planner, event, ui) {
         var e = new jQuery.Event('change');
         e.originalEvent = event;
         e.data = { start: 0 };
@@ -1428,13 +1412,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 });
             }
         }
-    };
+    }
     /**
      * Use the egw.data system to get data from the calendar list for the
      * selected time span.
      *
      */
-    et2_calendar_planner.prototype._fetch_data = function () {
+    _fetch_data() {
         var value = [];
         var fetch = false;
         this.doInvalidate = false;
@@ -1452,14 +1436,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         } while (t < end);
         this.doInvalidate = true;
         return value;
-    };
+    }
     /**
      * Deal with registering for data cache
      *
      * @param Date t
      * @param String owner Calendar owner
      */
-    et2_calendar_planner.prototype._cache_register = function (t, owner, last_data) {
+    _cache_register(t, owner, last_data) {
         // Cache is by date (and owner, if seperate)
         var date = t.getUTCFullYear() + sprintf('%02d', t.getUTCMonth() + 1) + sprintf('%02d', t.getUTCDate());
         var cache_id = CalendarApp._daywise_cache_id(date, owner);
@@ -1538,7 +1522,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             }
         }, this, this.getInstanceManager().execId, this.id);
         return value;
-    };
+    }
     /**
      * Because users may be participants in various events and the time it takes
      * to create many events, we don't want to update a row too soon - we may have
@@ -1549,7 +1533,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {type} id
      * @returns {undefined}
      */
-    et2_calendar_planner.prototype._deferred_row_update = function (id) {
+    _deferred_row_update(id) {
         // Something's in progress, skip
         if (!this.doInvalidate)
             return;
@@ -1578,7 +1562,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         if (this.rows.children().last().length) {
             this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
         }
-    };
+    }
     /**
      * Provide specific data to be displayed.
      * This is a way to set start and end dates, owner and event data in once call.
@@ -1591,10 +1575,10 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      *	Days should be in order.
      *
      */
-    et2_calendar_planner.prototype.set_value = function (events) {
+    set_value(events) {
         if (typeof events !== 'object')
             return false;
-        _super.prototype.set_value.call(this, events);
+        super.set_value(events);
         // Planner uses an array, not map
         var val = this.value;
         var array = [];
@@ -1602,7 +1586,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             array.push(val[key]);
         });
         this.value = array;
-    };
+    }
     /**
      * Change the start date
      * Planner view uses a date object internally
@@ -1610,10 +1594,10 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {string|number|Date} new_date New starting date
      * @returns {undefined}
      */
-    et2_calendar_planner.prototype.set_start_date = function (new_date) {
-        _super.prototype.set_start_date.call(this, new_date);
+    set_start_date(new_date) {
+        super.set_start_date(new_date);
         this.options.start_date = new Date(this.options.start_date);
-    };
+    }
     /**
      * Change the end date
      * Planner view uses a date object internally
@@ -1621,17 +1605,17 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {string|number|Date} new_date New end date
      * @returns {undefined}
      */
-    et2_calendar_planner.prototype.set_end_date = function (new_date) {
-        _super.prototype.set_end_date.call(this, new_date);
+    set_end_date(new_date) {
+        super.set_end_date(new_date);
         this.options.end_date = new Date(this.options.end_date);
-    };
+    }
     /**
      * Change how the planner is grouped
      *
      * @param {string|number} group_by 'user', 'month', or an integer category ID
      * @returns {undefined}
      */
-    et2_calendar_planner.prototype.set_group_by = function (group_by) {
+    set_group_by(group_by) {
         if (isNaN(group_by) && typeof this.groupers[group_by] === 'undefined') {
             throw new Error('Invalid group_by "' + group_by + '"');
         }
@@ -1641,7 +1625,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         if (old !== this.options.group_by && this.isAttached()) {
             this.invalidate(true);
         }
-    };
+    }
     /**
      * Set which users to display
      *
@@ -1655,56 +1639,56 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_planner.prototype.set_owner = function (_owner) {
-        _super.prototype.set_owner.call(this, _owner);
+    set_owner(_owner) {
+        super.set_owner(_owner);
         // If we're grouping by user, we need group members
         if (this.update_timer !== null && this.options.group_by == 'user') {
-            var options_1 = [];
-            var resource = {};
-            var missing_resources_1 = [];
+            let options = [];
+            let resource = {};
+            let missing_resources = [];
             if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
-                options_1 = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+                options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
             }
             else {
-                options_1 = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+                options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
             }
             for (var i = 0; i < this.options.owner.length; i++) {
                 var user = this.options.owner[i];
-                if (isNaN(user) || user >= 0 || !options_1)
+                if (isNaN(user) || user >= 0 || !options)
                     continue;
                 // Owner is a group, see if we have its members
-                if (options_1.find &&
-                    ((resource = options_1.find(function (element) {
+                if (options.find &&
+                    ((resource = options.find(function (element) {
                         return element.id == user;
                     })))) {
                     // Members found
                     continue;
                 }
                 // Group, but no users found.  Need those.
-                missing_resources_1.push(user);
+                missing_resources.push(user);
                 // Maybe api already has them?
                 egw.accountData(parseInt(user), 'account_fullname', true, function (result) {
-                    missing_resources_1.splice(missing_resources_1.indexOf(this), 1);
+                    missing_resources.splice(missing_resources.indexOf(this), 1);
                 }.bind(user), user);
             }
-            if (missing_resources_1.length > 0) {
+            if (missing_resources.length > 0) {
                 // Ask server, and WAIT or we have to redraw
-                egw.json('calendar_owner_etemplate_widget::ajax_owner', [missing_resources_1], function (data) {
-                    for (var owner in data) {
+                egw.json('calendar_owner_etemplate_widget::ajax_owner', [missing_resources], function (data) {
+                    for (let owner in data) {
                         if (!owner || typeof owner == "undefined")
                             continue;
-                        options_1.push(data[owner]);
+                        options.push(data[owner]);
                     }
                 }, this, false, this).sendRequest(false);
             }
         }
-    };
+    }
     /**
      * Turn on or off the visibility of weekends
      *
      * @param {boolean} weekends
      */
-    et2_calendar_planner.prototype.set_show_weekend = function (weekends) {
+    set_show_weekend(weekends) {
         weekends = weekends ? true : false;
         if (this.options.show_weekend !== weekends) {
             this.options.show_weekend = weekends;
@@ -1712,21 +1696,21 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 this.invalidate();
             }
         }
-    };
+    }
     /**
      * Turn on or off the visibility of hidden (empty) rows
      *
      * @param {boolean} hidden
      */
-    et2_calendar_planner.prototype.set_hide_empty = function (hidden) {
+    set_hide_empty(hidden) {
         this.options.hide_empty = hidden;
-    };
+    }
     /**
      * Call change handler, if set
      *
      * @param {type} event
      */
-    et2_calendar_planner.prototype.change = function (event) {
+    change(event) {
         if (this.onchange) {
             if (typeof this.onchange == 'function') {
                 // Make sure function gets a reference to the widget
@@ -1739,18 +1723,18 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 return (et2_compileLegacyJS(this.options.onchange, this, _node))();
             }
         }
-    };
+    }
     /**
      * Call event change handler, if set
      *
      * @param {type} event
      * @param {type} dom_node
      */
-    et2_calendar_planner.prototype.event_change = function (event, dom_node) {
+    event_change(event, dom_node) {
         if (this.onevent_change) {
             var event_data = this._get_event_info(dom_node);
             var event_widget = this.getWidgetById(event_data.widget_id);
-            et2_widget_event_1.et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function (button_id, event_data) {
+            et2_calendar_event.recur_prompt(event_data, jQuery.proxy(function (button_id, event_data) {
                 // No need to continue
                 if (button_id === 'cancel')
                     return false;
@@ -1769,7 +1753,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             }, this));
         }
         return false;
-    };
+    }
     /**
      * Click handler calling custom handler set via onclick attribute to this.onclick
      *
@@ -1780,7 +1764,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @param {Event} _ev
      * @returns {boolean} Continue processing event (true) or stop (false)
      */
-    et2_calendar_planner.prototype.click = function (_ev) {
+    click(_ev) {
         var result = true;
         // Drag to create in progress
         if (this.drag_create.start !== null)
@@ -1797,7 +1781,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 result = this.onclick.apply(this, args);
             }
             if (event.id && result && !this.options.disabled && !this.options.readonly) {
-                et2_widget_event_1.et2_calendar_event.recur_prompt(event);
+                et2_calendar_event.recur_prompt(event);
                 return false;
             }
             else if (!event.id) {
@@ -1847,7 +1831,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             });
             return false;
         }
-    };
+    }
     /**
      * Get time from position
      *
@@ -1856,7 +1840,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
      * @returns {Date|Boolean} A time for the given position, or false if one
      *	could not be determined.
      */
-    et2_calendar_planner.prototype._get_time_from_position = function (x, y) {
+    _get_time_from_position(x, y) {
         x = Math.round(x);
         y = Math.round(y);
         // Round to user's preferred event interval
@@ -1934,13 +1918,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             return false;
         this.date_helper.set_minutes(Math.round(rel_time / (60 * interval)) * interval);
         return new Date(this.date_helper.getValue());
-    };
+    }
     /**
      * Mousedown handler to support drag to create
      *
      * @param {jQuery.Event} event
      */
-    et2_calendar_planner.prototype._mouse_down = function (event) {
+    _mouse_down(event) {
         // Only left mouse button
         if (event.which !== 1)
             return;
@@ -1970,13 +1954,13 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             return false;
         this.div.css('cursor', 'ew-resize');
         return this._drag_create_start(jQuery.extend({}, this.drag_create.parent.node.dataset, { date: time.toJSON() }));
-    };
+    }
     /**
      * Mouseup handler to support drag to create
      *
      * @param {jQuery.Event} event
      */
-    et2_calendar_planner.prototype._mouse_up = function (event) {
+    _mouse_up(event) {
         // Get time at mouse
         if (this.options.group_by === 'month') {
             var time = this._get_time_from_position(event.clientX, event.clientY);
@@ -1985,19 +1969,19 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             var time = this._get_time_from_position(event.offsetX, event.offsetY);
         }
         return this._drag_create_end(time ? { date: time.toJSON() } : false);
-    };
+    }
     /**
      * Code for implementing et2_IDetachedDOM
      *
      * @param {array} _attrs array to add further attributes to
      */
-    et2_calendar_planner.prototype.getDetachedAttributes = function (_attrs) {
+    getDetachedAttributes(_attrs) {
         _attrs.push('start_date', 'end_date');
-    };
-    et2_calendar_planner.prototype.getDetachedNodes = function () {
+    }
+    getDetachedNodes() {
         return [this.getDOMNode()];
-    };
-    et2_calendar_planner.prototype.setDetachedAttributes = function (_nodes, _values) {
+    }
+    setDetachedAttributes(_nodes, _values) {
         this.div = jQuery(_nodes[0]);
         if (_values.start_date) {
             this.set_start_date(_values.start_date);
@@ -2005,9 +1989,9 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         if (_values.end_date) {
             this.set_end_date(_values.end_date);
         }
-    };
+    }
     // Resizable interface
-    et2_calendar_planner.prototype.resize = function () {
+    resize() {
         // Take the whole tab height
         var height = Math.min(jQuery(this.getInstanceManager().DOMContainer).height(), jQuery(this.getInstanceManager().DOMContainer).parent().innerHeight());
         // Allow for toolbar
@@ -2017,14 +2001,14 @@ var et2_calendar_planner = /** @class */ (function (_super) {
         // Set height for rows
         this.rows.height(this.div.height() - this.headers.outerHeight());
         this.grid.height(this.rows[0].scrollHeight);
-    };
+    }
     /**
      * Set up for printing
      *
      * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
      *  (waiting for data)
      */
-    et2_calendar_planner.prototype.beforePrint = function () {
+    beforePrint() {
         if (this.disabled || !this.div.is(':visible')) {
             return;
         }
@@ -2036,58 +2020,56 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             var event = jQuery(this);
             event.width((event.width() / width) * 100 + '%');
         });
-    };
+    }
     /**
      * Reset after printing
      */
-    et2_calendar_planner.prototype.afterPrint = function () {
+    afterPrint() {
         this.rows.css('overflow-y', 'auto');
-    };
-    et2_calendar_planner._attributes = {
-        group_by: {
-            name: "Group by",
-            type: "string",
-            default: "0",
-            description: "Display planner by 'user', 'month', or the given category"
-        },
-        filter: {
-            name: "Filter",
-            type: "string",
-            default: '',
-            description: 'A filter that is used to select events.  It is passed along when events are queried.'
-        },
-        show_weekend: {
-            name: "Weekends",
-            type: "boolean",
-            default: egw.preference('days_in_weekview', 'calendar') != 5,
-            description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
-        },
-        hide_empty: {
-            name: "Hide empty rows",
-            type: "boolean",
-            default: false,
-            description: "Hide rows with no events."
-        },
-        value: {
-            type: "any",
-            description: "A list of events, optionally you can set start_date, end_date and group_by as keys and events will be fetched"
-        },
-        "onchange": {
-            "name": "onchange",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when the date range changes."
-        },
-        "onevent_change": {
-            "name": "onevent_change",
-            "type": "js",
-            "default": et2_no_init,
-            "description": "JS code which is executed when an event changes."
-        }
-    };
-    et2_calendar_planner.DEFERRED_ROW_TIME = 100;
-    return et2_calendar_planner;
-}(et2_widget_view_1.et2_calendar_view));
-exports.et2_calendar_planner = et2_calendar_planner;
-et2_core_widget_1.et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
+    }
+}
+et2_calendar_planner._attributes = {
+    group_by: {
+        name: "Group by",
+        type: "string",
+        default: "0",
+        description: "Display planner by 'user', 'month', or the given category"
+    },
+    filter: {
+        name: "Filter",
+        type: "string",
+        default: '',
+        description: 'A filter that is used to select events.  It is passed along when events are queried.'
+    },
+    show_weekend: {
+        name: "Weekends",
+        type: "boolean",
+        default: egw.preference('days_in_weekview', 'calendar') != 5,
+        description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
+    },
+    hide_empty: {
+        name: "Hide empty rows",
+        type: "boolean",
+        default: false,
+        description: "Hide rows with no events."
+    },
+    value: {
+        type: "any",
+        description: "A list of events, optionally you can set start_date, end_date and group_by as keys and events will be fetched"
+    },
+    "onchange": {
+        "name": "onchange",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when the date range changes."
+    },
+    "onevent_change": {
+        "name": "onevent_change",
+        "type": "js",
+        "default": et2_no_init,
+        "description": "JS code which is executed when an event changes."
+    }
+};
+et2_calendar_planner.DEFERRED_ROW_TIME = 100;
+et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
 //# sourceMappingURL=et2_widget_planner.js.map

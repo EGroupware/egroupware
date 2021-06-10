@@ -13,6 +13,7 @@
  */
 import { EgwApp } from '../../api/js/jsapi/egw_app';
 import { et2_nextmatch } from "../../api/js/etemplate/et2_extension_nextmatch";
+import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * UI for Addressbook CRM view
  *

@@ -61,6 +61,7 @@ import { et2_dynheight } from "./et2_widget_dynheight";
 import { et2_arrayMgr } from "./et2_core_arrayMgr";
 import { egw } from "../jsapi/egw_global";
 import { et2_compileLegacyJS } from "./et2_core_legacyJSFunctions";
+import { egwIsMobile } from "../egw_action/egw_action_common.js";
 export const et2_INextmatchHeader = "et2_INextmatchHeader";
 et2_implements_registry.et2_INextmatchHeader = function (obj) {
     return implements_methods(obj, ["setNextmatch"]);

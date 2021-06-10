@@ -14,13 +14,17 @@
 	/calendar/js/et2_widget_event.js;
 */
 
-import {et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_event} from "./et2_widget_event";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import {et2_IDetachedDOM, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
+import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
+import {egw} from "../../api/js/jsapi/egw_global";
+import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a single days

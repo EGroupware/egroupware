@@ -12,7 +12,7 @@ import { et2_dataview_row } from "./et2_dataview_view_row";
 import { et2_dataview_tile } from "./et2_dataview_view_tile";
 import { et2_dataview_controller } from "./et2_dataview_controller";
 import { et2_dataview_column } from "./et2_dataview_model_columns";
-import { framework } from "../jsapi/egw_global";
+import { framework, egw } from "../jsapi/egw_global";
 import { egw_getActionManager, egw_getObjectManager, egwActionObjectManager, egwActionObject, EGW_AO_FLAG_DEFAULT_FOCUS, EGW_AO_EXEC_SELECTED, EGW_AO_FLAG_IS_CONTAINER } from "../egw_action/egw_action.js";
 import { nm_action } from "./et2_extension_nextmatch_actions.js";
 import { egwIsMobile } from "../egw_action/egw_action_common.js";

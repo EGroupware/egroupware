@@ -66,6 +66,7 @@ import {et2_searchbox} from "./et2_widget_textbox";
 import {et2_template} from "./et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+import {egwIsMobile} from "../egw_action/egw_action_common.js";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 

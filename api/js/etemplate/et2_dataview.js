@@ -21,6 +21,7 @@ import { et2_dataview_column, et2_dataview_columns } from './et2_dataview_model_
 import { et2_dataview_view_resizable } from "./et2_dataview_view_resizeable";
 import { et2_dataview_grid } from "./et2_dataview_view_grid";
 import { et2_dataview_rowProvider } from "./et2_dataview_view_rowProvider";
+import { egw } from "../jsapi/egw_global";
 /**
  * The et2_dataview class is the main class for displaying a dataview. The
  * dataview class manages the creation of the outer html nodes (like the table,

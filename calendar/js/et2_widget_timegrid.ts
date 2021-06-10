@@ -13,12 +13,18 @@
 	/calendar/js/et2_widget_view.js;
 */
 
-import {et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_calendar_daycol} from "./et2_widget_daycol";
+import {egw} from "../../api/js/jsapi/egw_global";
+import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
+import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
+import {et2_calendar_event} from "./et2_widget_event";
+import {EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT, egwActionObject, egw_getObjectManager} from "../../api/js/egw_action/egw_action.js";
+import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days

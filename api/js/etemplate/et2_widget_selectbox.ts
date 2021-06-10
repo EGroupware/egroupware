@@ -26,6 +26,7 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_directChildrenByTagName, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {sprintf} from "../egw_action/egw_action_common.js";
 
 // all calls to Chosen jQuery plugin as jQuery.(un)chosen() give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/chosen-js did NOT help :(
