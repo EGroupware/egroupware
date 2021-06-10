@@ -1122,6 +1122,11 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Files imported via script tag in egw.js, because they are no modules
+	 */
+	const legacy_js_imports = '/\/dhtmlx|jquery/';
+
+	/**
 	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
 	 *
 	 * @return array
@@ -1140,6 +1145,13 @@ abstract class Framework extends Framework\Extra
 			filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw_global.js');
 
 		// @todo: add all node_modules as bare imports
+
+		// map all legacy-js to something "not hurting"
+		$imports = array_map(static function($url) use ($prefix)
+		{
+			return !preg_match(self::legacy_js_imports, $url) ? $url :
+				$prefix.'/api/js/jquery/jquery.noconflict.js';
+		}, $imports);
 
 		return ['imports' => $imports];
 	}

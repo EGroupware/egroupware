@@ -11,7 +11,6 @@
 	vendor.bower-asset.jquery.dist.jquery;
 	egw_inheritance.js;
 */
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 import '../jsapi/egw_inheritance.js';
 
 window.fw_base = (function(){ "use strict"; return Class.extend(

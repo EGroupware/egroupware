@@ -19,8 +19,6 @@
 	egw_css;
 */
 import './egw_core.js';
-import 'jqueryui';
-import '../jquery/jquery-ui-timepicker-addon.js';
 
 /**
  * Date and timepicker

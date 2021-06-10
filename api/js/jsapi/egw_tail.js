@@ -4,13 +4,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage jsapi
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Hadi Nategh (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 import './egw_json.js';
 
 jQuery(function()

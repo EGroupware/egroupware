@@ -12,7 +12,6 @@
 	egw_inheritance.js;
 */
 
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 import '../egw_action/egw_action_common.js';
 import '../jsapi/egw_inheritance.js';
 import '../etemplate/etemplate2.js';	// otherwise et2_load json-response-handler is not (yet) available

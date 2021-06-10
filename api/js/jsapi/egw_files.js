@@ -156,6 +156,8 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				_jsFiles = [_jsFiles];
 			}
+			// filter out files included by script-tag via egw.js
+			_jsFiles = _jsFiles.filter((src) => src.match(egw.legacy_js_regexp) === null);
 			let promise;
 			if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
 			{

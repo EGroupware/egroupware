@@ -13,7 +13,6 @@
 	framework.fw_desktop;
 	/pixelegg/js/slider.js;
 */
-import '../../vendor/bower-asset/jquery/dist/jquery.js';
 import '../../api/js/framework/fw_desktop.js';
 import './slider.js';
 

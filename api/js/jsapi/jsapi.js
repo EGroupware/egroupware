@@ -13,8 +13,6 @@
 
 'use strict';
 
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
-
 /**
  * Check whether the console object is defined - if not, define one
  */

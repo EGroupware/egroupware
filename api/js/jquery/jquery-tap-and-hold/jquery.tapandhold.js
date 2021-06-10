@@ -17,7 +17,6 @@
  *  @description Adds a handler for a custom event 'taphold' that handles a
  *  tap and hold on touch interfaces.
  */
-import '../../../../vendor/bower-asset/jquery/dist/jquery.js';
 (function($) {
     var TAP_AND_HOLD_TRIGGER_TIMER = 600;
     var MAX_DISTANCE_ALLOWED_IN_TAP_AND_HOLD_EVENT = 40;

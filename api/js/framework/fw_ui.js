@@ -12,9 +12,6 @@
 	/api/js/jquery/mousewheel/mousewheel.js;
 	egw_inheritance.js;
 */
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
-import '../../../vendor/bower-asset/jquery-ui/jquery-ui.js';
-import '../jquery/mousewheel/mousewheel.js';
 import '../jsapi/egw_inheritance.js';
 
 /**

@@ -1,76 +1,64 @@
-"use strict";
 /**
  * EGroupware - Filemanager - Javascript UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-19 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.filemanagerAPP = void 0;
 /*egw:uses
     /api/js/jsapi/egw_app.js;
  */
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
+import { EgwApp } from "../../api/js/jsapi/egw_app";
+import { etemplate2 } from "../../api/js/etemplate/etemplate2";
+import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
+import { et2_file } from "../../api/js/etemplate/et2_widget_file";
+import { et2_button } from "../../api/js/etemplate/et2_widget_button";
+import { et2_nextmatch_controller } from "../../api/js/etemplate/et2_extension_nextmatch_controller";
+import { egw_get_file_editor_prefered_mimes } from "../../api/js/jsapi/egw_global";
+import { et2_createWidget } from "../../api/js/etemplate/et2_core_widget";
 /**
  * UI for filemanager
  */
-var filemanagerAPP = /** @class */ (function (_super) {
-    __extends(filemanagerAPP, _super);
+export class filemanagerAPP extends EgwApp {
     /**
      * Constructor
      *
      * @memberOf app.filemanager
      */
-    function filemanagerAPP() {
-        var _this = 
+    constructor() {
         // call parent
-        _super.call(this, 'filemanager') || this;
+        super('filemanager');
         /**
          * path widget, by template
          */
-        _this.path_widget = {};
+        this.path_widget = {};
         /**
          * Are files cut into clipboard - need to be deleted at source on paste
          */
-        _this.clipboard_is_cut = false;
+        this.clipboard_is_cut = false;
         /**
          * Regexp to convert id to a path, use this.id2path(_id)
          */
-        _this.remove_prefix = /^filemanager::/;
+        this.remove_prefix = /^filemanager::/;
         // Loading filemanager in its tab and home causes us problems with
         // unwanted destruction, so we check for already existing path widgets
-        var lists = etemplate2.getByApplication('home');
-        for (var i = 0; i < lists.length; i++) {
+        let lists = etemplate2.getByApplication('home');
+        for (let i = 0; i < lists.length; i++) {
             if (lists[i].app == 'filemanager' && lists[i].widgetContainer.getWidgetById('path')) {
-                _this.path_widget[lists[i].uniqueId] = lists[i].widgetContainer.getWidgetById('path');
+                this.path_widget[lists[i].uniqueId] = lists[i].widgetContainer.getWidgetById('path');
             }
         }
-        return _this;
     }
     /**
      * Destructor
      */
-    filemanagerAPP.prototype.destroy = function (_app) {
+    destroy(_app) {
         delete this.et2;
         // call parent
-        _super.prototype.destroy.call(this, _app);
-    };
+        super.destroy(_app);
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -79,10 +67,10 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param et2 etemplate2 Newly ready object
      * @param {string} name template name
      */
-    filemanagerAPP.prototype.et2_ready = function (et2, name) {
+    et2_ready(et2, name) {
         // call parent
-        _super.prototype.et2_ready.call(this, et2, name);
-        var path_widget = this.et2.getWidgetById('path');
+        super.et2_ready(et2, name);
+        let path_widget = this.et2.getWidgetById('path');
         if (path_widget) // do NOT set not found path-widgets, as uploads works on first one only!
          {
             this.path_widget[et2.DOMContainer.id] = path_widget;
@@ -108,17 +96,17 @@ var filemanagerAPP = /** @class */ (function (_super) {
             delete this.readonly;
         }
         if (name == 'filemanager.index') {
-            var fe = egw.link_get_registry('filemanager-editor');
-            var new_widget = this.et2.getWidgetById('new');
+            let fe = egw.link_get_registry('filemanager-editor');
+            let new_widget = this.et2.getWidgetById('new');
             if (fe && fe["edit"]) {
-                var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
+                let new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
                 new_widget.set_select_options(new_options);
             }
             else if (new_widget) {
                 new_widget.set_disabled(true);
             }
         }
-    };
+    }
     /**
      * Set the application's state to the given state.
      *
@@ -130,25 +118,25 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @return {boolean} false - Returns false to stop event propagation
      */
-    filemanagerAPP.prototype.setState = function (state) {
+    setState(state) {
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
             if (state.indexOf('{') != -1 || state == 'null') {
                 state = JSON.parse(state);
             }
         }
-        var result = _super.prototype.setState.call(this, state, 'filemanager.index');
+        let result = super.setState(state, 'filemanager.index');
         // This has to happen after the parent, changing to tile recreates
         // nm controller
         if (typeof state == "object" && state.state && state.state.view) {
-            var et2 = etemplate2.getById('filemanager-index');
+            let et2 = etemplate2.getById('filemanager-index');
             if (et2) {
                 this.et2 = et2.widgetContainer;
                 this.change_view(state.state.view);
             }
         }
         return result;
-    };
+    }
     /**
      * Retrieve the current state of the application for future restoration
      *
@@ -156,73 +144,73 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @return {object} Application specific map representing the current state
      */
-    filemanagerAPP.prototype.getState = function () {
-        var state = _super.prototype.getState.call(this);
-        var et2 = etemplate2.getById('filemanager-index');
+    getState() {
+        let state = super.getState();
+        let et2 = etemplate2.getById('filemanager-index');
         if (et2) {
-            var nm = et2.widgetContainer.getWidgetById('nm');
+            let nm = et2.widgetContainer.getWidgetById('nm');
             state.view = nm.view;
         }
         return state;
-    };
+    }
     /**
      * Convert id to path (remove "filemanager::" prefix)
      */
-    filemanagerAPP.prototype.id2path = function (_id) {
+    id2path(_id) {
         return _id.replace(this.remove_prefix, '');
-    };
+    }
     /**
      * Convert array of elems to array of paths
      */
-    filemanagerAPP.prototype._elems2paths = function (_elems) {
-        var paths = [];
-        for (var i = 0; i < _elems.length; i++) {
+    _elems2paths(_elems) {
+        let paths = [];
+        for (let i = 0; i < _elems.length; i++) {
             // If selected has no id, try parent.  This happens for the placeholder row
             // in empty directories.
             paths.push(_elems[i].id ? this.id2path(_elems[i].id) : _elems[i]._context._parentId);
         }
         return paths;
-    };
+    }
     /**
      * Get directory of a path
      */
-    filemanagerAPP.prototype.dirname = function (_path) {
-        var parts = _path.split('/');
+    dirname(_path) {
+        let parts = _path.split('/');
         parts.pop();
         return parts.join('/') || '/';
-    };
+    }
     /**
      * Get name of a path
      */
-    filemanagerAPP.prototype.basename = function (_path) {
+    basename(_path) {
         return _path.split('/').pop();
-    };
+    }
     /**
      * Get current working directory
      */
-    filemanagerAPP.prototype.get_path = function (etemplate_name) {
+    get_path(etemplate_name) {
         if (!etemplate_name || typeof this.path_widget[etemplate_name] == 'undefined') {
             for (etemplate_name in this.path_widget)
                 break;
         }
-        var path_widget = this.path_widget[etemplate_name];
+        let path_widget = this.path_widget[etemplate_name];
         return path_widget ? path_widget.get_value.apply(path_widget) : null;
-    };
+    }
     /**
      * Open compose with already attached files
      *
      * @param {(string|string[])} attachments path(s)
      * @param {object} params
      */
-    filemanagerAPP.prototype.open_mail = function (attachments, params) {
+    open_mail(attachments, params) {
         if (typeof attachments == 'undefined')
             attachments = this.get_clipboard_files();
         if (!params || typeof params != 'object')
             params = {};
         if (!(attachments instanceof Array))
             attachments = [attachments];
-        var content = { data: { files: { file: [] } } };
-        for (var i = 0; i < attachments.length; i++) {
+        let content = { data: { files: { file: [] } } };
+        for (let i = 0; i < attachments.length; i++) {
             params['preset[file][' + i + ']'] = 'vfs://default' + attachments[i];
             content.data.files.file.push('vfs://default' + attachments[i]);
         }
@@ -230,18 +218,18 @@ var filemanagerAPP = /** @class */ (function (_super) {
         // always open compose in html mode, as attachment links look a lot nicer in html
         params["mimeType"] = 'html';
         return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/, true);
-    };
+    }
     /**
      * Mail files action: open compose with already attached files
      *
      * @param _action
      * @param _elems
      */
-    filemanagerAPP.prototype.mail = function (_action, _elems) {
+    mail(_action, _elems) {
         this.open_mail(this._elems2paths(_elems), {
             'preset[filemode]': _action.id.substr(5)
         });
-    };
+    }
     /**
      * Mail files action: open compose with already linked files
      * We're only interested in hidden upload shares here, open_mail can handle
@@ -250,14 +238,14 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _selected
      */
-    filemanagerAPP.prototype.mail_share_link = function (_action, _selected) {
+    mail_share_link(_action, _selected) {
         if (_action.id !== 'mail_shareUploadDir') {
             return this.mail(_action, _selected);
         }
-        var path = this.id2path(_selected[0].id);
+        let path = this.id2path(_selected[0].id);
         this.share_link(_action, _selected, null, false, false, this._mail_link_callback);
         return true;
-    };
+    }
     /**
      * Callback with the share link to append to an email
      *
@@ -266,27 +254,27 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {String} _data.title Title for the link
      * @param {String} [_data.msg] Error message
      */
-    filemanagerAPP.prototype._mail_link_callback = function (_data) {
+    _mail_link_callback(_data) {
         debugger;
         if (_data.msg || !_data.share_link)
             window.egw_refresh(_data.msg, this.appname);
-        var params = {
+        let params = {
             'preset[body]': '<a href="' + _data.share_link + '">' + _data.title + '</a>',
             'mimeType': 'html' // always open compose in html mode, as attachment links look a lot nicer in html
         };
-        var content = {
+        let content = {
             mail_htmltext: ['<br /><a href="' + _data.share_link + '">' + _data.title + '</a>'],
             mail_plaintext: ["\n" + _data.share_link]
         };
         return egw.openWithinWindow("mail", "setCompose", content, params, /mail.mail_compose.compose/);
-    };
+    }
     /**
      * Trigger Upload after each file is uploaded
      * @param {type} _event
      */
-    filemanagerAPP.prototype.uploadOnOne = function (_event) {
+    uploadOnOne(_event) {
         this.upload(_event, 1);
-    };
+    }
     /**
      * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
      *
@@ -296,35 +284,33 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {string} _conflict What to do if the file conflicts with one on the server
      * @param {string} _target Upload processing target.  Sharing classes can override this.
      */
-    filemanagerAPP.prototype.upload = function (_event, _file_count, _path, _conflict, _target) {
-        if (_conflict === void 0) { _conflict = "ask"; }
-        if (_target === void 0) { _target = 'filemanager_ui::ajax_action'; }
+    upload(_event, _file_count, _path, _conflict = "ask", _target = 'filemanager_ui::ajax_action') {
         if (typeof _path == 'undefined') {
             _path = this.get_path();
         }
         if (_file_count && !jQuery.isEmptyObject(_event.data.getValue())) {
-            var widget = _event.data;
-            var value = widget.getValue();
+            let widget = _event.data;
+            let value = widget.getValue();
             value.conflict = _conflict;
             egw.json(_target, ['upload', value, _path, { ui_path: this.egw.window.location.pathname }], this._upload_callback, this, true, this).sendRequest();
             widget.set_value('');
         }
-    };
+    }
     /**
      * Finish callback for file a file dialog, to get the overwrite / rename prompt
      *
      * @param {event} _event
      * @param {number} _file_count
      */
-    filemanagerAPP.prototype.file_a_file_upload = function (_event, _file_count) {
-        var widget = _event.data;
-        var path = widget.getRoot().getWidgetById("path").getValue();
-        var action = widget.getRoot().getWidgetById("action").getValue();
-        var link = widget.getRoot().getWidgetById("entry").getValue();
+    file_a_file_upload(_event, _file_count) {
+        let widget = _event.data;
+        let path = widget.getRoot().getWidgetById("path").getValue();
+        let action = widget.getRoot().getWidgetById("action").getValue();
+        let link = widget.getRoot().getWidgetById("entry").getValue();
         if (action == 'save_as' && link.app && link.id) {
             path = "/apps/" + link.app + "/" + link.id;
         }
-        var props = widget.getInstanceManager().getValues(widget.getRoot());
+        let props = widget.getInstanceManager().getValues(widget.getRoot());
         egw.json('filemanager_ui::ajax_action', [action == 'save_as' ? 'upload' : 'link', widget.getValue(), path, props], function (_data) {
             app.filemanager._upload_callback(_data);
             // Remove successful after a delay
@@ -337,7 +323,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             opener.egw_refresh('', 'filemanager', null, null, 'filemanager');
         }, app.filemanager, true, this).sendRequest(true);
         return true;
-    };
+    }
     /**
      * Callback for server response to upload request:
      * - display message and refresh list
@@ -345,13 +331,13 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @param {object} _data values for attributes msg, files, ...
      */
-    filemanagerAPP.prototype._upload_callback = function (_data) {
+    _upload_callback(_data) {
         if (_data.msg || _data.uploaded)
             window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
-        var that = this;
-        for (var file in _data.uploaded) {
+        let that = this;
+        for (let file in _data.uploaded) {
             if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed) {
-                var buttons = [
+                let buttons = [
                     {
                         text: this.egw.lang("Yes"),
                         id: "overwrite",
@@ -364,8 +350,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 ];
                 if (_data.uploaded[file].confirm === "is_dir")
                     buttons.shift();
-                var dialog = et2_dialog.show_prompt(function (_button_id, _value) {
-                    var uploaded = {};
+                let dialog = et2_dialog.show_prompt(function (_button_id, _value) {
+                    let uploaded = {};
                     uploaded[this.my_data.file] = this.my_data.data;
                     switch (_button_id) {
                         case "overwrite":
@@ -396,22 +382,22 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 };
             }
         }
-    };
+    }
     /**
      * Get any files that are in the system clipboard
      *
      * @return {string[]} Paths
      */
-    filemanagerAPP.prototype.get_clipboard_files = function () {
-        var clipboard_files = [];
+    get_clipboard_files() {
+        let clipboard_files = [];
         if (typeof window.localStorage != 'undefined' && typeof egw.getSessionItem('phpgwapi', 'egw_clipboard') != 'undefined') {
-            var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+            let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
                 type: [],
                 selected: []
             };
             if (clipboard.type.indexOf('file') >= 0) {
-                for (var i = 0; i < clipboard.selected.length; i++) {
-                    var split = clipboard.selected[i].id.split('::');
+                for (let i = 0; i < clipboard.selected.length; i++) {
+                    let split = clipboard.selected[i].id.split('::');
                     if (split[0] == 'filemanager') {
                         clipboard_files.push(this.id2path(clipboard.selected[i].id));
                     }
@@ -419,27 +405,27 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }
         }
         return clipboard_files;
-    };
+    }
     /**
      * Update clickboard tooltips in buttons
      */
-    filemanagerAPP.prototype.clipboard_tooltips = function () {
-        var paste_buttons = ['button[paste]', 'button[linkpaste]', 'button[mailpaste]'];
-        for (var i = 0; i < paste_buttons.length; ++i) {
-            var button = this.et2.getWidgetById(paste_buttons[i]);
+    clipboard_tooltips() {
+        let paste_buttons = ['button[paste]', 'button[linkpaste]', 'button[mailpaste]'];
+        for (let i = 0; i < paste_buttons.length; ++i) {
+            let button = this.et2.getWidgetById(paste_buttons[i]);
             if (button)
                 button.set_statustext(this.get_clipboard_files().join(",\n"));
         }
-    };
+    }
     /**
      * Clip files into clipboard
      *
      * @param _action
      * @param _elems
      */
-    filemanagerAPP.prototype.clipboard = function (_action, _elems) {
+    clipboard(_action, _elems) {
         this.clipboard_is_cut = _action.id == "cut";
-        var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
+        let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard')) || {
             type: [],
             selected: []
         };
@@ -450,8 +436,8 @@ var filemanagerAPP = /** @class */ (function (_super) {
             };
         }
         // When pasting we need to know the type of data - pull from actions
-        var drag = _elems[0].getSelectedLinks('drag').links;
-        for (var k in drag) {
+        let drag = _elems[0].getSelectedLinks('drag').links;
+        for (let k in drag) {
             if (drag[k].enabled && drag[k].actionObj.dragType.length > 0) {
                 clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
             }
@@ -459,21 +445,21 @@ var filemanagerAPP = /** @class */ (function (_super) {
         clipboard.type = jQuery.unique(clipboard.type);
         // egwAction is a circular structure and can't be stringified so just take what we want
         // Hopefully that's enough for the action handlers
-        for (var k in _elems) {
+        for (let k in _elems) {
             if (_elems[k].id)
                 clipboard.selected.push({ id: _elems[k].id, data: _elems[k].data });
         }
         // Save it in session
         egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
         this.clipboard_tooltips();
-    };
+    }
     /**
      * Paste files into current directory or mail them
      *
      * @param _type 'paste', 'linkpaste', 'mailpaste'
      */
-    filemanagerAPP.prototype.paste = function (_type) {
-        var clipboard_files = this.get_clipboard_files();
+    paste(_type) {
+        let clipboard_files = this.get_clipboard_files();
         if (clipboard_files.length == 0) {
             alert(this.egw.lang('Clipboard is empty!'));
             return;
@@ -494,36 +480,36 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 this._do_action('symlink', clipboard_files);
                 break;
         }
-    };
+    }
     /**
      * Pass action to server
      *
      * @param _action
      * @param _elems
      */
-    filemanagerAPP.prototype.action = function (_action, _elems) {
-        var paths = this._elems2paths(_elems);
-        var path = this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+    action(_action, _elems) {
+        let paths = this._elems2paths(_elems);
+        let path = this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
         this._do_action(_action.id, paths, true, path);
-    };
+    }
     /**
      * Prompt user for directory to create
      *
      * @param {egwAction|undefined} action Action, event or undefined if called directly
      * @param {egwActionObject[] | undefined} selected Selected row, or undefined if called directly
      */
-    filemanagerAPP.prototype.createdir = function (action, selected) {
-        var self = this;
+    createdir(action, selected) {
+        let self = this;
         et2_dialog.show_prompt(function (button, dir) {
             if (button && dir) {
-                var path = self.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
+                let path = self.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
                 if (action && action instanceof egwAction) {
-                    var paths = self._elems2paths(selected);
+                    let paths = self._elems2paths(selected);
                     if (paths[0])
                         path = paths[0];
                     // check if target is a file --> use it's directory instead
                     if (selected[0].id || path) {
-                        var data = egw.dataGetUIDdata(selected[0].id || 'filemanager::' + path);
+                        let data = egw.dataGetUIDdata(selected[0].id || 'filemanager::' + path);
                         if (data && data.data.mime != 'httpd/unix-directory') {
                             path = self.dirname(path);
                         }
@@ -533,18 +519,18 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 self.change_dir((path == '/' ? '' : path) + '/' + egw.encodePathComponent(dir));
             }
         }, this.egw.lang('New directory'), this.egw.lang('Create directory'));
-    };
+    }
     /**
      * Prompt user for directory to create
      */
-    filemanagerAPP.prototype.symlink = function () {
-        var self = this;
+    symlink() {
+        let self = this;
         et2_dialog.show_prompt(function (button, target) {
             if (button && target) {
                 self._do_action('symlink', target);
             }
         }, this.egw.lang('Link target'), this.egw.lang('Create link'));
-    };
+    }
     /**
      * Run a serverside action via an ajax call
      *
@@ -553,50 +539,50 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param _sync send a synchronous ajax request
      * @param _path defaults to current path
      */
-    filemanagerAPP.prototype._do_action = function (_type, _selected, _sync, _path) {
+    _do_action(_type, _selected, _sync, _path) {
         if (typeof _path == 'undefined')
             _path = this.get_path();
         egw.json('filemanager_ui::ajax_action', [_type, _selected, _path], this._do_action_callback, this, !_sync, this).sendRequest();
-    };
+    }
     /**
      * Callback for _do_action ajax call
      *
      * @param _data
      */
-    filemanagerAPP.prototype._do_action_callback = function (_data) {
+    _do_action_callback(_data) {
         window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
-    };
+    }
     /**
      * Force download of a file by appending '?download' to it's download url
      *
      * @param _action
      * @param _senders
      */
-    filemanagerAPP.prototype.force_download = function (_action, _senders) {
-        for (var i = 0; i < _senders.length; i++) {
-            var data = egw.dataGetUIDdata(_senders[i].id);
-            var url = data ? data.data.download_url : '/webdav.php' + this.id2path(_senders[i].id);
+    force_download(_action, _senders) {
+        for (let i = 0; i < _senders.length; i++) {
+            let data = egw.dataGetUIDdata(_senders[i].id);
+            let url = data ? data.data.download_url : '/webdav.php' + this.id2path(_senders[i].id);
             if (url[0] == '/')
                 url = egw.link(url);
-            var a = document.createElement('a');
+            let a = document.createElement('a');
             if (typeof a.download == "undefined") {
                 window.location = (url + "?download");
                 return false;
             }
             // Multiple file download for those that support it
-            var $a = jQuery(a)
+            let $a = jQuery(a)
                 .prop('href', url)
                 .prop('download', data ? data.data.name : "")
                 .appendTo(this.et2.getDOMNode());
             window.setTimeout(jQuery.proxy(function () {
-                var evt = document.createEvent('MouseEvent');
+                let evt = document.createEvent('MouseEvent');
                 evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
                 this[0].dispatchEvent(evt);
                 this.remove();
             }, $a), 100 * i);
         }
         return false;
-    };
+    }
     /**
      * Check to see if the browser supports downloading multiple files
      * (using a tag download attribute) to enable/disable the context menu
@@ -604,19 +590,19 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {egwAction} action
      * @param {egwActionObject[]} selected
      */
-    filemanagerAPP.prototype.is_multiple_allowed = function (action, selected) {
-        var allowed = typeof document.createElement('a').download != "undefined";
+    is_multiple_allowed(action, selected) {
+        let allowed = typeof document.createElement('a').download != "undefined";
         if (typeof action == "undefined")
             return allowed;
         return (allowed || selected.length <= 1) && action.not_disableClass.apply(action, arguments);
-    };
+    }
     /**
      * Change directory
      *
      * @param {string} _dir directory to change to incl. '..' for one up
      * @param {et2_widget} widget
      */
-    filemanagerAPP.prototype.change_dir = function (_dir, widget) {
+    change_dir(_dir, widget) {
         for (var etemplate_name in this.path_widget)
             break;
         if (widget)
@@ -635,7 +621,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 break;
         }
         this.path_widget[etemplate_name].set_value(_dir);
-    };
+    }
     /**
      * Toggle view between tiles and rows
      *
@@ -643,9 +629,9 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *	Or, if this is used as a callback view is actually the event, and we need to find the view.
      * @param {et2_widget} [button_widget] - The widget that's calling
      */
-    filemanagerAPP.prototype.change_view = function (view, button_widget) {
-        var et2 = etemplate2.getById('filemanager-index');
-        var nm;
+    change_view(view, button_widget) {
+        let et2 = etemplate2.getById('filemanager-index');
+        let nm;
         if (et2 && et2.widgetContainer.getWidgetById('nm')) {
             nm = et2.widgetContainer.getWidgetById('nm');
         }
@@ -670,7 +656,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
         // Put it into active filters (but don't refresh)
         nm.activeFilters["view"] = view;
         // Change template to match
-        var template = view == et2_nextmatch_controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
+        let template = view == et2_nextmatch_controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
         nm.set_template(template);
         // Wait for template to load, then refresh
         template = nm.getWidgetById(template);
@@ -679,21 +665,21 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 nm.applyFilters({ view: view });
             });
         }
-    };
+    }
     /**
      * Open/active an item
      *
      * @param _action
      * @param _senders
      */
-    filemanagerAPP.prototype.open = function (_action, _senders) {
-        var data = egw.dataGetUIDdata(_senders[0].id);
-        var path = this.id2path(_senders[0].id);
+    open(_action, _senders) {
+        let data = egw.dataGetUIDdata(_senders[0].id);
+        let path = this.id2path(_senders[0].id);
         this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
-        var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+        let mime = this.et2._inst.widgetContainer.getWidgetById('$row');
         // try to get mime widget DOM node out of the row DOM
-        var mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
-        var fe = egw_get_file_editor_prefered_mimes();
+        let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
+        let fe = egw_get_file_editor_prefered_mimes();
         // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
         if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1) {
             this.change_dir(path, _action.parent.data.nextmatch || this.et2);
@@ -708,7 +694,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             }), '', fe.edit_popup);
         }
         else {
-            var url = void 0;
+            let url;
             // Build ViewerJS url
             if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/) &&
                 egw.preference('document_doubleclick_action', 'filemanager') == 'collabeditor') {
@@ -717,20 +703,20 @@ var filemanagerAPP = /** @class */ (function (_super) {
             egw.open({ path: path, type: data.data.mime, download_url: url }, 'file', 'view', null, '_browser');
         }
         return false;
-    };
+    }
     /**
      * Edit prefs of current directory
      *
      * @param _action
      * @param _senders
      */
-    filemanagerAPP.prototype.editprefs = function (_action, _senders) {
-        var path = typeof _senders != 'undefined' ? this.id2path(_senders[0].id) : this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+    editprefs(_action, _senders) {
+        let path = typeof _senders != 'undefined' ? this.id2path(_senders[0].id) : this.get_path(_action && _action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
         egw().open_link(egw.link('/index.php', {
             menuaction: 'filemanager.filemanager_ui.file',
             path: path
         }), 'fileprefs', '510x425');
-    };
+    }
     /**
      * Callback to check if the paste action is enabled.  We also update the
      * clipboard historical targets here as well
@@ -741,9 +727,9 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @returns boolean true if enabled, false otherwise
      */
-    filemanagerAPP.prototype.paste_enabled = function (_action, _senders, _target) {
+    paste_enabled(_action, _senders, _target) {
         // Need files in the clipboard for this
-        var clipboard_files = this.get_clipboard_files();
+        let clipboard_files = this.get_clipboard_files();
         if (clipboard_files.length === 0) {
             return false;
         }
@@ -754,18 +740,18 @@ var filemanagerAPP = /** @class */ (function (_super) {
         if (_action.canHaveChildren.indexOf('drop') == -1) {
             _action.canHaveChildren.push('drop');
         }
-        var actions = [];
+        let actions = [];
         // Current directory
-        var current_dir = this.get_path();
-        var dir = egw.dataGetUIDdata('filemanager::' + current_dir);
-        var path_widget = etemplate2.getById('filemanager-index').widgetContainer.getWidgetById('button[createdir]');
+        let current_dir = this.get_path();
+        let dir = egw.dataGetUIDdata('filemanager::' + current_dir);
+        let path_widget = etemplate2.getById('filemanager-index').widgetContainer.getWidgetById('button[createdir]');
         actions.push({
             id: _action.id + '_current', caption: current_dir, path: current_dir,
             enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
                 !dir && path_widget && !path_widget.options.readonly
         });
         // Target, if directory
-        var target_dir = this.id2path(_target.id);
+        let target_dir = this.id2path(_target.id);
         dir = egw.dataGetUIDdata(_target.id);
         actions.push({
             id: _action.id + '_target',
@@ -775,10 +761,10 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 (dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
         });
         // Last 10 folders
-        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
-        var action_index = 0;
-        for (var i = 0; i < 10; i++) {
-            var path = i < previous_dsts.length ? previous_dsts[i] : '';
+        let previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+        let action_index = 0;
+        for (let i = 0; i < 10; i++) {
+            let path = i < previous_dsts.length ? previous_dsts[i] : '';
             actions.push({
                 id: _action.id + '_target_' + action_index++,
                 caption: path,
@@ -788,7 +774,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             });
         }
         // Common stuff, every action needs these
-        for (var i = 0; i < actions.length; i++) {
+        for (let i = 0; i < actions.length; i++) {
             //actions[i].type = 'drop',
             actions[i].acceptedTypes = _action.acceptedTypes;
             actions[i].no_lang = true;
@@ -797,9 +783,9 @@ var filemanagerAPP = /** @class */ (function (_super) {
         _action.updateActions(actions);
         // Create paste action
         // This injects the clipboard data and calls the original handler
-        var paste_exec = function (action, selected) {
+        let paste_exec = function (action, selected) {
             // Add in clipboard as a sender
-            var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+            let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
             // Set a flag so apps can tell the difference, if they need to
             action.set_onExecute(action.parent.onExecute.fnct);
             action.execute(clipboard.selected, selected[0]);
@@ -811,12 +797,12 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 }));
             }
         };
-        for (var i = 0; i < actions.length; i++) {
+        for (let i = 0; i < actions.length; i++) {
             _action.getActionById(actions[i].id).onExecute = jQuery.extend(true, {}, _action.onExecute);
             _action.getActionById(actions[i].id).set_onExecute(paste_exec);
         }
         return actions.length > 0;
-    };
+    }
     /**
      * File(s) droped
      *
@@ -825,19 +811,19 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param _target
      * @returns
      */
-    filemanagerAPP.prototype.drop = function (_action, _elems, _target) {
-        var src = this._elems2paths(_elems);
+    drop(_action, _elems, _target) {
+        let src = this._elems2paths(_elems);
         // Target will be missing ID if directory is empty
         // so start with the current directory
-        var parent = _action;
-        var nm = _target ? _target.manager.data.nextmatch : null;
+        let parent = _action;
+        let nm = _target ? _target.manager.data.nextmatch : null;
         while (!nm && parent.parent) {
             parent = parent.parent;
             if (parent.data.nextmatch)
                 nm = parent.data.nextmatch;
         }
-        var nm_dst = this.get_path(nm.getInstanceManager().uniqueId || false);
-        var dst;
+        let nm_dst = this.get_path(nm.getInstanceManager().uniqueId || false);
+        let dst;
         // Action specifies a destination, target does not matter
         if (_action.data && _action.data.path) {
             dst = _action.data.path;
@@ -845,27 +831,27 @@ var filemanagerAPP = /** @class */ (function (_super) {
         // File(s) were dropped on a row, they want them inside
         else if (_target) {
             dst = '';
-            var paths = this._elems2paths([_target]);
+            let paths = this._elems2paths([_target]);
             if (paths[0])
                 dst = paths[0];
             // check if target is a file --> use it's directory instead
             if (_target.id) {
-                var data = egw.dataGetUIDdata(_target.id);
+                let data = egw.dataGetUIDdata(_target.id);
                 if (!data || data.data.mime != 'httpd/unix-directory') {
                     dst = this.dirname(dst);
                 }
             }
         }
         // Remember the target for next time
-        var previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+        let previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
         previous_dsts.unshift(dst);
         previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
         egw.set_preference(this.appname, 'drop_history', previous_dsts);
         // Actual action id will be something like file_drop_{move|copy|link}[_other_id],
         // but we need to send move, copy or link
-        var action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
+        let action_id = _action.id.replace("file_drop_", '').split('_', 1)[0];
         this._do_action(action_id, src, false, dst || nm_dst);
-    };
+    }
     /**
      * Handle a native / HTML5 file drop from system
      *
@@ -874,15 +860,15 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {string} row_uid UID of the row the files were dropped on
      * @param {Files[]} files
      */
-    filemanagerAPP.prototype.filedrop = function (row_uid, files) {
-        var self = this;
-        var data = egw.dataGetUIDdata(row_uid);
+    filedrop(row_uid, files) {
+        let self = this;
+        let data = egw.dataGetUIDdata(row_uid);
         files = files || window.event.dataTransfer.files;
-        var path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
-        var widget = this.et2.getWidgetById('upload');
+        let path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
+        let widget = this.et2.getWidgetById('upload');
         // Override finish to specify a potentially different path
-        var old_onfinishone = widget.options.onFinishOne;
-        var old_onfinish = widget.options.onFinish;
+        let old_onfinishone = widget.options.onFinishOne;
+        let old_onfinish = widget.options.onFinish;
         widget.options.onFinishOne = function (_event, _file_count) {
             self.upload(_event, _file_count, path);
         };
@@ -894,7 +880,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
         widget.set_value(files);
         // Return false to prevent the link
         return false;
-    };
+    }
     /**
      * Change readonly state for given directory
      *
@@ -903,57 +889,57 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {string} _path
      * @param {boolean} _ro
      */
-    filemanagerAPP.prototype.set_readonly = function (_path, _ro) {
+    set_readonly(_path, _ro) {
         //alert('set_readonly("'+_path+'", '+_ro+')');
         if (!this.path_widget) // widget not yet ready, try later
          {
             this.readonly = [_path, _ro];
             return;
         }
-        for (var id in this.path_widget) {
-            var path = this.get_path(id);
+        for (let id in this.path_widget) {
+            let path = this.get_path(id);
             if (_path == path) {
-                var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload', 'new'];
-                for (var i = 0; i < ids.length; ++i) {
-                    var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
+                let ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload', 'new'];
+                for (let i = 0; i < ids.length; ++i) {
+                    let widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
                     if (widget) {
                         widget.set_readonly(_ro);
                     }
                 }
             }
         }
-    };
+    }
     /**
      * Row or filename in select-file dialog clicked
      *
      * @param {jQuery.event} event
      * @param {et2_widget} widget
      */
-    filemanagerAPP.prototype.select_clicked = function (event, widget) {
+    select_clicked(event, widget) {
         var _a;
         if ((_a = widget === null || widget === void 0 ? void 0 : widget.value) === null || _a === void 0 ? void 0 : _a.is_dir) {
-            var path_1 = null;
+            let path = null;
             // Cannot do this, there are multiple widgets named path
             // widget.getRoot().getWidgetById("path");
             widget.getRoot().iterateOver(function (widget) {
                 if (widget.id == "path")
-                    path_1 = widget;
+                    path = widget;
             }, null, et2_textbox);
-            if (path_1) {
-                path_1.set_value(widget.value.path);
+            if (path) {
+                path.set_value(widget.value.path);
             }
         }
         else if (this.et2 && this.et2.getArrayMgr('content').getEntry('mode') != 'open-multiple') {
-            var editfield = this.et2.getWidgetById('name');
+            let editfield = this.et2.getWidgetById('name');
             if (editfield) {
                 editfield.set_value(widget.value.name);
             }
         }
         else {
-            var file_1 = widget.value.name;
+            let file = widget.value.name;
             widget.getParent().iterateOver(function (widget) {
-                if (widget.options.selected_value == file_1) {
-                    widget.set_value(widget.get_value() == file_1 ? widget.options.unselected_value : file_1);
+                if (widget.options.selected_value == file) {
+                    widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
                 }
             }, null, et2_checkbox);
         }
@@ -961,15 +947,15 @@ var filemanagerAPP = /** @class */ (function (_super) {
         event.preventDefault();
         event.stopPropagation();
         return false;
-    };
+    }
     /**
      * Set Sudo button's label and change its onclick handler according to its action
      *
      * @param {widget object} _widget sudo buttononly
      * @param {string} _action string of action type {login|logout}
      */
-    filemanagerAPP.prototype.set_sudoButton = function (_widget, _action) {
-        var widget = _widget || this.et2.getWidgetById('sudouser');
+    set_sudoButton(_widget, _action) {
+        let widget = _widget || this.et2.getWidgetById('sudouser');
         if (widget) {
             switch (_action) {
                 case 'login':
@@ -983,11 +969,11 @@ var filemanagerAPP = /** @class */ (function (_super) {
                     };
             }
         }
-    };
+    }
     /**
      * Open file a file dialog from EPL, warn if EPL is not available
      */
-    filemanagerAPP.prototype.fileafile = function () {
+    fileafile() {
         if (this.egw.user('apps').stylite) {
             this.egw.open_link('/index.php?menuaction=stylite.stylite_filemanager.upload&path=' + this.get_path(), '_blank', '670x320');
         }
@@ -1001,7 +987,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 this.egw.lang('You can use regular upload [+] button to upload files.') + "\n\n" +
                 this.egw.lang('Do you want more information about EPL subscription?'), this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
         }
-    };
+    }
     /**
      * create a share-link for the given entry
      * Overriden from parent to handle empty directories
@@ -1014,35 +1000,35 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {Function} _callback Callback with results
      * @returns {Boolean} returns false if not successful
      */
-    filemanagerAPP.prototype.share_link = function (_action, _senders, _target, _writable, _files, _callback) {
+    share_link(_action, _senders, _target, _writable, _files, _callback) {
         // Check to see if we're in the empty row (No matches found.) and use current path
-        var path = _senders[0].id;
+        let path = _senders[0].id;
         if (!path) {
             _senders[0] = { id: this.get_path() };
         }
         // Pass along any action data
-        var _extra = {};
-        for (var i in _action.data) {
+        let _extra = {};
+        for (let i in _action.data) {
             if (i.indexOf('share') == 0) {
                 _extra[i] = _action.data[i];
             }
         }
-        _super.prototype.share_link.call(this, _action, _senders, _target, _writable, _files, _callback, _extra);
-    };
+        super.share_link(_action, _senders, _target, _writable, _files, _callback, _extra);
+    }
     /**
      * Share-link callback
      * @param {object} _data
      */
-    filemanagerAPP.prototype._share_link_callback = function (_data) {
+    _share_link_callback(_data) {
         if (_data.msg || _data.share_link)
             window.egw_refresh(_data.msg, this.appname);
         console.log("_data", _data);
-        var app = this;
-        var copy_link_to_clipboard = function (evt) {
-            var $target = jQuery(evt.target);
+        let app = this;
+        let copy_link_to_clipboard = function (evt) {
+            let $target = jQuery(evt.target);
             $target.select();
             try {
-                var successful = document.execCommand('copy');
+                let successful = document.execCommand('copy');
                 if (successful) {
                     egw.message(app.egw.lang('Share link copied into clipboard'));
                     return true;
@@ -1063,19 +1049,19 @@ var filemanagerAPP = /** @class */ (function (_super) {
             width: 450,
             value: { content: { "share_link": _data.share_link } }
         });
-    };
+    }
     /**
      * Check if a row can have the Hidden Uploads action
      * Needs to be a directory
      */
-    filemanagerAPP.prototype.hidden_upload_enabled = function (_action, _senders) {
+    hidden_upload_enabled(_action, _senders) {
         if (_senders[0].id == 'nm')
             return false;
-        var data = egw.dataGetUIDdata(_senders[0].id);
-        var readonly = ((data === null || data === void 0 ? void 0 : data.data.class) || '').split(/ +/).indexOf('noEdit') >= 0;
+        let data = egw.dataGetUIDdata(_senders[0].id);
+        let readonly = ((data === null || data === void 0 ? void 0 : data.data.class) || '').split(/ +/).indexOf('noEdit') >= 0;
         // symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
         return (!_senders[0].id || data.data.is_dir && !readonly);
-    };
+    }
     /**
      * View the link from an existing share
      * (EPL only)
@@ -1083,11 +1069,11 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {egwAction} _action The shareLink action
      * @param {egwActionObject[]} _senders The row clicked on
      */
-    filemanagerAPP.prototype.view_link = function (_action, _senders) {
-        var id = egw.dataGetUIDdata(_senders[0].id).data.share_id;
+    view_link(_action, _senders) {
+        let id = egw.dataGetUIDdata(_senders[0].id).data.share_id;
         egw.json('stylite_filemanager::ajax_view_link', [id], this._share_link_callback, this, true, this).sendRequest();
         return true;
-    };
+    }
     /**
      * This function copies the selected file/folder entry as webdav link into clipboard
      *
@@ -1095,21 +1081,21 @@ var filemanagerAPP = /** @class */ (function (_super) {
      * @param {object} _senders selected nm row
      * @returns {Boolean} returns false if not successful
      */
-    filemanagerAPP.prototype.copy_link = function (_action, _senders) {
-        var data = egw.dataGetUIDdata(_senders[0].id);
-        var url = data ? data.data.download_url : '/webdav.php' + this.id2path(_senders[0].id);
+    copy_link(_action, _senders) {
+        let data = egw.dataGetUIDdata(_senders[0].id);
+        let url = data ? data.data.download_url : '/webdav.php' + this.id2path(_senders[0].id);
         if (url[0] == '/')
             url = egw.link(url);
         if (url.substr(0, 4) == 'http' && url.indexOf('://') <= 5) {
             // it's already a full url
         }
         else {
-            var hostUrl = new URL(window.location.href);
+            let hostUrl = new URL(window.location.href);
             url = hostUrl.origin + url;
         }
         if (url) {
-            var elem = jQuery(document.createElement('div'));
-            var range = void 0;
+            let elem = jQuery(document.createElement('div'));
+            let range;
             elem.text(url);
             elem.appendTo('body');
             if (document.selection) {
@@ -1123,7 +1109,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
                 window.getSelection().removeAllRanges();
                 window.getSelection().addRange(range);
             }
-            var successful = false;
+            let successful = false;
             try {
                 successful = document.execCommand('copy');
                 if (successful) {
@@ -1137,7 +1123,7 @@ var filemanagerAPP = /** @class */ (function (_super) {
             elem.remove();
             return false;
         }
-    };
+    }
     /**
      * Function to check wheter selected file is editable. ATM only .odt is supported.
      *
@@ -1146,16 +1132,16 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @returns {boolean} returns true if is editable otherwise false
      */
-    filemanagerAPP.prototype.isEditable = function (_egwAction, _senders) {
+    isEditable(_egwAction, _senders) {
         if (_senders.length > 1)
             return false;
-        var data = egw.dataGetUIDdata(_senders[0].id);
-        var mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
-        var fe = egw_get_file_editor_prefered_mimes(data.data.mime);
+        let data = egw.dataGetUIDdata(_senders[0].id);
+        let mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
+        let fe = egw_get_file_editor_prefered_mimes(data.data.mime);
         if (fe && fe.mime && !fe.mime[data.data.mime])
             return false;
         return !!data.data.mime.match(mime.mime_odf_regex);
-    };
+    }
     /**
      * Method to create a new document
      * @param {object} _action either action or node
@@ -1163,17 +1149,15 @@ var filemanagerAPP = /** @class */ (function (_super) {
      *
      * @return {boolean} returns true
      */
-    filemanagerAPP.prototype.create_new = function (_action, _selected) {
-        var fe = egw.link_get_registry('filemanager-editor');
+    create_new(_action, _selected) {
+        let fe = egw.link_get_registry('filemanager-editor');
         if (fe && fe["edit"]) {
             egw.open_link(egw.link('/index.php', {
                 menuaction: fe["edit"].menuaction
             }), '', fe["popup_edit"]);
         }
         return true;
-    };
-    return filemanagerAPP;
-}(egw_app_1.EgwApp));
-exports.filemanagerAPP = filemanagerAPP;
+    }
+}
 app.classes.filemanager = filemanagerAPP;
 //# sourceMappingURL=app.js.map

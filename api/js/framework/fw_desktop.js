@@ -16,7 +16,6 @@
 	framework.fw_classes;
 	egw_inheritance.js;
 */
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
 import './fw_base.js';
 import './fw_browser.js';
 import './fw_ui.js';

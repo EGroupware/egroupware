@@ -18,7 +18,6 @@
 import {egwAction, egwActionImplementation, egwActionObject} from './egw_action.js';
 import {egwFnct} from './egw_action_common.js';
 import {egwMenu, _egw_active_menu} from "./egw_menu.js";
-import '../jquery/jquery-tap-and-hold/jquery.tapandhold.js';
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};

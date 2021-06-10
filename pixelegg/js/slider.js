@@ -7,8 +7,6 @@
  * @package pixelegg
  */
 
-import '../../api/js/jquery/chosen/chosen.jquery.js';
-
 egw_ready.then(function()
 {
 	/**

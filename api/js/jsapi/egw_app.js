@@ -9,8 +9,6 @@
  * @author Hadi Nategh <hn@groupware.org>
  * @author Nathan Gray <ng@groupware.org>
  */
-import '../../../vendor/bower-asset/jquery/dist/jquery.js';
-import '../../../vendor/bower-asset/jquery-ui/jquery-ui.js';
 import { etemplate2 } from "../etemplate/etemplate2";
 import { et2_nextmatch } from "../etemplate/et2_extension_nextmatch";
 import { et2_dialog } from "../etemplate/et2_widget_dialog";

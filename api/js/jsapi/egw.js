@@ -63,6 +63,9 @@
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
 
+	// split includes in legacy js and modules
+	const legacy_js_regexp = /\/dhtmlx|jquery/;
+
 	// check if egw object was injected by window open
 	if (typeof window.egw == 'undefined')
 	{
@@ -95,6 +98,7 @@
 		{
 			window.egw = {
 				prefsOnly: true,
+				legacy_js_regexp: legacy_js_regexp,
 				webserverUrl: egw_webserverUrl
 			};
 			if (debug) console.log('creating new egw object');
@@ -146,6 +150,7 @@
 		console.log('Security exception accessing window specific egw object --> creating new one', e);
 		window.egw = {
 			prefsOnly: true,
+			legacy_js_regexp: legacy_js_regexp,
 			webserverUrl: egw_webserverUrl
 		};
 	}
@@ -187,12 +192,10 @@
 		}));
 	}
 
-	// split includes in legacy js and modules
-	const legacy_regexp = /dhtmlx/;
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
-	window.egw_LAB = window.egw_ready = Promise.all(
-		[legacy_js_import(include.filter((src) => src.match(legacy_regexp) !== null), window.egw_webserverUrl)]
-			.concat(include.filter((src) => src.match(legacy_regexp) === null)
+	window.egw_LAB = window.egw_ready =
+		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
+			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)
 				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
 					.catch((err) => { console.log(rel_src+":\n\n"+err.message)})
 	))).then(() =>

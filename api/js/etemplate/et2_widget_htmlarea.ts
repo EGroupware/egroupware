@@ -23,6 +23,8 @@ import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {et2_vfsSelect} from "./et2_widget_vfs";
+import {tinymce} from "../../../vendor/tinymce/tinymce/tinymce.min.js";
+import {etemplate2} from "./etemplate2";
 
 /**
  * @augments et2_inputWidget

@@ -1,4 +1,3 @@
-"use strict";
 /**
  * EGroupware - Admin - Javascript UI
  *
@@ -8,100 +7,83 @@
  * @copyright (c) 2013-20 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /api/js/jsapi/egw_app.js
  */
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
+import 'jquery';
+import 'jqueryui';
+import '../jsapi/egw_global';
+import '../etemplate/et2_types';
+import { EgwApp } from '../../api/js/jsapi/egw_app';
 /**
  * UI for Admin
  *
  * @augments AppJS
  */
-var AdminApp = /** @class */ (function (_super) {
-    __extends(AdminApp, _super);
+class AdminApp extends EgwApp {
     /**
      * Constructor
      *
      * @memberOf app.classes.admin
      */
-    function AdminApp() {
-        var _this = 
+    constructor() {
         // call parent
-        _super.call(this, 'admin') || this;
+        super('admin');
         /**
          * reference to iframe
          *
          * {et2_iframe}
          */
-        _this.iframe = null;
+        this.iframe = null;
         /**
          * reference to nextmatch
          *
          * {et2_extension_nextmatch}
          */
-        _this.nm = null;
+        this.nm = null;
         /**
          * Reference to div to hold AJAX loadable pages
          *
          * {et2_box}
          */
-        _this.ajax_target = null;
+        this.ajax_target = null;
         /**
          * Reference to ACL edit dialog (not the list)
          */
-        _this.acl_dialog = null;
-        _this.tree = null;
+        this.acl_dialog = null;
+        this.tree = null;
         /**
          * No SSL
          */
-        _this.SSL_NONE = 0;
+        this.SSL_NONE = 0;
         /**
          * STARTTLS on regular tcp connection/port
          */
-        _this.SSL_STARTTLS = 1;
+        this.SSL_STARTTLS = 1;
         /**
          * SSL (inferior to TLS!)
          */
-        _this.SSL_SSL = 3;
+        this.SSL_SSL = 3;
         /**
          * require TLS version 1+, no SSL version 2 or 3
          */
-        _this.SSL_TLS = 2;
+        this.SSL_TLS = 2;
         /**
          * if set, verify certifcate (currently not implemented in Horde_Imap_Client!)
          */
-        _this.SSL_VERIFY = 8;
-        return _this;
+        this.SSL_VERIFY = 8;
     }
     /**
      * Destructor
      */
-    AdminApp.prototype.destroy = function (_app) {
+    destroy(_app) {
         this.iframe = null;
         this.nm = null;
         this.acl_dialog = null;
         this.tree = null;
         // call parent
-        _super.prototype.destroy.call(this, _app);
-    };
+        super.destroy(_app);
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -110,9 +92,9 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {etemplate2} _et2
      * @param {string} _name name of template loaded
      */
-    AdminApp.prototype.et2_ready = function (_et2, _name) {
+    et2_ready(_et2, _name) {
         // call parent
-        _super.prototype.et2_ready.call(this, _et2, _name);
+        super.et2_ready(_et2, _name);
         switch (_name) {
             case 'admin.index':
                 var iframe = this.iframe = this.et2.getWidgetById('iframe');
@@ -154,13 +136,13 @@ var AdminApp = /** @class */ (function (_super) {
                 }
                 break;
         }
-    };
+    }
     /**
      * Show given url in (visible) iframe or nextmatch with accounts (!_url)
      *
      * @param {string} [_url=] url to show in iframe or nothing for showing
      */
-    AdminApp.prototype.load = function (_url) {
+    load(_url) {
         if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href
             .match(/menuaction=admin.admin_statistics.submit.+required=true/) && (!_url ||
             !_url.match(/statistics=(postpone|canceled|submitted)/))) {
@@ -210,7 +192,7 @@ var AdminApp = /** @class */ (function (_super) {
         this.nm.set_disabled(!!_url || ajax);
         this.groups.set_disabled(true);
         this.ajax_target.set_disabled(!ajax);
-    };
+    }
     /**
      * Observer method receives update notifications from all applications
      *
@@ -229,7 +211,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {string} _targetapp which app's window should be refreshed, default current
      * @return {false|*} false to stop regular refresh, thought all observers are run
      */
-    AdminApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _targetapp) {
+    observer(_msg, _app, _id, _type, _msg_type, _targetapp) {
         switch (_app) {
             case 'admin':
                 // if iframe is used --> refresh it
@@ -295,7 +277,7 @@ var AdminApp = /** @class */ (function (_super) {
                     return false; // --> no regular refresh needed
                 }
         }
-    };
+    }
     /**
      * Handle a push notification about entry changes from the websocket
      *
@@ -314,7 +296,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
      * @param {number} pushData.account_id User that caused the notification
      */
-    AdminApp.prototype.push = function (pushData) {
+    push(pushData) {
         // We'll listen to addressbook, but only if it has an account ID
         if (pushData.app != this.appname)
             return;
@@ -324,13 +306,13 @@ var AdminApp = /** @class */ (function (_super) {
         else if (pushData.id < 0) {
             this.groups.refresh(pushData.id, pushData.type);
         }
-    };
+    }
     /**
      * Hide navbar for idots template
      *
      * Just a hack for old idots, not neccesary for jdots
      */
-    AdminApp.prototype._hide_navbar = function () {
+    _hide_navbar() {
         var document = this.iframe.getDOMNode().contentDocument;
         if (!document)
             return; // nothing we can do ...
@@ -343,36 +325,36 @@ var AdminApp = /** @class */ (function (_super) {
             if (elem)
                 elem.style.display = 'none';
         }
-    };
+    }
     /**
      * Set location of iframe for given _action and _sender (row)
      *
      * @param _action
      * @param _senders
      */
-    AdminApp.prototype.iframe_location = function (_action, _senders) {
+    iframe_location(_action, _senders) {
         var id = _senders[0].id.split('::');
         var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
         this.load(url);
-    };
+    }
     /**
      * Callback to load an etemplate
      *
      * @param {Object[]} _data
      */
-    AdminApp.prototype._ajax_load_callback = function (_data) {
+    _ajax_load_callback(_data) {
         if (!_data || _data.type != undefined)
             return;
         // Insert the content, etemplate will load into it
         jQuery(this.ajax_target.node).append(typeof _data === 'string' ? _data : _data[0]);
-    };
+    }
     /**
      * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
      *
      * @param _url
      * @return boolean true, if linkHandler took care of link, false otherwise
      */
-    AdminApp.prototype.linkHandler = function (_url) {
+    linkHandler(_url) {
         var matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/);
         if (_url != 'about:blank' && (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') || matches)) {
             if (matches) {
@@ -383,14 +365,14 @@ var AdminApp = /** @class */ (function (_super) {
         }
         // can not load our own index page, has to be done by framework
         return false;
-    };
+    }
     /**
      * Run an admin module / onclick callback for tree
      *
      * @param {string} _id id of clicked node
      * @param {et2_tree} _widget reference to tree widget
      */
-    AdminApp.prototype.run = function (_id, _widget) {
+    run(_id, _widget) {
         var link = _widget.getUserData(_id, 'link');
         this.groups.set_disabled(true);
         if (_id == '/accounts' || _id.substr(0, 8) == '/groups/') {
@@ -410,9 +392,9 @@ var AdminApp = /** @class */ (function (_super) {
             this.load(link);
         }
         else if (link.substr(0, 11) == 'javascript:') {
-            var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
-            var matches = link.match(href_regexp);
-            var args = [];
+            const href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
+            const matches = link.match(href_regexp);
+            let args = [];
             if (matches.length > 1 && matches[2] !== undefined) {
                 try {
                     args = JSON.parse('[' + matches[2] + ']');
@@ -423,21 +405,21 @@ var AdminApp = /** @class */ (function (_super) {
             }
             egw.applyFunc(matches[1], args);
         }
-    };
+    }
     /**
      * Show the group list in the main window
      */
-    AdminApp.prototype.group_list = function () {
+    group_list() {
         this.nm.set_disabled(true);
         this.groups.set_disabled(false);
-    };
+    }
     /**
      * View, edit or delete a group callback for tree
      *
      * @param {object} _action egwAction
      * @param {array} _senders egwActionObject _senders[0].id holds id
      */
-    AdminApp.prototype.group = function (_action, _senders) {
+    group(_action, _senders) {
         // Tree IDs look like /groups/ID, nm uses admin::ID
         var from_nm = _senders[0].id.indexOf('::') > 0;
         var account_id = _senders[0].id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
@@ -465,14 +447,14 @@ var AdminApp = /** @class */ (function (_super) {
                 }
                 break;
         }
-    };
+    }
     /**
      * Modify an ACL entry
      *
      * @param {object} _action egwAction
      * @param {array} _senders egwActionObject _senders[0].id holds the id "admin::app:account:location"
      */
-    AdminApp.prototype.acl = function (_action, _senders) {
+    acl(_action, _senders) {
         var ids = [];
         for (var i = 0; i < _senders.length; ++i) {
             ids.push(_senders[i].id.split('::').pop()); // remove "admin::" prefix
@@ -492,8 +474,8 @@ var AdminApp = /** @class */ (function (_super) {
                 this._acl_dialog(content);
                 break;
         }
-    };
-    AdminApp.prototype._acl_delete = function (ids) {
+    }
+    _acl_delete(ids) {
         var app = egw.app_name(); // can be either admin or preferences!
         if (app != 'admin')
             app = 'preferences';
@@ -532,7 +514,7 @@ var AdminApp = /** @class */ (function (_super) {
         }
         // Create the dialog
         this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
-    };
+    }
     /**
      * Create the ACL edit dialog, including defaults & fetching what can be found
      *
@@ -542,7 +524,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {string} app Name of app
      * @param {function} callback
      */
-    AdminApp.prototype._acl_dialog = function (content, sel_options, etemplate, app, callback) {
+    _acl_dialog(content, sel_options, etemplate, app, callback) {
         if (typeof content == 'undefined')
             content = {};
         // Determine which application we're running as
@@ -585,8 +567,8 @@ var AdminApp = /** @class */ (function (_super) {
             else {
                 // Restrict application selectbox to only apps that support ACL
                 sel_options.acl_appname = [];
-                for (var app_1 in acl_rights) {
-                    sel_options.acl_appname.push({ value: app_1, label: this.egw.lang(this.egw.link_get_registry(app_1, 'entries') || app_1) });
+                for (let app in acl_rights) {
+                    sel_options.acl_appname.push({ value: app, label: this.egw.lang(this.egw.link_get_registry(app, 'entries') || app) });
                 }
                 // Sort list
                 sel_options.acl_appname.sort(function (a, b) {
@@ -603,7 +585,7 @@ var AdminApp = /** @class */ (function (_super) {
             content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
             jQuery.extend(content, { acl: [], right: [], label: [] });
             // Use this to make sure we get correct app translations
-            var app_egw = egw(content.acl_appname, window);
+            let app_egw = egw(content.acl_appname, window);
             for (var right in acl_rights[content.acl_appname]) {
                 // only user himself is allowed to grant private (16) rights
                 if (right == '16' && content['acl_account'] != egw.user('account_id')) {
@@ -704,7 +686,7 @@ var AdminApp = /** @class */ (function (_super) {
         }
         // Create the dialog
         this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
-    };
+    }
     /**
      * Change handler for ACL edit dialog application selectbox.
      * Re-creates the dialog with the current values
@@ -712,7 +694,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param input
      * @param widget
      */
-    AdminApp.prototype.acl_reopen_dialog = function (input, widget) {
+    acl_reopen_dialog(input, widget) {
         var content = {};
         if (this.acl_dialog != null) {
             content = this.acl_dialog.get_value() || {};
@@ -722,36 +704,36 @@ var AdminApp = /** @class */ (function (_super) {
         }
         // Re-open the dialog
         this._acl_dialog(content);
-    };
+    }
     /**
      * Load the new application's lang files when the app filter is changed
      */
-    AdminApp.prototype.acl_app_change = function (event, nm) {
-        var appname = nm.getWidgetById('filter2').getValue() || '';
+    acl_app_change(event, nm) {
+        let appname = nm.getWidgetById('filter2').getValue() || '';
         if (appname) {
-            var app_egw = egw(appname);
+            let app_egw = egw(appname);
             app_egw.langRequireApp(window, appname);
             nm.getRoot().setApiInstance(app_egw);
         }
-    };
+    }
     /**
      * Callback called on successfull call of serverside ACL handling
      *
      * @param {object} _data returned from server
      */
-    AdminApp.prototype._acl_callback = function (_data) {
+    _acl_callback(_data) {
         // Avoid the window / framework / app and just refresh the etemplate
         // Framework will try to refresh the opener
         // Get by ID, since this.et2 isn't always the ACL list
         var et2 = etemplate2.getById('admin-acl').widgetContainer;
         et2.getInstanceManager().refresh(_data.msg, this.appname, _data.ids, _data.type);
-    };
+    }
     /**
      * Check to see if admin has taken away access to a category
      *
      * @@param {widget} button add/apply pressed button
      */
-    AdminApp.prototype.check_owner = function (button) {
+    check_owner(button) {
         var select_owner = this.et2.getWidgetById('owner');
         var diff = [];
         if (typeof select_owner != 'undefined') {
@@ -794,25 +776,25 @@ var AdminApp = /** @class */ (function (_super) {
             }
         }
         return true;
-    };
+    }
     /**
      * Show icon based on icon-selectbox, hide placeholder (broken image), if no icon selected
      *
      * @param {widget} widget select box widget
      */
-    AdminApp.prototype.change_icon = function (widget) {
+    change_icon(widget) {
         var img = widget.getRoot().getWidgetById('icon_url');
         if (img) {
             img.set_src(widget.getValue());
         }
-    };
+    }
     /**
      * Add / edit an account
      *
      * @param {object} _action egwAction
      * @param {array} _senders egwActionObject _senders[0].id holds account_id
      */
-    AdminApp.prototype.account = function (_action, _senders) {
+    account(_action, _senders) {
         var params = jQuery.extend({}, this.egw.link_get_registry('addressbook', 'edit'));
         var popup = this.egw.link_get_registry('addressbook', 'edit_popup');
         switch (_action.id) {
@@ -828,7 +810,7 @@ var AdminApp = /** @class */ (function (_super) {
                 break;
         }
         this.egw.open_link(this.egw.link('/index.php', params), 'admin', popup, 'admin');
-    };
+    }
     /**
      * Submit statistic
      *
@@ -840,7 +822,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {string} submit_url
      * @return {boolean}
      */
-    AdminApp.prototype.submit_statistic = function (form, submit_url) {
+    submit_statistic(form, submit_url) {
         var that = this;
         var submit = function () {
             // submit to egroupware.org
@@ -872,26 +854,26 @@ var AdminApp = /** @class */ (function (_super) {
             }, this.egw.lang('Submit displayed information?'), '', {}, et2_dialog.BUTTON_YES_NO, et2_dialog.QUESTION_MESSAGE, undefined, egw);
         }
         return false;
-    };
+    }
     /**
      * Change handler for when you change the type of a custom field.
      * It toggles options / attributes as appropriate.
      * @param {event object} e
      * @param {widget object} widget
      */
-    AdminApp.prototype.cf_type_change = function (e, widget) {
+    cf_type_change(e, widget) {
         var root = widget.getRoot();
         var attributes = widget.getArrayMgr('content').getEntry('attributes[' + widget.getValue() + ']') || {};
         root.getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options[' + widget.getValue() + ']') || ''));
         jQuery(root.getWidgetById('cf_len').getDOMNode()).toggle(attributes.cf_len && true);
         jQuery(root.getWidgetById('cf_rows').getDOMNode()).toggle(attributes.cf_rows && true);
         jQuery(root.getWidgetById('cf_values').getParentDOMNode()).toggle(attributes.cf_values && true);
-    };
+    }
     /**
      * Change handler for when you delete a custom app type
      * If Policy app is available, it asks for documentation
      */
-    AdminApp.prototype.cf_type_delete = function (e, widget) {
+    cf_type_delete(e, widget) {
         var callback = function (button, value) {
             if (button === et2_dialog.YES_BUTTON) {
                 var values = jQuery.extend({}, this.getInstanceManager().getValues(this.getRoot()), value, { appname: this.getRoot().getArrayMgr('content').getEntry('content_types[appname]') });
@@ -933,14 +915,14 @@ var AdminApp = /** @class */ (function (_super) {
             callback(et2_dialog.YES_BUTTON);
         }
         return false;
-    };
+    }
     /**
      * Activate none standard SMTP mail accounts for selected users
      *
      * @param {egw_action} _action
      * @param {array} _selected selected users
      */
-    AdminApp.prototype.emailadminActiveAccounts = function (_action, _selected) {
+    emailadminActiveAccounts(_action, _selected) {
         var menuaction = 'admin.admin_mail.ajax_activeAccounts';
         var accounts = [];
         var msg1 = egw.lang('%1 accounts being activated', "" + Object.keys(_selected).length);
@@ -961,13 +943,13 @@ var AdminApp = /** @class */ (function (_super) {
         };
         // confirmation dialog
         et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), egw.lang('Active Mail Accounts'), {}, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
-    };
+    }
     /**
      * Resize window methode
      *
      * @returns {undefined}
      */
-    AdminApp.prototype.wizard_popup_resize = function () {
+    wizard_popup_resize() {
         var $main_div = jQuery('#popupMainDiv');
         var $et2 = jQuery('.et2_container');
         var w = {
@@ -981,21 +963,21 @@ var AdminApp = /** @class */ (function (_super) {
         if (delta_width != 0 || delta_height != 0) {
             window.resizeTo(egw_getWindowOuterWidth() - delta_width, egw_getWindowOuterHeight() - delta_height);
         }
-    };
+    }
     /**
      * Switch account wizard to manual entry
      */
-    AdminApp.prototype.wizard_manual = function () {
+    wizard_manual() {
         jQuery('.emailadmin_manual').fadeToggle(); // not sure how to to this et2-isch
         this.wizard_popup_resize(); // popup needs to be resized after toggling
-    };
+    }
     /**
      * onclick for continue button to show progress animation
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.wizard_detect = function (_event, _widget) {
+    wizard_detect(_event, _widget) {
         // we need to do a manual asynchronious submit to show progress animation
         // default synchronious submit stops animation!
         if (this.et2._inst.submit('button[continue]', true)) // true = async submit
@@ -1007,60 +989,60 @@ var AdminApp = /** @class */ (function (_super) {
             }
         }
         return false;
-    };
+    }
     /**
      * Set default port, if imap ssl-type changes
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.wizard_imap_ssl_onchange = function (_event, _widget) {
+    wizard_imap_ssl_onchange(_event, _widget) {
         var ssl_type = _widget.get_value();
         this.et2.getWidgetById('acc_imap_port').set_value(ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 993 : 143);
-    };
+    }
     /**
      * Set default port, if imap ssl-type changes
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.wizard_smtp_ssl_onchange = function (_event, _widget) {
+    wizard_smtp_ssl_onchange(_event, _widget) {
         var ssl_type = _widget.get_value();
         this.et2.getWidgetById('acc_smtp_port').set_value(ssl_type == 'no' ? 25 : (ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 465 : 587));
-    };
+    }
     /**
      * Set default port, if imap ssl-type changes
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.wizard_sieve_ssl_onchange = function (_event, _widget) {
+    wizard_sieve_ssl_onchange(_event, _widget) {
         var ssl_type = _widget.get_value();
         this.et2.getWidgetById('acc_sieve_port').set_value(ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 5190 : 4190);
         this.wizard_sieve_onchange(_event, _widget);
-    };
+    }
     /**
      * Enable sieve, if user changes some setting
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.wizard_sieve_onchange = function (_event, _widget) {
+    wizard_sieve_onchange(_event, _widget) {
         this.et2.getWidgetById('acc_sieve_enabled').set_value(1);
-    };
+    }
     /**
      * Switch to select multiple accounts
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.edit_multiple = function (_event, _widget) {
+    edit_multiple(_event, _widget) {
         // hide multiple button
         _widget.set_disabled(true);
         // switch account-selection to multiple
         var account_id = this.et2.getWidgetById('account_id');
         account_id.set_multiple(true);
-    };
+    }
     /**
      * Hide not applying fields, used as:
      * - onchange handler on account_id
@@ -1069,7 +1051,7 @@ var AdminApp = /** @class */ (function (_super) {
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.account_hide_not_applying = function (_event, _widget) {
+    account_hide_not_applying(_event, _widget) {
         var account_id = this.et2.getWidgetById('account_id');
         var ids = account_id && account_id.get_value ? account_id.get_value() : [];
         if (typeof ids == 'string')
@@ -1104,73 +1086,72 @@ var AdminApp = /** @class */ (function (_super) {
         if (_event && _event.stopPropagation)
             _event.stopPropagation();
         return false;
-    };
+    }
     /**
      * Callback if user changed account selction
      *
      * @param {object} _event event-object or information about event
      * @param {et2_baseWidget} _widget widget causing the event
      */
-    AdminApp.prototype.change_account = function (_event, _widget) {
+    change_account(_event, _widget) {
         // todo check dirty and query user to a) save changes, b) discard changes, c) cancel selection
         _widget.getInstanceManager().submit();
-    };
+    }
     /**
      * Callback if user changes notification folders: unset use-default checkbox
      *
      * @param {object} _event
      * @param {et2_widget} _widget
      */
-    AdminApp.prototype.change_folders = function (_event, _widget) {
+    change_folders(_event, _widget) {
         var use_default = this.et2.getWidgetById('notify_use_default');
         if (use_default)
             use_default.set_value(false);
-    };
+    }
     /**
      * default onExecute for admin actions
      *
      * @param {object} _action
      * @param {object} _senders
      */
-    AdminApp.prototype.account_edit_action = function (_action, _senders) {
+    account_edit_action(_action, _senders) {
         if (_action.data.url) {
             this.egw.open_link(_action.data.url, _action.data.target || '_blank', _action.data.popup);
         }
-    };
+    }
     /**
      * Clear instance cache
      *
      * If there is an error on server-side, resend request with an parameter allowing
      * cache to use different method not requiring eg. so much memory
      */
-    AdminApp.prototype.clear_cache = function () {
-        var wait = this.egw.message(this.egw.lang('Clear cache and register hooks') + "\n" + this.egw.lang('Please wait...'), 'info');
-        var success = function () {
+    clear_cache() {
+        let wait = this.egw.message(this.egw.lang('Clear cache and register hooks') + "\n" + this.egw.lang('Please wait...'), 'info');
+        let success = function () {
             wait.close();
             egw.message('Done');
         };
         this.egw.json('admin.admin_hooks.ajax_clear_cache', null, success).sendRequest(true, undefined, jQuery.proxy(function (_xmlhttp, _err) {
             this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1', null, success).sendRequest(true);
         }, this));
-    };
+    }
     /**
      * Action handler for clear credentials action
      *
      * @param action
      * @param selected
      */
-    AdminApp.prototype.clear_credentials_handler = function (action, selected) {
-        var ids = [];
-        for (var _i = 0, selected_1 = selected; _i < selected_1.length; _i++) {
-            var row = selected_1[_i];
+    clear_credentials_handler(action, selected) {
+        let ids = [];
+        for (let row of selected) {
             ids.push(row.id.split("::").pop());
         }
         this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [action.id, ids]);
-    };
+    }
     /**
      * Export content of given field into relevant file
      */
-    AdminApp.prototype.smime_exportCert = function () {
+    smime_exportCert() {
         var $a = jQuery(document.createElement('a')).appendTo('body').hide();
         var acc_id = this.et2.getArrayMgr("content").getEntry('acc_id');
         var url = window.egw.webserverUrl + '/index.php?';
@@ -1180,14 +1161,14 @@ var AdminApp = /** @class */ (function (_super) {
         $a.prop('download', "");
         $a[0].click();
         $a.remove();
-    };
+    }
     /**
      * Create certificate generator dialog
      */
-    AdminApp.prototype.smime_genCertificate = function () {
+    smime_genCertificate() {
         var self = this;
         et2_createWidget("dialog", {
-            callback: function (_button_id, _value) {
+            callback(_button_id, _value) {
                 if (_button_id == 'create' && _value) {
                     var isValid = true;
                     var required = ['countryName', 'emailAddress'];
@@ -1244,26 +1225,26 @@ var AdminApp = /** @class */ (function (_super) {
             resizable: false,
             position: 'left top'
         }, et2_dialog._create_parent('mail'));
-    };
+    }
     /**
      * Triggers upload for background image and updates its taglist
      *
      * @param {type} node
      * @param {type} widget
      */
-    AdminApp.prototype.login_background_update = function (node, widget) {
+    login_background_update(node, widget) {
         var taglist = widget._parent._children[0];
         egw.json('admin.admin_config.ajax_upload_anon_images', [widget.get_value(), taglist.get_value()], function (_data) {
             taglist.set_value(_data);
         }).sendRequest();
-    };
+    }
     /**
      * Set content of selected row
      *
      * @param {array} node
      * @returns
      */
-    AdminApp.prototype.cmds_onselect = function (node) {
+    cmds_onselect(node) {
         var splitter = this.et2.getWidgetById('splitter');
         var cmds_preview = this.et2.getWidgetById('cmds_preview');
         if (node.length != 1) {
@@ -1288,12 +1269,7 @@ var AdminApp = /** @class */ (function (_super) {
             policy_preview.set_disabled(true);
             cmds_preview.set_value({ content: [data.data] });
         }
-    };
-    return AdminApp;
-}(egw_app_1.EgwApp
-/**
- * @lends app.classes.admin
- */
-));
+    }
+}
 app.classes.admin = AdminApp;
 //# sourceMappingURL=app.js.map

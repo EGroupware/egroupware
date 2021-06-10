@@ -7,12 +7,10 @@
  * @link https://www.egroupware.org
  */
 
-import '../../vendor/bower-asset/jquery/dist/jquery.js';	// also ensures egw_LAB.wait exists!
-
 /* if login page is not in top window, set top windows location to it */
 if (top !== window) top.location = window.location;
 
-egw_LAB.wait(function()
+egw_ready.then(function()
 {
 	jQuery(document).ready(function()
 	{

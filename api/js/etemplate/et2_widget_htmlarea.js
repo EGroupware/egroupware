@@ -19,6 +19,8 @@ import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_register_widget, et2_createWidget } from "./et2_core_widget";
 import { et2_no_init } from "./et2_core_common";
 import { egw } from "../jsapi/egw_global";
+import { tinymce } from "../../../vendor/tinymce/tinymce/tinymce.min.js";
+import { etemplate2 } from "./etemplate2";
 /**
  * @augments et2_inputWidget
  */

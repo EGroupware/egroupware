@@ -1,15 +1,15 @@
 /**
  * EGroupware - Resources - Javascript UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package resources
- * @author Hadi Nategh	<hn-AT-stylite.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Hadi Nategh	<hn-AT-egroupware.org>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: app.js 44390 2013-11-04 20:54:23Z ralfbecker $
  */
 
 import {EgwApp} from "../../api/js/jsapi/egw_app";
+import {fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 
 /**
  * UI for resources
