@@ -23,7 +23,7 @@ import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {et2_vfsSelect} from "./et2_widget_vfs";
-import {tinymce} from "../../../vendor/tinymce/tinymce/tinymce.min.js";
+import "../../../vendor/tinymce/tinymce/tinymce.min.js";
 import {etemplate2} from "./etemplate2";
 
 /**
@@ -221,6 +221,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		}
 		// default settings for initialization
 		let settings = {
+			base_url: egw.webserverUrl + '/vendor/tinymce/tinymce',
 			target: this.htmlNode[0],
 			body_id: this.dom_id + '_htmlarea',
 			menubar: false,
