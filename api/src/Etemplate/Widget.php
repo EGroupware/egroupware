@@ -139,6 +139,10 @@ class Widget
 		if (!$ok && ($error = libxml_get_last_error()))
 		{
 			$file = str_replace([EGW_SERVER_ROOT.'/', '//default/etemplates/'], '', $error->file);
+			if(!$file && is_string($xml))
+			{
+				$file = $xml;
+			}
 			throw new \Exception("Error passing XML file '$file' line $error->line: $error->message");
 		}
 
