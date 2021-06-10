@@ -21,8 +21,6 @@ import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_evalBool, et2_no_init} from "./et2_core_common";
 import {et2_url} from "./et2_widget_url";
 import {egw} from "../jsapi/egw_global";
-import "../../../vendor/egroupware/magicsuggest/magicsuggest.js";
-
 /**
  * Tag list widget
  *

@@ -11,8 +11,6 @@
 
 'use strict';
 
-import '../../vendor/bower-asset/jquery/dist/jquery.js';
-
 /**
  * Installs app.notifications used to poll notifications from server and display them
  */

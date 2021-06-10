@@ -13,9 +13,6 @@
 	/api/js/jsapi/egw_app.js
  */
 
-import 'jquery';
-import 'jqueryui';
-
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
