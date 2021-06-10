@@ -23,7 +23,7 @@
  *
  * @param {type} _structure
  */
-function egwMenuImpl(_structure)
+export function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object
 	this.dhtmlxmenu = new dhtmlXMenuObject();

@@ -14,6 +14,7 @@
 import '../../api/js/jsapi/egw_global';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import {egw} from "../../api/js/jsapi/egw_global";
 
 /**
  * UI for timesheet

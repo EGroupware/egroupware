@@ -9,7 +9,7 @@
  *
  * @Todo: @new-js-loader port to TypeScript
  */
-
+import {egwMenuImpl} from './egw_menu_dhtmlx.js';
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu openes
 export var _egw_active_menu = null;
