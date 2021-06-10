@@ -10,11 +10,10 @@
 /*egw:uses
     /api/js/jsapi/egw_app.js
  */
-import 'jquery';
-import 'jqueryui';
-import '../jsapi/egw_global';
-import '../etemplate/et2_types';
 import { EgwApp } from '../../api/js/jsapi/egw_app';
+import { etemplate2 } from "../../api/js/etemplate/etemplate2";
+import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
+import { et2_createWidget } from "../../api/js/etemplate/et2_core_widget";
 /**
  * UI for Admin
  *
@@ -851,7 +850,7 @@ class AdminApp extends EgwApp {
                 if (_button == et2_dialog.YES_BUTTON) {
                     submit();
                 }
-            }, this.egw.lang('Submit displayed information?'), '', {}, et2_dialog.BUTTON_YES_NO, et2_dialog.QUESTION_MESSAGE, undefined, egw);
+            }, this.egw.lang('Submit displayed information?'), '', {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE, undefined, egw);
         }
         return false;
     }
@@ -942,7 +941,7 @@ class AdminApp extends EgwApp {
             }
         };
         // confirmation dialog
-        et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), egw.lang('Active Mail Accounts'), {}, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+        et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), egw.lang('Active Mail Accounts'), {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
     }
     /**
      * Resize window methode

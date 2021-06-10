@@ -28,9 +28,6 @@ import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {date} from "./lib/date.js";
 
-// lib/date.js:
-declare function date (format : string, timestamp? : string | number | Date);
-
 // all calls to jQueryUI.datetimepicker as jQuery.datepicker give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/jquery.ui.datetimepicker did NOT help :(
 

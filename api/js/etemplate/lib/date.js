@@ -249,7 +249,7 @@ export function date (format, timestamp) {
             return jsdate.getTime() / 1000 | 0;
         }
     };
-    this.date = function (format, timestamp) {
+    window.date = function (format, timestamp) {
         that = this;
         jsdate = ((typeof timestamp === 'undefined' ||isNaN(timestamp.valueOf())) ? new Date() : // Not provided
         (timestamp instanceof Date) ? new Date(timestamp) : // JS Date()
@@ -257,5 +257,5 @@ export function date (format, timestamp) {
         );
         return format.replace(formatChr, formatChrCb);
     };
-    return this.date(format, timestamp);
+    return window.date(format, timestamp);
 }

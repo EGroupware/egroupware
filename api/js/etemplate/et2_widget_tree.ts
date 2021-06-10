@@ -27,10 +27,16 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_no_init} from "./et2_core_common";
 import {egw, framework} from "../jsapi/egw_global";
 
+/* no module, but egw:uses is ignored, so adding it here commented out
+import '../../../api/js/dhtmlxtree/sources/dhtmlxtree.js';
+import '../../../api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js';
+import '../../../api/js/dhtmlxtree/sources/ext/dhtmlxtree_start.js';
+ */
+
 /**
  * Tree widget
  *
- * For syntax of nodes supplied via sel_optons or autoloading refer to Etemplate\Widget\Tree class.
+ * For syntax of nodes supplied via sel_options or autoloading refer to Etemplate\Widget\Tree class.
  *
  * @augments et2_inputWidget
  */
