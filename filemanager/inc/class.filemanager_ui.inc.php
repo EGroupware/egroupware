@@ -1178,11 +1178,11 @@ class filemanager_ui
 
 			$button = @key($content['button']);
 			unset($content['button']);
-			if(!$button && $content['sudo'])
+			if(!$button && $content['sudo'] && $content['sudouser'])
 			{
 				// Button to stop sudo is not in button namespace
 				$button = 'sudo';
-				unset($content['sudo']);
+				unset($content['sudo'], $content['sudouser']);
 			}
 			// need to check 'setup' button (submit button in sudo popup), as some browsers (eg. chrome) also fill the hidden field
 			if ($button == 'sudo' && Vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
