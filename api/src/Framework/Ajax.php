@@ -838,6 +838,7 @@ abstract class Ajax extends Api\Framework
 		{
 			$url = $last_direct_url;
 			$active_tab = self::app_from_url($last_direct_url);
+			Api\Cache::unsetSession(__CLASS__,'last_direct_url');
 		}
 		else if (strpos($url, 'menuaction') > 0)
 		{
