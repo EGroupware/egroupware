@@ -18,6 +18,7 @@ import { et2_compileLegacyJS } from "./et2_core_legacyJSFunctions";
 import { et2_loadXMLFromURL } from "./et2_core_xml";
 import { et2_nextmatch, et2_nextmatch_header_bar } from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
+import { egwIsMobile } from "../egw_action/egw_action_common";
 /* Include all widget classes here, we only care about them registering, not importing anything
 import './et2_widget_template';
 import './et2_widget_grid';
@@ -375,12 +376,14 @@ export class etemplate2 {
             var start_time = (new Date).getTime();
         }
         // require necessary translations from server AND the app.js file, if not already loaded
-        if (!jQuery.isArray(_data.langRequire))
-            _data.langRequire = [];
-        Promise.all([
-            egw(currentapp, window).langRequire(window, _data.langRequire),
-            egw(currentapp, window).includeJS('/' + appname + '/js/app.js', undefined, undefined, egw.webserverUrl)
-        ]).catch((err) => {
+        let promisses = [];
+        if (Array.isArray(_data.langRequire)) {
+            promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
+        }
+        if (appname) {
+            promisses.push(egw(currentapp, window).includeJS('/' + appname + '/js/app.js', undefined, undefined, egw.webserverUrl));
+        }
+        Promise.all(promisses).catch((err) => {
             console.log("et2.load(): error loading lang-files and app.js: " + err.message);
         }).then(() => {
             this.clear();

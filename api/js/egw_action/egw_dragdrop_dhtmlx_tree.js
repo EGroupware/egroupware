@@ -1,17 +1,19 @@
 /**
- * eGroupWare egw_dragdrop_dhtmlxmenu - egw action framework
+ * EGroupware egw_dragdrop_dhtmlxmenu - egw action framework
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel <as@stylite.de>
  * @copyright 2011 by Andreas Stöckel
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
- * @version $Id$
  */
 
 /*egw:uses
 	egw_action;
 */
+
+import {EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED, egwActionObjectInterface, EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT} from "./egw_action";
+import {egwBitIsSet} from "./egw_action_common";
 
 /**
 * This file contains an egw_actionObjectInterface which allows a dhtmlx tree
@@ -19,7 +21,7 @@
 * dhtmlx tree into egw_actionObjects
 */
 
-function dhtmlxTree_getNode(_tree, _itemId) {
+export function dhtmlxTree_getNode(_tree, _itemId) {
 	var node = _tree._globalIdStorageFind(_itemId);
 	if (node != null)
 	{
@@ -31,7 +33,7 @@ function dhtmlxTree_getNode(_tree, _itemId) {
 
 // An action object interface for an dhtmlxTree entry - it only contains the
 // code needed for drag/drop handling
-function dhtmlxtreeItemAOI(_tree, _itemId)
+export function dhtmlxtreeItemAOI(_tree, _itemId)
 {
 	var aoi = new egwActionObjectInterface();
 
