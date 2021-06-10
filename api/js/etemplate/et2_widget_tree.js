@@ -24,6 +24,8 @@ import { et2_inputWidget } from "./et2_core_inputWidget";
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_no_init } from "./et2_core_common";
 import { egw, framework } from "../jsapi/egw_global";
+import { EGW_AO_FLAG_IS_CONTAINER, egw_getAppObjectManager, egw_getObjectManager, egwActionObject } from "../egw_action/egw_action.js";
+import { egwIsMobile } from "../egw_action/egw_action_common";
 /* no module, but egw:uses is ignored, so adding it here commented out
 import '../../../api/js/dhtmlxtree/sources/dhtmlxtree.js';
 import '../../../api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js';

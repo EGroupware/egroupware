@@ -16,5 +16,6 @@
 	/api/js/jquery/mousewheel/mousewheel.js;
 	/api/js/jquery/jquery-ui-timepicker-addon.js;
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
+	/vendor/egroupware/magicsuggest/magicsuggest.js;
 */
 jQuery.noConflict();
