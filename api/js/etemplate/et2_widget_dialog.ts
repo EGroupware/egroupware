@@ -903,4 +903,6 @@ export class et2_dialog extends et2_widget {
         return dialog;
     }
 }
+// make et2_dialog publicly available as we need to call it from templates
+window['et2_dialog'] = et2_dialog;
 et2_register_widget(et2_dialog, ["dialog"]);

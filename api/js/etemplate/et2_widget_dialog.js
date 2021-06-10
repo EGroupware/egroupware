@@ -840,5 +840,7 @@ et2_dialog.CANCEL_BUTTON = 0;
 et2_dialog.OK_BUTTON = 1;
 et2_dialog.YES_BUTTON = 2;
 et2_dialog.NO_BUTTON = 3;
+// make et2_dialog publicly available as we need to call it from templates
+window['et2_dialog'] = et2_dialog;
 et2_register_widget(et2_dialog, ["dialog"]);
 //# sourceMappingURL=et2_widget_dialog.js.map
