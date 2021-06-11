@@ -1,11 +1,11 @@
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package
- * @subpackage
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 /*egw:uses
     /calendar/js/et2_widget_view.js;

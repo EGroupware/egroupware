@@ -1,11 +1,11 @@
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package etemplate
- * @subpackage api
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 /*egw:uses
     et2_core_valueWidget;
@@ -20,6 +20,8 @@ import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance
 import { et2_no_init } from "../../api/js/etemplate/et2_core_common";
 import { egw } from "../../api/js/jsapi/egw_global";
 import { egwIsMobile } from "../../api/js/egw_action/egw_action_common.js";
+import { CalendarApp } from "./app";
+import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a single days
  *

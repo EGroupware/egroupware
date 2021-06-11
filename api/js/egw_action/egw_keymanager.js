@@ -208,7 +208,7 @@ jQuery(window).on("contextmenu",document, function(event) {
 /**
  * Creates an unique key for the given shortcut
  */
-function egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt)
+export function egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt)
 {
 	return "_" + _keyCode + "_" +
 		(_shift ? "S" : "") +
@@ -229,7 +229,7 @@ var egw_registeredShortcuts = {}
  * 	parameter.
  * @param object _context is the context in which the function will be executed
  */
-function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handler, _context)
+export function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handler, _context)
 {
 	// Generate the hash map index for the shortcut
 	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
@@ -250,7 +250,8 @@ function egw_registerGlobalShortcut(_keyCode, _shift, _ctrl, _alt, _handler, _co
 /**
  * Unregisters the given shortcut.
  */
-function egw_unregisterGlobalShortcut(_keyCode, _shift, _ctrl, _alt) {
+export function egw_unregisterGlobalShortcut(_keyCode, _shift, _ctrl, _alt)
+{
 	// Generate the hash map index for the shortcut
 	var idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 

@@ -1,11 +1,11 @@
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package
- * @subpackage
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 
 
@@ -13,9 +13,9 @@
 	et2_widget_taglist;
 */
 
-import {et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
-import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
+import {et2_register_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {et2_taglist_email} from "../../api/js/etemplate/et2_widget_taglist";
 
 /**
  * Tag list widget customised for calendar owner, which can be a user

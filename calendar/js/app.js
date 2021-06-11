@@ -1,29 +1,13 @@
-"use strict";
 /**
  * EGroupware - Calendar - Javascript UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package calendar
- * @author Hadi Nategh	<hn-AT-stylite.de>
+ * @author Hadi Nategh	<hn-AT-egroupware.org>
  * @author Nathan Gray
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /api/js/jsapi/egw_app.js;
     /etemplate/js/etemplate2.js;
@@ -33,18 +17,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
     /calendar/js/et2_widget_planner.js;
     /vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
-var egw_app_1 = require("../../api/js/jsapi/egw_app");
-var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
-var View_1 = require("./View");
-var et2_widget_view_1 = require("./et2_widget_view");
-var et2_widget_timegrid_1 = require("./et2_widget_timegrid");
-var et2_widget_daycol_1 = require("./et2_widget_daycol");
-var et2_widget_planner_row_1 = require("./et2_widget_planner_row");
-var et2_widget_event_1 = require("./et2_widget_event");
-var et2_widget_dialog_1 = require("../../api/js/etemplate/et2_widget_dialog");
-var et2_core_valueWidget_1 = require("../../api/js/etemplate/et2_core_valueWidget");
-var et2_core_widget_1 = require("../../api/js/etemplate/et2_core_widget");
-var et2_core_inputWidget_1 = require("../../api/js/etemplate/et2_core_inputWidget");
+import { EgwApp } from "../../api/js/jsapi/egw_app";
+import { etemplate2 } from "../../api/js/etemplate/etemplate2";
+import { day, day4, listview, month, planner, week, weekN } from "./View";
+import { et2_calendar_view } from "./et2_widget_view";
+import { et2_calendar_timegrid } from "./et2_widget_timegrid";
+import { et2_calendar_daycol } from "./et2_widget_daycol";
+import { et2_calendar_planner_row } from "./et2_widget_planner_row";
+import { et2_calendar_event } from "./et2_widget_event";
+import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
+import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
+import { et2_widget } from "../../api/js/etemplate/et2_core_widget";
+import { et2_inputWidget } from "../../api/js/etemplate/et2_core_inputWidget";
+import { date } from "../../api/js/etemplate/lib/date.js";
+import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
+import { egw_registerGlobalShortcut } from "";
+// et2 widgets need to be imported, so they register themselves
+import "./et2_widget_daycol";
+import "./et2_widget_event";
+import "./et2_widget_owner";
+import "./et2_widget_planner";
+import "./et2_widget_planner_row";
+import "./et2_widget_timegrid";
+import "./et2_widget_view";
 /**
  * UI for calendar
  *
@@ -67,14 +62,12 @@ var et2_core_inputWidget_1 = require("../../api/js/etemplate/et2_core_inputWidge
  * changed, we discard the daywise cache and ask the server for the filtered events.
  *
  */
-var CalendarApp = /** @class */ (function (_super) {
-    __extends(CalendarApp, _super);
+export class CalendarApp extends EgwApp {
     /**
      * Constructor
      *
      */
-    function CalendarApp() {
-        var _this = 
+    constructor() {
         /*
         // categories have nothing to do with calendar, but eT2 objects loads calendars app.js
         if (window.framework && framework.applications.calendar.browser &&
@@ -100,22 +93,22 @@ var CalendarApp = /** @class */ (function (_super) {
         }
     */
         // call parent
-        _super.call(this, 'calendar') || this;
+        super('calendar');
         /**
          * Needed for JSON callback
          */
-        _this.prefix = 'calendar';
+        this.prefix = 'calendar';
         /**
          * etemplate for the sidebox filters
          */
-        _this.sidebox_et2 = null;
+        this.sidebox_et2 = null;
         /**
          * Current internal state
          *
          * If you need to change state, you can pass just the fields to change to
          * update_state().
          */
-        _this.state = {
+        this.state = {
             date: new Date(),
             view: egw.preference('saved_states', 'calendar') ?
                 // @ts-ignore
@@ -130,21 +123,21 @@ var CalendarApp = /** @class */ (function (_super) {
         // If you are in one of these views and select a date in the sidebox, the view
         // will change as needed to show the date.  Other views will only change the
         // date in the current view.
-        _this.sidebox_changes_views = ['day', 'week', 'month'];
+        this.sidebox_changes_views = ['day', 'week', 'month'];
         // Calendar allows other apps to hook into the sidebox.  We keep these etemplates
         // up to date as state is changed.
-        _this.sidebox_hooked_templates = [];
+        this.sidebox_hooked_templates = [];
         // List of queries in progress, to prevent home from requesting the same thing
-        _this._queries_in_progress = [];
+        this._queries_in_progress = [];
         // Calendar-wide autorefresh
-        _this._autorefresh_timer = null;
+        this._autorefresh_timer = null;
         // Flag if the state is being updated
-        _this.state_update_in_progress = false;
+        this.state_update_in_progress = false;
         /**
          * Some handy date calculations
          * All take either a Date object or full date with timestamp (Z)
          */
-        _this.date = {
+        this.date = {
             toString: function (date) {
                 // Ensure consistent formatting using UTC, avoids problems with comparison
                 // and timezones
@@ -298,20 +291,19 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         };
         // Scroll
-        jQuery(jQuery.proxy(_this._scroll, _this));
-        jQuery.extend(_this.state, _this.egw.preference('saved_states', 'calendar'));
+        jQuery(jQuery.proxy(this._scroll, this));
+        jQuery.extend(this.state, this.egw.preference('saved_states', 'calendar'));
         // Set custom color for events without category
-        if (_this.egw.preference('no_category_custom_color', 'calendar')) {
-            _this.egw.css('.calendar_calEvent:not([class*="cat_"])', 'background-color: ' + _this.egw.preference('no_category_custom_color', 'calendar') + ' !important');
+        if (this.egw.preference('no_category_custom_color', 'calendar')) {
+            this.egw.css('.calendar_calEvent:not([class*="cat_"])', 'background-color: ' + this.egw.preference('no_category_custom_color', 'calendar') + ' !important');
         }
-        return _this;
     }
     /**
      * Destructor
      */
-    CalendarApp.prototype.destroy = function () {
+    destroy() {
         // call parent
-        _super.prototype.destroy.call(this, this.appname);
+        super.destroy(this.appname);
         // remove top window reference
         // @ts-ignore
         if (window.top !== window && window.top.app.calendar === this) {
@@ -331,7 +323,7 @@ var CalendarApp = /** @class */ (function (_super) {
             window.clearInterval(this._autorefresh_timer);
             this._autorefresh_timer = null;
         }
-    };
+    }
     /**
      * This function is called when the etemplate2 object is loaded
      * and ready.  If you must store a reference to the et2 object,
@@ -340,9 +332,9 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {etemplate2} _et2 newly ready et2 object
      * @param {string} _name name of template
      */
-    CalendarApp.prototype.et2_ready = function (_et2, _name) {
+    et2_ready(_et2, _name) {
         // call parent
-        _super.prototype.et2_ready.call(this, _et2, _name);
+        super.et2_ready(_et2, _name);
         // Avoid many problems with home
         if (_et2.app !== 'calendar' || _name == 'admin.categories.index') {
             egw.loading_prompt(this.appname, false);
@@ -418,7 +410,7 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Record the templates for the views so we can switch between them
         this._et2_view_init(_et2, _name);
-    };
+    }
     /**
      * Observer method receives update notifications from all applications
      *
@@ -441,7 +433,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * or null, if not triggered on server-side, which adds that info
      * @return {false|*} false to stop regular refresh, thought all observers are run
      */
-    CalendarApp.prototype.observer = function (_msg, _app, _id, _type, _msg_type, _links) {
+    observer(_msg, _app, _id, _type, _msg_type, _links) {
         var do_refresh = false;
         if (this.state.view === 'listview') {
             // @ts-ignore
@@ -487,14 +479,14 @@ var CalendarApp = /** @class */ (function (_super) {
                 break;
             case 'calendar':
                 // Regular refresh
-                var event_1 = null;
+                let event = null;
                 if (_id) {
-                    event_1 = egw.dataGetUIDdata('calendar::' + _id);
+                    event = egw.dataGetUIDdata('calendar::' + _id);
                 }
-                if (event_1 && event_1.data && event_1.data.date || _type === 'delete') {
+                if (event && event.data && event.data.date || _type === 'delete') {
                     // Intelligent refresh without reloading everything
                     var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::' + _id + ':')));
-                    var ids = event_1 && event_1.data && event_1.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
+                    var ids = event && event.data && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
                         recurrences :
                         ['calendar::' + _id];
                     if (_type === 'delete') {
@@ -518,7 +510,7 @@ var CalendarApp = /** @class */ (function (_super) {
             default:
                 return undefined;
         }
-    };
+    }
     /**
      * Handle a push notification about entry changes from the websocket
      *
@@ -534,11 +526,11 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
      * @param {number} pushData.account_id User that caused the notification
      */
-    CalendarApp.prototype.push = function (pushData) {
+    push(pushData) {
         switch (pushData.app) {
             case "calendar":
                 if (pushData.type === 'delete') {
-                    return _super.prototype.push.call(this, pushData);
+                    return super.push(pushData);
                 }
                 return this.push_calendar(pushData);
             default:
@@ -548,15 +540,15 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                     else {
                         // Modify the pushData so it looks like one of ours
-                        var integrated_pushData = jQuery.extend(pushData, {
+                        let integrated_pushData = jQuery.extend(pushData, {
                             id: pushData.app + pushData.id,
                             app: this.appname
                         });
                         if (integrated_pushData.type == "delete" || egw.dataHasUID(this.uid(integrated_pushData))) {
                             // Super always looks at this.et2, make sure it finds listview
-                            var old_et2 = this.et2;
+                            let old_et2 = this.et2;
                             this.et2 = CalendarApp.views.listview.etemplates[0].widgetContainer;
-                            _super.prototype.push.call(this, integrated_pushData);
+                            super.push(integrated_pushData);
                             this.et2 = old_et2;
                         }
                         // Ask for the real data, we don't have it.  This also updates views that don't use nextmatch.
@@ -564,24 +556,23 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                 }
         }
-    };
+    }
     /**
      * Handle a push about infolog
      *
      * @param pushData
      */
-    CalendarApp.prototype.push_infolog = function (pushData) {
-        var _this = this;
+    push_infolog(pushData) {
         var _a;
         // Check if we have access
         if (!this._push_grant_check(pushData, ["info_owner", "info_responsible"], "infolog")) {
             return;
         }
         // check visibility - grants is ID => permission of people we're allowed to see
-        var infolog_grants = egw.grants(pushData.app);
+        let infolog_grants = egw.grants(pushData.app);
         // Filter what's allowed down to those we care about
-        var filtered = Object.keys(infolog_grants).filter(function (account) { return _this.state.owner.indexOf(account) >= 0; });
-        var owner_check = filtered.filter(function (value) {
+        let filtered = Object.keys(infolog_grants).filter(account => this.state.owner.indexOf(account) >= 0);
+        let owner_check = filtered.filter(function (value) {
             return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
         });
         if (!owner_check || owner_check.length == 0) {
@@ -589,7 +580,7 @@ var CalendarApp = /** @class */ (function (_super) {
             return;
         }
         // Only need to update the list if we're on that view
-        var update_list = this.state.view == "day";
+        let update_list = this.state.view == "day";
         // Delete, just pull it out of the list
         if (update_list && pushData.type == "delete") {
             jQuery('.calendar_calDayTodos')
@@ -610,8 +601,8 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         else {
             // Only care about certain infolog types, or already loaded (type may have changed)
-            var types = ((_a = egw.preference('calendar_integration', 'infolog')) === null || _a === void 0 ? void 0 : _a.split(",")) || [];
-            var info_uid = this.appname + "::" + pushData.app + pushData.id;
+            let types = ((_a = egw.preference('calendar_integration', 'infolog')) === null || _a === void 0 ? void 0 : _a.split(",")) || [];
+            let info_uid = this.appname + "::" + pushData.app + pushData.id;
             if (types.indexOf(pushData.acl.info_type) >= 0 || this.egw.dataHasUID(info_uid)) {
                 if (pushData.type === 'delete') {
                     return this.egw.dataStoreUID(info_uid, null);
@@ -631,25 +622,24 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             }
         }
-    };
+    }
     /**
      * Handle a push from calendar
      *
      * @param pushData
      */
-    CalendarApp.prototype.push_calendar = function (pushData) {
-        var _this = this;
+    push_calendar(pushData) {
         // pushData does not contain everything, just the minimum.  See calendar_hooks::search_link().
-        var cal_event = pushData.acl || {};
+        let cal_event = pushData.acl || {};
         // check visibility - grants is ID => permission of people we're allowed to see
-        var owners = [];
+        let owners = [];
         if (typeof this._grants === 'undefined') {
             this._grants = egw.grants(this.appname);
         }
         // Filter what's allowed down to those we care about
-        var filtered = Object.keys(this._grants).filter(function (account) { return _this.state.owner.indexOf(account) >= 0; });
+        let filtered = Object.keys(this._grants).filter(account => this.state.owner.indexOf(account) >= 0);
         // Check if we're interested in displaying by owner / participant
-        var owner_check = et2_widget_event_1.et2_calendar_event.owner_check(cal_event, jQuery.extend({}, { options: { owner: filtered } }, this.et2));
+        let owner_check = et2_calendar_event.owner_check(cal_event, jQuery.extend({}, { options: { owner: filtered } }, this.et2));
         if (!owner_check) {
             // The owner is not in the list of what we're allowed / care about
             return;
@@ -660,7 +650,7 @@ var CalendarApp = /** @class */ (function (_super) {
             return;
         }
         // Do we already have "fresh" data?  Most user actions give fresh data in response
-        var existing = egw.dataGetUIDdata('calendar::' + pushData.id);
+        let existing = egw.dataGetUIDdata('calendar::' + pushData.id);
         if (existing && Math.abs(existing.timestamp - new Date().valueOf()) < 1000) {
             // Update directly
             this._update_events(this.state, ['calendar::' + pushData.id]);
@@ -676,14 +666,14 @@ var CalendarApp = /** @class */ (function (_super) {
             // Any existing events were updated.  Run this to catch new events or events moved into view
             this._update_events(this.state, [data.uid]);
         }.bind(this)).sendRequest(true);
-    };
+    }
     /**
      * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
      *
      * @param {String} _url
      * @return {boolean|string} true, if linkHandler took care of link, false for default processing or url to navigate to
      */
-    CalendarApp.prototype.linkHandler = function (_url) {
+    linkHandler(_url) {
         if (_url == 'about:blank' || _url.match('menuaction=preferences\.preferences_categories_ui\.index')) {
             return false;
         }
@@ -751,13 +741,13 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // can not load our own index page, has to be done by framework
         return false;
-    };
+    }
     /**
      * Handle actions from the toolbar
      *
      * @param {egwAction} action Action from the toolbar
      */
-    CalendarApp.prototype.toolbar_action = function (action) {
+    toolbar_action(action) {
         // Most can just provide state change data
         if (action.data && action.data.state) {
             var state = jQuery.extend({}, action.data.state);
@@ -797,27 +787,27 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
                 break;
         }
-    };
+    }
     /**
      * Handle the video call toggle from the toolbar
      *
      * @param action
      */
-    CalendarApp.prototype.toolbar_videocall_toggle_action = function (action) {
-        var videocall_category = egw.config("status_cat_videocall", "status");
-        var callback = function () {
+    toolbar_videocall_toggle_action(action) {
+        let videocall_category = egw.config("status_cat_videocall", "status");
+        let callback = function () {
             this.update_state({ include_videocalls: action.checked });
         }.bind(this);
         this.toolbar_integration_action(action, [], null, callback);
-    };
+    }
     /**
      * Handle integration actions from the toolbar
      *
      * @param action {egwAction} Integration action from the toolbar
      */
-    CalendarApp.prototype.toolbar_integration_action = function (action, selected, target, callback) {
-        var app = action.id.replace("integration_", "");
-        var integration_preference = egw.preference("integration_toggle", "calendar");
+    toolbar_integration_action(action, selected, target, callback) {
+        let app = action.id.replace("integration_", "");
+        let integration_preference = egw.preference("integration_toggle", "calendar");
         if (typeof integration_preference === "undefined") {
             integration_preference = [];
         }
@@ -834,7 +824,7 @@ var CalendarApp = /** @class */ (function (_super) {
             }.bind(this);
         }
         else {
-            var index = integration_preference.indexOf(app);
+            const index = integration_preference.indexOf(app);
             if (index > -1) {
                 integration_preference.splice(index, 1);
             }
@@ -845,7 +835,7 @@ var CalendarApp = /** @class */ (function (_super) {
             callback = function () { };
         }
         egw.set_preference("calendar", "integration_toggle", integration_preference, callback);
-    };
+    }
     /**
      * Set the app header
      *
@@ -854,8 +844,8 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @param {string} header Text to display
      */
-    CalendarApp.prototype.set_app_header = function (header) {
-        var template = etemplate2_1.etemplate2.getById('calendar-toolbar');
+    set_app_header(header) {
+        var template = etemplate2.getById('calendar-toolbar');
         var widget = template ? template.widgetContainer.getWidgetById('app_header') : false;
         if (widget) {
             widget.set_value(header);
@@ -864,7 +854,7 @@ var CalendarApp = /** @class */ (function (_super) {
         else {
             egw_app_header(header, 'calendar');
         }
-    };
+    }
     /**
      * Setup and handle sortable calendars.
      *
@@ -872,7 +862,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * are not combined (many owners, multi-week or month views)
      * @returns {undefined}
      */
-    CalendarApp.prototype._sortable = function () {
+    _sortable() {
         // Calender current state
         var state = this.getState();
         // Day / month sortables
@@ -909,7 +899,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         else {
                             widget.div.parents('tr').removeAttr('data-owner');
                         }
-                    }, this, et2_widget_timegrid_1.et2_calendar_timegrid);
+                    }, this, et2_calendar_timegrid);
                 },
                 stop: function () {
                 },
@@ -933,7 +923,7 @@ var CalendarApp = /** @class */ (function (_super) {
                                 // Re-order the children, or it won't stay
                                 parent = widget._parent;
                                 children.splice(idx, 0, widget);
-                            }, this, et2_widget_daycol_1.et2_calendar_daycol);
+                            }, this, et2_calendar_daycol);
                             parent.day_widgets.sort(function (a, b) {
                                 return children.indexOf(a) - children.indexOf(b);
                             });
@@ -945,7 +935,7 @@ var CalendarApp = /** @class */ (function (_super) {
                                 var idx = sortedArr.indexOf(widget.options.owner);
                                 children.splice(idx, 0, widget);
                                 widget.resize();
-                            }, this, et2_widget_timegrid_1.et2_calendar_timegrid);
+                            }, this, et2_calendar_timegrid);
                         }
                         parent._children.sort(function (a, b) {
                             return children.indexOf(a) - children.indexOf(b);
@@ -971,7 +961,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         placeholder: "srotable_cal_day_ph",
                         axis: "x",
                         handle: '> div:first',
-                        helper: function (event, element) {
+                        helper(event, element) {
                             var scroll = element.parentsUntil('.calendar_calTimeGrid').last().next();
                             var helper = jQuery(document.createElement('div'))
                                 .append(element.clone())
@@ -997,21 +987,21 @@ var CalendarApp = /** @class */ (function (_super) {
         else {
             sortable.sortable('disable');
         }
-    };
+    }
     /**
      * Unlock the event before closing the popup
      *
      * @private
      */
-    CalendarApp.prototype._unlock = function () {
-        var content = this.et2.getArrayMgr('content');
+    _unlock() {
+        const content = this.et2.getArrayMgr('content');
         this.egw.json('calendar.calendar_uiforms.ajax_unlock', [content.data.id, content.data.lock_token], null, this, "keepalive", null).sendRequest();
-    };
+    }
     /**
      * Bind scroll event
      * When the user scrolls, we'll move enddate - startdate days
      */
-    CalendarApp.prototype._scroll = function () {
+    _scroll() {
         /**
          * Function we can pass all this off to
          *
@@ -1025,7 +1015,7 @@ var CalendarApp = /** @class */ (function (_super) {
             // Find the template
             var id = jQuery(this).closest('.et2_container').attr('id');
             if (id) {
-                var template = etemplate2_1.etemplate2.getById(id);
+                var template = etemplate2.getById(id);
             }
             else {
                 template = CalendarApp.views[app.calendar.state.view].etemplates[0];
@@ -1039,11 +1029,11 @@ var CalendarApp = /** @class */ (function (_super) {
             template.widgetContainer.iterateOver(function (w) {
                 if (w.getDOMNode() == this)
                     widget = w;
-            }, this, et2_core_widget_1.et2_widget);
+            }, this, et2_widget);
             if (widget == null) {
                 template.widgetContainer.iterateOver(function (w) {
                     widget = w;
-                }, this, et2_widget_timegrid_1.et2_calendar_timegrid);
+                }, this, et2_calendar_timegrid);
                 if (widget == null)
                     return;
             }
@@ -1256,7 +1246,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 return true;
             }, this);
         }
-    };
+    }
     /**
      * Handler for changes generated by internal user interactions, like
      * drag & drop inside calendar and resize.
@@ -1267,7 +1257,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *	in the popup
      * @returns {undefined}
      */
-    CalendarApp.prototype.event_change = function (event, widget, dialog_button) {
+    event_change(event, widget, dialog_button) {
         // Add loading spinner - not visible if the body / gradient is there though
         widget.div.addClass('loading');
         // Integrated infolog event
@@ -1295,7 +1285,7 @@ var CalendarApp = /** @class */ (function (_super) {
             };
             if (dialog_button == 'series' && widget.options.value.recur_type) {
                 widget.series_split_prompt(function (_button_id) {
-                    if (_button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                    if (_button_id == et2_dialog.OK_BUTTON) {
                         _send();
                     }
                 });
@@ -1304,46 +1294,46 @@ var CalendarApp = /** @class */ (function (_super) {
                 _send();
             }
         }
-    };
+    }
     /**
      * open the freetime search popup
      *
      * @param {string} _link
      */
-    CalendarApp.prototype.freetime_search_popup = function (_link) {
+    freetime_search_popup(_link) {
         this.egw.open_link(_link, 'ft_search', '700x500');
-    };
+    }
     /**
      * send an ajax request to server to set the freetimesearch window content
      *
      */
-    CalendarApp.prototype.freetime_search = function () {
+    freetime_search() {
         var content = this.et2.getArrayMgr('content').data;
         content['start'] = this.et2.getWidgetById('start').get_value();
         content['end'] = this.et2.getWidgetById('end').get_value();
         content['duration'] = this.et2.getWidgetById('duration').get_value();
         var request = this.egw.json('calendar.calendar_uiforms.ajax_freetimesearch', [content], null, null, null, null);
         request.sendRequest();
-    };
+    }
     /**
      * Function for disabling the recur_data multiselect box
      *
      */
-    CalendarApp.prototype.check_recur_type = function () {
+    check_recur_type() {
         var recurType = this.et2.getWidgetById('recur_type');
         var recurData = this.et2.getWidgetById('recur_data');
         if (recurType && recurData) {
             recurData.set_disabled(recurType.get_value() != 2 && recurType.get_value() != 4);
         }
-    };
+    }
     /**
      * Actions for when the user changes the event start date in edit dialog
      *
      * @returns {undefined}
      */
-    CalendarApp.prototype.edit_start_change = function (input, widget) {
+    edit_start_change(input, widget) {
         if (!widget) {
-            widget = etemplate2_1.etemplate2.getById('calendar-edit').widgetContainer.getWidgetById('start');
+            widget = etemplate2.getById('calendar-edit').widgetContainer.getWidgetById('start');
         }
         // Update settings for querying participants
         this.edit_update_participant(widget);
@@ -1354,9 +1344,9 @@ var CalendarApp = /** @class */ (function (_super) {
                 recur_end.set_min(widget.getValue());
             }
             // Update end date, min duration is 1 minute
-            var end = widget.getRoot().getDOMWidgetById('end');
-            var start_time = new Date(widget.getValue());
-            var end_time = new Date(end.getValue());
+            let end = widget.getRoot().getDOMWidgetById('end');
+            let start_time = new Date(widget.getValue());
+            let end_time = new Date(end.getValue());
             if (end.getValue() && end_time <= start_time) {
                 start_time.setMinutes(start_time.getMinutes() + 1);
                 end.set_value(start_time);
@@ -1364,13 +1354,13 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Update currently selected alarm time
         this.alarm_custom_date();
-    };
+    }
     /**
      * Show/Hide end date, for both edit and freetimesearch popups,
      * based on if "use end date" selected or not.
      *
      */
-    CalendarApp.prototype.set_enddate_visibility = function () {
+    set_enddate_visibility() {
         var duration = this.et2.getWidgetById('duration');
         var start = this.et2.getWidgetById('start');
         var end = this.et2.getWidgetById('end');
@@ -1385,7 +1375,7 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         this.edit_update_participant(start);
-    };
+    }
     /**
      * Update query parameters for participants
      *
@@ -1395,7 +1385,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_widget} [widget] If input is an input node, widget will have
      *	the widget, otherwise it will be undefined.
      */
-    CalendarApp.prototype.edit_update_participant = function (input, widget) {
+    edit_update_participant(input, widget) {
         if (typeof widget === 'undefined')
             widget = input;
         var content = widget.getInstanceManager().getValues(widget.getRoot());
@@ -1408,14 +1398,14 @@ var CalendarApp = /** @class */ (function (_super) {
                 duration: content.duration,
                 whole_day: content.whole_day,
             } });
-    };
+    }
     /**
      * handles actions selectbox in calendar edit popup
      *
      * @param {mixed} _event
      * @param {et2_base_widget} widget "actions selectBox" in edit popup window
      */
-    CalendarApp.prototype.actions_change = function (_event, widget) {
+    actions_change(_event, widget) {
         var event = this.et2.getArrayMgr('content').data;
         if (widget) {
             var id = this.et2.getArrayMgr('content').data['id'];
@@ -1442,16 +1432,16 @@ var CalendarApp = /** @class */ (function (_super) {
                     this.et2._inst.submit();
             }
         }
-    };
+    }
     /**
      * open mail compose popup window
      *
      * @param {Array} vars
      * @todo need to provide right mail compose from server to custom_mail function
      */
-    CalendarApp.prototype.custom_mail = function (vars) {
+    custom_mail(vars) {
         this.egw.open_link(this.egw.link("/index.php", vars), '_blank', '700x700');
-    };
+    }
     /**
      * control delete_series popup visibility
      *
@@ -1459,7 +1449,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {Array} exceptions an array contains number of exception entries
      *
      */
-    CalendarApp.prototype.delete_btn = function (widget, exceptions) {
+    delete_btn(widget, exceptions) {
         var content = this.et2.getArrayMgr('content').data;
         if (exceptions) {
             var buttons = [
@@ -1485,7 +1475,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             ];
             var self = this;
-            et2_widget_dialog_1.et2_dialog.show_dialog(function (_button_id) {
+            et2_dialog.show_dialog(function (_button_id) {
                 if (_button_id != 'dialog[cancel]') {
                     widget.getRoot().getWidgetById('delete_exceptions').set_value(_button_id == 'button[delete_exceptions]');
                     widget.getInstanceManager().submit('button[delete]');
@@ -1494,22 +1484,22 @@ var CalendarApp = /** @class */ (function (_super) {
                 else {
                     return false;
                 }
-            }, this.egw.lang("Do you want to keep the series exceptions in your calendar?"), this.egw.lang("This event is part of a series"), {}, buttons, et2_widget_dialog_1.et2_dialog.WARNING_MESSAGE);
+            }, this.egw.lang("Do you want to keep the series exceptions in your calendar?"), this.egw.lang("This event is part of a series"), {}, buttons, et2_dialog.WARNING_MESSAGE);
         }
         else if (content['recur_type'] !== 0) {
-            et2_widget_dialog_1.et2_dialog.confirm(widget, 'Delete this series of recurring events', 'Delete Series');
+            et2_dialog.confirm(widget, 'Delete this series of recurring events', 'Delete Series');
         }
         else {
-            et2_widget_dialog_1.et2_dialog.confirm(widget, 'Delete this event', 'Delete');
+            et2_dialog.confirm(widget, 'Delete this event', 'Delete');
         }
-    };
+    }
     /**
      * On change participant event, try to set add button status based on
      * participant field value. Additionally, disable/enable quantity field
      * if there's none resource value or there are more than one resource selected.
      *
      */
-    CalendarApp.prototype.participantOnChange = function () {
+    participantOnChange() {
         var add = this.et2.getWidgetById('add');
         var quantity = this.et2.getWidgetById('quantity');
         var participant = this.et2.getWidgetById('participant');
@@ -1526,7 +1516,7 @@ var CalendarApp = /** @class */ (function (_super) {
             }
             nRes++;
         }
-    };
+    }
     /**
      * print_participants_status(egw,widget)
      * Handle to apply changes from status in print popup
@@ -1535,7 +1525,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_base_widget} widget widget "status" in print popup window
      *
      */
-    CalendarApp.prototype.print_participants_status = function (_event, widget) {
+    print_participants_status(_event, widget) {
         if (widget && window.opener) {
             //Parent popup window
             var editPopWindow = window.opener;
@@ -1549,7 +1539,7 @@ var CalendarApp = /** @class */ (function (_super) {
         else if (widget) {
             window.egw_refresh(this.egw.lang('The original popup edit window is closed! You need to close the print window and reopen the entry again.'), 'calendar');
         }
-    };
+    }
     /**
      * Handles to select freetime, and replace the selected one on Start,
      * and End date&time in edit calendar entry popup.
@@ -1558,7 +1548,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_base_widget} _widget widget "select button" in freetime search popup window
      *
      */
-    CalendarApp.prototype.freetime_select = function (_event, _widget) {
+    freetime_select(_event, _widget) {
         if (_widget) {
             var content = this.et2._inst.widgetContainer.getArrayMgr('content').data;
             // Make the Id from selected button by checking the index
@@ -1582,16 +1572,16 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         egw(window).close();
-    };
+    }
     /**
      * show/hide the filter of nm list in calendar listview
      *
      */
-    CalendarApp.prototype.filter_change = function () {
-        var view = CalendarApp.views['listview'].etemplates[0].widgetContainer || null;
-        var nm = view ? view.getWidgetById('nm') : null;
-        var filter = view && nm ? nm.getWidgetById('filter') : null;
-        var dates = view ? view.getWidgetById('calendar.list.dates') : null;
+    filter_change() {
+        const view = CalendarApp.views['listview'].etemplates[0].widgetContainer || null;
+        const nm = view ? view.getWidgetById('nm') : null;
+        const filter = view && nm ? nm.getWidgetById('filter') : null;
+        const dates = view ? view.getWidgetById('calendar.list.dates') : null;
         // Update state when user changes it
         if (view && filter) {
             app.calendar.state.filter = filter.getValue();
@@ -1618,7 +1608,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 jQuery(view.getWidgetById('startdate').getDOMNode()).find('input').focus();
             }
         }
-    };
+    }
     /**
      * Application links from non-list events
      *
@@ -1634,10 +1624,10 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _events
      */
-    CalendarApp.prototype.action_open = function (_action, _events) {
-        var app, id, app_id;
+    action_open(_action, _events) {
+        let app, id, app_id;
         // Try to get better by going straight for the data
-        var data = egw.dataGetUIDdata(_events[0].id);
+        let data = egw.dataGetUIDdata(_events[0].id);
         if (data && data.data) {
             app = data.data.app;
             app_id = data.data.app_id;
@@ -1649,7 +1639,7 @@ var CalendarApp = /** @class */ (function (_super) {
             app = id[0];
             app_id = id[1];
             if (app_id && app_id.indexOf(':')) {
-                var split = id[1].split(':');
+                let split = id[1].split(':');
                 id = split[0];
             }
             else {
@@ -1673,7 +1663,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     _action.menu_context && _action.menu_context.event) {
                     // Non-row space in planner
                     // Context menu has position information, but target is not what we expact
-                    var target = jQuery('.calendar_plannerGrid', _action.menu_context.event.currentTarget);
+                    let target = jQuery('.calendar_plannerGrid', _action.menu_context.event.currentTarget);
                     var y = _action.menu_context.event.pageY - target.offset().top;
                     var x = _action.menu_context.event.pageX - target.offset().left;
                     var date = _events[0].iface.getWidget()._get_time_from_position(x, y);
@@ -1681,7 +1671,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         context.start = date.toJSON();
                     }
                 }
-                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_widget_planner_row_1.et2_calendar_planner_row)) {
+                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_calendar_planner_row)) {
                     // Empty space on a planner row
                     var widget = _events[0].iface.getWidget();
                     var parent = widget.getParent();
@@ -1696,7 +1686,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                     jQuery.extend(context, widget.getDOMNode().dataset);
                 }
-                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_core_valueWidget_1.et2_valueWidget)) {
+                else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget)) {
                     // Able to extract something from the widget
                     context = _events[0].iface.getWidget().getValue ?
                         _events[0].iface.getWidget().getValue() :
@@ -1705,7 +1695,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
                 // Try to pull whatever we can from the event
                 else if (jQuery.isEmptyObject(context) && _action.menu_context && (_action.menu_context.event.target)) {
-                    var target = _action.menu_context.event.target;
+                    let target = _action.menu_context.event.target;
                     while (target != null && target.parentNode && jQuery.isEmptyObject(target.dataset)) {
                         target = target.parentNode;
                     }
@@ -1731,7 +1721,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 .replace(/(\$|%24)id/, id);
             this.egw.open_link(url, _action.data.target, _action.data.popup);
         }
-    };
+    }
     /**
      * Check to see if we know how to convert this entry to the given app
      *
@@ -1743,14 +1733,14 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _events
      */
-    CalendarApp.prototype.action_convert_enabled_check = function (_action, _events) {
-        var supported_apps = _action.data.convert_apps || [];
-        var entry = egw.dataGetUIDdata(_events[0].id);
+    action_convert_enabled_check(_action, _events) {
+        let supported_apps = _action.data.convert_apps || [];
+        let entry = egw.dataGetUIDdata(_events[0].id);
         if (supported_apps && entry && entry.data) {
             return supported_apps.length > 0 && supported_apps.indexOf(entry.data.app) >= 0;
         }
         return true;
-    };
+    }
     /**
      * Context menu action (on a single event) in non-listview to generate ical
      *
@@ -1759,22 +1749,22 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _events
      */
-    CalendarApp.prototype.ical = function (_action, _events) {
+    ical(_action, _events) {
         // Send it through nextmatch
-        _action.data.nextmatch = etemplate2_1.etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm');
+        _action.data.nextmatch = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm');
         var ids = { ids: [] };
         for (var i = 0; i < _events.length; i++) {
             ids.ids.push(_events[i].id);
         }
         nm_action(_action, _events, null, ids);
-    };
+    }
     /**
      * Change status (via AJAX)
      *
      * @param {egwAction} _action
      * @param {egwActionObject} _events
      */
-    CalendarApp.prototype.status = function (_action, _events) {
+    status(_action, _events) {
         // Should be a single event, but we'll do it for all
         for (var i = 0; i < _events.length; i++) {
             var event_widget = _events[i].iface.getWidget() || false;
@@ -1795,14 +1785,14 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             }, this));
         }
-    };
+    }
     /**
      * this function try to fix ids which are from integrated apps
      *
      * @param {egwAction} _action
      * @param {egwActionObject[]} _senders
      */
-    CalendarApp.prototype.cal_fix_app_id = function (_action, _senders) {
+    cal_fix_app_id(_action, _senders) {
         var app = 'calendar';
         var id = _senders[0].id;
         var matches = id.match(/^(?:calendar::)?([0-9]+)(:([0-9]+))?$/);
@@ -1821,7 +1811,7 @@ var CalendarApp = /** @class */ (function (_super) {
         _action.data.url = _action.data.url.replace(/(\$|%24)app/, app);
         nm_action(_action, _senders, false, { ids: [id] });
         _action.data.url = backup_url; // restore url
-    };
+    }
     /**
      * Open a smaller dialog/popup to add a new entry
      *
@@ -1831,7 +1821,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {Object} options Array of values for new
      * @param {et2_calendar_event} event Placeholder showing where new event goes
      */
-    CalendarApp.prototype.add = function (options, event) {
+    add(options, event) {
         if (this.egw.preference('new_event_dialog', 'calendar') === 'edit') {
             // Set this to open the add template in a popup
             //options.template = 'calendar.add';
@@ -1840,7 +1830,7 @@ var CalendarApp = /** @class */ (function (_super) {
         // Hold on to options, may have to pass them into edit (rather than all, just send what the programmer wanted)
         this.quick_add = options;
         // Open dialog to use as target
-        var add_dialog = et2_widget_dialog_1.et2_dialog.show_dialog(null, '', ' ', null, [], et2_widget_dialog_1.et2_dialog.PLAIN_MESSAGE, this.egw);
+        var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
         // Call the server, get it into the dialog
         options = jQuery.extend({ menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add' }, options);
         this.egw.json(this.egw.link('/json.php', options), 
@@ -1875,13 +1865,13 @@ var CalendarApp = /** @class */ (function (_super) {
             close: function (ev, ui) {
                 // Wait a bit to make sure etemplate button finishes processing, or it will error
                 window.setTimeout(function () {
-                    var template = etemplate2_1.etemplate2.getById('calendar-add');
+                    var template = etemplate2.getById('calendar-add');
                     if (template && template.name === 'calendar.add') {
                         template.clear();
                         this.dialog.destroy();
                         delete app.calendar.quick_add;
                     }
-                    else if (template || (template = etemplate2_1.etemplate2.getById("calendar-conflicts"))) {
+                    else if (template || (template = etemplate2.getById("calendar-conflicts"))) {
                         // Open conflicts
                         var data = jQuery.extend({ menuaction: 'calendar.calendar_uiforms.ajax_conflicts' }, template.widgetContainer.getArrayMgr('content').data, app.calendar.quick_add);
                         egw.openPopup(egw.link('/index.php', data), 850, 300, 'conflicts', 'calendar');
@@ -1894,7 +1884,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }.bind({ dialog: add_dialog, event: ev }), 1000);
             }
         });
-    };
+    }
     /**
      * Callback for save button in add dialog
      *
@@ -1902,7 +1892,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_button} widget
      * @returns {Boolean}
      */
-    CalendarApp.prototype.add_dialog_save = function (event, widget) {
+    add_dialog_save(event, widget) {
         // Include all sent values so we can pass on things that we don't have UI widgets for
         this.quick_add = this._add_dialog_values(widget);
         // Close the dialog
@@ -1912,7 +1902,7 @@ var CalendarApp = /** @class */ (function (_super) {
         window.setTimeout(function () { window.opener = null; }, 1000);
         // Proceed with submit
         return true;
-    };
+    }
     /**
      * Callback for edit button in add dialog
      *
@@ -1920,19 +1910,19 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_button} widget
      * @returns {Boolean}
      */
-    CalendarApp.prototype.add_dialog_edit = function (event, widget) {
+    add_dialog_edit(event, widget) {
         var title = widget.getRoot().getWidgetById('title');
         if (title && !title.get_value()) {
             title.set_value(title.egw().lang('Event'));
         }
-        var options = jQuery.extend(this.quick_add, this._add_dialog_values(widget));
+        let options = jQuery.extend(this.quick_add, this._add_dialog_values(widget));
         // Open regular edit
         egw.open(null, 'calendar', 'edit', options);
         // Close the dialog
         jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
         // Do not submit this etemplate
         return false;
-    };
+    }
     /**
      * Include some additional values so we can pass on things that we don't have
      * UI widgets for in the add template
@@ -1940,7 +1930,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {et2_widget} widget
      * @returns {Object}
      */
-    CalendarApp.prototype._add_dialog_values = function (widget) {
+    _add_dialog_values(widget) {
         // Some select things to pass on, since not everything will fit
         var mgr = widget.getRoot().getArrayMgr('content');
         var values = {
@@ -1963,11 +1953,11 @@ var CalendarApp = /** @class */ (function (_super) {
                 values.participants.push(participant.uid);
             }
         }
-        var send = jQuery.extend(values, widget.getInstanceManager().getValues(widget.getRoot()));
+        let send = jQuery.extend(values, widget.getInstanceManager().getValues(widget.getRoot()));
         // Don't need the checkbox
         delete send.new_event_dialog;
         return send;
-    };
+    }
     /**
      * Open calendar entry, taking into accout the calendar integration of other apps
      *
@@ -1977,7 +1967,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param _senders
      *
      */
-    CalendarApp.prototype.cal_open = function (_action, _senders) {
+    cal_open(_action, _senders) {
         // Try for easy way - find a widget
         if (_senders[0].iface.getWidget) {
             var widget = _senders[0].iface.getWidget();
@@ -1989,7 +1979,7 @@ var CalendarApp = /** @class */ (function (_super) {
         var id = _senders[0].id;
         var data = egw.dataGetUIDdata(id);
         if (data && data.data) {
-            et2_widget_event_1.et2_calendar_event.recur_prompt(data.data);
+            et2_calendar_event.recur_prompt(data.data);
             return;
         }
         var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
@@ -2024,7 +2014,7 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Regular, single event
         egw.open(id.replace(/^calendar::/g, ''), 'calendar', 'edit');
-    };
+    }
     /**
      * Delete (a single) calendar entry over ajax.
      *
@@ -2033,7 +2023,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject} _events
      */
-    CalendarApp.prototype.delete = function (_action, _events) {
+    delete(_action, _events) {
         // Should be a single event, but we'll do it for all
         for (var i = 0; i < _events.length; i++) {
             var event_widget = _events[i].iface.getWidget() || false;
@@ -2054,7 +2044,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             }, this));
         }
-    };
+    }
     /**
      * Delete calendar entry, asking if you want to delete series or exception
      *
@@ -2063,13 +2053,13 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param _action
      * @param _senders
      */
-    CalendarApp.prototype.cal_delete = function (_action, _senders) {
+    cal_delete(_action, _senders) {
         var _a, _b;
-        var all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
-        var no_notifications = (_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked;
-        var matches = false;
-        var ids = [];
-        var cal_event = this.egw.dataGetUIDdata(_senders[0].id);
+        let all = (_a = _action.parent.data.nextmatch) === null || _a === void 0 ? void 0 : _a.getSelection().all;
+        let no_notifications = (_b = _action.parent.getActionById("no_notifications")) === null || _b === void 0 ? void 0 : _b.checked;
+        let matches = false;
+        let ids = [];
+        let cal_event = this.egw.dataGetUIDdata(_senders[0].id);
         // Loop so we ask if any of the selected entries is part of a series
         for (var i = 0; i < _senders.length; i++) {
             var id = _senders[i].id;
@@ -2080,9 +2070,9 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         if (matches) {
             // At least one event is a series, use its data to trigger the prompt
-            var cal_event_1 = this.egw.dataGetUIDdata(matches[0]);
+            let cal_event = this.egw.dataGetUIDdata(matches[0]);
         }
-        et2_widget_event_1.et2_calendar_event.recur_prompt(cal_event.data, function (button_id, event_data) {
+        et2_calendar_event.recur_prompt(cal_event.data, function (button_id, event_data) {
             switch (button_id) {
                 case 'single':
                 case 'exception':
@@ -2098,14 +2088,14 @@ var CalendarApp = /** @class */ (function (_super) {
                     break;
             }
         }.bind(this));
-    };
+    }
     /**
      * Confirmation dialog for moving a series entry
      *
      * @param {object} _DOM
      * @param {et2_widget} _button button Save | Apply
      */
-    CalendarApp.prototype.move_edit_series = function (_DOM, _button) {
+    move_edit_series(_DOM, _button) {
         var content = this.et2.getArrayMgr('content').data;
         var start_date = this.et2.getWidgetById('start').get_value();
         var end_date = this.et2.getWidgetById('end').get_value();
@@ -2114,8 +2104,8 @@ var CalendarApp = /** @class */ (function (_super) {
         var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
         var button = _button;
         var that = this;
-        var instance_date_regex = window.location.search.match(/date=(\d{4}-\d{2}-\d{2}(?:.+Z)?)/);
-        var instance_date;
+        let instance_date_regex = window.location.search.match(/date=(\d{4}-\d{2}-\d{2}(?:.+Z)?)/);
+        let instance_date;
         if (instance_date_regex && instance_date_regex.length && instance_date_regex[1]) {
             instance_date = new Date(unescape(instance_date_regex[1]));
             instance_date.setUTCMinutes(instance_date.getUTCMinutes() + instance_date.getTimezoneOffset());
@@ -2127,8 +2117,8 @@ var CalendarApp = /** @class */ (function (_super) {
                 (duration && '' + content.duration != duration ||
                     // End date might ignore seconds, and be 59 seconds off for all day events
                     !duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000)) {
-                et2_widget_event_1.et2_calendar_event.series_split_prompt(content, instance_date, function (_button_id) {
-                    if (_button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                et2_calendar_event.series_split_prompt(content, instance_date, function (_button_id) {
+                    if (_button_id == et2_dialog.OK_BUTTON) {
                         that.et2.getInstanceManager().submit(button);
                     }
                 });
@@ -2140,18 +2130,18 @@ var CalendarApp = /** @class */ (function (_super) {
         else {
             return true;
         }
-    };
+    }
     /**
      * Send a mail  or meeting request to event participants
      *
      * @param {egwAction} _action
      * @param {egwActionObject[]} _selected
      */
-    CalendarApp.prototype.action_mail = function (_action, _selected) {
+    action_mail(_action, _selected) {
         var data = egw.dataGetUIDdata(_selected[0].id) || { data: {} };
         var event = data.data;
         this.egw.json('calendar.calendar_uiforms.ajax_custom_mail', [event, false, _action.id === 'sendrequest'], null, null, null, null).sendRequest();
-    };
+    }
     /**
      * Insert selected event(s) into a document
      *
@@ -2160,14 +2150,14 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwAction} _action
      * @param {egwActionObject[]} _selected
      */
-    CalendarApp.prototype.action_merge = function (_action, _selected) {
+    action_merge(_action, _selected) {
         var ids = { ids: [] };
         for (var i = 0; i < _selected.length; i++) {
             ids.ids.push(_selected[i].id);
         }
         nm_action(egw_getActionManager(this.appname, false, 1)
             .getActionById('nm').getActionById(_action.id), _selected, null, ids);
-    };
+    }
     /**
      * Sidebox merge
      *
@@ -2179,13 +2169,13 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {Event} event UI event
      * @param {et2_widget} widget Should be the merge selectbox
      */
-    CalendarApp.prototype.sidebox_merge = function (event, widget) {
+    sidebox_merge(event, widget) {
         if (!widget || !widget.getValue())
             return false;
         if (this.state.view == 'listview') {
             // If user is looking at the list, pretend they used the context
             // menu and process it through the nextmatch
-            var nm = etemplate2_1.etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
+            var nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
             var selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
             var action = nm.controller._actionManager.getActionById('document_' + widget.getValue());
             if (nm && (!selected || !selected.length)) {
@@ -2208,13 +2198,13 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         return false;
-    };
+    }
     /**
      * Method to set state for JSON requests (jdots ajax_exec or et2 submits can NOT use egw.js script tag)
      *
      * @param {object} _state
      */
-    CalendarApp.prototype.set_state = function (_state) {
+    set_state(_state) {
         if (typeof _state == 'object') {
             // If everything is loaded, handle the changes
             if (this.sidebox_et2 !== null) {
@@ -2225,7 +2215,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 this.state = _state;
             }
         }
-    };
+    }
     /**
      * Change only part of the current state.
      *
@@ -2235,7 +2225,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @param {Object} _set New settings
      */
-    CalendarApp.prototype.update_state = function (_set) {
+    update_state(_set) {
         // Make sure we're running in top window
         // @ts-ignore
         if (window !== window.top && window.top.app.calendar) {
@@ -2265,7 +2255,7 @@ var CalendarApp = /** @class */ (function (_super) {
             this.egw.debug('navigation', 'Calendar state changed', changed.join("\n"));
             this.setState({ state: new_state });
         }
-    };
+    }
     /**
      * Return state object defining current view
      *
@@ -2273,7 +2263,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @return {object} description
      */
-    CalendarApp.prototype.getState = function () {
+    getState() {
         var state = jQuery.extend({}, this.state);
         if (!state) {
             var egw_script_tag = document.getElementById('egw_script_id');
@@ -2305,7 +2295,7 @@ var CalendarApp = /** @class */ (function (_super) {
         delete state.start_date;
         delete state.end_date;
         return state;
-    };
+    }
     /**
      * Set a state previously returned by getState
      *
@@ -2313,7 +2303,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @param {object} state containing "name" attribute to be used as "favorite" GET parameter to a nextmatch
      */
-    CalendarApp.prototype.setState = function (state) {
+    setState(state) {
         // State should be an object, not a string, but we'll parse
         if (typeof state == "string") {
             if (state.indexOf('{') != -1 || state == 'null') {
@@ -2349,7 +2339,7 @@ var CalendarApp = /** @class */ (function (_super) {
         // Check for valid cache
         var cachable_changes = ['date', 'weekend', 'view', 'days', 'planner_view', 'sortby'];
         // @ts-ignore
-        var keys = (Object.keys(this.state).concat(Object.keys(state.state))).filter(function (value, index, self) {
+        let keys = (Object.keys(this.state).concat(Object.keys(state.state))).filter(function (value, index, self) {
             return self.indexOf(value) === index;
         });
         for (var i = 0; i < keys.length; i++) {
@@ -2474,7 +2464,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         break;
                     default:
                         var end = state.state.last = view.end_date(state.state).toJSON();
-                        for (var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++) {
+                        for (let owner = 0; owner < grid_count && owner < state.state.owner.length; owner++) {
                             var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner;
                             value.push({
                                 id: CalendarApp._daywise_cache_id(date, _owner),
@@ -2514,7 +2504,7 @@ var CalendarApp = /** @class */ (function (_super) {
                                     grid._children.unshift(grid._children.pop());
                                     // Swap DOM nodes
                                     var a = grid._children[0].getDOMNode().parentNode.parentNode;
-                                    var a_scroll = jQuery('.calendar_calTimeGridScroll', a).scrollTop();
+                                    let a_scroll = jQuery('.calendar_calTimeGridScroll', a).scrollTop();
                                     var b = grid._children[1].getDOMNode().parentNode.parentNode;
                                     a.parentNode.insertBefore(a, b);
                                     // Moving nodes changes scrolling, so set it back
@@ -2524,7 +2514,7 @@ var CalendarApp = /** @class */ (function (_super) {
                             else if (row_index > i) {
                                 // Swap DOM nodes
                                 var a = grid._children[row_index].getDOMNode().parentNode.parentNode;
-                                var a_scroll = jQuery('.calendar_calTimeGridScroll', a).scrollTop();
+                                let a_scroll = jQuery('.calendar_calTimeGridScroll', a).scrollTop();
                                 var b = grid._children[i].getDOMNode().parentNode.parentNode;
                                 // Simple scroll forward, put top on the bottom
                                 // This makes it faster if they scroll back next
@@ -2544,7 +2534,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         }
                     }
                     row_index++;
-                }, this, et2_widget_view_1.et2_calendar_view);
+                }, this, et2_calendar_view);
                 row_index = 0;
                 // Set rows that need it
                 var was_disabled = [];
@@ -2558,7 +2548,7 @@ var CalendarApp = /** @class */ (function (_super) {
                         widget.set_disabled(true);
                     }
                     row_index++;
-                }, this, et2_widget_view_1.et2_calendar_view);
+                }, this, et2_calendar_view);
                 row_index = 0;
                 grid.iterateOver(function (widget) {
                     if (row_index >= value.length)
@@ -2594,34 +2584,30 @@ var CalendarApp = /** @class */ (function (_super) {
                     if (widget.set_value) {
                         widget.set_value(value[row_index++]);
                     }
-                }, this, et2_widget_view_1.et2_calendar_view);
+                }, this, et2_calendar_view);
             }
             else if (state.state.view !== 'listview') {
-                var _loop_1 = function () {
+                // Simple, easy case - just one widget for the selected time span. (planner)
+                // Update existing view's special attribute filters, defined in the view list
+                for (var updater in view) {
                     if (typeof view[updater] === 'function') {
-                        var value_1 = view[updater].call(this_1, state.state);
+                        let value = view[updater].call(this, state.state);
                         if (updater === 'start_date')
-                            state.state.first = this_1.date.toString(value_1);
+                            state.state.first = this.date.toString(value);
                         if (updater === 'end_date')
-                            state.state.last = this_1.date.toString(value_1);
+                            state.state.last = this.date.toString(value);
                         // Set value
                         for (var i = 0; i < view.etemplates.length; i++) {
                             view.etemplates[i].widgetContainer.iterateOver(function (widget) {
                                 if (typeof widget['set_' + updater] === 'function') {
-                                    widget['set_' + updater](value_1);
+                                    widget['set_' + updater](value);
                                 }
-                            }, this_1, et2_widget_view_1.et2_calendar_view);
+                            }, this, et2_calendar_view);
                         }
                     }
-                };
-                var this_1 = this;
-                // Simple, easy case - just one widget for the selected time span. (planner)
-                // Update existing view's special attribute filters, defined in the view list
-                for (var updater in view) {
-                    _loop_1();
                 }
-                var value_2 = [{ start_date: state.state.first, end_date: state.state.last }];
-                loading = this._need_data(value_2, state.state);
+                let value = [{ start_date: state.state.first, end_date: state.state.last }];
+                loading = this._need_data(value, state.state);
             }
             // Include first & last dates in state, mostly for server side processing
             if (state.state.first && state.state.first.toJSON)
@@ -2649,14 +2635,14 @@ var CalendarApp = /** @class */ (function (_super) {
                     jQuery(CalendarApp.views.day.etemplates[0].DOMContainer).css("width", "100%");
                     view.etemplates[0].widgetContainer.iterateOver(function (w) {
                         w.set_width('100%');
-                    }, this, et2_widget_timegrid_1.et2_calendar_timegrid);
+                    }, this, et2_calendar_timegrid);
                 }
             }
             else if (jQuery(view.etemplates[0].DOMContainer).is(':visible')) {
                 jQuery(view.etemplates[0].DOMContainer).css("width", "");
                 view.etemplates[0].widgetContainer.iterateOver(function (w) {
                     w.set_width('100%');
-                }, this, et2_widget_timegrid_1.et2_calendar_timegrid);
+                }, this, et2_calendar_timegrid);
             }
             // List view (nextmatch) has slightly different fields
             if (state.state.view === 'listview') {
@@ -2742,11 +2728,11 @@ var CalendarApp = /** @class */ (function (_super) {
                                 widget.set_value('');
                             }
                         }
-                        else if (widget.instanceOf(et2_core_inputWidget_1.et2_inputWidget) && typeof state.state[widget.id] == 'undefined') {
+                        else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined') {
                             // No value, clear it
                             widget.set_value('');
                         }
-                    }, this, et2_core_valueWidget_1.et2_valueWidget);
+                    }, this, et2_valueWidget);
                 }
             }
             // If current state matches a favorite, hightlight it
@@ -2790,7 +2776,7 @@ var CalendarApp = /** @class */ (function (_super) {
             menuaction = 'calendar.calendar_uilist.listview';
             state.state.ajax = 'true';
             // check if we already use et2 / are in listview
-            if (this.et2 || etemplate2_1.etemplate2 && etemplate2_1.etemplate2.getByApplication('calendar')) {
+            if (this.et2 || etemplate2 && etemplate2.getByApplication('calendar')) {
                 // current calendar-code can set regular calendar states only via a server-request :(
                 // --> check if we only need to set something which can be handeled by nm internally
                 // or we need a redirect
@@ -2831,7 +2817,7 @@ var CalendarApp = /** @class */ (function (_super) {
                     }
                 }
                 if (!need_redirect) {
-                    return _super.prototype.setState.call(this, [state]);
+                    return super.setState([state]);
                 }
             }
         }
@@ -2848,7 +2834,7 @@ var CalendarApp = /** @class */ (function (_super) {
         this.egw.open_link(this.egw.link('/index.php', query), 'calendar');
         // Stop the normal bubbling if this is called on click
         return false;
-    };
+    }
     /**
      * Check to see if any of the selected is an event widget
      * Used to separate grid actions from event actions
@@ -2857,10 +2843,10 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egwActioObject[]} _selected
      * @returns {boolean} Is any of the selected an event widget
      */
-    CalendarApp.prototype.is_event = function (_action, _selected) {
+    is_event(_action, _selected) {
         var is_widget = false;
         for (var i = 0; i < _selected.length; i++) {
-            if (_selected[i].iface.getWidget() && _selected[i].iface.getWidget().instanceOf(et2_widget_event_1.et2_calendar_event)) {
+            if (_selected[i].iface.getWidget() && _selected[i].iface.getWidget().instanceOf(et2_calendar_event)) {
                 is_widget = true;
             }
             // Also check classes, usually indicating permission
@@ -2872,13 +2858,13 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         return is_widget;
-    };
+    }
     /**
      * Enable/Disable custom Date-time for set Alarm
      *
      * @param {widget object} _widget new_alarm[options] selectbox
      */
-    CalendarApp.prototype.alarm_custom_date = function (selectbox, _widget) {
+    alarm_custom_date(selectbox, _widget) {
         var alarm_date = this.et2.getInputWidgetById('new_alarm[date]');
         var alarm_options = _widget || this.et2.getInputWidgetById('new_alarm[options]');
         var start = this.et2.getInputWidgetById('start');
@@ -2896,7 +2882,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 alarm_date.set_value(date);
             }
         }
-    };
+    }
     /**
      * Set alarm options based on WD/Regular event user preferences
      * Gets fired by wholeday checkbox.  This is mainly for display purposes,
@@ -2905,7 +2891,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {egw object} _egw
      * @param {widget object} _widget whole_day checkbox
      */
-    CalendarApp.prototype.set_alarmOptions_WD = function (_egw, _widget) {
+    set_alarmOptions_WD(_egw, _widget) {
         var alarm = this.et2.getWidgetById('alarm');
         if (!alarm)
             return; // no default alarm
@@ -2947,15 +2933,15 @@ var CalendarApp = /** @class */ (function (_super) {
                 event.set_value(_secs_to_label(60 * def_alarm));
             }
         }
-    };
+    }
     /**
      * Clear all calendar data from egw.data cache
      */
-    CalendarApp.prototype._clear_cache = function (integration_app) {
+    _clear_cache(integration_app) {
         // Full refresh, clear the caches
         var events = egw.dataKnownUIDs('calendar');
         for (var i = 0; i < events.length; i++) {
-            var event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || { app: "calendar" };
+            let event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || { app: "calendar" };
             if (!integration_app || integration_app && event_data && event_data.app === integration_app) {
                 // Remove entry
                 egw.dataStoreUID("calendar::" + events[i], null);
@@ -2971,7 +2957,7 @@ var CalendarApp = /** @class */ (function (_super) {
             // Empty to clear existing widgets
             egw.dataStoreUID(CalendarApp.DAYWISE_CACHE_ID + '::' + daywise[i], null);
         }
-    };
+    }
     /**
      * Take the date range(s) in the value and decide if we need to fetch data
      * for the date ranges, or if they're already cached fill them in.
@@ -2981,7 +2967,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @return {boolean} Data was requested
      */
-    CalendarApp.prototype._need_data = function (value, state) {
+    _need_data(value, state) {
         var need_data = false;
         // Determine if we're showing multiple owners seperate or consolidated
         var seperate_owners = false;
@@ -3034,7 +3020,7 @@ var CalendarApp = /** @class */ (function (_super) {
             this._fetch_data(state, this.sidebox_et2 ? null : this.et2.getInstanceManager());
         }
         return need_data;
-    };
+    }
     /**
      * Use the egw.data system to get data from the calendar list for the
      * selected time span.
@@ -3048,7 +3034,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {number} [start] Result offset.  Internal use only
      * @param {string[]} [specific_ids] Only request the given IDs
      */
-    CalendarApp.prototype._fetch_data = function (state, instance, start, specific_ids) {
+    _fetch_data(state, instance, start, specific_ids) {
         if (!this.sidebox_et2 && !instance) {
             return;
         }
@@ -3150,7 +3136,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 egw.loading_prompt('calendar', false);
             }
         }, this, null);
-    };
+    }
     /**
      * We have a list of calendar UIDs of events that need updating.
      *
@@ -3163,7 +3149,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {Object} state Current state for update, used to determine what to update
      * @param data
      */
-    CalendarApp.prototype._update_events = function (state, data) {
+    _update_events(state, data) {
         var updated_days = {};
         // Events can span for longer than we are showing
         var first = new Date(state.first);
@@ -3250,13 +3236,13 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         }
         egw.loading_prompt(this.appname, false);
-    };
+    }
     /**
      * The sidebox filters use some non-standard and not-exposed options.  They
      * are set up here.
      *
      */
-    CalendarApp.prototype._setup_sidebox_filters = function () {
+    _setup_sidebox_filters() {
         // Further date customizations
         var date_widget = this.sidebox_et2.getWidgetById('date');
         if (date_widget) {
@@ -3310,7 +3296,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 },
                 // Mark holidays
                 beforeShowDay: function (date) {
-                    var holidays = et2_widget_view_1.et2_calendar_view.get_holidays({ day_class_holiday: function () { } }, date.getFullYear());
+                    var holidays = et2_calendar_view.get_holidays({ day_class_holiday: function () { } }, date.getFullYear());
                     var day_holidays = holidays['' + date.getFullYear() +
                         sprintf("%02d", date.getMonth() + 1) +
                         sprintf("%02d", date.getDate())];
@@ -3397,14 +3383,14 @@ var CalendarApp = /** @class */ (function (_super) {
             }
         });
         window.setTimeout(calendar_resize, 50);
-    };
+    }
     /**
      * Record view templates so we can quickly switch between them.
      *
      * @param {etemplate2} _et2 etemplate2 template that was just loaded
      * @param {String} _name Name of the template
      */
-    CalendarApp.prototype._et2_view_init = function (_et2, _name) {
+    _et2_view_init(_et2, _name) {
         var hidden = typeof this.state.view !== 'undefined';
         var all_loaded = this.sidebox_et2 !== null;
         // Avoid home portlets using our templates, and get them right
@@ -3485,13 +3471,13 @@ var CalendarApp = /** @class */ (function (_super) {
             // Start calendar-wide autorefresh timer to include more than just nm
             this._set_autorefresh();
         }
-    };
+    }
     /**
      * Set a refresh timer that works for the current view.
      * The nextmatch goes into an infinite loop if we let it autorefresh while
      * hidden.
      */
-    CalendarApp.prototype._set_autorefresh = function () {
+    _set_autorefresh() {
         // Listview not loaded
         if (typeof CalendarApp.views.listview.etemplates[0] == 'string')
             return;
@@ -3549,26 +3535,26 @@ var CalendarApp = /** @class */ (function (_super) {
             this._set_autorefresh(this.egw.preference(refresh_preference, 'calendar'));
             jQuery(e.target).off(e);
         }, this));
-    };
+    }
     /**
      * Initialization function in order to set/unset
      * categories status.
      *
      */
-    CalendarApp.prototype.category_report_init = function () {
+    category_report_init() {
         var content = this.et2.getArrayMgr('content').data;
         for (var i = 1; i < content.grid.length; i++) {
             if (content.grid[i] != null)
                 this.category_report_enable({ id: i + '', checked: content.grid[i]['enable'] });
         }
-    };
+    }
     /**
      * Set/unset selected category's row
      *
      * @param {type} _widget
      * @returns {undefined}
      */
-    CalendarApp.prototype.category_report_enable = function (_widget) {
+    category_report_enable(_widget) {
         var widgets = ['[user]', '[weekend]', '[holidays]', '[min_days]'];
         var row_id = _widget.id.match(/\d+/);
         var w = {};
@@ -3577,19 +3563,19 @@ var CalendarApp = /** @class */ (function (_super) {
             if (w)
                 w.set_readonly(!_widget.checked);
         }
-    };
+    }
     /**
      * submit function for report button
      */
-    CalendarApp.prototype.category_report_submit = function () {
+    category_report_submit() {
         this.et2._inst.postSubmit();
-    };
+    }
     /**
      * Function to enable/disable categories
      *
      * @param {object} _widget select all checkbox
      */
-    CalendarApp.prototype.category_report_selectAll = function (_widget) {
+    category_report_selectAll(_widget) {
         var content = this.et2.getArrayMgr('content').data;
         var checkbox = {};
         var grid_index = typeof content.grid.length != 'undefined' ? content.grid : Object.keys(content.grid);
@@ -3602,7 +3588,7 @@ var CalendarApp = /** @class */ (function (_super) {
                 }
             }
         }
-    };
+    }
     /**
      * Create a cache ID for the daywise cache
      *
@@ -3610,7 +3596,7 @@ var CalendarApp = /** @class */ (function (_super) {
      * @param {String|integer|String[]} owner
      * @returns {String} Cache ID
      */
-    CalendarApp._daywise_cache_id = function (date, owner) {
+    static _daywise_cache_id(date, owner) {
         if (typeof date === 'object') {
             date = date.getUTCFullYear() + sprintf('%02d', date.getUTCMonth() + 1) + sprintf('%02d', date.getUTCDate());
         }
@@ -3620,24 +3606,23 @@ var CalendarApp = /** @class */ (function (_super) {
             _owner = '';
         }
         return CalendarApp.DAYWISE_CACHE_ID + '::' + date + (_owner ? '-' + _owner : '');
-    };
+    }
     /**
      * Videoconference checkbox checked
      */
-    CalendarApp.prototype.videoconferenceOnChange = function () {
-        var widget = this.et2.getWidgetById('videoconference');
+    videoconferenceOnChange() {
+        let widget = this.et2.getWidgetById('videoconference');
         if (widget && widget.get_value()) {
             // notify all participants
             this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
             // add alarm for all participants 5min before videoconference
-            var start = new Date(widget.getRoot().getWidgetById('start').getValue());
-            var alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
-            for (var _i = 0, alarms_1 = alarms; _i < alarms_1.length; _i++) {
-                var alarm = alarms_1[_i];
+            let start = new Date(widget.getRoot().getWidgetById('start').getValue());
+            let alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
+            for (let alarm of alarms) {
                 // Check for already existing alarm
                 if (!alarm || typeof alarm != "object" || !alarm.all)
                     continue;
-                var alarm_time = new Date(alarm.time);
+                let alarm_time = new Date(alarm.time);
                 if (start.getTime() - alarm_time.getTime() == 5 * 60 * 1000) {
                     // Alarm exists
                     return;
@@ -3647,19 +3632,19 @@ var CalendarApp = /** @class */ (function (_super) {
             this.et2.getWidgetById('new_alarm[owner]').set_value('0'); // all participants
             this.et2.getWidgetById('button[add_alarm]').click();
         }
-    };
-    CalendarApp.prototype.isVideoConference = function (_action, _selected) {
-        var data = egw.dataGetUIDdata(_selected[0].id);
+    }
+    isVideoConference(_action, _selected) {
+        let data = egw.dataGetUIDdata(_selected[0].id);
         return data && data.data ? data.data['##videoconference'] : false;
-    };
+    }
     /**
      * Action handler for join videoconference context menu
      *
      * @param _action
      * @param _sender
      */
-    CalendarApp.prototype.videoConferenceAction = function (_action, _sender) {
-        var data = egw.dataGetUIDdata(_sender[0].id)['data'];
+    videoConferenceAction(_action, _sender) {
+        let data = egw.dataGetUIDdata(_sender[0].id)['data'];
         switch (_action.id) {
             case 'recordings':
                 app.status.videoconference_getRecordings(data['##videoconference'], { cal_id: data['id'], title: data['title'] });
@@ -3667,7 +3652,7 @@ var CalendarApp = /** @class */ (function (_super) {
             case 'join':
                 return this.joinVideoConference(data['##videoconference'], data);
         }
-    };
+    }
     /**
      * Join a videoconference
      *
@@ -3675,7 +3660,7 @@ var CalendarApp = /** @class */ (function (_super) {
      *
      * @param {string} videoconference
      */
-    CalendarApp.prototype.joinVideoConference = function (videoconference, _data) {
+    joinVideoConference(videoconference, _data) {
         return egw.json("EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl", [videoconference,
             {
                 name: egw.user('account_fullname'),
@@ -3687,8 +3672,9 @@ var CalendarApp = /** @class */ (function (_super) {
             // Dates are user time, but we told javascript it was UTC.
             // Send just the timestamp (as a string) with no timezone
             (typeof _data.start != "string" ? _data.start.toJSON() : _data.start).slice(0, -1),
-            (typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0, -1), {
-                participants: Object.keys(_data.participants).filter(function (v) { return v.match(/^[0-9|e|c]/); })
+            (typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0, -1),
+            {
+                participants: Object.keys(_data.participants).filter(v => { return v.match(/^[0-9|e|c]/); })
             }], function (_value) {
             if (_value) {
                 if (_value.err)
@@ -3697,27 +3683,26 @@ var CalendarApp = /** @class */ (function (_super) {
                     egw.top.app.status.openCall(_value.url);
             }
         }).sendRequest();
-    };
-    /**
-     * These are the keys we keep to set & remember the status, others are discarded
-     */
-    CalendarApp.states_to_save = ['owner', 'status_filter', 'filter', 'cat_id', 'view', 'sortby', 'planner_view', 'weekend'];
-    CalendarApp.views = {
-        day: View_1.day,
-        day4: View_1.day4,
-        week: View_1.week,
-        weekN: View_1.weekN,
-        month: View_1.month,
-        planner: View_1.planner,
-        listview: View_1.listview
-    };
-    /**
-     * This is the data cache prefix for the daywise event index cache
-     * Daywise cache IDs look like: calendar_daywise::20150101 and
-     * contain a list of event IDs for that day (or empty array)
-     */
-    CalendarApp.DAYWISE_CACHE_ID = 'calendar_daywise';
-    return CalendarApp;
-}(egw_app_1.EgwApp));
+    }
+}
+/**
+ * These are the keys we keep to set & remember the status, others are discarded
+ */
+CalendarApp.states_to_save = ['owner', 'status_filter', 'filter', 'cat_id', 'view', 'sortby', 'planner_view', 'weekend'];
+CalendarApp.views = {
+    day: day,
+    day4: day4,
+    week: week,
+    weekN: weekN,
+    month: month,
+    planner: planner,
+    listview: listview
+};
+/**
+ * This is the data cache prefix for the daywise event index cache
+ * Daywise cache IDs look like: calendar_daywise::20150101 and
+ * contain a list of event IDs for that day (or empty array)
+ */
+CalendarApp.DAYWISE_CACHE_ID = 'calendar_daywise';
 app.classes.calendar = CalendarApp;
 //# sourceMappingURL=app.js.map

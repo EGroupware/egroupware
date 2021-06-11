@@ -10,6 +10,7 @@
  * @Todo: @new-js-loader port to TypeScript
  */
 import {egwMenuImpl} from './egw_menu_dhtmlx.js';
+import {egw_shortcutIdx} from './egw_keymanager.js';
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu openes
 export var _egw_active_menu = null;
@@ -221,7 +222,7 @@ egwMenu.prototype.keyHandler = function(_keyCode, _shift, _ctrl, _alt)
 			{
 				for(let i = 0; i < child.children.length; i++)
 				{
-					result = find_func(child.children[i]);
+					const result = find_func(child.children[i]);
 					if(result) return result;
 				}
 			}
@@ -257,7 +258,7 @@ egwMenu.prototype.keyHandler = function(_keyCode, _shift, _ctrl, _alt)
 			break;
 		case EGW_KEY_ARROW_UP:
 		case EGW_KEY_ARROW_DOWN:
-			direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
+			const direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
 			let parent = current.parent;
 			let index = parent.children.indexOf(current);
 			let cont = false;

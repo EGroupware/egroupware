@@ -1,22 +1,23 @@
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package
- * @subpackage
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 
 /*egw:uses
 	/etemplate/js/et2_core_valueWidget;
 */
 
-import {et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_createWidget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {et2_calendar_event} from "./et2_widget_event";
+import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 
 /**
  * Parent class for the various calendar views to reduce copied code
@@ -69,7 +70,7 @@ export class et2_calendar_view extends et2_valueWidget
 
 
 		// Used for its date calculations
-		this._date_helper = et2_createWidget('date-time', {}, null);
+		this._date_helper = <et2_date>et2_createWidget('date-time', {}, null);
 		this._date_helper.loadingFinished();
 
 		this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
@@ -552,7 +553,7 @@ export class et2_calendar_view extends et2_valueWidget
 					whole_day_on_top: this.drag_create.start.whole_day
 				}
 			);
-			this.drag_create.event = et2_createWidget('calendar-event',{
+			this.drag_create.event = <et2_calendar_event>et2_createWidget('calendar-event',{
 				id:'event_drag',
 				value: value
 			},this.drag_create.parent);

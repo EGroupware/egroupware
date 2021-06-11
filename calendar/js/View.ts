@@ -2,6 +2,12 @@
  * Super class for the different views.
  *
  * Each separate view overrides what it needs
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
+ * @author Nathan Gray
  */
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 

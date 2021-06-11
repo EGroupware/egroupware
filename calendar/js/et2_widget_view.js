@@ -1,30 +1,20 @@
-"use strict";
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package
- * @subpackage
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_calendar_view = void 0;
-var et2_core_valueWidget_1 = require("../../api/js/etemplate/et2_core_valueWidget");
-var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritance");
+/*egw:uses
+    /etemplate/js/et2_core_valueWidget;
+*/
+import { et2_createWidget } from "../../api/js/etemplate/et2_core_widget";
+import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
+import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
+import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
+
 /**
  * Parent class for the various calendar views to reduce copied code
  *
@@ -34,37 +24,34 @@ var et2_core_inheritance_1 = require("../../api/js/etemplate/et2_core_inheritanc
  *
  * @augments et2_valueWidget
  */
-var et2_calendar_view = /** @class */ (function (_super) {
-    __extends(et2_calendar_view, _super);
+export class et2_calendar_view extends et2_valueWidget {
     /**
      * Constructor
      *
      */
-    function et2_calendar_view(_parent, _attrs, _child) {
-        var _this = 
+    constructor(_parent, _attrs, _child) {
         // Call the inherited constructor
-        _super.call(this, _parent, _attrs, et2_core_inheritance_1.ClassWithAttributes.extendAttributes(et2_calendar_view._attributes, _child || {})) || this;
-        _this.dataStorePrefix = 'calendar';
-        _this.update_timer = null;
-        _this.now_timer = null;
+        super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_view._attributes, _child || {}));
+        this.dataStorePrefix = 'calendar';
+        this.update_timer = null;
+        this.now_timer = null;
         // Used for its date calculations
-        _this._date_helper = et2_createWidget('date-time', {}, null);
-        _this._date_helper.loadingFinished();
-        _this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
-        _this.now_div = jQuery('<div class="calendar_now"/>');
-        _this.update_timer = null;
-        _this.now_timer = null;
+        this._date_helper = et2_createWidget('date-time', {}, null);
+        this._date_helper.loadingFinished();
+        this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
+        this.now_div = jQuery('<div class="calendar_now"/>');
+        this.update_timer = null;
+        this.now_timer = null;
         // Used to support dragging on empty space to create an event
-        _this.drag_create = {
+        this.drag_create = {
             start: null,
             end: null,
             parent: null,
             event: null
         };
-        return _this;
     }
-    et2_calendar_view.prototype.destroy = function () {
-        _super.prototype.destroy.call(this);
+    destroy() {
+        super.destroy();
         // date_helper has no parent, so we must explicitly remove it
         this._date_helper.destroy();
         this._date_helper = null;
@@ -76,9 +63,9 @@ var et2_calendar_view = /** @class */ (function (_super) {
         if (this.now_timer) {
             window.clearInterval(this.now_timer);
         }
-    };
-    et2_calendar_view.prototype.doLoadingFinished = function () {
-        _super.prototype.doLoadingFinished.call(this);
+    }
+    doLoadingFinished() {
+        super.doLoadingFinished();
         this.loader.hide(0).prependTo(this.div);
         this.div.append(this.now_div);
         if (this.options.owner)
@@ -86,7 +73,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         // Start moving 'now' line
         this.now_timer = window.setInterval(this._updateNow.bind(this), 60000);
         return true;
-    };
+    }
     /**
      * Something changed, and the view need to be re-drawn.  We wait a bit to
      * avoid re-drawing twice if start and end date both changed, then recreate
@@ -98,9 +85,9 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.invalidate = function (trigger_event) {
+    invalidate(trigger_event) {
         // If this wasn't a stub, we'd set this.update_timer
-    };
+    }
     /**
      * Returns the current start date
      *
@@ -108,9 +95,9 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.get_start_date = function () {
+    get_start_date() {
         return new Date(this.options.start_date);
-    };
+    }
     /**
      * Returns the current start date
      *
@@ -118,9 +105,9 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.get_end_date = function () {
+    get_end_date() {
         return new Date(this.options.end_date);
-    };
+    }
     /**
      * Change the start date
      *
@@ -133,7 +120,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.set_start_date = function (new_date) {
+    set_start_date(new_date) {
         if (!new_date || new_date === null) {
             new_date = new Date();
         }
@@ -153,7 +140,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         if (old_date !== this.options.start_date && this.isAttached()) {
             this.invalidate(true);
         }
-    };
+    }
     /**
      * Change the end date
      *
@@ -166,7 +153,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.set_end_date = function (new_date) {
+    set_end_date(new_date) {
         if (!new_date || new_date === null) {
             new_date = new Date();
         }
@@ -186,7 +173,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         if (old_date !== this.options.end_date && this.isAttached()) {
             this.invalidate(true);
         }
-    };
+    }
     /**
      * Set which users to display
      *
@@ -200,7 +187,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype.set_owner = function (_owner) {
+    set_owner(_owner) {
         var old = this.options.owner;
         // 0 means current user, but that causes problems for comparison,
         // so we'll just switch to the actual ID
@@ -226,7 +213,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
             typeof old === 'string' && '' + old !== '' + this.options.owner)) {
             this.invalidate(true);
         }
-    };
+    }
     /**
      * Provide specific data to be displayed.
      * This is a way to set start and end dates, owner and event data in one call.
@@ -245,7 +232,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *	necessarily an entry from the resource app), or a list containing a
      *	combination of both.
      */
-    et2_calendar_view.prototype.set_value = function (events) {
+    set_value(events) {
         if (typeof events !== 'object')
             return false;
         if (events.length && events.length > 0 || !jQuery.isEmptyObject(events)) {
@@ -274,17 +261,13 @@ var et2_calendar_view = /** @class */ (function (_super) {
         if (!this.update_timer) {
             window.setTimeout(jQuery.proxy(function () { this.loader.hide(); }, this), 200);
         }
-    };
-    Object.defineProperty(et2_calendar_view.prototype, "date_helper", {
-        get: function () {
-            return this._date_helper;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    et2_calendar_view.prototype._createNamespace = function () {
+    }
+    get date_helper() {
+        return this._date_helper;
+    }
+    _createNamespace() {
         return true;
-    };
+    }
     /**
      * Update the 'now' line
      *
@@ -293,7 +276,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @private
      */
-    et2_calendar_view.prototype._updateNow = function () {
+    _updateNow() {
         var tempDate = new Date();
         var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes() - tempDate.getTimezoneOffset(), 0);
         // Use date widget's existing functions to deal
@@ -304,7 +287,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         }
         this.now_div.hide();
         return false;
-    };
+    }
     /**
      * Calendar supports many different owner types, including users & resources.
      * This translates an ID to a user-friendly name.
@@ -314,7 +297,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @memberOf et2_calendar_view
      */
-    et2_calendar_view.prototype._get_owner_name = function (user) {
+    _get_owner_name(user) {
         var label = undefined;
         if (parseInt(user) === 0) {
             // 0 means current user
@@ -335,7 +318,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
         }
         if (typeof label === 'undefined') {
             // Not found?  Ask the sidebox owner widget (it gets updated) or the original arrayMgr
-            var options = false;
+            let options = false;
             if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner')) {
                 options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
             }
@@ -365,14 +348,14 @@ var et2_calendar_view = /** @class */ (function (_super) {
             et2_calendar_view.owner_name_cache[user] = label;
         }
         return label;
-    };
+    }
     /**
      * Find the event information linked to a given DOM node
      *
      * @param {HTMLElement} dom_node - It should have something to do with an event
      * @returns {Object}
      */
-    et2_calendar_view.prototype._get_event_info = function (dom_node) {
+    _get_event_info(dom_node) {
         // Determine as much relevant info as can be found
         var event_node = jQuery(dom_node).closest('[data-id]', this.div)[0];
         var day_node = jQuery(event_node).closest('[data-date]', this.div)[0];
@@ -388,7 +371,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
             result.widget_id = 'event_' + widget_id.join('');
         }
         return result;
-    };
+    }
     /**
      * Starting (mousedown) handler to support drag to create
      *
@@ -398,7 +381,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      *
      * @param {String} start Date string (JSON format)
      */
-    et2_calendar_view.prototype._drag_create_start = function (start) {
+    _drag_create_start(start) {
         this.drag_create.start = jQuery.extend({}, start);
         if (!this.drag_create.start.date) {
             this.drag_create.start = null;
@@ -416,12 +399,12 @@ var et2_calendar_view = /** @class */ (function (_super) {
             // Create event
             this._drag_create_event();
         }, this), 250);
-    };
+    }
     /**
      * Create or update an event used for feedback while dragging on empty space,
      * so user can see something is happening
      */
-    et2_calendar_view.prototype._drag_create_event = function () {
+    _drag_create_event() {
         if (!this.drag_create.parent || !this.drag_create.start) {
             return;
         }
@@ -447,8 +430,8 @@ var et2_calendar_view = /** @class */ (function (_super) {
             this.drag_create.event._values_check(value);
             this.drag_create.event.doLoadingFinished();
         }
-    };
-    et2_calendar_view.prototype._drag_update_event = function () {
+    }
+    _drag_update_event() {
         if (!this.drag_create.event || !this.drag_create.start || !this.drag_create.end
             || !this.drag_create.parent || !this.drag_create.event._type) {
             return;
@@ -459,13 +442,13 @@ var et2_calendar_view = /** @class */ (function (_super) {
         }
         this.drag_create.event._update();
         this.drag_create.parent.position_event(this.drag_create.event);
-    };
+    }
     /**
      * Ending (mouseup) handler to support drag to create
      *
      * @param {String} end Date string (JSON format)
      */
-    et2_calendar_view.prototype._drag_create_end = function (end) {
+    _drag_create_end(end) {
         this.div.css('cursor', '');
         if (typeof end === 'undefined') {
             end = {};
@@ -492,7 +475,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
             jQuery.extend(options, this.drag_create.start, end);
             delete (options.date);
             // Make sure parent is set, if needed
-            var app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
+            let app_calendar = this.getInstanceManager().app_obj.calendar || app.calendar;
             if (this.drag_create.parent && this.drag_create.parent.options.owner !== app_calendar.state.owner && !options.owner) {
                 options.owner = this.drag_create.parent.options.owner;
             }
@@ -526,7 +509,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
             this.drag_create.event = null;
         }
         return true;
-    };
+    }
     /**
      * Check if the view should be consolidated into one, or listed seperately
      * based on the user's preferences
@@ -536,12 +519,12 @@ var et2_calendar_view = /** @class */ (function (_super) {
      * @returns {boolean} True of only one is needed, false if each owner needs
      *	to be listed seperately.
      */
-    et2_calendar_view.is_consolidated = function (owners, view) {
+    static is_consolidated(owners, view) {
         // Seperate owners, or consolidated?
         return !(owners.length > 1 &&
             (view === 'day' && owners.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
                 view === 'week' && owners.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))));
-    };
+    }
     /**
      * Fetch and cache a list of the year's holidays
      *
@@ -549,7 +532,7 @@ var et2_calendar_view = /** @class */ (function (_super) {
      * @param {string|numeric} year
      * @returns {Array}
      */
-    et2_calendar_view.get_holidays = function (widget, year) {
+    static get_holidays(widget, year) {
         // Loaded in an iframe or something
         var view = egw.window.et2_calendar_view ? egw.window.et2_calendar_view : this;
         // No country selected causes error, so skip if it's missing
@@ -582,29 +565,27 @@ var et2_calendar_view = /** @class */ (function (_super) {
         else {
             return cache;
         }
-    };
-    et2_calendar_view._attributes = {
-        owner: {
-            name: "Owner",
-            type: "any",
-            default: [egw.user('account_id')],
-            description: "Account ID number of the calendar owner, if not the current user"
-        },
-        start_date: {
-            name: "Start date",
-            type: "any"
-        },
-        end_date: {
-            name: "End date",
-            type: "any"
-        }
-    };
-    /**
-     * Cache to map owner & resource IDs to names, helps cut down on server requests
-     */
-    et2_calendar_view.owner_name_cache = {};
-    et2_calendar_view.holiday_cache = {};
-    return et2_calendar_view;
-}(et2_core_valueWidget_1.et2_valueWidget));
-exports.et2_calendar_view = et2_calendar_view;
+    }
+}
+et2_calendar_view._attributes = {
+    owner: {
+        name: "Owner",
+        type: "any",
+        default: [egw.user('account_id')],
+        description: "Account ID number of the calendar owner, if not the current user"
+    },
+    start_date: {
+        name: "Start date",
+        type: "any"
+    },
+    end_date: {
+        name: "End date",
+        type: "any"
+    }
+};
+/**
+ * Cache to map owner & resource IDs to names, helps cut down on server requests
+ */
+et2_calendar_view.owner_name_cache = {};
+et2_calendar_view.holiday_cache = {};
 //# sourceMappingURL=et2_widget_view.js.map

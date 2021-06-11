@@ -1,11 +1,11 @@
 /*
  * Egroupware Calendar timegrid
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package etemplate
- * @subpackage api
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 /*egw:uses
     /calendar/js/et2_widget_view.js;
@@ -22,6 +22,8 @@ import { et2_IResizeable } from "../../api/js/etemplate/et2_core_interfaces";
 import { et2_calendar_event } from "./et2_widget_event";
 import { EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT, egwActionObject, egw_getObjectManager } from "../../api/js/egw_action/egw_action.js";
 import { et2_compileLegacyJS } from "../../api/js/etemplate/et2_core_legacyJSFunctions";
+import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
+import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
  *

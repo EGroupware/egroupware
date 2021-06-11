@@ -1,11 +1,11 @@
 /*
  * Egroupware
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package
- * @subpackage
- * @link http://www.egroupware.org
+ *
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage etemplate
+ * @link https://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 
 /*egw:uses
@@ -76,7 +76,7 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 		this.setDOMNode(this.div[0]);
 
 		// Used for its date calculations
-		this._date_helper = et2_createWidget('date-time', {}, null);
+		this._date_helper = <et2_date>et2_createWidget('date-time', {}, null);
 		this._date_helper.loadingFinished();
 
 		this.set_start_date(this.options.start_date);

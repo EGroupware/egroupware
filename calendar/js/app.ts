@@ -1,13 +1,12 @@
 /**
  * EGroupware - Calendar - Javascript UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package calendar
- * @author Hadi Nategh	<hn-AT-stylite.de>
+ * @author Hadi Nategh	<hn-AT-egroupware.org>
  * @author Nathan Gray
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /*egw:uses
@@ -37,6 +36,19 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
+import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
+import {date} from "../../api/js/etemplate/lib/date.js";
+import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {egw_registerGlobalShortcut} from "";
+
+// et2 widgets need to be imported, so they register themselves
+import "./et2_widget_daycol";
+import "./et2_widget_event";
+import "./et2_widget_owner";
+import "./et2_widget_planner";
+import "./et2_widget_planner_row";
+import "./et2_widget_timegrid";
+import "./et2_widget_view";
 
 /**
  * UI for calendar
@@ -60,7 +72,7 @@ import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
  * changed, we discard the daywise cache and ask the server for the filtered events.
  *
  */
-class CalendarApp extends EgwApp
+export class CalendarApp extends EgwApp
 {
 
 	/**
