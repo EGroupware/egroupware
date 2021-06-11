@@ -34,6 +34,18 @@ class CustomfieldsTest extends LoggedInTest
 			'private'     => array()
 		);
 
+	public function tearDown(): void
+	{
+		// Clean
+		$fields = Customfields::get(self::APP);
+		foreach($this->customfields as $field_name)
+		{
+			unset($fields[$field_name]);
+		}
+		Customfields::save(self::APP, $fields);
+		parent::tearDown();
+	}
+
 	protected function assertPreConditions() : void
 	{
 		parent::assertPreConditions();
@@ -48,6 +60,7 @@ class CustomfieldsTest extends LoggedInTest
 	{
 		// Create
 		$field = $this->simple_field;
+		$this->customfields[] = $field['name'];
 
 		Customfields::update($field);
 
@@ -240,6 +253,34 @@ class CustomfieldsTest extends LoggedInTest
 		$this->assertCount(1, $options);
 	}
 
+	/**
+	 * Certain characters (&, ", etc.) will break our XML templates.
+	 * Make sure they get stripped out.
+	 */
+	public function testInvalidName()
+	{
+		// Create
+		$field = $this->simple_field;
+		$this->customfields[] = $invalid_name = $field['name'] = '<Invalid> & "TEST"';
+		$this->customfields[] = $valid_name = 'Invalid  TEST';
+
+		Customfields::update($field);
+
+		// Check
+		$fields = Customfields::get(self::APP);
+
+		$this->assertArrayNotHasKey($invalid_name, $fields, "Invalid customfield name was allowed");
+		$this->assertArrayHasKey($valid_name, $fields, "Invalid customfield name was not corrected");
+
+		$saved_field = $fields[$valid_name];
+
+		$this->assertEquals($valid_name, $saved_field['name'], "Invalid customfield name was allowed");
+
+		// Clean
+		unset($fields[$invalid_name], $fields[$saved_field['name']]);
+		Customfields::save(self::APP, $fields);
+	}
+
 	protected function create_private_field()
 	{
 		// Create field
@@ -249,6 +290,7 @@ class CustomfieldsTest extends LoggedInTest
 				'private' => array($GLOBALS['egw_info']['user']['account_id'])
 			)
 		);
+		$this->customfields[] = $field['name'];
 		Customfields::update($field);
 
 		return $field;
