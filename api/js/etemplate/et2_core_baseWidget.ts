@@ -21,7 +21,6 @@ import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_no_init} from "./et2_core_common";
 // fixing circular dependencies by only importing type
 import type {et2_inputWidget} from "./et2_core_inputWidget";
-import type {et2_valueWidget} from "./et2_core_valueWidget";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 
 /**
@@ -383,10 +382,12 @@ export class et2_container extends et2_baseWidget
 	 */
 	getInputWidgetById(_id) : et2_inputWidget | null
 	{
-		let widget = this.getWidgetById(_id);
-		if(widget && widget.instanceOf(et2_valueWidget))
+		let widget = <any>this.getWidgetById(_id);
+		// instead of checking widget to be instance of valueWidget (which would create a circular dependency)
+		// we check for the interface/methods of valueWidget
+		if(widget && typeof widget.get_value === 'function' && typeof widget.set_value === 'function')
 		{
-			return <et2_inputWidget><unknown>widget;
+			return <et2_inputWidget>widget;
 		}
 		return null
 	}

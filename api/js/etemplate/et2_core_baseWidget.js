@@ -284,7 +284,9 @@ export class et2_container extends et2_baseWidget {
      */
     getInputWidgetById(_id) {
         let widget = this.getWidgetById(_id);
-        if (widget && widget.instanceOf(et2_valueWidget)) {
+        // instead of checking widget to be instance of valueWidget (which would create a circular dependency)
+        // we check for the interface/methods of valueWidget
+        if (widget && typeof widget.get_value === 'function' && typeof widget.set_value === 'function') {
             return widget;
         }
         return null;
