@@ -8,6 +8,15 @@
  * @author Andreas Stöckel
  * @copyright EGroupware GmbH 2011-2021
  */
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { et2_baseWidget, et2_container } from "./et2_core_baseWidget";
 import { EgwApp } from "../jsapi/egw_app";
 import { et2_IInput, et2_IPrint, et2_IResizeable, et2_ISubmitListener } from "./et2_core_interfaces";
@@ -331,230 +340,232 @@ export class etemplate2 {
      * @return Promise
      */
     load(_name, _url, _data, _callback, _app, _no_et2_ready, _open_target) {
-        let app = _app || window.app;
-        this.name = _name; // store top-level template name to have it available in widgets
-        // store template base url, in case initial template is loaded via webdav, to use that for further loads too
-        // need to split off domain first, as it could contain app-name part of template eg. stylite.report.xet and https://my.stylite.de/egw/...
-        if (_url && _url[0] != '/') {
-            this.template_base_url = _url.match(/https?:\/\/[^/]+/).shift();
-            _url = _url.split(this.template_base_url)[1];
-        }
-        else {
-            this.template_base_url = '';
-        }
-        this.template_base_url += _url.split(_name.split('.').shift())[0];
-        egw().debug("info", "Loaded data", _data);
-        const currentapp = this.app = _data.currentapp || egw().app_name();
-        const appname = _name.split('.')[0];
-        // if no app object provided and template app is not currentapp (eg. infolog CRM view)
-        // create private app object / closure with just classes / prototypes
-        if (!_app && appname && appname != currentapp || _open_target) {
-            app = { classes: window.app.classes };
-        }
-        // remember used app object, to eg. use: onchange="widget.getInstanceMgr().app_object[app].callback()"
-        this.app_obj = app;
-        // extract $content['msg'] and call egw.message() with it
-        const msg = _data.content.msg;
-        if (typeof msg != 'undefined') {
-            egw(window).message(msg);
-            delete _data.content.msg;
-        }
-        // Register a handler for AJAX responses
-        egw(currentapp, window).registerJSONPlugin(this.handle_assign, this, 'assign');
-        if (egw.debug_level() >= 3) {
-            if (console.groupCollapsed) {
-                egw.window.console.groupCollapsed("Loading %s into ", _name, '#' + this._DOMContainer.id);
+        return __awaiter(this, void 0, void 0, function* () {
+            let app = _app || window.app;
+            this.name = _name; // store top-level template name to have it available in widgets
+            // store template base url, in case initial template is loaded via webdav, to use that for further loads too
+            // need to split off domain first, as it could contain app-name part of template eg. stylite.report.xet and https://my.stylite.de/egw/...
+            if (_url && _url[0] != '/') {
+                this.template_base_url = _url.match(/https?:\/\/[^/]+/).shift();
+                _url = _url.split(this.template_base_url)[1];
             }
-        }
-        // Timing & profiling on debug level 'log' (4)
-        if (egw.debug_level() >= 4) {
-            if (console.time) {
-                console.time(_name);
+            else {
+                this.template_base_url = '';
             }
-            if (console.profile) {
-                console.profile(_name);
+            this.template_base_url += _url.split(_name.split('.').shift())[0];
+            egw().debug("info", "Loaded data", _data);
+            const currentapp = this.app = _data.currentapp || egw().app_name();
+            const appname = _name.split('.')[0];
+            // if no app object provided and template app is not currentapp (eg. infolog CRM view)
+            // create private app object / closure with just classes / prototypes
+            if (!_app && appname && appname != currentapp || _open_target) {
+                app = { classes: window.app.classes };
             }
-            var start_time = (new Date).getTime();
-        }
-        // require necessary translations from server AND the app.js file, if not already loaded
-        let promisses = [];
-        if (Array.isArray(_data.langRequire)) {
-            promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
-        }
-        if (appname) {
-            promisses.push(egw(currentapp, window).includeJS('/' + appname + '/js/app.js', undefined, undefined, egw.webserverUrl));
-        }
-        return Promise.all(promisses).catch((err) => {
-            console.log("et2.load(): error loading lang-files and app.js: " + err.message);
-        }).then(() => {
-            this.clear();
-            // Initialize application js
-            let app_callback = null;
-            // Only initialize once
-            // new app class with constructor function in app.classes[appname]
-            if (typeof app[appname] !== 'object' && typeof app.classes[appname] == 'function') {
-                app[appname] = new app.classes[appname]();
+            // remember used app object, to eg. use: onchange="widget.getInstanceMgr().app_object[app].callback()"
+            this.app_obj = app;
+            // extract $content['msg'] and call egw.message() with it
+            const msg = _data.content.msg;
+            if (typeof msg != 'undefined') {
+                egw(window).message(msg);
+                delete _data.content.msg;
             }
-            else if (appname && typeof app[appname] !== "object") {
-                egw.debug("warn", "Did not load '%s' JS object", appname);
-            }
-            // If etemplate current app does not match app owning the template,
-            // initialize the current app too
-            if (typeof app[this.app] !== 'object' && typeof app.classes[this.app] == 'function') {
-                app[this.app] = new app.classes[this.app]();
-            }
-            if (typeof app[appname] == "object") {
-                app_callback = function (_et2, _name) {
-                    app[appname].et2_ready(_et2, _name);
-                };
-            }
-            // Create the basic widget container and attach it to the DOM
-            this._widgetContainer = new et2_container(null);
-            this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));
-            this._widgetContainer.setInstanceManager(this);
-            this._widgetContainer.setParentDOMNode(this._DOMContainer);
-            // store the id to submit it back to server
-            if (_data) {
-                this._etemplate_exec_id = _data.etemplate_exec_id;
-                // set app_header
-                if (typeof _data.app_header == 'string') {
-                    // @ts-ignore
-                    window.egw_app_header(_data.app_header);
+            // Register a handler for AJAX responses
+            egw(currentapp, window).registerJSONPlugin(this.handle_assign, this, 'assign');
+            if (egw.debug_level() >= 3) {
+                if (console.groupCollapsed) {
+                    egw.window.console.groupCollapsed("Loading %s into ", _name, '#' + this._DOMContainer.id);
                 }
-                // bind our unload handler
-                this.bind_unload();
             }
-            const _load = function () {
-                egw.debug("log", "Loading template...");
-                if (egw.debug_level() >= 4 && console.timeStamp) {
-                    console.timeStamp("Begin rendering template");
+            // Timing & profiling on debug level 'log' (4)
+            if (egw.debug_level() >= 4) {
+                if (console.time) {
+                    console.time(_name);
                 }
-                // Add into indexed list - do this before, so anything looking can find it,
-                // even if it's not loaded
-                if (typeof etemplate2._byTemplate[_name] == "undefined") {
-                    etemplate2._byTemplate[_name] = [];
+                if (console.profile) {
+                    console.profile(_name);
                 }
-                etemplate2._byTemplate[_name].push(this);
-                // Read the XML structure of the requested template
-                this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
-                // List of Promises from widgets that are not quite fully loaded
-                const deferred = [];
-                // Inform the widget tree that it has been successfully loaded.
-                this._widgetContainer.loadingFinished(deferred);
-                // Connect to the window resize event
-                jQuery(window).on("resize." + this.uniqueId, this, function (e) {
-                    e.data.resize(e);
-                });
-                if (egw.debug_level() >= 3 && console.groupEnd) {
-                    egw.window.console.groupEnd();
+                var start_time = (new Date).getTime();
+            }
+            // require necessary translations from server AND the app.js file, if not already loaded
+            let promisses = [];
+            if (Array.isArray(_data.langRequire)) {
+                promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
+            }
+            if (appname) {
+                promisses.push(egw(currentapp, window).includeJS('/' + appname + '/js/app.js', undefined, undefined, egw.webserverUrl));
+            }
+            return Promise.all(promisses).catch((err) => {
+                console.log("et2.load(): error loading lang-files and app.js: " + err.message);
+            }).then(() => {
+                this.clear();
+                // Initialize application js
+                let app_callback = null;
+                // Only initialize once
+                // new app class with constructor function in app.classes[appname]
+                if (typeof app[appname] !== 'object' && typeof app.classes[appname] == 'function') {
+                    app[appname] = new app.classes[appname]();
                 }
-                if (deferred.length > 0) {
-                    let still_deferred = 0;
-                    jQuery(deferred).each(function () {
-                        if (this.state() == "pending")
-                            still_deferred++;
+                else if (appname && typeof app[appname] !== "object") {
+                    egw.debug("warn", "Did not load '%s' JS object", appname);
+                }
+                // If etemplate current app does not match app owning the template,
+                // initialize the current app too
+                if (typeof app[this.app] !== 'object' && typeof app.classes[this.app] == 'function') {
+                    app[this.app] = new app.classes[this.app]();
+                }
+                if (typeof app[appname] == "object") {
+                    app_callback = function (_et2, _name) {
+                        app[appname].et2_ready(_et2, _name);
+                    };
+                }
+                // Create the basic widget container and attach it to the DOM
+                this._widgetContainer = new et2_container(null);
+                this._widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this._DOMContainer)));
+                this._widgetContainer.setInstanceManager(this);
+                this._widgetContainer.setParentDOMNode(this._DOMContainer);
+                // store the id to submit it back to server
+                if (_data) {
+                    this._etemplate_exec_id = _data.etemplate_exec_id;
+                    // set app_header
+                    if (typeof _data.app_header == 'string') {
+                        // @ts-ignore
+                        window.egw_app_header(_data.app_header);
+                    }
+                    // bind our unload handler
+                    this.bind_unload();
+                }
+                const _load = function () {
+                    egw.debug("log", "Loading template...");
+                    if (egw.debug_level() >= 4 && console.timeStamp) {
+                        console.timeStamp("Begin rendering template");
+                    }
+                    // Add into indexed list - do this before, so anything looking can find it,
+                    // even if it's not loaded
+                    if (typeof etemplate2._byTemplate[_name] == "undefined") {
+                        etemplate2._byTemplate[_name] = [];
+                    }
+                    etemplate2._byTemplate[_name].push(this);
+                    // Read the XML structure of the requested template
+                    this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
+                    // List of Promises from widgets that are not quite fully loaded
+                    const deferred = [];
+                    // Inform the widget tree that it has been successfully loaded.
+                    this._widgetContainer.loadingFinished(deferred);
+                    // Connect to the window resize event
+                    jQuery(window).on("resize." + this.uniqueId, this, function (e) {
+                        e.data.resize(e);
                     });
-                    if (still_deferred > 0) {
-                        egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...", still_deferred, deferred.length);
+                    if (egw.debug_level() >= 3 && console.groupEnd) {
+                        egw.window.console.groupEnd();
+                    }
+                    if (deferred.length > 0) {
+                        let still_deferred = 0;
+                        jQuery(deferred).each(function () {
+                            if (this.state() == "pending")
+                                still_deferred++;
+                        });
+                        if (still_deferred > 0) {
+                            egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...", still_deferred, deferred.length);
+                        }
+                    }
+                    // Wait for everything to be loaded, then finish it up
+                    jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function () {
+                        egw.debug("log", "Finished loading %s, triggering load event", _name);
+                        if (typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined') {
+                            //Call loading finished method of the framework with local window
+                            window.framework.et2_loadingFinished(egw(window).window);
+                        }
+                        // Trigger the "resize" event
+                        this.resize();
+                        // Automatically set focus to first visible input for popups
+                        if (this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0) {
+                            const $input = jQuery('input:visible', this._DOMContainer)
+                                // Date fields open the calendar popup on focus
+                                .not('.et2_date')
+                                .filter(function () {
+                                // Skip inputs that are out of tab ordering
+                                const $this = jQuery(this);
+                                return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+                            }).first();
+                            // mobile device, focus only if the field is empty (usually means new entry)
+                            // should focus always for non-mobile one
+                            if (egwIsMobile() && $input.val() == "" || !egwIsMobile())
+                                $input.focus();
+                        }
+                        // Tell others about it
+                        if (typeof _callback == "function") {
+                            _callback.call(window, this, _name);
+                        }
+                        if (app_callback && _callback != app_callback && !_no_et2_ready) {
+                            app_callback.call(window, this, _name);
+                        }
+                        if (appname && appname != this.app && typeof app[this.app] == "object" && !_no_et2_ready) {
+                            // Loaded a template from a different application?
+                            // Let the application that loaded it know too
+                            app[this.app].et2_ready(this, this.name);
+                        }
+                        jQuery(this._DOMContainer).trigger('load', this);
+                        if (etemplate2.templates[this.name].attributes.onload) {
+                            let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
+                            if (typeof onload === 'string') {
+                                onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
+                            }
+                            onload.call(this._widgetContainer);
+                        }
+                        // Profiling
+                        if (egw.debug_level() >= 4) {
+                            if (console.timeEnd) {
+                                console.timeEnd(_name);
+                            }
+                            if (console.profileEnd) {
+                                console.profileEnd(_name);
+                            }
+                            const end_time = (new Date).getTime();
+                            let gen_time_div = jQuery('#divGenTime_' + appname);
+                            if (!gen_time_div.length)
+                                gen_time_div = jQuery('.pageGenTime');
+                            gen_time_div.find('.et2RenderTime').remove();
+                            gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
+                        }
+                    }, this));
+                };
+                // Load & process
+                try {
+                    if (etemplate2.templates[_name]) {
+                        // Set array managers first, or errors will happen
+                        this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+                        // Already have it
+                        _load.apply(this, []);
+                        return;
                     }
                 }
-                // Wait for everything to be loaded, then finish it up
-                jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function () {
-                    egw.debug("log", "Finished loading %s, triggering load event", _name);
-                    if (typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined') {
-                        //Call loading finished method of the framework with local window
-                        window.framework.et2_loadingFinished(egw(window).window);
+                catch (e) {
+                    // weird security exception in IE denying access to template cache in opener
+                    if (e.message == 'Permission denied') {
+                        etemplate2.templates = {};
                     }
-                    // Trigger the "resize" event
-                    this.resize();
-                    // Automatically set focus to first visible input for popups
-                    if (this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0) {
-                        const $input = jQuery('input:visible', this._DOMContainer)
-                            // Date fields open the calendar popup on focus
-                            .not('.et2_date')
-                            .filter(function () {
-                            // Skip inputs that are out of tab ordering
-                            const $this = jQuery(this);
-                            return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-                        }).first();
-                        // mobile device, focus only if the field is empty (usually means new entry)
-                        // should focus always for non-mobile one
-                        if (egwIsMobile() && $input.val() == "" || !egwIsMobile())
-                            $input.focus();
+                    // other error eg. in app.js et2_ready or event handlers --> rethrow it
+                    else {
+                        throw e;
                     }
-                    // Tell others about it
-                    if (typeof _callback == "function") {
-                        _callback.call(window, this, _name);
+                }
+                // Split the given data into array manager objects and pass those to the
+                // widget container - do this here because file is loaded async
+                this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+                // Asynchronously load the XET file
+                return et2_loadXMLFromURL(_url, function (_xmldoc) {
+                    // Scan for templates and store them
+                    for (let i = 0; i < _xmldoc.childNodes.length; i++) {
+                        const template = _xmldoc.childNodes[i];
+                        if (template.nodeName.toLowerCase() != "template")
+                            continue;
+                        etemplate2.templates[template.getAttribute("id")] = template;
+                        if (!_name)
+                            this.name = template.getAttribute("id");
                     }
-                    if (app_callback && _callback != app_callback && !_no_et2_ready) {
-                        app_callback.call(window, this, _name);
-                    }
-                    if (appname && appname != this.app && typeof app[this.app] == "object" && !_no_et2_ready) {
-                        // Loaded a template from a different application?
-                        // Let the application that loaded it know too
-                        app[this.app].et2_ready(this, this.name);
-                    }
-                    jQuery(this._DOMContainer).trigger('load', this);
-                    if (etemplate2.templates[this.name].attributes.onload) {
-                        let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
-                        if (typeof onload === 'string') {
-                            onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
-                        }
-                        onload.call(this._widgetContainer);
-                    }
-                    // Profiling
-                    if (egw.debug_level() >= 4) {
-                        if (console.timeEnd) {
-                            console.timeEnd(_name);
-                        }
-                        if (console.profileEnd) {
-                            console.profileEnd(_name);
-                        }
-                        const end_time = (new Date).getTime();
-                        let gen_time_div = jQuery('#divGenTime_' + appname);
-                        if (!gen_time_div.length)
-                            gen_time_div = jQuery('.pageGenTime');
-                        gen_time_div.find('.et2RenderTime').remove();
-                        gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
-                    }
-                }, this));
-            };
-            // Load & process
-            try {
-                if (etemplate2.templates[_name]) {
-                    // Set array managers first, or errors will happen
-                    this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-                    // Already have it
                     _load.apply(this, []);
-                    return;
-                }
-            }
-            catch (e) {
-                // weird security exception in IE denying access to template cache in opener
-                if (e.message == 'Permission denied') {
-                    etemplate2.templates = {};
-                }
-                // other error eg. in app.js et2_ready or event handlers --> rethrow it
-                else {
-                    throw e;
-                }
-            }
-            // Split the given data into array manager objects and pass those to the
-            // widget container - do this here because file is loaded async
-            this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-            // Asynchronously load the XET file
-            return et2_loadXMLFromURL(_url, function (_xmldoc) {
-                // Scan for templates and store them
-                for (let i = 0; i < _xmldoc.childNodes.length; i++) {
-                    const template = _xmldoc.childNodes[i];
-                    if (template.nodeName.toLowerCase() != "template")
-                        continue;
-                    etemplate2.templates[template.getAttribute("id")] = template;
-                    if (!_name)
-                        this.name = template.getAttribute("id");
-                }
-                _load.apply(this, []);
-            }, this);
+                }, this);
+            });
         });
     }
     /**
@@ -967,81 +978,83 @@ export class etemplate2 {
      *
      * @param _type
      * @param _response
-     * @returns {Boolean}
+     * @returns Promise
      */
     static handle_load(_type, _response) {
-        // Check the parameters
-        const data = _response.data;
-        // handle Api\Framework::refresh_opener()
-        if (jQuery.isArray(data['refresh-opener'])) {
-            if (window.opener) // && typeof window.opener.egw_refresh == 'function')
-             {
-                var egw = window.egw(opener);
-                egw.refresh.apply(egw, data['refresh-opener']);
+        return __awaiter(this, void 0, void 0, function* () {
+            // Check the parameters
+            const data = _response.data;
+            // handle Api\Framework::refresh_opener()
+            if (Array.isArray(data['refresh-opener'])) {
+                if (window.opener) // && typeof window.opener.egw_refresh == 'function')
+                 {
+                    var egw = window.egw(opener);
+                    egw.refresh.apply(egw, data['refresh-opener']);
+                }
             }
-        }
-        var egw = window.egw(window);
-        // need to set app_header before message, as message temp. replaces app_header
-        if (typeof data.data == 'object' && typeof data.data.app_header == 'string') {
-            egw.app_header(data.data.app_header, data.data.currentapp || null);
-            delete data.data.app_header;
-        }
-        // handle Api\Framework::message()
-        if (jQuery.isArray(data.message)) {
-            egw.message.apply(egw, data.message);
-        }
-        // handle Api\Framework::window_close(), this will terminate execution
-        if (data['window-close']) {
-            if (typeof data['window-close'] == 'string' && data['window-close'] !== 'true') {
-                alert(data['window-close']);
+            var egw = window.egw(window);
+            // need to set app_header before message, as message temp. replaces app_header
+            if (typeof data.data == 'object' && typeof data.data.app_header == 'string') {
+                egw.app_header(data.data.app_header, data.data.currentapp || null);
+                delete data.data.app_header;
             }
-            egw.close();
-            return true;
-        }
-        // handle Api\Framework::window_focus()
-        if (data['window-focus']) {
-            window.focus();
-        }
-        // handle framework.setSidebox calls
-        if (window.framework && jQuery.isArray(data.setSidebox)) {
-            if (data['fw-target'])
-                data.setSidebox[0] = data['fw-target'];
-            window.framework.setSidebox.apply(window.framework, data.setSidebox);
-        }
-        // regular et2 re-load
-        if (typeof data.url == "string" && typeof data.data === 'object') {
-            // @ts-ignore
-            if (this && typeof this.load == 'function') {
-                // Called from etemplate
-                // set id in case serverside returned a different template
-                this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
+            // handle Api\Framework::message()
+            if (jQuery.isArray(data.message)) {
+                egw.message.apply(egw, data.message);
+            }
+            // handle Api\Framework::window_close(), this will terminate execution
+            if (data['window-close']) {
+                if (typeof data['window-close'] == 'string' && data['window-close'] !== 'true') {
+                    alert(data['window-close']);
+                }
+                egw.close();
+                return true;
+            }
+            // handle Api\Framework::window_focus()
+            if (data['window-focus']) {
+                window.focus();
+            }
+            // handle framework.setSidebox calls
+            if (window.framework && jQuery.isArray(data.setSidebox)) {
+                if (data['fw-target'])
+                    data.setSidebox[0] = data['fw-target'];
+                window.framework.setSidebox.apply(window.framework, data.setSidebox);
+            }
+            // regular et2 re-load
+            if (typeof data.url == "string" && typeof data.data === 'object') {
                 // @ts-ignore
-                return this.load(data.name, data.url, data.data);
-            }
-            else {
-                // Not etemplate
-                const node = document.getElementById(data.DOMNodeID);
-                let uniqueId = data.DOMNodeID;
-                if (node) {
-                    if (node.children.length) {
-                        // Node has children already?  Check for loading over an
-                        // existing etemplate
-                        const old = etemplate2.getById(node.id);
-                        if (old)
-                            old.clear();
-                    }
-                    if (data['open_target'] && !uniqueId.match(data['open_target'])) {
-                        uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
-                    }
-                    const et2 = new etemplate2(node, data.menuaction, uniqueId);
-                    return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
+                if (this && typeof this.load == 'function') {
+                    // Called from etemplate
+                    // set id in case serverside returned a different template
+                    this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
+                    // @ts-ignore
+                    return this.load(data.name, data.url, data.data);
                 }
                 else {
-                    egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+                    // Not etemplate
+                    const node = document.getElementById(data.DOMNodeID);
+                    let uniqueId = data.DOMNodeID;
+                    if (node) {
+                        if (node.children.length) {
+                            // Node has children already?  Check for loading over an
+                            // existing etemplate
+                            const old = etemplate2.getById(node.id);
+                            if (old)
+                                old.clear();
+                        }
+                        if (data['open_target'] && !uniqueId.match(data['open_target'])) {
+                            uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
+                        }
+                        const et2 = new etemplate2(node, data.menuaction, uniqueId);
+                        return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
+                    }
+                    else {
+                        egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+                    }
                 }
             }
-        }
-        throw ("Error while parsing et2_load response");
+            throw ("Error while parsing et2_load response");
+        });
     }
     /**
      * Plugin for egw.json type "et2_validation_error"

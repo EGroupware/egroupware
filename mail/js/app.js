@@ -1,5 +1,3 @@
-/* global msg */
-
 /**
  * mail - static javaScript functions
  *
@@ -12,6 +10,15 @@
 
 /*egw:uses
 	/api/js/jquery/jquery.base64.js;
+*/
+
+import {AppJS} from "../../api/js/jsapi/app_base.js";
+import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
+import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
+/* required dependency, commented out because no module, but egw:uses is no longer parsed
+import "../../api/js/jquery/jquery.base64.js";
 */
 
 /**
@@ -5364,7 +5371,7 @@ app.classes.mail = AppJS.extend(
 		var container = iframe.parent()[0];
 		var container_selector = container.id ? '#'+container.id : 'div.mailDisplayContainer';
 
-		options = {
+		var options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
@@ -5505,7 +5512,7 @@ app.classes.mail = AppJS.extend(
 			},
 			this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),
 			this.egw.lang('Switch off encryption?'),
-			{}, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, this.egw);
+			{}, et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, this.egw);
 		}
 	},
 

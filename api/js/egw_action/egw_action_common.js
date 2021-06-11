@@ -399,8 +399,7 @@ egwFnct.prototype.setValue = function(_value)
 				var self = this;
 				return new Promise(function(resolve)
 				{
-					// cache for a day, better then no invalidation
-					egw.includeJS("/"+parts[1]+"/js/app.js?"+((new Date()).valueOf()/86400|0).toString(), function ()
+					egw.includeJS("/"+parts[1]+"/js/app.js", function ()
 					{
 						if(typeof app.classes[parts[i]] !== "undefined")
 						{

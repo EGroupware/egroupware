@@ -1,5 +1,3 @@
-/* global jQuery, et2_dialog, Promise, et2_nextmatch, Class, etemplate2, et2_favorites, mailvelope */
-
 /**
  * EGroupware clientside Application javascript base object
  *
@@ -8,7 +6,6 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @version $Id$
  */
 
 /*egw:uses
@@ -16,6 +13,12 @@
 	/api/js/es6-promise.min.js;
 */
 import './egw_inheritance.js';
+import {et2_createWidget} from "../etemplate/et2_core_widget";
+import {etemplate2} from "../etemplate/etemplate2";
+import {et2_dialog} from "../etemplate/et2_widget_dialog";
+import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
+import {et2_favorites} from "../etemplate/et2_widget_favorites";
+import {EgwApp} from "./egw_app";
 
 /**
  * Object to collect instanciated appliction objects
@@ -64,7 +67,7 @@ window.app = {classes: {}};
  * @class AppJS
  * @augments Class
  */
-var AppJS = (function(){ "use strict"; return Class.extend(
+export const AppJS = (function(){ "use strict"; return Class.extend(
 {
 	/**
 	 * Internal application name - override this
@@ -1567,7 +1570,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		},
 		self.egw.lang('Are you sure, you would like to delete the backup key?'),
 		self.egw.lang('Delete backup key'),
-		{}, et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+		{}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
 	},
 
 	/**

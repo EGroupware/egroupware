@@ -504,7 +504,7 @@ export class etemplate2
 	 * @param {string} _open_target flag of string to distinguish between tab target and normal app object
 	 * @return Promise
 	 */
-	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
+	async load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
 		let app = _app || window.app;
 		this.name = _name;	// store top-level template name to have it available in widgets
@@ -1324,15 +1324,15 @@ export class etemplate2
 	 *
 	 * @param _type
 	 * @param _response
-	 * @returns {Boolean}
+	 * @returns Promise
 	 */
-	public static handle_load(_type, _response)
+	public static async handle_load(_type, _response)
 	{
 		// Check the parameters
 		const data = _response.data;
 
 		// handle Api\Framework::refresh_opener()
-		if (jQuery.isArray(data['refresh-opener']))
+		if (Array.isArray(data['refresh-opener']))
 		{
 			if (window.opener)// && typeof window.opener.egw_refresh == 'function')
 			{
