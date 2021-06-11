@@ -382,6 +382,8 @@ class Customfields implements \IteratorAggregate
 		// Add new one in for numbering
 		if(!$cf['id'])
 		{
+			// Make sure name is safe
+			$cf['name'] = str_replace(array(">", "<", '"', "&"), "", $cf['name']);
 			$cfs[$cf['name']] = $cf;
 		}
 
