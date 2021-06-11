@@ -15,6 +15,7 @@
 */
 
 import {EGW_AO_EXEC_SELECTED} from "./egw_action.js";
+import {_egw_active_menu} from "./egw_menu.js";
 
 /**
  * Define the key constants (IE doesn't support "const" keyword)
@@ -147,7 +148,7 @@ function _egw_nodeIsInInput(_node)
 /**
  * Register the onkeypress handler on the document
  */
-jQuery(document).ready(function() {
+jQuery(function() {
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states
@@ -165,7 +166,8 @@ jQuery(document).ready(function() {
 			if(jQuery(e.target).parents("#egw_fw_sidemenu").length > 0) return;
 
 			// If a context menu is open, give the keyboard to it
-			if(_egw_active_menu !== null && _egw_active_menu.keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+			if (typeof _egw_active_menu !== undefined && _egw_active_menu &&
+				_egw_active_menu.keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
 			{
 				e.preventDefault();
 				return;

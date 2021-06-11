@@ -17,7 +17,7 @@
 	/api/js/jquery/jquery-ui-timepicker-addon.js;
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 	/vendor/egroupware/magicsuggest/magicsuggest.js;
-	/api/js/jquery/jquery.splitter.js;
+	/api/js/jquery/splitter.js;
 	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 jQuery.noConflict();
