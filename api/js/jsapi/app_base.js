@@ -21,20 +21,6 @@ import {et2_favorites} from "../etemplate/et2_widget_favorites";
 import {EgwApp} from "./egw_app";
 
 /**
- * Object to collect instanciated appliction objects
- *
- * Attributes classes collects loaded application classes,
- * which can get instanciated:
- *
- *	app[appname] = new app.classes[appname]();
- *
- * On destruction only app[appname] gets deleted, app.classes[appname] need to be used again!
- *
- * @type object
- */
-window.app = {classes: {}};
-
-/**
  * Common base class for application javascript
  * Each app should extend as needed.
  *

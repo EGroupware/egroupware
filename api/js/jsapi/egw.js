@@ -31,8 +31,21 @@
 	egw_inheritance;
 	egw_message;
 	egw_notification;
-	app_base;
 */
+
+/**
+ * Object to collect instantiated application objects
+ *
+ * Attributes classes collects loaded application classes,
+ * which can get instantiated:
+ *
+ *	app[appname] = new app.classes[appname]();
+ *
+ * On destruction only app[appname] gets deleted, app.classes[appname] need to be used again!
+ *
+ * @type object
+ */
+window.app = {classes: {}};
 
 (function()
 {
