@@ -19,7 +19,6 @@
 */
 import './egw_core.js';
 import './egw_utils.js';
-import {etemplate2} from "../etemplate/etemplate2";
 
 /**
  * Module sending json requests
