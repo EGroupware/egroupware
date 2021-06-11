@@ -501,7 +501,8 @@ export class etemplate2
 	 * @param {function} _callback called after template is loaded
 	 * @param {object} _app local app object
 	 * @param {boolean} _no_et2_ready true: do not send et2_ready, used by et2_dialog to not overwrite app.js et2 object
-	 * @param {string} _open_target flag of string to distinguishe between tab target and normal app object
+	 * @param {string} _open_target flag of string to distinguish between tab target and normal app object
+	 * @return Promise
 	 */
 	load(_name, _url, _data, _callback?, _app?, _no_et2_ready?, _open_target?)
 	{
@@ -572,7 +573,7 @@ export class etemplate2
 		if (appname) {
 			promisses.push(egw(currentapp, window).includeJS('/'+appname+'/js/app.js', undefined, undefined, egw.webserverUrl));
 		}
-		Promise.all(promisses).catch((err) => {
+		return Promise.all(promisses).catch((err) => {
 			console.log("et2.load(): error loading lang-files and app.js: "+err.message);
 		}).then(() => {
 			this.clear();
@@ -774,8 +775,12 @@ export class etemplate2
 					throw e;
 				}
 			}
+			// Split the given data into array manager objects and pass those to the
+			// widget container - do this here because file is loaded async
+			this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+
 			// Asynchronously load the XET file
-			et2_loadXMLFromURL(_url, function (_xmldoc)
+			return et2_loadXMLFromURL(_url, function (_xmldoc)
 			{
 
 				// Scan for templates and store them
@@ -788,10 +793,6 @@ export class etemplate2
 				}
 				_load.apply(this, []);
 			}, this);
-
-			// Split the given data into array manager objects and pass those to the
-			// widget container - do this here because file is loaded async
-			this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
 		});
 	}
 
@@ -1389,8 +1390,7 @@ export class etemplate2
 				// set id in case serverside returned a different template
 				this._DOMContainer.id = this.uniqueId = data.DOMNodeID;
 				// @ts-ignore
-				this.load(data.name, data.url, data.data);
-				return true;
+				return this.load(data.name, data.url, data.data);
 			}
 			else
 			{
@@ -1411,8 +1411,7 @@ export class etemplate2
 						uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
 					}
 					const et2 = new etemplate2(node, data.menuaction, uniqueId);
-					et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
-					return true;
+					return et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
 				}
 				else
 				{

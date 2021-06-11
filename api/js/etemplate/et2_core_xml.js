@@ -18,6 +18,7 @@ import { egw } from "../jsapi/egw_global";
  * @param {function} _callback function(_xml)
  * @param {object} _context for _callback
  * @param {function} _fail_callback function(_xml)
+ * @return Promise
  */
 export function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback) {
     if (typeof _context == "undefined") {
@@ -36,7 +37,7 @@ export function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback) {
     if (typeof win == "undefined") {
         win = egw.top;
     }
-    win.jQuery.ajax({
+    return win.jQuery.ajax({
         // we add the full url (protocol and domain) as sometimes just the path
         // gives a CSP error interpreting it as file:///path
         // (if there are a enough 404 errors in html content ...)
@@ -45,11 +46,13 @@ export function et2_loadXMLFromURL(_url, _callback, _context, _fail_callback) {
         type: 'GET',
         dataType: 'xml',
         success: function (_data, _status, _xmlhttp) {
-            _callback.call(_context, _data.documentElement);
+            if (typeof _callback === 'function') {
+                _callback.call(_context, _data.documentElement);
+            }
         },
         error: function (_xmlhttp, _err) {
             egw().debug('error', 'Loading eTemplate from ' + _url + ' failed! ' + _xmlhttp.status + ' ' + _xmlhttp.statusText);
-            if (typeof _fail_callback !== 'undefined') {
+            if (typeof _fail_callback === 'function') {
                 _fail_callback.call(_context, _err);
             }
         }

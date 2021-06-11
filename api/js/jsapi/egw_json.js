@@ -19,12 +19,13 @@
 */
 import './egw_core.js';
 import './egw_utils.js';
+import {etemplate2} from "../etemplate/etemplate2";
 
 /**
  * Module sending json requests
  *
- * @param {string} _app application name object is instanciated for
- * @param {object} _wnd window object is instanciated for
+ * @param {string} _app application name object is instantiated for
+ * @param {object} _wnd window object is instantiated for
  */
 egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
@@ -308,6 +309,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				return;
 			}
 
+			// defer apply's for app.* after et2_load is finished
+			let apply_app = [];
+			if (data.response.filter((res) => res.type === 'et2_load').length)
+			{
+				apply_app = data.response.filter((res) => res.type === 'apply' && res.data.func.substr(0, 4) === 'app.');
+				if (apply_app.length)
+				{
+					data.response = data.response.filter((res) => !(res.type === 'apply' && res.data.func.substr(0, 4) === 'app.'));
+				}
+			}
+
 			// Flag for only data response - don't call callback if only data
 			var only_data = (data.response.length > 0);
 
@@ -328,7 +340,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 							try {
 								// Get a reference to the plugin
 								var plugin = handler_level[res.type][j];
-								if (res.type.match(/et2_load/))
+								if (res.type === 'et2_load')
 								{
 									if (egw.preference('show_generation_time', 'common', false) == "1")
 									{
@@ -345,10 +357,15 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 									}
 								}
 								// Call the plugin callback
-								plugin.callback.call(
+								const promise = plugin.callback.call(
 									plugin.context ? plugin.context : this.context,
 									res.type, res, this
 								);
+								// defer apply_app's after et2_load is finished (it returns a promise for that)
+								if (res.type === 'et2_load' && apply_app.length && typeof promise.then === 'function')
+								{
+									promise.then(() => this.handleResponse({response: apply_app}));
+								}
 							} catch(e) {
 								var msg = e.message ? e.message : e + '';
 								var stack = e.stack ? "\n-- Stack trace --\n" + e.stack : "";
