@@ -1800,4 +1800,6 @@ export class EgwApp {
  * we track all instances.
  */
 EgwApp._instances = [];
+// EgwApp need to be global on window, as it's used to iterate through all EgwApp instances
+window.EgwApp = EgwApp;
 //# sourceMappingURL=egw_app.js.map

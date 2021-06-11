@@ -2262,3 +2262,5 @@ export abstract class EgwApp
 		return EgwApp._instances[Symbol.iterator]();
 	}
 }
+// EgwApp need to be global on window, as it's used to iterate through all EgwApp instances
+window.EgwApp = EgwApp;
