@@ -39,7 +39,7 @@ import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
 import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
 import {date} from "../../api/js/etemplate/lib/date.js";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
-import {egw_registerGlobalShortcut} from "";
+import {egw_registerGlobalShortcut} from "../../api/js/egw_action/egw_keymanager.js";
 
 // et2 widgets need to be imported, so they register themselves
 import "./et2_widget_daycol";
