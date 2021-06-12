@@ -1,12 +1,11 @@
 /**
- * eGroupWare egw_action framework - egw action framework
+ * EGroupware egw_action framework - egw action framework
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel <as@stylite.de>
  * @copyright 2011 by Andreas Stöckel
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
- * @version $Id$
  */
 
 /*egw:uses
@@ -23,7 +22,7 @@ import "./egw_menu_dhtmlx.js";
  */
 
 var egw_globalActionManager = null;
-var egw_globalObjectManager = null;
+export var egw_globalObjectManager = null;
 
 /**
  * Returns the action manager for the given application - each application has its

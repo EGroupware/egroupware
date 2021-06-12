@@ -1,12 +1,11 @@
 /**
- * eGroupWare egw_action framework - Shortcut/Keyboard input manager
+ * EGroupware egw_action framework - Shortcut/Keyboard input manager
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @author Andreas Stöckel <as@stylite.de>
  * @copyright 2011 by Andreas Stöckel
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package egw_action
- * @version $Id$
  */
 
 /*egw:uses
@@ -14,7 +13,7 @@
 	egw_action;
 */
 
-import {EGW_AO_EXEC_SELECTED} from "./egw_action.js";
+import {EGW_AO_EXEC_SELECTED,egw_globalObjectManager} from "./egw_action.js";
 import {_egw_active_menu} from "./egw_menu.js";
 
 /**
