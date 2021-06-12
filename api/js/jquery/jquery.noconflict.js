@@ -19,5 +19,6 @@
 	/vendor/egroupware/magicsuggest/magicsuggest.js;
 	/api/js/jquery/splitter.js;
 	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
+	/api/js/Resumable/resumable.js;
 */
 jQuery.noConflict();

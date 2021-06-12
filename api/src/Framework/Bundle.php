@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Framework;
 
+use EGroupware\Api;
 use EGroupware\Api\Cache;
 use EGroupware\Api\Header\UserAgent;
 
@@ -380,12 +381,20 @@ class Bundle
 					if (!$use_bundle) $target = $file;
 					$map[$prefix . $file] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
 					// typescript unfortunately has currently no option to add ".js" to it's es6 import statements
-					// therefore we add extra entries without .js extension to the map					if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3) . '.ts'))
+					// therefore we add extra entries without .js extension to the map
+					if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3) . '.ts'))
 					{
 						$map[$prefix . substr($file, 0, -3)] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
 					}
 				}
 			}
+			// filter out legacy js files not load via import
+			$map = array_filter($map, function($url)
+			{
+				return !preg_match(Api\Framework::legacy_js_imports, $url);
+			});
+			ksort($map);
+
 			return $map;
 		}, [], 30);
 	}

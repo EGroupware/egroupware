@@ -17,7 +17,6 @@ import { et2_register_widget } from "./et2_core_widget";
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_no_init } from "./et2_core_common";
 import { et2_vfsSize } from "./et2_widget_vfs";
-import "../Resumable/resumable.js";
 /**
  * Class which implements file upload
  *

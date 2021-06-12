@@ -1124,7 +1124,7 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Files imported via script tag in egw.js, because they are no modules
 	 */
-	const legacy_js_imports = '/\/dhtmlx|jquery/';
+	const legacy_js_imports = '#/dhtmlx|jquery|magicsuggest|resumable#';
 
 	/**
 	 * Add EGroupware URL prefix eg. '/egroupware' to files AND bundles
@@ -1137,8 +1137,6 @@ abstract class Framework extends Framework\Extra
 
 		// adding some extra mappings
 		if (($prefix = parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH)) === '/') $prefix = '';
-		$imports['jquery'] = $imports[$prefix.'/vendor/bower-asset/jquery/dist/jquery.js'];
-		$imports['jqueryui'] = $imports[$prefix.'/vendor/bower-asset/jquery-ui/jquery-ui.js'];
 
 		// fix egw_global(.d.ts) import
 		$imports[$prefix.'/api/js/jsapi/egw_global'] = $prefix.'/api/js/jsapi/egw_global.js?'.
