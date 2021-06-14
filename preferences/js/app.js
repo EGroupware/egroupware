@@ -6,6 +6,8 @@
  * @package preferences
  */
 
+import {AppJS} from "../../api/js/jsapi/app_base.js";
+
 /**
  * JavaScript for WebAuthn
  *
