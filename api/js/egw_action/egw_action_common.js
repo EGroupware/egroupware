@@ -8,7 +8,7 @@
  * @package egw_action
  */
 
-import {EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_NONE} from "./egw_action.js";
+import {EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI, EGW_AO_SHIFT_STATE_NONE} from "./egw_action_constants.js";
 
 /**
  * Sets properties given in _data in _obj. Checks whether the property keys

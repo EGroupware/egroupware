@@ -22,9 +22,9 @@ import {
 	egw_getActionManager,
 	egwActionObject,
 	egwActionObjectInterface,
-	egw_getAppObjectManager,
-	EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT
+	egw_getAppObjectManager
 } from '../egw_action/egw_action.js';
+import {EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT} from '../egw_action/egw_action_constants.js';
 import {egw} from "../jsapi/egw_global";
 // fixing circular dependencies by only importing type
 import type {et2_tabbox} from "./et2_widget_tabs";

@@ -11,7 +11,23 @@
 /*egw:uses
 	egw_action_common;
 */
-
+import {
+	EGW_AO_STATE_NORMAL,
+	EGW_AO_STATE_VISIBLE,
+	EGW_AO_STATE_SELECTED,
+	EGW_AO_STATE_FOCUSED,
+	EGW_AO_SHIFT_STATE_MULTI,
+	EGW_AO_SHIFT_STATE_NONE,
+	EGW_AO_FLAG_IS_CONTAINER,
+	EGW_AO_SHIFT_STATE_BLOCK,
+	EGW_KEY_ARROW_UP,
+	EGW_KEY_ARROW_DOWN,
+	EGW_KEY_PAGE_UP,
+	EGW_KEY_PAGE_DOWN,
+	EGW_AO_EXEC_THIS,
+	EGW_AO_EXEC_SELECTED,
+	EGW_KEY_A, EGW_KEY_SPACE
+} from './egw_action_constants.js';
 import {egwFnct, egwActionStoreJSON, egwBitIsSet, egwQueueCallback, egwSetBit, egwObjectLength} from './egw_action_common.js';
 import './egw_action_popup.js';
 import "./egw_action_dragdrop.js";
@@ -1043,32 +1059,6 @@ egwActionLink.prototype.set_actionId = function(_value)
 		throw "Action object with id '"+_value+"' does not exist!";
 };
 
-/** egwActionObject Object **/
-
-//State bitmask (only use powers of two for new states!)
-export const EGW_AO_STATE_NORMAL = 0x00;
-export const EGW_AO_STATE_SELECTED = 0x01;
-export const EGW_AO_STATE_FOCUSED = 0x02;
-export const EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
-
-export const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
-export const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
-
-// No shift key is pressed
-export const EGW_AO_SHIFT_STATE_NONE = 0x00;
-// A shift key, which allows multiselection is pressed (usually CTRL on a PC keyboard)
-export const EGW_AO_SHIFT_STATE_MULTI = 0x01;
-// A shift key is pressed, which forces blockwise selection (SHIFT on a PC keyboard)
-export const EGW_AO_SHIFT_STATE_BLOCK = 0x02;
-
-// If this flag is set, this object will not be returned as "focused". If this
-// flag is not applied to container objects, it may lead to some strange behaviour.
-export const EGW_AO_FLAG_IS_CONTAINER = 0x01;
-
-// If this flag is set, the object will gets its focus when no other object is
-// selected and e.g. a key is pressed.
-export const EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
-
 /**
  * The egwActionObject represents an abstract object to which actions may be
  * applied. Communication with the DOM tree is established by using the
@@ -2070,8 +2060,6 @@ egwActionObject.prototype.makeVisible = function()
 	this.iface.makeVisible();
 };
 
-export const EGW_AO_EXEC_SELECTED = 0;
-export const EGW_AO_EXEC_THIS = 1;
 
 /**
  * Executes the action implementation which is associated to the given action type.
@@ -2536,7 +2524,3 @@ export function egwActionObjectManager(_id, _manager)
 
 	return ao;
 }
-
-export const EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is for events used with drag stuff
-export const EGW_AI_DRAG_OUT = EGW_AI_DRAG | 0x01;
-export const EGW_AI_DRAG_OVER = EGW_AI_DRAG | 0x02;

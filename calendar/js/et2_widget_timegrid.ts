@@ -23,10 +23,11 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_calendar_event} from "./et2_widget_event";
-import {EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT, egwActionObject, egw_getObjectManager} from "../../api/js/egw_action/egw_action.js";
+import {egwActionObject, egw_getObjectManager} from "../../api/js/egw_action/egw_action.js";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days

@@ -11,9 +11,9 @@
 /*egw:uses
 	egw_action;
 */
-
-import {EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED, egwActionObjectInterface, EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT} from "./egw_action.js";
+import {egwActionObjectInterface} from "./egw_action.js";
 import {egwBitIsSet} from "./egw_action_common.js";
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants.js";
 
 /**
 * This file contains an egw_actionObjectInterface which allows a dhtmlx tree

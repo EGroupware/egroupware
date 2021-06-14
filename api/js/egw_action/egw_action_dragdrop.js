@@ -17,6 +17,7 @@
 */
 
 import {egwAction,egwActionImplementation} from "./egw_action.js";
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "./egw_action_constants.js";
 
 /**
  * Register the drag and drop handlers

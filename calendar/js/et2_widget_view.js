@@ -14,7 +14,6 @@ import { et2_createWidget } from "../../api/js/etemplate/et2_core_widget";
 import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
 import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
 import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
-
 /**
  * Parent class for the various calendar views to reduce copied code
  *

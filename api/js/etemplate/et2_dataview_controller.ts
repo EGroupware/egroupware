@@ -28,7 +28,7 @@ import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_arrayIntKeys, et2_bounds} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {egwBitIsSet} from "../egw_action/egw_action_common.js";
-import {EGW_AO_STATE_NORMAL, EGW_AO_STATE_SELECTED} from "../egw_action/egw_action.js";
+import {EGW_AO_STATE_NORMAL, EGW_AO_STATE_SELECTED} from "../egw_action/egw_action_constants.js";
 
 /**
  * The fetch timeout specifies the time during which the controller tries to

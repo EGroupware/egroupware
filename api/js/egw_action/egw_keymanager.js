@@ -13,8 +13,9 @@
 	egw_action;
 */
 
-import {EGW_AO_EXEC_SELECTED,egw_globalObjectManager} from "./egw_action.js";
+import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action.js";
 import {_egw_active_menu} from "./egw_menu.js";
+import {EGW_AO_FLAG_DEFAULT_FOCUS, EGW_AO_EXEC_SELECTED} from "./egw_action_constants.js";
 
 /**
  * Define the key constants (IE doesn't support "const" keyword)
