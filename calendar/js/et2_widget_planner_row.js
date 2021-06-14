@@ -16,7 +16,8 @@ import { et2_createWidget, et2_register_widget } from "../../api/js/etemplate/et
 import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
 import { ClassWithAttributes } from "../../api/js/etemplate/et2_core_inheritance";
 import { et2_action_object_impl } from "../../api/js/etemplate/et2_core_DOMWidget";
-import { EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, egw_getObjectManager, egwActionObject } from "../../api/js/egw_action/egw_action.js";
+import { egw_getObjectManager, egwActionObject } from "../../api/js/egw_action/egw_action.js";
+import { EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER } from "../../api/js/egw_action/egw_action_constants.js";
 import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * Class for one row of a planner
