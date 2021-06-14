@@ -209,7 +209,7 @@ window.app = {classes: {}};
 	const egw_modules = [
 		'egw_core', 'egw_debug', 'egw_preferences', 'egw_lang', 'egw_links', 'egw_open', 'egw_user',
 		'egw_config', 'egw_images', 'egw_jsonq', 'egw_files', 'egw_json', 'egw_store', 'egw_tooltip', 'egw_css',
-		'egw_calendar', 'egw_ready', 'egw_data', 'egw_tail', 'egw_message', 'egw_notification'
+		'egw_calendar', 'egw_ready', 'egw_data', 'egw_tail', 'egw_message', 'egw_notification', 'jsapi',
 	];
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
 	window.egw_LAB = window.egw_ready =
