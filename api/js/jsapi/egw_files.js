@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -164,7 +163,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				const src = _jsFiles[0];
 				promise = import(_prefix ? _prefix+src : src)
 					.catch((err) => {
-						console.log(src+":\n\n"+err.message);
+						console.error(src+": "+err.message);
 					});
 			}
 			else
@@ -172,7 +171,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				promise = Promise.all(_jsFiles.map((src) => {
 					import(_prefix ? _prefix+src : src)
 						.catch((err) => {
-							console.log(src+":\n\n"+err.message);
+							console.error(src+": "+err.message);
 						})
 				}));
 			}
