@@ -13,7 +13,37 @@
 import { egw } from "../jsapi/egw_global";
 import { et2_checkType, et2_no_init, et2_validateAttrib } from "./et2_core_common";
 import { et2_implements_registry } from "./et2_core_interfaces";
-export class ClassWithAttributes {
+export class ClassWithInterfaces {
+    /**
+     * The implements function can be used to check whether the object
+     * implements the given interface.
+     *
+     * As TypeScript can not (yet) check if an objects implements an interface on runtime,
+     * we currently implements with each interface a function called 'implements_'+interfacename
+     * to be able to check here.
+     *
+     * @param _iface name of interface to check
+     */
+    implements(_iface_name) {
+        if (typeof et2_implements_registry[_iface_name] === 'function' &&
+            et2_implements_registry[_iface_name](this)) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Check if object is an instance of a class or implements an interface (specified by the interfaces name)
+     *
+     * @param _class_or_interfacename class(-name) or string with name of interface
+     */
+    instanceOf(_class_or_interfacename) {
+        if (typeof _class_or_interfacename === 'string') {
+            return this.implements(_class_or_interfacename);
+        }
+        return this instanceof _class_or_interfacename;
+    }
+}
+export class ClassWithAttributes extends ClassWithInterfaces {
     /**
      * Returns the value of the given attribute. If the property does not
      * exist, an error message is issued.
@@ -168,34 +198,6 @@ export class ClassWithAttributes {
             et2_validateAttrib(key, attributes[key]);
         }
         return attributes;
-    }
-    /**
-     * The implements function can be used to check whether the object
-     * implements the given interface.
-     *
-     * As TypeScript can not (yet) check if an objects implements an interface on runtime,
-     * we currently implements with each interface a function called 'implements_'+interfacename
-     * to be able to check here.
-     *
-     * @param _iface name of interface to check
-     */
-    implements(_iface_name) {
-        if (typeof et2_implements_registry[_iface_name] === 'function' &&
-            et2_implements_registry[_iface_name](this)) {
-            return true;
-        }
-        return false;
-    }
-    /**
-     * Check if object is an instance of a class or implements an interface (specified by the interfaces name)
-     *
-     * @param _class_or_interfacename class(-name) or string with name of interface
-     */
-    instanceOf(_class_or_interfacename) {
-        if (typeof _class_or_interfacename === 'string') {
-            return this.implements(_class_or_interfacename);
-        }
-        return this instanceof _class_or_interfacename;
     }
 }
 //# sourceMappingURL=et2_core_inheritance.js.map

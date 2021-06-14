@@ -10,6 +10,7 @@
  * @version $Id$
  */
 import { et2_bounds } from "./et2_core_common";
+import { ClassWithInterfaces } from "./et2_core_inheritance";
 /**
  * The et2_dataview_container class is the main object each dataview consits of.
  * Each row, spacer as well as the grid itself are containers. A container is
@@ -26,7 +27,7 @@ import { et2_bounds } from "./et2_core_common";
  *
  * @augments Class
  */
-export class et2_dataview_container {
+export class et2_dataview_container extends ClassWithInterfaces {
     /**
      * Initializes the container object.
      *
@@ -35,6 +36,7 @@ export class et2_dataview_container {
      * @memberOf et2_dataview_container
      */
     constructor(_parent) {
+        super();
         // Copy the given invalidation element
         this._parent = _parent;
         this._nodes = [];

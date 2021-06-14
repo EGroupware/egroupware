@@ -17,6 +17,7 @@
 
 import {et2_dataview_IInvalidatable} from "./et2_dataview_interfaces";
 import {et2_bounds} from "./et2_core_common";
+import {ClassWithInterfaces} from "./et2_core_inheritance";
 
 /**
  * The et2_dataview_container class is the main object each dataview consits of.
@@ -34,7 +35,7 @@ import {et2_bounds} from "./et2_core_common";
  *
  * @augments Class
  */
-export class et2_dataview_container implements et2_dataview_IInvalidatable
+export class et2_dataview_container extends ClassWithInterfaces implements et2_dataview_IInvalidatable
 {
 	protected _parent: any;
 
@@ -61,6 +62,8 @@ export class et2_dataview_container implements et2_dataview_IInvalidatable
 	 */
 	constructor(_parent)
 	{
+		super();
+
 		// Copy the given invalidation element
 		this._parent = _parent;
 
