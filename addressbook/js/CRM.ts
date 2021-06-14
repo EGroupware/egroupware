@@ -127,7 +127,6 @@ export class CRMView extends EgwApp
 	{
 		// Check
 		let contact_ids = app_obj.et2.getArrayMgr("content").getEntry("action_id") || "";
-		debugger;
 		if(!contact_ids) return;
 
 		for (let existing_app of EgwApp._instances)

@@ -17,7 +17,7 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {CRMView} from "../../addressbook/js/CRM";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
-import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import {egw} from "../../api/js/jsapi/egw_global";
 
 /**

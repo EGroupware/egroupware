@@ -13,7 +13,7 @@
 import { EgwApp } from '../../api/js/jsapi/egw_app';
 import { etemplate2 } from "../../api/js/etemplate/etemplate2";
 import { CRMView } from "../../addressbook/js/CRM";
-import { nm_open_popup } from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import { nm_open_popup } from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import { egw } from "../../api/js/jsapi/egw_global";
 /**
  * UI for Infolog
