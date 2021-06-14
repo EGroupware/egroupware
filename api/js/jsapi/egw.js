@@ -206,12 +206,19 @@ window.app = {classes: {}};
 		}));
 	}
 
+	const egw_modules = [
+		'egw_core', 'egw_debug', 'egw_preferences', 'egw_lang', 'egw_links', 'egw_open', 'egw_user',
+		'egw_config', 'egw_images', 'egw_jsonq', 'egw_files', 'egw_json', 'egw_store', 'egw_tooltip', 'egw_css',
+		'egw_calendar', 'egw_ready', 'egw_data', 'egw_tail', 'egw_message', 'egw_notification'
+	];
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
 	window.egw_LAB = window.egw_ready =
 		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
-			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)
+			.then(Promise.all(egw_modules.map(mod => import(window.egw_webserverUrl+'/api/js/jsapi/'+mod+'.js')
+				.catch((err) => {console.log(rel_src+":\n\n"+err.message)}))))
+			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
 				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
-					.catch((err) => { console.log(rel_src+":\n\n"+err.message)})
+					.catch((err) => {console.log(rel_src+":\n\n"+err.message)})
 	))).then(() =>
 	{
 		// We need to override the globalEval to mitigate potential execution of
