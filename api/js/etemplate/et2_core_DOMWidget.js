@@ -16,7 +16,7 @@ import { ClassWithAttributes } from './et2_core_inheritance';
 import { et2_IDOMNode } from "./et2_core_interfaces";
 import { et2_hasChild, et2_no_init } from "./et2_core_common";
 import { et2_widget } from "./et2_core_widget";
-import { egw_getActionManager, egwActionObject, egwActionObjectInterface, egw_getAppObjectManager } from '../egw_action/egw_action.js';
+import { egw_getActionManager, egwActionObject, egwActionObjectInterface, egw_getAppObjectManager, egw_getObjectManager } from '../egw_action/egw_action.js';
 import { EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT } from '../egw_action/egw_action_constants.js';
 import { egw } from "../jsapi/egw_global";
 /**
