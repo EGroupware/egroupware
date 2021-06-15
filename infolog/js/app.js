@@ -638,10 +638,9 @@ class InfologApp extends EgwApp {
         // use app object from etemplate2, which might be private and not just window.app
         var app = this.et2.getInstanceManager().app_obj;
         if (!app.stylite) {
-            var self = this;
-            egw.includeJS('/stylite/js/app.js?' + this.et2.getArrayMgr('content').getEntry('encryption_ts'), undefined, undefined, egw.webserverUrl).then(() => {
+            this.egw.includeJS('/stylite/js/app.js', undefined, undefined, egw.webserverUrl).then(() => {
                 app.stylite = new app.classes.stylite;
-                app.stylite.et2 = self.et2;
+                app.stylite.et2 = this.et2;
                 if (callback) {
                     callback.apply(app.stylite, attrs);
                 }
