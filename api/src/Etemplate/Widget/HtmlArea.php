@@ -118,11 +118,12 @@ class HtmlArea extends Etemplate\Widget
 		$toolbar_selOptions = array();
 		foreach (self::$toolbar_list as $toolbar)
 		{
+			$file = '/api/templates/default/images/htmlarea/'.$toolbar.'.svg';
 			$toolbar_selOptions[$toolbar] = array (
 				'id' => $toolbar,
 				'label' => lang($toolbar),
 				'title' => lang($toolbar),
-				'icon' => Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url']).'/api/templates/default/images/htmlarea/'.$toolbar.'.svg',
+				'icon' => file_exists(EGW_SERVER_ROOT.$file)?Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url'].$file):'',
 				'app' => 'api'
 			);
 		}
