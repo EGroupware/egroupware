@@ -80,6 +80,7 @@ blacklisted mails are marked as spam	mail	de	E-Mail-Adressen, die in die Blackli
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	de	Als Vorgabe wird 'http://' nur durch 'https://' ersetzt. Sie können gerne 'https://proxy.egroupware.org/' eintragen, um Bilder anzuzeigen die ausschließlich per http geladen werden können.
+caching of flags	mail	de	Caching der Flags (z.B. Gelesen)
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
 can not resolve the winmail.dat attachment!	mail	de	Der winmail.dat Anhang kann nicht geöffnet weden!
 canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebrochen
@@ -141,6 +142,7 @@ deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail-Modul einschränken.
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
+disable caching of flags	mail	de	Caching von Flags ausschalten
 disable horizontal rule for separation of mail body from signature	mail	de	Signatur-Trennzeichen ausblenden
 disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
@@ -201,6 +203,8 @@ enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
 encrypt your message with smime certificate	mail	de	Verschlüsseln Sie Ihre Nachricht mit einem S/MIME-Zertifikat
 encryption	mail	de	Verschlüsselung
+enable	mail	de	Einschalten
+enabled	mail	de	Eingeschaltet
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
 error saving %1!	mail	de	Fehler beim Speichern von %1!
 error while setting acl for folder %1!	mail	de	Fehler beim Speichern von Zugriffsrechten für den Ordner %1!
@@ -482,6 +486,7 @@ report as ham	mail	de	Als "gute E-Mail" kennzeichnen
 report as spam	mail	de	Als Spam kennzeichnen
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute E-Mail" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
 report this email content as spam - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als Spam - Spam-Lösungen wie SpamTitan lernen entsprechend
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	de	Muss ausgeschaltet werden, wenn Sie Dovecot mit privaten Gelesen Flags auf geteilten oder freigegebenen Ordnern benutzern!
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
 respond to mail sent to:	mail	de	Benachrichtigung für
