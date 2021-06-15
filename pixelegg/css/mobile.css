@@ -2393,6 +2393,11 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
     opacity: 0;
   }
 }
+@media only screen and (max-width: 1024px) and (min-width: 736px) {
+  #loginMainDiv #divAppIconBar #divLogo .login_logo_container {
+    height: 90px;
+  }
+}
 /**
  * EGroupware: Stylite Pixelegg template
  *
