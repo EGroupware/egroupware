@@ -187,7 +187,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 					'cacheob' => new Cache(),
 				)),
 			);
-			$config = Config::read('mail');
+			$config = Api\Config::read('mail');
 			// fix for Dovecot private seen flags: we must NOT allow Horde to cache flags (otherwise Seen does NOT change!)
 			if (!empty($config['disable_caching']))
 			{
