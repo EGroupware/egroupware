@@ -80,6 +80,7 @@ blacklisted mails are marked as spam	mail	en	Blacklisted mails are marked as spa
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	en	By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.
+caching of flags	mail	en	Caching of flags
 can not open imap connection	mail	en	Can not open IMAP connection
 can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
 canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
@@ -141,6 +142,7 @@ deleting folders	mail	en	Deleting folders
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
 directories have to be shared.	mail	en	Directories have to be shared.
 disable	mail	en	Disable
+disable caching of flags	mail	en	Disable caching of flags
 disable horizontal rule for separation of mail body from signature	mail	en	disable horizontal rule for separation of mail body from signature
 disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of flowed lines in plain text mails (RFC3676)
 disabled!	mail	en	disabled!
@@ -197,6 +199,7 @@ empty junk	mail	en	empty junk/spam folder
 empty trash	mail	en	empty trash
 empty trash and junk	mail	en	Empty Trash and Junk
 enable	mail	en	Enable
+enabled	mail	en	Enabled
 enabled!	mail	en	enabled!
 encrypt	mail	en	Encrypt
 encrypt your message with smime certificate	mail	en	Encrypt your message with S/MIME certificate
@@ -483,6 +486,7 @@ report as spam	mail	en	Report as Spam
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	en	Report this email content as Ham (not spam) - spam solutions like spamTitan will learn
 report this email content as spam - spam solutions like spamtitan will learn	mail	en	Report this email content as Spam - spam solutions like spamTitan will learn
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
+required to disable if you use dovecot with private seen flags on shared or user folder!	mail	en	Required to disable if you use Dovecot with private seen flags on shared or user folder!
 resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to mail sent to:
 restrict acl management	admin	en	restrict acl management

@@ -187,6 +187,23 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 					'cacheob' => new Cache(),
 				)),
 			);
+			$config = Config::read('mail');
+			// fix for Dovecot private seen flags: we must NOT allow Horde to cache flags (otherwise Seen does NOT change!)
+			if (!empty($config['disable_caching']))
+			{
+				$parent_params['cache']['fields'] = [
+					'envelope'  => Horde_Imap_Client::FETCH_ENVELOPE,
+					'flags'     => Horde_Imap_Client::FETCH_FLAGS,
+					'headers'   => Horde_Imap_Client::FETCH_HEADERS,
+					'imapdate'  => Horde_Imap_Client::FETCH_IMAPDATE,
+					'size'      => Horde_Imap_Client::FETCH_SIZE,
+					'structure' => Horde_Imap_Client::FETCH_STRUCTURE
+				];
+				foreach((array)$config['disable_caching'] as $disable)
+				{
+					unset($parent_params['cache']['fields'][$disable]);
+				}
+			}
 		}
 		// uncomment to enable imap log for a single user
 		//if ($GLOBALS['egw_info']['user']['account_lid'] === 'username') $parent_params['debug'] = '/var/lib/egroupware/'.$_SERVER['HTTP_HOST'].'/imap.log';
