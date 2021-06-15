@@ -13,8 +13,8 @@
 					<div style="background-image:url({logo_file})" class="login_logo" border="0" alt="{logo_title}" title="{logo_title}" ></div>
 				</a>
 			</div>
-			<div id="loginScreenMessage">{lang_message}</div>
 		</div>
+	    <div id="loginScreenMessage">{lang_message}</div>
     </div>
     <div id="centerBox">
         <form name="login_form" method="post" action="{login_url}">
