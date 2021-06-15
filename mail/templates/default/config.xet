@@ -102,6 +102,16 @@
 				</row>
 				<row>
 					<vbox>
+						<description value="Caching of flags"/>
+						<description value="Required to disable if you use Dovecot with private seen flags on shared or user folder!"/>
+					</vbox>
+					<select id="newsettings[disble_caching]">
+						<option value="">{Enabled} ({default})</option>
+						<option value="flags">Disable caching of flags</option>
+					</select>
+				</row>
+				<row>
+					<vbox>
 						<description value="Disable use of flowed lines in plain text mails (RFC3676)"/>
 						<description value="Some clients fail to detect correct charset, if flowed lines are enabled."/>
 					</vbox>
