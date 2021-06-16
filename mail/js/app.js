@@ -16,6 +16,7 @@ import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
 import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 import "../../api/js/jquery/jquery.base64.js";
