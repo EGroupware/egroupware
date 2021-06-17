@@ -29,6 +29,7 @@ import { et2_dialog } from "../../api/js/etemplate/et2_widget_dialog";
 import { et2_valueWidget } from "../../api/js/etemplate/et2_core_valueWidget";
 import { et2_widget } from "../../api/js/etemplate/et2_core_widget";
 import { et2_inputWidget } from "../../api/js/etemplate/et2_core_inputWidget";
+// @ts-ignore
 import { date } from "../../api/js/etemplate/lib/date.js";
 import { sprintf } from "../../api/js/egw_action/egw_action_common.js";
 import { egw_registerGlobalShortcut } from "../../api/js/egw_action/egw_keymanager.js";
@@ -40,6 +41,7 @@ import "./et2_widget_planner";
 import "./et2_widget_planner_row";
 import "./et2_widget_timegrid";
 import "./et2_widget_view";
+import { egw, egw_getFramework, framework } from "../../api/js/jsapi/egw_global";
 /**
  * UI for calendar
  *
@@ -1309,9 +1311,9 @@ export class CalendarApp extends EgwApp {
      */
     freetime_search() {
         var content = this.et2.getArrayMgr('content').data;
-        content['start'] = this.et2.getWidgetById('start').get_value();
-        content['end'] = this.et2.getWidgetById('end').get_value();
-        content['duration'] = this.et2.getWidgetById('duration').get_value();
+        content['start'] = this.et2.getValueById('start');
+        content['end'] = this.et2.getValueById('end');
+        content['duration'] = this.et2.getValueById('duration');
         var request = this.egw.json('calendar.calendar_uiforms.ajax_freetimesearch', [content], null, null, null, null);
         request.sendRequest();
     }
@@ -1368,8 +1370,10 @@ export class CalendarApp extends EgwApp {
         if (typeof duration != 'undefined' && typeof end != 'undefined') {
             end.set_disabled(duration.get_value() !== '');
             // Only set end date if not provided, adding seconds fails with DST
+            // @ts-ignore
             if (!end.disabled && !content.end) {
                 end.set_value(start.get_value());
+                // @ts-ignore
                 if (typeof content.duration != 'undefined')
                     end.set_value("+" + content.duration);
             }
@@ -2097,10 +2101,10 @@ export class CalendarApp extends EgwApp {
      */
     move_edit_series(_DOM, _button) {
         var content = this.et2.getArrayMgr('content').data;
-        var start_date = this.et2.getWidgetById('start').get_value();
-        var end_date = this.et2.getWidgetById('end').get_value();
+        var start_date = this.et2.getValueById('start');
+        var end_date = this.et2.getValueById('end');
         var whole_day = this.et2.getWidgetById('whole_day');
-        var duration = '' + this.et2.getWidgetById('duration').get_value();
+        var duration = '' + this.et2.getValueById('duration');
         var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
         var button = _button;
         var that = this;
@@ -2267,8 +2271,8 @@ export class CalendarApp extends EgwApp {
         var state = jQuery.extend({}, this.state);
         if (!state) {
             var egw_script_tag = document.getElementById('egw_script_id');
-            state = egw_script_tag.getAttribute('data-calendar-state');
-            state = state ? JSON.parse(state) : {};
+            let tag_state = egw_script_tag.getAttribute('data-calendar-state');
+            state = tag_state ? JSON.parse(tag_state) : {};
         }
         // Don't store current user in state to allow admins to create favourites for all
         // Should make no difference for normal users.
@@ -3492,7 +3496,7 @@ export class CalendarApp extends EgwApp {
             return;
         }
         else {
-            window.clearInterval(nm._autorefresh_timer);
+            nm._set_autorefresh(0);
         }
         var self = this;
         var refresh = function () {
@@ -3577,7 +3581,7 @@ export class CalendarApp extends EgwApp {
      */
     category_report_selectAll(_widget) {
         var content = this.et2.getArrayMgr('content').data;
-        var checkbox = {};
+        var checkbox = null;
         var grid_index = typeof content.grid.length != 'undefined' ? content.grid : Object.keys(content.grid);
         for (var i = 1; i < grid_index.length; i++) {
             if (content.grid[i] != null) {
@@ -3610,13 +3614,13 @@ export class CalendarApp extends EgwApp {
     /**
      * Videoconference checkbox checked
      */
-    videoconferenceOnChange() {
+    videoconferenceOnChange(event) {
         let widget = this.et2.getWidgetById('videoconference');
         if (widget && widget.get_value()) {
             // notify all participants
             this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
             // add alarm for all participants 5min before videoconference
-            let start = new Date(widget.getRoot().getWidgetById('start').getValue());
+            let start = new Date(widget.getRoot().getValueById('start'));
             let alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
             for (let alarm of alarms) {
                 // Check for already existing alarm
@@ -3630,7 +3634,7 @@ export class CalendarApp extends EgwApp {
             }
             this.et2.getWidgetById('new_alarm[options]').set_value('300');
             this.et2.getWidgetById('new_alarm[owner]').set_value('0'); // all participants
-            this.et2.getWidgetById('button[add_alarm]').click();
+            this.et2.getWidgetById('button[add_alarm]').click(event);
         }
     }
     isVideoConference(_action, _selected) {

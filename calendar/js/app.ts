@@ -37,6 +37,7 @@ import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
 import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
+// @ts-ignore
 import {date} from "../../api/js/etemplate/lib/date.js";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {egw_registerGlobalShortcut} from "../../api/js/egw_action/egw_keymanager.js";
@@ -49,6 +50,12 @@ import "./et2_widget_planner";
 import "./et2_widget_planner_row";
 import "./et2_widget_timegrid";
 import "./et2_widget_view";
+import {egw, egw_getFramework, framework} from "../../api/js/jsapi/egw_global";
+import {et2_number} from "../../api/js/etemplate/et2_widget_number";
+import {et2_calendar_owner} from "./et2_widget_owner";
+import {et2_template} from "../../api/js/etemplate/et2_widget_template";
+import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
+import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 
 /**
  * UI for calendar
@@ -1397,9 +1404,9 @@ export class CalendarApp extends EgwApp
 	freetime_search()
 	{
 		var content = this.et2.getArrayMgr('content').data;
-		content['start'] = this.et2.getWidgetById('start').get_value();
-		content['end'] = this.et2.getWidgetById('end').get_value();
-		content['duration'] = this.et2.getWidgetById('duration').get_value();
+		content['start'] = this.et2.getValueById('start');
+		content['end'] = this.et2.getValueById('end');
+		content['duration'] = this.et2.getValueById('duration');
 
 		var request = this.egw.json('calendar.calendar_uiforms.ajax_freetimesearch', [content],null,null,null,null);
 		request.sendRequest();
@@ -1411,8 +1418,8 @@ export class CalendarApp extends EgwApp
 	 */
 	check_recur_type()
 	{
-		var recurType = this.et2.getWidgetById('recur_type');
-		var recurData = this.et2.getWidgetById('recur_data');
+		var recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
+		var recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
 
 		if(recurType && recurData)
 		{
@@ -1466,9 +1473,9 @@ export class CalendarApp extends EgwApp
 	 */
 	set_enddate_visibility()
 	{
-		var duration = this.et2.getWidgetById('duration');
-		var start = this.et2.getWidgetById('start');
-		var end = this.et2.getWidgetById('end');
+		var duration = <et2_selectbox> this.et2.getWidgetById('duration');
+		var start = <et2_date> this.et2.getWidgetById('start');
+		var end = <et2_date> this.et2.getWidgetById('end');
 		var content = this.et2.getArrayMgr('content').data;
 
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
@@ -1476,9 +1483,11 @@ export class CalendarApp extends EgwApp
 			end.set_disabled(duration.get_value()!=='');
 
 			// Only set end date if not provided, adding seconds fails with DST
+			// @ts-ignore
 			if (!end.disabled && !content.end)
 			{
 				end.set_value(start.get_value());
+				// @ts-ignore
 				if (typeof content.duration != 'undefined') end.set_value("+"+content.duration);
 			}
 		}
@@ -1632,9 +1641,9 @@ export class CalendarApp extends EgwApp
 	 */
 	participantOnChange()
 	{
-		var add = this.et2.getWidgetById('add');
-		var quantity = this.et2.getWidgetById('quantity');
-		var participant = this.et2.getWidgetById('participant');
+		var add = <et2_button> this.et2.getWidgetById('add');
+		var quantity = <et2_number> this.et2.getWidgetById('quantity');
+		var participant = <et2_calendar_owner> this.et2.getWidgetById('participant');
 
 		// array of participants
 		var value = participant.get_value();
@@ -1703,7 +1712,7 @@ export class CalendarApp extends EgwApp
 			// Make the Id from selected button by checking the index
 			var selectedId = _widget.id.match(/^select\[([0-9])\]$/i)[1];
 
-			var sTime = this.et2.getWidgetById(selectedId+'start');
+			var sTime = <et2_date> this.et2.getWidgetById(selectedId+'start');
 
 			//check the parent window is still open before to try to access it
 			if (window.opener && sTime)
@@ -1711,8 +1720,8 @@ export class CalendarApp extends EgwApp
 				var editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
 				if (typeof editWindowObj != "undefined")
 				{
-					var startTime = editWindowObj.widgetContainer.getWidgetById('start');
-					var endTime = editWindowObj.widgetContainer.getWidgetById('end');
+					var startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
+					var endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
 					if (startTime && endTime)
 					{
 						startTime.set_value(sTime.get_value());
@@ -1738,7 +1747,7 @@ export class CalendarApp extends EgwApp
 		const view = <et2_container>(<etemplate2> CalendarApp.views['listview'].etemplates[0]).widgetContainer || null;
 		const nm = view ? <et2_nextmatch>view.getWidgetById('nm') : null;
 		const filter = view && nm ? <et2_selectbox>nm.getWidgetById('filter') : null;
-		const dates = view ? view.getWidgetById('calendar.list.dates') : null;
+		const dates = view ? <et2_template> view.getWidgetById('calendar.list.dates') : null;
 
 		// Update state when user changes it
 		if(view && filter)
@@ -2398,11 +2407,11 @@ export class CalendarApp extends EgwApp
 	 */
 	move_edit_series(_DOM,_button)
 	{
-		var content = this.et2.getArrayMgr('content').data;
-		var start_date = this.et2.getWidgetById('start').get_value();
-		var end_date = this.et2.getWidgetById('end').get_value();
-		var whole_day = this.et2.getWidgetById('whole_day');
-		var duration = ''+this.et2.getWidgetById('duration').get_value();
+		var content : any = this.et2.getArrayMgr('content').data;
+		var start_date = this.et2.getValueById('start');
+		var end_date = this.et2.getValueById('end');
+		var whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
+		var duration = ''+this.et2.getValueById('duration');
 		var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
 		var button = _button;
 		var that = this;
@@ -2617,8 +2626,8 @@ export class CalendarApp extends EgwApp
 		if (!state)
 		{
 			var egw_script_tag = document.getElementById('egw_script_id');
-			state = egw_script_tag.getAttribute('data-calendar-state');
-			state = state ? JSON.parse(state) : {};
+			let tag_state = egw_script_tag.getAttribute('data-calendar-state');
+			state = tag_state ? JSON.parse(tag_state) : {};
 		}
 
 		// Don't store current user in state to allow admins to create favourites for all
@@ -2635,7 +2644,7 @@ export class CalendarApp extends EgwApp
 		{
 			var listview : et2_nextmatch = typeof CalendarApp.views.listview.etemplates[0] !== 'string' &&
 				CalendarApp.views.listview.etemplates[0].widgetContainer &&
-				CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+				<et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 			if(listview && listview.activeFilters && listview.activeFilters.search)
 			{
 				state.keywords = listview.activeFilters.search;
@@ -3378,7 +3387,7 @@ export class CalendarApp extends EgwApp
 	 *
 	 * @param {widget object} _widget new_alarm[options] selectbox
 	 */
-	alarm_custom_date (selectbox : HTMLInputElement, _widget? : et2_selectbox)
+	alarm_custom_date (selectbox? : HTMLInputElement, _widget? : et2_selectbox)
 	{
 		var alarm_date = this.et2.getInputWidgetById('new_alarm[date]');
 		var alarm_options = _widget || this.et2.getInputWidgetById('new_alarm[options]');
@@ -3414,10 +3423,10 @@ export class CalendarApp extends EgwApp
 	 */
 	set_alarmOptions_WD (_egw,_widget)
 	{
-		var alarm = this.et2.getWidgetById('alarm');
+		var alarm = <et2_grid> this.et2.getWidgetById('alarm');
 		if (!alarm) return;	// no default alarm
 		var content = this.et2.getArrayMgr('content').data;
-		var start = this.et2.getWidgetById('start');
+		var start = <et2_date> this.et2.getWidgetById('start');
 		var self= this;
 		var time = alarm.cells[1][0].widget;
 		var event = alarm.cells[1][1].widget;
@@ -4355,7 +4364,7 @@ export class CalendarApp extends EgwApp
 		// Listview not loaded
 		if(typeof CalendarApp.views.listview.etemplates[0] == 'string') return;
 
-		var nm = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+		var nm = <et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 		// nextmatch missing
 		if(!nm) return;
 
@@ -4369,7 +4378,7 @@ export class CalendarApp extends EgwApp
 		}
 		else
 		{
-			window.clearInterval(nm._autorefresh_timer);
+			nm._set_autorefresh(0);
 		}
 		var self = this;
 		var refresh = function() {
@@ -4469,13 +4478,13 @@ export class CalendarApp extends EgwApp
 	category_report_selectAll (_widget)
 	{
 		var content = this.et2.getArrayMgr('content').data;
-		var checkbox = {};
+		var checkbox = null;
 		var grid_index = typeof content.grid.length !='undefined'? content.grid : Object.keys(content.grid);
 		for (var i=1;i< grid_index.length;i++)
 		{
 			if (content.grid[i] != null)
 			{
-				checkbox = this.et2.getWidgetById(i+'[enable]');
+				checkbox = <et2_checkbox> this.et2.getWidgetById(i+'[enable]');
 				if (checkbox)
 				{
 					checkbox.set_value(_widget.checked);
@@ -4511,17 +4520,17 @@ export class CalendarApp extends EgwApp
 	/**
 	 * Videoconference checkbox checked
 	 */
-	public videoconferenceOnChange()
+	public videoconferenceOnChange(event)
 	{
-		let widget = this.et2.getWidgetById('videoconference');
+		let widget = <et2_checkbox> this.et2.getWidgetById('videoconference');
 
 		if (widget && widget.get_value())
 		{
 			// notify all participants
-			this.et2.getWidgetById('participants[notify_externals]').set_value('yes');
+			(<et2_selectbox> this.et2.getWidgetById('participants[notify_externals]')).set_value('yes');
 
 			// add alarm for all participants 5min before videoconference
-			let start = new Date(widget.getRoot().getWidgetById('start').getValue());
+			let start = new Date(widget.getRoot().getValueById('start'));
 			let alarms = this.et2.getArrayMgr('content').getEntry('alarm') || {};
 			for(let alarm of alarms)
 			{
@@ -4534,9 +4543,9 @@ export class CalendarApp extends EgwApp
 					return;
 				}
 			}
-			this.et2.getWidgetById('new_alarm[options]').set_value('300');
-			this.et2.getWidgetById('new_alarm[owner]').set_value('0');	// all participants
-			this.et2.getWidgetById('button[add_alarm]').click();
+			(<et2_selectbox> this.et2.getWidgetById('new_alarm[options]')).set_value('300');
+			(<et2_selectbox> this.et2.getWidgetById('new_alarm[owner]')).set_value('0');	// all participants
+			(<et2_button> this.et2.getWidgetById('button[add_alarm]')).click(event);
 		}
 	}
 

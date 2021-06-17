@@ -1,3 +1,4 @@
+import { egw } from "../../api/js/jsapi/egw_global";
 export class View {
     /**
      * Translated label for header

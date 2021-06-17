@@ -10,6 +10,7 @@
  * @author Nathan Gray
  */
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import {egw} from "../../api/js/jsapi/egw_global";
 
 export abstract class View
 {
@@ -122,9 +123,9 @@ export abstract class View
 				return el;
 			});
 		}
-		return list.indexOf(state.view) >= 0 ?
+		return (<string[]> list).indexOf(state.view) >= 0 ?
 			0 :
-			parseInt(egw.preference('interval', 'calendar')) || 30;
+			parseInt(<string> egw.preference('interval', 'calendar')) || 30;
 	}
 
 	static extend(sub)
@@ -316,8 +317,8 @@ export class planner extends View
 
 		var endDate = new Date(state.last);
 		endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
-		return super._owner(state) + date(egw.preference('dateformat'), startDate) +
-			(startDate == endDate ? '' : ' - ' + date(egw.preference('dateformat'), endDate));
+		return super._owner(state) + date(<string>egw.preference('dateformat'), startDate) +
+			(startDate == endDate ? '' : ' - ' + date(<string>egw.preference('dateformat'), endDate));
 	}
 
 	static group_by(state)
@@ -434,7 +435,7 @@ export class listview extends View
 		endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 		var end_check = '' + endDate.getFullYear() + endDate.getMonth() + endDate.getDate();
 		return super._owner(state) +
-			date(egw.preference('dateformat'), startDate) +
-			(start_check == end_check ? '' : ' - ' + date(egw.preference('dateformat'), endDate));
+			date(<string>egw.preference('dateformat'), startDate) +
+			(start_check == end_check ? '' : ' - ' + date(<string>egw.preference('dateformat'), endDate));
 	}
 }
