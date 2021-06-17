@@ -538,7 +538,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
 					{
 						return this.includeJS('/'+parts[1]+'/js/app.js', undefined, undefined, this.webserverUrl)
-							.then(() => this.applyFunc(_func, args, _context));
+							.then(() => this.applyFunc(_func, args, _context),
+								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.js' + " (" + err + ")\nAborting.")});
 					}
 					// check if we need a not yet instantiated app.js object --> instantiate it now
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'function')

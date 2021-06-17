@@ -164,6 +164,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				promise = import(_prefix ? _prefix+src : src)
 					.catch((err) => {
 						console.error(src+": "+err.message);
+						return Promise.reject(err.message);
 					});
 			}
 			else
@@ -172,6 +173,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					import(_prefix ? _prefix+src : src)
 						.catch((err) => {
 							console.error(src+": "+err.message);
+							return Promise.reject(err.message);
 						})
 				}));
 			}
