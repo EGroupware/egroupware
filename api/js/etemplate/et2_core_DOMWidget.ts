@@ -270,7 +270,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	{
 		super.insertChild(_node, _idx);
 
-		if(_node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this))
+		if(_node.instanceOf && _node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this))
 		{
 			try
 			{
@@ -281,6 +281,11 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 				// Not ready to be added, usually due to construction order,
 				// will probably try again in doLoadingFinished()
 			}
+		}
+		// _node is actually a Web Component
+		else if (_node instanceof Element )
+		{
+			this.getDOMNode().append(_node);
 		}
 	}
 
