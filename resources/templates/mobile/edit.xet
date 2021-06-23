@@ -143,7 +143,7 @@
 				<row  class="dialogHeadbar" >
 					<hbox>
 						<button id="button[apply]" image="apply" background_image="1"/>
-						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
+						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete" background_image="1"/>
 						<textbox type="integer" id="res_id" readonly="true" class="entry_id"/>
 					</hbox>
 				</row>

@@ -1085,7 +1085,8 @@ abstract class Framework extends Framework\Extra
 		$java_script .= '<script type="importmap" nonce="'.htmlspecialchars(ContentSecurityPolicy::addNonce('script-src')).'">'."\n".
 			json_encode(self::getImportMap(), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
 			"</script>\n";
-
+$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
 		// load our clientside entrypoint egw.js
 		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				'/api/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.js').'" id="egw_script_id"';
@@ -1151,6 +1152,9 @@ abstract class Framework extends Framework\Extra
 				$prefix.'/api/js/jquery/jquery.noconflict.js';
 		}, $imports);
 
+		ContentSecurityPolicy::add("script-src","https://cdn.skypack.dev");
+		ContentSecurityPolicy::add("script-src","https://cdn.jsdelivr.net");
+		ContentSecurityPolicy::add("style-src","https://cdn.jsdelivr.net");
 		return ['imports' => $imports];
 	}
 

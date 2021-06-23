@@ -15,6 +15,7 @@ namespace EGroupware\Api\Storage;
 
 use DOMDocument;
 use EGroupware\Api;
+use EGroupware\Api\Vfs;
 use EGroupware\Stylite;
 use tidy;
 use uiaccountsel;
@@ -77,6 +78,9 @@ abstract class Merge
 	public $export_limit;
 
 
+	public $public_functions = array(
+		"merge_entries"		=> true
+	);
 	/**
 	 * Configuration for HTML Tidy to clean up any HTML content that is kept
 	 */
@@ -2083,10 +2087,6 @@ abstract class Merge
 			{
 				self::document_mail_action($documents['document'], $file);
 			}
-			else if ($editable_mimes[$file['mime']])
-			{
-				self::document_editable_action($documents['document'], $file);
-			}
 		}
 
 		$files = array();
@@ -2164,10 +2164,6 @@ abstract class Merge
 							{
 								self::document_mail_action($current_level[$prefix.$file['name']], $file);
 							}
-							else if ($editable_mimes[$file['mime']])
-							{
-								self::document_editable_action($current_level[$prefix.$file['name']], $file);
-							}
 							break;
 
 						default:
@@ -2198,15 +2194,20 @@ abstract class Merge
 				}
 				$documents[$file['mime']]['children'][$prefix.$file['name']] = array(
 					'caption' => Api\Vfs::decodePath($file['name']),
+					'target' => '_blank',
 					'postSubmit' => true,	// download needs post submit (not Ajax) to work
 				);
+				$edit_attributes = array(
+					'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
+					'document'   => $file['path'],
+					'merge'      => get_called_class(),
+					'id'         => '$id',
+					'select_all' => '$select_all'
+				);
+				$documents[$file['mime']]['children'][$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
 				if ($file['mime'] == 'message/rfc822')
 				{
 					self::document_mail_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
-				}
-				else if ($editable_mimes[$file['mime']])
-				{
-					self::document_editable_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
 				}
 			}
 			else
@@ -2215,15 +2216,20 @@ abstract class Merge
 					'icon' => Api\Vfs::mime_icon($file['mime']),
 					'caption' => Api\Vfs::decodePath($file['name']),
 					'group' => 2,
-					'postSubmit' => true,	// download needs post submit (not Ajax) to work
+					'target' => '_blank'
 				);
+
+				$edit_attributes = array(
+					'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
+					'document'   => $file['path'],
+					'merge'      => get_called_class(),
+					'id'         => '$id',
+					'select_all' => '$select_all'
+				);
+				$documents[$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
 				if ($file['mime'] == 'message/rfc822')
 				{
 					self::document_mail_action($documents[$prefix.$file['name']], $file);
-				}
-				else if ($editable_mimes[$file['mime']])
-				{
-					self::document_editable_action($documents[$prefix.$file['name']], $file);
 				}
 			}
 		}
@@ -2286,15 +2292,14 @@ abstract class Merge
 	private static function document_editable_action(Array &$action, $file)
 	{
 		unset($action['postSubmit']);
-		$action['nm_action'] = 'location';
-		$action['url'] = urldecode(http_build_query(array(
+		$edit_attributes = array(
 				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
 				'document'   => $file['path'],
 				'merge'      => get_called_class(),
 				'id'         => '$id',
 				'select_all' => '$select_all'
-		)));
-		$action['target'] = '_blank';
+		);
+		$action['url'] = urldecode(http_build_query($edit_attributes));
 	}
 
 	/**
@@ -2329,6 +2334,167 @@ abstract class Merge
 		}
 		//error_log(__METHOD__."('$document', dirs='$dirs') returning 'Document '$document' does not exist or is not readable for you!'");
 		return lang("Document '%1' does not exist or is not readable for you!",$document);
+	}
+
+	/**
+	 * Merge the selected IDs into the given document, save it to the VFS, then
+	 * either open it in the editor or have the browser download the file.
+	 */
+	public static function merge_entries()
+	{
+		if (class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
+		{
+			$document_merge = new $_REQUEST['merge']();
+		}
+		else
+		{
+			$document_merge = new Api\Contacts\Merge();
+		}
+
+		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
+		{
+			$response->error($error);
+			return;
+		}
+
+		$ids = is_string($_REQUEST['id']) && strpos($_REQUEST['id'],'[') === FALSE ? explode(',',$_REQUEST['id']) : json_decode($_REQUEST['id'],true);
+		if($_REQUEST['select_all'] === 'true')
+		{
+			$ids = self::get_all_ids($document_merge);
+		}
+
+		$filename = '';
+		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
+
+		if(!is_file($result) || !is_readable($result))
+		{
+			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n". $result);
+		}
+		// Put it into the vfs using user's configured home dir if writable,
+		// or expected home dir (/home/username) if not
+		$target = $_target = (Vfs::is_writable(Vfs::get_home_dir()) ?
+				Vfs::get_home_dir() :
+				"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
+			)."/$filename";
+		$dupe_count = 0;
+		while(is_file(Vfs::PREFIX.$target))
+		{
+			$dupe_count++;
+			$target = Vfs::dirname($_target) . '/' .
+				pathinfo($filename, PATHINFO_FILENAME) .
+				' ('.($dupe_count + 1).')' . '.' .
+				pathinfo($filename, PATHINFO_EXTENSION);
+		}
+		copy($result, Vfs::PREFIX.$target);
+		unlink($result);
+
+		// Find out what to do with it
+		$editable_mimes = array();
+		try {
+			if (class_exists('EGroupware\\collabora\\Bo') &&
+				$GLOBALS['egw_info']['user']['apps']['collabora'] &&
+				($discovery = \EGroupware\collabora\Bo::discover()) &&
+				$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
+			)
+			{
+				$editable_mimes = $discovery;
+			}
+		}
+		catch (\Exception $e)
+		{
+			// ignore failed discovery
+			unset($e);
+		}
+		if($editable_mimes[Vfs::mime_content_type($target)])
+		{
+			\Egroupware\Api\Egw::redirect_link('/index.php', array(
+				'menuaction' => 'collabora.EGroupware\\Collabora\\Ui.editor',
+				'path'=> $target
+			));
+		}
+		else
+		{
+			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target));
+		}
+	}
+
+	/**
+	 * Get all ids for when they try to do 'Select All', then merge into document
+	 *
+	 * @param Api\Contacts\Merge $merge App-specific merge object
+	 */
+	protected function get_all_ids(Api\Storage\Merge $merge)
+	{
+		$ids = array();
+		$locations = array('index', 'session_data');
+
+		// Get app
+		list($appname, $_merge) = explode('_',  get_class($merge));
+
+		if($merge instanceOf Api\Contacts\Merge)
+		{
+			$appname = 'addressbook';
+		}
+		switch(get_class($merge))
+		{
+			case \calendar_merge::class:
+				$ui_class = 'calendar_uilist';
+				$locations = array('calendar_list');
+				break;
+			case \projectmanager_merge::class;
+				$ui_class = 'projectmanager_ui';
+				$locations = array('project_list');
+				break;
+			default:
+				$ui_class = $appname . '_ui';
+				break;
+		}
+
+		// Ask app
+		if(class_exists($ui_class))
+		{
+			$ui = new $ui_class();
+			if( method_exists($ui_class, 'get_all_ids') )
+			{
+				return $ui->get_all_ids();
+			}
+
+			// Try cache
+			if( method_exists($ui_class, 'get_rows'))
+			{
+				foreach($locations as $location)
+				{
+					$session = Api\Cache::getSession($appname, $location);
+					if($session && $session['row_id'])
+					{
+						break;
+					}
+				}
+				$rows = $readonlys = array();
+				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
+				$session['num_rows'] = -1;	// all
+				$ui->get_rows($session, $rows, $readonlys);
+				foreach($rows as $row_number => $row)
+				{
+					if(!is_numeric($row_number)) continue;
+					$row_id = $row[$session['row_id'] ? $session['row_id'] : 'id'];
+					switch (get_class($merge))
+					{
+						case \calendar_merge::class:
+							$explody = explode(':',$row_id);
+							$ids[] = array('id' => $explody[0], 'recur_date' => $explody[1]);
+							break;
+						case \timesheet_merge::class:
+							// Skip the rows with totalss
+							if(!is_numeric($row_id)) continue 2;	// +1 for switch
+						// Fall through
+						default:
+							$ids[] = $row_id;
+					}
+				}
+			}
+		}
+		return $ids;
 	}
 
 	/**

@@ -46,6 +46,7 @@ delete this entry	resources	en	Delete this entry
 deleted	resources	en	deleted
 description (short)	resources	en	Short description
 direct booking permissions	resources	en	Direct booking permissions
+do you really want to delete this resource?	resources	en	Do you really want to delete this resource?
 don't use vfs (this will need a symlink --> see readme)	resources	en	Don't use vfs (this will need a symlink --> see README)
 edit this entry	resources	en	Edit this entry
 event start	resources	en	Event start

@@ -148,7 +148,7 @@ export class et2_DOMWidget extends et2_widget {
      */
     insertChild(_node, _idx) {
         super.insertChild(_node, _idx);
-        if (_node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this)) {
+        if (_node.instanceOf && _node.instanceOf(et2_DOMWidget) && typeof _node.hasOwnProperty('parentNode') && this.getDOMNode(this)) {
             try {
                 _node.setParentDOMNode(this.getDOMNode(_node));
             }
@@ -156,6 +156,10 @@ export class et2_DOMWidget extends et2_widget {
                 // Not ready to be added, usually due to construction order,
                 // will probably try again in doLoadingFinished()
             }
+        }
+        // _node is actually a Web Component
+        else if (_node instanceof Element) {
+            this.getDOMNode().append(_node);
         }
     }
     isAttached() {

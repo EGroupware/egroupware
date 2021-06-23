@@ -239,7 +239,10 @@ class timesheet_ui extends timesheet_bo
 						if ($this->data['old_pm_id'])
 						{
 							Link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
-							unset($content['link_to']['to_id']['projectmanager:'.$this->data['old_pm_id']]);
+							if(is_array($content['link_to']['to_id']))
+							{
+								unset($content['link_to']['to_id']['projectmanager:' . $this->data['old_pm_id']]);
+							}
 							unset($this->data['old_pm_id']);
 						}
 					}

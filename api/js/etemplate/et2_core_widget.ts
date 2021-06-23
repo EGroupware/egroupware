@@ -25,6 +25,7 @@ import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget, et2_input} from "./et2_core_inputWidget";
+import {decorateLanguageService} from "ts-lit-plugin/lib/decorate-language-service";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -716,12 +717,40 @@ export class et2_widget extends ClassWithAttributes
 		// Do an sanity check for the attributes
 		ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
 
-		// Creates the new widget, passes this widget as an instance and
-		// passes the widgetType. Then it goes on loading the XML for it.
-		var widget = new constructor(this, attributes);
+		if(undefined == window.customElements.get(_nodeName))
+		{
+			// Creates the new widget, passes this widget as an instance and
+			// passes the widgetType. Then it goes on loading the XML for it.
+			var widget = new constructor(this, attributes);
 
-		// Load the widget itself from XML
-		widget.loadFromXML(_node);
+			// Load the widget itself from XML
+			widget.loadFromXML(_node);
+		}
+		else
+		{
+			widget = this.loadWebComponent(_nodeName, _node, attributes);
+
+			if(this.addChild)
+			{
+				// webcomponent going into old et2_widget
+				this.addChild(widget);
+			}
+		}
+		return widget;
+	}
+
+	/**
+	 * Load a Web Component
+	 * @param _nodeName
+	 * @param _node
+	 */
+	loadWebComponent(_nodeName : string, _node, attributes : Object) : HTMLElement
+	{
+		let widget = document.createElement(_nodeName);
+		widget.textContent = _node.textContent;
+
+		// Apply any set attributes
+		_node.getAttributeNames().forEach(attribute => widget.setAttribute(attribute, attributes[attribute]));
 
 		return widget;
 	}

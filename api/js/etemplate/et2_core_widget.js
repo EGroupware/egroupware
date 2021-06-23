@@ -544,11 +544,32 @@ export class et2_widget extends ClassWithAttributes {
         this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
         // Do an sanity check for the attributes
         ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
-        // Creates the new widget, passes this widget as an instance and
-        // passes the widgetType. Then it goes on loading the XML for it.
-        var widget = new constructor(this, attributes);
-        // Load the widget itself from XML
-        widget.loadFromXML(_node);
+        if (undefined == window.customElements.get(_nodeName)) {
+            // Creates the new widget, passes this widget as an instance and
+            // passes the widgetType. Then it goes on loading the XML for it.
+            var widget = new constructor(this, attributes);
+            // Load the widget itself from XML
+            widget.loadFromXML(_node);
+        }
+        else {
+            widget = this.loadWebComponent(_nodeName, _node, attributes);
+            if (this.addChild) {
+                // webcomponent going into old et2_widget
+                this.addChild(widget);
+            }
+        }
+        return widget;
+    }
+    /**
+     * Load a Web Component
+     * @param _nodeName
+     * @param _node
+     */
+    loadWebComponent(_nodeName, _node, attributes) {
+        let widget = document.createElement(_nodeName);
+        widget.textContent = _node.textContent;
+        // Apply any set attributes
+        _node.getAttributeNames().forEach(attribute => widget.setAttribute(attribute, attributes[attribute]));
         return widget;
     }
     /**
