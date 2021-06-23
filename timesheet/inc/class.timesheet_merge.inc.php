@@ -29,6 +29,7 @@ class timesheet_merge extends Api\Storage\Merge
 		'download_by_request'		=> true,
 		'show_replacements'			=> true,
 		'timesheet_replacements'	=> true,
+		'merge_entries'				=> true
 	);
 
 	/**

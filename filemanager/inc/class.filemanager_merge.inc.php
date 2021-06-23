@@ -27,6 +27,7 @@ class filemanager_merge extends Api\Storage\Merge
 	 */
 	var $public_functions = array(
 		'show_replacements'		=> true,
+		'merge_entries'		=> true
 	);
 
 	/**
