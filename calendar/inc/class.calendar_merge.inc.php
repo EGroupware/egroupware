@@ -27,6 +27,7 @@ class calendar_merge extends Api\Storage\Merge
 	var $public_functions = array(
 		'download_by_request'	=> true,
 		'show_replacements'		=> true,
+		'merge_entries'		=> true
 	);
 
 	// Object for getting calendar info
