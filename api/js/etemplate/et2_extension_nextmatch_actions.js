@@ -46,6 +46,11 @@ function nm_action(_action, _senders, _target, _ids)
 			_ids = nm.getSelection();
 			_action.data.nextmatch = nm;
 		}
+		else
+		{
+			// This will probably fail without nm, but it depends on the action
+			_ids = {ids: _senders.map(function(s) {return s.id;})};
+		}
 	}
 	// row ids
 	var row_ids = "";

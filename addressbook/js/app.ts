@@ -3,8 +3,9 @@
  *
  * @link: https://www.egroupware.org
  * @package addressbook
- * @author Hadi Nategh	<hn-AT-stylite.de>
- * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Hadi Nategh <hn-AT-egroupware.org>
+ * @author Ralf Becker <rb-AT-egroupware.org>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -12,13 +13,13 @@
 	/api/js/jsapi/egw_app.js
  */
 
-import 'jquery';
-import 'jqueryui';
-import '../jsapi/egw_global';
-import '../etemplate/et2_types';
-
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {nm_action, fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
+import "./CRM.js";
+import {egw} from "../../api/js/jsapi/egw_global";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -695,11 +696,11 @@ class AddressbookApp extends EgwApp
 			{
 				content.push({"confirm":id,"name":_data.doublicates[id]});
 			}
-			confirmdialog(this.egw.lang('Duplicate warning'),content,et2_dialog.BUTTONs_OK_CANCEL);
+			confirmdialog(this.egw.lang('Duplicate warning'),content,et2_dialog.BUTTONS_OK_CANCEL);
 		}
 		if (typeof _data.fileas_options == 'object' && this.et2)
 		{
-			var selbox = this.et2.getWidgetById('fileas_type');
+			var selbox = <et2_selectbox>this.et2.getWidgetById('fileas_type');
 			if (selbox)
 			{
 				selbox.set_select_options(_data.fileas_sel_options);
