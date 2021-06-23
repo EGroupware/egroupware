@@ -82,7 +82,7 @@
 							<button label="Book" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');" id="btn_book" statustext="Book this resource"/>
 						</hbox>
 						<hbox align="right">
-							<button label="Delete" onclick="return confirm('Do you really want do delte this resource?');" id="btn_delete"/>
+							<button label="Delete" onclick="return confirm('Do you really want to delete this resource?');" id="btn_delete"/>
 						</hbox>
 					</hbox>
 				</row>

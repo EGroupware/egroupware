@@ -46,6 +46,7 @@ delete this entry	resources	de	Diesen Eintrag löschen
 deleted	resources	de	gelöscht
 description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
+do you really want to delete this resource?	resources	de	Wollen Sie diese Ressource wirklich löschen?
 don't use vfs (this will need a symlink --> see readme)	resources	de	Vfs nicht benutzen. (Dies erfordert einen symlink --> siehe README)
 edit this entry	resources	de	Diesen Eintrag bearbeiten
 event start	resources	de	Ereignis startet
