@@ -13,6 +13,55 @@
 import { egw } from "../jsapi/egw_global";
 import { et2_checkType, et2_no_init, et2_validateAttrib } from "./et2_core_common";
 import { et2_implements_registry } from "./et2_core_interfaces";
+// Needed for mixin
+export function mix(superclass) {
+    return new MixinBuilder(superclass);
+}
+export class MixinBuilder {
+    constructor(superclass) {
+        this.superclass = superclass;
+    }
+    with(...mixins) {
+        return mixins.reduce(this.applyMixins, this.superclass);
+    }
+    applyMixins(derivedConstructor, baseConstructor) {
+        Object.getOwnPropertyNames(baseConstructor.prototype)
+            .forEach(name => {
+            Object.defineProperty(derivedConstructor.prototype, name, Object.
+                getOwnPropertyDescriptor(baseConstructor.prototype, name));
+        });
+    }
+    copyProperties(target, source) {
+        for (let key of Reflect.ownKeys(source)) {
+            if (key !== "constructor" && key !== "prototype" && key !== "name") {
+                let desc = Object.getOwnPropertyDescriptor(source, key);
+                Object.defineProperty(target, key, desc);
+            }
+        }
+    }
+}
+// This one from Typescript docs
+export function applyMixins(derivedCtor, constructors) {
+    constructors.forEach((baseCtor) => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+            Object.defineProperty(derivedCtor.prototype, name, Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+                Object.create(null));
+        });
+    });
+}
+/*
+Experiments in using mixins to combine et2_widget & LitElement
+Note that this "works", in that it mixes the code properly.
+It does not work in that the resulting class does not work with et2's inheritance & class checking stuff
+
+// This one to make TypeScript happy?
+interface et2_textbox extends et2_textbox, LitElement {}
+// This one to make the inheritance magic happen
+applyMixins(et2_textbox, [et2_textbox,LitElement]);
+// Make it a real WebComponent
+customElements.define("et2-textbox",et2_textbox);
+
+ */
 export class ClassWithInterfaces {
     /**
      * The implements function can be used to check whether the object

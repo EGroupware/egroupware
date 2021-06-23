@@ -28,6 +28,7 @@ import { et2_loadXMLFromURL } from "./et2_core_xml";
 import { et2_nextmatch, et2_nextmatch_header_bar } from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
 import { egwIsMobile } from "../egw_action/egw_action_common.js";
+import './et2-button';
 /* Include all widget classes here, we only care about them registering, not importing anything
 import './et2_widget_template';
 import './et2_widget_grid';
