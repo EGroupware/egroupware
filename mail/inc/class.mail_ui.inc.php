@@ -3314,7 +3314,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
 			$charset = $calendar_part->getContentTypeParameter('charset');
-			$this->mail_bo->fetchPartContents($uid, $calendar_part);
+			// Do not try to fetch raw part content if it's smime signed message
+			if (!$smime) $this->mail_bo->fetchPartContents($uid, $calendar_part);
 			Api\Cache::setSession('calendar', 'ical', array(
 				'charset' => $charset ? $charset : 'utf-8',
 				'attachment' => $calendar_part->getContents(),
