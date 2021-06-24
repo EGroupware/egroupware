@@ -280,6 +280,7 @@
 
 			// Don't let the window gets horizental scrollbar
 			var scrollWidth = document.body.scrollWidth - document.body.clientWidth;
+			var scrollHeight = document.body.scrollHeight - w.height;
 			if (scrollWidth > 0 && scrollWidth + egw_getWindowOuterWidth() < screen.availWidth) delta_width = -scrollWidth;
 
 			if (delta_height && egw_getWindowOuterHeight() >= egw.availHeight())
@@ -287,7 +288,7 @@
 				delta_height = 0;
 			}
 			if((delta_width != 0 || delta_height != 0) &&
-				(delta_width >2 || delta_height >2 || delta_width<-2 || delta_height < -2))
+				(delta_width >2 || delta_height >2 || delta_width<-2 || delta_height < -2) && (scrollHeight>0 || scrollWidth>0))
 			{
 
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')

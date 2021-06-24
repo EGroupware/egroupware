@@ -19,7 +19,6 @@ if (document.all)
 	navigator.userAgent.toLowerCase().indexOf('msie 5') != -1 ? is_ie5 = true : is_ie5 = false;
 	is_ie = true;
 	is_moz1_6 = false;
-	is_mozilla = false;
 	is_ns4 = false;
 }
 else if (document.getElementById)
@@ -27,7 +26,6 @@ else if (document.getElementById)
 	navigator.userAgent.toLowerCase().match('mozilla.*rv[:]1\.6.*gecko') ? is_moz1_6 = true : is_moz1_6 = false;
 	is_ie = false;
 	is_ie5 = false;
-	is_mozilla = true;
 	is_ns4 = false;
 }
 else if (document.layers)
@@ -35,7 +33,6 @@ else if (document.layers)
 	is_ie = false;
 	is_ie5 = false;
 	is_moz1_6 = false;
-	is_mozilla = false;
 	is_ns4 = true;
 }
 
@@ -399,7 +396,7 @@ function egw_getWindowLeft()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if(is_mozilla) return window.screenX;
+		return window.screenX;
 	}
 	catch (e) {}
 
@@ -411,7 +408,7 @@ function egw_getWindowTop()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if(is_mozilla) return window.screenY;
+		return window.screenY;
 	}
 	catch (e) {}
 
@@ -421,33 +418,13 @@ function egw_getWindowTop()
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
 function egw_getWindowInnerWidth()
 {
-	if (is_mozilla)
-	{
-		return window.innerWidth;
-	}
-	else
-	{
-		// works only after the body has parsed
-		//return document.body.offsetWidth;
-		return document.body.clientWidth;
-		//return document.documentElement.clientWidth;
-	}
+	return window.innerWidth;
 }
 
 // get the outerHeight of the browser window. For IE we simply return the innerHeight
 function egw_getWindowInnerHeight()
 {
-	if (is_mozilla)
-	{
-		return window.innerHeight;
-	}
-	else
-	{
-		// works only after the body has parsed
-		//return document.body.offsetHeight;
-		//return document.body.clientHeight;
-		return document.documentElement.clientHeight;
-	}
+	return window.innerHeight;
 }
 
 // get the outerWidth of the browser window. For IE we simply return the innerWidth
@@ -455,7 +432,7 @@ function egw_getWindowOuterWidth()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if (is_mozilla) return window.outerWidth;
+		return window.outerWidth;
 	}
 	catch (e) {}
 
@@ -467,7 +444,7 @@ function egw_getWindowOuterHeight()
 {
 	// workaround for Fennec bug https://bugzilla.mozilla.org/show_bug.cgi?format=multiple&id=648250 window.(outerHeight|outerWidth|screenX|screenY) throw exception
 	try {
-		if (is_mozilla) return window.outerHeight;
+		return window.outerHeight;
 	}
 	catch (e) {}
 
