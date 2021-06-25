@@ -20,5 +20,6 @@
 	/api/js/jquery/splitter.js;
 	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 	/api/js/Resumable/resumable.js;
+	/vendor/bower-asset/cropper/dist/cropper.js;
 */
 jQuery.noConflict();
