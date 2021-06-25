@@ -17,8 +17,8 @@ import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
-import {nm_action, fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
-import "./CRM.js";
+import {nm_action, fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
 
 /**

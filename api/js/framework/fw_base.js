@@ -24,6 +24,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	 * @returns {undefined}
 	 */
 	init: function (_sidemenuId, _tabsId, _webserverUrl, _sideboxSizeCallback){
+		window.framework = this;
 		/* Get the base div */
 		this.sidemenuDiv = document.getElementById(_sidemenuId);
 		this.tabsDiv = document.getElementById(_tabsId);
@@ -1380,4 +1381,4 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 		gauge.width(this.firstload_animation_gauge+"%");
 		if (_gauge == 100) window.setTimeout(function(){jQuery('#egw_fw_firstload').remove();},1000);
 	}
-});}).call(this);
+});}).call(window);

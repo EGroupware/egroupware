@@ -11,6 +11,8 @@
 
 'use strict';
 
+import "../../api/js/jsapi/egw_ready.js";
+import "../../api/js/framework/fw_base.js";
 /**
  * Installs app.notifications used to poll notifications from server and display them
  */

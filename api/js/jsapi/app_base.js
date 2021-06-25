@@ -12,13 +12,12 @@
 	egw_inheritance;
 	/api/js/es6-promise.min.js;
 */
+import {EgwApp} from "./egw_app";
 import './egw_inheritance.js';
 import {et2_createWidget} from "../etemplate/et2_core_widget";
-import {etemplate2} from "../etemplate/etemplate2";
 import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_favorites} from "../etemplate/et2_widget_favorites";
-import {EgwApp} from "./egw_app";
 
 /**
  * Common base class for application javascript
@@ -2061,4 +2060,4 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 		});
 	}
 
-});}).call(this);
+});}).call(window);

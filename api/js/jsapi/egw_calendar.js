@@ -18,6 +18,11 @@
 //	egw_jquery;
 	egw_css;
 */
+
+import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
+import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
+import "../jquery/jquery.noconflict.js";
+import "../jquery/jquery-ui-timepicker-addon.js";
 import './egw_core.js';
 
 /**

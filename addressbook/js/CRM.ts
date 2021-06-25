@@ -16,7 +16,7 @@
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {egw} from "../../api/js/jsapi/egw_global";
+import {egw} from "../../api/js/jsapi/egw_global.js";
 
 /**
  * UI for Addressbook CRM view

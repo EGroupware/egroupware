@@ -14,7 +14,7 @@
 
 import '../egw_action/egw_action_common.js';
 import '../jsapi/egw_inheritance.js';
-import '../etemplate/etemplate2.js';	// otherwise et2_load json-response-handler is not (yet) available
+import '../etemplate/etemplate2';	// otherwise et2_load json-response-handler is not (yet) available
 
 /**
  * Constants definition
@@ -378,4 +378,4 @@ window.fw_browser = (function(){ "use strict"; return Class.extend(
 	{
 		this.browse('about:blank', this.type == EGW_BROWSER_TYPE_IFRAME);
 	}
-});}).call(this);
+});}).call(window);

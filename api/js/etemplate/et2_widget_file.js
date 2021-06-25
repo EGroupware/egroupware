@@ -12,6 +12,7 @@
     et2_core_inputWidget;
     api.Resumable.resumable;
 */
+import "../Resumable/resumable.js";
 import { et2_inputWidget } from "./et2_core_inputWidget";
 import { et2_register_widget } from "./et2_core_widget";
 import { ClassWithAttributes } from "./et2_core_inheritance";

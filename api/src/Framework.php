@@ -167,10 +167,9 @@ abstract class Framework extends Framework\Extra
 
 			// always load jquery (not -ui) first
 			'/vendor/bower-asset/jquery/dist/jquery.js',
-			'/api/js/jquery/jquery.noconflict.js',
 			// always include javascript helper functions
-			'/api/js/jsapi/jsapi.js',
-			'/api/js/jsapi/egw.js',
+			'/api/js/jsapi.min.js',
+			'/api/js/jsapi/egw.min.js',
 		));
 	}
 
@@ -1081,15 +1080,12 @@ abstract class Framework extends Framework\Extra
 		}, self::get_script_links(true, false, $map), array(1));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		// add import-map before (!) first module
-		$java_script .= '<script type="importmap" nonce="'.htmlspecialchars(ContentSecurityPolicy::addNonce('script-src')).'">'."\n".
-			json_encode(self::getImportMap(), JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)."\n".
-			"</script>\n";
+		// Static things we want to make sure are loaded first
 $java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
 		// load our clientside entrypoint egw.js
 		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				'/api/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.js').'" id="egw_script_id"';
+				'/api/js/jsapi/egw.min.js" id="egw_script_id"';
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)

@@ -11,6 +11,7 @@
 /*egw:uses
 	egw_action_common;
 */
+import "../jsapi/egw.js";
 import {
 	EGW_AO_STATE_NORMAL,
 	EGW_AO_STATE_VISIBLE,

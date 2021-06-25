@@ -44,8 +44,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	exit;
 }
 
-$content = "import './js/jsapi/egw_preferences.js';\nimport './js/jsapi/egw_user.js';\n\n";
-$content .= 'egw.set_preferences('.$preferences.", 'common', egw && egw.window !== window);\n";
+$content = 'egw.set_preferences('.$preferences.", 'common', egw && egw.window !== window);\n";
 $content .= 'egw.set_preferences('.$ab_preferences.", 'addressbook', egw && egw.window !== window);\n";
 $content .= 'egw.set_user('.$user.", egw && egw.window !== window);\n";
 

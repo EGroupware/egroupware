@@ -16,7 +16,7 @@ import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {egw} from "../../api/js/jsapi/egw_global";
+import {egw} from "../../api/js/jsapi/egw_global.js";
 import {egwActionObject, egwAction} from '../../api/js/egw_action/egw_action.js';
 /**
  * UI for Admin

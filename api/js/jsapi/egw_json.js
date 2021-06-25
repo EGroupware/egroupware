@@ -17,7 +17,7 @@
 	egw_files;
 	egw_debug;
 */
-import './egw_core.js';
+import './egw.js';
 import './egw_utils.js';
 
 /**

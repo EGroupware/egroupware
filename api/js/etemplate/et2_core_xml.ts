@@ -8,7 +8,10 @@
  * @author Andreas Stöckel
  */
 
-import {egw} from "../jsapi/egw_global";
+import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
+import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
+import "../jquery/jquery.noconflict.js";
+import {egw} from "../jsapi/egw_global.js";
 
 /**
  * Loads the given URL asynchronously from the server

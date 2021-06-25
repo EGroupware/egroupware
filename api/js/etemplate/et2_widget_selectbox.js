@@ -16,6 +16,8 @@
     et2_core_DOMWidget;
     et2_core_inputWidget;
 */
+import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
+import "../jquery/chosen/chosen.jquery.js";
 import { et2_no_init } from "./et2_core_common";
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_register_widget } from "./et2_core_widget";

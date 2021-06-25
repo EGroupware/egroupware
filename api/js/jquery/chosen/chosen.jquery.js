@@ -113,7 +113,7 @@
 
   this.SelectParser = SelectParser;
 
-}).call(this);
+}).call(window);
 
 (function() {
   var AbstractChosen, root;
@@ -458,7 +458,7 @@
 
   root.AbstractChosen = AbstractChosen;
 
-}).call(this);
+}).call(window);
 
 (function() {
   var $, Chosen, root, _ref,
@@ -1211,4 +1211,4 @@
 
   root.Chosen = Chosen;
 
-}).call(this);
+}).call(window);

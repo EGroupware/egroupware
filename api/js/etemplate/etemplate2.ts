@@ -9,69 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	// Include all widget classes here
-	et2_widget_template;
-	et2_widget_grid;
-	et2_widget_box;
-	et2_widget_hbox;
-	et2_widget_groupbox;
-	et2_widget_split;
-	et2_widget_button;
-	et2_widget_color;
-	et2_widget_description;
-	et2_widget_entry;
-	et2_widget_textbox;
-	et2_widget_number;
-    et2_widget_password;
-	et2_widget_url;
-	et2_widget_selectbox;
-	et2_widget_checkbox;
-	et2_widget_radiobox;
-	et2_widget_date;
-	et2_widget_dialog;
-	et2_widget_diff;
-	et2_widget_dropdown_button;
-	et2_widget_styles;
-	et2_widget_favorites;
-	et2_widget_html;
-	et2_widget_htmlarea;
-	et2_widget_tabs;
-	et2_widget_taglist;
-	et2_widget_timestamper;
-	et2_widget_toolbar;
-	et2_widget_tree;
-	et2_widget_historylog;
-	et2_widget_hrule;
-	et2_widget_image;
-	et2_widget_iframe;
-	et2_widget_file;
-	et2_widget_link;
-	et2_widget_progress;
-	et2_widget_portlet;
-	et2_widget_selectAccount;
-	et2_widget_ajaxSelect;
-	et2_widget_vfs;
-	et2_widget_video;
-	et2_widget_audio;
-	et2_widget_barcode;
-	et2_widget_itempicker;
-	et2_widget_script;
-	et2_widget_countdown;
-	et2_extension_nextmatch;
-	et2_extension_customfields;
-
-	// Requirements for the etemplate2 object
-	et2_core_common;
-	et2_core_xml;
-	et2_core_arrayMgr;
-	et2_core_interfaces;
-	et2_core_legacyJSFunctions;
-
-	// Include the client side api core
-	jsapi.egw_core;
-	jsapi.egw_json;
-*/
 
 import {et2_widget} from "./et2_core_widget";
 import {et2_baseWidget, et2_container} from "./et2_core_baseWidget";
@@ -86,8 +23,9 @@ import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch
 import {et2_tabbox} from "./et2_widget_tabs";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
-import './et2-button';
-/* Include all widget classes here, we only care about them registering, not importing anything
+//import './et2-button';
+/* Include all widget classes here, we only care about them registering, not importing anything*/
+import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
 import './et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
@@ -128,7 +66,6 @@ import './et2_widget_progress';
 import './et2_widget_portlet';
 import './et2_widget_selectAccount';
 import './et2_widget_ajaxSelect';
-import './et2_widget_vfs';
 import './et2_widget_video';
 import './et2_widget_audio';
 import './et2_widget_barcode';
@@ -137,7 +74,7 @@ import './et2_widget_script';
 import './et2_widget_countdown';
 import './et2_extension_nextmatch';
 import './et2_extension_customfields';
-*/
+
 
 /**
  * The etemplate2 class manages a certain etemplate2 instance.

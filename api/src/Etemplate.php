@@ -141,7 +141,7 @@ class Etemplate extends Etemplate\Widget\Template
 		unset($hook_data);
 
 		// Include the etemplate2 javascript code
-		Framework::includeJS('etemplate', 'etemplate2', 'api');
+		//Framework::includeJS('etemplate', 'etemplate2', 'api');
 
 		if (!$this->rel_path) throw new Exception\AssertionFailed("No (valid) template '$this->name' found!");
 
@@ -232,9 +232,13 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		else	// first call
 		{
-			// check if application of template has a app.js file --> load it
+			// check if application of template has a app.js file --> load it, preferring local min file if there
 			list($app) = explode('.',$this->name);
-			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.min.js'))
+			{
+				Framework::includeJS('.','app.min',$app,true);
+			}
+			else if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
 				Framework::includeJS('.','app',$app,true);
 			}

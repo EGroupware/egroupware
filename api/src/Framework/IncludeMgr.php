@@ -200,7 +200,7 @@ class IncludeMgr
 		$this->debug_processing_file = $path;
 
 		// Parse the given file for dependencies
-		$uses = $this->parse_file($path);
+		$uses = [];//$this->parse_file($path);
 
 		foreach ((array)$uses as $entry)
 		{

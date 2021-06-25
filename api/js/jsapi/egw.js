@@ -78,7 +78,7 @@ window.app = {classes: {}};
 	window.egw_appName = egw_script.getAttribute('data-app');
 
 	// split includes in legacy js and modules
-	const legacy_js_regexp = /\/dhtmlx|jquery|magicsuggest|resumable/;
+	const legacy_js_regexp = /do_not_match_anything/;
 
 	// check if egw object was injected by window open
 	if (typeof window.egw == 'undefined')
@@ -190,6 +190,7 @@ window.app = {classes: {}};
 	 */
 	async function legacy_js_import(_src, _baseurl)
 	{
+		console.log("Legacy import: ", _src,_baseurl);
 		if (!Array.isArray(_src)) _src = [].concat(_src);
 		return Promise.all(_src.map(src => {
 			return new Promise(function(_resolve, _reject)
@@ -207,9 +208,8 @@ window.app = {classes: {}};
 	}
 
 	const egw_modules = [
-		'egw_core', 'egw_debug', 'egw_preferences', 'egw_lang', 'egw_links', 'egw_open', 'egw_user',
-		'egw_config', 'egw_images', 'egw_jsonq', 'egw_files', 'egw_json', 'egw_store', 'egw_tooltip', 'egw_css',
-		'egw_calendar', 'egw_ready', 'egw_data', 'egw_tail', 'egw_message', 'egw_notification', 'jsapi',
+		// TODO: Dev mode should remove .min or remap it with importmap
+		'egw.min'
 	];
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
 	window.egw_LAB = window.egw_ready =
@@ -218,7 +218,7 @@ window.app = {classes: {}};
 				.catch((err) => {console.error(rel_src+": "+err.message)}))))
 			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
 				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
-					.catch((err) => {console.error(rel_src+": "+err.message)})
+					.catch((err) => {window.setTimeout(() => {throw err;},0)})
 	))).then(() =>
 	{
 		// We need to override the globalEval to mitigate potential execution of
@@ -371,7 +371,7 @@ window.app = {classes: {}};
 			// load etemplate2 template(s)
 			jQuery('form.et2_container[data-etemplate]').each(  function(index, node)
 			{
-				import('../etemplate/etemplate2.js').then((module) => {
+				import('../etemplate/etemplate2').then((module) => {
 					const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 					if (popup || window.opener && !egwIsMobile()) {
 						// Resize popup when et2 load is done

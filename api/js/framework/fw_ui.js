@@ -12,6 +12,10 @@
 	/api/js/jquery/mousewheel/mousewheel.js;
 	egw_inheritance.js;
 */
+
+import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
+import "../jquery/jquery.noconflict.js";
+import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import '../jsapi/egw_inheritance.js';
 
 /**
@@ -189,7 +193,7 @@ window.fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 		jQuery(this.headerDiv).remove();
 		jQuery(this.contentDiv).remove();
 	}
-});}).call(this);
+});}).call(window);
 
 /**
  *
@@ -290,7 +294,7 @@ window.fw_ui_sidemenu = (function(){ "use strict"; return Class.extend(
 
 	   this.entries = new Array();
    }
-});}).call(this);
+});}).call(window);
 
 /**
  * Class: egw_fw_ui_tab

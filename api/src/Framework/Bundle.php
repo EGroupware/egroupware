@@ -29,7 +29,7 @@ class Bundle
 	 */
 	static $bundle2minurl = array(
 		'api' => '/api/js/jsapi.min.js',
-		'et2' => '/api/js/etemplate/etemplate2.min.js',
+	//	'et2' => '/api/js/etemplate/etemplate2.min.js',
 		'et21'=> '/api/js/etemplate/etemplate2.min.js',
 		'pixelegg' => '/pixelegg/js/fw_pixelegg.min.js',
 		'jdots' => '/jdots/js/fw_jdots.min.js',
@@ -115,7 +115,7 @@ class Bundle
 						$path = $min_path;
 						$mod  = $min_mod;
 					}
-					$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
+					$to_include[$file] = $path;//.'?'.$mod.($query ? '&'.$query : '');
 				}
 			}
 		}
@@ -150,12 +150,12 @@ class Bundle
 			// TinyMCE must be included before bundled files, as it depends on it!
 			if (strpos($path, '/tinymce/tinymce.min.js') !== false)
 			{
-				$to_include_first[] = $path . '?' . $mod;
+				$to_include_first[] = $path;// . '?' . $mod;
 			}
 			// for now minify does NOT support query parameters, nor php files generating javascript
 			elseif ($debug_minify || $query || substr($path, -3) != '.js' || empty($minurl))
 			{
-				$path .= '?'. $mod.($query ? '&'.$query : '');
+				//$path .= '?'. $mod.($query ? '&'.$query : '');
 				$to_include[] = $path;
 			}
 			else
@@ -165,7 +165,7 @@ class Bundle
 		}
 		if (!$debug_minify && $to_minify)
 		{
-			$path = $minurl.'?'.filemtime(EGW_SERVER_ROOT.$minurl);
+			$path = $minurl;//.'?'.filemtime(EGW_SERVER_ROOT.$minurl);
 			/* no more dynamic minifying
 			if (!empty($minurl) && file_exists(EGW_SERVER_ROOT.$minurl) &&
 				($mod=filemtime(EGW_SERVER_ROOT.$minurl)) >= $max_modified)
@@ -217,6 +217,7 @@ class Bundle
 	 */
 	public static function all(bool $all_apps = false)
 	{
+		return [];
 		$inc_mgr = new IncludeMgr();
 		$bundles = array();
 
@@ -350,7 +351,7 @@ class Bundle
 				{
 					if (($key = array_search($file, $files)))
 					{
-						$map[$prefix . $file] = $prefix . $file . '?' . filemtime(EGW_SERVER_ROOT . $file);
+						$map[$prefix . $file] = $prefix . $file ;//. '?' . filemtime(EGW_SERVER_ROOT . $file);
 						unset($files[$key]);
 					}
 				}
@@ -380,12 +381,12 @@ class Bundle
 				{
 					// use bundle / minified url as target or not
 					if (!$use_bundle) $target = $file;
-					$map[$prefix . $file] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
+					$map[$prefix . $file] = $prefix.$target;//.'?'.filemtime(EGW_SERVER_ROOT.$target);
 					// typescript unfortunately has currently no option to add ".js" to it's es6 import statements
 					// therefore we add extra entries without .js extension to the map
 					if (file_exists(EGW_SERVER_ROOT.substr($file, 0, -3) . '.ts'))
 					{
-						$map[$prefix . substr($file, 0, -3)] = $prefix.$target.'?'.filemtime(EGW_SERVER_ROOT.$target);
+						$map[$prefix . substr($file, 0, -3)] = $prefix.$target;//.'?'.filemtime(EGW_SERVER_ROOT.$target);
 					}
 				}
 			}

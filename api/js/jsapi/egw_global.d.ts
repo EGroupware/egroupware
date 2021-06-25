@@ -13,7 +13,7 @@
  * @author Andreas Stöckel
  */
 
-import {EgwApp} from "./egw_app";
+//import {EgwApp} from "./egw_app";
 
 /**
  * Global egw object (for now created by the diverse JavaScript files) with a TypeScript interface

@@ -33,7 +33,7 @@ egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// Include the jQuery and jQuery UI library.
 	var token = ready.readyWaitFor();
 	files.includeJS([
-		this.webserverUrl + '/vendor/bower-asset/jquery/dist/jquery.js',
+		this.webserverUrl + '/vendor/bower-asset/jquery/dist/jquery.min.js',
 		this.webserverUrl + '/vendor/bower-asset/jquery-ui/jquery-ui.js',
 		this.webserverUrl + '/api/js/jquery/jquery.html5_upload.js'
 	], function () {
