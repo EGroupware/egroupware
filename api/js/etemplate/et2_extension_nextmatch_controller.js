@@ -12,7 +12,7 @@ import { et2_dataview_row } from "./et2_dataview_view_row";
 import { et2_dataview_tile } from "./et2_dataview_view_tile";
 import { et2_dataview_controller } from "./et2_dataview_controller";
 import { et2_dataview_column } from "./et2_dataview_model_columns";
-import { framework, egw } from "../jsapi/egw_global";
+import { egw } from "../jsapi/egw_global";
 import { egw_getActionManager, egw_getObjectManager, egwActionObjectManager, egwActionObject } from "../egw_action/egw_action.js";
 import { EGW_AO_FLAG_DEFAULT_FOCUS, EGW_AO_EXEC_SELECTED, EGW_AO_FLAG_IS_CONTAINER } from "../egw_action/egw_action_constants.js";
 import { nm_action } from "./et2_extension_nextmatch_actions.js";
@@ -566,7 +566,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller {
             return;
         // inform mobile framework about nm selections, need to update status of header objects on selection
         if (egwIsMobile())
-            framework.nm_onselect_ctrl(this._widget, action, senders);
+            window.framework.nm_onselect_ctrl(this._widget, action, senders);
         this._widget.onselect.call(this._widget, action, senders);
     }
     /** -- Implementation of et2_IDataProvider -- **/
