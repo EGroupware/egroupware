@@ -8455,7 +8455,7 @@ table.egwGridView_grid img.et2_appicon {
   }
   body .ui-dialog .ui-dialog-buttonpane {
     position: fixed !important;
-    top: 0 !important;
+    bottom: 0 !important;
     left: 0 !important;
     display: block !important;
     padding: 0 !important;
@@ -8477,6 +8477,7 @@ table.egwGridView_grid img.et2_appicon {
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
+    float: right !important;
   }
   body .ui-dialog .ui-dialog-buttonpane button span {
     padding-left: 20px;
@@ -8486,8 +8487,13 @@ table.egwGridView_grid img.et2_appicon {
     color: white;
     z-index: 100;
     background: #0c5da5;
-    width: 30%;
-    padding-top: 10px;
+    width: 100%;
+    height: 35px;
+    padding: 0;
+    padding-left: 5px;
+    margin: -3px;
+    padding-top: 15px;
+    border-radius: 0;
   }
   body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
     display: none;
