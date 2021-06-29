@@ -828,12 +828,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "6b8c487765f3c57bad3ebaf6dd8faba712043b6c"
+                "reference": "855da02457ab026c8d990406287bcd037effe145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/6b8c487765f3c57bad3ebaf6dd8faba712043b6c",
-                "reference": "6b8c487765f3c57bad3ebaf6dd8faba712043b6c",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/855da02457ab026c8d990406287bcd037effe145",
+                "reference": "855da02457ab026c8d990406287bcd037effe145",
                 "shasum": ""
             },
             "require": {
@@ -861,7 +861,7 @@
             ],
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-02-03T07:03:40+00:00"
+            "time": "2021-05-08T12:41:18+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -923,12 +923,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "2949098ebe8cb9e0a17559907286f930a6aacb88"
+                "reference": "26825e48b717835630c7db19af034485a964ca82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/2949098ebe8cb9e0a17559907286f930a6aacb88",
-                "reference": "2949098ebe8cb9e0a17559907286f930a6aacb88",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/26825e48b717835630c7db19af034485a964ca82",
+                "reference": "26825e48b717835630c7db19af034485a964ca82",
                 "shasum": ""
             },
             "require": {
@@ -947,7 +947,7 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-04-22T17:41:48+00:00"
+            "time": "2021-05-18T15:51:46+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -955,12 +955,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "664eb789fc921d89eecb1b125bd555c11bdb3a34"
+                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/664eb789fc921d89eecb1b125bd555c11bdb3a34",
-                "reference": "664eb789fc921d89eecb1b125bd555c11bdb3a34",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0a35643b00c370930f189a3a2f6a20627b5ef06b",
+                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-04-30T14:15:49+00:00"
+            "time": "2021-06-18T14:33:23+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -1216,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "0a5cbc45f7becbb80e1946a1366aa5d3ca1eb0a2"
+                "reference": "ced0dfce182ebb48d1dfd9a1a0f258a77d974ebe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/0a5cbc45f7becbb80e1946a1366aa5d3ca1eb0a2",
-                "reference": "0a5cbc45f7becbb80e1946a1366aa5d3ca1eb0a2",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/ced0dfce182ebb48d1dfd9a1a0f258a77d974ebe",
+                "reference": "ced0dfce182ebb48d1dfd9a1a0f258a77d974ebe",
                 "shasum": ""
             },
             "require": {
@@ -1240,7 +1240,7 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-04-06T07:40:34+00:00"
+            "time": "2021-05-08T12:47:36+00:00"
         },
         {
             "name": "egroupware/openid",
@@ -1248,12 +1248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "1b735b7c554c0eb5c6af66590acfd2afeeefbcfe"
+                "reference": "cac3140cf96fbfd09a3209be1b3d1cfc6b508e55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/1b735b7c554c0eb5c6af66590acfd2afeeefbcfe",
-                "reference": "1b735b7c554c0eb5c6af66590acfd2afeeefbcfe",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/cac3140cf96fbfd09a3209be1b3d1cfc6b508e55",
+                "reference": "cac3140cf96fbfd09a3209be1b3d1cfc6b508e55",
                 "shasum": ""
             },
             "require": {
@@ -1289,7 +1289,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-31T10:17:33+00:00"
+            "time": "2021-05-15T14:00:36+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1297,12 +1297,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "45d71b6be56b2f0a96c99f2285e4d2986b261d53"
+                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/45d71b6be56b2f0a96c99f2285e4d2986b261d53",
-                "reference": "45d71b6be56b2f0a96c99f2285e4d2986b261d53",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/72337abad01c945b68d6117832b28df1c6fd4e57",
+                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57",
                 "shasum": ""
             },
             "require": {
@@ -1330,7 +1330,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-04-19T22:02:41+00:00"
+            "time": "2021-05-08T12:51:23+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1338,12 +1338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "3759e01f8d8cc58c91695b2a36bf28b3fbf35c55"
+                "reference": "1b16017e3ec70e0a2884a37560f9f669aea10fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/3759e01f8d8cc58c91695b2a36bf28b3fbf35c55",
-                "reference": "3759e01f8d8cc58c91695b2a36bf28b3fbf35c55",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/1b16017e3ec70e0a2884a37560f9f669aea10fe9",
+                "reference": "1b16017e3ec70e0a2884a37560f9f669aea10fe9",
                 "shasum": ""
             },
             "require": {
@@ -1379,7 +1379,7 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-26T15:09:52+00:00"
+            "time": "2021-05-20T19:07:18+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -1387,12 +1387,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "bd79b22828aba15dacd1090998fe39068c0a2ab0"
+                "reference": "55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/bd79b22828aba15dacd1090998fe39068c0a2ab0",
-                "reference": "bd79b22828aba15dacd1090998fe39068c0a2ab0",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988",
+                "reference": "55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988",
                 "shasum": ""
             },
             "require": {
@@ -1419,7 +1419,7 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-16T16:00:54+00:00"
+            "time": "2021-05-08T12:53:30+00:00"
         },
         {
             "name": "egroupware/smallpart",
@@ -1427,12 +1427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "6e38640e8da57ad95359c31ac527d8c5cf25a737"
+                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/6e38640e8da57ad95359c31ac527d8c5cf25a737",
-                "reference": "6e38640e8da57ad95359c31ac527d8c5cf25a737",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/dcf05ca49915f96d574233f218994a3ada0cc164",
+                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164",
                 "shasum": ""
             },
             "require": {
@@ -1464,7 +1464,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-05-03T10:49:02+00:00"
+            "time": "2021-06-22T15:13:02+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1472,12 +1472,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "59cf2177ad63b3fe015312c1151f6b27a417217f"
+                "reference": "7c77882347184ca96f6f22cefde84b4a211b0d29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/59cf2177ad63b3fe015312c1151f6b27a417217f",
-                "reference": "59cf2177ad63b3fe015312c1151f6b27a417217f",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/7c77882347184ca96f6f22cefde84b4a211b0d29",
+                "reference": "7c77882347184ca96f6f22cefde84b4a211b0d29",
                 "shasum": ""
             },
             "require": {
@@ -1504,7 +1504,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-04-22T11:49:56+00:00"
+            "time": "2021-05-25T07:37:53+00:00"
         },
         {
             "name": "egroupware/swoolepush",
@@ -1512,12 +1512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "4bd93050039c25bf384d8912378890a39aa087b4"
+                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/4bd93050039c25bf384d8912378890a39aa087b4",
-                "reference": "4bd93050039c25bf384d8912378890a39aa087b4",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
+                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
                 "shasum": ""
             },
             "require": {
@@ -1546,7 +1546,7 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-03T15:06:13+00:00"
+            "time": "2021-05-08T12:58:28+00:00"
         },
         {
             "name": "egroupware/tracker",
@@ -1554,12 +1554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "6d9eb28be65026b6c3272cfffa0cc80c841a4c90"
+                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/6d9eb28be65026b6c3272cfffa0cc80c841a4c90",
-                "reference": "6d9eb28be65026b6c3272cfffa0cc80c841a4c90",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
+                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
                 "shasum": ""
             },
             "require": {
@@ -1586,7 +1586,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-02T06:39:16+00:00"
+            "time": "2021-06-01T14:35:24+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -4155,30 +4155,34 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.1.6",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3"
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3",
-                "reference": "c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a5b5c43e50b7fba655f793ad27303cd74c57363c",
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-filter": "*",
+                "ext-hash": "*",
                 "php": ">=5.5.0"
             },
             "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "doctrine/annotations": "^1.2",
-                "friendsofphp/php-cs-fixer": "^2.2",
-                "phpunit/phpunit": "^4.8 || ^5.7"
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.5.6",
+                "yoast/phpunit-polyfills": "^0.2.0"
             },
             "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
@@ -4213,7 +4217,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2020-05-27T12:24:03+00:00"
+            "time": "2021-06-16T14:33:43+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
