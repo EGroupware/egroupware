@@ -1,3 +1,24 @@
+egroupware-docker (21.1.20210629) hardy; urgency=low
+
+  * Mail/Admin: fix not working mail wizard
+  * Mail/SMIME: fix signed calendar events not being displayed (error:importing the ical!)
+  * Mail/Dovecot: allow to disable caching of flags in site config to support Dovecot private seen flags on shared folders
+  * Api: Prevent invalid customfield names
+  * Api: Clear initial load URL after using it, so F5 takes you to the app's normal entry point
+  * InfoLog: allow to limit list to last N month in site-configuration, if ordered by last modified
+  * Setup: skip files backup on update even if configured
+  * smallPART: only show own memberships when selecting an organisation for a course
+  * smallPART: allow to create new courses via LTI content-selection
+  * smallPART: fix ACL not used for course-list and giving you a "Course not found" error trying to subscribe
+  * smallPART: allow to interactive choose a course and video via LTI 1.3
+  * smallPART: automatic registration from Moodle 3.10+
+  * smallPART: using now ceLTIc/LTI for LTI 1.3 too
+  * smallPART: automatic use SameSite=None cookie attribute when embedding via LTI
+  * smallPART: fix failed opening of courses from course-list via LTI
+  * smallPART: allow to configure "Moodle username" for checking or creating an EGroupware user
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 29 Jun 2021 09:43:00 +0200
+
 egroupware-docker (21.1.20210521) hardy; urgency=low
 
   * final 21.1 release from 25th May incl. new login background
