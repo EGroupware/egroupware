@@ -45,6 +45,9 @@ class Bundle
 	 */
 	public static function js_includes(array $js_includes, array &$to_include=null)
 	{
+		// disable dev-mode for now with rollup
+		unset($GLOBALS['egw_info']['server']['debug_minify']);
+
 		$file2bundle = array();
 		if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True')
 		{
@@ -115,7 +118,8 @@ class Bundle
 						$path = $min_path;
 						$mod  = $min_mod;
 					}
-					$to_include[$file] = $path;//.'?'.$mod.($query ? '&'.$query : '');
+					// skip timestamp $to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
+					$to_include[$file] = $path.($query ? '?'.$query : '');
 				}
 			}
 		}

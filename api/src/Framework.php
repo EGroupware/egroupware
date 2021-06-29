@@ -1081,8 +1081,8 @@ abstract class Framework extends Framework\Extra
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// Static things we want to make sure are loaded first
-$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
+//$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
+//<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
 		// load our clientside entrypoint egw.js
 		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				'/api/js/jsapi/egw.min.js" id="egw_script_id"';

@@ -50,25 +50,6 @@ class pixelegg_framework extends Api\Framework\Ajax
 	}
 
 	/**
-	 * Render header
-	 *
-	 * Overwritten to load our slider.js
-	 *
-	 * @param array $extra
-	 * @return type
-	 */
-	function header(array $extra=array())
-	{
-		// load our slider.js, but only if framework requested
-		if (!self::$header_done && $_GET['cd'] === 'yes' &&
-			!(Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
-		{
-			self::includeJS('/pixelegg/js/slider.js');
-		}
-		return parent::header($extra);
-	}
-
-	/**
 	 * Make given color lighter or darker by percentage
 	 *
 	 * @param string $color in hex

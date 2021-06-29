@@ -28,6 +28,7 @@ export default {
         // Output : Input
         // Note the .ts extension on the input - we build directly from the TypeScript when available
         "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
+        "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
         "api/js/etemplate/etemplate2.min":"api/js/etemplate/etemplate2.ts",
         "api/js/egw_action/egw_dragdrop_dhtmlx_tree.min":"api/js/egw_action/egw_dragdrop_dhtmlx_tree.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
@@ -36,11 +37,30 @@ export default {
         // Should be just built-in apps, but until rollup supports multi-level we need them all
         "addressbook/js/app": "addressbook/js/app.ts",
         "admin/js/app": "admin/js/app.ts",
+        "bookmarks/js/app": "bookmarks/js/app.ts",
         "calendar/js/app.min" : "calendar/js/app.ts",
-        "notifications/js/notificationajaxpopup.min":"notifications/js/notificationajaxpopup.js",
+        "collabora/js/app": "collabora/js/app.ts",
+        "filemanager/js/app": "filemanager/js/app.ts",
+        //"home/js/app": "home/js/app.js",
+        //"importexport/js/app": "importexport/js/app.ts",
+        "infolog/js/app": "infolog/js/app.ts",
+        "mail/js/app.min": "mail/js/app.js",
+        //"news_admin/js/app.min": "news_admin/js/app.js",
+        "notifications/js/notificationajaxpopup.min": "notifications/js/notificationajaxpopup.js",
+        //"preferences/js/app": "preferences/js/app.js",
+        "projectmanager/js/app.min": "projectmanager/js/app.ts",
+        "resources/js/app": "resources/js/app.ts",
+        "rocketchat/js/app.min": "rocketchat/js/app.js",
+        //"smallpart/js/app.min": "smallpart/js/app.ts",
         "status/js/app": "status/js/app.ts",
-        "kanban/js/app":"kanban/js/app.ts",
-        "rocketchat/js/app.min":"rocketchat/js/app.js"
+        "timesheet/js/app": "timesheet/js/app.ts",
+        "tracker/js/app": "tracker/js/app.ts",
+        // EPL
+        "esyncpro/js/app": "esyncpro/js/app.ts",
+        //"kanban/js/app": "kanban/js/app.ts",
+        "policy/js/app": "policy/js/app.ts",
+        "stylite/js/app": "stylite/js/app.ts",
+        "webauthn/js/app": "webauthn/js/app.ts",
     },
     external: function(id,parentId,isResolved) {
         if(!isResolved)
