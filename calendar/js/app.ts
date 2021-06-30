@@ -18,6 +18,7 @@
 	/calendar/js/et2_widget_planner.js;
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
+import "../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.min.js";
 
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
