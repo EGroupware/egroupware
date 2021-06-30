@@ -42,7 +42,7 @@ export default {
         "collabora/js/app": "collabora/js/app.ts",
         "filemanager/js/app": "filemanager/js/app.ts",
         //"home/js/app": "home/js/app.js",
-        //"importexport/js/app": "importexport/js/app.ts",
+        "importexport/js/app": "importexport/js/app.ts",
         "infolog/js/app": "infolog/js/app.ts",
         "mail/js/app.min": "mail/js/app.js",
         //"news_admin/js/app.min": "news_admin/js/app.js",
