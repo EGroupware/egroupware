@@ -9,7 +9,6 @@
  */
 
 /*egw:uses
-	/api/js/jquery/jquery.base64.js;
 */
 
 import {AppJS} from "../../api/js/jsapi/app_base.js";
@@ -19,7 +18,6 @@ import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
 import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
-import "../../api/js/jquery/jquery.base64.js";
 */
 
 /**
@@ -2186,7 +2184,7 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			message = this.mail_splitRowId(_msg['msg'][0]);
-			if (message[3]) _foldernode = displayname = jQuery.base64Decode(message[3]);
+			if (message[3]) _foldernode = displayname = jQuery.atob(message[3]);
 		}
 
 		// Tell server
@@ -4514,7 +4512,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
-		this.egw.open_link('mail.mail_acl.edit&mailbox='+ jQuery.base64Encode(folder)+'&acc_id='+acc_id, '_blank', '640x480');
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '640x480');
 	},
 
 	/**
