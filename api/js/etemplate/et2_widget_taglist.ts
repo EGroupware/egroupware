@@ -14,6 +14,8 @@
 	/vendor/egroupware/magicsuggest/magicsuggest.js;
 */
 
+import "../../../vendor/egroupware/magicsuggest/magicsuggest-min.js";
+
 import {et2_selectbox, et2_selectbox_ro} from "./et2_widget_selectbox";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
