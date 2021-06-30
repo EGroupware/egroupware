@@ -57,7 +57,7 @@ export default {
         "tracker/js/app": "tracker/js/app.ts",
         // EPL
         "esyncpro/js/app": "esyncpro/js/app.ts",
-        //"kanban/js/app": "kanban/js/app.ts",
+        "kanban/js/app": "kanban/js/app.ts",
         "policy/js/app": "policy/js/app.ts",
         "stylite/js/app": "stylite/js/app.ts",
         "webauthn/js/app": "webauthn/js/app.ts",
