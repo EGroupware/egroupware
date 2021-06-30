@@ -45,7 +45,7 @@ export default {
         "importexport/js/app": "importexport/js/app.ts",
         "infolog/js/app": "infolog/js/app.ts",
         "mail/js/app.min": "mail/js/app.js",
-        "news_admin/js/app.min": "news_admin/js/app.js",
+        "news_admin/js/app": "news_admin/js/app.ts",
         "notifications/js/notificationajaxpopup.min": "notifications/js/notificationajaxpopup.js",
         "preferences/js/app": "preferences/js/app.ts",
         "projectmanager/js/app.min": "projectmanager/js/app.ts",
