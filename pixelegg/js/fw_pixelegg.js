@@ -161,4 +161,3 @@ import './slider.js';
 		});
 	});
 })(window);
-console.log("Pixelegg loaded");
