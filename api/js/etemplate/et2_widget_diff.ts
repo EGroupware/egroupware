@@ -15,7 +15,7 @@
 	/vendor/bower-asset/diff2html/dist/diff2html.min.js;
 	et2_core_valueWidget;
 */
-
+import "../../../vendor/bower-asset/diff2html/dist/diff2html.min";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
