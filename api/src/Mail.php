@@ -6608,7 +6608,7 @@ class Mail
 
 	static function detect_qp($string)
 	{
-		return preg_match('/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/', $string);
+		return preg_match('/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])[\s|=]/', $string);
 	}
 
 	/**
