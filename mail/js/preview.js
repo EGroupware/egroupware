@@ -9,7 +9,6 @@
  */
 
 /*egw:uses
-	/api/js/jquery/jquery.base64.js;
 */
 
 jQuery(function()
@@ -19,7 +18,7 @@ jQuery(function()
 		// active mailto: links with mail compose
 		if (this.href.substr(0, 7) == 'mailto:')
 		{
-			top.egw.open(null, 'mail', 'add', {send_to: jQuery.base64Encode(this.href.substr(7).replace('%40', '@'))});
+			top.egw.open(null, 'mail', 'add', {send_to: btoa(this.href.substr(7).replace('%40', '@'))});
 
 			return false;	// cant do event.stopImediatePropagation() in on!
 		}
