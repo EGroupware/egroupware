@@ -14,6 +14,7 @@
 */
 import {EgwApp} from "./egw_app";
 import './egw_inheritance.js';
+import {etemplate2} from "../etemplate/etemplate2";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
