@@ -123,6 +123,10 @@ class Bundle
 					{
 						$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
 					}
+					elseif (in_array($file, ['/api/js/jsapi.min.js', '/vendor/bower-asset/jquery/dist/jquery.min.js','/vendor/bower-asset/jquery/dist/jquery.js']))
+					{
+						error_log(function_backtrace());	// no NOT include
+					}
 					else
 					{
 						$to_include[$file] = $path.($query ? '?'.$query : '');

@@ -21,6 +21,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_IPrint, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {et2_dynheight} from "./et2_widget_dynheight";
+import "../jquery/splitter.js";
 
 /**
 * A container widget that accepts 2 children, and puts a resize bar between them.

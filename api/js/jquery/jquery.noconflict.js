@@ -8,17 +8,4 @@
  * @author Ralf Becker <rb@egroupware.org>
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	/api/js/jquery/chosen/chosen.jquery.js;
-	/api/js/jquery/jquery-tab-and-hold/jquery.tabandhold.js;
-	/api/js/jquery/mousewheel/mousewheel.js;
-	/api/js/jquery/jquery-ui-timepicker-addon.js;
-	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
-	/vendor/egroupware/magicsuggest/magicsuggest.js;
-	/api/js/jquery/splitter.js;
-	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
-	/api/js/Resumable/resumable.js;
-*/
 jQuery.noConflict();
