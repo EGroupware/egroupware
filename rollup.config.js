@@ -48,7 +48,7 @@ export default {
         "news_admin/js/app": "news_admin/js/app.ts",
         "notifications/js/notificationajaxpopup.min": "notifications/js/notificationajaxpopup.js",
         "preferences/js/app": "preferences/js/app.ts",
-        "projectmanager/js/app.min": "projectmanager/js/app.ts",
+        "projectmanager/js/app": "projectmanager/js/app.ts",
         "resources/js/app": "resources/js/app.ts",
         "rocketchat/js/app.min": "rocketchat/js/app.js",
         //"smallpart/js/app.min": "smallpart/js/app.ts",
