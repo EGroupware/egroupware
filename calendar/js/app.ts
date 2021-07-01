@@ -57,6 +57,7 @@ import {et2_calendar_owner} from "./et2_widget_owner";
 import {et2_template} from "../../api/js/etemplate/et2_widget_template";
 import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
+import "../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.min.js";
 
 /**
  * UI for calendar
