@@ -79,7 +79,7 @@ class Bundle
 		$query = null;
 		foreach($js_includes as $file)
 		{
-			if ($file == '/api/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
+			if (in_array($file, ['/api/js/jsapi/egw.js','/api/js/jsapi/egw.min.js'])) continue;	// loaded via own tag, and we must not load it twice!
 
 			if (!isset($to_include[$file]))
 			{
@@ -118,8 +118,15 @@ class Bundle
 						$path = $min_path;
 						$mod  = $min_mod;
 					}
-					// skip timestamp $to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
-					$to_include[$file] = $path.($query ? '?'.$query : '');
+					// use cache-buster only for entry-points / app.js, as the have no hash
+					if (preg_match('#/js/app(\.min)?\.js$#', $file))
+					{
+						$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
+					}
+					else
+					{
+						$to_include[$file] = $path.($query ? '?'.$query : '');
+					}
 				}
 			}
 		}

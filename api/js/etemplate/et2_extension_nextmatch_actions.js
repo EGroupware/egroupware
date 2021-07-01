@@ -234,7 +234,7 @@ export function nm_action(_action, _senders, _target, _ids)
 				// Fake a getValue() function
 				var old_value = nextmatch.getValue;
 				var value = nextmatch.getValue();
-				jQuery.extend(value, _action.data, this.activeFilters, {
+				jQuery.extend(value, _action.data, nextmatch.activeFilters, {
 					"selected": idsArr,
 					"select_all": _ids.all,
 					"checkboxes": checkbox_values
@@ -474,7 +474,7 @@ export function nm_open_popup(_action, _selected)
 				dialog_parent.append(dialog);
 			};
 			jQuery('button:visible',popup).each(function(index) {
-				var but = jQuery(this);
+				var but = jQuery(window);
 				if(but.attr("id"))
 				{
 					// Find the associated widget
@@ -485,13 +485,13 @@ export function nm_open_popup(_action, _selected)
 					text: but.text(),
 					id: widget_id,
 					click: button && button.onclick ? function(e) {
-						jQuery(this).dialog("close");
+						jQuery(window).dialog("close");
 						nm_popup_action = action;
 						nm_popup_ids = selected;
 						button.onclick.apply(button, e.currentTarget);
 						close_function();
 					} : function(e) {
-						jQuery(this).dialog("close");
+						jQuery(window).dialog("close");
 						nm_popup_action = null;
 						close_function();
 					}

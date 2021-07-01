@@ -507,9 +507,6 @@ export class etemplate2
 		if (Array.isArray(_data.langRequire)) {
 			promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
 		}
-		if (appname) {
-			promisses.push(egw(currentapp, window).includeJS('/'+appname+'/js/app.js', undefined, undefined, egw.webserverUrl));
-		}
 		return Promise.all(promisses).catch((err) => {
 			console.log("et2.load(): error loading lang-files and app.js: "+err.message);
 		}).then(() => {

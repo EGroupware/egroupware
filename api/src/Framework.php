@@ -14,6 +14,7 @@
 namespace EGroupware\Api;
 
 use EGroupware\Api\Framework\Bundle;
+use EGroupware\Api\Framework\IncludeMgr;
 use EGroupware\Api\Header\ContentSecurityPolicy;
 
 /**
@@ -1071,21 +1072,29 @@ abstract class Framework extends Framework\Extra
 				'etag' => md5(json_encode($GLOBALS['egw_info']['user']['preferences']['common']).
 					$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])),
 			));
+			// manually load old dhtmlx stuff via script tag
+			self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+			self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
+			self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
+			self::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
+			self::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		}
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$map = null;
 		$extra['include'] = array_map(static function($str){
 			return substr($str,1);
-		}, self::get_script_links(true, false, $map), array(1));
+		}, self::get_script_links(true, false, $map));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// Static things we want to make sure are loaded first
 //$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
 //<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js"></script>';
-		// load our clientside entrypoint egw.js
+
+		// load our clientside entrypoint egw.min.js with a cache-buster
 		$java_script .= '<script type="module" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				'/api/js/jsapi/egw.min.js" id="egw_script_id"';
+			'/api/js/jsapi/egw.min.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.min.js').
+			'" id="egw_script_id"';
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)
@@ -1460,6 +1469,8 @@ abstract class Framework extends Framework\Extra
 
 	/**
 	 * The include manager manages including js files and their dependencies
+	 *
+	 * @var IncludeMgr
 	 */
 	protected static $js_include_mgr;
 

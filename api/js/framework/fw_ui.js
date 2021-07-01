@@ -17,6 +17,7 @@ import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
 import "../jquery/jquery.noconflict.js";
 import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import '../jsapi/egw_inheritance.js';
+import {EGW_KEY_ENTER, EGW_KEY_SPACE} from '../egw_action/egw_action_constants.js';
 
 /**
  * ui siemenu entry class
