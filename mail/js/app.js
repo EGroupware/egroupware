@@ -2184,7 +2184,7 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			message = this.mail_splitRowId(_msg['msg'][0]);
-			if (message[3]) _foldernode = displayname = jQuery.atob(message[3]);
+			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
 
 		// Tell server
