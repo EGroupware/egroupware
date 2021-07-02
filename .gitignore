@@ -24,6 +24,7 @@
 /ewawi/
 /eworkflow/
 /collabora/
+chunks/
 /groups/
 /header.inc.php
 /jdots/
@@ -64,3 +65,15 @@ status/
 smallpart/
 swoolepush/
 webauthn/
+addressbook/js/app.js
+admin/js/app.js
+api/js/etemplate/*.js
+api/js/jsapi/egw_app.js
+calendar/js/*.js
+filemanager/js/app.js
+importexport/js/app.js
+infolog/js/app.js
+lit-element-starter-ts/src/my-input.js
+preferences/js/app.js
+resources/js/app.js
+timesheet/js/app.js
