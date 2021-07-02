@@ -51,7 +51,7 @@ export default {
         "projectmanager/js/app": "projectmanager/js/app.ts",
         "resources/js/app": "resources/js/app.ts",
         "rocketchat/js/app.min": "rocketchat/js/app.js",
-        //"smallpart/js/app.min": "smallpart/js/app.ts",
+        "smallpart/js/app": "smallpart/js/app.ts",
         "status/js/app": "status/js/app.ts",
         "timesheet/js/app": "timesheet/js/app.ts",
         "tracker/js/app": "tracker/js/app.ts",
