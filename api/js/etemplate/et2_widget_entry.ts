@@ -15,7 +15,7 @@
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_no_init} from "./et2_core_common";
+import {et2_cloneObject, et2_no_init} from "./et2_core_common";
 
 /**
  * A widget to display a value from an entry
@@ -94,7 +94,12 @@ export class et2_entry extends et2_valueWidget
 		}
 		let value = _attrs.value;
 
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_entry._attributes, _child || {}));
+		// Add all attributes hidden in the content arrays to the attributes
+		// parameter
+		this.transformAttributes(_attrs);
+
+		// Create a local copy of the options object
+		this.options = et2_cloneObject(_attrs);
 
 		// Save value from parsing, but only if set
 		if(value)
