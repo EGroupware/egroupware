@@ -2137,6 +2137,13 @@ abstract class Merge
 		}
 		foreach($files as $file)
 		{
+			$edit_attributes = array(
+				'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
+				'document'   => $file['path'],
+				'merge'      => get_called_class(),
+				'id'         => '$id',
+				'select_all' => '$select_all'
+			);
 			if (count($dircount) > 1)
 			{
 				$name_arr = explode('/', $file['name']);
@@ -2159,6 +2166,7 @@ abstract class Merge
 								'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
 								'group'		=> 2,
 								'postSubmit' => true,	// download needs post submit (not Ajax) to work
+								'url'		=> urldecode(http_build_query($edit_attributes))
 							);
 							if ($file['mime'] == 'message/rfc822')
 							{
@@ -2197,13 +2205,6 @@ abstract class Merge
 					'target' => '_blank',
 					'postSubmit' => true,	// download needs post submit (not Ajax) to work
 				);
-				$edit_attributes = array(
-					'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
-					'document'   => $file['path'],
-					'merge'      => get_called_class(),
-					'id'         => '$id',
-					'select_all' => '$select_all'
-				);
 				$documents[$file['mime']]['children'][$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
 				if ($file['mime'] == 'message/rfc822')
 				{
@@ -2217,14 +2218,6 @@ abstract class Merge
 					'caption' => Api\Vfs::decodePath($file['name']),
 					'group' => 2,
 					'target' => '_blank'
-				);
-
-				$edit_attributes = array(
-					'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
-					'document'   => $file['path'],
-					'merge'      => get_called_class(),
-					'id'         => '$id',
-					'select_all' => '$select_all'
 				);
 				$documents[$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
 				if ($file['mime'] == 'message/rfc822')
