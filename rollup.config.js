@@ -14,6 +14,7 @@ import babel from '@babel/core';
 import { readFileSync } from "fs";
 import rimraf from 'rimraf';
 import { minify } from 'terser';
+import { readdir,stat } from 'fs/promises';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
@@ -22,7 +23,7 @@ rimraf.sync('./chunks/');
 // Turn on minification
 const do_minify = false;
 
-export default {
+const config = {
     treeshake: false,
     input: {
         // Output : Input
@@ -32,35 +33,8 @@ export default {
         "api/js/etemplate/etemplate2.min":"api/js/etemplate/etemplate2.ts",
         "api/js/egw_action/egw_dragdrop_dhtmlx_tree.min":"api/js/egw_action/egw_dragdrop_dhtmlx_tree.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
-        "api/js/jsapi.min": 'api/js/jsapi/jsapi.js',
 
-        // Should be just built-in apps, but until rollup supports multi-level we need them all
-        "addressbook/js/app": "addressbook/js/app.ts",
-        "admin/js/app": "admin/js/app.ts",
-        "bookmarks/js/app": "bookmarks/js/app.ts",
-        "calendar/js/app" : "calendar/js/app.ts",
-        "collabora/js/app": "collabora/js/app.ts",
-        "filemanager/js/app": "filemanager/js/app.ts",
-        //"home/js/app": "home/js/app.js",
-        "importexport/js/app": "importexport/js/app.ts",
-        "infolog/js/app": "infolog/js/app.ts",
-        "mail/js/app.min": "mail/js/app.js",
-        "news_admin/js/app": "news_admin/js/app.ts",
-        "notifications/js/notificationajaxpopup.min": "notifications/js/notificationajaxpopup.js",
-        "preferences/js/app": "preferences/js/app.ts",
-        "projectmanager/js/app": "projectmanager/js/app.ts",
-        "resources/js/app": "resources/js/app.ts",
-        "rocketchat/js/app.min": "rocketchat/js/app.js",
-        "smallpart/js/app": "smallpart/js/app.ts",
-        "status/js/app": "status/js/app.ts",
-        "timesheet/js/app": "timesheet/js/app.ts",
-        "tracker/js/app": "tracker/js/app.ts",
-        // EPL
-        "esyncpro/js/app": "esyncpro/js/app.ts",
-        "kanban/js/app": "kanban/js/app.ts",
-        "policy/js/app": "policy/js/app.ts",
-        "stylite/js/app": "stylite/js/app.ts",
-        "webauthn/js/app": "webauthn/js/app.ts",
+        // app.ts/js are added automatic by addAppsConfig() below
     },
     external: function(id,parentId,isResolved) {
         if(!isResolved)
@@ -140,7 +114,7 @@ export default {
                 mangle: false,
                 output: {
                     preamble: `/*!
- * EGroupware (http://www.egroupware.org/) minified Javascript
+ * EGroupware (https://www.egroupware.org/) minified Javascript
  *
  * full sources are available under https://github.com/EGroupware/egroupware/
  *
@@ -151,11 +125,39 @@ export default {
             });
         }
     }],
+
     // Custom warning handler to give more information about circular dependencies
-
     onwarn: function(warning,warn) {
-        console.warn(warning);
+        console.warn(warning.message || warning);
     }
-
-
 };
+
+/**
+ * Add existing app.ts/js endpoints to config.input and return it
+ *
+ * @return Promise<object>
+ */
+export default async function addAppsConfig()
+{
+    const conf = config;
+    const files = await readdir('.', { withFileTypes: true});
+    for (const file of files)
+    {
+        if (file.isDirectory())
+        {
+            try {
+                await stat(file.name + '/js/app.ts');
+                config.input[file.name + '/js/app'] = file.name + '/js/app.ts';
+            }
+            catch (e) {
+                try {
+                    await stat(file.name + '/js/app.js');
+                    config.input[file.name + '/js/app.min'] = file.name + '/js/app.js';
+                }
+                catch (e) {
+                }
+            }
+        }
+    }
+    return conf;
+}
