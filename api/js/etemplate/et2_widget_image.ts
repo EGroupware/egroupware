@@ -24,6 +24,7 @@ import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {et2_dialog} from "./et2_widget_dialog";
+import '../../../vendor/bower-asset/cropper/dist/cropper.min.js';
 
 /**
  * Class which implements the "image" XET-Tag
@@ -653,7 +654,7 @@ export class et2_avatar extends et2_image
 	}
 }
 et2_register_widget(et2_avatar, ["avatar"]);
-
+window['et2_avatar'] = et2_avatar;
 /**
 * Avatar readonly widget to only display user profile picture or
 * user letter avatar based on user's firstname lastname.
