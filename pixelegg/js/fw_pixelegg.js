@@ -13,7 +13,7 @@
 	framework.fw_desktop;
 	/pixelegg/js/slider.js;
 */
-import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
+//import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import "../../api/js/jquery/mousewheel/mousewheel.js";
 import '../../api/js/framework/fw_desktop.js';
 import './slider.js';

@@ -503,7 +503,7 @@ export class etemplate2
 		}
 
 		// require necessary translations from server AND the app.js file, if not already loaded
-		let promisses = [];
+		let promisses = [window.egw_ready];	// to wait for legacy-loaded JS
 		if (Array.isArray(_data.langRequire)) {
 			promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
 		}

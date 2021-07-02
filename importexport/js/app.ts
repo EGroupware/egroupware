@@ -11,7 +11,7 @@
 
 
 import "../../vendor/bower-asset/jquery/dist/jquery.min.js";
-import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
+//import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {egw} from "../../api/js/jsapi/egw_global";

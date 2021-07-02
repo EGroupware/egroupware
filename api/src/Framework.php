@@ -1072,13 +1072,15 @@ abstract class Framework extends Framework\Extra
 				'etag' => md5(json_encode($GLOBALS['egw_info']['user']['preferences']['common']).
 					$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])),
 			));
-			// manually load old dhtmlx stuff via script tag
-			self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
-			self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
-			self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
-			self::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
-			self::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		}
+		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
+		self::includeJS('/vendor/bower-asset/jquery-ui/jquery-ui.js');
+		self::includeJS('/api/js/jquery/jquery-ui-timepicker-addon.js');
+		self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
+		self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
+		self::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
+		self::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$map = null;

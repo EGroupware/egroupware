@@ -26,7 +26,7 @@ jQuery(function()
 		else if ((this.href[0] === '/' || this.href.match(new RegExp('^'+location.protocol+'//'+location.host+'/'))) &&
 			this.href.match(/\/index.php\?/))
 		{
-			top.egw.openPopup(this.href.replace(/([?&])no_popup=[^&]*/, '\1'), 800, 600, '_blank');
+			top.egw.openPopup(this.href.replace(/([?&])no_popup=[^&]*/, '$1'), 800, 600, '_blank');
 			return false;
 		}
 		else	// add target=_blank to all other links, gives CSP error and would open in preview
