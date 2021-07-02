@@ -292,7 +292,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
 			{
-				eval(url.substr(11));
+				(new Function(url.substr(11)))();
 				return;
 			}
 			if (url.indexOf('mailto:') == 0)
