@@ -275,12 +275,14 @@ foreach(scandir(__DIR__) as $dir)
 $cmd = $composer.' install '.implode(' ', $composer_args);
 run_cmd($cmd, 'composer');
 
-// update npm dependencies and run grunt to minify javascript and css
+// update npm dependencies, run grunt to minify css and rollup to build javascript
 if ($npm && $grunt)
 {
-	run_cmd($npm.' install', 'npm');
+	run_cmd($npm.' install', 'npm install');
 
 	run_cmd($grunt, 'grunt');
+
+	run_cmd($npm .' run build', 'rollup (npm run build)');
 }
 
 echo "\n$succieded tasks successful run".
