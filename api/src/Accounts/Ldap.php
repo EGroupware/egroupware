@@ -26,11 +26,11 @@ use setup_cmd_ldap;
 /**
  * LDAP Backend for accounts
  *
- * The LDAP backend of the accounts class now stores accounts, groups and the memberships completly in LDAP.
+ * The LDAP backend of the accounts class now stores accounts, groups and the memberships completely in LDAP.
  * It does NO longer use the ACL class/table for group membership information.
  * Nor does it use the phpgwAcounts schema (part of that information is stored via shadowAccount now).
  *
- * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND
+ * A user is recognised by eGW, if he's in the user_context tree AND has the posixAccount object class AND
  * matches the LDAP search filter specified in setup >> configuration.
  * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
  * The group members are stored as memberuid's.
@@ -153,17 +153,13 @@ class Ldap
 	{
 		$this->frontend = $frontend;
 
-		// enable the caching in the session, done by the accounts class extending this class.
-		$this->use_session_cache = true;
-
 		$this->ldap = Api\Ldap::factory(false, $this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 		$this->ds = $this->ldap->ds;
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];
-		$this->group_context = $this->frontend->config['ldap_group_context'] ?
-			$this->frontend->config['ldap_group_context'] : $this->frontend->config['ldap_context'];
+		$this->group_context = $this->frontend->config['ldap_group_context'] ?: $this->frontend->config['ldap_context'];
 	}
 
 	/**
@@ -203,7 +199,7 @@ class Ldap
 			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
 		// common code for users and groups
-		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
+		// checks if account_lid (dn) has been changed or required objectclass'es are missing
 		if ($data_utf8['account_id'] && $data_utf8['account_lid'])
 		{
 			// read the entry first, to check if the dn (account_lid) has changed
@@ -741,7 +737,7 @@ class Ldap
 
 				if ($param['type'] != 'both')
 				{
-					// folw:
+					// follow:
 					// - first query only few attributes for sorting and throwing away not needed results
 					// - throw away & sort
 					// - fetch relevant accounts with full information
@@ -766,7 +762,6 @@ class Ldap
 
 					if (is_numeric($param['type'])) // return only group-members
 					{
-						$relevantAccounts = array();
 						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
 						$group = ldap_get_entries($this->ds, $sri);
 						$fullSet = $group[0]['memberuid'] ? array_intersect_key($fullSet, array_flip($group[0]['memberuid'])) : array();
