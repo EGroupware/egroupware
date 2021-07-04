@@ -128,7 +128,7 @@ const config = {
 
     // Custom warning handler to give more information about circular dependencies
     onwarn: function(warning,warn) {
-        console.warn(warning.message || warning);
+        console.warn(warning.toString());
     }
 };
 
