@@ -112,6 +112,7 @@ const config = {
             }
             return minify(code, {
                 mangle: false,
+                sourceMap: true,
                 output: {
                     preamble: `/*!
  * EGroupware (https://www.egroupware.org/) minified Javascript
