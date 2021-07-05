@@ -8,11 +8,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	et2_widget_taglist;
-*/
-
 import {et2_register_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_taglist_email} from "../../api/js/etemplate/et2_widget_taglist";
