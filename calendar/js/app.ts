@@ -24,6 +24,7 @@ import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import {et2_calendar_owner} from "./et2_widget_owner";
 import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -43,17 +44,8 @@ import {date} from "../../api/js/etemplate/lib/date.js";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {egw_registerGlobalShortcut} from "../../api/js/egw_action/egw_keymanager.js";
 
-// et2 widgets need to be imported, so they register themselves
-import "./et2_widget_daycol";
-import "./et2_widget_event";
-import "./et2_widget_owner";
-import "./et2_widget_planner";
-import "./et2_widget_planner_row";
-import "./et2_widget_timegrid";
-import "./et2_widget_view";
 import {egw, egw_getFramework, framework} from "../../api/js/jsapi/egw_global";
 import {et2_number} from "../../api/js/etemplate/et2_widget_number";
-import {et2_calendar_owner} from "./et2_widget_owner";
 import {et2_template} from "../../api/js/etemplate/et2_widget_template";
 import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
@@ -264,6 +256,9 @@ export class CalendarApp extends EgwApp
 		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
 		if(sidebox.length == 0 && egw_getFramework() != null)
 		{
+			// Force rollup to load owner widget, it leaves it out otherwise
+			new et2_calendar_owner(_et2.widgetContainer,{});
+
 			var egw_fw = egw_getFramework();
 			sidebox= jQuery('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 		}
