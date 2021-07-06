@@ -26,7 +26,6 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 //import './et2-button';
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
-import './vfsSelectUI';
 import './et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
@@ -75,6 +74,7 @@ import './et2_widget_script';
 import './et2_widget_countdown';
 import './et2_extension_nextmatch';
 import './et2_extension_customfields';
+import './vfsSelectUI';
 
 
 /**

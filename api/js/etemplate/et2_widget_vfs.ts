@@ -1453,12 +1453,12 @@ export class et2_vfsSelect extends et2_inputWidget
 				resizable: false
 			}, et2_dialog._create_parent('api'));
 		this.dialog.template.uniqueId = 'api.vfsSelectUI';
-		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
-		app.vfsSelectUI.vfsSelectWidget = this;
 
 		// Keep the dialog always at the top
 		this.dialog.div.parent().css({"z-index": 100000});
 		this.dialog.div.on('load', function(e) {
+			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
+			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
 		});
 

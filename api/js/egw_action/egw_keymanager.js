@@ -42,7 +42,7 @@ export var egw_keycode_translation_function = function(_nativeKeyCode) {
  * Checks whether the given keycode is in the list of valid key codes. If not,
  * returns -1.
  */
-function egw_keycode_makeValid(_keyCode) {
+export function egw_keycode_makeValid(_keyCode) {
 	var idx = EGW_VALID_KEYS.indexOf(_keyCode);
 	if (idx >= 0) {
 		return _keyCode;
