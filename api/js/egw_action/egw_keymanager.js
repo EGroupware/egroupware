@@ -28,7 +28,7 @@ import {
  * egw key constants as listed above. This key codes were chosen to match the
  * key codes of IE and FF.
  */
-var egw_keycode_translation_function = function(_nativeKeyCode) {
+export var egw_keycode_translation_function = function(_nativeKeyCode) {
 	// Map the numpad to the 0..9 keys
 	if (_nativeKeyCode >= 96 && _nativeKeyCode <= 105)
 	{
