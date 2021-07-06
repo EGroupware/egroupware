@@ -985,7 +985,7 @@ export class etemplate2
 		_root.iterateOver(function (_widget)
 		{
 			// The widget must have an id to be included in the values array
-			if (_widget.id == "") {
+			if (_widget.id === undefined || _widget.id === "") {
 				return;
 			}
 

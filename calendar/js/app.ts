@@ -630,10 +630,8 @@ export class CalendarApp extends EgwApp
 		let filtered = Object.keys(this._grants).filter(account => this.state.owner.indexOf(account) >= 0);
 
 		// Check if we're interested in displaying by owner / participant
-		let owner_check = et2_calendar_event.owner_check(cal_event, jQuery.extend({},
-            {options: {owner: filtered}},
-			this.et2
-		));
+		let owner_check = et2_calendar_event.owner_check(cal_event, this.et2, jQuery.extend({},
+            {options: {owner: filtered}}));
 		if(!owner_check)
 		{
 			// The owner is not in the list of what we're allowed / care about
