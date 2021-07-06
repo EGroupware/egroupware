@@ -15,6 +15,7 @@ import { readFileSync } from "fs";
 import rimraf from 'rimraf';
 import { minify } from 'terser';
 import { readdir,stat } from 'fs/promises';
+import resolve from '@rollup/plugin-node-resolve';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
@@ -80,7 +81,10 @@ const config = {
                 return tsPath;
             }
         }
-    }, {
+    },
+    // resolve (external) node modules from node_modules directory
+    //resolve(),
+    {
         transform (code, id) {
             if (id.endsWith('.ts'))
                 return new Promise((resolve, reject) => {
