@@ -9,15 +9,8 @@
  * @copyright Nathan Gray 2011
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	lib/date;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-*/
-
-//import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
+// NEEDED by date widget
+import "../jquery/jquery-ui-timepicker-addon.js";
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
@@ -633,7 +626,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 		{
 			if(this.getType() != 'date-timeonly') _value += this.is_mobile ? 'T' : ' ';
 
-			// @ts-ignore
+			// @ts-ignore TypeScript can't find formatTime(), but it's there
 			_value += jQuery.datepicker.formatTime(this.timeFormat, {
 				hour: formatDate.getHours(),
 				minute: formatDate.getMinutes(),

@@ -1207,7 +1207,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 	static owner_check(event, parent, owner_too?)
 	{
 		let owner_match = true;
-		let state = parent.getInstanceManager()?.app_obj.calendar.state || app.calendar?.state || {}
+		let state = (parent.getInstanceManager ? parent.getInstanceManager().app_obj.calendar.state : false ) || app.calendar?.state || {}
 		if(typeof owner_too === 'undefined' && state.status_filter)
 		{
 			owner_too = state.status_filter === 'owner';
