@@ -35,7 +35,6 @@ import {expose} from "./expose";
 import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
-import {etemplate2} from "./etemplate2";
 
 /**
  * Class which implements the "vfs" XET-Tag
