@@ -1442,6 +1442,10 @@ export class etemplate2
 		throw 'Invalid parameters';
 	}
 }
+
+// make etemplate2 global, as we need it to check an app uses it and then call methods on it
+window['etemplate2'] = etemplate2;
+
 // Calls etemplate2_handle_response in the context of the object which
 // requested the response from the server
 egw(window).registerJSONPlugin(etemplate2.handle_load, null, 'et2_load');
