@@ -12,6 +12,7 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-typescript": "^7.14.5",
     "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/jquery": "^3.5.5",
     "@types/jqueryui": "^1.12.14",
@@ -42,5 +43,11 @@
       "egw": true,
       "app": true
     }
+  },
+  "dependencies": {
+    "carbon-components": "^10.37.0",
+    "carbon-web-components": "^1.14.1",
+    "lit-element": "^2.5.1",
+    "lit-html": "^1.4.1"
   }
 }
