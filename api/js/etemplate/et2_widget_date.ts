@@ -28,7 +28,7 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {date} from "./lib/date.js";
-import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {egwIsMobile,sprintf} from "../egw_action/egw_action_common.js";
 
 // all calls to jQueryUI.datetimepicker as jQuery.datepicker give errors which are currently suppressed with @ts-ignore
 // adding npm package @types/jquery.ui.datetimepicker did NOT help :(
