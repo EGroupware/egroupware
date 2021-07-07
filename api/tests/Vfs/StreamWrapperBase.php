@@ -122,7 +122,14 @@ abstract class StreamWrapperBase extends LoggedInTest
 		}
 		foreach($this->files as $file)
 		{
-			Vfs::unlink($file);
+			if(Vfs::is_dir($file) && !Vfs::is_link(($file)))
+			{
+				Vfs::rmdir($file);
+			}
+			else
+			{
+				Vfs::unlink($file);
+			}
 		}
 
 		// Remove any mounts

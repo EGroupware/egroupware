@@ -110,7 +110,14 @@ class SharingBase extends LoggedInTest
 		}
 		foreach($this->files as $file)
 		{
-			Vfs::unlink($file);
+			if(Vfs::is_dir($file) && !Vfs::is_link(($file)))
+			{
+				Vfs::rmdir($file);
+			}
+			else
+			{
+				Vfs::unlink($file);
+			}
 		}
 		Vfs::remove($this->files);
 
@@ -164,6 +171,7 @@ class SharingBase extends LoggedInTest
 		if(!Vfs::is_readable($dir))
 		{
 			Vfs::mkdir($dir);
+			$this->files[] = $dir;
 		}
 		$this->files += $this->addFiles($dir);
 
