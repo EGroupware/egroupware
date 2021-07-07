@@ -24,7 +24,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	 * @returns {undefined}
 	 */
 	init: function (_sidemenuId, _tabsId, _webserverUrl, _sideboxSizeCallback){
-		window.framework = this;
+
 		/* Get the base div */
 		this.sidemenuDiv = document.getElementById(_sidemenuId);
 		this.tabsDiv = document.getElementById(_tabsId);

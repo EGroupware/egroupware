@@ -1302,7 +1302,6 @@ declare var chrome : any;
 declare var InstallTrigger : any;
 declare var app : {classes: any, [propName: string]: EgwApp};
 declare var egw_globalObjectManager : any;
-declare var framework : any;
 declare var egw_LAB : any;
 declare function egwIsMobile() : string|null;
 
