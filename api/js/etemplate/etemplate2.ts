@@ -224,8 +224,9 @@ export class etemplate2
 	/**
 	 * Clears the current instance.
 	 * @param _keep_app_object keep app object
+	 * @param _keep_session keep server-side et2 session eg. for vfs-select
 	 */
-	public clear(_keep_app_object?:boolean)
+	public clear(_keep_app_object?:boolean, _keep_session?: boolean)
 	{
 		jQuery(this._DOMContainer).trigger('clear');
 
@@ -238,7 +239,7 @@ export class etemplate2
 		// call our destroy_session handler, if it is not already unbind, and unbind it after
 		if (this.destroy_session)
 		{
-			this.destroy_session();
+			if (!_keep_session) this.destroy_session();
 			this.unbind_unload();
 		}
 		if (this._widgetContainer != null)
@@ -257,7 +258,7 @@ export class etemplate2
 			if (typeof etemplate2._byTemplate[name] == "undefined") continue;
 			for (let i = 0; i < etemplate2._byTemplate[name].length; i++)
 			{
-				if (etemplate2._byTemplate[name][i] == this)
+				if (etemplate2._byTemplate[name][i] === this)
 				{
 					etemplate2._byTemplate[name].splice(i, 1);
 				}
@@ -1444,7 +1445,7 @@ export class etemplate2
 }
 
 // make etemplate2 global, as we need it to check an app uses it and then call methods on it
-window['etemplate2'] = etemplate2;
+if (typeof window.etemplate2 === 'undefined') window['etemplate2'] = etemplate2;
 
 // Calls etemplate2_handle_response in the context of the object which
 // requested the response from the server

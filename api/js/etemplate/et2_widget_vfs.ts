@@ -1460,11 +1460,6 @@ export class et2_vfsSelect extends et2_inputWidget
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
 		});
-
-		// we need an etemplate_exec_id for better handling serverside parts of
-		// widgets and since we can not have a etemplate_exec_id specifically
-		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
-		this.dialog.template.etemplate_exec_id = et2.etemplate_exec_id;
 	}
 
 	/**

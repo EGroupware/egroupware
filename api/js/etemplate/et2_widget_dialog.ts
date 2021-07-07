@@ -322,7 +322,9 @@ export class et2_dialog extends et2_widget {
             this.div.dialog("destroy");
 
             if (this.template) {
-                this.template.clear(true);
+            	// if the dialog has an etemplate_exec_id, like the vfs select dialog, we must NOT delete the server-side
+				// et2 session, as the exec-id is NOT from the dialog, but some other template
+                this.template.clear(true, true);
                 this.template = null;
             }
 
@@ -904,5 +906,5 @@ export class et2_dialog extends et2_widget {
     }
 }
 // make et2_dialog publicly available as we need to call it from templates
-window['et2_dialog'] = et2_dialog;
+if (typeof window.et2_dialog === 'undefined') window['et2_dialog'] = et2_dialog;
 et2_register_widget(et2_dialog, ["dialog"]);
