@@ -63,6 +63,18 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 		parent::testWithAccess();
 	}
+	/**
+	 * Test that we can work through/with a symlink
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testSymlinkFromFolder($test_file = '') : void
+	{
+		$info_id = $this->make_infolog();
+		$this->files[] = $this->test_file = $this->getInfologFilename(null, $info_id);
+
+		parent::testSymlinkFromFolder($this->test_file);
+	}
 
 	protected function allowAccess(string $test_name, string &$test_file, int $test_user, string $needed) : void
 	{

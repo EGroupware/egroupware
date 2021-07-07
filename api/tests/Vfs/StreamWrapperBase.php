@@ -335,6 +335,91 @@ abstract class StreamWrapperBase extends LoggedInTest
 
 	}
 
+
+	/**
+	 * Test that we can work through/with a symlink
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testSymlinkFromFolder($test_file = '') : void
+	{
+		// Setup
+		if($test_file == '')
+		{
+			$test_file = Vfs::get_home_dir();
+		}
+		else
+		{
+			$test_file = Vfs::dirname($test_file);
+		}
+		$ns = explode('\\', __NAMESPACE__);
+		$test_base_dir = $test_file . '/'.array_pop($ns).'/'.$this->getName();
+		$source_dir = $test_base_dir . "/link_test";
+		$link_dir = $test_base_dir . "/link_target";
+
+		// Check if backend supports it
+		$url = Vfs::resolve_url_symlinks($test_base_dir,false,false);
+		$scheme = (string)Vfs::parse_url($url,PHP_URL_SCHEME);
+		if (!class_exists($class = Vfs\StreamWrapper::scheme2class($scheme)) || !method_exists($class,'symlink'))
+		{
+			$this->markTestIncomplete($scheme . " StreamWrapper ($class) does not support symlink");
+		}
+
+		$this->assertTrue(
+			Vfs::mkdir($test_base_dir),
+			"Could not create base test directory '$test_base_dir'"
+		);
+		$this->assertTrue(
+			Vfs::mkdir($source_dir),
+			"Could not create source directory '$source_dir'"
+		);
+
+		// Add something into the directory
+		$test_file_name = '/test.txt';
+		$this->files[] = $test_file = $source_dir.$test_file_name;
+		$contents = $this->getName() . "\n".__CLASS__."\nJust a test ;)\n";
+		$this->assertNotFalse(
+			file_put_contents(Vfs::PREFIX . $test_file, $contents),
+			"Could not write file $test_file"
+		);
+
+		// Add into files list after test file, to make sure test file is removed
+		// first during cleanup.  Order matters: link first, dir last
+		$this->files[] = $link_dir;
+		$this->files[] = $source_dir;
+		$this->files[] = $test_base_dir;
+
+		// Create the link
+		$this->assertTrue(
+			Vfs::symlink($source_dir, $link_dir),
+			"Could not create symlink to test ('$link_dir')"
+		);
+
+		Vfs::clearstatcache();
+
+		// Test - is a link
+		$this->assertTrue(Vfs::is_link($link_dir), "Link directory was not a link");
+
+		// Test - directory is a directory
+		$this->assertTrue(Vfs::is_dir($link_dir), "Link directory was not a directory");
+
+		// Test - Folder is what we expect
+		$stat = Vfs::stat($link_dir);
+		$this->assertEquals(2,$stat['nlink'], "Link target is not a folder");
+		$this->assertStringEndsWith($source_dir,$stat['url'], "Looks like link is wrong");
+
+		// Test - File is where we expect
+		$files = Vfs::find($link_dir,['type'=>'F']);
+		$this->assertEquals(1,Vfs::$find_total, "Unexpected file count");
+		$this->assertEquals($link_dir.$test_file_name, $files[0], "File name mismatch");
+
+
+		// Test - File is what we expect
+		Vfs::stat($files[0]);
+		$this->assertEquals($contents, file_get_contents(Vfs::PREFIX . $files[0]), "File contents are wrong");
+	}
+
+
 	////// Handy functions ///////
 
 	/**
