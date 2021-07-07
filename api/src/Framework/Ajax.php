@@ -216,16 +216,18 @@ abstract class Ajax extends Api\Framework
 
 		if ($do_framework)
 		{
-			//echo __METHOD__.__LINE__.' do framework ...'.'<br>';
 			// framework javascript classes only need for framework
+			$path = '/'.static::JS_INCLUDE_APP.'/js/';
 			if (Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile')
 			{
-				self::includeJS('.', 'fw_mobile', static::JS_INCLUDE_APP);
+				$path .= 'fw_mobile.min.js';
 			}
 			else
 			{
-				self::includeJS('.', 'fw_'.static::APP, static::JS_INCLUDE_APP);
+				$path .='fw_'.static::APP.'.min.js';
 			}
+			self::includeJS($path.'?'.filemtime(EGW_SERVER_ROOT.$path));
+
 			Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
 
 			$extra['navbar-apps'] = $this->get_navbar_apps($_SERVER['REQUEST_URI']);
