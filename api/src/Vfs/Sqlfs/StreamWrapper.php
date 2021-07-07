@@ -1852,7 +1852,7 @@ GROUP BY A.fs_id';
 		{
 			return false;
 		}
-		if (!$this->check_access($path,Api\Acl::EDIT, $stat))
+		if (!$this->check_access($path,Vfs::WRITABLE, $stat))
 		{
 			return false;	// permission denied
 		}
