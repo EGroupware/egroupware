@@ -323,18 +323,14 @@ class Storage
 			)));
 		}
 
-		// Add in deleted type, if holding deleted contacts
-		$config = Api\Config::read('phpgwapi');
-		if($config['history'])
-		{
-			$this->content_types[self::DELETED_TYPE] = array(
-				'name'	=>	lang('Deleted'),
-				'options' =>	array(
-					'template'	=>	'addressbook.edit',
-					'icon'		=>	'deleted.png'
-				)
-			);
-		}
+		// Always add in deleted type, to show deleted contacts
+		$this->content_types[self::DELETED_TYPE] = array(
+			'name'	=>	lang('Deleted'),
+			'options' =>	array(
+				'template'	=>	'addressbook.edit',
+				'icon'		=>	'deleted.png'
+			)
+		);
 	}
 
 	/**

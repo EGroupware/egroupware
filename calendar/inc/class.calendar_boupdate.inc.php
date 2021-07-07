@@ -1906,7 +1906,7 @@ class calendar_boupdate extends calendar_bo
 				// delete all links to the event
 				Link::unlink(0,'calendar',$cal_id);
 			}
-			elseif ($config['calendar_delete_history'])
+			else
 			{
 				// mark all links to the event as deleted, but keep them
 				Link::unlink(0,'calendar',$cal_id,'','','',true);
