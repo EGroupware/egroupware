@@ -412,7 +412,8 @@ export function nm_compare_field(_action, _senders, _target)
 
 // TODO: This code is rather suboptimal! No global variables as this code will
 // run in a global context
-var nm_popup_action, nm_popup_ids = null;
+window.nm_popup_action = null;
+window.nm_popup_ids = null;
 
 /**
  * Open popup for a certain action requiring further input
@@ -474,7 +475,7 @@ export function nm_open_popup(_action, _selected)
 				dialog_parent.append(dialog);
 			};
 			jQuery('button:visible',popup).each(function(index) {
-				var but = jQuery(window);
+				var but = jQuery(this);
 				if(but.attr("id"))
 				{
 					// Find the associated widget
@@ -485,13 +486,13 @@ export function nm_open_popup(_action, _selected)
 					text: but.text(),
 					id: widget_id,
 					click: button && button.onclick ? function(e) {
-						jQuery(window).dialog("close");
+						jQuery(this).dialog("close");
 						nm_popup_action = action;
 						nm_popup_ids = selected;
 						button.onclick.apply(button, e.currentTarget);
 						close_function();
 					} : function(e) {
-						jQuery(window).dialog("close");
+						jQuery(this).dialog("close");
 						nm_popup_action = null;
 						close_function();
 					}
@@ -525,9 +526,11 @@ export function nm_open_popup(_action, _selected)
 /**
  * Submit a popup action
  *
+ * Must to be global, as it's used as onclick action!
+ *
  * @param {DOMNode} button DOM node of button
  */
-export function nm_submit_popup(button)
+window.nm_submit_popup = function(button)
 {
 	if (nm_popup_action.data.nextmatch)
 	{
@@ -558,11 +561,13 @@ export function nm_submit_popup(button)
 /**
  * Hide popup
  *
+ * Must to be global, as it's used as onclick action!
+ *
  * @param {DOMNode} element
  * @param {string} div_id
  * @returns {Boolean}
  */
-export function nm_hide_popup(element, div_id)
+window.nm_hide_popup = function(element, div_id)
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
 	var popup = div_id ? document.getElementById(div_id) : jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
@@ -583,7 +588,7 @@ export function nm_hide_popup(element, div_id)
  * @param {egwAction} _action
  * @param {array} _senders of egwActionObject
  */
-export function nm_activate_link(_action, _senders)
+window.nm_activate_link = function(_action, _senders)
 {
 	jQuery(_senders[0].iface.getDOMNode()).find('.et2_clickable:first').trigger('click');
 }
