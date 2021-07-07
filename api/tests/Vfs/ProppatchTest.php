@@ -29,8 +29,26 @@ class ProppatchTest extends LoggedInTest
 
 	protected function tearDown() : void
 	{
-		// Do local stuff first, parent will remove stuff
+		// Remove any added files (as root to limit versioning issues)
 
+		$backup = Vfs::$is_root;
+		Vfs::$is_root = true;
+		if(in_array('/',$this->files))
+		{
+			$this->fail('Tried to remove root');
+		}
+		foreach($this->files as $file)
+		{
+			if(Vfs::is_dir($file) && !Vfs::is_link(($file)))
+			{
+				Vfs::rmdir($file);
+			}
+			else
+			{
+				Vfs::unlink($file);
+			}
+		}
+		Vfs::$is_root = $backup;
 		parent::tearDown();
 	}
 
