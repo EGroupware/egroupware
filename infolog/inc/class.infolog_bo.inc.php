@@ -1960,6 +1960,9 @@ class infolog_bo
 				$labels = implode(', ', $labels);
 			}
 		}
+		// always add deleted status
+		$statis['deleted'] = 'deleted';
+
 		return $statis;
 	}
 

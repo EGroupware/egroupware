@@ -532,10 +532,6 @@ class infolog_ui
 		// if filtered by type, show only the stati of the filtered type
 		$rows['sel_options']['info_status'] = $this->bo->get_status($query['col_filter']['info_type']);
 
-		if ($this->bo->history)
-		{
-			$rows['sel_options']['info_status']['deleted'] = 'deleted';
-		}
 		// Update actions for selected type / status / etc.
 		$query['actions'] = $this->get_actions($query);
 
