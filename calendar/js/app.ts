@@ -661,15 +661,14 @@ export class CalendarApp extends EgwApp
 		};
 
 		// Ask for the real data, we don't have it
-		egw.json("calendar.calendar_ui.ajax_get", [[pushData.id]], function(data) {
-			if(data && data.data && data.data.data) return;
-
+		egw.request("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
+		{
 			// Store it, which will call all registered listeners
 			egw.dataStoreUID(data.uid, data.data);
 
 			// Any existing events were updated.  Run this to catch new events or events moved into view
 			this._update_events(this.state, [data.uid]);
-		}.bind(this)).sendRequest(true);
+		});
 	}
 
 	/**
