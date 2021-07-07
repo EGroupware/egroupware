@@ -26,6 +26,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 
 	protected function setUp() : void
 	{
+		$this->files[] = $this->getFilename('',false);
 		$this->createShare();
 		parent::setUp();
 	}
