@@ -372,19 +372,17 @@ window.app = {classes: {}};
 			// load etemplate2 template(s)
 			jQuery('form.et2_container[data-etemplate]').each(  function(index, node)
 			{
-				import('../etemplate/etemplate2').then((module) => {
-					const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
-					if (popup || window.opener && !egwIsMobile()) {
-						// Resize popup when et2 load is done
-						jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
-					}
-					const et2 = new module.etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
-					et2.load(data.name, data.url, data.data);
-					if (typeof data.response !== 'undefined') {
-						const json_request = egw(window).json("");
-						json_request.handleResponse({response: data.response});
-					}
-				}).catch((e) => alert(e.message+"\n\n"+e.stack));
+				const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
+				if (popup || window.opener && !egwIsMobile()) {
+					// Resize popup when et2 load is done
+					jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
+				}
+				const et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
+				et2.load(data.name, data.url, data.data);
+				if (typeof data.response !== 'undefined') {
+					const json_request = egw(window).json("");
+					json_request.handleResponse({response: data.response});
+				}
 			});
 
 			// Offline/Online checking part

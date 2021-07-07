@@ -21,7 +21,7 @@ import { readdir,stat } from 'fs/promises';
 rimraf.sync('./chunks/');
 
 // Turn on minification
-const do_minify = false;
+const do_minify = true;
 
 const config = {
     treeshake: false,
@@ -30,7 +30,6 @@ const config = {
         // Note the .ts extension on the input - we build directly from the TypeScript when available
         "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
         "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
-        "api/js/etemplate/etemplate2.min":"api/js/etemplate/etemplate2.ts",
         "api/js/egw_action/egw_dragdrop_dhtmlx_tree.min":"api/js/egw_action/egw_dragdrop_dhtmlx_tree.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
 
