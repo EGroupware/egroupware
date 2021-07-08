@@ -1490,7 +1490,7 @@ abstract class Framework extends Framework\Extra
 	* @param string $app ='phpgwapi' application directory to search - default = phpgwapi
 	* @param boolean $append =true should the file be added
 	*/
-	static function includeJS($package, $file=null, $app='phpgwapi', $append=true)
+	static function includeJS($package, $file=null, $app='api', $append=true)
 	{
 		self::$js_include_mgr->include_js_file($package, $file, $app, $append);
 	}
@@ -1584,7 +1584,11 @@ abstract class Framework extends Framework\Extra
 		}
 
 		// try to add app specific js file
-		self::includeJS('.', 'app', $app);
+		if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.min.js')) ||
+			file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.js')))
+		{
+			self::includeJS($path);
+		}
 
 		// add all js files from Framework::includeJS()
 		$files = Framework\Bundle::js_includes(self::$js_include_mgr->get_included_files());

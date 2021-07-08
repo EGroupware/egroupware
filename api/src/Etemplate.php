@@ -234,13 +234,10 @@ class Etemplate extends Etemplate\Widget\Template
 		{
 			// check if application of template has a app.js file --> load it, preferring local min file if there
 			list($app) = explode('.',$this->name);
-			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.min.js'))
+			if (file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.min.js')) ||
+				file_exists(EGW_SERVER_ROOT.($path = '/'.$app.'/js/app.js')))
 			{
-				Framework::includeJS('.','app.min',$app,true);
-			}
-			else if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
-			{
-				Framework::includeJS('.','app',$app,true);
+				Framework::includeJS($path);
 			}
 			// Category styles
 			Categories::css($app);
