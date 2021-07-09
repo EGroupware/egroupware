@@ -90,7 +90,7 @@
 		function notifications() {
 			var notification_script = document.getElementById('notifications_script_id');
 			CURRENT_INTERVAL = POLL_INTERVAL = notification_script && notification_script.getAttribute('data-poll-interval');
-			TIMEOUT = this.setTimeout(POLL_INTERVAL || 60);
+			TIMEOUT = this.setTimeout(10);	// defer first poll
 			jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
 
 			// add click handler for refreshing Notifications
@@ -100,13 +100,10 @@
 				.click(jQuery.proxy(this.run_notifications, this));
 			$egwpopup_header.children('.button_right_toggle').attr('title', egw.lang('close'));
 
-			// query notifictions now
-			this.run_notifications();
-
 			this.filter = '';
 			// total number of notifications
 			this.total = 0;
-		};
+		}
 
 		notifications.prototype.run_notifications = function ()
 		{
