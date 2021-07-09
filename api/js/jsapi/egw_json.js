@@ -538,7 +538,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					// check if we need a not yet included app.js object --> include it now and return a Promise
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
 					{
-						return this.includeJS('/'+parts[1]+'/js/app.js', undefined, undefined, this.webserverUrl)
+						return this.includeJS('/'+parts[1]+'/js/app.js?'+((new Date).valueOf()/86400|0).toString(), undefined, undefined, this.webserverUrl)
 							.then(() => this.applyFunc(_func, args, _context),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.js' + " (" + err + ")\nAborting.")});
 					}

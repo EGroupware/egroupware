@@ -9,8 +9,6 @@
  * @copyright Nathan Gray 2011
  */
 
-// NEEDED by date widget
-import "../jquery/jquery-ui-timepicker-addon.js";
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
