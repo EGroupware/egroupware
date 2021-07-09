@@ -47,19 +47,19 @@
 						<option value="True">Yes</option>
 					</select>
 				</row>
+				<!-- remove currently not supported/necessary development option debug_minify
 				<row>
 					<description value="Disable minifying of javascript and CSS files" label="%s:"/>
 					<select id="newsettings[debug_minify]">
 						<option value="">{No} - {Default}</option>
 						<option value="True">Yes</option>
-						<!-- no more dynamic minifying: option value="debug">Debug</option -->
 					</select>
-				</row>
+				</row -->
 				<row>
 					<description value="Encryption" span="all" class="subHeader"/>
 				</row>
 				<row>
-					<description value="Disable PGP encryption (Mailvelope)" lable="%s:"/>
+					<description value="Disable PGP encryption (Mailvelope)" label="%s:"/>
 					<select id="newsettings[disable_pgp_encryption]">
 						<option value="">{No} - {Default}</option>
 						<option value="True">Yes</option>
