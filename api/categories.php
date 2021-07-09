@@ -26,6 +26,9 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
+// release session, as we dont need it and it blocks parallel requests
+$GLOBALS['egw']->session->commit_session();
+
 // Get appname
 $appname = $_GET['app'] && $GLOBALS['egw_info']['apps'][$_GET['app']] ? $_GET['app'] : Api\Categories::GLOBAL_APPNAME;
 

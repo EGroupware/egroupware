@@ -25,6 +25,9 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
+// release session, as we dont need it and it blocks parallel requests
+$GLOBALS['egw']->session->commit_session();
+
 $contacts = new Api\Contacts();
 
 $contacts->photo();

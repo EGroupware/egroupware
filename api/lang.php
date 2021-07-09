@@ -37,6 +37,8 @@ catch (\EGroupware\Api\Exception\NoPermission\App $e)
 {
 	// ignore missing run rights for an app, as translations of other apps are loaded sometimes without run rights
 }
+// release session, as we dont need it and it blocks parallel requests
+$GLOBALS['egw']->session->commit_session();
 
 // use an etag with app, lang and a hash over the creation-times of all lang-files
 $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.  Api\Translation::etag($_GET['app'], $_GET['lang']).'"';

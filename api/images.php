@@ -28,6 +28,9 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
+// release session, as we dont need it and it blocks parallel requests
+$GLOBALS['egw']->session->commit_session();
+
 $content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null),
 	JSON_FORCE_OBJECT |	// export empty php-arrays as empty objects, not empty arrays
 	JSON_UNESCAPED_SLASHES | // do not escape slashes, smaller and better readable

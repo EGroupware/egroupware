@@ -26,6 +26,9 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
+// release session, as we dont need it and it blocks parallel requests
+$GLOBALS['egw']->session->commit_session();
+
 // use an etag over config and link-registry
 $preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['common']);
 $ab_preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['addressbook']);
