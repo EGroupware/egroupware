@@ -22,6 +22,7 @@ import {
 	EGW_KEY_MENU,
 	EGW_KEY_F1, EGW_KEY_F12
 } from "./egw_action_constants.js";
+import {egwBitIsSet} from "./egw_action_common.js";
 
 /**
  * The tranlation function converts the given native key code into one of the
