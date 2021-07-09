@@ -207,15 +207,9 @@ window.app = {classes: {}};
 		}));
 	}
 
-	const egw_modules = [
-		// TODO: Dev mode should remove .min or remap it with importmap
-		'egw.min'
-	];
 	// make our promise global, as legacy code calls egw_LAB.wait which we assign to egw_ready.then
 	window.egw_LAB = window.egw_ready =
 		legacy_js_import(include.filter((src) => src.match(legacy_js_regexp) !== null), window.egw_webserverUrl)
-			.then(Promise.all(egw_modules.map(mod => import(window.egw_webserverUrl+'/api/js/jsapi/'+mod+'.js')
-				.catch((err) => {console.error(rel_src+": "+err.message)}))))
 			.then(() => Promise.all(include.filter((src) => src.match(legacy_js_regexp) === null)	//.reverse()
 				.map(rel_src => import(window.egw_webserverUrl+'/'+rel_src)
 					.catch((err) => {window.setTimeout(() => {throw err;},0)})
