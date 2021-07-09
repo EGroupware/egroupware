@@ -116,6 +116,9 @@ export function et2_createWidget(_name : string, _attrs : object, _parent? : any
 	return new constructor(_parent, _attrs);
 }
 
+// make et2_createWidget publicly available as we need to call it from stylite/js/gantt.js (maybe others)
+if (typeof window.et2_createWidget === 'undefined') window['et2_createWidget'] = et2_createWidget;
+
 export interface WidgetConfig {
 	type?: string;
 	readonly?: boolean;
