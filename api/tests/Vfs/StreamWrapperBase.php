@@ -354,8 +354,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 		}
 		$ns = explode('\\', __NAMESPACE__);
 		$test_base_dir = $test_file . '/'.array_pop($ns).'/'.$this->getName();
-		$source_dir = $test_base_dir . "/link_test";
-		$link_dir = $test_base_dir . "/link_target";
+		$source_dir = $test_base_dir . "/link_target";
+		$link_dir = $test_base_dir . "/im_a_symlink";
 
 		// Check if backend supports it
 		$url = Vfs::resolve_url_symlinks($test_base_dir,false,false);
