@@ -59,7 +59,11 @@ const config = {
     },
     plugins: [{
         resolveId (id, parentId) {
-            if(id.endsWith(".js") && parentId)
+            if (!parentId || parentId.indexOf(path.sep + 'node_modules' + path.sep) !== -1)
+            {
+                return;
+            }
+            if(id.endsWith(".js"))
             {
                 const tsPath =path.resolve(path.dirname(parentId), id.slice(0,-3) + '.ts');
                 try {
@@ -68,7 +72,7 @@ const config = {
                 }
                 catch (e) {}
             }
-            else if (!id.endsWith('.js') && !id.endsWith('.ts')) {
+            else if (!id.endsWith('.ts')) {
 
                 const tsPath =path.resolve(path.dirname(parentId), id + '.ts');
                 const jsPath =path.resolve(path.dirname(parentId), id + '.js');
@@ -83,7 +87,7 @@ const config = {
         }
     },
     // resolve (external) node modules from node_modules directory
-    //resolve(),
+    resolve(),
     {
         transform (code, id) {
             if (id.endsWith('.ts'))
