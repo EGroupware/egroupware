@@ -299,6 +299,36 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * Method called for symlink()
+	 *
+	 * @param string $target
+	 * @param string $link
+	 * @return boolean true on success false on error
+	 */
+	public static function symlink($target,$link)
+	{
+		$_target = Vfs::resolve_url($target);
+		$_link = Vfs::resolve_url($link);
+		// Check target & link are both filesystem, otherwise it needs to be in Sqlfs
+		$target_scheme = Vfs::parse_url($_target, PHP_URL_SCHEME);
+		$link_scheme = Vfs::parse_url($_link, PHP_URL_SCHEME);
+		if($target_scheme == static::SCHEME && $link_scheme == static::SCHEME)
+		{
+			$linked = symlink(
+				Vfs::parse_url($_target,PHP_URL_PATH),
+				Vfs::parse_url($_link, PHP_URL_PATH)
+			);
+			clearstatcache();
+			return $linked && is_link($_link);
+		}
+		else
+		{
+			$sqlfs = new Vfs\Sqlfs\StreamWrapper();
+			return $sqlfs->symlink($target, $link);
+		}
+	}
+
+	/**
 	 * This method is called in response to unlink() calls on URL paths associated with the wrapper.
 	 *
 	 * It should attempt to delete the item specified by path.

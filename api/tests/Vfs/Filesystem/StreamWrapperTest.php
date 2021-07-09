@@ -43,6 +43,12 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		$this->markTestSkipped("Filesystem StreamWrapper does not support giving access to a file by changing group permissions");
 	}
 
+	public function testSymlinkFromFolder($test_file = ''): void
+	{
+		// Pass a file inside the mountpoint.  It doesn't need to exists
+		parent::testSymlinkFromFolder(static::$mountpoint . '/test');
+	}
+
 	protected function mount(): void
 	{
 		$this->mountFilesystem(static::$mountpoint);
