@@ -161,7 +161,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 				this.lang_order = apps.reverse();
 			}
 
-			const promise = files.includeJS(jss, _callback, _context || null);
+			const promise = Promise.all(jss.map((src) => import(src)));
 			return typeof _callback === 'function' ? promise.then(_callback.call(_context)) : promise;
 		}
 	};

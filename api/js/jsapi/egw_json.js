@@ -538,7 +538,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					// check if we need a not yet included app.js object --> include it now and return a Promise
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'undefined')
 					{
-						return this.includeJS('/'+parts[1]+'/js/app.js?'+((new Date).valueOf()/86400|0).toString(), undefined, undefined, this.webserverUrl)
+						return import(this.webserverUrl+'/'+parts[1]+'/js/app.js?'+((new Date).valueOf()/86400|0).toString())
 							.then(() => this.applyFunc(_func, args, _context),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.js' + " (" + err + ")\nAborting.")});
 					}
@@ -793,15 +793,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
 		{
-			req.jsCount++;
-			req.egw.includeJS(res.data, function() {
-				req.jsFiles++;
-				if (req.jsFiles == req.jsCount && req.onLoadFinish)
-				{
-					req.onLoadFinish.call(req.sender);
-				}
-			});
-			return true;
+			return Promise.all(res.data.map((src) => import(src)))
+				.then(() => req.onLoadFinish.call(req.sender));
 		}
 		throw 'Invalid parameters';
 	}, null, 'js');

@@ -141,11 +141,15 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Load and execute javascript file(s) in order
 		 *
+		 * Deprecated because with egw composition happening in main window the used import statement happens in that context
+		 * and NOT in the window (eg. popup or iframe) this module is instantiated for!
+		 *
 		 * @memberOf egw
 		 * @param {string|array} _jsFiles (array of) urls to include
 		 * @param {function} _callback called after JS files are loaded and executed
 		 * @param {object} _context
 		 * @param {string} _prefix prefix for _jsFiles
+		 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
 		 * @return Promise
 		 */
 		includeJS: function(_jsFiles, _callback, _context, _prefix)

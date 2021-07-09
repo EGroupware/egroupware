@@ -853,6 +853,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {function} _callback called after JS files are loaded and executed
 	 * @param {object} _context
 	 * @param {string} _prefix prefix for _jsFiles
+	 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
 	 */
 	includeJS(_jsFiles : string|string[], _callback? : Function, _context? : object, _prefix? : string);
 	/**

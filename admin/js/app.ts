@@ -1081,7 +1081,7 @@ class AdminApp extends EgwApp
 
 		if(egw.app('policy'))
 		{
-			egw.includeJS(egw.link('/policy/js/app.js'), function() {
+			import(egw.link('/policy/js/app.js?'+((new Date).valueOf()/86400|0).toString())).then(() => {
 				if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
 				{
 					app.policy = new app.classes.policy();

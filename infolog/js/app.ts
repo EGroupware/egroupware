@@ -778,7 +778,7 @@ class InfologApp extends EgwApp
 
 		if (!app.stylite)
 		{
-			this.egw.includeJS('/stylite/js/app.js', undefined, undefined, egw.webserverUrl).then(() =>
+			import(egw.webserverUrl+'/stylite/js/app.js?'+((new Date).valueOf()/86400|0).toString()).then(() =>
 			{
 				app.stylite = new app.classes.stylite;
 				app.stylite.et2 = this.et2;
