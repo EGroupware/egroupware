@@ -7,7 +7,7 @@ FROM ubuntu:20.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
-ARG PHP_VERSION=7.3
+ARG PHP_VERSION=7.4
 
 # keeping build-arg in environment for entrypoint.sh
 ENV VERSION=$VERSION
@@ -50,6 +50,11 @@ RUN apt-get update \
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	# install tools to build EGroupware
 	&& apt-get install -y rsync npm zip curl sudo cron patch \
+	# install nodesource repo for nodejs 14.x
+	&& curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add - \
+	&& echo "deb https://deb.nodesource.com/node_14.x $(lsb_release -s -c) main" | tee /etc/apt/sources.list.d/nodesource.list \
+	&& apt-get update \
+	&& apt-get install -y nodejs \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \

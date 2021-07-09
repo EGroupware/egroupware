@@ -2,7 +2,7 @@
 set -ex
 
 VERSION=${VERSION:-dev-master}
-PHP_VERSION=${PHP_VERSION:-7.3}
+PHP_VERSION=${PHP_VERSION:-7.4}
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
