@@ -31,7 +31,6 @@ const config = {
         // Note the .ts extension on the input - we build directly from the TypeScript when available
         "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
         "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
-        "api/js/egw_action/egw_dragdrop_dhtmlx_tree.min":"api/js/egw_action/egw_dragdrop_dhtmlx_tree.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
 
         // app.ts/js are added automatic by addAppsConfig() below
