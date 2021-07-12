@@ -91,6 +91,7 @@ calendar menu	calendar	es-es	Menú de calendario
 calendar preferences	calendar	es-es	Preferencias - Calendario
 calendar settings	admin	es-es	Preferencias del calendario
 calendar-fieldname	calendar	es-es	Calendario - Nombre de campo
+can not send any notifications because notifications app is not installed!	calendar	es-es	¡No se pueden enviar notificaciones porque la aplicación de notificaciones no está instalada!
 can't add alarms in the past !!!	calendar	es-es	¡¡No se pueden añadir alarmas en el pasado!!
 can't aquire lock!	calendar	es-es	¡No se ha podido obtener un bloqueo!
 canceled	calendar	es-es	Cancelado
@@ -109,7 +110,6 @@ close the window	calendar	es-es	Cerrar la ventana
 compose a mail to all participants after the event is saved	calendar	es-es	redactar un correo para todos los participantes después de guardar el evento
 configuration settings	calendar	es-es	Ajustes de configuración
 conflict	calendar	es-es	Conflicto
-copy of:	calendar	es-es	Copia de:
 copy this event	calendar	es-es	Copiar este evento
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	es-es	Copiar sus cambios al portapapeles, %1recargar la entrada%2 y mezclarla.
 countries	calendar	es-es	Paises
@@ -159,6 +159,7 @@ delete series	calendar	es-es	Borrar series
 delete this alarm	calendar	es-es	Borrar esta alarma
 delete this event	calendar	es-es	Borrar este evento
 delete this exception	calendar	es-es	Borrar esta excepción
+delete this meeting for all participants	calendar	es-es	Eliminar esta reunión para todos los participantes
 delete this recurrence	calendar	es-es	Suprimir esta repetición
 delete this series of recurring events	calendar	es-es	Borrar esta serie de eventos recurrentes
 deleted	calendar	es-es	Borrado
@@ -203,6 +204,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	es-es	Fecha f
 enddate of the export	calendar	es-es	Fecha de fin de la exportación
 ends	calendar	es-es	Acaba
 error adding the alarm	calendar	es-es	Error al añadir la alarma
+error notifying %1	calendar	es-es	Error al notificar a %1
 error saving the event!	calendar	es-es	Error al guardar el evento
 error: can't delete original series!	calendar	es-es	Error: No se puede borrar la serie original
 error: duration of event longer then recurrence interval!	calendar	es-es	Error: Duración del evento más largo que el intervalo de repetición

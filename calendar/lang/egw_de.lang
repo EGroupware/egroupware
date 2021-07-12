@@ -406,7 +406,7 @@ notify all externals (non-users) about this event	calendar	de	Benachrichtigt all
 notify externals	calendar	de	Externe Teilnehmer benachrichtigen
 notify non-egroupware users about event updates	calendar	de	Teilnehmer außerhalb EGroupware über Terminänderungen benachrichtigen?
 number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)
-number of resources to be booked    calendar    de  Anzahl zu buchender Ressourcen
+number of resources to be booked	calendar	de	Anzahl der zu buchenden Ressourcen
 number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
@@ -523,6 +523,7 @@ should the number of weeks be shown on top of the calendar	calendar	de	Soll die 
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	de	Soll die Kalenderwoche im oberen Teil des Kalenders angezeigt werden (Nur wenn Abstand=0)
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	de	Soll der Status (zugesagt, abgesagt ...) der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
+show %1 from %2	calendar	de	Zeige %1 von %2
 show a calendar title	calendar	de	Soll der Kalender Titel angezeigt werden?
 show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
 show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgesagte Termine

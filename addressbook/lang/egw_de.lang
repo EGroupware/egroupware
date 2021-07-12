@@ -254,6 +254,7 @@ extra	addressbook	de	Extra
 extra encodings	addressbook	de	Extra Encoding
 extra private	addressbook	de	Extra Privat
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
+favorite phone	addressbook	de	Bevorzugtes Telefon
 favorites	addressbook	de	Favoriten
 fax	addressbook	de	Telefax
 fax (private)	addressbook	de	Telefax privat
