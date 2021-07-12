@@ -407,7 +407,7 @@ notify all externals (non-users) about this event	calendar	en	Notify all externa
 notify externals	calendar	en	Notify externals
 notify non-egroupware users about event updates	calendar	en	Notify non-EGroupware users about event updates
 number of records to read (%1)	calendar	en	Number of records to read (%1)
-number of resources to be booked    calendar    en  Number of resources to be booked
+number of resources to be booked	calendar	en	Number of resources to be booked
 number of weeks to show	calendar	en	Number of weeks to show
 observance rule	calendar	en	Observance rule
 occurence	calendar	en	Occurrence
