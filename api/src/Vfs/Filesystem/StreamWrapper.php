@@ -57,6 +57,10 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	/**
 	 * mode-bits, which have to be set for files
 	 */
+	const MODE_LINK = 0120000;
+	/**
+	 * mode-bits, which have to be set for files
+	 */
 	const MODE_FILE = 0100000;
 	/**
 	 * mode-bits, which have to be set for directories
@@ -296,6 +300,23 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	function stream_stat ( )
 	{
 		return $this->url_stat($this->opened_stream_url,0);
+	}
+
+	/**
+	 * This method is called in response to readlink().
+	 *
+	 * The readlink value is read by url_stat or dir_opendir and therefore cached in the stat-cache.
+	 *
+	 * @param string $path
+	 * @return string|boolean content of the symlink or false if $url is no symlink (or not found)
+	 */
+	function readlink($path)
+	{
+		if (!($url = Vfs::resolve_url($path)))
+		{
+			return false;
+		}
+		return readlink(Vfs::parse_url($url, PHP_URL_PATH));
 	}
 
 	/**
@@ -554,7 +575,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$parts = Vfs::parse_url($url);
 		$path = Vfs::decodePath($parts['path']);
 
-		$stat = @stat($path);	// suppressed the stat failed warnings
+		$stat = $flags & STREAM_URL_STAT_LINK ? @lstat($path) : @stat($path);	// suppressed the stat failed warnings
 
 		if ($stat)
 		{
@@ -566,7 +587,8 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			}
 			$stat['uid'] = $stat[4] = $uid;
 			$stat['gid'] = $stat[5] = $gid;
-			$stat['mode'] = $stat[2] = $stat['mode'] & self::MODE_DIR ? self::MODE_DIR | $mode : self::MODE_FILE | ($mode & ~0111);
+			$stat['mode'] = $stat[2] = $stat['mode'] & self::MODE_DIR ? self::MODE_DIR | $mode :
+				((($stat['mode'] & self::MODE_LINK) === self::MODE_LINK ? self::MODE_LINK : self::MODE_FILE) | ($mode & ~0111));
 			// write rights also depend on the write rights of the webserver
 			if (!is_writable($path))
 			{

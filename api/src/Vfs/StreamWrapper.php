@@ -725,7 +725,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			{
 				$stat = @stat($url);	// suppressed the stat failed warnings
 
-				if ($stat && ($stat['mode'] & self::MODE_LINK))
+				if ($stat && ($stat['mode'] & self::MODE_LINK) === self::MODE_LINK)
 				{
 					if (!$check_symlink_depth)
 					{

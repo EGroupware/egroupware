@@ -24,6 +24,7 @@ if (!($path = Api\Cache::getSession('filemanger','test')))
 }
 if (isset($_REQUEST['path'])) $path = $_REQUEST['path'];
 echo Api\Html::form("<p>Path: ".Api\Html::input('path',$path,'text','size="40"').
+	Api\Html::input_hidden(['cd'=>'no']).
 	Api\Html::submit_button('',lang('Submit'))."</p>\n",array(),'','','','','GET');
 
 if (isset($path) && !empty($path))
