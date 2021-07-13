@@ -239,6 +239,11 @@ class Etemplate extends Etemplate\Widget\Template
 			{
 				Framework::includeJS($path);
 			}
+			// if app has no app.ts/js, we need to load etemplate2.js, otherwise popups wont work!
+			else
+			{
+				Framework::includeJS('/api/js/etemplate/etemplate2.js');
+			}
 			// Category styles
 			Categories::css($app);
 
