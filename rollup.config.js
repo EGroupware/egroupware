@@ -11,10 +11,9 @@
 
 import path from 'path';
 import babel from '@babel/core';
-import { readFileSync } from "fs";
+import { readFileSync, readdirSync, statSync  } from "fs";
 import rimraf from 'rimraf';
 import { minify } from 'terser';
-import { readdir,stat } from 'fs/promises';
 import resolve from '@rollup/plugin-node-resolve';
 
 // Best practice: use this
@@ -144,21 +143,21 @@ const config = {
  *
  * @return Promise<object>
  */
-export default async function addAppsConfig()
+export default function addAppsConfig()
 {
     const conf = config;
-    const files = await readdir('.', { withFileTypes: true});
+    const files = readdirSync('.', { withFileTypes: true});
     for (const file of files)
     {
         if (file.isDirectory())
         {
             try {
-                await stat(file.name + '/js/app.ts');
+                statSync(file.name + '/js/app.ts');
                 config.input[file.name + '/js/app'] = file.name + '/js/app.ts';
             }
             catch (e) {
                 try {
-                    await stat(file.name + '/js/app.js');
+                    statSync(file.name + '/js/app.js');
                     config.input[file.name + '/js/app.min'] = file.name + '/js/app.js';
                 }
                 catch (e) {
