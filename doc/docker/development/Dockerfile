@@ -50,11 +50,6 @@ RUN apt-get update \
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	# install tools to build EGroupware
 	&& apt-get install -y rsync npm zip curl sudo cron patch \
-	# install nodesource repo for nodejs 14.x
-	&& curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add - \
-	&& echo "deb https://deb.nodesource.com/node_14.x $(lsb_release -s -c) main" | tee /etc/apt/sources.list.d/nodesource.list \
-	&& apt-get update \
-	&& apt-get install -y nodejs \
 	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
