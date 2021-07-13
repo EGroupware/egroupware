@@ -365,9 +365,14 @@ abstract class StreamWrapperBase extends LoggedInTest
 			$this->markTestIncomplete($scheme . " StreamWrapper ($class) does not support symlink");
 		}
 
+		// Try to remove if it's there already
+		if(Vfs::is_dir($test_base_dir))
+		{
+			Vfs::rmdir($test_base_dir);
+		}
 		$this->assertTrue(
 			Vfs::mkdir($test_base_dir),
-			"Could not create base test directory '$test_base_dir'"
+			"Could not create base test directory '$test_base_dir', delete it if it's there already."
 		);
 		$this->assertTrue(
 			Vfs::mkdir($source_dir),
@@ -404,9 +409,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 		$this->assertTrue(Vfs::is_dir($link_dir), "Link directory was not a directory");
 
 		// Test - Folder is what we expect
-		$stat = Vfs::stat($link_dir);
-		$this->assertEquals(2,$stat['nlink'], "Link target is not a folder");
-		$this->assertStringEndsWith($source_dir,$stat['url'], "Looks like link is wrong");
+		$readlink = Vfs::readlink($link_dir);
+		$this->assertStringEndsWith("/link_target", $readlink, "Looks like link is wrong");
 
 		// Test - File is where we expect
 		$files = Vfs::find($link_dir,['type'=>'F']);
