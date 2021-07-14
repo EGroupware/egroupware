@@ -100,7 +100,12 @@ const config = {
                             // plugins: stage3Syntax,
                             errorRecovery: true
                         },
-                        presets: ['@babel/preset-typescript']
+                        presets: ['@babel/preset-typescript'],
+                        plugins: [
+                            // These two to use LitElement decorators
+                            '@babel/plugin-proposal-class-properties',
+                            ['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}],
+                        ]
                     }, function (err, result) {
                         if (err)
                             return reject(err);
