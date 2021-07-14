@@ -8,14 +8,47 @@
  * @author Nathan Gray
  */
 
-/* Commented out while we work on rollup
-import {LitElement,html} from "https://cdn.skypack.dev/lit-element";
-import {SlButton} from "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/shoelace.js";
 
-export class Et2Button extends SlButton
+import BXButton from "../../../node_modules/carbon-web-components/es/components/button/button"
+import {css} from "../../../node_modules/lit-element/lit-element.js";
+import {Et2InputWidget} from "./et2_core_inputWidget";
+import {Et2Widget} from "./et2_core_inheritance";
+
+export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
 {
-	size='small';
+    static get properties() {
+        return {
+            image: {type: String}
+        }
+    }
+    static get styles()
+    {
+        debugger;
+        return [
+            super.styles,
+            css`
+            /* Custom CSS */
+            `
+        ];
+    }
+    constructor()
+    {
+        super();
+        this.image = '';
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.classList.add("et2_button")
+        debugger;
+        if(this.image)
+        {
+            let icon = document.createElement("img");
+            icon.src = egw.image(this.image);
+            icon.slot="icon";
+            this.appendChild(icon);
+        }
+    }
 }
 customElements.define("et2-button",Et2Button);
-
- */

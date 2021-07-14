@@ -14,7 +14,10 @@
 
 import {egw} from "../jsapi/egw_global";
 import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
-import {et2_implements_registry} from "./et2_core_interfaces";
+import {et2_IDOMNode, et2_IInput, et2_IInputNode, et2_implements_registry} from "./et2_core_interfaces";
+import {LitElement} from "lit-element";
+import {et2_arrayMgr} from "./et2_core_arrayMgr";
+import {et2_widget} from "./et2_core_widget";
 
 // Needed for mixin
 export function mix (superclass)
@@ -302,4 +305,141 @@ export class ClassWithAttributes extends ClassWithInterfaces
 
 		return attributes;
 	}
+}
+
+
+/**
+ * This mixin will allow any LitElement to become an Et2Widget
+ *
+ * Usage:
+ * export class Et2Loading extends Et2Widget(BXLoading) {...}
+ */
+
+type Constructor<T = {}> = new (...args: any[]) => T;
+export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
+	class Et2WidgetClass extends superClass implements et2_IDOMNode {
+
+		protected _mgrs: et2_arrayMgr[] = [] ;
+		protected _parent: Et2WidgetClass|et2_widget|null = null;
+
+		iterateOver(callback: Function, context, _type)
+		{}
+		loadingFinished()
+		{}
+		getWidgetById(_id)
+		{
+			if (this.id == _id) {
+				return this;
+			}
+		}
+
+		setParent(new_parent: HTMLElement | et2_widget)
+		{
+			this._parent = new_parent;
+		}
+		getParent() : HTMLElement | et2_widget {
+			let parentNode = this.parentNode;
+
+			// If parent is an old et2_widget, use it
+			if(this._parent)
+			{
+				return this._parent;
+			}
+
+			return parentNode;
+		}
+		getDOMNode(): HTMLElement {
+			return this;
+		}
+
+		/**
+		 * Sets the array manager for the given part
+		 *
+		 * @param {string} _part which array mgr to set
+		 * @param {object} _mgr
+		 */
+		setArrayMgr(_part : string, _mgr : et2_arrayMgr)
+		{
+			this._mgrs[_part] = _mgr;
+		}
+
+		/**
+		 * Returns the array manager object for the given part
+		 *
+		 * @param {string} managed_array_type name of array mgr to return
+		 */
+		getArrayMgr(managed_array_type : string) : et2_arrayMgr | null
+		{
+			if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
+				return this._mgrs[managed_array_type];
+			} else if (this.getParent()) {
+				return this.getParent().getArrayMgr(managed_array_type);
+			}
+
+			return null;
+		}
+
+		/**
+		 * Returns an associative array containing the top-most array managers.
+		 *
+		 * @param _mgrs is used internally and should not be supplied.
+		 */
+		getArrayMgrs(_mgrs? : object)
+		{
+			if (typeof _mgrs == "undefined") {
+				_mgrs = {};
+			}
+
+			// Add all managers of this object to the result, if they have not already
+			// been set in the result
+			for (var key in this._mgrs) {
+				if (typeof _mgrs[key] == "undefined") {
+					_mgrs[key] = this._mgrs[key];
+				}
+			}
+
+			// Recursively applies this function to the parent widget
+			if (this._parent) {
+				this._parent.getArrayMgrs(_mgrs);
+			}
+
+			return _mgrs;
+		}
+
+		/**
+		 * Checks whether a namespace exists for this element in the content array.
+		 * If yes, an own perspective of the content array is created. If not, the
+		 * parent content manager is used.
+		 *
+		 * Constructor attributes are passed in case a child needs to make decisions
+		 */
+		checkCreateNamespace(_attrs? : any)
+		{
+			// Get the content manager
+			var mgrs = this.getArrayMgrs();
+
+			for (var key in mgrs) {
+				var mgr = mgrs[key];
+
+				// Get the original content manager if we have already created a
+				// perspective for this node
+				if (typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this) {
+					mgr = mgr.parentMgr;
+				}
+
+				// Check whether the manager has a namespace for the id of this object
+				var entry = mgr.getEntry(this.id);
+				if (typeof entry === 'object' && entry !== null || this.id) {
+					// The content manager has an own node for this object, so
+					// create an own perspective.
+					this._mgrs[key] = mgr.openPerspective(this, this.id);
+				} else {
+					// The current content manager does not have an own namespace for
+					// this element, so use the content manager of the parent.
+					delete (this._mgrs[key]);
+				}
+			}
+		}
+	};
+	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
 }

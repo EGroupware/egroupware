@@ -18,10 +18,11 @@ import {et2_no_init} from "./et2_core_common";
 import { ClassWithAttributes } from "./et2_core_inheritance";
 import { et2_widget, WidgetConfig } from "./et2_core_widget";
 import { et2_valueWidget } from './et2_core_valueWidget'
-import {et2_IInput, et2_ISubmitListener} from "./et2_core_interfaces";
+import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "./et2_core_interfaces";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 // fixing circular dependencies by only importing the type (not in compiled .js)
 import type {et2_tabbox} from "./et2_widget_tabs";
+import {LitElement} from "lit-element";
 
 export interface et2_input {
 	getInputNode() : HTMLInputElement|HTMLElement;
@@ -383,3 +384,103 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	}
 }
 
+
+/**
+ * This mixin will allow any LitElement to become an Et2InputWidget
+ *
+ * Usage:
+ * export class Et2Button extends Et2InputWidget(BXButton) {...}
+ */
+
+type Constructor<T = {}> = new (...args: any[]) => T;
+export const Et2InputWidget = <T extends Constructor<LitElement>>(superClass: T) => {
+	class Et2InputWidgetClass extends superClass implements et2_IInput, et2_IInputNode {
+
+		label: string = '';
+		protected value: string | number | Object;
+		protected _oldValue: string | number | Object;
+
+
+		getValue()
+		{
+			var node = this.getInputNode();
+			if (node)
+			{
+				var val = jQuery(node).val();
+
+				return val;
+			}
+
+			return this._oldValue;
+		}
+
+		isDirty()
+		{
+			let value = this.getValue();
+			if(typeof value !== typeof this._oldValue)
+			{
+				return true;
+			}
+			if(this._oldValue === value)
+			{
+				return false;
+			}
+			switch(typeof this._oldValue)
+			{
+				case "object":
+					if(typeof this._oldValue.length !== "undefined" &&
+						this._oldValue.length !== value.length
+					)
+					{
+						return true;
+					}
+					for(let key in this._oldValue)
+					{
+						if(this._oldValue[key] !== value[key]) return true;
+					}
+					return false;
+				default:
+					return this._oldValue != value;
+			}
+		}
+
+		resetDirty()
+		{
+			this._oldValue = this.getValue();
+		}
+
+		isValid(messages)
+		{
+			var ok = true;
+
+			// Check for required
+			if (this.options && this.options.needed && !this.options.readonly && !this.disabled &&
+				(this.getValue() == null || this.getValue().valueOf() == ''))
+			{
+				messages.push(this.egw().lang('Field must not be empty !!!'));
+				ok = false;
+			}
+			return ok;
+		}
+
+		getInputNode()
+		{
+			return this.node;
+		}
+
+		/**
+		 * These belongs somewhere else/higher, I'm just getting it to work
+		 */
+		iterateOver(callback: Function, context, _type)
+		{}
+		loadingFinished()
+		{}
+		getWidgetById(_id)
+		{
+			if (this.id == _id) {
+				return this;
+			}
+		}
+	};
+	return Et2InputWidgetClass as unknown as Constructor<et2_IInput> & T;
+}

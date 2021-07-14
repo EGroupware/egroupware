@@ -16,7 +16,7 @@
 	et2_core_arrayMgr;
 */
 
-import {ClassWithAttributes} from './et2_core_inheritance';
+import {ClassWithAttributes, Et2Widget} from './et2_core_inheritance';
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
@@ -239,7 +239,7 @@ export class et2_widget extends ClassWithAttributes
 
 		// The supported widget classes array defines a whitelist for all widget
 		// classes or interfaces child widgets have to support.
-		this.supportedWidgetClasses = [et2_widget];
+		this.supportedWidgetClasses = [et2_widget, HTMLElement];
 
 		if (_attrs["id"]) {
 			// Create a namespace for this object
@@ -714,14 +714,14 @@ export class et2_widget extends ClassWithAttributes
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
 
-		// Parse the attributes from the given XML attributes object
-		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
-
-		// Do an sanity check for the attributes
-		ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
-
 		if(undefined == window.customElements.get(_nodeName))
 		{
+			// Parse the attributes from the given XML attributes object
+			this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
+
+			// Do an sanity check for the attributes
+			ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
+
 			// Creates the new widget, passes this widget as an instance and
 			// passes the widgetType. Then it goes on loading the XML for it.
 			var widget = new constructor(this, attributes);
@@ -731,7 +731,7 @@ export class et2_widget extends ClassWithAttributes
 		}
 		else
 		{
-			widget = this.loadWebComponent(_nodeName, _node, attributes);
+			widget = this.loadWebComponent(_nodeName, _node);
 
 			if(this.addChild)
 			{
@@ -747,14 +747,38 @@ export class et2_widget extends ClassWithAttributes
 	 * @param _nodeName
 	 * @param _node
 	 */
-	loadWebComponent(_nodeName : string, _node, attributes : Object) : HTMLElement
+	loadWebComponent(_nodeName : string, _node) : HTMLElement
 	{
-		let widget = document.createElement(_nodeName);
+		let widget = <Et2WidgetClass> document.createElement(_nodeName);
 		widget.textContent = _node.textContent;
 
-		// Apply any set attributes
-		_node.getAttributeNames().forEach(attribute => widget.setAttribute(attribute, attributes[attribute]));
+		const widget_class = window.customElements.get(_nodeName);
+		if(!widget_class)
+		{
+			throw Error("Unknown or unregistered WebComponent '"+_nodeName+"', could not find class");
+		}
+		widget.setParent(this);
+		var mgr = widget.getArrayMgr("content");
 
+		// Apply any set attributes - widget will do its own coercion
+		_node.getAttributeNames().forEach(attribute => {
+			let attrValue = _node.getAttribute(attribute);
+
+			// If there is not attribute set, ignore it.  Widget sets its own default.
+			if(typeof attrValue === "undefined") return;
+
+			// If the attribute is marked as boolean, parse the
+			// expression as bool expression.
+			if (widget_class.properties[attribute]?.type == "Boolean") {
+				attrValue = mgr.parseBoolExpression(attrValue);
+			} else {
+				attrValue = mgr.expandName(attrValue);
+			}
+			widget.setAttribute(attribute, attrValue);
+		});
+
+		// Children need to be loaded
+		//this.loadFromXML(_node);
 		return widget;
 	}
 
