@@ -102,9 +102,9 @@ const config = {
                         },
                         presets: ['@babel/preset-typescript'],
                         plugins: [
-                            // These two to use LitElement decorators
-                            '@babel/plugin-proposal-class-properties',
-                            ['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}],
+                            // These two allow us to use LitElement decorators, but cause problems witn some TypeScript properties
+                            //['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}],
+                            //'@babel/plugin-proposal-class-properties',
                         ]
                     }, function (err, result) {
                         if (err)

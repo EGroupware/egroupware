@@ -25,7 +25,6 @@ import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget, et2_input} from "./et2_core_inputWidget";
-import {decorateLanguageService} from "ts-lit-plugin/lib/decorate-language-service";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -769,7 +768,7 @@ export class et2_widget extends ClassWithAttributes
 
 			// If the attribute is marked as boolean, parse the
 			// expression as bool expression.
-			if (widget_class.properties[attribute]?.type == "Boolean") {
+			if (widget_class.getPropertyOptions(attribute).type == "Boolean") {
 				attrValue = mgr.parseBoolExpression(attrValue);
 			} else {
 				attrValue = mgr.expandName(attrValue);

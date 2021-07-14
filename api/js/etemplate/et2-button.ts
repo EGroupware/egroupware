@@ -16,9 +16,11 @@ import {Et2Widget} from "./et2_core_inheritance";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
 {
+    private _icon: HTMLImageElement;
     static get properties() {
         return {
-            image: {type: String}
+            image: {type: String},
+            onclick: {type: Function}
         }
     }
     static get styles()
@@ -34,7 +36,19 @@ export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
     constructor()
     {
         super();
+
+        // Property default values
         this.image = '';
+
+        // Create icon since BXButton puts it as child, we put it as attribute
+        this._icon = document.createElement("img");
+        this._icon.slot="icon";
+        // Do not add this._icon here, no children can be added in constructor
+
+        this.onclick = () => {
+            debugger;
+            this.getInstanceManager().submit(this);
+        };
     }
 
     connectedCallback() {
@@ -44,10 +58,8 @@ export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
         debugger;
         if(this.image)
         {
-            let icon = document.createElement("img");
-            icon.src = egw.image(this.image);
-            icon.slot="icon";
-            this.appendChild(icon);
+            this._icon.src = egw.image(this.image);
+            this.appendChild(this._icon);
         }
     }
 }

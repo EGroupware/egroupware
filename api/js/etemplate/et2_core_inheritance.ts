@@ -15,73 +15,11 @@
 import {egw} from "../jsapi/egw_global";
 import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
 import {et2_IDOMNode, et2_IInput, et2_IInputNode, et2_implements_registry} from "./et2_core_interfaces";
-import {LitElement} from "lit-element";
+import {LitElement} from "../../../node_modules/lit-element/lit-element.js";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_widget} from "./et2_core_widget";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 
-// Needed for mixin
-export function mix (superclass)
-{
-	return new MixinBuilder(superclass);
-}
-export class MixinBuilder {
-	constructor(superclass) {
-		this.superclass = superclass;
-	}
-
-	with(...mixins) {
-		return mixins.reduce(this.applyMixins, this.superclass);
-	}
-	applyMixins(derivedConstructor: any, baseConstructor: any) {
-		Object.getOwnPropertyNames(baseConstructor.prototype)
-			.forEach(name => {
-				Object.defineProperty(derivedConstructor.prototype,
-					name,
-					Object.
-					getOwnPropertyDescriptor(
-						baseConstructor.prototype,
-						name
-					)
-				);
-			});
-	}
-	 copyProperties(target, source) {
-		for (let key of Reflect.ownKeys(source)) {
-			if (key !== "constructor" && key !== "prototype" && key !== "name") {
-				let desc = Object.getOwnPropertyDescriptor(source, key);
-				Object.defineProperty(target, key, desc);
-			}
-		}
-	}
-}
-
-// This one from Typescript docs
-export function applyMixins(derivedCtor: any, constructors: any[]) {
-  constructors.forEach((baseCtor) => {
-    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
-      Object.defineProperty(
-        derivedCtor.prototype,
-        name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
-          Object.create(null)
-      );
-    });
-  });
-}
-
-/*
-Experiments in using mixins to combine et2_widget & LitElement
-Note that this "works", in that it mixes the code properly.
-It does not work in that the resulting class does not work with et2's inheritance & class checking stuff
-
-// This one to make TypeScript happy?
-interface et2_textbox extends et2_textbox, LitElement {}
-// This one to make the inheritance magic happen
-applyMixins(et2_textbox, [et2_textbox,LitElement]);
-// Make it a real WebComponent
-customElements.define("et2-textbox",et2_textbox);
-
- */
 export class ClassWithInterfaces
 {
 	/**
@@ -312,16 +250,84 @@ export class ClassWithAttributes extends ClassWithInterfaces
  * This mixin will allow any LitElement to become an Et2Widget
  *
  * Usage:
- * export class Et2Loading extends Et2Widget(BXLoading) {...}
+ * @example
+ * export class Et2Loading extends Et2Widget(BXLoading) { ... }
+ * @example
+ * export class Et2Button extends Et2InputWidget(Et2Widget(BXButton)) { ... }
+ *
+ * @see Mixin explanation https://lit.dev/docs/composition/mixins/
  */
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode {
 
+		/** et2_widget compatability **/
 		protected _mgrs: et2_arrayMgr[] = [] ;
 		protected _parent: Et2WidgetClass|et2_widget|null = null;
 
+		/** WebComponent **/
+		static get properties() {
+			return {
+				label: {type: String},
+				onclick: {
+					type: Function,
+					converter: (value) => {
+						debugger;
+						return et2_compileLegacyJS(value, this, this);
+					}
+				}
+			};
+		}
+
+		/**
+		 * Widget Mixin constructor
+		 *
+		 * Note the ...args parameter and super() call
+		 *
+		 * @param args
+		 */
+		constructor(...args: any[]) {
+			super(...args);
+
+			// Provide *default* property values in constructor
+			this.label = "";
+		}
+
+		connectedCallback()
+		{
+			super.connectedCallback();
+
+			this.set_label(this.label);
+		}
+
+
+		/**
+		 * NOT the setter, since we cannot add to the DOM before connectedCallback()
+		 *
+		 * @param value
+		 */
+		set_label(value)
+		{
+			let oldValue = this.label;
+
+			// Remove old
+			let oldLabels = this.getElementsByClassName("et2_label");
+			while(oldLabels[0])
+			{
+				this.removeChild(oldLabels[0]);
+			}
+
+			let label = document.createElement("span");
+			label.classList.add("et2_label");
+			label.textContent = this.label;
+			// We should have a slot in the template for the label
+			//label.slot="label";
+			this.appendChild(label);
+			this.requestUpdate('label',oldValue);
+		}
+
+		/** et2_widget compatability **/
 		iterateOver(callback: Function, context, _type)
 		{}
 		loadingFinished()
@@ -333,7 +339,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 			}
 		}
 
-		setParent(new_parent: HTMLElement | et2_widget)
+		setParent(new_parent: Et2WidgetClass | et2_widget)
 		{
 			this._parent = new_parent;
 		}
@@ -439,6 +445,22 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 					delete (this._mgrs[key]);
 				}
 			}
+		}
+
+		/**
+		 * Returns the instance manager
+		 *
+		 * @return {etemplate2}
+		 */
+		getInstanceManager()
+		{
+			if (this._inst != null) {
+				return this._inst;
+			} else if (this.getParent()) {
+				return this.getParent().getInstanceManager();
+			}
+
+			return null;
 		}
 	};
 	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
