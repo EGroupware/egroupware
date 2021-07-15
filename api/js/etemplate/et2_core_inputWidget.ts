@@ -471,8 +471,6 @@ export const Et2InputWidget = <T extends Constructor<LitElement>>(superClass: T)
 		/**
 		 * These belongs somewhere else/higher, I'm just getting it to work
 		 */
-		iterateOver(callback: Function, context, _type)
-		{}
 		loadingFinished()
 		{}
 		getWidgetById(_id)

@@ -19,6 +19,7 @@ import {LitElement} from "../../../node_modules/lit-element/lit-element.js";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_widget} from "./et2_core_widget";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+import {etemplate2} from "./etemplate2";
 
 export class ClassWithInterfaces
 {
@@ -264,7 +265,8 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 
 		/** et2_widget compatability **/
 		protected _mgrs: et2_arrayMgr[] = [] ;
-		protected _parent: Et2WidgetClass|et2_widget|null = null;
+		protected _parent: Et2WidgetClass | et2_widget | null = null;
+		private _inst: etemplate2 | null = null;
 
 		/** WebComponent **/
 		static get properties() {
@@ -327,9 +329,48 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 			this.requestUpdate('label',oldValue);
 		}
 
+		/**
+		 * Event handlers
+		 */
+
+		/**
+		 * Click handler calling custom handler set via onclick attribute to this.onclick
+		 *
+		 * @param _ev
+		 * @returns
+		 */
+		_handleClick(_ev : MouseEvent) : boolean
+		{
+			if(typeof this.onclick == 'function')
+			{
+				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
+				var args = Array.prototype.slice.call(arguments);
+				if(args.indexOf(this) == -1) args.splice(1, 0, this);
+
+				return this.onclick.apply(this, args);
+			}
+
+			return true;
+		}
+
 		/** et2_widget compatability **/
-		iterateOver(callback: Function, context, _type)
-		{}
+		destroy()
+		{
+			// Not really needed, use the disconnectedCallback() and let the browser handle it
+		}
+		isInTree() : boolean
+		{
+			// TODO: Probably should watch the state or something
+			return true;
+		}
+		iterateOver(_callback: Function, _context, _type)
+		{
+			if(et2_implements_registry[_type](this))
+			{
+				_callback.call(_context, this);
+			}
+			// TODO: children
+		}
 		loadingFinished()
 		{}
 		getWidgetById(_id)
@@ -461,6 +502,25 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 			}
 
 			return null;
+		}
+
+		/**
+		 * Returns the path into the data array.  By default, array manager takes care of
+		 * this, but some extensions need to override this
+		 */
+		getPath()
+		{
+			var path = this.getArrayMgr("content").getPath();
+
+			// Prevent namespaced widgets with value from going an extra layer deep
+			if (this.id && this._createNamespace() && path[path.length - 1] == this.id) path.pop();
+
+			return path;
+		}
+
+		_createNamespace()
+		{
+			return false;
 		}
 	};
 	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
