@@ -53,31 +53,47 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		/**
 		 * Query an EGroupware user preference
 		 *
-		 * If a prefernce is not already loaded (only done for "common" by default), it is synchroniosly queryed from the server!
+		 * If a preference is not already loaded (only done for "common" by default),
+		 * it is synchronously queried from the server, if no _callback parameter is given!
 		 *
 		 * @param {string} _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
 		 * @param {string} _app default 'common'
-		 * @param {function|false|undefined} _callback optional callback, if preference needs loading first
-		 * if false given and preference is not loaded, undefined is return and no (synchronious) request is send to server
+		 * @param {function|boolean|undefined} _callback optional callback, if preference needs loading first
+		 *  - default/undefined: preference is synchronously queried, if not loaded, and returned
+		 *  - function: if loaded, preference is returned, if not false and callback is called once it's loaded
+		 * 	- true:  a promise for the preference is returned
+		 *	- false: if preference is not loaded, undefined is return and no (synchronous) request is send to server
 		 * @param {object} _context context for callback
-		 * @return string|bool preference value or false, if callback given and preference not yet loaded
+		 * @return Promise|object|string|bool (Promise for) preference value or false, if callback given and preference not yet loaded
 		 */
 		preference: function(_name, _app, _callback, _context)
 		{
-			if (typeof _app == 'undefined') _app = 'common';
+			if (typeof _app === 'undefined') _app = 'common';
 
-			if (typeof prefs[_app] == 'undefined')
+			if (typeof prefs[_app] === 'undefined')
 			{
 				if (_callback === false) return undefined;
-				var request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
-				request.sendRequest(typeof _callback == 'function', 'GET');	// use synchronous (cachable) GET request
-				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
-				if (typeof _callback == 'function') return false;
+				const request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
+				const promise = request.sendRequest(typeof _callback !== 'undefined', 'GET');
+				if (typeof prefs[_app] === 'undefined') prefs[_app] = {};
+				if (_callback === true) return promise.then(() => this.preference(_name, _app));
+				if (typeof _callback === 'function') return false;
 			}
-			if (_name == "*") return typeof prefs[_app] ==='object' ? jQuery.extend({},prefs[_app]) : prefs[_app];
-
-			return typeof prefs[_app][_name] === 'object' && prefs[_app][_name] !== null ?
-				jQuery.extend({},prefs[_app][_name]) : prefs[_app][_name];
+			let ret;
+			if (_name === "*")
+			{
+				ret = typeof prefs[_app] === 'object' ? jQuery.extend({}, prefs[_app]) : prefs[_app];
+			}
+			else
+			{
+				ret = typeof prefs[_app][_name] === 'object' && prefs[_app][_name] !== null ?
+					jQuery.extend({}, prefs[_app][_name]) : prefs[_app][_name];
+			}
+			if (_callback === true)
+			{
+				return Promise.resolve(ret);
+			}
+			return ret;
 		},
 
 		/**

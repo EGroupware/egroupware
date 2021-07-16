@@ -285,7 +285,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				})
 			}
 			const date = typeof response.headers === 'object' ? 'Date: '+response.headers.get('Date') :
-				response.getAllResponseHeaders().match(/^Date:.*$/mi)[0] ||
+				(typeof response.getAllResponseHeaders === 'function' ? response.getAllResponseHeaders().match(/^Date:.*$/mi)[0] : null) ||
 				'Date: '+(new Date).toString();
 			this.egw.message.call(this.egw,
 				this.egw.lang('A request to the EGroupware server returned with an error')+
@@ -416,7 +416,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				}
 			}
 			// Call request callback, if provided
-			if(this.callback != null && !only_data)
+			if(typeof this.callback === 'function' && !only_data)
 			{
 				this.callback.call(this.context,res);
 			}
