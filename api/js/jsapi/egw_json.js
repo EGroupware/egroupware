@@ -203,7 +203,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		if (typeof method === 'undefined') method = 'POST';
 
 		// Assemble the complete request
-		var request_obj = JSON.stringify({
+		const request_obj = JSON.stringify({
 			request: {
 				parameters: this.parameters
 			}
@@ -218,53 +218,89 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			return navigator.sendBeacon(this.url, data);
 		}
 
-		// Send the request via AJAX using the jquery ajax function
-		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
-		// (causing eg. apply from server with app.$app.method to run in main window instead of popup)
-		this.request = (this.egw.window?this.egw.window.jQuery:jQuery).ajax({
-			url: this.url,
-			async: this.async,
-			context: this,
-			// only POST can send JSON as direct payload, GET can not
-			data: method === 'GET' ? { json_data: request_obj } : request_obj,
-			contentType: method === 'GET' ? false : 'application/json',
-			dataType: 'json',
-			type: method,
-			success: this.handleResponse,
-			jsonp: false,
-			error: error || this.handleError
-		});
-
+		let url = this.url;
+		let init = {
+			method: method
+		}
+		if (method === 'GET')
+		{
+			url += (url.indexOf('?') === -1 ? '?' : '&') + new URLSearchParams({ json_data: request_obj });
+		}
+		else
+		{
+			init.headers = { 'Content-Type': 'application/json'};
+			init.body = request_obj;
+		}
+		if (this.async)
+		{
+			this.request = (this.egw.window?this.egw.window:window).fetch(url, init)
+				.then((response) => {
+					if (!response.ok) {
+						throw response;
+					}
+					return response.json();
+				})
+				.then((data) => this.handleResponse(data))
+				.catch((_err) => {
+					(error || this.handleError).call(this, _err)
+				});
+		}
+		else
+		{
+			console.trace("Synchronous AJAX request detected", this);
+			this.request = new XMLHttpRequest();
+			this.request.open(method, url, false);
+			if (method !== 'GET') this.request.setRequestHeader('Content-Type', 'application/json');
+			this.request.send(init.body);
+			if (this.request.status !== 200)
+			{
+				(error || this.handleError).call(this, this.request, 'error')
+			}
+			else
+			{
+				this.handleResponse(JSON.parse(this.request.responseText));
+			}
+		}
 		return this.request;
 	};
 
 	/**
 	 * Default error callback displaying error via egw.message
 	 *
-	 * @param {XMLHTTP} _xmlhttp
+	 * @param {XMLHTTP|Response} response
 	 * @param {string} _err
 	 */
-	json_request.prototype.handleError = function(_xmlhttp, _err) {
+	json_request.prototype.handleError = function(response, _err) {
 		// Don't error about an abort
 		if(_err !== 'abort')
 		{
+			// for fetch Response get json, as it's used below
+			if (typeof response.headers === 'object' && response.headers.get('Content-Type') === 'application/json')
+			{
+				return response.json().then((json) => {
+					response.responseJSON = json;
+					this.handleError(response, 'error');
+				})
+			}
+			const date = typeof response.headers === 'object' ? 'Date: '+response.headers.get('Date') :
+				response.getAllResponseHeaders().match(/^Date:.*$/mi)[0] ||
+				'Date: '+(new Date).toString();
 			this.egw.message.call(this.egw,
 				this.egw.lang('A request to the EGroupware server returned with an error')+
-				': '+_xmlhttp.statusText+' ('+_xmlhttp.status+")\n\n"+
+				': '+response.statusText+' ('+response.status+")\n\n"+
 				this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
 				this.egw.lang('If the error persists, contact your administrator for help and ask to check the error-log of the webserver.')+
-				"\n\nURL: "+this.url+"\n"+
-				(_xmlhttp.getAllResponseHeaders() ? (_xmlhttp.getAllResponseHeaders().match(/^Date:.*$/mi) ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/mi)[0]:''):'')+
+				"\n\nURL: "+this.url+"\n"+date+
 				// if EGroupware send JSON payload with error, errno show it here too
-				(_err === 'error' && _xmlhttp.status === 400 && typeof _xmlhttp.responseJSON === 'object' && _xmlhttp.responseJSON.error ?
-				"\nError: "+_xmlhttp.responseJSON.error+' ('+_xmlhttp.responseJSON.errno+')' : '')
+				(_err === 'error' && response.status === 400 && typeof response.responseJSON === 'object' && response.responseJSON.error ?
+				"\nError: "+response.responseJSON.error+' ('+response.responseJSON.errno+')' : '')
 			);
 
-			this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText, _xmlhttp.responseJSON);
+			this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, response.status, response.statusText, response.responseJSON);
 
 			// check of unparsable JSON on server-side, which might be caused by some network problem --> resend max. twice
-			if (_err === 'error' && _xmlhttp.status === 400 && typeof _xmlhttp.responseJSON === 'object' &&
-				_xmlhttp.responseJSON.errno && _xmlhttp.responseJSON.error.substr(0, 5) === 'JSON ')
+			if (_err === 'error' && response.status === 400 && typeof response.responseJSON === 'object' &&
+				response.responseJSON.errno && response.responseJSON.error.substr(0, 5) === 'JSON ')
 			{
 				// ToDo: resend request max. twice
 			}
