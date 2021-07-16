@@ -1496,33 +1496,33 @@ export class et2_selectbox extends et2_inputWidget
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			var req = egw.json(
+			const req = egw.json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
 				[widget._type,options_string,attrs.value]
-			).sendRequest(!in_nextmatch);
+			).sendRequest();	// was !in_nextmatch to send synchronous request
 			if(typeof cache === 'undefined')
 			{
 				cache_owner[cache_id] = req;
 			}
 			cache = req;
 		}
-		if(typeof cache.done == 'function')
+		if (typeof cache.then === 'function')
 		{
 			// pending, wait for it
-			cache.done(jQuery.proxy(function(response) {
+			cache.then((response) => {
 				cache = cache_owner[cache_id] = response.response[0].data||undefined;
 				// Set select_options in attributes in case we get a resonse before
 				// the widget is finished loading (otherwise it will re-set to {})
 				attrs.select_options = cache;
 
-				egw.window.setTimeout(jQuery.proxy(function() {
+				egw.window.setTimeout(() => {
 					// Avoid errors if widget is destroyed before the timeout
-					if(this.widget && typeof this.widget.id !== 'undefined')
+					if (widget && typeof widget.id !== 'undefined')
 					{
-						this.widget.set_select_options(et2_selectbox.find_select_options(this.widget,{}, this.widget.options));
+						widget.set_select_options(et2_selectbox.find_select_options(widget,{}, widget.options));
 					}
-				},this),1);
-			},{widget:widget,cache_id:cache_id}));
+				}, 1);
+			});
 			return [];
 		}
 		else
