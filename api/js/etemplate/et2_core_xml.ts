@@ -70,7 +70,8 @@ export function et2_loadXMLFromURL(_url : string, _callback? : Function, _contex
 			return xmldoc.children[0];
 		})
 		.catch((_err) => {
-			egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_err.status+' '+_err.statusText);
+			egw().message('Loading eTemplate from '+_url+' failed!'+"\n\n"+
+				(typeof _err.stack !== 'undefined' ? _err.stack : _err.status+' '+_err.statusText), 'error');
 			if(typeof _fail_callback === 'function') {
 				_fail_callback.call(_context, _err);
 			}

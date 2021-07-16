@@ -75,9 +75,6 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		this.sender = _sender ? _sender : null;
 		this.egw = _egw;
 
-		// We currently don't have a request object
-		this.request = null;
-
 		// Some variables needed for notification about a JS files done loading
 		this.onLoadFinish = null;
 		this.jsFiles = 0;
@@ -191,7 +188,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
 	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
-	 * @return {jqXHR|boolean} jQuery jqXHR request object or for async==="keepalive" boolean is returned
+	 * @return {Promise|boolean} Promise or for async==="keepalive" boolean is returned
 	 */
 	json_request.prototype.sendRequest = function(async, method, error)
 	{
@@ -209,7 +206,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 		});
 
-		// send with keepalive===true or sendBeacon to be used in beforeunload event
+		// send with keepalive===true for sendBeacon to be used in beforeunload event
 		if (this.async === "keepalive" && typeof navigator.sendBeacon !== "undefined")
 		{
 			const data = new FormData();
@@ -231,16 +228,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			init.headers = { 'Content-Type': 'application/json'};
 			init.body = request_obj;
 		}
+		let promise;
 		if (this.async)
 		{
-			this.request = (this.egw.window?this.egw.window:window).fetch(url, init)
+			promise = (this.egw.window?this.egw.window:window).fetch(url, init)
 				.then((response) => {
-					if (!response.ok) {
+					if (!response.ok || !response.headers.get('Content-Type').startsWith('application/json')) {
 						throw response;
 					}
 					return response.json();
 				})
-				.then((data) => this.handleResponse(data))
+				.then((data) => this.handleResponse(data) || data)
 				.catch((_err) => {
 					(error || this.handleError).call(this, _err)
 				});
@@ -248,20 +246,24 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		else
 		{
 			console.trace("Synchronous AJAX request detected", this);
-			this.request = new XMLHttpRequest();
-			this.request.open(method, url, false);
-			if (method !== 'GET') this.request.setRequestHeader('Content-Type', 'application/json');
-			this.request.send(init.body);
-			if (this.request.status !== 200)
+			const request = new XMLHttpRequest();
+			request.open(method, url, false);
+			if (method !== 'GET') request.setRequestHeader('Content-Type', 'application/json');
+			request.send(init.body);
+			if (request.status >= 200 && request.status < 300)
 			{
-				(error || this.handleError).call(this, this.request, 'error')
+				const json = JSON.parse(request.responseText);
+				promise = Promise.resolve(this.handleResponse(json) || json);
 			}
 			else
 			{
-				this.handleResponse(JSON.parse(this.request.responseText));
+				(error || this.handleError).call(this, request, 'error')
 			}
 		}
-		return this.request;
+		// compatibility with jQuery.ajax
+		if (promise && typeof promise.then === 'function') promise.done = promise.then;
+
+		return promise;
 	};
 
 	/**
@@ -419,7 +421,6 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				this.callback.call(this.context,res);
 			}
 		}
-		this.request = null;
 	};
 
 	var json = {
