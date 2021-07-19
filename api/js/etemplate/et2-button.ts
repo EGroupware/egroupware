@@ -9,15 +9,34 @@
  */
 
 
-import BXButton from "../../../node_modules/carbon-web-components/es/components/button/button"
-import {css} from "../../../node_modules/lit-element/lit-element.js";
+import {css,html} from "../../../node_modules/@lion/core/index.js";
+import {LionButton} from "../../../node_modules/@lion/button/index.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
 import {Et2Widget} from "./et2_core_inheritance";
 
-export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
+export class Et2Button extends  Et2InputWidget(Et2Widget(LionButton))
 {
     protected _created_icon_node: HTMLImageElement;
     protected clicked: boolean = false;
+    private image: string;
+
+    static get styles() {
+        return [
+            ...super.styles,
+            css`
+            :host {
+                padding: 1px 8px;
+                /* These should probably come from somewhere else */
+                border-radius: 3px;
+                background-color: #e6e6e6;
+            }
+            /* Set size for icon */
+            ::slotted([slot="icon"]) {
+                width: 20px;
+                padding-right: 3px;
+            }`,
+        ];
+    }
 
     static get properties() {
         return {
@@ -25,15 +44,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
             onclick: {type: Function}
         }
     }
-    static get styles()
-    {
-        return [
-            super.styles,
-            css`
-            /* Custom CSS - Needs to work with the LitElement we're extending */
-            `
-        ];
-    }
+
     constructor()
     {
         super();
@@ -57,7 +68,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
     connectedCallback() {
         super.connectedCallback();
 
-        this.classList.add("et2_button")
+        //this.classList.add("et2_button")
 
         if(this.image)
         {
@@ -93,6 +104,12 @@ export class Et2Button extends Et2InputWidget(Et2Widget(BXButton))
         return true;
     }
 
+      render() {
+        return html` <div class="button-content et2_button" id="${this._buttonId}">
+            <slot name="icon"></slot>
+            <slot></slot>
+        </div> `;
+      }
     /**
      * Implementation of the et2_IInput interface
      */

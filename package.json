@@ -45,6 +45,8 @@
     }
   },
   "dependencies": {
+    "@lion/button": "^0.14.1",
+    "@lion/core": "^0.18.1",
     "carbon-components": "^10.37.0",
     "carbon-web-components": "^1.14.1",
     "lit-element": "^2.5.1",

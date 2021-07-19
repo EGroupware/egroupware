@@ -22,7 +22,6 @@ import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "./et2_core_interf
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 // fixing circular dependencies by only importing the type (not in compiled .js)
 import type {et2_tabbox} from "./et2_widget_tabs";
-import {LitElement} from "lit-element";
 
 export interface et2_input {
 	getInputNode() : HTMLInputElement|HTMLElement;
@@ -393,7 +392,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
  */
 
 type Constructor<T = {}> = new (...args: any[]) => T;
-export const Et2InputWidget = <T extends Constructor<LitElement>>(superClass: T) => {
+export const Et2InputWidget = <T extends Constructor>(superClass: T) => {
 	class Et2InputWidgetClass extends superClass implements et2_IInput, et2_IInputNode {
 
 		label: string = '';

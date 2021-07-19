@@ -260,7 +260,7 @@ export class ClassWithAttributes extends ClassWithInterfaces
  */
 
 type Constructor<T = {}> = new (...args: any[]) => T;
-export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
+export const Et2Widget = <T extends Constructor>(superClass: T) => {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode {
 
 		/** et2_widget compatability **/
