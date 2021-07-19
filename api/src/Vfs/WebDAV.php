@@ -636,6 +636,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'GET' && (($this->force_download = strpos($_SERVER['REQUEST_URI'],'?download')) !== false))
 		{
+			$_SERVER['ORIG_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 			$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'],0,$this->force_download);
 		}
 		parent::__construct();
