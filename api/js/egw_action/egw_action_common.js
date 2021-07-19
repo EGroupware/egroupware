@@ -396,17 +396,14 @@ egwFnct.prototype.setValue = function(_value)
 			// check if we need a not yet included app.js object --> include it now and re-set when it arrives
 			else if (i === 1 && typeof app.classes[parts[1]] === "undefined")
 			{
-				var self = this;
-				return new Promise(function(resolve)
-				{
-					egw.includeJS("/"+parts[1]+"/js/app.js", function ()
-					{
-						if(typeof app.classes[parts[i]] !== "undefined")
+				return import(egw.webserverUrl+"/"+parts[1]+"/js/app.min.js?"+((new Date).valueOf()/86400|0).toString())
+					.then(() => {
+						if(typeof app.classes[parts[i]] === "undefined")
 						{
-							resolve(this.setValue(_value));
+							throw new Error("app.classes."+parts[i]+" not found!");
 						}
-					}.bind(this), self, egw.webserverUrl);
-				}.bind(this));
+						this.setValue(_value);
+					});
 			}
 			// check if we need a not yet instantiated app.js object --> instantiate it now
 			else if (i === 1 && typeof app.classes[parts[1]] === "function")

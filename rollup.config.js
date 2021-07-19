@@ -154,7 +154,7 @@ export default function addAppsConfig()
         {
             try {
                 statSync(file.name + '/js/app.ts');
-                config.input[file.name + '/js/app'] = file.name + '/js/app.ts';
+                config.input[file.name + '/js/app.min'] = file.name + '/js/app.ts';
             }
             catch (e) {
                 try {
