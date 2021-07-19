@@ -31,6 +31,7 @@ const config = {
         "pixelegg/js/fw_pixelegg.min": "pixelegg/js/fw_pixelegg.js",
         "pixelegg/js/fw_mobile.min": "pixelegg/js/fw_mobile.js",
         "api/js/jsapi/egw.min": "api/js/jsapi/egw_modules.js",
+        "api/js/etemplate/etemplate2": "api/js/etemplate/etemplate2.ts",
 
         // app.ts/js are added automatic by addAppsConfig() below
     },
@@ -158,7 +159,7 @@ export default function addAppsConfig()
         {
             try {
                 statSync(file.name + '/js/app.ts');
-                config.input[file.name + '/js/app'] = file.name + '/js/app.ts';
+                config.input[file.name + '/js/app.min'] = file.name + '/js/app.ts';
             }
             catch (e) {
                 try {

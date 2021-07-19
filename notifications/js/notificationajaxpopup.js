@@ -908,7 +908,10 @@
 
 		var self = notifications;
 		var langRequire = jQuery('#notifications_script_id').attr('data-langRequire');
-		egw.langRequire(window, [JSON.parse(langRequire)]).then(()=>
+		Promise.all([
+			egw.langRequire(window, [JSON.parse(langRequire)]),
+			egw.preference('notification_chain','notifications', true)
+		]).then(() =>
 		{
 			var $egwpopup_fw = jQuery('#topmenu_info_notifications');
 			switch (egw.preference('notification_chain','notifications'))

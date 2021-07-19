@@ -47,26 +47,35 @@ export function et2_loadXMLFromURL(_url : string, _callback? : Function, _contex
 	{
 		win = egw.top;
 	}
-	return win.jQuery.ajax({
-		// we add the full url (protocol and domain) as sometimes just the path
-		// gives a CSP error interpreting it as file:///path
-		// (if there are a enough 404 errors in html content ...)
-		url: (_url[0]=='/' ? location.protocol+'//'+location.host : '')+_url,
-		context: _context,
-		type: 'GET',
-		dataType: 'xml',
-		success: function(_data, _status, _xmlhttp){
-			if (typeof _callback === 'function') {
-				_callback.call(_context, _data.documentElement);
+	// we add the full url (protocol and domain) as sometimes just the path
+	// gives a CSP error interpreting it as file:///path
+	// (if there are a enough 404 errors in html content ...)
+	return win.fetch((_url[0] === '/' ? location.protocol+'//'+location.host : '')+_url, {
+		method: 'GET'
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw response;
 			}
-		},
-		error: function(_xmlhttp, _err) {
-			egw().debug('error', 'Loading eTemplate from '+_url+' failed! '+_xmlhttp.status+' '+_xmlhttp.statusText);
+			return response.text();
+		})
+		.then((xml) => {
+			const parser = new window.DOMParser();
+			return parser.parseFromString( xml, "text/xml" );
+		})
+		.then((xmldoc) => {
+			if (typeof _callback === 'function') {
+				_callback.call(_context, xmldoc.children[0]);
+			}
+			return xmldoc.children[0];
+		})
+		.catch((_err) => {
+			egw().message('Loading eTemplate from '+_url+' failed!'+"\n\n"+
+				(typeof _err.stack !== 'undefined' ? _err.stack : _err.status+' '+_err.statusText), 'error');
 			if(typeof _fail_callback === 'function') {
 				_fail_callback.call(_context, _err);
 			}
-		}
-	});
+		});
 }
 
 export function et2_directChildrenByTagName(_node : HTMLElement, _tagName : String) : HTMLElement[]

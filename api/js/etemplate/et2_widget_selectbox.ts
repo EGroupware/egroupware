@@ -1469,60 +1469,40 @@ export class et2_selectbox extends et2_inputWidget
 		// normalize options by removing trailing commas
 		options_string = options_string.replace(/,+$/, '');
 
-		var cache_id = widget._type+'_'+options_string;
-		var cache_owner = (
-			// Todo: @new-js-loader et2_selectbox is no longer instanciated globaly --> caching needs to be fixed
-			et2_selectbox
-			/*egw.window.et2_selectbox ?
-				egw.window.et2_selectbox :
-				egw(window).window.et2_selectbox*/
-		).type_cache;
-		var cache = cache_owner[cache_id];
+		const cache_id = widget._type+'_'+options_string;
+		const cache_owner = egw.getCache('et2_selectbox');
+		let cache = cache_owner[cache_id];
 
-		// Options for a selectbox in a nextmatch must be returned now, as the
-		// widget we have is not enough to set the options later.
-		var in_nextmatch = false;
-		if(typeof cache === 'undefined' || typeof cache.length === 'undefined')
-		{
-			var parent = widget._parent;
-			while(parent && !in_nextmatch)
-			{
-				in_nextmatch = parent && parent._type && parent._type === 'nextmatch';
-				parent = parent._parent;
-			}
-		}
-		if (typeof cache == 'undefined' || in_nextmatch)
+		if (typeof cache === 'undefined')
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			var req = egw.json(
+			const req = egw.json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
 				[widget._type,options_string,attrs.value]
-			).sendRequest(!in_nextmatch);
+			).sendRequest();
 			if(typeof cache === 'undefined')
 			{
 				cache_owner[cache_id] = req;
 			}
 			cache = req;
 		}
-		if(typeof cache.done == 'function')
+		if (typeof cache.then === 'function')
 		{
 			// pending, wait for it
-			cache.done(jQuery.proxy(function(response) {
+			cache.then((response) => {
 				cache = cache_owner[cache_id] = response.response[0].data||undefined;
-				// Set select_options in attributes in case we get a resonse before
+				// Set select_options in attributes in case we get a response before
 				// the widget is finished loading (otherwise it will re-set to {})
 				attrs.select_options = cache;
 
-				egw.window.setTimeout(jQuery.proxy(function() {
-					// Avoid errors if widget is destroyed before the timeout
-					if(this.widget && typeof this.widget.id !== 'undefined')
-					{
-						this.widget.set_select_options(et2_selectbox.find_select_options(this.widget,{}, this.widget.options));
-					}
-				},this),1);
-			},{widget:widget,cache_id:cache_id}));
+				// Avoid errors if widget is destroyed before the timeout
+				if (widget && typeof widget.id !== 'undefined')
+				{
+					widget.set_select_options(et2_selectbox.find_select_options(widget,{}, widget.options));
+				}
+			});
 			return [];
 		}
 		else

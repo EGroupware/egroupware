@@ -30,10 +30,16 @@ include '../header.inc.php';
 $GLOBALS['egw']->session->commit_session();
 
 // use an etag over config and link-registry
-$preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['common']);
-$ab_preferences = json_encode($GLOBALS['egw_info']['user']['preferences']['addressbook']);
+$preferences['common'] = $GLOBALS['egw_info']['user']['preferences']['common'];
+foreach(['addressbook', 'notifications', 'status', 'filemanager'] as $app)
+{
+	if (!empty($GLOBALS['egw_info']['user']['apps'][$app]))
+	{
+		$preferences[$app] = $GLOBALS['egw_info']['user']['preferences'][$app];
+	}
+}
 $user = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-$etag = '"'.md5($preferences.$ab_preferences.$user).'"';
+$etag = '"'.md5(json_encode($preferences).$user).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 Api\Session::cache_control(86400);	// cache for 1 day
@@ -47,9 +53,11 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	exit;
 }
 
-$content = 'egw.set_preferences('.$preferences.", 'common', egw && egw.window !== window);\n";
-$content .= 'egw.set_preferences('.$ab_preferences.", 'addressbook', egw && egw.window !== window);\n";
-$content .= 'egw.set_user('.$user.", egw && egw.window !== window);\n";
+$content = 'egw.set_user('.$user.", egw && egw.window !== window);\n";
+foreach($preferences as $app => $data)
+{
+	$content .= 'egw.set_preferences('.json_encode($data).', '.json_encode($app).", egw && egw.window !== window);\n";
+}
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))

@@ -119,7 +119,7 @@ class Bundle
 						$mod  = $min_mod;
 					}
 					// use cache-buster only for entry-points / app.js, as the have no hash
-					if (preg_match('#/js/app(\.min)?\.js$#', $file))
+					if (preg_match('#/js/(app(\.min)?|etemplate/etemplate2)\.js$#', $file))
 					{
 						$to_include[$file] = $path.'?'.$mod.($query ? '&'.$query : '');
 					}
