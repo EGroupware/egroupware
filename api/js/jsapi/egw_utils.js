@@ -145,9 +145,27 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 
 	var uid_counter = 0;
 
+	/**
+	 * Global cache shared between all EGroupware windows
+	 * @type {{}}
+	 */
+	const cache = {};
+
 	// Create the utils object which contains references to all functions
 	// covered by it.
 	var utils = {
+		/**
+		 * Get a cache object shared between all EGroupware windows
+		 *
+		 * @param {string} _name unique name for the cache-object
+		 * @return {*}
+		 */
+		getCache: function(_name)
+		{
+			if (typeof cache[_name] === 'undefined') cache[_name] = {};
+
+			return cache[_name];
+		},
 
 		ajaxUrl: function(_menuaction) {
 			if(_menuaction.indexOf('menuaction=') >= 0)
