@@ -233,7 +233,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			promise = (this.egw.window?this.egw.window:window).fetch(url, init)
 				.then((response) => {
-					if (!response.ok || !response.headers.get('Content-Type').startsWith('application/json')) {
+					if (!response.ok) {
 						throw response;
 					}
 					return response.json();
