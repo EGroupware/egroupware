@@ -425,7 +425,7 @@ class Asyncservice
 			{
 				// checking / setting up egw_info/user
 				//
-				if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
+				//if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
 				{
 					// run notifications, before changing account_id of enviroment
 					Link::run_notifies();
