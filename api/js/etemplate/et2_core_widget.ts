@@ -25,6 +25,7 @@ import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget, et2_input} from "./et2_core_inputWidget";
+import {Et2InputWidget} from "./et2_core_inputWidget";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -758,7 +759,7 @@ export class et2_widget extends ClassWithAttributes
 		}
 		widget.setParent(this);
 		var mgr = widget.getArrayMgr("content");
-
+debugger;
 		// Apply any set attributes - widget will do its own coercion
 		_node.getAttributeNames().forEach(attribute => {
 			let attrValue = _node.getAttribute(attribute);
@@ -775,6 +776,22 @@ export class et2_widget extends ClassWithAttributes
 			}
 			widget.setAttribute(attribute, attrValue);
 		});
+
+		if(widget_class.getPropertyOptions("value") && widget.set_value)
+		{
+			if (mgr != null) {
+				let val = mgr.getEntry(widget.id, false, true);
+				if (val !== null)
+				{
+					widget.setAttribute("value", val);
+				}
+			}
+			// Check for already inside namespace
+			if(this._createNamespace() && this.getArrayMgr("content").perspectiveData.owner == this)
+			{
+				widget.setAttribute("value", this.getArrayMgr("content").data);
+			}
+		}
 
 		// Children need to be loaded
 		//this.loadFromXML(_node);

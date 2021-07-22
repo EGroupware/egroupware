@@ -388,7 +388,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
  * This mixin will allow any LitElement to become an Et2InputWidget
  *
  * Usage:
- * export class Et2Button extends Et2InputWidget(BXButton) {...}
+ * export class Et2Button extends Et2InputWidget(Et2Widget(LitWidget)) {...}
  */
 
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -399,18 +399,28 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) => {
 		protected value: string | number | Object;
 		protected _oldValue: string | number | Object;
 
+		/** WebComponent **/
+		static get properties() {
+			return {
+				...super.properties,
+				value: {attribute: false}
+			};
+		}
 
+		constructor() {
+			super();
+
+			// Add statustext hover
+
+		}
+
+		set_value(new_value)
+		{
+			this.modelValue=new_value;
+		}
 		getValue()
 		{
-			var node = this.getInputNode();
-			if (node)
-			{
-				var val = jQuery(node).val();
-
-				return val;
-			}
-
-			return this._oldValue;
+			return this._inputNode.value;
 		}
 
 		isDirty()
@@ -464,19 +474,8 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) => {
 
 		getInputNode()
 		{
-			return this.node;
-		}
-
-		/**
-		 * These belongs somewhere else/higher, I'm just getting it to work
-		 */
-		loadingFinished()
-		{}
-		getWidgetById(_id)
-		{
-			if (this.id == _id) {
-				return this;
-			}
+			// From LionInput
+			return this._inputNode;
 		}
 	};
 	return Et2InputWidgetClass as unknown as Constructor<et2_IInput> & T;

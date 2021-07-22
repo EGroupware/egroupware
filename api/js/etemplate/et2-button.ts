@@ -60,8 +60,7 @@ export class Et2Button extends  Et2InputWidget(Et2Widget(LionButton))
         // Define a default click handler
         // If a different one gets set via attribute, it will be used instead
         this.onclick = (typeof this.onclick === "function") ? this.onclick : () => {
-            debugger;
-            this.getInstanceManager().submit();
+            return this.getInstanceManager().submit();
         };
     }
 
@@ -82,6 +81,7 @@ export class Et2Button extends  Et2InputWidget(Et2Widget(LionButton))
 
     _handleClick(event: MouseEvent) : boolean
     {
+        debugger;
         // ignore click on readonly button
         if (this.disabled) return false;
 

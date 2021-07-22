@@ -260,7 +260,7 @@ export class ClassWithAttributes extends ClassWithInterfaces
  */
 
 type Constructor<T = {}> = new (...args: any[]) => T;
-export const Et2Widget = <T extends Constructor>(superClass: T) => {
+export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode {
 
 		/** et2_widget compatability **/
@@ -271,6 +271,12 @@ export const Et2Widget = <T extends Constructor>(superClass: T) => {
 		/** WebComponent **/
 		static get properties() {
 			return {
+				...super.properties,
+
+				/**
+				 * Tooltip which is shown for this element on hover
+				 */
+				statustext: {type: String},
 				label: {type: String},
 				onclick: {
 					type: Function,
@@ -372,7 +378,16 @@ export const Et2Widget = <T extends Constructor>(superClass: T) => {
 			// TODO: children
 		}
 		loadingFinished()
-		{}
+		{
+			/**
+			 * This is needed mostly as a bridge between non-WebComponent widgets and
+			 * connectedCallback().  It's not really needed if the whole tree is WebComponent.
+			 * WebComponents can be added as children immediately after createion, and they handle the
+			 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
+			 * of the equivalent of doLoadingFinished()
+ 			 */
+			this.getParent().getDOMNode(this).append(this);
+		}
 		getWidgetById(_id)
 		{
 			if (this.id == _id) {
@@ -523,5 +538,19 @@ export const Et2Widget = <T extends Constructor>(superClass: T) => {
 			return false;
 		}
 	};
+
+	function applyMixins(derivedCtor: any, baseCtors: any[]) {
+		baseCtors.forEach(baseCtor => {
+			Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+				 if (name !== 'constructor') {
+					derivedCtor.prototype[name] = baseCtor.prototype[name];
+				}
+			});
+		});
+	}
+
+	// Add some more stuff in
+	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
+
 	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
 }
