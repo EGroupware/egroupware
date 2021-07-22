@@ -82,7 +82,10 @@ class Vfs extends Vfs\Base
 	 */
 	static $is_root = false;
 	/**
-	 * Current user id, in case we ever change if away from $GLOBALS['egw_info']['user']['account_id']
+	 * Current Vfs user id, set from $GLOBALS['egw_info']['user']['account_id'] by self::init_static()
+	 *
+	 * Should be protected and moved to Vfs\Base plus a getter and setter method added for public access,
+	 * as after setting it in 21.1+, Api\Vfs\StreamWrapper::init_static() need to be called to set the default user context!
 	 *
 	 * @var int
 	 */
@@ -749,22 +752,22 @@ class Vfs extends Vfs\Base
 	 * @return boolean
 	 * @todo deprecated or even remove $user parameter and code
 	 */
-	static function check_access($path, $check, $stat=null, $user=null)
+	static function check_access($path, $check, $stat=null, int $user=null)
 	{
 		static $vfs = null;
 
-		if (is_null($stat) && $user && $user != self::$user)
+		if (is_null($stat) && $user && $user !== self::$user)
 		{
 			static $path_user_stat = array();
 
 			$backup_user = self::$user;
 			self::$user = $user;
+			Vfs\StreamWrapper::init_static();
+			self::clearstatcache($path);
 
 			if (!isset($path_user_stat[$path]) || !isset($path_user_stat[$path][$user]))
 			{
-				self::clearstatcache($path);
-
-				if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
+				$vfs = new Vfs\StreamWrapper();
 				$path_user_stat[$path][$user] = $vfs->url_stat($path, 0);
 
 				self::clearstatcache($path);	// we need to clear the stat-cache after the call too, as the next call might be the regular user again!
@@ -786,6 +789,8 @@ class Vfs extends Vfs\Base
 				$ret = false;	// no access, if we can not stat the file
 			}
 			self::$user = $backup_user;
+			Vfs\StreamWrapper::init_static();
+			$vfs = null;
 
 			// we need to clear stat-cache again, after restoring original user, as eg. eACL is stored in session
 			self::clearstatcache($path);
