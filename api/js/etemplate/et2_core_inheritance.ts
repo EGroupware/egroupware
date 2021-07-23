@@ -12,7 +12,7 @@
 	et2_core_common;
 */
 
-import {egw} from "../jsapi/egw_global";
+import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
 import {et2_IDOMNode, et2_IInput, et2_IInputNode, et2_implements_registry} from "./et2_core_interfaces";
 import {LitElement} from "../../../node_modules/lit-element/lit-element.js";
@@ -277,6 +277,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 				 * Tooltip which is shown for this element on hover
 				 */
 				statustext: {type: String},
+
 				label: {type: String},
 				onclick: {
 					type: Function,
@@ -300,6 +301,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 
 			// Provide *default* property values in constructor
 			this.label = "";
+			this.statustext = "";
 		}
 
 		connectedCallback()
@@ -307,8 +309,17 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 			super.connectedCallback();
 
 			this.set_label(this.label);
+
+			if(this.statustext)
+			{
+				this.egw().tooltipBind(this,this.statustext);
+			}
 		}
 
+		disconnectedCallback()
+		{
+			this.egw().tooltipUnbind(this);
+		}
 
 		/**
 		 * NOT the setter, since we cannot add to the DOM before connectedCallback()
@@ -408,7 +419,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 				return this._parent;
 			}
 
-			return parentNode;
+			return <HTMLElement> parentNode;
 		}
 		getDOMNode(): HTMLElement {
 			return this;
@@ -536,6 +547,27 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) => {
 		_createNamespace()
 		{
 			return false;
+		}
+
+		egw() : IegwAppLocal
+		{
+			if (this.getParent() != null && !(this.getParent() instanceof HTMLElement))
+			{
+				return (<et2_widget> this.getParent()).egw();
+			}
+
+			// Get the window this object belongs to
+			var wnd = null;
+			// @ts-ignore Technically this doesn't have implements(), but it's mixed in
+			if (this.implements(et2_IDOMNode)) {
+				var node = (<et2_IDOMNode><unknown>this).getDOMNode();
+				if (node && node.ownerDocument) {
+					wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
+				}
+			}
+
+			// If we're the root object, return the phpgwapi API instance
+			return egw('phpgwapi', wnd);
 		}
 	};
 

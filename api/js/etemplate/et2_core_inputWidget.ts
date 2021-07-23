@@ -410,8 +410,6 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) => {
 		constructor() {
 			super();
 
-			// Add statustext hover
-
 		}
 
 		set_value(new_value)
