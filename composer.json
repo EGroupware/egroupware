@@ -38,9 +38,13 @@
 		"issuses": "https://my.egroupware.org"
 	},
 	"repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.horde.org"
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		},
+		{
+			"type": "pear",
+			"url": "https://pear.horde.org"
 		},
 		{
 			"type": "vcs",
@@ -77,7 +81,6 @@
 		"egroupware/collabora": "self.version",
 		"egroupware/guzzlestream": "dev-master",
 		"egroupware/icalendar": "^2.1.9",
-		"egroupware/imap-client": "^2.30.2",
 		"egroupware/magicsuggest": "^2.1",
 		"egroupware/news_admin": "self.version",
 		"egroupware/openid": "self.version",
@@ -90,11 +93,11 @@
 		"egroupware/tracker": "self.version",
 		"egroupware/webdav": "dev-master",
 		"egroupware/z-push-dev": "^2.5",
-		"fxp/composer-asset-plugin": "^1.2.2",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^1.1",
+		"pear-pear.horde.org/horde_imap_client": "^2.30.3",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
