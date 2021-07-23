@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d4e11d13ad751c36ea277a8546ae450",
+    "content-hash": "638701899ce72c176fec838dab114429",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -824,7 +824,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -865,7 +865,7 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -919,7 +919,7 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
@@ -951,16 +951,16 @@
         },
         {
             "name": "egroupware/collabora",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b"
+                "reference": "86c29f80424c6d0b9e64cc20ec5023fcc1a69833"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0a35643b00c370930f189a3a2f6a20627b5ef06b",
-                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/86c29f80424c6d0b9e64cc20ec5023fcc1a69833",
+                "reference": "86c29f80424c6d0b9e64cc20ec5023fcc1a69833",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-06-18T14:33:23+00:00"
+            "time": "2021-07-22T12:15:36+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -1212,7 +1212,7 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
@@ -1244,7 +1244,7 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
@@ -1293,16 +1293,16 @@
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57"
+                "reference": "6fa78b260610a344c324b01b5ee9fffa07d3eab4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/72337abad01c945b68d6117832b28df1c6fd4e57",
-                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/6fa78b260610a344c324b01b5ee9fffa07d3eab4",
+                "reference": "6fa78b260610a344c324b01b5ee9fffa07d3eab4",
                 "shasum": ""
             },
             "require": {
@@ -1330,11 +1330,11 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-08T12:51:23+00:00"
+            "time": "2021-07-12T22:31:55+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
@@ -1383,7 +1383,7 @@
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
@@ -1423,16 +1423,16 @@
         },
         {
             "name": "egroupware/smallpart",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164"
+                "reference": "abc15fe30a02fd309b12dae1e0f96865a55c6f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/dcf05ca49915f96d574233f218994a3ada0cc164",
-                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/abc15fe30a02fd309b12dae1e0f96865a55c6f59",
+                "reference": "abc15fe30a02fd309b12dae1e0f96865a55c6f59",
                 "shasum": ""
             },
             "require": {
@@ -1464,11 +1464,11 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-06-22T15:13:02+00:00"
+            "time": "2021-07-12T11:55:28+00:00"
         },
         {
             "name": "egroupware/status",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
@@ -1508,16 +1508,16 @@
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8"
+                "reference": "7bdc2e79619a99ba96124f4f7c0c98bc12bf7971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
-                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/7bdc2e79619a99ba96124f4f7c0c98bc12bf7971",
+                "reference": "7bdc2e79619a99ba96124f4f7c0c98bc12bf7971",
                 "shasum": ""
             },
             "require": {
@@ -1546,20 +1546,20 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-08T12:58:28+00:00"
+            "time": "2021-06-29T06:31:19+00:00"
         },
         {
             "name": "egroupware/tracker",
-            "version": "21.1.x-dev",
+            "version": "21.1.20210723",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b"
+                "reference": "0cdd8e34f4f92fc96ddcb3a9807f99876971cca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
-                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/0cdd8e34f4f92fc96ddcb3a9807f99876971cca8",
+                "reference": "0cdd8e34f4f92fc96ddcb3a9807f99876971cca8",
                 "shasum": ""
             },
             "require": {
@@ -1586,7 +1586,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-06-01T14:35:24+00:00"
+            "time": "2021-07-12T22:32:10+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -10583,6 +10583,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -10762,20 +10763,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "egroupware/activesync": 20,
-        "egroupware/adodb-php": 20,
-        "egroupware/bookmarks": 20,
-        "egroupware/collabora": 20,
         "egroupware/guzzlestream": 20,
-        "egroupware/news_admin": 20,
-        "egroupware/openid": 20,
-        "egroupware/projectmanager": 20,
-        "egroupware/registration": 20,
-        "egroupware/rocketchat": 20,
-        "egroupware/smallpart": 20,
-        "egroupware/status": 20,
-        "egroupware/swoolepush": 20,
-        "egroupware/tracker": 20,
         "egroupware/webdav": 20
     },
     "prefer-stable": true,
