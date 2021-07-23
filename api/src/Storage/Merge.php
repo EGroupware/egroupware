@@ -2165,7 +2165,8 @@ abstract class Merge
 								'icon'		=> Api\Vfs::mime_icon($file['mime']),
 								'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
 								'group'		=> 2,
-								'postSubmit' => true,	// download needs post submit (not Ajax) to work
+								'postSubmit' => true,	// download needs post submit (not Ajax) to work,
+								'target'	=> '_blank',
 								'url'		=> urldecode(http_build_query($edit_attributes))
 							);
 							if ($file['mime'] == 'message/rfc822')
