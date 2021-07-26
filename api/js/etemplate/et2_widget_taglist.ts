@@ -638,7 +638,7 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 		});
 
 		// if value has already been set, re-set it by it's id(s)
-		if (this.options.select_options.length && this.options.value.length) {
+		if (this.options.select_options.length && this.options.value?.length) {
 			this.set_value(this.options.value.map((v) => v.id));
 		}
 	}
