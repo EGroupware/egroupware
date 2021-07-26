@@ -1262,6 +1262,8 @@ var AddressbookApp = /** @class */ (function (_super) {
      * @param _selected
      */
     AddressbookApp.prototype.videoconference_isUserOnline = function (_action, _selected) {
+        if (egwIsMobile())
+            return false;
         var list = app.status ? app.status.getEntireList() : {};
         for (var sel in _selected) {
             if (sel == '0' && _selected[sel]['id'] == 'nm')

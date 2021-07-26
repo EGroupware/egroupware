@@ -1528,6 +1528,7 @@ class AddressbookApp extends EgwApp
 	 */
 	private videoconference_isUserOnline(_action, _selected)
 	{
+		if (egwIsMobile()) return false;
 		let list = app.status ? app.status.getEntireList() : {};
 		for (let sel in _selected)
 		{
