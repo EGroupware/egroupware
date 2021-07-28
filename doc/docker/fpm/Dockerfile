@@ -69,7 +69,7 @@ fi; \
 rm composer-setup.php; \
 exit $RESULT' \
 	# build EGroupware
-	&& composer.phar self-update 1.8.6 \
+	&& composer.phar self-update 1.10.22 \
 	&& cd /usr/share \
 	&& [ $PHP_VERSION = "8.0" ] && COMPOSER_EXTRA=--ignore-platform-reqs || true \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
