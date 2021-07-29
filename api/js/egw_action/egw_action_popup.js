@@ -12,14 +12,12 @@
 /*egw:uses
 	vendor.bower-asset.jquery.dist.jquery;
 	egw_menu;
-	/api/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
 */
 
 import {egwAction, egwActionImplementation, egwActionObject} from './egw_action.js';
 import {egwFnct} from './egw_action_common.js';
 import {egwMenu, _egw_active_menu} from "./egw_menu.js";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants.js";
-import "../jquery/jquery-tap-and-hold/jquery.tapandhold.js";
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
@@ -280,7 +278,32 @@ export function egwPopupActionImplementation()
 
 		return false;
 	};
+	ai._handleTapHold = function (_node, _callback)
+	{
+		let holdTimer = 600;
+		let maxDistanceAllowed = 40;
+		let tapTimeout = null;
+		let startx = 0;
+		let starty = 0;
+		_node.addEventListener('touchstart', function(e){
 
+			tapTimeout = setTimeout(function(event){
+				_callback(e);
+			}, holdTimer);
+			startx = (e.changedTouches) ? e.changedTouches[0].pageX: e.pageX;
+			starty = (e.changedTouches) ? e.changedTouches[0].pageY: e.pageY;
+		});
+		_node.addEventListener('touchend', function(){
+			clearTimeout(tapTimeout);
+		});
+		_node.addEventListener('touchmove', function(_event){
+			if (tapTimeout == null) return;
+			let e = _event.originalEvent;
+			let x = (e.changedTouches) ? e.changedTouches[0].pageX: e.pageX;
+			let y = (e.changedTouches) ? e.changedTouches[0].pageY: e.pageY;
+			if (Math.sqrt((x-startx)*(x-startx) + (y-starty)+(y-starty)) > maxDistanceAllowed) clearTimeout(tapTimeout);
+		});
+	}
 	/**
 	 * Registers the handler for the context menu
 	 *
@@ -292,14 +315,6 @@ export function egwPopupActionImplementation()
 	ai._registerContext = function(_node, _callback, _context)
 	{
 		var contextHandler = function(e) {
-			if(egwIsMobile())
-			{
-				if (e.originalEvent.which == 3)
-				{
-					// Enable onhold trigger till we define a better handler for tree contextmenu
-				//	return;
-				}
-			}
 
 			//Obtain the event object
 			if (!e)
@@ -327,7 +342,7 @@ export function egwPopupActionImplementation()
 		};
 		// Safari still needs the taphold to trigger contextmenu
 		// Chrome has default event on touch and hold which acts like right click
-		jQuery(_node).bind('taphold', contextHandler);
+		this._handleTapHold(_node, contextHandler);
 		jQuery(_node).on('contextmenu', contextHandler);
 	};
 
