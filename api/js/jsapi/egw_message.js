@@ -459,6 +459,9 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					app_obj.push(pushData);
 				}
 			}
+
+			// call the global registered push callbacks
+			this.registerPush(pushData);
 		}
 	};
 
