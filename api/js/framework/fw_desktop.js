@@ -25,7 +25,7 @@ import './fw_browser.js';
 import './fw_ui.js';
 import './fw_classes.js';
 import '../jsapi/egw_inheritance.js';
-
+import "sortablejs/Sortable.min.js";
 /**
  *
  * @param {DOMWindow} window
@@ -48,31 +48,15 @@ import '../jsapi/egw_inheritance.js';
 		init: function()
 		{
 			this._super.apply(this,arguments);
-
+			let self = this;
 			this.setBottomLine(this.parent.entries);
-			//Make the base Div sortable. Set all elements with the style "egw_fw_ui_sidemenu_entry_header"
-			//as handle
-			if(jQuery(this.elemDiv).data('uiSortable'))
-			{
-				jQuery(this.elemDiv).sortable("destroy");
-			}
-			jQuery(this.elemDiv).sortable({
-				handle: ".egw_fw_ui_sidemenu_entry_header",
-				distance: 15,
-				start: function(event, ui)
-				{
-					var parent = ui.item.context._parent;
-					parent.isDraged = true;
-					parent.parent.startDrag.call(parent.parent);
+
+			Sortable.create(this.elemDiv,{
+				onSort: function (evt) {
+					self.parent.isDraged = true;
+					self.parent.refreshSort();
 				},
-				stop: function(event, ui)
-				{
-					var parent = ui.item.context._parent;
-					parent.parent.stopDrag.call(parent.parent);
-					parent.parent.refreshSort.call(parent.parent);
-				},
-				opacity: 0.7,
-				axis: 'y'
+				direction: 'vertical'
 			});
 		},
 
@@ -106,31 +90,6 @@ import '../jsapi/egw_inheritance.js';
 		{
 			this._super.apply(this,arguments);
 			this.sortCallback = _sortCallback;
-		},
-		/**
-		 *
-		 * @returns {undefined}
-		 */
-		startDrag: function()
-		{
-			if (this.activeEntry)
-			{
-				jQuery(this.activeEntry.marker).show();
-				jQuery(this.elemDiv).sortable("refresh");
-			}
-		},
-
-		/**
-		 *
-		 * @returns {undefined}
-		 */
-		stopDrag: function()
-		{
-			if (this.activeEntry)
-			{
-				jQuery(this.activeEntry.marker).hide();
-				jQuery(this.elemDiv).sortable("refresh");
-			}
 		},
 
 		/**
