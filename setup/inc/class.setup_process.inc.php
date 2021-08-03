@@ -618,10 +618,10 @@ class setup_process
 		foreach($setup_info as $appname => &$appdata)
 		{
 			// check if app is NOT installed
-			if(!$GLOBALS['egw_setup']->app_registered($appname))
+			if (!($registered = $GLOBALS['egw_setup']->app_registered($appname)))
 			{
-				// check if app wants to be automatically installed on update to version x or allways
-				if (isset($appdata['autoinstall']) && ($appdata['autoinstall'] === true ||
+				// check if app wants to be automatically installed on update to version x or always (unless uninstalled prior)
+				if (isset($appdata['autoinstall']) && ($appdata['autoinstall'] === true && $registered !== null ||
 					$appdata['autoinstall'] === $this->api_version_target))
 				{
 					$info_c = $this->current(array($appname => $appdata), $DEBUG);
