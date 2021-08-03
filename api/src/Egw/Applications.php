@@ -71,15 +71,18 @@ class Applications
 	}
 
 	/**
-	 * populate array with a list of installed apps
+	 * Populate array with a list of installed apps
 	 *
+	 * egw_applications.app_enabled = -1 is NOT installed, but an uninstalled autoinstall app!
+	 *
+	 * @return array[]
 	 */
 	function read_installed_apps()
 	{
 		$GLOBALS['egw_info']['apps'] = Api\Cache::getInstance(__CLASS__, 'apps', function()
 		{
 			$apps = array();
-			foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
+			foreach($this->db->select($this->table_name,'*', ['app_enabled != -1'],__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
 			{
 				$apps[$row['app_name']] = Array(
 					'title'   => $row['app_name'],

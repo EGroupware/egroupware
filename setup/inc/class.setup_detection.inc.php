@@ -62,7 +62,7 @@ class setup_detection
 				/* one of these tables exists. checking for post/pre beta version */
 				if($GLOBALS['egw_setup']->applications_table != 'applications')
 				{
-					foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'*',false,__LINE__,__FILE__) as $row)
+					foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table, '*', 'app_enabled != -1', __LINE__, __FILE__) as $row)
 					{
 						$app = $row['app_name'];
 						if (!isset($setup_info[$app]))	// app source no longer there

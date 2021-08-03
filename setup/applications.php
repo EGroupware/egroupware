@@ -226,6 +226,9 @@ if (!empty($detail = $_GET['detail']))
 	{
 		switch($key)
 		{
+			case 'autoinstall':
+				$val = json_encode($val);
+				break;
 			case 'title':
 				continue 2;
 			case 'tables':
