@@ -285,6 +285,13 @@ export function egwPopupActionImplementation()
 		let tapTimeout = null;
 		let startx = 0;
 		let starty = 0;
+
+		//TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
+		// should be no longer neccessary after removing jQuery nodes.
+		if (_node instanceof jQuery)
+		{
+			_node = _node[0];
+		}
 		_node.addEventListener('touchstart', function(e){
 
 			tapTimeout = setTimeout(function(event){
