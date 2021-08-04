@@ -2078,30 +2078,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				self.selectPopup = null;
 			};
 			const $select = jQuery(select.getDOMNode());
-			$select.find('.ui-multiselect-checkboxes').sortable({
-				placeholder:'ui-fav-sortable-placeholder',
-				items:'li[class^="selcolumn_sortable_col"]',
-				cancel: 'li[class^="selcolumn_sortable_#"]',
-				cursor: "move",
-				tolerance: "pointer",
-				axis: 'y',
-				containment: "parent",
-				delay: 250, //(millisecond) delay before the sorting should start
-				beforeStop: function(event, ui) {
-					jQuery('li[class^="selcolumn_sortable_#"]', this).css({
-						opacity: 1
-					});
-				},
-				start: function(event, ui){
-					jQuery('li[class^="selcolumn_sortable_#"]', this).css({
-						opacity: 0.5
-					});
-				},
-				sort: function (event, ui)
-				{
-					jQuery( this ).sortable("refreshPositions" );
-				}
-			});
+
+			//todo (todo-jquery-ui): fix the sortable import statement
+			import('../../../node_modules/sortablejs/Sortable.min.js').then(function(){
+				let sortablejs = Sortable.create(select.getDOMNode().getElementsByClassName('ui-multiselect-checkboxes')[0], {
+					ghostClass: 'ui-fav-sortable-placeholder',
+					draggable: 'li[class^="selcolumn_sortable_col"]',
+					filter: 'li[class^="selcolumn_sortable_#"]',
+					direction: 'vertical',
+					delay: 25,
+
+				});
+			}.bind(this));
+
 			$select.disableSelection();
 			$select.find('li[class^="selcolumn_sortable_"]').each(function(i,v){
 				// @ts-ignore

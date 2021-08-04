@@ -962,7 +962,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 
 
-		//todo: fix the sortable import statement
+		//todo (todo-jquery-ui): fix the sortable import statement
 		import('../../../node_modules/sortablejs/Sortable.min.js').then(function(){
 			this.sortablejs = new Sortable(tbody,{
 				group: this.options.sortable_connectWith,
