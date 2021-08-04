@@ -51,6 +51,7 @@ import "sortablejs/Sortable.min.js";
 			let self = this;
 			this.setBottomLine(this.parent.entries);
 
+			this.elemDiv.classList.add('ui-sortable')
 			Sortable.create(this.elemDiv,{
 				onSort: function (evt) {
 					self.parent.isDraged = true;
