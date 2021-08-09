@@ -2333,14 +2333,19 @@ abstract class Merge
 	/**
 	 * Merge the selected IDs into the given document, save it to the VFS, then
 	 * either open it in the editor or have the browser download the file.
+	 *
+	 * @param String[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
+	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
+	 * @throws Api\Exception
+	 * @throws Api\Exception\AssertionFailed
 	 */
-	public static function merge_entries()
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null)
 	{
-		if (class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
+		if (is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $_REQUEST['merge']();
 		}
-		else
+		elseif (is_null($document_merge))
 		{
 			$document_merge = new Api\Contacts\Merge();
 		}
@@ -2351,13 +2356,16 @@ abstract class Merge
 			return;
 		}
 
-		$ids = is_string($_REQUEST['id']) && strpos($_REQUEST['id'],'[') === FALSE ? explode(',',$_REQUEST['id']) : json_decode($_REQUEST['id'],true);
+		if(is_null(($ids)))
+		{
+			$ids = is_string($_REQUEST['id']) && strpos($_REQUEST['id'], '[') === FALSE ? explode(',', $_REQUEST['id']) : json_decode($_REQUEST['id'], true);
+		}
 		if($_REQUEST['select_all'] === 'true')
 		{
 			$ids = self::get_all_ids($document_merge);
 		}
 
-		$filename = '';
+		$filename = $document_merge->get_filename($_REQUEST['document']);
 		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
 
 		if(!is_file($result) || !is_readable($result))
@@ -2410,6 +2418,17 @@ abstract class Merge
 		{
 			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target));
 		}
+	}
+
+	/**
+	 * Generate a filename for the merged file
+	 *
+	 * Default is just the name of the template
+	 * @return string
+	 */
+	protected function get_filename($document) : string
+	{
+		return '';
 	}
 
 	/**
