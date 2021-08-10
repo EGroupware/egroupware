@@ -213,8 +213,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/fengyuanchen/cropper/zipball/30c58b29ee21010e17e58ebab165fbd84285c685",
-                "reference": "30c58b29ee21010e17e58ebab165fbd84285c685",
-                "shasum": ""
+                "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -271,8 +270,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/rtfpessoa/diff2html/zipball/4c15a9ca93e50c78f8d02e37273076994888d499",
-                "reference": "4c15a9ca93e50c78f8d02e37273076994888d499",
-                "shasum": ""
+                "reference": "4c15a9ca93e50c78f8d02e37273076994888d499"
             },
             "type": "bower-asset-library"
         },
@@ -287,8 +285,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ftlabs/fastclick/zipball/9977a916739360ad4ffd7aa19b0016bf375e934b",
-                "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b",
-                "shasum": ""
+                "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -314,8 +311,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/5e89585e0121e72ff47de177c5ef604f3089a53d",
-                "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d",
-                "shasum": ""
+                "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -345,8 +341,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/mattbryson/TouchSwipe-Jquery-Plugin/zipball/f0d71bf645779358e1458e212102c5d59b7702ec",
-                "reference": "f0d71bf645779358e1458e212102c5d59b7702ec",
-                "shasum": ""
+                "reference": "f0d71bf645779358e1458e212102c5d59b7702ec"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -364,8 +359,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/396781474d936959061271505f506b78398fe6a2",
-                "reference": "396781474d936959061271505f506b78398fe6a2",
-                "shasum": ""
+                "reference": "396781474d936959061271505f506b78398fe6a2"
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
@@ -2600,8 +2594,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery/zipball/f852e631ba85af7da4ad7594785e122504e7b233",
-                "reference": "f852e631ba85af7da4ad7594785e122504e7b233",
-                "shasum": ""
+                "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "require-dev": {
                 "npm-asset/archiver": "~0.4.2",
@@ -3530,16 +3523,16 @@
         },
         {
             "name": "pear/archive_tar",
-            "version": "1.4.13",
+            "version": "1.4.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/Archive_Tar.git",
-                "reference": "2b87b41178cc6d4ad3cba678a46a1cae49786011"
+                "reference": "4d761c5334c790e45ef3245f0864b8955c562caa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/2b87b41178cc6d4ad3cba678a46a1cae49786011",
-                "reference": "2b87b41178cc6d4ad3cba678a46a1cae49786011",
+                "url": "https://api.github.com/repos/pear/Archive_Tar/zipball/4d761c5334c790e45ef3245f0864b8955c562caa",
+                "reference": "4d761c5334c790e45ef3245f0864b8955c562caa",
                 "shasum": ""
             },
             "require": {
@@ -3592,7 +3585,17 @@
                 "archive",
                 "tar"
             ],
-            "time": "2021-02-16T10:50:50+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/mrook",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/michielrook",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-07-20T13:53:39+00:00"
         },
         {
             "name": "pear/auth_sasl",
@@ -10794,5 +10797,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.3"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
