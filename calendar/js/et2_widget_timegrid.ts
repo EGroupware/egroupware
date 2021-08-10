@@ -465,7 +465,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			var drop_date = dropEnd.date||false;
 
-			var event_data = timegrid._get_event_info(ui.draggable);
+			var event_data = timegrid._get_event_info(ui.item);
 			var event_widget = timegrid.getWidgetById(event_data.widget_id);
 			if(!event_widget)
 			{
@@ -1272,7 +1272,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			// Determine target node
 			var event = _data.event || false;
 			if(!event) return;
-			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			if(_data.ui.item.hasClass('rowNoEdit')) return;
 
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
@@ -1307,9 +1307,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				case EGW_AI_DRAG_OVER:
 					// Listen to the drag and update the helper with the time
 					// This part lets us drag between different timegrids
-					_data.ui.draggable.on('drag.et2_timegrid'+widget_object.id, drag_listener);
-					_data.ui.draggable.on('dragend.et2_timegrid'+widget_object.id, function() {
-						_data.ui.draggable.off('drag.et2_timegrid' + widget_object.id);
+					_data.ui.item.on('drag.et2_timegrid'+widget_object.id, drag_listener);
+					_data.ui.item.on('dragend.et2_timegrid'+widget_object.id, function() {
+						_data.ui.item.off('drag.et2_timegrid' + widget_object.id);
 					});
 
 					// Remove formatting for out-of-view events (full day non-blocking)
@@ -1317,7 +1317,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					jQuery('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
 
 					// Disable invite / change actions for same calendar or already participant
-					var event = _data.ui.draggable.data('selected')[0];
+					var event = _data.ui.item.data('selected')[0];
 					if(!event || event.id && event.id.indexOf('calendar') !== 0)
 					{
 						event = false;
@@ -1346,7 +1346,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
 					// Stop listening
-					_data.ui.draggable.off('drag.et2_timegrid'+widget_object.id);
+					_data.ui.item.off('drag.et2_timegrid'+widget_object.id);
 					// Remove highlighted time square
 					var timegrid = aoi.getWidget();
 					timegrid.gridHover.hide();
