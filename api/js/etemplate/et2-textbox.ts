@@ -9,42 +9,45 @@
  */
 
 
-import {css,html} from "../../../node_modules/@lion/core/index.js";
+import {css, html} from "../../../node_modules/@lion/core/index.js";
 import {LionInput} from "../../../node_modules/@lion/input/index.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
-import {Et2Widget} from "./et2_core_inheritance";
+import {Et2Widget} from "./et2_core_webComponent";
 
-export class Et2Textbox extends  Et2InputWidget(Et2Widget(LionInput))
+export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
 {
 
-    static get styles() {
-        return [
-            ...super.styles,
-            css`
+		static get styles()
+		{
+				return [
+						...super.styles,
+						css`
             /* Custom CSS */
             `,
-        ];
-    }
+				];
+		}
 
-    static get properties() {
-        return {
-            ...super.properties,
-            value: {attribute: true},
-            onclick: {type: Function}
-        }
-    }
+		static get properties()
+		{
+				return {
+						...super.properties,
+						value: {attribute: true},
+						onclick: {type: Function}
+				}
+		}
 
-    constructor()
-    {
-        debugger;
-        super();
+		constructor()
+		{
+				debugger;
+				super();
 
-    }
+		}
 
-    connectedCallback()
-    {
-        super.connectedCallback();
+		connectedCallback()
+		{
+				super.connectedCallback();
 
-    }
+		}
 }
-customElements.define("et2-textbox",Et2Textbox);
+
+customElements.define("et2-textbox", Et2Textbox);

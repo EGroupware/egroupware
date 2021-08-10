@@ -217,20 +217,16 @@
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
-					<hbox  width="100%">
-						<menulist>
-							<menupopup type="select-account" id="info_owner" readonly="true"/>
-						</menulist>
+					<et2-hbox>
+						<select-account id="info_owner" readonly="true"/>
 						<date-time id="info_created" readonly="true" align="right"/>
-					</hbox>
+					</et2-hbox>
 					<description/>
 					<description value="Last modified"/>
-					<hbox  width="100%">
-						<menulist>
-							<menupopup type="select-account" id="info_modifier" readonly="true"/>
-						</menulist>
+					<et2-hbox>
+						<select-account id="info_modifier" readonly="true"/>
 						<date-time id="info_datemodified" readonly="true" align="right"/>
-					</hbox>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox span="6">
