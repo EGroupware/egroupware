@@ -55,6 +55,9 @@
 		"platform": {
 			"php": "7.3"
 		},
+		"fxp-asset": {
+			"enabled": false
+		},
 		"sort-packages": true
 	},
 	"require": {
