@@ -77,7 +77,7 @@
 		"bower-asset/fastclick": "1.0.*",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/jquery-touchswipe": "1.6.*",
-		"bower-asset/jquery-ui": "=1.11.2",
+		"bower-asset/jquery-ui": "=1.12.1",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
 		"egroupware/bookmarks": "self.version",

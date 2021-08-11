@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecdc3fddca0c9dcad5155d7aad711dab",
+    "content-hash": "239bd7fe0d55cfccca0e0ce18c8a7503",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -350,27 +350,24 @@
         },
         {
             "name": "bower-asset/jquery-ui",
-            "version": "1.11.2",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jqueryui.git",
-                "reference": "396781474d936959061271505f506b78398fe6a2"
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/396781474d936959061271505f506b78398fe6a2",
-                "reference": "396781474d936959061271505f506b78398fe6a2"
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "jquery-ui.js"
-                ],
-                "bower-asset-ignore": []
-            }
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "celtic/lti",
@@ -1291,16 +1288,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "94d182778b2fc04c68c51e295259fa2c09548de3"
+                "reference": "74f9be3b29e9ece0f68201158863aa058443939a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/94d182778b2fc04c68c51e295259fa2c09548de3",
-                "reference": "94d182778b2fc04c68c51e295259fa2c09548de3",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/74f9be3b29e9ece0f68201158863aa058443939a",
+                "reference": "74f9be3b29e9ece0f68201158863aa058443939a",
                 "shasum": ""
             },
             "require": {
-                "fxp/composer-asset-plugin": "^1.2.2",
                 "npm-asset/dhtmlx-gantt": "~6.2"
             },
             "type": "egroupware-app",
@@ -1324,7 +1320,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-03-30T17:20:21+00:00"
+            "time": "2021-08-10T22:59:19+00:00"
         },
         {
             "name": "egroupware/registration",
