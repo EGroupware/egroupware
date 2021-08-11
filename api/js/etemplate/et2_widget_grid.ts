@@ -23,6 +23,7 @@ import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
 import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action.js';
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 
 /**
@@ -961,37 +962,33 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			}
 		}
 
-
-		//todo (todo-jquery-ui): fix the sortable import statement
-		import('../../../node_modules/sortablejs/Sortable.min.js').then(function(){
-			this.sortablejs = new Sortable(tbody,{
-				group: this.options.sortable_connectWith,
-				draggable: "tr:not(.th)",
-				filter: this.options.sortable_cancel,
-				ghostClass: this.options.sortable_placeholder,
-				dataIdAttr: 'id',
-				onAdd:function (event) {
-					if (typeof self.options.sortable_recieveCallback == 'function') {
-						self.options.sortable_recieveCallback.call(self, event, this, self.id);
-					}
-				},
-				onStart: function (event, ui) {
-					if (typeof self.options.sortable_startCallback == 'function') {
-						self.options.sortable_startCallback.call(self, event, this, self.id);
-					}
-				},
-				onSort: function (event) {
-					self.egw().json(sortable,[
-							self.getInstanceManager().etemplate_exec_id,
-							self.sortablejs.toArray(),
-							self.id],
-						null,
-						self,
-						true
-					).sendRequest();
-				},
-			});
-		}.bind(this));
+		this.sortablejs = new Sortable(tbody,{
+			group: this.options.sortable_connectWith,
+			draggable: "tr:not(.th)",
+			filter: this.options.sortable_cancel,
+			ghostClass: this.options.sortable_placeholder,
+			dataIdAttr: 'id',
+			onAdd:function (event) {
+				if (typeof self.options.sortable_recieveCallback == 'function') {
+					self.options.sortable_recieveCallback.call(self, event, this, self.id);
+				}
+			},
+			onStart: function (event, ui) {
+				if (typeof self.options.sortable_startCallback == 'function') {
+					self.options.sortable_startCallback.call(self, event, this, self.id);
+				}
+			},
+			onSort: function (event) {
+				self.egw().json(sortable,[
+						self.getInstanceManager().etemplate_exec_id,
+						self.sortablejs.toArray(),
+						self.id],
+					null,
+					self,
+					true
+				).sendRequest();
+			},
+		});
 	}
 
 	/**

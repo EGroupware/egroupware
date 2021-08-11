@@ -67,6 +67,7 @@ import {et2_template} from "./et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
@@ -2079,17 +2080,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			};
 			const $select = jQuery(select.getDOMNode());
 
-			//todo (todo-jquery-ui): fix the sortable import statement
-			import('../../../node_modules/sortablejs/Sortable.min.js').then(function(){
-				let sortablejs = Sortable.create(select.getDOMNode().getElementsByClassName('ui-multiselect-checkboxes')[0], {
-					ghostClass: 'ui-fav-sortable-placeholder',
-					draggable: 'li[class^="selcolumn_sortable_col"]',
-					filter: 'li[class^="selcolumn_sortable_#"]',
-					direction: 'vertical',
-					delay: 25,
-
-				});
-			}.bind(this));
+			let sortablejs = Sortable.create(select.getDOMNode().getElementsByClassName('ui-multiselect-checkboxes')[0], {
+				ghostClass: 'ui-fav-sortable-placeholder',
+				draggable: 'li[class^="selcolumn_sortable_col"]',
+				filter: 'li[class^="selcolumn_sortable_#"]',
+				direction: 'vertical',
+				delay: 25,
+			});
 
 			$select.disableSelection();
 			$select.find('li[class^="selcolumn_sortable_"]').each(function(i,v){
