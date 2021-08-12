@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecdc3fddca0c9dcad5155d7aad711dab",
+    "content-hash": "11c4709df1fbb8c2d7b55b3f2916a428",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1291,16 +1291,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57"
+                "reference": "325ed1ada24b05d5072dcde3b1859d3d2ba5fcda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/72337abad01c945b68d6117832b28df1c6fd4e57",
-                "reference": "72337abad01c945b68d6117832b28df1c6fd4e57",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/325ed1ada24b05d5072dcde3b1859d3d2ba5fcda",
+                "reference": "325ed1ada24b05d5072dcde3b1859d3d2ba5fcda",
                 "shasum": ""
             },
             "require": {
-                "fxp/composer-asset-plugin": "^1.2.2",
                 "npm-asset/dhtmlx-gantt": "~6.2"
             },
             "type": "egroupware-app",
@@ -1324,7 +1323,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-08T12:51:23+00:00"
+            "time": "2021-08-11T15:05:53+00:00"
         },
         {
             "name": "egroupware/registration",
