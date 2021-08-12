@@ -45,8 +45,10 @@
     }
   },
   "dependencies": {
-    "carbon-components": "^10.37.0",
-    "carbon-web-components": "^1.14.1",
+    "@andxor/jquery-ui-touch-punch-fix": "^1.0.2",
+    "jquery-ui-dist": "^1.12.1",
+    "jquery-ui-themes": "^1.12.0",
+    "jquery-ui-timepicker-addon": "^1.6.3",
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1",
     "sortablejs": "^1.14.0"

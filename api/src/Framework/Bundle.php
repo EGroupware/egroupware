@@ -241,7 +241,7 @@ class Bundle
 		// generate api bundle
 		$inc_mgr->include_js_file('/vendor/bower-asset/jquery/dist/jquery.js');
 		$inc_mgr->include_js_file('/api/js/jquery/jquery.noconflict.js');
-		$inc_mgr->include_js_file('/vendor/bower-asset/jquery-ui/jquery-ui.js');
+		$inc_mgr->include_js_file('/node_modules/jquery-ui-dist/jquery-ui.min.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/jsapi.js');
 		$inc_mgr->include_js_file('/api/js/egw_json.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/egw.js');
