@@ -1,3 +1,14 @@
+egroupware-docker (21.1.20210723) hardy; urgency=low
+
+  * Security Update: all 21.1 users should upgrade ASAP, 20.1 and below is not affected
+  * Filemanager/VFS: when creating a new file as root eg. via (docker exec) filemanager/cli.php do NOT create files unreadable by webserver
+  * Collabora: Fix editing files in mounted share
+  * Kanban/PostgreSQL: fix installation of example board under PostgreSQL
+  * smallPART/PostgreSQL: fix multiple SQL errors
+  * smallPART/PostgreSQL: fix installation under PostgreSQL
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 23 Jul 2021 08:09:49 +0200
+
 egroupware-docker (21.1.20210629) hardy; urgency=low
 
   * Mail/Admin: fix not working mail wizard

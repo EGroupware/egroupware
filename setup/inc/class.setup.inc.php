@@ -516,16 +516,17 @@ class setup
 					),False,__LINE__,__FILE__);
 			}
 			try {
-				$this->db->insert($this->applications_table,array(
-						'app_name'		=> $appname,
-						'app_enabled'	=> $enable,
-						'app_order'		=> $setup_info[$appname]['app_order'],
-						'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
-						'app_version'	=> $setup_info[$appname]['version'],
-						'app_index'     => $setup_info[$appname]['index'],
-						'app_icon'      => $setup_info[$appname]['icon'],
-						'app_icon_app'  => $setup_info[$appname]['icon_app'],
-					),False,__LINE__,__FILE__);
+				$this->db->insert($this->applications_table, [
+					'app_enabled'	=> $enable,
+					'app_order'		=> $setup_info[$appname]['app_order'],
+					'app_tables'	=> (string)$tables,	// app_tables is NOT NULL
+					'app_version'	=> $setup_info[$appname]['version'],
+					'app_index'     => $setup_info[$appname]['index'],
+					'app_icon'      => $setup_info[$appname]['icon'],
+					'app_icon_app'  => $setup_info[$appname]['icon_app'],
+				], [
+					'app_name'		=> $appname,
+				], __LINE__, __FILE__);
 			}
 			catch (Api\Db\Exception\InvalidSql $e)
 			{
@@ -548,7 +549,7 @@ class setup
 	 * Check if an application has info in the db
 	 *
 	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 * @param	$enabled	optional, set to False to not enable this app
+	 * @return boolean|null null: autoinstalled app which got uninstalled
 	 */
 	function app_registered($appname)
 	{
@@ -563,13 +564,13 @@ class setup
 			// _debug_array($setup_info[$appname]);
 		}
 
-		if ($this->db->select($this->applications_table,'COUNT(*)',array('app_name' => $appname),__LINE__,__FILE__)->fetchColumn())
+		if (($enabled = $this->db->select($this->applications_table, 'app_enabled', ['app_name' => $appname], __LINE__,__FILE__)->fetchColumn()) !== false)
 		{
 			if(@$GLOBALS['DEBUG'])
 			{
 				echo '... app previously registered.';
 			}
-			return True;
+			return $enabled <= -1 ? null : true;
 		}
 		if(@$GLOBALS['DEBUG'])
 		{
@@ -676,9 +677,34 @@ class setup
 			$this->db->delete(Api\Config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
 		}
 		//echo 'DELETING application: ' . $appname;
-		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
+
+		// when uninstalling an autoinstall app, we must mark it deleted in the DB, otherwise it will install again the next update
+		if (file_exists($file = EGW_SERVER_ROOT.'/'.$appname.'/setup/setup.inc.php'))
+		{
+			$setup_info = [];
+			include($file);
+		}
+		if (!empty($setup_info[$appname]['autoinstall']) && $setup_info[$appname]['autoinstall'] === true)
+		{
+			$this->db->update($this->applications_table, [
+				'app_enabled' => -1,
+				'app_tables'  => '',
+				'app_version' => 'uninstalled',
+				'app_index'   => null,
+			], [
+				'app_name' => $appname,
+			], __LINE__, __FILE__);
+		}
+		else
+		{
+			$this->db->delete($this->applications_table, ['app_name' => $appname], __LINE__, __FILE__);
+		}
 
 		Api\Egw\Applications::invalidate();
+
+		// unregister hooks, before removing links
+		unset($GLOBALS['egw_info']['apps'][$appname]);
+		Api\Hooks::read(true);
 
 		// Remove links to the app
 		Link::unlink(0, $appname);
@@ -1218,6 +1244,8 @@ class setup
 	function table_exist($tables,$force_refresh=False)
 	{
 		static $table_names = False;
+
+		if(!is_object($this->db)) $this->loaddb();
 
 		if (!$table_names || $force_refresh) $table_names = $this->db->table_names();
 

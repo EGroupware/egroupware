@@ -176,6 +176,24 @@ class mail_hooks
 			'always_display'	=> lang('always show html emails'),
 		);
 
+		$contactLabelOptions = array (
+			'n_prefix' => array (
+				'id' => 'n_prefix',
+				'label' => lang('Prefix'),
+			),
+			'n_given' => array (
+				'id' => 'n_given',
+				'label' => lang('First name')
+			),
+			'n_family' => array(
+				'id' => 'n_family',
+				'label' => lang('Last name')
+			),
+			'org_name' => array(
+				'id' => 'org_name',
+				'label' => lang('Organisation')
+			)
+		);
 		// otherwise we get warnings during setup
 		if (!is_array($folderList)) $folderList = array();
 
@@ -457,29 +475,12 @@ class mail_hooks
 				'label' => 'Contact label',
 				'help' => 'Defines what to show as contact label for added contact into To/Cc/Bcc when composing an email. Default is firstname lastname and empty means include eveything available.',
 				'name' => 'contactLabel',
-				'values' => '',
+				'values' => $contactLabelOptions,
 				'attributes' => array(
 					'allowFreeEntries' => false,
 					'editModeEnabled' => false,
 					'autocomplete_url' => ' ',
-					'select_options' => array (
-						'n_prefix' => array (
-							'id' => 'n_prefix',
-							'label' => lang('Prefix'),
-						),
-						'n_given' => array (
-							'id' => 'n_given',
-							'label' => lang('First name')
-						),
-						'n_family' => array(
-							'id' => 'n_family',
-							'label' => lang('Last name')
-						),
-						'org_name' => array(
-							'id' => 'org_name',
-							'label' => lang('Organisation')
-						)
-					)
+					'select_options' => $contactLabelOptions
 				),
 				'default' => ['n_given','n_family']
 			)

@@ -254,10 +254,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				$umaskbefore = umask();
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
-				self::mkdir_recursive($fs_dir,0700,true);
+				// if running as root eg. via (docker exec) filemanager/cli.php do NOT create dirs not readable by webserver
+				self::mkdir_recursive($fs_dir,function_exists('posix_getuid') && !posix_getuid() ? 0777 : 0700,true);
 			}
 		}
-		// check if opend file is a directory
+		// check if opened file is a directory
 		elseif($stat && ($stat['mode'] & self::MODE_DIR) == self::MODE_DIR)
 		{
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) Is a directory!");
@@ -308,6 +309,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if ($this->operation == self::STORE2FS)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." fopen (may create a directory? mkdir) ($this->opened_fs_id,$mode,$options)");
+			// if creating a new file as root eg. via (docker exec) filemanager/cli.php do NOT create files unreadable by webserver
+			if ($new_file && function_exists('posix_getuid') && !posix_getuid())
+			{
+				umask(0666);
+			}
 			if (!($this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode)) && $new_file)
 			{
 				// delete db entry again, if we are not able to open a new(!) file

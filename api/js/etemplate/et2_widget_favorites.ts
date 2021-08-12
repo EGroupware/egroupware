@@ -19,6 +19,7 @@ import {et2_INextmatchHeader} from "./et2_extension_nextmatch";
 import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {egw, egw_getFramework} from "../jsapi/egw_global";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 /**
  * Favorites widget, designed for use with a nextmatch widget
@@ -177,18 +178,19 @@ export class et2_favorites extends et2_dropdown_button implements et2_INextmatch
 			}
 		};
 
-		//Add Sortable handler to nm fav. menu
-		jQuery(this.menu).sortable({
-
-			items:'li:not([data-id$="add"])',
-			placeholder:'ui-fav-sortable-placeholder',
-			delay: 250, //(millisecond) delay before the sorting should start
-			update: function ()
-			{
-				self.favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
-
-				self.egw().set_preference(self.options.app,'fav_sort_pref',self.favSortedList);
-
+		/**
+		 * todo (@todo-jquery-ui): the sorting does not work at the moment becuase of jquery-ui menu being used in order to create dropdown
+		 * buttons menu. Once we replace the et2_widget_dropdown_button with web component this should be adapted
+		 * and working again.
+		 **/
+		let sortablejs = Sortable.create(this.menu[0], {
+			ghostClass: 'ui-fav-sortable-placeholder',
+			draggable: 'li:not([data-id$="add"])',
+			delay: 25,
+			dataIdAttr:'data-id',
+			onSort: function(event){
+				self.favSortedList  = sortablejs.toArray();
+				self.egw.set_preference(self.options.app,'fav_sort_pref', self.favSortedList );
 				sideBoxDOMNodeSort(self.favSortedList);
 			}
 		});

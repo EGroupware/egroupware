@@ -38,9 +38,13 @@
 		"issuses": "https://my.egroupware.org"
 	},
 	"repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.horde.org"
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		},
+		{
+			"type": "pear",
+			"url": "https://pear.horde.org"
 		},
 		{
 			"type": "vcs",
@@ -50,6 +54,9 @@
 	"config": {
 		"platform": {
 			"php": "7.3"
+		},
+		"fxp-asset": {
+			"enabled": false
 		},
 		"sort-packages": true
 	},
@@ -70,14 +77,12 @@
 		"bower-asset/fastclick": "1.0.*",
 		"bower-asset/jquery": "^1.12.4",
 		"bower-asset/jquery-touchswipe": "1.6.*",
-		"bower-asset/jquery-ui": "=1.11.2",
 		"egroupware/activesync": "self.version",
 		"egroupware/adodb-php": "self.version",
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
 		"egroupware/guzzlestream": "dev-master",
 		"egroupware/icalendar": "^2.1.9",
-		"egroupware/imap-client": "^2.30.2",
 		"egroupware/magicsuggest": "^2.1",
 		"egroupware/news_admin": "self.version",
 		"egroupware/openid": "self.version",
@@ -90,13 +95,13 @@
 		"egroupware/tracker": "self.version",
 		"egroupware/webdav": "dev-master",
 		"egroupware/z-push-dev": "^2.5",
-		"fxp/composer-asset-plugin": "^1.2.2",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^1.1",
 		"pear-pear.horde.org/horde_compress": "^2.0.8",
 		"pear-pear.horde.org/horde_crypt": "^2.7.9",
+		"pear-pear.horde.org/horde_imap_client": "^2.30.3",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
 		"pear-pear.horde.org/horde_mapi": "^1.0.9",

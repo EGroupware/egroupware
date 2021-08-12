@@ -21,6 +21,13 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 	"use strict";
 
 	/**
+	 * Explicit registered push callbacks
+	 *
+	 * @type {Function[]}
+	 */
+	let push_callbacks = [];
+
+	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
 	 *
 	 * @access private, use jsonq method to queue requests
@@ -149,6 +156,34 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 				}, 100);
 			}
 			return uid;
+		},
+
+		/**
+		 * Register a callback to receive push broadcasts eg. in a popup or iframe
+		 *
+		 * It's also used internally by egw_message's push method to dispatch to the registered callbacks.
+		 *
+		 * @param {Function|PushData} data callback (with bound context) or PushData to dispatch to callbacks
+		 */
+		registerPush: function(data)
+		{
+			if (typeof data === "function")
+			{
+				push_callbacks.push(data);
+			}
+			else
+			{
+				for (let n in push_callbacks)
+				{
+					try {
+						push_callbacks[n].call(this, data);
+					}
+					// if we get an exception, we assume the callback is no longer available and remove it
+					catch (ex) {
+						push_callbacks.splice(n, 1);
+					}
+				}
+			}
 		}
 
 	};

@@ -17,6 +17,7 @@ import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {et2_favorites} from "../etemplate/et2_widget_favorites";
 import type {IegwAppLocal} from "./egw_global";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 /**
  * Type for push-message
@@ -781,32 +782,18 @@ export abstract class EgwApp
 				})
 				.addClass("ui-helper-clearfix");
 
-			//Add Sortable handler to sideBox fav. menu
-			jQuery('ul','#favorite_sidebox_'+this.appname).sortable({
-					items:'li:not([data-id$="add"])',
-					placeholder:'ui-fav-sortable-placeholder',
-					delay:250, //(millisecond) delay before the sorting should start
-					helper: function(event, item : any) {
-						// We'll need to know which app this is for
-						item.attr('data-appname',self.appname);
-						// Create custom helper so it can be dragged to Home
-						var h_parent = item.parent().parent().clone();
-						h_parent.find('li').not('[data-id="'+item.attr('data-id')+'"]').remove();
-						h_parent.appendTo('body');
-						return h_parent;
-					},
-					// @ts-ignore
-					refreshPositions: true,
-					update: function (event, ui)
-					{
-						// @ts-ignore
-						var favSortedList = jQuery(this).sortable('toArray', {attribute:'data-id'});
-
-						self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
-
-						self._refresh_fav_nm();
-					}
-				});
+			let el = document.getElementById('favorite_sidebox_'+this.appname).getElementsByTagName('ul')[0];
+			let sortablejs = Sortable.create(el, {
+				ghostClass: 'ui-fav-sortable-placeholder',
+				draggable: 'li:not([data-id$="add"])',
+				delay: 25,
+				dataIdAttr:'data-id',
+				onSort: function(event){
+					let favSortedList = sortablejs.toArray();
+					self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
+					self._refresh_fav_nm();
+				}
+			});
 
 			// Bind favorite de-select
 			var egw_fw = egw_getFramework();

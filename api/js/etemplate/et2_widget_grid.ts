@@ -23,6 +23,7 @@ import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
 import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action.js';
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 
 /**
@@ -117,6 +118,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	private wrapper = null;
 	private lastRowNode: null;
 
+	private sortablejs : Sortable = null;
 	/**
 	 * Constructor
 	 *
@@ -943,55 +945,49 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	set_sortable(sortable: boolean | Function)
 	{
-		const $node = jQuery(this.getDOMNode());
-		if(!sortable)
+		const self = this;
+		let tbody = this.getDOMNode().getElementsByTagName('tbody')[0];
+
+		if(!sortable && this.sortablejs)
 		{
-			$node.sortable("destroy");
+			this.sortablejs.destroy();
 			return;
 		}
 
-		// Make sure rows have IDs, so sortable has something to return
-		jQuery('tr', this.tbody).each(function(index) {
-			const $this = jQuery(this);
+		for (let i =0; i < tbody.children.length; i++)
+		{
+			if (!tbody.children[i].classList.contains('th') && !tbody.children[i].id)
+			{
+				tbody.children[i].setAttribute('id', i.toString());
+			}
+		}
 
-			// Header does not participate in sorting
-			if($this.hasClass('th')) return;
-
-			// If row doesn't have an ID, assign the index as ID
-			if(!$this.attr("id")) $this.attr("id", index);
-		});
-
-		const self = this;
-
-		// Set up sortable
-		$node.sortable({
-			// Header does not participate in sorting
-			items: "> tbody > tr:not(.th)",
-			distance: 15,
-			cancel: this.options.sortable_cancel,
-			placeholder: this.options.sortable_placeholder,
-			containment: this.options.sortable_containment,
-			connectWith: this.options.sortable_connectWith,
-			update: function(event, ui) {
+		this.sortablejs = new Sortable(tbody,{
+			group: this.options.sortable_connectWith,
+			draggable: "tr:not(.th)",
+			filter: this.options.sortable_cancel,
+			ghostClass: this.options.sortable_placeholder,
+			dataIdAttr: 'id',
+			onAdd:function (event) {
+				if (typeof self.options.sortable_recieveCallback == 'function') {
+					self.options.sortable_recieveCallback.call(self, event, this, self.id);
+				}
+			},
+			onStart: function (event, ui) {
+				if (typeof self.options.sortable_startCallback == 'function') {
+					self.options.sortable_startCallback.call(self, event, this, self.id);
+				}
+			},
+			onSort: function (event) {
 				self.egw().json(sortable,[
-					self.getInstanceManager().etemplate_exec_id,
-					$node.sortable("toArray"),
-					self.id],
+						self.getInstanceManager().etemplate_exec_id,
+						self.sortablejs.toArray(),
+						self.id],
 					null,
 					self,
 					true
 				).sendRequest();
 			},
-			receive: function (event, ui) {
-				if (typeof self.sortable_recieveCallback == 'function') {
-					self.sortable_recieveCallback.call(self, event, ui, self.id);
-				}
-			},
-			start: function (event, ui) {
-				if (typeof self.options.sortable_startCallback == 'function') {
-					self.options.sortable_startCallback.call(self, event, ui, self.id);
-				}
-			}
 		});
 	}
 

@@ -972,6 +972,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	/**
 	 * Init our static properties and register this wrapper
 	 *
+	 * Must be called when Vfs::$user is changed!
 	 */
 	static function init_static()
 	{
@@ -984,16 +985,31 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		{
 			self::$fstab = $fstab;
 		}
-		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab']) &&
-			is_array($GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab']))
+
+		// get the user Vfs is currently using, might be different from $GLOBALS['egw_info']['user']['account_id']
+		if (!isset(Vfs::$user))
 		{
-			self::$fstab += $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'];
+			Vfs::init_static();
+		}
+		if (Vfs::$user != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$prefs = new Api\Preferences(Vfs::$user);
+			$vfs_fstab = $prefs->data['common']['vfs_fstab'];
+		}
+		else
+		{
+			$vfs_fstab = $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'];
+		}
+		if (!empty($vfs_fstab) && is_array($vfs_fstab))
+		{
+			self::$fstab += $vfs_fstab;
 		}
 
 		// set default context for our schema ('vfs') with current user
-		if (!($context = stream_context_get_options(stream_context_get_default())) || empty($context[self::SCHEME]['user']))
+		if (!($context = stream_context_get_options(stream_context_get_default())) || empty($context[self::SCHEME]['user']) ||
+			$context[self::SCHEME]['user'] !== (int)Vfs::$user)
 		{
-			$context[self::SCHEME]['user'] = (int)$GLOBALS['egw_info']['user']['account_id'];
+			$context[self::SCHEME]['user'] = (int)Vfs::$user;
 			stream_context_set_default($context);
 		}
 	}

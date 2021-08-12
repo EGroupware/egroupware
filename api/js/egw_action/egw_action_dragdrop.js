@@ -13,7 +13,6 @@
 	egw_action_common;
 	egw_action_popup;
 	vendor.bower-asset.jquery.dist.jquery;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 */
 
 import {egwAction,egwActionImplementation} from "./egw_action.js";

@@ -65,6 +65,8 @@ status/
 smallpart/
 swoolepush/
 webauthn/
+*/js/*.map
+*/js/app.min.js
 addressbook/js/app.js
 admin/js/app.js
 api/js/etemplate/*.js
