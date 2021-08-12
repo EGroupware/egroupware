@@ -23,7 +23,7 @@ import '../../api/js/framework/fw_browser.js';
 import '../../api/js/framework/fw_ui.js';
 import '../../api/js/framework/fw_classes.js';
 import '../../api/js/jsapi/egw_inheritance.js';
-
+import '@andxor/jquery-ui-touch-punch-fix/jquery.ui.touch-punch.js';
 /**
  *
  * @param {DOMWindow} window
