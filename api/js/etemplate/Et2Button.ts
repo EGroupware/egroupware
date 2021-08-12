@@ -9,10 +9,10 @@
  */
 
 
-import {css, html} from "../../../node_modules/@lion/core/index.js";
-import {LionButton} from "../../../node_modules/@lion/button/index.js";
+import {css, html} from "@lion/core/index.js";
+import {LionButton} from "@lion/button/index.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
-import {Et2Widget} from "./et2_core_webComponent";
+import {Et2Widget} from "./Et2Widget";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 {

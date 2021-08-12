@@ -7,8 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 // @ts-ignore
 import {IegwAppLocal} from "../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "./et2_core_inheritance";
-import {LitElement} from "../../../node_modules/lit-element/lit-element.js";
-import {forEach} from "carbon-web-components/es/globals/internal/collection-helpers";
+import {LitElement} from "@lion/core";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget

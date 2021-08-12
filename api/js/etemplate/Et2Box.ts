@@ -9,8 +9,8 @@
  */
 
 
-import {css, html, LitElement} from "../../../node_modules/@lion/core/index.js";
-import {Et2Widget} from "./et2_core_webComponent";
+import {css, html, LitElement} from "@lion/core";
+import {Et2Widget} from "./Et2Widget";
 
 export class Et2Box extends Et2Widget(LitElement)
 {
