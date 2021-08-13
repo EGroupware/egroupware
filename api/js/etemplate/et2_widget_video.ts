@@ -346,7 +346,6 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     }
 
-    }
     /**
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
