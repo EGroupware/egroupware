@@ -96,6 +96,18 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             "type": "boolean",
             "default": false,
             "description": "Defines if the video should be played repeatedly"
+        },
+        "volume": {
+            "name": "Video volume",
+            "type": "float",
+            "default": 0,
+            "description": "Set video's volume"
+        },
+        "playbackrate": {
+            "name": "Video playBackRate",
+            "type": "float",
+            "default": 1,
+            "description": "Set video's playBackRate"
         }
     };
 
@@ -261,6 +273,76 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         if (_value && !this._isYoutube())
         {
             this.video.attr("controls", _value);
+        }
+    }
+
+    /**
+     * Method to set volume
+     * @param _value
+     */
+    set_volume(_value: number)
+    {
+        let value = _value>100?100:_value;
+        if (value>= 0)
+        {
+            if (this._isYoutube())
+            {
+                this.youtube.set_volume(value);
+            }
+            else
+            {
+                this.video[0].volume = value/100;
+            }
+        }
+    }
+
+    /**
+     * get volume
+     */
+    get_volume()
+    {
+        if (this._isYoutube())
+        {
+            return this.youtube.get_playBackRate();
+        }
+        else
+        {
+            return this.video[0].playBackRate;
+        }
+    }
+
+    /**
+     * method to set playBackRate
+     * @param _value
+     */
+    set_playBackRate(_value: number)
+    {
+        let value = _value>16?16:_value;
+        if (value>= 0)
+        {
+            if (this._isYoutube())
+            {
+                this.youtube.playBackRate(value);
+            }
+            else
+            {
+                this.video[0].playBackRate = value;
+            }
+        }
+    }
+
+    /**
+     * get playBackRate
+     */
+    get_playBackRate()
+    {
+        if (this._isYoutube())
+        {
+            return this.youtube.get_volume();
+        }
+        else
+        {
+            return this.video[0].volume;
         }
     }
 

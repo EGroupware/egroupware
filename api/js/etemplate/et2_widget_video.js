@@ -164,6 +164,58 @@ var et2_video = /** @class */ (function (_super) {
         }
     };
     /**
+     * Method to set volume
+     * @param _value
+     */
+    et2_video.prototype.set_volume = function (_value) {
+        var value = _value > 100 ? 100 : _value;
+        if (value >= 0) {
+            if (this._isYoutube()) {
+                this.youtube.set_volume(value);
+            }
+            else {
+                this.video[0].volume = value / 100;
+            }
+        }
+    };
+    /**
+     * get volume
+     */
+    et2_video.prototype.get_volume = function () {
+        if (this._isYoutube()) {
+            return this.youtube.get_playBackRate();
+        }
+        else {
+            return this.video[0].playBackRate;
+        }
+    };
+    /**
+     * method to set playBackRate
+     * @param _value
+     */
+    et2_video.prototype.set_playBackRate = function (_value) {
+        var value = _value > 16 ? 16 : _value;
+        if (value >= 0) {
+            if (this._isYoutube()) {
+                this.youtube.playBackRate(value);
+            }
+            else {
+                this.video[0].playBackRate = value;
+            }
+        }
+    };
+    /**
+     * get playBackRate
+     */
+    et2_video.prototype.get_playBackRate = function () {
+        if (this._isYoutube()) {
+            return this.youtube.get_volume();
+        }
+        else {
+            return this.video[0].volume;
+        }
+    };
+    /**
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
      *
@@ -454,6 +506,18 @@ var et2_video = /** @class */ (function (_super) {
             "type": "boolean",
             "default": false,
             "description": "Defines if the video should be played repeatedly"
+        },
+        "volume": {
+            "name": "Video volume",
+            "type": "float",
+            "default": 0,
+            "description": "Set video's volume"
+        },
+        "playbackrate": {
+            "name": "Video playBackRate",
+            "type": "float",
+            "default": 1,
+            "description": "Set video's playBackRate"
         }
     };
     et2_video.youtube_player_states = {
