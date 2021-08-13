@@ -46,6 +46,11 @@
   },
   "dependencies": {
     "@andxor/jquery-ui-touch-punch-fix": "^1.0.2",
+    "@lion/button": "^0.14.2",
+    "@lion/core": "^0.18.2",
+    "@lion/input": "^0.15.4",
+    "@lion/input-date": "^0.12.6",
+    "@lion/input-datepicker": "^0.23.6",
     "jquery-ui-dist": "^1.12.1",
     "jquery-ui-themes": "^1.12.0",
     "jquery-ui-timepicker-addon": "^1.6.3",
