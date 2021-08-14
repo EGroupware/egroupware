@@ -496,45 +496,32 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {string} _menuaction
 		 * @param {any[]} _parameters
 		 *
-		 * @return Promise
+		 * @return Promise resolving to data part (not full response, which can contain other parts)
 		 */
 		request: function(_menuaction, _parameters)
 		{
-			let request = new json_request(_menuaction, _parameters, null, this, true, this, this);
-			let ajax_promise = request.sendRequest();
-
-			// This happens first, immediately
-			let resolvePromise = function(resolve, reject) {
-				// Bind to ajax response - this is called _after_ any other handling
-				ajax_promise.always(function(response, status, p) {
-					if(status !== "success") reject();
-
-					// The ajax request has completed, get just the data & pass it on
-					if(response && response.response)
+			const request = new json_request(_menuaction, _parameters, null, this, true, this, this);
+			return request.sendRequest().then(function(response)
+			{
+				// The ajax request has completed, get just the data & pass it on
+				if(response && response.response)
+				{
+					for(let value of response.response)
 					{
-						for(let value of response.response)
+						if(value.type && value.type === "data" && typeof value.data !== "undefined")
 						{
-							if(value.type && value.type === "data" && typeof value.data !== "undefined")
-							{
-								// Data was packed in response
-								resolve(value.data);
-							}
-							else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
-							{
-								// Just raw data
-								resolve(value);
-							}
+							// Data was packed in response
+							return value.data;
+						}
+						else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
+						{
+							// Just raw data
+							return value;
 						}
 					}
-
-					// No data? Resolve the promise with nothing
-					resolve();
-				});
-			};
-
-			const myPromise = new Promise(resolvePromise);
-
-			return myPromise;
+				}
+				return undefined;
+			});
 		},
 
 		/**
