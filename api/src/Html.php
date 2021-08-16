@@ -513,6 +513,9 @@ tinymce.init({
 			language: language_code["'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'"],
 			language_url: egw.webserverUrl+"/api/js/tinymce/langs/"+language_code[egw.preference("lang", "common")]+".js",
 			browser_spellcheck: true,
+			images_upload_url: imageUpload,
+			paste_data_images: true,
+			paste_filter_drop: true,
 			contextmenu: false,
 			file_picker_callback: function(_callback, _value, _meta){
 				var callback = _callback;
