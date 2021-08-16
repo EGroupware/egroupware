@@ -641,7 +641,7 @@ export class et2_avatar extends et2_image
 				}
 			).sendRequest(true);
 		}
-		if (this.options.crop)
+		if (this.options.crop && !this.options.readonly)
 		{
 			jQuery(this.image).cropper({
 				aspectRatio: 1/1,
