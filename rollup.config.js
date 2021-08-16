@@ -21,7 +21,7 @@ import resolve from '@rollup/plugin-node-resolve';
 rimraf.sync('./chunks/');
 
 // Turn on minification
-const do_minify = true;
+const do_minify = false;
 
 const config = {
     treeshake: false,
@@ -101,12 +101,7 @@ const config = {
                             // plugins: stage3Syntax,
                             errorRecovery: true
                         },
-                        presets: ['@babel/preset-typescript'],
-                        plugins: [
-                            // These two allow us to use LitElement decorators, but cause problems witn some TypeScript properties
-                            //['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}],
-                            //'@babel/plugin-proposal-class-properties',
-                        ]
+                        presets: ['@babel/preset-typescript']
                     }, function (err, result) {
                         if (err)
                             return reject(err);
