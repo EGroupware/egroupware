@@ -494,7 +494,7 @@ var et2_avatar = /** @class */ (function (_super) {
                 self._buildEditableLayer(noPhotoExists);
             }).sendRequest(true);
         }
-        if (this.options.crop) {
+        if (this.options.crop && !this.options.readonly) {
             jQuery(this.image).cropper({
                 aspectRatio: 1 / 1,
                 crop: function (e) {
