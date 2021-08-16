@@ -307,7 +307,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
         else
         {
-            return this.video[0].volume;
+            return this.video[0].volume * 100;
         }
     }
 
@@ -346,6 +346,35 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     }
 
+    set_mute(_value)
+    {
+        if (this._isYoutube() && this.youtube) {
+            if (_value)
+            {
+                this.youtube.mute();
+            }
+            else
+            {
+                this.youtube.unMute();
+            }
+        }
+        else
+        {
+            this.video[0].muted = _value;
+        }
+    }
+
+    get_mute(_value)
+    {
+        if (this._isYoutube() && this.youtube)
+        {
+            return this.youtube.isMuted();
+        }
+        else
+        {
+            return this.video[0].muted;
+        }
+    }
     /**
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
