@@ -285,9 +285,9 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         let value = _value>100?100:_value;
         if (value>= 0)
         {
-            if (this._isYoutube())
+            if (this._isYoutube() && this.youtube)
             {
-                this.youtube.set_volume(value);
+                this.youtube.setVolume(value);
             }
             else
             {
@@ -301,13 +301,13 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     get_volume()
     {
-        if (this._isYoutube())
+        if (this._isYoutube()  && this.youtube)
         {
-            return this.youtube.get_playBackRate();
+            return this.youtube.getVolume();
         }
         else
         {
-            return this.video[0].playBackRate;
+            return this.video[0].volume;
         }
     }
 
@@ -320,13 +320,13 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         let value = _value>16?16:_value;
         if (value>= 0)
         {
-            if (this._isYoutube())
+            if (this._isYoutube() && this.youtube)
             {
-                this.youtube.playBackRate(value);
+                this.youtube.setPlaybackRate(value);
             }
             else
             {
-                this.video[0].playBackRate = value;
+                this.video[0].playbackRate = value;
             }
         }
     }
@@ -336,13 +336,13 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
      */
     get_playBackRate()
     {
-        if (this._isYoutube())
+        if (this._isYoutube() && this.youtube)
         {
-            return this.youtube.get_volume();
+            return this.youtube.getPlaybackRate();
         }
         else
         {
-            return this.video[0].volume;
+            return this.video[0].playbackRate;
         }
     }
 
