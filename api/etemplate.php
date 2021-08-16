@@ -14,9 +14,8 @@ use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
 /* disabling v/hbox replacement for now as it fails with nextmatch headers
-const ADD_ET2_PREFIX_REGEXP = '#(\s|^|>)<((/?)([vh]?box|button))(\s|/?>)#m';*/
-const ADD_ET2_PREFIX_REGEXP = '#(\s|^|>)<((/?)(box|button))(\s|/?>)#m';
-const ADD_ET2_PREFIX_REPLACE = '$1<$3et2-$4$5';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|button))(/?|\s[^>]*)>#m';*/
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)(box|textbox|button))(/?|\s[^>]*)>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -25,7 +24,7 @@ $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'api',
 		'noheader' => true,
-		// misuse session creation callback to send the template, in case we have no session
+		// miss-use session creation callback to send the template, in case we have no session
 		'autocreate_session_callback' => 'send_template',
 		'nocachecontrol' => true,
 	)
@@ -66,16 +65,12 @@ function send_template()
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
 
-		// if there are multiple tags on one line, we need to run the regexp multiple times (eg. twice for the following example)
-		//$str = "<overlay>\n<template name='test'>\n\t<!-- this is a comment -->\n\t<box><button id='test'/></box>\n</template>\n</overlay>\n";
-		$iterations = 0;
-		do
-		{
-			$iterations++;
-			$original = $str;
-			$str = preg_replace(ADD_ET2_PREFIX_REGEXP, ADD_ET2_PREFIX_REPLACE, $original);
-		} while (strlen($str) !== strlen($original) || $str !== $original);
-		header('X-Required-Replace-Iterations: ' . ($iterations - 1));
+		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function(array $matches)
+			{
+				return '<'.$matches[2].'et2-'.$matches[3].
+					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
+					(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1).'></et2-'.$matches[3] : $matches[4]).'>';
+			}, $str);
 
 		$processing = microtime(true);
 
