@@ -21,7 +21,7 @@ use EGroupware\Api;
 /**
  * Record history logging service
  *
- * This class need to be instanciated for EACH app, which wishes to use it!
+ * This class need to be instantiated for EACH app, which wishes to use it!
  */
 class History
 {
@@ -59,8 +59,8 @@ class History
 	 */
 	function __construct($appname = '', $user = null)
 	{
-		$this->appname = $appname ? $appname : $GLOBALS['egw_info']['flags']['currentapp'];
-		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
+		$this->appname = $appname ?: $GLOBALS['egw_info']['flags']['currentapp'];
+		$this->user = $user ?: $GLOBALS['egw_info']['user']['account_id'];
 
 		if(is_object($GLOBALS['egw_setup']->db))
 		{
@@ -148,6 +148,7 @@ class History
 		if($new_value != $old_value)
 		{
 			$share_with = static::get_share_with($appname, $id);
+
 			$GLOBALS['egw']->db->insert(self::TABLE, array(
 				'history_record_id' => $id,
 				'history_appname'   => $appname,
@@ -172,11 +173,11 @@ class History
 	 * @param $appname
 	 * @param $id
 	 *
-	 * @return string
+	 * @return ?string
 	 */
 	static function get_share_with($appname, $id)
 	{
-		$share_with = '';
+		$share_with = null;
 		foreach(isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing : [] as $token => $share_obj)
 		{
 			// Make sure share is of the correct type to access an entry, and it is the correct entry
