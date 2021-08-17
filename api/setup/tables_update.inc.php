@@ -789,5 +789,18 @@ function api_upgrade20_1_002()
  */
 function api_upgrade20_1_003()
 {
-	return $GLOBALS['setup_info']['activesync']['currentver'] = '21.1';
+	return $GLOBALS['setup_info']['api']['currentver'] = '21.1';
+}
+
+/**
+ * Remove non-email addresses from egw_history_log.share_email
+ *
+ * @return string
+ */
+function api_upgrade21_1()
+{
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_history_log SET share_email=NULL, history_timestamp=history_timestamp".
+		" WHERE share_email is NOT NULL AND share_email NOT LIKE '%@%'", __LINE__, __FILE__);
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '21.1.001';
 }
