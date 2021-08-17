@@ -289,7 +289,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             {
                 this.youtube.setVolume(value);
             }
-            else
+            else if(!this._isYoutube())
             {
                 this.video[0].volume = value/100;
             }
@@ -364,7 +364,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     }
 
-    get_mute(_value)
+    get_mute()
     {
         if (this._isYoutube() && this.youtube)
         {
