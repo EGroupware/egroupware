@@ -783,17 +783,20 @@ export abstract class EgwApp
 				.addClass("ui-helper-clearfix");
 
 			let el = document.getElementById('favorite_sidebox_'+this.appname)?.getElementsByTagName('ul')[0];
-			let sortablejs = Sortable.create(el, {
-				ghostClass: 'ui-fav-sortable-placeholder',
-				draggable: 'li:not([data-id$="add"])',
-				delay: 25,
-				dataIdAttr:'data-id',
-				onSort: function(event){
-					let favSortedList = sortablejs.toArray();
-					self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
-					self._refresh_fav_nm();
-				}
-			});
+			if (el && el instanceof HTMLElement)
+			{
+				let sortablejs = Sortable.create(el, {
+					ghostClass: 'ui-fav-sortable-placeholder',
+					draggable: 'li:not([data-id$="add"])',
+					delay: 25,
+					dataIdAttr:'data-id',
+					onSort: function(event){
+						let favSortedList = sortablejs.toArray();
+						self.egw.set_preference(self.appname,'fav_sort_pref',favSortedList);
+						self._refresh_fav_nm();
+					}
+				});
+			}
 
 			// Bind favorite de-select
 			var egw_fw = egw_getFramework();
