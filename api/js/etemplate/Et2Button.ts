@@ -16,9 +16,9 @@ import {Et2Widget} from "./Et2Widget";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 {
-	protected _created_icon_node: HTMLImageElement;
-	protected clicked: boolean = false;
-	private image: string;
+	protected _created_icon_node : HTMLImageElement;
+	protected clicked : boolean = false;
+	private image : string;
 
 	static get styles()
 	{
@@ -43,8 +43,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 	{
 		return {
 			...super.properties,
-			image: {type: String},
-			onclick: {type: Function}
+			image: {type: String}
 		}
 	}
 
@@ -74,7 +73,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 		//this.classList.add("et2_button")
 
-		if (this.image)
+		if(this.image)
 		{
 			this._created_icon_node.src = egw.image(this.image);
 			this.appendChild(this._created_icon_node);
@@ -84,21 +83,21 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 	}
 
 
-	_handleClick(event: MouseEvent): boolean
+	_handleClick(event : MouseEvent) : boolean
 	{
 		debugger;
 		// ignore click on readonly button
-		if (this.disabled) return false;
+		if(this.disabled) return false;
 
 		this.clicked = true;
 
 		// Cancel buttons don't trigger the close confirmation prompt
-		if (this.classList.contains("et2_button_cancel"))
+		if(this.classList.contains("et2_button_cancel"))
 		{
 			this.getInstanceManager()?.skip_close_prompt();
 		}
 
-		if (!super._handleClick(event))
+		if(!super._handleClick(event))
 		{
 			this.clicked = false;
 			return false;
@@ -136,7 +135,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 	getValue()
 	{
-		if (this.clicked)
+		if(this.clicked)
 		{
 			return true;
 		}

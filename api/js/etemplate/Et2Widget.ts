@@ -21,28 +21,28 @@ import {LitElement} from "@lion/core";
  * @see Mixin explanation https://lit.dev/docs/composition/mixins/
  */
 
-type Constructor<T = {}> = new (...args: any[]) => T;
-export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
+type Constructor<T = {}> = new (...args : any[]) => T;
+export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode
 	{
 
 		/** et2_widget compatability **/
-		protected _mgrs: et2_arrayMgr[] = [];
-		protected _parent: Et2WidgetClass | et2_widget | null = null;
-		private _inst: etemplate2 | null = null;
+		protected _mgrs : et2_arrayMgr[] = [];
+		protected _parent : Et2WidgetClass | et2_widget | null = null;
+		private _inst : etemplate2 | null = null;
 		private supportedWidgetClasses = [];
 
 		/**
 		 * Not actually required by et2_widget, but needed to keep track of non-webComponent children
 		 */
-		private _legacy_children: et2_widget[] = [];
+		private _legacy_children : et2_widget[] = [];
 
 		/**
 		 * Properties
 		 */
-		private label: string = "";
-		private statustext: string = "";
+		private label : string = "";
+		private statustext : string = "";
 
 
 		/** WebComponent **/
@@ -75,7 +75,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 *
 		 * @param args
 		 */
-		constructor(...args: any[])
+		constructor(...args : any[])
 		{
 			super(...args);
 		}
@@ -86,7 +86,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 			this.set_label(this.label);
 
-			if (this.statustext)
+			if(this.statustext)
 			{
 				this.egw().tooltipBind(this, this.statustext);
 			}
@@ -111,13 +111,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 			// Remove old
 			let oldLabels = this.getElementsByClassName("et2_label");
-			while (oldLabels[0])
+			while(oldLabels[0])
 			{
 				this.removeChild(oldLabels[0]);
 			}
 
 			this.label = value;
-			if (value)
+			if(value)
 			{
 				let label = document.createElement("span");
 				label.classList.add("et2_label");
@@ -139,13 +139,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 * @param _ev
 		 * @returns
 		 */
-		_handleClick(_ev: MouseEvent): boolean
+		_handleClick(_ev : MouseEvent) : boolean
 		{
 			if (typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
 				var args = Array.prototype.slice.call(arguments);
-				if (args.indexOf(this) == -1) args.splice(1, 0, this);
+				if(args.indexOf(this) == -1) args.splice(1, 0, this);
 
 				return this.onclick.apply(this, args);
 			}
@@ -159,7 +159,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			// Not really needed, use the disconnectedCallback() and let the browser handle it
 		}
 
-		isInTree(): boolean
+		isInTree() : boolean
 		{
 			// TODO: Probably should watch the state or something
 			return true;
@@ -173,19 +173,19 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		loadFromXML(_node)
 		{
 			// Load the child nodes.
-			for (var i = 0; i < _node.childNodes.length; i++)
+			for(var i = 0; i < _node.childNodes.length; i++)
 			{
 				var node = _node.childNodes[i];
 				var widgetType = node.nodeName.toLowerCase();
 
-				if (widgetType == "#comment")
+				if(widgetType == "#comment")
 				{
 					continue;
 				}
 
-				if (widgetType == "#text")
+				if(widgetType == "#text")
 				{
-					if (node.data.replace(/^\s+|\s+$/g, ''))
+					if(node.data.replace(/^\s+|\s+$/g, ''))
 					{
 						this.innerText = node.data;
 					}
@@ -214,7 +214,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		createElementFromNode(_node, _name?)
 		{
 			var attributes = {};
-			debugger;
+
 			// Parse the "readonly" and "type" flag for this element here, as they
 			// determine which constructor is used
 			var _nodeName = attributes["type"] = _node.getAttribute("type") ?
@@ -226,15 +226,15 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 			// Check to see if modifications change type
 			var modifications = this.getArrayMgr("modifications");
-			if (modifications && _node.getAttribute("id"))
+			if(modifications && _node.getAttribute("id"))
 			{
-				let entry: any = modifications.getEntry(_node.getAttribute("id"));
-				if (entry == null)
+				let entry : any = modifications.getEntry(_node.getAttribute("id"));
+				if(entry == null)
 				{
 					// Try again, but skip the fancy stuff
 					// TODO: Figure out why the getEntry() call doesn't always work
 					entry = modifications.data[_node.getAttribute("id")];
-					if (entry)
+					if(entry)
 					{
 						this.egw().debug("warn", "getEntry(" + _node.getAttribute("id") + ") failed, but the data is there.", modifications, entry);
 					}
@@ -244,7 +244,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 						entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
 					}
 				}
-				if (entry && entry.type && typeof entry.type === 'string')
+				if(entry && entry.type && typeof entry.type === 'string')
 				{
 					_nodeName = attributes["type"] = entry.type;
 				}
@@ -253,18 +253,18 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 			// if _nodeName / type-attribute contains something to expand (eg. type="@${row}[type]"),
 			// we need to expand it now as it defines the constructor and by that attributes parsed via parseXMLAttrs!
-			if (_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
+			if(_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
 			{
 				_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
 			}
 
 			let widget = null;
-			if (undefined == window.customElements.get(_nodeName))
+			if(undefined == window.customElements.get(_nodeName))
 			{
 				// Get the constructor - if the widget is readonly, use the special "_ro"
 				// constructor if it is available
 				var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
-				if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
+				if(readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 				{
 					constructor = et2_registry[_nodeName + "_ro"];
 				}
@@ -286,7 +286,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			{
 				widget = this.loadWebComponent(_nodeName, _node);
 
-				if (this.addChild)
+				if(this.addChild)
 				{
 					// webcomponent going into old et2_widget
 					this.addChild(widget);
@@ -300,30 +300,30 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 * @param _nodeName
 		 * @param _node
 		 */
-		loadWebComponent(_nodeName: string, _node): HTMLElement
+		loadWebComponent(_nodeName : string, _node) : HTMLElement
 		{
 			let widget = <Et2WidgetClass>document.createElement(_nodeName);
 			widget.textContent = _node.textContent;
 
 			const widget_class = window.customElements.get(_nodeName);
-			if (!widget_class)
+			if(!widget_class)
 			{
 				throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
 			}
 			widget.setParent(this);
 			var mgr = widget.getArrayMgr("content");
-			debugger;
+
 			// Apply any set attributes - widget will do its own coercion
 			_node.getAttributeNames().forEach(attribute =>
 			{
 				let attrValue = _node.getAttribute(attribute);
 
 				// If there is not attribute set, ignore it.  Widget sets its own default.
-				if (typeof attrValue === "undefined") return;
+				if(typeof attrValue === "undefined") return;
 
 				// If the attribute is marked as boolean, parse the
 				// expression as bool expression.
-				if (widget_class.getPropertyOptions(attribute).type == "Boolean")
+				if(widget_class.getPropertyOptions(attribute).type == "Boolean")
 				{
 					attrValue = mgr.parseBoolExpression(attrValue);
 				}
@@ -334,12 +334,12 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 				widget.setAttribute(attribute, attrValue);
 			});
 
-			if (widget_class.getPropertyOptions("value") && widget.set_value)
+			if(widget_class.getPropertyOptions("value") && widget.set_value)
 			{
-				if (mgr != null)
+				if(mgr != null)
 				{
 					let val = mgr.getEntry(widget.id, false, true);
-					if (val !== null)
+					if(val !== null)
 					{
 						widget.set_value(val);
 					}
@@ -364,32 +364,32 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		parseXMLAttrs(_attrsObj, _target, _proto)
 		{
 			// Check whether the attributes object is really existing, if not abort
-			if (typeof _attrsObj == "undefined")
+			if(typeof _attrsObj == "undefined")
 			{
 				return;
 			}
 
 			// Iterate over the given attributes and parse them
 			var mgr = this.getArrayMgr("content");
-			for (var i = 0; i < _attrsObj.length; i++)
+			for(var i = 0; i < _attrsObj.length; i++)
 			{
 				var attrName = _attrsObj[i].name;
 				var attrValue = _attrsObj[i].value;
 
 				// Special handling for the legacy options
-				if (attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0)
+				if(attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0)
 				{
 					let legacy = _proto.constructor.legacyOptions || [];
 					let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
 					// Check for modifications on legacy options here.  Normal modifications
 					// are handled in widget constructor, but it's too late for legacy options then
-					if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
+					if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
 					{
-						var mod: any = this.getArrayMgr("modifications").getEntry(_target.id);
-						if (typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
+						var mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
+						if(typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
 					}
 					// expand legacyOptions with content
-					if (attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
+					if(attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
 					{
 						attrValue = mgr.expandName(attrValue);
 					}
@@ -397,13 +397,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 					// Parse the legacy options (as a string, other types not allowed)
 					var splitted = et2_csvSplit(attrValue + "");
 
-					for (var j = 0; j < splitted.length && j < legacy.length; j++)
+					for(var j = 0; j < splitted.length && j < legacy.length; j++)
 					{
 						// Blank = not set, unless there's more legacy options provided after
-						if (splitted[j].trim().length === 0 && legacy.length >= splitted.length) continue;
+						if(splitted[j].trim().length === 0 && legacy.length >= splitted.length) continue;
 
 						// Check to make sure we don't overwrite a current option with a legacy option
-						if (typeof _target[legacy[j]] === "undefined")
+						if(typeof _target[legacy[j]] === "undefined")
 						{
 							attrValue = splitted[j];
 
@@ -411,7 +411,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 						If more legacy options than expected, stuff them all in the last legacy option
 						Some legacy options take a comma separated list.
 							 */
-							if (j == legacy.length - 1 && splitted.length > legacy.length)
+							if(j == legacy.length - 1 && splitted.length > legacy.length)
 							{
 								attrValue = splitted.slice(j);
 							}
@@ -420,11 +420,11 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 							// If the attribute is marked as boolean, parse the
 							// expression as bool expression.
-							if (attr.type == "boolean")
+							if(attr.type == "boolean")
 							{
 								attrValue = mgr.parseBoolExpression(attrValue);
 							}
-							else if (typeof attrValue != "object")
+							else if(typeof attrValue != "object")
 							{
 								attrValue = mgr.expandName(attrValue);
 							}
@@ -432,20 +432,20 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 						}
 					}
 				}
-				else if (attrName == "readonly" && typeof _target[attrName] != "undefined")
+				else if(attrName == "readonly" && typeof _target[attrName] != "undefined")
 				{
 					// do NOT overwrite already evaluated readonly attribute
 				}
 				else
 				{
 					let attrs = et2_attribute_registry[_proto.constructor.name] || {};
-					if (mgr != null && typeof attrs[attrName] != "undefined")
+					if(mgr != null && typeof attrs[attrName] != "undefined")
 					{
 						var attr = attrs[attrName];
 
 						// If the attribute is marked as boolean, parse the
 						// expression as bool expression.
-						if (attr.type == "boolean")
+						if(attr.type == "boolean")
 						{
 							attrValue = mgr.parseBoolExpression(attrValue);
 						}
@@ -461,9 +461,9 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			}
 		}
 
-		iterateOver(_callback: Function, _context, _type)
+		iterateOver(_callback : Function, _context, _type)
 		{
-			if (et2_implements_registry[_type] && et2_implements_registry[_type](this))
+			if(et2_implements_registry[_type] && et2_implements_registry[_type](this))
 			{
 				_callback.call(_context, this);
 			}
@@ -484,16 +484,16 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
 			 * of the equivalent of doLoadingFinished()
 			 */
-			if (this.getParent() instanceof et2_widget)
+			if(this.getParent() instanceof et2_widget)
 			{
 				this.getParent().getDOMNode(this).append(this);
 			}
 
-			for (let i = 0; i < this._legacy_children.length; i++)
+			for(let i = 0; i < this._legacy_children.length; i++)
 			{
 				let child = this._legacy_children[i];
 				let child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
-				if (child_node && child_node !== this)
+				if(child_node && child_node !== this)
 				{
 					this.append(child_node);
 				}
@@ -503,20 +503,20 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 		getWidgetById(_id)
 		{
-			if (this.id == _id)
+			if(this.id == _id)
 			{
 				return this;
 			}
 		}
 
-		setParent(new_parent: Et2WidgetClass | et2_widget)
+		setParent(new_parent : Et2WidgetClass | et2_widget)
 		{
 			this._parent = new_parent;
 
-			if (this.id)
+			if(this.id)
 			{
 				// Create a namespace for this object
-				if (this._createNamespace())
+				if(this._createNamespace())
 				{
 					this.checkCreateNamespace();
 				}
@@ -524,12 +524,12 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 
 		}
 
-		getParent(): HTMLElement | et2_widget
+		getParent() : HTMLElement | et2_widget
 		{
 			let parentNode = this.parentNode;
 
 			// If parent is an old et2_widget, use it
-			if (this._parent)
+			if(this._parent)
 			{
 				return this._parent;
 			}
@@ -537,16 +537,24 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			return <HTMLElement>parentNode;
 		}
 
-		addChild(child: et2_widget | Et2WidgetClass)
+		addChild(child : et2_widget | Et2WidgetClass)
 		{
-			if (child instanceof et2_widget)
+			if(child instanceof et2_widget)
 			{
 				child._parent = this;
 
 				// During legacy widget creation, the child's DOM node won't be available yet.
 				this._legacy_children.push(child);
-				let child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
-				if (child_node && child_node !== this)
+				let child_node = null;
+				try
+				{
+					child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
+				}
+				catch(e)
+				{
+					// Child did not give up its DOM node nicely but errored instead
+				}
+				if(child_node && child_node !== this)
 				{
 					this.append(child_node);
 				}
@@ -567,15 +575,44 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			return this._legacy_children;
 		}
 
-		getType(): string
+		getType() : string
 		{
 			return this.nodeName;
 		}
 
-		getDOMNode(): HTMLElement
+		getDOMNode() : HTMLElement
 		{
 			return this;
 		}
+
+		/**
+		 * Creates a copy of this widget.
+		 *
+		 * @param {et2_widget} _parent parent to set for clone, default null
+		 */
+		clone(_parent?) : Et2WidgetClass
+		{
+			// Default _parent to null
+			if(typeof _parent == "undefined")
+			{
+				_parent = null;
+			}
+
+			// Create the copy
+			var copy = <Et2WidgetClass>this.cloneNode(true);
+
+			// Create a clone of all child widgets of the given object
+			for(var i = 0; i < copy.getChildren().length; i++)
+			{
+				copy.addChild(copy.getChildren()[i].clone(this));
+			}
+
+			// Copy a reference to the content array manager
+			copy.setArrayMgrs(this.getArrayMgrs());
+
+			return copy;
+		}
+
 
 		/**
 		 * Sets the array manager for the given part
@@ -583,7 +620,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 * @param {string} _part which array mgr to set
 		 * @param {object} _mgr
 		 */
-		setArrayMgr(_part: string, _mgr: et2_arrayMgr)
+		setArrayMgr(_part : string, _mgr : et2_arrayMgr)
 		{
 			this._mgrs[_part] = _mgr;
 		}
@@ -593,13 +630,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 *
 		 * @param {string} managed_array_type name of array mgr to return
 		 */
-		getArrayMgr(managed_array_type: string): et2_arrayMgr | null
+		getArrayMgr(managed_array_type : string) : et2_arrayMgr | null
 		{
-			if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined")
+			if(this._mgrs && typeof this._mgrs[managed_array_type] != "undefined")
 			{
 				return this._mgrs[managed_array_type];
 			}
-			else if (this.getParent())
+			else if(this.getParent())
 			{
 				return this.getParent().getArrayMgr(managed_array_type);
 			}
@@ -623,25 +660,25 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 *
 		 * @param _mgrs is used internally and should not be supplied.
 		 */
-		getArrayMgrs(_mgrs?: object)
+		getArrayMgrs(_mgrs? : object)
 		{
-			if (typeof _mgrs == "undefined")
+			if(typeof _mgrs == "undefined")
 			{
 				_mgrs = {};
 			}
 
 			// Add all managers of this object to the result, if they have not already
 			// been set in the result
-			for (var key in this._mgrs)
+			for(var key in this._mgrs)
 			{
-				if (typeof _mgrs[key] == "undefined")
+				if(typeof _mgrs[key] == "undefined")
 				{
 					_mgrs[key] = this._mgrs[key];
 				}
 			}
 
 			// Recursively applies this function to the parent widget
-			if (this._parent)
+			if(this._parent)
 			{
 				this._parent.getArrayMgrs(_mgrs);
 			}
@@ -661,20 +698,20 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			// Get the content manager
 			var mgrs = this.getArrayMgrs();
 
-			for (var key in mgrs)
+			for(var key in mgrs)
 			{
 				var mgr = mgrs[key];
 
 				// Get the original content manager if we have already created a
 				// perspective for this node
-				if (typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this)
+				if(typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this)
 				{
 					mgr = mgr.parentMgr;
 				}
 
 				// Check whether the manager has a namespace for the id of this object
 				var entry = mgr.getEntry(this.id);
-				if (typeof entry === 'object' && entry !== null || this.id)
+				if(typeof entry === 'object' && entry !== null || this.id)
 				{
 					// The content manager has an own node for this object, so
 					// create an own perspective.
@@ -696,11 +733,11 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		 */
 		getInstanceManager()
 		{
-			if (this._inst != null)
+			if(this._inst != null)
 			{
 				return this._inst;
 			}
-			else if (this.getParent())
+			else if(this.getParent())
 			{
 				return this.getParent().getInstanceManager();
 			}
@@ -717,19 +754,19 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			var path = this.getArrayMgr("content").getPath();
 
 			// Prevent namespaced widgets with value from going an extra layer deep
-			if (this.id && this._createNamespace() && path[path.length - 1] == this.id) path.pop();
+			if(this.id && this._createNamespace() && path[path.length - 1] == this.id) path.pop();
 
 			return path;
 		}
 
-		_createNamespace(): boolean
+		_createNamespace() : boolean
 		{
 			return false;
 		}
 
-		egw(): IegwAppLocal
+		egw() : IegwAppLocal
 		{
-			if (this.getParent() != null && !(this.getParent() instanceof HTMLElement))
+			if(this.getParent() != null && !(this.getParent() instanceof HTMLElement))
 			{
 				return (<et2_widget>this.getParent()).egw();
 			}
@@ -737,10 +774,10 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 			// Get the window this object belongs to
 			var wnd = null;
 			// @ts-ignore Technically this doesn't have implements(), but it's mixed in
-			if (this.implements(et2_IDOMNode))
+			if(this.implements(et2_IDOMNode))
 			{
 				var node = (<et2_IDOMNode><unknown>this).getDOMNode();
-				if (node && node.ownerDocument)
+				if(node && node.ownerDocument)
 				{
 					wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
 				}
@@ -751,13 +788,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass: T) =>
 		}
 	};
 
-	function applyMixins(derivedCtor: any, baseCtors: any[])
+	function applyMixins(derivedCtor : any, baseCtors : any[])
 	{
 		baseCtors.forEach(baseCtor =>
 		{
 			Object.getOwnPropertyNames(baseCtor.prototype).forEach(name =>
 			{
-				if (name !== 'constructor')
+				if(name !== 'constructor')
 				{
 					derivedCtor.prototype[name] = baseCtor.prototype[name];
 				}

@@ -13,8 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
-/* disabling v/hbox replacement for now as it fails with nextmatch headers
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|button))(/?|\s[^>]*)>#m';*/
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|button))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_REGEXP = '#<((/?)(box|textbox|button))(/?|\s[^>]*)>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
@@ -22,11 +21,11 @@ ini_set('zlib.output_compression', 0);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => 'api',
-		'noheader' => true,
+		'currentapp'                  => 'api',
+		'noheader'                    => true,
 		// miss-use session creation callback to send the template, in case we have no session
 		'autocreate_session_callback' => 'send_template',
-		'nocachecontrol' => true,
+		'nocachecontrol'              => true,
 	)
 );
 
@@ -47,8 +46,8 @@ function send_template()
 	//$path = EGW_SERVER_ROOT.$_SERVER['PATH_INFO'];
 	// check for customized template in VFS
 	list(, $app, , $template, $name) = explode('/', $_SERVER['PATH_INFO']);
-	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app.'.'.basename($name, '.xet'), $template));
-	if (empty($path) || !file_exists($path) || !is_readable($path))
+	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
+	if(empty($path) || !file_exists($path) || !is_readable($path))
 	{
 		http_response_code(404);
 		exit;
@@ -60,27 +59,28 @@ function send_template()
 	{
 		$cache_read = microtime(true);
 	}
-	else*/if (($str = file_get_contents($path)) !== false)
+	else*/
+	if(($str = file_get_contents($path)) !== false)
 	{
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
 
-		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function(array $matches)
-			{
-				return '<'.$matches[2].'et2-'.$matches[3].
-					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
-					(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1).'></et2-'.$matches[3] : $matches[4]).'>';
-			}, $str);
+		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches)
+		{
+			return '<' . $matches[2] . 'et2-' . $matches[3] .
+				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
+				(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1) . '></et2-' . $matches[3] : $matches[4]) . '>';
+		},                           $str);
 
 		$processing = microtime(true);
 
-		if (isset($cache) && (file_exists($cache_dir=dirname($cache)) || mkdir($cache_dir, 0755, true)))
+		if(isset($cache) && (file_exists($cache_dir = dirname($cache)) || mkdir($cache_dir, 0755, true)))
 		{
 			file_put_contents($cache, $str);
 		}
 	}
 	// stop here for not existing file path-traversal for both file and cache here
-	if (empty($str) || strpos($path, '..') !== false)
+	if(empty($str) || strpos($path, '..') !== false)
 	{
 		http_response_code(404);
 		exit;
@@ -92,29 +92,30 @@ function send_template()
 	Header('ETag: ' . $etag);
 
 	// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
-	if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
+	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
 	{
 		header("HTTP/1.1 304 Not Modified");
 		exit;
 	}
 
 	// we run our own gzip compression, to set a correct Content-Length of the encoded content
-	if (function_exists('gzencode') && in_array('gzip', explode(',', $_SERVER['HTTP_ACCEPT_ENCODING']), true))
+	if(function_exists('gzencode') && in_array('gzip', explode(',', $_SERVER['HTTP_ACCEPT_ENCODING']), true))
 	{
 		$gzip_start = microtime(true);
 		$str = gzencode($str);
 		header('Content-Encoding: gzip');
-		$gziping = microtime(true)-$gzip_start;
+		$gziping = microtime(true) - $gzip_start;
 	}
-	header('X-Timing: header-include='.number_format($header_include-$GLOBALS['start'], 3).
-		(empty($processing) ? ', cache-read='.number_format($cache_read-$header_include, 3) :
-			', processing='.number_format($processing-$header_include, 3)).
-		(!empty($gziping) ? ', gziping='.number_format($gziping, 3) : '').
-		', total='.number_format(microtime(true)-$GLOBALS['start'], 3));
+	header('X-Timing: header-include=' . number_format($header_include - $GLOBALS['start'], 3) .
+		   (empty($processing) ? ', cache-read=' . number_format($cache_read - $header_include, 3) :
+			   ', processing=' . number_format($processing - $header_include, 3)) .
+		   (!empty($gziping) ? ', gziping=' . number_format($gziping, 3) : '') .
+		   ', total=' . number_format(microtime(true) - $GLOBALS['start'], 3)
+	);
 
 	// Content-Length header is important, otherwise browsers dont cache!
 	Header('Content-Length: ' . bytes($str));
 	echo $str;
 
-	exit;	// stop further processing eg. redirect to login
+	exit;    // stop further processing eg. redirect to login
 }

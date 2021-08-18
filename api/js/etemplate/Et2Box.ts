@@ -42,7 +42,12 @@ export class Et2Box extends Et2Widget(LitElement)
             </div> `;
 	}
 
-	_createNamespace(): boolean
+	set_label(new_label)
+	{
+		// Boxes don't have labels
+	}
+
+	_createNamespace() : boolean
 	{
 		return true;
 	}
