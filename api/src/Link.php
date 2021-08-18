@@ -1344,15 +1344,16 @@ class Link extends Link\Storage
 				Storage\History::static_add($link['app2'],$link['id2'],$GLOBALS['egw_info']['user']['account_id'],'~file~','', Vfs::basename($url));
 			}
 		}
-		if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))
-		{
-			// try removing the dir, in case it's empty
-			try {
+		try {
+			if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))
+			{
+				// try removing the dir, in case it's empty
 				if (($dir = Vfs::dirname($url))) @Vfs::rmdir($dir);
 			}
-			catch (\Exception $e) {
-				// ignore SQL error caused by only virtual directories with non-integer (hash) fs_id
-			}
+		}
+		catch (\Exception $e) {
+			// ignore SQL error caused by only virtual directories with non-integer (hash) fs_id
+			$Ok = false;
 		}
 		if (!is_null($current_is_root))
 		{
