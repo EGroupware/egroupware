@@ -782,7 +782,7 @@ export abstract class EgwApp
 				})
 				.addClass("ui-helper-clearfix");
 
-			let el = document.getElementById('favorite_sidebox_'+this.appname).getElementsByTagName('ul')[0];
+			let el = document.getElementById('favorite_sidebox_'+this.appname)?.getElementsByTagName('ul')[0];
 			let sortablejs = Sortable.create(el, {
 				ghostClass: 'ui-fav-sortable-placeholder',
 				draggable: 'li:not([data-id$="add"])',
