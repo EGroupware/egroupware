@@ -923,9 +923,10 @@ class Widget
 
 	/**
 	 * Checks if a widget is readonly:
-	 * - readonly attribute set
-	 * - $readonlys[__ALL__] set and $readonlys[$form_name] !== false
-	 * - $readonlys[$form_name] evaluates to true
+	 * 1. $readonlys set to true for $form_name:
+	 *    a) $readonlys[$form_name] is set to true (flat array)
+	 *    b) self::get_array($readonlys, $form_name) is set to true (hierarchical)
+	 * 2. ($readonlys[__ALL__] or widget readonly attribute) is true AND NOT $readonlys set to false for $form_name
 	 *
 	 * @param string $cname =''
 	 * @param string $form_name =null form_name, to not calculate him again
@@ -940,13 +941,12 @@ class Widget
 			);
 			$form_name = self::form_name($cname, $this->id, $expand);
 		}
-		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
-			self::get_array(self::$request->readonlys,$form_name) === true ||
-			isset(self::$request->readonlys['__ALL__']) && (
-				// Exceptions to all
-				self::$request->readonlys[$form_name] !== false &&
-				self::get_array(self::$request->readonlys,$form_name) !== false
-			);
+		// readonlys can either be set / used as flat array with complete form-name, hierarchical
+		$readonlys = self::$request->readonlys[$form_name] ?? self::get_array(self::$request->readonlys,$form_name);
+
+		$readonly = $readonlys === true ||
+			// exception to __ALL__ or readonly="true" attribute by setting $readonlys[$from_name] === false
+			($this->attrs['readonly'] || isset(self::$request->readonlys['__ALL__'])) && $readonlys !== false;
 
 		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name': attrs[readonly]=".array2string($this->attrs['readonly']).", readonlys['$form_name']=".array2string(self::$request->readonlys[$form_name]).", readonlys[$form_name]=".array2string(self::get_array(self::$request->readonlys,$form_name)).", readonlys['__ALL__']=".array2string(self::$request->readonlys['__ALL__'])." returning ".array2string($readonly));
 		return $readonly;
