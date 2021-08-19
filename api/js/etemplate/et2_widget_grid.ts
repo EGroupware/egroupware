@@ -502,9 +502,9 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					cell.nm_id = node.getAttribute('id');
 				}
 				// Apply widget's class to td, for backward compatability
-				if(node.getAttribute("class"))
+				if (node.getAttribute("class"))
 				{
-					cell.class += (cell.class ? " " : "") + node.getAttribute("class");
+					cell.class += (cell.class ? " " : "") + this.getArrayMgr("content").expandName(node.getAttribute("class"));
 				}
 
 				// Create the element

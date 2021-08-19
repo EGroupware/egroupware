@@ -1041,6 +1041,13 @@ export class et2_link_entry extends et2_inputWidget
 				};
 			}
 		}
+		// display a search query, not a selected entry
+		else if (_value !== null && typeof _value === 'object' && typeof _value.query === 'string')
+		{
+			this.options.value = { app: _value.app || this.options.only_app, id: null };
+			this.search.val(_value.query);
+			return;
+		}
 		this._oldValue = this.options.value;
 		if (!_value || _value.length == 0 || _value == null || jQuery.isEmptyObject(_value))
 		{
