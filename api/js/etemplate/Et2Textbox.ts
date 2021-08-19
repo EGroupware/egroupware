@@ -31,7 +31,6 @@ export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
 	{
 		return {
 			...super.properties,
-			value: {attribute: true},
 			onclick: {type: Function}
 		}
 	}
