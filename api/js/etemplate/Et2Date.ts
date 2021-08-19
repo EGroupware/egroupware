@@ -9,8 +9,9 @@
  */
 
 
-import {css, html} from "../../../node_modules/@lion/core/index.js"
-import {LionInputDatepicker} from "../../../node_modules/@lion/input-datepicker/index.js"
+import {css, html} from "../../../node_modules/@lion/core/index.js";
+import {LionInputDatepicker} from "../../../node_modules/@lion/input-datepicker/index.js";
+import {Unparseable} from "../../../node_modules/@lion/form-core/src/validate/Unparseable.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
 import {Et2Widget} from "./Et2Widget";
 
@@ -23,13 +24,27 @@ import {Et2Widget} from "./Et2Widget";
  */
 export function parseDate(dateString)
 {
-	debugger;
+	// First try the server format
+	try
+	{
+		let date = new Date(dateString);
+		if(date instanceof Date)
+		{
+			return date;
+		}
+	}
+	catch(e)
+	{
+		// Nope, that didn't parse directly
+	}
+
 	let formatString = <string>(egw.preference("dateformat") || 'Y-m-d');
 	formatString = formatString.replaceAll(/-\/\./ig, '-');
 	let parsedString = "";
-	switch (formatString)
+	switch(formatString)
 	{
 		case 'd-m-Y':
+		case 'd/m/Y':
 			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(
 				3,
 				5,
@@ -42,6 +57,7 @@ export function parseDate(dateString)
 			)}/${dateString.slice(3, 5)}`;
 			break;
 		case 'Y-m-d':
+		case 'Y/m/d':
 			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(
 				5,
 				7,
@@ -83,7 +99,6 @@ export function parseDate(dateString)
  */
 export function formatDate(date: Date, options): string
 {
-	debugger;
 	if (!date || !(date instanceof Date))
 	{
 		return "";
@@ -95,8 +110,8 @@ export function formatDate(date: Date, options): string
 	let dateformat = options.dateFormat || <string>egw.preference("dateformat") || 'Y-m-d';
 
 	var replace_map = {
-		d: "" + date.getUTCDate(),
-		m: "" + date.getUTCMonth() + 1,
+		d: (date.getUTCDate() < 10 ? "0" : "") + date.getUTCDate(),
+		m: (date.getUTCMonth() < 9 ? "0" : "") + (date.getUTCMonth() + 1),
 		Y: "" + date.getUTCFullYear()
 	}
 	var re = new RegExp(Object.keys(replace_map).join("|"), "gi");
@@ -122,20 +137,7 @@ export class Et2Date extends Et2InputWidget(Et2Widget(LionInputDatepicker))
 	static get properties()
 	{
 		return {
-			...super.properties,
-			value: {
-				attribute: true,
-				converter: {
-					toAttribute(value)
-					{
-						return value ? value.toJSON().replace(/\.\d{3}Z$/, 'Z') : "";
-					},
-					fromAttribute(value)
-					{
-						return new Date(value);
-					}
-				}
-			},
+			...super.properties
 		}
 	}
 
@@ -149,14 +151,36 @@ export class Et2Date extends Et2InputWidget(Et2Widget(LionInputDatepicker))
 	connectedCallback()
 	{
 		super.connectedCallback();
-
 	}
 
+	/**
+	 * @param {Date} modelValue
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	serializer(modelValue : Date)
+	{
+		// isValidDate() is hidden inside LionInputDate, and not exported
+		//if(!isValidDate(modelValue))
+		if(!(modelValue instanceof Date) || isNaN(modelValue))
+		{
+			return '';
+		}
+		// modelValue is localized, so we take the timezone offset in milliseconds and subtract it
+		// before converting it to ISO string.
+		const offset = modelValue.getTimezoneOffset() * 60000;
+		return new Date(modelValue.getTime() - offset).toJSON().replace(/\.\d{3}Z$/, 'Z');
+	}
 
 	getValue()
 	{
-		debugger;
-		return this.modelValue ? this.modelValue.toJSON().replace(/\.\d{3}Z$/, 'Z') : "";
+		// The supplied value was not understandable, return null
+		if(this.modelValue instanceof Unparseable)
+		{
+			return null;
+		}
+
+		// It isn't always the case that we want the serializer value, but for Et2Date we do
+		return this.serializer(this.modelValue);
 	}
 }
 

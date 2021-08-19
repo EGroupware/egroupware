@@ -418,8 +418,7 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 				readonly: {
 					type: Boolean,
 					reflect: true
-				},
-				value: {attribute: false}
+				}
 			};
 		}
 
@@ -436,7 +435,7 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 
 		getValue()
 		{
-			return this.getInputNode().value;
+			return typeof this.serializedValue !== "undefined" ? this.serializedValue : this.modalValue;
 		}
 
 		isDirty()

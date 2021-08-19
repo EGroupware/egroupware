@@ -66,12 +66,13 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 				 */
 				statustext: {type: String},
 
-				label: {type: String},
+				// Defined in parent hierarchy
+				//label: {type: String},
 				onclick: {
 					type: Function,
 					converter: (value) =>
 					{
-						debugger;
+						// TODO: Check to see if this is a static converter so "this" gives the class, not the instance
 						return et2_compileLegacyJS(value, this, this);
 					}
 				}
