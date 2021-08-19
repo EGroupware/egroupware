@@ -415,6 +415,10 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 		{
 			return {
 				...super.properties,
+				readonly: {
+					type: Boolean,
+					reflect: true
+				},
 				value: {attribute: false}
 			};
 		}

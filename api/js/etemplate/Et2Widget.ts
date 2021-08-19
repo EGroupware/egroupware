@@ -39,10 +39,11 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		private _legacy_children : et2_widget[] = [];
 
 		/**
-		 * Properties
+		 * Properties - default values, and actually creating them as fields
 		 */
 		private label : string = "";
 		private statustext : string = "";
+		private disabled : Boolean = false;
 
 
 		/** WebComponent **/
@@ -50,6 +51,15 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		{
 			return {
 				...super.properties,
+
+				/**
+				 * Defines whether this widget is visible.
+				 * Not to be confused with an input widget's HTML attribute 'disabled'.",
+				 */
+				disabled: {
+					type: Boolean,
+					reflect: true
+				},
 
 				/**
 				 * Tooltip which is shown for this element on hover
@@ -90,11 +100,17 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			{
 				this.egw().tooltipBind(this, this.statustext);
 			}
+			if(this.onclick && !this.disabled)
+			{
+				this.addEventListener("click", this._handleClick.bind(this));
+			}
 		}
 
 		disconnectedCallback()
 		{
 			this.egw().tooltipUnbind(this);
+
+			this.removeEventListener("click", this._handleClick.bind(this));
 		}
 
 		/**
@@ -217,12 +233,12 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 
 			// Parse the "readonly" and "type" flag for this element here, as they
 			// determine which constructor is used
-			var _nodeName = attributes["type"] = _node.getAttribute("type") ?
+			let _nodeName = attributes["type"] = _node.getAttribute("type") ?
 												 _node.getAttribute("type") : _node.nodeName.toLowerCase();
-			var readonly = attributes["readonly"] = this.getArrayMgr("readonlys") ?
-													(<any>this.getArrayMgr("readonlys")).isReadOnly(
-														_node.getAttribute("id"), _node.getAttribute("readonly"),
-														typeof this.readonly !== "undefined" ? this.readonly : false) : false;
+			const readonly = attributes["readonly"] = this.getArrayMgr("readonlys") ?
+													  (<any>this.getArrayMgr("readonlys")).isReadOnly(
+														  _node.getAttribute("id"), _node.getAttribute("readonly"),
+														  typeof this.readonly !== "undefined" ? this.readonly : false) : false;
 
 			// Check to see if modifications change type
 			var modifications = this.getArrayMgr("modifications");
@@ -284,7 +300,11 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			}
 			else
 			{
-				widget = this.loadWebComponent(_nodeName, _node);
+				if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
+				{
+					_nodeName += "_ro";
+				}
+				widget = loadWebComponent(_nodeName, _node, this);
 
 				if(this.addChild)
 				{
@@ -295,62 +315,6 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			return widget;
 		}
 
-		/**
-		 * Load a Web Component
-		 * @param _nodeName
-		 * @param _node
-		 */
-		loadWebComponent(_nodeName : string, _node) : HTMLElement
-		{
-			let widget = <Et2WidgetClass>document.createElement(_nodeName);
-			widget.textContent = _node.textContent;
-
-			const widget_class = window.customElements.get(_nodeName);
-			if(!widget_class)
-			{
-				throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
-			}
-			widget.setParent(this);
-			var mgr = widget.getArrayMgr("content");
-
-			// Apply any set attributes - widget will do its own coercion
-			_node.getAttributeNames().forEach(attribute =>
-			{
-				let attrValue = _node.getAttribute(attribute);
-
-				// If there is not attribute set, ignore it.  Widget sets its own default.
-				if(typeof attrValue === "undefined") return;
-
-				// If the attribute is marked as boolean, parse the
-				// expression as bool expression.
-				if(widget_class.getPropertyOptions(attribute).type == "Boolean")
-				{
-					attrValue = mgr.parseBoolExpression(attrValue);
-				}
-				else
-				{
-					attrValue = mgr.expandName(attrValue);
-				}
-				widget.setAttribute(attribute, attrValue);
-			});
-
-			if(widget_class.getPropertyOptions("value") && widget.set_value)
-			{
-				if(mgr != null)
-				{
-					let val = mgr.getEntry(widget.id, false, true);
-					if(val !== null)
-					{
-						widget.set_value(val);
-					}
-				}
-			}
-
-			// Children need to be loaded
-			widget.loadFromXML(_node);
-
-			return widget;
-		}
 
 		/**
 		 * The parseXMLAttrs function takes an XML DOM attributes object
@@ -806,4 +770,67 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
 
 	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
+}
+
+/**
+ * Load a Web Component
+ * @param _nodeName
+ * @param _template_node
+ */
+export function loadWebComponent(_nodeName : string, _template_node, parent : Et2WidgetClass | et2_widget) : HTMLElement
+{
+	let widget = <Et2WidgetClass>document.createElement(_nodeName);
+	widget.textContent = _template_node.textContent;
+
+	const widget_class = window.customElements.get(_nodeName);
+	if(!widget_class)
+	{
+		throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
+	}
+	widget.setParent(parent);
+	var mgr = widget.getArrayMgr("content");
+
+	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
+	widget.readonly = parent.getArrayMgr("readonlys") ?
+					  (<any>parent.getArrayMgr("readonlys")).isReadOnly(
+						  _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
+						  typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
+
+	// Apply any set attributes - widget will do its own coercion
+	_template_node.getAttributeNames().forEach(attribute =>
+	{
+		let attrValue = _template_node.getAttribute(attribute);
+
+		// If there is not attribute set, ignore it.  Widget sets its own default.
+		if(typeof attrValue === "undefined") return;
+
+		// If the attribute is marked as boolean, parse the
+		// expression as bool expression.
+		if(widget_class.getPropertyOptions(attribute).type == "Boolean")
+		{
+			attrValue = mgr.parseBoolExpression(attrValue);
+		}
+		else
+		{
+			attrValue = mgr.expandName(attrValue);
+		}
+		widget.setAttribute(attribute, attrValue);
+	});
+
+	if(widget_class.getPropertyOptions("value") && widget.set_value)
+	{
+		if(mgr != null)
+		{
+			let val = mgr.getEntry(widget.id, false, true);
+			if(val !== null)
+			{
+				widget.set_value(val);
+			}
+		}
+	}
+
+	// Children need to be loaded
+	widget.loadFromXML(_template_node);
+
+	return widget;
 }

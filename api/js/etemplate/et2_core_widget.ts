@@ -22,6 +22,7 @@ import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
+import {loadWebComponent} from "./Et2Widget";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget} from "./et2_core_inputWidget";
@@ -802,7 +803,7 @@ export class et2_widget extends ClassWithAttributes
 		}
 		else
 		{
-			widget = this.loadWebComponent(_nodeName, _node);
+			widget = loadWebComponent(_nodeName, _node, this);
 
 			if (this.addChild)
 			{
@@ -810,63 +811,6 @@ export class et2_widget extends ClassWithAttributes
 				this.addChild(widget);
 			}
 		}
-		return widget;
-	}
-
-	/**
-	 * Load a Web Component
-	 * @param _nodeName
-	 * @param _node
-	 */
-	loadWebComponent(_nodeName: string, _node): HTMLElement
-	{
-		let widget = <Et2WidgetClass>document.createElement(_nodeName);
-		widget.textContent = _node.textContent;
-
-		const widget_class = window.customElements.get(_nodeName);
-		if (!widget_class)
-		{
-			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
-		}
-		widget.setParent(this);
-		var mgr = widget.getArrayMgr("content");
-		debugger;
-		// Apply any set attributes - widget will do its own coercion
-		_node.getAttributeNames().forEach(attribute =>
-		{
-			let attrValue = _node.getAttribute(attribute);
-
-			// If there is not attribute set, ignore it.  Widget sets its own default.
-			if (typeof attrValue === "undefined") return;
-
-			// If the attribute is marked as boolean, parse the
-			// expression as bool expression.
-			if (widget_class.getPropertyOptions(attribute).type == "Boolean")
-			{
-				attrValue = mgr.parseBoolExpression(attrValue);
-			}
-			else
-			{
-				attrValue = mgr.expandName(attrValue);
-			}
-			widget.setAttribute(attribute, attrValue);
-		});
-
-		if (widget_class.getPropertyOptions("value") && widget.set_value)
-		{
-			if (mgr != null)
-			{
-				let val = mgr.getEntry(widget.id, false, true);
-				if (val !== null)
-				{
-					widget.setAttribute("value", val);
-				}
-			}
-		}
-
-		// Children need to be loaded
-		widget.loadFromXML(_node);
-
 		return widget;
 	}
 

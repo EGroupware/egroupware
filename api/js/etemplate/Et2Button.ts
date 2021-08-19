@@ -31,6 +31,9 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
                 border-radius: 3px;
                 background-color: #e6e6e6;
             }
+            :host([readonly]) {
+            	display: none;
+            }
             /* Set size for icon */
             ::slotted([slot="icon"]) {
                 width: 20px;
@@ -78,8 +81,6 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 			this._created_icon_node.src = egw.image(this.image);
 			this.appendChild(this._created_icon_node);
 		}
-
-		this.addEventListener("click", this._handleClick.bind(this));
 	}
 
 
@@ -87,7 +88,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 	{
 		debugger;
 		// ignore click on readonly button
-		if(this.disabled) return false;
+		if(this.disabled || this.readonly) return false;
 
 		this.clicked = true;
 
@@ -110,6 +111,8 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 	render()
 	{
+		if(this.readonly) return '';
+
 		return html`
             <div class="button-content et2_button" id="${this._buttonId}">
                 <slot name="icon"></slot>

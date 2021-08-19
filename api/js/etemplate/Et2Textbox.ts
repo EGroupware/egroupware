@@ -38,9 +38,7 @@ export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
 
 	constructor()
 	{
-		debugger;
 		super();
-
 	}
 
 	connectedCallback()
