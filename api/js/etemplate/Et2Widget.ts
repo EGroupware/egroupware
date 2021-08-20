@@ -8,6 +8,7 @@ import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {IegwAppLocal} from "../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "./et2_core_inheritance";
 import {LitElement} from "@lion/core";
+import {et2_container} from "./et2_core_baseWidget";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -70,11 +71,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 				//label: {type: String},
 				onclick: {
 					type: Function,
-					converter: (value) =>
-					{
-						// TODO: Check to see if this is a static converter so "this" gives the class, not the instance
-						return et2_compileLegacyJS(value, this, this);
-					}
+					attribute: false
 				}
 			};
 		}
@@ -89,6 +86,8 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		constructor(...args : any[])
 		{
 			super(...args);
+			
+			this.addEventListener("click", this._handleClick.bind(this));
 		}
 
 		connectedCallback()
@@ -100,10 +99,6 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			if(this.statustext)
 			{
 				this.egw().tooltipBind(this, this.statustext);
-			}
-			if(this.onclick && !this.disabled)
-			{
-				this.addEventListener("click", this._handleClick.bind(this));
 			}
 		}
 
@@ -711,6 +706,22 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		}
 
 		/**
+		 * Returns the base widget
+		 * Usually this is the same as getInstanceManager().widgetContainer
+		 */
+		getRoot() : et2_container
+		{
+			if(this.getParent() != null)
+			{
+				return this.getParent().getRoot();
+			}
+			else
+			{
+				return <et2_container><unknown>this;
+			}
+		}
+
+		/**
 		 * Returns the path into the data array.  By default, array manager takes care of
 		 * this, but some extensions need to override this
 		 */
@@ -804,18 +815,39 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 
 		// If there is not attribute set, ignore it.  Widget sets its own default.
 		if(typeof attrValue === "undefined") return;
+		const property = widget_class.getPropertyOptions(attribute);
 
-		// If the attribute is marked as boolean, parse the
-		// expression as bool expression.
-		if(widget_class.getPropertyOptions(attribute).type == "Boolean")
+		switch(property.type)
 		{
-			attrValue = mgr.parseBoolExpression(attrValue);
+			case Boolean:
+				// If the attribute is marked as boolean, parse the
+				// expression as bool expression.
+				attrValue = mgr.parseBoolExpression(attrValue);
+				break;
+			case Function:
+				// We parse it into a function here so we can pass in the widget as context.
+				// Leaving it to the LitElement conversion loses the widget as context
+				if(typeof attrValue !== "function")
+				{
+					attrValue = et2_compileLegacyJS(attrValue, widget, widget);
+				}
+				break;
+			default:
+				attrValue = mgr.expandName(attrValue);
+				break;
+		}
+
+		// Set as attribute or property, as appropriate
+		if(widget.getAttributeNames().indexOf(attribute) >= 0)
+		{
+			// Set as attribute (reflected in DOM)
+			widget.setAttribute(attribute, attrValue);
 		}
 		else
 		{
-			attrValue = mgr.expandName(attrValue);
+			// Set as property, not attribute
+			widget[attribute] = attrValue;
 		}
-		widget.setAttribute(attribute, attrValue);
 	});
 
 	if(widget_class.getPropertyOptions("value") && widget.set_value)
