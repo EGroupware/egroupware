@@ -19,7 +19,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
 import {et2_IInput} from "./et2_core_interfaces";
-
+import {date} from "./lib/date.js";
 /**
  * Class which implements the "button-timestamper" XET-Tag
  *
