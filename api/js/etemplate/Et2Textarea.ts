@@ -23,7 +23,8 @@ export class Et2Textarea extends Et2InputWidget(Et2Widget(LionTextarea))
 			...super.styles,
 			css`
 			:host {
-				display: block;
+				display: flex;
+				flex-direction: column;
 				width: 100%;
 				height: 100%;
             }
