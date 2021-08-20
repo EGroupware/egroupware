@@ -86,7 +86,6 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 	_handleClick(event : MouseEvent) : boolean
 	{
-		debugger;
 		// ignore click on readonly button
 		if(this.disabled || this.readonly) return false;
 
