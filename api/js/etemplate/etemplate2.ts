@@ -26,6 +26,7 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Et2Box';
 import './Et2Button';
 import './Et2Date';
+import './Et2Textarea';
 import './Et2Textbox';
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle

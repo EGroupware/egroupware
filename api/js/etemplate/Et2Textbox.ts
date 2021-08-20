@@ -31,7 +31,7 @@ export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
 	{
 		return {
 			...super.properties,
-			onclick: {type: Function}
+			onkeypress: Function,
 		}
 	}
 
@@ -43,7 +43,6 @@ export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
 	connectedCallback()
 	{
 		super.connectedCallback();
-
 	}
 }
 
