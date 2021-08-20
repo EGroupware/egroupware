@@ -69,9 +69,9 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 
 				// Defined in parent hierarchy
 				//label: {type: String},
+
 				onclick: {
-					type: Function,
-					attribute: false
+					type: Function
 				}
 			};
 		}
@@ -86,7 +86,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		constructor(...args : any[])
 		{
 			super(...args);
-			
+
 			this.addEventListener("click", this._handleClick.bind(this));
 		}
 
@@ -444,7 +444,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
 			 * of the equivalent of doLoadingFinished()
 			 */
-			if(this.getParent() instanceof et2_widget)
+			if(this.getParent() instanceof et2_widget && this.getParent().getDOMNode(this))
 			{
 				this.getParent().getDOMNode(this).append(this);
 			}
