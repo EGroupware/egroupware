@@ -127,16 +127,16 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}.bind(this);
 
 		this.websocket = new WebSocket(url);
-		this.websocket.onopen = jQuery.proxy(function(e)
+		this.websocket.onopen = (e) =>
 		{
 			check_timer = window.setTimeout(check, check_interval);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(account_id)
 			}));
-		}, this);
+		};
 
-		this.websocket.onmessage = jQuery.proxy(function(event)
+		this.websocket.onmessage = (event) =>
 		{
 			reconnect_time = min_reconnect_time;
 			console.log(event);
@@ -148,18 +148,18 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				this.handleResponse({ response: [data]});
 			}
-		}, this);
+		};
 
-		this.websocket.onerror = jQuery.proxy(function(error)
+		this.websocket.onerror = (error) =>
 		{
 			reconnect_time *= 2;
 			if (reconnect_time > max_reconnect_time) reconnect_time = max_reconnect_time;
 
 			console.log(error);
 			(error||this.handleError({}, error));
-		}, this);
+		};
 
-		this.websocket.onclose = jQuery.proxy(function(event)
+		this.websocket.onclose = (event) =>
 		{
 			if (event.wasClean)
 			{
@@ -176,9 +176,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				console.log('[close] Connection died --> reconnect in '+reconnect_time+'ms');
 				if (check_timer) window.clearTimeout(check_timer);
 				check_timer = null;
-				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, account_id, error, reconnect_time), reconnect_time);
+				window.setTimeout(() => this.openWebSocket(url, tokens, account_id, error, reconnect_time), reconnect_time);
 			}
-		}, this);
+		};
 	},
 
 	/**
@@ -231,7 +231,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		let promise;
 		if (this.async)
 		{
-			promise = (this.egw.window?this.egw.window:window).fetch(url, init)
+			const controller = new AbortController();
+			const signal = controller.signal;
+			promise = (this.egw.window?this.egw.window:window).fetch(url, {...init, ...signal})
 				.then((response) => {
 					if (!response.ok) {
 						throw response;
@@ -242,6 +244,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				.catch((_err) => {
 					(error || this.handleError).call(this, _err)
 				});
+
+			// offering a simple abort mechanism and compatibility with jQuery.ajax
+			promise.abort = () => controller.abort();
 		}
 		else
 		{
