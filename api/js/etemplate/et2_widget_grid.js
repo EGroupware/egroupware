@@ -366,7 +366,7 @@ var et2_grid = /** @class */ (function (_super) {
                 }
                 // Apply widget's class to td, for backward compatability
                 if (node.getAttribute("class")) {
-                    cell.class += (cell.class ? " " : "") + node.getAttribute("class");
+                    cell.class += (cell.class ? " " : "") + this.getArrayMgr("content").expandName(node.getAttribute("class"));
                 }
                 // Create the element
                 if (!cell.disabled || cell.disabled && typeof cell.disabled === 'string') {
