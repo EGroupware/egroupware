@@ -11,10 +11,11 @@
 
 import {css, html} from "../../../node_modules/@lion/core/index.js";
 import {LionButton} from "../../../node_modules/@lion/button/index.js";
+import {SlotMixin} from "../../../node_modules/@lion/core/src/SlotMixin.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
 import {Et2Widget} from "./Et2Widget";
 
-export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
+export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 {
 	protected _created_icon_node : HTMLImageElement;
 	protected clicked : boolean = false;
@@ -50,6 +51,17 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 		}
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			icon: () =>
+			{
+				return document.createElement("img");
+			}
+		}
+	}
+
 	constructor()
 	{
 		super();
@@ -57,10 +69,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 		// Property default values
 		this.image = '';
 
-		// Create icon Element since BXButton puts it as child, but we put it as attribute
-		this._created_icon_node = document.createElement("img");
-		this._created_icon_node.slot = "icon";
-		// Do not add this._icon here, no children can be added in constructor
+		// Do not add icon here, no children can be added in constructor
 
 		// Define a default click handler
 		// If a different one gets set via attribute, it will be used instead
@@ -78,8 +87,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 		if(this.image)
 		{
-			this._created_icon_node.src = egw.image(this.image);
-			this.appendChild(this._created_icon_node);
+			this._iconNode.src = egw.image(this.image);
 		}
 	}
 
@@ -110,13 +118,23 @@ export class Et2Button extends Et2InputWidget(Et2Widget(LionButton))
 
 	render()
 	{
-		if(this.readonly) return '';
+		if(this.readonly)
+		{
+			return '';
+		}
 
 		return html`
             <div class="button-content et2_button" id="${this._buttonId}">
                 <slot name="icon"></slot>
                 <slot></slot>
             </div> `;
+	}
+
+	get _iconNode() : HTMLImageElement
+	{
+		return <HTMLImageElement>(Array.from(this.children)).find(
+			el => el.slot === "icon",
+		);
 	}
 
 	/**
