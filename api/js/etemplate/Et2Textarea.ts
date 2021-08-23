@@ -53,10 +53,6 @@ export class Et2Textarea extends Et2InputWidget(Et2Widget(LionTextarea))
 	constructor()
 	{
 		super();
-
-		// Unset parent's defaults
-		this.rows = undefined;
-		this.maxRows = undefined;
 	}
 
 	connectedCallback()
