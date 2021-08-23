@@ -427,7 +427,21 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			{
 				_callback.call(_context, this);
 			}
-			// TODO: children
+
+			// Webcomponent children
+			for(let child of Array.from(this.children))
+			{
+				if(typeof child.iterateOver == "function")
+				{
+					child.iterateOver(_callback, _context, _type);
+				}
+			}
+
+			// Legacy children
+			for(let i = 0; i < this._legacy_children.length; i++)
+			{
+				this._legacy_children[i].iterateOver(_callback, _context, _type);
+			}
 		}
 
 		/**
