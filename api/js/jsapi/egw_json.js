@@ -189,6 +189,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
 	 * @return {Promise|boolean} Promise or for async==="keepalive" boolean is returned
+	 * Promise.abort() allows to abort the pending request
 	 */
 	json_request.prototype.sendRequest = function(async, method, error)
 	{
@@ -502,11 +503,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {any[]} _parameters
 		 *
 		 * @return Promise resolving to data part (not full response, which can contain other parts)
+		 * Promise.abort() allows to abort the pending request
 		 */
 		request: function(_menuaction, _parameters)
 		{
 			const request = new json_request(_menuaction, _parameters, null, this, true, this, this);
-			return request.sendRequest().then(function(response)
+			const response = request.sendRequest();
+			let promise = response.then(function(response)
 			{
 				// The ajax request has completed, get just the data & pass it on
 				if(response && response.response)
@@ -527,6 +530,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				}
 				return undefined;
 			});
+			// pass abort method to returned response
+			if (typeof response.abort === 'function')
+			{
+				promise.abort = response.abort;
+			}
+			return promise;
 		},
 
 		/**
