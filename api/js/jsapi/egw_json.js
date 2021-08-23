@@ -127,16 +127,16 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}.bind(this);
 
 		this.websocket = new WebSocket(url);
-		this.websocket.onopen = jQuery.proxy(function(e)
+		this.websocket.onopen = (e) =>
 		{
 			check_timer = window.setTimeout(check, check_interval);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(account_id)
 			}));
-		}, this);
+		};
 
-		this.websocket.onmessage = jQuery.proxy(function(event)
+		this.websocket.onmessage = (event) =>
 		{
 			reconnect_time = min_reconnect_time;
 			console.log(event);
@@ -148,18 +148,18 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			{
 				this.handleResponse({ response: [data]});
 			}
-		}, this);
+		};
 
-		this.websocket.onerror = jQuery.proxy(function(error)
+		this.websocket.onerror = (error) =>
 		{
 			reconnect_time *= 2;
 			if (reconnect_time > max_reconnect_time) reconnect_time = max_reconnect_time;
 
 			console.log(error);
 			(error||this.handleError({}, error));
-		}, this);
+		};
 
-		this.websocket.onclose = jQuery.proxy(function(event)
+		this.websocket.onclose = (event) =>
 		{
 			if (event.wasClean)
 			{
@@ -176,9 +176,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				console.log('[close] Connection died --> reconnect in '+reconnect_time+'ms');
 				if (check_timer) window.clearTimeout(check_timer);
 				check_timer = null;
-				window.setTimeout(jQuery.proxy(this.openWebSocket, this, url, tokens, account_id, error, reconnect_time), reconnect_time);
+				window.setTimeout(() => this.openWebSocket(url, tokens, account_id, error, reconnect_time), reconnect_time);
 			}
-		}, this);
+		};
 	},
 
 	/**
@@ -189,6 +189,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
 	 * @return {Promise|boolean} Promise or for async==="keepalive" boolean is returned
+	 * Promise.abort() allows to abort the pending request
 	 */
 	json_request.prototype.sendRequest = function(async, method, error)
 	{
@@ -231,7 +232,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		let promise;
 		if (this.async)
 		{
-			promise = (this.egw.window?this.egw.window:window).fetch(url, init)
+			const controller = new AbortController();
+			const signal = controller.signal;
+			promise = (this.egw.window?this.egw.window:window).fetch(url, {...init, ...signal})
 				.then((response) => {
 					if (!response.ok) {
 						throw response;
@@ -242,6 +245,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				.catch((_err) => {
 					(error || this.handleError).call(this, _err)
 				});
+
+			// offering a simple abort mechanism and compatibility with jQuery.ajax
+			promise.abort = () => controller.abort();
 		}
 		else
 		{
@@ -496,45 +502,40 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {string} _menuaction
 		 * @param {any[]} _parameters
 		 *
-		 * @return Promise
+		 * @return Promise resolving to data part (not full response, which can contain other parts)
+		 * Promise.abort() allows to abort the pending request
 		 */
 		request: function(_menuaction, _parameters)
 		{
-			let request = new json_request(_menuaction, _parameters, null, this, true, this, this);
-			let ajax_promise = request.sendRequest();
-
-			// This happens first, immediately
-			let resolvePromise = function(resolve, reject) {
-				// Bind to ajax response - this is called _after_ any other handling
-				ajax_promise.always(function(response, status, p) {
-					if(status !== "success") reject();
-
-					// The ajax request has completed, get just the data & pass it on
-					if(response && response.response)
+			const request = new json_request(_menuaction, _parameters, null, this, true, this, this);
+			const response = request.sendRequest();
+			let promise = response.then(function(response)
+			{
+				// The ajax request has completed, get just the data & pass it on
+				if(response && response.response)
+				{
+					for(let value of response.response)
 					{
-						for(let value of response.response)
+						if(value.type && value.type === "data" && typeof value.data !== "undefined")
 						{
-							if(value.type && value.type === "data" && typeof value.data !== "undefined")
-							{
-								// Data was packed in response
-								resolve(value.data);
-							}
-							else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
-							{
-								// Just raw data
-								resolve(value);
-							}
+							// Data was packed in response
+							return value.data;
+						}
+						else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
+						{
+							// Just raw data
+							return value;
 						}
 					}
-
-					// No data? Resolve the promise with nothing
-					resolve();
-				});
-			};
-
-			const myPromise = new Promise(resolvePromise);
-
-			return myPromise;
+				}
+				return undefined;
+			});
+			// pass abort method to returned response
+			if (typeof response.abort === 'function')
+			{
+				promise.abort = response.abort;
+			}
+			return promise;
 		},
 
 		/**

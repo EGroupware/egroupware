@@ -639,7 +639,6 @@ export class et2_link_entry extends et2_inputWidget
 	protected search: JQuery;
 	protected clear: JQuery;
 	protected link_button: JQuery;
-	private response: any;
 	private request: any;
 	private last_search: string;
 	processing: boolean = false;
@@ -1041,6 +1040,13 @@ export class et2_link_entry extends et2_inputWidget
 				};
 			}
 		}
+		// display a search query, not a selected entry
+		else if (_value !== null && typeof _value === 'object' && typeof _value.query === 'string')
+		{
+			this.options.value = { app: _value.app || this.options.only_app, id: null };
+			this.search.val(_value.query);
+			return;
+		}
 		this._oldValue = this.options.value;
 		if (!_value || _value.length == 0 || _value == null || jQuery.isEmptyObject(_value))
 		{
@@ -1183,18 +1189,29 @@ export class et2_link_entry extends et2_inputWidget
 			return response(this.cache[request.term]);
 		}
 
-		// Remember callback
-		this.response = response;
-
 		this.search.addClass("loading");
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display', '');
-		this.request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search",
-			[this.app_select.val(), '', request.term, request.options],
-			this._results,
-			this, true, this
-		).sendRequest();
+
+		this.request = egw.request("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search",
+			[this.app_select.val(), '', request.term, request.options]);
+
+		this.request.then((data) =>
+		{
+			if (this.request)
+			{
+				this.request = null;
+			}
+			this.search.removeClass("loading");
+			let result = [];
+			for (var id in data)
+			{
+				result.push({"value": id, "label": data[id]});
+			}
+			this.cache[this.search.val()] = result;
+			response(result);
+		});
 	}
 
 	/**
@@ -1237,27 +1254,6 @@ export class et2_link_entry extends et2_inputWidget
 		{
 			delete this.processing;
 		}, event.data));
-	}
-
-	/**
-	 * Server found some results
-	 *
-	 * @param {Array} data
-	 */
-	_results(data)
-	{
-		if (this.request)
-		{
-			this.request = null;
-		}
-		this.search.removeClass("loading");
-		var result = [];
-		for (var id in data)
-		{
-			result.push({"value": id, "label": data[id]});
-		}
-		this.cache[this.search.val()] = result;
-		this.response(result);
 	}
 
 	/**

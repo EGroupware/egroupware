@@ -645,8 +645,7 @@ class InfologApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		var widget = this.et2.getWidgetById('info_subject');
-		if(widget) return widget.options.value;
+		return this.et2.getValueById("info_subject");
 	}
 
 	/**

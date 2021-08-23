@@ -867,7 +867,7 @@ class Link extends Link\Storage
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
 			static $unlinking = array();
-			// check if we are already trying to unlink the entry, to avoid an infinit recursion
+			// check if we are already trying to unlink the entry, to avoid an infinite recursion
 			if (!isset($unlinking[$app]) || !isset($unlinking[$app][$id]))
 			{
 				$unlinking[$app][$id] = true;
@@ -1344,10 +1344,16 @@ class Link extends Link\Storage
 				Storage\History::static_add($link['app2'],$link['id2'],$GLOBALS['egw_info']['user']['account_id'],'~file~','', Vfs::basename($url));
 			}
 		}
-		if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))
-		{
-			// try removing the dir, in case it's empty
-			if (($dir = Vfs::dirname($url))) @Vfs::rmdir($dir);
+		try {
+			if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))
+			{
+				// try removing the dir, in case it's empty
+				if (($dir = Vfs::dirname($url))) @Vfs::rmdir($dir);
+			}
+		}
+		catch (\Exception $e) {
+			// ignore SQL error caused by only virtual directories with non-integer (hash) fs_id
+			$Ok = false;
 		}
 		if (!is_null($current_is_root))
 		{

@@ -326,6 +326,11 @@ class mail_integration {
 			}
 		}
 
+		//consider all addresses in the header
+		foreach (['TO','CC','BCC', 'FROM'] as $h)
+		{
+			$mailcontent['mailaddress'] .= ','.$headers[$h];
+		}
 		// Convert addresses to email and personal
 		$addresses = imap_rfc822_parse_adrlist($mailcontent['mailaddress'],'');
 		foreach ($addresses as $address)

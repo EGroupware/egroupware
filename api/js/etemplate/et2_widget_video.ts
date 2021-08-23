@@ -96,6 +96,18 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             "type": "boolean",
             "default": false,
             "description": "Defines if the video should be played repeatedly"
+        },
+        "volume": {
+            "name": "Video volume",
+            "type": "float",
+            "default": 0,
+            "description": "Set video's volume"
+        },
+        "playbackrate": {
+            "name": "Video playBackRate",
+            "type": "float",
+            "default": 1,
+            "description": "Set video's playBackRate"
         }
     };
 
@@ -264,6 +276,105 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         }
     }
 
+    /**
+     * Method to set volume
+     * @param _value
+     */
+    set_volume(_value: number)
+    {
+        let value = _value>100?100:_value;
+        if (value>= 0)
+        {
+            if (this._isYoutube() && this.youtube)
+            {
+                this.youtube.setVolume(value);
+            }
+            else if(!this._isYoutube())
+            {
+                this.video[0].volume = value/100;
+            }
+        }
+    }
+
+    /**
+     * get volume
+     */
+    get_volume()
+    {
+        if (this._isYoutube()  && this.youtube)
+        {
+            return this.youtube.getVolume();
+        }
+        else
+        {
+            return this.video[0].volume * 100;
+        }
+    }
+
+    /**
+     * method to set playBackRate
+     * @param _value
+     */
+    set_playBackRate(_value: number)
+    {
+        let value = _value>16?16:_value;
+        if (value>= 0)
+        {
+            if (this._isYoutube() && this.youtube)
+            {
+                this.youtube.setPlaybackRate(value);
+            }
+            else
+            {
+                this.video[0].playbackRate = value;
+            }
+        }
+    }
+
+    /**
+     * get playBackRate
+     */
+    get_playBackRate()
+    {
+        if (this._isYoutube() && this.youtube)
+        {
+            return this.youtube.getPlaybackRate();
+        }
+        else
+        {
+            return this.video[0].playbackRate;
+        }
+    }
+
+    set_mute(_value)
+    {
+        if (this._isYoutube() && this.youtube) {
+            if (_value)
+            {
+                this.youtube.mute();
+            }
+            else
+            {
+                this.youtube.unMute();
+            }
+        }
+        else
+        {
+            this.video[0].muted = _value;
+        }
+    }
+
+    get_mute()
+    {
+        if (this._isYoutube() && this.youtube)
+        {
+            return this.youtube.isMuted();
+        }
+        else
+        {
+            return this.video[0].muted;
+        }
+    }
     /**
      * Set poster attribute in order to specify
      * an image to be shown while video is loading or before user play it
