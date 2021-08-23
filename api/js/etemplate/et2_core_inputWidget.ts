@@ -415,10 +415,12 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 		{
 			return {
 				...super.properties,
-				readonly: {
+				// readOnly is what the property is in Lion, readonly is the attribute
+				readOnly: {
 					type: Boolean,
-					reflect: true
-				}
+					attribute: 'readonly',
+					reflect: true,
+				},
 			};
 		}
 
