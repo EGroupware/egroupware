@@ -8384,14 +8384,14 @@ table.egwGridView_grid img.et2_appicon {
     margin-bottom: 5px;
   }
   body #egw_fw_basecontainer #egw_fw_toggler {
-    z-index: 2;
+    z-index: 999;
     height: 50px;
   }
   body #egw_fw_basecontainer #egw_fw_toggler span {
     top: 15px;
   }
   body #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #egw_fw_toggler {
-    z-index: 2;
+    z-index: 999;
     height: 50px;
     background-color: transparent;
   }
