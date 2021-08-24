@@ -435,6 +435,11 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 			this.value = new_value;
 		}
 
+		get_value()
+		{
+			return this.getValue();
+		}
+
 		getValue()
 		{
 			return typeof this.serializedValue !== "undefined" ? this.serializedValue : this.modalValue;
@@ -443,11 +448,11 @@ export const Et2InputWidget = <T extends Constructor>(superClass: T) =>
 		isDirty()
 		{
 			let value = this.getValue();
-			if (typeof value !== typeof this._oldValue)
+			if(typeof value !== typeof this._oldValue)
 			{
 				return true;
 			}
-			if (this._oldValue === value)
+			if(this._oldValue === value)
 			{
 				return false;
 			}
