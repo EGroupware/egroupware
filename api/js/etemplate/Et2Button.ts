@@ -14,6 +14,7 @@ import {LionButton} from "../../../node_modules/@lion/button/index.js";
 import {SlotMixin} from "../../../node_modules/@lion/core/src/SlotMixin.js";
 import {Et2InputWidget} from "./et2_core_inputWidget";
 import {Et2Widget} from "./Et2Widget";
+import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 {

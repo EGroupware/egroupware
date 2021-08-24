@@ -104,7 +104,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 
 		disconnectedCallback()
 		{
-			this.egw().tooltipUnbind(this);
+			this.egw()?.tooltipUnbind(this);
 
 			this.removeEventListener("click", this._handleClick.bind(this));
 		}
@@ -774,7 +774,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 			}
 
 			// If we're the root object, return the phpgwapi API instance
-			return egw('phpgwapi', wnd);
+			return typeof egw === "function" ? egw('phpgwapi', wnd) : null;
 		}
 	};
 
