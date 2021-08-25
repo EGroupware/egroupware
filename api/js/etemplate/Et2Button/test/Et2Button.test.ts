@@ -3,7 +3,7 @@
  */
 import {assert, fixture} from '@open-wc/testing';
 import {Et2Button} from "../Et2Button";
-import type {Et2Widget} from "../../Et2Widget";
+import type {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {html} from "lit-element";
 import * as sinon from 'sinon';
 

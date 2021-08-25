@@ -9,10 +9,10 @@
  */
 
 
-import {css, html} from "../../../node_modules/@lion/core/index.js"
-import {LionTextarea} from "../../../node_modules/@lion/textarea/index.js"
-import {Et2InputWidget} from "./Et2InputWidget/Et2InputWidget";
-import {Et2Widget} from "./Et2Widget";
+import {css, html} from "@lion/core"
+import {LionTextarea} from "@lion/textarea"
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 
 export class Et2Textarea extends Et2InputWidget(Et2Widget(LionTextarea))

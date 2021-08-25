@@ -13,7 +13,7 @@ import {css, html} from "../../../../node_modules/@lion/core/index.js";
 import {LionButton} from "../../../../node_modules/@lion/button/index.js";
 import {SlotMixin} from "../../../../node_modules/@lion/core/src/SlotMixin.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {Et2Widget} from "../Et2Widget";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 {

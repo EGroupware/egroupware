@@ -10,7 +10,7 @@
 
 
 import {css, html, LitElement} from "../../../../node_modules/@lion/core/index.js";
-import {Et2Widget} from "../Et2Widget";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Box extends Et2Widget(LitElement)
 {

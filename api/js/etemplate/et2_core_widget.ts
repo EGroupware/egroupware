@@ -22,7 +22,7 @@ import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
-import {loadWebComponent} from "./Et2Widget";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget} from "./et2_core_inputWidget";
