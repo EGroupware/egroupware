@@ -9,12 +9,11 @@
  */
 
 
-import {css, html} from "../../../node_modules/@lion/core/index.js";
-import {LionButton} from "../../../node_modules/@lion/button/index.js";
-import {SlotMixin} from "../../../node_modules/@lion/core/src/SlotMixin.js";
-import {Et2InputWidget} from "./et2_core_inputWidget";
-import {Et2Widget} from "./Et2Widget";
-import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
+import {css, html} from "../../../../node_modules/@lion/core/index.js";
+import {LionButton} from "../../../../node_modules/@lion/button/index.js";
+import {SlotMixin} from "../../../../node_modules/@lion/core/src/SlotMixin.js";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {Et2Widget} from "../Et2Widget";
 
 export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 {
@@ -96,7 +95,10 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 	_handleClick(event : MouseEvent) : boolean
 	{
 		// ignore click on readonly button
-		if(this.disabled || this.readonly) return false;
+		if(this.disabled || this.readonly)
+		{
+			return false;
+		}
 
 		this.clicked = true;
 

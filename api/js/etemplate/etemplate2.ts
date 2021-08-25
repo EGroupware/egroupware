@@ -24,7 +24,7 @@ import {et2_tabbox} from "./et2_widget_tabs";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Et2Box/Et2Box';
-import './Et2Button';
+import './Et2Button/Et2Button';
 import './Et2Date';
 import './Et2Textarea';
 import './Et2Textbox';

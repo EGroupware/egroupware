@@ -1,7 +1,7 @@
 /**
  * Test file for Etemplate webComponent base widget Et2Box
  */
-import {assert, expect, fixture} from '@open-wc/testing';
+import {assert, fixture} from '@open-wc/testing';
 import {Et2Box} from "../Et2Box";
 import {html} from "lit-element";
 

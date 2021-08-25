@@ -12,7 +12,7 @@
 import {css, html} from "../../../node_modules/@lion/core/index.js";
 import {LionInputDatepicker} from "../../../node_modules/@lion/input-datepicker/index.js";
 import {Unparseable} from "../../../node_modules/@lion/form-core/src/validate/Unparseable.js";
-import {Et2InputWidget} from "./et2_core_inputWidget";
+import {Et2InputWidget} from "./Et2InputWidget/Et2InputWidget";
 import {Et2Widget} from "./Et2Widget";
 
 

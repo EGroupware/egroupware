@@ -1,14 +1,14 @@
 import {et2_IDOMNode, et2_implements_registry} from "./et2_core_interfaces";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_attribute_registry, et2_registry, et2_widget} from "./et2_core_widget";
-import {etemplate2} from "./etemplate2";
+import type {etemplate2} from "./etemplate2";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 // @ts-ignore
-import {IegwAppLocal} from "../jsapi/egw_global";
+import type {IegwAppLocal} from "../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "./et2_core_inheritance";
 import {LitElement} from "@lion/core";
-import {et2_container} from "./et2_core_baseWidget";
+import type {et2_container} from "./et2_core_baseWidget";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -117,7 +117,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		 *
 		 * @param value
 		 */
-		set_label(value)
+		set_label(value : string)
 		{
 			let oldValue = this.label;
 

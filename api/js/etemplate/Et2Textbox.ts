@@ -11,7 +11,7 @@
 
 import {css, html} from "../../../node_modules/@lion/core/index.js"
 import {LionInput} from "../../../node_modules/@lion/input/index.js"
-import {Et2InputWidget} from "./et2_core_inputWidget";
+import {Et2InputWidget} from "./Et2InputWidget/Et2InputWidget";
 import {Et2Widget} from "./Et2Widget";
 
 export class Et2Textbox extends Et2InputWidget(Et2Widget(LionInput))
