@@ -19,7 +19,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 {
 	protected _created_icon_node : HTMLImageElement;
 	protected clicked : boolean = false;
-	private image : string;
+	private _image : string;
 
 	static get styles()
 	{
@@ -67,7 +67,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 		super();
 
 		// Property default values
-		this.image = '';
+		this._image = '';
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -84,13 +84,21 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 		super.connectedCallback();
 
 		//this.classList.add("et2_button")
-
-		if(this.image)
-		{
-			this._iconNode.src = egw.image(this.image);
-		}
 	}
 
+	set image(new_image : string)
+	{
+		let oldValue = this._image;
+		if(new_image.indexOf("http") >= 0)
+		{
+			this._image = new_image
+		}
+		else
+		{
+			this._image = this.egw().image(new_image, 'etemplate');
+		}
+		this.requestUpdate("image", oldValue);
+	}
 
 	_handleClick(event : MouseEvent) : boolean
 	{
@@ -125,6 +133,8 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 		{
 			return '';
 		}
+
+		this._iconNode.src = this._image;
 
 		return html`
             <div class="button-content et2_button" id="${this._buttonId}">
