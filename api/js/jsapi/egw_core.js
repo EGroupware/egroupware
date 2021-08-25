@@ -10,7 +10,6 @@
  * @version $Id$
  */
 
- import "./egw.js";
 /**
  * This code setups the egw namespace and adds the "extend" function, which is
  * used by extension modules to inject their content into the egw object.
