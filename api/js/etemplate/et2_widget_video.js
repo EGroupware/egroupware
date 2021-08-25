@@ -170,10 +170,10 @@ var et2_video = /** @class */ (function (_super) {
     et2_video.prototype.set_volume = function (_value) {
         var value = _value > 100 ? 100 : _value;
         if (value >= 0) {
-            if (this._isYoutube()) {
-                this.youtube.set_volume(value);
+            if (this._isYoutube() && this.youtube) {
+                this.youtube.setVolume(value);
             }
-            else {
+            else if (!this._isYoutube()) {
                 this.video[0].volume = value / 100;
             }
         }
@@ -182,11 +182,11 @@ var et2_video = /** @class */ (function (_super) {
      * get volume
      */
     et2_video.prototype.get_volume = function () {
-        if (this._isYoutube()) {
-            return this.youtube.get_playBackRate();
+        if (this._isYoutube() && this.youtube) {
+            return this.youtube.getVolume();
         }
         else {
-            return this.video[0].playBackRate;
+            return this.video[0].volume * 100;
         }
     };
     /**
@@ -196,11 +196,11 @@ var et2_video = /** @class */ (function (_super) {
     et2_video.prototype.set_playBackRate = function (_value) {
         var value = _value > 16 ? 16 : _value;
         if (value >= 0) {
-            if (this._isYoutube()) {
-                this.youtube.playBackRate(value);
+            if (this._isYoutube() && this.youtube) {
+                this.youtube.setPlaybackRate(value);
             }
             else {
-                this.video[0].playBackRate = value;
+                this.video[0].playbackRate = value;
             }
         }
     };
@@ -208,11 +208,32 @@ var et2_video = /** @class */ (function (_super) {
      * get playBackRate
      */
     et2_video.prototype.get_playBackRate = function () {
-        if (this._isYoutube()) {
-            return this.youtube.get_volume();
+        if (this._isYoutube() && this.youtube) {
+            return this.youtube.getPlaybackRate();
         }
         else {
-            return this.video[0].volume;
+            return this.video[0].playbackRate;
+        }
+    };
+    et2_video.prototype.set_mute = function (_value) {
+        if (this._isYoutube() && this.youtube) {
+            if (_value) {
+                this.youtube.mute();
+            }
+            else {
+                this.youtube.unMute();
+            }
+        }
+        else {
+            this.video[0].muted = _value;
+        }
+    };
+    et2_video.prototype.get_mute = function () {
+        if (this._isYoutube() && this.youtube) {
+            return this.youtube.isMuted();
+        }
+        else {
+            return this.video[0].muted;
         }
     };
     /**
