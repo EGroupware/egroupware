@@ -122,7 +122,7 @@ export function formatDate(date: Date, options): string
 	return _value;
 }
 
-export class Et2Date extends Et2InputWidget(Et2Widget(LionInputDatepicker))
+export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 {
 	static get styles()
 	{

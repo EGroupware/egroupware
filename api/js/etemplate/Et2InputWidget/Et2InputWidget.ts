@@ -1,4 +1,6 @@
 import {et2_IInput, et2_IInputNode} from "../et2_core_interfaces";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {dedupeMixin} from "../../../../node_modules/@lion/core/index.js";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -7,10 +9,9 @@ import {et2_IInput, et2_IInputNode} from "../et2_core_interfaces";
  * export class Et2Button extends Et2InputWidget(Et2Widget(LitWidget)) {...}
  */
 
-type Constructor<T = {}> = new (...args : any[]) => T;
-export const Et2InputWidget = <T extends Constructor>(superClass : T) =>
-{
-	class Et2InputWidgetClass extends superClass implements et2_IInput, et2_IInputNode
+
+const Et2InputWidgetClass = superclass =>
+	class extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode
 	{
 
 		label : string = '';
@@ -31,9 +32,9 @@ export const Et2InputWidget = <T extends Constructor>(superClass : T) =>
 			};
 		}
 
-		constructor()
+		constructor(...args : any[])
 		{
-			super();
+			super(...args);
 
 		}
 
@@ -67,7 +68,7 @@ export const Et2InputWidget = <T extends Constructor>(superClass : T) =>
 			switch(typeof this._oldValue)
 			{
 				case "object":
-					if(typeof this._oldValue.length !== "undefined" &&
+					if(Array.isArray(this._oldValue) &&
 						this._oldValue.length !== value.length
 					)
 					{
@@ -111,5 +112,5 @@ export const Et2InputWidget = <T extends Constructor>(superClass : T) =>
 			return this._inputNode;
 		}
 	};
-	return Et2InputWidgetClass as unknown as Constructor<et2_IInput> & T;
-}
+
+export const Et2InputWidget = dedupeMixin(Et2InputWidgetClass);

@@ -15,7 +15,7 @@ import {SlotMixin} from "../../../../node_modules/@lion/core/src/SlotMixin.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
-export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
+export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 {
 	protected _created_icon_node : HTMLImageElement;
 	protected clicked : boolean = false;
@@ -146,7 +146,7 @@ export class Et2Button extends Et2InputWidget(Et2Widget(SlotMixin(LionButton)))
 	get _iconNode() : HTMLImageElement
 	{
 		return <HTMLImageElement>(Array.from(this.children)).find(
-			el => el.slot === "icon",
+			el => (<HTMLElement>el).slot === "icon",
 		);
 	}
 

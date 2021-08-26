@@ -15,7 +15,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 
-export class Et2Textarea extends Et2InputWidget(Et2Widget(LionTextarea))
+export class Et2Textarea extends Et2InputWidget(LionTextarea)
 {
 	static get styles()
 	{

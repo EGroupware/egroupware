@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {LitElement} from "@lion/core";
+import {LitElement} from "../../../../node_modules/@lion/core/index.js";
 import type {et2_container} from "../et2_core_baseWidget";
 
 /**
@@ -21,6 +21,19 @@ import type {et2_container} from "../et2_core_baseWidget";
  *
  * @see Mixin explanation https://lit.dev/docs/composition/mixins/
  */
+function applyMixins(derivedCtor : any, baseCtors : any[])
+{
+	baseCtors.forEach(baseCtor =>
+	{
+		Object.getOwnPropertyNames(baseCtor.prototype).forEach(name =>
+		{
+			if(name !== 'constructor')
+			{
+				derivedCtor.prototype[name] = baseCtor.prototype[name];
+			}
+		});
+	});
+}
 
 type Constructor<T = {}> = new (...args : any[]) => T;
 export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
@@ -778,19 +791,6 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		}
 	};
 
-	function applyMixins(derivedCtor : any, baseCtors : any[])
-	{
-		baseCtors.forEach(baseCtor =>
-		{
-			Object.getOwnPropertyNames(baseCtor.prototype).forEach(name =>
-			{
-				if(name !== 'constructor')
-				{
-					derivedCtor.prototype[name] = baseCtor.prototype[name];
-				}
-			});
-		});
-	}
 
 	// Add some more stuff in
 	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
