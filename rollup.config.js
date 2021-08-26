@@ -103,7 +103,9 @@ const config = {
         }
     },
     // resolve (external) node modules from node_modules directory
-    resolve(),
+    resolve({
+        browser: true
+    }),
     {
         transform (code, id) {
             if (id.endsWith('.ts'))
