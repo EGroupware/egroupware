@@ -9,7 +9,7 @@
  */
 
 
-import {css, html} from "../../../../node_modules/@lion/core/index.js";
+import {css, html} from "@lion/core";
 import {LionButton} from "../../../../node_modules/@lion/button/index.js";
 import {SlotMixin} from "../../../../node_modules/@lion/core/src/SlotMixin.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
