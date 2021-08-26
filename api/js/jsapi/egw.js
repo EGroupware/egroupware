@@ -78,7 +78,7 @@ window.app = {classes: {}};
 	window.egw_appName = egw_script.getAttribute('data-app');
 
 	// split includes in legacy js and modules
-	const legacy_js_regexp = /\/dhtmlx|jquery-ui-dist/;
+	const legacy_js_regexp = /\/dhtmlx|jquery-ui-dist|^etemplate\/|^phpbrain\//;
 
 	// check if egw object was injected by window open
 	if (typeof window.egw == 'undefined')
