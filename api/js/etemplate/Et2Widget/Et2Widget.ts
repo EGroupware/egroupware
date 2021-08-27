@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {LitElement} from "../../../../node_modules/@lion/core/index.js";
+import {LitElement} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 
 /**

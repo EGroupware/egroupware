@@ -1,6 +1,6 @@
 import {et2_IInput, et2_IInputNode} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {dedupeMixin} from "../../../../node_modules/@lion/core/index.js";
+import {dedupeMixin} from "@lion/core";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget

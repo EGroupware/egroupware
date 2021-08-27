@@ -10,8 +10,8 @@
 
 
 import {css, html} from "@lion/core";
-import {LionButton} from "../../../../node_modules/@lion/button/index.js";
-import {SlotMixin} from "../../../../node_modules/@lion/core/src/SlotMixin.js";
+import {LionButton} from "@lion/button";
+import {SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 
