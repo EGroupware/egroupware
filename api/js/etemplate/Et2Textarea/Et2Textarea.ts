@@ -79,4 +79,5 @@ export class Et2Textarea extends Et2InputWidget(LionTextarea)
 	}
 }
 
+// @ts-ignore TypeScript is not recognizing that Et2Textarea is a LitElement
 customElements.define("et2-textarea", Et2Textarea);

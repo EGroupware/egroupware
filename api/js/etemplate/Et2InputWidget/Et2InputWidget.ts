@@ -6,19 +6,47 @@ import {dedupeMixin} from "@lion/core";
  * This mixin will allow any LitElement to become an Et2InputWidget
  *
  * Usage:
- * export class Et2Button extends Et2InputWidget(Et2Widget(LitWidget)) {...}
+ * export class Et2Button extends Et2InputWidget(LitWidget)) {...}
  */
 
+/**
+ * Need to define the interface first, to get around TypeScript issues with protected/public
+ * This must match the public API for Et2InputWidgetClass
+ * @see https://lit.dev/docs/composition/mixins/#typing-the-subclass
+ */
+export declare class Et2InputWidgetInterface
+{
+	readOnly : boolean;
+	protected value : string | number | Object;
 
-const Et2InputWidgetClass = superclass =>
-	class extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode
+	public set_value(any) : void;
+
+	public get_value() : any;
+
+	public getValue() : any;
+
+	public isDirty() : boolean;
+
+	public resetDirty() : void;
+
+	public isValid(messages : string[]) : boolean;
+}
+
+const Et2InputWidgetMixin = (superclass) =>
+{
+	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode
 	{
-
-		label : string = '';
 		protected value : string | number | Object;
 		protected _oldValue : string | number | Object;
 
 		/** WebComponent **/
+		static get styles()
+		{
+			return [
+				...super.styles
+			];
+		}
+
 		static get properties()
 		{
 			return {
@@ -111,6 +139,8 @@ const Et2InputWidgetClass = superclass =>
 			// From LionInput
 			return this._inputNode;
 		}
-	};
+	}
 
-export const Et2InputWidget = dedupeMixin(Et2InputWidgetClass);
+	return Et2InputWidgetClass;
+}
+export const Et2InputWidget = dedupeMixin(Et2InputWidgetMixin);

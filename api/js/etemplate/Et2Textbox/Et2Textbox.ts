@@ -45,4 +45,5 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 	}
 }
 
+// @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement
 customElements.define("et2-textbox", Et2Textbox);

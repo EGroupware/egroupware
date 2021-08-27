@@ -13,7 +13,6 @@ import {css, html} from "@lion/core";
 import {LionButton} from "@lion/button";
 import {SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 {
@@ -179,4 +178,5 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	}
 }
 
+// @ts-ignore TypeScript is not recognizing that Et2Button is a LitElement
 customElements.define("et2-button", Et2Button);

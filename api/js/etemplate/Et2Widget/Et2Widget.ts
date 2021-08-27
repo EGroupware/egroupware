@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {LitElement} from "@lion/core";
+import {dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 
 /**
@@ -35,8 +35,7 @@ function applyMixins(derivedCtor : any, baseCtors : any[])
 	});
 }
 
-type Constructor<T = {}> = new (...args : any[]) => T;
-export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
+const Et2WidgetMixin = (superClass) =>
 {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode
 	{
@@ -55,9 +54,9 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		/**
 		 * Properties - default values, and actually creating them as fields
 		 */
-		private label : string = "";
+		private _label : string = "";
 		private statustext : string = "";
-		private disabled : Boolean = false;
+		protected disabled : Boolean = false;
 
 
 		/** WebComponent **/
@@ -107,7 +106,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		{
 			super.connectedCallback();
 
-			this.set_label(this.label);
+			this.set_label(this._label);
 
 			if(this.statustext)
 			{
@@ -132,7 +131,7 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		 */
 		set_label(value : string)
 		{
-			let oldValue = this.label;
+			let oldValue = this._label;
 
 			// Remove old
 			let oldLabels = this.getElementsByClassName("et2_label");
@@ -141,12 +140,12 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 				this.removeChild(oldLabels[0]);
 			}
 
-			this.label = value;
+			this._label = value;
 			if(value)
 			{
 				let label = document.createElement("span");
 				label.classList.add("et2_label");
-				label.textContent = this.label;
+				label.textContent = this._label;
 				// We should have a slot in the template for the label
 				//label.slot="label";
 				this.appendChild(label);
@@ -791,21 +790,22 @@ export const Et2Widget = <T extends Constructor<LitElement>>(superClass : T) =>
 		}
 	};
 
-
 	// Add some more stuff in
 	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
 
-	return Et2WidgetClass as unknown as Constructor<et2_IDOMNode> & T;
+	return Et2WidgetClass;
 }
+export const Et2Widget = dedupeMixin(Et2WidgetMixin);
 
 /**
  * Load a Web Component
  * @param _nodeName
  * @param _template_node
  */
-export function loadWebComponent(_nodeName : string, _template_node, parent : Et2WidgetClass | et2_widget) : HTMLElement
+export function loadWebComponent(_nodeName : string, _template_node, parent : Et2Widget | et2_widget) : HTMLElement
 {
-	let widget = <Et2WidgetClass>document.createElement(_nodeName);
+	// @ts-ignore
+	let widget = <Et2Widget>document.createElement(_nodeName);
 	widget.textContent = _template_node.textContent;
 
 	const widget_class = window.customElements.get(_nodeName);

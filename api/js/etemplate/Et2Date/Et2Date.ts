@@ -159,7 +159,7 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	serializer(modelValue : Date)
 	{
 		// isValidDate() is hidden inside LionInputDate, and not exported
-		//if(!isValidDate(modelValue))
+		// @ts-ignore Can't call isNan(Date), but we're just checking
 		if(!(modelValue instanceof Date) || isNaN(modelValue))
 		{
 			return '';
@@ -183,4 +183,5 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	}
 }
 
+// @ts-ignore TypeScript is not recognizing that Et2Date is a LitElement
 customElements.define("et2-date", Et2Date);
