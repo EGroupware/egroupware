@@ -156,6 +156,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_video._attributes, _child || {}));
 
         this.set_src_type(this.options.src_type);
+        this.options.starttime = isNaN(this.options.starttime) ? 0 : this.options.starttime;
     }
 
     set_src_type(_type)
@@ -285,7 +286,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
         let value = _value>100?100:_value;
         if (value>= 0)
         {
-            if (this._isYoutube() && this.youtube)
+            if (this._isYoutube() && this.youtube && typeof this.youtube.setVolume === 'function')
             {
                 this.youtube.setVolume(value);
             }
@@ -569,7 +570,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
     public videoLoadnigIsFinished()
     {
-        if (this.options.starttime)
+        if (this.options.starttime >= 0)
         {
             this.seek_video(this.options.starttime);
 
