@@ -16,7 +16,7 @@ use EGroupware\Api\Egw;
 
 // Rocket.Chat desktop clients ignore /rocketchat/ path in URL and use just /
 // --> redirect them back to /rocketchat/
-if (strpos($_SERVER['HTTP_USER_AGENT'], 'Rocket.Chat') !== false)
+if (strpos($_SERVER['HTTP_USER_AGENT'] ?? '', 'Rocket.Chat') !== false)
 {
 	header('Location: /rocketchat/');
 	exit;
