@@ -86,8 +86,7 @@ class notifications_push implements Json\PushBackend
 	/**
 	 * Adds any type of data to the message
 	 *
-	 * @param int|null $account_id account_id to push message too, 0 for broadcast
-	 *	or null for curent session (we can only send to current user)
+	 * @param ?int|int[] $account_id account_id(s) to push message too, null: session, 0: whole instance
 	 * @param string $key
 	 * @param mixed $data
 	 *
@@ -99,23 +98,26 @@ class notifications_push implements Json\PushBackend
 	{
 		if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 
-		self::$db->insert(self::TABLE, array(
-			'account_id'  => $account_id,
-			'notify_type' => self::TYPE,
-			'notify_message' => json_encode(array(
-				'method' => $key,
-				'data' => $data,
-			)),
-		), false, __LINE__, __FILE__, self::APP);
+		foreach((array)$account_id as $account_id)
+		{
+			self::$db->insert(self::TABLE, array(
+				'account_id'  => $account_id,
+				'notify_type' => self::TYPE,
+				'notify_message' => json_encode(array(
+					'method' => $key,
+					'data' => $data,
+				)),
+			), false, __LINE__, __FILE__, self::APP);
+		}
 
-		// cache highest id, to not poll database
+		// cache the highest id, to not poll database
 		Api\Cache::setInstance(__CLASS__, 'max_id', self::$db->get_last_insert_id(self::TABLE, 'notify_id'));
 
 		self::cleanup_push_msgs();
 	}
 
 	/**
-	 * Delete push messges older then our heartbeat-limit (poll frequency of notifications)
+	 * Delete push messages older then our heartbeat-limit (poll frequency of notifications)
 	 */
 	protected static function cleanup_push_msgs()
 	{
