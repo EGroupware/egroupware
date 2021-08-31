@@ -36,7 +36,7 @@ class Push extends Msg
 	/**
 	 * account_id we are pushing too
 	 *
-	 * @var int
+	 * @var int|int[]
 	 */
 	protected $account_id;
 
@@ -63,7 +63,7 @@ class Push extends Msg
 
 	/**
 	 *
-	 * @param int $account_id =null account_id to push message too or
+	 * @param ?int|int[] $account_id =null account_id(s) to push message too or
 	 *	self::SESSION(=null): for current session only or self::ALL(=0) for whole instance / broadcast
 	 */
 	public function __construct($account_id=self::SESSION)
