@@ -1122,7 +1122,7 @@ class admin_mail
 					}
 					if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
 					if (stripos($msg,'fatal error:')!==false) $msg_type = 'error';
-					Framework::refresh_opener($msg, 'emailadmin', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
+					Framework::refresh_opener($msg, 'mail-account', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
 					if ($button == 'save') Framework::window_close();
 					break;
 
@@ -1135,7 +1135,7 @@ class admin_mail
 					elseif (Mail\Account::delete($content['acc_id']) > 0)
 					{
 						if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
-						Framework::refresh_opener(lang('Account deleted.'), 'emailadmin', $content['acc_id'], 'delete');
+						Framework::refresh_opener(lang('Account deleted.'), 'mail-account', $content['acc_id'], 'delete');
 						Framework::window_close();
 					}
 					else
