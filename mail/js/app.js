@@ -588,7 +588,7 @@ app.classes.mail = AppJS.extend(
 				if (_type === 'delete' && !this.egw.dataHasUID('mail::'+_id)) return false;
 				break;
 
-			case 'emailadmin':	// update tree with given mail account _id and _type
+			case 'mail-account':	// update tree with given mail account _id and _type
 				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
 				var node = tree.getNode(_id);
