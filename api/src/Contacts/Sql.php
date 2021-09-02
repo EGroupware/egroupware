@@ -1165,7 +1165,7 @@ class Sql extends Api\Storage
 			}
 			elseif (!isset($keys['contact_id']))
 			{
-				$query = parent::delete($keys,true);
+				$query = ['contact_id' => parent::delete($keys,true)];
 			}
 			$this->db->delete(self::SHARED_TABLE, $query ?? $keys, __LINE__, __FILE__);
 		}

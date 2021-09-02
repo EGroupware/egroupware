@@ -107,6 +107,9 @@ class mail_hooks
 			),
 			'entry' => 'Mail',
 			'entries' => 'Mails',
+			'additional' => [
+				'mail-account' => []
+ 			]
         );
     }
 
