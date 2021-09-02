@@ -27,10 +27,19 @@ export class Et2Box extends Et2Widget(LitElement)
             	flex-wrap: nowrap;
             	justify-content: space-between;
             	align-items: stretch;
-						}
+			}
+			/* CSS for child elements */
             ::slotted(*) {
-            	/* CSS for child elements */
-            }`,
+            	margin: 0px 2px;
+            	flex: 1 0 auto;
+            }
+            ::slotted([align="left"]) {
+            	margin-right: auto;
+            }
+            ::slotted([align="right"]) {
+            	margin-left: auto;
+            }
+            `,
 		];
 	}
 
@@ -38,7 +47,7 @@ export class Et2Box extends Et2Widget(LitElement)
 	{
 		return html`
             <div class="et2_box" ${this.id ? html`id="${this.id}"` : ''}>
-                <slot><p>Empty box</p></slot>
+                <slot></slot>
             </div> `;
 	}
 

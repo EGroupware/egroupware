@@ -54,7 +54,7 @@ const Et2WidgetMixin = (superClass) =>
 		/**
 		 * Properties - default values, and actually creating them as fields
 		 */
-		private _label : string = "";
+		protected _label : string = "";
 		private statustext : string = "";
 		protected disabled : Boolean = false;
 
@@ -84,6 +84,26 @@ const Et2WidgetMixin = (superClass) =>
 
 				onclick: {
 					type: Function
+				},
+
+				/*** Style type attributes ***/
+				/**
+				 * Used by Et2Box to determine alignment.
+				 * Allowed values are left, right
+				 */
+				align: {
+					type: String,
+					reflect: true
+				},
+
+				/**
+				 * Allow styles to be set on widgets.
+				 * Any valid CSS will work.  Mostly for testing, maybe we won't use this?
+				 * That kind of style should normally go in the app.css
+				 */
+				style: {
+					type: String,
+					reflect: true
 				}
 			};
 		}
@@ -151,6 +171,13 @@ const Et2WidgetMixin = (superClass) =>
 				this.appendChild(label);
 				this.requestUpdate('label', oldValue);
 			}
+		}
+
+		set label(value : string)
+		{
+			let oldValue = this.label;
+			this._label = value;
+			this.requestUpdate('label', oldValue);
 		}
 
 		/**
