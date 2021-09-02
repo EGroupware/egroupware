@@ -30,6 +30,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
                 /* These should probably come from somewhere else */
                 border-radius: 3px;
                 background-color: #e6e6e6;
+                max-width: 125px;
             }
             :host([readonly]) {
             	display: none;
@@ -138,7 +139,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		return html`
             <div class="button-content et2_button" id="${this._buttonId}">
                 <slot name="icon"></slot>
-                <slot></slot>
+                <slot>${this._label}</slot>
             </div> `;
 	}
 
