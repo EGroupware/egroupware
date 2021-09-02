@@ -1,3 +1,11 @@
+/**
+ * This is the configuration file for automatic TypeScript testing
+ *
+ * It uses "web-test-runner" to run the tests, which are written using
+ * Mocha (https://mochajs.org/) &  Chai Assertion Library (https://www.chaijs.com/api/assert/)
+ * Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
+ */
+
 import fs from 'fs';
 import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
@@ -54,7 +62,8 @@ export default {
 						files: `${app}/js/**/*.test.ts`
 					}
 				}
-			))
+			)
+		)
 	,
 
 	plugins: [
