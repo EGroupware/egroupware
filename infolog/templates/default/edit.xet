@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<textbox multiline="true"  id="info_des" no_lang="1" width="99.7%" height="245px"/>
+		<et2-textarea  id="info_des" no_lang="1" width="99.7%" height="245px"/>
 		<checkbox id="clean_history"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
@@ -154,7 +154,7 @@
 			<rows>
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"/>
+					<et2-textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"></et2-textbox>
 					<textbox type="integer" id="info_number" readonly="true"/>
                     <appicon src="infolog" for="info_number"/>
 				</row>
@@ -165,7 +165,7 @@
 					</menulist>
 					<description/>
 					<description value="Startdate" for="info_startdate"/>
-					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
+					<et2-date statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"></et2-date>
 				</row>
 				<row class="dialogHeader3">
 					<description value="Contact"/>
@@ -217,25 +217,21 @@
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
-					<hbox  width="100%">
-						<menulist>
-							<menupopup type="select-account" id="info_owner" readonly="true"/>
-						</menulist>
+					<et2-hbox>
+						<select-account id="info_owner" readonly="true"/>
 						<date-time id="info_created" readonly="true" align="right"/>
-					</hbox>
+					</et2-hbox>
 					<description/>
 					<description value="Last modified"/>
-					<hbox  width="100%">
-						<menulist>
-							<menupopup type="select-account" id="info_modifier" readonly="true"/>
-						</menulist>
+					<et2-hbox>
+						<select-account id="info_modifier" readonly="true"/>
 						<date-time id="info_datemodified" readonly="true" align="right"/>
-					</hbox>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
 					<hbox span="6">
 						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
-						<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<et2-button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"></et2-button>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>

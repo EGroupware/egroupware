@@ -20,7 +20,7 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from './et2_core_baseWidget'
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {expose} from "./expose";
-import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
+import {et2_IDetachedDOM, et2_IExposable, et2_IInputNode} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 
 /**
@@ -168,10 +168,10 @@ export class et2_description extends expose(class et2_description extends et2_ba
 				(for_widget = this.getRoot().getWidgetById(this.options.for))
 		) && for_widget && for_widget.id)
 		{
-			if(for_widget.dom_id)
+			if(for_widget.dom_id || for_widget.getDOMNode().id)
 			{
-				for_id = for_widget.dom_id;
-				if(for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode().id)
+				for_id = for_widget.dom_id || for_widget.getDOMNode().id;
+				if(for_widget.instanceOf(et2_IInputNode) && for_widget.getInputNode() && for_id !== for_widget.getInputNode().id)
 				{
 					for_id = for_widget.getInputNode().id;
 				}
