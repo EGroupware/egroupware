@@ -52,6 +52,13 @@ const Et2WidgetMixin = (superClass) =>
 		private _legacy_children : et2_widget[] = [];
 
 		/**
+		 * Keep track of child widgets
+		 * This can differ from this.children, as it only includes the widgets where this.children will be child DOM nodes,
+		 * not guaranteed to be widgets
+		 */
+		private _children : (et2_widget | Et2WidgetClass)[] = [];
+
+		/**
 		 * Properties - default values, and actually creating them as fields
 		 */
 		protected _label : string = "";
@@ -467,19 +474,10 @@ const Et2WidgetMixin = (superClass) =>
 				_callback.call(_context, this);
 			}
 
-			// Webcomponent children
-			for(let child of Array.from(this.children))
+			// Ask children
+			for(let i = 0; i < this._children.length; i++)
 			{
-				if(typeof child.iterateOver == "function")
-				{
-					child.iterateOver(_callback, _context, _type);
-				}
-			}
-
-			// Legacy children
-			for(let i = 0; i < this._legacy_children.length; i++)
-			{
-				this._legacy_children[i].iterateOver(_callback, _context, _type);
+				this._children[i].iterateOver(_callback, _context, _type);
 			}
 		}
 
@@ -520,6 +518,35 @@ const Et2WidgetMixin = (superClass) =>
 			{
 				return this;
 			}
+			if(this.getChildren().length == 0)
+			{
+				return null;
+			}
+
+			let check_children = children =>
+			{
+				for(var i = 0; i < children.length; i++)
+				{
+					var elem = children[i].getWidgetById(_id);
+
+					if(elem != null)
+					{
+						return elem;
+					}
+				}
+				if(this.id && _id.indexOf('[') > -1 && children.length)
+				{
+					var ids = (new et2_arrayMgr()).explodeKey(_id);
+					var widget : Et2WidgetClass = this;
+					for(var i = 0; i < ids.length && widget !== null; i++)
+					{
+						widget = widget.getWidgetById(ids[i]);
+					}
+					return widget;
+				}
+			};
+
+			return check_children(this.getChildren()) || null;
 		}
 
 		setParent(new_parent : Et2WidgetClass | et2_widget)
@@ -576,16 +603,17 @@ const Et2WidgetMixin = (superClass) =>
 			{
 				this.append(child);
 			}
+			this._children.push(child);
 		}
 
 		/**
-		 * Get [legacy] children
+		 * Get child widgets
 		 * Use <obj>.children to get web component children
 		 * @returns {et2_widget[]}
 		 */
 		getChildren()
 		{
-			return this._legacy_children;
+			return this._children;
 		}
 
 		getType() : string
