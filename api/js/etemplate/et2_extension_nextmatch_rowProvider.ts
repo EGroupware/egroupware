@@ -287,20 +287,28 @@ export class et2_nextmatch_rowProvider
 					continue;
 				}
 
+				let attr_name = key;
+				let val;
 				if(!_widget.attributes[key].ignore &&
+					typeof _widget.options != "undefined" &&
 					typeof _widget.options[key] != "undefined")
 				{
-					const val = _widget.options[key];
-
-					// TODO: Improve detection
-					if(typeof val == "string" && val.indexOf("$") >= 0)
-					{
-						hasAttr = true;
-						widgetData.data.push({
-							                     "attribute": key,
-							                     "expression": val
-						                     });
-					}
+					val = _widget.options[key];
+				}
+				// Handle web components
+				else if(_widget.attributes[key].value)
+				{
+					val = _widget.attributes[key].value;
+					attr_name = _widget.attributes[key].name;
+				}
+				// TODO: Improve detection
+				if(typeof val == "string" && val.indexOf("$") >= 0)
+				{
+					hasAttr = true;
+					widgetData.data.push({
+						"attribute": attr_name,
+						"expression": val
+					});
 				}
 			}
 
