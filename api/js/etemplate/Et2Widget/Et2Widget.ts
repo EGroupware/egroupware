@@ -469,7 +469,7 @@ const Et2WidgetMixin = (superClass) =>
 
 		iterateOver(_callback : Function, _context, _type)
 		{
-			if(et2_implements_registry[_type] && et2_implements_registry[_type](this))
+			if(typeof _type == "undefined" || et2_implements_registry[_type] && et2_implements_registry[_type](this))
 			{
 				_callback.call(_context, this);
 			}
@@ -500,9 +500,9 @@ const Et2WidgetMixin = (superClass) =>
 				this.getParent().getDOMNode(this).append(this);
 			}
 
-			for(let i = 0; i < this._legacy_children.length; i++)
+			for(let i = 0; i < this.getChildren().length; i++)
 			{
-				let child = this._legacy_children[i];
+				let child = this.getChildren()[i];
 				let child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
 				if(child_node && child_node !== this)
 				{
@@ -640,16 +640,26 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			// Create the copy
-			var copy = <Et2WidgetClass>this.cloneNode(true);
+			var copy = <Et2WidgetClass>this.cloneNode();
 
-			// Create a clone of all child widgets of the given object
-			for(var i = 0; i < copy.getChildren().length; i++)
+			if(_parent)
 			{
-				copy.addChild(copy.getChildren()[i].clone(this));
+				copy.setParent(_parent);
+			}
+			else
+			{
+				// Copy a reference to the content array manager
+				copy.setArrayMgrs(this.getArrayMgrs());
+
+				// Pass on instance too
+				copy.setInstanceManager(this.getInstanceManager());
 			}
 
-			// Copy a reference to the content array manager
-			copy.setArrayMgrs(this.getArrayMgrs());
+			// Create a clone of all child widgets of the given object
+			for(var i = 0; i < this.getChildren().length; i++)
+			{
+				this.getChildren()[i].clone(copy);
+			}
 
 			return copy;
 		}
@@ -765,6 +775,16 @@ const Et2WidgetMixin = (superClass) =>
 					delete (this._mgrs[key]);
 				}
 			}
+		}
+
+		/**
+		 * Set the instance manager
+		 * Normally this is not needed as it's set on the top-level container, and we just return that reference
+		 *
+		 */
+		setInstanceManager(manager : etemplate2)
+		{
+			this._inst = manager;
 		}
 
 		/**

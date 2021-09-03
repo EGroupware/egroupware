@@ -11,8 +11,9 @@
 
 import {css, html, LitElement} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
-export class Et2Box extends Et2Widget(LitElement)
+export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 	static get styles()
 	{
@@ -59,6 +60,36 @@ export class Et2Box extends Et2Widget(LitElement)
 	_createNamespace() : boolean
 	{
 		return true;
+	}
+
+	/**
+	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+	 *
+	 * @param {array} _attrs array to add further attributes to
+	 */
+	getDetachedAttributes(_attrs)
+	{
+		_attrs.push('data');
+	}
+
+	getDetachedNodes()
+	{
+		return [this.getDOMNode()];
+	}
+
+	setDetachedAttributes(_nodes, _values)
+	{
+		if(_values.data)
+		{
+			var pairs = _values.data.split(/,/g);
+			for(var i = 0; i < pairs.length; ++i)
+			{
+				var name_value = pairs[i].split(':');
+				jQuery(_nodes[0]).attr('data-' + name_value[0], name_value[1]);
+			}
+		}
 	}
 }
 

@@ -282,6 +282,11 @@ export class et2_nextmatch_rowProvider
 			// Get all attribute values
 			for (const key in _widget.attributes)
 			{
+				if(typeof _widget.attributes[key] !== "object")
+				{
+					continue;
+				}
+
 				if(!_widget.attributes[key].ignore &&
 					typeof _widget.options[key] != "undefined")
 				{
