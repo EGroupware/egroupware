@@ -213,7 +213,8 @@ class Template extends Etemplate\Widget
 	public static function rel2url($path)
 	{
 		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/etemplate.php'.
-			($path[0] === '/' ? $path : Api\Vfs::parse_url($path, PHP_URL_PATH)).'?'.filemtime(self::rel2path($path));
+			($path[0] === '/' ? $path : preg_replace('#^'.self::VFS_TEMPLATE_PATH.'#', '',
+				Api\Vfs::parse_url($path, PHP_URL_PATH))).'?'.filemtime(self::rel2path($path));
 	}
 
 	/**
