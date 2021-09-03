@@ -2416,7 +2416,7 @@ abstract class Merge
 		}
 		else
 		{
-			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target));
+			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target, true));
 		}
 	}
 
