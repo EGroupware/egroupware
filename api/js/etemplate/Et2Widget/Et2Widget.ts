@@ -77,7 +77,7 @@ const Et2WidgetMixin = (superClass) =>
 				 * Due to how WebComponents work, this might not change anything inside the component.
 				 */
 				class: {type: String, reflect: true},
-				
+
 				/**
 				 * Defines whether this widget is visible.
 				 * Not to be confused with an input widget's HTML attribute 'disabled'.",
@@ -918,7 +918,7 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 	var mgr = widget.getArrayMgr("content");
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
-	widget.readonly = parent.getArrayMgr("readonlys") ?
+	widget.readOnly = parent.getArrayMgr("readonlys") ?
 					  (<any>parent.getArrayMgr("readonlys")).isReadOnly(
 						  _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
 						  typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
