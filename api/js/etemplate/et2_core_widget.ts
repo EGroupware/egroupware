@@ -22,10 +22,10 @@ import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
-import {loadWebComponent} from "./Et2Widget/Et2Widget";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
-import type {et2_inputWidget} from "./et2_core_inputWidget";
+import type {et2_inputWidget, et2_input} from "./et2_core_inputWidget";
+import {decorateLanguageService} from "ts-lit-plugin/lib/decorate-language-service";
 
 /**
  * The registry contains all XML tag names and the corresponding widget
@@ -77,7 +77,7 @@ export function et2_register_widget(_constructor, _types)
  * 	is not passed, it will default to null. Then you have to attach the element
  * 	to a parent using the addChild or insertChild method.
  */
-export function et2_createWidget(_name: string, _attrs: object, _parent?: any): et2_widget
+export function et2_createWidget(_name : string, _attrs : object, _parent? : any) : et2_widget
 {
 	"use strict";
 
@@ -119,12 +119,10 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 // make et2_createWidget publicly available as we need to call it from stylite/js/gantt.js (maybe others)
 if (typeof window.et2_createWidget === 'undefined') window['et2_createWidget'] = et2_createWidget;
 
-export interface WidgetConfig
-{
+export interface WidgetConfig {
 	type?: string;
 	readonly?: boolean;
 	width?: number;
-
 	[propName: string]: any;
 }
 
@@ -193,7 +191,7 @@ export class et2_widget extends ClassWithAttributes
 
 	private _type: string;
 	id: string;
-	supportedWidgetClasses: any[];
+	supportedWidgetClasses : any[];
 	options: WidgetConfig;
 	readonly: boolean;
 
@@ -210,24 +208,21 @@ export class et2_widget extends ClassWithAttributes
 	 * @param _attrs is an associative array of attributes.
 	 * @param _child attributes object from the child
 	 */
-	constructor(_parent?, _attrs?: WidgetConfig, _child?: object)
+	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
 	{
 		super();	// because we in the top of the widget hierarchy
 		this.attributes = ClassWithAttributes.extendAttributes(et2_widget._attributes, _child || {});
 
 		// Check whether all attributes are available
-		if (typeof _parent == "undefined")
-		{
+		if (typeof _parent == "undefined") {
 			_parent = null;
 		}
 
-		if (typeof _attrs == "undefined")
-		{
+		if (typeof _attrs == "undefined") {
 			_attrs = {};
 		}
 
-		if (_attrs.attributes)
-		{
+		if (_attrs.attributes) {
 			jQuery.extend(_attrs, _attrs.attributes);
 		}
 		// Initialize all important parameters
@@ -238,26 +233,22 @@ export class et2_widget extends ClassWithAttributes
 		this.id = _attrs["id"];
 
 		// Add this widget to the given parent widget
-		if (_parent != null)
-		{
+		if (_parent != null) {
 			_parent.addChild(this);
 		}
 
 		// The supported widget classes array defines a whitelist for all widget
 		// classes or interfaces child widgets have to support.
-		this.supportedWidgetClasses = [et2_widget, HTMLElement];
+		this.supportedWidgetClasses = [et2_widget];
 
-		if (_attrs["id"])
-		{
+		if (_attrs["id"]) {
 			// Create a namespace for this object
-			if (this._createNamespace())
-			{
+			if (this._createNamespace()) {
 				this.checkCreateNamespace(_attrs);
 			}
 		}
 
-		if (this.id)
-		{
+		if (this.id) {
 			//this.id = this.id.replace(/\[/g,'&#x5B;').replace(/]/g,'&#x5D;');
 		}
 
@@ -280,33 +271,29 @@ export class et2_widget extends ClassWithAttributes
 	destroy()
 	{
 		// Call the destructor of all children
-		for (var i = this._children.length - 1; i >= 0; i--)
-		{
+		for (var i = this._children.length - 1; i >= 0; i--) {
 			this._children[i].destroy();
 		}
 
 		// Remove this element from the parent, if it exists
-		if (typeof this._parent != "undefined" && this._parent !== null)
-		{
+		if (typeof this._parent != "undefined" && this._parent !== null) {
 			this._parent.removeChild(this);
 		}
 
 		// Free the array managers if they belong to this widget
-		for (var key in this._mgrs)
-		{
-			if (this._mgrs[key] && this._mgrs[key].owner == this)
-			{
+		for (var key in this._mgrs) {
+			if (this._mgrs[key] && this._mgrs[key].owner == this) {
 				this._mgrs[key].destroy();
 			}
 		}
 	}
 
-	getType(): string
+	getType() : string
 	{
 		return this._type;
 	}
 
-	setType(_type: string)
+	setType(_type : string)
 	{
 		this._type = _type;
 	}
@@ -321,8 +308,7 @@ export class et2_widget extends ClassWithAttributes
 	clone(_parent)
 	{
 		// Default _parent to null
-		if (typeof _parent == "undefined")
-		{
+		if (typeof _parent == "undefined") {
 			_parent = null;
 		}
 
@@ -337,14 +323,12 @@ export class et2_widget extends ClassWithAttributes
 
 	assign(_obj)
 	{
-		if (typeof _obj._children == "undefined")
-		{
+		if (typeof _obj._children == "undefined") {
 			this.egw().debug("log", "Foo!");
 		}
 
 		// Create a clone of all child elements of the given object
-		for (var i = 0; i < _obj._children.length; i++)
-		{
+		for (var i = 0; i < _obj._children.length; i++) {
 			_obj._children[i].clone(this);
 		}
 
@@ -357,7 +341,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the parent widget of this widget
 	 */
-	getParent(): et2_widget | null
+	getParent() : et2_widget | null
 	{
 		return this._parent;
 	}
@@ -367,7 +351,7 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the list of children of this widget.
 	 */
-	getChildren(): et2_widget[]
+	getChildren() : et2_widget[]
 	{
 		return this._children;
 	}
@@ -375,14 +359,11 @@ export class et2_widget extends ClassWithAttributes
 	/**
 	 * Returns the base widget
 	 */
-	getRoot(): et2_container
+	getRoot() : et2_container
 	{
-		if (this._parent != null)
-		{
+		if (this._parent != null) {
 			return this._parent.getRoot();
-		}
-		else
-		{
+		} else {
 			return <et2_container><unknown>this;
 		}
 	}
@@ -393,7 +374,7 @@ export class et2_widget extends ClassWithAttributes
 	 * @param _node is the node which should be added. It has to be an instance
 	 * 	of et2_widget
 	 */
-	addChild(_node: et2_widget)
+	addChild(_node : et2_widget)
 	{
 		this.insertChild(_node, this._children.length);
 	}
@@ -405,22 +386,18 @@ export class et2_widget extends ClassWithAttributes
 	 * 	of et2_widget
 	 * @param _idx is the position at which the element should be added.
 	 */
-	insertChild(_node: et2_widget, _idx: number)
+	insertChild(_node : et2_widget, _idx: number)
 	{
 		// Check whether the node is one of the supported widget classes.
-		if (this.isOfSupportedWidgetClass(_node))
-		{
+		if (this.isOfSupportedWidgetClass(_node)) {
 			// Remove the node from its original parent
-			if (_node._parent)
-			{
+			if (_node._parent) {
 				_node._parent.removeChild(_node);
 			}
 
 			_node._parent = this;
 			this._children.splice(_idx, 0, _node);
-		}
-		else
-		{
+		} else {
 			this.egw().debug("error", "Widget " + _node._type + " is not supported by this widget class", this);
 //			throw("Widget is not supported by this widget class!");
 		}
@@ -436,8 +413,7 @@ export class et2_widget extends ClassWithAttributes
 		// Retrieve the child from the child list
 		var idx = this._children.indexOf(_node);
 
-		if (idx >= 0)
-		{
+		if (idx >= 0) {
 			// This element is no longer parent of the child
 			_node._parent = null;
 
@@ -450,29 +426,24 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param _id is the id you're searching for
 	 */
-	getWidgetById(_id): et2_widget | null
+	getWidgetById(_id) : et2_widget | null
 	{
-		if (this.id == _id)
-		{
+		if (this.id == _id) {
 			return this;
 		}
 		if (!this._children) return null;
 
-		for (var i = 0; i < this._children.length; i++)
-		{
+		for (var i = 0; i < this._children.length; i++) {
 			var elem = this._children[i].getWidgetById(_id);
 
-			if (elem != null)
-			{
+			if (elem != null) {
 				return elem;
 			}
 		}
-		if (this.id && _id.indexOf('[') > -1 && this._children.length)
-		{
+		if (this.id && _id.indexOf('[') > -1 && this._children.length) {
 			var ids = (new et2_arrayMgr()).explodeKey(_id);
-			var widget: et2_widget = this;
-			for (var i = 0; i < ids.length && widget !== null; i++)
-			{
+			var widget : et2_widget = this;
+			for (var i = 0; i < ids.length && widget !== null; i++) {
 				widget = widget.getWidgetById(ids[i]);
 			}
 			return widget;
@@ -491,18 +462,15 @@ export class et2_widget extends ClassWithAttributes
 	 */
 	iterateOver(_callback, _context, _type?)
 	{
-		if (typeof _type == "undefined")
-		{
+		if (typeof _type == "undefined") {
 			_type = et2_widget;
 		}
 
-		if (this.isInTree() && this.instanceOf(_type))
-		{
+		if (this.isInTree() && this.instanceOf(_type)) {
 			_callback.call(_context, this);
 		}
 
-		for (var i = 0; i < this._children.length; i++)
-		{
+		for (var i = 0; i < this._children.length; i++) {
 			this._children[i].iterateOver(_callback, _context, _type);
 		}
 	}
@@ -518,15 +486,13 @@ export class et2_widget extends ClassWithAttributes
 	 * 		return this._super(inTree);
 	 *	when calling this function the _vis parameter does not have to be supplied.
 	 */
-	isInTree(_sender?, _vis?: boolean)
+	isInTree(_sender?, _vis? : boolean)
 	{
-		if (typeof _vis == "undefined")
-		{
+		if (typeof _vis == "undefined") {
 			_vis = true;
 		}
 
-		if (this._parent)
-		{
+		if (this._parent) {
 			return _vis && this._parent.isInTree(this);
 		}
 
@@ -535,10 +501,8 @@ export class et2_widget extends ClassWithAttributes
 
 	isOfSupportedWidgetClass(_obj)
 	{
-		for (var i = 0; i < this.supportedWidgetClasses.length; i++)
-		{
-			if (_obj instanceof this.supportedWidgetClasses[i])
-			{
+		for (var i = 0; i < this.supportedWidgetClasses.length; i++) {
+			if (_obj instanceof this.supportedWidgetClasses[i]) {
 				return true;
 			}
 		}
@@ -557,55 +521,47 @@ export class et2_widget extends ClassWithAttributes
 	parseXMLAttrs(_attrsObj, _target, _proto)
 	{
 		// Check whether the attributes object is really existing, if not abort
-		if (typeof _attrsObj == "undefined")
-		{
+		if (typeof _attrsObj == "undefined") {
 			return;
 		}
 
 		// Iterate over the given attributes and parse them
 		var mgr = this.getArrayMgr("content");
-		for (var i = 0; i < _attrsObj.length; i++)
-		{
+		for (var i = 0; i < _attrsObj.length; i++) {
 			var attrName = _attrsObj[i].name;
 			var attrValue = _attrsObj[i].value;
 
 			// Special handling for the legacy options
-			if (attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0)
-			{
+			if (attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0) {
 				let legacy = _proto.constructor.legacyOptions || [];
 				let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
 				// Check for modifications on legacy options here.  Normal modifications
 				// are handled in widget constructor, but it's too late for legacy options then
-				if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
-				{
-					var mod: any = this.getArrayMgr("modifications").getEntry(_target.id);
+				if (_target.id && this.getArrayMgr("modifications").getEntry(_target.id)) {
+					var mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
 					if (typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
 				}
 				// expand legacyOptions with content
-				if (attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
-				{
+				if (attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1) {
 					attrValue = mgr.expandName(attrValue);
 				}
 
 				// Parse the legacy options (as a string, other types not allowed)
 				var splitted = et2_csvSplit(attrValue + "");
 
-				for (var j = 0; j < splitted.length && j < legacy.length; j++)
-				{
+				for (var j = 0; j < splitted.length && j < legacy.length; j++) {
 					// Blank = not set, unless there's more legacy options provided after
 					if (splitted[j].trim().length === 0 && legacy.length >= splitted.length) continue;
 
 					// Check to make sure we don't overwrite a current option with a legacy option
-					if (typeof _target[legacy[j]] === "undefined")
-					{
+					if (typeof _target[legacy[j]] === "undefined") {
 						attrValue = splitted[j];
 
 						/**
 						If more legacy options than expected, stuff them all in the last legacy option
 						Some legacy options take a comma separated list.
 						 */
-						if (j == legacy.length - 1 && splitted.length > legacy.length)
-						{
+						if (j == legacy.length - 1 && splitted.length > legacy.length) {
 							attrValue = splitted.slice(j);
 						}
 
@@ -613,37 +569,26 @@ export class et2_widget extends ClassWithAttributes
 
 						// If the attribute is marked as boolean, parse the
 						// expression as bool expression.
-						if (attr.type == "boolean")
-						{
+						if (attr.type == "boolean") {
 							attrValue = mgr.parseBoolExpression(attrValue);
-						}
-						else if (typeof attrValue != "object")
-						{
+						} else if (typeof attrValue != "object") {
 							attrValue = mgr.expandName(attrValue);
 						}
 						_target[legacy[j]] = attrValue;
 					}
 				}
-			}
-			else if (attrName == "readonly" && typeof _target[attrName] != "undefined")
-			{
+			} else if (attrName == "readonly" && typeof _target[attrName] != "undefined") {
 				// do NOT overwrite already evaluated readonly attribute
-			}
-			else
-			{
+			} else {
 				let attrs = et2_attribute_registry[_proto.constructor.name] || {};
-				if (mgr != null && typeof attrs[attrName] != "undefined")
-				{
+				if (mgr != null && typeof attrs[attrName] != "undefined") {
 					var attr = attrs[attrName];
 
 					// If the attribute is marked as boolean, parse the
 					// expression as bool expression.
-					if (attr.type == "boolean")
-					{
+					if (attr.type == "boolean") {
 						attrValue = mgr.parseBoolExpression(attrValue);
-					}
-					else
-					{
+					} else {
 						attrValue = mgr.expandName(attrValue);
 					}
 				}
@@ -664,26 +609,20 @@ export class et2_widget extends ClassWithAttributes
 	{
 
 		// Apply the content of the modifications array
-		if (this.id)
-		{
-			if (typeof this.id != "string")
-			{
+		if (this.id) {
+			if (typeof this.id != "string") {
 				console.log(this.id);
 			}
 
-			if (this.getArrayMgr("modifications"))
-			{
+			if (this.getArrayMgr("modifications")) {
 				var data = this.getArrayMgr("modifications").getEntry(this.id);
 
 				// Check for already inside namespace
-				if (this._createNamespace() && this.getArrayMgr("modifications").perspectiveData.owner == this)
-				{
+				if (this._createNamespace() && this.getArrayMgr("modifications").perspectiveData.owner == this) {
 					data = this.getArrayMgr("modifications").data;
 				}
-				if (typeof data === 'object')
-				{
-					for (var key in data)
-					{
+				if (typeof data === 'object') {
+					for (var key in data) {
 						_attrs[key] = data[key];
 					}
 				}
@@ -691,19 +630,16 @@ export class et2_widget extends ClassWithAttributes
 		}
 
 		// Translate the attributes
-		for (var key in _attrs)
-		{
-			if (_attrs[key] && typeof this.attributes[key] != "undefined")
-			{
+		for (var key in _attrs) {
+			if (_attrs[key] && typeof this.attributes[key] != "undefined") {
 				if (this.attributes[key].translate === true ||
-					(this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"]))
-				{
+					(this.attributes[key].translate === "!no_lang" && !_attrs["no_lang"])) {
 					let value = _attrs[key];
 					// allow statustext to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
 					if (value.indexOf('{') !== -1)
 					{
 						const egw = this.egw();
-						_attrs[key] = value.replace(/{([^}]+)}/g, function (str, p1)
+						_attrs[key] = value.replace(/{([^}]+)}/g, function(str,p1)
 						{
 							return egw.lang(p1);
 						});
@@ -738,34 +674,28 @@ export class et2_widget extends ClassWithAttributes
 		// Parse the "readonly" and "type" flag for this element here, as they
 		// determine which constructor is used
 		var _nodeName = attributes["type"] = _node.getAttribute("type") ?
-											 _node.getAttribute("type") : _node.nodeName.toLowerCase();
+			_node.getAttribute("type") : _node.nodeName.toLowerCase();
 		var readonly = attributes["readonly"] = this.getArrayMgr("readonlys") ?
-												(<any>this.getArrayMgr("readonlys")).isReadOnly(
-													_node.getAttribute("id"), _node.getAttribute("readonly"),
-													typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly) : false;
+			(<any>this.getArrayMgr("readonlys")).isReadOnly(
+				_node.getAttribute("id"), _node.getAttribute("readonly"),
+				typeof this.readonly !== 'undefined' ? this.readonly : this.options.readonly) : false;
 
 		// Check to see if modifications change type
 		var modifications = this.getArrayMgr("modifications");
-		if (modifications && _node.getAttribute("id"))
-		{
-			var entry: any = modifications.getEntry(_node.getAttribute("id"));
-			if (entry == null)
-			{
+		if (modifications && _node.getAttribute("id")) {
+			var entry : any = modifications.getEntry(_node.getAttribute("id"));
+			if (entry == null) {
 				// Try again, but skip the fancy stuff
 				// TODO: Figure out why the getEntry() call doesn't always work
 				var entry = modifications.data[_node.getAttribute("id")];
-				if (entry)
-				{
+				if (entry) {
 					this.egw().debug("warn", "getEntry(" + _node.getAttribute("id") + ") failed, but the data is there.", modifications, entry);
-				}
-				else
-				{
+				} else {
 					// Try the root, in case a namespace got missed
 					entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
 				}
 			}
-			if (entry && entry.type && typeof entry.type === 'string')
-			{
+			if (entry && entry.type && typeof entry.type === 'string') {
 				_nodeName = attributes["type"] = entry.type;
 			}
 			entry = null;
@@ -773,27 +703,25 @@ export class et2_widget extends ClassWithAttributes
 
 		// if _nodeName / type-attribute contains something to expand (eg. type="@${row}[type]"),
 		// we need to expand it now as it defines the constructor and by that attributes parsed via parseXMLAttrs!
-		if (_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
-		{
+		if (_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0) {
 			_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
 		}
 
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
 		var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
-		if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
-		{
+		if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined") {
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
 
-		if (undefined == window.customElements.get(_nodeName))
+		// Parse the attributes from the given XML attributes object
+		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
+
+		// Do an sanity check for the attributes
+		ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
+
+		if(undefined == window.customElements.get(_nodeName))
 		{
-			// Parse the attributes from the given XML attributes object
-			this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
-
-			// Do an sanity check for the attributes
-			ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], attributes);
-
 			// Creates the new widget, passes this widget as an instance and
 			// passes the widgetType. Then it goes on loading the XML for it.
 			var widget = new constructor(this, attributes);
@@ -803,14 +731,30 @@ export class et2_widget extends ClassWithAttributes
 		}
 		else
 		{
-			widget = loadWebComponent(_nodeName, _node, this);
+			widget = this.loadWebComponent(_nodeName, _node, attributes);
 
-			if (this.addChild)
+			if(this.addChild)
 			{
 				// webcomponent going into old et2_widget
 				this.addChild(widget);
 			}
 		}
+		return widget;
+	}
+
+	/**
+	 * Load a Web Component
+	 * @param _nodeName
+	 * @param _node
+	 */
+	loadWebComponent(_nodeName : string, _node, attributes : Object) : HTMLElement
+	{
+		let widget = document.createElement(_nodeName);
+		widget.textContent = _node.textContent;
+
+		// Apply any set attributes
+		_node.getAttributeNames().forEach(attribute => widget.setAttribute(attribute, attributes[attribute]));
+
 		return widget;
 	}
 
@@ -822,20 +766,16 @@ export class et2_widget extends ClassWithAttributes
 	loadFromXML(_node)
 	{
 		// Load the child nodes.
-		for (var i = 0; i < _node.childNodes.length; i++)
-		{
+		for (var i = 0; i < _node.childNodes.length; i++) {
 			var node = _node.childNodes[i];
 			var widgetType = node.nodeName.toLowerCase();
 
-			if (widgetType == "#comment")
-			{
+			if (widgetType == "#comment") {
 				continue;
 			}
 
-			if (widgetType == "#text")
-			{
-				if (node.data.replace(/^\s+|\s+$/g, ''))
-				{
+			if (widgetType == "#text") {
+				if (node.data.replace(/^\s+|\s+$/g, '')) {
 					this.loadContent(node.data);
 				}
 				continue;
@@ -883,39 +823,29 @@ export class et2_widget extends ClassWithAttributes
 
 		// Make sure promises is defined to avoid errors.
 		// We'll warn (below) if programmer should have passed it.
-		if (typeof promises == "undefined")
-		{
+		if (typeof promises == "undefined") {
 			promises = [];
 			var warn_if_deferred = true;
 		}
 
-		var loadChildren = function ()
-		{
+		var loadChildren = function () {
 			// Descend recursively into the tree
-			for (var i = 0; i < this._children.length; i++)
-			{
-				try
-				{
+			for (var i = 0; i < this._children.length; i++) {
+				try {
 					this._children[i].loadingFinished(promises);
-				}
-				catch (e)
-				{
+				} catch (e) {
 					egw.debug("error", "There was an error with a widget:\nError:%o\nProblem widget:%o", e.valueOf(), this._children[i], e.stack);
 				}
 			}
 		};
 
 		var result = this.doLoadingFinished();
-		if (typeof result == "boolean" && result)
-		{
+		if (typeof result == "boolean" && result) {
 			// Simple widget finishes nicely
 			loadChildren.apply(this, arguments);
-		}
-		else if (typeof result == "object" && result.done)
-		{
+		} else if (typeof result == "object" && result.done) {
 			// Warn if list was not provided
-			if (warn_if_deferred)
-			{
+			if (warn_if_deferred) {
 				// Might not be a problem, but if you need the widget to be really loaded, it could be
 				egw.debug("warn", "Loading was deferred for widget %o, but creator is not checking.  Pass a list to loadingFinished().", this);
 			}
@@ -938,17 +868,14 @@ export class et2_widget extends ClassWithAttributes
 	 */
 	initAttributes(_attrs)
 	{
-		for (var key in _attrs)
-		{
-			if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined))
-			{
+		for (var key in _attrs) {
+			if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined)) {
 				var val = _attrs[key];
 				// compile string values of attribute type "js" to functions
-				if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string')
-				{
+				if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string') {
 					val = et2_compileLegacyJS(val, this,
 						this.implements(et2_IInputNode) ? (<et2_inputWidget><unknown>this).getInputNode() :
-						(this.implements(et2_IDOMNode) ? (<et2_IDOMNode><unknown>this).getDOMNode() : null));
+							(this.implements(et2_IDOMNode) ? (<et2_IDOMNode><unknown>this).getDOMNode() : null));
 				}
 				this.setAttribute(key, val, false);
 			}
@@ -964,7 +891,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @see {@link http://api.jquery.com/deferred.promise/|jQuery Promise}
 	 */
-	doLoadingFinished(): JQueryPromise<any> | boolean
+	doLoadingFinished() : JQueryPromise<any> | boolean
 	{
 		return true;
 	}
@@ -976,23 +903,19 @@ export class et2_widget extends ClassWithAttributes
 	 * to this widget tree. The api instance can be set in the "container"
 	 * widget using the setApiInstance function.
 	 */
-	egw(): IegwAppLocal
+	egw() : IegwAppLocal
 	{
 		// The _egw property is not set
-		if (typeof this._egw === 'undefined')
-		{
-			if (this._parent != null)
-			{
+		if (typeof this._egw === 'undefined') {
+			if (this._parent != null) {
 				return this._parent.egw();
 			}
 
 			// Get the window this object belongs to
 			var wnd = null;
-			if (this.implements(et2_IDOMNode))
-			{
+			if (this.implements(et2_IDOMNode)) {
 				var node = (<et2_IDOMNode><unknown>this).getDOMNode();
-				if (node && node.ownerDocument)
-				{
+				if (node && node.ownerDocument) {
 					wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
 				}
 			}
@@ -1010,7 +933,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param {IegwAppLocal} _egw egw object to set
 	 */
-	setApiInstance(_egw: IegwAppLocal)
+	setApiInstance(_egw : IegwAppLocal)
 	{
 		this._egw = _egw;
 	}
@@ -1033,26 +956,22 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param _mgrs is used internally and should not be supplied.
 	 */
-	getArrayMgrs(_mgrs?: object)
+	getArrayMgrs(_mgrs? : object)
 	{
-		if (typeof _mgrs == "undefined")
-		{
+		if (typeof _mgrs == "undefined") {
 			_mgrs = {};
 		}
 
 		// Add all managers of this object to the result, if they have not already
 		// been set in the result
-		for (var key in this._mgrs)
-		{
-			if (typeof _mgrs[key] == "undefined")
-			{
+		for (var key in this._mgrs) {
+			if (typeof _mgrs[key] == "undefined") {
 				_mgrs[key] = this._mgrs[key];
 			}
 		}
 
 		// Recursively applies this function to the parent widget
-		if (this._parent)
-		{
+		if (this._parent) {
 			this._parent.getArrayMgrs(_mgrs);
 		}
 
@@ -1065,7 +984,7 @@ export class et2_widget extends ClassWithAttributes
 	 * @param {string} _part which array mgr to set
 	 * @param {object} _mgr
 	 */
-	setArrayMgr(_part: string, _mgr: et2_arrayMgr)
+	setArrayMgr(_part : string, _mgr : et2_arrayMgr)
 	{
 		this._mgrs[_part] = _mgr;
 	}
@@ -1075,14 +994,11 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param {string} managed_array_type name of array mgr to return
 	 */
-	getArrayMgr(managed_array_type: string): et2_arrayMgr | null
+	getArrayMgr(managed_array_type : string) : et2_arrayMgr | null
 	{
-		if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined")
-		{
+		if (this._mgrs && typeof this._mgrs[managed_array_type] != "undefined") {
 			return this._mgrs[managed_array_type];
-		}
-		else if (this._parent)
-		{
+		} else if (this._parent) {
 			return this._parent.getArrayMgr(managed_array_type);
 		}
 
@@ -1096,32 +1012,27 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * Constructor attributes are passed in case a child needs to make decisions
 	 */
-	checkCreateNamespace(_attrs?: any)
+	checkCreateNamespace(_attrs? : any)
 	{
 		// Get the content manager
 		var mgrs = this.getArrayMgrs();
 
-		for (var key in mgrs)
-		{
+		for (var key in mgrs) {
 			var mgr = mgrs[key];
 
 			// Get the original content manager if we have already created a
 			// perspective for this node
-			if (typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this)
-			{
+			if (typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this) {
 				mgr = mgr.parentMgr;
 			}
 
 			// Check whether the manager has a namespace for the id of this object
 			var entry = mgr.getEntry(this.id);
-			if (typeof entry === 'object' && entry !== null || this.id)
-			{
+			if (typeof entry === 'object' && entry !== null || this.id) {
 				// The content manager has an own node for this object, so
 				// create an own perspective.
 				this._mgrs[key] = mgr.openPerspective(this, this.id);
-			}
-			else
-			{
+			} else {
 				// The current content manager does not have an own namespace for
 				// this element, so use the content manager of the parent.
 				delete (this._mgrs[key]);
@@ -1137,7 +1048,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @private
 	 */
-	protected _createNamespace(): boolean
+	protected _createNamespace() : boolean
 	{
 		return false;
 	}
@@ -1166,12 +1077,9 @@ export class et2_widget extends ClassWithAttributes
 	 */
 	getInstanceManager()
 	{
-		if (this._inst != null)
-		{
+		if (this._inst != null) {
 			return this._inst;
-		}
-		else if (this._parent)
-		{
+		} else if (this._parent) {
 			return this._parent.getInstanceManager();
 		}
 

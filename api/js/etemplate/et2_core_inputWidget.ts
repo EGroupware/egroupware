@@ -15,19 +15,17 @@
 */
 
 import {et2_no_init} from "./et2_core_common";
-import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_widget, WidgetConfig} from "./et2_core_widget";
-import {et2_valueWidget} from './et2_core_valueWidget'
-import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "./et2_core_interfaces";
+import { ClassWithAttributes } from "./et2_core_inheritance";
+import { et2_widget, WidgetConfig } from "./et2_core_widget";
+import { et2_valueWidget } from './et2_core_valueWidget'
+import {et2_IInput, et2_ISubmitListener} from "./et2_core_interfaces";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 // fixing circular dependencies by only importing the type (not in compiled .js)
 import type {et2_tabbox} from "./et2_widget_tabs";
 
-export interface et2_input
-{
-	getInputNode(): HTMLInputElement | HTMLElement;
+export interface et2_input {
+	getInputNode() : HTMLInputElement|HTMLElement;
 }
-
 /**
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput
  * interface. When derriving from this class, call setDOMNode with an input
@@ -35,9 +33,9 @@ export interface et2_input
  */
 export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_ISubmitListener, et2_input
 {
-	static readonly _attributes: any = {
+	static readonly _attributes : any = {
 		"needed": {
-			"name": "Required",
+			"name":	"Required",
 			"default": false,
 			"type": "boolean",
 			"description": "If required, the user must enter a value before the form can be submitted"
@@ -80,7 +78,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	/**
 	 * Constructor
 	 */
-	constructor(_parent, _attrs?: WidgetConfig, _child?: object)
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_inputWidget._attributes, _child || {}));
@@ -107,7 +105,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	/**
 	 * Make sure dirty flag is properly set
 	 */
-	doLoadingFinished(): boolean | JQueryPromise<unknown>
+	doLoadingFinished() : boolean | JQueryPromise<unknown>
 	{
 		let result = super.doLoadingFinished();
 
@@ -143,12 +141,10 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		{
 			jQuery(node)
 				.off('.et2_inputWidget')
-				.bind("change.et2_inputWidget", this, function (e)
-				{
+				.bind("change.et2_inputWidget", this, function(e) {
 					e.data.change.call(e.data, this);
 				})
-				.bind("focus.et2_inputWidget", this, function (e)
-				{
+				.bind("focus.et2_inputWidget", this, function(e) {
 					e.data.focus.call(e.data, this);
 				});
 		}
@@ -177,16 +173,14 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 
 		if (valid && this.onchange)
 		{
-			if (typeof this.onchange == 'function')
+			if(typeof this.onchange == 'function')
 			{
 				// Make sure function gets a reference to the widget
 				var args = Array.prototype.slice.call(arguments);
-				if (args.indexOf(this) == -1) args.push(this);
+				if(args.indexOf(this) == -1) args.push(this);
 
 				return this.onchange.apply(this, args);
-			}
-			else
-			{
+			} else {
 				return (et2_compileLegacyJS(this.options.onchange, this, _node))();
 			}
 		}
@@ -195,11 +189,11 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 
 	focus(_node)
 	{
-		if (typeof this.options.onfocus == 'function')
+		if(typeof this.options.onfocus == 'function')
 		{
 			// Make sure function gets a reference to the widget
 			var args = Array.prototype.slice.call(arguments);
-			if (args.indexOf(this) == -1) args.push(this);
+			if(args.indexOf(this) == -1) args.push(this);
 
 			return this.options.onfocus.apply(this, args);
 		}
@@ -212,13 +206,13 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	 *
 	 * @param {string} _value value to set
 	 */
-	set_value(_value: any | null)
+	set_value(_value : any | null)
 	{
 		var node = this.getInputNode();
 		if (node)
 		{
 			jQuery(node).val(_value);
-			if (this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
+			if(this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
 			{
 				jQuery(node).change();
 			}
@@ -229,7 +223,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	set_id(_value)
 	{
 		this.id = _value;
-		this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId + '_' + this.id : _value;
+		this.dom_id = _value && this.getInstanceManager() ? this.getInstanceManager().uniqueId+'_'+this.id : _value;
 
 		// Set the id of the _input_ node (in contrast to the default
 		// implementation, which sets the base node)
@@ -255,12 +249,9 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		var node = this.getInputNode();
 		if (node)
 		{
-			if (_value && !this.options.readonly)
-			{
+			if(_value && !this.options.readonly) {
 				jQuery(node).attr("required", "required");
-			}
-			else
-			{
+			} else {
 				node.removeAttribute("required");
 			}
 		}
@@ -282,8 +273,8 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 				jQuery(node).addClass("invalid");
 
 				// If on a tab, switch to that tab so user can see it
-				let widget: et2_widget = this;
-				while (widget.getParent() && widget.getType() != 'tabbox')
+				let widget : et2_widget = this;
+				while(widget.getParent() && widget.getType() != 'tabbox')
 				{
 					widget = widget.getParent();
 				}
@@ -328,26 +319,26 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	isDirty()
 	{
 		let value = this.getValue();
-		if (typeof value !== typeof this._oldValue)
+		if(typeof value !== typeof this._oldValue)
 		{
 			return true;
 		}
-		if (this._oldValue === value)
+		if(this._oldValue === value)
 		{
 			return false;
 		}
-		switch (typeof this._oldValue)
+		switch(typeof this._oldValue)
 		{
 			case "object":
-				if (typeof this._oldValue.length !== "undefined" &&
+				if(typeof this._oldValue.length !== "undefined" &&
 					this._oldValue.length !== value.length
 				)
 				{
 					return true;
 				}
-				for (let key in this._oldValue)
+				for(let key in this._oldValue)
 				{
-					if (this._oldValue[key] !== value[key]) return true;
+					if(this._oldValue[key] !== value[key]) return true;
 				}
 				return false;
 			default:
@@ -391,3 +382,4 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		return valid;
 	}
 }
+

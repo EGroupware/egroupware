@@ -161,11 +161,11 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * It is important to remove all tooltips from all elements which are
 		 * no longer needed, in order to prevent memory leaks.
 		 *
-		 * @param _elem is the element to which the tooltip should get bound.
+		 * @param _elem is the element to which the tooltip should get bound. It
+		 * 	has to be a jQuery node.
 		 * @param _html is the html code which should be shown as tooltip.
 		 */
 		tooltipBind: function(_elem, _html, _isHtml) {
-			_elem = jQuery(_elem);
 			if (_html != '')
 			{
 				_elem.bind('mouseenter.tooltip', function(e) {
@@ -222,7 +222,6 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * removed. _elem has to be a jQuery node.
 		 */
 		tooltipUnbind: function(_elem) {
-			_elem = jQuery(_elem);
 			if (current_elem == _elem)
 			{
 				hide();

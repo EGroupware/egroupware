@@ -21,19 +21,7 @@ import resolve from '@rollup/plugin-node-resolve';
 rimraf.sync('./chunks/');
 
 // Turn on minification
-const do_minify = false;
-
-function isBareSpecifier (id) {
-    if (id.startsWith("./") || id.startsWith("../") || id.startsWith("/"))
-        return false;
-    try {
-        new URL(id);
-        return false;
-    }
-    catch {
-        return true;
-    }
-}
+const do_minify = true;
 
 const config = {
     treeshake: false,
@@ -70,18 +58,13 @@ const config = {
     },
     plugins: [{
         resolveId (id, parentId) {
-            // Delegate bare specifiers to node_modules resolver
-            if (isBareSpecifier(id))
-            {
-                return;
-            }
             if (!parentId || parentId.indexOf(path.sep + 'node_modules' + path.sep) !== -1)
             {
                 return;
             }
-            if (id.endsWith(".js"))
+            if(id.endsWith(".js"))
             {
-                const tsPath = path.resolve(path.dirname(parentId), id.slice(0,-3) + '.ts');
+                const tsPath =path.resolve(path.dirname(parentId), id.slice(0,-3) + '.ts');
                 try {
                     readFileSync(tsPath);
                     console.warn(id + " is a TS file loaded with wrong extension.  Remove the extension on the import in " + parentId);
@@ -103,9 +86,7 @@ const config = {
         }
     },
     // resolve (external) node modules from node_modules directory
-    resolve({
-        browser: true
-    }),
+    resolve(),
     {
         transform (code, id) {
             if (id.endsWith('.ts'))

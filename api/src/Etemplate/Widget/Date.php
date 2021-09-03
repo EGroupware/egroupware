@@ -29,7 +29,7 @@ use EGroupware\Api;
  *           &8 = dont show time for readonly and type date-time if time is 0:00,
  *           &16 = prefix r/o display with dow
  *           &32 = prefix r/o display with week-number
- *             &64 = prefix r/o display with weeknumber and dow
+ *			 &64 = prefix r/o display with weeknumber and dow
  *           &128 = no icon to trigger popup, click into input trigers it, also removing the separators to save space
  *
  * @todo validation of date-duration
@@ -60,7 +60,7 @@ class Date extends Transformer
 	 * @param string $cname
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand = null)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		if($this->type == 'date-houronly')
 		{
@@ -87,20 +87,14 @@ class Date extends Transformer
 	 * @param array $expand
 	 * @param array $data Row data
 	 */
-	public function set_row_value($cname, array $expand, array &$data)
+	public function set_row_value($cname, Array $expand, Array &$data)
 	{
-		if($this->type == 'date-duration')
-		{
-			return;
-		}
+		if($this->type == 'date-duration') return;
 
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& $this->get_array($data, $form_name, true);
 
-		if(true)
-		{
-			$value = $this->format_date($value);
-		}
+		if (true) $value = $this->format_date($value);
 	}
 
 	/**
@@ -110,17 +104,14 @@ class Date extends Transformer
 	 */
 	public function format_date($value)
 	{
-		if(!$value)
-		{
-			return $value;
-		}    // otherwise we will get current date or 1970-01-01 instead of an empty value
+		if (!$value) return $value;	// otherwise we will get current date or 1970-01-01 instead of an empty value
 
 		// for DateTime objects (regular PHP and Api\DateTime ones), set user timezone
-		if($value instanceof \DateTime)
+		if ($value instanceof \DateTime)
 		{
 			$date = Api\DateTime::server2user($value);
 		}
-		elseif($this->attrs['data_format'] && $this->attrs['data_format'] !== 'object')
+		elseif ($this->attrs['data_format'] && $this->attrs['data_format'] !== 'object')
 		{
 			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
 		}
@@ -151,65 +142,58 @@ class Date extends Transformer
 	 * @param string $cname current namespace
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 * @param array $content
-	 * @param array &$validated =array() validated content
+	 * @param array &$validated=array() validated content
 	 * @return boolean true if no validation error, false otherwise
 	 */
-	public function validate($cname, array $expand, array $content, &$validated = array())
+	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		if(!$this->is_readonly($cname, $form_name) && $this->type != 'date-since')    // date-since is always readonly
+		if (!$this->is_readonly($cname, $form_name) && $this->type != 'date-since')	// date-since is always readonly
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
-			if($value && $this->type !== 'date-duration')
+			if ($value && $this->type !== 'date-duration')
 			{
 				try
 				{
-					if(substr($value, -1) === 'Z')
-					{
-						$value = substr($value, 0, -1);
-					}
+					if (substr($value, -1) === 'Z') $value = substr($value, 0, -1);
 					$date = new Api\DateTime($value);
 				}
-				catch (\Exception $e)
+				catch(\Exception $e)
 				{
 					unset($e);
 					$date = null;
 					$value = '';
 					// this is not really a user error, but one of the clientside engine
-					self::set_validation_error($form_name, lang("'%1' is not a valid date !!!", $value) . ' ' . $this->data_format);
+					self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->data_format);
 				}
 			}
 
-			if((string)$value === '' && $this->attrs['needed'])
+			if ((string)$value === '' && $this->attrs['needed'])
 			{
-				self::set_validation_error($form_name, lang('Field must not be empty !!!'));
+				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
 			}
-			elseif(is_null($value))
+			elseif (is_null($value))
 			{
 				$valid = null;
 			}
-			elseif($this->type == 'date-duration')
+			elseif ($this->type == 'date-duration')
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
 
-			if(!empty($this->attrs['min']) && !empty($value))
+			if (!empty($this->attrs['min']) && !empty($value))
 			{
 				if(is_numeric($this->attrs['min']))
 				{
-					$min = new Api\DateTime(strtotime($this->attrs['min'] . 'days'));
+					$min = new Api\DateTime(strtotime( $this->attrs['min'] . 'days'));
 				}
-				elseif(preg_match('/[+-][[:digit:]]+[ymwd]/', $this->attrs['min']))
+				elseif (preg_match('/[+-][[:digit:]]+[ymwd]/',$this->attrs['min']))
 				{
 					// Relative date with periods
-					$min = new Api\DateTime(strtotime(str_replace(array('y', 'm', 'w', 'd'), array('years', 'months',
-																								   'weeks',
-																								   'days'), $this->attrs['min'])
-											)
-					);
+					$min = new Api\DateTime(strtotime(str_replace(array('y','m','w','d'), array('years','months','weeks','days'), $this->attrs['min'])));
 				}
 				else
 				{
@@ -217,28 +201,23 @@ class Date extends Transformer
 				}
 				if($date < $min)
 				{
-					self::set_validation_error($form_name, lang(
+					self::set_validation_error($form_name,lang(
 						"Value has to be at least '%1' !!!",
 						$min->format($this->type != 'date')
-					),                         ''
-					);
+					),'');
 					$value = $min;
 				}
 			}
-			if(!empty($this->attrs['max']) && !empty($value))
+			if (!empty($this->attrs['max']) && !empty($value))
 			{
 				if(is_numeric($this->attrs['max']))
 				{
-					$max = new Api\DateTime(strtotime($this->attrs['max'] . 'days'));
+					$max = new Api\DateTime(strtotime( $this->attrs['max'] . 'days'));
 				}
-				elseif(preg_match('/[+-][[:digit:]]+[ymwd]/', $this->attrs['max']))
+				elseif (preg_match('/[+-][[:digit:]]+[ymwd]/',$this->attrs['max']))
 				{
 					// Relative date with periods
-					$max = new Api\DateTime(strtotime(str_replace(array('y', 'm', 'w', 'd'), array('years', 'months',
-																								   'weeks',
-																								   'days'), $this->attrs['max'])
-											)
-					);
+					$max = new Api\DateTime(strtotime(str_replace(array('y','m','w','d'), array('years','months','weeks','days'), $this->attrs['max'])));
 				}
 				else
 				{
@@ -246,15 +225,14 @@ class Date extends Transformer
 				}
 				if($date > $max)
 				{
-					self::set_validation_error($form_name, lang(
+					self::set_validation_error($form_name,lang(
 						"Value has to be at maximum '%1' !!!",
 						$max->format($this->type != 'date')
-					),                         ''
-					);
+					),'');
 					$value = $max;
 				}
 			}
-			if($this->type == 'date-duration')
+			if ($this->type == 'date-duration')
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
@@ -263,23 +241,22 @@ class Date extends Transformer
 				// Not null, blank
 				$value = '';
 			}
-			elseif($date && empty($this->attrs['data_format']))    // integer timestamp
+			elseif ($date && empty($this->attrs['data_format']))	// integer timestamp
 			{
 				$valid = $date->format('ts');
 			}
 			// string with formatting letters like for php's date() method
-			elseif($date && ($valid = $date->format($this->attrs['data_format'])))
+			elseif ($date && ($valid = $date->format($this->attrs['data_format'])))
 			{
 				// Nothing to do here
 			}
 			else
 			{
 				// this is not really a user error, but one of the clientside engine
-				self::set_validation_error($form_name, lang("'%1' is not a valid date !!!", $value) . ' ' . $this->data_format);
+				self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->data_format);
 			}
 			//error_log("$this : ($valid)" . Api\DateTime::to($valid));
 		}
 	}
 }
-
-\EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Date', array('et2-date', 'time_or_date'));
+\EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Date', array('time_or_date'));
