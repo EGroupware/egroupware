@@ -308,7 +308,7 @@ class History
 			$_query[] = array(
 				'table' => Api\Vfs\Sqlfs\StreamWrapper::TABLE,
 				'cols'  => array('fs_id', 'fs_dir', "'filemanager'", 'COALESCE(fs_modifier,fs_creator)', "'~file~'",
-								 'fs_name', 'fs_modified', 'fs_mime', '"" AS share_email'),
+								 'fs_name', 'fs_modified', 'fs_mime', "'' AS share_email"),
 				'where' => array('fs_dir' => $file['ino'])
 			);
 		}
@@ -316,7 +316,8 @@ class History
 		foreach($GLOBALS['egw']->db->union(
 			$_query,
 			__LINE__, __FILE__,
-			' ORDER BY ' . ($query['order'] ? $query['order'] : 'history_timestamp') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'),
+			preg_match('/^(([a-z0-9_]+) (ASC|DESC),?)+$/', $query['order'].' '.($query['sort'] ?: 'DESC')) ?
+				' ORDER BY ' . $query['order'] . ' ' . ($query['sort'] ?: 'DESC') : ' ORDER BY history_timestamp DESC,history_id ASC',
 			$query['start'],
 			$query['num_rows']
 		) as $row)
