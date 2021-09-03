@@ -561,7 +561,7 @@ const Et2WidgetMixin = (superClass) =>
 					this.checkCreateNamespace();
 				}
 			}
-
+			this._parent.addChild(this);
 		}
 
 		getParent() : HTMLElement | et2_widget
