@@ -47,7 +47,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	render()
 	{
 		return html`
-            <div class="et2_box" ${this.id ? html`id="${this.id}"` : ''}>
+            <div ${this.id ? html`id="${this.id}"` : ''}>
                 <slot></slot>
             </div> `;
 	}
@@ -104,7 +104,7 @@ export class Et2HBox extends Et2Box
 			css`
             :host > div {
             	flex-direction: row;
-						}`
+			}`
 		];
 	}
 }

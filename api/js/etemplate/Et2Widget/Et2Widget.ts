@@ -73,6 +73,12 @@ const Et2WidgetMixin = (superClass) =>
 				...super.properties,
 
 				/**
+				 * CSS Class.  This class is applied to the _outside_, on the web component itself.
+				 * Due to how WebComponents work, this might not change anything inside the component.
+				 */
+				class: {type: String, reflect: true},
+				
+				/**
 				 * Defines whether this widget is visible.
 				 * Not to be confused with an input widget's HTML attribute 'disabled'.",
 				 */
@@ -185,6 +191,19 @@ const Et2WidgetMixin = (superClass) =>
 			let oldValue = this.label;
 			this._label = value;
 			this.requestUpdate('label', oldValue);
+		}
+
+		set class(value : string)
+		{
+			let oldValue = this.classList.value;
+			this.classList.value = value;
+
+			this.requestUpdate('class', oldValue);
+		}
+
+		get class()
+		{
+			return this.classList.value;
 		}
 
 		/**
@@ -579,6 +598,10 @@ const Et2WidgetMixin = (superClass) =>
 
 		addChild(child : et2_widget | Et2WidgetClass)
 		{
+			if(this._children.indexOf(child) >= 0)
+			{
+				return;
+			}
 			if(child instanceof et2_widget)
 			{
 				child._parent = this;
@@ -642,6 +665,9 @@ const Et2WidgetMixin = (superClass) =>
 			// Create the copy
 			var copy = <Et2WidgetClass>this.cloneNode();
 
+			let widget_class = window.customElements.get(this.nodeName);
+			let properties = widget_class ? widget_class.properties() : {};
+			console.log(this, properties);
 			if(_parent)
 			{
 				copy.setParent(_parent);
