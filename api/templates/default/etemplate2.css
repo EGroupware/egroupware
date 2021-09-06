@@ -2295,6 +2295,7 @@ div.ui-dialog div.ui-dialog-content > div {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+div.et2_toolbar.ui-widget-header {background: none;}
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
 	background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;
