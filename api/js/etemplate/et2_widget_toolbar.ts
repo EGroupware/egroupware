@@ -479,15 +479,19 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			heightStyle:"fill",
 			collapsible: true,
 			active:'none',
+			animate: 10,
 			activate: function (event, ui) {
-				var menubox = event.target;
+				var menubox = jQuery(event.target);
 				if (ui.oldHeader.length == 0)
 				{
 					jQuery('html').on('click.outsideOfMenu', function (event){
-						jQuery(menubox).accordion( "option", "active", 2);
+						if (menubox.accordion('instance'))
+						{
+							menubox.accordion( "option", "active", 2);
+						}
 						jQuery(this).unbind(event);
 						// Remove the focus class, user clicked elsewhere
-						jQuery(menubox).children().removeClass('ui-state-focus');
+						menubox.children().removeClass('ui-state-focus');
 					});
 				}
 			},
