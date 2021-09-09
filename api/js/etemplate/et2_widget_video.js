@@ -71,6 +71,7 @@ var et2_video = /** @class */ (function (_super) {
          */
         _this._previousTime = 0;
         _this.set_src_type(_this.options.src_type);
+        _this.options.starttime = isNaN(_this.options.starttime) ? 0 : _this.options.starttime;
         return _this;
     }
     et2_video.prototype.set_src_type = function (_type) {
@@ -170,7 +171,7 @@ var et2_video = /** @class */ (function (_super) {
     et2_video.prototype.set_volume = function (_value) {
         var value = _value > 100 ? 100 : _value;
         if (value >= 0) {
-            if (this._isYoutube() && this.youtube) {
+            if (this._isYoutube() && this.youtube && typeof this.youtube.setVolume === 'function') {
                 this.youtube.setVolume(value);
             }
             else if (!this._isYoutube()) {
@@ -390,7 +391,7 @@ var et2_video = /** @class */ (function (_super) {
         return false;
     };
     et2_video.prototype.videoLoadnigIsFinished = function () {
-        if (this.options.starttime) {
+        if (this.options.starttime >= 0) {
             this.seek_video(this.options.starttime);
             // unfortunately, youtube api autoplays the video after seekTo on initiation
             // and there's no way to stop that therefore we need to trick it by manually
