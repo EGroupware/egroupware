@@ -2311,6 +2311,10 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short {
     height: 24px;
     margin-top: 0px;
 }
+.et2_toolbar_more .ui-accordion-header-active.header_list-short.ui-state-active span.ui-accordion-header-icon {
+    background-position: bottom !important;
+    margin-top: 2px;
+}
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
 	background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;
