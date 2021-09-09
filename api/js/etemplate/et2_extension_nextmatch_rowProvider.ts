@@ -193,7 +193,7 @@ export class et2_nextmatch_rowProvider
 			}
 
 			// Adjust data for that row
-			entry.widget.transformAttributes.call(entry.widget,data);
+			entry.widget.transformAttributes?.call(entry.widget, data);
 
 			// Call the setDetachedAttributes function
 			entry.widget.setDetachedAttributes(nodes, data, _data);
