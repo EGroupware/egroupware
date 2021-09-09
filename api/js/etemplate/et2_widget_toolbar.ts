@@ -42,6 +42,12 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			"type": "boolean",
 			"default": true,
 			"description": "Define whether the actions with children should be shown as dropdown or flat list"
+		},
+		"list_header": {
+			"name": "list header style",
+			"type": "string",
+			"default": "more",
+			"description": "Define a style for list header (more ...), which can get short 3dots with no caption or bigger button with caption more ..."
 		}
 	};
 
@@ -216,7 +222,8 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionbox.empty();
 		this.actionlist.empty();
 		let admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="'+egw.lang('Admin settings')+' ..."></span>': '';
-		this.actionbox.append('<h class="ui-toolbar-menulistHeader">'+egw.lang('more')+' ...'+admin_setting+'</h>');
+		const header_list = this.options.header_list == 'more'?true:false;
+		this.actionbox.append('<h class="ui-toolbar-menulistHeader'+(!header_list?' header_list-short':' ')+'">'+(header_list?egw.lang('more')+' ...':'')+admin_setting+'</h>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		let that = this;
 		if (this.options.is_admin)
@@ -470,15 +477,19 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			heightStyle:"fill",
 			collapsible: true,
 			active:'none',
+			animate: 10,
 			activate: function (event, ui) {
-				var menubox = event.target;
+				var menubox = jQuery(event.target);
 				if (ui.oldHeader.length == 0)
 				{
 					jQuery('html').on('click.outsideOfMenu', function (event){
-						jQuery(menubox).accordion( "option", "active", 2);
+						if (menubox.accordion('instance'))
+						{
+							menubox.accordion( "option", "active", 2);
+						}
 						jQuery(this).unbind(event);
 						// Remove the focus class, user clicked elsewhere
-						jQuery(menubox).children().removeClass('ui-state-focus');
+						menubox.children().removeClass('ui-state-focus');
 					});
 				}
 			},
