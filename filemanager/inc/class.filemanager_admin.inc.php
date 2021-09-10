@@ -261,7 +261,7 @@ class filemanager_admin extends filemanager_ui
 		{
 			$content['mounts'][$n++] = array(
 				'path' => $path,
-				'url'  => $url,
+				'url'  => preg_replace('#://([^:@/]+):([^@/]+)@#', '://$1:****@', $url),
 			);
 			$readonlys["disable[$path]"] = !$this->versioning || !Vfs::$is_root ||
 				Vfs::parse_url($url,PHP_URL_SCHEME) != $this->versioning;
