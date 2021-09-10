@@ -369,6 +369,7 @@ monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
+multiple participants	calendar	de	Mehrere Teilnehmer
 multiple week view	calendar	de	Mehrwochenansicht
 name of current user, all other contact fields are valid too	calendar	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder sind weiterhin gültig
 name of the day of the week (ex: monday)	calendar	de	Name des Wochentags (z.B. Montag)
@@ -451,6 +452,7 @@ prevent deleting of entries	admin	de	Das Löschen von Einträgen verhindern
 previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
+private event	calendar	de	Privater Termin
 private only	calendar	de	nur private
 quantity	calendar	de	Anzahl
 quick add	calendar	de	schnelles Hinzufügen
@@ -547,6 +549,7 @@ show this month	calendar	de	Diesen Monat anzeigen
 show this week	calendar	de	Diese Woche anzeigen
 show year and age	calendar	de	Zeige Jahr und Alter
 single event	calendar	de	Einzelner Termin
+single participant	calendar	de	Einzelner Teilnehmer
 specify where url of the day links to	calendar	de	Gegen Sie an, wohin die URL des Tages linken soll
 start	calendar	de	Start
 start date/time	calendar	de	Startdatum/ -zeit
