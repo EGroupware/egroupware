@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11c4709df1fbb8c2d7b55b3f2916a428",
+    "content-hash": "210ce7c8e74551a16bebace0ffa679b8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1583,16 +1583,16 @@
         },
         {
             "name": "egroupware/webdav",
-            "version": "dev-master",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/WebDAV.git",
-                "reference": "889da78b6489965df8a379ccdc25853fe74da199"
+                "reference": "554b8ed3fb3bc98427f0c1edbba7f9bab9894d4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/889da78b6489965df8a379ccdc25853fe74da199",
-                "reference": "889da78b6489965df8a379ccdc25853fe74da199",
+                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/554b8ed3fb3bc98427f0c1edbba7f9bab9894d4c",
+                "reference": "554b8ed3fb3bc98427f0c1edbba7f9bab9894d4c",
                 "shasum": ""
             },
             "require": {
@@ -1631,7 +1631,7 @@
                 "stream",
                 "wrapper"
             ],
-            "time": "2020-09-23T16:16:07+00:00"
+            "time": "2021-09-10T11:59:20+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -10718,8 +10718,7 @@
         "egroupware/smallpart": 20,
         "egroupware/status": 20,
         "egroupware/swoolepush": 20,
-        "egroupware/tracker": 20,
-        "egroupware/webdav": 20
+        "egroupware/tracker": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
