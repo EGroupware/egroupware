@@ -83,9 +83,14 @@ class Base
 	 */
 	static function mount($url = null, $path = null, $check_url = null, $persistent_mount = true, $clear_fstab = false)
 	{
-		if(is_null($check_url))
+		if ($check_url === true || !isset($check_url) && strpos($url, '$') === false)
 		{
-			$check_url = strpos($url, '$') === false;
+			$check_url = strtr($url, [
+				'user' => $GLOBALS['egw_info']['user']['account_lid'],
+				'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+				'host' => $GLOBALS['egw_info']['user']['domain'],
+				'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
+			]);
 		}
 
 		if(!isset($GLOBALS['egw_info']['server']['vfs_fstab']))    // happens eg. in setup
@@ -134,7 +139,7 @@ class Base
 		}
 		self::load_wrapper(Vfs::parse_url($url, PHP_URL_SCHEME));
 
-		if($check_url && (!file_exists($url) || opendir($url) === false))
+		if ($check_url && (!file_exists($check_url) || opendir($check_url) === false))
 		{
 			if(self::LOG_LEVEL > 0)
 			{

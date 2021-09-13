@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
 <overlay>
 	<template id="filemanager.admin" template="" lang="" group="0" version="1.7.001">
 		<groupbox disabled="!@percent_size">
@@ -40,7 +39,7 @@
 				<column/>
 				<column/>
 				<column disabled="!@@is_root"/>
-				<column disabled="!@@is_setup"/>
+				<column disabled="!@@is_root"/>
 			</columns>
 			<rows>
 				<row class="th" part="header">
@@ -49,9 +48,31 @@
 					<description value="Versioning" align="center"/>
 					<description value="Mount" align="center"/>
 				</row>
-				<row disabled="!@@is_root" part="footer">
-					<textbox id="path" class="inputFullWidth"/>
-					<textbox size="50" blur="stylite.versioning://default/$path" class="inputFullWidth" id="url" statustext="Backend URL to mount"/>
+				<row disabled="!@@is_root" part="footer" valign="bottom">
+					<textbox id="path" size="64"/>
+					<vbox width="100%">
+						<groupbox>
+							<caption label="Protocols"/>
+							<vbox class="filemanager_protocols">
+								<description value="WebDAVs: mount EGroupware or *Cloud shares"/>
+								<description value="SMB: mount Samba of Windows fileserver shares"/>
+								<description value="{Versioning}: {Versioning requires EGroupware EPL}"
+									extra_link_target="_blank" href="https://www.egroupware.org/EPL"/>
+								<description value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem"
+									extra_link_target="_blank" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20"/>
+							</vbox>
+						</groupbox>
+						<hbox width="100%">
+							<select id="url[scheme]" statustext="Protocol to use" onchange="app.filemanager.changeMountScheme"/>
+							<description value="://"/>
+							<textbox id="url[user]" blur="user" statustext="Username for WebDAV and SMB, use $user for name of logged in user" size="12"/>
+							<description id="colon" value=":"/>
+							<passwd id="url[pass]" blur="password" statustext="Password for WebDAV and SMB, use $pass for password of logged in user" class="filemanager_password" size="12"/>
+							<description id="at"/>
+							<textbox id="url[host]" blur="host" statustext="Hostname/IP for WebDAV and SMB"/>
+							<textbox id="url[path]" blur="Path and query-parameters, SMB: share and optional path (with slashes!)" size="64"/>
+						</hbox>
+					</vbox>
 					<button label="Enable" id="enable" statustext="Enable versioning for given mountpoint" class="filemanager_smallButton" align="center"/>
 					<button label="Mount" id="mount" class="filemanager_smallButton" align="center"/>
 				</row>

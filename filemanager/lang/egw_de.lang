@@ -159,6 +159,7 @@ files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Verzeichnis endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
@@ -175,6 +176,7 @@ go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
 hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
+hostname/ip for webdav and smb	filemanager	de	Hostname/IP für WebDAV und SMB
 id	filemanager	de	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Verzeichnis angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	de	Wenn Sie hier ein Dokument angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 ein zusätzliches Dokumentsymbol für jeden Eintrag an. Dieses Symbol erlaubt es, das Dokument mit eingefügten Daten herunterzuladen.
@@ -211,14 +213,15 @@ no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis
 no preview available	filemanager	de	Keine Vorschau verfügbar
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
-notebookbar	filemanager	de	In Registern
 noone	filemanager	de	Niemand
+notebookbar	filemanager	de	In Registern
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
 open	filemanager	de	Öffnen
 open documents with collabora, if permissions are given	filemanager	de	Dokument mit Collabora Online öffnen, falls Rechte vorhanden sind
 open odt documents with collabeditor	filemanager	de	odt Dokumente mit CollabEditor öffnen
 operation	filemanager	de	Vorgang
+password for webdav and smb, use $pass for password of logged in user	filemanager	de	Passwort für WebDAV und SMB, benutzer $pass für das Passwort des angemeldeten Benutzers
 paste link	filemanager	de	Als Verknüpfung einfügen
 path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Verzeichnis!
 percentage	filemanager	de	Prozentual
@@ -231,6 +234,8 @@ preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
 projectmanager	filemanager	de	Projektmanager
 properties saved.	filemanager	de	Eigenschaften gespeichert
+protocol to use	filemanager	de	Zu benutzendes Protokoll
+protocols	filemanager	de	Protokolle
 quick jump to	filemanager	de	Springe zu
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
@@ -272,6 +277,8 @@ show link "your home directory" in side box menu?	filemanager	de	Möchten Sie de
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
+smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
+smb: mount samba of windows fileserver shares	filemanager	de	SMB: mounten von Freigaben eines Samba oder Windows Dateiservern
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
 sqlfs statistics	filemanager	de	sqlFS Statistik
 start search	filemanager	de	Suche starten
@@ -302,11 +309,14 @@ upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
 user color indicator	filemanager	de	Benutzer-Farbe
+username for webdav and smb, use $user for name of logged in user	filemanager	de	Benutzername für WebDAV und SMB, benutzer $user für den Benutzername des angemeldeten Benutzers
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
+versioning requires egroupware epl	filemanager	de	Versionierung benötigt EGroupware EPL
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 view link	filemanager	de	Zeige Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
+webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAVs: mounten von EGroupware oder *Cloud Freigaben
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe-Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
