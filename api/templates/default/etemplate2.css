@@ -2295,6 +2295,26 @@ div.ui-dialog div.ui-dialog-content > div {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+div.et2_toolbar.ui-widget-header {background: none;}
+
+div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
+    background-image: url(../../../pixelegg/images/dots.svg);
+    background-size: 16px;
+    height: 24px;
+    width: 20px;
+    margin-top: 0px;
+}
+
+div.et2_toolbar_more h.ui-accordion-header.header_list-short {
+    padding: 0px !important;
+    width: 40px;
+    height: 24px;
+    margin-top: 0px;
+}
+.et2_toolbar_more .ui-accordion-header-active.header_list-short.ui-state-active span.ui-accordion-header-icon {
+    background-position: bottom !important;
+    margin-top: 2px;
+}
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
 	background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;

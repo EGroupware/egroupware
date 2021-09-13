@@ -159,6 +159,7 @@ files from links	filemanager	en	Files from links
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem
 finally delete	filemanager	en	Finally delete
 finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
@@ -175,6 +176,7 @@ go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	Go up
 hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
+hostname/ip for webdav and smb	filemanager	en	Hostname/IP for WebDAV and SMB
 id	filemanager	en	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
@@ -219,6 +221,7 @@ open	filemanager	en	Open
 open documents with collabora, if permissions are given	filemanager	en	open documents with Collabora, if permissions are given
 open odt documents with collabeditor	filemanager	en	open odt documents with CollabEditor
 operation	filemanager	en	Operation
+password for webdav and smb, use $pass for password of logged in user	filemanager	en	Password for WebDAV and SMB, use $pass for password of logged in user
 paste link	filemanager	en	Paste Link
 path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
 percentage	filemanager	en	Percentage
@@ -231,6 +234,8 @@ preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
 projectmanager	filemanager	en	Project Manager
 properties saved.	filemanager	en	Properties saved.
+protocol to use	filemanager	en	Protocol to use
+protocols	filemanager	en	Protocols
 quick jump to	filemanager	en	Quick jump to
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
@@ -261,8 +266,8 @@ select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 share files	filemanager	en	Share files
 share link copied into clipboard	filemanager	en	Share link copied into clipboard
-shared files	filemanager	en	Shared files
 share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.<br/>Please close this tab.
+shared files	filemanager	en	Shared files
 shared with	filemanager	en	Shared with
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
@@ -273,6 +278,8 @@ show link "your home directory" in side box menu?	filemanager	en	Show link "Your
 show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
+smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAVs and VFS require a username!
+smb: mount samba of windows fileserver shares	filemanager	en	SMB: mount Samba of Windows fileserver shares
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	en	Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.
 sqlfs statistics	filemanager	en	sqlFS Statistics
 start search	filemanager	en	Start search
@@ -303,11 +310,14 @@ upload files	filemanager	en	Upload files
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 user color indicator	filemanager	en	User color indicator
+username for webdav and smb, use $user for name of logged in user	filemanager	en	Username for WebDAV and SMB, use $user for name of logged in user
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
+versioning requires egroupware epl	filemanager	en	Versioning requires EGroupware EPL
 vfs mounts and versioning	common	en	VFS mounts and versioning
 view link	filemanager	en	View link
 webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
+webdavs: mount egroupware or *cloud shares	filemanager	en	WebDAVs: mount EGroupware or *Cloud shares
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 writable share link	filemanager	en	Writable Share link
 wrong username or password!	filemanager	en	Wrong username or password!

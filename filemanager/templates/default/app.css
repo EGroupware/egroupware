@@ -102,6 +102,12 @@ table.egwGridView_grid .tile .file_tile {
 	font-size: 90%;
 	margin: 0;
 }
+.filemanager_password > input {
+	min-width: 0 !important;
+}
+div.filemanager_protocols > *:before {
+	content: "• ";
+}
 .filemanager_header {
 	font-size: 120%;
 	font-weight: bold;

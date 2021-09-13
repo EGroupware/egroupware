@@ -32,7 +32,7 @@ class filemanager_admin extends filemanager_ui
 	);
 
 	/**
-	 * Autheticated user is setup config user
+	 * Authenticated user is setup config user
 	 *
 	 * @var boolean
 	 */
@@ -82,146 +82,180 @@ class filemanager_admin extends filemanager_ui
 	{
 		if (is_array($content))
 		{
-			//_debug_array($content);
-			if ($content['sudo'])
+			try
 			{
-				$msg = $this->sudo($content['user'],$content['password'],self::$is_setup) ?
-					lang('Root access granted.') : lang('Wrong username or password!');
-				$msg_type = Vfs::$is_root ? 'success' : 'error';
-			}
-			elseif ($content['etemplates'] && $GLOBALS['egw_info']['user']['apps']['admin'])
-			{
-				$path = '/etemplates';
-				$url = 'stylite.merge://default/etemplates?merge=.&lang=0&level=1&extension=xet&url=egw';
-				$backup = Vfs::$is_root;
-				Vfs::$is_root = true;
-				Vfs::mkdir($path);
-				Vfs::chgrp($path, 'Admins');
-				Vfs::chmod($path, 075);
-				$msg = Vfs::mount($url, $path) ?
-					lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
-				Vfs::$is_root = $backup;
-			}
-			elseif (Vfs::$is_root)
-			{
-				if ($content['logout'])
+				if ($content['sudo'])
 				{
-					$msg = $this->sudo('','',self::$is_setup) ? 'Logout failed!' : lang('Root access stopped.');
-					$msg_type = !Vfs::$is_root ? 'success' : 'error';
+					$this->sudo($content['user'], $content['password'], $msg, true, self::$is_setup);
+					$msg_type = Vfs::$is_root ? 'success' : 'error';
 				}
-				if ($content['mounts']['disable'] || self::$is_setup && $content['mounts']['umount'])
+				elseif ($content['etemplates'] && $GLOBALS['egw_info']['user']['apps']['admin'])
 				{
-					if (($unmount = $content['mounts']['umount']))
-					{
-						$path = @key($content['mounts']['umount']);
-					}
-					else
-					{
-						$path = @key($content['mounts']['disable']);
-					}
-					if (!in_array($path, self::$protected_path) && $path != '/')
-					{
-						$msg = Vfs::umount($path) ?
-							lang('%1 successful unmounted.',$path) : lang('Error unmounting %1!',$path);
-					}
-					else	// re-mount / with sqlFS, to disable versioning
-					{
-						$msg = Vfs::mount($url=Vfs\Sqlfs\StreamWrapper::SCHEME.'://default'.$path,$path) ?
-							lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
-					}
-				}
-				if (($path = $content['mounts']['path']) &&
-					($content['mounts']['enable'] || self::$is_setup && $content['mounts']['mount']))
-				{
-					$url = str_replace('$path',$path,$content['mounts']['url']);
-					if (empty($url) && $this->versioning) $url = Versioning\StreamWrapper::PREFIX.$path;
-
-					if ($content['mounts']['enable'] && !$this->versioning)
-					{
-						$msg = lang('Versioning requires <a href="http://www.egroupware.org/products">Stylite EGroupware Enterprise Line (EPL)</a>!');
-						$msg_type = 'info';
-					}
-					elseif (!Vfs::file_exists($path) || !Vfs::is_dir($path))
-					{
-						$msg = lang('Path %1 not found or not a directory!',$path);
-						$msg_type = 'error';
-					}
-					// dont allow to change mount of /apps or /templates (eg. switching on versioning)
-					elseif (in_array($path, self::$protected_path))
-					{
-						$msg = lang('Permission denied!');
-						$msg_type = 'error';
-					}
-					else
-					{
-						$msg = Vfs::mount($url,$path) ?
-							lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
-					}
-				}
-				if ($content['allow_delete_versions'] != $GLOBALS['egw_info']['server']['allow_delete_versions'])
-				{
-					Api\Config::save_value('allow_delete_versions', $content['allow_delete_versions'], 'phpgwapi');
-					$GLOBALS['egw_info']['server']['allow_delete_versions'] = $content['allow_delete_versions'];
-					$msg = lang('Configuration changed.');
-				}
-			}
-			// delete old versions and deleted files
-			if ($content['delete-versions'])
-			{
-				if (!Versioning\StreamWrapper::check_delete_version(null))
-				{
-					$msg = lang('Permission denied')."\n\n".lang('You are NOT allowed to finally delete older versions and deleted files!');
-					$msg_type = 'error';
-				}
-				else
-				{
-					// we need to be root to delete files independent of permissions and ownership
+					$path = '/etemplates';
+					$url = 'stylite.merge://default/etemplates?merge=.&lang=0&level=1&extension=xet&url=egw';
+					$backup = Vfs::$is_root;
 					Vfs::$is_root = true;
-					if (!Vfs::file_exists($content['versionedpath']) || !Vfs::is_dir($content['versionedpath']))
+					Vfs::mkdir($path);
+					Vfs::chgrp($path, 'Admins');
+					Vfs::chmod($path, 075);
+					$msg = Vfs::mount($url, $path) ?
+						lang('Successful mounted %1 on %2.', $url, $path) : lang('Error mounting %1 on %2!', $url, $path);
+					Vfs::$is_root = $backup;
+				}
+				elseif (Vfs::$is_root)
+				{
+					if ($content['logout'])
 					{
-						$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
-						$msg_type = 'error';
+						$this->sudo('', '', $msg);
+						$msg_type = 'success';
 					}
-					else
+					if ($content['mounts']['disable'] || Vfs::$is_root && $content['mounts']['umount'])
 					{
-						@set_time_limit(0);
-						$starttime = microtime(true);
-						$deleted = $errors = 0;
-
-						// shortcut to efficently delete every old version and deleted file
-						if ($content['versionedpath'] == '/')
+						if (!empty($content['mounts']['umount']))
 						{
-							$deleted = Versioning\StreamWrapper::purge_all_versioning($content['mtime']);
+							$path = @key($content['mounts']['umount']);
 						}
 						else
 						{
-							Vfs::find($content['versionedpath'], array(
-								'show-deleted' => true,
-								'hidden' => true,
-								'depth' => true,
-								'path_preg' => '#/\.(attic|versions)/#',
-							)+(!(int)$content['mtime'] ? array() : array(
-								'mtime' => ($content['mtime']<0?'-':'+').(int)$content['mtime'],
-							)), function($path) use (&$deleted, &$errors)
-							{
-								if (($is_dir = Vfs::is_dir($path)) && Vfs::rmdir($path) ||
-									!$is_dir && Vfs::unlink($path))
-								{
-									++$deleted;
-								}
-								else
-								{
-									++$errors;
-								}
-							});
+							$path = @key($content['mounts']['disable']);
 						}
-						$time = number_format(microtime(true)-$starttime, 1);
-						$msg = ($errors ? lang('%1 errors deleting!', $errors)."\n\n" : '').
-							lang('%1 files or directories deleted in %2 seconds.', $deleted, $time);
-						$msg_type = $errors ? 'error' : 'info';
+						// set umounted url for a (changed) remount
+						$mounts = Vfs::mount();
+						$content['mounts']['path'] = $path;
+						$content['mounts']['url'] = Vfs::parse_url($mounts[$path]);
+						if (!empty($content['mounts']['url']['query']))
+						{
+							$content['mounts']['url']['path'] .= '?'.$content['mounts']['url']['query'];
+						}
+						if (!in_array($path, self::$protected_path) && $path != '/')
+						{
+							$msg = Vfs::umount($path) ?
+								lang('%1 successful unmounted.', $path) : lang('Error unmounting %1!', $path);
+						}
+						else    // re-mount / with sqlFS, to disable versioning
+						{
+							$msg = Vfs::mount($url = Vfs\Sqlfs\StreamWrapper::SCHEME . '://default' . $path, $path) ?
+								lang('Successful mounted %1 on %2.', $url, $path) : lang('Error mounting %1 on %2!', $url, $path);
+						}
 					}
-					Vfs::$is_root = false;
+					if (($path = $content['mounts']['path']) &&
+						($content['mounts']['enable'] || Vfs::$is_root && $content['mounts']['mount']))
+					{
+						if (empty($content['mounts']['url']['path']) && $this->versioning)
+						{
+							$content['mounts']['url'] = [
+								'scheme' => Versioning\StreamWrapper::SCHEME,
+								'path' => $path,
+							];
+						}
+						if (empty($content['mounts']['url']['scheme']) || $content['mounts']['url']['scheme'] === 'filesystem' && !self::$is_setup)
+						{
+							throw new Api\Exception\NoPermission();
+						}
+						$url = $content['mounts']['url']['scheme'] . '://';
+						if (in_array($content['mounts']['url']['scheme'], ['smb', 'webdavs', 'vfs']))
+						{
+							if (empty(trim($content['mounts']['url']['user'])))
+							{
+								throw new Api\Exception\WrongUserinput(lang('SMB, WebDAVs and VFS require a username!'));
+							}
+							$url .= $content['mounts']['url']['user'] === '$user' ? '$user' : urlencode(trim($content['mounts']['url']['user']));
+							if (!empty($content['mounts']['url']['pass']))
+							{
+								$url .= ':' . ($content['mounts']['url']['pass'] === '$pass' ? '$pass' : urlencode(trim($content['mounts']['url']['pass'])));
+							}
+							$url .= '@';
+						}
+						$url .= $content['mounts']['url']['host'] ?: 'default';
+						$url .= $content['mounts']['url']['path'] ?: $path;
+
+						if (($content['mounts']['enable'] || substr($content['mounts']['url']['scheme'], 0, 8) === 'stylite.') && !$this->versioning)
+						{
+							throw new Api\Exception\WrongUserinput(lang('Versioning requires EGroupware EPL'));
+						}
+						elseif (!Vfs::file_exists(Vfs::decodePath($path)) || Vfs::file_exists($path) && !Vfs::is_dir($path))
+						{
+							throw new Api\Exception\WrongUserinput(lang('Path %1 not found or not a directory!', $path));
+						}
+						// don't allow changing mount of /apps or /templates (eg. switching on versioning)
+						elseif (in_array($path, self::$protected_path))
+						{
+							throw new Api\Exception\NoPermission();
+						}
+						else
+						{
+							$msg = Vfs::mount($url, $path, true) ?
+								lang('Successful mounted %1 on %2.', $url, $path) : lang('Error mounting %1 on %2!', $url, $path);
+						}
+					}
+					if ($content['allow_delete_versions'] != $GLOBALS['egw_info']['server']['allow_delete_versions'])
+					{
+						Api\Config::save_value('allow_delete_versions', $content['allow_delete_versions'], 'phpgwapi');
+						$GLOBALS['egw_info']['server']['allow_delete_versions'] = $content['allow_delete_versions'];
+						$msg = lang('Configuration changed.');
+					}
 				}
+				// delete old versions and deleted files
+				if ($content['delete-versions'])
+				{
+					if (!Versioning\StreamWrapper::check_delete_version(null))
+					{
+						$msg = lang('Permission denied') . "\n\n" . lang('You are NOT allowed to finally delete older versions and deleted files!');
+						$msg_type = 'error';
+					}
+					else
+					{
+						// we need to be root to delete files independent of permissions and ownership
+						Vfs::$is_root = true;
+						if (!Vfs::file_exists($content['versionedpath']) || !Vfs::is_dir($content['versionedpath']))
+						{
+							$msg = lang('Directory "%1" NOT found!', $content['versionedpath']);
+							$msg_type = 'error';
+						}
+						else
+						{
+							@set_time_limit(0);
+							$starttime = microtime(true);
+							$deleted = $errors = 0;
+
+							// shortcut to efficently delete every old version and deleted file
+							if ($content['versionedpath'] == '/')
+							{
+								$deleted = Versioning\StreamWrapper::purge_all_versioning($content['mtime']);
+							}
+							else
+							{
+								Vfs::find($content['versionedpath'], array(
+										'show-deleted' => true,
+										'hidden' => true,
+										'depth' => true,
+										'path_preg' => '#/\.(attic|versions)/#',
+									) + (!(int)$content['mtime'] ? array() : array(
+										'mtime' => ($content['mtime'] < 0 ? '-' : '+') . (int)$content['mtime'],
+									)), function ($path) use (&$deleted, &$errors) {
+									if (($is_dir = Vfs::is_dir($path)) && Vfs::rmdir($path) ||
+										!$is_dir && Vfs::unlink($path))
+									{
+										++$deleted;
+									}
+									else
+									{
+										++$errors;
+									}
+								});
+							}
+							$time = number_format(microtime(true) - $starttime, 1);
+							$msg = ($errors ? lang('%1 errors deleting!', $errors) . "\n\n" : '') .
+								lang('%1 files or directories deleted in %2 seconds.', $deleted, $time);
+							$msg_type = $errors ? 'error' : 'info';
+						}
+						Vfs::$is_root = false;
+					}
+				}
+			}
+			catch (\Exception $e) {
+				$msg = $e->getMessage();
+				$msg_type = 'error';
 			}
 		}
 		else
@@ -230,10 +264,11 @@ class filemanager_admin extends filemanager_ui
 			$content['versionedpath'] = '/';
 			$content['mtime'] = 100;
 		}
-		if (true) $content = array(
+		$content = [
 			'versionedpath' => $content['versionedpath'],
 			'mtime' => $content['mtime'],
-		);
+			'mounts' => $content['mounts'],
+		];
 		if ($this->versioning)
 		{
 			// statistical information
@@ -256,12 +291,12 @@ class filemanager_admin extends filemanager_ui
 		Framework::message($msg, $msg_type);
 
 		$n = 2;
-		$content['mounts'] = array();
+		$content['mounts']['at'] = '@';
 		foreach(Vfs::mount() as $path => $url)
 		{
 			$content['mounts'][$n++] = array(
 				'path' => $path,
-				'url'  => $url,
+				'url'  => preg_replace('#://([^:@/]+):((?!\$pass)[^@/]+)@#', '://$1:****@', $url),
 			);
 			$readonlys["disable[$path]"] = !$this->versioning || !Vfs::$is_root ||
 				Vfs::parse_url($url,PHP_URL_SCHEME) != $this->versioning;
@@ -274,6 +309,23 @@ class filemanager_admin extends filemanager_ui
 			'admins'   => lang('Administrators'),
 			'everyone' => lang('Everyone'),
 		);
+		$sel_options['scheme'] = [
+			"webdavs" => "WebDAVs",
+			"smb" => "SMB",
+			"filesystem" => "Filesystem",
+			"sqlfs" => "SQLfs",
+			"links" => "Links",
+			"stylite.versioning" => "Versioning",
+			"stylite.links" => "Links+Versioning",
+			"vfs" => "VFS",
+		];
+		foreach($sel_options['scheme'] as $scheme => $label)
+		{
+			if (!Vfs::load_wrapper($scheme) || !self::$is_setup && $scheme === 'filesystem')
+			{
+				unset($sel_options['scheme'][$scheme]);
+			}
+		}
 		// show [Mount /etemplates] button for admin, if not already mounted and available
 		$readonlys['etemplates'] = !class_exists('\EGroupware\Stylite\Vfs\Merge\StreamWrapper') ||
 			($fs_tab=Vfs::mount($url)) && isset($fs_tab['/etemplates']) ||

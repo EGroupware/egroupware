@@ -215,8 +215,8 @@ check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 children	admin	de	Kinder
 clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
 clear credentials	admin	de	Anmeldeinformationen löschen
+clear mail credentials	admin	de	E-Mail-Anmeldeinformationen löschen
 clear security tokens	admin	de	Sicherheits-Tokens löschen
-clear mail credentials	admin	de	Mail-Anmeldeinformationen löschen
 click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	de	Komma getrennte Liste von IP Adressen die nicht blockiert werden (:optional Anzahl Fehlversuche)
@@ -682,7 +682,7 @@ only below displayed information is directly submitted to %s.	admin	de	Nur die u
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 organisation	admin	de	Organisation
-other security configuration	admin	de	Andere sicherheitsrelevanten Konfigurationen
+other security configuration	admin	de	Andere sicherheitsrelevante Konfigurationen
 outbound	admin	de	ausgehend
 own categories	admin	de	eigene Kategorien
 own install id	admin	de	Eigene Install ID

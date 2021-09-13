@@ -6,8 +6,6 @@
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
 %1 mails selected	mail	it	% messaggi selezionati
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	it	(*) Per favore considerare che l'inoltro a indirizzi multipli non funzionerà se il limite di indirizzi venisse superato. Per la maggior parte dei server di posta il limite predefinito è di 4. Per favore contattare l'amministratore del proprio server di posta per delucidazioni.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide.
-sieve_edit_instructions	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide. Per il punto esclamativo quando non usato come operatore "NOT", usare regex e backslash (\) (p.es. \!)
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
@@ -491,7 +489,7 @@ set / remove labels	mail	it	Imposta / Rimuovi etichette
 set it as default:	mail	it	imposta come predefinito
 should new messages show up on the home page	mail	it	I nuovi messaggi devono apparire in Home Page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	it	La firma dovrebbe essere inserita dopo (standard) o prima del testo di risposta o inoltro? La firma deve essere visibile e modificabile in fase di composizione?
-show	mail	it	mostrra
+show	mail	it	Mostra
 show all addresses	mail	it	Mostra tutti gli indirizzi
 show all attachments	mail	it	Mostra tutti gli allegati
 show all folders	mail	it	mostra tutte le cartelle
@@ -509,6 +507,7 @@ sieve connection status	mail	it	Salva lo stato della connessione
 sieve not activated	mail	it	Sieve non attivato
 sieve script name	mail	it	Nome script sieve
 sieve server	mail	it	Server sieve
+sieve_edit_instructions	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide. Per il punto esclamativo quando non usato come operatore "NOT", usare regex e backslash (\) (p.es. \!)
 signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 signature position and visibility	mail	it	Posizione e visibilità della firma
@@ -557,6 +556,7 @@ the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a i
 the rule with priority %1 successfully saved!	mail	it	La regola con priorità %1 è stata salvata
 then	mail	it	DI
 there is no imap server configured.	mail	it	Non c'è alcun server IMAP configurato!
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	it	Questo messaggio contiene immagini da recuperare tramite protocollo HTTP non sicuro. Fare attenzione poiché quest'azione potrebbe compromettere la sicurezza!
 this message is smime encrypted and password protected.	mail	it	Questo messaggio è criptato via smime e protetto da password
 timeout on connections to your imap server	mail	it	Timeout della connessione al server IMAP
 to do	mail	it	da fare

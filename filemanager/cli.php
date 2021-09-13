@@ -484,11 +484,6 @@ function load_wrapper($url)
 	{
 		switch($scheme)
 		{
-			case 'webdav':
-			case 'webdavs':
-				require_once('HTTP/WebDAV/Client.php');
-				break;
-
 			default:
 				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')) &&
 					($user = parse_url($url,PHP_URL_USER)) && ($pass = parse_url($url,PHP_URL_PASS)))

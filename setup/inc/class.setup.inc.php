@@ -283,10 +283,8 @@ class setup
 		$auth_type = strtolower($_auth_type);
 		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = $GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 
-		if(!$this->checkip(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-			$_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']))
+		if (($GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = self::checkip()))
 		{
-			//error_log(__METHOD__."('$auth_type') invalid IP");
 			return false;
 		}
 
@@ -405,15 +403,19 @@ class setup
 	 * Check for correct IP, if an IP address should be enforced
 	 *
 	 * @param string $remoteip
-	 * @return boolean
+	 * @return string error-message or null on success
 	 */
-	function checkip($remoteip='')
+	public static function checkip($remoteip=null)
 	{
+		if (!isset($remoteip))
+		{
+			$remoteip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?: $_SERVER['REMOTE_ADDR'];
+		}
 		//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['egw_info']['server']['setup_acl']."'</p>\n";
 		$allowed_ips = explode(',',@$GLOBALS['egw_info']['server']['setup_acl']);
 		if(empty($GLOBALS['egw_info']['server']['setup_acl']) || !is_array($allowed_ips))
 		{
-			return True;	// no test
+			return null;	// no test
 		}
 		$remotes = explode('.',$remoteip);
 		foreach($allowed_ips as $value)
@@ -433,12 +435,11 @@ class setup
 			}
 			if ($i == count($values))
 			{
-				return True;	// match
+				return null;	// match
 			}
 		}
-		$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address').' '.$remoteip;
 		error_log(__METHOD__.'-> checking IP failed:'.print_r($remoteip,true));
-		return False;
+		return lang('Invalid IP address').' '.$remoteip;
 	}
 
 	/**

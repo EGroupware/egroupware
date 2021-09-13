@@ -2416,7 +2416,7 @@ abstract class Merge
 		}
 		else
 		{
-			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target));
+			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target, true));
 		}
 	}
 
@@ -2472,8 +2472,8 @@ abstract class Merge
 				return $ui->get_all_ids();
 			}
 
-			// Try cache
-			if( method_exists($ui_class, 'get_rows'))
+			// Try cache, preferring get_rrows over get_rows
+			if (method_exists($ui_class, $get_rows='get_rrows') || method_exists($ui_class, $get_rows='get_rows'))
 			{
 				foreach($locations as $location)
 				{
@@ -2486,7 +2486,7 @@ abstract class Merge
 				$rows = $readonlys = array();
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$session['num_rows'] = -1;	// all
-				$ui->get_rows($session, $rows, $readonlys);
+				$ui->$get_rows($session, $rows, $readonlys);
 				foreach($rows as $row_number => $row)
 				{
 					if(!is_numeric($row_number)) continue;

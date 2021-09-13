@@ -444,31 +444,48 @@ class filemanager_ui
 	/**
 	 * Make the current user (vfs) root
 	 *
-	 * The user/pw is either the setup config user or a specially configured vfs_root user
+	 * The user/pw is either the "root_" prefixed setup config user or a specially configured vfs_root user
 	 *
 	 * @param string $user setup config user to become root or '' to log off as root
 	 * @param string $password setup config password to become root
+	 * @param string &$msg on return error or success message
+	 * @param bool $allow_setup =false true: allow "root_" prefixed setup-config user/pw
 	 * @param boolean &$is_setup=null on return true if authenticated user is setup config user, false otherwise
 	 * @return boolean true is root user given, false otherwise (including logout / empty $user)
 	 */
-	protected function sudo($user='',$password=null,&$is_setup=null)
+	protected function sudo($user='', $password='', string &$msg=null, bool $allow_setup=false, &$is_setup=null)
 	{
+		$is_root = $is_setup = false;
+		$msg = null;
+
 		if (!$user)
 		{
-			$is_root = $is_setup = false;
+			$msg = lang('Root access stopped.');
 		}
+		// config user & password
+		elseif ($allow_setup && substr($user, 0, 5) === 'root_')
+		{
+			if (!($msg = setup::checkip()))
+			{
+				$is_root = $is_setup = setup::check_auth(substr($user, 5), $password, $GLOBALS['egw_info']['server']['header_admin_user'],
+					$GLOBALS['egw_info']['server']['header_admin_password']);
+			}
+		}
+		// or vfs root user from setup >> configuration
 		else
 		{
-			// config user & password
-			$is_setup = Api\Session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
-			// or vfs root user from setup >> configuration
-			$is_root = $is_setup ||	$GLOBALS['egw_info']['server']['vfs_root_user'] &&
+			$is_root = $GLOBALS['egw_info']['server']['vfs_root_user'] &&
 				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
-		//error_log(__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".Api\Session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root));
+		if (empty($msg))
+		{
+			$msg = $is_root ? lang('Root access granted.') : lang('Wrong username or password!');
+		}
+		//error_log(__METHOD__."('$user', '$password', $is_setup, '$msg') --> returning ".array2string($is_root));
 		Api\Cache::setSession('filemanager', 'is_setup',$is_setup);
 		Api\Cache::setSession('filemanager', 'is_root',Vfs::$is_root = $is_root);
+
 		return Vfs::$is_root;
 	}
 
@@ -1187,9 +1204,7 @@ class filemanager_ui
 			// need to check 'setup' button (submit button in sudo popup), as some browsers (eg. chrome) also fill the hidden field
 			if ($button == 'sudo' && Vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
 			{
-				$msg = $this->sudo($button == 'setup' ? $content['sudo']['user'] : '',$content['sudo']['passwd']) ?
-					lang('Root access granted.') : ($button == 'setup' && $content['sudo']['user'] ?
-					lang('Wrong username or password!') : lang('Root access stopped.'));
+				$this->sudo($button === 'setup' ? $content['sudo']['user'] : '', $content['sudo']['passwd'], $msg);
 				unset($content['sudo']);
 				$content['is_owner'] = Vfs::has_owner_rights($path);
 			}
