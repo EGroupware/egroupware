@@ -36,9 +36,11 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             }
             ::slotted([align="left"]) {
             	margin-right: auto;
+            	order: -1;
             }
             ::slotted([align="right"]) {
             	margin-left: auto;
+            	order: 1;
             }
             `,
 		];
