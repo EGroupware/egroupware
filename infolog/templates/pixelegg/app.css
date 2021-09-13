@@ -132,7 +132,7 @@ button.infologExtraButton {
 button.infologExtraButton:hover {
   background-size: 16px;
 }
-div.et2_hbox.tab_toolbar {
+.tab_toolbar {
   position: relative;
 }
 button#infolog-edit_encrypt {

@@ -229,17 +229,22 @@
 					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox span="6">
-						<button statustext="Saves this entry" label="Save" id="button[save]" image="save" background_image="1"/>
-						<et2-button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"></et2-button>
-						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<menulist>
-							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>
-						</menulist>
-						<checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"/>
-					</hbox>
-					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
-				</row>
+                    <hbox span="all">
+                        <button statustext="Saves this entry" label="Save" id="button[save]" image="save"
+                                background_image="1"/>
+                        <button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply"
+                                background_image="1"></button>
+                        <button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]"
+                                onclick="window.close();" image="cancel" background_image="1"/>
+                        <select statustext="Execute a further action for this entry" id="action"
+                                onchange="app.infolog.edit_actions()" empty_label="Actions..."/>
+                        <checkbox label="Do not notify" id="no_notifications"
+                                  statustext="Do not notify of these changes"/>
+                        <button align="right" statustext="delete this entry" label="Delete" id="button[delete]"
+                                onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');"
+                                image="delete" background_image="1" span="all"/>
+                    </hbox>
+                </row>
 			</rows>
 		</grid>
 	</template>
