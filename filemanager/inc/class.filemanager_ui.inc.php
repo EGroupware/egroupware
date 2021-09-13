@@ -467,8 +467,8 @@ class filemanager_ui
 		{
 			if (!($msg = setup::checkip()))
 			{
-				$is_root = $is_setup = setup::check_auth(substr($user, 5), $password, $GLOBALS['egw_info']['server']['config_user'],
-					$GLOBALS['egw_info']['server']['config_passwd']);
+				$is_root = $is_setup = setup::check_auth(substr($user, 5), $password, $GLOBALS['egw_info']['server']['header_admin_user'],
+					$GLOBALS['egw_info']['server']['header_admin_password']);
 			}
 		}
 		// or vfs root user from setup >> configuration
