@@ -283,9 +283,18 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 			}
 		}
 		// _node is actually a Web Component
-		else if (_node instanceof Element )
+		else if(_node instanceof Element)
 		{
-			this.getDOMNode().append(_node);
+			if(this.getDOMNode(_node))
+			{
+				this.getDOMNode(_node).append(_node);
+			}
+			else
+			{
+				// Warn about it.  This slows down loading, as it requires a second pass (loadingFinished) to get the child
+				// properly added.
+				console.warn("Legacy widget " + this.getType() + "[#" + this.options.id + "] could not handle adding a child. ")
+			}
 		}
 	}
 
