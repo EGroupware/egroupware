@@ -669,7 +669,7 @@ const Et2WidgetMixin = (superClass) =>
 
 			let widget_class = window.customElements.get(this.nodeName);
 			let properties = widget_class ? widget_class.properties() : {};
-			console.log(this, properties);
+			
 			if(_parent)
 			{
 				copy.setParent(_parent);
