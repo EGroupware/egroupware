@@ -519,14 +519,16 @@ const Et2WidgetMixin = (superClass) =>
 				this.getParent().getDOMNode(this).append(this);
 			}
 
+			// An empty text node causes problems with legacy widget children
+			// It throws off their insertion indexing, making them get added in the wrong place
+			if(this.childNodes[0]?.nodeType == this.TEXT_NODE)
+			{
+				this.removeChild(this.childNodes[0]);
+			}
 			for(let i = 0; i < this.getChildren().length; i++)
 			{
 				let child = this.getChildren()[i];
-				let child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
-				if(child_node && child_node !== this)
-				{
-					this.append(child_node);
-				}
+
 				child.loadingFinished(promises);
 			}
 		}
