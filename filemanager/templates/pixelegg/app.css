@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package filemanager
- * @version $Id$
  */
 /**
  * EGroupware - CSS Styles used by filemanager app
@@ -121,6 +120,12 @@ input.displayNone {
 .filemanager_smallButton {
   font-size: 90%;
   margin: 0;
+}
+.filemanager_password > input {
+  min-width: 0 !important;
+}
+div.filemanager_protocols > *:before {
+  content: "• ";
 }
 .filemanager_header {
   font-size: 120%;
@@ -270,6 +275,13 @@ div#filemanager-file_tabs {
 }
 div#filemanager-file_tabs span.ui-icon-search {
   /*.background_color_10_gray;*/
+  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   position: relative;
   top: 3px;
   margin-left: 3px;

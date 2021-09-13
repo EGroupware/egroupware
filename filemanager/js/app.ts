@@ -20,6 +20,8 @@ import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
 import {egw, egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 
 /**
  * UI for filemanager
@@ -87,6 +89,12 @@ export class filemanagerAPP extends EgwApp
 	{
 		// call parent
 		super.et2_ready(et2, name);
+
+		if (name === 'filemanager.admin')
+		{
+			this.changeMountScheme();
+			return;
+		}
 
 		let path_widget = this.et2.getWidgetById('path');
 		if(path_widget)	// do NOT set not found path-widgets, as uploads works on first one only!
@@ -1412,6 +1420,26 @@ export class filemanagerAPP extends EgwApp
 			}), '', fe["popup_edit"]);
 		}
 		return true;
+	}
+
+	/**
+	 * Mount scheme change --> enable/disable user, pass and host
+	 */
+	changeMountScheme()
+	{
+		const grid = this.et2.getWidgetById('mounts');
+		const scheme = (<et2_selectbox>grid.getWidgetById('url[scheme]'))?.get_value();
+
+		['url[user]', 'url[pass]', 'url[host]', 'colon', 'at'].forEach((name) => {
+			(<et2_textbox>grid.getWidgetById(name))?.set_disabled(scheme !== 'webdavs' && scheme !== 'smb');
+		});
+		if (scheme === 'vfs')
+		{
+			['url[user]', 'at'].forEach((name) => {
+				(<et2_textbox>grid.getWidgetById(name))?.set_disabled(false);
+			});
+
+		}
 	}
 }
 app.classes.filemanager = filemanagerAPP;
