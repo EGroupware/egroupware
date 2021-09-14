@@ -175,15 +175,15 @@ class AdminApp extends EgwApp
 			if(ajax)
 			{
 
-				if(this.ajax_target.node.children.length)
+				if(this.ajax_target.getDOMNode().children.length)
 				{
 					// Node has children already?  Check for loading over an
 					// existing etemplate, and remove it first
-					jQuery(this.ajax_target.node.children).each(function() {
+					jQuery(this.ajax_target.getDOMNode().children).each(function() {
 						var old = etemplate2.getById(this.id);
 						if(old) old.clear();
 					});
-					jQuery(this.ajax_target.node).empty();
+					jQuery(this.ajax_target.getDOMNode()).empty();
 				}
 				this.egw.json(
 					framework.activeApp.getMenuaction('ajax_exec', _url),
@@ -394,7 +394,7 @@ class AdminApp extends EgwApp
 		if(!_data || _data.type != undefined) return;
 
 		// Insert the content, etemplate will load into it
-		jQuery(this.ajax_target.node).append(typeof _data === 'string' ? _data : _data[0]);
+		jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
 	}
 
 	/**
