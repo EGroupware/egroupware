@@ -158,6 +158,7 @@ files	common	en	Files
 files from links	filemanager	en	Files from links
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
+filesystem	filemanager	en	Filesystem
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem
 finally delete	filemanager	en	Finally delete
@@ -224,6 +225,7 @@ operation	filemanager	en	Operation
 password for webdav and smb, use $pass for password of logged in user	filemanager	en	Password for WebDAV and SMB, use $pass for password of logged in user
 paste link	filemanager	en	Paste Link
 path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
+path and query-parameters, smb: share and optional path (with /)	filemanager	en	Path and query-parameters, SMB: share and optional path (with /)
 percentage	filemanager	en	Percentage
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
@@ -279,7 +281,7 @@ show link "your home directory*" in side box menu?*	filemanager	en	Show link "Yo
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
 smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAVs and VFS require a username!
-smb: mount samba of windows fileserver shares	filemanager	en	SMB: mount Samba of Windows fileserver shares
+smb: mount samba or windows fileserver shares	filemanager	en	SMB: mount Samba or Windows fileserver shares
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	en	Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.
 sqlfs statistics	filemanager	en	sqlFS Statistics
 start search	filemanager	en	Start search

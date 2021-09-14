@@ -70,6 +70,7 @@ class filemanager_admin extends filemanager_ui
 		{
 			$this->versioning = Versioning\StreamWrapper::SCHEME;
 		}
+		Api\Translation::add_app('filemanager');
 	}
 
 	/**
@@ -312,15 +313,16 @@ class filemanager_admin extends filemanager_ui
 		$sel_options['scheme'] = [
 			"webdavs" => "WebDAVs",
 			"smb" => "SMB",
-			"filesystem" => "Filesystem",
+			"filesystem" => lang("Filesystem"),
 			"sqlfs" => "SQLfs",
-			"links" => "Links",
-			"stylite.versioning" => "Versioning",
-			"stylite.links" => "Links+Versioning",
+			"links" => lang("Links"),
+			"stylite.versioning" => lang("Versioning"),
+			"stylite.links" => lang("Links").'+'.lang("Versioning"),
 			"vfs" => "VFS",
 		];
-		foreach($sel_options['scheme'] as $scheme => $label)
+		foreach($sel_options['scheme'] as $scheme => &$label)
 		{
+			$label = ['label' => $label, 'title' => $scheme.'://...'];
 			if (!Vfs::load_wrapper($scheme) || !self::$is_setup && $scheme === 'filesystem')
 			{
 				unset($sel_options['scheme'][$scheme]);
