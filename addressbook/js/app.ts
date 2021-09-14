@@ -374,8 +374,7 @@ class AddressbookApp extends EgwApp
 	view_actions(_action, _widget)
 	{
 
-		var app_id = _widget.dom_id.split('_');
-		var et2 = etemplate2.getById(app_id[0]);
+		var et2 = _widget.getInstanceManager();
 		var id = et2.widgetContainer.getArrayMgr('content').data.id;
 
 		switch(_widget.id)
@@ -1326,8 +1325,7 @@ class AddressbookApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		var widget = this.et2.getWidgetById('n_fn');
-		if(widget) return widget.options.value;
+		return this.et2.getValueById('n_fn');
 	}
 
 	/**
