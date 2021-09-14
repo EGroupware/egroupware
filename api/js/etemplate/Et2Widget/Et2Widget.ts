@@ -186,6 +186,16 @@ const Et2WidgetMixin = (superClass) =>
 			}
 		}
 
+		/**
+		 * Wrapper on this.disabled because legacy had it.
+		 *
+		 * @param {boolean} value
+		 */
+		set_disabled(value : boolean)
+		{
+			this.disabled = value;
+		}
+
 		set label(value : string)
 		{
 			let oldValue = this.label;
@@ -669,7 +679,7 @@ const Et2WidgetMixin = (superClass) =>
 
 			let widget_class = window.customElements.get(this.nodeName);
 			let properties = widget_class ? widget_class.properties() : {};
-			
+
 			if(_parent)
 			{
 				copy.setParent(_parent);
