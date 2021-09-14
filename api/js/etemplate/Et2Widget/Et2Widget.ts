@@ -61,6 +61,8 @@ const Et2WidgetMixin = (superClass) =>
 		/**
 		 * Properties - default values, and actually creating them as fields
 		 */
+		protected _widget_id : string = "";
+		protected _dom_id : string = "";
 		protected _label : string = "";
 		private statustext : string = "";
 		protected disabled : Boolean = false;
@@ -194,6 +196,42 @@ const Et2WidgetMixin = (superClass) =>
 		set_disabled(value : boolean)
 		{
 			this.disabled = value;
+		}
+
+		/**
+		 * Get the actual DOM ID, which has been prefixed to make sure it's unique.
+		 *
+		 * @returns {string}
+		 */
+		get dom_id()
+		{
+			return this.getAttribute("id");
+		}
+
+		/**
+		 * Set the ID of the widget
+		 *
+		 * This is the "widget" ID, which is used as an index into the managed arrays (content, etc) and when
+		 * trying to find widgets by ID.
+		 *
+		 * This is not the DOM ID.
+		 *
+		 * @param {string} value
+		 */
+		set id(value)
+		{
+			this._widget_id = value;
+			this.setAttribute("id", this._widget_id ? this.getInstanceManager().uniqueId + '_' + this._widget_id.replace(/\./g, '-') : "");
+		}
+
+		/**
+		 * Get the ID of the widget
+		 *
+		 * @returns {string}
+		 */
+		get id()
+		{
+			return this._widget_id;
 		}
 
 		set label(value : string)
@@ -658,7 +696,7 @@ const Et2WidgetMixin = (superClass) =>
 
 		getDOMNode() : HTMLElement
 		{
-			return this;
+			return <HTMLElement><unknown>this;
 		}
 
 		/**
