@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<et2-textarea  id="info_des" no_lang="1" width="99.7%" height="245px"/>
+		<et2-textarea id="info_des" no_lang="1"/>
 		<checkbox id="clean_history"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
