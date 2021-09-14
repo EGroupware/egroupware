@@ -36,10 +36,14 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
             	display: none;
             }
             /* Set size for icon */
-            ::slotted([slot="icon"]) {
+            ::slotted([slot="icon"][src]) {
                 width: 20px;
                 padding-right: 3px;
-            }`,
+            }
+            ::slotted([slot="icon"][src='']) {
+				display: none;
+			}
+            `,
 		];
 	}
 
