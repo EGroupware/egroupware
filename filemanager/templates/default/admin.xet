@@ -49,13 +49,13 @@
 					<description value="Mount" align="center"/>
 				</row>
 				<row disabled="!@@is_root" part="footer" valign="bottom">
-					<textbox id="path" size="64"/>
+					<textbox id="path" size="48"/>
 					<vbox width="100%">
 						<groupbox>
 							<caption label="Protocols"/>
 							<vbox class="filemanager_protocols">
 								<description value="WebDAVs: mount EGroupware or *Cloud shares"/>
-								<description value="SMB: mount Samba of Windows fileserver shares"/>
+								<description value="SMB: mount Samba or Windows fileserver shares"/>
 								<description value="{Versioning}: {Versioning requires EGroupware EPL}"
 									extra_link_target="_blank" href="https://www.egroupware.org/EPL"/>
 								<description value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem"
@@ -70,7 +70,7 @@
 							<passwd id="url[pass]" blur="password" statustext="Password for WebDAV and SMB, use $pass for password of logged in user" class="filemanager_password" size="12"/>
 							<description id="at"/>
 							<textbox id="url[host]" blur="host" statustext="Hostname/IP for WebDAV and SMB"/>
-							<textbox id="url[path]" blur="Path and query-parameters, SMB: share and optional path (with slashes!)" size="64"/>
+							<textbox id="url[path]" blur="Path and query-parameters, SMB: share and optional path (with /)" size="64"/>
 						</hbox>
 					</vbox>
 					<button label="Enable" id="enable" statustext="Enable versioning for given mountpoint" class="filemanager_smallButton" align="center"/>

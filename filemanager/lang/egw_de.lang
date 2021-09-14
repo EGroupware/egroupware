@@ -158,6 +158,7 @@ files	common	de	Dateien
 files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
+filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
@@ -224,6 +225,7 @@ operation	filemanager	de	Vorgang
 password for webdav and smb, use $pass for password of logged in user	filemanager	de	Passwort für WebDAV und SMB, benutzer $pass für das Passwort des angemeldeten Benutzers
 paste link	filemanager	de	Als Verknüpfung einfügen
 path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Verzeichnis!
+path and query-parameters, smb: share and optional path (with /)	filemanager	de	Pfad und Suchparameter, SMB: Freigabe und optionaler Pfad (mit /)
 percentage	filemanager	de	Prozentual
 permission denied!	filemanager	de	Zugriff verweigert!
 permissions	filemanager	de	Zugriffsrechte
@@ -278,7 +280,7 @@ show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie 
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
-smb: mount samba of windows fileserver shares	filemanager	de	SMB: mounten von Freigaben eines Samba oder Windows Dateiservern
+smb: mount samba or windows fileserver shares	filemanager	de	SMB: mounten von Freigaben eines Samba oder Windows Dateiserver
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
 sqlfs statistics	filemanager	de	sqlFS Statistik
 start search	filemanager	de	Suche starten
