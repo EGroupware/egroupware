@@ -234,7 +234,7 @@ const Et2WidgetMixin = (superClass) =>
 				var args = Array.prototype.slice.call(arguments);
 				if(args.indexOf(this) == -1) args.splice(1, 0, this);
 
-				return this.onclick.apply(this, args);
+				return this.onclick(...args);
 			}
 
 			return true;
