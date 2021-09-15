@@ -71,7 +71,8 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 			}
 		}
 		if (typeof parent[existing_func] === "function") {
-			return parent[existing_func];
+			// Bind the object so no matter what happens, context is correct
+			return parent[existing_func].bind(parent);
 		}
 	}
 
