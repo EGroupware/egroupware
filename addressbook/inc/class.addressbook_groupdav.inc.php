@@ -13,6 +13,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Acl;
+use EGroupware\Api\Contacts\JsContact;
 
 /**
  * CalDAV/CardDAV/GroupDAV access: Addressbook handler
@@ -588,11 +589,20 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			return $contact;
 		}
-		$handler = self::_get_handler();
-		$options['data'] = $contact['list_id'] ? $handler->getGroupVCard($contact) :
-			$handler->getVCard($contact['id'],$this->charset,false);
-		// e.g. Evolution does not understand 'text/vcard'
-		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
+		// jsContact or vCard
+		if (JsContact::isJsContact())
+		{
+			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact) : JsContact::getJsCard($contact);
+			$options['mimetype'] = $contact['list_id'] ? JsContact::MIME_TYPE_JSCARDGROUP : JsContact::MIME_TYPE_JSCARD;
+		}
+		else
+		{
+			$handler = self::_get_handler();
+			$options['data'] = $contact['list_id'] ? $handler->getGroupVCard($contact) :
+				$handler->getVCard($contact['id'], $this->charset, false);
+			// e.g. Evolution does not understand 'text/vcard'
+			$options['mimetype'] = 'text/x-vcard; charset=' . $this->charset;
+		}
 		header('Content-Encoding: identity');
 		header('ETag: "'.$this->get_etag($contact).'"');
 		return true;
@@ -618,31 +628,42 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $oldContact;
 		}
 
-		$handler = self::_get_handler();
-		// Fix for Apple Addressbook
-		$vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1',
-			htmlspecialchars_decode($options['content']));
-		$charset = null;
-		if (!empty($options['content_type']))
+		if (JsContact::isJsContact())
 		{
-			$content_type = explode(';', $options['content_type']);
-			if (count($content_type) > 1)
+			$contact = JsContact::parseJsCard($options['content']);
+			// just output it again for now
+			header('Content-Type: application/json');
+			echo json_encode($contact, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+			return "200 Ok";
+		}
+		else
+		{
+			$handler = self::_get_handler();
+			// Fix for Apple Addressbook
+			$vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1',
+				htmlspecialchars_decode($options['content']));
+			$charset = null;
+			if (!empty($options['content_type']))
 			{
-				array_shift($content_type);
-				foreach ($content_type as $attribute)
+				$content_type = explode(';', $options['content_type']);
+				if (count($content_type) > 1)
 				{
-					trim($attribute);
-					list($key, $value) = explode('=', $attribute);
-					switch (strtolower($key))
+					array_shift($content_type);
+					foreach ($content_type as $attribute)
 					{
-						case 'charset':
-							$charset = strtoupper(substr($value,1,-1));
+						trim($attribute);
+						list($key, $value) = explode('=', $attribute);
+						switch (strtolower($key))
+						{
+							case 'charset':
+								$charset = strtoupper(substr($value,1,-1));
+						}
 					}
 				}
 			}
-		}
 
-		$contact = $handler->vcardtoegw($vCard, $charset);
+			$contact = $handler->vcardtoegw($vCard, $charset);
+		}
 
 		if (is_array($oldContact) || ($oldContact = $this->bo->read(array('contact_uid' => $contact['uid']))))
 		{
@@ -753,7 +774,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			//error_log(__METHOD__."(, $id, '$user') read(_list)($save_ok) returned ".array2string($contact));
 		}
 
-		// send evtl. necessary respose headers: Location, etag, ...
+		// send evtl. necessary response headers: Location, etag, ...
 		$this->put_response_headers($contact, $options['path'], $retval, self::$path_attr != 'id');
 
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
