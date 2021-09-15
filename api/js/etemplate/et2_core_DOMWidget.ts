@@ -238,7 +238,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 
 			// Append this node at its index
 			var idx = this.getDOMIndex();
-			if (idx < 0 || idx >= this.parentNode.childNodes.length - 1)
+			if(idx < 0 || idx > this.parentNode.childNodes.length - 1)
 			{
 				this.parentNode.appendChild(node);
 			}
