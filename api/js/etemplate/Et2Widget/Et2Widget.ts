@@ -220,8 +220,10 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set id(value)
 		{
+			let oldValue = this._widget_id;
 			this._widget_id = value;
 			this.setAttribute("id", this._widget_id ? this.getInstanceManager().uniqueId + '_' + this._widget_id.replace(/\./g, '-') : "");
+			this.requestUpdate("id", oldValue);
 		}
 
 		/**
