@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {dedupeMixin} from "@lion/core";
+import {css, dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 
 /**
@@ -65,10 +65,21 @@ const Et2WidgetMixin = (superClass) =>
 		protected _dom_id : string = "";
 		protected _label : string = "";
 		private statustext : string = "";
-		protected disabled : Boolean = false;
+		protected disabled : boolean = false;
 
 
 		/** WebComponent **/
+		static get styles()
+		{
+			return [
+				...(super.styles ? super.styles : []),
+				css`
+				:host([disabled]) {
+					display: none;
+				}
+            `];
+		}
+
 		static get properties()
 		{
 			return {
@@ -195,7 +206,14 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set_disabled(value : boolean)
 		{
-			this.disabled = value;
+			if(value)
+			{
+				this.setAttribute("disabled", "")
+			}
+			else
+			{
+				this.removeAttribute("disabled");
+			}
 		}
 
 		/**

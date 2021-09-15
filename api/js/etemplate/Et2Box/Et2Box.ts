@@ -18,6 +18,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	static get styles()
 	{
 		return [
+			...super.styles,
 			css`
             :host {
 				display: block;
