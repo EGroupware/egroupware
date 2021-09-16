@@ -103,10 +103,18 @@ const Et2WidgetMixin = (superClass) =>
 				/**
 				 * Tooltip which is shown for this element on hover
 				 */
-				statustext: {type: String},
+				statustext: {type: String, translate: true},
 
-				// Defined in parent hierarchy
-				//label: {type: String},
+				/**
+				 * The label of the widget
+				 * This is usually displayed in some way.  It's also important for accessability.
+				 * This is defined in the parent somewhere, and re-defining it causes labels to disappear
+				 *
+				label: {
+					type: String,
+					translate: true
+				},
+				 */
 
 				onclick: {
 					type: Function
@@ -132,6 +140,20 @@ const Et2WidgetMixin = (superClass) =>
 					reflect: true
 				}
 			};
+		}
+
+		/**
+		 * List of properties that get translated
+		 * Done separately to not interfere with properties - if we re-define label property,
+		 * labels go missing.
+		 * @returns {{statustext : boolean, label : boolean}}
+		 */
+		static get translate()
+		{
+			return {
+				label: true,
+				statustext: true
+			}
 		}
 
 		/**
@@ -1019,6 +1041,10 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 				break;
 			default:
 				attrValue = mgr.expandName(attrValue);
+				if(!_template_node.getAttribute("no_lang") && widget_class.translate[attribute])
+				{
+					attrValue = widget.egw().lang(attrValue);
+				}
 				break;
 		}
 
