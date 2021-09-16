@@ -10,14 +10,14 @@
 
 
 
-import {css, html} from "@lion/core";
+import {css, html, SlotMixin, render, RenderOptions} from "@lion/core";
 import {LionInput} from "@lion/input";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
-export class Et2Colorpicker extends Et2InputWidget(Et2Widget(LionInput))
+export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput)))
 {
-	private cleared: boolean = true;
+	private cleared : boolean = true;
 
 	static get styles()
 	{
@@ -27,7 +27,13 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(LionInput))
 			:host {
 				display: flex;
 			}
-			div:hover > span.clear-icon {
+			.input-group__suffix{
+				height: 12px;
+			}
+			.input-group__container {
+				align-items: center
+			}
+			:host(:hover) ::slotted([slot="suffix"]) {
 				width: 12px;
 				height: 12px;
 				display: inline-flex;
@@ -41,9 +47,25 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(LionInput))
 		];
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			input: () => this.__getInputNode(),
+			suffix: () => this.__getClearButtonNode()
+		}
+	}
+
 	constructor()
 	{
 		super();
+
+		// Override the default type of "text"
+		this.type = 'color';
+
+		// Bind the handlers, since slots bind without this as context
+		this._handleChange = this._handleChange.bind(this);
+		this._handleClickClear = this._handleClickClear.bind(this);
 	}
 
 	connectedCallback()
@@ -51,15 +73,52 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(LionInput))
 		super.connectedCallback();
 	}
 
-	render()
+	__getInputNode()
+	{
+		const renderParent = document.createElement('div');
+		render(
+			this._inputTemplate(),
+			renderParent,
+			<RenderOptions>({
+				scopeName: this.localName,
+				eventContext: this,
+			}),
+		);
+		return renderParent.firstElementChild;
+	}
+
+	_inputTemplate()
 	{
 		return html`
-            <div class="et2_colorpicker" id="${this.id}">
-                <input class="et2_colorpicker" type="color" @change="${this._handleChange}"/>
-				<span class="clear-icon" @click="${this._handleClickClear}"></span>
-            </div>
+            <input type="color" onchange="${this._handleChange}"/>
 		`;
 	}
+
+	/**
+	 * Get the clear button node
+	 * @returns {Element|null}
+	 */
+	__getClearButtonNode()
+	{
+		const renderParent = document.createElement('div');
+		render(
+			this._clearButtonTemplate(),
+			renderParent,
+			<RenderOptions>({
+				scopeName: this.localName,
+				eventContext: this,
+			}),
+		);
+		return renderParent.firstElementChild;
+	}
+
+	_clearButtonTemplate()
+	{
+		return html`
+            <span class="clear-icon" @click="${this._handleClickClear}"></span>
+		`;
+	}
+
 	_handleChange(e)
 	{
 		this.set_value(e.target.value);
