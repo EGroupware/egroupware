@@ -315,6 +315,9 @@ button.et2_button_with_image {
 button.et2_button_with_image.et2_button_text {
 	background-position: 4px center;
 }
+button.et2_buttonFitContent, et2-button.et2_buttonFitContent {
+	max-width: fit-content;
+}
 /* et2_box_widget ###*/
 button[id="cancel"],
 button#cancel {

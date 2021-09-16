@@ -67,6 +67,9 @@ function send_template()
 		// fix <textbox multiline="true" .../> --> <textarea .../> (et2-prefix and self-closing is handled below)
 		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#u', '<textarea$1$2/>', $str);
 
+		// fix <buttononly.../> --> <button type="buttononly".../>
+		$str = preg_replace('#<buttononly\s(.*?)/>#u', '<button type="buttononly" $1/>', $str);
+
 		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches)
 		{
 			return '<' . $matches[2] . 'et2-' . $matches[3] .
