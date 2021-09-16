@@ -22,7 +22,6 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			css`
             :host {
 				display: block;
-				width: 100%;
             }
             :host > div {
             	display: flex;
