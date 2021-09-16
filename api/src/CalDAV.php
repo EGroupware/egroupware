@@ -18,6 +18,8 @@ use EGroupware\Api\CalDAV\Principals;
 
 // explicit import non-namespaced classes
 require_once(__DIR__.'/WebDAV/Server.php');
+
+use EGroupware\Api\Contacts\JsContact;
 use HTTP_WebDAV_Server;
 use calendar_hooks;
 
@@ -977,6 +979,21 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * Check if clients want's or sends JSON
+	 *
+	 * @return bool
+	 */
+	public static function isJSON(string $type=null)
+	{
+		if (!isset($type))
+		{
+			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PROPPATCH']) ?
+				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
+		}
+		return (bool)preg_match('#application/([^+ ;]+\+)?json#', $type);
+	}
+
+	/**
 	 * GET method handler
 	 *
 	 * @param  array $options parameter passing array
@@ -989,6 +1006,10 @@ class CalDAV extends HTTP_WebDAV_Server
 		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
+			if (self::isJSON())
+			{
+				return $this->jsonIndex($options);
+			}
 			return $this->autoindex($options);
 		}
 		if (($handler = self::app_handler($app)))
@@ -997,6 +1018,170 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
 		return '501 Not Implemented';
+	}
+
+	const JSON_OPTIONS = JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR;
+	const JSON_OPTIONS_PRETTY = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR;
+
+	/**
+	 * JSON encode incl. modified pretty-print
+	 *
+	 * @param $data
+	 * @return array|string|string[]|null
+	 */
+	public static function json_encode($data, $pretty = true)
+	{
+		if (!$pretty)
+		{
+			return self::json_encode($data, self::JSON_OPTIONS);
+		}
+		return preg_replace('/: {\n\s*(.*?)\n\s*(},?\n)/', ': { $1 $2',
+			json_encode($data, self::JSON_OPTIONS_PRETTY));
+	}
+
+	/**
+	 * PROPFIND/REPORT like output for GET request on collection with Accept: application/(.*+)?json
+	 *
+	 * For addressbook-collections we give a REST-like output without any other properties
+	 * {
+	 *   "/addressbook/ID": {
+	 *     JsContact-data
+	 *   },
+	 *   ...
+	 * }
+	 *
+	 * @param array $options
+	 * @return bool|string|void
+	 */
+	protected function jsonIndex(array $options)
+	{
+		header('Content-Type: application/json; charset=utf-8');
+		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
+		$propfind_options = array(
+			'path'  => $options['path'],
+			'depth' => 1,
+			'props' => $is_addressbook ? [
+				'address-data' => self::mkprop(self::CARDDAV, 'address-data', '')
+			] : 'all',
+			'other' => [],
+		);
+
+		// sync-collection report via GET parameter sync-token
+		if (isset($_GET['sync-token']))
+		{
+			$propfind_options['root'] = ['name' => 'sync-collection'];
+			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token']];
+			$propfind_options['other'][] = ['name' => 'sync-level', 'data' => $_GET['sync-level'] ?? 1];
+
+			// clients want's pagination
+			if (isset($_GET['nresults']))
+			{
+				$propfind_options['other'][] = ['name' => 'nresults', 'data' => (int)$_GET['nresults']];
+			}
+		}
+
+		// ToDo: client want data filtered
+		if (isset($_GET['filters']))
+		{
+
+		}
+
+		// properties to NOT get the default address-data for addressbook-collections and "all" for the rest
+		if (isset($_GET['props']))
+		{
+			$propfind_options['props'] = [];
+			foreach((array)$_GET['props'] as $value)
+			{
+				$parts = explode(':', $value);
+				$name = array_pop($parts);
+				$ns = $parts ? implode(':', $parts) : 'DAV:';
+				$propfind_options['props'][$name] = self::mkprop($ns, $name, '');
+			}
+		}
+		$files = array();
+		if (($ret = $this->REPORT($propfind_options,$files)) !== true)
+		{
+			return $ret;	// no collection
+		}
+
+		echo "{\n";
+		$prefix = "  ";
+		foreach($files['files'] as $resource)
+		{
+			$path = $resource['path'];
+			echo $prefix.json_encode($path, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).': ';
+			if (!isset($resource['props']))
+			{
+				echo 'null';    // deleted in sync-report
+			}
+			/*elseif (isset($resource['props']['address-data']))
+			{
+				echo $resource['props']['address-data']['val'];
+			}*/
+			else
+			{
+				$props = $propfind_options['props'] === 'all' ? $resource['props'] :
+					array_intersect_key($resource['props'], $propfind_options['props']);
+
+				if (count($props) > 1)
+				{
+					$props = self::jsonProps($props);
+				}
+				else
+				{
+					$props = current($props)['val'];
+				}
+				echo self::json_encode($props);
+			}
+			$prefix = ",\n  ";
+		}
+		// add sync-token to response
+		if (isset($files['sync-token']))
+		{
+			echo $prefix.'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
+				call_user_func_array($files['sync-token'], (array)$files['sync-token-params']), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+		}
+		echo "\n}\n";
+
+		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
+		exit;
+	}
+
+	/**
+	 * Nicer way to display/encode DAV properties
+	 *
+	 * @param array $props
+	 * @return array
+	 */
+	protected function jsonProps(array $props)
+	{
+		$json = [];
+		foreach($props as $key => $prop)
+		{
+			if (is_scalar($prop['val']))
+			{
+				$value = is_int($key) && $prop['val'] === '' ?
+					/*$prop['ns'].':'.*/$prop['name'] : $prop['val'];
+			}
+			// check if this is a property-object
+			elseif (count($prop) === 3 && isset($prop['name']) && isset($prop['ns']) && isset($prop['val']))
+			{
+				$value = $prop['name'] === 'address-data' ? $prop['val'] : self::jsonProps($prop['val']);
+			}
+			else
+			{
+				$value = $prop;
+			}
+			if (is_int($key))
+			{
+				$json[] = $value;
+			}
+			else
+			{
+				$json[/*($prop['ns'] === 'DAV:' ? '' : $prop['ns'].':').*/$prop['name']] = $value;
+			}
+		}
+		return $json;
 	}
 
 	/**

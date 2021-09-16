@@ -73,9 +73,14 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 
 		$this->bo = new Api\Contacts();
 
+		if (Api\CalDAV::isJSON())
+		{
+			self::$path_attr = 'id';
+			self::$path_extension = '';
+		}
 		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
 		// LDAP does NOT have a carddav_name attribute --> stick with id mapped to LDAP attribute uid
-		if (version_compare($GLOBALS['egw_info']['apps']['api']['version'], '1.9.007', '<') ||
+		elseif (version_compare($GLOBALS['egw_info']['apps']['api']['version'], '1.9.007', '<') ||
 			$this->bo->contact_repository != 'sql' ||
 			$this->bo->account_repository != 'sql' && strpos($_SERVER['REQUEST_URI'].'/','/addressbook-accounts/') !== false)
 		{
@@ -173,12 +178,12 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
 			{
 				--$this->sync_collection_token;
-				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
+				$files['sync-token-params'][] = true;	// tell get_sync_collection_token that we have more entries
 			}
 		}
 		else
 		{
-			// return iterator, calling ourself to return result in chunks
+			// return iterator, calling ourselves to return result in chunks
 			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
 		}
 		return true;
@@ -270,6 +275,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				}
 			}
 
+			$is_jscontact = Api\CalDAV::isJSON();
 			foreach($contacts as &$contact)
 			{
 				// remove contact from requested multiget ids, to be able to report not found urls
@@ -284,15 +290,16 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					continue;
 				}
 				$props = array(
-					'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'text/vcard'),
+					'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', $is_jscontact ? JsContact::MIME_TYPE_JSCARD : 'text/vcard'),
 					'getlastmodified' => $contact['modified'],
 					'displayname' => $contact['n_fn'],
 				);
 				if ($address_data)
 				{
-					$content = $handler->getVCard($contact['id'],$this->charset,false);
+					$content = $is_jscontact ? JsContact::getJsCard($contact['id'], false) :
+						$handler->getVCard($contact['id'],$this->charset,false);
 					$props['getcontentlength'] = bytes($content);
-					$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
+					$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 				}
 				$files[] = $this->add_resource($path, $contact, $props);
 			}
@@ -351,16 +358,16 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 							$etag .= ':'.implode('-',$filter['owner']);
 						}
 						$props = array(
-							'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'text/vcard'),
+							'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', $is_jscontact ? JsContact::MIME_TYPE_JSCARDGROUP : 'text/vcard'),
 							'getlastmodified' => Api\DateTime::to($list['list_modified'],'ts'),
 							'displayname' => $list['list_name'],
 							'getetag' => '"'.$etag.'"',
 						);
 						if ($address_data)
 						{
-							$content = $handler->getGroupVCard($list);
+							$content = $is_jscontact ? JsContact::getJsCardGroup($list) : $handler->getGroupVCard($list);
 							$props['getcontentlength'] = bytes($content);
-							$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
+							$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 						}
 						$files[] = $this->add_resource($path, $list, $props);
 
@@ -452,7 +459,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						}
 						else
 						{
-							switch($filter['attrs']['collation'])	// todo: which other collations allowed, we are allways unicode
+							switch($filter['attrs']['collation'])	// todo: which other collations allowed, we are always unicode
 							{
 								case 'i;unicode-casemap':
 								default:
@@ -590,7 +597,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $contact;
 		}
 		// jsContact or vCard
-		if (JsContact::isJsContact())
+		if (Api\CalDAV::isJSON())
 		{
 			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact) : JsContact::getJsCard($contact);
 			$options['mimetype'] = $contact['list_id'] ? JsContact::MIME_TYPE_JSCARDGROUP : JsContact::MIME_TYPE_JSCARD;
@@ -628,7 +635,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $oldContact;
 		}
 
-		if (JsContact::isJsContact())
+		if (Api\CalDAV::isJSON())
 		{
 			$contact = JsContact::parseJsCard($options['content']);
 			// just output it again for now

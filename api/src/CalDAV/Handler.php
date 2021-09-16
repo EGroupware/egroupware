@@ -712,16 +712,23 @@ abstract class Handler
 		//error_log(__METHOD__."('$path', $user, more_results=$more_results) this->sync_collection_token=".$this->sync_collection_token);
 		if ($more_results)
 		{
-			$error =
-' <D:response>
-  <D:href>'.htmlspecialchars($this->caldav->base_uri.$this->caldav->path).'</D:href>
+			if (Api\CalDAV::isJSON())
+			{
+				$error = ",\n".'  "more-results": true';
+			}
+			else
+			{
+				$error =
+					' <D:response>
+  <D:href>' . htmlspecialchars($this->caldav->base_uri . $this->caldav->path) . '</D:href>
   <D:status>HTTP/1.1 507 Insufficient Storage</D:status>
   <D:error><D:number-of-matches-within-limits/></D:error>
  </D:response>
 ';
-			if ($this->caldav->crrnd)
-			{
-				$error = str_replace(array('<D:', '</D:'),  array('<', '</'), $error);
+				if ($this->caldav->crrnd)
+				{
+					$error = str_replace(array('<D:', '</D:'), array('<', '</'), $error);
+				}
 			}
 			echo $error;
 		}
