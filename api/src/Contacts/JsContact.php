@@ -27,38 +27,20 @@ class JsContact
 	const MIME_TYPE_JSON = "application/json";
 
 	/**
-	 * Check if request want's JSON
-	 *
-	 * @param ?string $type default use Content-Type or Accept HTTP header depending on request method
-	 * @return bool true: jsContact, false: other eg. vCard
-	 */
-	public static function isJsContact(string $type=null)
-	{
-		if (!isset($type))
-		{
-			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST']) ?
-				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
-		}
-		return strpos($type, self::MIME_TYPE) !== false ||
-			strpos($type, self::MIME_TYPE_JSON) !== false;
-	}
-
-	const JSON_OPTIONS = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
-
-	/**
 	 * Get jsCard for given contact
 	 *
 	 * @param int|array $contact
-	 * @return string
+	 * @param bool $encode=true true: JSON encode, false: return raw data eg. from listing
+	 * @return string|array
 	 * @throws Api\Exception\NotFound
 	 */
-	public static function getJsCard($contact)
+	public static function getJsCard($contact, $encode=true)
 	{
 		if (is_scalar($contact) && !($contact = self::getContacts()->read($contact)))
 		{
 			throw new Api\Exception\NotFound();
 		}
-		return json_encode(array_filter([
+		$data = array_filter([
 			'uid' => $contact['uid'],
 			'prodId' => 'EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'],
 			'created' => self::UTCDateTime($contact['created']),
@@ -90,7 +72,12 @@ class JsContact
 			'egroupware.org/customfields' => self::customfields($contact),
 			'egroupware.org/assistant' => $contact['assistent'],
 			'egroupware.org/fileAs' => $contact['fileas'],
-		]), self::JSON_OPTIONS);
+		]);
+		if ($encode)
+		{
+			return Api\CalDAV::json_encode($data);
+		}
+		return $data;
 	}
 
 	/**
@@ -526,14 +513,19 @@ class JsContact
 	 * @param ?string $street2=null 2. address line
 	 * @return array[] array of objects with attributes type and value
 	 */
-	protected static function streetComponents(string $street, ?string $street2=null)
+	protected static function streetComponents(?string $street, ?string $street2=null)
 	{
-		$components = [['type' => 'name', 'value' => $street]];
-
-		if (!empty($street2))
+		$components = [];
+		foreach(func_get_args() as $street)
 		{
-			$components[] = ['type' => 'separator', 'value' => "\n"];
-			$components[] = ['type' => 'name', 'value' => $street2];
+			if ($components)
+			{
+				$components[] = ['type' => 'separator', 'value' => "\n"];
+			}
+			if (!empty($street))
+			{
+				$components[] = ['type' => 'name', 'value' => $street];
+			}
 		}
 		return $components;
 	}
@@ -968,7 +960,7 @@ class JsContact
 		$vCard->setAttribute('UID',$list['list_uid']);
 		*/
 
-		return json_encode($group, self::JSON_OPTIONS);
+		return Api\CalDAV::json_encode($group);
 	}
 
 	/**
