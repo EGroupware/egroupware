@@ -178,13 +178,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 				let image = this._get_default_image(this._widget_id);
 				if(image != this._image)
 				{
-					this.image = this._get_default_image(this._widget_id);
+					this.image = image;
 				}
 			}
 			let default_class = this._get_default_class(this._widget_id);
 			if(default_class && !this.classList.contains(default_class))
 			{
-				this.classList.add(this._get_default_class(this._widget_id));
+				this.classList.add(default_class);
 			}
 		}
 	}

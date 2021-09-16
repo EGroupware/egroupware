@@ -57,6 +57,11 @@ const Et2InputWidgetMixin = (superclass) =>
 					attribute: 'readonly',
 					reflect: true,
 				},
+				// readonly is what is in the templates
+				// I put this in here so loadWebComponent finds it when it tries to set it from the template
+				readonly: {
+					type: Boolean
+				}
 			};
 		}
 
