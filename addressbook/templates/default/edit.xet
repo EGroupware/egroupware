@@ -83,9 +83,7 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox  class="city_state_postcode" width="100%">
-						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" submit="1" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
-						</menulist>
+						<select type="select-country" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
 					<description/>
