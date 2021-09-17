@@ -26,7 +26,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             :host > div {
             	display: flex;
             	flex-wrap: nowrap;
-            	justify-content: space-between;
+            	justify-content: flex-start;
             	align-items: stretch;
 			}
 			/* CSS for child elements */
