@@ -232,7 +232,6 @@ select#addressbook-index_col_filter\[tid\] {
   #addressbook-edit {
     height: auto;
     min-height: 390px;
-    overflow: auto;
   }
   /*##################################################################*/
   /*Infolog*/
