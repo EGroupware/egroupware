@@ -599,8 +599,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		// jsContact or vCard
 		if (Api\CalDAV::isJSON())
 		{
-			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact) : JsContact::getJsCard($contact);
-			$options['mimetype'] = $contact['list_id'] ? JsContact::MIME_TYPE_JSCARDGROUP : JsContact::MIME_TYPE_JSCARD;
+			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact) :
+				JsContact::getJsCard($contact);
+			$options['mimetype'] = ($contact['list_id'] ? JsContact::MIME_TYPE_JSCARDGROUP :
+				JsContact::MIME_TYPE_JSCARD).';charset=utf-8';
 		}
 		else
 		{
@@ -638,10 +640,12 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (Api\CalDAV::isJSON())
 		{
 			$contact = JsContact::parseJsCard($options['content']);
-			// just output it again for now
+
+			/* uncomment to return parsed data for testing
 			header('Content-Type: application/json');
 			echo json_encode($contact, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 			return "200 Ok";
+			*/
 		}
 		else
 		{
@@ -751,7 +755,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
-		$contact['photo_unchanged'] = false;	// photo needs saving
+		// ignore photo for JSON/REST, it's not yet supported
+		$contact['photo_unchanged'] = Api\CalDAV::isJSON(); //false;	// photo needs saving
 		if (!($save_ok = $is_group ? $this->save_group($contact, $oldContact) : $this->bo->save($contact)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
@@ -1051,7 +1056,17 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			unset($tids[Api\Contacts::DELETED_TYPE]);
 			$non_deleted_tids = array_keys($tids);
 		}
-		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
+		$keys = ['tid' => $non_deleted_tids];
+		// with REST/JSON we only use our id, but DELETE request has neither Accept nor Content-Type header to detect JSON request
+		if ((string)$id === (string)(int)$id)
+		{
+			$keys['id'] = $id;
+		}
+		else
+		{
+			$keys[self::$path_attr] = $id;
+		}
+		$contact = $this->bo->read($keys);
 
 		// if contact not found and accounts stored NOT like contacts, try reading it without path-extension as id
 		if (is_null($contact) && $this->bo->so_accounts && ($c = $this->bo->read($test=basename($id, '.vcf'))))

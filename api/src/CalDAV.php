@@ -19,16 +19,16 @@ use EGroupware\Api\CalDAV\Principals;
 // explicit import non-namespaced classes
 require_once(__DIR__.'/WebDAV/Server.php');
 
-use EGroupware\Api\Contacts\JsContact;
+use EGroupware\Api\Contacts\JsContactParseException;
 use HTTP_WebDAV_Server;
 use calendar_hooks;
 
 /**
- * EGroupware: GroupDAV access
+ * EGroupware: CalDAV/CardDAV server
  *
  * Using a modified PEAR HTTP/WebDAV/Server class from API!
  *
- * One can use the following url's releative (!) to http://domain.com/egroupware/groupdav.php
+ * One can use the following URLs relative (!) to https://example.org/egroupware/groupdav.php
  *
  * - /                        base of Cal|Card|GroupDAV tree, only certain clients (KDE, Apple) can autodetect folders from here
  * - /principals/             principal-collection-set for WebDAV ACL
@@ -51,10 +51,25 @@ use calendar_hooks;
  * - /(resources|locations)/<resource-name>/calendar calendar of a resource/location, if user has rights to view
  * - /<current-username>/(resource|location)-<resource-name> shared calendar from a resource/location
  *
- * Shared addressbooks or calendars are only shown in in users home-set, if he subscribed to it via his CalDAV preferences!
+ * Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
  *
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
- * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
+ * from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
+ *
+ * Using EGroupware CalDAV/CardDAV as REST API: currently only for contacts
+ * ===========================================
+ * GET requests to collections with an "Accept: application/json" header return a JSON response similar to a PROPFIND
+ *     following GET parameters are supported to customize the returned properties:
+ *     - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
+ *       Default for addressbook collections is to only return address-data (JsContact), other collections return all props.
+ *     - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
+ *     - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
+ *       this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
+ * POST requests to collection with a "Content-Type: application/json" header add new entries in addressbook or calendar collections
+ *      (Location header in response gives URL of new resource)
+ * GET  requests with an "Accept: application/json" header can be used to retrieve single resources / JsContact or JsCalendar schema
+ * PUT  requests with  a "Content-Type: application/json" header allow modifying single resources
+ * DELETE requests delete single resources
  *
  * Permanent error_log() calls should use groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
@@ -1403,7 +1418,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
-		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork')
+		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
+			substr($options['path'], -1) === '/' && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options);
@@ -2421,16 +2437,37 @@ class CalDAV extends HTTP_WebDAV_Server
 		$headline = null;
 		_egw_log_exception($e,$headline);
 
-		// exception handler sending message back to the client as basic auth message
-		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
-		header('WWW-Authenticate: Basic realm="'.$headline.': '.$error.'"');
-		header('HTTP/1.1 401 Unauthorized');
-		header('X-WebDAV-Status: 401 Unauthorized', true);
-
+		if (self::isJSON())
+		{
+			header('Content-Type: application/json; charset=utf-8');
+			if (is_a($e, JsContactParseException::class))
+			{
+				$status = '422 Unprocessable Entity';
+			}
+			else
+			{
+				$status = '500 Internal Server Error';
+			}
+			http_response_code((int)$status);
+			echo self::json_encode([
+				'error' => $e->getCode() ?: (int)$status,
+				'message' => $e->getMessage(),
+			]+($e->getPrevious() ? [
+				'original' => get_class($e->getPrevious()).': '.$e->getPrevious()->getMessage(),
+			] : []), JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+		}
+		else
+		{
+			// exception handler sending message back to the client as basic auth message
+			$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+			header('WWW-Authenticate: Basic realm="' . $headline . ': ' . $error . '"');
+			header('HTTP/1.1 401 Unauthorized');
+			header('X-WebDAV-Status: 401 Unauthorized', true);
+		}
 		// if our own logging is active, log the request plus a trace, if enabled in server-config
 		if (self::$request_starttime && isset(self::$instance))
 		{
-			self::$instance->_http_status = '401 Unauthorized';	// to correctly log it
+			self::$instance->_http_status = self::isJSON() ? $status : '401 Unauthorized';	// to correctly log it
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 			{
 				self::$instance->log_request("\n".$e->getTraceAsString()."\n");
