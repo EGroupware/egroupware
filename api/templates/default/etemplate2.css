@@ -26,6 +26,7 @@
   padding: 0px;
   background-color: white;
   height: 99%;
+  max-width: 100%
 }
 .et2_container > div:not([class]) {
   height: 100%;
