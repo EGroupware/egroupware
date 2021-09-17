@@ -518,12 +518,12 @@ class JsContact
 		$components = [];
 		foreach(func_get_args() as $street)
 		{
-			if ($components)
-			{
-				$components[] = ['type' => 'separator', 'value' => "\n"];
-			}
 			if (!empty($street))
 			{
+				if ($components)
+				{
+					$components[] = ['type' => 'separator', 'value' => "\n"];
+				}
 				$components[] = ['type' => 'name', 'value' => $street];
 			}
 		}
