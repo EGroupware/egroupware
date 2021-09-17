@@ -53,8 +53,15 @@ class JsContact
 			'organizations' => array_filter(['org' => self::organization($contact)]),
 			'titles' => self::titles($contact),
 			'emails' => array_filter([
-				'work' => empty($contact['email']) ? null : ['email' => $contact['email']],
-				'private' => empty($contact['email_home']) ? null : ['email' => $contact['email_home']],
+				'work' => empty($contact['email']) ? null : [
+					'email' => $contact['email'],
+					'contexts' => ['work' => true],
+					'pref' => 1,    // as it's the more prominent in our UI
+				],
+				'private' => empty($contact['email_home']) ? null : [
+					'email' => $contact['email_home'],
+					'contexts' => ['private' => true],
+				],
 			]),
 			'phones' => self::phones($contact),
 			'online' => array_filter([
@@ -62,7 +69,7 @@ class JsContact
 				'url_home' => !empty($contact['url_home']) ? ['resource' => $contact['url_home'], 'type' => 'uri', 'contexts' => ['private' => true]] : null,
 			]),
 			'addresses' => [
-				'work' => self::address($contact, 'work', 1),
+				'work' => self::address($contact, 'work', 1),    // as it's the more prominent in our UI
 				'home' =>  self::address($contact, 'home'),
 			],
 			'photos' => self::photos($contact),
@@ -75,7 +82,7 @@ class JsContact
 		]);
 		if ($encode)
 		{
-			return Api\CalDAV::json_encode($data);
+			return Api\CalDAV::json_encode($data, self::JSON_OPTIONS_ERROR);
 		}
 		return $data;
 	}
@@ -88,96 +95,125 @@ class JsContact
 	 */
 	public static function parseJsCard(string $json)
 	{
-		$data = json_decode($json, JSON_THROW_ON_ERROR);
-
-		if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
-
-		$contact = [];
-		foreach($data as $name => $value)
+		try
 		{
-			switch($name)
+			$data = json_decode($json, true, 10, JSON_THROW_ON_ERROR);
+
+			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
+
+			$contact = [];
+			foreach ($data as $name => $value)
 			{
-				case 'uid':
-					if (!is_string($value) || empty($value))
-					{
-						throw new \InvalidArgumentException("Invalid uid value!");
-					}
-					$contact['uid'] = $value;
-					break;
+				switch ($name)
+				{
+					case 'uid':
+						if (!is_string($value) || empty($value))
+						{
+							throw new \InvalidArgumentException("Missing or invalid uid value!");
+						}
+						$contact['uid'] = $value;
+						break;
 
-				case 'name':
-					$contact += self::parseNameComponents($value);
-					break;
+					case 'name':
+						$contact += self::parseNameComponents($value);
+						break;
 
-				case 'fullName':
-					$contact['n_fn'] = self::parseLocalizedString($value);
-					break;
+					case 'fullName':
+						$contact['n_fn'] = self::parseLocalizedString($value);
+						break;
 
-				case 'organizations':
-					$contact += self::parseOrganizations($value);
-					break;
+					case 'organizations':
+						$contact += self::parseOrganizations($value);
+						break;
 
-				case 'titles':
-					$contact += self::parseTitles($value);
-					break;
+					case 'titles':
+						$contact += self::parseTitles($value);
+						break;
 
-				case 'emails':
-					$contact += self::parseEmails($value);
-					break;
+					case 'emails':
+						$contact += self::parseEmails($value);
+						break;
 
-				case 'phones':
-					$contact += self::parsePhones($value);
-					break;
+					case 'phones':
+						$contact += self::parsePhones($value);
+						break;
 
-				case 'online':
-					$contact += self::parseOnline($value);
-					break;
+					case 'online':
+						$contact += self::parseOnline($value);
+						break;
 
-				case 'addresses':
-					$contact += self::parseAddresses($value);
-					break;
+					case 'addresses':
+						$contact += self::parseAddresses($value);
+						break;
 
-				case 'photos':
-					$contact += self::parsePhotos($value);
-					break;
+					case 'photos':
+						$contact += self::parsePhotos($value);
+						break;
 
-				case 'anniversaries':
-					$contact += self::parseAnniversaries($value);
-					break;
+					case 'anniversaries':
+						$contact += self::parseAnniversaries($value);
+						break;
 
-				case 'notes':
-					$contact['note'] = implode("\n", array_map(static function($note)
-					{
-						return self::parseLocalizedString($note);
-					}, $value));
-					break;
+					case 'notes':
+						$contact['note'] = implode("\n", array_map(static function ($note) {
+							return self::parseLocalizedString($note);
+						}, $value));
+						break;
 
-				case 'categories':
-					$contact['cat_id'] = self::parseCategories($value);
-					break;
+					case 'categories':
+						$contact['cat_id'] = self::parseCategories($value);
+						break;
 
-				case 'egroupware.org/customfields':
-					$contact += self::parseCustomfields($value);
-					break;
+					case 'egroupware.org/customfields':
+						$contact += self::parseCustomfields($value);
+						break;
 
-				case 'egroupware.org/assistant':
-					$contact['assistent'] = $value;
-					break;
+					case 'egroupware.org/assistant':
+						$contact['assistent'] = $value;
+						break;
 
-				case 'egroupware.org/fileAs':
-					$contact['fileas'] = $value;
-					break;
+					case 'egroupware.org/fileAs':
+						$contact['fileas'] = $value;
+						break;
 
-				case 'prodId': case 'created': case 'updated': case 'kind':
-					break;
+					case 'prodId':
+					case 'created':
+					case 'updated':
+					case 'kind':
+						break;
 
-				default:
-					error_log(__METHOD__."() $name=".json_encode($value).' --> ignored');
-					break;
+					default:
+						error_log(__METHOD__ . "() $name=" . json_encode($value, self::JSON_OPTIONS_ERROR) . ' --> ignored');
+						break;
+				}
 			}
+		}
+		catch (\JsonException $e) {
+			throw new JsContactParseException("Error parsing JSON: ".$e->getMessage(), 422, $e);
+		}
+		catch (\InvalidArgumentException $e) {
+			throw new JsContactParseException("Error parsing JsContact field '$name': ".
+				str_replace('"', "'", $e->getMessage()), 422);
+		}
+		catch (\TypeError $e) {
+			$message = $e->getMessage();
+			if (preg_match('/must be of the type ([^ ]+), ([^ ]+) given/', $message, $matches))
+			{
+				$message = "$matches[1] expected, but got $matches[2]: ".
+					str_replace('"', "'", json_encode($value, self::JSON_OPTIONS_ERROR));
+			}
+			throw new JsContactParseException("Error parsing JsContact field '$name': $message", 422, $e);
+		}
+		catch (\Throwable $e) {
+			throw new JsContactParseException("Error parsing JsContact field '$name': ". $e->getMessage(), 422, $e);
 		}
 		return $contact;
 	}
+
+	/**
+	 * JSON options for errors thrown as exceptions
+	 */
+	const JSON_OPTIONS_ERROR = JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
 
 	/**
 	 * Return organisation
@@ -317,6 +353,7 @@ class JsContact
 	 * Parse custom fields
 	 *
 	 * Not defined custom fields are ignored!
+	 * Not send custom fields are set to null!
 	 *
 	 * @param array $cfs name => object with attribute data and optional type, label, values
 	 * @return array
@@ -324,17 +361,18 @@ class JsContact
 	protected static function parseCustomfields(array $cfs)
 	{
 		$contact = [];
-		$definition = Api\Storage\Customfields::get('addressbook');
+		$definitions = Api\Storage\Customfields::get('addressbook');
 
-		foreach($cfs as $name => $data)
+		foreach($definitions as $name => $definition)
 		{
-			if (!is_array($data) || !array_key_exists('value', $data))
+			$data = $cfs[$name];
+			if (isset($data[$name]))
 			{
-				throw new \InvalidArgumentException("Invalid customfield object $name: ".json_encode($data));
-			}
-			if (isset($definition[$name]))
-			{
-				switch($definition[$name]['type'])
+				if (!is_array($data) || !array_key_exists('value', $data))
+				{
+					throw new \InvalidArgumentException("Invalid customfield object $name: ".json_encode($data, self::JSON_OPTIONS_ERROR));
+				}
+				switch($definition['type'])
 				{
 					case 'date-time':
 						$data['value'] = Api\DateTime::to($data['value'], 'object');
@@ -347,12 +385,22 @@ class JsContact
 						break;
 					case 'select':
 						if (is_scalar($data['value'])) $data['value'] = explode(',', $data['value']);
-						$data['value'] = array_intersect(array_keys($definition[$name]['values']), $data['value']);
+						$data['value'] = array_intersect(array_keys($definition['values']), $data['value']);
 						$data['value'] = $data['value'] ? implode(',', (array)$data['value']) : null;
 						break;
 				}
 				$contact['#'.$name] = $data['value'];
 			}
+			// set not return cfs to null
+			else
+			{
+				$contact['#'.$name] = null;
+			}
+		}
+		// report not existing cfs to log
+		if (($not_existing=array_diff(array_keys($cfs), array_keys($definitions))))
+		{
+			error_log(__METHOD__."() not existing/ignored custom fields: ".implode(', ', $not_existing));
 		}
 		return $contact;
 	}
@@ -454,7 +502,7 @@ class JsContact
 			$contact += ($values=self::parseAddress($address, $id, $last_type));
 			if (++$n > 2)
 			{
-				error_log(__METHOD__."() Ignoring $n. address id=$id: ".json_encode($address));
+				error_log(__METHOD__."() Ignoring $n. address id=$id: ".json_encode($address, self::JSON_OPTIONS_ERROR));
 				break;
 			}
 		}
@@ -481,7 +529,8 @@ class JsContact
 	 */
 	protected static function parseAddress(array $address, string $id, string &$last_type=null)
 	{
-		$type = !isset($last_type) && (empty($address['context']['private']) || $id !== 'private') || $last_type === 'home' ? 'work' : 'home';
+		$type = !isset($last_type) && (empty($address['contexts']['private']) || $id === 'work') ||
+			$last_type === 'home' ? 'work' : 'home';
 		$last_type = $type;
 		$prefix = $type === 'work' ? 'adr_one_' : 'adr_two_';
 
@@ -547,7 +596,7 @@ class JsContact
 		{
 			if (!is_array($component) || !is_string($component['value']))
 			{
-				throw new \InvalidArgumentException("Invalid streetComponents!");
+				throw new \InvalidArgumentException("Invalid street-component: ".json_encode($component, self::JSON_OPTIONS_ERROR));
 			}
 			if ($street && $last_type !== 'separator')  // if we have no separator, we add a space
 			{
@@ -614,7 +663,7 @@ class JsContact
 		{
 			if (!is_array($phone) || !is_string($phone['phone']))
 			{
-				throw new \InvalidArgumentException("Invalid phone: " . json_encode($phone));
+				throw new \InvalidArgumentException("Invalid phone: " . json_encode($phone, self::JSON_OPTIONS_ERROR));
 			}
 			// first check for "our" id's
 			if (isset(self::$phone2jscard[$id]) && !isset($contact[$id]))
@@ -687,7 +736,7 @@ class JsContact
 		{
 			if (!is_array($value) || !is_string($value['resource']))
 			{
-				throw new \InvalidArgumentException("Invalid online resource with id '$id': ".json_encode($value));
+				throw new \InvalidArgumentException("Invalid online resource with id '$id': ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
 			// check for "our" id's
 			if (in_array($id, ['url', 'url_home']))
@@ -717,6 +766,7 @@ class JsContact
 	/**
 	 * Parse emails object
 	 *
+	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.3.1
 	 * @param array $emails id => object with attribute "email" and optional "context"
 	 * @return array
 	 */
@@ -727,7 +777,7 @@ class JsContact
 		{
 			if (!is_array($value) || !is_string($value['email']))
 			{
-				throw new \InvalidArgumentException("Invalid email object: ".json_encode($value));
+				throw new \InvalidArgumentException("Invalid email object (requires email attribute): ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
 			if (!isset($contact['email']) && $id !== 'private' && empty($value['context']['private']))
 			{
@@ -802,21 +852,21 @@ class JsContact
 	/**
 	 * parse nameComponents
 	 *
-	 * @param array $values
+	 * @param array $components
 	 * @return array
 	 */
-	protected static function parseNameComponents(array $values)
+	protected static function parseNameComponents(array $components)
 	{
 		$contact = array_combine(array_values(self::$nameType2attribute),
 			array_fill(0, count(self::$nameType2attribute), null));
 
-		foreach($values as $value)
+		foreach($components as $component)
 		{
-			if (empty($value['type']) || isset($value) && !is_string($value['value']))
+			if (empty($component['type']) || isset($component) && !is_string($component['value']))
 			{
-				throw new \InvalidArgumentException("Invalid nameComponent!");
+				throw new \InvalidArgumentException("Invalid name-component (must have type and value attributes): ".json_encode($component, self::JSON_OPTIONS_ERROR));
 			}
-			$contact[self::$nameType2attribute[$value['type']]] = $value['value'];
+			$contact[self::$nameType2attribute[$component['type']]] = $component['value'];
 		}
 		return $contact;
 	}
@@ -854,7 +904,7 @@ class JsContact
 				(!list($year, $month, $day) = explode('-', $anniversary['date'])) ||
 				!(1 <= $month && $month <= 12 && 1 <= $day && $day <= 31))
 			{
-				throw new \InvalidArgumentException("Invalid anniversary object with id '$id': ".json_encode($anniversary));
+				throw new \InvalidArgumentException("Invalid anniversary object with id '$id': ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
 			if (!isset($contact['bday']) && ($id === 'bday' || $anniversary['type'] === 'birth'))
 			{
@@ -862,7 +912,7 @@ class JsContact
 			}
 			else
 			{
-				error_log(__METHOD__."() only one birtday is supported, ignoring aniversary: ".json_encode($anniversary));
+				error_log(__METHOD__."() only one birtday is supported, ignoring aniversary: ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
 		}
 		return $contact;
@@ -902,7 +952,7 @@ class JsContact
 	{
 		if (!is_string($value['value']))
 		{
-			throw new \InvalidArgumentException("Invalid localizedString: ".json_encode($value));
+			throw new \InvalidArgumentException("Invalid localizedString: ".json_encode($value, self::JSON_OPTIONS_ERROR));
 		}
 		return $value['value'];
 	}
@@ -960,7 +1010,7 @@ class JsContact
 		$vCard->setAttribute('UID',$list['list_uid']);
 		*/
 
-		return Api\CalDAV::json_encode($group);
+		return Api\CalDAV::json_encode($group, self::JSON_OPTIONS_ERROR);
 	}
 
 	/**
