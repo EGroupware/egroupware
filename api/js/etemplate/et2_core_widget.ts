@@ -804,12 +804,6 @@ export class et2_widget extends ClassWithAttributes
 		else
 		{
 			widget = loadWebComponent(_nodeName, _node, this);
-
-			if (this.addChild)
-			{
-				// webcomponent going into old et2_widget
-				this.addChild(widget);
-			}
 		}
 		return widget;
 	}

@@ -9,6 +9,7 @@ import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
 import {css, dedupeMixin} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
+import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -604,7 +605,7 @@ const Et2WidgetMixin = (superClass) =>
 			 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
 			 * of the equivalent of doLoadingFinished()
 			 */
-			if(this.getParent() instanceof et2_widget && this.getParent().getDOMNode(this))
+			if(this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
 			{
 				this.getParent().getDOMNode(this).append(this);
 			}
