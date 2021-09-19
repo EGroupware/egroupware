@@ -350,7 +350,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				{
 					foreach($lists as $list)
 					{
-						$list[self::$path_attr] = $list['list_carddav_name'];
+						$list[self::$path_attr] = $is_jscontact ? 'list-'.$list['list_id'] : $list['list_carddav_name'];
 						$etag = $list['list_id'].':'.$list['list_etag'];
 						// for all-in-one addressbook, add selected ABs to etag
 						if (isset($filter['owner']) && is_array($filter['owner']))
@@ -365,7 +365,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						);
 						if ($address_data)
 						{
-							$content = $is_jscontact ? JsContact::getJsCardGroup($list) : $handler->getGroupVCard($list);
+							$content = $is_jscontact ? JsContact::getJsCardGroup($list, false) : $handler->getGroupVCard($list);
 							$props['getcontentlength'] = bytes($content);
 							$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 						}
@@ -597,10 +597,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $contact;
 		}
 		// jsContact or vCard
-		if (Api\CalDAV::isJSON())
+		if (($type=Api\CalDAV::isJSON()))
 		{
-			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact) :
-				JsContact::getJsCard($contact);
+			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact, $type) :
+				JsContact::getJsCard($contact, $type);
 			$options['mimetype'] = ($contact['list_id'] ? JsContact::MIME_TYPE_JSCARDGROUP :
 				JsContact::MIME_TYPE_JSCARD).';charset=utf-8';
 		}
@@ -1057,16 +1057,24 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$non_deleted_tids = array_keys($tids);
 		}
 		$keys = ['tid' => $non_deleted_tids];
+
 		// with REST/JSON we only use our id, but DELETE request has neither Accept nor Content-Type header to detect JSON request
-		if ((string)$id === (string)(int)$id)
+		if (preg_match('/^(list-)?(\d+)$/', $id, $matches))
 		{
-			$keys['id'] = $id;
+			if (!empty($matches[1]))
+			{
+				$keys = ['list_id' => $matches[2]];
+			}
+			else
+			{
+				$keys['id'] = $id;
+			}
 		}
 		else
 		{
 			$keys[self::$path_attr] = $id;
 		}
-		$contact = $this->bo->read($keys);
+		$contact = isset($keys['list_id']) ? false: $this->bo->read($keys);
 
 		// if contact not found and accounts stored NOT like contacts, try reading it without path-extension as id
 		if (is_null($contact) && $this->bo->so_accounts && ($c = $this->bo->read($test=basename($id, '.vcf'))))
@@ -1086,12 +1094,13 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$limit_in_ab[] = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		/* we are currently not syncing distribution-lists/groups to /addressbook/ as
-		 * Apple clients use that only as directory gateway
-		elseif ($account_lid == 'addressbook')	// /addressbook/ contains all readably contacts
+		 * Apple clients use that only as directory gateway*/
+		elseif (Api\CalDAV::isJSON() && $account_lid == 'addressbook')	// /addressbook/ contains all readably contacts
 		{
 			$limit_in_ab = array_keys($this->bo->grants);
-		}*/
-		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',$limit_in_ab)))
+		}
+		if (!$contact && ($contact = $this->bo->read_lists(isset($keys['list_id']) ? $keys :
+			['list_'.self::$path_attr => $id],'contact_uid',$limit_in_ab)))
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];

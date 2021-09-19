@@ -30,7 +30,7 @@ class JsContact
 	 * Get jsCard for given contact
 	 *
 	 * @param int|array $contact
-	 * @param bool $encode=true true: JSON encode, false: return raw data eg. from listing
+	 * @param bool|"pretty" $encode=true true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data eg. from listing
 	 * @return string|array
 	 * @throws Api\Exception\NotFound
 	 */
@@ -68,13 +68,13 @@ class JsContact
 				'url' => !empty($contact['url']) ? ['resource' => $contact['url'], 'type' => 'uri', 'contexts' => ['work' => true]] : null,
 				'url_home' => !empty($contact['url_home']) ? ['resource' => $contact['url_home'], 'type' => 'uri', 'contexts' => ['private' => true]] : null,
 			]),
-			'addresses' => [
+			'addresses' => array_filter([
 				'work' => self::address($contact, 'work', 1),    // as it's the more prominent in our UI
 				'home' =>  self::address($contact, 'home'),
-			],
+			]),
 			'photos' => self::photos($contact),
 			'anniversaries' => self::anniversaries($contact),
-			'notes' => [self::localizedString($contact['note'])],
+			'notes' => empty($contact['note']) ? null : [self::localizedString($contact['note'])],
 			'categories' => self::categories($contact['cat_id']),
 			'egroupware.org/customfields' => self::customfields($contact),
 			'egroupware.org/assistant' => $contact['assistent'],
@@ -82,7 +82,7 @@ class JsContact
 		]);
 		if ($encode)
 		{
-			return Api\CalDAV::json_encode($data, self::JSON_OPTIONS_ERROR);
+			return Api\CalDAV::json_encode($data, $encode === "pretty");
 		}
 		return $data;
 	}
@@ -474,16 +474,17 @@ class JsContact
 		$js2attr = self::$jsAddress2attr;
 		if ($type === 'work') $js2attr += self::$jsAddress2workAttr;
 
-		$address = array_map(static function($attr) use ($contact, $prefix)
+		$address = array_filter(array_map(static function($attr) use ($contact, $prefix)
 		{
 			return $contact[$prefix.$attr];
 		}, $js2attr) + [
 			'street' => self::streetComponents($contact[$prefix.'street'], $contact[$prefix.'street2']),
+		]);
+		// only add contexts and preference to non-empty address
+		return !$address ? [] : $address+[
 			'contexts' => [$type => true],
 			'pref' => $preference,
 		];
-
-		return array_filter($address);
 	}
 
 	/**
@@ -984,33 +985,35 @@ class JsContact
 	 * Get jsCardGroup for given group
 	 *
 	 * @param int|array $group
-	 * @return string
+	 * @param bool|"pretty" $encode=true true: JSON, "pretty": JSON pretty-print, false: array
+	 * @return array|string
 	 * @throws Api\Exception\NotFound
 	 */
-	public static function getJsCardGroup($group)
+	public static function getJsCardGroup($group, $encode=true)
 	{
 		if (is_scalar($group) && !($group = self::getContacts()->read_lists($group)))
 		{
 			throw new Api\Exception\NotFound();
 		}
-		/*
-		$vCard = new Horde_Icalendar_Vcard($version);
-		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'].'//'.
-			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
-
-		$vCard->setAttribute('N',$list['list_name'],array(),true,array($list['list_name'],'','','',''));
-		$vCard->setAttribute('FN',$list['list_name']);
-
-		$vCard->setAttribute('X-ADDRESSBOOKSERVER-KIND','group');
-		foreach($list['members'] as $uid)
+		$data = array_filter([
+			'uid' => $group['list_uid'],
+			'name' => $group['list_name'],
+			'card' => self::getJsCard([
+				'uid' => $group['list_uid'],
+				'n_fn' => $group['list_name'],  // --> fullName
+				'modified' => $group['list_modified'],  // no other way to send modification date
+			], false),
+			'members' => [],
+		]);
+		foreach($group['members'] as $uid)
 		{
-			$vCard->setAttribute('X-ADDRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
+			$data['members'][$uid] = true;
 		}
-		$vCard->setAttribute('REV',Api\DateTime::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
-		$vCard->setAttribute('UID',$list['list_uid']);
-		*/
-
-		return Api\CalDAV::json_encode($group, self::JSON_OPTIONS_ERROR);
+		if ($encode)
+		{
+			$data = Api\CalDAV::json_encode($data, $encode === 'pretty');
+		}
+		return $data;
 	}
 
 	/**

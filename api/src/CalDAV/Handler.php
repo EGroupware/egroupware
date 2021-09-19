@@ -714,7 +714,7 @@ abstract class Handler
 		{
 			if (Api\CalDAV::isJSON())
 			{
-				$error = ",\n".'  "more-results": true';
+				$error = ",\n\t".'"more-results": true';
 			}
 			else
 			{

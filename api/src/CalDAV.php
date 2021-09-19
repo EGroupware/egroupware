@@ -994,9 +994,9 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Check if clients want's or sends JSON
+	 * Check if client want or sends JSON
 	 *
-	 * @return bool
+	 * @return bool|string false: no json, true: application/json, string: application/(string)+json
 	 */
 	public static function isJSON(string $type=null)
 	{
@@ -1005,7 +1005,8 @@ class CalDAV extends HTTP_WebDAV_Server
 			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PROPPATCH']) ?
 				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
 		}
-		return (bool)preg_match('#application/([^+ ;]+\+)?json#', $type);
+		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
+			(empty($matches[1]) ? true : $matches[2]) : false;
 	}
 
 	/**
@@ -1021,9 +1022,9 @@ class CalDAV extends HTTP_WebDAV_Server
 		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
-			if (self::isJSON())
+			if (($json = self::isJSON()))
 			{
-				return $this->jsonIndex($options);
+				return $this->jsonIndex($options, $json === 'pretty');
 			}
 			return $this->autoindex($options);
 		}
@@ -1048,7 +1049,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		if (!$pretty)
 		{
-			return self::json_encode($data, self::JSON_OPTIONS);
+			return json_encode($data, self::JSON_OPTIONS);
 		}
 		return preg_replace('/: {\n\s*(.*?)\n\s*(},?\n)/', ': { $1 $2',
 			json_encode($data, self::JSON_OPTIONS_PRETTY));
@@ -1066,9 +1067,10 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * }
 	 *
 	 * @param array $options
+	 * @param bool $pretty =false true: pretty-print JSON
 	 * @return bool|string|void
 	 */
-	protected function jsonIndex(array $options)
+	protected function jsonIndex(array $options, bool $pretty)
 	{
 		header('Content-Type: application/json; charset=utf-8');
 		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
@@ -1118,9 +1120,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return $ret;	// no collection
 		}
-
-		echo "{\n";
-		$prefix = "  ";
+		// set start as prefix, to no have it in front of exceptions
+		$prefix = "{\n\t\"responses\": {\n";
 		foreach($files['files'] as $resource)
 		{
 			$path = $resource['path'];
@@ -1129,10 +1130,6 @@ class CalDAV extends HTTP_WebDAV_Server
 			{
 				echo 'null';    // deleted in sync-report
 			}
-			/*elseif (isset($resource['props']['address-data']))
-			{
-				echo $resource['props']['address-data']['val'];
-			}*/
 			else
 			{
 				$props = $propfind_options['props'] === 'all' ? $resource['props'] :
@@ -1146,17 +1143,24 @@ class CalDAV extends HTTP_WebDAV_Server
 				{
 					$props = current($props)['val'];
 				}
-				echo self::json_encode($props);
+				echo self::json_encode($props, $pretty);
 			}
-			$prefix = ",\n  ";
+			$prefix = ",\n";
 		}
-		// add sync-token to response
+		// happens with an empty response
+		if ($prefix !== ",\n")
+		{
+			echo $prefix;
+			$prefix = ",\n";
+		}
+		echo "\n\t}";
+		// add sync-token and more-results to response
 		if (isset($files['sync-token']))
 		{
-			echo $prefix.'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
+			echo $prefix."\t".'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
 				call_user_func_array($files['sync-token'], (array)$files['sync-token-params']), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 		}
-		echo "\n}\n";
+		echo "\n}";
 
 		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
 		exit;
