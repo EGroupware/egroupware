@@ -1209,7 +1209,8 @@ class Storage
 	 *
 	 * @param array $keys column-name => value(s) pairs, eg. array('list_uid'=>$uid)
 	 * @param string $member_attr ='contact_uid' null: no members, 'contact_uid', 'contact_id', 'caldav_name' return members as that attribute
-	 * @param boolean $limit_in_ab =false if true only return members from the same owners addressbook
+	 * @param boolean|int|array $limit_in_ab =false if true only return members from the same owners addressbook,
+	 * 	if int|array only return members from the given owners addressbook(s)
 	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
 	 */
 	function read_lists($keys,$member_attr=null,$limit_in_ab=false)
