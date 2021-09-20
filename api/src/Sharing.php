@@ -603,6 +603,8 @@ class Sharing
 	/**
 	 * Create a new share
 	 *
+	 * Only for shares with identical attributes AND recipients an existing share-token is returned.
+	 *
 	 * @param string $action_id Specific type of share being created, default ''
 	 * @param string $path either path in temp_dir or vfs with optional vfs scheme
 	 * @param string $mode self::LINK: copy file in users tmp-dir or self::READABLE share given vfs file,
@@ -626,35 +628,17 @@ class Sharing
 		// Check if path is mounted somewhere that needs a password
 		static::path_needs_password($path);
 
-		// check if file has been shared before, with identical attributes
+		// check if file has been shared before, with identical attributes AND recipients
 		if (($share = static::$db->select(static::TABLE, '*', $extra+array(
 				'share_path' => $path,
 				'share_owner' => Vfs::$user,
 				'share_expires' => null,
 				'share_passwd'  => null,
 				'share_writable'=> false,
+				'share_with'    => implode(',', (array)$recipients),
 			), __LINE__, __FILE__, Db::API_APPNAME)->fetch()))
 		{
-			// if yes, just add additional recipients
-			$share['share_with'] = $share['share_with'] ? explode(',', $share['share_with']) : array();
-			$need_save = false;
-			foreach((array)$recipients as $recipient)
-			{
-				if (!in_array($recipient, $share['share_with']))
-				{
-					$share['share_with'][] = $recipient;
-					$need_save = true;
-				}
-			}
-			$share['share_with'] = implode(',', $share['share_with']);
-			if ($need_save)
-			{
-				static::$db->update(static::TABLE, array(
-					'share_with' => $share['share_with'],
-				), array(
-					'share_id' => $share['share_id'],
-				), __LINE__, __FILE__, Db::API_APPNAME);
-			}
+			// if yes, nothing to do
 		}
 		else
 		{
