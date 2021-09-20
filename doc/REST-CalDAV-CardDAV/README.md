@@ -224,7 +224,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/5593' -H "Accept: 
 ```
 </details>
 
-* **POST** requests to collection with a "Content-Type: application/json" header add new entries in addressbook or calendar collections
+* **POST** requests to collection with a ```Content-Type: application/json``` header add new entries in addressbook or calendar collections
        (Location header in response gives URL of new resource)
 <details>
    <summary>Example: POST request to create a new resource</summary>
