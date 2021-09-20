@@ -41,14 +41,14 @@ class JsContact
 			throw new Api\Exception\NotFound();
 		}
 		$data = array_filter([
-			'uid' => $contact['uid'],
+			'uid' => self::uid($contact['uid']),
 			'prodId' => 'EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'],
 			'created' => self::UTCDateTime($contact['created']),
 			'updated' => self::UTCDateTime($contact['modified']),
 			//'kind' => '', // 'individual' or 'org'
 			//'relatedTo' => [],
 			'name' => self::nameComponents($contact),
-			'fullName' => self::localizedString($contact['n_fn']),
+			'fullName' => $contact['n_fn'],
 			//'nickNames' => [],
 			'organizations' => array_filter(['org' => self::organization($contact)]),
 			'titles' => self::titles($contact),
@@ -74,11 +74,11 @@ class JsContact
 			]),
 			'photos' => self::photos($contact),
 			'anniversaries' => self::anniversaries($contact),
-			'notes' => empty($contact['note']) ? null : [self::localizedString($contact['note'])],
+			'notes' => empty($contact['note']) ? null : [$contact['note']],
 			'categories' => self::categories($contact['cat_id']),
-			'egroupware.org/customfields' => self::customfields($contact),
-			'egroupware.org/assistant' => $contact['assistent'],
-			'egroupware.org/fileAs' => $contact['fileas'],
+			'egroupware.org:customfields' => self::customfields($contact),
+			'egroupware.org:assistant' => $contact['assistent'],
+			'egroupware.org:fileAs' => $contact['fileas'],
 		]);
 		if ($encode)
 		{
@@ -119,7 +119,7 @@ class JsContact
 						break;
 
 					case 'fullName':
-						$contact['n_fn'] = self::parseLocalizedString($value);
+						$contact['n_fn'] = self::parseString($value);
 						break;
 
 					case 'organizations':
@@ -156,7 +156,7 @@ class JsContact
 
 					case 'notes':
 						$contact['note'] = implode("\n", array_map(static function ($note) {
-							return self::parseLocalizedString($note);
+							return self::parseString($note);
 						}, $value));
 						break;
 
@@ -164,15 +164,15 @@ class JsContact
 						$contact['cat_id'] = self::parseCategories($value);
 						break;
 
-					case 'egroupware.org/customfields':
+					case 'egroupware.org:customfields':
 						$contact += self::parseCustomfields($value);
 						break;
 
-					case 'egroupware.org/assistant':
+					case 'egroupware.org:assistant':
 						$contact['assistent'] = $value;
 						break;
 
-					case 'egroupware.org/fileAs':
+					case 'egroupware.org:fileAs':
 						$contact['fileas'] = $value;
 						break;
 
@@ -188,26 +188,45 @@ class JsContact
 				}
 			}
 		}
-		catch (\JsonException $e) {
-			throw new JsContactParseException("Error parsing JSON: ".$e->getMessage(), 422, $e);
-		}
-		catch (\InvalidArgumentException $e) {
-			throw new JsContactParseException("Error parsing JsContact field '$name': ".
-				str_replace('"', "'", $e->getMessage()), 422);
-		}
-		catch (\TypeError $e) {
-			$message = $e->getMessage();
-			if (preg_match('/must be of the type ([^ ]+), ([^ ]+) given/', $message, $matches))
-			{
-				$message = "$matches[1] expected, but got $matches[2]: ".
-					str_replace('"', "'", json_encode($value, self::JSON_OPTIONS_ERROR));
-			}
-			throw new JsContactParseException("Error parsing JsContact field '$name': $message", 422, $e);
-		}
 		catch (\Throwable $e) {
-			throw new JsContactParseException("Error parsing JsContact field '$name': ". $e->getMessage(), 422, $e);
+			self::handleExceptions($e, 'JsContact Card', $name, $value);
 		}
 		return $contact;
+	}
+
+	const URN_UUID_PREFIX = 'urn:uuid:';
+	const UUID_PREG = '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i';
+
+	/**
+	 * Get UID with either "urn:uuid:" prefix for UUIDs or just the text
+	 *
+	 * @param string $uid
+	 * @return string
+	 */
+	protected static function uid(string $uid)
+	{
+		return preg_match(self::UUID_PREG, $uid) ? self::URN_UUID_PREFIX.$uid : $uid;
+	}
+
+	/**
+	 * Parse and optionally generate UID
+	 *
+	 * @param string|null $uid
+	 * @param bool $generate_when_empty true: generate UID if empty, false: throw error
+	 * @return string without urn:uuid: prefix
+	 * @throws \InvalidArgumentException
+	 */
+	protected static function parseUid(string $uid=null, $generate_when_empty=false)
+	{
+		if (empty($uid) || strlen($uid) < 12)
+		{
+			if (!$generate_when_empty)
+			{
+				throw new \InvalidArgumentException("Invalid or missing UID: ".json_encode($uid));
+			}
+			$uid = \HTTP_WebDAV_Server::_new_uuid();
+		}
+		return strpos($uid, self::URN_UUID_PREFIX) === 0 ? substr($uid, 9) : $uid;
 	}
 
 	/**
@@ -229,8 +248,8 @@ class JsContact
 			return null;    // name is mandatory
 		}
 		return array_filter([
-			'name' => self::localizedString($contact['org_name']),
-			'units' => empty($contact['org_unit']) ? null : ['org_unit' => self::localizedString($contact['org_unit'])],
+			'name' => $contact['org_name'],
+			'units' => empty($contact['org_unit']) ? null : ['org_unit' => $contact['org_unit']],
 		]);
 	}
 
@@ -247,10 +266,10 @@ class JsContact
 		$contact = [];
 		foreach($orgas as $orga)
 		{
-			$contact['org_name'] = self::parseLocalizedString($orga['name']);
+			$contact['org_name'] = self::parseString($orga['name']);
 			$contact['org_unit'] = implode(' ', array_map(static function($unit)
 			{
-				return self::parseLocalizedString($unit);
+				return self::parseString($unit);
 			}, $orga['units']));
 			break;
 		}
@@ -270,8 +289,8 @@ class JsContact
 	protected static function titles(array $contact)
 	{
 		return array_filter([
-			'title' => self::localizedString($contact['title']),
-			'role' => self::localizedString($contact['role']),
+			'title' => $contact['title'],
+			'role' => $contact['role'],
 		]);
 	}
 
@@ -286,21 +305,21 @@ class JsContact
 		$contact = [];
 		if (isset($titles[$id='title']) || isset($contact[$id='jobTitle']))
 		{
-			$contact['title'] = self::parseLocalizedString($titles[$id]);
+			$contact['title'] = self::parseString($titles[$id]);
 			unset($titles[$id]);
 		}
 		if (isset($titles[$id='role']))
 		{
-			$contact['role'] = self::parseLocalizedString($titles[$id]);
+			$contact['role'] = self::parseString($titles[$id]);
 			unset($titles[$id]);
 		}
 		if (!isset($contact['title']) && $titles)
 		{
-			$contact['title'] = self::parseLocalizedString(array_shift($titles));
+			$contact['title'] = self::parseString(array_shift($titles));
 		}
 		if (!isset($contact['role']) && $titles)
 		{
-			$contact['role'] = self::parseLocalizedString(array_shift($titles));
+			$contact['role'] = self::parseString(array_shift($titles));
 		}
 		if (count($titles))
 		{
@@ -481,10 +500,10 @@ class JsContact
 			'street' => self::streetComponents($contact[$prefix.'street'], $contact[$prefix.'street2']),
 		]);
 		// only add contexts and preference to non-empty address
-		return !$address ? [] : $address+[
+		return !$address ? [] : array_filter($address+[
 			'contexts' => [$type => true],
 			'pref' => $preference,
-		];
+		]);
 	}
 
 	/**
@@ -946,16 +965,12 @@ class JsContact
 	 *
 	 * We're not currently storing/allowing any localization --> they get ignored/thrown away!
 	 *
-	 * @param array $value object with attribute "value"
+	 * @param string $value =null
 	 * @return string
 	 */
-	protected static function parseLocalizedString(array $value)
+	protected static function parseString(string $value=null)
 	{
-		if (!is_string($value['value']))
-		{
-			throw new \InvalidArgumentException("Invalid localizedString: ".json_encode($value, self::JSON_OPTIONS_ERROR));
-		}
-		return $value['value'];
+		return $value;
 	}
 
 	/**
@@ -996,10 +1011,10 @@ class JsContact
 			throw new Api\Exception\NotFound();
 		}
 		$data = array_filter([
-			'uid' => $group['list_uid'],
+			'uid' => self::uid($group['list_uid']),
 			'name' => $group['list_name'],
 			'card' => self::getJsCard([
-				'uid' => $group['list_uid'],
+				'uid' => self::uid($group['list_uid']),
 				'n_fn' => $group['list_name'],  // --> fullName
 				'modified' => $group['list_modified'],  // no other way to send modification date
 			], false),
@@ -1007,13 +1022,123 @@ class JsContact
 		]);
 		foreach($group['members'] as $uid)
 		{
-			$data['members'][$uid] = true;
+			$data['members'][self::uid($uid)] = true;
 		}
 		if ($encode)
 		{
 			$data = Api\CalDAV::json_encode($data, $encode === 'pretty');
 		}
 		return $data;
+	}
+
+	/**
+	 * Parse JsCard
+	 *
+	 * @param string $json
+	 * @return array
+	 */
+	public static function parseJsCardGroup(string $json)
+	{
+		try
+		{
+			$data = json_decode($json, true, 10, JSON_THROW_ON_ERROR);
+
+			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
+
+			// make sure missing mandatory members give an error
+			$data += ['uid' => null, 'members' => null];
+			$group = [];
+			foreach ($data as $name => $value)
+			{
+				switch ($name)
+				{
+					case 'uid':
+						$group['uid'] = self::parseUid($value);
+						break;
+
+					case 'name':
+						$group['n_fn'] = $value;
+						break;
+
+					case 'card':
+						$card = self::parseJsCard(json_encode($value, self::JSON_OPTIONS_ERROR));
+						// prefer name over card-fullName
+						if (!empty($card['n_fn']) && empty($group['n_fn']))
+						{
+							$group['n_fn'] = $card['n_fn'];
+						}
+						break;
+
+					case 'members':
+						$group['members'] = self::parseMembers($value);
+						break;
+
+					default:
+						error_log(__METHOD__ . "() $name=" . json_encode($value, self::JSON_OPTIONS_ERROR) . ' --> ignored');
+						break;
+				}
+			}
+		}
+		catch (\Throwable $e) {
+			self::handleExceptions($e, 'JsContact CardGroup', $name, $value);
+		}
+		return $group;
+	}
+
+	/**
+	 * Parse members object
+	 *
+	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-3.1.2
+	 * @param array $values uid => true pairs
+	 * @return array of uid's
+	 */
+	protected static function parseMembers(array $values)
+	{
+		$members = [];
+		foreach($values as $uid => $value)
+		{
+			if (!is_string($uid) || $value !== true)
+			{
+				throw new \InvalidArgumentException('Invalid members object: '.json_encode($values, self::JSON_OPTIONS_ERROR));
+			}
+			$members[] = self::parseUid($uid);
+		}
+		return $members;
+	}
+
+	/**
+	 * Map all kind of exceptions while parsing to a JsContactParseException
+	 *
+	 * @param \Throwable $e
+	 * @param string $type
+	 * @param string $name
+	 * @param mixed $value
+	 * @throws JsContactParseException
+	 */
+	protected static function handleExceptions(\Throwable $e, $type='JsContact', string $name, $value)
+	{
+		try {
+			throw $e;
+		}
+		catch (\JsonException $e) {
+			throw new JsContactParseException("Error parsing JSON: ".$e->getMessage(), 422, $e);
+		}
+		catch (\InvalidArgumentException $e) {
+			throw new JsContactParseException("Error parsing $type attribute '$name': ".
+				str_replace('"', "'", $e->getMessage()), 422);
+		}
+		catch (\TypeError $e) {
+			$message = $e->getMessage();
+			if (preg_match('/must be of the type ([^ ]+( or [^ ]+)*), ([^ ]+) given/', $message, $matches))
+			{
+				$message = "$matches[1] expected, but got $matches[3]: ".
+					str_replace('"', "'", json_encode($value, self::JSON_OPTIONS_ERROR));
+			}
+			throw new JsContactParseException("Error parsing $type attribute '$name': $message", 422, $e);
+		}
+		catch (\Throwable $e) {
+			throw new JsContactParseException("Error parsing $type attribute '$name': ". $e->getMessage(), 422, $e);
+		}
 	}
 
 	/**

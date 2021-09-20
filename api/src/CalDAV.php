@@ -996,9 +996,10 @@ class CalDAV extends HTTP_WebDAV_Server
 	/**
 	 * Check if client want or sends JSON
 	 *
+	 * @param string &$type=null
 	 * @return bool|string false: no json, true: application/json, string: application/(string)+json
 	 */
-	public static function isJSON(string $type=null)
+	public static function isJSON(string &$type=null)
 	{
 		if (!isset($type))
 		{
