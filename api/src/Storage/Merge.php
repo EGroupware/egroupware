@@ -1573,6 +1573,25 @@ abstract class Merge
 	}
 
 	/**
+	 * Get the correct class for the given app
+	 *
+	 * @param $appname
+	 */
+	public static function get_app_class($appname)
+	{
+		if(class_exists($appname) && is_subclass_of($appname, 'EGroupware\\Api\\Storage\\Merge'))
+		{
+			$classname = "{$appname}_merge";
+			$document_merge = new $classname();
+		}
+		else
+		{
+			$document_merge = new Api\Contacts\Merge();
+		}
+		return $document_merge;
+	}
+
+	/**
 	 * Get the replacements for any entry specified by app & id
 	 *
 	 * @param stribg $app
@@ -1580,7 +1599,7 @@ abstract class Merge
 	 * @param string $content
 	 * @return array
 	 */
-	public function get_app_replacements($app, $id, $content, $prefix='')
+	public function get_app_replacements($app, $id, $content, $prefix = '')
 	{
 		$replacements = array();
 		if($app == 'addressbook')

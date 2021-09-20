@@ -62,6 +62,7 @@ import './et2_widget_image';
 import './et2_widget_iframe';
 import './et2_widget_file';
 import './et2_widget_link';
+import './et2_widget_placeholder';
 import './et2_widget_progress';
 import './et2_widget_portlet';
 import './et2_widget_selectAccount';

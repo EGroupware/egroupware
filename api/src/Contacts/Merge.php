@@ -246,19 +246,75 @@ class Merge extends Api\Storage\Merge
 			'owner'    => lang('Owner'),
 		) as $name => $label)
 		{
-			if (in_array($name,array('start','end')) && $n&1)		// main values, which should be in the first column
+			if(in_array($name, array('start',
+									 'end')) && $n & 1)        // main values, which should be in the first column
 			{
 				echo "</tr>\n";
 				$n++;
 			}
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{calendar/#/'.$name.'}}</td><td>'.$label.'</td>';
-			if ($n&1) echo "</tr>\n";
+			if(!($n & 1))
+			{
+				echo '<tr>';
+			}
+			echo '<td>{{calendar/#/' . $name . '}}</td><td>' . $label . '</td>';
+			if($n & 1)
+			{
+				echo "</tr>\n";
+			}
 			$n++;
 		}
 		echo "</table>\n";
 
 		$GLOBALS['egw']->framework->render(ob_get_clean());
+	}
+
+	/**
+	 * Get a list of placeholders provided.
+	 *
+	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
+	 */
+	public function get_placeholder_list()
+	{
+		$placeholders = [];
+		$group = 'contact';
+		foreach($this->contacts->contact_fields as $name => $label)
+		{
+			if(in_array($name, array('tid', 'label', 'geo')))
+			{
+				continue;
+			}    // dont show them, as they are not used in the UI atm.
+
+			switch($name)
+			{
+				case 'adr_one_street':
+					$group = 'business';
+					break;
+				case 'adr_two_street':
+					$group = 'private';
+					break;
+				case 'tel_work':
+					$group = 'phone';
+					break;
+				case 'email':
+				case 'email_home':
+					$group = 'email';
+					break;
+				case 'url':
+					$group = 'details';
+			}
+			$placeholders[$group]["{{" . $name . "}}"] = $label;
+			if($name == 'cat_id')
+			{
+				$placeholders[$group]["{{" . $name . "}}"] = lang('Category path');
+			}
+		}
+
+		$group = 'customfields';
+		foreach($this->contacts->customfields as $name => $field)
+		{
+			$placeholders[$group]["{{" . $name . "}}"] = $field['label'];
+		}
+		return $placeholders;
 	}
 
 	/**

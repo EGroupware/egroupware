@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="etemplate.insert_merge_placeholder" template="" lang="" group="0" version="21.1.001">
+        <vbox id="outer_box">
+            <hbox id="selects">
+                <vbox>
+                    <select id="app"/>
+                    <select id="group"/>
+
+                </vbox>
+                <select id="placeholder_list"/>
+            </hbox>
+            <link-entry id="entry" label="Preview with entry"/>
+            <hbox class="preview">
+                <description id="preview_placeholder"/>
+                <button id="insert_placeholder"></button>
+            </hbox>
+            <hbox class="preview">
+                <description id="preview_content"/>
+                <button id="insert_content"></button>
+            </hbox>
+        </vbox>
+        <styles>
+
+            #api\.insert_merge_placeholder_outer_box > #api\.insert_merge_placeholder_selects {
+            flex: 1 1 80%;
+            }
+            #api\.insert_merge_placeholder_outer_box > label.et2_label {
+            flex: 0 1 auto;
+            }
+            #api\.insert_merge_placeholder_outer_box .preview {
+            flex: 1 1 2em;
+            font-size: larger;
+            }
+            select#api\.insert_merge_placeholder_app {
+            flex-grow: 0;
+            }
+            .ui-dialog-content, div.et2_box_widget, div.et2_box_widget > div.et2_box_widget {
+            display: flex;
+            flex: 1 1 auto;
+            }
+            div.et2_hbox {
+            flex-direction: row;
+            flex-grow: 1;
+            }
+            div.et2_vbox {
+            flex-direction: column;
+            gap: 5px;
+            }
+            div.et2_box_widget > * {
+            flex: 1 1 auto;
+            width: 100%;
+            }
+            div.et2_link_entry {
+            flex-grow: 0;
+            }
+            div.et2_link_entry input.ui-autocomplete-input {
+            width: 75%
+            }
+            .et2_hbox button {
+            flex: 0 1 24px;
+            height: 24px;
+            }
+        </styles>
+    </template>
+</overlay>
