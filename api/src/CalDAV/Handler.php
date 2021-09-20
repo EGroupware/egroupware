@@ -570,8 +570,9 @@ abstract class Handler
 	 * @param int|string $retval
 	 * @param boolean $path_attr_is_name =true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
 	 * @param string $etag =null etag, to not calculate it again (if != null)
+	 * @param string $prefix='' prefix for id
 	 */
-	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null, string $prefix='')
 	{
 		//error_log(__METHOD__."(".array2string($entry).", '$path', ".array2string($retval).", path_attr_is_name=$path_attr_is_name, etag=".array2string($etag).")");
 		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
@@ -589,9 +590,9 @@ abstract class Handler
 		// send Location header only on success AND if we dont use caldav_name as path-attribute or
 		if ((is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
 			// POST with add-member query parameter
-			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])) ||
-			// in case we choose to use a different name for the resourece, give the client a hint
-			basename($path) !== $this->new_id)
+			$_SERVER['REQUEST_METHOD'] == 'POST') ||
+			// in case we choose to use a different name for the resource, give the client a hint
+			basename($path) !== $prefix.$this->new_id)
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $path);
 			header('Location: '.$this->base_uri.$path.$this->new_id);

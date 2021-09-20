@@ -41,7 +41,8 @@ from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a r
 > currently implemented only for contacts!
 
 Following RFCs / drafts used/planned for JSON encoding of ressources
-* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07)
+* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07) ([*](#implemented-changes-to-jscontact-draft-07-from-next-draft))
+* [draft-ietf-jmap-jscontact-vcard-06: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
 
 ### Supported request methods and examples
@@ -66,9 +67,9 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
       "fullName": { "value": "Default Tester" },
       "organizations": {
         "org": {
-          "name": { "value": "default.org" },
+          "name": "default.org",
           "units": {
-            "org_unit": { "value": "department.default.org" }
+            "org_unit": "department.default.org"
           }
         }
       },
@@ -83,7 +84,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
         "url": { "resource": "https://www.test.com/", "type": "uri", "contexts": { "work": true } }
       },
       "notes": [
-        { "value": "Test test TEST\n\\server\\share\n\\\nother\nblah" }
+        "Test test TEST\n\\server\\share\n\\\nother\nblah"
       ],
     },
     "/<username>/addressbook/list-36": {
@@ -96,7 +97,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
         "fullName": { "value": "Example distribution list" }
       },
       "members": {
-        "5638-8623c4830472a8ede9f9f8b30d435ea4": true
+        "urn:uuid:5638-8623c4830472a8ede9f9f8b30d435ea4": true
       }
     }
   }
@@ -194,7 +195,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
         { "type": "personal", "value": "Default" },
         { "type": "surname", "value": "Tester" }
       ],
-      "fullName": { "value": "Default Tester" },
+      "fullName": "Default Tester",
 ....
     }
   },
@@ -218,7 +219,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/5593' -H "Accept: 
     { "type": "personal", "value": "Default" },
     { "type": "surname", "value": "Tester" }
   ],
-  "fullName": { "value": "Default Tester" },
+  "fullName": "Default Tester",
 ....
 }
 ```
@@ -255,3 +256,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 * **DELETE** requests delete single resources
 
 * one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API
+
+#### Implemented changes to [JsContact draft 07](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07) from next draft:
+* localizedString type / object is removed in favor or regular String type and a [localizations object like in JsCalendar](https://datatracker.ietf.org/doc/html/rfc8984#section-4.6.1)
+* [Vendor-specific Property Extensions and Values](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.3) use ```<domain-name>:<name>``` like in JsCalendar

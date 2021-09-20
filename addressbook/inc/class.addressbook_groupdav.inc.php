@@ -62,6 +62,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	var $home_set_pref;
 
 	/**
+	 * Prefix for JsCardGroup id
+	 */
+	const JS_CARDGROUP_ID_PREFIX = 'list-';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -350,7 +355,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				{
 					foreach($lists as $list)
 					{
-						$list[self::$path_attr] = $is_jscontact ? 'list-'.$list['list_id'] : $list['list_carddav_name'];
+						$list[self::$path_attr] = $is_jscontact ? self::JS_CARDGROUP_ID_PREFIX.$list['list_id'] : $list['list_carddav_name'];
 						$etag = $list['list_id'].':'.$list['list_etag'];
 						// for all-in-one addressbook, add selected ABs to etag
 						if (isset($filter['owner']) && is_array($filter['owner']))
@@ -637,9 +642,33 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $oldContact;
 		}
 
-		if (Api\CalDAV::isJSON())
+		$type = null;
+		if (($is_json=Api\CalDAV::isJSON($type)))
 		{
-			$contact = JsContact::parseJsCard($options['content']);
+			if (strpos($type, JsContact::MIME_TYPE_JSCARD) === false && strpos($type, JsContact::MIME_TYPE_JSCARDGROUP) === false)
+			{
+				if (!empty($id))
+				{
+					$type = strpos($id, self::JS_CARDGROUP_ID_PREFIX) === 0 ? JsContact::MIME_TYPE_JSCARDGROUP : JsContact::MIME_TYPE_JSCARD;
+				}
+				else
+				{
+					$json = json_decode($options['content'], true);
+					$type = is_array($json['members']) ? JsContact::MIME_TYPE_JSCARDGROUP : JsContact::MIME_TYPE_JSCARD;
+				}
+			}
+			$contact = $type === JsContact::MIME_TYPE_JSCARD ?
+				JsContact::parseJsCard($options['content']) : JsContact::parseJsCardGroup($options['content']);
+
+			if (!empty($id) && strpos($id, self::JS_CARDGROUP_ID_PREFIX) === 0)
+			{
+				$id = substr($id, strlen(self::JS_CARDGROUP_ID_PREFIX));
+			}
+			elseif (empty($id))
+			{
+				$contact['cardav_name'] = $contact['uid'].'.vcf';
+				$contact['owner'] = $user;
+			}
 
 			/* uncomment to return parsed data for testing
 			header('Content-Type: application/json');
@@ -687,7 +716,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$contactId = -1;
 			$retval = '201 Created';
 		}
-		$is_group = $contact['##X-ADDRESSBOOKSERVER-KIND'] == 'group';
+		$is_group = isset($type) && $type === JsContact::MIME_TYPE_JSCARDGROUP || $contact['##X-ADDRESSBOOKSERVER-KIND'] === 'group';
 		if ($oldContact && $is_group !== isset($oldContact['list_id']))
 		{
 			throw new Api\Exception\AssertionFailed(__METHOD__."(,'$id',$user,'$prefix') can contact into group or visa-versa!");
@@ -756,7 +785,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
 		// ignore photo for JSON/REST, it's not yet supported
-		$contact['photo_unchanged'] = Api\CalDAV::isJSON(); //false;	// photo needs saving
+		$contact['photo_unchanged'] = $is_json; //false;	// photo needs saving
 		if (!($save_ok = $is_group ? $this->save_group($contact, $oldContact) : $this->bo->save($contact)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($contact).") failed, Ok=$save_ok");
@@ -775,7 +804,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				if (($contact = $this->bo->read_list($save_ok)))
 				{
-					// re-read group to get correct etag (not dublicate etag code here)
+					// re-read group to get correct etag (not duplicate etag code here)
 					$contact = $this->read($contact['list_'.self::$path_attr], $options['path']);
 				}
 			}
@@ -787,14 +816,17 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 
 		// send evtl. necessary response headers: Location, etag, ...
-		$this->put_response_headers($contact, $options['path'], $retval, self::$path_attr != 'id');
+		$this->put_response_headers($contact, $options['path'], $retval,
+			// JSON uses 'id', while CardDAV uses carddav_name !== 'id'
+			(self::$path_attr !== 'id') === !$is_json, null,
+			$is_group && $is_json ? self::JS_CARDGROUP_ID_PREFIX : '');
 
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
 		return $retval;
 	}
 
 	/**
-	 * Save distribition-list / group
+	 * Save distribution-list / group
 	 *
 	 * @param array $contact
 	 * @param array|false $oldContact
@@ -813,18 +845,21 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			$contact['owner'], null, $data)))
 		{
 			// update members given in $contact['##X-ADDRESSBOOKSERVER-MEMBER']
-			$new_members = $contact['##X-ADDRESSBOOKSERVER-MEMBER'];
-			if ($new_members[1] == ':' && ($n = unserialize($new_members)))
+			$new_members = $contact['members'] ?: $contact['##X-ADDRESSBOOKSERVER-MEMBER'];
+			if (is_string($new_members) && $new_members[1] === ':' && ($n = unserialize($new_members)))
 			{
 				$new_members = $n['values'];
 			}
 			else
 			{
-				$new_members = array($new_members);
+				$new_members = (array)$new_members;
 			}
 			foreach($new_members as &$uid)
 			{
-				$uid = substr($uid,9);	// cut off "urn:uuid:" prefix
+				if (substr($uid, 0, 9) === 'urn:uuid:')
+				{
+					$uid = substr($uid,9);	// cut off "urn:uuid:" prefix
+				}
 			}
 			if ($oldContact)
 			{
@@ -861,7 +896,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			// reread as update of list-members updates etag and modified
 			if (($contact = $this->bo->read_list($list_id)))
 			{
-				// re-read group to get correct etag (not dublicate etag code here)
+				// re-read group to get correct etag (not duplicate etag code here)
 				$contact = $this->read($contact['list_'.self::$path_attr]);
 			}
 		}
@@ -1059,7 +1094,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		$keys = ['tid' => $non_deleted_tids];
 
 		// with REST/JSON we only use our id, but DELETE request has neither Accept nor Content-Type header to detect JSON request
-		if (preg_match('/^(list-)?(\d+)$/', $id, $matches))
+		if (preg_match('/^('.self::JS_CARDGROUP_ID_PREFIX.')?(\d+)$/', $id, $matches))
 		{
 			if (!empty($matches[1]))
 			{
