@@ -99,7 +99,7 @@ class Placeholder extends Etemplate\Widget
 		{
 			case 'addressbook':
 			default:
-				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain');
+				$merged = $merge->merge_string($content, [$entry], $err, 'text/plain');
 		}
 		$response = Api\Json\Response::get();
 		$response->data($merged);

@@ -15,7 +15,6 @@
 	et2_widget_description;
 */
 
-import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_dialog} from "./et2_widget_dialog";
@@ -47,6 +46,9 @@ export class et2_placeholder_select extends et2_inputWidget
 	dialog : et2_dialog;
 	protected value : any;
 
+	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
+	protected TEMPLATE = '/api/templates/default/insert_merge_placeholder.xet?1';
+
 	/**
 	 * Constructor
 	 *
@@ -76,7 +78,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		{
 			this.egw().loading_prompt('placeholder_select', true, '', 'body');
 			this.egw().json(
-				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders',
+				this.LIST_URL,
 				[],
 				function(_content)
 				{
@@ -93,7 +95,7 @@ export class et2_placeholder_select extends et2_inputWidget
 	}
 
 	/**
-	 * Builds file navigator dialog
+	 * Builds placeholder selection dialog
 	 *
 	 * @param {object} _data content
 	 */
@@ -161,56 +163,13 @@ export class et2_placeholder_select extends et2_inputWidget
 				minHeight: 400,
 				width: 400,
 				value: data,
-				template: this.egw().webserverUrl + '/api/templates/default/insert_merge_placeholder.xet?1',
+				template: this.egw().webserverUrl + this.TEMPLATE,
 				resizable: true
 			}, et2_dialog._create_parent('api'));
 		this.dialog.template.uniqueId = 'api.insert_merge_placeholder';
 
 
-		this.dialog.div.on('load', function(e)
-		{
-			console.log(this);
-
-			let app = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("app");
-			let group = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("group");
-			let placeholder_list = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
-			let preview = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder");
-			let entry = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
-
-
-			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
-
-			// Further setup / styling that can't be done in etemplate
-			this.dialog.template.DOMContainer.style.display = "flex";
-			this.dialog.template.DOMContainer.firstChild.style.display = "flex";
-			group.getDOMNode().size = 5;
-			placeholder_list.getDOMNode().size = 5;
-
-			// Bind some handlers
-			app.onchange = (node, widget) =>
-			{
-				group.set_select_options(this._get_group_options(widget.get_value()));
-				entry.set_value({app: widget.get_value()});
-			}
-			group.onchange = (select_node, select_widget) =>
-			{
-				console.log(this, arguments);
-				placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
-				preview.set_value("");
-			}
-			placeholder_list.onchange = this._on_placeholder_select.bind(this);
-			entry.onchange = this._on_placeholder_select.bind(this);
-			(<et2_button>this.dialog.template.widgetContainer.getDOMWidgetById("insert_placeholder")).onclick = () =>
-			{
-				this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder").getDOMNode().textContent);
-			};
-			(<et2_button>this.dialog.template.widgetContainer.getDOMWidgetById("insert_content")).onclick = () =>
-			{
-				this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
-			};
-
-			this._on_placeholder_select();
-		}.bind(this));
+		this.dialog.div.on('load', this._on_template_load.bind(this));
 	}
 
 	doLoadingFinished()
@@ -219,7 +178,58 @@ export class et2_placeholder_select extends et2_inputWidget
 		return true;
 	}
 
-	_on_placeholder_select(node, widget : et2_selectbox | et2_link_entry)
+	/**
+	 * Post-load of the dialog
+	 * Bind internal events, set some things that are difficult to do in the template
+	 */
+	_on_template_load()
+	{
+		let app = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("app");
+		let group = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("group");
+		let placeholder_list = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder");
+		let entry = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
+
+
+		placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
+
+		// Further setup / styling that can't be done in etemplate
+		this.dialog.template.DOMContainer.style.display = "flex";
+		this.dialog.template.DOMContainer.firstChild.style.display = "flex";
+		group.getDOMNode().size = 5;
+		placeholder_list.getDOMNode().size = 5;
+
+		// Bind some handlers
+		app.onchange = (node, widget) =>
+		{
+			group.set_select_options(this._get_group_options(widget.get_value()));
+			entry.set_value({app: widget.get_value()});
+		}
+		group.onchange = (select_node, select_widget) =>
+		{
+			console.log(this, arguments);
+			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
+			preview.set_value("");
+		}
+		placeholder_list.onchange = this._on_placeholder_select.bind(this);
+		entry.onchange = this._on_placeholder_select.bind(this);
+		(<et2_button>this.dialog.template.widgetContainer.getDOMWidgetById("insert_placeholder")).onclick = () =>
+		{
+			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder").getDOMNode().textContent);
+		};
+		(<et2_button>this.dialog.template.widgetContainer.getDOMWidgetById("insert_content")).onclick = () =>
+		{
+			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
+		};
+
+		this._on_placeholder_select();
+	}
+
+	/**
+	 * User has selected a placeholder
+	 * Update the UI, and if they have an entry selected do the replacement and show that.
+	 */
+	_on_placeholder_select()
 	{
 		let app = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("app");
 		let entry = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
@@ -251,7 +261,12 @@ export class et2_placeholder_select extends et2_inputWidget
 		}
 	}
 
-	_get_group_options(appname)
+	/**
+	 * Get the list of placeholder groups under the selected application
+	 * @param appname
+	 * @returns {value:string, label:string}[]
+	 */
+	_get_group_options(appname : string)
 	{
 		let options = [];
 		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
@@ -265,7 +280,14 @@ export class et2_placeholder_select extends et2_inputWidget
 		return options;
 	}
 
-	_get_placeholders(appname, group)
+	/**
+	 * Get a list of placeholders under the given application + group
+	 *
+	 * @param appname
+	 * @param group
+	 * @returns {value:string, label:string}[]
+	 */
+	_get_placeholders(appname : string, group : string)
 	{
 		let options = [];
 		Object.keys(et2_placeholder_select.placeholders[appname][group]).map((key) =>
