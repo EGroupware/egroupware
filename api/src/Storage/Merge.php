@@ -283,22 +283,43 @@ abstract class Merge
 					}
 					break;
 				case 'account_id':
-					if ($value)
+					if($value)
 					{
-						$replacements['$$'.($prefix ? $prefix.'/':'').'account_lid$$'] = $GLOBALS['egw']->accounts->id2name($value);
+						$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'account_lid$$'] = $GLOBALS['egw']->accounts->id2name($value);
 					}
 					break;
 			}
-			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
+			if($name != 'photo')
+			{
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = $value;
+			}
 		}
+
+		// Formatted address, according to preference or country
+		foreach(['one', 'two'] as $adr)
+		{
+			switch($this->contacts->addr_format_by_country($contact["adr_{$adr}_countryname"]))
+			{
+				case 'city_state_postcode':
+					$formatted_placeholder = $contact["adr_{$adr}_locality"] . " " .
+						$contact["adr_{$adr}_region"] . "  " . $contact["adr_{$adr}_postalcode"];
+					break;
+				case 'postcode_city':
+				default:
+					$formatted_placeholder = $contact["adr_{$adr}_postalcode"] . ' ' . $contact["adr_{$adr}_locality"];
+					break;
+			}
+			$replacements['$$adr_' . $adr . '_formatted$$'] = $formatted_placeholder;
+		}
+
 		// set custom fields, should probably go to a general method all apps can use
 		// need to load all cfs for $ignore_acl=true
 		foreach($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
 		{
-			$name = '#'.$name;
+			$name = '#' . $name;
 			if(!array_key_exists($name, $contact) || !$contact[$name])
 			{
-				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = '';
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = '';
 				continue;
 			}
 			// Format date cfs per user Api\Preferences

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="etemplate.placeholder_snippet" template="" lang="" group="0" version="21.1.001">
+        <vbox id="outer_box">
+            <vbox id="selects">
+                <select id="app"/>
+                <select id="placeholder_list"/>
+            </vbox>
+            <hrule/>
+            <link-entry id="entry" label="Select entry"/>
+            <hbox class="preview">
+                <description id="preview_content"/>
+            </hbox>
+        </vbox>
+        <styles>
+
+            #api\.insert_merge_placeholder_outer_box > #api\.insert_merge_placeholder_selects {
+            flex: 1 1 50%;
+            }
+            #api\.insert_merge_placeholder_outer_box > label.et2_label {
+            flex: 0 1 auto;
+            }
+            #api\.insert_merge_placeholder_outer_box .preview {
+            flex: 1 1 50%;
+            font-size: larger;
+            }
+            select#api\.insert_merge_placeholder_app {
+            flex-grow: 0;
+            }
+            .ui-dialog-content, div.et2_box_widget, div.et2_box_widget > div.et2_box_widget {
+            display: flex;
+            flex: 1 1 auto;
+            }
+            div.et2_hbox {
+            flex-direction: row;
+            flex-grow: 1;
+            }
+            div.et2_vbox {
+            flex-direction: column;
+            gap: 5px;
+            }
+            div.et2_box_widget > * {
+            flex: 1 1 auto;
+            width: 100%;
+            }
+            div.et2_link_entry {
+            flex-grow: 0;
+            }
+            div.et2_link_entry input.ui-autocomplete-input {
+            width: 75%
+            }
+            div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button, button#cancel, .et2_button {
+            border: none;
+            border-radius: 0px;
+            background-color: transparent;
+            }
+            div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:hover, button#cancel:hover {
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            }
+            .preview .et2_button {
+            flex: 0 1 24px;
+            height: 24px;
+            border: none;
+            border-radius: 0px;
+            background-color: transparent;
+            }
+        </styles>
+    </template>
+</overlay>

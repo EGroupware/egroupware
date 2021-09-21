@@ -309,6 +309,10 @@ class Merge extends Api\Storage\Merge
 			}
 		}
 
+		// Correctly formatted address by country / preference
+		$placeholders['business']["{{adr_one_formatted}}"] = "Formatted business address";
+		$placeholders['private']["{{adr_two_formatted}}"] = "Formatted private address";
+
 		$group = 'customfields';
 		foreach($this->contacts->customfields as $name => $field)
 		{

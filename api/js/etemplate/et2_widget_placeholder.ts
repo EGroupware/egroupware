@@ -36,6 +36,11 @@ export class et2_placeholder_select extends et2_inputWidget
 			"name": "Insert callback",
 			"description": "Method called with the selected placeholder text",
 			"type": "js"
+		},
+		dialog_title: {
+			"name": "Dialog title",
+			"type": "string",
+			"default": "Insert Placeholder"
 		}
 	};
 
@@ -99,7 +104,7 @@ export class et2_placeholder_select extends et2_inputWidget
 	 *
 	 * @param {object} _data content
 	 */
-	private _buildDialog(_data)
+	protected _buildDialog(_data)
 	{
 
 		let self = this;
@@ -149,7 +154,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		{
 			if((submit_button_id == 'submit' || (extra_buttons_action && extra_buttons_action[submit_button_id])) && submit_value)
 			{
-				this.options.insert_callback(submit_value.placeholder_list);
+				this._do_insert_callback(submit_value);
 				return true;
 			}
 		}.bind(this);
@@ -238,6 +243,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		let preview_content = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
 
 		// Show the selected placeholder
+		this.set_value(placeholder_list.get_value());
 		preview.set_value(placeholder_list.get_value());
 		preview.getDOMNode().parentNode.style.visibility = placeholder_list.get_value().trim() ? null : 'hidden';
 
@@ -301,6 +307,16 @@ export class et2_placeholder_select extends et2_inputWidget
 		return options;
 	}
 
+	/**
+	 * Get the correct insert text call the insert callback with it
+	 *
+	 * @param dialog_values
+	 */
+	_do_insert_callback(dialog_values : Object)
+	{
+		this.options.insert_callback(this.get_value());
+	}
+
 	set_value(value)
 	{
 		this.value = value;
@@ -313,3 +329,160 @@ export class et2_placeholder_select extends et2_inputWidget
 };
 et2_register_widget(et2_placeholder_select, ["placeholder-select"]);
 
+/**
+ * Display a dialog to choose from a set list of placeholder snippets
+ */
+export class et2_placeholder_snippet_select extends et2_placeholder_select
+{
+	static readonly _attributes : any = {
+		dialog_title: {
+			"default": "Insert address"
+		}
+	};
+	static placeholders = {
+		"addressbook": {
+			"addresses": {
+				"{{n_fn}}\n{{adr_one_street}}{{NELF adr_one_street2}}\n{{adr_one_formatted}}": "Work address",
+				"{{n_fn}}\n{{adr_two_street}}{{NELF adr_two_street2}}\n{{adr_two_formatted}}": "Home address",
+			}
+		}
+	};
+
+	button : JQuery;
+	submit_callback : any;
+	dialog : et2_dialog;
+	protected value : any;
+
+	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
+	protected TEMPLATE = '/api/templates/default/placeholder_snippet.xet?1';
+
+	/**
+	 * Post-load of the dialog
+	 * Bind internal events, set some things that are difficult to do in the template
+	 */
+	_on_template_load()
+	{
+		let app = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("app");
+		let placeholder_list = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
+		let entry = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
+
+
+		placeholder_list.set_select_options(this._get_placeholders("addressbook", "addresses"));
+
+		// Further setup / styling that can't be done in etemplate
+		app.getInputNode().setAttribute("readonly", true);
+		this.dialog.template.DOMContainer.style.display = "flex";
+		this.dialog.template.DOMContainer.firstChild.style.display = "flex";
+		placeholder_list.getDOMNode().size = 5;
+
+		// Bind some handlers
+		app.onchange = (node, widget) =>
+		{
+			entry.set_value({app: widget.get_value()});
+			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), "addresses"));
+		}
+		placeholder_list.onchange = this._on_placeholder_select.bind(this);
+		entry.onchange = this._on_placeholder_select.bind(this);
+
+		this._on_placeholder_select();
+	}
+
+	/**
+	 * User has selected a placeholder
+	 * Update the UI, and if they have an entry selected do the replacement and show that.
+	 */
+	_on_placeholder_select()
+	{
+		let app = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("app");
+		let entry = <et2_link_entry>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
+		let placeholder_list = <et2_selectbox>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
+		let preview = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_placeholder");
+		let preview_content = <et2_description>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
+
+		if(placeholder_list.get_value() && entry.get_value())
+		{
+			// Show the selected placeholder replaced with value from the selected entry
+			this.egw().json(
+				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
+				[app.get_value(), placeholder_list.get_value(), entry.get_value()],
+				function(_content)
+				{
+					this.set_value(_content);
+					preview_content.set_value(_content);
+					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
+				}.bind(this)
+			).sendRequest(true);
+		}
+		else
+		{
+			// No value, hide the row
+			preview_content.getDOMNode().parentNode.style.visibility = 'hidden';
+		}
+		if(!entry.get_value())
+		{
+			entry.search.get(0).focus();
+		}
+	}
+
+	/**
+	 * Get the list of placeholder groups under the selected application
+	 * @param appname
+	 * @returns {value:string, label:string}[]
+	 */
+	_get_group_options(appname : string)
+	{
+		let options = [];
+		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
+		{
+			options.push(
+				{
+					value: key,
+					label: this.egw().lang(key)
+				});
+		});
+		return options;
+	}
+
+	/**
+	 * Get a list of placeholders under the given application + group
+	 *
+	 * @param appname
+	 * @param group
+	 * @returns {value:string, label:string}[]
+	 */
+	_get_placeholders(appname : string, group : string)
+	{
+		let options = [];
+		Object.keys(et2_placeholder_snippet_select.placeholders[appname][group]).map((key) =>
+		{
+			options.push(
+				{
+					value: key,
+					label: et2_placeholder_snippet_select.placeholders[appname][group][key]
+				});
+		});
+		return options;
+	}
+
+	/**
+	 * Get the correct insert text call the insert callback with it
+	 *
+	 * @param dialog_values
+	 */
+	_do_insert_callback(dialog_values : Object)
+	{
+		this.options.insert_callback(this.get_value());
+	}
+
+	set_value(value)
+	{
+		this.value = value;
+	}
+
+	getValue()
+	{
+		return this.value;
+	}
+};
+et2_register_widget(et2_placeholder_snippet_select, ["placeholder-snippet"]);
