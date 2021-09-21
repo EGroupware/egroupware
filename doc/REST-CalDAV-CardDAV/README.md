@@ -62,12 +62,13 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
       "created": "2010-10-21T09:55:42Z",
       "updated": "2014-06-02T14:45:24Z",
       "name": [
-        { "type": "personal", "value": "Default" },
-        { "type": "surname", "value": "Tester" }
+        { "@type": "NameComponent", "type": "personal", "value": "Default" },
+        { "@type": "NameComponent", "type": "surname", "value": "Tester" }
       ],
       "fullName": { "value": "Default Tester" },
       "organizations": {
         "org": {
+          "@type": "Organization", 
           "name": "default.org",
           "units": {
             "org_unit": "department.default.org"
@@ -75,30 +76,30 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
         }
       },
       "emails": {
-        "work": { "email": "test@test.com", "contexts": { "work": true }, "pref": 1 }
+        "work": { "@type": "EmailAddress", "email": "test@test.com", "contexts": { "work": true }, "pref": 1 }
       },
       "phones": {
-        "tel_work": { "phone": "+49 123 4567890", "pref": 1, "features": { "voice": true }, "contexts": { "work": true } },
-        "tel_cell": { "phone": "012 3723567", "features": { "cell": true }, "contexts": { "work": true } }
+        "tel_work": { "@type": "Phone", "phone": "+49 123 4567890", "pref": 1, "features": { "voice": true }, "contexts": { "work": true } },
+        "tel_cell": { "@type": "Phone", "phone": "012 3723567", "features": { "cell": true }, "contexts": { "work": true } }
       },
       "online": {
-        "url": { "resource": "https://www.test.com/", "type": "uri", "contexts": { "work": true } }
+        "url": { "@type": "Resource", "resource": "https://www.test.com/", "type": "uri", "contexts": { "work": true } }
       },
       "notes": [
         "Test test TEST\n\\server\\share\n\\\nother\nblah"
       ],
     },
     "/<username>/addressbook/list-36": {
-      "uid": "dfa5cac5-987b-448b-85d7-6c8b529a835c",
+      "uid": "urn:uuid:dfa5cac5-987b-448b-85d7-6c8b529a835c",
       "name": "Example distribution list",
       "card": {
-        "uid": "dfa5cac5-987b-448b-85d7-6c8b529a835c",
+        "uid": "urn:uuid:dfa5cac5-987b-448b-85d7-6c8b529a835c",
         "prodId": "EGroupware Addressbook 21.1.001",
         "updated": "2018-04-11T14:46:43Z",
         "fullName": { "value": "Example distribution list" }
       },
       "members": {
-        "urn:uuid:5638-8623c4830472a8ede9f9f8b30d435ea4": true
+        "5638-8623c4830472a8ede9f9f8b30d435ea4": true
       }
     }
   }
@@ -193,8 +194,8 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
       "created": "2010-10-21T09:55:42Z",
       "updated": "2014-06-02T14:45:24Z",
       "name": [
-        { "type": "personal", "value": "Default" },
-        { "type": "surname", "value": "Tester" }
+        { "@type": "NameComponent", "type": "personal", "value": "Default" },
+        { "@type": "NameComponent", "type": "surname", "value": "Tester" }
       ],
       "fullName": "Default Tester",
 ....
@@ -217,8 +218,8 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/5593' -H "Accept: 
   "created": "2010-10-21T09:55:42Z",
   "updated": "2014-06-02T14:45:24Z",
   "name": [
-    { "type": "personal", "value": "Default" },
-    { "type": "surname", "value": "Tester" }
+    { "@type": "NameComponent", "type": "personal", "value": "Default" },
+    { "@type": "NameComponent", "type": "surname", "value": "Tester" }
   ],
   "fullName": "Default Tester",
 ....
@@ -239,8 +240,8 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "created": "2010-10-21T09:55:42Z",
   "updated": "2014-06-02T14:45:24Z",
   "name": [
-    { "type": "personal", "value": "Default" },
-    { "type": "surname", "value": "Tester" }
+    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "surname", "value": "Tester" }
   ],
   "fullName": { "value": "Default Tester" },
 ....
