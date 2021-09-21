@@ -96,15 +96,11 @@ class JsContact
 				switch ($name)
 				{
 					case 'uid':
-						if (!is_string($value) || empty($value))
-						{
-							throw new \InvalidArgumentException("Missing or invalid uid value!");
-						}
-						$contact['uid'] = $value;
+						$contact['uid'] = self::parseUid($value);
 						break;
 
 					case 'name':
-						$contact += self::parseNameComponents($value);
+						$contact += self::parseNameComponents($value, $check_at_type);
 						break;
 
 					case 'fullName':
@@ -981,6 +977,8 @@ class JsContact
 		'suffix'     => 'n_suffix',
 	];
 
+	const TYPE_NAME_COMPONENT = 'NameComponent';
+
 	/**
 	 * Return name-components objects with "type" and "value" attributes
 	 *
@@ -996,7 +994,11 @@ class JsContact
 		}, self::$nameType2attribute));
 		return array_map(function($type, $value)
 		{
-			return ['type' => $type, 'value' => $value];
+			return [
+				self::AT_TYPE => self::TYPE_NAME_COMPONENT,
+				'type' => $type,
+				'value' => $value,
+			];
 		}, array_keys($components), array_values($components));
 	}
 
@@ -1006,7 +1008,7 @@ class JsContact
 	 * @param array $components
 	 * @return array
 	 */
-	protected static function parseNameComponents(array $components)
+	protected static function parseNameComponents(array $components, bool $check_at_type=true)
 	{
 		$contact = array_combine(array_values(self::$nameType2attribute),
 			array_fill(0, count(self::$nameType2attribute), null));
@@ -1016,6 +1018,10 @@ class JsContact
 			if (empty($component['type']) || isset($component) && !is_string($component['value']))
 			{
 				throw new \InvalidArgumentException("Invalid name-component (must have type and value attributes): ".json_encode($component, self::JSON_OPTIONS_ERROR));
+			}
+			if ($check_at_type && $component[self::AT_TYPE] !== self::TYPE_NAME_COMPONENT)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($component, self::JSON_OPTIONS_ERROR));
 			}
 			$contact[self::$nameType2attribute[$component['type']]] = $component['value'];
 		}
