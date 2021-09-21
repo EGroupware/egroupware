@@ -41,8 +41,9 @@ from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a r
 > currently implemented only for contacts!
 
 Following RFCs / drafts used/planned for JSON encoding of ressources
-* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07) ([*](#implemented-changes-to-jscontact-draft-07-from-next-draft))
-* [draft-ietf-jmap-jscontact-vcard-06: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
+* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
+([* see at end of document](#implemented-changes-from-jscontact-draft-08))
+* [draft-ietf-jmap-jscontact-vcard: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
 
 ### Supported request methods and examples
@@ -257,6 +258,10 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 
 * one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API
 
-#### Implemented changes to [JsContact draft 07](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07) from next draft:
+#### Implemented [changes from JsContact draft 08](https://github.com/rsto/draft-stepanek-jscontact/compare/draft-ietf-jmap-jscontact-08):
 * localizedString type / object is removed in favor or regular String type and a [localizations object like in JsCalendar](https://datatracker.ietf.org/doc/html/rfc8984#section-4.6.1)
-* [Vendor-specific Property Extensions and Values](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.3) use ```<domain-name>:<name>``` like in JsCalendar
+* [Vendor-specific Property Extensions and Values](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.3) 
+use ```<domain-name>:<name>``` like in JsCalendar
+* top-level objects need a ```@type``` attribute with one of the following values: 
+```NameComponent```, ```Organization```, ```Title```, ```Phone```, ```Resource```, ```File```, ```ContactLanguage```, 
+```Address```, ```StreetComponent```, ```Anniversary```, ```PersonalInformation```
