@@ -45,29 +45,17 @@ class JsContact
 			'prodId' => 'EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'],
 			'created' => self::UTCDateTime($contact['created']),
 			'updated' => self::UTCDateTime($contact['modified']),
-			//'kind' => '', // 'individual' or 'org'
+			'kind' => !empty($contact['n_family']) || !empty($contact['n_given']) ? 'individual' :
+				(!empty($contact['org_name']) ? 'org' : null),
 			//'relatedTo' => [],
 			'name' => self::nameComponents($contact),
 			'fullName' => $contact['n_fn'],
 			//'nickNames' => [],
-			'organizations' => array_filter(['org' => self::organization($contact)]),
+			'organizations' => self::organizations($contact),
 			'titles' => self::titles($contact),
-			'emails' => array_filter([
-				'work' => empty($contact['email']) ? null : [
-					'email' => $contact['email'],
-					'contexts' => ['work' => true],
-					'pref' => 1,    // as it's the more prominent in our UI
-				],
-				'private' => empty($contact['email_home']) ? null : [
-					'email' => $contact['email_home'],
-					'contexts' => ['private' => true],
-				],
-			]),
+			'emails' => self::emails($contact),
 			'phones' => self::phones($contact),
-			'online' => array_filter([
-				'url' => !empty($contact['url']) ? ['resource' => $contact['url'], 'type' => 'uri', 'contexts' => ['work' => true]] : null,
-				'url_home' => !empty($contact['url_home']) ? ['resource' => $contact['url_home'], 'type' => 'uri', 'contexts' => ['private' => true]] : null,
-			]),
+			'online' => self::online($contact),
 			'addresses' => array_filter([
 				'work' => self::address($contact, 'work', 1),    // as it's the more prominent in our UI
 				'home' =>  self::address($contact, 'home'),
@@ -91,9 +79,10 @@ class JsContact
 	 * Parse JsCard
 	 *
 	 * @param string $json
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	public static function parseJsCard(string $json)
+	public static function parseJsCard(string $json, bool $check_at_type=true)
 	{
 		try
 		{
@@ -123,31 +112,31 @@ class JsContact
 						break;
 
 					case 'organizations':
-						$contact += self::parseOrganizations($value);
+						$contact += self::parseOrganizations($value, $check_at_type);
 						break;
 
 					case 'titles':
-						$contact += self::parseTitles($value);
+						$contact += self::parseTitles($value, $check_at_type);
 						break;
 
 					case 'emails':
-						$contact += self::parseEmails($value);
+						$contact += self::parseEmails($value, $check_at_type);
 						break;
 
 					case 'phones':
-						$contact += self::parsePhones($value);
+						$contact += self::parsePhones($value, $check_at_type);
 						break;
 
 					case 'online':
-						$contact += self::parseOnline($value);
+						$contact += self::parseOnline($value, $check_at_type);
 						break;
 
 					case 'addresses':
-						$contact += self::parseAddresses($value);
+						$contact += self::parseAddresses($value, $check_at_type);
 						break;
 
 					case 'photos':
-						$contact += self::parsePhotos($value);
+						$contact += self::parsePhotos($value, $check_at_type);
 						break;
 
 					case 'anniversaries':
@@ -234,23 +223,27 @@ class JsContact
 	 */
 	const JSON_OPTIONS_ERROR = JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE;
 
+	const AT_TYPE = '@type';
+	const TYPE_ORGANIZATION = 'Organization';
+
 	/**
-	 * Return organisation
+	 * Return organizations
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.2.4
 	 * @param array $contact
 	 * @return array
 	 */
-	protected static function organization(array $contact)
+	protected static function organizations(array $contact)
 	{
-		if (empty($contact['org_name']))
-		{
-			return null;    // name is mandatory
-		}
-		return array_filter([
+		$org = array_filter([
 			'name' => $contact['org_name'],
 			'units' => empty($contact['org_unit']) ? null : ['org_unit' => $contact['org_unit']],
 		]);
+		if (!$org || empty($contact['org_name']))
+		{
+			return null;    // name is mandatory
+		}
+		return ['org' => [self::AT_TYPE => self::TYPE_ORGANIZATION]+$org];
 	}
 
 	/**
@@ -259,18 +252,23 @@ class JsContact
 	 * As we store only one organization, the rest get lost, multiple units get concatenated by space.
 	 *
 	 * @param array $orgas
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseOrganizations(array $orgas)
+	protected static function parseOrganizations(array $orgas, bool $check_at_type=true)
 	{
 		$contact = [];
 		foreach($orgas as $orga)
 		{
+			if ($check_at_type && $orga[self::AT_TYPE] !== self::TYPE_ORGANIZATION)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($orga, self::JSON_OPTIONS_ERROR));
+			}
 			$contact['org_name'] = self::parseString($orga['name']);
 			$contact['org_unit'] = implode(' ', array_map(static function($unit)
 			{
 				return self::parseString($unit);
-			}, $orga['units']));
+			}, (array)$orga['units']));
 			break;
 		}
 		if (count($orgas) > 1)
@@ -280,6 +278,8 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_TITLE = 'Title';
+
 	/**
 	 * Return titles of a contact
 	 *
@@ -288,42 +288,58 @@ class JsContact
 	 */
 	protected static function titles(array $contact)
 	{
-		return array_filter([
+		$titles = [];
+		foreach([
 			'title' => $contact['title'],
 			'role' => $contact['role'],
-		]);
+		] as $id => $value)
+		{
+			if (!empty($value))
+			{
+				$titles[$id] = [
+					self::AT_TYPE => self::TYPE_TITLE,
+					'title' => $value,
+					'organization' => 'org',    // the single organization we support use "org" as Id
+				];
+			}
+		}
+		return $titles;
 	}
 
 	/**
-	 * Parse titles, thought we only have "title" and "role" available for storage
+	 * Parse titles, thought we only have "title" and "role" available for storage.
 	 *
 	 * @param array $titles
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseTitles(array $titles)
+	protected static function parseTitles(array $titles, bool $check_at_type=true)
 	{
 		$contact = [];
-		if (isset($titles[$id='title']) || isset($contact[$id='jobTitle']))
+		foreach($titles as $id => $title)
 		{
-			$contact['title'] = self::parseString($titles[$id]);
-			unset($titles[$id]);
-		}
-		if (isset($titles[$id='role']))
-		{
-			$contact['role'] = self::parseString($titles[$id]);
-			unset($titles[$id]);
-		}
-		if (!isset($contact['title']) && $titles)
-		{
-			$contact['title'] = self::parseString(array_shift($titles));
-		}
-		if (!isset($contact['role']) && $titles)
-		{
-			$contact['role'] = self::parseString(array_shift($titles));
-		}
-		if (count($titles))
-		{
-			error_log(__METHOD__."() only 2 titles can be stored --> rest is ignored!");
+			if ($check_at_type && $title[self::AT_TYPE] !== self::TYPE_TITLE)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: " . json_encode($title[self::AT_TYPE]));
+			}
+			if (empty($title['title']) || !is_string($title['title']))
+			{
+				throw new \InvalidArgumentException("Missing or invalid title attribute in title with id '$id': " . json_encode($title));
+			}
+			// put first title as "title", unless we have an Id "title"
+			if (!isset($contact['title']) && ($id === 'title' || !isset($titles['title'])))
+			{
+				$contact['title'] = $title['title'];
+			}
+			// put second title as "role", unless we have an Id "role"
+			elseif (!isset($contact['role']) && ($id === 'role' || !isset($titles['role'])))
+			{
+				$contact['role'] = $title['title'];
+			}
+			else
+			{
+				error_log(__METHOD__ . "() only 2 titles can be stored --> rest is ignored!");
+			}
 		}
 		return $contact;
 	}
@@ -479,6 +495,8 @@ class JsContact
 		'timeZone' => 'tz',
 	];
 
+	const TYPE_ADDRESS = 'Address';
+
 	/**
 	 * Return address object
 	 *
@@ -500,7 +518,9 @@ class JsContact
 			'street' => self::streetComponents($contact[$prefix.'street'], $contact[$prefix.'street2']),
 		]);
 		// only add contexts and preference to non-empty address
-		return !$address ? [] : array_filter($address+[
+		return !$address ? [] : array_filter([
+			self::AT_TYPE => self::TYPE_ADDRESS,
+			]+$address+[
 			'contexts' => [$type => true],
 			'pref' => $preference,
 		]);
@@ -510,16 +530,22 @@ class JsContact
 	 * Parse addresses object containing multiple addresses
 	 *
 	 * @param array $addresses
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseAddresses(array $addresses)
+	protected static function parseAddresses(array $addresses, bool $check_at_type=true)
 	{
 		$n = 0;
 		$last_type = null;
 		$contact = [];
 		foreach($addresses as $id => $address)
 		{
+			if ($check_at_type && $address[self::AT_TYPE] !== self::TYPE_ADDRESS)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($address));
+			}
 			$contact += ($values=self::parseAddress($address, $id, $last_type));
+
 			if (++$n > 2)
 			{
 				error_log(__METHOD__."() Ignoring $n. address id=$id: ".json_encode($address, self::JSON_OPTIONS_ERROR));
@@ -567,6 +593,8 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_STREET_COMPONENT = 'StreetComponent';
+
 	/**
 	 * Our data module does NOT distinguish between all the JsContact components therefore we only send a "name" component
 	 *
@@ -591,9 +619,17 @@ class JsContact
 			{
 				if ($components)
 				{
-					$components[] = ['type' => 'separator', 'value' => "\n"];
+					$components[] = [
+						self::AT_TYPE => self::TYPE_STREET_COMPONENT,
+						'type' => 'separator',
+						'value' => "\n",
+					];
 				}
-				$components[] = ['type' => 'name', 'value' => $street];
+				$components[] = [
+					self::AT_TYPE => self::TYPE_STREET_COMPONENT,
+					'type' => 'name',
+					'value' => $street,
+				];
 			}
 		}
 		return $components;
@@ -606,9 +642,10 @@ class JsContact
 	 * Then we split it into 2 lines.
 	 *
 	 * @param array $components
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return string[] street and street2 values
 	 */
-	protected static function parseStreetComponents(array $components)
+	protected static function parseStreetComponents(array $components, bool $check_at_type=true)
 	{
 		$street = [];
 		$last_type = null;
@@ -617,6 +654,10 @@ class JsContact
 			if (!is_array($component) || !is_string($component['value']))
 			{
 				throw new \InvalidArgumentException("Invalid street-component: ".json_encode($component, self::JSON_OPTIONS_ERROR));
+			}
+			if ($check_at_type && $component[self::AT_TYPE] !== self::TYPE_STREET_COMPONENT)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($component, self::JSON_OPTIONS_ERROR));
 			}
 			if ($street && $last_type !== 'separator')  // if we have no separator, we add a space
 			{
@@ -644,6 +685,8 @@ class JsContact
 		'tel_other' => ['features' => ['voice' => true], 'contexts' => ['work' => true]],
 	];
 
+	const TYPE_PHONE = 'Phone';
+
 	/**
 	 * Return "phones" resources
 	 *
@@ -659,6 +702,7 @@ class JsContact
 			if (!empty($contact[$name]))
 			{
 				$phones[$name] = array_filter([
+					self::AT_TYPE => self::TYPE_PHONE,
 					'phone' => $contact[$name],
 					'pref' => $name === $contact['tel_prefer'] ? 1 : null,
 					'label' => '',
@@ -672,9 +716,10 @@ class JsContact
 	 * Parse phone objects
 	 *
 	 * @param array $phones $id => object with attribute "phone" and optional "features" and "context"
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parsePhones(array $phones)
+	protected static function parsePhones(array $phones, bool $check_at_type=true)
 	{
 		$contact = [];
 
@@ -684,6 +729,10 @@ class JsContact
 			if (!is_array($phone) || !is_string($phone['phone']))
 			{
 				throw new \InvalidArgumentException("Invalid phone: " . json_encode($phone, self::JSON_OPTIONS_ERROR));
+			}
+			if ($check_at_type && $phone[self::AT_TYPE] !== self::TYPE_PHONE)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($phone, self::JSON_OPTIONS_ERROR));
 			}
 			// first check for "our" id's
 			if (isset(self::$phone2jscard[$id]) && !isset($contact[$id]))
@@ -741,15 +790,42 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_RESOURCE = 'Resource';
+
+	/**
+	 * Get online resources
+	 *
+	 * @param array $contact
+	 * @return mixed
+	 */
+	protected static function online(array $contact)
+	{
+		return array_filter([
+			'url' => !empty($contact['url']) ? [
+				self::AT_TYPE => self::TYPE_RESOURCE,
+				'resource' => $contact['url'],
+				'type' => 'uri',
+				'contexts' => ['work' => true],
+			] : null,
+			'url_home' => !empty($contact['url_home']) ? [
+				self::AT_TYPE => self::TYPE_RESOURCE,
+				'resource' => $contact['url_home'],
+				'type' => 'uri',
+				'contexts' => ['private' => true],
+			] : null,
+		]);
+	}
+
 	/**
 	 * Parse online resource objects
 	 *
 	 * We currently only support 2 URLs, rest get's ignored!
 	 *
 	 * @param array $values
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseOnline(array $values)
+	protected static function parseOnline(array $values, bool $check_at_type)
 	{
 		$contact = [];
 		foreach($values as $id => $value)
@@ -757,6 +833,10 @@ class JsContact
 			if (!is_array($value) || !is_string($value['resource']))
 			{
 				throw new \InvalidArgumentException("Invalid online resource with id '$id': ".json_encode($value, self::JSON_OPTIONS_ERROR));
+			}
+			if ($check_at_type && $value[self::AT_TYPE] !== self::TYPE_RESOURCE)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
 			// check for "our" id's
 			if (in_array($id, ['url', 'url_home']))
@@ -783,23 +863,53 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_EMAIL = 'EmailAddress';
+
+	/**
+	 * Return emails
+	 *
+	 * @param array $contact
+	 * @return array
+	 */
+	protected static function emails(array $contact)
+	{
+		return array_filter([
+			'work' => empty($contact['email']) ? null : [
+				self::AT_TYPE => self::TYPE_EMAIL,
+				'email' => $contact['email'],
+				'contexts' => ['work' => true],
+				'pref' => 1,    // as it's the more prominent in our UI
+			],
+			'private' => empty($contact['email_home']) ? null : [
+				self::AT_TYPE => self::TYPE_EMAIL,
+				'email' => $contact['email_home'],
+				'contexts' => ['private' => true],
+			],
+		]);
+	}
+
 	/**
 	 * Parse emails object
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.3.1
 	 * @param array $emails id => object with attribute "email" and optional "context"
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseEmails(array $emails)
+	protected static function parseEmails(array $emails, bool $check_at_type=true)
 	{
 		$contact = [];
 		foreach($emails as $id => $value)
 		{
+			if ($check_at_type && $value[self::AT_TYPE] !== self::TYPE_EMAIL)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($value, self::JSON_OPTIONS_ERROR));
+			}
 			if (!is_array($value) || !is_string($value['email']))
 			{
 				throw new \InvalidArgumentException("Invalid email object (requires email attribute): ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
-			if (!isset($contact['email']) && $id !== 'private' && empty($value['context']['private']))
+			if (!isset($contact['email']) && $id === 'work' && empty($value['context']['private']))
 			{
 				$contact['email'] = $value['email'];
 			}
@@ -815,8 +925,10 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_FILE = 'File';
+
 	/**
-	 * Return id => photo objects of a contact pairs
+	 * Return id => photo objects
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.3.4
 	 * @param array $contact
@@ -824,7 +936,17 @@ class JsContact
 	 */
 	protected static function photos(array $contact)
 	{
-		return [];
+		$photos = [];
+		if (!empty($contact['photo']))
+		{
+			$photos['photo'] = [
+				self::AT_TYPE => self::TYPE_FILE,
+				'href' => $contact['photo'],
+				'mediaType' => 'image/jpeg',
+				//'size' => ''
+			];
+		}
+		return $photos;
 	}
 
 	/**
@@ -833,9 +955,18 @@ class JsContact
 	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.3.4
 	 * @param array $photos id => photo objects of a contact pairs
 	 * @return array
+	 * @ToDo
 	 */
-	protected static function parsePhotos(array $photos)
+	protected static function parsePhotos(array $photos, bool $check_at_type)
 	{
+		foreach($photos as $id => $photo)
+		{
+			if ($check_at_type && $photo[self::AT_TYPE] !== self::TYPE_FILE)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($photo, self::JSON_OPTIONS_ERROR));
+			}
+			error_log(__METHOD__."() importing attribute photos not yet implemented / ignored!");
+		}
 		return [];
 	}
 
@@ -891,6 +1022,8 @@ class JsContact
 		return $contact;
 	}
 
+	const TYPE_ANNIVERSARY = 'Anniversary';
+
 	/**
 	 * Return anniversaries / birthday
 	 *
@@ -901,6 +1034,7 @@ class JsContact
 	protected static function anniversaries(array $contact)
 	{
 		return empty($contact['bday']) ? [] : ['bday' => [
+			self::AT_TYPE => self::TYPE_ANNIVERSARY,
 			'type' => 'birth',
 			'date' => $contact['bday'],
 			//'place' => '',
@@ -912,9 +1046,10 @@ class JsContact
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-2.5.1
 	 * @param array $anniversaries id => object with attribute date and optional type
+	 * @param bool $check_at_type true: check if objects have their proper @type attribute
 	 * @return array
 	 */
-	protected static function parseAnniversaries(array $anniversaries)
+	protected static function parseAnniversaries(array $anniversaries, bool $check_at_type=true)
 	{
 		$contact = [];
 		foreach($anniversaries as $id => $anniversary)
@@ -925,6 +1060,10 @@ class JsContact
 				!(1 <= $month && $month <= 12 && 1 <= $day && $day <= 31))
 			{
 				throw new \InvalidArgumentException("Invalid anniversary object with id '$id': ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
+			}
+			if ($check_at_type && $anniversary[self::AT_TYPE] !== self::TYPE_ANNIVERSARY)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @type: ".json_encode($anniversary, self::JSON_OPTIONS_ERROR));
 			}
 			if (!isset($contact['bday']) && ($id === 'bday' || $anniversary['type'] === 'birth'))
 			{
