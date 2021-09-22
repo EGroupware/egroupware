@@ -273,7 +273,7 @@ class Merge extends Api\Storage\Merge
 	 *
 	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
 	 */
-	public function get_placeholder_list()
+	public function get_placeholder_list($prefix = '')
 	{
 		$placeholders = [];
 		$group = 'contact';
@@ -302,21 +302,21 @@ class Merge extends Api\Storage\Merge
 				case 'url':
 					$group = 'details';
 			}
-			$placeholders[$group]["{{" . $name . "}}"] = $label;
+			$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = $label;
 			if($name == 'cat_id')
 			{
-				$placeholders[$group]["{{" . $name . "}}"] = lang('Category path');
+				$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = lang('Category path');
 			}
 		}
 
 		// Correctly formatted address by country / preference
-		$placeholders['business']["{{adr_one_formatted}}"] = "Formatted business address";
-		$placeholders['private']["{{adr_two_formatted}}"] = "Formatted private address";
+		$placeholders['business']['{{' . ($prefix ? $prefix . '/' : '') . 'adr_one_formatted}}'] = "Formatted business address";
+		$placeholders['private']['{{' . ($prefix ? $prefix . '/' : '') . 'adr_two_formatted}}'] = "Formatted private address";
 
 		$group = 'customfields';
 		foreach($this->contacts->customfields as $name => $field)
 		{
-			$placeholders[$group]["{{" . $name . "}}"] = $field['label'];
+			$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = $field['label'];
 		}
 		return $placeholders;
 	}
