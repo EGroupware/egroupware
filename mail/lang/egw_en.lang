@@ -51,7 +51,7 @@ allways a new window	mail	en	allways a new window
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
 always show html emails	mail	en	always show HTML emails
-always show notifiction	mail	en	Always show notifiction
+always show notifiction	mail	en	Always show notification
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 any of	mail	en	any of
