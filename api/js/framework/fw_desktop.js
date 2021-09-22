@@ -551,18 +551,6 @@
 		},
 
 		/**
-		 * This method only used for status app when it tries to broadcast data to users
-		 * avoiding throwing exceptions for users whom might have no status app access
-		 *
-		 * @param {type} _data
-		 * @returns {undefined}
-		 */
-		execPushBroadcastAppStatus: function(_data)
-		{
-			if (app.status) app.status.mergeContent(_data, true);
-		},
-
-		/**
 		 * Get color scheme
 		 * @return {string|null} returns active color scheme mode or null in case browser not supporting it
 		 * @private
