@@ -838,6 +838,18 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 	},
 
 	/**
+	 * This method only used for status app when it tries to broadcast data to users
+	 * avoiding throwing exceptions for users whom might have no status app access
+	 *
+	 * @param {type} _data
+	 * @returns {undefined}
+	 */
+	execPushBroadcastAppStatus: function(_data)
+	{
+		if (app.status) app.status.mergeContent(_data, true);
+	},
+
+	/**
 	* Sets the active framework application to the application specified by _app
 	*
 	* @param {egw_fw_class_application} _app application object
