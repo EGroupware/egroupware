@@ -13,6 +13,7 @@
 addressbook csv import	importexport	it	Importazione da CSV rubrica
 addressbook vcard import	importexport	it	Importazione da vCard rubrica
 admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione
+all custom fields	importexport	it	Tutti i campi personalizzati
 all encodings	importexport	it	Tutte le codifiche
 all users	importexport	it	Tutti gli utenti
 allowed users	importexport	it	Utenti consentiti
@@ -33,6 +34,7 @@ column mismatch: %1 should be %2, not %3	importexport	it	Discrepanza di colonne:
 condition	importexport	it	Condizione
 copied	importexport	it	Copiato
 create a <a href="%1">new definition</a> for this file	importexport	it	Crea una  <a href="%1">nuova definizione</a> per questo file
+create a matching export definition based on this import definition	importexport	it	Crea una definizione di esportazione in base a questa definizione di importazione
 create export	importexport	it	Crea esportazione
 created	importexport	it	Creato
 csv field	importexport	it	Campo CSV
@@ -41,6 +43,7 @@ day of week	importexport	it	Giorni della settimana
 define imports|exports	common	it	Definisci Importazioni | Esportazioni
 definition	importexport	it	Definizione
 delete all selected definitions	importexport	it	Rimuovi TUTTE le definizioni selezionate
+delete files after import	importexport	it	Elimina dopo l'importazione
 deleted	importexport	it	Eliminato
 delimiter	importexport	it	Separatore
 duplicate name, please choose another.	importexport	it	Nome duplicato, selezionare un altro
@@ -66,6 +69,7 @@ fieldseperator	importexport	it	Separatore campo
 filters	importexport	it	Filtri
 finish	importexport	it	Termina
 from definition	importexport	it	Da definizione
+from file	importexport	it	Da file
 general	preferences	it	Generale
 general fields:	preferences	it	Campi generici:
 header lines to skip	importexport	it	Linee di intestazione da saltare
@@ -110,8 +114,11 @@ schedule import | export	importexport	it	Pianifica importazione | esportazione
 schedule not found	importexport	it	Pianificazione non trovata
 schedule times are server time!  currently %s.	importexport	it	Gli orari di pianificazine sono quelli del server! Attualmente sono le %s
 select definition	importexport	it	Seleziona definizione
+select groups	importexport	it	Seleziona gruppi
+select owner	importexport	it	Seleziona proprietario
 select plugin	importexport	it	Seleziona plugin
 select...	importexport	it	Seleziona:
+set import values	importexport	it	Imposta parametri di importazione
 skipped	importexport	it	Saltati
 some nice text	importexport	it	Un po' di testo
 some records may not have been imported	importexport	it	Alcune voci potrebbero non essere state importate
@@ -137,6 +144,7 @@ user template folder	importexport	it	Usa cartella modelli
 users allowed to create their own definitions	importexport	it	Utenti a cui è consentito modificare le loro definizioni
 users allowed to share their own definitions	importexport	it	Utenti a cui è consentito condividere le loro definizioni
 warnings	importexport	it	Avvisi
+what should be done with unknown values?	importexport	it	Cosa si dovrebbe fare con i valori sconosciuti?
 which useres are allowed for this definition	importexport	it	A quali utenti è permesso di usare questa definizione
 which users are allowed to use this definition	importexport	it	A quali utenti è permesso di usare questa definizione
 you may want to <a href="%1" target="_new">backup</a> first.	importexport	it	Potresti effettuare un <a href="%1" target="_new">backup dei dati</a> prima di procedere.

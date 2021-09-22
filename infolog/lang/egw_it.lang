@@ -82,6 +82,7 @@ change completed	infolog	it	Modifica completata
 change completion	infolog	it	Modifica la percentuale di completamento
 change history	infolog	it	Cambia storico
 change owner when updating	infolog	it	Modifica il proprietario quando aggiorni
+change responsible	infolog	it	Cambia responsabile
 change the status of an entry, eg. close it	infolog	it	Cambia lo stato di una voce, es. chiudi
 changed category to %1	infolog	it	Categoria modificata in %1
 changed completion to %1%	infolog	it	Completamento modificato in %1%
@@ -170,6 +171,7 @@ done	infolog	it	eseguita
 download	infolog	it	Download
 download url for links	infolog	it	URL di scaricamento per i collegamenti
 due %1	infolog	it	In scadenza %1
+due date	infolog	it	Data di scadenza
 duration	infolog	it	Durata
 e-mail:	infolog	it	Email
 each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
@@ -248,10 +250,11 @@ infolog - new subproject	infolog	it	Attività - Nuovo progetto secondario
 infolog - subprojects from	infolog	it	Attività - progetto secondario da
 infolog csv export	infolog	it	Esportazione CSV Attività
 infolog csv import	infolog	it	Importazione CSV Attività
+infolog encryption requires epl subscription	infolog	it	La cifratura delle attività richiede la sottoscrizione di EPL
 infolog entry deleted	infolog	it	Voce Attività cancellata
 infolog entry saved	infolog	it	Voce Attività salvata
 infolog fields:	infolog	it	Campi Attività
-InfoLog filter for the home screen	infolog	it	Filtro Attività per la schermata principale
+infolog filter for the home screen	infolog	it	Filtro Attività per la schermata principale
 infolog ical export	infolog	it	Esportazione iCal Attività
 infolog ical import	infolog	it	importazione iCal Attività
 infolog id	infolog	it	ID Attività
@@ -351,6 +354,7 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	infolog	it	stringa da ricercare nella rubrica
 pattern for search in projects	infolog	it	stringa da ricercare nei progetti
 percent completed	infolog	it	Percentuale completamento
+performance optimization for huge infolog tables	admin	it	Ottimizza performance per tabelle Attività grandi
 permission denied	infolog	it	Permesso negato
 permissions error - %1 could not %2	infolog	it	Errore di permessi - %1 non può %2
 phone	infolog	it	Chiamata Telefonica
@@ -362,6 +366,7 @@ prefix for sub-entries (default: re:)	infolog	it	Prefisso per sottovoci (default
 price	infolog	it	Prezzo
 pricelist	infolog	it	Listino
 primary link	infolog	it	Collegamento primario
+print this infolog	infolog	it	Stampa quest' Attività
 printing...	infolog	it	In stampa...
 priority	infolog	it	Priorità
 private	infolog	it	Privata
@@ -432,7 +437,7 @@ sets the status of this entry and its subs to done	infolog	it	Imposta lo stato d
 sets the status of this entry to done	infolog	it	Imposta lo stato di questa voce in completato
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	it	Attività deve visualizzare ToDo-, chiamate- o note- secondarie nella vista normale oppure no. Potrai sempre visualizzare le secondarie attraverso le principali.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	it	Attività deve mostrare i link ad altre apllicazioni e/o gli allegati nell'elenco Attività (vista normale quando entri in Attività).
-Should InfoLog show up on the home screen and with which filter. Works only if you dont selected an application for the home screen (in your preferences).	infolog	it	Attività deve apparire nella schermata principale e con quale filtro. Funziona solo se non hai selezionato un'applicazione per la schermata principale (nelle tue preferenze).
+should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	it	Attività deve apparire nella schermata principale e con quale filtro. Funziona solo se non hai selezionato un'applicazione per la schermata principale (nelle tue preferenze).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	it	Attività deve usare i nomi completi (nome e cognome) o solo il nome utente.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	it	L'elenco Attività deve mostrare un ID numerico univoco, che può essere usato ad esempio come Id ticket.
 should the infolog list show the column "last modified".	infolog	it	L'elenco Attività deve mostrare la colonna "ultima modifica".
@@ -457,8 +462,8 @@ startdate must be before enddate!!!	infolog	it	La data di inizio deve essere ant
 starting %1	infolog	it	Avvio %1
 startrecord	infolog	it	Record Iniziale
 status	infolog	it	Stato
-status, percent and date completed are always allowed.	infolog	it	Stato, percentuale e data completamento sono sempre permessi.
 status ...	infolog	it	Stato ...
+status, percent and date completed are always allowed.	infolog	it	Stato, percentuale e data completamento sono sempre permessi.
 sub	infolog	it	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	it	Le sotto-voci diventano sotto- di voci superiori o voci principali, se non c'è più superiore
 sub-entries will not be closed	infolog	it	Le sottovoci non verranno chiuse
@@ -514,7 +519,7 @@ view the parent of this entry and all his subs	infolog	it	Visualizza i padri di 
 view this linked entry in its application	infolog	it	Visualizza le voci linkate nella sua applicazione
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	it	Che campi aggiuntivi sarà permesso modificare al responsabile senza avere diritti di modifica?
-which implicit acl rights should the responsible get?	infolog	it	Che diritti ACL impliciti otterrà il responsabile?
+which implicit acl rights should the responsible get	infolog	it	Quale ACL implicita deve essere fornita al responsabile
 which participants should be preselected when scheduling an appointment.	infolog	it	Quali partecipanti dovrebbero essere preselezionati quando si programma un appuntamento?
 which types should the calendar show	infolog	it	Quali tipi di calendario mostrare?
 which types should the calendar show like events?	infolog	it	Quali tipi dovrebbe mostrare l'agenda come eventi?
@@ -532,7 +537,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	it	Non puoi cancellare uno dei tipi predefiniti !!!
 you have entered an invalid ending date	infolog	it	E' stata inserita una data di fine non valida
 you have entered an invalid starting date	infolog	it	E' stata inserita una data di inizio non valida
-you have to enter a name, to create a new typ!!!	infolog	it	Per creare un nuovo tipo devi inserire un nome!!!
+you have to enter a name, to create a new type!	infolog	it	Deve essere inserito un nome per creare un nuovo tipo!
 you must enter a subject or a description	infolog	it	E' necessario inserire un oggetto o una descrizione
 you need to select an entry for linking.	infolog	it	Devi selezionare una voce da collegare
 you need to select some entries first	infolog	it	Devi prima selezionare alcune voci.
