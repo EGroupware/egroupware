@@ -2311,6 +2311,10 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short {
     height: 24px;
     margin-top: 0px;
 }
+div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
+    top: 0px;
+    left: auto;
+}
 .et2_toolbar_more .ui-accordion-header-active.header_list-short.ui-state-active span.ui-accordion-header-icon {
     background-position: bottom !important;
     margin-top: 2px;
