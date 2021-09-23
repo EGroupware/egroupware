@@ -24,26 +24,28 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 export function parseDate(dateString)
 {
 	// First try the server format
-	try
+	if(dateString.substr(-1) === "Z")
 	{
-		let date = new Date(dateString);
-		if(date instanceof Date)
+		try
 		{
-			return date;
+			let date = new Date(dateString);
+			if(date instanceof Date)
+			{
+				return date;
+			}
 		}
-	}
-	catch(e)
-	{
-		// Nope, that didn't parse directly
+		catch(e)
+		{
+			// Nope, that didn't parse directly
+		}
 	}
 
 	let formatString = <string>(egw.preference("dateformat") || 'Y-m-d');
-	formatString = formatString.replaceAll(/-\/\./ig, '-');
+	formatString = formatString.replaceAll(new RegExp('[-/\.]', 'ig'), '-');
 	let parsedString = "";
 	switch(formatString)
 	{
 		case 'd-m-Y':
-		case 'd/m/Y':
 			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(
 				3,
 				5,
@@ -56,7 +58,6 @@ export function parseDate(dateString)
 			)}/${dateString.slice(3, 5)}`;
 			break;
 		case 'Y-m-d':
-		case 'Y/m/d':
 			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(
 				5,
 				7,
@@ -72,7 +73,7 @@ export function parseDate(dateString)
 	}
 
 	const [year, month, day] = parsedString.split('/').map(Number);
-	const parsedDate = new Date(Date.UTC(year, month - 1, day));
+	const parsedDate = new Date(year, month - 1, day);
 
 	// Check if parsedDate is not `Invalid Date` or that the date has changed (e.g. the not existing 31.02.2020)
 	if (
@@ -178,9 +179,9 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 			return null;
 		}
 
-		// It isn't always the case that we want the serializer value, but for Et2Date we do
-		return this.serializer(this.modelValue);
+		return this.modelValue.toJSON();
 	}
+
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Date is a LitElement
