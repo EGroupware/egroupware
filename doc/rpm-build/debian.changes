@@ -1,3 +1,42 @@
+egroupware-docker (21.1.20210923) hardy; urgency=low
+
+  * smallPART: many new features and improvements for the new semester:
+  - push changes in course, videos, participants and comments instantly to all online users
+  - new video-controls for speed, skip 10s forward/back, full width, speaker control
+  - add staff rolls: tutor (readonly teacher access), teacher and co-admin (identical to owner)
+  - split students in groups and limit visibility of comments to their group, staff can filter by group
+  - allow students to pick a nickname displayed to fellow students, always show staff and students to staff with full name
+  - videos are ordered now alphabetic, use eg. 1st, 2nd, ... as prefix to force videos to a desired order
+  - record date and time student subscribes or unsubscribes a course
+  - CSV comment export adds user retweeting in front of his comment
+  - fix questions with same start-time got identical question-numbers
+  - fix LTI automatic registration and interactive content-selection (LTI 1.3 eg. for Moodle 3.10+)
+    + content-selection shows all available courses, not just subscribed ones
+    + fix not working content selection if there is only a single 1.3 config (no 1.0 one)
+    + fix not working buttons to change between video, questions and scores
+  * Filemanager: added user-interface to mount WebDAV or SMB shares
+  * Filemanager/Sharing: create different share-token for different recipients (before recipients where added to the token)
+  * Kanban: Boards now remember collapsed columns & swimlanes
+  * Kanban: improve formatting for small columns
+  * Kanban: Fix Infolog field "Projectmanager" did not load in board edit Column & Listen dialogs after first being set.
+  * Calendar: Activate links in location & description in event tooltip
+  * Knowledge Base: fix pasting/dragging image into htmlarea editor does not work
+  * Addressbook/Mobile theme: fix opening contacts fails in mobile theme
+  * Tracker: Add configuration for defaulting group (all queues and queue specific)
+  * Mail: fix updating/deleting mail accounts does not refresh the mail tree no more
+  * Api: Fix some merge files were opened in browser instead of downloaded
+  * Api: Fix entry list stops scrolling if a row is updated while the tab is not visible
+  * Api: Fix changes in history log had a hash instead of user if the change was made after a share was opened.
+  * PostgreSQL/Addressbook: fix SQL error deleting a contact finally
+  * PostgreSQL/Addressbook/All Apps: fix SQL error in history tab if there are attachments
+  * PostgreSQL: fix SQL error when accessing eg. InfoLog
+  * Calendar/Addressbook/InfoLog: no longer allow to immediately delete entries as it breaks CalDAV/CardDAV sync
+  * Setup: support uninstalling automatic installed apps (no more reinstalling next update)
+  * EPL/Univention: support permanent uninstalling EPL features / downgrade to CE
+  * Chrome 94.0.4606.54: fix CSP error clicking on sidebox menu
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 23 Sep 2021 09:59:41 +0200
+
 egroupware-docker (21.1.20210723) hardy; urgency=low
 
   * Security Update: all 21.1 users should upgrade ASAP, 20.1 and below is not affected
