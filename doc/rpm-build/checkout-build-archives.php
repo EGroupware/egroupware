@@ -359,11 +359,13 @@ function do_tag()
 	update_composer_json_version($config['tag']);
 	// might require more then one run, as pushed tags need to be picked up by packagist
 	$output = $ret = null;
-	$timeout = $retries = 10;
+	$timeout = 30;
+    $try = 0;
 	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*';
-	for($try=1; $try <= $retries && run_cmd($cmd, $output, $try < $retries ? 2 : null); ++$try)
+	while(run_cmd($cmd, $output, 2))
 	{
-		error_log("Retry $try/$retries in $timeout seconds ...");
+        ++$try;
+		error_log("$try. retry in $timeout seconds ...");
 		sleep($timeout);
 	}
 	run_cmd($config['git'].' commit -m '.escapeshellarg('Updating dependencies for '.$config['tag']).' composer.{json,lock}');
