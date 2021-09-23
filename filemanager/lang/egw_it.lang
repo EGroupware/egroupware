@@ -51,6 +51,7 @@ cannot create directory because it begins or ends in a space	filemanager	it	Non 
 cautiously rejecting to remove folder '%1'!	filemanager	it	Eliminazione della cartella %1 rigettata per precauzione!
 check all	filemanager	it	Seleziona tutto
 check virtual filesystem	common	it	Controlla il filesystem virtuale
+classic	filemanager	it	Barra degli strumenti predefinita
 clear search	filemanager	it	Reimposta la ricerca
 clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
 collab editor settings	filemanager	it	Impostazioni Collab Editor
@@ -80,8 +81,10 @@ current directory	filemanager	it	Cartella corrente
 custom fields	filemanager	it	Campi personalizzati
 cut	filemanager	it	Taglia
 cut to clipboard	filemanager	it	Taglia e metti negli appunti
+default action on double-click	filemanager	it	Azione predefinita al doppio click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
 default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
+defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	it	Definisce come gestire di doppio-click su un file. Le immagini sono sempre aperte in modalità visualizzazione e le email con l'applicazione E-Mail. Tutti gli altri file sono gestiti dal browser come oggetti MIME-type.
 defines how to open a merge print document	filemanager	it	Definisce il modo di apertura di un documento per la stampa unione
 delete all older versions and deleted files older then %s days	filemanager	it	Eliminare tutte le versioni passate e le cartelle più vecchie di %s giorni
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
@@ -105,14 +108,17 @@ do you want more information about epl subscription?	common	it	Si vorrebbero ric
 do you want to overwrite existing file %1 in directory %2?	filemanager	it	Vuoi sovrascrivere il file esistente %1 nella cartella %2?
 do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere il file esistente?
 download	filemanager	it	Download
+download documents	filemanager	it	scarica documenti
 edit comments	filemanager	it	Modifica commenti
 edit settings	filemanager	it	Modifica le impostazioni
+edit share	filemanager	it	modifica condivisione
 enable	filemanager	it	Abilita
 enable versioning for given mountpoint	filemanager	it	Abilitare il controllo delle versioni per il mountpoint selezionato
 enter setup user and password	filemanager	it	Inserisci il nome utente e la password dell'utente di setup.
 enter setup user and password to get root rights	filemanager	it	Inserisci il nome utente e la password dell'utente di setup per ottenere diritti amministrativi (root)
 enter the complete vfs path to specify a fast access link to a folder	filemanager	it	Inserisci il percorso VFS completo per specificare un link veloce verso una cartella
 enter the complete vfs path to specify your desired start folder.	filemanager	it	Inserisci il percorso VFS completo per specificare la tua cartella di avvio
+enter your file name	filemanager	it	inserisci il nome del file
 error adding the acl!	filemanager	it	Errore nell'aggiunta della regola ACL!
 error creating symlink to target %1!	filemanager	it	Errore di creazione del link simbolico verso %1!
 error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola ACL!
@@ -167,6 +173,8 @@ go home	filemanager	it	Vai alla Home
 go to	filemanager	it	Vai A
 go to your home directory	filemanager	it	Vai alla tua directory Home
 go up	filemanager	it	Vai su
+hidden upload	filemanager	it	Caricamento nascosto
+hidden uploads	filemanager	it	Caricamenti nascosti
 id	filemanager	it	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà l'azione per ogni documento. Quella azione permette di scaricare il documento specificato con i dati %1 inseriti
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	it	Se specifichi una directory (percorso vfs completo), %1 mostrerà un'icona in più per ogni voce. Quell'icona permette di scaricare il documento specificato con i dati inseriti
@@ -207,6 +215,8 @@ noone	filemanager	it	Nessuno
 older versions or deleted files	filemanager	it	Versioni vecchie o file eliminati
 only owner can rename or delete the content	filemanager	it	Solo il proprietario può rinominare o eliminare il contenuto
 open	filemanager	it	Apri
+open documents with collabora, if permissions are given	filemanager	it	apri i documenti utilizzando Collabora, se hai i permessi
+open odt documents with collabeditor	filemanager	it	Apri i file di testo (odt) con CollabEditor
 operation	filemanager	it	Operazione
 paste link	filemanager	it	Incolla collegamento
 path %1 not found or not a directory!	filemanager	it	Il percorso %1 non è stato trovato, oppure non è una directory!
@@ -249,6 +259,7 @@ select file to upload in current directory	filemanager	it	Seleziona il file da c
 select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (vfs)
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
 share files	filemanager	it	Condividi file
+share link copied into clipboard	filemanager	it	Condividi il collegamento copiato negli appunti
 shared files	filemanager	it	File condivisi
 shared with	filemanager	it	Condivisi con
 show	filemanager	it	Mostra
@@ -278,6 +289,7 @@ there's already a file with that name!	filemanager	it	Esiste già un file con qu
 tile view	filemanager	it	Vista affiancata
 to overwrite the existing file store again.	filemanager	it	Per sovrascrivere l'esistente salva di nuovo
 total files	filemanager	it	File totali
+ui mode	filemanager	it	Barra degli strumenti predefinita
 under directory	filemanager	it	sotto la cartella
 unmount	filemanager	it	Smonta
 unused space	filemanager	it	Spazio inutilizzato
@@ -291,6 +303,7 @@ user color indicator	filemanager	it	Indicatore colorato utente
 users and groups	filemanager	it	Utenti e gruppo
 versioning	filemanager	it	Registrazione Versioni di file
 vfs mounts and versioning	common	it	Montaggi VFS e registrazione versioni
+view link	filemanager	it	Mostra Indirizzo
 webdav link copied into clipboard	filemanager	it	Link webDAV copiato negli appunti
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	it	Chi dovrebbe poter eliminare definitivamente file o vecchie versioni di file:
 writable share link	filemanager	it	Collegamento condiviso in scrittura

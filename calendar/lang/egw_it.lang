@@ -91,6 +91,7 @@ calendar menu	calendar	it	Menù Agenda
 calendar preferences	calendar	it	Preferenze Agenda
 calendar settings	admin	it	Impostazioni Agenda
 calendar-fieldname	calendar	it	Campi-Agenda
+can not send any notifications because notifications app is not installed!	calendar	it	Impossibile inviare notifiche poiché l'app notifiche non è installata!
 can't add alarms in the past !!!	calendar	it	Non si può aggiungere sveglie nel passato !!!
 can't aquire lock!	calendar	it	Impossibile acquisire lo sblocco!
 canceled	calendar	it	Cancellato
@@ -109,7 +110,6 @@ close the window	calendar	it	Chiudi la finestra
 compose a mail to all participants after the event is saved	calendar	it	componi una email per tutti i partecipanti dopo che l'evento è stato salvato
 configuration settings	calendar	it	Impostazioni di configurazione
 conflict	calendar	it	Conflitto
-copy of:	calendar	it	Copia di:
 copy this event	calendar	it	Copia questo evento
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	it	Copia le tue modifiche negli appunti, %1aggiorna l'inserimento%2 e uniscili.
 countries	calendar	it	Nazioni
@@ -159,6 +159,7 @@ delete series	calendar	it	Cancella serie
 delete this alarm	calendar	it	Cancella questa sveglia
 delete this event	calendar	it	Cancella questo evento
 delete this exception	calendar	it	Cancella questa eccezione
+delete this meeting for all participants	calendar	it	Elimina questa riunione per tutti i partecipanti
 delete this recurrence	calendar	it	Elimina la ricorrenza
 delete this series of recurring events	calendar	it	Cancella questa serie di eventi ricorrenti
 deleted	calendar	it	Cancellati
@@ -172,12 +173,15 @@ displays this calendar view on the home page (page you get when you enter egroup
 distribution list	calendar	it	Lista di distribuzione
 do not import conflicting events	calendar	it	Non importare eventi in conflitto
 do not include events of group members	calendar	it	Non includere eventi di membri del gruppo
+do not notify externals (non-users) about this event	calendar	it	NON notificare agli esterni (non-utenti) quest'evento
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	it	Confermi di voler modificare l'inizio di questa serie? Se confermi allora la serie originale terminerà da %1 e verrà creata una nuova serie nel futuro, che riflette queste modifiche.
 do you want a weekview with or without weekend?	calendar	it	Vuoi una vista settimanale con o senza weekend?
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	it	Vuoi notificare a partecipanti che non sono utenti di Egroupware circa i nuovi eventi oppure le modifiche degli appuntamenti?
+do you want responses from events you created, but are not participating in?	calendar	it	Vuoi ricevere risposte ad eventi che hai creato, ma ai quali non parteciperai?
 do you want to be notified about changes of appointments you modified?	calendar	it	Vuoi ricevere notifiche sui cambiamenti in appuntamenti creati da te?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	it	Vuoi una notifica per i nuovi appuntamenti o per quelli cambiati? Sarai avvertito dei cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. TUTTE LE VOCI include tutte le notifiche elencate sopra di esso. TUTTE LE MODIFICHE include il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi ricevere una notifica sugli appuntamenti nuovi o modificati? Sarai notificato anche delle modifiche che apporti tu.  Puoi limitare le notifiche a solo alcuni cambiamenti. Ogni elemento include tutte le notifiche sopra di essa.Tutte le modifiche includono cambiamenti di titolo, descrizione, partecipanti, ma non le risposte dei partecipanti. Se il proprietario della scheda di un evento ha richiesto delle notifiche, riceverà sempre le risposte dei partecipanti.
+do you want to be notified about participant responses from events you created, but are not participating in?	calendar	it	Vuoi ricevere una notifica sulla risposta dei partecipanti ad eventi che hai creato, ma ai quali non parteciperai?
 do you want to edit this event as an exception or the whole series?	calendar	it	Vuoi modificare questo evento come eccezione oppure l'intera ricorrenza?
 do you want to keep the series exceptions in your calendar?	calendar	it	Vuoi mantenere le modifiche alla serie nell'agenda?
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
@@ -201,6 +205,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	it	Data/ora f
 enddate of the export	calendar	it	Data finale dell'esportazione
 ends	calendar	it	finisce
 error adding the alarm	calendar	it	Errore aggiungendo la sveglia
+error notifying %1	calendar	it	Errore notificando %1
 error saving the event!	calendar	it	Errore durante il salvataggio dell'evento
 error: can't delete original series!	calendar	it	Errore! Impossibile eliminare  la serie originale!
 error: duration of event longer then recurrence interval!	calendar	it	Errore! Durata dell'evento maggiore dell'intervallo di ricorrenza
@@ -369,6 +374,7 @@ name of current user, all other contact fields are valid too	calendar	it	Nome de
 name of the day of the week (ex: monday)	calendar	it	Nome del giorno della settimana
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	it	Nome della settimana, p.es. lunedì, disponibile per la prima voce in ogni giorno della settimana oppure tabella giornaliera entro l'intervallo selezionato.
 needs action	calendar	it	Richiede azione
+never notify externals (non-users) about events i create	calendar	it	Non notificare mai agli esterni (non utenti) gli eventi che creo
 new	calendar	it	Nuovo
 new event category	calendar	it	Nuova categoria di evento
 new event participants	calendar	it	Nuovi partecipanti all'evento
@@ -395,8 +401,12 @@ notification messages for uninvited participants	calendar	it	Messaggi di notific
 notification messages for your alarms	calendar	it	Messaggi di notifica per i tuoi allarmi
 notification messages for your responses	calendar	it	Messaggi di notifica per le tue risposte
 notification settings	calendar	it	Impostazioni di notifica
+notify	calendar	it	Notifica
+notify all externals (non-users) about this event	calendar	it	Notifica a tutti gli esterni (non-utenti) quest'evento
+notify externals	calendar	it	Notifica agli esterni
 notify non-egroupware users about event updates	calendar	it	Invia notifiche a utenti che non appartengono a EGroupware, circa gli aggiornamenti
 number of records to read (%1)	calendar	it	Numero di record da leggere (%1)
+number of resources to be booked	calendar	it	Numero di risorse da prenotare
 number of weeks to show	calendar	it	Numero di settimane da mostrare
 observance rule	calendar	it	Regola da osservare
 occurence	calendar	it	Occorrenze
@@ -441,6 +451,7 @@ prevent deleting of entries	admin	it	Previeni la eliminazione degli inserimenti
 previous	calendar	it	precedente
 private and global public	calendar	it	Privato e Pubblico Globale
 private and group public	calendar	it	Private e Pubblico per il Gruppo
+private event	calendar	it	Evento Privato
 private only	calendar	it	Solo privato
 quantity	calendar	it	Quantità
 quick add	calendar	it	Immissione rapida
@@ -458,6 +469,7 @@ recurring event	calendar	it	evento ricorrente
 regular edit	calendar	it	Modifica regolare
 reject	calendar	it	Rifiuta
 rejected	calendar	it	Rifiutato
+removes the event from my calendar	calendar	it	Rimuove l'evento dal mio calendario
 repeat days	calendar	it	Giorni di ripetizione
 repeat the event until which date (empty means unlimited)	calendar	it	ripeti l'evento fino a che data (vuoto significa illimitato)
 repeat type	calendar	it	Tipo di ripetizione
@@ -499,6 +511,8 @@ select who should get the alarm	calendar	it	Seleziona chi dovrà avere la svegli
 selected range	calendar	it	Intervallo di selezione
 selected users/groups	calendar	it	Utenti/Gruppi selezionati
 send meetingrequest to all participants after the event is saved	calendar	it	Invia richiesta meeting a tutti i partecipanti a evento salvato.
+send notifications	calendar	it	Invia notifiche
+send notifications to users right now	calendar	it	Invia notifiche ai partecipanti adesso
 series deleted	calendar	it	Serie cancellata
 set new events to private	calendar	it	Imposta il nuovo evento come privato
 setting lock time calender	admin	it	Impostazione di blocco di dati di orario per l'agenda (predefinito 1 sec.)
@@ -510,6 +524,7 @@ should the number of weeks be shown on top of the calendar	calendar	it	Il numero
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	it	Il numero delle settimane dovrebbe essere visualizzato in cima all'agenda (solo se offset=0)
 should the planner display an empty row for users or categories without any appointment.	calendar	it	Il pianificatore dovrebbe mostrare una riga vuota per gli utenti o le categorie senza appuntamenti.
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	it	Lo stato dei partecipanti agli eventi (accettato, rifiutato, ...) sarà visualizzato tra parentesi dopo il nome?
+show %1 from %2	calendar	it	Mostra %1 da %2
 show a calendar title	calendar	it	Mostra titolo dell'agenda
 show all events, as if they were private	calendar	it	Mostra tutti gli eventi come se fossero privati
 show all status incl. rejected events	calendar	it	Mostra tutti gli stati compresi gli eventi rifiutati
@@ -533,6 +548,7 @@ show this month	calendar	it	mostra questo mese
 show this week	calendar	it	mostra questa settimana
 show year and age	calendar	it	Mostra anno e età
 single event	calendar	it	singolo evento
+single participant	calendar	it	Singolo partecipante
 specify where url of the day links to	calendar	it	Specifica l'URL del collegamento del giorno
 start	calendar	it	Inizio
 start date/time	calendar	it	Data/Ora Inizio
@@ -542,6 +558,7 @@ startdate / -time	calendar	it	Data/ora iniziale
 startdate and -time of the search	calendar	it	Data/ora iniziale della ricerca
 startdate of the export	calendar	it	Data iniziale dell'esportazione
 startrecord	calendar	it	Primo Record
+status	calendar	it	Stato
 status already applied	calendar	it	Stato già applicato
 status changed	calendar	it	Stato modificato
 status for all future scheduled days changed	calendar	it	Stato per tutti gli eventi futuri modificato
@@ -610,6 +627,7 @@ update calendar view immediately when navigation calendar in sidebox is changed	
 update timezones	common	it	Aggiorna i fusi orari
 updated	calendar	it	Aggiornato
 use end date	calendar	it	Usa data di termine
+use event tz	calendar	it	Usa fuso orario dell'evento
 use given criteria:	calendar	it	Utilizzare i criteri indicati:
 use quick add or full edit dialog when creating a new event	calendar	it	Utilizzare l'immissione rapida o completa quando si crea un nuovo evento
 use range-views to optimise calendar queries?	calendar	it	Usare le viste a intervalli per ottimizzare le interrogazioni dell'agenda?

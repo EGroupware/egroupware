@@ -810,14 +810,14 @@ class Sql extends Api\Storage
 		{
 			if ($limit_in_ab)
 			{
-				$in_ab_join = " JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND $this->lists_table.";
+				$in_ab_join = " JOIN $this->lists_table ON $this->lists_table.list_id=$this->ab2list_table.list_id AND ";
 				if (!is_bool($limit_in_ab))
 				{
-					$in_ab_join .= $this->db->expression($this->lists_table, array('list_owner'=>$limit_in_ab));
+					$in_ab_join .= $this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $limit_in_ab]);
 				}
 				else
 				{
-					$in_ab_join .= "list_owner=$this->table_name.contact_owner";
+					$in_ab_join .= "$this->lists_table.list_owner=$this->table_name.contact_owner";
 				}
 			}
 			foreach($this->db->select($this->ab2list_table,"$this->ab2list_table.list_id,$this->table_name.$member_attr",

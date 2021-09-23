@@ -18,15 +18,17 @@ use EGroupware\Api\CalDAV\Principals;
 
 // explicit import non-namespaced classes
 require_once(__DIR__.'/WebDAV/Server.php');
+
+use EGroupware\Api\Contacts\JsContactParseException;
 use HTTP_WebDAV_Server;
 use calendar_hooks;
 
 /**
- * EGroupware: GroupDAV access
+ * EGroupware: CalDAV/CardDAV server
  *
  * Using a modified PEAR HTTP/WebDAV/Server class from API!
  *
- * One can use the following url's releative (!) to http://domain.com/egroupware/groupdav.php
+ * One can use the following URLs relative (!) to https://example.org/egroupware/groupdav.php
  *
  * - /                        base of Cal|Card|GroupDAV tree, only certain clients (KDE, Apple) can autodetect folders from here
  * - /principals/             principal-collection-set for WebDAV ACL
@@ -49,10 +51,25 @@ use calendar_hooks;
  * - /(resources|locations)/<resource-name>/calendar calendar of a resource/location, if user has rights to view
  * - /<current-username>/(resource|location)-<resource-name> shared calendar from a resource/location
  *
- * Shared addressbooks or calendars are only shown in in users home-set, if he subscribed to it via his CalDAV preferences!
+ * Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
  *
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
- * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
+ * from the data of a allprop PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
+ *
+ * Using EGroupware CalDAV/CardDAV as REST API: currently only for contacts
+ * ===========================================
+ * GET requests to collections with an "Accept: application/json" header return a JSON response similar to a PROPFIND
+ *     following GET parameters are supported to customize the returned properties:
+ *     - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
+ *       Default for addressbook collections is to only return address-data (JsContact), other collections return all props.
+ *     - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
+ *     - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
+ *       this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
+ * POST requests to collection with a "Content-Type: application/json" header add new entries in addressbook or calendar collections
+ *      (Location header in response gives URL of new resource)
+ * GET  requests with an "Accept: application/json" header can be used to retrieve single resources / JsContact or JsCalendar schema
+ * PUT  requests with  a "Content-Type: application/json" header allow modifying single resources
+ * DELETE requests delete single resources
  *
  * Permanent error_log() calls should use groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
@@ -977,6 +994,23 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * Check if client want or sends JSON
+	 *
+	 * @param string &$type=null
+	 * @return bool|string false: no json, true: application/json, string: application/(string)+json
+	 */
+	public static function isJSON(string &$type=null)
+	{
+		if (!isset($type))
+		{
+			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PROPPATCH']) ?
+				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
+		}
+		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
+			(empty($matches[1]) ? true : $matches[2]) : false;
+	}
+
+	/**
 	 * GET method handler
 	 *
 	 * @param  array $options parameter passing array
@@ -989,6 +1023,10 @@ class CalDAV extends HTTP_WebDAV_Server
 		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
+			if (($json = self::isJSON()))
+			{
+				return $this->jsonIndex($options, $json === 'pretty');
+			}
 			return $this->autoindex($options);
 		}
 		if (($handler = self::app_handler($app)))
@@ -997,6 +1035,173 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
 		return '501 Not Implemented';
+	}
+
+	const JSON_OPTIONS = JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR;
+	const JSON_OPTIONS_PRETTY = JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR;
+
+	/**
+	 * JSON encode incl. modified pretty-print
+	 *
+	 * @param $data
+	 * @return array|string|string[]|null
+	 */
+	public static function json_encode($data, $pretty = true)
+	{
+		if (!$pretty)
+		{
+			return json_encode($data, self::JSON_OPTIONS);
+		}
+		return preg_replace('/: {\n\s*(.*?)\n\s*(},?\n)/', ': { $1 $2',
+			json_encode($data, self::JSON_OPTIONS_PRETTY));
+	}
+
+	/**
+	 * PROPFIND/REPORT like output for GET request on collection with Accept: application/(.*+)?json
+	 *
+	 * For addressbook-collections we give a REST-like output without any other properties
+	 * {
+	 *   "/addressbook/ID": {
+	 *     JsContact-data
+	 *   },
+	 *   ...
+	 * }
+	 *
+	 * @param array $options
+	 * @param bool $pretty =false true: pretty-print JSON
+	 * @return bool|string|void
+	 */
+	protected function jsonIndex(array $options, bool $pretty)
+	{
+		header('Content-Type: application/json; charset=utf-8');
+		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
+		$propfind_options = array(
+			'path'  => $options['path'],
+			'depth' => 1,
+			'props' => $is_addressbook ? [
+				'address-data' => self::mkprop(self::CARDDAV, 'address-data', '')
+			] : 'all',
+			'other' => [],
+		);
+
+		// sync-collection report via GET parameter sync-token
+		if (isset($_GET['sync-token']))
+		{
+			$propfind_options['root'] = ['name' => 'sync-collection'];
+			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token']];
+			$propfind_options['other'][] = ['name' => 'sync-level', 'data' => $_GET['sync-level'] ?? 1];
+
+			// clients want's pagination
+			if (isset($_GET['nresults']))
+			{
+				$propfind_options['other'][] = ['name' => 'nresults', 'data' => (int)$_GET['nresults']];
+			}
+		}
+
+		// ToDo: client want data filtered
+		if (isset($_GET['filters']))
+		{
+
+		}
+
+		// properties to NOT get the default address-data for addressbook-collections and "all" for the rest
+		if (isset($_GET['props']))
+		{
+			$propfind_options['props'] = [];
+			foreach((array)$_GET['props'] as $value)
+			{
+				$parts = explode(':', $value);
+				$name = array_pop($parts);
+				$ns = $parts ? implode(':', $parts) : 'DAV:';
+				$propfind_options['props'][$name] = self::mkprop($ns, $name, '');
+			}
+		}
+		$files = array();
+		if (($ret = $this->REPORT($propfind_options,$files)) !== true)
+		{
+			return $ret;	// no collection
+		}
+		// set start as prefix, to no have it in front of exceptions
+		$prefix = "{\n\t\"responses\": {\n";
+		foreach($files['files'] as $resource)
+		{
+			$path = $resource['path'];
+			echo $prefix.json_encode($path, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).': ';
+			if (!isset($resource['props']))
+			{
+				echo 'null';    // deleted in sync-report
+			}
+			else
+			{
+				$props = $propfind_options['props'] === 'all' ? $resource['props'] :
+					array_intersect_key($resource['props'], $propfind_options['props']);
+
+				if (count($props) > 1)
+				{
+					$props = self::jsonProps($props);
+				}
+				else
+				{
+					$props = current($props)['val'];
+				}
+				echo self::json_encode($props, $pretty);
+			}
+			$prefix = ",\n";
+		}
+		// happens with an empty response
+		if ($prefix !== ",\n")
+		{
+			echo $prefix;
+			$prefix = ",\n";
+		}
+		echo "\n\t}";
+		// add sync-token and more-results to response
+		if (isset($files['sync-token']))
+		{
+			echo $prefix."\t".'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
+				call_user_func_array($files['sync-token'], (array)$files['sync-token-params']), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+		}
+		echo "\n}";
+
+		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
+		exit;
+	}
+
+	/**
+	 * Nicer way to display/encode DAV properties
+	 *
+	 * @param array $props
+	 * @return array
+	 */
+	protected function jsonProps(array $props)
+	{
+		$json = [];
+		foreach($props as $key => $prop)
+		{
+			if (is_scalar($prop['val']))
+			{
+				$value = is_int($key) && $prop['val'] === '' ?
+					/*$prop['ns'].':'.*/$prop['name'] : $prop['val'];
+			}
+			// check if this is a property-object
+			elseif (count($prop) === 3 && isset($prop['name']) && isset($prop['ns']) && isset($prop['val']))
+			{
+				$value = $prop['name'] === 'address-data' ? $prop['val'] : self::jsonProps($prop['val']);
+			}
+			else
+			{
+				$value = $prop;
+			}
+			if (is_int($key))
+			{
+				$json[] = $value;
+			}
+			else
+			{
+				$json[/*($prop['ns'] === 'DAV:' ? '' : $prop['ns'].':').*/$prop['name']] = $value;
+			}
+		}
+		return $json;
 	}
 
 	/**
@@ -1218,7 +1423,8 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
-		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork')
+		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
+			substr($options['path'], -1) === '/' && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options);
@@ -2236,16 +2442,37 @@ class CalDAV extends HTTP_WebDAV_Server
 		$headline = null;
 		_egw_log_exception($e,$headline);
 
-		// exception handler sending message back to the client as basic auth message
-		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
-		header('WWW-Authenticate: Basic realm="'.$headline.': '.$error.'"');
-		header('HTTP/1.1 401 Unauthorized');
-		header('X-WebDAV-Status: 401 Unauthorized', true);
-
+		if (self::isJSON())
+		{
+			header('Content-Type: application/json; charset=utf-8');
+			if (is_a($e, JsContactParseException::class))
+			{
+				$status = '422 Unprocessable Entity';
+			}
+			else
+			{
+				$status = '500 Internal Server Error';
+			}
+			http_response_code((int)$status);
+			echo self::json_encode([
+				'error' => $e->getCode() ?: (int)$status,
+				'message' => $e->getMessage(),
+			]+($e->getPrevious() ? [
+				'original' => get_class($e->getPrevious()).': '.$e->getPrevious()->getMessage(),
+			] : []), JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+		}
+		else
+		{
+			// exception handler sending message back to the client as basic auth message
+			$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+			header('WWW-Authenticate: Basic realm="' . $headline . ': ' . $error . '"');
+			header('HTTP/1.1 401 Unauthorized');
+			header('X-WebDAV-Status: 401 Unauthorized', true);
+		}
 		// if our own logging is active, log the request plus a trace, if enabled in server-config
 		if (self::$request_starttime && isset(self::$instance))
 		{
-			self::$instance->_http_status = '401 Unauthorized';	// to correctly log it
+			self::$instance->_http_status = self::isJSON() ? $status : '401 Unauthorized';	// to correctly log it
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 			{
 				self::$instance->log_request("\n".$e->getTraceAsString()."\n");

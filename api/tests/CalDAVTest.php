@@ -67,15 +67,15 @@ abstract class CalDAVTest extends TestCase
 	/**
 	 * Get HTTP client for tests
 	 *
-	 * It will use by default the always existing user "demo" with password "guest" (use [] to NOT authenticate).
+	 * It will use by default the user configured in phpunit.xml: demo/guest (use [] to NOT authenticate).
 	 * Additional users need to be created with $this->createUser("name").
 	 *
-	 * @param string|array $user_or_options ='demo' string with account_lid of user for authentication or array of options
+	 * @param string|array $user_or_options =null string with account_lid of user for authentication or array of options
 	 * @return Client
 	 * @see http://docs.guzzlephp.org/en/v6/request-options.html
 	 * @see http://docs.guzzlephp.org/en/v6/quickstart.html
 	 */
-	protected function getClient($user_or_options='demo')
+	protected function getClient($user_or_options=null)
 	{
 		if (!is_array($user_or_options))
 		{
@@ -160,14 +160,15 @@ abstract class CalDAVTest extends TestCase
 	/**
 	 * Get authentication information for given user to use
 	 *
-	 * @param string $_account_lid ='demo'
+	 * @param string $_account_lid =null default EGW_USER configured in phpunit.xml
 	 * @return array
 	 */
-	protected function auth($_account_lid='demo')
+	protected function auth($_account_lid=null)
 	{
-		if ($_account_lid === 'demo')
+		if (!isset($_account_lid) || $_account_lid === $GLOBALS['EGW_USER'])
 		{
-			$password = 'guest';
+			$_account_lid = $GLOBALS['EGW_USER'];
+			$password = $GLOBALS['EGW_PASSWORD'];
 		}
 		elseif (!isset(self::$created_users[$_account_lid]))
 		{

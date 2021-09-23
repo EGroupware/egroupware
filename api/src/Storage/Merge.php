@@ -283,22 +283,43 @@ abstract class Merge
 					}
 					break;
 				case 'account_id':
-					if ($value)
+					if($value)
 					{
-						$replacements['$$'.($prefix ? $prefix.'/':'').'account_lid$$'] = $GLOBALS['egw']->accounts->id2name($value);
+						$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'account_lid$$'] = $GLOBALS['egw']->accounts->id2name($value);
 					}
 					break;
 			}
-			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
+			if($name != 'photo')
+			{
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = $value;
+			}
 		}
+
+		// Formatted address, according to preference or country
+		foreach(['one', 'two'] as $adr)
+		{
+			switch($this->contacts->addr_format_by_country($contact["adr_{$adr}_countryname"]))
+			{
+				case 'city_state_postcode':
+					$formatted_placeholder = $contact["adr_{$adr}_locality"] . " " .
+						$contact["adr_{$adr}_region"] . "  " . $contact["adr_{$adr}_postalcode"];
+					break;
+				case 'postcode_city':
+				default:
+					$formatted_placeholder = $contact["adr_{$adr}_postalcode"] . ' ' . $contact["adr_{$adr}_locality"];
+					break;
+			}
+			$replacements['$$adr_' . $adr . '_formatted$$'] = $formatted_placeholder;
+		}
+
 		// set custom fields, should probably go to a general method all apps can use
 		// need to load all cfs for $ignore_acl=true
 		foreach($ignore_acl ? Customfields::get('addressbook', true) : $this->contacts->customfields as $name => $field)
 		{
-			$name = '#'.$name;
+			$name = '#' . $name;
 			if(!array_key_exists($name, $contact) || !$contact[$name])
 			{
-				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = '';
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = '';
 				continue;
 			}
 			// Format date cfs per user Api\Preferences
@@ -1573,6 +1594,25 @@ abstract class Merge
 	}
 
 	/**
+	 * Get the correct class for the given app
+	 *
+	 * @param $appname
+	 */
+	public static function get_app_class($appname)
+	{
+		if(class_exists($appname) && is_subclass_of($appname, 'EGroupware\\Api\\Storage\\Merge'))
+		{
+			$classname = "{$appname}_merge";
+			$document_merge = new $classname();
+		}
+		else
+		{
+			$document_merge = new Api\Contacts\Merge();
+		}
+		return $document_merge;
+	}
+
+	/**
 	 * Get the replacements for any entry specified by app & id
 	 *
 	 * @param stribg $app
@@ -1580,7 +1620,7 @@ abstract class Merge
 	 * @param string $content
 	 * @return array
 	 */
-	public function get_app_replacements($app, $id, $content, $prefix='')
+	public function get_app_replacements($app, $id, $content, $prefix = '')
 	{
 		$replacements = array();
 		if($app == 'addressbook')
@@ -2550,34 +2590,50 @@ abstract class Merge
 	{
 		return array(
 			// Link to current entry
-			'link' => lang('URL of current record'),
-			'link/href' => lang('HTML link to the current record'),
-			'link/title' => lang('Link title of current record'),
+			'link'               => lang('URL of current record'),
+			'link/href'          => lang('HTML link to the current record'),
+			'link/title'         => lang('Link title of current record'),
 
 			// Link system - linked entries
-			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
-			'links/href' => lang('HTML links to any entries linked to the current record, excluding attached files'),
-			'links/url' => lang('URLs of any entries linked to the current record, excluding attached files'),
-			'attachments' => lang('List of files linked to the current record'),
-			'links_attachments' => lang('Links and attached files'),
-			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
+			'links'              => lang('Titles of any entries linked to the current record, excluding attached files'),
+			'links/href'         => lang('HTML links to any entries linked to the current record, excluding attached files'),
+			'links/url'          => lang('URLs of any entries linked to the current record, excluding attached files'),
+			'attachments'        => lang('List of files linked to the current record'),
+			'links_attachments'  => lang('Links and attached files'),
+			'links/[appname]'    => lang('Links to specified application.  Example: {{links/infolog}}'),
 
 			// General information
-			'date' => lang('Date'),
-			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
-			'user/account_lid' => lang('Username'),
+			'date'               => lang('Date'),
+			'user/n_fn'          => lang('Name of current user, all other contact fields are valid too'),
+			'user/account_lid'   => lang('Username'),
 
 			// Merge control
-			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
-			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
-			'labelplacement' => lang('Tag to mark positions for address labels'),
+			'pagerepeat'         => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
+			'label'              => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
+			'labelplacement'     => lang('Tag to mark positions for address labels'),
 
 			// Commands
-			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF' => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
+			'IF fieldname'       => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+			'NELF'               => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
+			'NENVLF'             => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
+			'LETTERPREFIX'       => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
 			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
 		);
+	}
+
+	/**
+	 * Get a list of placeholders for the current user
+	 */
+	public function get_user_placeholder_list($prefix = '')
+	{
+		$contacts = new Api\Contacts\Merge();
+		$replacements = $contacts->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'user');
+		unset($replacements['details']['{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}']);
+		$replacements['account'] = [
+			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}'  => 'Account ID',
+			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_lid}}' => 'Login ID'
+		];
+
+		return $replacements;
 	}
 }

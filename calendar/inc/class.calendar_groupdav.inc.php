@@ -1550,8 +1550,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param int|string $retval
 	 * @param boolean $path_attr_is_name =true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
 	 * @param string $etag =null etag, to not calculate it again (if != null)
+	 * @param string $prefix =''
 	 */
-	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null, $prefix='')
 	{
 		$schedule_tag = null;
 		if (!isset($etag)) $etag = $this->get_etag($entry, $schedule_tag);
@@ -1560,7 +1561,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			header('Schedule-Tag: "'.$schedule_tag.'"');
 		}
-		parent::put_response_headers($entry, $path, $retval, $path_attr_is_name, $etag);
+		parent::put_response_headers($entry, $path, $retval, $path_attr_is_name, $etag, $prefix);
 	}
 
 	/**

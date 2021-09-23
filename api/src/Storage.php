@@ -585,9 +585,9 @@ class Storage extends Storage\Base
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
 				// Check to make sure our order by doesn't have aliases that won't work
-				else if (stripos($col, 'AS') !== false && $order_by)
+				else if (stripos($col, ' AS ') !== false && $order_by)
 				{
-					list($value, $alias) = explode(' AS ', $col);
+					list($value, $alias) = preg_split('/ AS /i', $col);
 					if(stripos($order_by, $alias) !== FALSE && stripos($value, $this->table_name) === FALSE)
 					{
 						$order_by = str_replace($alias, $value, $order_by);
