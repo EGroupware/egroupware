@@ -68,8 +68,8 @@ else \
 fi; \
 rm composer-setup.php; \
 exit $RESULT' \
-	# build EGroupware
-	&& composer.phar self-update 1.10.22 \
+	# build EGroupware (Horde using a PEAR repo requires Composer v1)
+	&& composer.phar self-update --1 \
 	&& cd /usr/share \
 	&& [ $PHP_VERSION = "8.0" ] && COMPOSER_EXTRA=--ignore-platform-reqs || true \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
