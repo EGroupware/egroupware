@@ -417,11 +417,19 @@ var et2_calendar_event = /** @class */ (function (_super) {
             }
             cat.destroy();
         }
+        // Activate links in description
+        var description_node = document.createElement("p");
+        description_node.className = "calendar_calEvent_description";
+        et2_insertLinkText(et2_activateLinks(egw.htmlspecialchars(this.options.value.description)), description_node, '_blank');
         // Location + Videoconference
         var location = '';
         if (this.options.value.location || this.options.value['##videoconference']) {
-            location += '<p><span class="calendar_calEventLabel">' + this.egw().lang('Location') + '</span>:' +
-                egw.htmlspecialchars(this.options.value.location);
+            location = '<p>';
+            var location_node = document.createElement("span");
+            location_node.className = "calendar_calEventLabel";
+            et2_insertLinkText(et2_activateLinks(this.egw().lang('Location') + ':' +
+                egw.htmlspecialchars(this.options.value.location)), location_node, '_blank');
+            location += location_node.outerHTML;
             if (this.options.value['##videoconference']) {
                 // Click handler is set in _bind_videoconference()
                 location += (this.options.value.location.trim() ? '<br />' : '') +
@@ -453,7 +461,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
             '</div>' +
             '<div class="calendar_calEventBody">' +
             '<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br><p>' +
-            egw.htmlspecialchars(this.options.value.description) + '</p>' +
+            description_node.outerHTML +
             '<p style="margin: 2px 0px;">' + times + '</p>' +
             location +
             (cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ':</h2>' + cat_label + '</p>' : '') +

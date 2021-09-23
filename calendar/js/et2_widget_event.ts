@@ -531,19 +531,32 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			cat.destroy();
 		}
 
+		// Activate links in description
+		let description_node = document.createElement("p");
+		description_node.className = "calendar_calEvent_description";
+		et2_insertLinkText(
+			et2_activateLinks(egw.htmlspecialchars(this.options.value.description)), description_node, '_blank'
+		);
+
 		// Location + Videoconference
 		let location = '';
 		if(this.options.value.location || this.options.value['##videoconference'])
 		{
-			location += '<p><span class="calendar_calEventLabel">' + this.egw().lang('Location') + '</span>:' +
-				egw.htmlspecialchars(this.options.value.location);
-			if(this.options.value['##videoconference'])
+			location = '<p>';
+			let location_node = document.createElement("span");
+			location_node.className = "calendar_calEventLabel";
+			et2_insertLinkText(et2_activateLinks(
+				this.egw().lang('Location') + ':' +
+				egw.htmlspecialchars(this.options.value.location)), location_node, '_blank');
+			location += location_node.outerHTML;
+
+			if (this.options.value['##videoconference'])
 			{
 				// Click handler is set in _bind_videoconference()
 				location += (this.options.value.location.trim() ? '<br />' : '') +
-					'<span data-videoconference="'+this.options.value['##videoconference']+
-					'" data-id="'+this.options.value['id']+'" data-title="'+this.options.value['title']+
-					'" data-start="'+this.options.value['start'].toJSON()+'" data-end="'+this.options.value['end'].toJSON()+ '">'+
+					'<span data-videoconference="' + this.options.value['##videoconference'] +
+					'" data-id="' + this.options.value['id'] + '" data-title="' + this.options.value['title'] +
+					'" data-start="' + this.options.value['start'].toJSON() + '" data-end="' + this.options.value['end'].toJSON() + '">' +
 					this.egw().lang('Video conference') +
 					'<img src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
 				this._bind_videoconference();
@@ -574,7 +587,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			'</div>'+
 			'<div class="calendar_calEventBody">'+
 				'<h1 class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</h1><br><p>'+
-				egw.htmlspecialchars(this.options.value.description)+'</p>'+
+				description_node.outerHTML +
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
 				location +
 				(cat_label ? '<p><h2 class="calendar_calEventLabel">'+this.egw().lang('Category') + ':</h2>' + cat_label +'</p>' : '')+
