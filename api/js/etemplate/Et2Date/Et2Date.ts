@@ -129,8 +129,16 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		return [
 			...super.styles,
 			css`
-			/* Custom CSS */
-			`,
+			:host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
+				display: inline-block;
+			}
+            ::slotted(.calendar_button) {
+            	border: none;
+            	background: transparent;
+            	margin-left: -20px;
+                display: none;
+			}
+            `,
 		];
 	}
 
@@ -182,6 +190,51 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		return this.modelValue.toJSON();
 	}
 
+	get _overlayReferenceNode()
+	{
+		return this.getInputNode();
+	}
+
+	/**
+	 * @override Configures OverlayMixin
+	 * @desc overrides default configuration options for this component
+	 * @returns {Object}
+	 */
+	_defineOverlayConfig()
+	{
+		this.hasArrow = false;
+		if(window.innerWidth >= 600)
+		{
+			return {
+				hidesOnOutsideClick: true,
+				placementMode: 'local',
+				popperConfig: {
+					placement: 'bottom-end',
+				},
+			};
+		}
+		return super.withBottomSheetConfig();
+	}
+
+	/**
+	 * Overriding parent to add class to button, and use an image instead of unicode emoji
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	_invokerTemplate()
+	{
+		return html`
+            <button
+                    type="button"
+                    class="calendar_button"
+                    @click="${this.__openCalendarOverlay}"
+                    id="${this.__invokerId}"
+                    aria-label="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
+                    title="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
+            >
+                <img src="${this.egw().image("calendar")}" style="width:16px"/>
+            </button>
+		`;
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Date is a LitElement
