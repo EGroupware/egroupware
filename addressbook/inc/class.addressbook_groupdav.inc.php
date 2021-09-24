@@ -658,7 +658,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				}
 			}
 			$contact = $type === JsContact::MIME_TYPE_JSCARD ?
-				JsContact::parseJsCard($options['content']) : JsContact::parseJsCardGroup($options['content']);
+				JsContact::parseJsCard($options['content'], $oldContact ?: []) : JsContact::parseJsCardGroup($options['content']);
 
 			if (!empty($id) && strpos($id, self::JS_CARDGROUP_ID_PREFIX) === 0)
 			{

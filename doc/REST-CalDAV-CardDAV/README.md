@@ -253,6 +253,29 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 </details>
 
+<details>
+   <summary>Example: POST request to create a new resource using flat attributes (JSON patch syntax) eg. for a simple Wordpress contact-form</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/' -X POST -d @- -H "Content-Type: application/json" --user <username>
+{
+  "name/personal": "First",
+  "name/surname":  "Tester",
+  "organizations/org/name": "Test Organization",
+  "emails/work": "test.user@test-user.org",
+  "addresses/work/locality": "Test-Town",
+  "addresses/work/postcode": "12345",
+  "addresses/work/street": "Teststr. 123",
+  "phones/tel_work": "+49 123 4567890",
+  "online/url": "https://www.example.org/"
+}
+EOF
+
+HTTP/1.1 201 Created
+Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/1234
+```
+</details>
+
 * **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources
 
 * **DELETE** requests delete single resources
