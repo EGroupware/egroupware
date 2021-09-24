@@ -1780,13 +1780,12 @@ abstract class Merge
 		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
 		{	//sets a Letterprefix
 			$replaceprefixsort = array();
-			// ToDo Stefan: $contentstart is NOT defined here!!!
 			$replaceprefix = explode(' ',substr($param[0],21,-2));
 			foreach ($replaceprefix as $nameprefix)
 			{
 				if ($this->replacements['$$'.$nameprefix.'$$'] !='') $replaceprefixsort[] = $this->replacements['$$'.$nameprefix.'$$'];
 			}
-			$replace = implode($replaceprefixsort,' ');
+			$replace = implode(' ', $replaceprefixsort);
 		}
 		return $replace;
 	}
