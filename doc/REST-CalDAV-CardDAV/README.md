@@ -276,7 +276,37 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources
+* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+
+* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+
+<details>
+   <summary>Example: PATCH request to modify a contact with partial data</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/1234' -X PATCH -d @- -H "Content-Type: application/json" --user <username>
+{
+  "name": [
+    {
+      "@type": "NameComponent",
+      "type": "personal",
+      "value": "Testfirst"
+    },
+    {
+      "@type": "NameComponent",
+      "type": "surname",
+      "value": "Username"
+    }
+  ],
+  "fullName": "Testfirst Username",
+  "organizations/org/name": "Test-User.org",
+  "emails/work/email": "test.user@test-user.org"
+}
+EOF
+
+HTTP/1.1 204 No content
+```
+</details>
 
 * **DELETE** requests delete single resources
 
@@ -289,3 +319,11 @@ use ```<domain-name>:<name>``` like in JsCalendar
 * top-level objects need a ```@type``` attribute with one of the following values: 
 ```NameComponent```, ```Organization```, ```Title```, ```Phone```, ```Resource```, ```File```, ```ContactLanguage```, 
 ```Address```, ```StreetComponent```, ```Anniversary```, ```PersonalInformation```
+
+### ToDos
+- [x] Addressbook
+  - [ ] update of photos, keys, attachments
+- [ ] InfoLog
+- [ ] Calendar
+- [ ] relatedTo / links
+- [ ] storing not native supported attributes eg. localization

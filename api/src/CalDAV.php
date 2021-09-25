@@ -994,6 +994,34 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * REST API PATCH handler
+	 *
+	 * Currently, only implemented for REST not CalDAV/CardDAV
+	 *
+	 * @param $options
+	 * @param $files
+	 * @return string|void
+	 */
+	function PATCH(array &$options)
+	{
+		if (!preg_match('#^application/([^; +]+\+)?json#', $_SERVER['HTTP_CONTENT_TYPE']))
+		{
+			return '501 Not implemented';
+		}
+		return $this->PUT($options, 'PATCH');
+	}
+
+	/**
+	 * REST API PATCH handler
+	 *
+	 * Just calls http_PUT()
+	 */
+	function http_PATCH()
+	{
+		return parent::http_PUT('PATCH');
+	}
+
+	/**
 	 * Check if client want or sends JSON
 	 *
 	 * @param string &$type=null
@@ -1003,7 +1031,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		if (!isset($type))
 		{
-			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PROPPATCH']) ?
+			$type = in_array($_SERVER['REQUEST_METHOD'], ['PUT', 'POST', 'PATCH', 'PROPPATCH']) ?
 				$_SERVER['HTTP_CONTENT_TYPE'] : $_SERVER['HTTP_ACCEPT'];
 		}
 		return preg_match('#application/(([^+ ;]+)\+)?json#', $type, $matches) ?
@@ -1427,7 +1455,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			substr($options['path'], -1) === '/' && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
-			return $this->PUT($options);
+			return $this->PUT($options, 'POST');
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
@@ -1915,7 +1943,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param  array  parameter passing array
 	 * @return bool   true on success
 	 */
-	function PUT(&$options)
+	function PUT(&$options, $method='PUT')
 	{
 		// read the content in a string, if a stream is given
 		if (isset($options['stream']))
@@ -1934,9 +1962,14 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return '404 Not Found';
 		}
+		// REST API & PATCH only implemented for addressbook currently
+		if ($app !== 'addressbook' && $method === 'PATCH')
+		{
+			return '501 Not implemented';
+		}
 		if (($handler = self::app_handler($app)))
 		{
-			$status = $handler->put($options,$id,$user,$prefix);
+			$status = $handler->put($options, $id, $user, $prefix, $method, $_SERVER['HTTP_CONTENT_TYPE']);
 
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
