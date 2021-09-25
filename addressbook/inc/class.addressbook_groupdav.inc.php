@@ -1108,6 +1108,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				$keys['id'] = $id;
 			}
 		}
+		// json with uid
+		elseif (empty(self::$path_extension) && (string)$id !== (string)(int)$id)
+		{
+			$keys['uid'] = $id;
+		}
 		else
 		{
 			$keys[self::$path_attr] = $id;
