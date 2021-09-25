@@ -1701,10 +1701,10 @@ class HTTP_WebDAV_Server
     /**
      * PUT method handler
      *
-     * @param  void
+     * @param string $method='PUT'
      * @return void
      */
-    function http_PUT()
+    function http_PUT(string $method='PUT')
     {
         if ($this->_check_lock_status($this->path)) {
             $options                   = Array();
@@ -1839,7 +1839,7 @@ class HTTP_WebDAV_Server
                 }
             }
 
-            $stat = $this->PUT($options);
+            $stat = $this->$method($options);
 
             if ($stat === false) {
                 $stat = "403 Forbidden";

@@ -629,13 +629,15 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * @param int $id
 	 * @param int $user =null account_id of owner, default null
 	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
+	 * @param string $method='PUT' also called for POST and PATCH
+	 * @param string $content_type=null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null,$prefix=null)
+	function put(&$options, $id, $user=null, $prefix=null, string $method='PUT', string $content_type=null)
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).",$id,$user)");
 
-		$oldContact = $this->_common_get_put_delete('PUT',$options,$id);
+		$oldContact = $this->_common_get_put_delete($method,$options,$id);
 		if (!is_null($oldContact) && !is_array($oldContact))
 		{
 			if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($oldContact));
@@ -658,7 +660,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				}
 			}
 			$contact = $type === JsContact::MIME_TYPE_JSCARD ?
-				JsContact::parseJsCard($options['content'], $oldContact ?: []) : JsContact::parseJsCardGroup($options['content']);
+				JsContact::parseJsCard($options['content'], $oldContact ?: [], $content_type, $method) :
+				JsContact::parseJsCardGroup($options['content']);
 
 			if (!empty($id) && strpos($id, self::JS_CARDGROUP_ID_PREFIX) === 0)
 			{

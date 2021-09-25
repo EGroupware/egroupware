@@ -60,6 +60,7 @@ abstract class Handler
 	var $method2acl = array(
 		'GET' => Api\Acl::READ,
 		'PUT' => Api\Acl::EDIT,
+		'PATCH' => Api\Acl::EDIT,
 		'DELETE' => Api\Acl::DELETE,
 	);
 	/**

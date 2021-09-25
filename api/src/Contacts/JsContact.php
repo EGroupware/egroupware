@@ -78,26 +78,32 @@ class JsContact
 	/**
 	 * Parse JsCard
 	 *
+	 * We use strict parsing for "application/jscontact+json" content-type, not for "application/json".
+	 * Strict parsing checks objects for proper @type attributes and value attributes, non-strict allows scalar values.
+	 *
+	 * Non-strict parsing also automatic detects patch for POST requests.
+	 *
 	 * @param string $json
-	 * @param array $old=[] existing contact
-	 * @param bool $strict true: check if objects have their proper @type attribute
+	 * @param array $old=[] existing contact for patch
+	 * @param ?string $content_type=null application/json no strict parsing and automatic patch detection, if method not 'PATCH' or 'PUT'
+	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
 	 * @return array
 	 */
-	public static function parseJsCard(string $json, array $old=[], bool $strict=true)
+	public static function parseJsCard(string $json, array $old=[], string $content_type=null, $method='PUT')
 	{
 		try
 		{
+			$strict = !isset($content_type) || !preg_match('#^application/json#', $content_type);
 			$data = json_decode($json, true, 10, JSON_THROW_ON_ERROR);
 
-			// check if we have a patch: keys contain slashes
-			if (array_filter(array_keys($data), static function ($key)
+			// check if we use patch: method is PATCH or method is POST AND keys contain slashes
+			if ($method === 'PATCH' || !$strict && $method === 'POST' && array_filter(array_keys($data), static function ($key)
 			{
 				return strpos($key, '/') !== false;
 			}))
 			{
 				// apply patch on JsCard of contact
 				$data = self::patch($data, $old ? self::getJsCard($old, false) : [], !$old);
-				$strict = false;
 			}
 
 			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
@@ -951,7 +957,7 @@ class JsContact
 			{
 				throw new \InvalidArgumentException("Invalid email object (requires email attribute): ".json_encode($value, self::JSON_OPTIONS_ERROR));
 			}
-			if (!isset($contact['email']) && $id === 'work' && empty($value['context']['private']))
+			if (!isset($contact['email']) && ($id === 'work' || empty($value['contexts']['private']) || isset($contact['email_home'])))
 			{
 				$contact['email'] = $value['email'];
 			}
