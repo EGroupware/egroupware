@@ -11,14 +11,21 @@
 
 import path from 'path';
 import babel from '@babel/core';
-import { readFileSync, readdirSync, statSync  } from "fs";
-import rimraf from 'rimraf';
+import { readFileSync, readdirSync, statSync, unlinkSync  } from "fs";
+//import rimraf from 'rimraf';
 import { minify } from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
-rimraf.sync('./chunks/');
+//rimraf.sync('./chunks/');
+
+// remove only chunks older then 2 days, to allow UI to still load them and not require a reload / F5
+const rm_older = Date.now() - 48*3600000;
+readdirSync('./chunks').forEach(name => {
+    const stat = statSync('./chunks/'+name);
+    if (stat.atimeMs < rm_older) unlinkSync('./chunks/'+name);
+});
 
 // Turn on minification
 const do_minify = true;
