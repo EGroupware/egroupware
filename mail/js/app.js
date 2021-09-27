@@ -2443,12 +2443,18 @@ app.classes.mail = AppJS.extend(
 		var rvMain = false;
 		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
-			// Avoid possibly doing select all action on not desired mailbox e.g. INBOX
-			for (let n=0;n<_elems.length;n++)
+			try {
+				// Avoid possibly doing select all action on not desired mailbox e.g. INBOX
+				for (let n=0;n<_elems.length;n++)
+				{
+					// drop the action if there's a mixedup mailbox found in the selected messages
+					if (atob(_elems[n].id.split("::")[3]) != tree.getSelectedNode().id.split("::")[1]) return;
+				}
+			}catch(e)
 			{
-				// drop the action if there's a mixedup mailbox found in the selected messages
-				if (atob(_elems[n].id.split("::")[3]) != tree.getSelectedNode().id.split("::")[1]) return;
+				// continue
 			}
+
 
 			if (_confirm)
 			{
