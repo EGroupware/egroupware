@@ -64,7 +64,7 @@ class Placeholder extends Etemplate\Widget
 
 		if(is_null($apps))
 		{
-			$apps = ['addressbook', 'user'];
+			$apps = ['addressbook', 'user', 'general'];
 		}
 
 		foreach($apps as $appname)
@@ -74,6 +74,9 @@ class Placeholder extends Etemplate\Widget
 			{
 				case 'user':
 					$list = $merge->get_user_placeholder_list();
+					break;
+				case 'general':
+					$list = $merge->get_common_placeholder_list();
 					break;
 				default:
 					$list = $merge->get_placeholder_list();

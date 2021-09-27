@@ -2645,16 +2645,66 @@ abstract class Merge
 	}
 
 	/**
+	 * Get a list of common placeholders
+	 *
+	 * @param string $prefix
+	 */
+	public function get_common_placeholder_list($prefix = '')
+	{
+		$placeholders = [
+			'URLs'             => [],
+			'Egroupware links' => [],
+			'General'          => [],
+			'Repeat'           => [],
+			'Commands'         => []
+		];
+		// Iterate through the list & switch groups as we go
+		// Hopefully a little better than assigning each field to a group
+		$group = 'URLs';
+		foreach($this->get_common_replacements() as $name => $label)
+		{
+			if(in_array($name, array('user/n_fn', 'user/account_lid')))
+			{
+				continue;
+			}    // don't show them, they're in 'User'
+
+			switch($name)
+			{
+				case 'links':
+					$group = 'Egroupware links';
+					break;
+				case 'date':
+					$group = 'General';
+					break;
+				case 'pagerepeat':
+					$group = 'Repeat';
+					break;
+				case 'IF fieldname':
+					$group = 'Commands';
+			}
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][$marker] = $label;
+			}
+		}
+		return $placeholders;
+	}
+
+	/**
 	 * Get a list of placeholders for the current user
 	 */
 	public function get_user_placeholder_list($prefix = '')
 	{
 		$contacts = new Api\Contacts\Merge();
-		$replacements = $contacts->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'user');
-		unset($replacements['details']['{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}']);
+		$replacements = $contacts->get_placeholder_list($this->prefix($prefix, 'user'));
+		unset($replacements['details'][$this->prefix($prefix, 'user/account_id', '{')]);
 		$replacements['account'] = [
-			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}'  => 'Account ID',
-			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_lid}}' => 'Login ID'
+			$this->prefix($prefix, 'user/account_id', '{')  => 'Account ID',
+			$this->prefix($prefix, 'user/account_lid', '{') => 'Login ID'
 		];
 
 		return $replacements;
