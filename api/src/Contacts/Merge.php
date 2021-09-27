@@ -334,7 +334,7 @@ class Merge extends Api\Storage\Merge
 		$group = 'customfields';
 		foreach($this->contacts->customfields as $name => $field)
 		{
-			$placeholders[$group][$this->prefix($prefix, $name, '{')] = $field['label'];
+			$placeholders[$group][$this->prefix($prefix, '#' . $name, '{')] = $field['label'];
 		}
 		return $placeholders;
 	}

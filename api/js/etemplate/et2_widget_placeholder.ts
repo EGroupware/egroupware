@@ -87,6 +87,12 @@ export class et2_placeholder_select extends et2_inputWidget
 				[],
 				function(_content)
 				{
+					if(typeof _content === 'object' && _content.message)
+					{
+						// Something went wrong
+						this.egw().message(_content.message, 'error');
+						return;
+					}
 					this.egw().loading_prompt('placeholder_select', false);
 					et2_placeholder_select.placeholders = _content;
 					callback.apply(self, arguments);
@@ -146,7 +152,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		data.sel_options.group = this._get_group_options(Object.keys(_data)[0]);
 		data.content.app = data.sel_options.app[0].value;
 		data.content.group = data.sel_options.group[0].value;
-		data.content.entry = data.modifications.outer_box.entry.only_app = data.content.app;
+		data.content.entry = {app: data.content.app};
 		data.modifications.outer_box.entry.application_list = Object.keys(_data);
 
 		// callback for dialog
@@ -207,14 +213,30 @@ export class et2_placeholder_select extends et2_inputWidget
 		// Bind some handlers
 		app.onchange = (node, widget) =>
 		{
-			group.set_select_options(this._get_group_options(widget.get_value()));
-			entry.set_value({app: widget.get_value()});
+			let groups = this._get_group_options(widget.get_value());
+			group.set_select_options(groups);
+			group.set_value(groups[0].value);
+			if(['user'].indexOf(widget.get_value()) >= 0)
+			{
+				entry.app_select.val('api-accounts');
+				entry.set_value({app: 'api-accounts', id: '', query: ''});
+			}
+			else if(widget.get_value() == 'general')
+			{
+				// Don't change entry app, leave it
+			}
+			else
+			{
+				entry.app_select.val(widget.get_value());
+				entry.set_value({app: widget.get_value(), id: '', query: ''});
+			}
 		}
 		group.onchange = (select_node, select_widget) =>
 		{
-			console.log(this, arguments);
-			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
+			let options = this._get_placeholders(app.get_value(), group.get_value())
+			placeholder_list.set_select_options(options);
 			preview.set_value("");
+			placeholder_list.set_value(options[0].value);
 		}
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
@@ -227,7 +249,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
 		};
 
-		this._on_placeholder_select();
+		app.set_value(app.get_value());
 	}
 
 	/**
@@ -252,9 +274,13 @@ export class et2_placeholder_select extends et2_inputWidget
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[app.get_value(), placeholder_list.get_value(), entry.get_value()],
+				[placeholder_list.get_value(), entry.get_value()],
 				function(_content)
 				{
+					if(!_content)
+					{
+						_content = '';
+					}
 					preview_content.set_value(_content);
 					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
 				}.bind(this)
@@ -385,6 +411,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
 
+		app.set_value(app.get_value());
 		this._on_placeholder_select();
 	}
 
@@ -405,9 +432,13 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[app.get_value(), placeholder_list.get_value(), entry.get_value()],
+				[placeholder_list.get_value(), entry.get_value()],
 				function(_content)
 				{
+					if(!_content)
+					{
+						_content = '';
+					}
 					this.set_value(_content);
 					preview_content.set_value(_content);
 					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';

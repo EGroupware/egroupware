@@ -64,7 +64,9 @@ class Placeholder extends Etemplate\Widget
 
 		if(is_null($apps))
 		{
-			$apps = ['addressbook', 'user', 'general'];
+			$apps = ['addressbook', 'user', 'general'] +
+				// We use linking for preview, so limit to apps that support links
+				array_keys(Api\Link::app_list('query'));
 		}
 
 		foreach($apps as $appname)
@@ -79,30 +81,38 @@ class Placeholder extends Etemplate\Widget
 					$list = $merge->get_common_placeholder_list();
 					break;
 				default:
-					$list = $merge->get_placeholder_list();
+					if(get_class($merge) === 'EGroupware\Api\Contacts\Merge' && $appname !== 'addressbook' || $placeholders[$appname])
+					{
+						// Looks like app doesn't support merging
+						continue 2;
+					}
+					$list = method_exists($merge, 'get_placeholder_list') ? $merge->get_placeholder_list() : [];
 					break;
 			}
-			if(!is_null($group))
+			if(!is_null($group) && is_array($list))
 			{
 				$list = array_intersect_key($list, $group);
 			}
-			$placeholders[$appname] = $list;
+			if($list)
+			{
+				$placeholders[$appname] = $list;
+			}
 		}
 
 		$response = Api\Json\Response::get();
 		$response->data($placeholders);
 	}
 
-	public function ajax_fill_placeholders($app, $content, $entry)
+	public function ajax_fill_placeholders($content, $entry)
 	{
-		$merge = Api\Storage\Merge::get_app_class($app);
+		$merge = Api\Storage\Merge::get_app_class($entry['app']);
 		$err = "";
 
-		switch($app)
+		switch($entry['app'])
 		{
 			case 'addressbook':
 			default:
-				$merged = $merge->merge_string($content, [$entry], $err, 'text/plain');
+				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain');
 		}
 		$response = Api\Json\Response::get();
 		$response->data($merged);

@@ -250,14 +250,44 @@ class infolog_merge extends Api\Storage\Merge
 			echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
 
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
+		echo '<tr><td colspan="4"><h3>' . lang('General fields:') . "</h3></td></tr>";
 		foreach($this->get_common_replacements() as $name => $label)
 		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
 		}
 
 		echo "</table>\n";
 
 		echo $GLOBALS['egw']->framework->footer();
+	}
+
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = parent::get_placeholder_list($prefix);
+
+		$tracking = new infolog_tracking($this->bo);
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'),
+						'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
+		Api\Translation::add_app('projectmanager');
+
+		$group = 'placeholders';
+		foreach($fields as $name => $label)
+		{
+			if(in_array($name, array('custom')))
+			{
+				// dont show them
+				continue;
+			}
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][$marker] = $label;
+			}
+		}
+
+		return $placeholders;
 	}
 }

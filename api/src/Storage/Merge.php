@@ -1600,9 +1600,9 @@ abstract class Merge
 	 */
 	public static function get_app_class($appname)
 	{
-		if(class_exists($appname) && is_subclass_of($appname, 'EGroupware\\Api\\Storage\\Merge'))
+		$classname = "{$appname}_merge";
+		if(class_exists($classname) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
 		{
-			$classname = "{$appname}_merge";
 			$document_merge = new $classname();
 		}
 		else
@@ -2708,5 +2708,24 @@ abstract class Merge
 		];
 
 		return $replacements;
+	}
+
+	/**
+	 * Get a list of placeholders provided.
+	 *
+	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
+	 * Override this method and specify the placeholders, as well as groups or a specific order
+	 */
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = [
+			'placeholders' => []
+		];
+		foreach(Customfields::get($this->get_app()) as $name => $field)
+		{
+			$placeholders['customfields'][$this->prefix($prefix, '#' . $name, '{')] = $field['label'] . ($field['type'] == 'select-account' ? '*' : '');
+		}
+
+		return $placeholders;
 	}
 }
