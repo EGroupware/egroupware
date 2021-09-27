@@ -1193,7 +1193,7 @@ class filemanager_ui
 			//_debug_array($content);
 			$path =& $content['path'];
 
-			$button = @key($content['button']);
+			$button = @key($content['button'] ?? []);
 			unset($content['button']);
 			if(!$button && $content['sudo'] && $content['sudouser'])
 			{
