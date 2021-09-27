@@ -275,7 +275,22 @@ class Merge extends Api\Storage\Merge
 	 */
 	public function get_placeholder_list($prefix = '')
 	{
-		$placeholders = [];
+		// Specific order for these ones
+		$placeholders = [
+			'contact' => [],
+			'details' => [
+				$this->prefix($prefix, 'categories', '{') => lang('Category path'),
+				$this->prefix($prefix, 'note', '{')       => $this->contacts->contact_fields['note'],
+				$this->prefix($prefix, 'id', '{')         => $this->contacts->contact_fields['id'],
+				$this->prefix($prefix, 'owner', '{')      => $this->contacts->contact_fields['owner'],
+				$this->prefix($prefix, 'private', '{')    => $this->contacts->contact_fields['private'],
+				$this->prefix($prefix, 'cat_id', '{')     => $this->contacts->contact_fields['cat_id'],
+			],
+
+		];
+
+		// Iterate through the list & switch groups as we go
+		// Hopefully a little better than assigning each field to a group
 		$group = 'contact';
 		foreach($this->contacts->contact_fields as $name => $label)
 		{
@@ -299,24 +314,27 @@ class Merge extends Api\Storage\Merge
 				case 'email_home':
 					$group = 'email';
 					break;
-				case 'url':
+				case 'freebusy_uri':
 					$group = 'details';
 			}
-			$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = $label;
-			if($name == 'cat_id')
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
 			{
-				$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = lang('Category path');
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][$marker] = $label;
 			}
 		}
 
 		// Correctly formatted address by country / preference
-		$placeholders['business']['{{' . ($prefix ? $prefix . '/' : '') . 'adr_one_formatted}}'] = "Formatted business address";
-		$placeholders['private']['{{' . ($prefix ? $prefix . '/' : '') . 'adr_two_formatted}}'] = "Formatted private address";
+		$placeholders['business'][$this->prefix($prefix, 'adr_one_formatted', '{')] = "Formatted business address";
+		$placeholders['private'][$this->prefix($prefix, 'adr_two_formatted', '{')] = "Formatted private address";
 
 		$group = 'customfields';
 		foreach($this->contacts->customfields as $name => $field)
 		{
-			$placeholders[$group]["{{" . ($prefix ? $prefix . '/' : '') . $name . "}}"] = $field['label'];
+			$placeholders[$group][$this->prefix($prefix, $name, '{')] = $field['label'];
 		}
 		return $placeholders;
 	}
