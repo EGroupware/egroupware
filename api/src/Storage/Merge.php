@@ -1655,6 +1655,30 @@ abstract class Merge
 	}
 
 	/**
+	 * Prefix a placeholder, taking care of $$ or {{}} markers
+	 *
+	 * @param string $prefix Placeholder prefix
+	 * @param string $placeholder Placeholder, with or without {{...}} or $$...$$ markers
+	 * @param null|string $wrap "{" or "$" to add markers, omit to exclude markers
+	 * @return string
+	 */
+	protected function prefix($prefix, $placeholder, $wrap = null)
+	{
+		$marker = ['', ''];
+		if($placeholder[0] == '{' && is_null($wrap) || $wrap[0] == '{')
+		{
+			$marker = ['{{', '}}'];
+		}
+		elseif($placeholder[0] == '$' && is_null($wrap) || $wrap[0] == '$')
+		{
+			$marker = ['$$', '$$'];
+		}
+
+		$placeholder = str_replace(['{{', '}}', '$$'], '', $placeholder);
+		return $marker[0] . ($prefix ? $prefix . '/' : '') . $placeholder . $marker[1];
+	}
+
+	/**
 	 * Process special flags, such as IF or NELF
 	 *
 	 * @param content Text to be examined and changed
