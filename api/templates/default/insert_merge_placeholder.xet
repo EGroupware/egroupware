@@ -24,7 +24,7 @@
             </hbox>
         </vbox>
         <styles>
-
+            /** Structural stuff **/
             #api\.insert_merge_placeholder_outer_box > #api\.insert_merge_placeholder_selects {
             flex: 1 1 80%;
             }
@@ -75,6 +75,11 @@
             border: none;
             border-radius: 0px;
             background-color: transparent;
+            }
+
+            /** Cosmetics **/
+            #api\.insert_merge_placeholder_outer_box option:first-letter {
+            text-transform: capitalize;
             }
         </styles>
     </template>
