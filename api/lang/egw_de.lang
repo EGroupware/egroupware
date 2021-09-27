@@ -724,6 +724,7 @@ insert new column behind this one	common	de	Neue Spalte hinter dieser einfügen
 insert new column in front of all	common	de	Neue Spalte vor dieser einfügen
 insert new row after this one	common	de	Neue Zeile nach dieser einfügen
 insert new row in front of first line	common	de	Neue Zeile vor dieser einfügen
+insert placeholder	common	de	Platzhalter einfügen
 insert row after	common	de	Zeile danach einfügen
 insert row before	common	de	Zeile davor einfügen
 insert timestamp into description field	common	de	Zeitstempel in das Beschreibungs-Feld einfügen
@@ -1072,6 +1073,7 @@ preference	common	de	Einstellung
 preferences	common	de	Einstellungen
 preferences for the %1 template set	preferences	de	Einstellungen für das %1 Template
 prev	common	de	Vorheriger
+preview with entry	common	de	Vorschau aus Eintrag
 previous	common	de	Vorherige
 previous page	common	de	Vorherige Seite
 primary group	common	de	Hauptgruppe
