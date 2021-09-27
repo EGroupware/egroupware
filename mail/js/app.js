@@ -2444,11 +2444,16 @@ app.classes.mail = AppJS.extend(
 		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
 			try {
+				let splitedID = [];
+				let mailbox = '';
 				// Avoid possibly doing select all action on not desired mailbox e.g. INBOX
 				for (let n=0;n<_elems.length;n++)
 				{
+					splitedID = _elems[n].id.split("::");
+					// find the mailbox from the constructed rowID, sometimes the rowID may not contain the app name
+					mailbox = splitedID.length == 4?atob(splitedID[2]):atob(splitedID[3]);
 					// drop the action if there's a mixedup mailbox found in the selected messages
-					if (atob(_elems[n].id.split("::")[3]) != tree.getSelectedNode().id.split("::")[1]) return;
+					if (mailbox != tree.getSelectedNode().id.split("::")[1]) return;
 				}
 			}catch(e)
 			{
