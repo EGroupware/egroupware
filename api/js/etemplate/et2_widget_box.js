@@ -193,7 +193,7 @@ var et2_details = /** @class */ (function (_super) {
                 .click(function () {
                 self._toggle();
             })
-                .text(this.options.title);
+                .text(this.egw().lang(this.options.title));
         }
         // Align toggle button left/right
         if (this.options.toggle_align === "left")
