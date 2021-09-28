@@ -760,10 +760,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		else
 		{
-			$contact['carddav_name'] = $id;
+			$contact['carddav_name'] = (!empty($id) ? basename($id, '.vcf') : $contact['uid']).'.vcf';
 
 			// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/) or sync-all-in-one!)
-			if ($prefix && !in_array('O',$this->home_set_pref) && $user)
+			if ($prefix && ($is_json || !in_array('O',$this->home_set_pref)) && $user)
 			{
 				$contact['owner'] = $user;
 			}
