@@ -368,8 +368,9 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	static placeholders = {
 		"addressbook": {
 			"addresses": {
-				"{{n_fn}}\n{{adr_one_street}}{{NELF adr_one_street2}}\n{{adr_one_formatted}}": "Work address",
+				"{{org_name}}\n{{n_fn}}\n{{adr_one_street}}{{NELF adr_one_street2}}\n{{adr_one_formatted}}": "Business address",
 				"{{n_fn}}\n{{adr_two_street}}{{NELF adr_two_street2}}\n{{adr_two_formatted}}": "Home address",
+				"{{n_fn}}\n{{email}}\n{{tel_work}}": "Name, email, phone"
 			}
 		}
 	};
@@ -490,7 +491,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 			options.push(
 				{
 					value: key,
-					label: et2_placeholder_snippet_select.placeholders[appname][group][key]
+					label: this.egw().lang(et2_placeholder_snippet_select.placeholders[appname][group][key])
 				});
 		});
 		return options;
