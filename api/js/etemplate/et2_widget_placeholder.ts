@@ -168,7 +168,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		this.dialog = <et2_dialog>et2_createWidget("dialog",
 			{
 				callback: this.submit_callback,
-				title: this.options.dialog_title || this.egw().lang("Insert Placeholder"),
+				title: this.egw().lang(this.options.dialog_title) || this.egw().lang("Insert Placeholder"),
 				buttons: buttons,
 				minWidth: 500,
 				minHeight: 400,
