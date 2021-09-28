@@ -2440,17 +2440,9 @@ abstract class Merge
 		$target = $_target = (Vfs::is_writable(Vfs::get_home_dir()) ?
 				Vfs::get_home_dir() :
 				"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
-			)."/$filename";
-		$dupe_count = 0;
-		while(is_file(Vfs::PREFIX.$target))
-		{
-			$dupe_count++;
-			$target = Vfs::dirname($_target) . '/' .
-				pathinfo($filename, PATHINFO_FILENAME) .
-				' ('.($dupe_count + 1).')' . '.' .
-				pathinfo($filename, PATHINFO_EXTENSION);
-		}
-		copy($result, Vfs::PREFIX.$target);
+			) . "/$filename";
+		$target = Vfs::make_unique($target);
+		copy($result, Vfs::PREFIX . $target);
 		unlink($result);
 
 		// Find out what to do with it
