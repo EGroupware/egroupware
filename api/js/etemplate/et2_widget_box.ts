@@ -240,7 +240,7 @@ export class et2_details extends et2_box
 				.click(function () {
 					self._toggle();
 				})
-					.text(this.options.title);
+					.text(this.egw().lang(this.options.title));
 		}
 
 		// Align toggle button left/right
