@@ -2396,14 +2396,15 @@ class Vfs extends Vfs\Base
 	 */
 	static function make_unique($path)
 	{
+		$filename = Vfs::basename($path);
 		$dupe_count = 0;
 		while(is_file(Vfs::PREFIX . $path))
 		{
 			$dupe_count++;
 			$path = Vfs::dirname($path) . '/' .
-				pathinfo($path, PATHINFO_FILENAME) .
+				pathinfo($filename, PATHINFO_FILENAME) .
 				' (' . ($dupe_count + 1) . ')' . '.' .
-				pathinfo($path, PATHINFO_EXTENSION);
+				pathinfo($filename, PATHINFO_EXTENSION);
 		}
 		return $path;
 	}
