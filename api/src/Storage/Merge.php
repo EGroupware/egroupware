@@ -2409,7 +2409,7 @@ abstract class Merge
 
 		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 		{
-			$response->error($error);
+			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
 			return;
 		}
 
@@ -2466,8 +2466,20 @@ abstract class Merge
 		if($editable_mimes[Vfs::mime_content_type($target)] && $pdf)
 		{
 			$error = '';
+			$converted_path = '';
 			$convert = new Conversion();
-			$convert->convert($target, $target, 'pdf', $error);
+			$convert->convert($target, $converted_path, 'pdf', $error);
+			
+			if($error)
+			{
+				error_log(__METHOD__ . "({$_REQUEST['document']}) $target => $converted_path Error in PDF conversion: $error");
+			}
+			else
+			{
+				// Remove original
+				Vfs::unlink($target);
+				$target = $converted_path;
+			}
 		}
 		if($editable_mimes[Vfs::mime_content_type($target)] &&
 			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
