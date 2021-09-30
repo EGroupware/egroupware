@@ -840,6 +840,38 @@ export class etemplate2
 	}
 
 	/**
+	 * Check if there is an invalid widget / all widgets are valid
+	 *
+	 * @param container
+	 * @param values
+	 * @return et2_widget|null first invalid widget or null, if all are valid
+	 */
+	isInvalid(container : et2_container|undefined, values : object|undefined) : et2_widget|null
+	{
+		if (typeof container === 'undefined')
+		{
+			container = this._widgetContainer;
+		}
+		if (typeof values === 'undefined')
+		{
+			values = this.getValues(container);
+		}
+		let invalid = null;
+		container.iterateOver(function (_widget)
+		{
+			if (_widget.submit(values) === false)
+			{
+				if(!invalid && !_widget.isValid([]))
+				{
+					invalid = _widget;
+				}
+			}
+		}, this, et2_ISubmitListener);
+
+		return invalid;
+	}
+
+	/**
 	 * Submit form via ajax
 	 *
 	 * @param {(et2_button|string)} button button widget or string with id
@@ -867,17 +899,7 @@ export class etemplate2
 		let invalid = null;
 		if (!no_validation)
 		{
-			container.iterateOver(function (_widget)
-			{
-				if (_widget.submit(values) === false)
-				{
-					if(!invalid && !_widget.isValid())
-					{
-						invalid = _widget;
-					}
-					canSubmit = false;
-				}
-			}, this, et2_ISubmitListener);
+			canSubmit = !(invalid = this.isInvalid(container, values));
 		}
 
 		if (canSubmit)
@@ -1081,7 +1103,6 @@ export class etemplate2
 		egw().debug("info", "Value", result);
 		return result;
 	}
-
 
 	/**
 	 * "Intelligently" refresh the template based on the given ID
