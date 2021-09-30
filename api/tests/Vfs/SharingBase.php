@@ -296,15 +296,18 @@ class SharingBase extends LoggedInTest
 	 */
 	protected function mountVersioned($path)
 	{
-		if (!class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper'))
+		if(!class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper'))
 		{
 			$this->markTestSkipped("No versioning available");
 		}
-		if(substr($path, -1) == '/') $path = substr($path, 0, -1);
+		if(substr($path, -1) == '/')
+		{
+			$path = substr($path, 0, -1);
+		}
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$url = Versioning\StreamWrapper::PREFIX.$path;
-		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $path as versioned");
+		$url = Versioning\StreamWrapper::PREFIX . $path;
+		$this->assertTrue(Vfs::mount($url, $path, false), "Unable to mount $path as versioned");
 		Vfs::$is_root = $backup;
 
 		$this->mounts[] = $path;
@@ -362,8 +365,8 @@ class SharingBase extends LoggedInTest
 		Vfs::chmod($path, 0750);
 		Vfs::chown($path, $GLOBALS['egw_info']['user']['account_id']);
 
-		$url = \EGroupware\Stylite\Vfs\Merge\StreamWrapper::SCHEME.'://default'.$path.'?merge=' . realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
-		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
+		$url = \EGroupware\Stylite\Vfs\Merge\StreamWrapper::SCHEME . '://default' . $path . '?merge=' . realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
+		$this->assertTrue(Vfs::mount($url, $path, false), "Unable to mount $url to $path");
 		Vfs::$is_root = $backup;
 
 		$this->mounts[] = $path;
