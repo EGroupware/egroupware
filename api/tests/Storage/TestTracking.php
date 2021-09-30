@@ -14,8 +14,10 @@
 namespace EGroupware\Api\Storage;
 
 
+require_once __DIR__ . '/../../src/Storage/Tracking.php';
 
-class TestTracking extends Tracking {
+class TestTracking extends Tracking
+{
 
 	var $app = 'test';
 
