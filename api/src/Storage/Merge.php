@@ -32,6 +32,9 @@ use ZipArchive;
  */
 abstract class Merge
 {
+
+	const PREF_STORE_LOCATION = "merge_store_path";
+
 	/**
 	 * Instance of the addressbook_bo class
 	 *
@@ -2434,20 +2437,21 @@ abstract class Merge
 		{
 			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n" . $result);
 		}
-		// Put it into the vfs using user's configured home dir if writable,
+		// Put it into the vfs using user's preferred directory if writable,
 		// or expected home dir (/home/username) if not
-		$target = $_target = (Vfs::is_writable(Vfs::get_home_dir()) ?
-				Vfs::get_home_dir() :
-				"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
-			) . "/$filename";
+		$target = $document_merge->get_save_path($filename);
+
+		// Make sure we won't overwrite something already there
 		$target = Vfs::make_unique($target);
+
 		copy($result, Vfs::PREFIX . $target);
 		unlink($result);
 
 		// Find out what to do with it
 		$editable_mimes = array();
-		try {
-			if (class_exists('EGroupware\\collabora\\Bo') &&
+		try
+		{
+			if(class_exists('EGroupware\\collabora\\Bo') &&
 				$GLOBALS['egw_info']['user']['apps']['collabora'] &&
 				($discovery = \EGroupware\collabora\Bo::discover()) &&
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
@@ -2469,7 +2473,7 @@ abstract class Merge
 			$converted_path = '';
 			$convert = new Conversion();
 			$convert->convert($target, $converted_path, 'pdf', $error);
-			
+
 			if($error)
 			{
 				error_log(__METHOD__ . "({$_REQUEST['document']}) $target => $converted_path Error in PDF conversion: $error");
@@ -2496,7 +2500,7 @@ abstract class Merge
 	}
 
 	/**
-	 * Generate a filename for the merged file
+	 * Generate a filename for the merged file, without extension
 	 *
 	 * Default is just the name of the template
 	 * @return string
@@ -2504,6 +2508,30 @@ abstract class Merge
 	protected function get_filename($document) : string
 	{
 		return '';
+	}
+
+	/**
+	 * Return a path where we can save the generated file
+	 * Takes into account user preference.
+	 *
+	 * @param string $filename The name of the generated file, including extension
+	 * @return string
+	 */
+	protected function get_save_path($filename) : string
+	{
+		// Default is home directory
+		$target = (Vfs::is_writable(Vfs::get_home_dir()) ?
+			Vfs::get_home_dir() :
+			"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
+		);
+
+		// Check for a configured preferred directory
+		if(($pref = $GLOBALS['egw_info']['user']['preferences']['filemanager'][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		{
+			$target = $pref;
+		}
+
+		return $target . "/$filename";
 	}
 
 	/**

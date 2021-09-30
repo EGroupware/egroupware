@@ -161,27 +161,34 @@ class filemanager_hooks
 				'forced'   => 'yes',
 			),
 			'showusers'		=> array(
-				'type'		=> 'select',
-				'name'		=> 'showusers',
-				'values'	=> $yes_no,
-				'label' 	=> lang('Show link "%1" in side box menu?',lang('Users and groups')),
-				'xmlrpc'	=> True,
-				'admin'		=> False,
-				'forced'   => 'yes',
+				'type'   => 'select',
+				'name'   => 'showusers',
+				'values' => $yes_no,
+				'label'  => lang('Show link "%1" in side box menu?', lang('Users and groups')),
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => 'yes',
 			),
 		);
 
+		$settings[Api\Storage\Merge::PREF_STORE_LOCATION] = array(
+			'type'  => 'vfs_dir',
+			'size'  => 60,
+			'label' => 'Directory for storing merged documents',
+			'name'  => Api\Storage\Merge::PREF_STORE_LOCATION,
+			'help'  => lang('When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in %1', Vfs::get_home_dir())
+		);
 		$settings['default_document'] = array(
-			'type'   => 'vfs_file',
-			'size'   => 60,
-			'label'  => 'Default document to insert entries',
-			'name'   => 'default_document',
-			'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('filemanager')).' '.
-				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name').' '.
-				lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
+			'type'     => 'vfs_file',
+			'size'     => 60,
+			'label'    => 'Default document to insert entries',
+			'name'     => 'default_document',
+			'help'     => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.', lang('filemanager')) . ' ' .
+				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name') . ' ' .
+				lang('The following document-types are supported:') . implode(',', Api\Storage\Merge::get_file_extensions()),
 			'run_lang' => false,
-			'xmlrpc' => True,
-			'admin'  => False,
+			'xmlrpc'   => True,
+			'admin'    => False,
 		);
 		$settings['document_dir'] = array(
 			'type'   => 'vfs_dirs',
