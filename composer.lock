@@ -207,7 +207,7 @@
             "version": "v2.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fengyuanchen/cropper.git",
+                "url": "git@github.com:fengyuanchen/cropper.git",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "dist": {
@@ -264,7 +264,7 @@
             "version": "v2.9.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rtfpessoa/diff2html.git",
+                "url": "git@github.com:rtfpessoa/diff2html.git",
                 "reference": "4c15a9ca93e50c78f8d02e37273076994888d499"
             },
             "dist": {
@@ -279,7 +279,7 @@
             "version": "v1.0.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ftlabs/fastclick.git",
+                "url": "git@github.com:ftlabs/fastclick.git",
                 "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b"
             },
             "dist": {
@@ -305,7 +305,7 @@
             "version": "1.12.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
@@ -335,7 +335,7 @@
             "version": "1.6.19",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mattbryson/TouchSwipe-Jquery-Plugin.git",
+                "url": "git@github.com:mattbryson/TouchSwipe-Jquery-Plugin.git",
                 "reference": "f0d71bf645779358e1458e212102c5d59b7702ec"
             },
             "dist": {
@@ -353,7 +353,7 @@
             "version": "1.11.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
+                "url": "git@github.com:components/jqueryui.git",
                 "reference": "396781474d936959061271505f506b78398fe6a2"
             },
             "dist": {
@@ -2099,16 +2099,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.4.5",
+            "version": "3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1"
+                "reference": "3ef8657a78278dfeae7707d51747251db4176240"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/511629a54465e89a31d3d7e4cf0935feab8b14c1",
-                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/3ef8657a78278dfeae7707d51747251db4176240",
+                "reference": "3ef8657a78278dfeae7707d51747251db4176240",
                 "shasum": ""
             },
             "require": {
@@ -2158,7 +2158,17 @@
                 "JWS",
                 "jwt"
             ],
-            "time": "2021-02-16T09:40:01+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/lcobucci",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/lcobucci",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-09-28T19:18:28+00:00"
         },
         {
             "name": "league/event",
@@ -5105,6 +5115,7 @@
                 "facebook",
                 "simplesamlphp"
             ],
+            "abandoned": true,
             "time": "2020-03-13T11:29:21+00:00"
         },
         {
@@ -5251,6 +5262,7 @@
                 "windows",
                 "windowslive"
             ],
+            "abandoned": true,
             "time": "2019-12-03T09:01:13+00:00"
         },
         {
