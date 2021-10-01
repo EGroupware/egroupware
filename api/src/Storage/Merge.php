@@ -2674,6 +2674,8 @@ abstract class Merge
 
 			// General information
 			'date'               => lang('Date'),
+			'datetime'           => lang('Date + time'),
+			'time'               => lang('Time'),
 			'user/n_fn'          => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid'   => lang('Username'),
 
