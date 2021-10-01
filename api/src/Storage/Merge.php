@@ -2144,11 +2144,11 @@ abstract class Merge
 				$file['path'] = $default_doc;
 			}
 			$documents['document'] = array(
-				'icon' => Api\Vfs::mime_icon($file['mime']),
+				'icon'    => Api\Vfs::mime_icon($file['mime']),
 				'caption' => Api\Vfs::decodePath(Api\Vfs::basename($default_doc)),
-				'group' => 1,
-				'postSubmit' => true,	// download needs post submit (not Ajax) to work
+				'group'   => 1
 			);
+			self::document_editable_action($documents['document'], $file);
 			if ($file['mime'] == 'message/rfc822')
 			{
 				self::document_mail_action($documents['document'], $file);
@@ -2303,6 +2303,7 @@ abstract class Merge
 	private static function document_mail_action(Array &$action, $file)
 	{
 		unset($action['postSubmit']);
+		unset($action['onExecute']);
 
 		// Lots takes a while, confirm
 		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
@@ -2347,12 +2348,18 @@ abstract class Merge
 			'document'   => $file['path'],
 			'merge'      => get_called_class(),
 		);
-		$action = array_merge($action_base, $action, array(
-			'icon'       => Api\Vfs::mime_icon($file['mime']),
-			'caption'    => Api\Vfs::decodePath($file['name']),
-			'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
-			'merge_data' => $edit_attributes
-		));
+
+		$action = array_merge(
+			$action_base,
+			array(
+				'icon'       => Api\Vfs::mime_icon($file['mime']),
+				'caption'    => Api\Vfs::decodePath($file['name']),
+				'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
+				'merge_data' => $edit_attributes
+			),
+			// Merge in provided action last, so we can customize if needed (eg: default document)
+			$action
+		);
 	}
 
 	/**
