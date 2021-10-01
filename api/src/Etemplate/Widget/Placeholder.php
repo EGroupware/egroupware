@@ -110,7 +110,9 @@ class Placeholder extends Etemplate\Widget
 
 		switch($entry['app'])
 		{
-			case 'addressbook':
+			case 'user':
+				$entry = ['id' => $GLOBALS['egw_info']['user']['person_id']];
+			// fall through
 			default:
 				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain');
 		}

@@ -154,6 +154,13 @@ export class et2_placeholder_select extends et2_inputWidget
 		data.content.group = data.sel_options.group[0].value;
 		data.content.entry = {app: data.content.app};
 		data.modifications.outer_box.entry.application_list = Object.keys(_data);
+		// Remove non-app placeholders (user & general)
+		let non_apps = ['user', 'general'];
+		for(let i = 0; i < non_apps.length; i++)
+		{
+			let index = data.modifications.outer_box.entry.application_list.indexOf(non_apps[i]);
+			data.modifications.outer_box.entry.application_list.splice(index, 1);
+		}
 
 		// callback for dialog
 		this.submit_callback = function(submit_button_id, submit_value)
@@ -213,23 +220,28 @@ export class et2_placeholder_select extends et2_inputWidget
 		// Bind some handlers
 		app.onchange = (node, widget) =>
 		{
-			let groups = this._get_group_options(widget.get_value());
-			group.set_select_options(groups);
-			group.set_value(groups[0].value);
+			preview.set_value("");
 			if(['user'].indexOf(widget.get_value()) >= 0)
 			{
-				entry.app_select.val('api-accounts');
-				entry.set_value({app: 'api-accounts', id: '', query: ''});
+				entry.set_disabled(true);
+				entry.app_select.val('user');
+				entry.set_value({app: 'user', id: '', query: ''});
 			}
 			else if(widget.get_value() == 'general')
 			{
 				// Don't change entry app, leave it
+				entry.set_disabled(false);
 			}
 			else
 			{
+				entry.set_disabled(false);
 				entry.app_select.val(widget.get_value());
 				entry.set_value({app: widget.get_value(), id: '', query: ''});
 			}
+			let groups = this._get_group_options(widget.get_value());
+			group.set_select_options(groups);
+			group.set_value(groups[0].value);
+			group.onchange();
 		}
 		group.onchange = (select_node, select_widget) =>
 		{
@@ -433,7 +445,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[placeholder_list.get_value(), entry.get_value()],
+				[placeholder_list.get_value(), {app: "addressbook", id: entry.get_value()}],
 				function(_content)
 				{
 					if(!_content)
