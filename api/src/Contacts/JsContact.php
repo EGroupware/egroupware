@@ -173,7 +173,7 @@ class JsContact
 						break;
 
 					case 'egroupware.org:customfields':
-						$contact += self::parseCustomfields($value);
+						$contact += self::parseCustomfields($value, $strict);
 						break;
 
 					case 'egroupware.org:assistant':
@@ -433,8 +433,12 @@ class JsContact
 		foreach($definitions as $name => $definition)
 		{
 			$data = $cfs[$name];
-			if (isset($data[$name]))
+			if (isset($data))
 			{
+				if (is_scalar($data))
+				{
+					$data = ['value' => $data];
+				}
 				if (!is_array($data) || !array_key_exists('value', $data))
 				{
 					throw new \InvalidArgumentException("Invalid customfield object $name: ".json_encode($data, self::JSON_OPTIONS_ERROR));
@@ -614,7 +618,10 @@ class JsContact
 		$prefix = $type === 'work' ? 'adr_one_' : 'adr_two_';
 
 		$contact = [$prefix.'street' => null, $prefix.'street2' => null];
-		list($contact[$prefix.'street'], $contact[$prefix.'street2']) = self::parseStreetComponents($address['street'], $stict);
+		if (!empty($address['street']))
+		{
+			list($contact[$prefix.'street'], $contact[$prefix.'street2']) = self::parseStreetComponents($address['street'], $stict);
+		}
 		foreach(self::$jsAddress2attr+self::$jsAddress2workAttr as $js => $attr)
 		{
 			if (isset($address[$js]) && !is_string($address[$js]))
