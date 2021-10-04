@@ -16,7 +16,7 @@ use EGroupware\Api;
 /**
  * Translate message only if translation object is already loaded
  *
- * This function is usefull for exception handlers or early stages of the initialisation of the egw object,
+ * This function is useful for exception handlers or early stages of the initialisation of the egw object,
  * as calling lang would try to load the translations, evtl. cause more errors, eg. because there's no db-connection.
  *
  * @param string $key message in englich with %1, %2, ... placeholders
@@ -36,7 +36,7 @@ function try_lang($key,$vars=null)
 }
 
 /**
- * Clasify exception for a headline and log it to error_log, if not running as cli
+ * Classify exception for a headline and log it to error_log, if not running as cli
  *
  * @param Exception|Error $e
  * @param string &$headline
@@ -82,7 +82,7 @@ function _egw_log_exception($e,&$headline=null)
 }
 
 /**
- * Fail a little bit more gracefully then an uncought exception
+ * Fail a little more gracefully then an uncaught exception
  *
  * Does NOT return
  *
@@ -159,7 +159,7 @@ if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || $GLOBALS['e
 }
 
 /**
- * Fail a little bit more gracefully then a catchable fatal error, by throwing an exception
+ * Fail a little more gracefully then a catchable fatal error, by throwing an exception
  *
  * @param int $errno  level of the error raised: E_* constants
  * @param string $errstr error message
@@ -178,7 +178,7 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 
 		case E_WARNING:
 		case E_USER_WARNING:
-			// skip message for warnings supressed via @-error-control-operator (eg. @is_dir($path))
+			// skip message for warnings suppressed via @-error-control-operator (eg. @is_dir($path))
 			// can be commented out to get suppressed warnings too!
 			if ((error_reporting() & $errno) && PHP_VERSION < 8.0)
 			{

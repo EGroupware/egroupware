@@ -349,8 +349,8 @@ class Vfs extends Vfs\Base
 	{
 		//error_log(__METHOD__."(".print_r($base,true).",".print_r($options,true).",".print_r($exec,true).",".print_r($exec_params,true).")\n");
 
-		$type = $options['type'];	// 'd', 'f' or 'F'
-		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
+		$type = $options['type'] ?? null;	// 'd', 'f' or 'F'
+		$dirs_last = !empty($options['depth']);	// put content of dirs before the dir itself
 		// show dirs on top by default, if no recursive listing (allways disabled if $type specified, as unnecessary)
 		$dirsontop = !$type && (isset($options['dirsontop']) ? (boolean)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
 		if ($dirsontop) $options['need_mime'] = true;	// otherwise dirsontop can NOT work
@@ -386,7 +386,7 @@ class Vfs extends Vfs\Base
 				$options['gid'] = 0;
 			}
 		}
-		if ($options['order'] == 'mime')
+		if (isset($options['order']) && $options['order'] === 'mime')
 		{
 			$options['need_mime'] = true;	// we need to return the mime colum
 		}
@@ -403,7 +403,7 @@ class Vfs extends Vfs\Base
 			],
 		]);
 
-		$url = $options['url'];
+		$url = $options['url'] ?? null;
 
 		if (!is_array($base))
 		{
@@ -422,7 +422,7 @@ class Vfs extends Vfs\Base
 				$options['remove'] = count($base) == 1 ? count(explode('/',$path))-3+(int)(substr($path,-1)!='/') : 0;
 			}
 			$is_dir = is_dir($path);
-			if ((int)$options['mindepth'] == 0 && (!$dirs_last || !$is_dir))
+			if (empty($options['mindepth']) && (!$dirs_last || !$is_dir))
 			{
 				self::_check_add($options,$path,$result);
 			}
@@ -434,11 +434,11 @@ class Vfs extends Vfs\Base
 				{
 					if ($fname == '.' || $fname == '..') continue;	// ignore current and parent dir!
 
-					if (self::is_hidden($fname, $options['show-deleted']) && !$options['hidden']) continue;	// ignore hidden files
+					if (self::is_hidden($fname, $options['show-deleted'] ?? false) && !$options['hidden']) continue;	// ignore hidden files
 
 					$file = self::concat($path, $fname);
 
-					if ((int)$options['mindepth'] <= 1)
+					if (!isset($options['mindepth']) || (int)$options['mindepth'] <= 1)
 					{
 						self::_check_add($options,$file,$result);
 					}
@@ -459,7 +459,7 @@ class Vfs extends Vfs\Base
 				}
 				closedir($dir);
 			}
-			if ($is_dir && (int)$options['mindepth'] == 0 && $dirs_last)
+			if ($is_dir && empty($options['mindepth']) && $dirs_last)
 			{
 				self::_check_add($options,$path,$result);
 			}
@@ -569,9 +569,9 @@ class Vfs extends Vfs\Base
 	 */
 	private static function _check_add($options,$path,&$result)
 	{
-		$type = $options['type'];	// 'd' or 'f'
+		$type = $options['type'] ?? null;	// 'd' or 'f'
 
-		if ($options['url'])
+		if (!empty($options['url']))
 		{
 			if (($stat = @lstat($path)))
 			{
@@ -595,7 +595,7 @@ class Vfs extends Vfs\Base
 		$stat['path'] = self::parse_url($path,PHP_URL_PATH);
 		$stat['name'] = $options['remove'] > 0 ? implode('/',array_slice(explode('/',$stat['path']),$options['remove'])) : self::basename($path);
 
-		if ($options['mime'] || $options['need_mime'])
+		if (!empty($options['mime']) || !empty($options['need_mime']))
 		{
 			$stat['mime'] = self::mime_content_type($path);
 		}
@@ -642,7 +642,7 @@ class Vfs extends Vfs\Base
 			return;	// not create/modified in the spezified time
 		}
 		// do we return url or just vfs pathes
-		if (!$options['url'])
+		if (empty($options['url']))
 		{
 			$path = self::parse_url($path,PHP_URL_PATH);
 		}
@@ -1227,7 +1227,7 @@ class Vfs extends Vfs\Base
 				}
 			}
 		}
-		return $component >= 0 ? $result[$component2str[$component]] : $result;
+		return $component >= 0 ? ($result[$component2str[$component]] ?? null) : $result;
 	}
 
 	/**
@@ -1240,7 +1240,7 @@ class Vfs extends Vfs\Base
 	 */
 	static function dirname($_url)
 	{
-		list($url,$query) = explode('?',$_url,2);	// strip the query first, as it can contain slashes
+		if (strpos($url=$_url, '?') !== false) list($url, $query) = explode('?',$_url,2);	// strip the query first, as it can contain slashes
 
 		if ($url == '/' || $url[0] != '/' && self::parse_url($url,PHP_URL_PATH) == '/')
 		{
@@ -1283,7 +1283,7 @@ class Vfs extends Vfs\Base
 	 */
 	static function concat($_url,$relative)
 	{
-		list($url,$query) = explode('?',$_url,2);
+		if (strpos($url=$_url, '?') !== false) list($url, $query) = explode('?',$_url,2);
 		if (substr($url,-1) == '/') $url = substr($url,0,-1);
 		$ret = ($relative === '' || $relative[0] == '/' ? $url.$relative : $url.'/'.$relative);
 
@@ -2264,17 +2264,17 @@ class Vfs extends Vfs\Base
 				}
 			}
 		}
-		if (!$mime && is_dir($url))
+		if (empty($mime) && is_dir($url))
 		{
 			$mime = self::DIR_MIME_TYPE;
 		}
 		// if we operate on the regular filesystem and the mime_content_type function is available --> use it
-		if (!$mime && !$scheme && function_exists('mime_content_type'))
+		if (empty($mime) && !$scheme && function_exists('mime_content_type'))
 		{
 			$mime = mime_content_type($path);
 		}
 		// using EGw's own mime magic (currently only checking the extension!)
-		if (!$mime)
+		if (empty($mime))
 		{
 			$mime = MimeMagic::filename2mime(self::parse_url($url,PHP_URL_PATH));
 		}
