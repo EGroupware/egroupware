@@ -259,6 +259,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/' -X POST -d @- -H "Content-Type: application/json" --user <username>
 {
+  "fullName": "First Tester",
   "name/personal": "First",
   "name/surname":  "Tester",
   "organizations/org/name": "Test Organization",
@@ -266,8 +267,12 @@ cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addr
   "addresses/work/locality": "Test-Town",
   "addresses/work/postcode": "12345",
   "addresses/work/street": "Teststr. 123",
+  "addresses/work/country": "Germany",
+  "addresses/work/countryCode": "DE",
   "phones/tel_work": "+49 123 4567890",
-  "online/url": "https://www.example.org/"
+  "online/url": "https://www.example.org/",
+  "notes/note": "This is a note.",
+  "egroupware.org:customfields/Test": "Content for Test"
 }
 EOF
 
