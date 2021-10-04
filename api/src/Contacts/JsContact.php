@@ -124,9 +124,23 @@ class JsContact
 					case 'fullName':
 						$contact['n_fn'] = self::parseString($value);
 						// if no separate name-components given, simply split first word off as n_given and rest as n_family
-						if (!isset($data['name']))
+						if (!isset($data['name']) && !empty($contact['n_fn']))
 						{
-							list($contact['n_given'], $contact['n_family']) = explode(' ', $contact['n_fn'], 2);
+							if (preg_match('/^([^ ,]+)(,?) (.*)$/', $contact['n_fn'], $matches))
+							{
+								if (!empty($matches[2]))
+								{
+									list(, $contact['n_family'], , $contact['n_given']) = $matches;
+								}
+								else
+								{
+									list(, $contact['n_given'], , $contact['n_family']) = $matches;
+								}
+							}
+							else
+							{
+								$contact['n_family'] = $contact['n_fn'];
+							}
 						}
 						break;
 
