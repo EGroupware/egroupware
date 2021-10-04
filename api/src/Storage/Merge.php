@@ -2738,7 +2738,10 @@ abstract class Merge
 				return array_key_exists($marker, $a);
 			}))
 			{
-				$placeholders[$group][$marker] = $label;
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
 			}
 		}
 		return $placeholders;
@@ -2753,11 +2756,43 @@ abstract class Merge
 		$replacements = $contacts->get_placeholder_list($this->prefix($prefix, 'user'));
 		unset($replacements['details'][$this->prefix($prefix, 'user/account_id', '{')]);
 		$replacements['account'] = [
-			$this->prefix($prefix, 'user/account_id', '{')  => 'Account ID',
-			$this->prefix($prefix, 'user/account_lid', '{') => 'Login ID'
+			[
+				'value' => $this->prefix($prefix, 'user/account_id', '{'),
+				'label' => 'Account ID'
+			],
+			[
+				'value' => $this->prefix($prefix, 'user/account_lid', '{'),
+				'label' => 'Login ID'
+			]
 		];
 
 		return $replacements;
+	}
+
+	/**
+	 * Get the list of placeholders for an application's customfields
+	 * If the customfield is a link to another application, we expand and add those placeholders as well
+	 */
+	protected function add_customfield_placeholders(&$placeholders, $prefix = '')
+	{
+		foreach(Customfields::get($this->get_app()) as $name => $field)
+		{
+			if(array_key_exists($field['type'], Api\Link::app_list()))
+			{
+				$app = self::get_app_class($field['type']);
+				if($app)
+				{
+					$this->add_linked_placeholders($placeholders, $name, $app->get_placeholder_list('#' . $name));
+				}
+			}
+			else
+			{
+				$placeholders['customfields'][] = [
+					'value' => $this->prefix($prefix, '#' . $name, '{'),
+					'label' => $field['label'] . ($field['type'] == 'select-account' ? '*' : '')
+				];
+			}
+		}
 	}
 
 	/**
@@ -2771,11 +2806,34 @@ abstract class Merge
 		$placeholders = [
 			'placeholders' => []
 		];
-		foreach(Customfields::get($this->get_app()) as $name => $field)
-		{
-			$placeholders['customfields'][$this->prefix($prefix, '#' . $name, '{')] = $field['label'] . ($field['type'] == 'select-account' ? '*' : '');
-		}
+
+		$this->add_customfield_placeholders($placeholders, $prefix);
 
 		return $placeholders;
+	}
+
+	/**
+	 * Add placeholders from another application into the given list of placeholders
+	 *
+	 * This is used for linked entries (like info_contact) and custom fields where the type is another application.
+	 * Here we adjust the group name, and add the group to the end of the placeholder list
+	 * @param array $placeholder_list Our placeholder list
+	 * @param string $base_name Name of the entry (eg: Contact, custom field name)
+	 * @param array $add_placeholder_groups Placeholder list from the other app
+	 */
+	protected function add_linked_placeholders(&$placeholder_list, $base_name, $add_placeholder_groups) : void
+	{
+		if(!$add_placeholder_groups)
+		{
+			// Skip empties
+			return;
+		}
+		/*
+				foreach($add_placeholder_groups as $group => $add_placeholders)
+				{
+					$placeholder_list[$base_name . ': ' . lang($group)] = $add_placeholders;
+				}
+		*/
+		$placeholder_list[$base_name] = $add_placeholder_groups;
 	}
 }

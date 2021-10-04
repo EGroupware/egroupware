@@ -279,12 +279,20 @@ class Merge extends Api\Storage\Merge
 		$placeholders = [
 			'contact' => [],
 			'details' => [
-				$this->prefix($prefix, 'categories', '{') => lang('Category path'),
-				$this->prefix($prefix, 'note', '{')       => $this->contacts->contact_fields['note'],
-				$this->prefix($prefix, 'id', '{')         => $this->contacts->contact_fields['id'],
-				$this->prefix($prefix, 'owner', '{')      => $this->contacts->contact_fields['owner'],
-				$this->prefix($prefix, 'private', '{')    => $this->contacts->contact_fields['private'],
-				$this->prefix($prefix, 'cat_id', '{')     => $this->contacts->contact_fields['cat_id'],
+				[
+					'value' => $this->prefix($prefix, 'categories', '{'),
+					'label' => lang('Category path')
+				],
+				['value' => $this->prefix($prefix, 'note', '{'),
+				 'label' => $this->contacts->contact_fields['note']],
+				['value' => $this->prefix($prefix, 'id', '{'),
+				 'label' => $this->contacts->contact_fields['id']],
+				['value' => $this->prefix($prefix, 'owner', '{'),
+				 'label' => $this->contacts->contact_fields['owner']],
+				['value' => $this->prefix($prefix, 'private', '{'),
+				 'label' => $this->contacts->contact_fields['private']],
+				['value' => $this->prefix($prefix, 'cat_id', '{'),
+				 'label' => $this->contacts->contact_fields['cat_id']],
 			],
 
 		];
@@ -320,22 +328,31 @@ class Merge extends Api\Storage\Merge
 			$marker = $this->prefix($prefix, $name, '{');
 			if(!array_filter($placeholders, function ($a) use ($marker)
 			{
-				return array_key_exists($marker, $a);
+				count(array_filter($a, function ($b) use ($marker)
+					  {
+						  return $b['value'] == $marker;
+					  })
+				) > 0;
 			}))
 			{
-				$placeholders[$group][$marker] = $label;
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
 			}
 		}
 
 		// Correctly formatted address by country / preference
-		$placeholders['business'][$this->prefix($prefix, 'adr_one_formatted', '{')] = "Formatted business address";
-		$placeholders['private'][$this->prefix($prefix, 'adr_two_formatted', '{')] = "Formatted private address";
+		$placeholders['business'][] = [
+			'value' => $this->prefix($prefix, 'adr_one_formatted', '{'),
+			'label' => "Formatted business address"
+		];
+		$placeholders['private'][] = [
+			'value' => $this->prefix($prefix, 'adr_two_formatted', '{'),
+			'label' => "Formatted private address"
+		];
 
-		$group = 'customfields';
-		foreach($this->contacts->customfields as $name => $field)
-		{
-			$placeholders[$group][$this->prefix($prefix, '#' . $name, '{')] = $field['label'];
-		}
+		$this->add_customfield_placeholders($placeholders, $prefix);
 		return $placeholders;
 	}
 

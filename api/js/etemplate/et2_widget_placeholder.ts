@@ -138,7 +138,13 @@ export class et2_placeholder_select extends et2_inputWidget
 		let data = {
 			content: {app: '', group: '', entry: {}},
 			sel_options: {app: [], group: []},
-			modifications: {outer_box: {entry: {}}}
+			modifications: {
+				outer_box: {
+					entry: {
+						application_list: []
+					}
+				}
+			}
 		};
 
 		Object.keys(_data).map((key) =>
@@ -151,7 +157,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		});
 		data.sel_options.group = this._get_group_options(Object.keys(_data)[0]);
 		data.content.app = data.sel_options.app[0].value;
-		data.content.group = data.sel_options.group[0].value;
+		data.content.group = data.sel_options.group[0]?.value;
 		data.content.entry = {app: data.content.app};
 		data.modifications.outer_box.entry.application_list = Object.keys(_data);
 		// Remove non-app placeholders (user & general)
@@ -315,11 +321,37 @@ export class et2_placeholder_select extends et2_inputWidget
 		let options = [];
 		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
 		{
-			options.push(
+			// @ts-ignore
+			if(Object.keys(et2_placeholder_select.placeholders[appname][key]).filter((key) => isNaN(key)).length > 0)
+			{
+				// Handle groups of groups
+				if(typeof et2_placeholder_select.placeholders[appname][key].label !== "undefined")
 				{
+					options[key] = et2_placeholder_select.placeholders[appname][key];
+				}
+				else
+				{
+					options[this.egw().lang(key)] = [];
+					for(let sub of Object.keys(et2_placeholder_select.placeholders[appname][key]))
+					{
+						if(!et2_placeholder_select.placeholders[appname][key][sub])
+						{
+							continue;
+						}
+						options[key].push({
+							value: key + '-' + sub,
+							label: this.egw().lang(sub)
+						});
+					}
+				}
+			}
+			else
+			{
+				options.push({
 					value: key,
 					label: this.egw().lang(key)
 				});
+			}
 		});
 		return options;
 	}
@@ -333,16 +365,13 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	_get_placeholders(appname : string, group : string)
 	{
-		let options = [];
-		Object.keys(et2_placeholder_select.placeholders[appname][group]).map((key) =>
+		let _group = group.split('-', 2);
+		let ph = et2_placeholder_select.placeholders[appname];
+		for(let i = 0; typeof ph !== "undefined" && i < _group.length; i++)
 		{
-			options.push(
-				{
-					value: key,
-					label: et2_placeholder_select.placeholders[appname][group][key]
-				});
-		});
-		return options;
+			ph = ph[_group[i]];
+		}
+		return ph || [];
 	}
 
 	/**

@@ -284,9 +284,21 @@ class infolog_merge extends Api\Storage\Merge
 				return array_key_exists($marker, $a);
 			}))
 			{
-				$placeholders[$group][$marker] = $label;
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
 			}
 		}
+
+		// Add contact placeholders
+		$insert_index = 1;
+		$placeholders = array_slice($placeholders, 0, $insert_index, true) +
+			[lang($tracking->field2label['info_from']) => []] +
+			array_slice($placeholders, $insert_index, count($placeholders) - $insert_index, true);
+		$contact_merge = new Api\Contacts\Merge();
+		$contact = $contact_merge->get_placeholder_list('info_contact');
+		$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
 
 		return $placeholders;
 	}
