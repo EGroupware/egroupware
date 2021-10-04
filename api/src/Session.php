@@ -1363,7 +1363,7 @@ class Session
 			return false;
 		}
 
-		if ($GLOBALS['egw_info']['server']['sessions_checkip'])
+		if (!empty($GLOBALS['egw_info']['server']['sessions_checkip']))
 		{
 			if (strtoupper(substr(PHP_OS,0,3)) != 'WIN' && (!$GLOBALS['egw_info']['user']['session_ip'] ||
 				$GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip()))
@@ -1538,7 +1538,7 @@ class Session
 		}
 
 		// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-		list($ret_url,$othervars) = explode('?', $url, 2);
+		if (strpos($ret_url=$url, '?') !== false) list($ret_url,$othervars) = explode('?', $url, 2);
 		if ($extravars && is_array($extravars))
 		{
 			$vars += $extravars;
@@ -1720,7 +1720,7 @@ class Session
 	{
 		if (PHP_SAPI === "cli") return;	// gives warnings and has no benefit
 
-		if ($GLOBALS['egw_info']['server']['cookiedomain'])
+		if (!empty($GLOBALS['egw_info']['server']['cookiedomain']))
 		{
 			// Admin set domain, eg. .domain.com to allow egw.domain.com and www.domain.com
 			self::$cookie_domain = $GLOBALS['egw_info']['server']['cookiedomain'];
@@ -1741,7 +1741,7 @@ class Session
 			// setcookie dont likes domains without dots, leaving it empty, gets setcookie to fill the domain in
 			self::$cookie_domain = '';
 		}
-		if (!$GLOBALS['egw_info']['server']['cookiepath'] ||
+		if (empty($GLOBALS['egw_info']['server']['cookiepath']) ||
 			!(self::$cookie_path = parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH)))
 		{
 			self::$cookie_path = '/';
@@ -1851,7 +1851,7 @@ class Session
 	private function update_dla($update_access_log=false)
 	{
 		// This way XML-RPC users aren't always listed as xmlrpc.php
-		if (isset($_GET['menuaction']))
+		if (isset($_GET['menuaction']) && strpos($_GET['menuaction'], '.ajax_exec.template.') !== false)
 		{
 			list(, $action) = explode('.ajax_exec.template.', $_GET['menuaction']);
 
