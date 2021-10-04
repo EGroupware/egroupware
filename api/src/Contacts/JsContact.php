@@ -630,6 +630,17 @@ class JsContact
 			}
 			$contact[$prefix.$attr] = $address[$js];
 		}
+		// no country-code but a name translating to a code --> use it
+		if (empty($contact[$prefix.'countrycode']) && !empty($contact[$prefix.'countryname']) &&
+			strlen($code = Api\Country::country_code($contact[$prefix.'countryname'])) === 2)
+		{
+			$contact[$prefix.'countrycode'] = $code;
+		}
+		// if we have a valid code, the untranslated name as our UI does
+		if (!empty($contact[$prefix.'countrycode']) && !empty($name = Api\Country::get_full_name($contact[$prefix.'countrycode'], false)))
+		{
+			$contact[$prefix.'countryname'] = $name;
+		}
 		return $contact;
 	}
 
