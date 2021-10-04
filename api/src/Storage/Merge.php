@@ -811,6 +811,7 @@ abstract class Merge
 	 */
 	public function &merge_string($_content,$ids,&$err,$mimetype,array $fix=null,$charset=null)
 	{
+		$ids = empty($ids) ? [] : (array)$ids;
 		$matches = null;
 		if ($mimetype == 'application/xml' &&
 			preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($_content,0,200),$matches))
@@ -941,7 +942,7 @@ abstract class Merge
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
 			if ($lableprint) $content = $Labelrepeat;
 
-			// generate replacements; if exeption is thrown, catch it set error message and return false
+			// generate replacements; if exception is thrown, catch it set error message and return false
 			try
 			{
 				if(!($replacements = $this->get_replacements($id,$content)))
