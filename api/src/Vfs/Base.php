@@ -295,7 +295,7 @@ class Base
 			'host' => $GLOBALS['egw_info']['user']['domain'],
 			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
 		);
-		$parts = array_merge(Vfs::parse_url($_path), Vfs::parse_url($path), $defaults);
+		$parts = array_merge(Vfs::parse_url($_path), Vfs::parse_url($path) ?: [], $defaults);
 		if(!$parts['host'])
 		{
 			// otherwise we get an invalid url (scheme:///path/to/something)!
