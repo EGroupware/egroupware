@@ -991,7 +991,8 @@ export class et2_selectbox extends et2_inputWidget
 						if(sub == 'value') continue;
 						if (typeof _options[key][sub] === 'object' && _options[key][sub] !== null)
 						{
-							this._appendOptionElement(sub,
+							this._appendOptionElement(
+								typeof _options[key][sub]["value"] !== "undefined" ? _options[key][sub]["value"] : sub,
 								_options[key][sub]["label"] ? _options[key][sub]["label"] : "",
 								_options[key][sub]["title"] ? _options[key][sub]["title"] : "",
 								group
