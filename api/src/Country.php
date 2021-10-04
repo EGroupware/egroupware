@@ -766,6 +766,19 @@ class Country
 	{
 		if (!$name) return '';	// nothing to do
 
+		// handle names like "Germany (Deutschland)"
+		if (preg_match('/^([^(]+) \(([^)]+)\)$/', $name, $matches))
+		{
+			if (($code = self::country_code($matches[1])) && strlen($code) === 2)
+			{
+				return $code;
+			}
+			if (($code = self::country_code($matches[2])) && strlen($code) === 2)
+			{
+				return $code;
+			}
+		}
+
 		if (strlen($name) == 2 && isset(self::$country_array[$name]))
 		{
 			return $name;	// $name is already a country-code
