@@ -186,7 +186,7 @@ class Nextmatch extends Etemplate\Widget
 		if (true) $value =& self::get_array(self::$request->content, $form_name, true);
 
 		// Add favorite here so app doesn't save it in the session
-		if (empty($_GET['favorite']))
+		if (!empty($_GET['favorite']))
 		{
 			$send_value['favorite'] = $safe_name;
 		}

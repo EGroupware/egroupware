@@ -147,7 +147,8 @@ class Widget
 		}
 
 		// Reset content as we leave
-		if ($old_cont ?? null) {
+		if (isset($old_cont))
+		{
 			self::$cont = $old_cont;
 		}
 	}
@@ -206,7 +207,7 @@ class Widget
 		$template = $this;
 		while($reader->moveToNextAttribute())
 		{
-			if ($reader->name != 'id' && isset($template->attr[$reader->name]) && $template->attr[$reader->name] !== $reader->value)
+			if ($reader->name != 'id' && (!isset($template->attr[$reader->name]) || $template->attr[$reader->name] !== $reader->value))
 			{
 				if (!$cloned)
 				{
