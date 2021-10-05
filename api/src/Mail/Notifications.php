@@ -87,7 +87,7 @@ class Notifications
 				$account_specific = $account_id;
 			}
 		}
-		$folders = (array)self::$cache[$acc_id][$account_specific];
+		$folders = self::$cache[$acc_id][$account_specific] ?? [];
 		if (!$return_empty_marker && $folders == array(null)) $folders = array();
 		$result = array(
 			'notify_folders' => $folders,

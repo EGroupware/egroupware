@@ -1538,21 +1538,21 @@ class Session
 		}
 
 		// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-		if (strpos($ret_url=$url, '?') !== false) list($ret_url,$othervars) = explode('?', $url, 2);
+		if (strpos($ret_url=$url, '?') !== false) list($ret_url,$othervars) = explode('?', $url, 2)+[null,null];
 		if ($extravars && is_array($extravars))
 		{
 			$vars += $extravars;
 			$extravars = $othervars;
 		}
-		else
+		elseif (!empty($othervars))
 		{
-			if ($othervars) $extravars .= ($extravars?'&':'').$othervars;
+			$extravars .= ($extravars ? '&' : '') . $othervars;
 		}
 
 		// parse extravars string into the vars array
-		if ($extravars)
+		if (!empty($extravars))
 		{
-			foreach(explode('&',$extravars) as $expr)
+			foreach(explode('&', $extravars) as $expr)
 			{
 				list($var,$val) = explode('=', $expr,2);
 				if (strpos($val,'%26') != false) $val = str_replace('%26','&',$val);	// make sure to not double encode &

@@ -495,17 +495,10 @@ abstract class Framework extends Framework\Extra
 		{
 			$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		}
-		// IE specific fixes
-		if (Header\UserAgent::type() == 'msie')
-		{
-			// tell IE to use it's own mode, not old compatibility modes (set eg. via group policy for all intranet sites)
-			// has to be before any other header tags, but meta and title!!!
-			$pngfix = '<meta http-equiv="X-UA-Compatible" content="IE=edge" />'."\n";
-		}
 
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$app_title = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
-		$app_header = $GLOBALS['egw_info']['flags']['app_header'] ? $GLOBALS['egw_info']['flags']['app_header'] : $app_title;
+		$app_header = $GLOBALS['egw_info']['flags']['app_header'] ?? $app_title;
 		$site_title = strip_tags($GLOBALS['egw_info']['server']['site_title'].' ['.($app_header ? $app_header : $app_title).']');
 
 		// send appheader to clientside
@@ -515,7 +508,7 @@ abstract class Framework extends Framework\Extra
 
 		$var['favicon_file'] = self::get_login_logo_or_bg_url('favicon_file', 'favicon.ico');
 
-		if ($GLOBALS['egw_info']['flags']['include_wz_tooltip'] &&
+		if (!empty($GLOBALS['egw_info']['flags']['include_wz_tooltip']) &&
 			file_exists(EGW_SERVER_ROOT.($wz_tooltip = '/phpgwapi/js/wz_tooltip/wz_tooltip.js')))
 		{
 			$include_wz_tooltip = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].
@@ -524,7 +517,6 @@ abstract class Framework extends Framework\Extra
 		return $this->_get_css()+array(
 			'img_icon'			=> $var['favicon_file'],
 			'img_shortcut'		=> $var['favicon_file'],
-			'pngfix'        	=> $pngfix,
 			'lang_code'			=> $lang_code,
 			'charset'       	=> Translation::charset(),
 			'website_title' 	=> $site_title,
@@ -532,7 +524,7 @@ abstract class Framework extends Framework\Extra
 			'java_script'   	=> self::_get_js($extra),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
-			'include_wz_tooltip'=> $include_wz_tooltip,
+			'include_wz_tooltip'=> $include_wz_tooltip ?? '',
 			'webserver_url'     => $GLOBALS['egw_info']['server']['webserver_url'],
 			'darkmode'		=>  !empty(Cache::getSession('api','darkmode')) ?? $GLOBALS['egw_info']['user']['preferences']['common']['darkmode']
 		);
@@ -601,12 +593,12 @@ abstract class Framework extends Framework\Extra
 	 */
 	static function get_login_logo_or_bg_url ($type, $find_type)
 	{
-		$url = is_array($GLOBALS['egw_info']['server'][$type]) ?
+		$url = !empty($GLOBALS['egw_info']['server'][$type]) && is_array($GLOBALS['egw_info']['server'][$type]) ?
 			$GLOBALS['egw_info']['server'][$type][0] :
-			$GLOBALS['egw_info']['server'][$type];
+			$GLOBALS['egw_info']['server'][$type] ?? null;
 
-		if (substr($url, 0, 4) == 'http' ||
-			$url[0] == '/')
+		if (substr($url, 0, 4) === 'http' ||
+			!empty($url) && $url[0] === '/')
 		{
 			return $url;
 		}
@@ -800,7 +792,7 @@ abstract class Framework extends Framework\Extra
 				$index = '/index.php?menuaction='.$data['index'];
 			}
 		}
-		return self::link($index,$GLOBALS['egw_info']['flags']['params'][$app]);
+		return self::link($index, $GLOBALS['egw_info']['flags']['params'][$app] ?? '');
 	}
 
 	/**
@@ -981,7 +973,7 @@ abstract class Framework extends Framework\Extra
 			{
 				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
-			$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+			$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 			if (!$debug_minify && file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{
 				//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
@@ -1095,8 +1087,7 @@ abstract class Framework extends Framework\Extra
 		if(@isset($_GET['menuaction']))
 		{
 			list(, $class) = explode('.',$_GET['menuaction']);
-			if(is_array($GLOBALS[$class]->public_functions) &&
-				$GLOBALS[$class]->public_functions['java_script'])
+			if (!empty($GLOBALS[$class]->public_functions['java_script']))
 			{
 				$java_script .= $GLOBALS[$class]->java_script();
 			}
@@ -1524,8 +1515,8 @@ abstract class Framework extends Framework\Extra
 		foreach(Framework\CssIncludes::get() as $path)
 		{
 			unset($query);
-			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. ($query ? $query : filemtime(EGW_SERVER_ROOT.$path));
+			list($path,$query) = explode('?', $path,2)+[null,null];
+			$path .= '?'. ($query ?? filemtime(EGW_SERVER_ROOT.$path));
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 

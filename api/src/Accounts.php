@@ -223,7 +223,7 @@ class Accounts
 		if (!empty($param['offset']) && !isset($param['start'])) $param['start'] = 0;
 
 		// Check for lang(Group) in search - if there, we search all groups
-		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'])));
+		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'] ?? '')));
 		if($group_index !== FALSE && !(
 				in_array($param['type'], array('accounts', 'groupmembers')) || is_int($param['type'])
 		))
@@ -595,12 +595,12 @@ class Accounts
 	/**
 	 * Return formatted username for a given account_id
 	 *
-	 * @param string $account_id =null account id
-	 * @return string full name of user or "#$accountid" if user not found
+	 * @param int $account_id account id
+	 * @return string full name of user or "#$account_id" if user not found
 	 */
-	static function username($account_id=null)
+	static function username(int $account_id)
 	{
-		if ($account_id && !($account = self::cache_read((int)$account_id)))
+		if (!($account = self::cache_read($account_id)))
 		{
 			return '#'.$account_id;
 		}
