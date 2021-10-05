@@ -1736,9 +1736,13 @@ class addressbook_ui extends addressbook_bo
 		if (isset($this->grouped_views[(string) $query['grouped_view']]))
 		{
 			// we have a grouped view, reset the advanced search
-			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
+			if (empty($query['search']) && !empty($old_state['advanced_search']))
+			{
+				$query['advanced_search'] = $old_state['advanced_search'];
+			}
 		}
-		elseif(!$query['search'] && array_key_exists('advanced_search',$old_state))	// eg. paging in an advanced search
+		// eg. paging in an advanced search
+		elseif(empty($query['search']) && is_array($old_state) && array_key_exists('advanced_search', $old_state))
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
