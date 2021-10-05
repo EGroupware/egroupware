@@ -93,6 +93,15 @@ class Placeholder extends Etemplate\Widget
 			{
 				$list = array_intersect_key($list, $group);
 			}
+			// Remove if empty
+			foreach($list as $p_group => $p_list)
+			{
+				if(count($p_list) == 0)
+				{
+					unset($list[$p_group]);
+				}
+			}
+
 			if($list)
 			{
 				$placeholders[$appname] = $list;

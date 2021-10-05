@@ -207,14 +207,59 @@ class timesheet_merge extends Api\Storage\Merge
 			$i++;
 		}
 
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
+		echo '<tr><td colspan="4"><h3>' . lang('General fields:') . "</h3></td></tr>";
 		foreach($this->get_common_replacements() as $name => $label)
 		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
 		}
 
 		echo "</table>\n";
 
 		echo $GLOBALS['egw']->framework->footer();
+	}
+
+	/**
+	 * Get a list of placeholders provided.
+	 *
+	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
+	 */
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = array(
+				'timesheet'     => [],
+				lang('Project') => []
+			) + parent::get_placeholder_list($prefix);
+
+		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array(
+				'ts_total'    => lang('total'),
+				'ts_created'  => lang('Created'),
+				'ts_modified' => lang('Modified'),
+			);
+		$group = 'timesheet';
+		foreach($fields as $name => $label)
+		{
+			if(in_array($name, array('custom')))
+			{
+				// dont show them
+				continue;
+			}
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
+			}
+		}
+
+		// Add project placeholders
+		$pm_merge = new projectmanager_merge();
+		$this->add_linked_placeholders($placeholders, lang('Project'), $pm_merge->get_placeholder_list('ts_project'));
+
+		return $placeholders;
 	}
 }

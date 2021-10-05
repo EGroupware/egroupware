@@ -968,10 +968,10 @@ abstract class Merge
 			}
 			if ($this->report_memory_usage) error_log(__METHOD__."() $n: $id ".Api\Vfs::hsize(memory_get_usage(true)));
 			// some general replacements: current user, date and time
-			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
+			if(strpos($content, '$$user/') !== false && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
 			{
-				$replacements += $this->contact_replacements($user,'user', false, $content);
-				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'account_primary_group'));
+				$replacements += $this->contact_replacements($user, 'user', false, $content);
+				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
 			}
 			$replacements['$$date$$'] = Api\DateTime::to('now',true);
 			$replacements['$$datetime$$'] = Api\DateTime::to('now');
@@ -2828,7 +2828,7 @@ abstract class Merge
 	 * Here we adjust the group name, and add the group to the end of the placeholder list
 	 * @param array $placeholder_list Our placeholder list
 	 * @param string $base_name Name of the entry (eg: Contact, custom field name)
-	 * @param array $add_placeholder_groups Placeholder list from the other app
+	 * @param array $add_placeholder_groups Placeholder list from the other app.  Placeholders should include any needed prefix
 	 */
 	protected function add_linked_placeholders(&$placeholder_list, $base_name, $add_placeholder_groups) : void
 	{
