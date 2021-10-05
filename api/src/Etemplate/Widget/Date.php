@@ -111,7 +111,7 @@ class Date extends Transformer
 		{
 			$date = Api\DateTime::server2user($value);
 		}
-		elseif ($this->attrs['data_format'] && $this->attrs['data_format'] !== 'object')
+		elseif (!empty($this->attrs['data_format']) && $this->attrs['data_format'] !== 'object')
 		{
 			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
 		}

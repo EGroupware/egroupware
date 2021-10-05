@@ -52,7 +52,12 @@ abstract class Merge
 	/**
 	 * Fields that are to be treated as datetimes, when merged into spreadsheets
 	 */
-	var $date_fields = array();
+	var $date_fields = [];
+
+	/**
+	 * Fields that are numeric, for special numeric handling
+	 */
+	protected $numeric_fields = [];
 
 	/**
 	 * Mimetype of document processed by merge
@@ -81,10 +86,10 @@ abstract class Merge
 	 */
 	public $export_limit;
 
-
 	public $public_functions = array(
 		"merge_entries"		=> true
 	);
+
 	/**
 	 * Configuration for HTML Tidy to clean up any HTML content that is kept
 	 */
@@ -241,7 +246,7 @@ abstract class Merge
 		$replacements = array();
 		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
-			$value = $contact[$name];
+			$value = $contact[$name] ?? null;
 			switch($name)
 			{
 				case 'created': case 'modified':
@@ -358,7 +363,9 @@ abstract class Merge
 				$cats[$cat_id] = array();
 			}
 		}
-		foreach($cats as $main => $cat) {
+		$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] = '';
+		foreach($cats as $main => $cat)
+		{
 			$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] .= $GLOBALS['egw']->categories->id2name($main,'name')
 				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
 		}
@@ -843,7 +850,7 @@ abstract class Merge
 			$content = preg_replace(array_keys($fix),array_values($fix),$content);
 			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
-		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get differt parts of document, seperatet by Pagerepeat
 		if ($mimetype == 'text/plain' && $ids && count($ids) > 1)
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
@@ -887,11 +894,11 @@ abstract class Merge
 			$contentstart .= '<w:body>';
 			$contentend = '</w:body></w:document>';
 		}
-		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
+		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get the label content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0]);
 		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
-		if ($countlables > 1) $lableprint = true;
+		$lableprint = $countlables > 1;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
@@ -1136,7 +1143,7 @@ abstract class Merge
 		{
 			foreach($this->date_fields as $field)
 			{
-				if(($value = $replacements['$$'.$field.'$$']))
+				if(($value = $replacements['$$'.$field.'$$'] ?? null))
 				{
 					$time = Api\DateTime::createFromFormat('+'.Api\DateTime::$user_dateformat.' '.Api\DateTime::$user_timeformat.'*', $value);
 					$replacements['$$'.$field.'/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat)  : '';
@@ -1259,7 +1266,8 @@ abstract class Merge
 			// Look for numbers, set their value if needed
 			if(property_exists($this,'numeric_fields') || count($names))
 			{
-				foreach((array)$this->numeric_fields as $fieldname) {
+				foreach($this->numeric_fields as $fieldname)
+				{
 					$names[] = preg_quote($fieldname,'/');
 				}
 				$this->format_spreadsheet_numbers($content, $names, $mimetype.$mso_application_progid);
@@ -1352,7 +1360,8 @@ abstract class Merge
 	 */
 	protected function format_spreadsheet_numbers(&$content, $names, $mimetype)
 	{
-		foreach((array)$this->numeric_fields as $fieldname) {
+		foreach($this->numeric_fields as $fieldname)
+		{
 			$names[] = preg_quote($fieldname,'/');
 		}
 		switch($mimetype)
@@ -1376,7 +1385,7 @@ abstract class Merge
 
 				break;
 		}
-		if($format && $names)
+		if (!empty($format) && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
 			do {

@@ -145,7 +145,7 @@ class mail_tree
 	 */
 	private static function isAccountNode ($_node)
 	{
-		list(,$leaf) = explode(self::DELIMITER, $_node);
+		list(,$leaf) = explode(self::DELIMITER, $_node)+[null,null];
 		if ($leaf || $_node == null) return false;
 		return true;
 	}
@@ -404,7 +404,7 @@ class mail_tree
 			}
 			$parents[] = $component;
 		}
-		if ($data['folderarray']['delimiter'] && $data['folderarray']['MAILBOX'])
+		if (!empty($data['folderarray']['delimiter']) && !empty($data['folderarray']['MAILBOX']))
 		{
 			$path = explode($data['folderarray']['delimiter'], $data['folderarray']['MAILBOX']);
 			$folderName = array_pop($path);
@@ -428,7 +428,7 @@ class mail_tree
 					$data[Tree::IMAGE_FOLDER_OPEN] =
 					$data [Tree::IMAGE_FOLDER_CLOSED] = basename(Api\Image::find('mail', 'dhtmlxtree/'."MailFolder".$key));
 			}
-			elseif(stripos(array2string($data['folderarray']['attributes']),'\noselect')!== false)
+			elseif(!empty($data['folderarray']['attributes']) && stripos(array2string($data['folderarray']['attributes']),'\noselect') !== false)
 			{
 				$data[Tree::IMAGE_LEAF] = self::$leafImages['folderNoSelectClosed'];
 				$data[Tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderNoSelectOpen'];
@@ -444,7 +444,7 @@ class mail_tree
 			}
 
 			// Contains unseen mails for the folder
-			$unseen = $data['folderarray']['counter']['UNSEEN'];
+			$unseen = $data['folderarray']['counter']['UNSEEN'] ?? 0;
 
 			// if there's unseen mails then change the label and style
 			// accordingly to indicate useen mails
@@ -477,7 +477,7 @@ class mail_tree
 		foreach(Mail\Account::search(true, false) as $acc_id => $accObj)
 		{
 			if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
-			$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id'], true));
+			$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true, $GLOBALS['egw_info']['user']['account_id'], true));
 			// Open top level folders for active account
 			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
 

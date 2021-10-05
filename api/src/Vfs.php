@@ -1255,7 +1255,7 @@ class Vfs extends Vfs\Base
 			array_push($parts,'');	// scheme://host is wrong (no path), has to be scheme://host/
 		}
 		//error_log(__METHOD__."($url)=".implode('/',$parts).($query ? '?'.$query : ''));
-		return implode('/',$parts).($query ? '?'.$query : '');
+		return implode('/',$parts).(!empty($query) ? '?'.$query : '');
 	}
 
 	/**

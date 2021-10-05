@@ -2950,7 +2950,7 @@ class Mail
 			// Trigger examination of namespace to retrieve
 			// folders located in other and shared; needed only for some servers
 			if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
-			if (self::$mailConfig['examineNamespace'])
+			if (!empty(self::$mailConfig['examineNamespace']))
 			{
 				$prefixes=array();
 				if (is_array($nameSpace))
@@ -3014,7 +3014,7 @@ class Mail
 					$subFolders = $this->icServer->getMailboxes($node['MAILBOX'].$node['delimiter'], $_search, true);
 				}
 
-				if (is_array($mainFolder['INBOX']))
+				if (isset($mainFolder['INBOX']) && is_array($mainFolder['INBOX']))
 				{
 					// Array container of auto folders
 					$aFolders = array();
@@ -3180,7 +3180,7 @@ class Mail
 				{
 					foreach(array('others','shared') as $type)
 					{
-						if ($nameSpace[$type]['prefix_present']&&$nameSpace[$type]['prefix'])
+						if (!empty($nameSpace[$type]['prefix_present']) && !empty($nameSpace[$type]['prefix']))
 						{
 							if (substr($k,0,strlen($nameSpace[$type]['prefix']))==$nameSpace[$type]['prefix']||
 								substr($k,0,strlen($nameSpace[$type]['prefix'])-strlen($nameSpace[$type]['delimiter']))==substr($nameSpace[$type]['prefix'],0,strlen($nameSpace[$type]['delimiter'])*-1)) {
@@ -3211,7 +3211,7 @@ class Mail
 			}
 			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
 			if (!$isGoogleMail) {
-				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'],(array)$typeFolderObject['shared']);
+				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'] ?? [],(array)$typeFolderObject['shared'] ?? []);
 			} else {
 				// avoid calling sortByAutoFolder as it is not regarding subfolders
 				$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
@@ -3910,7 +3910,7 @@ class Mail
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
 		$oldMailbox = '';
-		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
+		if (empty($_folder) && !empty($this->sessionData['mailbox'])) $_folder = $this->sessionData['mailbox'];
 		if (empty($_messageUID))
 		{
 			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));

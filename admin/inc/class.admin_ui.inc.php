@@ -204,7 +204,7 @@ class admin_ui
 						$item['id'] = substr($item['extradata'], 11);
 						unset($item['extradata']);
 						$matches = null;
-						if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
+						if (!empty($item['options']) && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
 						{
 							$item['popup'] = $matches[2].'x'.$matches[3];
 							if (isset($matches[5])) $item['tooltip'] = $matches[5];
@@ -213,7 +213,7 @@ class admin_ui
 					}
 					if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
 					if (empty($item['group'])) $item['group'] = $group;
-					if (empty($item['onExecute'])) $item['onExecute'] = $item['popup'] ?
+					if (empty($item['onExecute'])) $item['onExecute'] = !empty($item['popup']) ?
 						'javaScript:nm_action' : 'javaScript:app.admin.iframe_location';
 					if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
 
@@ -297,7 +297,7 @@ class admin_ui
 					$item['id'] = substr($item['extradata'], 11);
 					unset($item['extradata']);
 					$matches = null;
-					if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
+					if (!empty($item['options']) && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
 					{
 						$item['popup'] = $matches[2].'x'.$matches[3];
 						$item['onExecute'] = 'javaScript:nm_action';
@@ -326,7 +326,7 @@ class admin_ui
 	public static function get_users(array $query, array &$rows=null)
 	{
 		$params = array(
-			'type' => (int)$query['filter'] ? (int)$query['filter'] : 'accounts',
+			'type' => (int)($query['filter'] ?? 0) ?: 'accounts',
 			'start' => $query['start'],
 			'offset' => $query['num_rows'],
 			'order' => $query['order'],
@@ -334,7 +334,7 @@ class admin_ui
 			'active' => !empty($query['active']) ? $query['active'] : false,
 		);
 		// Make sure active filter give status what it needs
-		switch($query['filter2'])
+		switch($query['filter2'] ?? '')
 		{
 			case 'disabled':
 			case 'expired':
@@ -356,12 +356,12 @@ class admin_ui
 				break;
 		}
 
-		if ($query['searchletter'])
+		if (!empty($query['searchletter']))
 		{
 			$params['query'] = $query['searchletter'];
 			$params['query_type'] = 'start';
 		}
-		elseif($query['search'])
+		elseif(!empty($query['search']))
 		{
 			$params['query'] = $query['search'];
 			$params['query_type'] = 'all';
@@ -377,7 +377,7 @@ class admin_ui
 		foreach($rows as $key => &$row)
 		{
 			// Filter by status
-			if ($need_status_filter && !static::filter_status($need_status_filter, $row))
+			if (!empty($need_status_filter) && !static::filter_status($need_status_filter, $row))
 			{
 				unset($rows[$key]);
 				$total--;
@@ -391,8 +391,8 @@ class admin_ui
 
 			if (!self::$accounts->is_active($row)) $row['status_class'] = 'adminAccountInactive';
 		}
-		// finally limit query, if status filter was used
-		if ($need_status_filter)
+		// finally, limit query, if status filter was used
+		if (!empty($need_status_filter))
 		{
 			$rows = array_values(array_slice($rows, (int)$query['start'], $query['num_rows'] ?: count($rows)));
 		}
@@ -436,9 +436,9 @@ class admin_ui
 	{
 		$groups = $GLOBALS['egw']->accounts->search(array(
 				'type'  => 'groups',
-				'query' => $query['search'],
-				'order' => $query['order'],
-				'sort'  => $query['sort'],
+				'query' => $query['search'] ?? null,
+				'order' => $query['order'] ?? null,
+				'sort'  => $query['sort'] ?? null,
 				'start' => (int)$query['start'],
 				'offset' => (int)$query['num_rows']
 			));
@@ -463,7 +463,7 @@ class admin_ui
 			$run_rights = $GLOBALS['egw']->acl->get_user_applications($group['account_id'], false, false);
 			foreach($apps as $app)
 			{
-				if((boolean)$run_rights[$app])
+				if(!empty($run_rights[$app]))
 				{
 					$group['apps'][] = $app;
 				}
@@ -537,7 +537,7 @@ class admin_ui
 					if (!empty($data['icon']))
 					{
 						$icon = Etemplate\Widget\Tree::imagePath($data['icon']);
-						if ($data['child'] || $data[Tree::CHILDREN])
+						if (!empty($data['child']) || !empty($data[Tree::CHILDREN]))
 						{
 							$data[Tree::IMAGE_FOLDER_OPEN] = $data[Tree::IMAGE_FOLDER_CLOSED] = $icon;
 						}
