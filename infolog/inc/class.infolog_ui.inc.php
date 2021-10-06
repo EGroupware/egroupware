@@ -831,7 +831,7 @@ class infolog_ui
 					{
 						$popup =& $values;
 					}
-					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action']);
+					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action'] ?? []);
 					if($multi_action == 'link')
 					{
 						$popup[$multi_action] = $popup['link']['app'] . ':'.$popup['link']['id'];
@@ -2498,7 +2498,7 @@ class infolog_ui
 		if($content)
 		{
 			// Save
-			$button = key($content['button']);
+			$button = key($content['button'] ?? []);
 			if($button == 'save' || $button == 'apply')
 			{
 				$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');

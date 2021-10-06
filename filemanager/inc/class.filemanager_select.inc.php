@@ -106,11 +106,11 @@ class filemanager_select
 					}
 				}
 
-				$content['mime'] = key($sel_options['mime']);
+				$content['mime'] = key($sel_options['mime'] ?? []);
 				error_log(array2string($content['options-mime']));
 			}
 		}
-		elseif(isset($content['button']))
+		elseif(!empty($content['button']))
 		{
 			$button = key($content['button']);
 			unset($content['button']);
@@ -205,7 +205,7 @@ class filemanager_select
 
 			$sel_options['mime'] = $content['options-mime'];
 		}
-		elseif(isset($content['apps']))
+		elseif(!empty($content['apps']))
 		{
 			$app = key($content['apps']);
 			if ($app == 'home') $content['path'] = filemanager_ui::get_home_dir();

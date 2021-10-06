@@ -93,7 +93,7 @@ class calendar_uilist extends calendar_ui
 			// handle a single button like actions
 			foreach(array('delete','timesheet','document') as $button)
 			{
-				if ($_content['nm']['rows'][$button])
+				if (!empty($_content['nm']['rows'][$button]))
 				{
 					$id = key($_content['nm']['rows'][$button]);
 					$_content['nm']['action'] = $button;

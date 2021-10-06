@@ -313,7 +313,7 @@ class calendar_uiforms extends calendar_ui
 			$msg = $this->export($content['id'],true);
 		}
 		// delete a recur-exception
-		if ($content['recur_exception']['delete_exception'])
+		if (!empty($content['recur_exception']['delete_exception']))
 		{
 			$date = key($content['recur_exception']['delete_exception']);
 			// eT2 converts time to
@@ -338,7 +338,7 @@ class calendar_uiforms extends calendar_ui
 			$update_type = 'edit';
 		}
 		// delete an alarm
-		if ($content['alarm']['delete_alarm'])
+		if (!empty($content['alarm']['delete_alarm']))
 		{
 			$id = key($content['alarm']['delete_alarm']);
 			//echo "delete alarm $id"; _debug_array($content['alarm']['delete_alarm']);
@@ -2250,7 +2250,7 @@ class calendar_uiforms extends calendar_ui
 					$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 			}
 		}
-		else
+		elseif (!empty($event['button']))
 		{
 			//_debug_array($event);
 			$button = key($event['button']);
@@ -2908,7 +2908,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			throw new Api\Exception\NoPermission\Admin();
 		}
-		if ($_content)
+		if (!empty($_content['button']))
 		{
 			$button = key($_content['button']);
 			unset($_content['button']);
