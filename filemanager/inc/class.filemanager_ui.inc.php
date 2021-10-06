@@ -573,13 +573,11 @@ class filemanager_ui
 		{
 			$content['nm']['path'] = urldecode($content['nm']['path']);
 		}
-		if ($content['button'])
+		if (!empty($content['button']))
 		{
-			if ($content['button'])
-			{
-				$button = key($content['button']);
-				unset($content['button']);
-			}
+			$button = key($content['button']);
+			unset($content['button']);
+
 			switch ($button)
 			{
 				case 'upload':
@@ -1347,9 +1345,9 @@ class filemanager_ui
 					}
 				}
 			}
-			elseif ($content['eacl'] && $content['is_owner'])
+			elseif (!empty($content['eacl']) && !empty($content['is_owner']))
 			{
-				if ($content['eacl']['delete'])
+				if (!empty($content['eacl']['delete']))
 				{
 					$ino_owner = key($content['eacl']['delete']);
 					list(, $owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!

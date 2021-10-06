@@ -139,7 +139,7 @@ class admin_categories
 				$button = 'delete';
 				$delete_subs = $content['delete']['subs']?true:false;
 			}
-			else
+			elseif (!empty($content['button']))
 			{
 				$button = key($content['button']);
 				unset($content['button']);
@@ -564,7 +564,7 @@ class admin_categories
 					{
 						$content = array_merge($content,$content[$action.'_popup']);
 					}
-					$content['nm']['action'] .= '_' . key($content[$action . '_action']);
+					$content['nm']['action'] .= '_' . key($content[$action . '_action'] ?? []);
 
 					if(is_array($content[$action]))
 					{
@@ -680,7 +680,7 @@ class admin_categories
 				{
 					$cmd = new admin_cmd_delete_category(
 							$cat_id,
-							key($content['button']) == 'delete_sub',
+							key($content['button'] ?? []) == 'delete_sub',
 							$content['admin_cmd']
 					);
 					$cmd->run();

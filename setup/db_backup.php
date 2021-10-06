@@ -38,7 +38,7 @@ $db_backup = new Api\Db\Backup();
 $asyncservice = new Api\Asyncservice();
 
 // download a backup, has to be before any output !!!
-if ($_POST['download'])
+if (!empty($_POST['download']))
 {
 	$file = key($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
@@ -166,7 +166,7 @@ if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['e
 		sprintf('%3.1f MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
 }
 // delete a backup
-if ($_POST['delete'])
+if (!empty($_POST['delete']))
 {
 	$file = key($_POST['delete']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
@@ -174,7 +174,7 @@ if ($_POST['delete'])
 	if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
 }
 // rename a backup
-if ($_POST['rename'])
+if (!empty($_POST['rename']))
 {
 	$file = key($_POST['rename']);
 	$new_name = $_POST['new_name'][$file];
@@ -190,7 +190,7 @@ if ($_POST['rename'])
 	}
 }
 // restore a backup
-if ($_POST['restore'])
+if (!empty($_POST['restore']))
 {
 	$file = key($_POST['restore']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
@@ -217,12 +217,12 @@ if ($_POST['restore'])
 	}
 }
 // create a new scheduled backup
-if ($_POST['schedule'])
+if (!empty($_POST['schedule']))
 {
 	$asyncservice->set_timer($_POST['times'],'db_backup-'.implode(':',$_POST['times']),'admin.admin_db_backup.do_backup','');
 }
 // cancel a scheduled backup
-if (is_array($_POST['cancel']))
+if (!empty($_POST['cancel']) && is_array($_POST['cancel']))
 {
 	$id = key($_POST['cancel']);
 	$asyncservice->cancel_timer($id);
