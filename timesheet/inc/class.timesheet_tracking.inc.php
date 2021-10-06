@@ -81,35 +81,17 @@ class timesheet_tracking extends Api\Storage\Tracking
 	}
 
 	/**
-	 * Get a notification-config value
-	 *
-	 * @param string $name
-	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
-	 *  - 'lang' string lang code for copy mail
-	 *  - 'sender' string send email address
-	 * @param array $data current entry
-	 * @param array $old =null old/last state of the entry or null for a new entry
-	 * @return mixed
-	 */
-	function get_config($name,$data,$old=null)
-	{
-		$timesheet = $data['ts_id'];
-
-		//$config = $this->timesheet->notification[$timesheet][$name] ? $this->timesheet->notification[$timesheet][$name] : $this->$timesheet->notification[0][$name];
-		//no nitify configert (ToDo)
-		return $config;
-	}
-
-	/**
 	 * Get the subject for a given entry, reimplementation for get_subject in Api\Storage\Tracking
 	 *
 	 * Default implementation uses the link-title
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param boolean $deleted =null can be set to true to let the tracking know the item got deleted or undeleted
+	 * @param int|string $receiver numeric account_id or email address
 	 * @return string
 	 */
-	function get_subject($data,$old)
+	protected function get_subject($data,$old,$deleted=null,$receiver=null)
 	{
 		return '#'.$data['ts_id'].' - '.$data['ts_title'];
 	}
@@ -119,9 +101,10 @@ class timesheet_tracking extends Api\Storage\Tracking
 	 *
 	 * @param array $data
 	 * @param array $old
+	 * @param int|string $receiver nummeric account_id or email address
 	 * @return string
 	 */
-	function get_message($data,$old)
+	protected function get_message($data,$old,$receiver=null)
 	{
 		if (!$data['ts_modified'] || !$old)
 		{
