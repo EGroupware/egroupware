@@ -551,7 +551,7 @@ class mail_compose
 			}
 			if ($sendOK)
 			{
-				$workingFolder = $activeFolder;
+				$workingFolder = $activeFolder['mailbox'];
 				$mode = 'compose';
 				$idsForRefresh = array();
 				if (isset($_content['mode']) && !empty($_content['mode']))
