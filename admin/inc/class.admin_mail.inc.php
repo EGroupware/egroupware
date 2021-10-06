@@ -1031,7 +1031,7 @@ class admin_mail
 								unset($content['smimeKeyUpload']);
 							}
 							self::fix_account_id_0($content['account_id'], true);
-							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
+							$content = Mail\Account::write($content, !empty($content['called_for']) && $this->is_admin ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 							self::fix_account_id_0($content['account_id']);
 							$msg = lang('Account saved.');
