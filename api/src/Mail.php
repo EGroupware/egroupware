@@ -4210,7 +4210,10 @@ class Mail
 		}
 		if ($folder instanceof Horde_Imap_Client_Mailbox) $_folder = $folder->utf8;
 		//error_log(__METHOD__.__LINE__.'#'.$this->icServer->ImapServerId.'#'.array2string($_folder).'#');
-		self::$folderStatusCache[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
+		if (isset(self::$folderStatusCache[$this->icServer->ImapServerId][($_folder??$this->sessionData['mailbox'])]['uidValidity']))
+		{
+			self::$folderStatusCache[$this->icServer->ImapServerId][($_folder??$this->sessionData['mailbox'])]['uidValidity'] = 0;
+		}
 
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue
