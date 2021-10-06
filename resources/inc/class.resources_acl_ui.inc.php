@@ -176,7 +176,7 @@ class resources_acl_ui
 				$content = array('data' => array());
 			}
 		}
-		elseif ($content['button'])
+		elseif (!empty($content['button']))
 		{
 			$cats = new Categories($content['owner'] ? $content['owner'] : Categories::GLOBAL_ACCOUNT,'resources');
 

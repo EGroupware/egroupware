@@ -762,7 +762,7 @@ class Link extends Link\Storage
 			if ($must_support && !isset($reg[$must_support])) continue;
 
 			list($app) = explode('-', $type);
-			if ($GLOBALS['egw_info']['user']['apps'][$app])
+			if (!empty($GLOBALS['egw_info']['user']['apps'][$app]))
 			{
 				$apps[$type] = lang(self::get_registry($type, 'name'));
 			}
@@ -1132,7 +1132,7 @@ class Link extends Link\Storage
 	 */
 	static function get_registry($app, $name, $url_id=false)
 	{
-		$reg = self::$app_register[$app];
+		$reg = self::$app_register[$app] ?? null;
 
 		if (!isset($reg)) return false;
 
@@ -1181,7 +1181,7 @@ class Link extends Link\Storage
 			return $str;
 		}
 
-		return isset($reg) ? $reg[$name] : false;
+		return $reg[$name] ?? false;
 	}
 
 	/**

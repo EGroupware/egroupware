@@ -196,7 +196,7 @@ class Preferences
 		foreach((array)$ids as $id)
 		{
 			// if prefs are not returned, null or not an array, read them from db
-			if (!isset($prefs[$id]) && !is_array($prefs[$id])) $db_read[] = $id;
+			if (!isset($prefs[$id]) || !is_array($prefs[$id])) $db_read[] = $id;
 		}
 		if ($db_read)
 		{
@@ -237,7 +237,7 @@ class Preferences
 		$replace = $with = array();
 		foreach($vals as $key => $val)
 		{
-			if ($this->debug) error_log(__METHOD__." replacing \$\$$key\$\$ with $val  ");
+			if (!empty($this->debug)) error_log(__METHOD__." replacing \$\$$key\$\$ with $val  ");
 			$replace[] = '$$'.$key.'$$';
 			$with[]    = $val;
 		}
@@ -275,7 +275,7 @@ class Preferences
 	 */
 	function standard_substitutes()
 	{
-		if ($this->debug) error_log(__METHOD__." is called ");
+		if (!empty($this->debug)) error_log(__METHOD__." is called ");
 		if (!is_array(@$GLOBALS['egw_info']['user']['preferences']))
 		{
 			$GLOBALS['egw_info']['user']['preferences'] = $this->data;	// else no lang()
@@ -301,7 +301,7 @@ class Preferences
 			'email'     => lang('email-address of the user, eg. "%1"',$this->values['email']),
 			'date'      => lang('todays date, eg. "%1"',$this->values['date']),
 		);
-		if ($this->debug) error_log(__METHOD__.print_r($this->vars,true));
+		if (!empty($this->debug)) error_log(__METHOD__.print_r($this->vars,true));
 		// do the substituetion in the effective prefs (data)
 		//
 		foreach($this->data as $app => $data)
@@ -421,7 +421,7 @@ class Preferences
 				default:
 					foreach($values as $app => $vals)
 					{
-						$this->group[$app] = (array)$vals + (array)$this->group[$app];
+						$this->group[$app] = (array)$vals + ($this->group[$app] ?? []);
 					}
 					break;
 			}
@@ -474,7 +474,7 @@ class Preferences
 		}
 		// setup the standard substitutes and substitutes the data in $this->data
 		//
-		if ($GLOBALS['egw_info']['flags']['load_translations'] !== false)
+		if (!empty($GLOBALS['egw_info']['flags']['load_translations']))
 		{
 			$this->standard_substitutes();
 		}

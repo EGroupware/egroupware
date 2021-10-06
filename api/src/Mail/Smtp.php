@@ -233,10 +233,23 @@ class Smtp
 	 * 	default use $this->loginType
 	 * @return string
 	 */
-	/*static*/ public function mailbox_addr($account,$domain=null,$mail_login_type=null)
+	public function mailbox_addr($account, $domain=null, $mail_login_type=null)
 	{
-		if (is_null($domain)) $domain = $this->defaultDomain;
-		if (is_null($mail_login_type)) $mail_login_type = $this->loginType;
+		return self::mailbox_address($account, $domain ?? $this->defaultDomain, $mail_login_type ?? $this->loginType);
+	}
+
+	/**
+	 * Build mailbox address for given account and mail_addr_type
+	 *
+	 * If $account is an array (with values for keys account_(id|lid|email), it does NOT call accounts class
+	 *
+	 * @param int|array $account account_id or whole account array with values for keys
+	 * @param string $domain domain
+	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber
+	 * @return string
+	 */
+	static public function mailbox_address($account, string $domain, string $mail_login_type=null)
+	{
 
 		switch($mail_login_type)
 		{

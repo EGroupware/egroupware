@@ -80,7 +80,7 @@ class Grid extends Box
 			$columns_disabled = array();
 		}
 
-		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
+		if ($respect_disabled && isset($this->attrs['disabled']) && self::check_disabled($this->attrs['disabled'], $expand))
 		{
 			//error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
 			$params[0] = $old_cname;
@@ -89,7 +89,7 @@ class Grid extends Box
 		}
 
 		if ($this->id && $this->type !== 'row') $cname = self::form_name($cname, $this->id, $expand);
-		if ($expand['cname'] !== $cname && $cname)
+		if (!empty($expand['cname']) && $expand['cname'] !== $cname && $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;

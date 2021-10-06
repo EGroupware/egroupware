@@ -63,8 +63,8 @@ class Hooks
 		$location = is_array($args) ? (isset($args['hook_location']) ? $args['hook_location'] : $args['location']) : $args;
 
 		if (!isset(self::$locations)) self::read();
+		if (empty(self::$locations[$location])) return [];	// not a single app implements that hook
 		$hooks = self::$locations[$location];
-		if (!isset($hooks) || empty($hooks)) return array();	// not a single app implements that hook
 
 		$apps = array_keys($hooks);
 		if (!$no_permission_check)
@@ -115,7 +115,7 @@ class Hooks
 		}
 
 		$ret = array();
-		foreach((array)self::$locations[$location][$appname] as $hook)
+		foreach(self::$locations[$location][$appname] ?? [] as $hook)
 		{
 			try {
 				// old style file hook
@@ -130,7 +130,7 @@ class Hooks
 					return true;
 				}
 
-				list($class, $method) = explode('::', $hook);
+				list($class, $method) = explode('::', $hook)+[null,null];
 
 				// static method of an autoloadable class
 				if (isset($method) && class_exists($class))

@@ -114,7 +114,7 @@ class Widget
 		// Update content?
 		if(self::$cont == null)
 			self::$cont = is_array(self::$request->content) ? self::$request->content : array();
-		if($this->id && is_array(self::$cont[$this->id]))
+		if($this->id && is_array(self::$cont[$this->id] ?? null))
 		{
 			$old_cont = self::$cont;
 			self::$cont = self::$cont[$this->id];
@@ -147,7 +147,8 @@ class Widget
 		}
 
 		// Reset content as we leave
-		if($old_cont) {
+		if (isset($old_cont))
+		{
 			self::$cont = $old_cont;
 		}
 	}
@@ -206,7 +207,7 @@ class Widget
 		$template = $this;
 		while($reader->moveToNextAttribute())
 		{
-			if ($reader->name != 'id' && $template->attr[$reader->name] !== $reader->value)
+			if ($reader->name != 'id' && (!isset($template->attr[$reader->name]) || $template->attr[$reader->name] !== $reader->value))
 			{
 				if (!$cloned)
 				{
@@ -218,7 +219,7 @@ class Widget
 				$template->attrs[$reader->name] = $value = $reader->value;
 
 				// expand attributes values, otherwise eg. validation can not use attrs referencing to content
-				if ($value[0] == '@' || strpos($value, '$cont') !== false)
+				if (!empty($value) && ($value[0] === '@' || strpos($value, '$cont') !== false))
 				{
 					$value = self::expand_name($value, null, null, null, null,
 						isset(self::$cont) ? self::$cont : self::$request->content);
@@ -237,7 +238,7 @@ class Widget
 		}
 
 		// Add in anything in the modification array
-		if(is_array(self::$request->modifications[$this->id]))
+		if (is_array(self::$request->modifications[$this->id] ?? null))
 		{
 			$this->attrs = array_merge($this->attrs,self::$request->modifications[$this->id]);
 		}
@@ -426,7 +427,7 @@ class Widget
 					 class_exists($class_name = $basetype.'_etemplate_widget'))))
 			{
 				// Try for base type, it's probably better than the root
-				if(self::$widget_registry[$basetype] && self::$widget_registry[$basetype] != $class_name)
+				if(isset(self::$widget_registry[$basetype]) && self::$widget_registry[$basetype] !== $class_name)
 				{
 					$class_name = self::$widget_registry[$basetype];
 				}
@@ -535,12 +536,12 @@ class Widget
 		// maintain $expand array name-expansion
 		$cname = $params[0];
 		$expand =& $params[1];
-		if ($expand['cname'] && $expand['cname'] !== $cname)
+		if (isset($expand['cname']) && $expand['cname'] !== $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
 		}
-		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
+		if ($respect_disabled && ($disabled = isset($this->attrs['disabled']) && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
 			//error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
 			return;
@@ -593,13 +594,13 @@ class Widget
 		foreach($attrs as $name => &$value)
 		{
 			if(!is_string($value)) continue;
-			$value = self::expand_name($value,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+			$value = self::expand_name($value, $expand['c'] ?? null, $expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont'] ?? []);
 		}
-		if($attrs['attributes'])
+		if (!empty($attrs['attributes']))
 		{
 			$attrs = array_merge($attrs, $attrs['attributes']);
 		}
-		if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
+		if (!empty($child->attrs['type']) && (strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false))
 		{
 			$type = self::expand_name($child->attrs['type'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 			$id = self::expand_name($child->id,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
@@ -677,7 +678,7 @@ class Widget
 	 */
 	protected static function expand_name($name,$c,$row,$c_=0,$row_=0,$cont=array())
 	{
-		$is_index_in_content = $name[0] == '@';
+		$is_index_in_content = !empty($name) && $name[0] == '@';
 		if (($pos_var=strpos($name,'$')) !== false)
 		{
 			if (!$cont)
@@ -687,8 +688,8 @@ class Widget
 			if (!is_numeric($c)) $c = self::chrs2num($c);
 			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
 			if (is_numeric($c_)) $col_ = self::num2chrs($c_-1);
-			$row_cont = $cont[$row];
-			$col_row_cont = $cont[$col.$row];
+			$row_cont = $cont[$row] ?? null;
+			$col_row_cont = $cont[$col.$row] ?? null;
 
 			try {
 				eval('$name = "' . str_replace('"', '\\"', $name) . '";');
@@ -726,9 +727,9 @@ class Widget
 	 */
 	static function chrs2num($chrs)
 	{
+		if (empty($chrs)) return 0;
 		$min = ord('A');
 		$max = ord('Z') - $min + 1;
-
 		$num = 1+ord($chrs[0])-$min;
 		if (strlen($chrs) > 1)
 		{
@@ -751,7 +752,7 @@ class Widget
 		if ($num >= $max)
 		{
 			$chrs = chr(($num / $max) + $min - 1);
-		}
+		} else $chrs = '';
 		$chrs .= chr(($num % $max) + $min);
 
 		return $chrs;
@@ -829,7 +830,7 @@ class Widget
 	{
 		if ($expand && !empty($name))
 		{
-			$name = self::expand_name($name, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+			$name = self::expand_name($name, $expand['c'] ?? null, $expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont'] ?? []);
 		}
 		if (count($name_parts = explode('[', $name, 2)) > 1)
 		{

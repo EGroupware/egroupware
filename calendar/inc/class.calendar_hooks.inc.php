@@ -901,7 +901,7 @@ END:VALARM';
 	{
 		Api\Translation::add_app('calendar');
 		// do not set actions for alarm type
-		if ($params['data']['type'] == 6)
+		if (isset($params['data']['type']) && $params['data']['type'] == 6)
 		{
 			if (!empty($params['data']['videoconference'])
 				&& !self::isVideoconferenceDisabled())
@@ -917,6 +917,8 @@ END:VALARM';
 			}
 			return array();
 		}
+		if (!isset($params['data']['event_id'])) $params['data']['event_id'] = '';
+		if (!isset($params['data']['user_id'])) $params['data']['user_id'] = '';
 		return array(
 			array(
 				'id' => 'A',

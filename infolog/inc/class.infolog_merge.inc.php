@@ -64,9 +64,9 @@ class infolog_merge extends Api\Storage\Merge
 	 * @param string &$content=null content to create some replacements only if they are use
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null)
+	protected function get_replacements($id, &$content = null)
 	{
-		if (!($replacements = $this->infolog_replacements($id, '', $content)))
+		if(!($replacements = $this->infolog_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -74,13 +74,32 @@ class infolog_merge extends Api\Storage\Merge
 	}
 
 	/**
+	 * Override contact filename placeholder to use info_contact
+	 *
+	 * @param $document
+	 * @param $ids
+	 * @return array|void
+	 */
+	public function get_filename_placeholders($document, $ids)
+	{
+		$placeholders = parent::get_filename_placeholders($document, $ids);
+		if(count($ids) == 1 && ($info = $this->bo->read($ids[0])))
+		{
+			$placeholders['$$contact_title$$'] = $info['info_contact']['title'] ??
+				(is_array($info['info_contact']) && Link::title($info['info_contact']['app'], $info['info_contact']['id'])) ??
+				'';
+		}
+		return $placeholders;
+	}
+
+	/**
 	 * Get infolog replacements
 	 *
 	 * @param int $id id of entry
-	 * @param string $prefix='' prefix like eg. 'erole'
+	 * @param string $prefix ='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function infolog_replacements($id,$prefix='', &$content = '')
+	public function infolog_replacements($id, $prefix = '', &$content = '')
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
@@ -250,14 +269,56 @@ class infolog_merge extends Api\Storage\Merge
 			echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
 
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
+		echo '<tr><td colspan="4"><h3>' . lang('General fields:') . "</h3></td></tr>";
 		foreach($this->get_common_replacements() as $name => $label)
 		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
 		}
 
 		echo "</table>\n";
 
 		echo $GLOBALS['egw']->framework->footer();
+	}
+
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = parent::get_placeholder_list($prefix);
+
+		$tracking = new infolog_tracking($this->bo);
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'),
+						'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
+		Api\Translation::add_app('projectmanager');
+
+		$group = 'placeholders';
+		foreach($fields as $name => $label)
+		{
+			if(in_array($name, array('custom')))
+			{
+				// dont show them
+				continue;
+			}
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
+			}
+		}
+
+		// Add contact placeholders
+		$insert_index = 1;
+		$placeholders = array_slice($placeholders, 0, $insert_index, true) +
+			[lang($tracking->field2label['info_from']) => []] +
+			array_slice($placeholders, $insert_index, count($placeholders) - $insert_index, true);
+		$contact_merge = new Api\Contacts\Merge();
+		$contact = $contact_merge->get_placeholder_list('info_contact');
+		$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
+
+		return $placeholders;
 	}
 }

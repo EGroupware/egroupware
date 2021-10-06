@@ -471,17 +471,27 @@ class infolog_hooks
 				'admin'  => False,
 			);
 			$settings['document_dir'] = array(
-				'type'   => 'vfs_dirs',
-				'size'   => 60,
-				'label'  => 'Directory with documents to insert entries',
-				'name'   => 'document_dir',
-				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('infolog')).' '.
-					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','info_subject').' '.
-					lang('The following document-types are supported:').'*.rtf, *.txt',
+				'type'     => 'vfs_dirs',
+				'size'     => 60,
+				'label'    => 'Directory with documents to insert entries',
+				'name'     => 'document_dir',
+				'help'     => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.', lang('infolog')) . ' ' .
+					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'info_subject') . ' ' .
+					lang('The following document-types are supported:') . '*.rtf, *.txt',
 				'run_lang' => false,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default' => '/templates/infolog',
+				'xmlrpc'   => True,
+				'admin'    => False,
+				'default'  => '/templates/infolog',
+			);
+			$settings[Api\Storage\Merge::PREF_DOCUMENT_FILENAME] = array(
+				'type'    => 'taglist',
+				'label'   => 'Document download filename',
+				'name'    => 'document_download_name',
+				'values'  => Api\Storage\Merge::DOCUMENT_FILENAME_OPTIONS,
+				'help'    => 'Choose the default filename for downloaded documents.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => 'document',
 			);
 		}
 

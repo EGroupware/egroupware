@@ -253,7 +253,119 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources
+<details>
+   <summary>Example: POST request to create a new resource using flat attributes (JSON patch syntax) eg. for a simple Wordpress contact-form</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/' -X POST -d @- -H "Content-Type: application/json" --user <username>
+{
+  "fullName": "First Tester",
+  "name/personal": "First",
+  "name/surname":  "Tester",
+  "organizations/org/name": "Test Organization",
+  "emails/work": "test.user@test-user.org",
+  "addresses/work/locality": "Test-Town",
+  "addresses/work/postcode": "12345",
+  "addresses/work/street": "Teststr. 123",
+  "addresses/work/country": "Germany",
+  "addresses/work/countryCode": "DE",
+  "phones/tel_work": "+49 123 4567890",
+  "online/url": "https://www.example.org/",
+  "notes/note": "This is a note.",
+  "egroupware.org:customfields/Test": "Content for Test"
+}
+EOF
+
+HTTP/1.1 201 Created
+Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/1234
+```
+</details>
+
+* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+
+<details>
+   <summary>Example: PUT request to update a resource</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/1234' -X PUT -d @- -H "Content-Type: application/json" --user <username>
+{
+  "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
+  "prodId": "EGroupware Addressbook 21.1.001",
+  "created": "2010-10-21T09:55:42Z",
+  "updated": "2014-06-02T14:45:24Z",
+  "name": [
+    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "surname", "value": "Tester" }
+  ],
+  "fullName": { "value": "Default Tester" },
+....
+}
+EOF
+
+HTTP/1.1 204 No Content
+```
+</details>
+
+<details>
+   <summary>Example: PUT request with UID to update an existing resource or create it, if not exists</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/5638-8623c4830472a8ede9f9f8b30d435ea4' -X PUT -d @- -H "Content-Type: application/json" --user <username>
+{
+  "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
+  "prodId": "EGroupware Addressbook 21.1.001",
+  "created": "2010-10-21T09:55:42Z",
+  "updated": "2014-06-02T14:45:24Z",
+  "name": [
+    { "type": "@type": "NameComponent", "personal", "value": "Default" },
+    { "type": "@type": "NameComponent", "surname", "value": "Tester" }
+  ],
+  "fullName": { "value": "Default Tester" },
+....
+}
+EOF
+```
+Update of an existing one:
+```
+HTTP/1.1 204 No Content
+```
+New contact:
+```
+HTTP/1.1 201 Created
+Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/1234
+```
+</details>
+
+
+* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+
+<details>
+   <summary>Example: PATCH request to modify a contact with partial data</summary>
+
+```
+cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/addressbook/1234' -X PATCH -d @- -H "Content-Type: application/json" --user <username>
+{
+  "name": [
+    {
+      "@type": "NameComponent",
+      "type": "personal",
+      "value": "Testfirst"
+    },
+    {
+      "@type": "NameComponent",
+      "type": "surname",
+      "value": "Username"
+    }
+  ],
+  "fullName": "Testfirst Username",
+  "organizations/org/name": "Test-User.org",
+  "emails/work/email": "test.user@test-user.org"
+}
+EOF
+
+HTTP/1.1 204 No content
+```
+</details>
 
 * **DELETE** requests delete single resources
 
@@ -266,3 +378,11 @@ use ```<domain-name>:<name>``` like in JsCalendar
 * top-level objects need a ```@type``` attribute with one of the following values: 
 ```NameComponent```, ```Organization```, ```Title```, ```Phone```, ```Resource```, ```File```, ```ContactLanguage```, 
 ```Address```, ```StreetComponent```, ```Anniversary```, ```PersonalInformation```
+
+### ToDos
+- [x] Addressbook
+  - [ ] update of photos, keys, attachments
+- [ ] InfoLog
+- [ ] Calendar
+- [ ] relatedTo / links
+- [ ] storing not native supported attributes eg. localization

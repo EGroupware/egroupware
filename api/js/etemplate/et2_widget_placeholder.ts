@@ -87,6 +87,12 @@ export class et2_placeholder_select extends et2_inputWidget
 				[],
 				function(_content)
 				{
+					if(typeof _content === 'object' && _content.message)
+					{
+						// Something went wrong
+						this.egw().message(_content.message, 'error');
+						return;
+					}
 					this.egw().loading_prompt('placeholder_select', false);
 					et2_placeholder_select.placeholders = _content;
 					callback.apply(self, arguments);
@@ -132,7 +138,13 @@ export class et2_placeholder_select extends et2_inputWidget
 		let data = {
 			content: {app: '', group: '', entry: {}},
 			sel_options: {app: [], group: []},
-			modifications: {outer_box: {entry: {}}}
+			modifications: {
+				outer_box: {
+					entry: {
+						application_list: []
+					}
+				}
+			}
 		};
 
 		Object.keys(_data).map((key) =>
@@ -145,9 +157,16 @@ export class et2_placeholder_select extends et2_inputWidget
 		});
 		data.sel_options.group = this._get_group_options(Object.keys(_data)[0]);
 		data.content.app = data.sel_options.app[0].value;
-		data.content.group = data.sel_options.group[0].value;
-		data.content.entry = data.modifications.outer_box.entry.only_app = data.content.app;
+		data.content.group = data.sel_options.group[0]?.value;
+		data.content.entry = {app: data.content.app};
 		data.modifications.outer_box.entry.application_list = Object.keys(_data);
+		// Remove non-app placeholders (user & general)
+		let non_apps = ['user', 'general'];
+		for(let i = 0; i < non_apps.length; i++)
+		{
+			let index = data.modifications.outer_box.entry.application_list.indexOf(non_apps[i]);
+			data.modifications.outer_box.entry.application_list.splice(index, 1);
+		}
 
 		// callback for dialog
 		this.submit_callback = function(submit_button_id, submit_value)
@@ -162,7 +181,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		this.dialog = <et2_dialog>et2_createWidget("dialog",
 			{
 				callback: this.submit_callback,
-				title: this.options.dialog_title || this.egw().lang("Insert Placeholder"),
+				title: this.egw().lang(this.options.dialog_title) || this.egw().lang("Insert Placeholder"),
 				buttons: buttons,
 				minWidth: 500,
 				minHeight: 400,
@@ -207,14 +226,35 @@ export class et2_placeholder_select extends et2_inputWidget
 		// Bind some handlers
 		app.onchange = (node, widget) =>
 		{
-			group.set_select_options(this._get_group_options(widget.get_value()));
-			entry.set_value({app: widget.get_value()});
+			preview.set_value("");
+			if(['user'].indexOf(widget.get_value()) >= 0)
+			{
+				entry.set_disabled(true);
+				entry.app_select.val('user');
+				entry.set_value({app: 'user', id: '', query: ''});
+			}
+			else if(widget.get_value() == 'general')
+			{
+				// Don't change entry app, leave it
+				entry.set_disabled(false);
+			}
+			else
+			{
+				entry.set_disabled(false);
+				entry.app_select.val(widget.get_value());
+				entry.set_value({app: widget.get_value(), id: '', query: ''});
+			}
+			let groups = this._get_group_options(widget.get_value());
+			group.set_select_options(groups);
+			group.set_value(groups[0].value);
+			group.onchange();
 		}
 		group.onchange = (select_node, select_widget) =>
 		{
-			console.log(this, arguments);
-			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), group.get_value()));
+			let options = this._get_placeholders(app.get_value(), group.get_value())
+			placeholder_list.set_select_options(options);
 			preview.set_value("");
+			placeholder_list.set_value(options[0].value);
 		}
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
@@ -227,7 +267,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			this.options.insert_callback(this.dialog.template.widgetContainer.getDOMWidgetById("preview_content").getDOMNode().textContent);
 		};
 
-		this._on_placeholder_select();
+		app.set_value(app.get_value());
 	}
 
 	/**
@@ -252,9 +292,13 @@ export class et2_placeholder_select extends et2_inputWidget
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[app.get_value(), placeholder_list.get_value(), entry.get_value()],
+				[placeholder_list.get_value(), entry.get_value()],
 				function(_content)
 				{
+					if(!_content)
+					{
+						_content = '';
+					}
 					preview_content.set_value(_content);
 					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
 				}.bind(this)
@@ -277,11 +321,37 @@ export class et2_placeholder_select extends et2_inputWidget
 		let options = [];
 		Object.keys(et2_placeholder_select.placeholders[appname]).map((key) =>
 		{
-			options.push(
+			// @ts-ignore
+			if(Object.keys(et2_placeholder_select.placeholders[appname][key]).filter((key) => isNaN(key)).length > 0)
+			{
+				// Handle groups of groups
+				if(typeof et2_placeholder_select.placeholders[appname][key].label !== "undefined")
 				{
+					options[key] = et2_placeholder_select.placeholders[appname][key];
+				}
+				else
+				{
+					options[this.egw().lang(key)] = [];
+					for(let sub of Object.keys(et2_placeholder_select.placeholders[appname][key]))
+					{
+						if(!et2_placeholder_select.placeholders[appname][key][sub])
+						{
+							continue;
+						}
+						options[key].push({
+							value: key + '-' + sub,
+							label: this.egw().lang(sub)
+						});
+					}
+				}
+			}
+			else
+			{
+				options.push({
 					value: key,
 					label: this.egw().lang(key)
 				});
+			}
 		});
 		return options;
 	}
@@ -295,16 +365,13 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	_get_placeholders(appname : string, group : string)
 	{
-		let options = [];
-		Object.keys(et2_placeholder_select.placeholders[appname][group]).map((key) =>
+		let _group = group.split('-', 2);
+		let ph = et2_placeholder_select.placeholders[appname];
+		for(let i = 0; typeof ph !== "undefined" && i < _group.length; i++)
 		{
-			options.push(
-				{
-					value: key,
-					label: et2_placeholder_select.placeholders[appname][group][key]
-				});
-		});
-		return options;
+			ph = ph[_group[i]];
+		}
+		return ph || [];
 	}
 
 	/**
@@ -342,8 +409,9 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	static placeholders = {
 		"addressbook": {
 			"addresses": {
-				"{{n_fn}}\n{{adr_one_street}}{{NELF adr_one_street2}}\n{{adr_one_formatted}}": "Work address",
+				"{{org_name}}\n{{n_fn}}\n{{adr_one_street}}{{NELF adr_one_street2}}\n{{adr_one_formatted}}": "Business address",
 				"{{n_fn}}\n{{adr_two_street}}{{NELF adr_two_street2}}\n{{adr_two_formatted}}": "Home address",
+				"{{n_fn}}\n{{email}}\n{{tel_work}}": "Name, email, phone"
 			}
 		}
 	};
@@ -385,6 +453,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
 
+		app.set_value(app.get_value());
 		this._on_placeholder_select();
 	}
 
@@ -405,9 +474,13 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[app.get_value(), placeholder_list.get_value(), entry.get_value()],
+				[placeholder_list.get_value(), {app: "addressbook", id: entry.get_value()}],
 				function(_content)
 				{
+					if(!_content)
+					{
+						_content = '';
+					}
 					this.set_value(_content);
 					preview_content.set_value(_content);
 					preview_content.getDOMNode().parentNode.style.visibility = _content.trim() ? null : 'hidden';
@@ -459,7 +532,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 			options.push(
 				{
 					value: key,
-					label: et2_placeholder_snippet_select.placeholders[appname][group][key]
+					label: this.egw().lang(et2_placeholder_snippet_select.placeholders[appname][group][key])
 				});
 		});
 		return options;

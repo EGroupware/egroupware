@@ -183,12 +183,12 @@ class addressbook_ui extends addressbook_bo
 					$msg = '';
 				}
 			}
-			if ($_content['nm']['rows']['infolog'])
+			if (!empty($_content['nm']['rows']['infolog']))
 			{
 				$org = key($_content['nm']['rows']['infolog']);
 				return $this->infolog_org_view($org);
 			}
-			if ($_content['nm']['rows']['view'])	// show all contacts of an organisation
+			if (!empty($_content['nm']['rows']['view']))	// show all contacts of an organisation
 			{
 				$grouped_view = key($_content['nm']['rows']['view']);
 			}
@@ -1736,9 +1736,13 @@ class addressbook_ui extends addressbook_bo
 		if (isset($this->grouped_views[(string) $query['grouped_view']]))
 		{
 			// we have a grouped view, reset the advanced search
-			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
+			if (empty($query['search']) && !empty($old_state['advanced_search']))
+			{
+				$query['advanced_search'] = $old_state['advanced_search'];
+			}
 		}
-		elseif(!$query['search'] && array_key_exists('advanced_search',$old_state))	// eg. paging in an advanced search
+		// eg. paging in an advanced search
+		elseif(empty($query['search']) && is_array($old_state) && array_key_exists('advanced_search', $old_state))
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
@@ -2256,7 +2260,7 @@ class addressbook_ui extends addressbook_bo
 			// remove invalid shared-with entries (should not happen, as we validate already on client-side)
 			$this->check_shared_with($content['shared']);
 
-			$button = @key($content['button']);
+			$button = @key($content['button'] ?? []);
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
@@ -2984,7 +2988,7 @@ class addressbook_ui extends addressbook_bo
 
 		if(is_array($content))
 		{
-			$button = is_array($content['button']) ? key($content['button']) : "";
+			$button = key($content['button'] ?? []);
 			switch ($button)
 			{
 				case 'vcard':
@@ -3067,7 +3071,7 @@ class addressbook_ui extends addressbook_bo
 				$_GET['contact_id'] = array_shift($rows);
 				$_GET['index'] = 0;
 			}
-			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
+			$contact_id = $_GET['contact_id'] ?? ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
 			if(!$contact_id || !is_array($content = $this->read($contact_id)))
 			{
 				Egw::redirect_link('/index.php',array(

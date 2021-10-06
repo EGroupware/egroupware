@@ -9,7 +9,7 @@
                 <select id="placeholder_list"/>
             </vbox>
             <hrule/>
-            <link-entry id="entry" label="Select entry"/>
+            <link-entry id="entry" label="Select entry" only_app="addressbook"/>
             <hbox class="preview">
                 <description id="preview_content"/>
             </hbox>
@@ -49,7 +49,7 @@
             flex-grow: 0;
             }
             div.et2_link_entry input.ui-autocomplete-input {
-            width: 75%
+            width: 70%
             }
             div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button, button#cancel, .et2_button {
             border: none;

@@ -483,7 +483,7 @@ class Contacts extends Contacts\Storage
 				'bday'     => (int)$contact['bday'] ? DateTime::to($contact['bday'], true) : $contact['bday'],
 			)));
 
-		while ($fileas[0] == ':' ||  $fileas[0] == ',')
+		while (!empty($fileas) && ($fileas[0] == ':' ||  $fileas[0] == ','))
 		{
 			$fileas = substr($fileas,2);
 		}
@@ -764,10 +764,10 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'] || ($data['files'] & self::FILES_BIT_PHOTO), '', $data['etag']);
+		$data['photo'] = $this->photo_src($data['id'],!empty($data['jpegphoto']) || (($data['files']??0) & self::FILES_BIT_PHOTO), '', $data['etag'] ?? null);
 
 		// set freebusy_uri for accounts
-		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
+		if (empty($data['freebusy_uri']) && empty($data['owner']) && !empty($data['account_id']) && empty($GLOBALS['egw_setup']))
 		{
 			if ($fb_url || @is_dir(EGW_SERVER_ROOT.'/calendar/inc'))
 			{
@@ -1686,7 +1686,7 @@ class Contacts extends Contacts\Storage
 			{
 				$result[$contact['id']] = $this->link_title($contact+(array)$cfs[$contact['id']]);
 				// make sure to return a correctly quoted rfc822 address, if requested
-				if ($options['type'] === 'email')
+				if (isset($options['type']) && $options['type'] === 'email')
 				{
 					$args = explode('@', $contact['email']);
 					$args[] = $result[$contact['id']];

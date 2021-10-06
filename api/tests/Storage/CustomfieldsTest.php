@@ -12,6 +12,7 @@
 
 namespace EGroupware\Api\Storage;
 
+require_once __DIR__ . '/../LoggedInTest.php';
 use EGroupware\Api\LoggedInTest as LoggedInTest;
 
 class CustomfieldsTest extends LoggedInTest
@@ -20,19 +21,19 @@ class CustomfieldsTest extends LoggedInTest
 	protected $customfields = null;
 
 	protected $simple_field = array(
-			'app'         => self::APP,
-			'name'        => 'test_field',
-			'label'       => 'Custom field',
-			'type'        => 'text',
-			'type2'       => array(),
-			'help'        => 'Custom field created for automated testing by CustomfieldsTest',
-			'values'      => null,
-			'len'         => null,
-			'rows'        => null,
-			'order'       => null,
-			'needed'      => null,
-			'private'     => array()
-		);
+		'app'     => self::APP,
+		'name'    => 'test_field',
+		'label'   => 'Custom field',
+		'type'    => 'text',
+		'type2'   => array(),
+		'help'    => 'Custom field created for automated testing by CustomfieldsTest',
+		'values'  => null,
+		'len'     => null,
+		'rows'    => null,
+		'order'   => null,
+		'needed'  => null,
+		'private' => array()
+	);
 
 	public function tearDown(): void
 	{
@@ -209,35 +210,35 @@ class CustomfieldsTest extends LoggedInTest
 		// Expected options, file
 		return array(
 			array(array(
-				'' =>	'Select',
-				'Α'=>	'α	Alpha',
-				'Β'=>	'β	Beta',
-				'Γ'=>	'γ	Gamma',
-				'Δ'=>	'δ	Delta',
-				'Ε'=>	'ε	Epsilon',
-				'Ζ'=>	'ζ	Zeta',
-				'Η'=>	'η	Eta',
-				'Θ'=>	'θ	Theta',
-				'Ι'=>	'ι	Iota',
-				'Κ'=>	'κ	Kappa',
-				'Λ'=>	'λ	Lambda',
-				'Μ'=>	'μ	Mu',
-				'Ν'=>	'ν	Nu',
-				'Ξ'=>	'ξ	Xi',
-				'Ο'=>	'ο	Omicron',
-				'Π'=>	'π	Pi',
-				'Ρ'=>	'ρ	Rho',
-				'Σ'=>	'σ	Sigma',
-				'Τ'=>	'τ	Tau',
-				'Υ'=>	'υ	Upsilon',
-				'Φ'=>	'φ	Phi',
-				'Χ'=>	'χ	Chi',
-				'Ψ'=>	'ψ	Psi',
-				'Ω'=>	'ω	Omega'
-			), 'greek_options.php'),
+					  ''  =>	'Select',
+					  'Α' =>	'α	Alpha',
+					  'Β' =>	'β	Beta',
+					  'Γ' =>	'γ	Gamma',
+					  'Δ' =>	'δ	Delta',
+					  'Ε' =>	'ε	Epsilon',
+					  'Ζ' =>	'ζ	Zeta',
+					  'Η' =>	'η	Eta',
+					  'Θ' =>	'θ	Theta',
+					  'Ι' =>	'ι	Iota',
+					  'Κ' =>	'κ	Kappa',
+					  'Λ' =>	'λ	Lambda',
+					  'Μ' =>	'μ	Mu',
+					  'Ν' =>	'ν	Nu',
+					  'Ξ' =>	'ξ	Xi',
+					  'Ο' =>	'ο	Omicron',
+					  'Π' =>	'π	Pi',
+					  'Ρ' =>	'ρ	Rho',
+					  'Σ' =>	'σ	Sigma',
+					  'Τ' =>	'τ	Tau',
+					  'Υ' =>	'υ	Upsilon',
+					  'Φ' =>	'φ	Phi',
+					  'Χ' =>	'χ	Chi',
+					  'Ψ' =>	'ψ	Psi',
+					  'Ω' =>	'ω	Omega'
+				  ), 'greek_options.php'),
 			array(array(
-				'View Subs' => "egw_open('','infolog','list',{action:'sp',action_id:widget.getRoot().getArrayMgr('content').getEntry('info_id')},'infolog','infolog');"
-			), 'infolog_subs_option.php')
+					  'View Subs' => "egw_open('','infolog','list',{action:'sp',action_id:widget.getRoot().getArrayMgr('content').getEntry('info_id')},'infolog','infolog');"
+				  ), 'infolog_subs_option.php')
 		);
 	}
 
@@ -302,8 +303,8 @@ class CustomfieldsTest extends LoggedInTest
 	protected function get_another_user()
 	{
 		$accounts = $GLOBALS['egw']->accounts->search(array(
-			'type'    => 'accounts'
-		));
+														  'type' => 'accounts'
+													  ));
 		unset($accounts[$GLOBALS['egw_info']['user']['account_id']]);
 		if(count($accounts) == 0)
 		{

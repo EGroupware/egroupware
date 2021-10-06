@@ -2322,6 +2322,8 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-h
 .et2_toolbar_more .ui-accordion-header-active.header_list-short.ui-state-active span.ui-accordion-header-icon {
     background-position: bottom !important;
     margin-top: 2px;
+    left: 0;
+    top: 0;
 }
 .et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
 	background-image: url(../../../pixelegg/images/setup.svg);

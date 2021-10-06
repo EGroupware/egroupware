@@ -116,7 +116,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 					{
 						$popup =& $values;
 					}
-					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action']);
+					$values['nm']['multi_action'] .= '_' . key($popup[$multi_action . '_action'] ?? []);
 					if($multi_action == 'link')
 					{
 						$popup[$multi_action] = $popup['link']['app'] . ':'.$popup['link']['id'];

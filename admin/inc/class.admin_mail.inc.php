@@ -212,7 +212,7 @@ class admin_mail
 	public function autoconfig(array $content)
 	{
 		// user pressed [Skip IMAP] --> jump to SMTP config
-		if ($content['button'] && key($content['button']) == 'skip_imap')
+		if (!empty($content['button']) && key($content['button']) === 'skip_imap')
 		{
 			unset($content['button']);
 			if (!isset($content['acc_smtp_host'])) $content['acc_smtp_host'] = '';	// do manual mode right away
@@ -361,7 +361,7 @@ class admin_mail
 	 */
 	public function folder(array $content, $msg='', Horde_Imap_Client_Socket $imap=null)
 	{
-		if (isset($content['button']))
+		if (!empty($content['button']))
 		{
 			$button = key($content['button']);
 			unset($content['button']);
@@ -482,7 +482,7 @@ class admin_mail
 		);
 		$content['msg'] = $msg;
 
-		if (isset($content['button']))
+		if (!empty($content['button']))
 		{
 			$button = key($content['button']);
 			unset($content['button']);
@@ -619,7 +619,7 @@ class admin_mail
 		);
 		$content['msg'] = $msg;
 
-		if (isset($content['button']))
+		if (!empty($content['button']))
 		{
 			$button = key($content['button']);
 			unset($content['button']);
@@ -835,7 +835,7 @@ class admin_mail
 			{
 				$content['called_for'] = (int)$_GET['account_id'];
 				$content['accounts'] = iterator_to_array(Mail\Account::search($content['called_for']));
-				if ($content['accounts'])
+				if (!empty($content['accounts']))
 				{
 					$content['acc_id'] = key($content['accounts']);
 					//error_log(__METHOD__.__LINE__.'.'.array2string($content['acc_id']));
@@ -949,7 +949,7 @@ class admin_mail
 		$tpl->disableElement('notify_save_default', !$is_multiple || !$edit_access);
 		$tpl->disableElement('notify_use_default', !$is_multiple);
 
-		if (isset($content['button']))
+		if (!empty($content['button']))
 		{
 			$button = key($content['button']);
 			unset($content['button']);
@@ -1031,7 +1031,7 @@ class admin_mail
 								unset($content['smimeKeyUpload']);
 							}
 							self::fix_account_id_0($content['account_id'], true);
-							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
+							$content = Mail\Account::write($content, !empty($content['called_for']) && $this->is_admin ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 							self::fix_account_id_0($content['account_id']);
 							$msg = lang('Account saved.');

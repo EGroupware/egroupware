@@ -340,7 +340,7 @@ class Sql extends Mail\Smtp
 			}
 		}
 
-		// let interesed parties know account was update
+		// let interested parties know account was update
 		Api\Hooks::process(array(
 			'location' => 'mailaccount_userdata_updated',
 			'account_id' => $_uidnumber,

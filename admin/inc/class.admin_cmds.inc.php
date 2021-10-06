@@ -70,7 +70,7 @@ class admin_cmds
 			}
 			$content['nm']['actions'] = self::cmd_actions();
 		}
-		elseif ($content['nm']['rows']['delete'])
+		elseif (!empty($content['nm']['rows']['delete']))
 		{
 			$id = key($content['nm']['rows']['delete']);
 			unset($content['nm']['rows']);

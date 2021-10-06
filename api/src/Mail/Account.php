@@ -313,7 +313,7 @@ class Account implements \ArrayAccess
 		try {
 			if ($this->acc_imap_type != __NAMESPACE__.'\\Imap' &&
 				// do NOT query IMAP server, if we are in forward-only delivery-mode, imap will NOT answer, as switched off for that account!
-				$this->params['deliveryMode'] != Smtp::FORWARD_ONLY && $need_quota &&
+				($this->params['deliveryMode'] ?? null) != Smtp::FORWARD_ONLY && $need_quota &&
 				$this->imapServer($this->user) && is_a($this->imapServer, __NAMESPACE__.'\\Imap') &&
 				($data = $this->imapServer->getUserData($GLOBALS['egw']->accounts->id2name($this->user))))
 			{
@@ -335,7 +335,7 @@ class Account implements \ArrayAccess
 		}
 		$this->params += array_fill_keys(self::$user_data, null);	// make sure all keys exist now
 
-		return (array)$data + (array)$smtp_data;
+		return ($data ?? []) + ($smtp_data ?? []);
 	}
 
 	/**
@@ -454,10 +454,10 @@ class Account implements \ArrayAccess
 					$this->smtpServer->host = 'tls://'.$this->smtpServer->host;
 			}
 			$this->smtpServer->smtpAuth = !empty($this->params['acc_smtp_username']);
-			$this->smtpServer->username = $this->params['acc_smtp_username'];
-			$this->smtpServer->password = $this->params['acc_smtp_password'];
+			$this->smtpServer->username = $this->params['acc_smtp_username'] ?? null;
+			$this->smtpServer->password = $this->params['acc_smtp_password'] ?? null;
 			$this->smtpServer->defaultDomain = $this->params['acc_domain'];
-			$this->smtpServer->loginType = $this->params['acc_imap_login_type'];
+			$this->smtpServer->loginType = $this->params['acc_imap_login_type'] ?? null;
 		}
 		return $this->smtpServer;
 	}
@@ -676,7 +676,7 @@ class Account implements \ArrayAccess
 		$to_replace = array();
 		foreach($fields as $name)
 		{
-			if (strpos($identity[$name], '{{') !== false || strpos($identity[$name], '$$') !== false)
+			if (!empty($identity[$name]) && (strpos($identity[$name], '{{') !== false || strpos($identity[$name], '$$') !== false))
 			{
 				$to_replace[$name] = $identity[$name];
 			}
@@ -781,7 +781,7 @@ class Account implements \ArrayAccess
 			'account_id' => self::is_multiple($identity) ? 0 :
 				(is_array($identity['account_id']) ? $identity['account_id'][0] : $identity['account_id']),
 		);
-		if ($identity['ident_id'] > 0)
+		if ($identity['ident_id'] !== 'new' && (int)$identity['ident_id'] > 0)
 		{
 			self::$db->update(self::IDENTITIES_TABLE, $data, array(
 				'ident_id' => $identity['ident_id'],
@@ -837,7 +837,7 @@ class Account implements \ArrayAccess
 			// let getUserData "know" if we are interested in quota (requiring IMAP login) or not
 			$this->getUserData(substr($name, 0, 5) === 'quota');
 		}
-		return $this->params[$name];
+		return $this->params[$name] ?? null;
 	}
 
 	/**
@@ -1196,7 +1196,7 @@ class Account implements \ArrayAccess
 
 		// store identity
 		$new_ident_id = self::save_identity($data);
-		if (!($data['ident_id'] > 0))
+		if ($data['ident_id'] === 'new' || empty($data['ident_id']))
 		{
 			$data['ident_id'] = $new_ident_id;
 			self::$db->update(self::TABLE, array(
@@ -1578,7 +1578,7 @@ class Account implements \ArrayAccess
 				'ident_realname' => $account['ident_realname'],
 				'ident_org' => $account['ident_org'],
 				'ident_email' => $account['ident_email'],
-				'acc_name' => $account['acc_name'],
+				'acc_name' => $account['acc_name'] ?? null,
 				'acc_imap_username' => $account['acc_imap_username'],
 				'acc_imap_logintype' => $account['acc_imap_logintype'],
 				'acc_domain' => $account['acc_domain'],
@@ -1605,7 +1605,7 @@ class Account implements \ArrayAccess
 					}
 				}
 				// fill an empty ident_realname or ident_email of current user with data from user account
-				if ($replace_placeholders && (!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['acount_id']))
+				if ($replace_placeholders && (!isset($account_id) || $account_id == $GLOBALS['egw_info']['user']['account_id']))
 				{
 					if (empty($account['ident_realname'])) $account['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
 					if (empty($account['ident_email'])) $account['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];

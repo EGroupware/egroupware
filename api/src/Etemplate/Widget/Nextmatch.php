@@ -186,21 +186,21 @@ class Nextmatch extends Etemplate\Widget
 		if (true) $value =& self::get_array(self::$request->content, $form_name, true);
 
 		// Add favorite here so app doesn't save it in the session
-		if($_GET['favorite'])
+		if (!empty($_GET['favorite']))
 		{
 			$send_value['favorite'] = $safe_name;
 		}
 		if (true) $value = $send_value;
-		$value['total'] = $total;
+		$value['total'] = $total ?? null;
 
 		// Send categories
-		if(!$value['no_cat'] && !$value['cat_is_select'])
+		if(empty($value['no_cat']) && empty($value['cat_is_select']))
 		{
-			$cat_app = $value['cat_app'] ? $value['cat_app'] : $GLOBALS['egw_info']['flags']['current_app'];
-			$value['options-cat_id'] = self::$request->sel_options['cat_id'] ? self::$request->sel_options['cat_id'] : array();
+			$cat_app = $value['cat_app'] ?? $GLOBALS['egw_info']['flags']['current_app'] ?? '';
+			$value['options-cat_id'] = self::$request->sel_options['cat_id'] ?? [];
 
 			// Add 'All', if not already there
-			if(!$value['options-cat_id'][''] && !$value['options-cat_id'][0])
+			if(empty($value['options-cat_id']['']) && empty($value['options-cat_id'][0]))
 			{
 				$value['options-cat_id'][''] = lang('All categories');
 			}
@@ -220,7 +220,7 @@ class Nextmatch extends Etemplate\Widget
 			if(strpos($name, 'options-') !== false && $_value)
 			{
 				$select = substr($name, 8);
-				if(!self::$request->sel_options[$select])
+				if (empty(self::$request->sel_options[$select]))
 				{
 					self::$request->sel_options[$select] = array();
 				}
@@ -231,21 +231,21 @@ class Nextmatch extends Etemplate\Widget
 				//unset($value[$name]);
 			}
 		}
-		if($value['rows']['sel_options'])
+		if (!empty($value['rows']['sel_options']))
 		{
 			self::$request->sel_options = array_merge(self::$request->sel_options,$value['rows']['sel_options']);
 			unset($value['rows']['sel_options']);
 		}
 
 		// If column selection preference is forced, set a flag to turn off UI
-		$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
-		$value['no_columnselection'] = $value['no_columnselection'] || (
-			$GLOBALS['egw']->preferences->forced[$app][$pref_name] &&
+		$pref_name = 'nextmatch-' . ($value['columnselection_pref'] ?? $this->attrs['template'] ?? '');
+		$value['no_columnselection'] = !empty($value['no_columnselection']) || (
+			!empty($GLOBALS['egw']->preferences->forced[$app][$pref_name]) &&
 			// Need to check admin too, or it will be impossible to turn off
-			!$GLOBALS['egw_info']['user']['apps']['admin']
+			empty($GLOBALS['egw_info']['user']['apps']['admin'])
 		);
 		// Use this flag to indicate to the admin that columns are forced (and that's why they can't change)
-		$value['columns_forced'] = (boolean)$GLOBALS['egw']->preferences->forced[$app][$pref_name];
+		$value['columns_forced'] = !empty($GLOBALS['egw']->preferences->forced[$app][$pref_name]);
 
 		// todo: no need to store rows in request, it's enought to send them to client
 
@@ -256,7 +256,7 @@ class Nextmatch extends Etemplate\Widget
 		if (isset($value['actions']) && !isset($value['actions'][0]))
 		{
 			$value['action_links'] = array();
-			$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?: $this->attrs['options']);
+			$template_name = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
 			if (!is_array($value['action_links'])) $value['action_links'] = array();
 			$value['actions'] = self::egw_actions($value['actions'], $template_name, '', $value['action_links']);
 		}
@@ -375,8 +375,8 @@ class Nextmatch extends Etemplate\Widget
 
 		$GLOBALS['egw']->session->commit_session();
 
-		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
-		$row_modified = $value['row_modified'];
+		$row_id = $value['row_id'] ?? 'id';
+		$row_modified = $value['row_modified'] ?? null;
 
 		foreach($rows as $n => $row)
 		{
@@ -384,12 +384,12 @@ class Nextmatch extends Etemplate\Widget
 			if (is_int($n) && $row)
 			{
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
-				if (!isset($row[$row_modified])) unset($row_modified);
+				if (empty($row[$row_modified])) unset($row_modified);
 
 				$id = $row_id ? $row[$row_id] : $n;
 				$result['order'][] = $id;
 
-				$modified = $row[$row_modified];
+				$modified = $row[$row_modified] ?? null;
 				if (isset($modified) && !(is_int($modified) || is_string($modified) && is_numeric($modified)))
 				{
 					$modified = Api\DateTime::to(str_replace('Z', '', $modified), 'ts');
@@ -497,10 +497,10 @@ class Nextmatch extends Etemplate\Widget
 			{
 				continue;
 			}
-			if($value_in[$key] == $value[$key]) continue;
+			if (($value_in[$key]??null) == ($value[$key]??null)) continue;
 
 			// These keys we don't send row data back, as they cause a partial reload
-			if(in_array($key, array('template'))) $no_rows = true;
+			if (in_array($key, array('template'))) $no_rows = true;
 
 			// Actions still need extra handling
 			if($key == 'actions' && !isset($value['actions'][0]))
@@ -626,7 +626,7 @@ class Nextmatch extends Etemplate\Widget
 		), array(), true);	// true = no permission check
 
 		// if we have a nextmatch widget, find the repeating row
-		if ($widget && $widget->attrs['template'])
+		if ($widget && !empty($widget->attrs['template']))
 		{
 			$row_template = $widget->getElementById($widget->attrs['template']);
 			if(!$row_template)
@@ -642,12 +642,12 @@ class Nextmatch extends Etemplate\Widget
 				if($child->type == 'row') $repeating_row = $child;
 			}
 		}
-		// otherwise we might get stoped by max_excutiontime
+		// otherwise, we might get stopped by max_excutiontime
 		if ($total > 200) @set_time_limit(0);
 
-		$is_parent = $value['is_parent'];
-		$is_parent_value = $value['is_parent_value'];
-		$parent_id = $value['parent_id'];
+		$is_parent = $value['is_parent'] ?? null;
+		$is_parent_value = $value['is_parent_value'] ?? null;
+		$parent_id = $value['parent_id'] ?? null;
 
 		// remove empty rows required by old etemplate to compensate for header rows
 		$first = $total ? null : 0;
@@ -658,14 +658,14 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if (is_null($first)) $first = $n;
 
-				if ($row[$is_parent])	// if app supports parent_id / hierarchy, set parent_id and is_parent
+				if (!empty($row[$is_parent]))	// if app supports parent_id / hierarchy, set parent_id and is_parent
 				{
 					$row['is_parent'] = isset($is_parent_value) ?
 						$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
-					$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
+					$row['parent_id'] = $row[$parent_id] ?? null;	// seems NOT used on client!
 				}
 				// run beforeSendToClient methods of widgets in row on row-data
-				if($repeating_row)
+				if (!empty($repeating_row))
 				{
 					// Change anything by widget for each row ($row set to 1)
 					$_row = array(1 => &$row);
@@ -894,7 +894,7 @@ class Nextmatch extends Etemplate\Widget
 			if ($default_attrs) $action += $default_attrs;
 
 			// Add 'Select All' after first group
-			if ($first_level && $group !== false && $action['group'] != $group && !$egw_actions[$prefix.'select_all'])
+			if ($first_level && $group !== false && $action['group'] != $group && empty($egw_actions[$prefix.'select_all']))
 			{
 
 				$egw_actions[$prefix.'select_all'] = array(
@@ -911,7 +911,7 @@ class Nextmatch extends Etemplate\Widget
 				);
 				$action_links[] = $prefix.'select_all';
 			}
-			$group = $action['group'];
+			$group = $action['group'] ?? 0;
 
 			if (!$first_level && $n == $max_length && count($actions) > $max_length)
 			{
@@ -941,29 +941,29 @@ class Nextmatch extends Etemplate\Widget
 			}
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
-			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag','drop'))) &&	// popup is the default
-				($first_level || substr($action['enabled'],0,11) == 'javaScript:'))
+			if ((!isset($action['type']) || in_array($action['type'], array('popup','drag','drop'))) &&	// popup is the default
+				($first_level || isset($action['enabled']) && substr($action['enabled'],0,11) === 'javaScript:'))
 			{
 				$action_links[] = $prefix.$id;
 			}
 
-			// add sub-menues
-			if ($action['children'])
+			// add sub-menus
+			if (!empty($action['children']))
 			{
 				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open','allowOnMultiple','confirm','confirm_multiple');
 				$inherit_keys = array_flip($inherit_attrs);
-				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'], $action_links, $max_length,
+				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'] ?? '', $action_links, $max_length,
 					array_intersect_key($action, $inherit_keys));
 
 				unset($action['prefix']);
 
 				// Allow default actions to keep their onExecute
-				if($action['default']) unset($inherit_keys['onExecute']);
+				if (!empty($action['default'])) unset($inherit_keys['onExecute']);
 				$action = array_diff_key($action, $inherit_keys);
 			}
 
 			// link or popup action
-			if ($action['url'])
+			if (!empty($action['url']))
 			{
 				$action['url'] = Api\Framework::link('/index.php',str_replace('$action',$id,$action['url']));
 				if ($action['popup'])
@@ -984,7 +984,7 @@ class Nextmatch extends Etemplate\Widget
 					}
 				}
 			}
-			if ($action['egw_open'])
+			if (!empty($action['egw_open']))
 			{
 				$action['data']['nm_action'] = 'egw_open';
 			}
@@ -997,10 +997,10 @@ class Nextmatch extends Etemplate\Widget
 		// Make sure select all is in a group by itself
 		foreach($egw_actions as $id => &$_action)
 		{
-			if($id == $prefix . 'select_all') continue;
-			if($_action['group'] >= $egw_actions[$prefix.'select_all']['group'] )
+			if ($id == $prefix . 'select_all') continue;
+			if (($_action['group'] ?? 0) >= (($egw_actions[$prefix.'select_all'] ?? [])['group'] ?? 0))
 			{
-				$egw_actions[$id]['group']+=1;
+				$egw_actions[$id]['group'] = ($egw_actions[$id]['group'] ?? 0) + 1;
 			}
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
@@ -1044,7 +1044,7 @@ class Nextmatch extends Etemplate\Widget
 					'no_lang' => true,
 				);
 				// add category icon
-				if (is_array($cat['data']) && $cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
+				if (is_array($cat['data']) && !empty($cat['data']['icon']) && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
 					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
@@ -1083,7 +1083,7 @@ class Nextmatch extends Etemplate\Widget
 					'prefix' => $prefix,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
+				if (!empty($cat['data']['icon']) && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
 					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
@@ -1222,7 +1222,7 @@ class Nextmatch extends Etemplate\Widget
 			// Run on all the sub-templates
 			foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
 			{
-				if($this->attrs[$sub_template])
+				if (!empty($this->attrs[$sub_template]))
 				{
 					$row_template = Template::instance($this->attrs[$sub_template]);
 					$row_template->run($method_name, $params, $respect_disabled);
@@ -1230,14 +1230,6 @@ class Nextmatch extends Etemplate\Widget
 			}
 		}
 		$params[0] = $old_param0;
-
-		// Prevent troublesome keys from breaking the nextmatch
-		// TODO: Figure out where these come from
-		foreach(array('$row','${row}', '$', '0','1','2') as $key)
-		{
-			if(is_array(self::$request->content[$cname])) unset(self::$request->content[$cname][$key]);
-			if(is_array(self::$request->preserve[$cname])) unset(self::$request->preserve[$cname][$key]);
-		}
 	}
 
 	/**

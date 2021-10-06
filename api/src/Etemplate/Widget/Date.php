@@ -29,7 +29,7 @@ use EGroupware\Api;
  *           &8 = dont show time for readonly and type date-time if time is 0:00,
  *           &16 = prefix r/o display with dow
  *           &32 = prefix r/o display with week-number
- *             &64 = prefix r/o display with weeknumber and dow
+ *			 &64 = prefix r/o display with weeknumber and dow
  *           &128 = no icon to trigger popup, click into input trigers it, also removing the separators to save space
  *
  * @todo validation of date-duration
@@ -120,7 +120,7 @@ class Date extends Transformer
 		{
 			$date = Api\DateTime::server2user($value);
 		}
-		elseif($this->attrs['data_format'] && $this->attrs['data_format'] !== 'object')
+		elseif (!empty($this->attrs['data_format']) && $this->attrs['data_format'] !== 'object')
 		{
 			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
 		}

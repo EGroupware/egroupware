@@ -12,6 +12,7 @@
 
 namespace EGroupware\Api\Storage;
 
+require_once __DIR__ . '/../LoggedInTest.php';
 require_once __DIR__ . '/TestTracking.php';
 
 use EGroupware\Api;
@@ -22,18 +23,18 @@ class TrackingTest extends LoggedInTest
 	const APP = 'test';
 
 	protected $simple_field = array(
-		'app'         => self::APP,
-		'name'        => 'test_field',
-		'label'       => 'Custom field',
-		'type'        => 'text',
-		'type2'       => array(),
-		'help'        => 'Custom field created for automated testing by CustomfieldsTest',
-		'values'      => null,
-		'len'         => null,
-		'rows'        => null,
-		'order'       => null,
-		'needed'      => null,
-		'private'     => array()
+		'app'     => self::APP,
+		'name'    => 'test_field',
+		'label'   => 'Custom field',
+		'type'    => 'text',
+		'type2'   => array(),
+		'help'    => 'Custom field created for automated testing by CustomfieldsTest',
+		'values'  => null,
+		'len'     => null,
+		'rows'    => null,
+		'order'   => null,
+		'needed'  => null,
+		'private' => array()
 	);
 
 	/**
@@ -57,8 +58,8 @@ class TrackingTest extends LoggedInTest
 
 		// Get another user
 		$accounts = $GLOBALS['egw']->accounts->search(array(
-			'type'    => 'accounts'
-		));
+														  'type' => 'accounts'
+													  ));
 		unset($accounts[$GLOBALS['egw_info']['user']['account_id']]);
 		if(count($accounts) == 0)
 		{

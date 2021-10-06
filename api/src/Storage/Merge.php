@@ -16,6 +16,7 @@ namespace EGroupware\Api\Storage;
 use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
+use EGroupware\Collabora\Conversion;
 use EGroupware\Stylite;
 use tidy;
 use uiaccountsel;
@@ -31,6 +32,26 @@ use ZipArchive;
  */
 abstract class Merge
 {
+	/**
+	 * Preference, path where we will put the generated document
+	 */
+	const PREF_STORE_LOCATION = "merge_store_path";
+
+	/**
+	 * Preference, placeholders for creating the filename of the generated document
+	 */
+	const PREF_DOCUMENT_FILENAME = "document_download_name";
+
+	/**
+	 * List of placeholders
+	 */
+	const DOCUMENT_FILENAME_OPTIONS = [
+		'$$document$$'      => 'Template name',
+		'$$link_title$$'    => 'Entry link-title',
+		'$$contact_title$$' => 'Contact link-title',
+		'$$current_date$$'  => 'Current date',
+	];
+
 	/**
 	 * Instance of the addressbook_bo class
 	 *
@@ -48,7 +69,12 @@ abstract class Merge
 	/**
 	 * Fields that are to be treated as datetimes, when merged into spreadsheets
 	 */
-	var $date_fields = array();
+	var $date_fields = [];
+
+	/**
+	 * Fields that are numeric, for special numeric handling
+	 */
+	protected $numeric_fields = [];
 
 	/**
 	 * Mimetype of document processed by merge
@@ -77,10 +103,10 @@ abstract class Merge
 	 */
 	public $export_limit;
 
-
 	public $public_functions = array(
 		"merge_entries"		=> true
 	);
+
 	/**
 	 * Configuration for HTML Tidy to clean up any HTML content that is kept
 	 */
@@ -237,47 +263,59 @@ abstract class Merge
 		$replacements = array();
 		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
-			$value = $contact[$name];
+			$value = $contact[$name] ?? '';
+			if(!$value)
+			{
+				continue;
+			}
 			switch($name)
 			{
-				case 'created': case 'modified':
-					if($value) $value = Api\DateTime::to($value);
+				case 'created':
+				case 'modified':
+					if($value)
+					{
+						$value = Api\DateTime::to($value);
+					}
 					break;
 				case 'bday':
-					if ($value)
+					if($value)
 					{
-						try {
+						try
+						{
 							$value = Api\DateTime::to($value, true);
 						}
-						catch (\Exception $e) {
-							unset($e);	// ignore exception caused by wrongly formatted date
+						catch (\Exception $e)
+						{
+							unset($e);    // ignore exception caused by wrongly formatted date
 						}
 					}
 					break;
-				case 'owner': case 'creator': case 'modifier':
+				case 'owner':
+				case 'creator':
+				case 'modifier':
 					$value = Api\Accounts::username($value);
 					break;
 				case 'cat_id':
-					if ($value)
+					if($value)
 					{
 						// if cat-tree is displayed, we return a full category path not just the name of the cat
 						$use = $GLOBALS['egw_info']['server']['cat_tab'] == 'Tree' ? 'path' : 'name';
 						$cats = array();
-						foreach(is_array($value) ? $value : explode(',',$value) as $cat_id)
+						foreach(is_array($value) ? $value : explode(',', $value) as $cat_id)
 						{
-							$cats[] = $GLOBALS['egw']->categories->id2name($cat_id,$use);
+							$cats[] = $GLOBALS['egw']->categories->id2name($cat_id, $use);
 						}
-						$value = implode(', ',$cats);
+						$value = implode(', ', $cats);
 					}
 					break;
-				case 'jpegphoto':	// returning a link might make more sense then the binary photo
-					if ($contact['photo'])
+				case 'jpegphoto':    // returning a link might make more sense then the binary photo
+					if($contact['photo'])
 					{
-						$value = Api\Framework::getUrl(Api\Framework::link('/index.php',$contact['photo']));
+						$value = Api\Framework::getUrl(Api\Framework::link('/index.php', $contact['photo']));
 					}
 					break;
 				case 'tel_prefer':
-					if ($value && $contact[$value])
+					if($value && $contact[$value])
 					{
 						$value = $contact[$value];
 					}
@@ -354,7 +392,9 @@ abstract class Merge
 				$cats[$cat_id] = array();
 			}
 		}
-		foreach($cats as $main => $cat) {
+		$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] = '';
+		foreach($cats as $main => $cat)
+		{
 			$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] .= $GLOBALS['egw']->categories->id2name($main,'name')
 				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
 		}
@@ -807,6 +847,7 @@ abstract class Merge
 	 */
 	public function &merge_string($_content,$ids,&$err,$mimetype,array $fix=null,$charset=null)
 	{
+		$ids = empty($ids) ? [] : (array)$ids;
 		$matches = null;
 		if ($mimetype == 'application/xml' &&
 			preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($_content,0,200),$matches))
@@ -838,7 +879,7 @@ abstract class Merge
 			$content = preg_replace(array_keys($fix),array_values($fix),$content);
 			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
-		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get differt parts of document, seperatet by Pagerepeat
 		if ($mimetype == 'text/plain' && $ids && count($ids) > 1)
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
@@ -882,11 +923,11 @@ abstract class Merge
 			$contentstart .= '<w:body>';
 			$contentend = '</w:body></w:document>';
 		}
-		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
+		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get the label content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0]);
 		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
-		if ($countlables > 1) $lableprint = true;
+		$lableprint = $countlables > 1;
 		if (count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
@@ -937,7 +978,7 @@ abstract class Merge
 			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
 			if ($lableprint) $content = $Labelrepeat;
 
-			// generate replacements; if exeption is thrown, catch it set error message and return false
+			// generate replacements; if exception is thrown, catch it set error message and return false
 			try
 			{
 				if(!($replacements = $this->get_replacements($id,$content)))
@@ -956,10 +997,10 @@ abstract class Merge
 			}
 			if ($this->report_memory_usage) error_log(__METHOD__."() $n: $id ".Api\Vfs::hsize(memory_get_usage(true)));
 			// some general replacements: current user, date and time
-			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
+			if(strpos($content, '$$user/') !== false && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
 			{
-				$replacements += $this->contact_replacements($user,'user', false, $content);
-				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'account_primary_group'));
+				$replacements += $this->contact_replacements($user, 'user', false, $content);
+				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
 			}
 			$replacements['$$date$$'] = Api\DateTime::to('now',true);
 			$replacements['$$datetime$$'] = Api\DateTime::to('now');
@@ -1131,7 +1172,7 @@ abstract class Merge
 		{
 			foreach($this->date_fields as $field)
 			{
-				if(($value = $replacements['$$'.$field.'$$']))
+				if(($value = $replacements['$$'.$field.'$$'] ?? null))
 				{
 					$time = Api\DateTime::createFromFormat('+'.Api\DateTime::$user_dateformat.' '.Api\DateTime::$user_timeformat.'*', $value);
 					$replacements['$$'.$field.'/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat)  : '';
@@ -1254,7 +1295,8 @@ abstract class Merge
 			// Look for numbers, set their value if needed
 			if(property_exists($this,'numeric_fields') || count($names))
 			{
-				foreach((array)$this->numeric_fields as $fieldname) {
+				foreach($this->numeric_fields as $fieldname)
+				{
 					$names[] = preg_quote($fieldname,'/');
 				}
 				$this->format_spreadsheet_numbers($content, $names, $mimetype.$mso_application_progid);
@@ -1347,7 +1389,8 @@ abstract class Merge
 	 */
 	protected function format_spreadsheet_numbers(&$content, $names, $mimetype)
 	{
-		foreach((array)$this->numeric_fields as $fieldname) {
+		foreach($this->numeric_fields as $fieldname)
+		{
 			$names[] = preg_quote($fieldname,'/');
 		}
 		switch($mimetype)
@@ -1371,7 +1414,7 @@ abstract class Merge
 
 				break;
 		}
-		if($format && $names)
+		if (!empty($format) && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
 			do {
@@ -1600,9 +1643,9 @@ abstract class Merge
 	 */
 	public static function get_app_class($appname)
 	{
-		if(class_exists($appname) && is_subclass_of($appname, 'EGroupware\\Api\\Storage\\Merge'))
+		$classname = "{$appname}_merge";
+		if(class_exists($classname, false) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
 		{
-			$classname = "{$appname}_merge";
 			$document_merge = new $classname();
 		}
 		else
@@ -1630,14 +1673,9 @@ abstract class Merge
 
 		try
 		{
-			$classname = "{$app}_merge";
-			if(!class_exists($classname))
-			{
-				return $replacements;
-			}
-			$class = new $classname();
-			$method = $app.'_replacements';
-			if(method_exists($class,$method))
+			$class = $this->get_app_class($app);
+			$method = $app . '_replacements';
+			if(method_exists($class, $method))
 			{
 				$replacements = $class->$method($id, $prefix, $content);
 			}
@@ -1652,6 +1690,30 @@ abstract class Merge
 			error_log($e->getMessage());
 		}
 		return $replacements;
+	}
+
+	/**
+	 * Prefix a placeholder, taking care of $$ or {{}} markers
+	 *
+	 * @param string $prefix Placeholder prefix
+	 * @param string $placeholder Placeholder, with or without {{...}} or $$...$$ markers
+	 * @param null|string $wrap "{" or "$" to add markers, omit to exclude markers
+	 * @return string
+	 */
+	protected function prefix($prefix, $placeholder, $wrap = null)
+	{
+		$marker = ['', ''];
+		if($placeholder[0] == '{' && is_null($wrap) || $wrap[0] == '{')
+		{
+			$marker = ['{{', '}}'];
+		}
+		elseif($placeholder[0] == '$' && is_null($wrap) || $wrap[0] == '$')
+		{
+			$marker = ['$$', '$$'];
+		}
+
+		$placeholder = str_replace(['{{', '}}', '$$'], '', $placeholder);
+		return $marker[0] . ($prefix ? $prefix . '/' : '') . $placeholder . $marker[1];
 	}
 
 	/**
@@ -1780,13 +1842,12 @@ abstract class Merge
 		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
 		{	//sets a Letterprefix
 			$replaceprefixsort = array();
-			// ToDo Stefan: $contentstart is NOT defined here!!!
 			$replaceprefix = explode(' ',substr($param[0],21,-2));
 			foreach ($replaceprefix as $nameprefix)
 			{
 				if ($this->replacements['$$'.$nameprefix.'$$'] !='') $replaceprefixsort[] = $this->replacements['$$'.$nameprefix.'$$'];
 			}
-			$replace = implode($replaceprefixsort,' ');
+			$replace = implode(' ', $replaceprefixsort);
 		}
 		return $replace;
 	}
@@ -2092,7 +2153,6 @@ abstract class Merge
 		$export_limit=null)
 	{
 		$documents = array();
-		$editable_mimes = array();
 		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
 
 		try {
@@ -2118,11 +2178,11 @@ abstract class Merge
 				$file['path'] = $default_doc;
 			}
 			$documents['document'] = array(
-				'icon' => Api\Vfs::mime_icon($file['mime']),
+				'icon'    => Api\Vfs::mime_icon($file['mime']),
 				'caption' => Api\Vfs::decodePath(Api\Vfs::basename($default_doc)),
-				'group' => 1,
-				'postSubmit' => true,	// download needs post submit (not Ajax) to work
+				'group'   => 1
 			);
+			self::document_editable_action($documents['document'], $file);
 			if ($file['mime'] == 'message/rfc822')
 			{
 				self::document_mail_action($documents['document'], $file);
@@ -2177,13 +2237,6 @@ abstract class Merge
 		}
 		foreach($files as $file)
 		{
-			$edit_attributes = array(
-				'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
-				'document'   => $file['path'],
-				'merge'      => get_called_class(),
-				'id'         => '$id',
-				'select_all' => '$select_all'
-			);
 			if (count($dircount) > 1)
 			{
 				$name_arr = explode('/', $file['name']);
@@ -2200,30 +2253,24 @@ abstract class Merge
 					}
 					switch($count)
 					{
-						case (count($name_arr)-1):
-							$current_level[$prefix.$file['name']] = array(
-								'icon'		=> Api\Vfs::mime_icon($file['mime']),
-								'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
-								'group'		=> 2,
-								'postSubmit' => true,	// download needs post submit (not Ajax) to work,
-								'target'	=> '_blank',
-								'url'		=> urldecode(http_build_query($edit_attributes))
-							);
-							if ($file['mime'] == 'message/rfc822')
+						case (count($name_arr) - 1):
+							$current_level[$prefix . $file['name']];
+							self::document_editable_action($current_level[$prefix . $file['name']], $file);
+							if($file['mime'] == 'message/rfc822')
 							{
-								self::document_mail_action($current_level[$prefix.$file['name']], $file);
+								self::document_mail_action($current_level[$prefix . $file['name']], $file);
 							}
 							break;
 
 						default:
-							if(!is_array($current_level[$prefix.$name_arr[$count]]))
+							if(!is_array($current_level[$prefix . $name_arr[$count]]))
 							{
 								// create parent folder
-								$current_level[$prefix.$name_arr[$count]] = array(
-									'icon'		=> 'phpgwapi/foldertree_folder',
-									'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
-									'group'		=> 2,
-									'children'	=> array(),
+								$current_level[$prefix . $name_arr[$count]] = array(
+									'icon'     => 'phpgwapi/foldertree_folder',
+									'caption'  => Api\Vfs::decodePath($name_arr[$count]),
+									'group'    => 2,
+									'children' => array(),
 								);
 							}
 							break;
@@ -2232,50 +2279,47 @@ abstract class Merge
 			}
 			else if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
 			{
-				if (!isset($documents[$file['mime']]))
+				if(!isset($documents[$file['mime']]))
 				{
 					$documents[$file['mime']] = array(
-						'icon' => Api\Vfs::mime_icon($file['mime']),
-						'caption' => Api\MimeMagic::mime2label($file['mime']),
-						'group' => 2,
+						'icon'     => Api\Vfs::mime_icon($file['mime']),
+						'caption'  => Api\MimeMagic::mime2label($file['mime']),
+						'group'    => 2,
 						'children' => array(),
 					);
 				}
-				$documents[$file['mime']]['children'][$prefix.$file['name']] = array(
-					'caption' => Api\Vfs::decodePath($file['name']),
-					'target' => '_blank',
-					'postSubmit' => true,	// download needs post submit (not Ajax) to work
-				);
-				$documents[$file['mime']]['children'][$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
-				if ($file['mime'] == 'message/rfc822')
+				$documents[$file['mime']]['children'][$prefix . $file['name']] = array();
+				self::document_editable_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
+				if($file['mime'] == 'message/rfc822')
 				{
-					self::document_mail_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
+					self::document_mail_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
 				}
 			}
 			else
 			{
-				$documents[$prefix.$file['name']] = array(
-					'icon' => Api\Vfs::mime_icon($file['mime']),
-					'caption' => Api\Vfs::decodePath($file['name']),
-					'group' => 2,
-					'target' => '_blank'
-				);
-				$documents[$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
-				if ($file['mime'] == 'message/rfc822')
+				$documents[$prefix . $file['name']] = array();
+				self::document_editable_action($documents[$prefix . $file['name']], $file);
+				if($file['mime'] == 'message/rfc822')
 				{
-					self::document_mail_action($documents[$prefix.$file['name']], $file);
+					self::document_mail_action($documents[$prefix . $file['name']], $file);
 				}
 			}
 		}
 
+		// Add PDF checkbox
+		$documents['as_pdf'] = array(
+			'caption'  => 'As PDF',
+			'checkbox' => true,
+		);
 		return array(
-			'icon' => 'etemplate/merge',
-			'caption' => $caption,
-			'children' => $documents,
+			'icon'           => 'etemplate/merge',
+			'caption'        => $caption,
+			'children'       => $documents,
 			// disable action if no document or export completly forbidden for non-admins
-			'enabled' => (boolean)$documents && (self::hasExportLimit($export_limit,'ISALLOWED') || self::is_export_limit_excepted()),
-			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
-			'group' => $group,
+			'enabled'        => (boolean)$documents && (self::hasExportLimit($export_limit, 'ISALLOWED') || self::is_export_limit_excepted()),
+			'hideOnDisabled' => true,
+			// do not show 'Insert in document', if no documents defined or no export allowed
+			'group'          => $group,
 		);
 	}
 
@@ -2293,6 +2337,7 @@ abstract class Merge
 	private static function document_mail_action(Array &$action, $file)
 	{
 		unset($action['postSubmit']);
+		unset($action['onExecute']);
 
 		// Lots takes a while, confirm
 		$action['confirm_multiple'] = lang('Do you want to send the message to all selected entries, WITHOUT further editing?');
@@ -2325,15 +2370,30 @@ abstract class Merge
 	 */
 	private static function document_editable_action(Array &$action, $file)
 	{
-		unset($action['postSubmit']);
-		$edit_attributes = array(
-				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
-				'document'   => $file['path'],
-				'merge'      => get_called_class(),
-				'id'         => '$id',
-				'select_all' => '$select_all'
+		static $action_base = array(
+			// The same for every file
+			'group'   => 2,
+			// Overwritten for every file
+			'icon'    => '', //Api\Vfs::mime_icon($file['mime']),
+			'caption' => '', //Api\Vfs::decodePath($name_arr[$count]),
 		);
-		$action['url'] = urldecode(http_build_query($edit_attributes));
+		$edit_attributes = array(
+			'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'] . '.' . get_called_class() . '.merge_entries',
+			'document'   => $file['path'],
+			'merge'      => get_called_class(),
+		);
+
+		$action = array_merge(
+			$action_base,
+			array(
+				'icon'       => Api\Vfs::mime_icon($file['mime']),
+				'caption'    => Api\Vfs::decodePath($file['name']),
+				'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
+				'merge_data' => $edit_attributes
+			),
+			// Merge in provided action last, so we can customize if needed (eg: default document)
+			$action
+		);
 	}
 
 	/**
@@ -2374,25 +2434,26 @@ abstract class Merge
 	 * Merge the selected IDs into the given document, save it to the VFS, then
 	 * either open it in the editor or have the browser download the file.
 	 *
-	 * @param String[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
+	 * @param string[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
 	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
+	 * @param boolean|null $pdf Convert result to PDF
 	 * @throws Api\Exception
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	public static function merge_entries(array $ids = null, Merge &$document_merge = null)
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $pdf = null)
 	{
-		if (is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
+		if(is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $_REQUEST['merge']();
 		}
-		elseif (is_null($document_merge))
+		elseif(is_null($document_merge))
 		{
 			$document_merge = new Api\Contacts\Merge();
 		}
 
 		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 		{
-			$response->error($error);
+			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
 			return;
 		}
 
@@ -2405,35 +2466,33 @@ abstract class Merge
 			$ids = self::get_all_ids($document_merge);
 		}
 
-		$filename = $document_merge->get_filename($_REQUEST['document']);
+		if(is_null($pdf))
+		{
+			$pdf = (boolean)$_REQUEST['pdf'];
+		}
+
+		$filename = $document_merge->get_filename($_REQUEST['document'], $ids);
 		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
 
 		if(!is_file($result) || !is_readable($result))
 		{
-			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n". $result);
+			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n" . $result);
 		}
-		// Put it into the vfs using user's configured home dir if writable,
+		// Put it into the vfs using user's preferred directory if writable,
 		// or expected home dir (/home/username) if not
-		$target = $_target = (Vfs::is_writable(Vfs::get_home_dir()) ?
-				Vfs::get_home_dir() :
-				"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
-			)."/$filename";
-		$dupe_count = 0;
-		while(is_file(Vfs::PREFIX.$target))
-		{
-			$dupe_count++;
-			$target = Vfs::dirname($_target) . '/' .
-				pathinfo($filename, PATHINFO_FILENAME) .
-				' ('.($dupe_count + 1).')' . '.' .
-				pathinfo($filename, PATHINFO_EXTENSION);
-		}
-		copy($result, Vfs::PREFIX.$target);
+		$target = $document_merge->get_save_path($filename);
+
+		// Make sure we won't overwrite something already there
+		$target = Vfs::make_unique($target);
+
+		copy($result, Vfs::PREFIX . $target);
 		unlink($result);
 
 		// Find out what to do with it
 		$editable_mimes = array();
-		try {
-			if (class_exists('EGroupware\\collabora\\Bo') &&
+		try
+		{
+			if(class_exists('EGroupware\\collabora\\Bo') &&
 				$GLOBALS['egw_info']['user']['apps']['collabora'] &&
 				($discovery = \EGroupware\collabora\Bo::discover()) &&
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
@@ -2447,11 +2506,32 @@ abstract class Merge
 			// ignore failed discovery
 			unset($e);
 		}
-		if($editable_mimes[Vfs::mime_content_type($target)])
+
+		// PDF conversion
+		if($editable_mimes[Vfs::mime_content_type($target)] && $pdf)
+		{
+			$error = '';
+			$converted_path = '';
+			$convert = new Conversion();
+			$convert->convert($target, $converted_path, 'pdf', $error);
+
+			if($error)
+			{
+				error_log(__METHOD__ . "({$_REQUEST['document']}) $target => $converted_path Error in PDF conversion: $error");
+			}
+			else
+			{
+				// Remove original
+				Vfs::unlink($target);
+				$target = $converted_path;
+			}
+		}
+		if($editable_mimes[Vfs::mime_content_type($target)] &&
+			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
 		{
 			\Egroupware\Api\Egw::redirect_link('/index.php', array(
 				'menuaction' => 'collabora.EGroupware\\Collabora\\Ui.editor',
-				'path'=> $target
+				'path'       => $target
 			));
 		}
 		else
@@ -2461,14 +2541,80 @@ abstract class Merge
 	}
 
 	/**
-	 * Generate a filename for the merged file
+	 * Generate a filename for the merged file, without extension
 	 *
-	 * Default is just the name of the template
+	 * Default filename is just the name of the template.
+	 * We use the placeholders from get_filename_placeholders() and the application's document filename preference
+	 * to generate a custom filename.
+	 *
+	 * @param string $document Template filename
+	 * @param string[] $ids List of IDs being merged
 	 * @return string
 	 */
-	protected function get_filename($document) : string
+	protected function get_filename($document, $ids = []) : string
 	{
-		return '';
+		$name = '';
+		if(isset($GLOBALS['egw_info']['user']['preferences'][$this->get_app()][static::PREF_DOCUMENT_FILENAME]))
+		{
+			$pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][static::PREF_DOCUMENT_FILENAME];
+			$placeholders = $this->get_filename_placeholders($document, $ids);
+
+			// Make values safe for VFS
+			foreach($placeholders as &$value)
+			{
+				$value = Api\Mail::clean_subject_for_filename($value);
+			}
+
+			// Do replacement
+			$name = str_replace(
+				array_keys($placeholders),
+				array_values($placeholders),
+				is_array($pref) ? implode(' ', $pref) : $pref
+			);
+		}
+		return $name;
+	}
+
+	protected function get_filename_placeholders($document, $ids)
+	{
+		$ext = '.' . pathinfo($document, PATHINFO_EXTENSION);
+		$link_title = count($ids) == 1 ? Api\Link::title($this->get_app(), $ids[0]) : lang("multiple");
+		$contact_title = count($ids) == 1 ? Api\Link::title($this->get_app(), $ids[0]) : lang("multiple");
+		$current_date = str_replace('/', '-', Api\DateTime::to('now', Api\DateTime::$user_dateformat));
+
+
+		$values = [
+			'$$document$$'      => basename($document, $ext),
+			'$$link_title$$'    => $link_title,
+			'$$contact_title$$' => $contact_title,
+			'$$current_date$$'  => $current_date
+		];
+
+		return $values;
+	}
+
+	/**
+	 * Return a path where we can save the generated file
+	 * Takes into account user preference.
+	 *
+	 * @param string $filename The name of the generated file, including extension
+	 * @return string
+	 */
+	protected function get_save_path($filename) : string
+	{
+		// Default is home directory
+		$target = (Vfs::is_writable(Vfs::get_home_dir()) ?
+			Vfs::get_home_dir() :
+			"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
+		);
+
+		// Check for a configured preferred directory
+		if(($pref = $GLOBALS['egw_info']['user']['preferences']['filemanager'][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		{
+			$target = $pref;
+		}
+
+		return $target . "/$filename";
 	}
 
 	/**
@@ -2604,6 +2750,8 @@ abstract class Merge
 
 			// General information
 			'date'               => lang('Date'),
+			'datetime'           => lang('Date + time'),
+			'time'               => lang('Time'),
 			'user/n_fn'          => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid'   => lang('Username'),
 
@@ -2622,18 +2770,145 @@ abstract class Merge
 	}
 
 	/**
+	 * Get a list of common placeholders
+	 *
+	 * @param string $prefix
+	 */
+	public function get_common_placeholder_list($prefix = '')
+	{
+		$placeholders = [
+			'URLs'             => [],
+			'Egroupware links' => [],
+			'General'          => [],
+			'Repeat'           => [],
+			'Commands'         => []
+		];
+		// Iterate through the list & switch groups as we go
+		// Hopefully a little better than assigning each field to a group
+		$group = 'URLs';
+		foreach($this->get_common_replacements() as $name => $label)
+		{
+			if(in_array($name, array('user/n_fn', 'user/account_lid')))
+			{
+				continue;
+			}    // don't show them, they're in 'User'
+
+			switch($name)
+			{
+				case 'links':
+					$group = 'Egroupware links';
+					break;
+				case 'date':
+					$group = 'General';
+					break;
+				case 'pagerepeat':
+					$group = 'Repeat';
+					break;
+				case 'IF fieldname':
+					$group = 'Commands';
+			}
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
+			}
+		}
+		return $placeholders;
+	}
+
+	/**
 	 * Get a list of placeholders for the current user
 	 */
 	public function get_user_placeholder_list($prefix = '')
 	{
 		$contacts = new Api\Contacts\Merge();
-		$replacements = $contacts->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'user');
-		unset($replacements['details']['{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}']);
+		$replacements = $contacts->get_placeholder_list($this->prefix($prefix, 'user'));
+		unset($replacements['details'][$this->prefix($prefix, 'user/account_id', '{')]);
 		$replacements['account'] = [
-			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_id}}'  => 'Account ID',
-			'{{' . ($prefix ? $prefix . '/' : '') . 'user/account_lid}}' => 'Login ID'
+			[
+				'value' => $this->prefix($prefix, 'user/account_id', '{'),
+				'label' => 'Account ID'
+			],
+			[
+				'value' => $this->prefix($prefix, 'user/account_lid', '{'),
+				'label' => 'Login ID'
+			]
 		];
 
 		return $replacements;
+	}
+
+	/**
+	 * Get the list of placeholders for an application's customfields
+	 * If the customfield is a link to another application, we expand and add those placeholders as well
+	 */
+	protected function add_customfield_placeholders(&$placeholders, $prefix = '')
+	{
+		foreach(Customfields::get($this->get_app()) as $name => $field)
+		{
+			if(array_key_exists($field['type'], Api\Link::app_list()))
+			{
+				$app = self::get_app_class($field['type']);
+				if($app)
+				{
+					$this->add_linked_placeholders($placeholders, $name, $app->get_placeholder_list('#' . $name));
+				}
+			}
+			else
+			{
+				$placeholders['customfields'][] = [
+					'value' => $this->prefix($prefix, '#' . $name, '{'),
+					'label' => $field['label'] . ($field['type'] == 'select-account' ? '*' : '')
+				];
+			}
+		}
+	}
+
+	/**
+	 * Get a list of placeholders provided.
+	 *
+	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
+	 * Override this method and specify the placeholders, as well as groups or a specific order
+	 */
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = [
+			'placeholders' => []
+		];
+
+		$this->add_customfield_placeholders($placeholders, $prefix);
+
+		return $placeholders;
+	}
+
+	/**
+	 * Add placeholders from another application into the given list of placeholders
+	 *
+	 * This is used for linked entries (like info_contact) and custom fields where the type is another application.
+	 * Here we adjust the group name, and add the group to the end of the placeholder list
+	 * @param array $placeholder_list Our placeholder list
+	 * @param string $base_name Name of the entry (eg: Contact, custom field name)
+	 * @param array $add_placeholder_groups Placeholder list from the other app.  Placeholders should include any needed prefix
+	 */
+	protected function add_linked_placeholders(&$placeholder_list, $base_name, $add_placeholder_groups) : void
+	{
+		if(!$add_placeholder_groups)
+		{
+			// Skip empties
+			return;
+		}
+		/*
+				foreach($add_placeholder_groups as $group => $add_placeholders)
+				{
+					$placeholder_list[$base_name . ': ' . lang($group)] = $add_placeholders;
+				}
+		*/
+		$placeholder_list[$base_name] = $add_placeholder_groups;
 	}
 }

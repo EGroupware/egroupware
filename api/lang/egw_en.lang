@@ -724,6 +724,7 @@ insert new column behind this one	common	en	Insert new column after
 insert new column in front of all	common	en	Insert new column before all
 insert new row after this one	common	en	Insert new row after
 insert new row in front of first line	common	en	Insert new row before first line
+insert placeholder	common	en	Insert placeholder
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 insert timestamp into description field	common	en	Insert timestamp into description field
@@ -1073,6 +1074,7 @@ preference	common	en	Preference
 preferences	common	en	Preferences
 preferences for the %1 template set	preferences	en	Preferences for the %1 template set
 prev	common	en	Prev
+preview with entry	common	en	Preview with entry
 previous	common	en	Previous
 previous page	common	en	Previous page
 primary group	common	en	Primary group

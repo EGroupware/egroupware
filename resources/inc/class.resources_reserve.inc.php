@@ -32,7 +32,8 @@ class resources_reserve {
 		$display_days = $_GET['planner_days'] ? $_GET['planner_days'] : 3;
 		$planner_date = $_GET['date'] ? $_GET['date'] : strtotime('yesterday',$content['date'] ? $content['date'] : time());
 
-		if($_GET['confirm']) {
+		if(!empty($_GET['confirm']))
+		{
 			$register_code = ($_GET['confirm'] && preg_match('/^[0-9a-f]{32}$/',$_GET['confirm'])) ? $_GET['confirm'] : false;
 			if($register_code && $registration = registration_bo::confirm($register_code)) {
 				// Get calendar through link
@@ -48,17 +49,19 @@ class resources_reserve {
 				$planner_date = mktime(0,0,0,date('m',$data['start']),date('d',$data['start']),date('Y',$data['start']));
 				$readonlys['__ALL__'] = true;
 				$content = array(
-					'resource' => key($data['participant_types']['r']),
+					'resource' => key($data['participant_types']['r'] ?? []),
 					'date' => $data['start'],
 					'time' => $data['start'] - mktime(0,0,0,date('m',$data['start']),date('d',$data['start']),date('Y',$data['start'])),
 					'quantity' => 0
 				);
 				calendar_so::split_status($data['participant_types']['r'][$content['resource']], $content['quantity'],$role);
 				$data['msg']= '<div class="confirm">'.lang('Registration confirmed %1', Api\DateTime::to($data['start'])) .'</div>';
-			} else {
+			}
+			else
+			{
 				$data['msg']= '<div class="confirm">'.lang('Unable to process confirmation.').'</div>';
 			}
-                }
+		}
 
 		$this->tmpl->read('resources.sitemgr_book');
 

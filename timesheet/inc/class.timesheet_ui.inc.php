@@ -879,8 +879,8 @@ class timesheet_ui extends timesheet_bo
 	{
 		$etpl = new Etemplate('timesheet.index');
 
-		if ($_GET['msg']) $msg = $_GET['msg'];
-		if ($content['nm']['rows']['delete'])
+		if (!empty($_GET['msg'])) $msg = $_GET['msg'];
+		if (!empty($content['nm']['rows']['delete']))
 		{
 			$ts_id = key($content['nm']['rows']['delete']);
 			if ($this->delete($ts_id))
@@ -892,13 +892,13 @@ class timesheet_ui extends timesheet_bo
 				$msg = lang('Error deleting the entry!!!');
 			}
 		}
-		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
+		if (is_array($content) && !empty($content['nm']['rows']['document']))  // handle insert in default document button like an action
 		{
 			$id = @key($content['nm']['rows']['document']);
 			$content['nm']['action'] = 'document';
 			$content['nm']['selected'] = array($id);
 		}
-		if ($content['nm']['action'])
+		if (!empty($content['nm']['action']))
 		{
 			// remove sum-* rows from checked rows
 			$content['nm']['selected'] = array_filter($content['nm']['selected'], function($id)
@@ -1309,7 +1309,7 @@ class timesheet_ui extends timesheet_bo
 					$GLOBALS['egw']->redirect_link('/admin/index.php', null, 'admin');
 			}
 		}
-		if (isset($content['statis']['delete']))
+		if (!empty($content['statis']['delete']))
 		{
 			$id = key($content['statis']['delete']);
 			if (isset($this->status_labels_config[$id]))

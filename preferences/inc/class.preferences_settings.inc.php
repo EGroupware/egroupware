@@ -68,7 +68,7 @@ class preferences_settings
 		{
 			$is_admin = $content['is_admin'] || $content['type'] != 'user';
 			//error_log(__METHOD__."(".array2string($content).")");
-			if ($content['button'])
+			if (!empty($content['button']))
 			{
 				$button = key($content['button']);
 				$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
