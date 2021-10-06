@@ -191,17 +191,27 @@ class timesheet_hooks
 				'admin'  => False,
 			);
 			$settings['document_dir'] = array(
-				'type'   => 'vfs_dirs',
-				'size'   => 60,
-				'label'  => 'Directory with documents to insert entries',
-				'name'   => 'document_dir',
-				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('timesheet')).' '.
-					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','ts_title').' '.
-					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
+				'type'     => 'vfs_dirs',
+				'size'     => 60,
+				'label'    => 'Directory with documents to insert entries',
+				'name'     => 'document_dir',
+				'help'     => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('timesheet')) . ' ' .
+					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'ts_title') . ' ' .
+					lang('The following document-types are supported:') . implode(',', Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default' => '/templates/timesheet',
+				'xmlrpc'   => True,
+				'admin'    => False,
+				'default'  => '/templates/timesheet',
+			);
+			$settings[Api\Storage\Merge::PREF_DOCUMENT_FILENAME] = array(
+				'type'    => 'taglist',
+				'label'   => 'Document download filename',
+				'name'    => 'document_download_name',
+				'values'  => Api\Storage\Merge::DOCUMENT_FILENAME_OPTIONS,
+				'help'    => 'Choose the default filename for downloaded documents.',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => 'document',
 			);
 		}
 

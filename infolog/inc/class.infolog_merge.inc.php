@@ -64,9 +64,9 @@ class infolog_merge extends Api\Storage\Merge
 	 * @param string &$content=null content to create some replacements only if they are use
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null)
+	protected function get_replacements($id, &$content = null)
 	{
-		if (!($replacements = $this->infolog_replacements($id, '', $content)))
+		if(!($replacements = $this->infolog_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -74,13 +74,32 @@ class infolog_merge extends Api\Storage\Merge
 	}
 
 	/**
+	 * Override contact filename placeholder to use info_contact
+	 *
+	 * @param $document
+	 * @param $ids
+	 * @return array|void
+	 */
+	public function get_filename_placeholders($document, $ids)
+	{
+		$placeholders = parent::get_filename_placeholders($document, $ids);
+		if(count($ids) == 1 && ($info = $this->bo->read($ids[0])))
+		{
+			$placeholders['$$contact_title$$'] = $info['info_contact']['title'] ??
+				(is_array($info['info_contact']) && Link::title($info['info_contact']['app'], $info['info_contact']['id'])) ??
+				'';
+		}
+		return $placeholders;
+	}
+
+	/**
 	 * Get infolog replacements
 	 *
 	 * @param int $id id of entry
-	 * @param string $prefix='' prefix like eg. 'erole'
+	 * @param string $prefix ='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function infolog_replacements($id,$prefix='', &$content = '')
+	public function infolog_replacements($id, $prefix = '', &$content = '')
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();

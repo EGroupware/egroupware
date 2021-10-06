@@ -32,8 +32,25 @@ use ZipArchive;
  */
 abstract class Merge
 {
-
+	/**
+	 * Preference, path where we will put the generated document
+	 */
 	const PREF_STORE_LOCATION = "merge_store_path";
+
+	/**
+	 * Preference, placeholders for creating the filename of the generated document
+	 */
+	const PREF_DOCUMENT_FILENAME = "document_download_name";
+
+	/**
+	 * List of placeholders
+	 */
+	const DOCUMENT_FILENAME_OPTIONS = [
+		'$$document$$'      => 'Template name',
+		'$$link_title$$'    => 'Entry link-title',
+		'$$contact_title$$' => 'Contact link-title',
+		'$$current_date$$'  => 'Current date',
+	];
 
 	/**
 	 * Instance of the addressbook_bo class
@@ -246,47 +263,59 @@ abstract class Merge
 		$replacements = array();
 		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
-			$value = $contact[$name] ?? null;
+			$value = $contact[$name] ?? '';
+			if(!$value)
+			{
+				continue;
+			}
 			switch($name)
 			{
-				case 'created': case 'modified':
-					if($value) $value = Api\DateTime::to($value);
+				case 'created':
+				case 'modified':
+					if($value)
+					{
+						$value = Api\DateTime::to($value);
+					}
 					break;
 				case 'bday':
-					if ($value)
+					if($value)
 					{
-						try {
+						try
+						{
 							$value = Api\DateTime::to($value, true);
 						}
-						catch (\Exception $e) {
-							unset($e);	// ignore exception caused by wrongly formatted date
+						catch (\Exception $e)
+						{
+							unset($e);    // ignore exception caused by wrongly formatted date
 						}
 					}
 					break;
-				case 'owner': case 'creator': case 'modifier':
+				case 'owner':
+				case 'creator':
+				case 'modifier':
 					$value = Api\Accounts::username($value);
 					break;
 				case 'cat_id':
-					if ($value)
+					if($value)
 					{
 						// if cat-tree is displayed, we return a full category path not just the name of the cat
 						$use = $GLOBALS['egw_info']['server']['cat_tab'] == 'Tree' ? 'path' : 'name';
 						$cats = array();
-						foreach(is_array($value) ? $value : explode(',',$value) as $cat_id)
+						foreach(is_array($value) ? $value : explode(',', $value) as $cat_id)
 						{
-							$cats[] = $GLOBALS['egw']->categories->id2name($cat_id,$use);
+							$cats[] = $GLOBALS['egw']->categories->id2name($cat_id, $use);
 						}
-						$value = implode(', ',$cats);
+						$value = implode(', ', $cats);
 					}
 					break;
-				case 'jpegphoto':	// returning a link might make more sense then the binary photo
-					if ($contact['photo'])
+				case 'jpegphoto':    // returning a link might make more sense then the binary photo
+					if($contact['photo'])
 					{
-						$value = Api\Framework::getUrl(Api\Framework::link('/index.php',$contact['photo']));
+						$value = Api\Framework::getUrl(Api\Framework::link('/index.php', $contact['photo']));
 					}
 					break;
 				case 'tel_prefer':
-					if ($value && $contact[$value])
+					if($value && $contact[$value])
 					{
 						$value = $contact[$value];
 					}
@@ -1615,7 +1644,7 @@ abstract class Merge
 	public static function get_app_class($appname)
 	{
 		$classname = "{$appname}_merge";
-		if(class_exists($classname) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
+		if(class_exists($classname, false) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $classname();
 		}
@@ -1644,14 +1673,9 @@ abstract class Merge
 
 		try
 		{
-			$classname = "{$app}_merge";
-			if(!class_exists($classname))
-			{
-				return $replacements;
-			}
-			$class = new $classname();
-			$method = $app.'_replacements';
-			if(method_exists($class,$method))
+			$class = $this->get_app_class($app);
+			$method = $app . '_replacements';
+			if(method_exists($class, $method))
 			{
 				$replacements = $class->$method($id, $prefix, $content);
 			}
@@ -2447,7 +2471,7 @@ abstract class Merge
 			$pdf = (boolean)$_REQUEST['pdf'];
 		}
 
-		$filename = $document_merge->get_filename($_REQUEST['document']);
+		$filename = $document_merge->get_filename($_REQUEST['document'], $ids);
 		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
 
 		if(!is_file($result) || !is_readable($result))
@@ -2519,12 +2543,54 @@ abstract class Merge
 	/**
 	 * Generate a filename for the merged file, without extension
 	 *
-	 * Default is just the name of the template
+	 * Default filename is just the name of the template.
+	 * We use the placeholders from get_filename_placeholders() and the application's document filename preference
+	 * to generate a custom filename.
+	 *
+	 * @param string $document Template filename
+	 * @param string[] $ids List of IDs being merged
 	 * @return string
 	 */
-	protected function get_filename($document) : string
+	protected function get_filename($document, $ids = []) : string
 	{
-		return '';
+		$name = '';
+		if(isset($GLOBALS['egw_info']['user']['preferences'][$this->get_app()][static::PREF_DOCUMENT_FILENAME]))
+		{
+			$pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][static::PREF_DOCUMENT_FILENAME];
+			$placeholders = $this->get_filename_placeholders($document, $ids);
+
+			// Make values safe for VFS
+			foreach($placeholders as &$value)
+			{
+				$value = Api\Mail::clean_subject_for_filename($value);
+			}
+
+			// Do replacement
+			$name = str_replace(
+				array_keys($placeholders),
+				array_values($placeholders),
+				is_array($pref) ? implode(' ', $pref) : $pref
+			);
+		}
+		return $name;
+	}
+
+	protected function get_filename_placeholders($document, $ids)
+	{
+		$ext = '.' . pathinfo($document, PATHINFO_EXTENSION);
+		$link_title = count($ids) == 1 ? Api\Link::title($this->get_app(), $ids[0]) : lang("multiple");
+		$contact_title = count($ids) == 1 ? Api\Link::title($this->get_app(), $ids[0]) : lang("multiple");
+		$current_date = str_replace('/', '-', Api\DateTime::to('now', Api\DateTime::$user_dateformat));
+
+
+		$values = [
+			'$$document$$'      => basename($document, $ext),
+			'$$link_title$$'    => $link_title,
+			'$$contact_title$$' => $contact_title,
+			'$$current_date$$'  => $current_date
+		];
+
+		return $values;
 	}
 
 	/**
