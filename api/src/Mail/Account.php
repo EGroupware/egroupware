@@ -781,7 +781,7 @@ class Account implements \ArrayAccess
 			'account_id' => self::is_multiple($identity) ? 0 :
 				(is_array($identity['account_id']) ? $identity['account_id'][0] : $identity['account_id']),
 		);
-		if ($identity['ident_id'] > 0)
+		if ($identity['ident_id'] !== 'new' && (int)$identity['ident_id'] > 0)
 		{
 			self::$db->update(self::IDENTITIES_TABLE, $data, array(
 				'ident_id' => $identity['ident_id'],
@@ -1196,7 +1196,7 @@ class Account implements \ArrayAccess
 
 		// store identity
 		$new_ident_id = self::save_identity($data);
-		if (!($data['ident_id'] > 0))
+		if ($data['ident_id'] === 'new' || empty($data['ident_id']))
 		{
 			$data['ident_id'] = $new_ident_id;
 			self::$db->update(self::TABLE, array(
