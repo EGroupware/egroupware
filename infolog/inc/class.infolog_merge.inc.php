@@ -316,7 +316,7 @@ class infolog_merge extends Api\Storage\Merge
 			[lang($tracking->field2label['info_from']) => []] +
 			array_slice($placeholders, $insert_index, count($placeholders) - $insert_index, true);
 		$contact_merge = new Api\Contacts\Merge();
-		$contact = $contact_merge->get_placeholder_list('info_contact');
+		$contact = $contact_merge->get_placeholder_list($this->prefix($prefix, 'info_contact'));
 		$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
 
 		return $placeholders;

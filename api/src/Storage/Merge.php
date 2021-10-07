@@ -3085,7 +3085,7 @@ abstract class Merge
 				$app = self::get_app_class($field['type']);
 				if($app)
 				{
-					$this->add_linked_placeholders($placeholders, $name, $app->get_placeholder_list('#' . $name));
+					$this->add_linked_placeholders($placeholders, $name, $app->get_placeholder_list(($prefix ? $prefix . '/' : '') . '#' . $name));
 				}
 			}
 			else

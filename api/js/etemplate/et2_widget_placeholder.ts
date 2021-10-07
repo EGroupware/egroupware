@@ -339,7 +339,7 @@ export class et2_placeholder_select extends et2_inputWidget
 						{
 							continue;
 						}
-						options[key].push({
+						options[this.egw().lang(key)].push({
 							value: key + '-' + sub,
 							label: this.egw().lang(sub)
 						});
