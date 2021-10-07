@@ -144,7 +144,7 @@ class infolog_tracking extends Api\Storage\Tracking
 	 */
 	function get_subject($data, $old, $deleted = null, $receiver = null)
 	{
-		if ($data['prefix'])
+		if (!empty($data['prefix']))
 		{
 			$prefix = $data['prefix'];	// async notification
 		}
@@ -172,7 +172,7 @@ class infolog_tracking extends Api\Storage\Tracking
 	 */
 	function get_message($data, $old, $receiver = null)
 	{
-		if ($data['message']) return $data['message'];	// async notification
+		if (!empty($data['message'])) return $data['message'];	// async notification
 
 		if (!$old || $old['info_status'] == 'deleted')
 		{
@@ -345,16 +345,16 @@ class infolog_tracking extends Api\Storage\Tracking
 					return '';
 				}
 				// Per-type notification
-				$type_config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
+				$type_config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']] ?? null;
 				$global = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
 
 				// Disabled
-				if(!$type_config['use_custom'] && !$global['use_custom']) return '';
+				if(empty($type_config['use_custom']) && empty($global['use_custom'])) return '';
 
-				// Type or globabl
+				// Type or global
 				$config = trim(strip_tags($type_config['message'])) != '' && $type_config['use_custom'] ? $type_config['message'] : $global['message'];
 				break;
 		}
-		return $config;
+		return $config ?? null;
 	}
 }

@@ -98,7 +98,7 @@ class Customfields extends Transformer
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		// Store properties at top level, so all customfield widgets can share
-		if($this->attrs['app'])
+		if (!empty($this->attrs['app']))
 		{
 			$app = $this->attrs['app'];
 		}
@@ -141,12 +141,12 @@ class Customfields extends Transformer
 			// app changed
 			$customfields = Api\Storage\Customfields::get($app);
 		}
-		if($this->attrs['customfields'])
+		if (!empty($this->attrs['customfields']))
 		{
 			$customfields = $this->attrs['customfields'];
 		}
 		// Filter fields
-		if($this->attrs['field-names'])
+		if (!empty($this->attrs['field-names']))
 		{
 			$fields_name = explode(',', $this->attrs['field-names']);
 			foreach($fields_name as &$f)
@@ -162,8 +162,8 @@ class Customfields extends Transformer
 
 		$fields = $customfields;
 
-		$use_private = self::expand_name($this->attrs['use-private'],0,0,'','',self::$cont);
-		$this->attrs['sub-type'] = self::expand_name($this->attrs['sub-type'],0,0,'','',self::$cont);
+		$use_private = self::expand_name($this->attrs['use-private'] ?? null,0,0,'','',self::$cont);
+		$this->attrs['sub-type'] = self::expand_name($this->attrs['sub-type'] ?? null,0,0,'','',self::$cont);
 
 		foreach((array)$fields as $key => $field)
 		{
@@ -174,7 +174,7 @@ class Customfields extends Transformer
 			}
 
 			// Remove filtered fields
-			if($field_filters && in_array($key, $negate_fields) && in_array($key, $field_filters))
+			if (!empty($field_filters) && in_array($key, $negate_fields) && in_array($key, $field_filters))
 			{
 				unset($fields[$key]);
 			}
@@ -284,7 +284,7 @@ class Customfields extends Transformer
 
 		$type = $field['type'];
 		// Link-tos needs to change from appname to link-to
-		if($link_types[$field['type']])
+		if (!empty($link_types[$field['type']]))
 		{
 			if($type == 'filemanager')
 			{
@@ -314,8 +314,8 @@ class Customfields extends Transformer
 				{
 					$widget->attrs['data_format'] = $type == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s';
 				}
-				if($field['values']['min']) $widget->attrs['min'] = $field['values']['min'];
-				if($field['values']['max']) $widget->attrs['min'] = $field['values']['max'];
+				if (isset($field['values']['min'])) $widget->attrs['min'] = $field['values']['min'];
+				if (isset($field['values']['max'])) $widget->attrs['min'] = $field['values']['max'];
 				break;
 
 			case 'vfs-upload':
@@ -355,7 +355,7 @@ class Customfields extends Transformer
 					$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
 				}
 				// keep extra values set by app code, eg. addressbook advanced search
-				if (is_array(self::$request->sel_options[self::$prefix.$fname]))
+				if (!empty(self::$request->sel_options[self::$prefix.$fname]) && is_array(self::$request->sel_options[self::$prefix.$fname]))
 				{
 					self::$request->sel_options[self::$prefix.$fname] += (array)$field['values'];
 				}

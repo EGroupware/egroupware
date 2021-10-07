@@ -636,13 +636,13 @@ abstract class Tracking
 		{
 			//error_log(__METHOD__."() data[$this->assigned_field]=".print_r($data[$this->assigned_field],true).", old[$this->assigned_field]=".print_r($old[$this->assigned_field],true));
 			$old_assignees = array();
-			$assignees = $assigned ? $assigned : array();
-			if ($data[$this->assigned_field])	// current assignments
+			$assignees = $assigned ?? array();
+			if (!empty($data[$this->assigned_field]))	// current assignments
 			{
 				$assignees = is_array($data[$this->assigned_field]) ?
 					$data[$this->assigned_field] : explode(',',$data[$this->assigned_field]);
 			}
-			if ($old && $old[$this->assigned_field])
+			if ($old && !empty($old[$this->assigned_field]))
 			{
 				$old_assignees = is_array($old[$this->assigned_field]) ?
 					$old[$this->assigned_field] : explode(',',$old[$this->assigned_field]);
@@ -1127,18 +1127,18 @@ abstract class Tracking
 			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 
-			$body .= $this->format_line($html_email,$detail['type'],$modified,
-				$detail['label'] ? $detail['label'] : '', $detail['value']);
+			$body .= $this->format_line($html_email, $detail['type'] ?? null, $modified,
+				$detail['label'] ?? '', $detail['value']);
 		}
 		if ($html_email)
 		{
 			$body .= "</table>\n";
 		}
-		if(($sig = $this->get_signature($data,$old,$receiver)))
+		if (($sig = $this->get_signature($data,$old,$receiver)))
 		{
 			$body .= ($html_email ? '<br />':'') . "\n$sig";
 		}
-		if (!$html_email && $data['tr_edit_mode'] == 'html')
+		if (!$html_email && isset($data['tr_edit_mode']) && $data['tr_edit_mode'] === 'html')
 		{
 			$body = Api\Mail\Html::convertHTMLToText($body);
 		}
@@ -1271,7 +1271,7 @@ abstract class Tracking
 			$merge_class = $this->app.'_merge';
 			$merge = new $merge_class();
 			$error = null;
-			$sig = $merge->merge_string($config['signature'], array($data[$this->id_field]), $error, 'text/html');
+			$sig = $merge->merge_string($config['signature']??null, array($data[$this->id_field]), $error, 'text/html');
 			if($error)
 			{
 				error_log($error);

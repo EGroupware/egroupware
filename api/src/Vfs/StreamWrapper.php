@@ -798,11 +798,11 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		{
 			$stat['url'] = $url;
 		}
-		if (($stat['mode'] & 0222) && self::url_is_readonly($stat['url']))
+		if ($stat && ($stat['mode'] & 0222) && self::url_is_readonly($stat['url']))
 		{
 			$stat['mode'] &= ~0222;
 		}
-		if($stat['url'] && $query && strpos($stat['url'],'?'.$query)===false)
+		if ($stat && $stat['url'] && $query && strpos($stat['url'],'?'.$query) === false)
 		{
 			$stat['url'] .= '?'.$query;
 		}
@@ -998,7 +998,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		}
 		else
 		{
-			$vfs_fstab = $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'];
+			$vfs_fstab = $GLOBALS['egw_info']['user']['preferences']['common']['vfs_fstab'] ?? [];
 		}
 		if (!empty($vfs_fstab) && is_array($vfs_fstab))
 		{

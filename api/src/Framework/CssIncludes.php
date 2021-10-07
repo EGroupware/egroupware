@@ -113,7 +113,7 @@ class CssIncludes
 		{
 			foreach(self::resolve_css_includes($path) as $path)
 			{
-				list($file,$query) = explode('?',$path,2);
+				list($file,$query) = explode('?',$path,2)+[null,null];
 				if (($mod = filemtime(EGW_SERVER_ROOT.$file)) > $max_modified) $max_modified = $mod;
 
 				// do NOT include app.css or categories.php, as it changes from app to app

@@ -1538,7 +1538,7 @@ class Session
 		}
 
 		// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-		if (strpos($ret_url=$url, '?') !== false) list($ret_url,$othervars) = explode('?', $url, 2)+[null,null];
+		list($ret_url,$othervars) = explode('?', $url, 2)+[null,null];
 		if ($extravars && is_array($extravars))
 		{
 			$vars += $extravars;

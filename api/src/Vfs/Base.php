@@ -335,21 +335,20 @@ class Base
 					$url = str_replace($matches[0], $matches[1] . Vfs::concat($matches[2], substr($parts['path'], strlen($mounted))), $url);
 				}
 
-				if($replace_user_pass_host)
+				if ($replace_user_pass_host)
 				{
-					$url = str_replace(array('$user',
-											 '$pass',
-											 '$host',
-											 '$home'), array($parts['user'],
-															 $parts['pass'],
-															 $parts['host'],
-															 $parts['home']), $url);
+					$url = strtr($url, [
+						'$user' => $parts['user'],
+						'$pass' => $parts['pass'],
+						'$host' => $parts['host'],
+						'$home' => $parts['home'],
+					]);
 				}
-				if($parts['query'])
+				if (isset($parts['query']))
 				{
 					$url .= '?' . $parts['query'];
 				}
-				if($parts['fragment'])
+				if (isset($parts['fragment']))
 				{
 					$url .= '#' . $parts['fragment'];
 				}
@@ -657,7 +656,7 @@ class Base
 				return false;
 			}
 			$k = (string)Vfs::parse_url($url, PHP_URL_SCHEME);
-			if(!(is_array($scheme2urls[$k])))
+			if (!isset($scheme2urls[$k]))
 			{
 				$scheme2urls[$k] = array();
 			}

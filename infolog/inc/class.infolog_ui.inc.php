@@ -1874,7 +1874,7 @@ class infolog_ui
 
 					$content['link_to']['to_app'] = 'infolog';
 					$content['link_to']['to_id'] = $info_id;
-
+					/* $info_link_id is never defined
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);
@@ -1903,7 +1903,7 @@ class infolog_ui
 							// we need eg. the new modification date, for further updates
 							$content = array_merge($content,$to_write);
 						}
-					}
+					}*/
 
 					// Need to purge description history after encryption?
 					if($content['clean_history'])
@@ -2115,7 +2115,7 @@ class infolog_ui
 			// remove types owned by groups the user has no edit grant (current type is made readonly)
 			foreach($this->bo->group_owners as $type => $group)
 			{
-				if (!($this->bo->grants[$group] & Acl::EDIT))
+				if (!(($this->bo->grants[$group]??0) & Acl::EDIT))
 				{
 					if ($type == $content['info_type'])
 					{
@@ -2172,7 +2172,7 @@ class infolog_ui
 			$readonlys['action'] = true;
 		}
 		// ToDo: use the old status before the delete
-		if ($info_id && $undelete)
+		if ($info_id && !empty($undelete))
 		{
 			$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
@@ -2187,7 +2187,7 @@ class infolog_ui
 		// use a typ-specific template (infolog.edit.xyz), if one exists, otherwise fall back to the generic one
 		if (!$this->tmpl->read('infolog.edit.'.$content['info_type']))
 		{
-			$this->tmpl->read($print ? 'infolog.edit.print':'infolog.edit');
+			$this->tmpl->read(!empty($print) ? 'infolog.edit.print' : 'infolog.edit');
 		}
 		if ($this->bo->has_customfields($content['info_type']))
 		{
@@ -2252,7 +2252,7 @@ class infolog_ui
 			$tracking = new infolog_tracking($this);
 			foreach($tracking->field2history as $field => $history)
 			{
-				$history_stati[$history] = $tracking->field2label[$field];
+				$history_stati[$history] = $tracking->field2label[$field] ?? null;
 			}
 			// Modified date removed from field2history, we don't need that in the history
 			$history_stati['Mo'] = $tracking->field2label['info_datemodified'];
@@ -2276,20 +2276,20 @@ class infolog_ui
 				'to_tracker' => array('label' => 'Tracker', 'title' => 'Convert to a ticket'),
 			),
 		);
-		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		if (!empty($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
 			$sel_options['action']['schedule'] = array('label' => 'Schedule', 'title' => 'Schedule appointment');
 		}
-		if ($GLOBALS['egw_info']['user']['apps']['stylite'] && !$GLOBALS['egw_info']['server']['disable_pgp_encryption'])
+		if (!empty($GLOBALS['egw_info']['user']['apps']['stylite']) && empty($GLOBALS['egw_info']['server']['disable_pgp_encryption']))
 		{
 			$content['encryption_ts'] = filemtime(EGW_SERVER_ROOT.'/stylite/js/app.js');
 		}
-		elseif ($GLOBALS['egw_info']['server']['disable_pgp_encryption'])
+		elseif (!empty($GLOBALS['egw_info']['server']['disable_pgp_encryption']))
 		{
 			$readonlys['encrypt'] = true;
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
-			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
+			(!empty($content['status_only']) ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
 		//error_log(substr($content['info_des'],1793,10));
 		//$content['info_des'] = substr($content['info_des'],0,1793);

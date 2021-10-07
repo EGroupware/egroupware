@@ -425,7 +425,7 @@ class mail_ui
 	protected static function image_proxy()
 	{
 		$configs = Api\Config::read('mail');
-		$image_proxy = $configs[self::IMAGE_PROXY_CONFIG] ?: self::DEFAULT_IMAGE_PROXY;
+		$image_proxy = $configs[self::IMAGE_PROXY_CONFIG] ?? self::DEFAULT_IMAGE_PROXY;
 		if (strpos(self::EGROUPWARE_IMAGE_PROXY, parse_url($image_proxy, PHP_URL_HOST)))
 		{
 			$image_proxy = self::EGROUPWARE_IMAGE_PROXY;
@@ -565,7 +565,7 @@ class mail_ui
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 
 				// sending preview toolbar actions
-				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+				if (!empty($content['mailSplitter'])) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
 				// We need to send toolbar actions to client-side because view template needs them
 				if (Api\Header\UserAgent::mobile()) $sel_options['toolbar'] = $this->get_toolbar_actions();
@@ -1827,7 +1827,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// we have an own created rowID; prepend app=mail
 			array_unshift($res,'mail');
 		}
-		return array('app'=>$res[0], 'accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
+		return array('app'=>$res[0], 'accountID'=>$res[1]??null, 'profileID'=>$res[2]??null, 'folder'=>base64_decode($res[3]??null), 'msgUID'=>$res[4]??null);
 	}
 
 	/**

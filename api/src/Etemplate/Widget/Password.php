@@ -49,7 +49,8 @@ class Password extends Etemplate\Widget\Textbox
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name);
-		$plaintext = !in_array(self::expand_name($this->attrs['plaintext'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']),
+		$plaintext = !empty($this->attrs['plaintext']) && !in_array(
+			self::expand_name($this->attrs['plaintext'], $expand['c'] ?? null, $expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']),
 			['false', '0']);
 
 		if (!empty($value))

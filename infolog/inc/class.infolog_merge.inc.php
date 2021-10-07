@@ -138,7 +138,7 @@ class infolog_merge extends Api\Storage\Merge
 		// Set any missing custom fields, or the marker will stay
 		foreach($this->bo->customfields as $name => $field)
 		{
-			if(!$array['#'.$name])
+			if (empty($array['#'.$name]))
 			{
 				$array['#'.$name] = '';
 			}

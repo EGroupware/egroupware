@@ -160,7 +160,7 @@ class notifications_popup implements notifications_iface {
 			foreach ($rs as $notification) {
 				$actions = null;
 				$data = json_decode($notification['notify_data'], true);
-				if ($data['appname'] && $data['data'])
+				if (!empty($data['appname']) && !empty($data['data']))
 				{
 					$_actions = Api\Hooks::process (array(
 						'location' => 'notifications_actions',
@@ -175,7 +175,7 @@ class notifications_popup implements notifications_iface {
 					'created' => Api\DateTime::server2user($notification['notify_created']),
 					'current' => new Api\DateTime('now'),
 					'actions' => is_array($actions)?$actions:NULL,
-					'extra_data' => ($data['data'] ? $data['data'] : array())
+					'extra_data' => $data['data'] ?? [],
 				);
 
 			}

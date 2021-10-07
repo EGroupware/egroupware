@@ -3211,7 +3211,7 @@ class Mail
 			}
 			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
 			if (!$isGoogleMail) {
-				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)$typeFolderObject['others'] ?? [],(array)$typeFolderObject['shared'] ?? []);
+				$folders = array_merge($inboxFolderObject,$autoFolderObjects,(array)$inboxSubFolderObjects,(array)$folders,(array)($typeFolderObject['others'] ?? []),(array)($typeFolderObject['shared'] ?? []));
 			} else {
 				// avoid calling sortByAutoFolder as it is not regarding subfolders
 				$gAutoFolderObjectsTmp = $googleAutoFolderObjects;

@@ -150,10 +150,10 @@ class Script
 						$rule['anyof']		= ($bits[8] & $anyofbit);
 						$rule['keep']		= ($bits[8] & $keepbit);
 						$rule['regexp']		= ($bits[8] & $regexbit);
-						$rule['bodytransform'] = ($bits[12]);
-						$rule['field_bodytransform'] = ($bits[13]);
-						$rule['ctype'] = ($bits[14]);
-						$rule['field_ctype_val'] = ($bits[15]);
+						$rule['bodytransform'] = ($bits[12]??null);
+						$rule['field_bodytransform'] = ($bits[13]??null);
+						$rule['ctype'] = ($bits[14]??null);
+						$rule['field_ctype_val'] = ($bits[15]??null);
 						$rule['unconditional']	= 0;
 						if (!$rule['from'] && !$rule['to'] && !$rule['subject'] &&
 							!$rule['field'] && !$rule['size'] && $rule['action']) {
@@ -188,7 +188,7 @@ class Script
 							}
 							$vacation['addresses'] = &$vaddresses;
 
-							$vacation['forwards'] = $bits[5];
+							$vacation['forwards'] = $bits[5]??null;
 						}
 						break;
 					case "notify":
