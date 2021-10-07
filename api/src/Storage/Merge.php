@@ -1644,7 +1644,7 @@ abstract class Merge
 	public static function get_app_class($appname)
 	{
 		$classname = "{$appname}_merge";
-		if(class_exists($classname, false) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
+		if(class_exists($classname) && is_subclass_of($classname, 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $classname();
 		}
