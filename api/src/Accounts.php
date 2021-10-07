@@ -595,11 +595,15 @@ class Accounts
 	/**
 	 * Return formatted username for a given account_id
 	 *
-	 * @param int $account_id account id
+	 * @param ?int $account_id account id, default current user
 	 * @return string full name of user or "#$account_id" if user not found
 	 */
-	static function username(int $account_id)
+	static function username(int $account_id=null)
 	{
+		if (empty($account_id))
+		{
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		}
 		if (!($account = self::cache_read($account_id)))
 		{
 			return '#'.$account_id;
