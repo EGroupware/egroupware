@@ -33,6 +33,16 @@ use ZipArchive;
 abstract class Merge
 {
 	/**
+	 * Preference, path where we look for merge templates
+	 */
+	public const PREF_TEMPLATE_DIR = 'document_dir';
+
+	/**
+	 * Preference, path to special documents that are listed first
+	 */
+	public const PREF_DEFAULT_TEMPLATE = 'default_document';
+
+	/**
 	 * Preference, path where we will put the generated document
 	 */
 	const PREF_STORE_LOCATION = "merge_store_path";
@@ -104,21 +114,21 @@ abstract class Merge
 	public $export_limit;
 
 	public $public_functions = array(
-		"merge_entries"		=> true
+		"merge_entries" => true
 	);
 
 	/**
 	 * Configuration for HTML Tidy to clean up any HTML content that is kept
 	 */
 	public static $tidy_config = array(
-		'output-xml'		=> true,	// Entity encoding
-		'show-body-only'	=> true,
-		'output-encoding'	=> 'utf-8',
-		'input-encoding'	=> 'utf-8',
-		'quote-ampersand'	=> false,	// Prevent double encoding
-		'quote-nbsp'		=> true,	// XSLT can handle spaces easier
-		'preserve-entities'	=> true,
-		'wrap'			=> 0,		// Wrapping can break output
+		'output-xml'        => true,    // Entity encoding
+		'show-body-only'    => true,
+		'output-encoding'   => 'utf-8',
+		'input-encoding'    => 'utf-8',
+		'quote-ampersand'   => false,    // Prevent double encoding
+		'quote-nbsp'        => true,    // XSLT can handle spaces easier
+		'preserve-entities' => true,
+		'wrap'              => 0,        // Wrapping can break output
 	);
 
 	/**
@@ -156,8 +166,8 @@ abstract class Merge
 
 		$this->contacts = new Api\Contacts();
 
-		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
-			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12 ? 'h:i a' : 'H:i');
+		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' ' .
+			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i');
 
 		$this->export_limit = self::getExportLimit();
 	}
@@ -171,8 +181,8 @@ abstract class Merge
 	{
 		$accountsel = new uiaccountsel();
 
-		return '<input type="hidden" value="" name="newsettings[export_limit_excepted]" />'.
-			$accountsel->selection('newsettings[export_limit_excepted]','export_limit_excepted',$config['export_limit_excepted'],'both',4);
+		return '<input type="hidden" value="" name="newsettings[export_limit_excepted]" />' .
+			$accountsel->selection('newsettings[export_limit_excepted]', 'export_limit_excepted', $config['export_limit_excepted'], 'both', 4);
 	}
 
 	/**
@@ -183,10 +193,10 @@ abstract class Merge
 	 * - format_datetime($time,$format=null)
 	 *
 	 * @param int $id id of entry
-	 * @param string &$content=null content to create some replacements only if they are use
+	 * @param string &$content =null content to create some replacements only if they are use
 	 * @return array|boolean array with replacements or false if entry not found
 	 */
-	abstract protected function get_replacements($id,&$content=null);
+	abstract protected function get_replacements($id, &$content = null);
 
 	/**
 	 * Return if merge-print is implemented for given mime-type (and/or extension)
@@ -194,47 +204,56 @@ abstract class Merge
 	 * @param string $mimetype eg. text/plain
 	 * @param string $extension only checked for applications/msword and .rtf
 	 */
-	static public function is_implemented($mimetype,$extension=null)
+	static public function is_implemented($mimetype, $extension = null)
 	{
-		static $zip_available=null;
-		if (is_null($zip_available))
+		static $zip_available = null;
+		if(is_null($zip_available))
 		{
 			$zip_available = check_load_extension('zip') &&
-				class_exists('ZipArchive');	// some PHP has zip extension, but no ZipArchive (eg. RHEL5!)
+				class_exists('ZipArchive');    // some PHP has zip extension, but no ZipArchive (eg. RHEL5!)
 		}
-		switch ($mimetype)
+		switch($mimetype)
 		{
 			case 'application/msword':
-				if (strtolower($extension) != '.rtf') break;
+				if(strtolower($extension) != '.rtf')
+				{
+					break;
+				}
 			case 'application/rtf':
 			case 'text/rtf':
-				return true;	// rtf files
-			case 'application/vnd.oasis.opendocument.text':	// oo text
-			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+				return true;    // rtf files
+			case 'application/vnd.oasis.opendocument.text':    // oo text
+			case 'application/vnd.oasis.opendocument.spreadsheet':    // oo spreadsheet
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-				if (!$zip_available) break;
-				return true;	// open office write xml files
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007 xml format
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				if(!$zip_available)
+				{
+					break;
+				}
+				return true;    // open office write xml files
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms word 2007 xml format
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':    // mimetypes in vfs are limited to 64 chars
 			case 'application/vnd.ms-word.document.macroenabled.12':
-			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007 xml format
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':    // ms excel 2007 xml format
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-				if (!$zip_available) break;
-				return true;	// ms word xml format
+				if(!$zip_available)
+				{
+					break;
+				}
+				return true;    // ms word xml format
 			case 'application/xml':
-				return true;	// alias for text/xml, eg. ms office 2003 word format
+				return true;    // alias for text/xml, eg. ms office 2003 word format
 			case 'message/rfc822':
 				return true; // ToDo: check if you are theoretical able to send mail
 			case 'application/x-yaml':
-				return true;	// yaml file, plain text with marginal syntax support for multiline replacements
+				return true;    // yaml file, plain text with marginal syntax support for multiline replacements
 			default:
-				if (substr($mimetype,0,5) == 'text/')
+				if(substr($mimetype, 0, 5) == 'text/')
 				{
-					return true;	// text files
+					return true;    // text files
 				}
 				break;
 		}
@@ -252,13 +271,16 @@ abstract class Merge
 	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return array
 	 */
-	public function contact_replacements($contact,$prefix='',$ignore_acl=false, &$content = '')
+	public function contact_replacements($contact, $prefix = '', $ignore_acl = false, &$content = '')
 	{
-		if (!is_array($contact))
+		if(!is_array($contact))
 		{
 			$contact = $this->contacts->read($contact, $ignore_acl);
 		}
-		if (!is_array($contact)) return array();
+		if(!is_array($contact))
+		{
+			return array();
+		}
 
 		$replacements = array();
 		foreach(array_keys($this->contacts->contact_fields) as $name)
@@ -362,15 +384,15 @@ abstract class Merge
 			}
 			// Format date cfs per user Api\Preferences
 			if($this->mimetype !== 'application/x-yaml' && $contact[$name] &&
-					($field['type'] == 'date' || $field['type'] == 'date-time'))
+				($field['type'] == 'date' || $field['type'] == 'date-time'))
 			{
-				$this->date_fields[] = '#'.$name;
-				$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = Api\DateTime::to($contact[$name], $field['type'] == 'date' ? true : '');
+				$this->date_fields[] = '#' . $name;
+				$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = Api\DateTime::to($contact[$name], $field['type'] == 'date' ? true : '');
 			}
-			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] =
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] =
 				// use raw data for yaml, no user-preference specific formatting
 				$this->mimetype == 'application/x-yaml' || $field['type'] == 'htmlarea' ? (string)$contact[$name] :
-				Customfields::format($field, (string)$contact[$name]);
+					Customfields::format($field, (string)$contact[$name]);
 		}
 
 		if($content && strpos($content, '$$#') !== FALSE)
@@ -380,22 +402,27 @@ abstract class Merge
 
 		// Add in extra cat field
 		$cats = array();
-		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : explode(',',$contact['cat_id']) as $cat_id)
+		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : explode(',', $contact['cat_id']) as $cat_id)
 		{
-			if(!$cat_id) continue;
-			if($GLOBALS['egw']->categories->id2name($cat_id,'main') != $cat_id)
+			if(!$cat_id)
+			{
+				continue;
+			}
+			if($GLOBALS['egw']->categories->id2name($cat_id, 'main') != $cat_id)
 			{
 				$path = explode(' / ', $GLOBALS['egw']->categories->id2name($cat_id, 'path'));
 				unset($path[0]); // Drop main
-				$cats[$GLOBALS['egw']->categories->id2name($cat_id,'main')][] = implode(' / ', $path);
-			} elseif($cat_id) {
+				$cats[$GLOBALS['egw']->categories->id2name($cat_id, 'main')][] = implode(' / ', $path);
+			}
+			elseif($cat_id)
+			{
 				$cats[$cat_id] = array();
 			}
 		}
-		$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] = '';
+		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'categories$$'] = '';
 		foreach($cats as $main => $cat)
 		{
-			$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] .= $GLOBALS['egw']->categories->id2name($main,'name')
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'categories$$'] .= $GLOBALS['egw']->categories->id2name($main, 'name')
 				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
 		}
 		return $replacements;
@@ -411,11 +438,11 @@ abstract class Merge
 	 * @param only_app Restrict links to only given application
 	 * @param exclude Exclude links to these applications
 	 * @param style String One of:
-	 * 	'title' - plain text, just the title of the link
-	 * 	'link' - URL to the entry
-	 * 	'href' - HREF tag wrapped around the title
+	 *    'title' - plain text, just the title of the link
+	 *    'link' - URL to the entry
+	 *    'href' - HREF tag wrapped around the title
 	 */
-	protected function get_links($app, $id, $only_app='', $exclude = array(), $style = 'title')
+	protected function get_links($app, $id, $only_app = '', $exclude = array(), $style = 'title')
 	{
 		$links = Api\Link::get_links($app, $id, $only_app);
 		$link_titles = array();
@@ -425,34 +452,40 @@ abstract class Merge
 			if(!is_array($link_info) && $only_app && $only_app[0] !== '!')
 			{
 				$link_info = array(
-					'app'	=> $only_app,
-					'id'	=> $link_info
+					'app' => $only_app,
+					'id'  => $link_info
 				);
 			}
-			if($exclude && in_array($link_info['id'], $exclude)) continue;
+			if($exclude && in_array($link_info['id'], $exclude))
+			{
+				continue;
+			}
 
 			$title = Api\Link::title($link_info['app'], $link_info['id']);
-			
+
 			if($style == 'href' || $style == 'link')
 			{
 				$link = Api\Link::view($link_info['app'], $link_info['id'], $link_info);
 				if($link_info['app'] != Api\Link::VFS_APPNAME)
 				{
 					// Set app to false so we always get an external link
-					$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php',$link, false));
+					$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php', $link, false));
 				}
 				else
 				{
 					$link = Api\Framework::link($link, array());
 				}
 				// Prepend site
-				if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+				if($link[0] == '/')
+				{
+					$link = Api\Framework::getUrl($link);
+				}
 
 				$title = $style == 'href' ? Api\Html::a_href(Api\Html::htmlspecialchars($title), $link) : $link;
 			}
 			$link_titles[] = $title;
 		}
-		return implode("\n",$link_titles);
+		return implode("\n", $link_titles);
 	}
 
 	/**
@@ -469,7 +502,7 @@ abstract class Merge
 	{
 		$array = array();
 		$pattern = '@\$\$(links_attachments|links|attachments|link)\/?(title|href|link)?\/?([a-z]*)\$\$@';
-		static $link_cache=null;
+		static $link_cache = null;
 		$matches = null;
 		if(preg_match_all($pattern, $content, $matches))
 		{
@@ -495,38 +528,44 @@ abstract class Merge
 						if($app != Api\Link::VFS_APPNAME)
 						{
 							// Set app to false so we always get an external link
-							$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php',$link, false));
+							$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php', $link, false));
 						}
 						else
 						{
 							$link = Api\Framework::link($link, array());
 						}
 						// Prepend site
-						if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+						if($link[0] == '/')
+						{
+							$link = Api\Framework::getUrl($link);
+						}
 
 						// Formatting
 						if($matches[2][$i] == 'title')
 						{
 							$link = $title;
 						}
-						else if($matches[2][$i] == 'href')
+						else
 						{
-							// Turn on HTML style parsing or the link will be escaped
-							$this->parse_html_styles = true;
-							$link = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
+							if($matches[2][$i] == 'href')
+							{
+								// Turn on HTML style parsing or the link will be escaped
+								$this->parse_html_styles = true;
+								$link = Api\Html::a_href(Api\Html::htmlspecialchars($title), $link);
+							}
 						}
 
-						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $link;
+						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $link;
 						break;
 					case 'links':
-						$link_app = $matches[3][$i] ? $matches[3][$i] :  '!'.Api\Link::VFS_APPNAME;
-						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, $link_app, array(),$matches[2][$i]);
+						$link_app = $matches[3][$i] ? $matches[3][$i] : '!' . Api\Link::VFS_APPNAME;
+						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, $link_app, array(), $matches[2][$i]);
 						break;
 					case 'attachments':
-						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, Api\Link::VFS_APPNAME,array(),$matches[2][$i]);
+						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, Api\Link::VFS_APPNAME, array(), $matches[2][$i]);
 						break;
 					default:
-						$array['$$'.($prefix?$prefix.'/':'').$placeholder.'$$'] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
+						$array['$$' . ($prefix ? $prefix . '/' : '') . $placeholder . '$$'] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
 						break;
 				}
 				$link_cache[$id][$placeholder] = $array[$placeholder];
@@ -553,7 +592,7 @@ abstract class Merge
 
 		if(!$GLOBALS['egw_info']['user']['apps']['stylite'])
 		{
-			$replacements['$$'.$prefix.'share$$'] = lang('EPL Only');
+			$replacements['$$' . $prefix . 'share$$'] = lang('EPL Only');
 			return $replacements;
 		}
 
@@ -562,7 +601,7 @@ abstract class Merge
 
 		if($share)
 		{
-			$replacements['$$'.$prefix.'share$$'] = $link = Api\Sharing::share2link($share);
+			$replacements['$$' . $prefix . 'share$$'] = $link = Api\Sharing::share2link($share);
 		}
 
 		return $replacements;
@@ -589,7 +628,8 @@ abstract class Merge
 
 		// Need to create the share here.
 		// No way to know here if it should be writable, or who it's going to
-		$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
+		$mode = /* ?  ? Sharing::WRITABLE :*/
+			Api\Sharing::READONLY;
 		$recipients = array();
 		$extra = array();
 
@@ -603,15 +643,18 @@ abstract class Merge
 	 *
 	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
 	 * @param string $format =null format string, default $this->datetime_format
-	 * @deprecated use Api\DateTime::to($time='now',$format='')
 	 * @return string
+	 * @deprecated use Api\DateTime::to($time='now',$format='')
 	 */
-	protected function format_datetime($time,$format=null)
+	protected function format_datetime($time, $format = null)
 	{
 		trigger_error(__METHOD__ . ' is deprecated, use Api\DateTime::to($time, $format)', E_USER_DEPRECATED);
-		if (is_null($format)) $format = $this->datetime_format;
+		if(is_null($format))
+		{
+			$format = $this->datetime_format;
+		}
 
-		return Api\DateTime::to($time,$format);
+		return Api\DateTime::to($time, $format);
 	}
 
 	/**
@@ -623,19 +666,19 @@ abstract class Merge
 	 */
 	public static function is_export_limit_excepted()
 	{
-		static $is_excepted=null;
+		static $is_excepted = null;
 
-		if (is_null($is_excepted))
+		if(is_null($is_excepted))
 		{
 			$is_excepted = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 			// check export-limit and fail if user tries to export more entries then allowed
-			if (!$is_excepted && (is_array($export_limit_excepted = $GLOBALS['egw_info']['server']['export_limit_excepted']) ||
-				is_array($export_limit_excepted = unserialize($export_limit_excepted))))
+			if(!$is_excepted && (is_array($export_limit_excepted = $GLOBALS['egw_info']['server']['export_limit_excepted']) ||
+					is_array($export_limit_excepted = unserialize($export_limit_excepted))))
 			{
-				$id_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+				$id_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 				$id_and_memberships[] = $GLOBALS['egw_info']['user']['account_id'];
-				$is_excepted = (bool) array_intersect($id_and_memberships, $export_limit_excepted);
+				$is_excepted = (bool)array_intersect($id_and_memberships, $export_limit_excepted);
 			}
 		}
 		return $is_excepted;
@@ -646,30 +689,36 @@ abstract class Merge
 	 *
 	 * @param string $app ='common' checks and validates app_limit, if not set returns the global limit
 	 * @return mixed - no if no export is allowed, false if there is no restriction and int as there is a valid restriction
-	 *		you may have to cast the returned value to int, if you want to use it as number
+	 *        you may have to cast the returned value to int, if you want to use it as number
 	 */
-	public static function getExportLimit($app='common')
+	public static function getExportLimit($app = 'common')
 	{
-		static $exportLimitStore=array();
-		if (empty($app)) $app='common';
+		static $exportLimitStore = array();
+		if(empty($app))
+		{
+			$app = 'common';
+		}
 		//error_log(__METHOD__.__LINE__.' called with app:'.$app);
-		if (!array_key_exists($app,$exportLimitStore))
+		if(!array_key_exists($app, $exportLimitStore))
 		{
 			//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
 			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
-			if ($app !='common')
+			if($app != 'common')
 			{
-				$app_limit = Api\Hooks::single('export_limit',$app);
-				if ($app_limit) $exportLimitStore[$app] = $app_limit;
+				$app_limit = Api\Hooks::single('export_limit', $app);
+				if($app_limit)
+				{
+					$exportLimitStore[$app] = $app_limit;
+				}
 			}
 			//error_log(__METHOD__.__LINE__.' building cache for app:'.$app.' -> '.$exportLimitStore[$app]);
-			if (empty($exportLimitStore[$app]))
+			if(empty($exportLimitStore[$app]))
 			{
 				$exportLimitStore[$app] = false;
 				return false;
 			}
 
-			if (is_numeric($exportLimitStore[$app]))
+			if(is_numeric($exportLimitStore[$app]))
 			{
 				$exportLimitStore[$app] = (int)$exportLimitStore[$app];
 			}
@@ -691,12 +740,24 @@ abstract class Merge
 	 *
 	 * @return bool - true if no export is allowed or a limit is set, false if there is no restriction
 	 */
-	public static function hasExportLimit($app_limit,$checkas='AND')
+	public static function hasExportLimit($app_limit, $checkas = 'AND')
 	{
-		if (strtoupper($checkas) == 'ISALLOWED') return (empty($app_limit) || ($app_limit !='no' && $app_limit > 0) );
-		if (empty($app_limit)) return false;
-		if ($app_limit == 'no') return true;
-		if ($app_limit > 0) return true;
+		if(strtoupper($checkas) == 'ISALLOWED')
+		{
+			return (empty($app_limit) || ($app_limit != 'no' && $app_limit > 0));
+		}
+		if(empty($app_limit))
+		{
+			return false;
+		}
+		if($app_limit == 'no')
+		{
+			return true;
+		}
+		if($app_limit > 0)
+		{
+			return true;
+		}
 	}
 
 	/**
@@ -709,31 +770,34 @@ abstract class Merge
 	 * @param array $fix =null regular expression => replacement pairs eg. to fix garbled placeholders
 	 * @return string|boolean merged document or false on error
 	 */
-	public function &merge($document,$ids,&$err,$mimetype,array $fix=null)
+	public function &merge($document, $ids, &$err, $mimetype, array $fix = null)
 	{
-		if (!($content = file_get_contents($document)))
+		if(!($content = file_get_contents($document)))
 		{
-			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
+			$err = lang("Document '%1' does not exist or is not readable for you!", $document);
 			$ret = false;
 			return $ret;
 		}
 
-		if (self::hasExportLimit($this->export_limit) && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
+		if(self::hasExportLimit($this->export_limit) && !self::is_export_limit_excepted() && count($ids) > (int)$this->export_limit)
 		{
-			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
+			$err = lang('No rights to export more than %1 entries!', (int)$this->export_limit);
 			$ret = false;
 			return $ret;
 		}
 
 		// fix application/msword mimetype for rtf files
-		if ($mimetype == 'application/msword' && strtolower(substr($document,-4)) == '.rtf')
+		if($mimetype == 'application/msword' && strtolower(substr($document, -4)) == '.rtf')
 		{
 			$mimetype = 'application/rtf';
 		}
 
-		try {
-			$content = $this->merge_string($content,$ids,$err,$mimetype,$fix);
-		} catch (\Exception $e) {
+		try
+		{
+			$content = $this->merge_string($content, $ids, $err, $mimetype, $fix);
+		}
+		catch (\Exception $e)
+		{
 			_egw_log_exception($e);
 			$err = $e->getMessage();
 			$ret = false;
@@ -742,51 +806,51 @@ abstract class Merge
 		return $content;
 	}
 
-	protected function apply_styles (&$content, $mimetype, $mso_application_progid=null)
+	protected function apply_styles(&$content, $mimetype, $mso_application_progid = null)
 	{
-		if (!isset($mso_application_progid))
+		if(!isset($mso_application_progid))
 		{
 			$matches = null;
 			$mso_application_progid = $mimetype == 'application/xml' &&
-				preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($content,0,200),$matches) ?
-					$matches[1] : '';
+			preg_match('/' . preg_quote('<?mso-application progid="', '/') . '([^"]+)' . preg_quote('"?>', '/') . '/', substr($content, 0, 200), $matches) ?
+				$matches[1] : '';
 		}
 		// Tags we can replace with the target document's version
 		$replace_tags = array();
-		switch($mimetype.$mso_application_progid)
+		switch($mimetype . $mso_application_progid)
 		{
-			case 'application/vnd.oasis.opendocument.text':	// oo text
-			case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+			case 'application/vnd.oasis.opendocument.text':    // oo text
+			case 'application/vnd.oasis.opendocument.spreadsheet':    // oo spreadsheet
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
-				$doc->load(EGW_INCLUDE_ROOT.'/api/templates/default/Merge/openoffice.xslt');
+				$doc->load(EGW_INCLUDE_ROOT . '/api/templates/default/Merge/openoffice.xslt');
 				$xslt->importStyleSheet($doc);
 
 //echo $content;die();
 				break;
-			case 'application/xmlWord.Document':	// Word 2003*/
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/xmlWord.Document':    // Word 2003*/
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
 			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
 					// Tables, lists don't go inside <w:p>
-					'/<(ol|ul|table)( [^>]*)?>/' => '</w:t></w:r></w:p><$1$2>',
-					'/<\/(ol|ul|table)>/' => '</$1><w:p><w:r><w:t>',
+					'/<(ol|ul|table)( [^>]*)?>/'                    => '</w:t></w:r></w:p><$1$2>',
+					'/<\/(ol|ul|table)>/'                           => '</$1><w:p><w:r><w:t>',
 					// Fix for things other than text (newlines) inside table row
 					'/<(td)( [^>]*)?>((?!<w:t>))(.*?)<\/td>[\s]*?/' => '<$1$2><w:t>$4</w:t></td>',
 					// Remove extra whitespace
-					'/<li([^>]*?)>[^:print:]*?(.*?)<\/li>/' => '<li$1>$2</li>', // This doesn't get it all
-					'/<w:t>[\s]+(.*?)<\/w:t>/' => '<w:t>$1</w:t>',
+					'/<li([^>]*?)>[^:print:]*?(.*?)<\/li>/'         => '<li$1>$2</li>', // This doesn't get it all
+					'/<w:t>[\s]+(.*?)<\/w:t>/'                      => '<w:t>$1</w:t>',
 					// Remove spans with no attributes, linebreaks inside them cause problems
-					'/<span>(.*?)<\/span>/' => '$1'
+					'/<span>(.*?)<\/span>/'                         => '$1'
 				);
-				$content = preg_replace(array_keys($replace_tags),array_values($replace_tags),$content);
+				$content = preg_replace(array_keys($replace_tags), array_values($replace_tags), $content);
 
 				/*
 				In the case where you have something like <span><span></w:t><w:br/><w:t></span></span> (invalid - mismatched tags),
@@ -796,14 +860,15 @@ abstract class Merge
 				$count = $i = 0;
 				do
 				{
-					$content = preg_replace('/<span>(.*?)<\/span>/','$1',$content, -1, $count);
+					$content = preg_replace('/<span>(.*?)<\/span>/', '$1', $content, -1, $count);
 					$i++;
-				} while($count > 0 && $i < 10);
+				}
+				while($count > 0 && $i < 10);
 
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
 				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
-				$doc->load(EGW_INCLUDE_ROOT.'/api/templates/default/Merge/'.$xslt_file);
+				$doc->load(EGW_INCLUDE_ROOT . '/api/templates/default/Merge/' . $xslt_file);
 				$xslt->importStyleSheet($doc);
 				break;
 		}
@@ -822,8 +887,9 @@ abstract class Merge
 			$content = $xslt->transformToXml($element);
 //echo $content;die();
 			// Word 2003 needs two declarations, add extra declaration back in
-			if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0) {
-				$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.$content;
+			if($mimetype == 'application/xml' && $mso_application_progid == 'Word.Document' && strpos($content, '<?xml') !== 0)
+			{
+				$content = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . $content;
 			}
 			// Validate
 			/*
@@ -845,12 +911,12 @@ abstract class Merge
 	 * @param string $charset =null charset to override default set by mimetype or export charset
 	 * @return string|boolean merged document or false on error
 	 */
-	public function &merge_string($_content,$ids,&$err,$mimetype,array $fix=null,$charset=null)
+	public function &merge_string($_content, $ids, &$err, $mimetype, array $fix = null, $charset = null)
 	{
 		$ids = empty($ids) ? [] : (array)$ids;
 		$matches = null;
-		if ($mimetype == 'application/xml' &&
-			preg_match('/'.preg_quote('<?mso-application progid="', '/').'([^"]+)'.preg_quote('"?>', '/').'/',substr($_content,0,200),$matches))
+		if($mimetype == 'application/xml' &&
+			preg_match('/' . preg_quote('<?mso-application progid="', '/') . '([^"]+)' . preg_quote('"?>', '/') . '/', substr($_content, 0, 200), $matches))
 		{
 			$mso_application_progid = $matches[1];
 		}
@@ -860,33 +926,38 @@ abstract class Merge
 		}
 		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
 		// agressivly removing all xml-tags eg. Word adds within placeholders
-		$content = preg_replace_callback('/{{[^}]+}}/i', function($matches)
+		$content = preg_replace_callback('/{{[^}]+}}/i', function ($matches)
 		{
-			return '$$'.strip_tags(substr($matches[0], 2, -2)).'$$';
-		}, $_content);
+			return '$$' . strip_tags(substr($matches[0], 2, -2)) . '$$';
+		},                               $_content);
 		// Handle escaped placeholder markers in RTF, they won't match when escaped
 		if($mimetype == 'application/rtf')
 		{
-			$content = preg_replace('/\\\{\\\{([^\\}]+)\\\}\\\}/i','$$\1$$',$content);
+			$content = preg_replace('/\\\{\\\{([^\\}]+)\\\}\\\}/i', '$$\1$$', $content);
 		}
 
 		// make currently processed mimetype available to class methods;
 		$this->mimetype = $mimetype;
 
 		// fix garbled placeholders
-		if ($fix && is_array($fix))
+		if($fix && is_array($fix))
 		{
-			$content = preg_replace(array_keys($fix),array_values($fix),$content);
+			$content = preg_replace(array_keys($fix), array_values($fix), $content);
 			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
-		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get differt parts of document, seperatet by Pagerepeat
-		if ($mimetype == 'text/plain' && $ids && count($ids) > 1)
+		list($contentstart, $contentrepeat, $contentend) = preg_split('/\$\$pagerepeat\$\$/', $content, -1, PREG_SPLIT_NO_EMPTY) + [null,
+																																	null,
+																																	null];  //get differt parts of document, seperatet by Pagerepeat
+		if($mimetype == 'text/plain' && $ids && count($ids) > 1)
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
 			// header and footer should not hold any $$ tags; if we find $$ tags with the header, we assume it is the pagerepeatcontent
 			$nohead = false;
-			if (stripos($contentstart,'$$') !== false) $nohead = true;
-			if ($nohead)
+			if(stripos($contentstart, '$$') !== false)
+			{
+				$nohead = true;
+			}
+			if($nohead)
 			{
 				$contentend = $contentrepeat;
 				$contentrepeat = $contentstart;
@@ -894,51 +965,58 @@ abstract class Merge
 			}
 
 		}
-		if (in_array($mimetype, array('application/vnd.oasis.opendocument.text','application/vnd.oasis.opendocument.text-template')) && count($ids) > 1)
+		if(in_array($mimetype, array('application/vnd.oasis.opendocument.text',
+									 'application/vnd.oasis.opendocument.text-template')) && count($ids) > 1)
 		{
 			if(strpos($content, '$$pagerepeat') === false)
 			{
 				//for odt files we have to split the content and add a style for page break to  the style area
-				list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
-				$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
-				$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+				list($contentstart, $contentrepeat, $contentend) = preg_split('/office:body>/', $content, -1, PREG_SPLIT_NO_EMPTY);           //get differt parts of document, seperatet by Pagerepeat
+				$contentstart = substr($contentstart, 0, strlen($contentstart) - 1);                                                          //remove "<"
+				$contentrepeat = substr($contentrepeat, 0, strlen($contentrepeat) - 2);                                                       //remove "</";
 				// need to add page-break style to the style list
-				list($stylestart,$stylerepeat,$styleend) = preg_split('/<\/office:automatic-styles>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
-				$contentstart = $stylestart.'<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
+				list($stylestart, $stylerepeat, $styleend) = preg_split('/<\/office:automatic-styles>/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
+				$contentstart = $stylestart . '<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
 				$contentstart .= '<office:body>';
 				$contentend = '</office:body></office:document-content>';
 			}
 			else
 			{
 				// Template specifies where to repeat
-				list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get different parts of document, seperated by pagerepeat
+				list($contentstart, $contentrepeat, $contentend) = preg_split('/\$\$pagerepeat\$\$/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get different parts of document, seperated by pagerepeat
 			}
 		}
-		if (in_array($mimetype, array('application/vnd.ms-word.document.macroenabled.12', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) && count($ids) > 1)
+		if(in_array($mimetype, array('application/vnd.ms-word.document.macroenabled.12',
+									 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) && count($ids) > 1)
 		{
 			//for Word 2007 XML files we have to split the content and add a style for page break to  the style area
-			list($contentstart,$contentrepeat,$contentend) = preg_split('/w:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
-			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "</"
-			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
+			list($contentstart, $contentrepeat, $contentend) = preg_split('/w:body>/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+			$contentstart = substr($contentstart, 0, strlen($contentstart) - 1);                                            //remove "</"
+			$contentrepeat = substr($contentrepeat, 0, strlen($contentrepeat) - 2);                                         //remove "</";
 			$contentstart .= '<w:body>';
 			$contentend = '</w:body></w:document>';
 		}
-		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY)+[null,null,null];  //get the label content
-		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
+		list($Labelstart, $Labelrepeat, $Labeltend) = preg_split('/\$\$label\$\$/', $contentrepeat, -1, PREG_SPLIT_NO_EMPTY) + [null,
+																																null,
+																																null];  //get the label content
+		preg_match_all('/\$\$labelplacement\$\$/', $contentrepeat, $countlables, PREG_SPLIT_NO_EMPTY);
 		$countlables = count($countlables[0]);
-		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
+		preg_replace('/\$\$labelplacement\$\$/', '', $Labelrepeat, 1);
 		$lableprint = $countlables > 1;
-		if (count($ids) > 1 && !$contentrepeat)
+		if(count($ids) > 1 && !$contentrepeat)
 		{
 			$err = lang('for more than one contact in a document use the tag pagerepeat!');
 			$ret = false;
 			return $ret;
 		}
-		if ($this->report_memory_usage) error_log(__METHOD__."(count(ids)=".count($ids).") strlen(contentrepeat)=".strlen($contentrepeat).', strlen(labelrepeat)='.strlen($Labelrepeat));
-
-		if ($contentrepeat)
+		if($this->report_memory_usage)
 		{
-			$content_stream = fopen('php://temp','r+');
+			error_log(__METHOD__ . "(count(ids)=" . count($ids) . ") strlen(contentrepeat)=" . strlen($contentrepeat) . ', strlen(labelrepeat)=' . strlen($Labelrepeat));
+		}
+
+		if($contentrepeat)
+		{
+			$content_stream = fopen('php://temp', 'r+');
 			fwrite($content_stream, $contentstart);
 			$joiner = '';
 			switch($mimetype)
@@ -947,8 +1025,8 @@ abstract class Merge
 				case 'text/rtf':
 					$joiner = '\\par \\page\\pard\\plain';
 					break;
-				case 'application/vnd.oasis.opendocument.text':	// oo text
-				case 'application/vnd.oasis.opendocument.spreadsheet':	// oo spreadsheet
+				case 'application/vnd.oasis.opendocument.text':    // oo text
+				case 'application/vnd.oasis.opendocument.spreadsheet':    // oo spreadsheet
 				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.text-template':
 				case 'application/vnd.oasis.opendocument.spreadsheet-template':
@@ -968,20 +1046,26 @@ abstract class Merge
 					$joiner = "\r\n";
 					break;
 				default:
-					$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
+					$err = lang('%1 not implemented for %2!', '$$pagerepeat$$', $mimetype);
 					$ret = false;
 					return $ret;
 			}
 		}
-		foreach ((array)$ids as $n => $id)
+		foreach((array)$ids as $n => $id)
 		{
-			if ($contentrepeat) $content = $contentrepeat;   //content to repeat
-			if ($lableprint) $content = $Labelrepeat;
+			if($contentrepeat)
+			{
+				$content = $contentrepeat;
+			}   //content to repeat
+			if($lableprint)
+			{
+				$content = $Labelrepeat;
+			}
 
 			// generate replacements; if exception is thrown, catch it set error message and return false
 			try
 			{
-				if(!($replacements = $this->get_replacements($id,$content)))
+				if(!($replacements = $this->get_replacements($id, $content)))
 				{
 					$err = lang('Entry not found!');
 					$ret = false;
@@ -995,114 +1079,120 @@ abstract class Merge
 				$ret = false;
 				return $ret;
 			}
-			if ($this->report_memory_usage) error_log(__METHOD__."() $n: $id ".Api\Vfs::hsize(memory_get_usage(true)));
+			if($this->report_memory_usage)
+			{
+				error_log(__METHOD__ . "() $n: $id " . Api\Vfs::hsize(memory_get_usage(true)));
+			}
 			// some general replacements: current user, date and time
 			if(strpos($content, '$$user/') !== false && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'person_id')))
 			{
 				$replacements += $this->contact_replacements($user, 'user', false, $content);
 				$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
 			}
-			$replacements['$$date$$'] = Api\DateTime::to('now',true);
+			$replacements['$$date$$'] = Api\DateTime::to('now', true);
 			$replacements['$$datetime$$'] = Api\DateTime::to('now');
-			$replacements['$$time$$'] = Api\DateTime::to('now',false);
+			$replacements['$$time$$'] = Api\DateTime::to('now', false);
 
 			$app = $this->get_app();
 			$replacements += $this->share_placeholder($app, $id, '', $content);
 
 			// does our extending class registered table-plugins AND document contains table tags
-			if ($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s',$content,$matches,PREG_SET_ORDER))
+			if($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s', $content, $matches, PREG_SET_ORDER))
 			{
 				// process each table
 				foreach($matches as $match)
 				{
-					$plugin   = $match[1];	// plugin name
+					$plugin = $match[1];    // plugin name
 					$callback = $this->table_plugins[$plugin];
-					$repeat   = $match[2];	// line to repeat
+					$repeat = $match[2];    // line to repeat
 					$repeats = '';
-					if (isset($callback))
+					if(isset($callback))
 					{
-						for($n = 0; ($row_replacements = $this->$callback($plugin,$id,$n,$repeat)); ++$n)
+						for($n = 0; ($row_replacements = $this->$callback($plugin, $id, $n, $repeat)); ++$n)
 						{
 							$_repeat = $this->process_commands($repeat, $row_replacements);
-							$repeats .= $this->replace($_repeat,$row_replacements,$mimetype,$mso_application_progid);
+							$repeats .= $this->replace($_repeat, $row_replacements, $mimetype, $mso_application_progid);
 						}
 					}
-					$content = str_replace($match[0],$repeats,$content);
+					$content = str_replace($match[0], $repeats, $content);
 				}
 			}
-			$content = $this->process_commands($this->replace($content,$replacements,$mimetype,$mso_application_progid,$charset), $replacements);
+			$content = $this->process_commands($this->replace($content, $replacements, $mimetype, $mso_application_progid, $charset), $replacements);
 
 			// remove not existing replacements (eg. from calendar array)
-			if (strpos($content,'$$') !== null)
+			if(strpos($content, '$$') !== null)
 			{
-				$content = preg_replace('/\$\$[a-z0-9_\/]+\$\$/i','',$content);
+				$content = preg_replace('/\$\$[a-z0-9_\/]+\$\$/i', '', $content);
 			}
-			if ($contentrepeat)
+			if($contentrepeat)
 			{
 				fwrite($content_stream, ($n == 0 ? '' : $joiner) . $content);
 			}
 			if($lableprint)
 			{
-				$contentrep[is_array($id) ? implode(':',$id) : $id] = $content;
+				$contentrep[is_array($id) ? implode(':', $id) : $id] = $content;
 			}
 		}
-		if ($Labelrepeat)
+		if($Labelrepeat)
 		{
-			$countpage=0;
-			$count=0;
-			$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
+			$countpage = 0;
+			$count = 0;
+			$contentrepeatpages[$countpage] = $Labelstart . $Labeltend;
 
-			foreach ($contentrep as $Label)
+			foreach($contentrep as $Label)
 			{
-				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/',$Label,$contentrepeatpages[$countpage],1);
-				$count=$count+1;
-				if (($count % $countlables) == 0 && count($contentrep)>$count)  //new page
+				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/', $Label, $contentrepeatpages[$countpage], 1);
+				$count = $count + 1;
+				if(($count % $countlables) == 0 && count($contentrep) > $count)  //new page
 				{
-					$countpage = $countpage+1;
-					$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
+					$countpage = $countpage + 1;
+					$contentrepeatpages[$countpage] = $Labelstart . $Labeltend;
 				}
 			}
-			$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/','',$contentrepeatpages[$countpage],-1);  //clean empty fields
+			$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/', '', $contentrepeatpages[$countpage], -1);  //clean empty fields
 
 			switch($mimetype)
 			{
 				case 'application/rtf':
 				case 'text/rtf':
-					$ret = $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
+					$ret = $contentstart . implode('\\par \\page\\pard\\plain', $contentrepeatpages) . $contentend;
 					break;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.text-template':
 				case 'application/vnd.oasis.opendocument.presentation-template':
-					$ret = $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
+					$ret = $contentstart . implode('<text:line-break />', $contentrepeatpages) . $contentend;
 					break;
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 				case 'application/vnd.oasis.opendocument.spreadsheet-template':
-					$ret = $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
+					$ret = $contentstart . implode('</text:p><text:p>', $contentrepeatpages) . $contentend;
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.ms-word.document.macroenabled.12':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.ms-excel.sheet.macroenabled.12':
-					$ret = $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
+					$ret = $contentstart . implode('<w:br w:type="page" />', $contentrepeatpages) . $contentend;
 					break;
 				case 'text/plain':
-					$ret = $contentstart.implode("\r\n",$contentrep).$contentend;
+					$ret = $contentstart . implode("\r\n", $contentrep) . $contentend;
 					break;
 				default:
-					$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
+					$err = lang('%1 not implemented for %2!', '$$labelplacement$$', $mimetype);
 					$ret = false;
 			}
 			return $ret;
 		}
 
-		if ($contentrepeat)
+		if($contentrepeat)
 		{
 			fwrite($content_stream, $contentend);
 			rewind($content_stream);
 			$content = stream_get_contents($content_stream);
 		}
-		if ($this->report_memory_usage) error_log(__METHOD__."() returning ".Api\Vfs::hsize(memory_get_peak_usage(true)));
+		if($this->report_memory_usage)
+		{
+			error_log(__METHOD__ . "() returning " . Api\Vfs::hsize(memory_get_peak_usage(true)));
+		}
 
 		return $content;
 	}
@@ -1117,54 +1207,57 @@ abstract class Merge
 	 * @param string $charset =null charset to override default set by mimetype or export charset
 	 * @return string
 	 */
-	protected function replace($content,array $replacements,$mimetype,$mso_application_progid='',$charset=null)
+	protected function replace($content, array $replacements, $mimetype, $mso_application_progid = '', $charset = null)
 	{
 		switch($mimetype)
 		{
-			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.text':        // open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
 			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 			case 'application/xml':
 			case 'text/xml':
 				$is_xml = true;
-				$charset = 'utf-8';	// xml files --> always use utf-8
+				$charset = 'utf-8';    // xml files --> always use utf-8
 				break;
 
 			case 'application/rtf':
 			case 'text/rtf':
-				$charset = 'iso-8859-1';	// rtf seems to user iso-8859-1 or equivalent windows charset, not utf-8
+				$charset = 'iso-8859-1';    // rtf seems to user iso-8859-1 or equivalent windows charset, not utf-8
 				break;
 
 			case 'text/html':
 				$is_xml = true;
 				$matches = null;
-				if (preg_match('/<meta http-equiv="content-type".*charset=([^;"]+)/i',$content,$matches))
+				if(preg_match('/<meta http-equiv="content-type".*charset=([^;"]+)/i', $content, $matches))
 				{
 					$charset = $matches[1];
 				}
-				elseif (empty($charset))
+				elseif(empty($charset))
 				{
 					$charset = 'utf-8';
 				}
 				break;
 
-			default:	// div. text files --> use our export-charset, defined in addressbook prefs
-				if (empty($charset)) $charset = $this->contacts->prefs['csv_charset'];
+			default:    // div. text files --> use our export-charset, defined in addressbook prefs
+				if(empty($charset))
+				{
+					$charset = $this->contacts->prefs['csv_charset'];
+				}
 				break;
 		}
 		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".Api\Translation::charset().', export='.$this->contacts->prefs['csv_charset'].')');
 
 		// do we need to convert charset
-		if ($charset && $charset != Api\Translation::charset())
+		if($charset && $charset != Api\Translation::charset())
 		{
-			$replacements = Api\Translation::convert($replacements,Api\Translation::charset(),$charset);
+			$replacements = Api\Translation::convert($replacements, Api\Translation::charset(), $charset);
 		}
 
 		// Date only placeholders for timestamps
@@ -1172,14 +1265,14 @@ abstract class Merge
 		{
 			foreach($this->date_fields as $field)
 			{
-				if(($value = $replacements['$$'.$field.'$$'] ?? null))
+				if(($value = $replacements['$$' . $field . '$$'] ?? null))
 				{
-					$time = Api\DateTime::createFromFormat('+'.Api\DateTime::$user_dateformat.' '.Api\DateTime::$user_timeformat.'*', $value);
-					$replacements['$$'.$field.'/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat)  : '';
+					$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . ' ' . Api\DateTime::$user_timeformat . '*', $value);
+					$replacements['$$' . $field . '/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat) : '';
 				}
 			}
 		}
-		if ($is_xml)	// zip'ed xml document (eg. OO)
+		if($is_xml)    // zip'ed xml document (eg. OO)
 		{
 			// Numeric fields
 			$names = array();
@@ -1187,35 +1280,35 @@ abstract class Merge
 			// Tags we can replace with the target document's version
 			$replace_tags = array();
 			// only keep tags, if we have xsl extension available
-			if (class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
+			if(class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
 			{
-				switch($mimetype.$mso_application_progid)
+				switch($mimetype . $mso_application_progid)
 				{
 					case 'text/html':
 						$replace_tags = array(
-							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>','<a>','<style>','<img>',
+							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+							'<table>', '<tr>', '<td>', '<a>', '<style>', '<img>',
 						);
 						break;
-					case 'application/vnd.oasis.opendocument.text':		// open office
+					case 'application/vnd.oasis.opendocument.text':        // open office
 					case 'application/vnd.oasis.opendocument.spreadsheet':
 					case 'application/vnd.oasis.opendocument.presentation':
 					case 'application/vnd.oasis.opendocument.text-template':
 					case 'application/vnd.oasis.opendocument.spreadsheet-template':
 					case 'application/vnd.oasis.opendocument.presentation-template':
 						$replace_tags = array(
-							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>','<a>',
+							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+							'<table>', '<tr>', '<td>', '<a>',
 						);
 						break;
-					case 'application/xmlWord.Document':	// Word 2003*/
-					case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+					case 'application/xmlWord.Document':    // Word 2003*/
+					case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
 					case 'application/vnd.ms-word.document.macroenabled.12':
 					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					case 'application/vnd.ms-excel.sheet.macroenabled.12':
 						$replace_tags = array(
-							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
-							'<table>','<tr>','<td>',
+							'<b>', '<strong>', '<i>', '<em>', '<u>', '<span>', '<ol>', '<ul>', '<li>',
+							'<table>', '<tr>', '<td>',
 						);
 						break;
 				}
@@ -1231,114 +1324,122 @@ abstract class Merge
 				}
 				// decode html entities back to utf-8
 
-				if (is_string($value) && (strpos($value,'&') !== false) && $this->parse_html_styles)
+				if(is_string($value) && (strpos($value, '&') !== false) && $this->parse_html_styles)
 				{
-					$value = html_entity_decode($value,ENT_QUOTES,$charset);
+					$value = html_entity_decode($value, ENT_QUOTES, $charset);
 
 					// remove all non-decodable entities
-					if (strpos($value,'&') !== false)
+					if(strpos($value, '&') !== false)
 					{
-						$value = preg_replace('/&[^; ]+;/','',$value);
+						$value = preg_replace('/&[^; ]+;/', '', $value);
 					}
 				}
 				if(!$this->parse_html_styles || (
-					strpos($value, "\n") !== FALSE &&
-						strpos($value,'<br') === FALSE && strpos($value, '<span') === FALSE && strpos($value, '<p') === FALSE && strpos($value, '<div') === FALSE
-				))
+						strpos($value, "\n") !== FALSE &&
+						strpos($value, '<br') === FALSE && strpos($value, '<span') === FALSE && strpos($value, '<p') === FALSE && strpos($value, '<div') === FALSE
+					))
 				{
 					// Encode special chars so they don't break the file
-					$value = htmlspecialchars($value,ENT_NOQUOTES);
+					$value = htmlspecialchars($value, ENT_NOQUOTES);
 				}
-				else if (is_string($value) && (strpos($value,'<') !== false))
+				else
 				{
-					// Clean HTML, if it's being kept
-					if($replace_tags && extension_loaded('tidy')) {
-						$tidy = new tidy();
-						$cleaned = $tidy->repairString($value, self::$tidy_config, 'utf8');
-						// Found errors. Strip it all so there's some output
-						if($tidy->getStatus() == 2)
-						{
-							error_log($tidy->errorBuffer);
-							$value = strip_tags($value);
-						}
-						else
-						{
-							$value = $cleaned;
-						}
-					}
-					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
-					$value = strip_tags(str_replace(array("\r","\n",'<p>','</p>','<div>','</div>','<br />'),
-						array('','','',"\r\n",'',"\r\n","\r\n"), $value),
-						implode('', $replace_tags));
-
-					// Change <tag>...\r\n</tag> to <tag>...</tag>\r\n or simplistic line break below will mangle it
-					// Loop to catch things like <b><span>Break:\r\n</span></b>
-					if($mso_application_progid)
+					if(is_string($value) && (strpos($value, '<') !== false))
 					{
-						$count = $i = 0;
-						do
+						// Clean HTML, if it's being kept
+						if($replace_tags && extension_loaded('tidy'))
 						{
-							$value = preg_replace('/<(b|strong|i|em|u|span)\b([^>]*?)>(.*?)'."\r\n".'<\/\1>/u', '<$1$2>$3</$1>'."\r\n",$value,-1,$count);
-							$i++;
-						} while($count > 0 && $i < 10); // Limit of 10 chosen arbitrarily just in case
+							$tidy = new tidy();
+							$cleaned = $tidy->repairString($value, self::$tidy_config, 'utf8');
+							// Found errors. Strip it all so there's some output
+							if($tidy->getStatus() == 2)
+							{
+								error_log($tidy->errorBuffer);
+								$value = strip_tags($value);
+							}
+							else
+							{
+								$value = $cleaned;
+							}
+						}
+						// replace </p> and <br /> with CRLF (remove <p> and CRLF)
+						$value = strip_tags(str_replace(array("\r", "\n", '<p>', '</p>', '<div>', '</div>', '<br />'),
+														array('', '', '', "\r\n", '', "\r\n", "\r\n"), $value
+											),
+											implode('', $replace_tags)
+						);
+
+						// Change <tag>...\r\n</tag> to <tag>...</tag>\r\n or simplistic line break below will mangle it
+						// Loop to catch things like <b><span>Break:\r\n</span></b>
+						if($mso_application_progid)
+						{
+							$count = $i = 0;
+							do
+							{
+								$value = preg_replace('/<(b|strong|i|em|u|span)\b([^>]*?)>(.*?)' . "\r\n" . '<\/\1>/u', '<$1$2>$3</$1>' . "\r\n", $value, -1, $count);
+								$i++;
+							}
+							while($count > 0 && $i < 10); // Limit of 10 chosen arbitrarily just in case
+						}
 					}
 				}
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
-				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237\x{FFF0}-\x{FFFD}]/u',' ',$value);
+				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237\x{FFF0}-\x{FFFD}]/u', ' ', $value);
 				if(is_numeric($value) && $name != '$$user/account_id$$') // account_id causes problems with the preg_replace below
 				{
-					$names[] = preg_quote($name,'/');
+					$names[] = preg_quote($name, '/');
 				}
 			}
 
 			// Look for numbers, set their value if needed
-			if(property_exists($this,'numeric_fields') || count($names))
+			if(property_exists($this, 'numeric_fields') || count($names))
 			{
 				foreach($this->numeric_fields as $fieldname)
 				{
-					$names[] = preg_quote($fieldname,'/');
+					$names[] = preg_quote($fieldname, '/');
 				}
-				$this->format_spreadsheet_numbers($content, $names, $mimetype.$mso_application_progid);
+				$this->format_spreadsheet_numbers($content, $names, $mimetype . $mso_application_progid);
 			}
 
 			// Look for dates, set their value if needed
 			if($this->date_fields || count($names))
 			{
 				$names = array();
-				foreach((array)$this->date_fields as $fieldname) {
+				foreach((array)$this->date_fields as $fieldname)
+				{
 					$names[] = $fieldname;
 				}
-				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype.$mso_application_progid);
+				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype . $mso_application_progid);
 			}
 
 			// replace CRLF with linebreak tag of given type
-			switch($mimetype.$mso_application_progid)
+			switch($mimetype . $mso_application_progid)
 			{
-				case 'application/vnd.oasis.opendocument.text':		// open office writer
+				case 'application/vnd.oasis.opendocument.text':        // open office writer
 				case 'application/vnd.oasis.opendocument.text-template':
 				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.presentation-template':
 					$break = '<text:line-break/>';
 					break;
-				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+				case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 				case 'application/vnd.oasis.opendocument.spreadsheet-template':
 					$break = '</text:p><text:p>';
 					break;
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms word 2007
 				case 'application/vnd.ms-word.document.macroenabled.12':
 					$break = '</w:t><w:br/><w:t>';
 					break;
-				case 'application/xmlExcel.Sheet':	// Excel 2003
+				case 'application/xmlExcel.Sheet':    // Excel 2003
 					$break = '&#10;';
 					break;
-				case 'application/xmlWord.Document':	// Word 2003*/
+				case 'application/xmlWord.Document':    // Word 2003*/
 					$break = '</w:t><w:br/><w:t>';
 					break;
 				case 'text/html':
 					$break = '<br/>';
 					break;
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':    // ms excel 2007
 				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				default:
 					$break = "\r\n";
@@ -1348,40 +1449,43 @@ abstract class Merge
 			// Check for encoded >< getting double-encoded
 			if($this->parse_html_styles)
 			{
-				$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
+				$replacements = str_replace(array('&', "\r", "\n", '&amp;lt;', '&amp;gt;'), array('&amp;', '', $break,
+																								  '&lt;',
+																								  '&gt;'), $replacements);
 			}
 			else
 			{
 				// Need to at least handle new lines, or it'll be run together on one line
-				$replacements = str_replace(array("\r","\n"),array('',$break),$replacements);
+				$replacements = str_replace(array("\r", "\n"), array('', $break), $replacements);
 			}
 		}
-		if ($mimetype == 'application/x-yaml')
+		if($mimetype == 'application/x-yaml')
 		{
-			$content = preg_replace_callback('/^( +)([^$\n]*)(\$\$.+?\$\$)/m', function($matches) use ($replacements)
+			$content = preg_replace_callback('/^( +)([^$\n]*)(\$\$.+?\$\$)/m', function ($matches) use ($replacements)
 			{
 				// allow with {{name/replace/with}} syntax to replace eg. commas with linebreaks: "{{name/, */\n}}"
 				$parts = null;
-				if (preg_match('|^\$\$([^/]+)/([^/]+)/([^$]*)\$\$$|', $matches[3], $parts) && isset($replacements['$$'.$parts[1].'$$']))
+				if(preg_match('|^\$\$([^/]+)/([^/]+)/([^$]*)\$\$$|', $matches[3], $parts) && isset($replacements['$$' . $parts[1] . '$$']))
 				{
-					$replacement =& $replacements['$$'.$parts[1].'$$'];
-					$replacement = preg_replace('/'.$parts[2].'/', strtr($parts[3], array(
+					$replacement =& $replacements['$$' . $parts[1] . '$$'];
+					$replacement = preg_replace('/' . $parts[2] . '/', strtr($parts[3], array(
 						'\\n' => "\n", '\\r' => "\r", '\\t' => "\t", '\\v' => "\v", '\\\\' => '\\', '\\f' => "\f",
-					)), $replacement);
+					)),                         $replacement
+					);
 				}
 				else
 				{
 					$replacement =& $replacements[$matches[3]];
 				}
 				// replacement with multiple lines --> add same number of space as before placeholder
-				if (isset($replacement))
+				if(isset($replacement))
 				{
-					return $matches[1].$matches[2].implode("\n".$matches[1], preg_split("/\r?\n/", $replacement));
+					return $matches[1] . $matches[2] . implode("\n" . $matches[1], preg_split("/\r?\n/", $replacement));
 				}
-				return $matches[0];	// regular replacement below
-			}, $content);
+				return $matches[0];    // regular replacement below
+			},                               $content);
 		}
-		return str_replace(array_keys($replacements),array_values($replacements),$content);
+		return str_replace(array_keys($replacements), array_values($replacements), $content);
 	}
 
 	/**
@@ -1391,39 +1495,43 @@ abstract class Merge
 	{
 		foreach($this->numeric_fields as $fieldname)
 		{
-			$names[] = preg_quote($fieldname,'/');
+			$names[] = preg_quote($fieldname, '/');
 		}
 		switch($mimetype)
 		{
-			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><$3>$4</$3></table:table-cell>';
 				break;
-			case 'application/vnd.oasis.opendocument.text':		// tables in open office writer
+			case 'application/vnd.oasis.opendocument.text':        // tables in open office writer
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\3>.?<\/table:table-cell>/s';
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
 				break;
-			case 'application/vnd.oasis.opendocument.text':		// open office writer
-			case 'application/xmlExcel.Sheet':	// Excel 2003
-				$format = '/'.preg_quote('<Data ss:Type="String">','/').'('.implode('|',$names).')'.preg_quote('</Data>','/').'/';
+			case 'application/vnd.oasis.opendocument.text':        // open office writer
+			case 'application/xmlExcel.Sheet':    // Excel 2003
+				$format = '/' . preg_quote('<Data ss:Type="String">', '/') . '(' . implode('|', $names) . ')' . preg_quote('</Data>', '/') . '/';
 				$replacement = '<Data ss:Type="Number">$1</Data>';
 
 				break;
 		}
-		if (!empty($format) && $names)
+		if(!empty($format) && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
-			do {
+			do
+			{
 				$result = preg_replace($format, $replacement, $content, -1);
 			}
-			// try to increase/double pcre.backtrack_limit failure
+				// try to increase/double pcre.backtrack_limit failure
 			while(preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR && self::increase_backtrack_limit());
 
-			if ($result) $content = $result;  // On failure $result would be NULL
+			if($result)
+			{
+				$content = $result;
+			}  // On failure $result would be NULL
 		}
 	}
 
@@ -1434,24 +1542,27 @@ abstract class Merge
 	 */
 	protected static function increase_backtrack_limit()
 	{
-		static $backtrack_limit=null,$memory_limit=null;
-		if (!isset($backtrack_limit))
+		static $backtrack_limit = null, $memory_limit = null;
+		if(!isset($backtrack_limit))
 		{
 			$backtrack_limit = ini_get('pcre.backtrack_limit');
 		}
-		if (!isset($memory_limit))
+		if(!isset($memory_limit))
 		{
 			$memory_limit = ini_get('memory_limit');
 			switch(strtoupper(substr($memory_limit, -1)))
 			{
-				case 'G': $memory_limit *= 1024;
-				case 'M': $memory_limit *= 1024;
-				case 'K': $memory_limit *= 1024;
+				case 'G':
+					$memory_limit *= 1024;
+				case 'M':
+					$memory_limit *= 1024;
+				case 'K':
+					$memory_limit *= 1024;
 			}
 		}
-		if ($backtrack_limit < $memory_limit/8)
+		if($backtrack_limit < $memory_limit / 8)
 		{
-			ini_set( 'pcre.backtrack_limit', $backtrack_limit*=2);
+			ini_set('pcre.backtrack_limit', $backtrack_limit *= 2);
 			return true;
 		}
 		error_log("pcre.backtrack_limit exceeded @ $backtrack_limit, some cells left as text.");
@@ -1464,25 +1575,28 @@ abstract class Merge
 	protected function format_spreadsheet_dates(&$content, $names, &$values, $mimetype)
 	{
 		if(!in_array($mimetype, array(
-			'application/vnd.oasis.opendocument.spreadsheet',		// open office calc
-			'application/xmlExcel.Sheet',					// Excel 2003
+			'application/vnd.oasis.opendocument.spreadsheet',        // open office calc
+			'application/xmlExcel.Sheet',                    // Excel 2003
 			//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'//Excel WTF
-		))) return;
+		)))
+		{
+			return;
+		}
 
 		// Some different formats dates could be in, depending what they've been through
 		$formats = array(
-			'!'.Api\DateTime::$user_dateformat . ' ' .Api\DateTime::$user_timeformat.':s',
-			'!'.Api\DateTime::$user_dateformat . '*' .Api\DateTime::$user_timeformat.':s',
-			'!'.Api\DateTime::$user_dateformat . '* ' .Api\DateTime::$user_timeformat,
-			'!'.Api\DateTime::$user_dateformat . '*',
-			'!'.Api\DateTime::$user_dateformat,
+			'!' . Api\DateTime::$user_dateformat . ' ' . Api\DateTime::$user_timeformat . ':s',
+			'!' . Api\DateTime::$user_dateformat . '*' . Api\DateTime::$user_timeformat . ':s',
+			'!' . Api\DateTime::$user_dateformat . '* ' . Api\DateTime::$user_timeformat,
+			'!' . Api\DateTime::$user_dateformat . '*',
+			'!' . Api\DateTime::$user_dateformat,
 			'!Y-m-d\TH:i:s'
 		);
 
 		// Properly format values for spreadsheet
 		foreach($names as $idx => &$field)
 		{
-			$key = '$$'.$field.'$$';
+			$key = '$$' . $field . '$$';
 			$field = preg_quote($field, '/');
 			if($values[$key])
 			{
@@ -1491,13 +1605,13 @@ abstract class Merge
 					$mimetype == 'application/vnd.ms-excel.sheet.macroenabled.12')//Excel WTF
 				{
 					$interval = $date->diff(new Api\DateTime('1900-01-00 0:00'));
-					$values[$key] = $interval->format('%a')+1;// 1900-02-29 did not exist
+					$values[$key] = $interval->format('%a') + 1;// 1900-02-29 did not exist
 					// 1440 minutes in a day - fractional part
-					$values[$key] += ($date->format('H') * 60 + $date->format('i'))/1440;
+					$values[$key] += ($date->format('H') * 60 + $date->format('i')) / 1440;
 				}
 				else
 				{
-					$values[$key] = date('Y-m-d\TH:i:s',Api\DateTime::to($date,'ts'));
+					$values[$key] = date('Y-m-d\TH:i:s', Api\DateTime::to($date, 'ts'));
 				}
 			}
 			else
@@ -1508,15 +1622,15 @@ abstract class Merge
 
 		switch($mimetype)
 		{
-			case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 				// Removing these forces calc to respect our set value-type
-				$content = str_ireplace('calcext:value-type="string"','',$content);
+				$content = str_ireplace('calcext:value-type="string"', '', $content);
 
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>\$\$('.implode('|',$names).')\$\$<\/\3>.?<\/table:table-cell>/s';
+				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>\$\$(' . implode('|', $names) . ')\$\$<\/\3>.?<\/table:table-cell>/s';
 				$replacement = '<table:table-cell$1office:value-type="date" office:date-value="\$\$$4\$\$"$2><$3>\$\$$4\$\$</$3></table:table-cell>';
 				break;
-			case 'application/xmlExcel.Sheet':	// Excel 2003
-				$format = '/'.preg_quote('<Data ss:Type="String">','/').'..('.implode('|',$names).')..'.preg_quote('</Data>','/').'/';
+			case 'application/xmlExcel.Sheet':    // Excel 2003
+				$format = '/' . preg_quote('<Data ss:Type="String">', '/') . '..(' . implode('|', $names) . ')..' . preg_quote('</Data>', '/') . '/';
 				$replacement = '<Data ss:Type="DateTime">\$\$$1\$\$</Data>';
 
 				break;
@@ -1527,13 +1641,17 @@ abstract class Merge
 		if($format && $names)
 		{
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
-			do {
+			do
+			{
 				$result = preg_replace($format, $replacement, $content, -1);
 			}
-			// try to increase/double pcre.backtrack_limit failure
+				// try to increase/double pcre.backtrack_limit failure
 			while(preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR && self::increase_backtrack_limit());
 
-			if ($result) $content = $result;  // On failure $result would be NULL
+			if($result)
+			{
+				$content = $result;
+			}  // On failure $result would be NULL
 		}
 	}
 
@@ -1545,7 +1663,7 @@ abstract class Merge
 	{
 		if($app == null)
 		{
-			$app = str_replace('_merge','',get_class($this));
+			$app = str_replace('_merge', '', get_class($this));
 		}
 		$cfs = Api\Storage\Customfields::get($app);
 
@@ -1563,9 +1681,9 @@ abstract class Merge
 		$expand_sub_cfs = [];
 		foreach($sub as $index => $cf_sub)
 		{
-			if(strpos($cf_sub, '#') === 0)
+			if(str_starts_with($cf_sub, '#'))
 			{
-				$expand_sub_cfs[$cf[$index]] .= '$$'.$cf_sub . '$$ ';
+				$expand_sub_cfs[$cf[$index]] .= '$$' . $cf_sub . '$$ ';
 			}
 		}
 
@@ -1573,25 +1691,31 @@ abstract class Merge
 		{
 			if($cfs[$field])
 			{
-				if(in_array($cfs[$field]['type'],array_keys($GLOBALS['egw_info']['apps'])))
+				if(in_array($cfs[$field]['type'], array_keys($GLOBALS['egw_info']['apps'])))
 				{
 					$field_app = $cfs[$field]['type'];
 				}
-				else if ($cfs[$field]['type'] == 'api-accounts' || $cfs[$field]['type'] == 'select-account')
-				{
-					// Special case for api-accounts -> contact
-					$field_app = 'addressbook';
-					$account = $GLOBALS['egw']->accounts->read($values['#'.$field]);
-					$app_replacements[$field] = $this->contact_replacements($account['person_id']);
-				}
-				else if (($list = explode('-',$cfs[$field]['type'])) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
-				{
-					// Sub-type - use app
-					$field_app = $list[0];
-				}
 				else
 				{
-					continue;
+					if($cfs[$field]['type'] == 'api-accounts' || $cfs[$field]['type'] == 'select-account')
+					{
+						// Special case for api-accounts -> contact
+						$field_app = 'addressbook';
+						$account = $GLOBALS['egw']->accounts->read($values['#' . $field]);
+						$app_replacements[$field] = $this->contact_replacements($account['person_id']);
+					}
+					else
+					{
+						if(($list = explode('-', $cfs[$field]['type'])) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
+						{
+							// Sub-type - use app
+							$field_app = $list[0];
+						}
+						else
+						{
+							continue;
+						}
+					}
 				}
 
 				// Get replacements for that application
@@ -1600,13 +1724,16 @@ abstract class Merge
 					// If we send the real content it can result in infinite loop of lookups
 					// so we send only the used fields
 					$content = $expand_sub_cfs[$field] ? $expand_sub_cfs[$field] : '';
-					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#'.$field], $content);
+					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#' . $field], $content);
 				}
-				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$'.$sub[$index].'$$'];
+				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'];
 			}
 			else
 			{
-				if ($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time') $this->date_fields[] = '#'.$field;
+				if($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time')
+				{
+					$this->date_fields[] = '#' . $field;
+				}
 			}
 		}
 	}
@@ -1618,13 +1745,13 @@ abstract class Merge
 	 */
 	protected function get_app()
 	{
-		switch (get_class($this))
+		switch(get_class($this))
 		{
 			case 'EGroupware\Api\Contacts\Merge':
 				$app = 'addressbook';
 				break;
 			default:
-				$app = str_replace('_merge','',get_class($this));
+				$app = str_replace('_merge', '', get_class($this));
 				if(!in_array($app, array_keys($GLOBALS['egw_info']['apps'])))
 				{
 					$app = false;
@@ -1726,33 +1853,37 @@ abstract class Merge
 	 */
 	private function process_commands($content, $replacements)
 	{
-		if (strpos($content,'$$IF') !== false)
-		{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
+		if(strpos($content, '$$IF') !== false)
+		{    //Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 			$this->replacements =& $replacements;
-			$content = preg_replace_callback('/\$\$IF ([#0-9a-z_\/-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+			$content = preg_replace_callback('/\$\$IF ([#0-9a-z_\/-]+)~(.*)~(.*)~(.*)\$\$/imU', array($this,
+																									  'replace_callback'), $content);
 			unset($this->replacements);
 		}
-		if (strpos($content,'$$NELF') !== false)
-		{	//Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
+		if(strpos($content, '$$NELF') !== false)
+		{    //Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
 			$this->replacements =& $replacements;
-			$content = preg_replace_callback('/\$\$NELF ([#0-9a-z_\/-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+			$content = preg_replace_callback('/\$\$NELF ([#0-9a-z_\/-]+)\$\$/imU', array($this,
+																						 'replace_callback'), $content);
 			unset($this->replacements);
 		}
-		if (strpos($content,'$$NENVLF') !== false)
-		{	//Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
+		if(strpos($content, '$$NENVLF') !== false)
+		{    //Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
 			$this->replacements =& $replacements;
-			$content = preg_replace_callback('/\$\$NENVLF ([#0-9a-z_\/-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+			$content = preg_replace_callback('/\$\$NENVLF ([#0-9a-z_\/-]+)\$\$/imU', array($this,
+																						   'replace_callback'), $content);
 			unset($this->replacements);
 		}
-		if (strpos($content,'$$LETTERPREFIX$$') !== false)
-		{	//Example use to use: $$LETTERPREFIX$$
+		if(strpos($content, '$$LETTERPREFIX$$') !== false)
+		{    //Example use to use: $$LETTERPREFIX$$
 			$LETTERPREFIXCUSTOM = '$$LETTERPREFIXCUSTOM n_prefix title n_family$$';
-			$content = str_replace('$$LETTERPREFIX$$',$LETTERPREFIXCUSTOM,$content);
+			$content = str_replace('$$LETTERPREFIX$$', $LETTERPREFIXCUSTOM, $content);
 		}
-		if (strpos($content,'$$LETTERPREFIXCUSTOM') !== false)
-		{	//Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
+		if(strpos($content, '$$LETTERPREFIXCUSTOM') !== false)
+		{    //Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
 			$this->replacements =& $replacements;
-			$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([#0-9a-z_-]+)(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+			$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([#0-9a-z_-]+)(.*)\$\$/imU', array($this,
+																										 'replace_callback'), $content);
 			unset($this->replacements);
 		}
 		return $content;
@@ -1766,24 +1897,30 @@ abstract class Merge
 	 */
 	private function replace_callback($param)
 	{
-		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
-		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
+		if(array_key_exists('$$' . $param[4] . '$$', $this->replacements))
+		{
+			$param[4] = $this->replacements['$$' . $param[4] . '$$'];
+		}
+		if(array_key_exists('$$' . $param[3] . '$$', $this->replacements))
+		{
+			$param[3] = $this->replacements['$$' . $param[3] . '$$'];
+		}
 
-		$pattern = '/'.preg_quote($param[2], '/').'/';
-		if (strpos($param[0],'$$IF') === 0 && (trim($param[2]) == "EMPTY" || $param[2] === ''))
+		$pattern = '/' . preg_quote($param[2], '/') . '/';
+		if(strpos($param[0], '$$IF') === 0 && (trim($param[2]) == "EMPTY" || $param[2] === ''))
 		{
 			$pattern = '/^$/';
 		}
-		$replace = preg_match($pattern,$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
+		$replace = preg_match($pattern, $this->replacements['$$' . $param[1] . '$$']) ? $param[3] : $param[4];
 		switch($this->mimetype)
 		{
-			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.text':        // open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':    // ms office 2007
 			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/vnd.ms-excel.sheet.macroenabled.12':
@@ -1795,57 +1932,69 @@ abstract class Merge
 		}
 
 		switch($this->mimetype)
+		{
+			case 'application/rtf':
+			case 'text/rtf':
+				$LF = '}\par \pard\plain{';
+				break;
+			case 'application/vnd.oasis.opendocument.text':
+			case 'application/vnd.oasis.opendocument.presentation':
+			case 'application/vnd.oasis.opendocument.text-template':
+			case 'application/vnd.oasis.opendocument.presentation-template':
+				$LF = '<text:line-break/>';
+				break;
+			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
+			case 'application/vnd.oasis.opendocument.spreadsheet-template':
+				$LF = '</text:p><text:p>';
+				break;
+			case 'application/xmlExcel.Sheet':    // Excel 2003
+				$LF = '&#10;';
+				break;
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.ms-word.document.macroenabled.12':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
+				$LF = '</w:t></w:r></w:p><w:p><w:r><w:t>';
+				break;
+			case 'application/xml';
+				$LF = '</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
+				break;
+			case 'text/html':
+				$LF = "<br/>";
+				break;
+			default:
+				$LF = "\n";
+		}
+		if($is_xml)
+		{
+			$this->replacements = str_replace(array('&', '&amp;amp;', '<', '>', "\r", "\n"), array('&amp;', '&amp;',
+																								   '&lt;', '&gt;', '',
+																								   $LF), $this->replacements);
+		}
+		if(strpos($param[0], '$$NELF') === 0)
+		{    //sets a Pagebreak and value, only if the field has a value
+			if($this->replacements['$$' . $param[1] . '$$'] != '')
 			{
-				case 'application/rtf':
-				case 'text/rtf':
-					$LF = '}\par \pard\plain{';
-					break;
-				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.presentation':
-				case 'application/vnd.oasis.opendocument.text-template':
-				case 'application/vnd.oasis.opendocument.presentation-template':
-					$LF ='<text:line-break/>';
-					break;
-				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-				case 'application/vnd.oasis.opendocument.spreadsheet-template':
-					$LF = '</text:p><text:p>';
-					break;
-				case 'application/xmlExcel.Sheet':	// Excel 2003
-					$LF = '&#10;';
-					break;
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-				case 'application/vnd.ms-word.document.macroenabled.12':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				case 'application/vnd.ms-excel.sheet.macroenabled.12':
-					$LF ='</w:t></w:r></w:p><w:p><w:r><w:t>';
-					break;
-				case 'application/xml';
-					$LF ='</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
-					break;
-				case 'text/html':
-					$LF = "<br/>";
-					break;
-				default:
-					$LF = "\n";
+				$replace = $LF . $this->replacements['$$' . $param[1] . '$$'];
 			}
-		if($is_xml) {
-			$this->replacements = str_replace(array('&','&amp;amp;','<','>',"\r","\n"),array('&amp;','&amp;','&lt;','&gt;','',$LF),$this->replacements);
 		}
-		if (strpos($param[0],'$$NELF') === 0)
-		{	//sets a Pagebreak and value, only if the field has a value
-			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF.$this->replacements['$$'.$param[1].'$$'];
-		}
-		if (strpos($param[0],'$$NENVLF') === 0)
-		{	//sets a Pagebreak without any value, only if the field has a value
-			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF;
-		}
-		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
-		{	//sets a Letterprefix
-			$replaceprefixsort = array();
-			$replaceprefix = explode(' ',substr($param[0],21,-2));
-			foreach ($replaceprefix as $nameprefix)
+		if(strpos($param[0], '$$NENVLF') === 0)
+		{    //sets a Pagebreak without any value, only if the field has a value
+			if($this->replacements['$$' . $param[1] . '$$'] != '')
 			{
-				if ($this->replacements['$$'.$nameprefix.'$$'] !='') $replaceprefixsort[] = $this->replacements['$$'.$nameprefix.'$$'];
+				$replace = $LF;
+			}
+		}
+		if(strpos($param[0], '$$LETTERPREFIXCUSTOM') === 0)
+		{    //sets a Letterprefix
+			$replaceprefixsort = array();
+			$replaceprefix = explode(' ', substr($param[0], 21, -2));
+			foreach($replaceprefix as $nameprefix)
+			{
+				if($this->replacements['$$' . $nameprefix . '$$'] != '')
+				{
+					$replaceprefixsort[] = $this->replacements['$$' . $nameprefix . '$$'];
+				}
 			}
 			$replace = implode(' ', $replaceprefixsort);
 		}
@@ -1861,14 +2010,14 @@ abstract class Merge
 	 * @param string $dirs comma or whitespace separated directories, used if $document is a relative path
 	 * @return string with error-message on error, otherwise it does NOT return
 	 */
-	public function download($document, $ids, $name='', $dirs='')
+	public function download($document, $ids, $name = '', $dirs = '')
 	{
 		$result = $this->merge_file($document, $ids, $name, $dirs, $header);
 
 		if(is_file($result) && is_readable($result))
 		{
-			Api\Header\Content::type($header['name'],$header['mime'],$header['filesize']);
-			readfile($result,'r');
+			Api\Header\Content::type($header['name'], $header['mime'], $header['filesize']);
+			readfile($result, 'r');
 			exit;
 		}
 
@@ -1887,15 +2036,15 @@ abstract class Merge
 	 * @return string with error-message on error
 	 * @throws Api\Exception
 	 */
-	public function merge_file($document, $ids, &$name='', $dirs='', &$header)
+	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header)
 	{
 		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
-		if (($error = $this->check_document($document, $dirs)))
+		if(($error = $this->check_document($document, $dirs)))
 		{
 			return $error;
 		}
-		$content_url = Api\Vfs::PREFIX.$document;
-		switch (($mimetype = Api\Vfs::mime_content_type($document)))
+		$content_url = Api\Vfs::PREFIX . $document;
+		switch(($mimetype = Api\Vfs::mime_content_type($document)))
 		{
 			case 'message/rfc822':
 				//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs')=>$content_url ->".function_backtrace());
@@ -1913,13 +2062,19 @@ abstract class Merge
 				}
 				//error_log(__METHOD__.__LINE__.' Message after importMessageToMergeAndSend:'.array2string($msgs));
 				$retString = '';
-				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.(count($msgs['success'])+count($msgs['failed'])==1?lang('Message prepared for sending.'):lang('Message(s) send ok.'));//implode('<br />',$msgs['success']);
-				//if (strlen($retString)>0) $retString .= '<br />';
-				foreach($msgs['failed'] as $c =>$e)
+				if(count($msgs['success']) > 0)
 				{
-					$errorString .= lang('contact').' '.lang('id').':'.$c.'->'.$e.'.';
+					$retString .= count($msgs['success']) . ' ' . (count($msgs['success']) + count($msgs['failed']) == 1 ? lang('Message prepared for sending.') : lang('Message(s) send ok.'));
+				}//implode('<br />',$msgs['success']);
+				//if (strlen($retString)>0) $retString .= '<br />';
+				foreach($msgs['failed'] as $c => $e)
+				{
+					$errorString .= lang('contact') . ' ' . lang('id') . ':' . $c . '->' . $e . '.';
 				}
-				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed!').'=>'.$errorString;
+				if(count($msgs['failed']) > 0)
+				{
+					$retString .= count($msgs['failed']) . ' ' . lang('Message(s) send failed!') . '=>' . $errorString;
+				}
 				return $retString;
 			case 'application/vnd.oasis.opendocument.text':
 			case 'application/vnd.oasis.opendocument.spreadsheet':
@@ -1929,64 +2084,76 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.presentation-template':
 				switch($mimetype)
 				{
-					case 'application/vnd.oasis.opendocument.text':	$ext = '.odt'; break;
-					case 'application/vnd.oasis.opendocument.spreadsheet': $ext = '.ods'; break;
-					case 'application/vnd.oasis.opendocument.presentation': $ext = '.odp'; break;
-					case 'application/vnd.oasis.opendocument.text-template': $ext = '.ott'; break;
-					case 'application/vnd.oasis.opendocument.spreadsheet-template': $ext = '.ots'; break;
-					case 'application/vnd.oasis.opendocument.presentation-template': $ext = '.otp'; break;
+					case 'application/vnd.oasis.opendocument.text':
+						$ext = '.odt';
+						break;
+					case 'application/vnd.oasis.opendocument.spreadsheet':
+						$ext = '.ods';
+						break;
+					case 'application/vnd.oasis.opendocument.presentation':
+						$ext = '.odp';
+						break;
+					case 'application/vnd.oasis.opendocument.text-template':
+						$ext = '.ott';
+						break;
+					case 'application/vnd.oasis.opendocument.spreadsheet-template':
+						$ext = '.ots';
+						break;
+					case 'application/vnd.oasis.opendocument.presentation-template':
+						$ext = '.otp';
+						break;
 				}
-				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,$ext).'-').$ext;
-				copy($content_url,$archive);
-				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document, $ext) . '-') . $ext;
+				copy($content_url, $archive);
+				$content_url = 'zip://' . $archive . '#' . ($content_file = 'content.xml');
 				$this->parse_html_styles = true;
 				break;
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':    // mimetypes in vfs are limited to 64 chars
 				$mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 			case 'application/vnd.ms-word.document.macroenabled.12':
-				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.docx').'-').'.docx';
-				copy($content_url,$archive);
-				$content_url = 'zip://'.$archive.'#'.($content_file = 'word/document.xml');
-				$fix = array(		// regular expression to fix garbled placeholders
-					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
-						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$$\\1$$',
-					'/'.preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:rPr><w:lang w:val="','/').
-						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>','/').'([a-z0-9_]+)'.
-						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="','/').
-						'([a-z]{2}-[A-Z]{2})'.preg_quote('"/></w:rPr><w:t>$$','/').'/i' => '$$\\2$$',
-					'/'.preg_quote('$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
-						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$\\1$',
-					'/'.preg_quote('$ $</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>','/').'([a-z0-9_]+)'.
-						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$ $\\1$ $',
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document, '.docx') . '-') . '.docx';
+				copy($content_url, $archive);
+				$content_url = 'zip://' . $archive . '#' . ($content_file = 'word/document.xml');
+				$fix = array(        // regular expression to fix garbled placeholders
+									 '/' . preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>', '/') . '([a-z0-9_]+)' .
+									 preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>', '/') . '/i' => '$$\\1$$',
+									 '/' . preg_quote('$$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:rPr><w:lang w:val="', '/') .
+									 '([a-z]{2}-[A-Z]{2})' . preg_quote('"/></w:rPr><w:t>', '/') . '([a-z0-9_]+)' .
+									 preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:rPr><w:lang w:val="', '/') .
+									 '([a-z]{2}-[A-Z]{2})' . preg_quote('"/></w:rPr><w:t>$$', '/') . '/i'            => '$$\\2$$',
+									 '/' . preg_quote('$</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>', '/') . '([a-z0-9_]+)' .
+									 preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>', '/') . '/i' => '$\\1$',
+									 '/' . preg_quote('$ $</w:t></w:r><w:proofErr w:type="spellStart"/><w:r><w:t>', '/') . '([a-z0-9_]+)' .
+									 preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>', '/') . '/i' => '$ $\\1$ $',
 				);
 				break;
 			case 'application/xml':
-				$fix = array(	// hack to get Excel 2003 to display additional rows in tables
-					'/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
+				$fix = array(    // hack to get Excel 2003 to display additional rows in tables
+								 '/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
 				);
 				break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 				$mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/vnd.ms-excel.sheet.macroenabled.12':
-				$fix = array(	// hack to get Excel 2007 to display additional rows in tables
-					'/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
+				$fix = array(    // hack to get Excel 2007 to display additional rows in tables
+								 '/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
 				);
-				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.xlsx').'-').'.xlsx';
-				copy($content_url,$archive);
-				$content_url = 'zip://'.$archive.'#'.($content_file = 'xl/sharedStrings.xml');
+				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document, '.xlsx') . '-') . '.xlsx';
+				copy($content_url, $archive);
+				$content_url = 'zip://' . $archive . '#' . ($content_file = 'xl/sharedStrings.xml');
 				break;
 		}
 		$err = null;
-		if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
+		if(!($merged =& $this->merge($content_url, $ids, $err, $mimetype, $fix)))
 		{
 			//error_log(__METHOD__."() !this->merge() err=$err");
 			return $err;
 		}
 		// Apply HTML formatting to target document, if possible
 		// check if we can use the XSL extension, to not give a fatal error and rendering whole merge-print non-functional
-		if (class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
+		if(class_exists('XSLTProcessor') && class_exists('DOMDocument') && $this->parse_html_styles)
 		{
 			try
 			{
@@ -1996,22 +2163,25 @@ abstract class Merge
 			{
 				// Error converting HTML styles over
 				error_log($e->getMessage());
-				error_log("Target document: $content_url, IDs: ". array2string($ids));
+				error_log("Target document: $content_url, IDs: " . array2string($ids));
 
 				// Try again, but strip HTML so user gets something
 				$this->parse_html_styles = false;
-				if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
+				if(!($merged =& $this->merge($content_url, $ids, $err, $mimetype, $fix)))
 				{
 					return $err;
 				}
 			}
-			if ($this->report_memory_usage) error_log(__METHOD__."() after HTML processing ".Api\Vfs::hsize(memory_get_peak_usage(true)));
+			if($this->report_memory_usage)
+			{
+				error_log(__METHOD__ . "() after HTML processing " . Api\Vfs::hsize(memory_get_peak_usage(true)));
+			}
 		}
 		if(!empty($name))
 		{
 			if(empty($ext))
 			{
-				$ext = '.'.pathinfo($document,PATHINFO_EXTENSION);
+				$ext = '.' . pathinfo($document, PATHINFO_EXTENSION);
 			}
 			$name .= $ext;
 		}
@@ -2020,33 +2190,45 @@ abstract class Merge
 			$name = basename($document);
 		}
 		$header = array('name' => $name, 'mime' => $mimetype);
-		if (isset($archive))
+		if(isset($archive))
 		{
 			$zip = new ZipArchive;
-			if ($zip->open($archive, ZipArchive::CHECKCONS) !== true)
+			if($zip->open($archive, ZipArchive::CHECKCONS) !== true)
 			{
-				error_log(__METHOD__.__LINE__." !ZipArchive::open('$archive',ZIPARCHIVE"."::CHECKCONS) failed. Trying open without validating");
-				if ($zip->open($archive) !== true) throw new Api\Exception("!ZipArchive::open('$archive',|ZIPARCHIVE::CHECKCONS)");
+				error_log(__METHOD__ . __LINE__ . " !ZipArchive::open('$archive',ZIPARCHIVE" . "::CHECKCONS) failed. Trying open without validating");
+				if($zip->open($archive) !== true)
+				{
+					throw new Api\Exception("!ZipArchive::open('$archive',|ZIPARCHIVE::CHECKCONS)");
+				}
 			}
-			if ($zip->addFromString($content_file,$merged) !== true) throw new Api\Exception("!ZipArchive::addFromString('$content_file',\$merged)");
-			if ($zip->close() !== true) throw new Api\Exception("!ZipArchive::close()");
+			if($zip->addFromString($content_file, $merged) !== true)
+			{
+				throw new Api\Exception("!ZipArchive::addFromString('$content_file',\$merged)");
+			}
+			if($zip->close() !== true)
+			{
+				throw new Api\Exception("!ZipArchive::close()");
+			}
 			unset($zip);
 			unset($merged);
-			if ($this->report_memory_usage) error_log(__METHOD__."() after ZIP processing ".Api\Vfs::hsize(memory_get_peak_usage(true)));
+			if($this->report_memory_usage)
+			{
+				error_log(__METHOD__ . "() after ZIP processing " . Api\Vfs::hsize(memory_get_peak_usage(true)));
+			}
 			$header['filesize'] = filesize($archive);
 		}
 		else
 		{
-			$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.'.$ext).'-').'.'.$ext;
-			if ($mimetype == 'application/xml')
+			$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document, '.' . $ext) . '-') . '.' . $ext;
+			if($mimetype == 'application/xml')
 			{
-				if (strpos($merged,'<?mso-application progid="Word.Document"?>') !== false)
+				if(strpos($merged, '<?mso-application progid="Word.Document"?>') !== false)
 				{
-					$header['mimetype'] = 'application/msword';	// to open it automatically in word or oowriter
+					$header['mimetype'] = 'application/msword';    // to open it automatically in word or oowriter
 				}
-				elseif (strpos($merged,'<?mso-application progid="Excel.Sheet"?>') !== false)
+				elseif(strpos($merged, '<?mso-application progid="Excel.Sheet"?>') !== false)
 				{
-					$header['mimetype'] = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
+					$header['mimetype'] = 'application/vnd.ms-excel';    // to open it automatically in excel or oocalc
 				}
 			}
 			$handle = fopen($archive, 'w');
@@ -2068,13 +2250,22 @@ abstract class Merge
 	 */
 	public function download_by_request()
 	{
-		if(empty($_POST['data_document_name'])) return false;
-		if(empty($_POST['data_document_dir'])) return false;
-		if(empty($_POST['data_checked'])) return false;
+		if(empty($_POST['data_document_name']))
+		{
+			return false;
+		}
+		if(empty($_POST['data_document_dir']))
+		{
+			return false;
+		}
+		if(empty($_POST['data_checked']))
+		{
+			return false;
+		}
 
 		return $this->download(
 			$_POST['data_document_name'],
-			explode(',',$_POST['data_checked']),
+			explode(',', $_POST['data_checked']),
 			'',
 			$_POST['data_document_dir']
 		);
@@ -2084,27 +2275,33 @@ abstract class Merge
 	 * Get a list of document actions / files from the given directory
 	 *
 	 * @param string $dirs Directory(s comma or space separated) to search
-	 * @param string $prefix='document_' prefix for array keys
-	 * @param array|string $mime_filter=null allowed mime type(s), default all, negative filter if $mime_filter[0] === '!'
+	 * @param string $prefix ='document_' prefix for array keys
+	 * @param array|string $mime_filter =null allowed mime type(s), default all, negative filter if $mime_filter[0] === '!'
 	 * @return array List of documents, suitable for a selectbox.  The key is document_<filename>.
 	 */
-	public static function get_documents($dirs, $prefix='document_', $mime_filter=null, $app='')
+	public static function get_documents($dirs, $prefix = 'document_', $mime_filter = null, $app = '')
 	{
-		$export_limit=self::getExportLimit($app);
-		if (!$dirs || (!self::hasExportLimit($export_limit,'ISALLOWED') && !self::is_export_limit_excepted())) return array();
+		$export_limit = self::getExportLimit($app);
+		if(!$dirs || (!self::hasExportLimit($export_limit, 'ISALLOWED') && !self::is_export_limit_excepted()))
+		{
+			return array();
+		}
 
 		// split multiple comma or whitespace separated directories
 		// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-		if (count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
+		if(count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
 		{
 			foreach($dirs as $n => &$d)
 			{
-				if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
+				if($n)
+				{
+					$d = '/' . $d;
+				}    // re-adding trailing slash removed by split
 			}
 		}
-		if ($mime_filter && ($negativ_filter = $mime_filter[0] === '!'))
+		if($mime_filter && ($negativ_filter = $mime_filter[0] === '!'))
 		{
-			if (is_array($mime_filter))
+			if(is_array($mime_filter))
 			{
 				unset($mime_filter[0]);
 			}
@@ -2116,15 +2313,21 @@ abstract class Merge
 		$list = array();
 		foreach($dirs as $dir)
 		{
-			if (($files = Api\Vfs::find($dir,array('need_mime'=>true),true)))
+			if(($files = Api\Vfs::find($dir, array('need_mime' => true), true)))
 			{
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					$parts = explode('.',$file['name']);
-					if (!self::is_implemented($file['mime'],'.'.array_pop($parts))) continue;
-					if ($mime_filter && $negativ_filter === in_array($file['mime'], (array)$mime_filter)) continue;
-					$list[$prefix.$file['name']] = Api\Vfs::decodePath($file['name']);
+					$parts = explode('.', $file['name']);
+					if(!self::is_implemented($file['mime'], '.' . array_pop($parts)))
+					{
+						continue;
+					}
+					if($mime_filter && $negativ_filter === in_array($file['mime'], (array)$mime_filter))
+					{
+						continue;
+					}
+					$list[$prefix . $file['name']] = Api\Vfs::decodePath($file['name']);
 				}
 			}
 		}
@@ -2149,17 +2352,21 @@ abstract class Merge
 	 * @param int|string $export_limit =null export-limit, default $GLOBALS['egw_info']['server']['export_limit']
 	 * @return array see nextmatch_widget::egw_actions
 	 */
-	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
-		$export_limit=null)
+	public static function document_action($dirs, $group = 0, $caption = 'Insert in document', $prefix = 'document_', $default_doc = '',
+										   $export_limit = null)
 	{
 		$documents = array();
-		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
+		if($export_limit == null)
+		{
+			$export_limit = self::getExportLimit();
+		} // check if there is a globalsetting
 
-		try {
-			if (class_exists('EGroupware\\collabora\\Bo') &&
-					$GLOBALS['egw_info']['user']['apps']['collabora'] &&
-					($discovery = \EGroupware\collabora\Bo::discover()) &&
-					$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
+		try
+		{
+			if(class_exists('EGroupware\\collabora\\Bo') &&
+				$GLOBALS['egw_info']['user']['apps']['collabora'] &&
+				($discovery = \EGroupware\collabora\Bo::discover()) &&
+				$GLOBALS['egw_info']['user']['preferences']['filemanager']['merge_open_handler'] != 'download'
 			)
 			{
 				$editable_mimes = $discovery;
@@ -2170,7 +2377,7 @@ abstract class Merge
 			// ignore failed discovery
 			unset($e);
 		}
-		if ($default_doc && ($file = Api\Vfs::stat($default_doc)))	// put default document on top
+		if($default_doc && ($file = Api\Vfs::stat($default_doc)))    // put default document on top
 		{
 			if(!$file['mime'])
 			{
@@ -2183,31 +2390,34 @@ abstract class Merge
 				'group'   => 1
 			);
 			self::document_editable_action($documents['document'], $file);
-			if ($file['mime'] == 'message/rfc822')
+			if($file['mime'] == 'message/rfc822')
 			{
 				self::document_mail_action($documents['document'], $file);
 			}
 		}
 
 		$files = array();
-		if ($dirs)
+		if($dirs)
 		{
 			// split multiple comma or whitespace separated directories
 			// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-			if (count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
+			if(count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
 			{
 				foreach($dirs as $n => &$d)
 				{
-					if ($n) $d = '/'.$d;	// re-adding trailing slash removed by split
+					if($n)
+					{
+						$d = '/' . $d;
+					}    // re-adding trailing slash removed by split
 				}
 			}
 			foreach($dirs as $dir)
 			{
-				$files += Api\Vfs::find($dir,array(
+				$files += Api\Vfs::find($dir, array(
 					'need_mime' => true,
-					'order' => 'fs_name',
-					'sort' => 'ASC',
-				),true);
+					'order'     => 'fs_name',
+					'sort'      => 'ASC',
+				),                      true);
 			}
 		}
 
@@ -2215,10 +2425,10 @@ abstract class Merge
 		foreach($files as $key => $file)
 		{
 			// use only the mime-types we support
-			$parts = explode('.',$file['name']);
-			if (!self::is_implemented($file['mime'],'.'.array_pop($parts)) ||
-				!Api\Vfs::check_access($file['path'], Api\Vfs::READABLE, $file) ||	// remove files not readable by user
-				$file['path'] === $default_doc)	// default doc already added
+			$parts = explode('.', $file['name']);
+			if(!self::is_implemented($file['mime'], '.' . array_pop($parts)) ||
+				!Api\Vfs::check_access($file['path'], Api\Vfs::READABLE, $file) ||    // remove files not readable by user
+				$file['path'] === $default_doc)    // default doc already added
 			{
 				unset($files[$key]);
 			}
@@ -2231,13 +2441,13 @@ abstract class Merge
 				}
 				else
 				{
-					$dircount[$dirname] ++;
+					$dircount[$dirname]++;
 				}
 			}
 		}
 		foreach($files as $file)
 		{
-			if (count($dircount) > 1)
+			if(count($dircount) > 1)
 			{
 				$name_arr = explode('/', $file['name']);
 				$current_level = &$documents;
@@ -2249,24 +2459,24 @@ abstract class Merge
 					}
 					else
 					{
-						$current_level = &$current_level[$prefix.$name_arr[($count-1)]]['children'];
+						$current_level = &$current_level[$prefix . $name_arr[($count - 1)]]['children'];
 					}
 					switch($count)
 					{
 						case (count($name_arr) - 1):
-							if (!isset($current_level[$prefix . $file['name']]))
+							if(!isset($current_level[$prefix . $file['name']]))
 							{
 								$current_level[$prefix . $file['name']] = [];
 							}
 							self::document_editable_action($current_level[$prefix . $file['name']], $file);
-							if ($file['mime'] === 'message/rfc822')
+							if($file['mime'] === 'message/rfc822')
 							{
 								self::document_mail_action($current_level[$prefix . $file['name']], $file);
 							}
 							break;
 
 						default:
-							if (!isset($current_level[$prefix . $name_arr[$count]]))
+							if(!isset($current_level[$prefix . $name_arr[$count]]))
 							{
 								// create parent folder
 								$current_level[$prefix . $name_arr[$count]] = array(
@@ -2280,31 +2490,34 @@ abstract class Merge
 					}
 				}
 			}
-			else if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
-			{
-				if(!isset($documents[$file['mime']]))
-				{
-					$documents[$file['mime']] = array(
-						'icon'     => Api\Vfs::mime_icon($file['mime']),
-						'caption'  => Api\MimeMagic::mime2label($file['mime']),
-						'group'    => 2,
-						'children' => array(),
-					);
-				}
-				$documents[$file['mime']]['children'][$prefix . $file['name']] = array();
-				self::document_editable_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
-				if($file['mime'] == 'message/rfc822')
-				{
-					self::document_mail_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
-				}
-			}
 			else
 			{
-				$documents[$prefix . $file['name']] = array();
-				self::document_editable_action($documents[$prefix . $file['name']], $file);
-				if($file['mime'] == 'message/rfc822')
+				if(count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
 				{
-					self::document_mail_action($documents[$prefix . $file['name']], $file);
+					if(!isset($documents[$file['mime']]))
+					{
+						$documents[$file['mime']] = array(
+							'icon'     => Api\Vfs::mime_icon($file['mime']),
+							'caption'  => Api\MimeMagic::mime2label($file['mime']),
+							'group'    => 2,
+							'children' => array(),
+						);
+					}
+					$documents[$file['mime']]['children'][$prefix . $file['name']] = array();
+					self::document_editable_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
+					if($file['mime'] == 'message/rfc822')
+					{
+						self::document_mail_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
+					}
+				}
+				else
+				{
+					$documents[$prefix . $file['name']] = array();
+					self::document_editable_action($documents[$prefix . $file['name']], $file);
+					if($file['mime'] == 'message/rfc822')
+					{
+						self::document_mail_action($documents[$prefix . $file['name']], $file);
+					}
 				}
 			}
 		}
@@ -2337,7 +2550,7 @@ abstract class Merge
 	 * @param Array $file Array of information about the document from Api\Vfs::find
 	 * @return void
 	 */
-	private static function document_mail_action(Array &$action, $file)
+	private static function document_mail_action(array &$action, $file)
 	{
 		unset($action['postSubmit']);
 		unset($action['onExecute']);
@@ -2348,19 +2561,19 @@ abstract class Merge
 		// These parameters trigger compose + merge - only if 1 row
 		$extra = array(
 			'from=merge',
-			'document='.$file['path'],
-			'merge='.get_called_class()
+			'document=' . $file['path'],
+			'merge=' . get_called_class()
 		);
 
 		// egw.open() used if only 1 row selected
-		$action['egw_open'] = 'edit-mail--'.implode('&',$extra);
-		$action['target'] = 'compose_' .$file['path'];
+		$action['egw_open'] = 'edit-mail--' . implode('&', $extra);
+		$action['target'] = 'compose_' . $file['path'];
 
 		// long_task runs menuaction once for each selected row
 		$action['nm_action'] = 'long_task';
 		$action['popup'] = Api\Link::get_registry('mail', 'edit_popup');
-		$action['message'] = lang('insert in %1',Api\Vfs::decodePath($file['name']));
-		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document='.$file['path'].'&merge='. get_called_class();
+		$action['message'] = lang('insert in %1', Api\Vfs::decodePath($file['name']));
+		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document=' . $file['path'] . '&merge=' . get_called_class();
 	}
 
 	/**
@@ -2371,7 +2584,7 @@ abstract class Merge
 	 * @param Array $file Array of information about the document from Api\Vfs::find
 	 * @return void
 	 */
-	private static function document_editable_action(Array &$action, $file)
+	private static function document_editable_action(array &$action, $file)
 	{
 		static $action_base = array(
 			// The same for every file
@@ -2412,25 +2625,28 @@ abstract class Merge
 		{
 			// split multiple comma or whitespace separated directories
 			// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-			if ($dirs && ($dirs = preg_split('/[,\s]+\//', $dirs)))
+			if($dirs && ($dirs = preg_split('/[,\s]+\//', $dirs)))
 			{
 				foreach($dirs as $n => $dir)
 				{
-					if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
-					if (Api\Vfs::stat($dir.'/'.$document) && Api\Vfs::is_readable($dir.'/'.$document))
+					if($n)
 					{
-						$document = $dir.'/'.$document;
+						$dir = '/' . $dir;
+					}    // re-adding trailing slash removed by split
+					if(Api\Vfs::stat($dir . '/' . $document) && Api\Vfs::is_readable($dir . '/' . $document))
+					{
+						$document = $dir . '/' . $document;
 						return false;
 					}
 				}
 			}
 		}
-		elseif (Api\Vfs::stat($document) && Api\Vfs::is_readable($document))
+		elseif(Api\Vfs::stat($document) && Api\Vfs::is_readable($document))
 		{
 			return false;
 		}
 		//error_log(__METHOD__."('$document', dirs='$dirs') returning 'Document '$document' does not exist or is not readable for you!'");
-		return lang("Document '%1' does not exist or is not readable for you!",$document);
+		return lang("Document '%1' does not exist or is not readable for you!", $document);
 	}
 
 	/**
@@ -2454,7 +2670,7 @@ abstract class Merge
 			$document_merge = new Api\Contacts\Merge();
 		}
 
-		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
+		if(($error = $document_merge->check_document($_REQUEST['document'], '')))
 		{
 			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
 			return;
@@ -2572,7 +2788,7 @@ abstract class Merge
 			$name = str_replace(
 				array_keys($placeholders),
 				array_values($placeholders),
-				is_array($pref) ? implode(' ', $pref) : $pref
+				is_array($pref) ? implode(' ', $pref) : str_replace(',', ', ', $pref)
 			);
 		}
 		return $name;
@@ -2612,7 +2828,7 @@ abstract class Merge
 		);
 
 		// Check for a configured preferred directory
-		if(($pref = $GLOBALS['egw_info']['user']['preferences']['filemanager'][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		if(($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
 		{
 			$target = $pref;
 		}
@@ -2631,9 +2847,9 @@ abstract class Merge
 		$locations = array('index', 'session_data');
 
 		// Get app
-		list($appname, $_merge) = explode('_',  get_class($merge));
+		list($appname, $_merge) = explode('_', get_class($merge));
 
-		if($merge instanceOf Api\Contacts\Merge)
+		if($merge instanceof Api\Contacts\Merge)
 		{
 			$appname = 'addressbook';
 		}
@@ -2656,13 +2872,13 @@ abstract class Merge
 		if(class_exists($ui_class))
 		{
 			$ui = new $ui_class();
-			if( method_exists($ui_class, 'get_all_ids') )
+			if(method_exists($ui_class, 'get_all_ids'))
 			{
 				return $ui->get_all_ids();
 			}
 
 			// Try cache, preferring get_rrows over get_rows
-			if (method_exists($ui_class, $get_rows='get_rrows') || method_exists($ui_class, $get_rows='get_rows'))
+			if(method_exists($ui_class, $get_rows = 'get_rrows') || method_exists($ui_class, $get_rows = 'get_rows'))
 			{
 				foreach($locations as $location)
 				{
@@ -2673,22 +2889,28 @@ abstract class Merge
 					}
 				}
 				$rows = $readonlys = array();
-				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
-				$session['num_rows'] = -1;	// all
+				@set_time_limit(0);            // switch off the execution time limit, as it's for big selections to small
+				$session['num_rows'] = -1;     // all
 				$ui->$get_rows($session, $rows, $readonlys);
 				foreach($rows as $row_number => $row)
 				{
-					if(!is_numeric($row_number)) continue;
+					if(!is_numeric($row_number))
+					{
+						continue;
+					}
 					$row_id = $row[$session['row_id'] ? $session['row_id'] : 'id'];
-					switch (get_class($merge))
+					switch(get_class($merge))
 					{
 						case \calendar_merge::class:
-							$explody = explode(':',$row_id);
+							$explody = explode(':', $row_id);
 							$ids[] = array('id' => $explody[0], 'recur_date' => $explody[1]);
 							break;
 						case \timesheet_merge::class:
 							// Skip the rows with totalss
-							if(!is_numeric($row_id)) continue 2;	// +1 for switch
+							if(!is_numeric($row_id))
+							{
+								continue 2;
+							}    // +1 for switch
 						// Fall through
 						default:
 							$ids[] = $row_id;
@@ -2717,17 +2939,20 @@ abstract class Merge
 	 * @param string $_mimetype =''
 	 * @return string
 	 */
-	static public function number_format($number,$num_decimal_places=2,$_mimetype='')
+	static public function number_format($number, $num_decimal_places = 2, $_mimetype = '')
 	{
-		if ((string)$number === '') return '';
+		if((string)$number === '')
+		{
+			return '';
+		}
 		//error_log(__METHOD__.$_mimetype);
 		switch($_mimetype)
 		{
-			case 'application/xml':	// Excel 2003
+			case 'application/xml':    // Excel 2003
 			case 'application/vnd.oasis.opendocument.spreadsheet': // OO.o spreadsheet
-				return number_format(str_replace(' ','',$number),$num_decimal_places,'.','');
+				return number_format(str_replace(' ', '', $number), $num_decimal_places, '.', '');
 		}
-		return Api\Etemplate::number_format($number,$num_decimal_places);
+		return Api\Etemplate::number_format($number, $num_decimal_places);
 	}
 
 	/**
@@ -2913,5 +3138,64 @@ abstract class Merge
 				}
 		*/
 		$placeholder_list[$base_name] = $add_placeholder_groups;
+	}
+
+	/**
+	 * Get preference settings
+	 *
+	 * Merge has some preferences that the same across apps, but can have different values for each app:
+	 * - Default document
+	 * - Document template directory
+	 * - Filename customization
+	 * - Generated document target directory
+	 */
+	public function merge_preferences()
+	{
+		$settings = array();
+		$settings[self::PREF_DEFAULT_TEMPLATE] = array(
+			'type'     => 'vfs_file',
+			'size'     => 60,
+			'label'    => 'Default document to insert entries',
+			'name'     => self::PREF_DEFAULT_TEMPLATE,
+			'help'     => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.', lang($this->get_app())) . ' ' .
+				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name') . ' ' .
+				lang('The following document-types are supported:') . implode(',', self::get_file_extensions()),
+			'run_lang' => false,
+			'xmlrpc'   => True,
+			'admin'    => False,
+		);
+		$settings[self::PREF_TEMPLATE_DIR] = array(
+			'type'     => 'vfs_dirs',
+			'size'     => 60,
+			'label'    => 'Directory with documents to insert entries',
+			'name'     => self::PREF_TEMPLATE_DIR,
+			'help'     => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang($this->get_app())) . ' ' .
+				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name') . ' ' .
+				lang('The following document-types are supported:') . implode(',', self::get_file_extensions()),
+			'run_lang' => false,
+			'xmlrpc'   => True,
+			'admin'    => False,
+			'default'  => '/templates/' . $this->get_app(),
+		);
+		$settings[self::PREF_STORE_LOCATION] = array(
+			'type'  => 'vfs_dir',
+			'size'  => 60,
+			'label' => 'Directory for storing merged documents',
+			'name'  => self::PREF_STORE_LOCATION,
+			'help'  => lang('When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (%1)', Vfs::get_home_dir())
+		);
+
+		$settings[self::PREF_DOCUMENT_FILENAME] = array(
+			'type'    => 'taglist',
+			'label'   => 'Merged document filename',
+			'name'    => self::PREF_DOCUMENT_FILENAME,
+			'values'  => self::DOCUMENT_FILENAME_OPTIONS,
+			'help'    => 'Choose the default filename for merged documents.',
+			'xmlrpc'  => True,
+			'admin'   => False,
+			'default' => 'document',
+		);
+
+		return $settings;
 	}
 }
