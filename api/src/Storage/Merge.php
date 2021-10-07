@@ -2254,16 +2254,19 @@ abstract class Merge
 					switch($count)
 					{
 						case (count($name_arr) - 1):
-							$current_level[$prefix . $file['name']];
+							if (!isset($current_level[$prefix . $file['name']]))
+							{
+								$current_level[$prefix . $file['name']] = [];
+							}
 							self::document_editable_action($current_level[$prefix . $file['name']], $file);
-							if($file['mime'] == 'message/rfc822')
+							if ($file['mime'] === 'message/rfc822')
 							{
 								self::document_mail_action($current_level[$prefix . $file['name']], $file);
 							}
 							break;
 
 						default:
-							if(!is_array($current_level[$prefix . $name_arr[$count]]))
+							if (!isset($current_level[$prefix . $name_arr[$count]]))
 							{
 								// create parent folder
 								$current_level[$prefix . $name_arr[$count]] = array(
