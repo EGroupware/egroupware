@@ -297,7 +297,7 @@ class Tree extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (!empty($this->attrs['image_path']) && ($templated_path = self::templateImagePath($this->attrs['image_path'])) != $this->attrs['image_path'])
+		if (($templated_path = self::templateImagePath($this->attrs['image_path'] ?? null)) !== ($this->attrs['image_path'] ?? null))
 		{
 			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path'] = $templated_path);
 			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
