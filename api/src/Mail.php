@@ -5589,10 +5589,10 @@ class Mail
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?: $this->icServer->getCurrentMailbox();
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
-		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
+		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
-			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)];
+			return $rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)];
 		}
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -5629,7 +5629,7 @@ class Mail
 		if (!$_stream)
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '."[{$this->icServer->ImapServerId}][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
-			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)] = $body;
+			$rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)] = $body;
 		}
 		return $body;
 	}
