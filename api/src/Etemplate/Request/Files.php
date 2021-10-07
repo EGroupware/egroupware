@@ -97,9 +97,10 @@ class Files extends Etemplate\Request
 	 * Factory method to get a new request object or the one for an existing request
 	 *
 	 * @param string $id =null
-	 * @return ?Etemplate\Request|false the object or false if $id is not found
+	 * @param bool $handle_not_found =true true: handle not found by trying to redirect, false: just return null
+	 * @return Request|null null if Request not found and $handle_not_found === false
 	 */
-	static function read($id=null)
+	public static function read($id=null, $handle_not_found=true)
 	{
 		$request = new Files($id);
 
