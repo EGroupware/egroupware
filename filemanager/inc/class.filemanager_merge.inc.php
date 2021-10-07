@@ -26,15 +26,14 @@ class filemanager_merge extends Api\Storage\Merge
 	 * @var array
 	 */
 	var $public_functions = array(
-		'show_replacements'		=> true,
-		'merge_entries'		=> true
+		'show_replacements' => true,
+		'merge_entries'     => true
 	);
 
 	/**
 	 * Fields that are numeric, for special numeric handling
 	 */
-	protected $numeric_fields = array(
-	);
+	protected $numeric_fields = array();
 
 	/**
 	 * Fields that are dates or timestamps
@@ -74,12 +73,12 @@ class filemanager_merge extends Api\Storage\Merge
 	 * Get replacements
 	 *
 	 * @param int $id id of entry
-	 * @param string &$content=null content to create some replacements only if they are use
+	 * @param string &$content =null content to create some replacements only if they are use
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null)
+	protected function get_replacements($id, &$content = null)
 	{
-		if (!($replacements = $this->filemanager_replacements($id, '', $content)))
+		if(!($replacements = $this->filemanager_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -90,58 +89,58 @@ class filemanager_merge extends Api\Storage\Merge
 	 * Get filemanager replacements
 	 *
 	 * @param int $id id (vfs path) of entry
-	 * @param string $prefix='' prefix like eg. 'erole'
+	 * @param string $prefix ='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function filemanager_replacements($id,$prefix='', &$content = null)
+	public function filemanager_replacements($id, $prefix = '', &$content = null)
 	{
 		$info = array();
-		$file = Vfs::lstat($id,true);
+		$file = Vfs::lstat($id, true);
 
 		$file['mtime'] = Api\DateTime::to($file['mtime']);
 		$file['ctime'] = Api\DateTime::to($file['ctime']);
 
 		$file['name'] = Vfs::basename($id);
 		$file['dir'] = ($dir = Vfs::dirname($id)) ? Vfs::decodePath($dir) : '';
-		$dirlist = explode('/',$file['dir']);
+		$dirlist = explode('/', $file['dir']);
 		$file['folder'] = array_pop($dirlist);
-		$file['folder_file'] = $file['folder'] . '/'.$file['name'];
+		$file['folder_file'] = $file['folder'] . '/' . $file['name'];
 		$file['path'] = $id;
-		$file['rel_path'] = str_replace($this->dir.'/', '', $id);
+		$file['rel_path'] = str_replace($this->dir . '/', '', $id);
 		$file['hsize'] = Vfs::hsize($file['size']);
 		$file['mime'] = Vfs::mime_content_type($id);
 		$file['gid'] *= -1;  // our widgets use negative gid's
-		if (($props = Vfs::propfind($id)))
+		if(($props = Vfs::propfind($id)))
 		{
 			foreach($props as $prop)
 			{
 				$file[$prop['name']] = $prop['val'];
 			}
 		}
-		if (($file['is_link'] = Vfs::is_link($id)))
+		if(($file['is_link'] = Vfs::is_link($id)))
 		{
 			$file['symlink'] = Vfs::readlink($id);
 		}
 		// Custom fields
 		if($content && strpos($content, '#') !== 0)
-                {
+		{
 			// Expand link-to custom fields
-			 $this->cf_link_to_expand($file, $content, $info);
+			$this->cf_link_to_expand($file, $content, $info);
 
 			foreach(Api\Storage\Customfields::get('filemanager') as $name => $field)
 			{
 				// Set any missing custom fields, or the marker will stay
-				if(!$file['#'.$name])
+				if(!$file['#' . $name])
 				{
-					$file['#'.$name] = '';
+					$file['#' . $name] = '';
 					continue;
 				}
 
 				// Format date cfs per user Api\Preferences
 				if($field['type'] == 'date' || $field['type'] == 'date-time')
 				{
-					$this->date_fields[] = '#'.$name;
-					$file['#'.$name] = Api\DateTime::to($file['#'.$name], $field['type'] == 'date' ? true : '');
+					$this->date_fields[] = '#' . $name;
+					$file['#' . $name] = Api\DateTime::to($file['#' . $name], $field['type'] == 'date' ? true : '');
 				}
 			}
 		}
@@ -150,17 +149,19 @@ class filemanager_merge extends Api\Storage\Merge
 		if($dirlist[1] == 'apps' && count($dirlist) > 1)
 		{
 			// Try this first - a normal path /apps/appname/id/file
-			list($app, $app_id) = explode('/', substr($file['path'], strpos($file['path'], 'apps/')+5));
+			list($app, $app_id) = explode('/', substr($file['path'], strpos($file['path'], 'apps/') + 5));
 			// Symlink?
-			if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+			if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps']))
+			{
 				// Try resolving just app + ID - /apps/App Name/Record Title/file
-				$resolved = Vfs::resolve_url_symlinks(implode('/',array_slice(explode('/',$file['dir']),0,4)));
-				list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+				$resolved = Vfs::resolve_url_symlinks(implode('/', array_slice(explode('/', $file['dir']), 0, 4)));
+				list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/') + 5));
 
-				if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
+				if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps']))
+				{
 					// Get rid of any virtual folders (eg: All$) and symlinks
 					$resolved = Vfs::resolve_url_symlinks($file['path']);
-					list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
+					list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/') + 5));
 				}
 			}
 			if($app && $app_id)
@@ -170,7 +171,7 @@ class filemanager_merge extends Api\Storage\Merge
 					$app_merge = null;
 					try
 					{
-						$classname = $app .'_merge';
+						$classname = $app . '_merge';
 						if(class_exists($classname))
 						{
 							$app_merge = new $classname();
@@ -180,9 +181,10 @@ class filemanager_merge extends Api\Storage\Merge
 							}
 						}
 					}
-					// Silently discard & continue
-					catch(Exception $e) {
-						unset($e);	// not used
+						// Silently discard & continue
+					catch (Exception $e)
+					{
+						unset($e);    // not used
 					}
 				}
 			}
@@ -211,7 +213,7 @@ class filemanager_merge extends Api\Storage\Merge
 		foreach($file as $key => &$value)
 		{
 			if(!$value) $value = '';
-			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
+			$info['$$' . ($prefix ? $prefix . '/' : '') . $key . '$$'] = $value;
 		}
 		if($app_placeholders)
 		{
@@ -239,14 +241,18 @@ class filemanager_merge extends Api\Storage\Merge
 		{
 			return $session;
 		}
-		else if (($session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, "$app::$id")) &&
-				substr($session['share_path'], -strlen($path)) === $path)
+		else
 		{
-			return $session;
+			if(($session = \EGroupware\Api\Cache::getSession(Api\Sharing::class, "$app::$id")) &&
+				substr($session['share_path'], -strlen($path)) === $path)
+			{
+				return $session;
+			}
 		}
 		// Need to create the share here.
 		// No way to know here if it should be writable, or who it's going to
-		$mode = /* ?  ? Sharing::WRITABLE :*/ Api\Sharing::READONLY;
+		$mode = /* ?  ? Sharing::WRITABLE :*/
+			Api\Sharing::READONLY;
 		$recipients = array();
 		$extra = array();
 
@@ -302,24 +308,68 @@ class filemanager_merge extends Api\Storage\Merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
-			'date' => lang('Date'),
-			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
-			'user/account_lid' => lang('Username'),
-			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
-			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
-			'labelplacement' => lang('Tag to mark positions for address labels'),
-			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF' => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example'),
-			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
-			) as $name => $label)
+					'date' => lang('Date'),
+					'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
+					'user/account_lid' => lang('Username'),
+					'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
+					'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
+					'labelplacement' => lang('Tag to mark positions for address labels'),
+					'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+					'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
+					'NENVLF' => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
+					'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example'),
+					'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
+				) as $name => $label)
 		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
 		}
 
 		echo "</table>\n";
 
 		echo $GLOBALS['egw']->framework->footer();
+	}
+
+	/**
+	 * Get a list of placeholders provided.
+	 *
+	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
+	 */
+	public function get_placeholder_list($prefix = '')
+	{
+		$placeholders = parent::get_placeholder_list($prefix);
+
+		$fields = array(
+			'name'        => 'name',
+			'path'        => 'Absolute path',
+			'rel_path'    => 'Path relative to current directory',
+			'folder'      => 'Containing folder',
+			'folder_file' => 'Containing folder and file name',
+			'url'         => 'url',
+			'webdav_url'  => 'External path using webdav',
+			'link'        => 'Clickable link to file',
+			'comment'     => 'comment',
+			'mtime'       => 'modified',
+			'ctime'       => 'created',
+			'mime'        => 'Type',
+			'hsize'       => 'Size',
+			'size'        => 'Size (in bytes)',
+		);
+		$group = 'placeholders';
+		foreach($fields as $name => $label)
+		{
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
+			{
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
+			}
+		}
+
+		return $placeholders;
 	}
 }

@@ -227,8 +227,9 @@ export class et2_placeholder_select extends et2_inputWidget
 		app.onchange = (node, widget) =>
 		{
 			preview.set_value("");
-			if(['user'].indexOf(widget.get_value()) >= 0)
+			if(['user', 'filemanager'].indexOf(widget.get_value()) >= 0)
 			{
+				// These ones don't let you select an entry for preview (they don't work)
 				entry.set_disabled(true);
 				entry.app_select.val('user');
 				entry.set_value({app: 'user', id: '', query: ''});
