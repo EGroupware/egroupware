@@ -68,7 +68,7 @@ class Template extends Etemplate\Widget
 		list($name) = explode('?', $_name);	// remove optional cache-buster
 		if (isset(self::$cache[$name]) || !($path = self::relPath($name, $template_set, $version, $load_via)))
 		{
-			if ((!$path || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
+			if ((empty($path) || self::read($load_via, $template_set)) && isset(self::$cache[$name]))
 			{
 				//error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') read from cache");
 				return self::$cache[$name];
@@ -146,7 +146,7 @@ class Template extends Etemplate\Widget
 	{
 		static $prefixes = null;
 		unset($version);	// not used currently
-		list($app, $rest) = explode('.', $load_via ?: $name, 2);
+		list($app, $rest) = explode('.', $load_via ?: $name, 2)+[null,null];
 
 		if (empty($template_set))
 		{
@@ -184,7 +184,7 @@ class Template extends Etemplate\Widget
 			$path = $prefix.$path;
 		}
 		//error_log(__METHOD__."('$name', '$template_set') returning ".array2string($path));
-		return $path;
+		return $path ?? null;
 	}
 
 	/**
@@ -243,16 +243,16 @@ class Template extends Etemplate\Widget
 	{
 		$cname =& $params[0];
 		$old_cname = $params[0];
-		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
+		if (!empty($this->attrs['content'])) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
 
 		// Check for template from content, and run over it
 		// templates included via template tag have their name to load them from in attribute "template"
-		$expand_name = self::expand_name($this->id ? $this->id : $this->attrs['template'], '','','','',self::$request->content);
+		$expand_name = self::expand_name($this->id ?: $this->attrs['template'], '','','','',self::$request->content);
 		if(!$expand_name && $this->id && $this->attrs['template'])
 		{
 			$expand_name = $this->attrs['template'];
 		}
-		if($this->original_name)
+		if (!empty($this->original_name))
 		{
 			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
 		}

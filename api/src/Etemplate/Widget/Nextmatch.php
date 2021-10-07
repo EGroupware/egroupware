@@ -130,13 +130,13 @@ class Nextmatch extends Etemplate\Widget
 		$send_value = $value;
 
 		list($app) = explode('.',$value['get_rows']);
-		if(!$GLOBALS['egw_info']['apps'][$app])
+		if (empty($GLOBALS['egw_info']['apps'][$app]))
 		{
 			list($app) = explode('.',$this->attrs['template']);
 		}
 
 		// Check for a favorite in URL
-		if($_GET['favorite'] && $value['favorites'])
+		if (!empty($_GET['favorite']) && !empty($value['favorites']))
 		{
 			$safe_name = preg_replace('/[^A-Za-z0-9-_]/','_',strip_tags($_GET['favorite']));
 			$pref_name = "favorite_" .$safe_name;
@@ -210,7 +210,7 @@ class Nextmatch extends Etemplate\Widget
 		}
 
 		// Favorite group for admins
-		if($GLOBALS['egw_info']['apps']['admin'] && $value['favorites'])
+		if (!empty($GLOBALS['egw_info']['apps']['admin']) && !empty($value['favorites']))
 		{
 			self::$request->sel_options[$form_name]['favorite']['group'] = array('all' => lang('All users')) +
 				Select::typeOptions('select-account',',groups');
@@ -894,7 +894,7 @@ class Nextmatch extends Etemplate\Widget
 			if ($default_attrs) $action += $default_attrs;
 
 			// Add 'Select All' after first group
-			if ($first_level && $group !== false && $action['group'] != $group && empty($egw_actions[$prefix.'select_all']))
+			if ($first_level && $group !== false && ($action['group']??null) != $group && empty($egw_actions[$prefix.'select_all']))
 			{
 
 				$egw_actions[$prefix.'select_all'] = array(

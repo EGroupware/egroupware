@@ -125,7 +125,7 @@ class Pdo
 			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
 			self::$pdo = new \PDO($dsn,$egw_db->User,'$egw_db->Password');
 		}
-		if ($query)
+		if (!empty($query))
 		{
 			self::$pdo->exec($query);
 		}

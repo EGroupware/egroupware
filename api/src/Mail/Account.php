@@ -549,7 +549,7 @@ class Account implements \ArrayAccess
 					$row = array_merge($row, Credentials::from_session($row));
 				}
 				// fill an empty ident_realname or ident_email of current user with data from user account
-				if ($replace_placeholders && (!isset($user) || $user == $GLOBALS['egw_info']['user']['acount_id']))
+				if ($replace_placeholders && (!isset($user) || $user == $GLOBALS['egw_info']['user']['account_id']))
 				{
 					if (empty($row['ident_realname'])) $row['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
 					if (empty($row['ident_email'])) $row['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];

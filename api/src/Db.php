@@ -591,7 +591,7 @@ class Db
 			$this->setupType = $this->Type;
 			$this->Type = 'mysql';
 		}
-		if ($new_connection)
+		if (!empty($new_connection))
 		{
 			foreach(get_included_files() as $file)
 			{
@@ -1599,7 +1599,7 @@ class Db
 		{
 			return $array;
 		}
-		if (!$column_definitions)
+		if (empty($column_definitions))
 		{
 			$column_definitions = $this->column_definitions;
 		}

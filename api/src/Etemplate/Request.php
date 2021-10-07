@@ -428,9 +428,9 @@ class Request
 	 * @param string $var
 	 * @param mixed $val
 	 */
-	public function __set($var,$val)
+	public function __set($var, $val)
 	{
-		if ($this->data[$var] !== $val)
+		if (!isset($this->data[$var]) || $this->data[$var] !== $val)
 		{
 			$this->data[$var] = $val;
 			//error_log(__METHOD__."('$var', ...) data of id=$this->id changed ...");

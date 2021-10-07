@@ -564,7 +564,7 @@ class Mailer extends Horde_Mime_Mail
 			if (!isset($flowed)) $flowed = $this->_body && !in_array($this->_body->getType(), array('multipart/encrypted', 'multipart/signed'));
 
 			// check if flowed is disabled in mail site configuration
-			if (($config = Config::read('mail')) && $config['disable_rfc3676_flowed'])
+			if (($config = Config::read('mail')) && !empty($config['disable_rfc3676_flowed']))
 			{
 				$flowed = false;
 			}
@@ -616,7 +616,7 @@ class Mailer extends Horde_Mime_Mail
 		}
 
 		// log mails to file specified in $GLOBALS['egw_info']['server']['log_mail'] or error_log for true
-		if ($GLOBALS['egw_info']['server']['log_mail'])
+		if (!empty($GLOBALS['egw_info']['server']['log_mail']))
 		{
 			$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s')."\n" : '';
 			$msg .= (!isset($e) ? 'Mail send' : 'Mail NOT send').
@@ -732,7 +732,7 @@ class Mailer extends Horde_Mime_Mail
 				$recipients->add($h->getAddressList());
 			}
 		}
-		if ($this->_bcc) {
+		if (!empty($this->_bcc)) {
 			$recipients->add($this->_bcc);
 		}
 

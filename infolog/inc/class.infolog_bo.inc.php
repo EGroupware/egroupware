@@ -228,7 +228,7 @@ class infolog_bo
 			{
 				foreach(array_keys($config_data['status']) as $key)
 				{
-					if (!is_array($this->status[$key]))
+					if (!isset($this->status[$key]) || !is_array($this->status[$key]))
 					{
 						$this->status[$key] = array();
 					}
@@ -262,17 +262,17 @@ class infolog_bo
 						$save_config = true;
 					}
 				}
-				if ($save_config) Api\Config::save_value('customfields',$this->customfields,'infolog');
+				if (!empty($save_config)) Api\Config::save_value('customfields',$this->customfields,'infolog');
 			}
-			if (is_array($config_data['responsible_edit']))
+			if (isset($config_data['responsible_edit']) && is_array($config_data['responsible_edit']))
 			{
 				$this->responsible_edit = array_merge($this->responsible_edit,$config_data['responsible_edit']);
 			}
-			if (is_array($config_data['copy_excludefields']))
+			if (isset($config_data['copy_excludefields']) && is_array($config_data['copy_excludefields']))
 			{
 				$this->copy_excludefields = array_merge($this->copy_excludefields,$config_data['copy_excludefields']);
 			}
-			if (is_array($config_data['sub_excludefields']) && $config_data['sub_excludefields'])
+			if (!empty($config_data['sub_excludefields']) && is_array($config_data['sub_excludefields']))
 			{
 				$this->sub_excludefields = array_merge($this->sub_excludefields,$config_data['sub_excludefields']);
 			}
@@ -286,7 +286,7 @@ class infolog_bo
 			}
 			$this->history = $config_data['history'];
 
-			$this->limit_modified_n_month = $config_data['limit_modified_n_month'];
+			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
@@ -629,12 +629,14 @@ class infolog_bo
 
 		if (!$info_id || ($data = $this->so->read($info_id)) === False)
 		{
-			return null;
+			$null = null;
+			return $null;
 		}
 
 		if (!$ignore_acl && !$this->check_access($data,Acl::READ))	// check behind read, to prevent a double read
 		{
-			return False;
+			$false = False;
+			return $false;
 		}
 
 		if ($data['info_subject'] == $this->subject_from_des($data['info_des']))

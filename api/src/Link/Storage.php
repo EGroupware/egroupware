@@ -127,7 +127,7 @@ class Storage
 		{
 			echo "<p>solink.get_links($app,".print_r($id,true).",$only_app,$order,$deleted)</p>\n";
 		}
-		if (($not_only = $only_app[0] == '!'))
+		if (!empty($only_app) && ($not_only = $only_app[0] == '!'))
 		{
 			$only_app = substr($only_app,1);
 		}
@@ -173,7 +173,7 @@ class Storage
 		catch(Api\Db\Exception $e) {
 			_egw_log_exception($e);
 		}
-		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
+		return is_array($id) ? $links : ($links[$id] ?? []);
 	}
 
 	private static function _add2links($row,$left,$only_app,$not_only,array &$links)

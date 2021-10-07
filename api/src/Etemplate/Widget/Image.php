@@ -36,17 +36,17 @@ class Image extends Etemplate\Widget
 
 		$image = $value != '' ? $value : $this->attrs['src'];
 
-		if (is_string($image)) list($app,$img) = explode('/',$image,2);
-		if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
+		if (is_string($image)) list($app,$img) = explode('/',$image,2)+[null,null];
+		if (empty($app) || empty($img) || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
 		{
 			$img = $image;
 			list($app) = explode('.',$form_name);
 		}
 		$src = Api\Image::find($app, $img);
-		if(!$this->id)
+		/*if(!$this->id)
 		{
 //			self::setElementAttribute($this->attrs['src'], 'id', $this->attrs['src']);
-		}
+		}*/
 		self::setElementAttribute($this->attrs['src'], 'src', $src);
 	}
 }

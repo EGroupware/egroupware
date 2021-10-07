@@ -94,7 +94,7 @@ class Sql extends Mail\Smtp
 				);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."('$_accountName') returning ".array2string($emailAddresses));
+		if (!empty($this->debug)) error_log(__METHOD__."('$_accountName') returning ".array2string($emailAddresses));
 
 		return $emailAddresses;
 	}
@@ -191,7 +191,7 @@ class Sql extends Mail\Smtp
 					case self::TYPE_MAILBOX:
 						$userData['mailMessageStore'] = $row['mail_value'];
 						//error_log(__METHOD__."('$user') row=".array2string($row).', enabled[$row[account_id]]='.array2string($enabled[$row['account_id']]).', forwardOnly[$row[account_id]]='.array2string($forwardOnly[$row['account_id']]));
-						if ($row['account_id'] > 0 && $enabled[$row['account_id']] && !$forwardOnly[$row['account_id']])
+						if ($row['account_id'] > 0 && !empty($enabled[$row['account_id']]) && empty($forwardOnly[$row['account_id']]))
 						{
 							$userData['uid'][] = $this->accounts->id2name($row['account_id'], 'account_lid');
 							$userData['mailbox'][] = $row['mail_value'];
@@ -218,7 +218,7 @@ class Sql extends Mail\Smtp
 				}
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."('$user') returning ".array2string($userData));
+		if (!empty($this->debug)) error_log(__METHOD__."('$user') returning ".array2string($userData));
 
 		return $userData;
 	}
@@ -240,7 +240,7 @@ class Sql extends Mail\Smtp
 	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
 		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
-		if ($this->debug) error_log(__METHOD__."($_uidnumber, ".array2string($_mailAlternateAddress).', '.array2string($_mailForwardingAddress).", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=".array2string($_forwarding_only).') '.function_backtrace());
+		if (!empty($this->debug)) error_log(__METHOD__."($_uidnumber, ".array2string($_mailAlternateAddress).', '.array2string($_mailForwardingAddress).", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=".array2string($_forwarding_only).') '.function_backtrace());
 
 		if (!$_forwarding_only && $this->accounts->id2name($_uidnumber, 'account_email') !== $_mailLocalAddress)
 		{

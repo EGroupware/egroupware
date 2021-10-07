@@ -216,7 +216,7 @@ class mail_compose
 
 		);
 		$acc_smime = Mail\Smime::get_acc_smime($content['mailaccount']);
-		if ($acc_smime['acc_smime_password'])
+		if ($acc_smime && !empty($acc_smime['acc_smime_password']))
 		{
 			$actions = array_merge($actions, array(
 				'smime_sign' => array (
@@ -271,9 +271,9 @@ class mail_compose
 			}
 			unset($actions['pgp']);
 		}
-		if ($GLOBALS['egw_info']['server']['disable_pgp_encryption']) unset($actions['pgp']);
+		if (!empty($GLOBALS['egw_info']['server']['disable_pgp_encryption'])) unset($actions['pgp']);
 		// remove vfs actions if the user has no run access to filemanager
-		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['filemanager']))
 		{
 			unset($actions['save2vfs']);
 			unset($actions['selectFromVFSForCompose']);
@@ -1242,16 +1242,16 @@ class mail_compose
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;
 		foreach(self::$destinations as $destination) {
-			if (!is_array($content[$destination]))
+			if (!empty($content[$destination]) && !is_array($content[$destination]))
 			{
-				if (!empty($content[$destination])) $content[$destination] = (array)$content[$destination];
+				$content[$destination] = (array)$content[$destination];
 			}
-			$addr_content = $content[strtolower($destination)];
+			$addr_content = $content[strtolower($destination)] ?? [];
 			// we clear the given address array and rebuild it
 			unset($content[strtolower($destination)]);
-			foreach((array)$addr_content as $key => $value) {
-				if ($value=="NIL@NIL") continue;
-				if ($destination=='replyto' && str_replace('"','',$value) ==
+			foreach($addr_content as $value) {
+				if ($value === "NIL@NIL") continue;
+				if ($destination === 'replyto' && str_replace('"','',$value) ===
 					str_replace('"','',$identities[$this->mail_bo->getDefaultIdentity()]))
 				{
 					// preserve/restore the value to content.
@@ -1261,7 +1261,7 @@ class mail_compose
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = str_replace("\"\"",'"', htmlspecialchars_decode($value, ENT_COMPAT));
 				foreach(Mail::parseAddressList($value) as $addressObject) {
-					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
+					if ($addressObject->host === '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
 					//$address = Mail::htmlentities($address, $this->displayCharset);
 					$content[strtolower($destination)][]=$address;
@@ -1289,7 +1289,7 @@ class mail_compose
 		$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] =$content['body'];
 		$content['showtempname']=0;
 		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
-		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],(!empty($content['uploadForCompose'])?$content['uploadForCompose']:array())):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
+		$content['attachments'] = array_merge($content['attachments'] ?? [], $content['uploadForCompose'] ?? []);
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
@@ -1297,21 +1297,21 @@ class mail_compose
 
 		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
 		// if no filemanager -> no vfsFileSelector
-		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['filemanager']))
 		{
 			$content['vfsNotAvailable'] = "mail_DisplayNone";
 		}
 		// if no infolog -> no save as infolog
-		if (!$GLOBALS['egw_info']['user']['apps']['infolog'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['infolog']))
 		{
 			$content['noInfologAvailable'] = "mail_DisplayNone";
 		}
 		// if no tracker -> no save as tracker
-		if (!$GLOBALS['egw_info']['user']['apps']['tracker'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['tracker']))
 		{
 			$content['noTrackerAvailable'] = "mail_DisplayNone";
 		}
-		if (!$GLOBALS['egw_info']['user']['apps']['infolog'] && !$GLOBALS['egw_info']['user']['apps']['tracker'])
+		if (empty($GLOBALS['egw_info']['user']['apps']['infolog']) && empty($GLOBALS['egw_info']['user']['apps']['tracker']))
 		{
 			$content['noSaveAsAvailable'] = "mail_DisplayNone";
 		}
@@ -1324,12 +1324,12 @@ class mail_compose
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
 		$sel_options['filemode'] = Vfs\Sharing::$modes;
-		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
+		if (empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new Etemplate('mail.compose');
 
 		$etpl->setElementAttribute('composeToolbar', 'actions', self::getToolbarActions($content));
-		if ($content['mimeType']=='html')
+		if ($content['mimeType'] === 'html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"
 			$_htmlConfig = Mail::$htmLawed_config;
@@ -1340,7 +1340,7 @@ class mail_compose
 			Mail::$htmLawed_config = $_htmlConfig;
 		}
 
-		if (isset($content['composeID'])&&!empty($content['composeID']))
+		if (!empty($content['composeID']))
 		{
 			$composeCache = $content;
 			unset($composeCache['body']);
@@ -1348,23 +1348,23 @@ class mail_compose
 			unset($composeCache['mail_plaintext']);
 			Api\Cache::setCache(Api\Cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
 		}
-		if (!isset($_content['serverID'])||empty($_content['serverID']))
+		if (empty($_content['serverID']))
 		{
 			$content['serverID'] = $this->mail_bo->profileID;
 		}
 		$preserv['serverID'] = $content['serverID'];
-		$preserv['lastDrafted'] = $content['lastDrafted'];
-		$preserv['processedmail_id'] = $content['processedmail_id'];
-		$preserv['references'] = $content['references'];
-		$preserv['in-reply-to'] = $content['in-reply-to'];
+		$preserv['lastDrafted'] = $content['lastDrafted'] ?? null;
+		$preserv['processedmail_id'] = $content['processedmail_id'] ?? null;
+		$preserv['references'] = $content['references'] ?? null;
+		$preserv['in-reply-to'] = $content['in-reply-to'] ?? null;
 		// thread-topic is a proprietary microsoft header and deprecated with the current version
 		// horde does not support the encoding of thread-topic, and probably will not no so in the future
 		//$preserv['thread-topic'] = $content['thread-topic'];
-		$preserv['thread-index'] = $content['thread-index'];
-		$preserv['list-id'] = $content['list-id'];
-		$preserv['mode'] = $content['mode'];
+		$preserv['thread-index'] = $content['thread-index'] ?? null;
+		$preserv['list-id'] = $content['list-id'] ?? null;
+		$preserv['mode'] = $content['mode'] ?? null;
 		// convert it back to checkbox expectations
-		if($content['mimeType'] == 'html') {
+		if($content['mimeType'] === 'html') {
 			$content['mimeType']=1;
 		} else {
 			$content['mimeType']=0;
@@ -1391,11 +1391,11 @@ class mail_compose
 		// Resolve distribution list before send content to client
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $f)
 		{
-			if (is_array($content[$f])) $content[$f]= self::resolveEmailAddressList ($content[$f]);
+			if (isset($content[$f]) && is_array($content[$f])) $content[$f]= self::resolveEmailAddressList ($content[$f]);
 		}
 
 		// set filemode icons for all attachments
-		if($content['attachments'] && is_array($content['attachments']))
+		if(!empty($content['attachments']))
 		{
 			foreach($content['attachments'] as &$attach)
 			{
@@ -1407,9 +1407,9 @@ class mail_compose
 			}
 		}
 
-		$content['to'] = self::resolveEmailAddressList($content['to']);
+		if (isset($content['to'])) $content['to'] = self::resolveEmailAddressList($content['to']);
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
-			join(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : join(',', Mail::$mailConfig['html_toolbar']);
+			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
@@ -2485,7 +2485,7 @@ class mail_compose
 		if(!empty($_formData['list-id'])) {
 			$_mailObject->addHeader('List-Id', $_formData['list-id']);
 		}
-		if($_formData['disposition']=='on') {
+		if(isset($_formData['disposition']) && $_formData['disposition'] === 'on') {
 			$_mailObject->addHeader('Disposition-Notification-To', $_identity['ident_email']);
 		}
 
@@ -2522,7 +2522,7 @@ class mail_compose
 		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
 		{
 			$attachment_links = $this->_getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
-				$_formData['mimeType'] == 'html',
+				$_formData['mimeType'] === 'html',
 				array_unique(array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc'])),
 				$_formData['expiration'], $_formData['password']);
 		}
@@ -2530,7 +2530,7 @@ class mail_compose
 		{
 			case 'html':
 				$body = $_formData['body'];
-				if ($attachment_links)
+				if (!empty($attachment_links))
 				{
 					if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
 					{
@@ -2567,7 +2567,7 @@ class mail_compose
 			default:
 				$body = $this->convertHTMLToText($_formData['body'],false, false, true, true);
 
-				if ($attachment_links) $body .= $attachment_links;
+				if (!empty($attachment_links)) $body .= $attachment_links;
 
 				#$_mailObject->Body = $_formData['body'];
 				if(!empty($signature)) {
@@ -2653,7 +2653,7 @@ class mail_compose
 			}
 			if ($connection_opened) $mail_bo->closeConnection();
 		}
-		return is_array($inline_images)?$inline_images:array();
+		return $inline_images ?? [];
 	}
 
 	/**
@@ -2761,7 +2761,7 @@ class mail_compose
 						$dmailbox = $dhA['folder'];
 						// beware: do not delete the original mail as found in processedmail_id
 						$pMuid='';
-						if ($content['processedmail_id'])
+						if (!empty($content['processedmail_id']))
 						{
 							$pMhA = mail_ui::splitRowID($content['processedmail_id']);
 							$pMuid = $pMhA['msgUID'];
@@ -3021,7 +3021,7 @@ class mail_compose
 		// create the messages and store inline images
 		$inline_images = $this->createMessage($mail, $_formData, $identity);
 		// remember the identity
-		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->From;//$mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
+		if (!empty($mail->From) && ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on')) $fromAddress = $mail->From;//$mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 		#exit;
@@ -3317,14 +3317,14 @@ class mail_compose
 			if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
 			// manually drafted, do not delete
 			// will be handled later on IF mode was $_formData['mode']=='composefromdraft'
-			if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == $this->sessionData['uid'])) $lastDrafted=false;
+			if (isset($lastDrafted['uid']) && (empty($lastDrafted['uid']) || $lastDrafted['uid'] == ($this->sessionData['uid']??null))) $lastDrafted=false;
 			//error_log(__METHOD__.__LINE__.array2string($lastDrafted));
 		}
 		if ($lastDrafted && is_array($lastDrafted) && $mail_bo->isDraftFolder($lastDrafted['folder']))
 		{
 			try
 			{
-				if ($this->sessionData['lastDrafted'] != $this->sessionData['uid'] || !($_formData['mode']=='composefromdraft' &&
+				if ($this->sessionData['lastDrafted'] != ($this->sessionData['uid']??null) || !($_formData['mode']=='composefromdraft' &&
 					($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )&&$this->sessionData['attachments']))
 				{
 					//error_log(__METHOD__.__LINE__."#".$lastDrafted['uid'].'#'.$lastDrafted['folder'].array2string($_formData));
@@ -3399,7 +3399,7 @@ class mail_compose
 		}
 		if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
 		if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
-		if (!empty($mailaddresses)) $mailaddresses['from'] = Mail\Html::decodeMailHeader($fromAddress);
+		if (!empty($mailaddresses) && !empty($fromAddress)) $mailaddresses['from'] = Mail\Html::decodeMailHeader($fromAddress);
 
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )
 		{
@@ -3407,7 +3407,7 @@ class mail_compose
 
 			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
 			{
-				$entryid = $_formData['to_integrate_ids'][0][$app_key];
+				$entryid = $_formData['to_integrate_ids'][0][$app_key] ?? null;
 				if ($_formData[$app_key] == 'on')
 				{
 					$app_name = substr($app_key,3);

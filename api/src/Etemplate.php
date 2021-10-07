@@ -117,22 +117,22 @@ class Etemplate extends Etemplate\Widget\Template
 
 			foreach(count(array_filter(array_keys($extras), 'is_int')) ? $extras : array($extras) as $extra)
 			{
-				if ($extra['data'] && is_array($extra['data']))
+				if (!empty($extra['data']) && is_array($extra['data']))
 				{
 					$content = array_merge($content, $extra['data']);
 				}
 
-				if ($extra['preserve'] && is_array($extra['preserve']))
+				if (!empty($extra['preserve']) && is_array($extra['preserve']))
 				{
 					$preserv = array_merge($preserv, $extra['preserve']);
 				}
 
-				if ($extra['readonlys'] && is_array($extra['readonlys']))
+				if (!empty($extra['readonlys']) && is_array($extra['readonlys']))
 				{
 					$readonlys = array_merge($readonlys, $extra['readonlys']);
 				}
 
-				if ($extra['sel_options'] && is_array($extra['sel_options']))
+				if (!empty($extra['sel_options']) && is_array($extra['sel_options']))
 				{
 					$sel_options = array_merge($sel_options, $extra['sel_options']);
 				}
@@ -177,7 +177,7 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
-		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
+		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'] ?? null;
 
 		// compile required translations translations
 		$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -209,7 +209,7 @@ class Etemplate extends Etemplate\Widget\Template
 			'currentapp' => $currentapp,
 		);
 
-		if($data['content']['nm']['rows'] && is_array($data['content']['nm']['rows']))
+		if (!empty($data['content']['nm']['rows']) && is_array($data['content']['nm']['rows']))
 		{
 			// Deep copy rows so we don't lose them when request is set to null
 			// (some content by reference)
@@ -414,7 +414,7 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 
 		$tcontent = is_array($content) ? $content :
-			self::complete_array_merge(self::$request->preserv, $validated);
+			self::complete_array_merge(self::$request->preserv ?? [], $validated);
 
 		$hook_data = Hooks::process(
 			array(

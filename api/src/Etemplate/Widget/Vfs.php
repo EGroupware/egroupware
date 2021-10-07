@@ -37,10 +37,10 @@ class Vfs extends File
 	 */
 	public function beforeSendToClient($cname, $expand = array())
 	{
-		if($this->type == 'vfs-upload' || $this->attrs['type'] == 'vfs-upload')
+		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
 		{
 			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
-			if($this->attrs['path'])
+			if (!empty($this->attrs['path']))
 			{
 				$path = self::expand_name($this->attrs['path'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 			}

@@ -415,9 +415,9 @@ class Storage
 	 */
 	function allow_account_edit($user=null)
 	{
-		return $GLOBALS['egw_info']['server']['allow_account_edit'] &&
+		return !empty($GLOBALS['egw_info']['server']['allow_account_edit']) &&
 			array_intersect($GLOBALS['egw_info']['server']['allow_account_edit'],
-				$GLOBALS['egw']->accounts->memberships($user ? $user : $this->user, true));
+				$GLOBALS['egw']->accounts->memberships($user ?: $this->user, true));
 	}
 
 	/**
