@@ -853,7 +853,7 @@ class Categories
 
 		if (is_null(self::$cache)) self::init_cache();
 
-		$cat = self::$cache[$cat_id];
+		$cat = self::$cache[$cat_id] ?? null;
 		if ($item == 'path')
 		{
 			if ($cat['parent'])
@@ -864,7 +864,7 @@ class Categories
 		}
 		if ($item == 'data')
 		{
-			return $cat['data'] ? json_php_unserialize($cat['data'], true) : array();
+			return !empty($cat['data']) ? json_php_unserialize($cat['data'], true) : array();
 		}
 		elseif ($cat[$item])
 		{

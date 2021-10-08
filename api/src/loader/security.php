@@ -175,6 +175,8 @@ function php_safe_unserialize($str)
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
 {
+	if (!isset($str)) return $str;
+
 	if ((in_array($str[0], array('a', 'i', 's', 'b', 'O', 'C')) && $str[1] == ':' || $str === 'N;') &&
 		($arr = php_safe_unserialize($str)) !== false || $str === 'b:0;')
 	{

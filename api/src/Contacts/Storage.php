@@ -256,7 +256,7 @@ class Storage
 		}
 		$this->customfields = Api\Storage\Customfields::get('addressbook');
 		// contacts backend (contacts in LDAP require accounts in LDAP!)
-		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
+		if (($GLOBALS['egw_info']['server']['contact_repository']??null) === 'ldap' && $this->account_repository === 'ldap')
 		{
 			$this->contact_repository = 'ldap';
 			$this->somain = new Ldap();
@@ -264,7 +264,7 @@ class Storage
 		}
 		else	// sql or sql->ldap
 		{
-			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap')
+			if (($GLOBALS['egw_info']['server']['contact_repository']??null) === 'sql-ldap')
 			{
 				$this->contact_repository = 'sql-ldap';
 			}
@@ -347,9 +347,9 @@ class Storage
 		if ($user)
 		{
 			// contacts backend (contacts in LDAP require accounts in LDAP!)
-			if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
+			if(($GLOBALS['egw_info']['server']['contact_repository']??null) === 'ldap' && $this->account_repository === 'ldap')
 			{
-				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
+				// static grants from ldap: all rights for the own personal addressbook and the group ones of the memberships
 				$grants = array($user => ~0);
 				foreach($GLOBALS['egw']->accounts->memberships($user,true) as $gid)
 				{

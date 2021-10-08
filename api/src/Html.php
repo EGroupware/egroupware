@@ -756,7 +756,7 @@ tinymce.init({
 		{
 			parse_str($vars,$vars);
 		}
-		list($url,$v) = explode('?', $_url);	// url may contain additional vars
+		list($url,$v) = explode('?', $_url)+[null,null];	// url may contain additional vars
 		if ($v)
 		{
 			parse_str($v,$v);

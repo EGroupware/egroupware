@@ -468,7 +468,7 @@ class Accounts
 		$data = self::cache_read($id);
 
 		// add default description for Admins and Default group
-		if ($data['account_type'] === 'g')
+		if ($data && $data['account_type'] === 'g')
 		{
 			self::add_default_group_description($data);
 		}
@@ -989,7 +989,7 @@ class Accounts
 			$ret = $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
 		}
 		//error_log(__METHOD__."($account_id, $just_id) data=".array2string($data)." returning ".array2string($ret));
-		return $ret;
+		return $ret ?? [];
 	}
 
 	/**
