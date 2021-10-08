@@ -839,7 +839,7 @@ class Select extends Etemplate\Widget
 				}
 				foreach((array)$options as $right => $name)
 				{
-					if(!!($value & $right))
+					if (!!((int)$value & (int)$right))
 					{
 						$new_value[] = $right;
 					}
