@@ -273,7 +273,7 @@ class admin_acl
 			{
 				$rows['sel_options']['filter2'][] = array(
 					'value' => $appname,
-					'label' => lang(Api\Link::get_registry($appname, 'entries')) ?? lang($appname)
+					'label' => lang(Api\Link::get_registry($appname, 'entries') ?: $appname)
 				);
 			}
 			usort($rows['sel_options']['filter2'], function($a,$b) {
