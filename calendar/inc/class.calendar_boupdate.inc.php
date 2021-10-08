@@ -1627,7 +1627,7 @@ class calendar_boupdate extends calendar_bo
 			$memberships = $GLOBALS['egw']->accounts->memberships($uid,true);
 		}
 		$memberships[] = $uid;
-		return array_intersect($memberships, array_keys($event['participants'])) && $this->check_perms(Acl::EDIT,0,$uid);
+		return array_intersect($memberships, array_keys($event['participants'] ?? [])) && $this->check_perms(Acl::EDIT,0,$uid);
 	}
 
 	/**
