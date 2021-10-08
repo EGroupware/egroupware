@@ -77,15 +77,15 @@ class Sql extends Api\Storage
 		// Get custom fields from addressbook instead of api
 		$this->customfields = Api\Storage\Customfields::get('addressbook');
 
-		if ($GLOBALS['egw_info']['server']['account_repository'])
+		if (!empty($GLOBALS['egw_info']['server']['account_repository']))
 		{
 			$this->account_repository = $GLOBALS['egw_info']['server']['account_repository'];
 		}
-		elseif ($GLOBALS['egw_info']['server']['auth_type'])
+		elseif (!empty($GLOBALS['egw_info']['server']['auth_type']))
 		{
 			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
 		}
-		if ($GLOBALS['egw_info']['server']['contact_repository'])
+		if (!empty($GLOBALS['egw_info']['server']['contact_repository']))
 		{
 			$this->contact_repository = $GLOBALS['egw_info']['server']['contact_repository'];
 		}

@@ -202,9 +202,9 @@ class Contacts extends Contacts\Storage
 			$this->prefs['hide_accounts'] = '0';
 		}
 		// get the default addressbook from the users prefs
-		$this->default_addressbook = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?
+		$this->default_addressbook = !empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']) ?
 			(int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] : $this->user;
-		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],-1) == 'p';
+		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?? '',-1) == 'p';
 		if ($this->default_addressbook > 0 && $this->default_addressbook != $this->user &&
 			($this->default_private ||
 			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'] ||
@@ -312,14 +312,14 @@ class Contacts extends Contacts\Storage
 			'adr_two_countryname'  => lang('country').' ('.lang('business').')',
 		);
 		//_debug_array($this->contact_fields);
-		$this->own_account_acl = $GLOBALS['egw_info']['server']['own_account_acl'];
+		$this->own_account_acl = $GLOBALS['egw_info']['server']['own_account_acl'] ?? null;
 		if (!is_array($this->own_account_acl)) $this->own_account_acl = json_php_unserialize($this->own_account_acl, true);
 		// we have only one acl (n_fn) for the whole name, as not all backends store every part in an own field
 		if ($this->own_account_acl && in_array('n_fn',$this->own_account_acl))
 		{
 			$this->own_account_acl = array_merge($this->own_account_acl,array('n_prefix','n_given','n_middle','n_family','n_suffix'));
 		}
-		if ($GLOBALS['egw_info']['server']['org_fileds_to_update'])
+		if (!empty($GLOBALS['egw_info']['server']['org_fileds_to_update']))
 		{
 			$this->org_fields =  $GLOBALS['egw_info']['server']['org_fileds_to_update'];
 			if (!is_array($this->org_fields)) $this->org_fields = unserialize($this->org_fields);
@@ -337,7 +337,7 @@ class Contacts extends Contacts\Storage
 		}
 		$this->categories = new Categories($this->user,'addressbook');
 
-		$this->delete_history = $GLOBALS['egw_info']['server']['history'];
+		$this->delete_history = $GLOBALS['egw_info']['server']['history'] ?? null;
 	}
 
 	/**

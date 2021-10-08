@@ -1034,14 +1034,14 @@ class Base
 					$this->total = $this->db->select($this->table_name,$colums,$query,__LINE__,__FILE__,false,$order_by,false,0,$join)->NumRows();
 				}
 			}
-			$rs = $this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
+			$rs = $this->db->select($this->table_name,($mysql_calc_rows??'').$colums,$query,__LINE__,__FILE__,
 				$start,$order_by,$this->app,$num_rows,$join);
 			if ($this->debug) error_log(__METHOD__."() ".$this->db->Query_ID->sql);
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
 		if ((int) $this->debug >= 4) echo "<p>sql='{$this->db->Query_ID->sql}'</p>\n";
 
-		if ($mysql_calc_rows)
+		if (!empty($mysql_calc_rows))
 		{
 			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
 		}
@@ -1157,8 +1157,8 @@ class Base
 				}
 			}
 		}
-		if (is_array($query) && $op != 'AND') $query = $this->db->column_data_implode(' '.$op.' ',$query);
-		return $query;
+		if (!empty($query) && is_array($query) && $op != 'AND') $query = $this->db->column_data_implode(' '.$op.' ',$query);
+		return $query ?? null;
 	}
 
 	/**

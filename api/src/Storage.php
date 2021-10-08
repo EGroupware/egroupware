@@ -674,7 +674,7 @@ class Storage extends Storage\Base
 				elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
 				{
 					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
-					if ($extra_columns['fd'][array_search($name, $this->db_cols)])
+					if (!empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 					{
 						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 							array_search($name, $this->db_cols) => $val,

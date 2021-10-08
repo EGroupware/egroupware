@@ -283,7 +283,7 @@ abstract class Tracking
 				//error_log(__METHOD__."() $name: data['#$name']=".array2string($data['#'.$name]).", field[values]=".array2string($field['values']));
 				$details['#'.$name] = array(
 					'label' => $field['label'],
-					'value' => Customfields::format($field, $data['#'.$name]),
+					'value' => Customfields::format($field, $data['#'.$name] ?? null),
 				);
 				//error_log("--> details['#$name']=".array2string($details['#'.$name]));
 			}
@@ -1049,7 +1049,7 @@ abstract class Tracking
 			// remove the session-id in the notification mail!
 			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$link);
 
-			if ($popup) $link .= '&nopopup=1';
+			if (!empty($popup)) $link .= '&nopopup=1';
 		}
 		//error_log(__METHOD__."(..., $allow_popup, $receiver) returning ".array2string($allow_popup ? array($link,$popup) : $link));
 		return $allow_popup ? array($link,$popup) : $link;
@@ -1122,7 +1122,7 @@ abstract class Tracking
 		{
 			// if there's no old entry, the entry is not modified by definition
 			// if both values are '', 0 or null, we count them as equal too
-			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
+			$modified = $old && ($data[$name] ?? null) != ($old[$name] ?? null) && !(empty($data[$name]) && empty($old[$name]));
 			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 
