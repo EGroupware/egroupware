@@ -190,7 +190,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Format a single custom field value as string
 	 *
-	 * @param array $field field defintion incl. type
+	 * @param array $field field definition incl. type
 	 * @param string $value field value
 	 * @return string formatted value
 	 */
@@ -204,7 +204,7 @@ class Customfields implements \IteratorAggregate
 					$values = array();
 					foreach($field['rows'] > 1 ? explode(',', $value) : (array) $value as $value)
 					{
-						$values[] = Api\Accounts::username($value);
+						$values[] = is_numeric($value) ? Api\Accounts::username($value) : $value;
 					}
 					$value = implode(', ',$values);
 				}
