@@ -1329,7 +1329,7 @@ class mail_compose
 		$etpl = new Etemplate('mail.compose');
 
 		$etpl->setElementAttribute('composeToolbar', 'actions', self::getToolbarActions($content));
-		if ($content['mimeType'] === 'html')
+		if ($content['mimeType'] == 'html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"
 			$_htmlConfig = Mail::$htmLawed_config;
@@ -1364,7 +1364,7 @@ class mail_compose
 		$preserv['list-id'] = $content['list-id'] ?? null;
 		$preserv['mode'] = $content['mode'] ?? null;
 		// convert it back to checkbox expectations
-		if($content['mimeType'] === 'html') {
+		if($content['mimeType'] == 'html') {
 			$content['mimeType']=1;
 		} else {
 			$content['mimeType']=0;
@@ -2522,7 +2522,9 @@ class mail_compose
 		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
 		{
 			$attachment_links = $this->_getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
-				$_formData['mimeType'] === 'html',
+				// @TODO: $content['mimeType'] could type string/boolean. At the moment we can't strictly check them :(.
+				// @TODO: This needs to be fixed in compose function to get the right type from the content.
+				$_formData['mimeType'] == 'html',
 				array_unique(array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc'])),
 				$_formData['expiration'], $_formData['password']);
 		}
