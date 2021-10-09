@@ -128,10 +128,10 @@ class admin_customfields
 	public function index($content = array())
 	{
 		// determine appname
-		$this->appname = $this->appname ? $this->appname : ($_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false));
+		$this->appname = $this->appname ?: (!empty($_GET['appname']) ? $_GET['appname'] : (!empty($content['appname']) ? $content['appname'] : false));
 		if(!$this->appname) die(lang('Error! No appname found'));
 
-		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
+		$this->use_private = !empty($_GET['use_private']) && $_GET['use_private'] !== 'undefined' || !empty($content['use_private']);
 
 		// Read fields, constructor doesn't always know appname
 		$this->fields = Api\Storage\Customfields::get($this->appname,true);
@@ -323,10 +323,10 @@ class admin_customfields
 	 */
 	function edit($content = null)
 	{
-		$cf_id = $_GET['cf_id'] ? (int)$_GET['cf_id'] : (int)$content['cf_id'];
+		$cf_id = isset($_GET['cf_id']) ? (int)$_GET['cf_id'] : (int)$content['cf_id'];
 
 		// determine appname
-		$this->appname = $this->appname ? $this->appname : ($_GET['appname'] ? $_GET['appname'] : ($content['cf_app'] ? $content['cf_app'] : false));
+		$this->appname = $this->appname ?: (isset($_GET['appname']) ? $_GET['appname'] : (!empty($content['cf_app']) ? $content['cf_app'] : false));
 		if(!$this->appname)
 		{
 			if($cf_id && $this->so)
@@ -339,7 +339,7 @@ class admin_customfields
 		{
 			die(lang('Error! No appname found'));
 		}
-		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
+		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || !empty($content['use_private']);
 
 		// Read fields, constructor doesn't always know appname
 		$this->fields = Api\Storage\Customfields::get($this->appname,true);
@@ -347,7 +347,7 @@ class admin_customfields
 		// Update based on info returned from template
 		if (is_array($content))
 		{
-			$action = @key($content['button']);
+			$action = key($content['button'] ?? []);
 			switch($action)
 			{
 				case 'delete':
@@ -422,7 +422,7 @@ class admin_customfields
 		}
 		else
 		{
-			$content['use_private'] = !isset($_GET['use_private']) || (boolean)$_GET['use_private'];
+			$content['use_private'] = !empty($_GET['use_private']) && $_GET['use_private'] !== 'undefined';
 		}
 
 
@@ -474,11 +474,11 @@ class admin_customfields
 		// Show sub-type row, and get types
 		if($this->manage_content_types)
 		{
-			if(count($this->content_types) == 0)
+			if(empty($this->content_types))
 			{
 				$this->content_types = Api\Config::get_content_types($this->appname);
 			}
-			if (count($this->content_types)==0)
+			if (empty($this->content_types))
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
 				$this->content_types = (array)Api\Link::get_registry($this->appname, 'default_types');
@@ -592,7 +592,7 @@ class admin_customfields
 	*/
 	function create_field(&$content)
 	{
-		$new_name = trim($content['fields'][count($content['fields'])-1]['name']);
+		$new_name = trim($content['fields'][count((array)$content['fields'])-1]['name']);
 		if (empty($new_name) || isset($this->fields[$new_name]))
 		{
 			$content['error_msg'] .= empty($new_name) ?
@@ -601,7 +601,7 @@ class admin_customfields
 		}
 		else
 		{
-			$this->fields[$new_name] = $content['fields'][count($content['fields'])-1];
+			$this->fields[$new_name] = $content['fields'][count((array)$content['fields'])-1];
 			if(!$this->fields[$new_name]['label']) $this->fields[$new_name]['label'] = $this->fields[$new_name]['name'];
 			$this->save_repository();
 		}
