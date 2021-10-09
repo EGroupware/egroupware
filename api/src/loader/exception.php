@@ -71,6 +71,7 @@ function _egw_log_exception($e,&$headline=null)
 	{
 		error_log($headline.($e instanceof egw_exception_warning ? ': ' : ' ('.get_class($e).'): ').
 			$e->getMessage().(!empty($e->details) ? ': '.$e->details : ''));
+		error_log('File: '.str_replace(EGW_SERVER_ROOT, '', $e->getFile()).', Line: '.$e->getLine());
 		foreach($trace as $line)
 		{
 			error_log($line);
@@ -174,6 +175,7 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 	{
 		case E_RECOVERABLE_ERROR:
 		case E_USER_ERROR:
+			error_log(__METHOD__."($errno, '$errstr', '$errfile', $errline)");
 			throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 
 		case E_WARNING:
