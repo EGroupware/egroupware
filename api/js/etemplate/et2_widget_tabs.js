@@ -290,14 +290,17 @@ var et2_tabbox = /** @class */ (function (_super) {
             }
             else {
                 if (this.tabData[i]['onclick']) {
-                    entry.flagDiv.on("click", function () {
-                        et2_compileLegacyJS(this.tab['onclick'], this.widget, this.widget)(this.widget);
-                    }.bind({ widget: this, tab: this.tabData[i] }));
+                    /*  ...(this.tab['onclick'], this.widget, this.widget)
+                        why this.widget twice?
+                        first is the widget, second is the method context.
+                        second is optional, and defaults to the DOM node
+                    */
+                    var click_function = function () { et2_compileLegacyJS(this.tab['onclick'], this.widget, this.widget)(this.widget); };
+                    entry.flagDiv.on("click", click_function.bind({ widget: this, tab: this.tabData[i] }));
                 }
                 if (this.tabData[i]['ondblclick']) {
-                    entry.flagDiv.on("dblclick", function () {
-                        et2_compileLegacyJS(this.tab['ondblclick'], this.widget, this.widget)(this.widget);
-                    }.bind({ widget: this, tab: this.tabData[i] }));
+                    var dblclick_function = function () { et2_compileLegacyJS(this.tab['ondblclick'], this.widget, this.widget)(this.widget); };
+                    entry.flagDiv.on("dblclick", dblclick_function.bind({ widget: this, tab: this.tabData[i] }));
                 }
                 entry.flagDiv.click({ "tabs": this, "idx": i }, function (e) {
                     e.data.tabs.setActiveTab(e.data.idx);
