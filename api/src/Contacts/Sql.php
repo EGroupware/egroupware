@@ -742,7 +742,7 @@ class Sql extends Api\Storage
 		$cat_filter = array();
 		foreach(is_array($cats) ? $cats : (is_numeric($cats) ? array($cats) : explode(',',$cats)) as $cat)
 		{
-			if (is_numeric($cat)) $cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
+			if (is_numeric($cat)) $cat_filter[] = $this->db->concat("','", 'cat_id', "','")." LIKE '%,$cat,%'";
 		}
 		return $cat_filter;
 	}
