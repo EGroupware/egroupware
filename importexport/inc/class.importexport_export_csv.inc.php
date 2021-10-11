@@ -279,7 +279,7 @@ class importexport_export_csv implements importexport_iface_export_record
 					}
 					// Fall through for other settings
 				case 'select':
-					if (count($c_field['values']) == 1 && isset($c_field['values']['@']))
+					if (!empty($c_field['values']) && count($c_field['values']) == 1 && isset($c_field['values']['@']))
 					{
 						$c_field['values'] = Api\Storage\Customfields::get_options_from_file($c_field['values']['@']);
 					}
