@@ -2181,7 +2181,7 @@ class calendar_uiforms extends calendar_ui
 						}
 						$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 						$user_and_memberships[] = $user;
-						if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
+						if (!array_intersect(array_keys($event['participants'] ?? []), $user_and_memberships))
 						{
 							$event['error'] .= ($event['error'] ? "\n" : '').lang('You are not invited to that event!');
 							if ($event['id'])
