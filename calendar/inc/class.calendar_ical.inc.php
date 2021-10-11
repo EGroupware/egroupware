@@ -3093,7 +3093,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						// if that's not enough --> unset it, as truncating the json gives nothing
 						if (strlen($event['##'.$attributes['name']]) >
-							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
+							$GLOBALS['egw']->db->get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
 						{
 							unset($event['##'.$attributes['name']]);
 						}
