@@ -48,6 +48,22 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			"type": "string",
 			"default": "more",
 			"description": "Define a style for list header (more ...), which can get short 3dots with no caption or bigger button with caption more ..."
+		},
+		"preference_id": {
+			"name": "Preference id",
+			"type": "string",
+			"default": false,
+			"description": "Define a custom preference id for saving the toolbar preferences." +
+				           "This is useful when you have the same toolbar and you use it in a pop up but also in a tab, which have different dom ids" +
+				           "When not set it defaults to the dom id of the form."
+		},
+		"preference_app": {
+			"name": "Preference application",
+			"type": "string",
+			"default": false,
+			"description": 	"Define a custom preference application for saving the toolbar preferences." +
+							"This is useful when you have the same toolbar and you use it in a pop up but also in a tab, wich have different application names" +
+							"When not set it defaults to the result of this.egw().app_name();"
 		}
 	};
 
@@ -92,6 +108,13 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		// Set proper id and dom_id for the widget
 		this.set_id(this.id);
 
+		if(!this.options.preference_id){
+			this.options.preference_id = this.dom_id;
+		}
+
+		if(!this.options.preference_app){
+			this.options.preference_app = this.egw().app_name();
+		}
 
 		this.actionbox = jQuery(document.createElement('div'))
 			.addClass("et2_toolbar_more")
@@ -230,7 +253,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		{
 			this.actionbox.find('.toolbar-admin-pref').click(function(e){
 				e.stopImmediatePropagation();
-				egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_get_default_prefs', [egw.app_name(), that.dom_id], function(_prefs){
+				egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_get_default_prefs', [that.options.preference_app, that.options.preference_id], function(_prefs){
 					let prefs = [];
 					for (let p in _prefs)
 					{
@@ -240,7 +263,8 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				}).sendRequest(true);
 			});
 		}
-		let pref = (!egwIsMobile())? egw.preference(this.dom_id, this.egw().app_name()): undefined;
+
+		let pref = (!egwIsMobile())? egw.preference(this.options.preference_id, this.options.preference_app): undefined;
 		if (pref && !jQuery.isArray(pref)) this.preference = pref;
 
 		//Set the default actions for the first time
@@ -459,7 +483,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				if (that.actionlist.find(".ui-draggable").length == 0)
 				{
 					that.preference = {};
-					egw.set_preference(that.egw().app_name(),that.dom_id,that.preference);
+					egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
 				}
 			},
 			tolerance:"touch"
@@ -523,7 +547,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	{
 		this.preference[_action] = _state;
 		if (egwIsMobile()) return;
-		egw.set_preference(this.egw().app_name(),this.dom_id,this.preference);
+		egw.set_preference(this.options.preference_app,this.options.preference_id,this.preference);
 	}
 
 	/**
@@ -771,7 +795,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 						id:child,
 						value: child,
 						label: _actions[key]['children'][child]['caption'],
-						app: egw.app_name(),
+						app: self.options.preference_app,
 						icon: _actions[key]['children'][child]['iconUrl']
 					});
 				}
@@ -782,7 +806,7 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					id:key,
 					value: key,
 					label: _actions[key]['caption'],
-					app: egw.app_name(),
+					app: self.options.preference_app,
 					icon: _actions[key]['iconUrl']
 				});
 			}
@@ -806,12 +830,12 @@ class et2_toolbar extends et2_DOMWidget implements et2_IInput
 							_value.actions = pref;
 						}
 						egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
-							[_value, self.dom_id, egw.app_name()],function(_result){
+							[_value, self.options.preference_id, self.options.preference_app],function(_result){
 								egw.message(_result);
 							}).sendRequest(true);
 					}
 				},
-				title: egw.lang('admin settings for %1', this.dom_id),
+				title: egw.lang('admin settings for %1', this.options.preference_id),
 				buttons: buttons,
 				minWidth: 600,
 				minHeight: 300,
