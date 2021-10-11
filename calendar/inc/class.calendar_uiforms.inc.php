@@ -1267,8 +1267,6 @@ class calendar_uiforms extends calendar_ui
 			Api\DateTime::to($as_of_date,'ts') < time()
 		)
 		{
-
-			unset($orig_event);
 			// copy event by unsetting the id(s)
 			unset($event['id']);
 			unset($event['uid']);
@@ -1325,7 +1323,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			$last->setTime(0, 0, 0);
 			$old_event['recur_enddate'] = Api\DateTime::to($last, 'ts');
-			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
+			$dummy = null;
+			if (!$this->bo->update($old_event,true,true,false,true,$dummy, $no_notifications))
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 					lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
