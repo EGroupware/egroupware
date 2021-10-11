@@ -696,10 +696,16 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					{
 						trim($attribute);
 						list($key, $value) = explode('=', $attribute);
+						// check if value is enclosed in quotes
+						if (in_array($value[0], ['"', "'"], true) && $value[0] === substr($value, -1))
+						{
+							$value = substr($value,1,-1);
+						}
 						switch (strtolower($key))
 						{
 							case 'charset':
-								$charset = strtoupper(substr($value,1,-1));
+								$charset = strtoupper($value);
+								break;
 						}
 					}
 				}
