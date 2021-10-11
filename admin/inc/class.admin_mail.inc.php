@@ -1258,7 +1258,7 @@ class admin_mail
 			if ($content['ident_id'] != $content['old_ident_id'] &&
 				($content['old_ident_id'] || $content['ident_id'] != $content['std_ident_id']))
 			{
-				if ($content['ident_id'] > 0)
+				if ((int)$content['ident_id'] > 0)
 				{
 					$identity = Mail\Account::read_identity($content['ident_id'], false, $content['called_for']);
 					unset($identity['account_id']);
