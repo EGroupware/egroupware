@@ -44,7 +44,7 @@
 				</row>
 				<row>
 					<description value="Category owner" for="owner"/>
-					<taglist statustext="Limit global category to members of a certain group" id="owner" needed="1" height="190" class="et2_fullWidth" rows="4" />
+					<taglist-account statustext="Limit global category to members of a certain group" id="owner" needed="1" class="et2_fullWidth" />
 				</row>
 
 			</rows>
