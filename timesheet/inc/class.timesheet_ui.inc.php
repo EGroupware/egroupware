@@ -660,12 +660,16 @@ class timesheet_ui extends timesheet_bo
 			unset($query['col_filter']['cat_id']);
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet');
-		if ($query['col_filter']['ts_owner'])
+		if (!empty($query['col_filter']['ts_owner']))
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.Api\Accounts::username($query['col_filter']['ts_owner']);
-			#if ($GLOBALS['egw']->accounts->get_type($query['col_filter']['ts_owner']) == 'g') $GLOBALS['egw_info']['flags']['app_header'] .= ' '. lang("and its members");
-			#_debug_array($GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
-			if ($query['col_filter']['ts_owner']<0) $query['col_filter']['ts_owner'] = array_merge(array($query['col_filter']['ts_owner']),$GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.implode(', ',
+				array_map(Api\Accounts::class.'::username', (array)$query['col_filter']['ts_owner']));
+
+			if ($query['col_filter']['ts_owner'] < 0)
+			{
+				$query['col_filter']['ts_owner'] = array_merge(array($query['col_filter']['ts_owner']),
+					$GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
+			}
 		}
 		else
 		{
