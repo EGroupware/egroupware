@@ -451,7 +451,7 @@ class timesheet_bo extends Api\Storage
 		{
 			$extra_cols[] = $total_sql.' AS ts_total';
 		}
-		if (!isset($filter['ts_owner']) || !count($filter['ts_owner']))
+		if (!isset($filter['ts_owner']) || !count((array)$filter['ts_owner']))
 		{
 			$filter['ts_owner'] = array_keys($this->grants);
 		}
