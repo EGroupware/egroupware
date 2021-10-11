@@ -60,6 +60,7 @@ function ajax_exception_handler($e)
 	$response = Json\Response::get();
 	$message .= ($message ? "\n\n" : '').$e->getMessage();
 
+	$message .= "\n\n".$e->getFile().' ('.$e->getLine().')';
 	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
 	if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 	{
