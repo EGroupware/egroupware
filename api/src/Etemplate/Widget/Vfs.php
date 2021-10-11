@@ -226,7 +226,7 @@ class Vfs extends File
 		foreach($links as $link)
 		{
 			$matches = null;
-			if (is_array($link) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
+			if (is_array($link) && !empty($link['id']['tmp_name']) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
 			{
 				$replace[substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX))] =
 					Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
