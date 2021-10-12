@@ -1924,7 +1924,7 @@ class calendar_uiforms extends calendar_ui
 				$sel_options['owner'][$uid] = $this->bo->participant_name($uid);
 			}
 		}
-		$content['no_add_alarm'] = !count($sel_options['owner']);	// no rights to set any alarm
+		$content['no_add_alarm'] = empty($sel_options['owner']) || !count((array)$sel_options['owner']);	// no rights to set any alarm
 		if (!$event['id'])
 		{
 			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');
