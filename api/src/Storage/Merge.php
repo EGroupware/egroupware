@@ -2445,7 +2445,7 @@ abstract class Merge
 	 *
 	 * @param Api\Contacts\Merge $merge App-specific merge object
 	 */
-	protected function get_all_ids(Api\Storage\Merge $merge)
+	protected static function get_all_ids(Api\Storage\Merge $merge)
 	{
 		$ids = array();
 		$locations = array('index', 'session_data');
