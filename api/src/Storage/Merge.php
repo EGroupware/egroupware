@@ -3079,6 +3079,12 @@ abstract class Merge
 	 */
 	protected function add_customfield_placeholders(&$placeholders, $prefix = '')
 	{
+		// Avoid recursing between custom fields of different apps
+		if(substr_count($prefix, '#') > 1)
+		{
+			return;
+		}
+
 		foreach(Customfields::get($this->get_app()) as $name => $field)
 		{
 			if(array_key_exists($field['type'], Api\Link::app_list()))
@@ -3108,7 +3114,6 @@ abstract class Merge
 	public function get_placeholder_list($prefix = '')
 	{
 		$placeholders = [
-			'placeholders' => []
 		];
 
 		$this->add_customfield_placeholders($placeholders, $prefix);
@@ -3212,7 +3217,6 @@ abstract class Merge
 	 */
 	public function show_replacements()
 	{
-
 		$template_name = 'api.show_replacements';
 		$content = $sel_options = $readonlys = $preserve = array();
 
