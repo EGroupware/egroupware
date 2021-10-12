@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Storage;
 
+use ceLTIc\LTI\Service\Result;
 use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
@@ -433,11 +434,11 @@ abstract class Merge
 	 *
 	 * Uses egw_link system to get link titles
 	 *
-	 * @param app Name of current app
-	 * @param id ID of current entry
-	 * @param only_app Restrict links to only given application
-	 * @param exclude Exclude links to these applications
-	 * @param style String One of:
+	 * @param string app Name of current app
+	 * @param string id ID of current entry
+	 * @param string only_app Restrict links to only given application
+	 * @param string[] exclude Exclude links to these applications
+	 * @param string style  One of:
 	 *    'title' - plain text, just the title of the link
 	 *    'link' - URL to the entry
 	 *    'href' - HREF tag wrapped around the title
@@ -1785,7 +1786,7 @@ abstract class Merge
 	/**
 	 * Get the replacements for any entry specified by app & id
 	 *
-	 * @param stribg $app
+	 * @param string $app
 	 * @param string $id
 	 * @param string $content
 	 * @return array
@@ -1846,10 +1847,10 @@ abstract class Merge
 	/**
 	 * Process special flags, such as IF or NELF
 	 *
-	 * @param content Text to be examined and changed
-	 * @param replacements array of markers => replacement
+	 * @param string content Text to be examined and changed
+	 * @param array replacements array of markers => replacement
 	 *
-	 * @return changed content
+	 * @return string changed content
 	 */
 	private function process_commands($content, $replacements)
 	{
@@ -2031,7 +2032,7 @@ abstract class Merge
 	 * @param array $ids array with contact id(s)
 	 * @param string $name ='' name to use for downloaded document
 	 * @param string $dirs comma or whitespace separated directories, used if $document is a relative path
-	 * @param Array $header File name, mime & filesize if you want to send a header
+	 * @param array $header File name, mime & filesize if you want to send a header
 	 *
 	 * @return string with error-message on error
 	 * @throws Api\Exception
@@ -2546,8 +2547,8 @@ abstract class Merge
 	 * back to the client like the other documents.  Merging for a single selected
 	 * contact opens a compose window, multiple contacts just sends.
 	 *
-	 * @param Array &$action Action to be modified for mail
-	 * @param Array $file Array of information about the document from Api\Vfs::find
+	 * @param array &$action Action to be modified for mail
+	 * @param array $file Array of information about the document from Api\Vfs::find
 	 * @return void
 	 */
 	private static function document_mail_action(array &$action, $file)
@@ -2580,8 +2581,8 @@ abstract class Merge
 	 * Set up a document action so the generated file is saved and opened in
 	 * the collabora editor (if collabora is available)
 	 *
-	 * @param Array &$action Action to be modified for editor
-	 * @param Array $file Array of information about the document from Api\Vfs::find
+	 * @param array &$action Action to be modified for editor
+	 * @param array $file Array of information about the document from Api\Vfs::find
 	 * @return void
 	 */
 	private static function document_editable_action(array &$action, $file)
@@ -3197,5 +3198,81 @@ abstract class Merge
 		);
 
 		return $settings;
+	}
+
+	/**
+	 * Show replacement placeholders for the app
+	 *
+	 * Generates a page that shows all the available placeholders for this appliction.  By default,
+	 * we have all placeholders generated in get_placeholder_list() (including any custom fields)
+	 * as well as the common and current user placeholders.
+	 *
+	 * By overridding show_replacements_hook(), extending classes can override without having to
+	 * re-implement everything.
+	 */
+	public function show_replacements()
+	{
+
+		$template_name = 'api.show_replacements';
+		$content = $sel_options = $readonlys = $preserve = array();
+
+		$content['appname'] = $this->get_app();
+		$content['placeholders'] = $this->remap_replacement_list($this->get_placeholder_list());
+		$content['extra'] = array();
+		$content['common'] = $this->remap_replacement_list($this->get_common_placeholder_list());
+		$content['user'] = $this->remap_replacement_list($this->get_user_placeholder_list());
+
+		$this->show_replacements_hook($template_name, $content, $sel_options, $readonlys);
+		$etemplate = new Api\Etemplate($template_name);
+
+		$etemplate->exec('filemanager.filemanager_ui.file', $content, $sel_options, $readonlys, $preserve, 2);
+	}
+
+	/**
+	 * Helper function for show_replacements() to change the output of get_placeholder_list() into somethig
+	 * more suited for etemplate repeating rows.
+	 *
+	 * @param $list
+	 * @return array
+	 */
+	protected function remap_replacement_list($list, $title_prefix = '')
+	{
+		$new_list = [];
+		foreach($list as $group_title => $group_placeholders)
+		{
+			if(is_array($group_placeholders) && !array_key_exists('0', $group_placeholders))
+			{
+				// Limit how far we go through linked entries
+				if($title_prefix)
+				{
+					continue;
+				}
+				$new_list = array_merge($new_list, $this->remap_replacement_list($group_placeholders, $group_title));
+			}
+			else
+			{
+				$new_list[] = [
+					'title'        => ($title_prefix ? $title_prefix . ': ' : '') . $group_title,
+					'placeholders' => $group_placeholders
+				];
+			}
+		}
+		return $new_list;
+	}
+
+	/**
+	 * Hook for extending apps to customise the replacements UI without having to override the whole method.
+	 *
+	 * This can include detailed descriptions or instructions, documentation of tables and custom stuff
+	 * Set $content['extra_template'] to a template ID with extra descriptions or instructions and it will be
+	 * added into the main template.
+	 *
+	 * @param string $template_name
+	 * @param $content
+	 * @param $sel_options
+	 * @param $readonlys
+	 */
+	protected function show_replacements_hook(&$template_name, &$content, &$sel_options, &$readonlys)
+	{
 	}
 }

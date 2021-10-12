@@ -260,73 +260,16 @@ class filemanager_merge extends Api\Storage\Merge
 	}
 
 	/**
-	 * Generate table with replacements for the Api\Preferences
+	 * Hook for extending apps to customise the replacements UI without having to override the whole method
 	 *
+	 * @param string $template_name
+	 * @param $content
+	 * @param $sel_options
+	 * @param $readonlys
 	 */
-	public function show_replacements()
+	protected function show_replacements_hook(&$template_name, &$content, &$sel_options, &$readonlys)
 	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager').' - '.lang('Replacements for inserting entries into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		echo $GLOBALS['egw']->framework->header();
-
-		echo "<table width='90%' align='center'>\n";
-		echo '<tr><td colspan="4"><h3>'.lang('Filemanager fields:')."</h3></td></tr>";
-
-		$n = 0;
-		$fields = array(
-			'name' => 'name',
-			'path' => 'Absolute path',
-			'rel_path' => 'Path relative to current directory',
-			'folder' => 'Containing folder',
-			'folder_file' => 'Containing folder and file name',
-			'url' => 'url',
-			'webdav_url' => 'External path using webdav',
-			'link' => 'Clickable link to file',
-			'comment' => 'comment',
-			'mtime' => 'modified',
-			'ctime' => 'created',
-			'mime'	=> 'Type',
-			'hsize' => 'Size',
-			'size' => 'Size (in bytes)',
-		);
-		foreach($fields as $name => $label)
-		{
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
-			if ($n&1) echo "</tr>\n";
-			$n++;
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach(Api\Storage\Customfields::get('filemanager') as $name => $field)
-		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Application fields').":</h3></td></tr>";
-		echo '<tr><td colspan="4">'.lang('For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders.').'</td></tr>';
-
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
-		foreach(array(
-					'date' => lang('Date'),
-					'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
-					'user/account_lid' => lang('Username'),
-					'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
-					'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
-					'labelplacement' => lang('Tag to mark positions for address labels'),
-					'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-					'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
-					'NENVLF' => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
-					'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example'),
-					'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
-				) as $name => $label)
-		{
-			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
-		}
-
-		echo "</table>\n";
-
-		echo $GLOBALS['egw']->framework->footer();
+		$content['extra_template'] = 'filemanager.replacements';
 	}
 
 	/**

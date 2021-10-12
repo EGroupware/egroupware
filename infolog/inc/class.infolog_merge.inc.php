@@ -198,98 +198,20 @@ class infolog_merge extends Api\Storage\Merge
 		return $info;
 	}
 
-	/**
-	 * Generate table with replacements for the Api\Preferences
-	 *
-	 */
-	public function show_replacements()
-	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('infolog').' - '.lang('Replacements for inserting entries into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		echo $GLOBALS['egw']->framework->header();
-
-		echo "<table width='90%' align='center'>\n";
-		echo '<tr><td colspan="4"><h3>'.lang('Infolog fields:')."</h3></td></tr>";
-
-		$n = 0;
-		$tracking = new infolog_tracking($this->bo);
-		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
-		Api\Translation::add_app('projectmanager');
-		foreach($fields as $name => $label)
-		{
-			if (in_array($name,array('custom'))) continue;	// dont show them
-
-			if (in_array($name,array('info_subject', 'info_des')) && $n&1)		// main values, which should be in the first column
-			{
-				echo "</tr>\n";
-				$n++;
-			}
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
-			if ($n&1) echo "</tr>\n";
-			$n++;
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		$contact_custom = false;
-		foreach($this->bo->customfields as $name => $field)
-		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label'].($field['type'] == 'select-account' ? '*':'')."</td></tr>\n";
-			if($field['type'] == 'select-account') $contact_custom = true;
-		}
-		if($contact_custom)
-		{
-			echo '<tr><td /><td colspan="3">* '.lang('Addressbook placeholders available'). '</td></tr>';
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Parent').":</h3></td></tr>";
-		echo '<tr><td>{{info_id_parent/info_subject}}</td><td colspan="3">'.lang('All other %1 fields are valid',lang('infolog'))."</td></tr>\n";
-
-		echo '<tr><td colspan="4"><h3>'.lang('Contact fields').':</h3></td></tr>';
-		$i = 0;
-		foreach($this->contacts->contact_fields as $name => $label)
-		{
-			if (in_array($name,array('tid','label','geo'))) continue;       // dont show them, as they are not used in the UI atm.
-
-			if (in_array($name,array('email','org_name','tel_work','url')) && $n&1)         // main values, which should be in the first column
-			{
-					echo "</tr>\n";
-					$i++;
-			}
-			if (!($i&1)) echo '<tr>';
-			echo '<td>{{info_contact/'.$name.'}}</td><td>'.$label.'</td>';
-			if ($i&1) echo "</tr>\n";
-			$i++;
-		}
-		echo '<tr><td colspan="4">'.lang('Owner contact fields also available under info_owner/...').'</td></tr>';
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach($this->contacts->customfields as $name => $field)
-		{
-			echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-		}
-
-		echo '<tr><td colspan="4"><h3>' . lang('General fields:') . "</h3></td></tr>";
-		foreach($this->get_common_replacements() as $name => $label)
-		{
-			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
-		}
-
-		echo "</table>\n";
-
-		echo $GLOBALS['egw']->framework->footer();
-	}
-
 	public function get_placeholder_list($prefix = '')
 	{
-		$placeholders = parent::get_placeholder_list($prefix);
-
 		$tracking = new infolog_tracking($this->bo);
+		$placeholders = array(
+				'infolog'                                 => [],
+				lang('parent')                            => [],
+				lang($tracking->field2label['info_from']) => []
+			) + parent::get_placeholder_list($prefix);
+
 		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'),
 						'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
 		Api\Translation::add_app('projectmanager');
 
-		$group = 'placeholders';
+		$group = 'infolog';
 		foreach($fields as $name => $label)
 		{
 			if(in_array($name, array('custom')))
@@ -310,15 +232,22 @@ class infolog_merge extends Api\Storage\Merge
 			}
 		}
 
-		// Add contact placeholders
-		$insert_index = 1;
-		$placeholders = array_slice($placeholders, 0, $insert_index, true) +
-			[lang($tracking->field2label['info_from']) => []] +
-			array_slice($placeholders, $insert_index, count($placeholders) - $insert_index, true);
-		$contact_merge = new Api\Contacts\Merge();
-		$contact = $contact_merge->get_placeholder_list($this->prefix($prefix, 'info_contact'));
-		$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
+		// Don't add any linked placeholders if we're not at the top level
+		// This avoids potential recursion
+		if(!$prefix)
+		{
+			// Add contact placeholders
+			$contact_merge = new Api\Contacts\Merge();
+			$contact = $contact_merge->get_placeholder_list($this->prefix($prefix, 'info_contact'));
+			$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
 
+			// Add parent placeholders
+			$this->add_linked_placeholders(
+				$placeholders,
+				lang('parent'),
+				$this->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'info_id_parent')
+			);
+		}
 		return $placeholders;
 	}
 }
