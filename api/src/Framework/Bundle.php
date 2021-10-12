@@ -89,7 +89,7 @@ class Bundle
 					if (!in_array($bundle, $included_bundles))
 					{
 						$included_bundles[] = $bundle;
-						$minurl = self::$bundle2minurl[$bundle];
+						$minurl = self::$bundle2minurl[$bundle] ?? null;
 						if (!isset($minurl) && isset($GLOBALS['egw_info']['apps'][$bundle]))
 						{
 							$minurl = '/'.$bundle.'/js/app.min.js';
@@ -148,7 +148,7 @@ class Bundle
 	 */
 	protected static function urls(array $js_includes, &$max_modified=null, $minurl=null)
 	{
-		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+		$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		// ignore not existing minurl
 		if (!empty($minurl) && !file_exists(EGW_SERVER_ROOT.$minurl)) $minurl = null;
 		$to_include_first = $to_include = $to_minify = array();
@@ -158,7 +158,7 @@ class Bundle
 		{
 			if ($path == '/api/js/jsapi/egw.js') continue; // Leave egw.js out of bundle
 			unset($query);
-			list($path,$query) = explode('?',$path,2);
+			list($path,$query) = explode('?',$path,2)+[null,null];
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
 			if ($mod > $max_modified) $max_modified = $mod;
 
