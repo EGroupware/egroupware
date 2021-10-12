@@ -248,6 +248,11 @@ class infolog_merge extends Api\Storage\Merge
 				$this->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'info_id_parent')
 			);
 		}
+		else
+		{
+			unset($placeholders[lang('parent')]);
+			unset($placeholders[lang($tracking->field2label['info_from'])]);
+		}
 		return $placeholders;
 	}
 }
