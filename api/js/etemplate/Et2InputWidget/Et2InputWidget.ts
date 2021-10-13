@@ -38,6 +38,7 @@ const Et2InputWidgetMixin = (superclass) =>
 	{
 		protected value : string | number | Object;
 		protected _oldValue : string | number | Object;
+		protected node : HTMLElement;
 
 		/** WebComponent **/
 		static get styles()
@@ -70,7 +71,11 @@ const Et2InputWidgetMixin = (superclass) =>
 			super(...args);
 
 		}
-
+		connectedCallback()
+		{
+			super.connectedCallback();
+			this.node = this.getInputNode();
+		}
 		set_value(new_value)
 		{
 			this.value = new_value;
