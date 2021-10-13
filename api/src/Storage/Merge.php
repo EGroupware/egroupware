@@ -3079,15 +3079,10 @@ abstract class Merge
 	 */
 	protected function add_customfield_placeholders(&$placeholders, $prefix = '')
 	{
-		// Avoid recursing between custom fields of different apps
-		if(substr_count($prefix, '#') > 1)
-		{
-			return;
-		}
-
 		foreach(Customfields::get($this->get_app()) as $name => $field)
 		{
-			if(array_key_exists($field['type'], Api\Link::app_list()))
+			// Avoid recursing between custom fields of different apps
+			if(array_key_exists($field['type'], Api\Link::app_list()) && substr_count($prefix, '#') == 0)
 			{
 				$app = self::get_app_class($field['type']);
 				if($app)
