@@ -282,12 +282,19 @@ class importexport_wizard_basic_export_csv
 			unset ($preserv['button']);
 
 			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
-				$content['application'],$content['plugin'],$this
+				$content['application'], $content['plugin'], $this
 			);
 			// Load existing filter from either content or definition
+			if(!array_key_exists('filter', $content) || !is_array($content['filter']))
+			{
+				$content['filter'] = [];
+			}
 			foreach($content['set_filter']['fields'] as $field => $settings)
 			{
-				$content['set_filter'][$field] = $content['filter'][$field];
+				if(array_key_exists($field, $content['filter']))
+				{
+					$content['set_filter'][$field] = $content['filter'][$field];
+				}
 			}
 
 			if(!$content['set_filter']['fields'])
