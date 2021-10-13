@@ -3194,7 +3194,7 @@ abstract class Merge
 			'help'    => 'Choose the default filename for merged documents.',
 			'xmlrpc'  => True,
 			'admin'   => False,
-			'default' => 'document',
+			'default' => '$$document$$',
 		);
 
 		return $settings;
