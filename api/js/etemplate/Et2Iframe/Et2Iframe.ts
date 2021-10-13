@@ -50,7 +50,7 @@ export class Et2Iframe extends Et2Widget(SlotMixin(LitElement))
 	}
 
 	render() {
-		return html` <iframe ${this.id ? html`id="${this.id}"` : ''}></iframe>`;
+		return html` <iframe ${this.id ? html`id="${this.id}"` : ''} allowfullscreen="${this.fullscreen}"></iframe>`;
 	}
 
 	__getIframeNode()
