@@ -109,6 +109,8 @@ var et2_tabbox = /** @class */ (function (_super) {
                 }
                 tabData.push({
                     "id": index_name,
+                    "onclick": et2_readAttrWithDefault(node, "onclick", ''),
+                    "ondblclick": et2_readAttrWithDefault(node, "ondblclick", ''),
                     "label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
                     "widget": null,
                     "widget_options": widget_options,
@@ -287,6 +289,19 @@ var et2_tabbox = /** @class */ (function (_super) {
                 entry.flagDiv.hide();
             }
             else {
+                if (this.tabData[i]['onclick']) {
+                    /*  ...(this.tab['onclick'], this.widget, this.widget)
+                        why this.widget twice?
+                        first is the widget, second is the method context.
+                        second is optional, and defaults to the DOM node
+                    */
+                    var click_function = function () { et2_compileLegacyJS(this.tab['onclick'], this.widget, this.widget)(this.widget); };
+                    entry.flagDiv.on("click", click_function.bind({ widget: this, tab: this.tabData[i] }));
+                }
+                if (this.tabData[i]['ondblclick']) {
+                    var dblclick_function = function () { et2_compileLegacyJS(this.tab['ondblclick'], this.widget, this.widget)(this.widget); };
+                    entry.flagDiv.on("dblclick", dblclick_function.bind({ widget: this, tab: this.tabData[i] }));
+                }
                 entry.flagDiv.click({ "tabs": this, "idx": i }, function (e) {
                     e.data.tabs.setActiveTab(e.data.idx);
                 });
