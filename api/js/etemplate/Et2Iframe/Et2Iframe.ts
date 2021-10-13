@@ -20,6 +20,13 @@ export class Et2Iframe extends Et2Widget(SlotMixin(LitElement))
 		return [
 			...super.styles,
 			css`
+			:host {
+				display: flex;
+			}
+			:host > iframe {
+				width: 100%;
+				height: 100%;
+			}
 			/* Custom CSS */
 			`,
 		];
@@ -43,14 +50,22 @@ export class Et2Iframe extends Et2Widget(SlotMixin(LitElement))
 	{
 		super(...args);
 	}
-
+	get slots()
+	{
+		return {
+			...super.slots
+		};
+	}
 	connectedCallback()
 	{
 		super.connectedCallback();
 	}
 
 	render() {
-		return html` <iframe ${this.id ? html`id="${this.id}"` : ''} allowfullscreen="${this.fullscreen}"></iframe>`;
+		return html`
+			<iframe ${this.id ? html`id="${this.id}"` : ''} allowfullscreen="${this.fullscreen}" seamless="${this.seamless}" name="${this.name}" allow="${this.allow}"></iframe>
+            <slot>${this._label}</slot>
+		`;
 	}
 
 	__getIframeNode()
