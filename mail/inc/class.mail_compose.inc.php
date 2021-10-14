@@ -2022,7 +2022,7 @@ class mail_compose
 			'size'		=> $_size,
 			'folder'	=> $_folder,
 			'winmailFlag' => $_is_winmail,
-			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid).'_'.(!empty($_partID)?$_partID:count($this->sessionData['attachments'])+1),
+			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid).'_'.(!empty($_partID)?$_partID:count($this->sessionData['attachments'] ?? [])+1),
 		);
 	}
 
