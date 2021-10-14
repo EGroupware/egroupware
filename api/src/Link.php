@@ -471,7 +471,7 @@ class Link extends Link\Storage
 	 */
 	static function temp_link_id($app,$id)
 	{
-		return $app.':'.(!in_array($app, array(self::VFS_APPNAME,self::VFS_LINK, self::DATA_APPNAME)) ? $id : $id['name']);
+		return $app.':'.(!in_array($app, array(self::VFS_APPNAME,self::VFS_LINK, self::DATA_APPNAME)) || !is_array($id) ? $id : $id['name']);
 	}
 
 	/**
