@@ -1000,9 +1000,7 @@ class Mail
 	 */
 	static function getTimeOut($_use='IMAP')
 	{
-		$timeout = $GLOBALS['egw_info']['user']['preferences']['mail']['connectionTimeout'];
-		if (empty($timeout)) $timeout = ($_use=='SIEVE'?10:20); // this is the default value
-		return $timeout;
+		return $_use=='SIEVE' ? 10 : 20; // this is the default value
 	}
 
 	/**
