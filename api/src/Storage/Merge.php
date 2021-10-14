@@ -3153,13 +3153,30 @@ abstract class Merge
 	public function merge_preferences()
 	{
 		$settings = array();
+
+		switch($this->get_app())
+		{
+			case 'addressbook':
+				// lang() will mangle the %5C encoded \ in api.EGroupware\\Api\\Contacts\\Merge.show_replacements
+				$pref_list_link = Api\Html::a_href('', Api\Framework::link('/index.php', [
+					'menuaction' => 'addressbook.addressbook_merge.show_replacements'
+				],                                                         $this->get_app())
+				);
+				break;
+			default:
+				$pref_list_link = Api\Html::a_href('', Api\Framework::link('/index.php', [
+					'menuaction' => $this->get_app() . '.' . get_class($this) . '.show_replacements'
+				],                                                         $this->get_app())
+				);
+		}
+		$pref_list_link = str_replace('</a>', '', $pref_list_link);
 		$settings[self::PREF_DEFAULT_TEMPLATE] = array(
 			'type'     => 'vfs_file',
 			'size'     => 60,
 			'label'    => 'Default document to insert entries',
 			'name'     => self::PREF_DEFAULT_TEMPLATE,
 			'help'     => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.', lang($this->get_app())) . ' ' .
-				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name') . ' ' .
+				lang('the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).', $pref_list_link, '</a>', 'name') . ' <br/>' .
 				lang('The following document-types are supported:') . implode(',', self::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc'   => True,
@@ -3170,8 +3187,8 @@ abstract class Merge
 			'size'     => 60,
 			'label'    => 'Directory with documents to insert entries',
 			'name'     => self::PREF_TEMPLATE_DIR,
-			'help'     => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang($this->get_app())) . ' ' .
-				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name') . ' ' .
+			'help'     => lang('if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.', lang($this->get_app())) . ' ' .
+				lang('the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).', $pref_list_link, '</a>', 'name') . ' <br/>' .
 				lang('The following document-types are supported:') . implode(',', self::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc'   => True,
