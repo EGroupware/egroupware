@@ -104,6 +104,7 @@ function egw_exception_handler($e)
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
 		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
+		echo $e->getFile().' ('.$e->getLine().")\n";
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 		{
 			echo $e->getTraceAsString()."\n";
