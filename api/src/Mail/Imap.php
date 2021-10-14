@@ -360,9 +360,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 */
 	static function getTimeOut($_use='IMAP')
 	{
-		if (empty($timeout = $GLOBALS['egw_info']['user']['preferences']['mail']['connectionTimeout']) || !((int)$timeout > 0))
-			$timeout = $_use == 'SIEVE' ? 10 : 20; // this is the default value
-		return $timeout;
+		return $_use == 'SIEVE' ? 10 : 20; // this is the default value
 	}
 
 	/**
