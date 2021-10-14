@@ -949,11 +949,11 @@ class mail_sieve
 				break;
 			case 'enable':
 				$msg = lang('rule with priority ') . $checked . lang(' enabled!');
-				$this->rules[$checked][status] = 'ENABLED';
+				$this->rules[$checked]['status'] = 'ENABLED';
 				break;
 			case 'disable':
 				$msg = lang('rule with priority ') . $checked . lang(' disabled!');
-				$this->rules[$checked][status] = 'DISABLED';
+				$this->rules[$checked]['status'] = 'DISABLED';
 				break;
 			case 'move':
 				break;
