@@ -726,12 +726,55 @@ export abstract class EgwApp
 		framework.pushState('view');
 		if(templateName)
 		{
-			this.et2_view.load(this.appname+'.'+templateName,templateURL, data, typeof et2_callback == 'function'?et2_callback:function(){}, app);
+			this.et2_view.load(this.appname + '.' + templateName, templateURL, data, typeof et2_callback == 'function' ? et2_callback : function() {}, app);
 		}
 
 		// define a global close function for view template
 		// in order to be able to destroy view on action
 		this.et2_view.close = destroy;
+	}
+
+	/**
+	 * Merge selected entries into template document
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	merge(_action : egwAction, _selected : egwActionObject[])
+	{
+		// Find what we need
+		let nm = null;
+		let action = _action;
+		let as_pdf = false;
+
+		// Find Select all
+		while(nm == null && action != null)
+		{
+			if(action.data != null && action.data.nextmatch)
+			{
+				nm = action.data.nextmatch;
+			}
+			action = action.parent;
+		}
+		let all = nm?.getSelection().all || false;
+
+		as_pdf = action.getActionById('as_pdf')?.checked || false;
+
+		// Get list of entry IDs
+		let ids = [];
+		for(let i = 0; !all && i < _selected.length; i++)
+		{
+			let split = _selected[i].id.split("::");
+			ids.push(split[1]);
+		}
+
+		let vars = {
+			..._action.data.merge_data,
+			pdf: as_pdf,
+			select_all: all,
+			id: JSON.stringify(ids)
+		};
+		egw.open_link(egw.link('/index.php', vars), '_blank');
 	}
 
 	/**
@@ -742,12 +785,12 @@ export abstract class EgwApp
 	_init_sidebox(sidebox)
 	{
 		// Initialize egw tutorial sidebox, but only for non-popups, as calendar edit app.js has this.et2 set to tutorial et2 object
-		if (!this.egw.is_popup())
+		if(!this.egw.is_popup())
 		{
 			var egw_fw = egw_getFramework();
-			var tutorial = jQuery('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
+			var tutorial = jQuery('#egw_tutorial_' + this.appname + '_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
 			// _init_sidebox gets currently called multiple times, which needs to be fixed
-			if (tutorial.length && !this.tutorial_initialised)
+			if(tutorial.length && !this.tutorial_initialised)
 			{
 				this.egwTutorial_init(tutorial[0]);
 				this.tutorial_initialised = true;

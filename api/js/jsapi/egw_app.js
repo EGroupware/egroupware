@@ -10,6 +10,17 @@
  * @author Hadi Nategh <hn@groupware.org>
  * @author Nathan Gray <ng@groupware.org>
  */
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EgwApp = void 0;
 require("jquery");
@@ -561,6 +572,36 @@ var EgwApp = /** @class */ (function () {
         // define a global close function for view template
         // in order to be able to destroy view on action
         this.et2_view.close = destroy;
+    };
+    /**
+     * Merge selected entries into template document
+     *
+     * @param {egwAction} _action
+     * @param {egwActionObject[]} _selected
+     */
+    EgwApp.prototype.merge = function (_action, _selected) {
+        var _a;
+        // Find what we need
+        var nm = null;
+        var action = _action;
+        var as_pdf = false;
+        // Find Select all
+        while (nm == null && action != null) {
+            if (action.data != null && action.data.nextmatch) {
+                nm = action.data.nextmatch;
+            }
+            action = action.parent;
+        }
+        var all = (nm === null || nm === void 0 ? void 0 : nm.getSelection().all) || false;
+        as_pdf = ((_a = action.getActionById('as_pdf')) === null || _a === void 0 ? void 0 : _a.checked) || false;
+        // Get list of entry IDs
+        var ids = [];
+        for (var i = 0; !all && i < _selected.length; i++) {
+            var split = _selected[i].id.split("::");
+            ids.push(split[1]);
+        }
+        var vars = __assign(__assign({}, _action.data.merge_data), { pdf: as_pdf, select_all: all, id: JSON.stringify(ids) });
+        egw.open_link(egw.link('/index.php', vars), '_blank');
     };
     /**
      * Initializes actions and handlers on sidebox (delete)

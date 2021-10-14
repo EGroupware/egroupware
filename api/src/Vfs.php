@@ -2386,6 +2386,28 @@ class Vfs extends Vfs\Base
 		}
 		return self::_call_on_backend('get_minimum_file_id', array($path));
 	}
+
+	/**
+	 * Make sure the path is unique, by appending (#) to the filename if it already exists
+	 *
+	 * @param string $path
+	 *
+	 * @return string The same path, but modified if it exists
+	 */
+	static function make_unique($path)
+	{
+		$filename = Vfs::basename($path);
+		$dupe_count = 0;
+		while(is_file(Vfs::PREFIX . $path))
+		{
+			$dupe_count++;
+			$path = Vfs::dirname($path) . '/' .
+				pathinfo($filename, PATHINFO_FILENAME) .
+				' (' . ($dupe_count + 1) . ')' . '.' .
+				pathinfo($filename, PATHINFO_EXTENSION);
+		}
+		return $path;
+	}
 }
 
 Vfs::init_static();

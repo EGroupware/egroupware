@@ -16,6 +16,7 @@ namespace EGroupware\Api\Storage;
 use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
+use EGroupware\Collabora\Conversion;
 use EGroupware\Stylite;
 use tidy;
 use uiaccountsel;
@@ -2061,7 +2062,6 @@ abstract class Merge
 		$export_limit=null)
 	{
 		$documents = array();
-		$editable_mimes = array();
 		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
 
 		try {
@@ -2146,13 +2146,6 @@ abstract class Merge
 		}
 		foreach($files as $file)
 		{
-			$edit_attributes = array(
-				'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'].'.'.get_called_class().'.merge_entries',
-				'document'   => $file['path'],
-				'merge'      => get_called_class(),
-				'id'         => '$id',
-				'select_all' => '$select_all'
-			);
 			if (count($dircount) > 1)
 			{
 				$name_arr = explode('/', $file['name']);
@@ -2169,30 +2162,24 @@ abstract class Merge
 					}
 					switch($count)
 					{
-						case (count($name_arr)-1):
-							$current_level[$prefix.$file['name']] = array(
-								'icon'		=> Api\Vfs::mime_icon($file['mime']),
-								'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
-								'group'		=> 2,
-								'postSubmit' => true,	// download needs post submit (not Ajax) to work,
-								'target'	=> '_blank',
-								'url'		=> urldecode(http_build_query($edit_attributes))
-							);
-							if ($file['mime'] == 'message/rfc822')
+						case (count($name_arr) - 1):
+							$current_level[$prefix . $file['name']];
+							self::document_editable_action($current_level[$prefix . $file['name']], $file);
+							if($file['mime'] == 'message/rfc822')
 							{
-								self::document_mail_action($current_level[$prefix.$file['name']], $file);
+								self::document_mail_action($current_level[$prefix . $file['name']], $file);
 							}
 							break;
 
 						default:
-							if(!is_array($current_level[$prefix.$name_arr[$count]]))
+							if(!is_array($current_level[$prefix . $name_arr[$count]]))
 							{
 								// create parent folder
-								$current_level[$prefix.$name_arr[$count]] = array(
-									'icon'		=> 'phpgwapi/foldertree_folder',
-									'caption'	=> Api\Vfs::decodePath($name_arr[$count]),
-									'group'		=> 2,
-									'children'	=> array(),
+								$current_level[$prefix . $name_arr[$count]] = array(
+									'icon'     => 'phpgwapi/foldertree_folder',
+									'caption'  => Api\Vfs::decodePath($name_arr[$count]),
+									'group'    => 2,
+									'children' => array(),
 								);
 							}
 							break;
@@ -2201,50 +2188,47 @@ abstract class Merge
 			}
 			else if (count($files) >= self::SHOW_DOCS_BY_MIME_LIMIT)
 			{
-				if (!isset($documents[$file['mime']]))
+				if(!isset($documents[$file['mime']]))
 				{
 					$documents[$file['mime']] = array(
-						'icon' => Api\Vfs::mime_icon($file['mime']),
-						'caption' => Api\MimeMagic::mime2label($file['mime']),
-						'group' => 2,
+						'icon'     => Api\Vfs::mime_icon($file['mime']),
+						'caption'  => Api\MimeMagic::mime2label($file['mime']),
+						'group'    => 2,
 						'children' => array(),
 					);
 				}
-				$documents[$file['mime']]['children'][$prefix.$file['name']] = array(
-					'caption' => Api\Vfs::decodePath($file['name']),
-					'target' => '_blank',
-					'postSubmit' => true,	// download needs post submit (not Ajax) to work
-				);
-				$documents[$file['mime']]['children'][$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
-				if ($file['mime'] == 'message/rfc822')
+				$documents[$file['mime']]['children'][$prefix . $file['name']] = array();
+				self::document_editable_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
+				if($file['mime'] == 'message/rfc822')
 				{
-					self::document_mail_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
+					self::document_mail_action($documents[$file['mime']]['children'][$prefix . $file['name']], $file);
 				}
 			}
 			else
 			{
-				$documents[$prefix.$file['name']] = array(
-					'icon' => Api\Vfs::mime_icon($file['mime']),
-					'caption' => Api\Vfs::decodePath($file['name']),
-					'group' => 2,
-					'target' => '_blank'
-				);
-				$documents[$prefix.$file['name']]['url'] = urldecode(http_build_query($edit_attributes));
-				if ($file['mime'] == 'message/rfc822')
+				$documents[$prefix . $file['name']] = array();
+				self::document_editable_action($documents[$prefix . $file['name']], $file);
+				if($file['mime'] == 'message/rfc822')
 				{
-					self::document_mail_action($documents[$prefix.$file['name']], $file);
+					self::document_mail_action($documents[$prefix . $file['name']], $file);
 				}
 			}
 		}
 
+		// Add PDF checkbox
+		$documents['as_pdf'] = array(
+			'caption'  => 'As PDF',
+			'checkbox' => true,
+		);
 		return array(
-			'icon' => 'etemplate/merge',
-			'caption' => $caption,
-			'children' => $documents,
+			'icon'           => 'etemplate/merge',
+			'caption'        => $caption,
+			'children'       => $documents,
 			// disable action if no document or export completly forbidden for non-admins
-			'enabled' => (boolean)$documents && (self::hasExportLimit($export_limit,'ISALLOWED') || self::is_export_limit_excepted()),
-			'hideOnDisabled' => true,	// do not show 'Insert in document', if no documents defined or no export allowed
-			'group' => $group,
+			'enabled'        => (boolean)$documents && (self::hasExportLimit($export_limit, 'ISALLOWED') || self::is_export_limit_excepted()),
+			'hideOnDisabled' => true,
+			// do not show 'Insert in document', if no documents defined or no export allowed
+			'group'          => $group,
 		);
 	}
 
@@ -2294,15 +2278,24 @@ abstract class Merge
 	 */
 	private static function document_editable_action(Array &$action, $file)
 	{
-		unset($action['postSubmit']);
-		$edit_attributes = array(
-				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
-				'document'   => $file['path'],
-				'merge'      => get_called_class(),
-				'id'         => '$id',
-				'select_all' => '$select_all'
+		static $action_base = array(
+			// The same for every file
+			'group'   => 2,
+			// Overwritten for every file
+			'icon'    => '', //Api\Vfs::mime_icon($file['mime']),
+			'caption' => '', //Api\Vfs::decodePath($name_arr[$count]),
 		);
-		$action['url'] = urldecode(http_build_query($edit_attributes));
+		$edit_attributes = array(
+			'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'] . '.' . get_called_class() . '.merge_entries',
+			'document'   => $file['path'],
+			'merge'      => get_called_class(),
+		);
+		$action = array_merge($action_base, $action, array(
+			'icon'       => Api\Vfs::mime_icon($file['mime']),
+			'caption'    => Api\Vfs::decodePath($file['name']),
+			'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
+			'merge_data' => $edit_attributes
+		));
 	}
 
 	/**
@@ -2343,25 +2336,26 @@ abstract class Merge
 	 * Merge the selected IDs into the given document, save it to the VFS, then
 	 * either open it in the editor or have the browser download the file.
 	 *
-	 * @param String[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
+	 * @param string[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
 	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
+	 * @param boolean|null $pdf Convert result to PDF
 	 * @throws Api\Exception
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	public static function merge_entries(array $ids = null, Merge &$document_merge = null)
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $pdf = null)
 	{
-		if (is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
+		if(is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $_REQUEST['merge']();
 		}
-		elseif (is_null($document_merge))
+		elseif(is_null($document_merge))
 		{
 			$document_merge = new Api\Contacts\Merge();
 		}
 
 		if(($error = $document_merge->check_document($_REQUEST['document'],'')))
 		{
-			$response->error($error);
+			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
 			return;
 		}
 
@@ -2374,29 +2368,26 @@ abstract class Merge
 			$ids = self::get_all_ids($document_merge);
 		}
 
+		if(is_null($pdf))
+		{
+			$pdf = (boolean)$_REQUEST['pdf'];
+		}
+
 		$filename = $document_merge->get_filename($_REQUEST['document']);
 		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
 
 		if(!is_file($result) || !is_readable($result))
 		{
-			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n". $result);
+			throw new Api\Exception\AssertionFailed("Unable to generate merge file\n" . $result);
 		}
 		// Put it into the vfs using user's configured home dir if writable,
 		// or expected home dir (/home/username) if not
 		$target = $_target = (Vfs::is_writable(Vfs::get_home_dir()) ?
 				Vfs::get_home_dir() :
 				"/home/{$GLOBALS['egw_info']['user']['account_lid']}"
-			)."/$filename";
-		$dupe_count = 0;
-		while(is_file(Vfs::PREFIX.$target))
-		{
-			$dupe_count++;
-			$target = Vfs::dirname($_target) . '/' .
-				pathinfo($filename, PATHINFO_FILENAME) .
-				' ('.($dupe_count + 1).')' . '.' .
-				pathinfo($filename, PATHINFO_EXTENSION);
-		}
-		copy($result, Vfs::PREFIX.$target);
+			) . "/$filename";
+		$target = Vfs::make_unique($target);
+		copy($result, Vfs::PREFIX . $target);
 		unlink($result);
 
 		// Find out what to do with it
@@ -2416,11 +2407,32 @@ abstract class Merge
 			// ignore failed discovery
 			unset($e);
 		}
-		if($editable_mimes[Vfs::mime_content_type($target)])
+
+		// PDF conversion
+		if($editable_mimes[Vfs::mime_content_type($target)] && $pdf)
+		{
+			$error = '';
+			$converted_path = '';
+			$convert = new Conversion();
+			$convert->convert($target, $converted_path, 'pdf', $error);
+			
+			if($error)
+			{
+				error_log(__METHOD__ . "({$_REQUEST['document']}) $target => $converted_path Error in PDF conversion: $error");
+			}
+			else
+			{
+				// Remove original
+				Vfs::unlink($target);
+				$target = $converted_path;
+			}
+		}
+		if($editable_mimes[Vfs::mime_content_type($target)] &&
+			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
 		{
 			\Egroupware\Api\Egw::redirect_link('/index.php', array(
 				'menuaction' => 'collabora.EGroupware\\Collabora\\Ui.editor',
-				'path'=> $target
+				'path'       => $target
 			));
 		}
 		else
