@@ -126,7 +126,10 @@ class importexport_definitions_bo {
 			$definition = $this->read($key);
 			if($definition['owner'] && $definition['owner'] == $GLOBALS['egw_info']['user']['account_id'] || $GLOBALS['egw_info']['user']['apps']['admin']) {
 				// clear private cache
-				unset($this->definitions[array_search($key,$this->definitions)]);
+				if(is_array($this->definitions))
+				{
+					unset($this->definitions[array_search($key, $this->definitions)]);
+				}
 			} else {
 				unset($keys[$index]);
 			}
