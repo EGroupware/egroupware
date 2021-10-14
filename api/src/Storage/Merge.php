@@ -13,7 +13,6 @@
 
 namespace EGroupware\Api\Storage;
 
-use ceLTIc\LTI\Service\Result;
 use DOMDocument;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
