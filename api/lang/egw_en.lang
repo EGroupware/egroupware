@@ -274,6 +274,7 @@ choose a background style.	common	en	Choose a background style
 choose a text color for the icons	common	en	Choose a text color for the icons
 choose file...	common	en	Choose file...
 choose the category	common	en	Choose the category
+choose the default filename for merged documents.	preferences	en	Choose the default filename for merged documents.
 choose the parent category	common	en	Choose the parent category
 choose time	common	en	Choose Time
 chosen parent category no longer exists	common	en	Chosen parent category no longer exists
@@ -378,6 +379,7 @@ december	common	en	December
 deck	common	en	Deck (internal)
 default	common	en	Default
 default category	common	en	Default category
+default document to insert entries	preferences	en	Default document to insert entries
 default height for the windows	common	en	Default height for the windows
 default visible actions	common	en	Default visible actions
 default width for the windows	common	en	Default width for the windows
@@ -417,6 +419,8 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	en	Direction left to right
 directory	common	en	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
+directory for storing merged documents	preferences	en	Directory for storing merged documents
+directory with documents to insert entries	preferences	en	Directory with documents to insert entries
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png image bugfix
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page.
@@ -724,6 +728,7 @@ insert new column behind this one	common	en	Insert new column after
 insert new column in front of all	common	en	Insert new column before all
 insert new row after this one	common	en	Insert new row after
 insert new row in front of first line	common	en	Insert new row before first line
+insert placeholder	common	en	Insert placeholder
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 insert timestamp into description field	common	en	Insert timestamp into description field
@@ -855,6 +860,7 @@ maybe	common	en	Maybe
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
 menu	common	en	Menu
+merged document filename	preferences	en	Merged document filename
 message	common	en	Message
 message ...	common	en	Message ...
 message prepared for sending.	common	en	Message prepared for sending.
@@ -1072,6 +1078,7 @@ preference	common	en	Preference
 preferences	common	en	Preferences
 preferences for the %1 template set	preferences	en	Preferences for the %1 template set
 prev	common	en	Prev
+preview with entry	common	en	Preview with entry
 previous	common	en	Previous
 previous page	common	en	Previous page
 primary group	common	en	Primary group
@@ -1498,6 +1505,7 @@ western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 what style would you like the image to have?	common	en	Image style
+when you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	en	Which groups

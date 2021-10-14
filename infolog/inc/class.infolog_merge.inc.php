@@ -64,9 +64,9 @@ class infolog_merge extends Api\Storage\Merge
 	 * @param string &$content=null content to create some replacements only if they are use
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null)
+	protected function get_replacements($id, &$content = null)
 	{
-		if (!($replacements = $this->infolog_replacements($id, '', $content)))
+		if(!($replacements = $this->infolog_replacements($id, '', $content)))
 		{
 			return false;
 		}
@@ -74,13 +74,32 @@ class infolog_merge extends Api\Storage\Merge
 	}
 
 	/**
+	 * Override contact filename placeholder to use info_contact
+	 *
+	 * @param $document
+	 * @param $ids
+	 * @return array|void
+	 */
+	public function get_filename_placeholders($document, $ids)
+	{
+		$placeholders = parent::get_filename_placeholders($document, $ids);
+		if(count($ids) == 1 && ($info = $this->bo->read($ids[0])))
+		{
+			$placeholders['$$contact_title$$'] = $info['info_contact']['title'] ??
+				(is_array($info['info_contact']) && Link::title($info['info_contact']['app'], $info['info_contact']['id'])) ??
+				'';
+		}
+		return $placeholders;
+	}
+
+	/**
 	 * Get infolog replacements
 	 *
 	 * @param int $id id of entry
-	 * @param string $prefix='' prefix like eg. 'erole'
+	 * @param string $prefix ='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	public function infolog_replacements($id,$prefix='', &$content = '')
+	public function infolog_replacements($id, $prefix = '', &$content = '')
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
@@ -179,84 +198,61 @@ class infolog_merge extends Api\Storage\Merge
 		return $info;
 	}
 
-	/**
-	 * Generate table with replacements for the Api\Preferences
-	 *
-	 */
-	public function show_replacements()
+	public function get_placeholder_list($prefix = '')
 	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('infolog').' - '.lang('Replacements for inserting entries into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		echo $GLOBALS['egw']->framework->header();
-
-		echo "<table width='90%' align='center'>\n";
-		echo '<tr><td colspan="4"><h3>'.lang('Infolog fields:')."</h3></td></tr>";
-
-		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
-		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
+		$placeholders = array(
+				'infolog'                                 => [],
+				lang('parent')                            => [],
+				lang($tracking->field2label['info_from']) => []
+			) + parent::get_placeholder_list($prefix);
+
+		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'),
+						'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
 		Api\Translation::add_app('projectmanager');
+
+		$group = 'infolog';
 		foreach($fields as $name => $label)
 		{
-			if (in_array($name,array('custom'))) continue;	// dont show them
-
-			if (in_array($name,array('info_subject', 'info_des')) && $n&1)		// main values, which should be in the first column
+			if(in_array($name, array('custom')))
 			{
-				echo "</tr>\n";
-				$n++;
+				// dont show them
+				continue;
 			}
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
-			if ($n&1) echo "</tr>\n";
-			$n++;
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		$contact_custom = false;
-		foreach($this->bo->customfields as $name => $field)
-		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label'].($field['type'] == 'select-account' ? '*':'')."</td></tr>\n";
-			if($field['type'] == 'select-account') $contact_custom = true;
-		}
-		if($contact_custom)
-		{
-			echo '<tr><td /><td colspan="3">* '.lang('Addressbook placeholders available'). '</td></tr>';
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Parent').":</h3></td></tr>";
-		echo '<tr><td>{{info_id_parent/info_subject}}</td><td colspan="3">'.lang('All other %1 fields are valid',lang('infolog'))."</td></tr>\n";
-
-		echo '<tr><td colspan="4"><h3>'.lang('Contact fields').':</h3></td></tr>';
-		$i = 0;
-		foreach($this->contacts->contact_fields as $name => $label)
-		{
-			if (in_array($name,array('tid','label','geo'))) continue;       // dont show them, as they are not used in the UI atm.
-
-			if (in_array($name,array('email','org_name','tel_work','url')) && $n&1)         // main values, which should be in the first column
+			$marker = $this->prefix($prefix, $name, '{');
+			if(!array_filter($placeholders, function ($a) use ($marker)
 			{
-					echo "</tr>\n";
-					$i++;
+				return array_key_exists($marker, $a);
+			}))
+			{
+				$placeholders[$group][] = [
+					'value' => $marker,
+					'label' => $label
+				];
 			}
-			if (!($i&1)) echo '<tr>';
-			echo '<td>{{info_contact/'.$name.'}}</td><td>'.$label.'</td>';
-			if ($i&1) echo "</tr>\n";
-			$i++;
 		}
 
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach($this->contacts->customfields as $name => $field)
+		// Don't add any linked placeholders if we're not at the top level
+		// This avoids potential recursion
+		if(!$prefix)
 		{
-			echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-		}
+			// Add contact placeholders
+			$contact_merge = new Api\Contacts\Merge();
+			$contact = $contact_merge->get_placeholder_list($this->prefix($prefix, 'info_contact'));
+			$this->add_linked_placeholders($placeholders, lang($tracking->field2label['info_from']), $contact);
 
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
-		foreach($this->get_common_replacements() as $name => $label)
+			// Add parent placeholders
+			$this->add_linked_placeholders(
+				$placeholders,
+				lang('parent'),
+				$this->get_placeholder_list(($prefix ? $prefix . '/' : '') . 'info_id_parent')
+			);
+		}
+		else
 		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
+			unset($placeholders[lang('parent')]);
+			unset($placeholders[lang($tracking->field2label['info_from'])]);
 		}
-
-		echo "</table>\n";
-
-		echo $GLOBALS['egw']->framework->footer();
+		return $placeholders;
 	}
 }

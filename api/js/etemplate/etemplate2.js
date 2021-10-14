@@ -50,6 +50,7 @@
     et2_widget_file;
     et2_widget_link;
     et2_widget_progress;
+    et2_widget_placeholder;
     et2_widget_portlet;
     et2_widget_selectAccount;
     et2_widget_ajaxSelect;

@@ -22,11 +22,13 @@ require_once realpath(__DIR__.'/../WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
-class EntryTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
+class ContactEntryTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
+{
 
 	const TEST_TEMPLATE = 'api.entry_test_contact';
 
-	public static function setUpBeforeClass() : void {
+	public static function setUpBeforeClass() : void
+	{
 		parent::setUpBeforeClass();
 	}
 

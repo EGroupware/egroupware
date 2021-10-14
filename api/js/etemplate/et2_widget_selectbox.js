@@ -738,7 +738,7 @@ var et2_selectbox = /** @class */ (function (_super) {
                         if (sub == 'value')
                             continue;
                         if (typeof _options[key][sub] === 'object' && _options[key][sub] !== null) {
-                            this._appendOptionElement(sub, _options[key][sub]["label"] ? _options[key][sub]["label"] : "", _options[key][sub]["title"] ? _options[key][sub]["title"] : "", group);
+                            this._appendOptionElement(typeof _options[key][sub]["value"] !== "undefined" ? _options[key][sub]["value"] : sub, _options[key][sub]["label"] ? _options[key][sub]["label"] : "", _options[key][sub]["title"] ? _options[key][sub]["title"] : "", group);
                         }
                         else {
                             this._appendOptionElement(sub, _options[key][sub], undefined, group);
