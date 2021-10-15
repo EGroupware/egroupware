@@ -183,9 +183,9 @@ class infolog_merge extends Api\Storage\Merge
 		$info += $this->get_all_links('infolog', $id, $prefix, $content);
 
 		// Add contact fields
-		if($array['info_link'] && $array['info_link']['app'] && $array['info_link']['id'])
+		if($array['info_link'] && is_array($array['info_link']) && $array['info_link']['app'] && $array['info_link']['id'])
 		{
-			$info+=$this->get_app_replacements($array['info_link']['app'], $array['info_link']['id'], $content, 'info_contact');
+			$info += $this->get_app_replacements($array['info_link']['app'], $array['info_link']['id'], $content, 'info_contact');
 		}
 		// Add owner fields
 		$info += $this->contact_replacements(Api\Accounts::id2name($info_owner,'person_id'),'info_owner');
