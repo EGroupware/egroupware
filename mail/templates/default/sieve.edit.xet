@@ -99,6 +99,13 @@
 					<description/>
 				</row>
 				<row>
+					<radio label="set flags" id="action" options="flags"/>
+					<taglist id="action_flags_list">
+						<option value="\\Flagged">Flagged</option>
+						<option value="\\Deleted">Deleted</option>
+					</taglist>
+				</row>
+				<row>
 					<description value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info."/>
 				</row>
 			</rows>

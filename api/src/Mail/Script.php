@@ -392,6 +392,9 @@ class Script
 				if (preg_match("/discard/i",$rule['action'])) {
 						$newruletext .= "discard;";
 				}
+				if (preg_match("/flags/i",$rule['action'])) {
+					$newruletext .= "addflag \"".$rule['action_arg']."\";";
+				}
 				if ($rule['keep']) $newruletext .= "\n\tkeep;";
 				if (!$rule['unconditional']) $newruletext .= "\n}";
 
@@ -556,6 +559,8 @@ class Script
 			if ($this->extensions['body']) $newscripthead .= ",\"body\"";
 			if ($this->extensions['date']) $newscripthead .= ",\"date\"";
 			if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
+			if ($this->extensions['variables']) $newscripthead .= ",\"variables\"";
+			if ($this->extensions['imap4flags']) $newscripthead .= ",\"imap4flags\"";
 
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($this->extensions['enotify']?'e':'').'notify"'.($this->extensions['variables']?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
@@ -566,6 +571,9 @@ class Script
 			{
 				$newscripthead .= "require [\"vacation\"";
 				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
+				if ($this->extensions['date']) $newscripthead .= ",\"date\"";
+				if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
+
 				$closeRequired=true;
 			}
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on')
