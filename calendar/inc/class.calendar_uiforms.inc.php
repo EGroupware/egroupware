@@ -1007,7 +1007,7 @@ class calendar_uiforms extends calendar_ui
 				$response = Api\Json\Response::get();
 				if($response && $update_type != 'delete' && !$client_updated)
 				{
-					$client_updated = $this->update_client($event['id']);
+					$client_updated = $this->update_client($event['id'], null, $old_event);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');

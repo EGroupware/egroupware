@@ -651,22 +651,34 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Do we already have "fresh" data?  Most user actions give fresh data in response
-		let existing = egw.dataGetUIDdata('calendar::'+pushData.id);
+		let existing = egw.dataGetUIDdata('calendar::' + pushData.id);
 		if(existing && Math.abs(existing.timestamp - new Date().valueOf()) < 1000)
 		{
 			// Update directly
-			this._update_events(this.state, ['calendar::'+pushData.id]);
+			this._update_events(this.state, ['calendar::' + pushData.id]);
 			return;
-		};
+		}
+		;
 
 		// Ask for the real data, we don't have it
-		egw.request("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
+		let process_data = (data) =>
 		{
 			// Store it, which will call all registered listeners
 			egw.dataStoreUID(data.uid, data.data);
 
 			// Any existing events were updated.  Run this to catch new events or events moved into view
 			this._update_events(this.state, [data.uid]);
+		}
+		egw.request("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
+		{
+			if(typeof data.uid !== "undefined")
+			{
+				return process_data(data)
+			}
+			for(let e of data)
+			{
+				process_data(e);
+			}
 		});
 	}
 
@@ -3736,11 +3748,20 @@ export class CalendarApp extends EgwApp
 				else if(typeof framework !== 'undefined')
 				{
 					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
-					egw.loading_prompt('calendar',false)
+					egw.loading_prompt('calendar', false)
 
 				}
-			}, this,null
+			}, this, null
 		);
+	}
+
+	/**
+	 * We have a list of calendar UIDs of events that need updating.
+	 * Public wrapper for _update_events so we can call it from server
+	 */
+	update_events(uids : string[])
+	{
+		return this._update_events(this.state, uids);
 	}
 
 	/**
