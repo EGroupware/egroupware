@@ -252,6 +252,10 @@ class mail_sieve
 						break;
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
+						break;
+					case 'flags':
+						$content['action_flags_list'] = explode(' ', $rules['action_arg']);
+						break;
 				}
 				$content['anyof'] = $rules['anyof'] != 0?1:0;
 			}
@@ -302,10 +306,15 @@ class mail_sieve
 								break;
 							case 'reject':
 								$newRule['action_arg'] = $content['action_reject_text'];
+								break;
+							case 'flags':
+								$newRule['action_arg'] = implode(' ', $content['action_flags_list']);
+								break;
 						}
 						unset($newRule['action_folder_text']);
 						unset($newRule['action_address_text']);
 						unset($newRule['action_reject_text']);
+						unset($newRule['action_flags_list']);
 
 						$newRule['flg'] = 0 ;
 						if( $newRule['continue'] ) { $newRule['flg'] += 1; }
