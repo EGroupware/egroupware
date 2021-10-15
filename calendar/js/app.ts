@@ -1,13 +1,12 @@
 /**
  * EGroupware - Calendar - Javascript UI
  *
- * @link http://www.egroupware.org
+ * @link https://www.egroupware.org
  * @package calendar
- * @author Hadi Nategh	<hn-AT-stylite.de>
+ * @author Hadi Nategh	<hn-AT-egroupware.org>
  * @author Nathan Gray
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-21 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /*egw:uses
@@ -24,6 +23,7 @@ import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import {et2_calendar_owner} from "./et2_widget_owner";
 import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -60,7 +60,7 @@ import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
  * changed, we discard the daywise cache and ask the server for the filtered events.
  *
  */
-class CalendarApp extends EgwApp
+export class CalendarApp extends EgwApp
 {
 
 	/**
@@ -614,10 +614,14 @@ class CalendarApp extends EgwApp
 		let filtered = Object.keys(this._grants).filter(account => this.state.owner.indexOf(account) >= 0);
 
 		// Check if we're interested in displaying by owner / participant
-		let owner_check = et2_calendar_event.owner_check(cal_event, jQuery.extend({},
-            {options: {owner: filtered}},
-			this.et2
-		));
+		let owner_check = et2_calendar_event.owner_check(
+			cal_event,
+			// Fake the required widget since we don't actually have it right now
+			jQuery.extend({},
+				{options: {owner: filtered}},
+				this.et2
+			)
+		);
 		if(!owner_check)
 		{
 			// The owner is not in the list of what we're allowed / care about
@@ -632,24 +636,35 @@ class CalendarApp extends EgwApp
 		}
 
 		// Do we already have "fresh" data?  Most user actions give fresh data in response
-		let existing = egw.dataGetUIDdata('calendar::'+pushData.id);
+		let existing = egw.dataGetUIDdata('calendar::' + pushData.id);
 		if(existing && Math.abs(existing.timestamp - new Date().valueOf()) < 1000)
 		{
 			// Update directly
-			this._update_events(this.state, ['calendar::'+pushData.id]);
+			this._update_events(this.state, ['calendar::' + pushData.id]);
 			return;
-		};
+		}
+		;
 
 		// Ask for the real data, we don't have it
-		egw.json("calendar.calendar_ui.ajax_get", [[pushData.id]], function(data) {
-			if(data && data.data && data.data.data) return;
-
+		let process_data = (data) =>
+		{
 			// Store it, which will call all registered listeners
 			egw.dataStoreUID(data.uid, data.data);
 
 			// Any existing events were updated.  Run this to catch new events or events moved into view
 			this._update_events(this.state, [data.uid]);
-		}.bind(this)).sendRequest(true);
+		}
+		egw.request("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
+		{
+			if(typeof data.uid !== "undefined")
+			{
+				return process_data(data)
+			}
+			for(let e of data)
+			{
+				process_data(e);
+			}
+		});
 	}
 
 	/**
@@ -1385,9 +1400,9 @@ class CalendarApp extends EgwApp
 	freetime_search()
 	{
 		var content = this.et2.getArrayMgr('content').data;
-		content['start'] = this.et2.getWidgetById('start').get_value();
-		content['end'] = this.et2.getWidgetById('end').get_value();
-		content['duration'] = this.et2.getWidgetById('duration').get_value();
+		content['start'] = this.et2.getValueById('start');
+		content['end'] = this.et2.getValueById('end');
+		content['duration'] = this.et2.getValueById('duration');
 
 		var request = this.egw.json('calendar.calendar_uiforms.ajax_freetimesearch', [content],null,null,null,null);
 		request.sendRequest();
@@ -1399,8 +1414,8 @@ class CalendarApp extends EgwApp
 	 */
 	check_recur_type()
 	{
-		var recurType = this.et2.getWidgetById('recur_type');
-		var recurData = this.et2.getWidgetById('recur_data');
+		var recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
+		var recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
 
 		if(recurType && recurData)
 		{
@@ -1454,9 +1469,9 @@ class CalendarApp extends EgwApp
 	 */
 	set_enddate_visibility()
 	{
-		var duration = this.et2.getWidgetById('duration');
-		var start = this.et2.getWidgetById('start');
-		var end = this.et2.getWidgetById('end');
+		var duration = <et2_selectbox> this.et2.getWidgetById('duration');
+		var start = <et2_date> this.et2.getWidgetById('start');
+		var end = <et2_date> this.et2.getWidgetById('end');
 		var content = this.et2.getArrayMgr('content').data;
 
 		if (typeof duration != 'undefined' && typeof end != 'undefined')
@@ -1464,9 +1479,11 @@ class CalendarApp extends EgwApp
 			end.set_disabled(duration.get_value()!=='');
 
 			// Only set end date if not provided, adding seconds fails with DST
+			// @ts-ignore
 			if (!end.disabled && !content.end)
 			{
 				end.set_value(start.get_value());
+				// @ts-ignore
 				if (typeof content.duration != 'undefined') end.set_value("+"+content.duration);
 			}
 		}
@@ -1620,9 +1637,9 @@ class CalendarApp extends EgwApp
 	 */
 	participantOnChange()
 	{
-		var add = this.et2.getWidgetById('add');
-		var quantity = this.et2.getWidgetById('quantity');
-		var participant = this.et2.getWidgetById('participant');
+		var add = <et2_button> this.et2.getWidgetById('add');
+		var quantity = <et2_number> this.et2.getWidgetById('quantity');
+		var participant = <et2_calendar_owner> this.et2.getWidgetById('participant');
 
 		// array of participants
 		var value = participant.get_value();
@@ -1691,7 +1708,7 @@ class CalendarApp extends EgwApp
 			// Make the Id from selected button by checking the index
 			var selectedId = _widget.id.match(/^select\[([0-9])\]$/i)[1];
 
-			var sTime = this.et2.getWidgetById(selectedId+'start');
+			var sTime = <et2_date> this.et2.getWidgetById(selectedId+'start');
 
 			//check the parent window is still open before to try to access it
 			if (window.opener && sTime)
@@ -1699,8 +1716,8 @@ class CalendarApp extends EgwApp
 				var editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
 				if (typeof editWindowObj != "undefined")
 				{
-					var startTime = editWindowObj.widgetContainer.getWidgetById('start');
-					var endTime = editWindowObj.widgetContainer.getWidgetById('end');
+					var startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
+					var endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
 					if (startTime && endTime)
 					{
 						startTime.set_value(sTime.get_value());
@@ -1726,7 +1743,7 @@ class CalendarApp extends EgwApp
 		const view = <et2_container>(<etemplate2> CalendarApp.views['listview'].etemplates[0]).widgetContainer || null;
 		const nm = view ? <et2_nextmatch>view.getWidgetById('nm') : null;
 		const filter = view && nm ? <et2_selectbox>nm.getWidgetById('filter') : null;
-		const dates = view ? view.getWidgetById('calendar.list.dates') : null;
+		const dates = view ? <et2_template> view.getWidgetById('calendar.list.dates') : null;
 
 		// Update state when user changes it
 		if(view && filter)
@@ -2386,11 +2403,11 @@ class CalendarApp extends EgwApp
 	 */
 	move_edit_series(_DOM,_button)
 	{
-		var content = this.et2.getArrayMgr('content').data;
-		var start_date = this.et2.getWidgetById('start').get_value();
-		var end_date = this.et2.getWidgetById('end').get_value();
-		var whole_day = this.et2.getWidgetById('whole_day');
-		var duration = ''+this.et2.getWidgetById('duration').get_value();
+		var content : any = this.et2.getArrayMgr('content').data;
+		var start_date = this.et2.getValueById('start');
+		var end_date = this.et2.getValueById('end');
+		var whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
+		var duration = ''+this.et2.getValueById('duration');
 		var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
 		var button = _button;
 		var that = this;
@@ -2623,7 +2640,7 @@ class CalendarApp extends EgwApp
 		{
 			var listview : et2_nextmatch = typeof CalendarApp.views.listview.etemplates[0] !== 'string' &&
 				CalendarApp.views.listview.etemplates[0].widgetContainer &&
-				CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+				<et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 			if(listview && listview.activeFilters && listview.activeFilters.search)
 			{
 				state.keywords = listview.activeFilters.search;
@@ -3366,7 +3383,7 @@ class CalendarApp extends EgwApp
 	 *
 	 * @param {widget object} _widget new_alarm[options] selectbox
 	 */
-	alarm_custom_date (selectbox : HTMLInputElement, _widget? : et2_selectbox)
+	alarm_custom_date (selectbox? : HTMLInputElement, _widget? : et2_selectbox)
 	{
 		var alarm_date = this.et2.getInputWidgetById('new_alarm[date]');
 		var alarm_options = _widget || this.et2.getInputWidgetById('new_alarm[options]');
@@ -3402,10 +3419,10 @@ class CalendarApp extends EgwApp
 	 */
 	set_alarmOptions_WD (_egw,_widget)
 	{
-		var alarm = this.et2.getWidgetById('alarm');
+		var alarm = <et2_grid> this.et2.getWidgetById('alarm');
 		if (!alarm) return;	// no default alarm
 		var content = this.et2.getArrayMgr('content').data;
-		var start = this.et2.getWidgetById('start');
+		var start = <et2_date> this.et2.getWidgetById('start');
 		var self= this;
 		var time = alarm.cells[1][0].widget;
 		var event = alarm.cells[1][1].widget;
@@ -3716,11 +3733,20 @@ class CalendarApp extends EgwApp
 				else if(typeof framework !== 'undefined')
 				{
 					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
-					egw.loading_prompt('calendar',false)
+					egw.loading_prompt('calendar', false)
 
 				}
-			}, this,null
+			}, this, null
 		);
+	}
+
+	/**
+	 * We have a list of calendar UIDs of events that need updating.
+	 * Public wrapper for _update_events so we can call it from server
+	 */
+	update_events(uids : string[])
+	{
+		return this._update_events(this.state, uids);
 	}
 
 	/**
@@ -4343,7 +4369,7 @@ class CalendarApp extends EgwApp
 		// Listview not loaded
 		if(typeof CalendarApp.views.listview.etemplates[0] == 'string') return;
 
-		var nm = CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+		var nm = <et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 		// nextmatch missing
 		if(!nm) return;
 
@@ -4522,9 +4548,9 @@ class CalendarApp extends EgwApp
 					return;
 				}
 			}
-			this.et2.getWidgetById('new_alarm[options]').set_value('300');
-			this.et2.getWidgetById('new_alarm[owner]').set_value('0');	// all participants
-			this.et2.getWidgetById('button[add_alarm]').click();
+			(<et2_selectbox> this.et2.getWidgetById('new_alarm[options]')).set_value('300');
+			(<et2_selectbox> this.et2.getWidgetById('new_alarm[owner]')).set_value('0');	// all participants
+			(<et2_button> this.et2.getWidgetById('button[add_alarm]')).click(event);
 		}
 	}
 
