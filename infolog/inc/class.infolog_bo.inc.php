@@ -1110,7 +1110,7 @@ class infolog_bo
 			) || (
 				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none' &&
 				array_key_exists('search', $values['info_contact'])
-			))
+		))
 		{
 			if(is_array($values['info_contact']))
 			{
