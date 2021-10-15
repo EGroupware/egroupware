@@ -1374,6 +1374,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			case 'retrieveRules':
 			case 'getVacation':
 			case 'setVacation':
+			case 'getExtensions':
 				if (is_null($this->sieve))
 				{
 					$this->sieve = new Sieve($this);
