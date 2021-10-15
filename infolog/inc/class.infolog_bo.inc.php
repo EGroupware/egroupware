@@ -1098,7 +1098,7 @@ class infolog_bo
 	 */
 	protected function write_check_links(array &$values)
 	{
-		if(!$this->bo->check_access($values, Acl::EDIT))
+		if(!$this->check_access($values, Acl::EDIT))
 		{
 			return;
 		}
