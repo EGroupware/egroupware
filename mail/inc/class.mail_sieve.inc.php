@@ -550,7 +550,7 @@ class mail_sieve
 			}
 			else
 			{
-				if ($icServer->acc_imap_administration)
+				if ($icServer->acc_imap_administration || (!empty($icServer->getExtensions()) && in_array('DATE', $icServer->getExtensions())))
 				{
 					$ByDate = array('by_date' => lang('By date'));
 				}
