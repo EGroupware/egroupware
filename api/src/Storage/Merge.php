@@ -1793,6 +1793,10 @@ abstract class Merge
 	public function get_app_replacements($app, $id, $content, $prefix = '')
 	{
 		$replacements = array();
+		if(!$app || $id || !$content)
+		{
+			return $replacements;
+		}
 		if($app == 'addressbook')
 		{
 			return $this->contact_replacements($id, $prefix, false, $content);
