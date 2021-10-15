@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "210ce7c8e74551a16bebace0ffa679b8",
+    "content-hash": "e2720b854779a8593705635d20ce220a",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -982,6 +982,139 @@
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
             "time": "2021-06-18T14:33:23+00:00"
+        },
+        {
+            "name": "egroupware/compress",
+            "version": "2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Compress.git",
+                "reference": "5c02e95fff1462ca13ecd3af04b30356ad1363b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Compress/zipball/5c02e95fff1462ca13ecd3af04b30356ad1363b3",
+                "reference": "5c02e95fff1462ca13ecd3af04b30356ad1363b3",
+                "shasum": ""
+            },
+            "require": {
+                "pear-pear.horde.org/horde_exception": "^2",
+                "pear-pear.horde.org/horde_mime": "^2.5",
+                "pear-pear.horde.org/horde_translation": "^2.2",
+                "pear-pear.horde.org/horde_util": "^2",
+                "php": "^5.3 || ^7"
+            },
+            "replace": {
+                "pear-horde/horde_compress": "2.*",
+                "pear-pear.horde.org/horde_compress": "2.*"
+            },
+            "suggest": {
+                "ext-zlib": "*",
+                "pear-pear.horde.org/Horde_Icalendar": "^2",
+                "pear-pear.horde.org/Horde_Mail": "^2.5",
+                "pear-pear.horde.org/Horde_Mapi": "^1",
+                "pear-pear.horde.org/Horde_Stream_Filter": "^2",
+                "pear-pear.horde.org/Horde_Test": "^2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Compress": "lib/"
+                }
+            },
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Schneider",
+                    "email": "jan@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael J Rubinsky",
+                    "email": "mrubinsk@horde.org",
+                    "role": "developer"
+                },
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "lead"
+                }
+            ],
+            "description": "Compression library",
+            "homepage": "https://www.horde.org/libraries/Horde_Compress",
+            "support": {
+                "source": "https://github.com/EGroupware/Compress/tree/2.2.3"
+            },
+            "time": "2020-03-11T00:00:00+00:00"
+        },
+        {
+            "name": "egroupware/crypt",
+            "version": "2.7.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Crypt.git",
+                "reference": "d25af6514c134426647dae2c47e5bf07bb7c4d1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Crypt/zipball/d25af6514c134426647dae2c47e5bf07bb7c4d1e",
+                "reference": "d25af6514c134426647dae2c47e5bf07bb7c4d1e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "pear-pear.horde.org/horde_exception": "^2",
+                "pear-pear.horde.org/horde_http": "^2",
+                "pear-pear.horde.org/horde_mime": "^2",
+                "pear-pear.horde.org/horde_stream": "^1.5",
+                "pear-pear.horde.org/horde_stream_filter": "^2",
+                "pear-pear.horde.org/horde_translation": "^2.2",
+                "pear-pear.horde.org/horde_url": "^2",
+                "pear-pear.horde.org/horde_util": "^2",
+                "php": "^5.3 || ^7 || ^8"
+            },
+            "replace": {
+                "pear-horde/horde_crypt": "2.*",
+                "pear-pear.horde.org/horde_crypt": "2.*"
+            },
+            "suggest": {
+                "pear-pear.horde.org/Horde_Test": "^2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Crypt": "lib/"
+                }
+            },
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Jan Schneider",
+                    "email": "jan@horde.org",
+                    "role": "lead"
+                }
+            ],
+            "description": "Cryptography library",
+            "homepage": "https://www.horde.org/libraries/Horde_Crypt",
+            "support": {
+                "source": "https://github.com/EGroupware/Crypt/tree/v2.7.13"
+            },
+            "time": "2017-11-11T00:00:00+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
@@ -2725,74 +2858,6 @@
                 "random"
             ],
             "time": "2018-07-02T15:55:56+00:00"
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Compress",
-            "version": "2.2.3",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.3.tgz"
-            },
-            "require": {
-                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
-                "pear-pear.horde.org/horde_mime": "<3.0.0.0",
-                "pear-pear.horde.org/horde_translation": "<3.0.0.0",
-                "pear-pear.horde.org/horde_util": "<3.0.0.0",
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_compress": "== 2.2.3.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "A library to wrap various compression techniques."
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Crypt",
-            "version": "2.7.12",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.12.tgz"
-            },
-            "require": {
-                "ext-hash": "*",
-                "ext-openssl": "*",
-                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
-                "pear-pear.horde.org/horde_http": "<3.0.0.0",
-                "pear-pear.horde.org/horde_mime": "<3.0.0.0",
-                "pear-pear.horde.org/horde_stream": "<2.0.0.0",
-                "pear-pear.horde.org/horde_stream_filter": "<3.0.0.0",
-                "pear-pear.horde.org/horde_translation": "<3.0.0.0",
-                "pear-pear.horde.org/horde_url": "<3.0.0.0",
-                "pear-pear.horde.org/horde_util": "<3.0.0.0",
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_crypt": "== 2.7.12.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "The Horde_Crypt package class provides an API for various cryptographic systems."
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt_Blowfish",
@@ -5980,6 +6045,7 @@
                 "oauth1",
                 "simplesamlphp"
             ],
+            "abandoned": true,
             "time": "2019-12-03T09:22:08+00:00"
         },
         {
