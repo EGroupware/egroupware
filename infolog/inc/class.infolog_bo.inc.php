@@ -1094,10 +1094,14 @@ class infolog_bo
 	 * Checks for info_contact properly linked, project properly linked and
 	 * adds or removes to correct.
 	 *
-	 * @param Array $values
+	 * @param array $values
 	 */
-	protected function write_check_links(&$values)
+	protected function write_check_links(array &$values)
 	{
+		if(!$this->bo->check_access($values, Acl::EDIT))
+		{
+			return;
+		}
 		$old_link_id = (int)$values['info_link_id'];
 		$from = $values['info_from'];
 
@@ -1106,7 +1110,7 @@ class infolog_bo
 			) || (
 				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none' &&
 				array_key_exists('search', $values['info_contact'])
-		))
+			))
 		{
 			if(is_array($values['info_contact']))
 			{
@@ -1115,7 +1119,7 @@ class infolog_bo
 				$id = (int)$values['info_contact']['id'];
 				$from = $values['info_contact']['search'];
 			}
-			else if ($values['info_contact'])
+			else if($values['info_contact'])
 			{
 				list($app, $id) = explode(':', $values['info_contact'], 2);
 			}
