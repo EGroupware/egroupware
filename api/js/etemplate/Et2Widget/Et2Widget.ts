@@ -212,13 +212,20 @@ const Et2WidgetMixin = (superClass) =>
 			this._label = value;
 			if(value)
 			{
-				let label = document.createElement("span");
-				label.classList.add("et2_label");
-				label.textContent = this._label;
-				// We should have a slot in the template for the label
-				//label.slot="label";
-				this.appendChild(label);
-				this.requestUpdate('label', oldValue);
+				if(this._labelNode)
+				{
+					this._labelNode.textContent = this._label;
+				}
+				else
+				{
+					let label = document.createElement("span");
+					label.classList.add("et2_label");
+					label.textContent = this._label;
+					// We should have a slot in the template for the label
+					//label.slot="label";
+					this.appendChild(label);
+					this.requestUpdate('label', oldValue);
+				}
 			}
 		}
 

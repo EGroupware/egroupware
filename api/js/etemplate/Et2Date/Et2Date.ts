@@ -105,7 +105,7 @@ export function formatDate(date: Date, options): string
 	}
 	let _value = '';
 	// Add timezone offset back in, or formatDate will lose those hours
-	let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+	let formatDate = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
 
 	let dateformat = options.dateFormat || <string>egw.preference("dateformat") || 'Y-m-d';
 
@@ -179,14 +179,18 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		return new Date(modelValue.getTime() - offset).toJSON().replace(/\.\d{3}Z$/, 'Z');
 	}
 
+	set_value(value)
+	{
+		this.modelValue = this.parser(value);
+	}
+
 	getValue()
 	{
 		// The supplied value was not understandable, return null
-		if(this.modelValue instanceof Unparseable)
+		if(this.modelValue instanceof Unparseable || !this.modelValue)
 		{
 			return null;
 		}
-
 		return this.modelValue.toJSON();
 	}
 
@@ -217,11 +221,28 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	}
 
 	/**
+	 * The LionCalendar shouldn't know anything about the modelValue;
+	 * it can't handle Unparseable dates, but does handle 'undefined'
+	 * @param {?} modelValue
+	 * @returns {Date|undefined} a 'guarded' modelValue
+	 */
+	static __getSyncDownValue(modelValue)
+	{
+		if(!(modelValue instanceof Date))
+		{
+			return undefined;
+		}
+		const offset = modelValue.getTimezoneOffset() * 60000;
+		return new Date(modelValue.getTime() + offset);
+	}
+
+	/**
 	 * Overriding parent to add class to button, and use an image instead of unicode emoji
 	 */
 	// eslint-disable-next-line class-methods-use-this
 	_invokerTemplate()
 	{
+		let img = this.egw() ? this.egw().image("calendar") || '' : '';
 		return html`
             <button
                     type="button"
@@ -231,7 +252,7 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
                     aria-label="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
                     title="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
             >
-                <img src="${this.egw().image("calendar")}" style="width:16px"/>
+                <img src="${img}" style="width:16px"/>
             </button>
 		`;
 	}
