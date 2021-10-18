@@ -103,6 +103,7 @@
 					<taglist id="action_flags_list">
 						<option value="\\Flagged">Flagged</option>
 						<option value="\\Deleted">Deleted</option>
+						<option value="\\Seen">Read</option>
 					</taglist>
 				</row>
 				<row>
