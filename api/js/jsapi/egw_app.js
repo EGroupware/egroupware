@@ -580,20 +580,22 @@ var EgwApp = /** @class */ (function () {
      * @param {egwActionObject[]} _selected
      */
     EgwApp.prototype.merge = function (_action, _selected) {
-        var _a;
         // Find what we need
         var nm = null;
         var action = _action;
-        var as_pdf = false;
+        var as_pdf = null;
         // Find Select all
-        while (nm == null && action != null) {
+        while (nm == null && action.parent != null) {
             if (action.data != null && action.data.nextmatch) {
                 nm = action.data.nextmatch;
+            }
+            if (as_pdf === null && action.getActionById('as_pdf') !== null) {
+                as_pdf = action.getActionById('as_pdf').checked;
             }
             action = action.parent;
         }
         var all = (nm === null || nm === void 0 ? void 0 : nm.getSelection().all) || false;
-        as_pdf = ((_a = action.getActionById('as_pdf')) === null || _a === void 0 ? void 0 : _a.checked) || false;
+        as_pdf = as_pdf || false;
         // Get list of entry IDs
         var ids = [];
         for (var i = 0; !all && i < _selected.length; i++) {

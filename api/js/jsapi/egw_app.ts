@@ -745,20 +745,24 @@ export abstract class EgwApp
 		// Find what we need
 		let nm = null;
 		let action = _action;
-		let as_pdf = false;
+		let as_pdf = null;
 
 		// Find Select all
-		while(nm == null && action != null)
+		while(nm == null && action.parent != null)
 		{
 			if(action.data != null && action.data.nextmatch)
 			{
 				nm = action.data.nextmatch;
 			}
+			if(as_pdf === null && action.getActionById('as_pdf') !== null)
+			{
+				as_pdf = action.getActionById('as_pdf').checked;
+			}
 			action = action.parent;
 		}
 		let all = nm?.getSelection().all || false;
 
-		as_pdf = action.getActionById('as_pdf')?.checked || false;
+		as_pdf = as_pdf || false;
 
 		// Get list of entry IDs
 		let ids = [];
