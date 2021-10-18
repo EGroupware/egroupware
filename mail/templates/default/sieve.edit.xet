@@ -104,6 +104,8 @@
 						<option value="\\Flagged">Flagged</option>
 						<option value="\\Deleted">Deleted</option>
 						<option value="\\Seen">Read</option>
+						<option value="\\Answered">Answered</option>
+						<option value="\\Draft">Draft</option>
 					</taglist>
 				</row>
 				<row>
