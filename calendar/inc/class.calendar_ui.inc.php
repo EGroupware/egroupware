@@ -642,12 +642,12 @@ class calendar_ui
 	 *
 	 * @param int $event_id
 	 * @param Api\DateTime $recurrence_date
-	 * @param array $old_event
+	 * @param array|bool|int|null $old_event
 	 *
 	 * @return boolean True if the event was updated, false if it could not be
 	 *    updated or was removed.
 	 */
-	public function update_client($event_id, Api\DateTime $recurrence_date = null, array $old_event = array())
+	public function update_client($event_id, Api\DateTime $recurrence_date = null, $old_event = array())
 	{
 		if(!$event_id)
 		{
