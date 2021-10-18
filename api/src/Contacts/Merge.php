@@ -156,119 +156,6 @@ class Merge extends Api\Storage\Merge
 	}
 
 	/**
-	 * Generate table with replacements for the preferences
-	 *
-	 */
-	public function show_replacements()
-	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Replacements for inserting contacts into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = (bool)$_GET['nonavbar'];
-
-		ob_start();
-		echo "<table width='90%' align='center'>\n";
-		echo '<tr><td colspan="4"><h3>'.lang('Contact fields:')."</h3></td></tr>";
-
-		$n = 0;
-		foreach($this->contacts->contact_fields as $name => $label)
-		{
-			if (in_array($name,array('tid','label','geo'))) continue;	// dont show them, as they are not used in the UI atm.
-
-			if (in_array($name,array('email','org_name','tel_work','url')) && $n&1)		// main values, which should be in the first column
-			{
-				echo "</tr>\n";
-				$n++;
-			}
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.$label.'</td>';
-			if($name == 'cat_id')
-			{
-				if ($n&1) echo "</tr>\n";
-				echo '<td>{{categories}}</td><td>'.lang('Category path').'</td>';
-				$n++;
-			}
-			if ($n&1) echo "</tr>\n";
-			$n++;
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach($this->contacts->customfields as $name => $field)
-		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
-		foreach(array(
-			'link' => lang('HTML link to the current record'),
-			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
- 			'attachments' => lang('List of files linked to the current record'),
-			'links_attachments' => lang('Links and attached files'),
-			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
-			'date' => lang('Date'),
-			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
-			'user/account_lid' => lang('Username'),
-			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
-			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
-			'labelplacement' => lang('Tag to mark positions for address labels'),
-			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF' => lang('Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example'),
-			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
-			) as $name => $label)
-		{
-			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('EPL Only').":</h3></td></tr>";
-		echo '<tr><td>{{share}}</td><td colspan="3">'.lang('Public sharing URL')."</td></tr>\n";
-
-		Api\Translation::add_app('calendar');
-		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20, -1</h3></td></tr>";
-		foreach(array(
-			'title' => lang('Title'),
-			'description' => lang('Description'),
-			'participants' => lang('Participants'),
-			'location' => lang('Location'),
-			'start'    => lang('Start').': '.lang('Date').'+'.lang('Time'),
-			'startday' => lang('Start').': '.lang('Weekday'),
-			'startdate'=> lang('Start').': '.lang('Date'),
-			'starttime'=> lang('Start').': '.lang('Time'),
-			'end'      => lang('End').': '.lang('Date').'+'.lang('Time'),
-			'endday'   => lang('End').': '.lang('Weekday'),
-			'enddate'  => lang('End').': '.lang('Date'),
-			'endtime'  => lang('End').': '.lang('Time'),
-			'duration' => lang('Duration'),
-			'category' => lang('Category'),
-			'priority' => lang('Priority'),
-			'updated'  => lang('Updated'),
-			'recur_type' => lang('Repetition'),
-			'access'   => lang('Access').': '.lang('public').', '.lang('private'),
-			'owner'    => lang('Owner'),
-		) as $name => $label)
-		{
-			if(in_array($name, array('start',
-									 'end')) && $n & 1)        // main values, which should be in the first column
-			{
-				echo "</tr>\n";
-				$n++;
-			}
-			if(!($n & 1))
-			{
-				echo '<tr>';
-			}
-			echo '<td>{{calendar/#/' . $name . '}}</td><td>' . $label . '</td>';
-			if($n & 1)
-			{
-				echo "</tr>\n";
-			}
-			$n++;
-		}
-		echo "</table>\n";
-
-		$GLOBALS['egw']->framework->render(ob_get_clean());
-	}
-
-	/**
 	 * Get a list of placeholders provided.
 	 *
 	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
@@ -352,8 +239,56 @@ class Merge extends Api\Storage\Merge
 			'label' => "Formatted private address"
 		];
 
+		$placeholders['EPL only'][] = [
+			'value' => $this->prefix($prefix, 'share', '{'),
+			'label' => 'Public sharing URL'
+		];
+
 		$this->add_customfield_placeholders($placeholders, $prefix);
+
+		// Don't add any linked placeholders if we're not at the top level
+		// This avoids potential recursion
+		if(!$prefix)
+		{
+			$this->add_calendar_placeholders($placeholders, $prefix);
+		}
+
 		return $placeholders;
+	}
+
+	protected function add_calendar_placeholders(&$placeholders, $prefix)
+	{
+		Api\Translation::add_app('calendar');
+
+		// NB: The -1 is actually ‑1, a non-breaking hyphen to avoid UI issues where we split on -
+		$group = lang('Calendar fields:') . " # = 1, 2, ..., 20, ‑1";
+		foreach(array(
+					'title'        => lang('Title'),
+					'description'  => lang('Description'),
+					'participants' => lang('Participants'),
+					'location'     => lang('Location'),
+					'start'        => lang('Start') . ': ' . lang('Date') . '+' . lang('Time'),
+					'startday'     => lang('Start') . ': ' . lang('Weekday'),
+					'startdate'    => lang('Start') . ': ' . lang('Date'),
+					'starttime'    => lang('Start') . ': ' . lang('Time'),
+					'end'          => lang('End') . ': ' . lang('Date') . '+' . lang('Time'),
+					'endday'       => lang('End') . ': ' . lang('Weekday'),
+					'enddate'      => lang('End') . ': ' . lang('Date'),
+					'endtime'      => lang('End') . ': ' . lang('Time'),
+					'duration'     => lang('Duration'),
+					'category'     => lang('Category'),
+					'priority'     => lang('Priority'),
+					'updated'      => lang('Updated'),
+					'recur_type'   => lang('Repetition'),
+					'access'       => lang('Access') . ': ' . lang('public') . ', ' . lang('private'),
+					'owner'        => lang('Owner'),
+				) as $name => $label)
+		{
+			$placeholders[$group][] = array(
+				'value' => $this->prefix(($prefix ? $prefix . '/' : '') . 'calendar/#', $name, '{'),
+				'label' => $label
+			);
+		}
 	}
 
 	/**

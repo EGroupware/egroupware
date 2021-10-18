@@ -71,6 +71,7 @@ function _egw_log_exception($e,&$headline=null)
 	{
 		error_log($headline.($e instanceof egw_exception_warning ? ': ' : ' ('.get_class($e).'): ').
 			$e->getMessage().(!empty($e->details) ? ': '.$e->details : ''));
+		error_log('File: '.str_replace(EGW_SERVER_ROOT, '', $e->getFile()).', Line: '.$e->getLine());
 		foreach($trace as $line)
 		{
 			error_log($line);
@@ -103,6 +104,7 @@ function egw_exception_handler($e)
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
 		echo ($headline ? $headline.': ' : '').$e->getMessage()."\n";
+		echo $e->getFile().' ('.$e->getLine().")\n";
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 		{
 			echo $e->getTraceAsString()."\n";
@@ -115,6 +117,8 @@ function egw_exception_handler($e)
 		header('HTTP/1.1 500 '.$headline);
 		$message = '<h3>'.Api\Html::htmlspecialchars($headline)."</h3>\n".
 			'<pre><b>'.Api\Html::htmlspecialchars($e->getMessage())."</b>\n\n";
+
+		echo $e->getFile().' ('.$e->getLine().")\n";
 
 		// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
 		if ($GLOBALS['egw_info']['server']['exception_show_trace'])
@@ -174,6 +178,7 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 	{
 		case E_RECOVERABLE_ERROR:
 		case E_USER_ERROR:
+			error_log(__METHOD__."($errno, '$errstr', '$errfile', $errline)");
 			throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 
 		case E_WARNING:

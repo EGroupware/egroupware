@@ -15,8 +15,7 @@
 namespace EGroupware\Api;
 
 // allow to set an application depending authentication type (eg. for syncml, groupdav, ...)
-if (isset($GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']]) &&
-	$GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']])
+if (!empty($GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']]))
 {
 	$GLOBALS['egw_info']['server']['auth_type'] = $GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']];
 }
@@ -223,11 +222,11 @@ class Auth
 		{
 			return true;
 		}
-		if (is_null($passwordAgeBorder) && $GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
+		if (is_null($passwordAgeBorder) && !empty($GLOBALS['egw_info']['server']['change_pwd_every_x_days']))
 		{
 			$passwordAgeBorder = (DateTime::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400));
 		}
-		if (is_null($daysLeftUntilChangeReq) && $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'])
+		if (is_null($daysLeftUntilChangeReq) && !empty($GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']))
 		{
 			// maxage - passwordage = days left until change is required
 			$daysLeftUntilChangeReq = ($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - ((DateTime::to('now','ts')-($alpwchange_val?$alpwchange_val:0))/86400));
@@ -235,9 +234,9 @@ class Auth
 		if ($alpwchange_val == 0 ||	// admin requested password change
 			$passwordAgeBorder > $alpwchange_val ||	// change password every N days policy requests change
 			// user should be warned N days in advance about change and is not yet
-			$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] &&
-			$GLOBALS['egw_info']['user']['apps']['preferences'] &&
-			$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] &&
+			!empty($GLOBALS['egw_info']['server']['change_pwd_every_x_days']) &&
+			!empty($GLOBALS['egw_info']['user']['apps']['preferences']) &&
+			!empty($GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']) &&
 			$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq &&
 			$UserKnowsAboutPwdChange !== true)
 		{
@@ -255,8 +254,8 @@ class Auth
 			else
 			{
 				// login page does not inform user about passwords about to expire
-				if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' &&
-					($GLOBALS['egw_info']['flags']['currentapp'] != 'home' ||
+				if ($GLOBALS['egw_info']['flags']['currentapp'] !== 'login' &&
+					($GLOBALS['egw_info']['flags']['currentapp'] !== 'home' ||
 						strpos($_SERVER['SCRIPT_NAME'], '/home/') !== false))
 				{
 					$UserKnowsAboutPwdChange = true;

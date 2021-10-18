@@ -169,7 +169,7 @@ class Html
 				if ($addbracesforendtag === true )
 				{
 					if (stripos($_body,'<'.$tag)!==false)  $ct = preg_match_all('#<'.$tag.'(?:\s.*)?>(.+)</'.$endtag.'>#isU', $_body, $found);
-					if ($ct>0)
+					if (isset($ct) && $ct>0)
 					{
 						//error_log(__METHOD__.__LINE__.array2string($found[0]));
 						// only replace what we have found
@@ -495,7 +495,7 @@ class Html
 		$html =  preg_replace('/&(?!#?[a-zA-Z0-9]+;)/', '&amp;', $html);
 
 		$dom = new \DOMDocument('1.0','UTF-8');
-		if(!$dom->loadHTML(
+		if (!@$dom->loadHTML(
 			'<?xml encoding="UTF-8">'. Api\Translation::convert($html,preg_match('/<meta[^>]+content="[^>"]+charset=([^;"]+)/i', $html, $matches) ? $matches[1] : false, 'utf8'),
 			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS
 		))

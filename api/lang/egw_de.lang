@@ -274,6 +274,7 @@ choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
 choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
 choose file...	common	de	Dateien wählen...
 choose the category	common	de	Kategorie auswählen
+choose the default filename for merged documents.	preferences	de	Wählen Sie den Standard-Dateinamen für zusammengeführte Platzhalter-Dokumente.
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 choose time	common	de	Uhrzeit auswählen
 chosen parent category no longer exists	common	de	Die ausgewählte Elternkategorie existiert nicht (mehr).
@@ -378,6 +379,7 @@ december	common	de	Dezember
 deck	common	de	Deck (intern)
 default	common	de	Vorgabe
 default category	common	de	Standard-Kategorie
+default document to insert entries	preferences	de	Standarddokument für Einfügen in Dokument
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default visible actions	common	de	standardmäßig sichtbare Aktionen
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
@@ -417,6 +419,8 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	de	Richtung von links nach rechts
 directory	common	de	Verzeichnis
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht entsprechend zur Dokumentroot!
+directory for storing merged documents	preferences	de	Verzeichnis für zusammengeführte Platzhalter-Dokumente
+directory with documents to insert entries	preferences	de	Vorlagen-Verzeichnis für Einfügen in Dokument
 disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
 disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des Navigationsmenüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
@@ -1500,6 +1504,7 @@ western sahara	common	de	WEST SAHARA
 what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 what style would you like the image to have?	common	de	Welchen Stil soll das Bild haben?
+when you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Verzeichnis angeben, werden diese in Ihrem Homeverzeichnis gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen

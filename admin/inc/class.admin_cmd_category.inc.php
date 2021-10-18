@@ -87,7 +87,7 @@ class admin_cmd_category extends admin_cmd
 		unset($set['old_parent'], $set['base_url'], $set['last_mod'], $set['all_cats'], $set['no_private']);
 		foreach($set as $key => $value)
 		{
-			if(array_key_exists($key, $old) && $old[$key] == $value)
+			if ($old && array_key_exists($key, $old) && $old[$key] == $value)
 			{
 				unset($set[$key]);
 				unset($old[$key]);

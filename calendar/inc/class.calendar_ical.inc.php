@@ -3082,7 +3082,7 @@ class calendar_ical extends calendar_boupdate
 					// check if json_encoded attribute is to big for our table
 					if (($attributes['params'] || count($attributes['values']) > 1) &&
 						strlen($event['##'.$attributes['name']]) >
-							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
+							$GLOBALS['egw']->db->get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
 					{
 						// store content compressed (Outlook/Exchange HTML garbadge is very good compressable)
 						if (function_exists('gzcompress'))
@@ -3093,7 +3093,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						// if that's not enough --> unset it, as truncating the json gives nothing
 						if (strlen($event['##'.$attributes['name']]) >
-							Api\Db::get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
+							$GLOBALS['egw']->db->get_column_attribute('cal_extra_value', 'egw_cal_extra', 'calendar', 'precision'))
 						{
 							unset($event['##'.$attributes['name']]);
 						}

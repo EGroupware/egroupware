@@ -34,6 +34,7 @@ class Script
 	var $emailNotification; /* email notification settings. */
 	var $pcount;       /* highest priority value in ruleset. */
 	var $errstr;       /* error text. */
+	var $extensions;	/* contains extensions status*/
 	/**
 	 * Body transform content types
 	 *
@@ -69,6 +70,21 @@ class Script
 		$this->emailNotification = array(); // Added email notifications
 		$this->pcount = 0;
 		$this->errstr = '';
+		$this->extensions = [];
+	}
+
+	private function _setExtensionsStatus(Sieve $connection)
+	{
+		$this->extensions = [
+			'vacation' => $connection->hasExtension('vacation'),
+			'regex' => $connection->hasExtension('regex'),
+			'enotify' => $connection->hasExtension('enotify'),
+			'body' => $connection->hasExtension('body'),
+			'variables' => $connection->hasExtension('variables'),
+			'date' => $connection->hasExtension('date'),
+			'imap4flags' => $connection->hasExtension('imap4flags'),
+			'relational' => $connection->hasExtension('relational'),
+		];
 	}
 
 	// get sieve script rules for this user
@@ -86,6 +102,7 @@ class Script
 		$anyofbit = 4;
 		$keepbit = 8;
 		$regexbit = 128;
+		$this->_setExtensionsStatus($connection);
 
 		if (!isset($this->name)){
 			$this->errstr = 'retrieveRules: no script name specified';
@@ -150,10 +167,10 @@ class Script
 						$rule['anyof']		= ($bits[8] & $anyofbit);
 						$rule['keep']		= ($bits[8] & $keepbit);
 						$rule['regexp']		= ($bits[8] & $regexbit);
-						$rule['bodytransform'] = ($bits[12]);
-						$rule['field_bodytransform'] = ($bits[13]);
-						$rule['ctype'] = ($bits[14]);
-						$rule['field_ctype_val'] = ($bits[15]);
+						$rule['bodytransform'] = ($bits[12]??null);
+						$rule['field_bodytransform'] = ($bits[13]??null);
+						$rule['ctype'] = ($bits[14]??null);
+						$rule['field_ctype_val'] = ($bits[15]??null);
 						$rule['unconditional']	= 0;
 						if (!$rule['from'] && !$rule['to'] && !$rule['subject'] &&
 							!$rule['field'] && !$rule['size'] && $rule['action']) {
@@ -188,7 +205,7 @@ class Script
 							}
 							$vacation['addresses'] = &$vaddresses;
 
-							$vacation['forwards'] = $bits[5];
+							$vacation['forwards'] = $bits[5]??null;
 						}
 						break;
 					case "notify":
@@ -236,7 +253,6 @@ class Script
 
 		$activerules = 0;
 		$regexused = 0;
-		$regexsupported = true;
 		$rejectused = 0;
 		$vacation_active = false;
 
@@ -245,13 +261,10 @@ class Script
 
 		//include "$default->lib_dir/version.php";
 
-		// lets generate the main body of the script from our rules
-		$enotify = $variables= $supportsbody = false;
-		if ($connection->hasExtension('enotify')) $enotify = true;
-		if ($connection->hasExtension('variables')) $variables = true;
-		if ($connection->hasExtension('body')) $supportsbody = true;
-		if (!$connection->hasExtension('vacation')) $this->vacation = false;
-		if (!$connection->hasExtension('regex')) $regexsupported = false;
+		// set extensions status
+		$this->_setExtensionsStatus($connection);
+
+		if (!$this->extensions['vacation']) $this->vacation = false;
 
 		$newscriptbody = "";
 		$continue = 1;
@@ -334,7 +347,7 @@ class Script
 								$newruletext .= "size " . $xthan . $rule['size'] . "K";
 								$started = 1;
 						}
-						if ($supportsbody){
+						if ($this->extensions['body']){
 							if (!empty($rule['field_bodytransform'])){
 								if ($started) $newruletext .= ", ";
 								$btransform	= " :raw ";
@@ -379,6 +392,9 @@ class Script
 				if (preg_match("/discard/i",$rule['action'])) {
 						$newruletext .= "discard;";
 				}
+				if (preg_match("/flags/i",$rule['action'])) {
+					$newruletext .= "addflag \"".$rule['action_arg']."\";";
+				}
 				if ($rule['keep']) $newruletext .= "\n\tkeep;";
 				if (!$rule['unconditional']) $newruletext .= "\n}";
 
@@ -417,7 +433,7 @@ class Script
 				$vacation_active = true;
 				if ($vacation['text'])
 				{
-					if ($regexsupported)
+					if ($this->extensions['regex'])
 					{
 						$newscriptbody .= "if header :regex ".'"X-Spam-Status" '.'"\\\\bYES\\\\b"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 						$regexused = 1;
@@ -441,17 +457,17 @@ class Script
 					}
 					$newscriptbody .= "\tkeep;\n}\n";
 				}
-				$newscriptbody .= "vacation :days " . $vacation['days'];
+				$vac_rule = "vacation :days " . $vacation['days'];
 				$first = 1;
 				if (!empty($vacation['addresses'][0]))
 				{
-					$newscriptbody .=  " :addresses [";
+					$vac_rule .=  " :addresses [";
 					foreach ($vacation['addresses'] as $vaddress) {
-							if (!$first) $newscriptbody .= ", ";
-							$newscriptbody .= "\"" . trim($vaddress) . "\"";
+							if (!$first) $vac_rule .= ", ";
+							$vac_rule .= "\"" . trim($vaddress) . "\"";
 							$first = 0;
 					}
-					$newscriptbody .=  "] ";
+					$vac_rule .=  "] ";
 				}
 				$message = $vacation['text'];
 				if ($vacation['start_date'] || $vacation['end_date'])
@@ -463,7 +479,20 @@ class Script
 							date($format_date,$vacation['end_date']),
 						),$message);
 				}
-				$newscriptbody .= " text:\n" . $message . "\n.\n;\n\n";
+				$vac_rule .= " text:\n" . $message . "\n.\n;\n\n";
+				if ($this->extensions['date'] && $vacation['start_date'] && $vacation['end_date'])
+				{
+					$newscriptbody .= "if allof (\n".
+					"currentdate :value \"ge\" \"date\" \"". date('Y-m-d', $vacation['start_date']) ."\",\n".
+					"currentdate :value \"le\" \"date\" \"". date('Y-m-d', $vacation['end_date']) ."\")\n".
+					"{\n".
+						$vac_rule."\n".
+					"}\n";
+				}
+				else
+				{
+					$newscriptbody .= $vac_rule;
+				}
 			}
 
 			// update with any changes.
@@ -476,10 +505,10 @@ class Script
 
 			// format notification body
 			$egw_site_title = $GLOBALS['egw_info']['server']['site_title'];
-			if ($enotify==true)
+			if ($this->extensions['enotify']==true)
 			{
 				$notification_body = lang("You have received a new message on the")." {$egw_site_title}";
-				if ($variables)
+				if ($this->extensions['variables'])
 				{
 					$notification_body .= ", ";
 					$notification_body .= 'From: ${from}';
@@ -522,13 +551,18 @@ class Script
 
 		if ($activerules) {
 			$newscripthead .= "require [\"fileinto\"";
-			if ($regexsupported && $regexused) $newscripthead .= ",\"regex\"";
+			if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
 			if ($rejectused) $newscripthead .= ",\"reject\"";
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= ",\"vacation\"";
 			}
-			if ($supportsbody) $newscripthead .= ",\"body\"";
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($enotify?'e':'').'notify"'.($variables?',"variables"':''); // Added email notifications
+			if ($this->extensions['body']) $newscripthead .= ",\"body\"";
+			if ($this->extensions['date']) $newscripthead .= ",\"date\"";
+			if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
+			if ($this->extensions['variables']) $newscripthead .= ",\"variables\"";
+			if ($this->extensions['imap4flags']) $newscripthead .= ",\"imap4flags\"";
+
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($this->extensions['enotify']?'e':'').'notify"'.($this->extensions['variables']?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
 		} else {
 			// no active rules, but might still have an active vacation rule
@@ -536,18 +570,21 @@ class Script
 			if ($this->vacation && $vacation_active)
 			{
 				$newscripthead .= "require [\"vacation\"";
-				if ($regexsupported && $regexused) $newscripthead .= ",\"regex\"";
+				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
+				if ($this->extensions['date']) $newscripthead .= ",\"date\"";
+				if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
+
 				$closeRequired=true;
 			}
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on')
 			{
 				if ($this->vacation && $vacation_active)
 				{
-					$newscripthead .= ",\"".($enotify?'e':'')."notify\"".($variables?',"variables"':'')."];\n\n"; // Added email notifications
+					$newscripthead .= ",\"".($this->extensions['enotify']?'e':'')."notify\"".($this->extensions['variables']?',"variables"':'')."];\n\n"; // Added email notifications
 				}
 				else
 				{
-					$newscripthead .= "require [\"".($enotify?'e':'')."notify\"".($variables?',"variables"':'')."];\n\n"; // Added email notifications
+					$newscripthead .= "require [\"".($this->extensions['enotify']?'e':'')."notify\"".($this->extensions['variables']?',"variables"':'')."];\n\n"; // Added email notifications
 				}
 			}
 			if ($closeRequired) $newscripthead .= "];\n\n";
@@ -570,7 +607,7 @@ class Script
 				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" .
 				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" .
 				$rule['action_arg'] . "&&" . $rule['flg'] . "&&" . addslashes($rule['field']) . "&&" . addslashes($rule['field_val']) . "&&" . $rule['size'];
-				if ($supportsbody && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
+				if ($this->extensions['body'] && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
 				$newscriptfoot .= "\n";
 				$pcount = $pcount+2;
 				//error_log(__CLASS__."::".__METHOD__.__LINE__.array2string($newscriptfoot));
@@ -616,7 +653,7 @@ class Script
 		}
 		catch (\Exception $e) {
 			$this->errstr = 'updateScript: putscript failed: ' . $e->getMessage().($e->details?': '.$e->details:'');
-			if ($regexused&&!$regexsupported) $this->errstr .= " REGEX is not an supported CAPABILITY";
+			if ($regexused && !$this->extensions['regex']) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);

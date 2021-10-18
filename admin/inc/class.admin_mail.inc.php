@@ -1258,7 +1258,7 @@ class admin_mail
 			if ($content['ident_id'] != $content['old_ident_id'] &&
 				($content['old_ident_id'] || $content['ident_id'] != $content['std_ident_id']))
 			{
-				if ($content['ident_id'] > 0)
+				if ((int)$content['ident_id'] > 0)
 				{
 					$identity = Mail\Account::read_identity($content['ident_id'], false, $content['called_for']);
 					unset($identity['account_id']);
@@ -1285,7 +1285,7 @@ class admin_mail
 		{
 			$sel_options['ident_email_alias'] = array_merge(
 				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
-				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
+				array_combine($content['mailAlternateAddress'] ?? [], $content['mailAlternateAddress'] ?? []));
 			// if admin explicitly set a non-alias, we need to add it to aliases to keep it after storing signature by user
 			if ($content['ident_email'] !== $content['mailLocalAddress'] && !isset($sel_options['ident_email_alias'][$content['ident_email']]))
 			{

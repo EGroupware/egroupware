@@ -143,7 +143,7 @@ class Tree extends Etemplate\Widget
 		parent::set_attrs($xml, $cloned);
 
 		// set attrs[multiple] from attrs[options]
-		if ($this->attrs['options'] > 1)
+		if (isset($this->attrs['options']) && (int)$this->attrs['options'] > 1)
 		{
 			self::setElementAttribute($this->id, 'multiple', true);
 		}
@@ -297,21 +297,21 @@ class Tree extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (($templated_path = self::templateImagePath($this->attrs['image_path'])) != $this->attrs['image_path'])
+		if (($templated_path = self::templateImagePath($this->attrs['image_path'] ?? null)) !== ($this->attrs['image_path'] ?? null))
 		{
 			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path'] = $templated_path);
 			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
 		}
 
-		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-		if ($this->attrs['type'])
+		if (empty(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = [];
+		if (!empty($this->attrs['type']))
 		{
 			// += to keep further options set by app code
-			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
-				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
+			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'] ?? null,
+				$no_lang, $this->attrs['readonly'] ?? null, self::get_array(self::$request->content, $form_name), $form_name);
 
 			// if no_lang was modified, forward modification to the client
-			if ($no_lang != $this->attr['no_lang'])
+			if (!isset($this->attr['no_lang']) || $no_lang != $this->attr['no_lang'])
 			{
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
 			}
@@ -440,7 +440,7 @@ class Tree extends Etemplate\Widget
 	 */
 	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null, $form_name=null)
 	{
-		list($rows,$type,$type2,$type3) = explode(',',$legacy_options);
+		list($rows,$type,$type2,$type3) = explode(',', $legacy_options)+[null,null,null,null];
 
 		$no_lang = false;
 		$options = array();

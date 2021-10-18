@@ -48,6 +48,14 @@
 		},
 		{
 			"type": "vcs",
+			"url": "https://github.com/egroupware/Crypt"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/egroupware/Compress"
+		},
+		{
+			"type": "vcs",
 			"url": "https://github.com/IMSGlobal/lti-1-3-php-library"
 		}
 	],
@@ -81,6 +89,8 @@
 		"egroupware/adodb-php": "self.version",
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
+		"egroupware/compress": "^2.2.3",
+		"egroupware/crypt": "^2.7.13",
 		"egroupware/guzzlestream": "dev-master",
 		"egroupware/icalendar": "^2.1.9",
 		"egroupware/magicsuggest": "^2.1",
@@ -99,8 +109,6 @@
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^1.1",
-		"pear-pear.horde.org/horde_compress": "^2.0.8",
-		"pear-pear.horde.org/horde_crypt": "^2.7.9",
 		"pear-pear.horde.org/horde_imap_client": "^2.30.3",
 		"pear-pear.horde.org/horde_mail": "^2.1.2",
 		"pear-pear.horde.org/horde_managesieve": "^1.0.2",

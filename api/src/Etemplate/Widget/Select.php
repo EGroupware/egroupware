@@ -109,14 +109,14 @@ class Select extends Etemplate\Widget
 	{
 		parent::set_attrs($xml, $cloned);
 
-		if ($this->attrs['multiple'] !== 'dynamic')
+		if (!isset($this->attrs['multiple']) || $this->attrs['multiple'] !== 'dynamic')
 		{
 			$this->attrs['multiple'] = !isset($this->attrs['multiple']) ? false :
 				!(!$this->attrs['multiple'] || $this->attrs['multiple'] === 'false');
 		}
 
 		// set attrs[multiple] from attrs[options], unset options only if it just contains number or rows
-		if ($this->attrs['options'] > 1)
+		if (isset($this->attrs['options']) && $this->attrs['options'] > 1)
 		{
 			$this->attrs['multiple'] = (int)$this->attrs['options'];
 			if ((string)$this->attrs['multiple'] == $this->attrs['options'])
@@ -124,7 +124,7 @@ class Select extends Etemplate\Widget
 				unset($this->attrs['options']);
 			}
 		}
-		elseif($this->attrs['rows'] > 1)
+		elseif(isset($this->attrs['rows']) && $this->attrs['rows'] > 1)
 		{
 			$this->attrs['multiple'] = true;
 		}
@@ -311,8 +311,8 @@ class Select extends Etemplate\Widget
 		{
 			$form_name = self::form_name($cname, $this->id, $expand);
 		}
-		if (!is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = array();
-		$type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
+		if (empty(self::$request->sel_options[$form_name]) || !is_array(self::$request->sel_options[$form_name])) self::$request->sel_options[$form_name] = [];
+		$type = $this->attrs['type'] ?? $this->type;
 		if ($type != 'select' && $type != 'menupopup')
 		{
 			// Check selection preference, we may be able to skip reading some data
@@ -335,8 +335,8 @@ class Select extends Etemplate\Widget
 				if (!isset($form_names_done[$form_name]) &&
 					($type_options = self::typeOptions($this,
 					// typeOptions thinks # of rows is the first thing in options
-					($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
-					$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name)))
+					(!empty($this->attrs['rows']) && !empty($this->attrs['options']) && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
+					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name)))
 				{
 					self::fix_encoded_options($type_options);
 
@@ -356,7 +356,7 @@ class Select extends Etemplate\Widget
 		$options = (isset(self::$request->sel_options[$form_name]) ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
 		{
-			if(in_array($this->attrs['type'], self::$cached_types) && !isset($form_names_done[$options]))
+			if (isset($this->attrs['type']) && in_array($this->attrs['type'], self::$cached_types) && !isset($form_names_done[$options]))
 			{
 				// Fix any custom options from application
 				self::fix_encoded_options(self::$request->sel_options[$options],true);
@@ -561,7 +561,7 @@ class Select extends Etemplate\Widget
 			$field = self::expand_name($field, 0, 0,'','',self::$cont);
 		}
 
-		list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options;
+		list($rows,$type,$type2,$type3,$type4,$type5) = $legacy_options+[null,null,null,null,null,null];
 		$no_lang = false;
 		$options = array();
 		switch ($widget_type)
@@ -644,7 +644,7 @@ class Select extends Etemplate\Widget
 						// These are extra info for easy dealing with categories
 						// client side, without extra loading
 						'main'  => (int)$cat['main'],
-						'children'	=> $cat['children'],
+						'children'	=> $cat['children'] ?? null,
 						//add different class per level to allow different styling for each category level:
 						'class' => "cat_level". $cat['level']
 					);
@@ -839,7 +839,7 @@ class Select extends Etemplate\Widget
 				}
 				foreach((array)$options as $right => $name)
 				{
-					if(!!($value & $right))
+					if (!!((int)$value & (int)$right))
 					{
 						$new_value[] = $right;
 					}

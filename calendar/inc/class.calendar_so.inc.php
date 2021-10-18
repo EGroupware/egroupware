@@ -878,7 +878,14 @@ class calendar_so
 			$where[] = "$this->user_table.cal_recur_date=0";
 			$cols = str_replace(array('cal_start','cal_end'),array('range_start AS cal_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end'),$cols);
 			// in case cal_start is used in a query, eg. calendar_ical::find_event
-			$where = str_replace(array('cal_start','cal_end'), array('range_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id)'), $where);
+			// in contrary to the docu on php.net, 3rd parameter can not be an array: https://3v4l.org/budKH
+			foreach($where as &$val)
+			{
+				if (!is_array($val))
+				{
+					$val = str_replace(array('cal_start','cal_end'), array('range_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id)'), $val);
+				}
+			}
 			$params['order'] = str_replace('cal_start', 'range_start', $params['order']);
 			if ($end) $where[] = (int)$end.' > range_start';
   		}

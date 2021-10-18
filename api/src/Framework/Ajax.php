@@ -2,12 +2,12 @@
 /**
  * EGroupware - Framework for Ajax based templates: jdots & Pixelegg
  *
- * @link http://www.stylite.de
+ * @link https://www.egroupware.org
  * @package api
  * @subpackage framework
- * @author Andreas Stöckel <as@stylite.de>
- * @author Ralf Becker <rb@stylite.de>
- * @author Nathan Gray <ng@stylite.de>
+ * @author Andreas Stöckel
+ * @author Ralf Becker <rb@egroupware.org>
+ * @author Nathan Gray <ng@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -16,7 +16,7 @@ namespace EGroupware\Api\Framework;
 use EGroupware\Api;
 
 /**
-* Stylite jdots template
+* Framework for Ajax based templates
 */
 abstract class Ajax extends Api\Framework
 {
@@ -88,13 +88,13 @@ abstract class Ajax extends Api\Framework
 		$width = self::DEFAULT_SIDEBAR_WIDTH;
 
 		//Check whether the width had been stored explicitly for the jdots template, use that value
-		if ($GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth'])
+		if (!empty($GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth']))
 		{
 			$width = (int)$GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth'];
 //				error_log(__METHOD__.__LINE__."($app):$width --> reading jdotssideboxwidth");
 		}
 		//Otherwise use the legacy "idotssideboxwidth" value
-		else if ($GLOBALS['egw_info']['user']['preferences'][$app]['idotssideboxwidth'])
+		elseif (!empty($GLOBALS['egw_info']['user']['preferences'][$app]['idotssideboxwidth']))
 		{
 			$width = (int)$GLOBALS['egw_info']['user']['preferences'][$app]['idotssideboxwidth'];
 //				error_log(__METHOD__.__LINE__."($app):$width --> reading idotssideboxwidth");
@@ -249,7 +249,7 @@ abstract class Ajax extends Api\Framework
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
 				// eT2 sets $GLOBALS['egw_info']['flags']['nonavbar'] === 'popup' for popups, Etemplate::exec($outputmode === 2)
-				$extra['check-framework'] = $_GET['cd'] !== 'no' && $GLOBALS['egw_info']['flags']['nonavbar'] !== 'popup';
+				$extra['check-framework'] = (!isset($_GET['cd']) || $_GET['cd'] !== 'no') && $GLOBALS['egw_info']['flags']['nonavbar'] !== 'popup';
 			}
 		}
 
@@ -1047,16 +1047,16 @@ abstract class Ajax extends Api\Framework
 		if (self::$footer_done) return;	// prevent (multiple) footers
 		self::$footer_done = true;
 
-		if (!isset($GLOBALS['egw_info']['flags']['nofooter']) || !$GLOBALS['egw_info']['flags']['nofooter'])
+		if (empty($GLOBALS['egw_info']['flags']['nofooter']))
 		{
-			if ($no_framework && $GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
+			if ($no_framework && !empty($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time']))
 			{
 				$vars = $this->_get_footer();
 				$footer = "\n".$vars['page_generation_time']."\n";
 			}
 		}
-		return $footer.
-			$GLOBALS['egw_info']['flags']['need_footer']."\n".	// eg. javascript, which need to be at the end of the page
+		return ($footer??'').
+			($GLOBALS['egw_info']['flags']['need_footer']??'')."\n".	// eg. javascript, which need to be at the end of the page
 			"</body>\n</html>\n";
 	}
 

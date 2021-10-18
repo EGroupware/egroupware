@@ -210,7 +210,7 @@ class Config
 		{
 			self::init_static();
 		}
-		return (array)self::$configs[$app];
+		return self::$configs[$app] ?? [];
 	}
 
 	/**
@@ -238,7 +238,7 @@ class Config
 	{
 		$config = self::read($app);
 
-		return is_array($config['types']) ? $config['types'] : array();
+		return !empty($config['types']) && is_array($config['types']) ? $config['types'] : [];
 	}
 
 	/**

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="api.show_replacements.placeholder_list">
+        <description id="title" class="title"/>
+        <grid id="placeholders" width="100%">
+            <columns>
+                <column width="30%"/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <description id="${row}[value]"/>
+                    <description id="${row}[label]"/>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="api.show_replacements" template="" lang="" group="0" version="21.1.001">
+        <vbox>
+            <description value="Placeholders" class="group title"/>
+            <box id="placeholders">
+                <box id="${row}">
+                    <template template="api.show_replacements.placeholder_list"/>
+                </box>
+            </box>
+            <template template="@extra_template"/>
+            <details title="Common">
+                <description value="Common" class="group title"/>
+                <box id="common">
+                    <box id="${row}">
+                        <template template="api.show_replacements.placeholder_list"/>
+                    </box>
+                </box>
+            </details>
+            <details title="Current user">
+                <description value="Current user" class="group title"/>
+                <box id="user">
+                    <box id="${row}">
+                        <template template="api.show_replacements.placeholder_list"/>
+                    </box>
+                </box>
+            </details>
+        </vbox>
+        <styles>
+            .et2_details_title, .title {
+            display: inline-block;
+            font-weight: bold;
+            font-size: 130%;
+            margin-top: 2ex;
+
+            }
+            .et2_details_title, .group {
+            margin-top: 3ex;
+            font-size: 150%;
+            }
+
+            /** Cosmetics **/
+            #api-show_replacements_title:first-letter, .title {
+            text-transform: capitalize;
+            }
+        </styles>
+    </template>
+</overlay>

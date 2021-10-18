@@ -265,10 +265,10 @@ class Credentials
 				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($data['acc_imap_logintype']).'!');
 		}
 		$password = base64_decode(Api\Cache::getSession('phpgwapi', 'password'));
-		$realname = !$set_identity || $data['ident_realname'] ? $data['ident_realname'] :
-			$GLOBALS['egw_info']['user']['account_fullname'];
-		$email = !$set_identity || $data['ident_email'] ? $data['ident_email'] :
-			$GLOBALS['egw_info']['user']['account_email'];
+		$realname = !$set_identity || !empty($data['ident_realname']) ? $data['ident_realname'] :
+			($GLOBALS['egw_info']['user']['account_fullname'] ?? null);
+		$email = !$set_identity || !empty($data['ident_email']) ? $data['ident_email'] :
+			($GLOBALS['egw_info']['user']['account_email'] ?? null);
 
 		return array(
 			'ident_realname' => $realname,

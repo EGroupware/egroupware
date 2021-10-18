@@ -1007,7 +1007,7 @@ class calendar_uiforms extends calendar_ui
 				$response = Api\Json\Response::get();
 				if($response && $update_type != 'delete' && !$client_updated)
 				{
-					$client_updated = $this->update_client($event['id']);
+					$client_updated = $this->update_client($event['id'], null, is_array($old_event) ? $old_event : []);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
@@ -1267,8 +1267,6 @@ class calendar_uiforms extends calendar_ui
 			Api\DateTime::to($as_of_date,'ts') < time()
 		)
 		{
-
-			unset($orig_event);
 			// copy event by unsetting the id(s)
 			unset($event['id']);
 			unset($event['uid']);
@@ -1325,7 +1323,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			$last->setTime(0, 0, 0);
 			$old_event['recur_enddate'] = Api\DateTime::to($last, 'ts');
-			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
+			$dummy = null;
+			if (!$this->bo->update($old_event,true,true,false,true,$dummy, $no_notifications))
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 					lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -1925,7 +1924,7 @@ class calendar_uiforms extends calendar_ui
 				$sel_options['owner'][$uid] = $this->bo->participant_name($uid);
 			}
 		}
-		$content['no_add_alarm'] = !count($sel_options['owner']);	// no rights to set any alarm
+		$content['no_add_alarm'] = empty($sel_options['owner']) || !count((array)$sel_options['owner']);	// no rights to set any alarm
 		if (!$event['id'])
 		{
 			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');
@@ -2182,7 +2181,7 @@ class calendar_uiforms extends calendar_ui
 						}
 						$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 						$user_and_memberships[] = $user;
-						if (!array_intersect(array_keys($event['participants']), $user_and_memberships))
+						if (!array_intersect(array_keys($event['participants'] ?? []), $user_and_memberships))
 						{
 							$event['error'] .= ($event['error'] ? "\n" : '').lang('You are not invited to that event!');
 							if ($event['id'])

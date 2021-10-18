@@ -468,7 +468,7 @@ class Accounts
 		$data = self::cache_read($id);
 
 		// add default description for Admins and Default group
-		if ($data['account_type'] === 'g')
+		if ($data && $data['account_type'] === 'g')
 		{
 			self::add_default_group_description($data);
 		}
@@ -595,11 +595,15 @@ class Accounts
 	/**
 	 * Return formatted username for a given account_id
 	 *
-	 * @param int $account_id account id
+	 * @param ?int $account_id account id, default current user
 	 * @return string full name of user or "#$account_id" if user not found
 	 */
-	static function username(int $account_id)
+	static function username(int $account_id=null)
 	{
+		if (empty($account_id))
+		{
+			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		}
 		if (!($account = self::cache_read($account_id)))
 		{
 			return '#'.$account_id;
@@ -985,7 +989,7 @@ class Accounts
 			$ret = $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
 		}
 		//error_log(__METHOD__."($account_id, $just_id) data=".array2string($data)." returning ".array2string($ret));
-		return $ret;
+		return $ret ?? [];
 	}
 
 	/**

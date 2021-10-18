@@ -553,12 +553,21 @@ class Widget
 			$method = new ReflectionMethod($this, $method_name);
 			foreach($method->getParameters() as $index => $param)
 			{
-				if(!$param->isOptional() && !array_key_exists($index,$params))
+				if(!$param->isOptional() && !array_key_exists($index, $params))
 				{
 					error_log("Missing required parameter {$param->getPosition()}: {$param->getName()}");
 					$call = false;
 				}
-				if($param->isArray() && !is_array($params[$index]))
+				// Check to see if method wants an array, and we're providing it
+				$paramType = $param->getType();
+				if(!$paramType)
+				{
+					continue;
+				}
+				$types = $paramType instanceof \ReflectionUnionType
+					? $paramType->getTypes()
+					: [$paramType];
+				if(in_array('array', array_map(fn(\ReflectionNamedType $t) => $t->getName(), $types)) && !is_array($params[$index]))
 				{
 					error_log("$method_name expects an array for {$param->getPosition()}: {$param->getName()}");
 					$params[$index] = (array)$params[$index];
@@ -1044,6 +1053,10 @@ class Widget
 	 */
 	public static function &setElementAttribute($name,$attr,$val)
 	{
+		if (!isset(self::$request))
+		{
+			throw new \Exception(__METHOD__."('$name', '$attr', ".json_encode($val)." called before instanciating Api\Etemplate!");
+		}
 		//error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
 		$ref =& self::$request->modifications[$name][$attr];
 		if(self::$request && self::$response)

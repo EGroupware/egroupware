@@ -684,7 +684,7 @@ class filemanager_ui
 	 */
 	static public function action($action,$selected,$dir=null,&$errs=null,&$files=null,&$dirs=null)
 	{
-		if (!count($selected))
+		if (!count((array)$selected))
 		{
 			return lang('You need to select some files first!');
 		}

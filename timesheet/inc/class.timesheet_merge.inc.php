@@ -157,68 +157,6 @@ class timesheet_merge extends Api\Storage\Merge
 	}
 
 	/**
-	 * Generate table with replacements for the Api\Preferences
-	 *
-	 */
-	public function show_replacements()
-	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.lang('Replacements for inserting entries into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		echo $GLOBALS['egw']->framework->header();
-
-		echo "<table width='90%' align='center'>\n";
-		echo '<tr><td colspan="4"><h3>'.lang('Timesheet fields:')."</h3></td></tr>";
-
-		$n = 0;
-		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array(
-			'ts_total' => lang('total'),
-			'ts_created' => lang('Created'),
-			'ts_modified' => lang('Modified'),
-		);
-		foreach($fields as $name => $label)
-		{
-			if (in_array($name,array('pl_id','customfields'))) continue;	// dont show them
-
-			if (in_array($name,array('ts_title', 'ts_description')) && $n&1)		// main values, which should be in the first column
-			{
-				echo "</tr>\n";
-				$n++;
-			}
-			if (!($n&1)) echo '<tr>';
-			echo '<td>{{'.$name.'}}</td><td>'.lang($label).'</td>';
-			if ($n&1) echo "</tr>\n";
-			$n++;
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach($this->bo->customfields as $name => $field)
-		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
-		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Project fields').':</h3></td></tr>';
-		$pm_merge = new projectmanager_merge();
-		$i = 0;
-		foreach($pm_merge->projectmanager_fields as $name => $label)
-		{
-			if (!($i&1)) echo '<tr>';
-			echo '<td>{{ts_project/'.$name.'}}</td><td>'.$label.'</td>';
-			if ($i&1) echo "</tr>\n";
-			$i++;
-		}
-
-		echo '<tr><td colspan="4"><h3>' . lang('General fields:') . "</h3></td></tr>";
-		foreach($this->get_common_replacements() as $name => $label)
-		{
-			echo '<tr><td>{{' . $name . '}}</td><td colspan="3">' . $label . "</td></tr>\n";
-		}
-
-		echo "</table>\n";
-
-		echo $GLOBALS['egw']->framework->footer();
-	}
-
-	/**
 	 * Get a list of placeholders provided.
 	 *
 	 * Placeholders are grouped logically.  Group key should have a user-friendly translation.
@@ -256,10 +194,14 @@ class timesheet_merge extends Api\Storage\Merge
 			}
 		}
 
-		// Add project placeholders
-		$pm_merge = new projectmanager_merge();
-		$this->add_linked_placeholders($placeholders, lang('Project'), $pm_merge->get_placeholder_list('ts_project'));
-
+		// Don't add any linked placeholders if we're not at the top level
+		// This avoids potential recursion
+		if(!$prefix)
+		{
+			// Add project placeholders
+			$pm_merge = new projectmanager_merge();
+			$this->add_linked_placeholders($placeholders, lang('Project'), $pm_merge->get_placeholder_list('ts_project'));
+		}
 		return $placeholders;
 	}
 }

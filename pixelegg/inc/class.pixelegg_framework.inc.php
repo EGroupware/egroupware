@@ -85,13 +85,13 @@ class pixelegg_framework extends Api\Framework\Ajax
 	{
 		$ret = parent::_get_css();
 		// color to use
-		$color = str_replace('custom',$GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'],
-			$GLOBALS['egw_info']['user']['preferences']['common']['template_color']);
+		$color = str_replace('custom', $GLOBALS['egw_info']['user']['preferences']['common']['template_custom_color'] ?? null,
+			$GLOBALS['egw_info']['user']['preferences']['common']['template_color'] ?? null);
 
 		// Create a dark variant of the color
 		$color_darker = empty($color) ? '' :$this->_color_shader($color, -30);
 
-		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color']))
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color']) && preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color']))
 		{
 			$sidebox_color_hover = $GLOBALS['egw_info']['user']['preferences']['common']['sidebox_custom_color'];
 			$sidebox_color = $this->_color_shader($sidebox_color_hover, -30);
@@ -101,7 +101,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			$sidebox_color_hover = $color;
 			$sidebox_color = $color_darker;
 		}
-		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color']))
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color']) && preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i', $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color']))
 		{
 			$loginbox_color = $GLOBALS['egw_info']['user']['preferences']['common']['loginbox_custom_color'];
 		}
@@ -109,8 +109,8 @@ class pixelegg_framework extends Api\Framework\Ajax
 		{
 			$loginbox_color = $color_darker;
 		}
-		//alway set header logo used  in sharing regardless of custom color being set
-		$header = $GLOBALS['egw_info']['server']['login_logo_header'] ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
+		//always set header logo used  in sharing regardless of custom color being set
+		$header = !empty($GLOBALS['egw_info']['server']['login_logo_header']) ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
 			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
 		$ret['app_css'] .= "
 			/*

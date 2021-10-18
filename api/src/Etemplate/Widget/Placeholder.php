@@ -64,9 +64,13 @@ class Placeholder extends Etemplate\Widget
 
 		if(is_null($apps))
 		{
-			$apps = ['addressbook', 'user', 'general'] +
+			$apps = array_merge(
+				['addressbook', 'user', 'general'],
 				// We use linking for preview, so limit to apps that support links
-				array_keys(Api\Link::app_list('query'));
+				array_keys(Api\Link::app_list('query')),
+				// Filemanager doesn't support links, but add it anyway
+				['filemanager']
+			);
 		}
 
 		foreach($apps as $appname)
@@ -86,6 +90,8 @@ class Placeholder extends Etemplate\Widget
 						// Looks like app doesn't support merging
 						continue 2;
 					}
+
+					Api\Translation::load_app($appname, $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 					$list = method_exists($merge, 'get_placeholder_list') ? $merge->get_placeholder_list() : [];
 					break;
 			}

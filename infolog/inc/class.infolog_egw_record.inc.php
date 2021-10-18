@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Infolog - importexport
+ * EGroupware - InfoLog - importexport
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
@@ -8,13 +8,12 @@
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray
- * @version $Id$
  */
 
 /**
  * class infolog_egw_record
  *
- * compability layer for iface_egw_record needet for importexport
+ * compatibility layer for iface_egw_record needed for importexport
  */
 class infolog_egw_record implements importexport_iface_egw_record
 {
@@ -53,7 +52,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 * @param string $_attribute_name
 	 */
 	public function __get($_attribute_name) {
-		return $this->record[$_attribute_name];
+		return $this->record[$_attribute_name] ?? null;
 	}
 
 	/**

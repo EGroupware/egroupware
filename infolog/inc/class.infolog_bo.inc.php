@@ -228,7 +228,7 @@ class infolog_bo
 			{
 				foreach(array_keys($config_data['status']) as $key)
 				{
-					if (!is_array($this->status[$key]))
+					if (!isset($this->status[$key]) || !is_array($this->status[$key]))
 					{
 						$this->status[$key] = array();
 					}
@@ -262,17 +262,17 @@ class infolog_bo
 						$save_config = true;
 					}
 				}
-				if ($save_config) Api\Config::save_value('customfields',$this->customfields,'infolog');
+				if (!empty($save_config)) Api\Config::save_value('customfields',$this->customfields,'infolog');
 			}
-			if (is_array($config_data['responsible_edit']))
+			if (isset($config_data['responsible_edit']) && is_array($config_data['responsible_edit']))
 			{
 				$this->responsible_edit = array_merge($this->responsible_edit,$config_data['responsible_edit']);
 			}
-			if (is_array($config_data['copy_excludefields']))
+			if (isset($config_data['copy_excludefields']) && is_array($config_data['copy_excludefields']))
 			{
 				$this->copy_excludefields = array_merge($this->copy_excludefields,$config_data['copy_excludefields']);
 			}
-			if (is_array($config_data['sub_excludefields']) && $config_data['sub_excludefields'])
+			if (!empty($config_data['sub_excludefields']) && is_array($config_data['sub_excludefields']))
 			{
 				$this->sub_excludefields = array_merge($this->sub_excludefields,$config_data['sub_excludefields']);
 			}
@@ -286,7 +286,7 @@ class infolog_bo
 			}
 			$this->history = $config_data['history'];
 
-			$this->limit_modified_n_month = $config_data['limit_modified_n_month'];
+			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
@@ -629,12 +629,14 @@ class infolog_bo
 
 		if (!$info_id || ($data = $this->so->read($info_id)) === False)
 		{
-			return null;
+			$null = null;
+			return $null;
 		}
 
 		if (!$ignore_acl && !$this->check_access($data,Acl::READ))	// check behind read, to prevent a double read
 		{
-			return False;
+			$false = False;
+			return $false;
 		}
 
 		if ($data['info_subject'] == $this->subject_from_des($data['info_des']))
@@ -1092,10 +1094,14 @@ class infolog_bo
 	 * Checks for info_contact properly linked, project properly linked and
 	 * adds or removes to correct.
 	 *
-	 * @param Array $values
+	 * @param array $values
 	 */
-	protected function write_check_links(&$values)
+	protected function write_check_links(array &$values)
 	{
+		if(!$this->check_access($values, Acl::EDIT))
+		{
+			return;
+		}
 		$old_link_id = (int)$values['info_link_id'];
 		$from = $values['info_from'];
 
@@ -1104,7 +1110,7 @@ class infolog_bo
 			) || (
 				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none' &&
 				array_key_exists('search', $values['info_contact'])
-		))
+			))
 		{
 			if(is_array($values['info_contact']))
 			{
@@ -1113,7 +1119,7 @@ class infolog_bo
 				$id = (int)$values['info_contact']['id'];
 				$from = $values['info_contact']['search'];
 			}
-			else if ($values['info_contact'])
+			else if($values['info_contact'])
 			{
 				list($app, $id) = explode(':', $values['info_contact'], 2);
 			}

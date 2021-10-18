@@ -73,7 +73,7 @@ class Notifications
 		$account_specific = 0;
 		foreach($rows as $row)
 		{
-			if ($row['account_id'])
+			if (!empty($row['account_id']))
 			{
 				$account_specific = $row['account_id'];
 			}
@@ -82,7 +82,7 @@ class Notifications
 			{
 				self::$cache[$acc_id][$row['account_id']][] = $row['notif_folder'];
 			} // make sure set the account_specific correctly when notify_folder gets removed
-			elseif (!$row['account_id'] && !is_array($account_id) && is_array($rows[$account_id]))
+			elseif (empty($row['account_id']) && !is_array($account_id) && is_array($rows[$account_id]))
 			{
 				$account_specific = $account_id;
 			}

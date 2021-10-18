@@ -549,7 +549,7 @@ class Account implements \ArrayAccess
 					$row = array_merge($row, Credentials::from_session($row));
 				}
 				// fill an empty ident_realname or ident_email of current user with data from user account
-				if ($replace_placeholders && (!isset($user) || $user == $GLOBALS['egw_info']['user']['acount_id']))
+				if ($replace_placeholders && (!isset($user) || $user == $GLOBALS['egw_info']['user']['account_id']))
 				{
 					if (empty($row['ident_realname'])) $row['ident_realname'] = $GLOBALS['egw_info']['user']['account_fullname'];
 					if (empty($row['ident_email'])) $row['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
@@ -737,13 +737,13 @@ class Account implements \ArrayAccess
 
 						if (empty($data['ident_email']) && $is_current_user)
 						{
-							$data['ident_email'] = $GLOBALS['egw_info']['user']['account_email'];
+							$data['ident_email'] = $GLOBALS['egw_info']['user']['account_email'] ?? null;
 						}
 					}
 					if (empty($data['ident_realname']))
 					{
 						$data['ident_realname'] = $account->ident_realname || !$is_current_user ?
-							$account->ident_realname : $GLOBALS['egw_info']['user']['account_fullname'];
+							$account->ident_realname : ($GLOBALS['egw_info']['user']['account_fullname'] ?? null);
 					}
 				}
 			}
@@ -1414,7 +1414,7 @@ class Account implements \ArrayAccess
 		{
 			// for current user prefer account with ident_email matching user email or domain
 			// (this also helps notifications to account allowing to send with from address of current user / account_email)
-			if ($only_current_user && $GLOBALS['egw_info']['user']['account_email'])
+			if ($only_current_user && !empty($GLOBALS['egw_info']['user']['account_email']))
 			{
 				list(,$domain) = explode('@', $account_email = $GLOBALS['egw_info']['user']['account_email']);
 				// empty ident_email will be replaced with account_email!

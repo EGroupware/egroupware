@@ -183,28 +183,37 @@ class importexport_wizard_basic_export_csv
 			$content['step'] = 'wizard_step40';
 
 			// If editing an existing definition, these will be in plugin_options
-			if(!$content['delimiter'] && $content['plugin_options']['delimiter']) {
+			if(!$content['delimiter'] && $content['plugin_options']['delimiter'])
+			{
 				$content['delimiter'] = $content['plugin_options']['delimiter'];
-			} elseif (!$content['delimiter']) {
+			}
+			elseif(!$content['delimiter'])
+			{
 				$content['delimiter'] = ';';
 			}
-			if(!$content['charset'] && $content['plugin_options']['charset']) {
+			if(!$content['charset'] && $content['plugin_options']['charset'])
+			{
 				$content['charset'] = $content['plugin_options']['charset'] ? $content['plugin_options']['charset'] : 'user';
 			}
-			if(!array_key_exists('begin_with_fieldnames', $content) && array_key_exists('begin_with_fieldnames', $content['plugin_options'])) {
+			if(!array_key_exists('begin_with_fieldnames', $content) &&
+				is_array($content['plugin_options']) &&
+				array_key_exists('begin_with_fieldnames', $content['plugin_options']))
+			{
 				$content['begin_with_fieldnames'] = $content['plugin_options']['begin_with_fieldnames'];
 			}
-			if(!array_key_exists('convert', $content) && array_key_exists('convert', $content['plugin_options'])) {
+			if(!array_key_exists('convert', $content) &&
+				is_array($content['plugin_options']) && array_key_exists('convert', $content['plugin_options']))
+			{
 				$content['convert'] = $content['plugin_options']['convert'];
 			}
 
 
 			$sel_options['begin_with_fieldnames'] = array(
-				0	=> lang('No'),
-				1	=> lang('Field names'),
-				'label'	=> lang('Field labels')
+				0       => lang('No'),
+				1       => lang('Field names'),
+				'label' => lang('Field labels')
 			);
-			$sel_options['charset'] = Api\Translation::get_installed_charsets()+
+			$sel_options['charset'] = Api\Translation::get_installed_charsets() +
 			array(
                                 'user'  => lang('User preference'),
                         );
@@ -273,12 +282,19 @@ class importexport_wizard_basic_export_csv
 			unset ($preserv['button']);
 
 			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
-				$content['application'],$content['plugin'],$this
+				$content['application'], $content['plugin'], $this
 			);
 			// Load existing filter from either content or definition
+			if(!array_key_exists('filter', $content) || !is_array($content['filter']))
+			{
+				$content['filter'] = [];
+			}
 			foreach($content['set_filter']['fields'] as $field => $settings)
 			{
-				$content['set_filter'][$field] = $content['filter'][$field];
+				if(array_key_exists($field, $content['filter']))
+				{
+					$content['set_filter'][$field] = $content['filter'][$field];
+				}
 			}
 
 			if(!$content['set_filter']['fields'])

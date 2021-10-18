@@ -49,12 +49,12 @@ class Bundle
 		unset($GLOBALS['egw_info']['server']['debug_minify']);
 
 		$file2bundle = array();
-		if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True')
+		if (!isset($GLOBALS['egw_info']['server']['debug_minify']) || $GLOBALS['egw_info']['server']['debug_minify'] !== 'True')
 		{
 			// get used bundles and cache them on tree-level for 2h
 			//$bundles = self::all(); Cache::setTree(__CLASS__, 'bundles', $bundles, 7200);
 			$bundles = Cache::getTree(__CLASS__, 'bundles', array(__CLASS__, 'all'), array(), 7200);
-			$bundles_ts = $bundles['.ts'];
+			$bundles_ts = $bundles['.ts'] ?? null;
 			unset($bundles['.ts']);
 			foreach($bundles as $name => $files)
 			{
@@ -83,13 +83,13 @@ class Bundle
 
 			if (!isset($to_include[$file]))
 			{
-				if (($bundle = $file2bundle[$file]))
+				if (($bundle = $file2bundle[$file] ?? false))
 				{
 					//error_log(__METHOD__."() requiring bundle $bundle for $file");
 					if (!in_array($bundle, $included_bundles))
 					{
 						$included_bundles[] = $bundle;
-						$minurl = self::$bundle2minurl[$bundle];
+						$minurl = self::$bundle2minurl[$bundle] ?? null;
 						if (!isset($minurl) && isset($GLOBALS['egw_info']['apps'][$bundle]))
 						{
 							$minurl = '/'.$bundle.'/js/app.min.js';
@@ -108,10 +108,10 @@ class Bundle
 				else
 				{
 					unset($query);
-					list($path, $query) = explode('?', $file, 2);
+					list($path, $query) = explode('?', $file, 2)+[null,null];
 					$mod = filemtime(EGW_SERVER_ROOT.$path);
 					// check if we have a more recent minified version of the file and use it
-					if ($GLOBALS['egw_info']['server']['debug_minify'] !== 'True' &&
+					if ((!isset($GLOBALS['egw_info']['server']['debug_minify']) || $GLOBALS['egw_info']['server']['debug_minify'] !== 'True') &&
 						substr($path, -3) == '.js' && file_exists(EGW_SERVER_ROOT.($min_path = substr($path, 0, -3).'.min.js')) &&
 						(($min_mod = filemtime(EGW_SERVER_ROOT.$min_path)) >= $mod))
 					{
@@ -148,7 +148,7 @@ class Bundle
 	 */
 	protected static function urls(array $js_includes, &$max_modified=null, $minurl=null)
 	{
-		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+		$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		// ignore not existing minurl
 		if (!empty($minurl) && !file_exists(EGW_SERVER_ROOT.$minurl)) $minurl = null;
 		$to_include_first = $to_include = $to_minify = array();
@@ -158,7 +158,7 @@ class Bundle
 		{
 			if ($path == '/api/js/jsapi/egw.js') continue; // Leave egw.js out of bundle
 			unset($query);
-			list($path,$query) = explode('?',$path,2);
+			list($path,$query) = explode('?',$path,2)+[null,null];
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
 			if ($mod > $max_modified) $max_modified = $mod;
 

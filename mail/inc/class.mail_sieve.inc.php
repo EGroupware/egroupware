@@ -252,6 +252,10 @@ class mail_sieve
 						break;
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
+						break;
+					case 'flags':
+						$content['action_flags_list'] = explode(' ', $rules['action_arg']);
+						break;
 				}
 				$content['anyof'] = $rules['anyof'] != 0?1:0;
 			}
@@ -302,10 +306,15 @@ class mail_sieve
 								break;
 							case 'reject':
 								$newRule['action_arg'] = $content['action_reject_text'];
+								break;
+							case 'flags':
+								$newRule['action_arg'] = implode(' ', $content['action_flags_list']);
+								break;
 						}
 						unset($newRule['action_folder_text']);
 						unset($newRule['action_address_text']);
 						unset($newRule['action_reject_text']);
+						unset($newRule['action_flags_list']);
 
 						$newRule['flg'] = 0 ;
 						if( $newRule['continue'] ) { $newRule['flg'] += 1; }
@@ -550,7 +559,7 @@ class mail_sieve
 			}
 			else
 			{
-				if ($icServer->acc_imap_administration)
+				if ($icServer->acc_imap_administration || (!empty($icServer->getExtensions()) && in_array('DATE', $icServer->getExtensions())))
 				{
 					$ByDate = array('by_date' => lang('By date'));
 				}
@@ -949,11 +958,11 @@ class mail_sieve
 				break;
 			case 'enable':
 				$msg = lang('rule with priority ') . $checked . lang(' enabled!');
-				$this->rules[$checked][status] = 'ENABLED';
+				$this->rules[$checked]['status'] = 'ENABLED';
 				break;
 			case 'disable':
 				$msg = lang('rule with priority ') . $checked . lang(' disabled!');
-				$this->rules[$checked][status] = 'DISABLED';
+				$this->rules[$checked]['status'] = 'DISABLED';
 				break;
 			case 'move':
 				break;

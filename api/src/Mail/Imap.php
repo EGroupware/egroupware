@@ -360,9 +360,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 */
 	static function getTimeOut($_use='IMAP')
 	{
-		$timeout = $GLOBALS['egw_info']['user']['preferences']['mail']['connectionTimeout'];
-		if (empty($timeout) || !($timeout > 0)) $timeout = $_use == 'SIEVE' ? 10 : 20; // this is the default value
-		return $timeout;
+		return $_use == 'SIEVE' ? 10 : 20; // this is the default value
 	}
 
 	/**
@@ -742,7 +740,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * @param   string  $returnAttributes   true means return an assoc array containing mailbox names and mailbox attributes
 	 *                                      false - the default - means return an array of mailboxes with only selected attributes like delimiter
 	 *
-	 * @return  mixed   array of mailboxes
+	 * @return  ?array   array of mailboxes or null
 	 */
 	function listSubscribedMailboxes($reference = ''  , $restriction_search = 0, $returnAttributes = false)
 	{
@@ -794,10 +792,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			}
 			else
 			{
-				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?$box['delimiter']:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
+				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
 			}
 		}
-		return $ret;
+		return $ret ?? null;
 	}
 
 	/**
@@ -1376,6 +1374,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			case 'retrieveRules':
 			case 'getVacation':
 			case 'setVacation':
+			case 'getExtensions':
 				if (is_null($this->sieve))
 				{
 					$this->sieve = new Sieve($this);

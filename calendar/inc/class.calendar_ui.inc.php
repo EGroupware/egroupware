@@ -642,16 +642,20 @@ class calendar_ui
 	 *
 	 * @param int $event_id
 	 * @param Api\DateTime $recurrence_date
+	 * @param array|bool|int|null $old_event
 	 *
 	 * @return boolean True if the event was updated, false if it could not be
-	 *	updated or was removed.
+	 *    updated or was removed.
 	 */
-	public function update_client($event_id, Api\DateTime $recurrence_date = null)
+	public function update_client($event_id, Api\DateTime $recurrence_date = null, $old_event = array())
 	{
-		if(!$event_id) return false;
-		if(is_string($event_id) && strpos($event_id,':') !== FALSE)
+		if(!$event_id)
 		{
-			list($event_id, $date) = explode(':',$event_id);
+			return false;
+		}
+		if(is_string($event_id) && strpos($event_id, ':') !== FALSE)
+		{
+			list($event_id, $date) = explode(':', $event_id);
 			$recurrence_date = new Api\DateTime($date);
 		}
 
@@ -698,6 +702,21 @@ class calendar_ui
 		else if($event['recur_type'] )
 		{
 			$this_month = new Api\DateTime('next month');
+			$data = [];
+			if($old_event && ($old_event['start'] != $event['start'] || $old_event['recur_enddate'] != $event['recur_enddate']))
+			{
+				// Set up to clear old events in case recurrence start/end date changed
+				$old_rrule = calendar_rrule::event2rrule($old_event, true);
+
+				$old_rrule->rewind();
+				do
+				{
+					$occurrence = $old_rrule->current();
+					$data['calendar::' . $old_event['id'] . ':' . $occurrence->format('ts')] = null;
+					$old_rrule->next();
+				}
+				while($old_rrule->valid() && $occurrence <= $this_month);
+			}
 			$rrule = calendar_rrule::event2rrule($event, true);
 			$rrule->rewind();
 			do
@@ -705,10 +724,17 @@ class calendar_ui
 				$occurrence = $rrule->current();
 				$converted = $this->bo->read($event['id'], $occurrence);
 				$this->to_client($converted);
-				$response->generic('data', array('uid' => 'calendar::'.$converted['row_id'], 'data' => $converted));
+				$data['calendar::' . $converted['row_id']] = $converted;
 				$rrule->next();
 			}
-			while ($rrule->valid() && $occurrence <= $this_month );
+			while($rrule->valid() && $occurrence <= $this_month);
+
+			// Now we have to go through and send each one individually, since client side data can't handle more than one
+			foreach($data as $uid => $cal_data)
+			{
+				$response->apply('egw.dataStoreUID', [$uid, $cal_data]);
+			}
+			$response->apply('app.calendar.update_events', [array_keys($data)]);
 		}
 		return true;
 	}

@@ -100,6 +100,7 @@ class Html
 			// use preg_replace_callback as we experienced problems with links such as <www.example.tld/pfad/zu/einer/pdf-Datei.pdf>
 			$result4 = preg_replace_callback( $Expr, function ($match) {
 					//error_log(__METHOD__.__LINE__.array2string($match));
+					$match += [null,null,null,null];
 					if ($match[4]==';' && (strlen($match[3])-4) >=0 && strpos($match[3],'&gt',strlen($match[3])-4)!==false)
 					{
 						$match[3] = substr($match[3],0,strpos($match[3],'&gt',strlen($match[3])-4));
@@ -111,7 +112,7 @@ class Html
 						$match[4] = "&gt;";
 					}
 					//error_log(__METHOD__.__LINE__.array2string($match));
-					return $match[1]."<a href=\"http://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
+					return $match[1]."<a href=\"https://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
 				}, $result3 );
 		}
 		return $result4;
@@ -755,7 +756,7 @@ tinymce.init({
 		{
 			parse_str($vars,$vars);
 		}
-		list($url,$v) = explode('?', $_url);	// url may contain additional vars
+		list($url,$v) = explode('?', $_url)+[null,null];	// url may contain additional vars
 		if ($v)
 		{
 			parse_str($v,$v);

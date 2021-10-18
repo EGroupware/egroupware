@@ -62,14 +62,14 @@ class Textbox extends Etemplate\Widget
 		parent::set_attrs($xml, $cloned);
 
 		// Legacy handling only
-		// A negative size triggered the HTML readonly attibute, but not etemplate readonly,
+		// A negative size triggered the HTML readonly attribute, but not etemplate readonly,
 		// so you got an input element, but it was not editable.
-		if ($this->attrs['size'] < 0)
+		if (isset($this->attrs['size']) && $this->attrs['size'] < 0)
 		{
 			self::setElementAttribute($this->id, 'size', abs($this->attrs['size']));
 			self::$request->readonlys[$this->id] = false;
 			self::setElementAttribute($this->id, 'readonly', true);
-			trigger_error("Using a negative size to set textbox readonly. " .$this, E_USER_DEPRECATED);
+			//trigger_error("Using a negative size to set textbox readonly. " .$this, E_USER_DEPRECATED);
 		}
 		return $this;
 	}

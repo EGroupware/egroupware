@@ -37,10 +37,10 @@ class Vfs extends File
 	 */
 	public function beforeSendToClient($cname, $expand = array())
 	{
-		if($this->type == 'vfs-upload' || $this->attrs['type'] == 'vfs-upload')
+		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
 		{
 			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
-			if($this->attrs['path'])
+			if (!empty($this->attrs['path']))
 			{
 				$path = self::expand_name($this->attrs['path'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 			}
@@ -226,7 +226,7 @@ class Vfs extends File
 		foreach($links as $link)
 		{
 			$matches = null;
-			if (is_array($link) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
+			if (is_array($link) && !empty($link['id']['tmp_name']) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
 			{
 				$replace[substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX))] =
 					Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);

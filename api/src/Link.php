@@ -471,7 +471,7 @@ class Link extends Link\Storage
 	 */
 	static function temp_link_id($app,$id)
 	{
-		return $app.':'.(!in_array($app, array(self::VFS_APPNAME,self::VFS_LINK, self::DATA_APPNAME)) ? $id : $id['name']);
+		return $app.':'.(!in_array($app, array(self::VFS_APPNAME,self::VFS_LINK, self::DATA_APPNAME)) || !is_array($id) ? $id : $id['name']);
 	}
 
 	/**
@@ -683,15 +683,15 @@ class Link extends Link\Storage
 		{
 			echo "<p>Link::unlink('$link_id','$app',".array2string($id).",'$owner','$app2','$id2', $hold_for_purge)</p>\n";
 		}
-		if ($link_id < 0)	// vfs-link?
+		if ((int)$link_id < 0)	// vfs-link?
 		{
 			return self::delete_attached(-$link_id);
 		}
-		elseif ($app == self::VFS_APPNAME)
+		elseif ($app === self::VFS_APPNAME)
 		{
 			return self::delete_attached($app2,$id2,$id);
 		}
-		elseif ($app2 == self::VFS_APPNAME)
+		elseif ($app2 === self::VFS_APPNAME)
 		{
 			return self::delete_attached($app,$id,$id2);
 		}
