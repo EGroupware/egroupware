@@ -29,6 +29,8 @@ import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunct
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {CalendarApp} from "./app";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
+import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -1906,7 +1908,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 		else
 		{
-			fetch = true;
 			// Assume it's empty, if there is data it will be filled later
 			egw.dataStoreUID(cache_id, []);
 		}
@@ -2375,22 +2376,26 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 */
 	_get_time_from_position( x,y)
 	{
+		if(!this.options.start_date || !this.options.end_date)
+		{
+			return false;
+		}
 
 		x = Math.round(x);
 		y = Math.round(y);
 
 		// Round to user's preferred event interval
-		var interval = egw.preference('interval','calendar') || 30;
+		var interval = egw.preference('interval', 'calendar') || 30;
 
 		// Relative horizontal position, as a percentage
 		var width = 0;
-		jQuery('.calendar_eventRows',this.div).each(function() {width = Math.max(width,jQuery(this).width());});
-		var rel_x = Math.min(x / width,1);
+		jQuery('.calendar_eventRows', this.div).each(function() {width = Math.max(width, jQuery(this).width());});
+		var rel_x = Math.min(x / width, 1);
 
 		// Relative time, in minutes from start
 		var rel_time = 0;
 
-		var day_header = jQuery('.calendar_plannerScaleDay',this.headers);
+		var day_header = jQuery('.calendar_plannerScaleDay', this.headers);
 
 		// Simple math, the x is offset from start date
 		if(this.options.group_by !== 'month' && (

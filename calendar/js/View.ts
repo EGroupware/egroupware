@@ -22,7 +22,7 @@ export abstract class View
 	 * @param {Object} state
 	 * @returns {string}
 	 */
-	static header(state)
+	public static header(state)
 	{
 		let formatDate = new Date(state.date);
 		formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
@@ -34,7 +34,7 @@ export abstract class View
 	 *
 	 * @param {object} state
 	 */
-	static _owner(state)
+	public static _owner(state)
 	{
 		let owner = '';
 		if(state.owner.length && state.owner.length == 1 && app.calendar.sidebox_et2)
@@ -53,7 +53,7 @@ export abstract class View
 	 * @param {Object} state
 	 * @returns {Date}
 	 */
-	static start_date(state)
+	public static start_date(state)
 	{
 		const d = state.date ? new Date(state.date) : new Date();
 		d.setUTCHours(0);
@@ -68,7 +68,7 @@ export abstract class View
 	 * @param {Object} state
 	 * @returns {Date}
 	 */
-	static end_date(state)
+	public static end_date(state)
 	{
 		const d = state.date ? new Date(state.date) : new Date();
 		d.setUTCHours(23);
@@ -87,7 +87,7 @@ export abstract class View
 	 * @param {number[]|String} state state.owner List of owner IDs, or a comma seperated list
 	 * @returns {number[]|String}
 	 */
-	static owner(state)
+	public static owner(state)
 	{
 		return state.owner || 0;
 	}
@@ -98,7 +98,7 @@ export abstract class View
 	 * @param {object} state
 	 * @returns {boolean} Current preference to show 5 or 7 days in weekview
 	 */
-	static show_weekend(state)
+	public static show_weekend(state)
 	{
 		return state.weekend;
 	}
@@ -108,27 +108,30 @@ export abstract class View
 	 *
 	 * @param {object} state
 	 */
-	static granularity(state)
+	public static granularity(state)
 	{
 		var list = egw.preference('use_time_grid', 'calendar');
 		if(list == '0' || typeof list === 'undefined')
 		{
 			return parseInt('' + egw.preference('interval', 'calendar')) || 30;
 		}
-		if(typeof list == 'string') list = list.split(',');
+		if(typeof list == 'string')
+		{
+			list = list.split(',');
+		}
 		if(!(<string><unknown>list).indexOf && jQuery.isPlainObject(list))
 		{
-			list = jQuery.map(list, function (el)
+			list = jQuery.map(list, function(el)
 			{
 				return el;
 			});
 		}
-		return (<string[]> list).indexOf(state.view) >= 0 ?
-			0 :
-			parseInt(<string> egw.preference('interval', 'calendar')) || 30;
+		return (<string[]>list).indexOf(state.view) >= 0 ?
+			   0 :
+			   parseInt(<string>egw.preference('interval', 'calendar')) || 30;
 	}
 
-	static extend(sub)
+	public static extend(sub)
 	{
 		return jQuery.extend({}, this, {_super: this}, sub);
 	}
@@ -140,7 +143,7 @@ export abstract class View
 	 *	forward, negative for backward
 	 * @returns {Date}
 	 */
-	static scroll(delta)
+	public static scroll(delta)
 	{
 		var d = new Date(app.calendar.state.date);
 		d.setUTCDate(d.getUTCDate() + (7 * delta));
@@ -158,27 +161,27 @@ export class day extends View
 {
 	public static etemplates : (string | etemplate2)[] = ['calendar.view', 'calendar.todo'];
 
-	static header(state)
+	public static header(state)
 	{
 		var formatDate = new Date(state.date);
 		formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
 		return date('l, ', formatDate) + super.header(state);
 	}
 
-	static start_date(state)
+	public static start_date(state)
 	{
 		var d = super.start_date(state);
 		state.date = app.calendar.date.toString(d);
 		return d;
 	}
 
-	static show_weekend(state)
+	public static show_weekend(state)
 	{
 		state.days = '1';
 		return true;
 	}
 
-	static scroll(delta)
+	public static scroll(delta)
 	{
 		var d = new Date(app.calendar.state.date);
 		d.setUTCDate(d.getUTCDate() + (delta));
@@ -188,7 +191,7 @@ export class day extends View
 
 export class day4 extends View
 {
-	static end_date(state)
+	public static end_date(state)
 	{
 		var d = super.end_date(state);
 		state.days = '4';
@@ -199,13 +202,13 @@ export class day4 extends View
 		return d;
 	}
 
-	static show_weekend(state)
+	public static show_weekend(state)
 	{
 		state.weekend = 'true';
 		return true;
 	}
 
-	static scroll(delta)
+	public static scroll(delta)
 	{
 		var d = new Date(app.calendar.state.date);
 		d.setUTCDate(d.getUTCDate() + (4 * delta));
@@ -215,7 +218,7 @@ export class day4 extends View
 
 export class week extends View
 {
-	static header(state)
+	public static header(state)
 	{
 		var end_date = state.last;
 		if(!week.show_weekend(state))
@@ -228,12 +231,12 @@ export class week extends View
 			app.calendar.date.long_date(state.first, end_date);
 	}
 
-	static start_date(state)
+	public static start_date(state)
 	{
 		return app.calendar.date.start_of_week(super.start_date(state));
 	}
 
-	static end_date(state)
+	public static end_date(state)
 	{
 		var d = app.calendar.date.start_of_week(state.date || new Date());
 		// Always 7 days, we just turn weekends on or off
@@ -247,7 +250,7 @@ export class week extends View
 
 export class weekN extends View
 {
-	static header(state)
+	public static header(state)
 	{
 		return super._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 			app.calendar.date.week_number(state.first) + ' - ' +
@@ -255,12 +258,12 @@ export class weekN extends View
 			app.calendar.date.long_date(state.first, state.last);
 	}
 
-	static start_date(state)
+	public static start_date(state)
 	{
 		return app.calendar.date.start_of_week(super.start_date(state));
 	}
 
-	static end_date(state)
+	public static end_date(state)
 	{
 		state.days = '' + (state.days >= 5 ? state.days : egw.preference('days_in_weekview', 'calendar') || 7);
 
@@ -273,21 +276,21 @@ export class weekN extends View
 
 export class month extends View
 {
-	static header(state)
+	public static header(state)
 	{
 		var formatDate = new Date(state.date);
 		formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
 		return super._owner(state) + app.calendar.egw.lang(date('F', formatDate)) + ' ' + date('Y', formatDate);
 	}
 
-	static start_date(state)
+	public static start_date(state)
 	{
 		var d = super.start_date(state);
 		d.setUTCDate(1);
 		return app.calendar.date.start_of_week(d);
 	}
 
-	static end_date(state)
+	public static end_date(state)
 	{
 		var d = super.end_date(state);
 		d = new Date(d.getFullYear(), d.getUTCMonth() + 1, 1, 0, -d.getTimezoneOffset(), 0);
@@ -295,7 +298,7 @@ export class month extends View
 		return app.calendar.date.end_of_week(d);
 	}
 
-	static scroll(delta)
+	public static scroll(delta)
 	{
 		var d = new Date(app.calendar.state.date);
 		// Set day to 15 so we don't get overflow on short months
@@ -310,7 +313,7 @@ export class planner extends View
 {
 	public static etemplates : (string | etemplate2)[] = ['calendar.planner'];
 
-	static header(state)
+	public static header(state)
 	{
 		var startDate = new Date(state.first);
 		startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
@@ -321,17 +324,17 @@ export class planner extends View
 			(startDate == endDate ? '' : ' - ' + date(<string>egw.preference('dateformat'), endDate));
 	}
 
-	static group_by(state)
+	public static group_by(state)
 	{
 		return state.sortby ? state.sortby : 0;
 	}
 
 	// Note: Planner uses the additional value of planner_view to determine
 	// the start & end dates using other view's functions
-	static start_date(state)
+	public static start_date(state)
 	{
 		// Start here, in case we can't find anything better
-		var d = super.start_date( state);
+		var d = super.start_date(state);
 
 		if(state.sortby && state.sortby === 'month')
 		{
@@ -353,10 +356,10 @@ export class planner extends View
 		return d;
 	}
 
-	static end_date(state)
+	public static end_date(state)
 	{
 
-		var d = super.end_date( state);
+		var d = super.end_date(state);
 		if(state.sortby && state.sortby === 'month')
 		{
 			d.setUTCDate(0);
@@ -379,13 +382,13 @@ export class planner extends View
 		return d;
 	}
 
-	static hide_empty(state)
+	public static hide_empty(state)
 	{
 		var check = state.sortby == 'user' ? ['user', 'both'] : ['cat', 'both'];
 		return (check.indexOf(egw.preference('planner_show_empty_rows', 'calendar') + '') === -1);
 	}
 
-	static scroll(delta)
+	public static scroll(delta)
 	{
 		if(app.calendar.state.planner_view && !isNaN(delta) && app.calendar.state.sortby !== "month")
 		{
@@ -425,7 +428,7 @@ export class listview extends View
 {
 	public static etemplates : (string | etemplate2)[] = ['calendar.list'];
 
-	static header(state)
+	public static header(state)
 	{
 		var startDate = new Date(state.first || state.date);
 		startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
