@@ -1356,7 +1356,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 
 			// from now on we deal with exceptions
-			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
+			$org_recurrence = isset($recurrence['recurrence']) ? $org_recurrences[$recurrence['recurrence']] : null;
 			if (isset($org_recurrence))	// already existing recurrence
 			{
 				//error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
