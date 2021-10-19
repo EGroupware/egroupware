@@ -1793,7 +1793,7 @@ abstract class Merge
 	public function get_app_replacements($app, $id, $content, $prefix = '')
 	{
 		$replacements = array();
-		if(!$app || $id || !$content)
+		if(!$app || !$id || !$content)
 		{
 			return $replacements;
 		}
