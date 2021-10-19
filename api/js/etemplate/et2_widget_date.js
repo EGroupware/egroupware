@@ -285,6 +285,11 @@ var et2_date = /** @class */ (function (_super) {
      * @param {Date|Number|String} _value
      */
     et2_date.prototype.set_min = function (_value) {
+        // minDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+        // @ts-ignore
+        if (typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value) {
+            _value = parseInt(_value);
+        }
         if (this.input_date) {
             if (this.is_mobile) {
                 this.input_date.attr('min', this._relativeDate(_value));
@@ -331,6 +336,11 @@ var et2_date = /** @class */ (function (_super) {
      * @param {Date|Number|String} _value
      */
     et2_date.prototype.set_max = function (_value) {
+        // maxDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+        // @ts-ignore
+        if (typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value) {
+            _value = parseInt(_value);
+        }
         if (this.input_date) {
             if (this.is_mobile) {
                 this.input_date.attr('max', this._relativeDate(_value));
