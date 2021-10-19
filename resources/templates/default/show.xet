@@ -5,14 +5,15 @@
 	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
-				<column width="70"/>
-				<column width="50%"/>
-				<column width="50"/>
-				<column width="15%"/>
-				<column width="15%"/>
-				<column width="15%"/>
-				<column width="15%" disabled="@no_customfields"/>
-			</columns>
+                <column width="70"/>
+                <column width="50%"/>
+                <column width="50"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%"/>
+                <column width="15%" disabled="@no_customfields"/>
+            </columns>
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Image" id="image"/>
@@ -32,6 +33,7 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<description value="Storage information"/>
 					</vbox>
+                    <nextmatch-sortheader label="Inventory Number" id="inventory_number"/>
 					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
 				</row>
@@ -57,6 +59,7 @@
 						<description id="${row}[location]" no_lang="1"/>
 						<description id="${row}[storage_info]" no_lang="1"/>
 					</vbox>
+                    <description id="${row}[inventory_number]" no_lang="1"/>
 					<vbox no_lang="1">
 						<description extra_link_popup="850x600" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" id="${row}[accessory_of_label]" no_lang="1"/>
 						<grid width="100%" id="${row}[accessories]">
