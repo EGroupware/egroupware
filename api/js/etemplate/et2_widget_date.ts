@@ -375,9 +375,15 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_min(_value)
 	{
+		// minDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+		// @ts-ignore
+		if(typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value)
+		{
+			_value = parseInt(_value);
+		}
 		if(this.input_date)
 		{
-			if (this.is_mobile)
+			if(this.is_mobile)
 			{
 				this.input_date.attr('min', this._relativeDate(_value));
 			}
@@ -430,9 +436,15 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_max(_value)
 	{
+		// maxDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+		// @ts-ignore
+		if(typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value)
+		{
+			_value = parseInt(_value);
+		}
 		if(this.input_date)
 		{
-			if (this.is_mobile)
+			if(this.is_mobile)
 			{
 				this.input_date.attr('max', this._relativeDate(_value));
 			}
