@@ -1662,6 +1662,9 @@ abstract class Framework extends Framework\Extra
 	 */
 	public static function ajax_user_list()
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
+
 		$list = array('accounts' => array(),'groups' => array(), 'owngroups' => array());
 		if($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'primary_group')
 		{
@@ -1688,6 +1691,9 @@ abstract class Framework extends Framework\Extra
 	 */
 	public static function ajax_account_data($_account_ids, $_field, $_resolve_groups=false)
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
+
 		$list = array();
 		foreach((array)$_account_ids as $account_id)
 		{
