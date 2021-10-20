@@ -1723,7 +1723,7 @@ abstract class Merge
 				{
 					// If we send the real content it can result in infinite loop of lookups
 					// so we send only the used fields
-					$content = $expand_sub_cfs[$field] ? $expand_sub_cfs[$field] : '';
+					$content = $expand_sub_cfs[$field] ?? $matches[0][$index];
 					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#' . $field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'];
