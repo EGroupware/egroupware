@@ -26,22 +26,18 @@
                 </box>
             </box>
             <template template="@extra_template"/>
-            <details title="Common">
                 <description value="Common" class="group title"/>
                 <box id="common">
                     <box id="${row}">
                         <template template="api.show_replacements.placeholder_list"/>
                     </box>
                 </box>
-            </details>
-            <details title="Current user">
                 <description value="Current user" class="group title"/>
                 <box id="user">
                     <box id="${row}">
                         <template template="api.show_replacements.placeholder_list"/>
                     </box>
                 </box>
-            </details>
         </vbox>
         <styles>
             .et2_details_title, .title {
@@ -59,6 +55,17 @@
             /** Cosmetics **/
             #api-show_replacements_title:first-letter, .title {
             text-transform: capitalize;
+            }
+            div#api-show_replacements_placeholders, #api-show_replacements_common, #api-show_replacements_user {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            }
+            div[id^="api-show_replacements"] {
+            min-width: 350px;
+            }
+            table#api-show_replacements_placeholders > tbody > tr > td:first-child {
+            padding-right: 5em;
             }
         </styles>
     </template>
