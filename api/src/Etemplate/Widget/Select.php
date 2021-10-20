@@ -966,6 +966,9 @@ class Select extends Etemplate\Widget
 	 */
 	public static function ajax_get_options($type, $attributes, $value = null)
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
+
 		$no_lang = false;
 		if(is_array($attributes))
 		{
