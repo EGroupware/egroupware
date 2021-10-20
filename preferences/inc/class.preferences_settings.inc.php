@@ -412,7 +412,7 @@ class preferences_settings
 					continue 2;
 
 				case 'notify':
-					$vars = $GLOBALS['egw']->preferences->vars;
+					$vars = $GLOBALS['egw']->preferences->vars ?? [];
 					if (is_array($setting['values'])) $vars += $setting['values'];
 					$GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']] =
 						$GLOBALS['egw']->preferences->lang_notify($GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']], $vars);
