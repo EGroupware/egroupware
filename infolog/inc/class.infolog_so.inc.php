@@ -784,9 +784,9 @@ class infolog_so
 			'event'       => 'calendar'
 		);
 		// query children independent of action
-		if ((string)$query['col_filter']['info_id_parent'] === '')
+		if (empty($query['col_filter']['info_id_parent']))
 		{
-			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
+			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : ($query['action'] ?? null);
 			if ($action)
 			{
 				$links = Link\Storage::get_links($action=='sp'?'infolog':$action,
@@ -833,10 +833,10 @@ class infolog_so
 			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 		}
 		$filtermethod = $no_acl ? '1=1' : $this->aclFilter($query['filter']);
-		if (!$query['col_filter']['info_status'])  $filtermethod .= $this->statusFilter($query['filter']);
+		if (empty($query['col_filter']['info_status']))  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
 		$cfcolfilter=0;
-		if (is_array($query['col_filter']))
+		if (isset($query['col_filter']) && is_array($query['col_filter']))
 		{
 			foreach($query['col_filter'] as $col => $data)
 			{
@@ -894,15 +894,15 @@ class infolog_so
 		}
 		//echo "<p>filtermethod='$filtermethod'</p>";
 
-		if ((int)$query['cat_id'])
+		if (!empty($query['cat_id']) && (int)$query['cat_id'])
 		{
 			$categories = new Api\Categories('','infolog');
 			$cats = $categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
 		$join = $distinct = '';
-		if ($query['query']) $query['search'] = $query['query'];	// allow both names
-		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
+		if (!empty($query['query'])) $query['search'] = $query['query'];	// allow both names
+		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
 		{
 			$columns = array('info_from','info_location','info_subject');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
@@ -924,7 +924,7 @@ class infolog_so
 		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id AND attendees.info_res_deleted IS NULL";
 		$group_by = ' GROUP BY main.info_id ';
 		// check if $query['append'] already contains a GROUP BY clause
-		if (stripos($query['append'], 'group by') !== false)
+		if (!empty($query['append']) && stripos($query['append'], 'group by') !== false)
 		{
 			$query['append'] .= ',main.info_id ';
 		}
@@ -943,7 +943,7 @@ class infolog_so
 		$ids = array( );
 		if ($action == '' || $action == 'sp' || count($links))
 		{
-			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid ".($sql_query ?? '').') '.($link_extra??'');
 			#error_log("infolog.so.search:\n" . print_r($sql_query, true));
 
 			if ($this->db->Type == 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
@@ -984,7 +984,7 @@ class infolog_so
 				$cols .= ','.$this->db->group_concat('attendees.info_res_attendee').' AS info_cc';
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
 					$query['append'].$ordermethod,__LINE__,__FILE__,
-					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
+					(int)($query['start']??0),isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
 				if ($mysql_calc_rows)
@@ -1011,7 +1011,7 @@ class infolog_so
 				$ids[$info['info_id']] = $info;
 			}
 			static $index_load_cfs = null;
-			if (is_null($index_load_cfs) && $query['col_filter']['info_type'])
+			if (is_null($index_load_cfs) && !empty($query['col_filter']['info_type']))
 			{
 				$config_data = Api\Config::read('infolog');
 				$index_load_cfs = $config_data['index_load_cfs'];

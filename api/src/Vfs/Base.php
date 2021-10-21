@@ -573,7 +573,7 @@ class Base
 		{
 			return __CLASS__;
 		}
-		list($app, $app_scheme) = explode('.', $scheme);
+		list($app, $app_scheme) = explode('.', $scheme)+[null,null];
 		foreach(array(
 					empty($app_scheme) ? 'EGroupware\\Api\\Vfs\\' . ucfirst($scheme) . '\\StreamWrapper' :    // streamwrapper in Api\Vfs
 						'EGroupware\\' . ucfirst($app) . '\\Vfs\\' . ucfirst($app_scheme) . '\\StreamWrapper',

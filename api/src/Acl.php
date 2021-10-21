@@ -74,7 +74,7 @@ class Acl
 	 */
 	function __construct($account_id = null)
 	{
-		if (is_object($GLOBALS['egw_setup']->db))
+		if (isset($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']->db))
 		{
 			$this->db = $GLOBALS['egw_setup']->db;
 		}
@@ -481,6 +481,10 @@ class Acl
 			'acl_appname' => $appname,
 		),__LINE__,__FILE__) as $row)
 		{
+			if (!isset($rights[$row['acl_location']]))
+			{
+				$rights[$row['acl_location']] = 0;
+			}
 			$rights[$row['acl_location']] |= $row['acl_rights'];
 		}
 		return $rights;

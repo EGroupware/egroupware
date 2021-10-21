@@ -2832,7 +2832,7 @@ abstract class Merge
 		);
 
 		// Check for a configured preferred directory
-		if(($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		if(!empty($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
 		{
 			$target = $pref;
 		}

@@ -435,7 +435,7 @@ abstract class Tracking
 			$this->historylog = new History($this->app, $this->user);
 		}
 		// log user-agent and session-action
-		if ($GLOBALS['egw_info']['server']['log_user_agent_action'] && ($changed_fields || !$old))
+		if (!empty($GLOBALS['egw_info']['server']['log_user_agent_action']) && ($changed_fields || !$old))
 		{
 			$this->historylog->add('user_agent_action', $data[$this->id_field],
 				$_SERVER['HTTP_USER_AGENT'], $_SESSION[Api\Session::EGW_SESSION_VAR]['session_action']);
@@ -509,7 +509,7 @@ abstract class Tracking
 		$changed_fields = array();
 		foreach($this->field2history as $name => $status)
 		{
-			if (!$old[$name] && !$data[$name]) continue;	// treat all sorts of empty equally
+			if (empty($old[$name]) && empty($data[$name])) continue;	// treat all sorts of empty equally
 
 			if ($name[0] == '#' && !isset($data[$name])) continue;	// no set customfields are not stored, therefore not changed
 
@@ -544,7 +544,7 @@ abstract class Tracking
 		}
 		foreach($data as $name => $value)
 		{
-			if ($name[0] == '#' && $name[1] == '#' && $value !== $old[$name])
+			if (isset($name[0]) && $name[0] == '#' && $name[1] == '#' && $value !== $old[$name])
 			{
 				$changed_fields[] = $name;
 			}
@@ -842,7 +842,7 @@ abstract class Tracking
 				$notification->set_reply_to($reply_to);
 				$notification->set_subject($subject);
 				$notification->set_links(array($link));
-				$notification->set_popupdata($link['app'], $link);
+				$notification->set_popupdata($link?$link['app']:null, $link);
 				if ($attachments && is_array($attachments))
 				{
 					$notification->set_attachments($attachments);
@@ -937,9 +937,9 @@ abstract class Tracking
 				$sender = $name ? $name.' <'.$email.'>' : $email;
 			}
 		}
-		elseif(!$sender)
+		elseif (!$sender)
 		{
-			$sender = 'EGroupware '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'].'>';
+			$sender = 'EGroupware '.lang($this->app).' <noreply@'.($GLOBALS['egw_info']['server']['mail_suffix']??'nodomain.org').'>';
 		}
 		//echo "<p>".__METHOD__."()='".htmlspecialchars($sender)."'</p>\n";
 		return $sender;

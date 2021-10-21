@@ -182,7 +182,7 @@ class Image
 		}
 		$app_map =& $map['vfs'];
 		if (true) $app_map = array();
-		if (($dir = $GLOBALS['egw_info']['server']['vfs_image_dir']) && Vfs::file_exists($dir) && Vfs::is_readable($dir))
+		if (!empty($dir = $GLOBALS['egw_info']['server']['vfs_image_dir']) && Vfs::file_exists($dir) && Vfs::is_readable($dir))
 		{
 			foreach(Vfs::find($dir) as $img)
 			{

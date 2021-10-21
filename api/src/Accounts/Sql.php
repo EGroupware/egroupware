@@ -166,8 +166,8 @@ class Sql
 			$data['account_id'] = -$data['account_id'];
 			$data['mailAllowed'] = true;
 		}
-		if (!$data['account_firstname']) $data['account_firstname'] = $data['account_lid'];
-		if (!$data['account_lastname'])
+		if (empty($data['account_firstname'])) $data['account_firstname'] = $data['account_lid'];
+		if (empty($data['account_lastname']))
 		{
 			$data['account_lastname'] = $data['account_type'] == 'g' ? 'Group' : 'User';
 			// if we call lang() before the translation-class is correctly setup,
@@ -177,7 +177,7 @@ class Sql
 				$data['account_lastname'] = lang($data['account_lastname']);
 			}
 		}
-		if (!$data['account_fullname']) $data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
+		if (empty($data['account_fullname'])) $data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
 
 		return $data;
 	}

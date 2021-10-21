@@ -1527,7 +1527,7 @@ class Link extends Link\Storage
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
-		if($data[Link::OLD_LINK_TITLE] && Json\Response::isJSONResponse())
+		if (!empty($data[Link::OLD_LINK_TITLE]) && Json\Response::isJSONResponse())
 		{
 			// Update client side with new title
 			Json\Response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));

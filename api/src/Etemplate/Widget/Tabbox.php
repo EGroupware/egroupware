@@ -85,7 +85,7 @@ class Tabbox extends Etemplate\Widget
 		{
 			foreach($this->children[1]->children as $tab)
 			{
-				if($readonlys[$tab->id])
+				if (!empty($readonlys[$tab->id]))
 				{
 					$tab->attrs['disabled'] = $readonlys[$tab->id];
 				}

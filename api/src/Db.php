@@ -1601,7 +1601,7 @@ class Db
 		}
 		if (empty($column_definitions))
 		{
-			$column_definitions = $this->column_definitions;
+			$column_definitions = $this->column_definitions ?? null;
 		}
 		if ($this->Debug) echo "<p>db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre>\n";
 
@@ -2164,7 +2164,7 @@ class Db
 		}
 		if (is_array($where))
 		{
-			$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+			$where = $this->column_data_implode(' AND ',$where,True,False, $table_def ? $table_def['fd'] : null);
 		}
 		if (self::$tablealiases && isset(self::$tablealiases[$table]))
 		{

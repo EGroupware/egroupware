@@ -209,7 +209,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		// are we requested to treat the opened file as new file (only for files opened NOT for reading)
 		if ($mode[0] != 'r' && !$this->opened_stream_is_new && $this->context &&
 			($opts = stream_context_get_options($this->context)) &&
-			$opts['options'][self::SCHEME]['treat_as_new'])
+			!empty($opts['options'][self::SCHEME]['treat_as_new']))
 		{
 			$this->opened_stream_is_new = true;
 			//error_log(__METHOD__."($path,$mode,...) stat=$stat, context=".array2string($opts)." --> ".array2string($this->opened_stream_is_new));
@@ -994,7 +994,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		if (Vfs::$user != $GLOBALS['egw_info']['user']['account_id'])
 		{
 			$prefs = new Api\Preferences(Vfs::$user);
-			$vfs_fstab = $prefs->data['common']['vfs_fstab'];
+			$vfs_fstab = $prefs->data['common']['vfs_fstab'] ?? [];
 		}
 		else
 		{

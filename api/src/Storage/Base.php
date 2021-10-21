@@ -965,7 +965,7 @@ class Base
 			}
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
-		if (is_array($start)) list($start,$num_rows) = $start;
+		if (is_array($start)) list($start,$num_rows) = $start+[null,null];
 
 		// fix GROUP BY clause to contain all non-aggregate selected columns
 		if ($order_by && stripos($order_by,'GROUP BY') !== false)
@@ -1106,8 +1106,8 @@ class Base
 						$query[$db_col] = '';
 					}
 				}
-				elseif ($wildcard || $criteria[$col][0] == '!' ||
-					is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
+				elseif ($wildcard || is_string($criteria[$col]) && ($criteria[$col][0] == '!' ||
+					(strpos($criteria[$col],'*') !== false || strpos($criteria[$col],'?') !== false)))
 				{
 					// if search pattern alread contains a wildcard, do NOT add further ones automatic
 					if (is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))

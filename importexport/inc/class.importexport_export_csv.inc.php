@@ -320,7 +320,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
 
 			// Add in any fields that are keys to another app
-			foreach((array)$fields['links'] as $link_field => $app)
+			foreach($fields['links'] ?? [] as $link_field => $app)
 			{
 				if(is_numeric($link_field)) continue;
 				$links[$link_field] = $app;
@@ -332,7 +332,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			// Not quite a recursive merge, since only one level
 			foreach($fields as $type => &$list)
 			{
-				if($c_fields[$type])
+				if (!empty($c_fields[$type]))
 				{
 					$list = array_merge($c_fields[$type], $list);
 					unset($c_fields[$type]);
@@ -341,7 +341,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			$fields += $c_fields;
 			$selects += $c_selects;
 		}
-		foreach((array)$fields['select'] as $name)
+		foreach($fields['select'] ?? [] as $name)
 		{
 			if($record->$name != null && is_array($selects) && $selects[$name])
 			{
@@ -366,7 +366,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				$record->$name = '';
 			}
 		}
-		foreach((array)$fields['links'] as $name) {
+		foreach($fields['links'] ?? [] as $name) {
 			if($record->$name) {
 				if(is_numeric($record->$name) && !$links[$name]) {
 					$link = Link::get_link($record->$name);
@@ -387,7 +387,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				$record->$name = '';
 			}
 		}
-		foreach((array)$fields['select-account'] as $name) {
+		foreach($fields['select-account'] ?? [] as $name) {
 			// Compare against null to deal with empty arrays
 			if ($record->$name !== null) {
 				if(is_array($record->$name)) {
@@ -405,25 +405,25 @@ class importexport_export_csv implements importexport_iface_export_record
 				$record->$name = '';
 			}
 		}
-		foreach((array)$fields['select-bool'] as $name) {
+		foreach($fields['select-bool'] ?? [] as $name) {
 			if($record->$name !== null) {
 				$record->$name = $record->$name ? lang('Yes') : lang('No');
 			}
 		}
-		foreach((array)$fields['date-time'] as $name) {
+		foreach($fields['date-time'] ?? [] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name); // Standard date format
 			if ($record->$name && !is_numeric($record->$name)) $record->$name = strtotime($record->$name); // Custom fields stored as string
 			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
 				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H:i:s' : 'h:i:s a'),$record->$name); // User date format
 			if (!$record->$name) $record->$name = '';
 		}
-		foreach((array)$fields['date'] as $name) {
+		foreach($fields['date'] ?? [] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d',$record->$name); // Standard date format
 			if ($record->$name && !is_numeric($record->$name)) $record->$name = strtotime($record->$name); // Custom fields stored as string
 			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
 			if (!$record->$name) $record->$name = '';
 		}
-		foreach((array)$fields['float'] as $name)
+		foreach($fields['float'] ?? [] as $name)
 		{
 			static $dec_separator,$thousands_separator;
 			if (is_null($dec_separator))
@@ -445,7 +445,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 
 		// Some custom methods for conversion
-		foreach((array)$methods as $name => $method) {
+		foreach($methods ?? [] as $name => $method) {
 			if ($record->$name)
 			{
 				if(is_string($method))
