@@ -2607,7 +2607,7 @@ abstract class Merge
 			$action_base,
 			array(
 				'icon'       => Api\Vfs::mime_icon($file['mime']),
-				'caption'    => Api\Vfs::decodePath($file['name']),
+				'caption'    => Api\Vfs::decodePath(Api\Vfs::basename($file['name'])),
 				'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
 				'merge_data' => $edit_attributes
 			),
