@@ -1554,7 +1554,7 @@ class Session
 		{
 			foreach(explode('&', $extravars) as $expr)
 			{
-				list($var,$val) = explode('=', $expr,2);
+				list($var,$val) = explode('=', $expr,2)+[null,null];
 				if (strpos($val,'%26') != false) $val = str_replace('%26','&',$val);	// make sure to not double encode &
 				if (substr($var,-2) == '[]')
 				{

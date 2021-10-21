@@ -427,7 +427,7 @@ class Vfs extends Vfs\Base
 				self::_check_add($options,$path,$result);
 			}
 			if ($is_dir && (!isset($options['maxdepth']) || ($options['maxdepth'] > 0 &&
-				$options['depth'] < $options['maxdepth'])) &&
+				($options['depth'] ?? 0) < $options['maxdepth'])) &&
 				($dir = @opendir($path, $context)))
 			{
 				while(($fname = readdir($dir)) !== false)
@@ -1296,7 +1296,7 @@ class Vfs extends Vfs\Base
 			$b = explode('/',$b_str);
 			$ret = implode('/',array_merge($a,$b));
 		}
-		return $ret.($query ? (strpos($url,'?')===false ? '?' : '&').$query : '');
+		return $ret.(isset($query) ? (strpos($url,'?')===false ? '?' : '&').$query : '');
 	}
 
 	/**
@@ -2043,7 +2043,7 @@ class Vfs extends Vfs\Base
 		}
 		else
 		{
-			$ret = ($context ? copy($tmp_name, self::PREFIX.$target, $context) :
+			$ret = (isset($context) ? copy($tmp_name, self::PREFIX.$target, $context) :
 				copy($tmp_name, self::PREFIX.$target)) ?
 				self::stat($target) : false;
 		}

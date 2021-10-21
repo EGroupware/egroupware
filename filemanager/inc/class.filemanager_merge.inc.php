@@ -193,7 +193,7 @@ class filemanager_merge extends Api\Storage\Merge
 		if(is_array($link))
 		{
 			// Directories have their internal protocol in path here
-			if($link['path'] && strpos($link['path'], '://') !== false) $link['path'] = $file['path'];
+			if (!empty($link['path']) && strpos($link['path'], '://') !== false) $link['path'] = $file['path'];
 			$link = Api\Session::link('/index.php', $link);
 		}
 		else
@@ -215,7 +215,7 @@ class filemanager_merge extends Api\Storage\Merge
 			if(!$value) $value = '';
 			$info['$$' . ($prefix ? $prefix . '/' : '') . $key . '$$'] = $value;
 		}
-		if($app_placeholders)
+		if (!empty($app_placeholders) && is_array($app_placeholders))
 		{
 			$info = array_merge($app_placeholders, $info);
 		}

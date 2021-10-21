@@ -154,10 +154,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		$this->params = $params;
 		$this->isAdminConnection = $_adminConnection;
 		$this->enableSieve = (boolean)$this->params['acc_sieve_enabled'];
-		$this->loginType = $this->params['acc_imap_logintype'];
-		$this->domainName = $this->params['acc_domain'];
+		$this->loginType = $this->params['acc_imap_logintype'] ?? null;
+		$this->domainName = $this->params['acc_domain'] ?? null;
 
-		if (is_null($_timeout)) $_timeout = $this->params['acc_imap_timeout']?$this->params['acc_imap_timeout']:self::getTimeOut ();
+		if (is_null($_timeout)) $_timeout = $this->params['acc_imap_timeout']??self::getTimeOut ();
 
 		// Horde use locale for translation of error messages
 		// need to set LC_CTYPE for charachter classification (eg. Umlauts)

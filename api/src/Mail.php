@@ -213,7 +213,7 @@ class Mail
 		}
 		if ($_oldImapServerObject instanceof Mail\Imap)
 		{
-			if (!is_object(self::$instances[$_profileID]))
+			if (!isset(self::$instances[$_profileID]))
 			{
 				self::$instances[$_profileID] = new Mail('utf-8',false,$_profileID,false,$_reuseCache);
 			}
@@ -1113,7 +1113,7 @@ class Mail
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_sent));
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_draft));
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($this->icServer->acc_folder_template));
-		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
+		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId] ?? [];
 		if (isset($_specialUseFolders[$this->icServer->ImapServerId]) && !empty($_specialUseFolders[$this->icServer->ImapServerId]))
 			return $_specialUseFolders[$this->icServer->ImapServerId];
 		$_specialUseFolders[$this->icServer->ImapServerId]=array();
