@@ -1506,12 +1506,18 @@ export class et2_date_range extends et2_inputWidget
 		this.from = <et2_date>et2_createWidget('date',{
 			id: this.id+'[from]',
 			blur: egw.lang('From'),
-			onchange() { widget.to.set_min(widget.from.getValue()); }
+			onchange(_node,_widget) {
+				widget.to.set_min(widget.from.getValue());
+				if (_node instanceof jQuery) widget.onchange.call(widget, _widget, widget);
+			}
 		},this);
 		this.to = <et2_date>et2_createWidget('date',{
 			id: this.id+'[to]',
 			blur: egw.lang('To'),
-			onchange() {widget.from.set_max(widget.to.getValue()); }
+			onchange(_node,_widget) {
+				widget.from.set_max(widget.to.getValue());
+				if (_node instanceof jQuery) widget.onchange.call(widget, _widget,widget);
+			}
 		},this);
 		this.select = <et2_selectbox><unknown>et2_createWidget('select',{
 			id: this.id+'[relative]',

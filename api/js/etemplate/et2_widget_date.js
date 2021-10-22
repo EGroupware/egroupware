@@ -1269,12 +1269,20 @@ var et2_date_range = /** @class */ (function (_super) {
         this.from = et2_core_widget_1.et2_createWidget('date', {
             id: this.id + '[from]',
             blur: egw.lang('From'),
-            onchange: function () { widget.to.set_min(widget.from.getValue()); }
+            onchange: function (_node, _widget) {
+                widget.to.set_min(widget.from.getValue());
+                if (_node instanceof jQuery)
+                    widget.onchange.call(widget, _widget, widget);
+            }
         }, this);
         this.to = et2_core_widget_1.et2_createWidget('date', {
             id: this.id + '[to]',
             blur: egw.lang('To'),
-            onchange: function () { widget.from.set_max(widget.to.getValue()); }
+            onchange: function (_node, _widget) {
+                widget.from.set_max(widget.to.getValue());
+                if (_node instanceof jQuery)
+                    widget.onchange.call(widget, _widget, widget);
+            }
         }, this);
         this.select = et2_core_widget_1.et2_createWidget('select', {
             id: this.id + '[relative]',
