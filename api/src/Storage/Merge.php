@@ -1820,7 +1820,7 @@ abstract class Merge
 			// Don't break merge, just log it
 			error_log($e->getMessage());
 		}
-		return $replacements;
+		return $replacements ?: [];
 	}
 
 	/**
