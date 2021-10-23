@@ -232,7 +232,7 @@ class Asyncservice
 					{
 						if ((string)$t == '*') 	$t = '*/1';
 
-						list($one,$inc) = $arr = explode('/',$t)+[null,null];
+						list($one,$inc) = ($arr = explode('/', $t))+[null,null];
 
 						if (!(is_numeric($one) && count($arr) == 1 ||
 									count($arr) == 2 && is_numeric($inc)))
@@ -247,7 +247,7 @@ class Asyncservice
 						}
 						else
 						{
-							list($min,$max) = $arr = explode('-',$one)+[null,null];
+							list($min,$max) = ($arr = explode('-', $one))+[null,null];
 							if (empty($one) || $one == '*')
 							{
 								$min = $min_unit[$u];
