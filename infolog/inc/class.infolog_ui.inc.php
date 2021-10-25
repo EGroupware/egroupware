@@ -608,7 +608,10 @@ class infolog_ui
 		}
 		if(count($links))
 		{
-			$query['col_filter']['info_id'] = count($links) > 1 ? call_user_func_array('array_intersect', array_values($links)) : $links[$key ?? 'info_id'];
+			$query['col_filter']['info_id'] = count($links) > 1 ? array_intersect(...array_map(static function($ids)
+			{
+				return (array)$ids;
+			}, array_values($links))) : $links[$key ?? 'info_id'];
 		}
 		return $linked;
 	}
