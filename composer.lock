@@ -8505,16 +8505,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "5.5.1",
+            "version": "5.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "a436d254bc8d62e50be1fdb3d3e98981ab0e4c40"
+                "reference": "48c665ad12ba0e4d8068ba0784026c7488aa4746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/a436d254bc8d62e50be1fdb3d3e98981ab0e4c40",
-                "reference": "a436d254bc8d62e50be1fdb3d3e98981ab0e4c40",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/48c665ad12ba0e4d8068ba0784026c7488aa4746",
+                "reference": "48c665ad12ba0e4d8068ba0784026c7488aa4746",
                 "shasum": ""
             },
             "type": "component",
@@ -8540,16 +8540,22 @@
                 "LGPL-2.1-only"
             ],
             "description": "Web based JavaScript HTML WYSIWYG editor control.",
-            "homepage": "http://www.tinymce.com",
+            "homepage": "https://www.tiny.cloud/",
             "keywords": [
-                "editor",
+                "contenteditable",
+                "editing",
                 "html",
                 "javascript",
+                "rich editor",
+                "rich text",
+                "rich text editor",
                 "richtext",
+                "rte",
+                "text",
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2020-10-01T05:31:22+00:00"
+            "time": "2021-09-08T03:45:09+00:00"
         },
         {
             "name": "twig/extensions",
