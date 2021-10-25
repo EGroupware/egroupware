@@ -163,9 +163,9 @@
 					</vbox>
 					<description id="${row}[id]" class="contactid"/>
 					<vbox>
-						<link id="${row}[last_link]"/>
-						<link id="${row}[next_link]"/>
-					</vbox>
+                        <link id="${row}[last_link]" readonly="true"/>
+                        <link id="${row}[next_link]" readonly="true"/>
+                    </vbox>
 					<vbox>
 						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
 						<select-account id="${row}[creator]" readonly="true"/>
