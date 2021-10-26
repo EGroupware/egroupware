@@ -89,7 +89,7 @@ class preferences_password
 							break;
 
 						case 'two_factor_auth':
-							switch(key($content['2fa']['action']))
+							switch(key($content['2fa']['action'] ?? []))
 							{
 								case 'show':
 									$content['2fa'] = $this->generateQRCode($google2fa, false);
