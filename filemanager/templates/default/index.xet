@@ -6,6 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width="150"/>
+				<column width="80"/>
 				<column width="50%"/>
 				<column width="80"/>
 				<column width="120"/>
@@ -19,6 +20,7 @@
 			<rows>
 				<row class="th">
 					<nextmatch-sortheader align="center" label="Type" id="mime"/>
+                    <nextmatch-header align="center" label="Lock" id="lock"/>
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Size" id="size"/>
 					<nextmatch-sortheader label="Modified" id="mtime"/>
@@ -31,6 +33,7 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<vfs-mime align="center" id="$row"/>
+                    <image src="${row}[locked]"/>
 					<vfs id="$row" no_lang="1"/>
 					<vfs-size align="right" id="${row}[size]"/>
 					<date-time id="${row}[mtime]" readonly="true"/>
