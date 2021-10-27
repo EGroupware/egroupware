@@ -142,58 +142,68 @@ class filemanager_ui
 	public static function get_actions()
 	{
 		$actions = array(
-			'open' => array(
-				'caption' => lang('Open'),
-				'icon' => '',
-				'group' => $group=1,
+			'open'      => array(
+				'caption'         => lang('Open'),
+				'icon'            => '',
+				'group'           => $group = 1,
 				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:app.filemanager.open',
-				'default' => true
+				'onExecute'       => 'javaScript:app.filemanager.open',
+				'default'         => true
 			),
-			'new' => array(
-				'caption' => 'New',
-				'group' => $group,
+			'new'       => array(
+				'caption'      => 'New',
+				'group'        => $group,
 				'disableClass' => 'noEdit',
-				'children' => array (
-					'document' => array (
-						'caption' => 'Document',
-						'icon' => 'new',
+				'children'     => array(
+					'document' => array(
+						'caption'   => 'Document',
+						'icon'      => 'new',
 						'onExecute' => 'javaScript:app.filemanager.create_new',
 					)
 				)
 			),
-			'mkdir' => array(
-				'caption' => lang('Create directory'),
-				'icon' => 'filemanager/button_createdir',
-				'group' => $group,
+			'mkdir'     => array(
+				'caption'         => lang('Create directory'),
+				'icon'            => 'filemanager/button_createdir',
+				'group'           => $group,
 				'allowOnMultiple' => false,
-				'disableClass' => 'noEdit',
-				'onExecute' => 'javaScript:app.filemanager.createdir'
+				'disableClass'    => 'noEdit',
+				'onExecute'       => 'javaScript:app.filemanager.createdir'
 			),
-			'edit' => array(
-				'caption' => lang('Edit settings'),
-				'group' => $group,
-				'allowOnMultiple' => false,
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
-				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
+			'edit'      => array(
+				'caption'            => lang('Edit settings'),
+				'group'              => $group,
+				'allowOnMultiple'    => false,
+				'onExecute'          => Api\Header\UserAgent::mobile() ? 'javaScript:app.filemanager.viewEntry' : 'javaScript:app.filemanager.editprefs',
+				'mobileViewTemplate' => 'file?' . filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
-			'saveas' => array(
-				'caption' => lang('Save as'),
-				'group' => $group,
+			'unlock'    => array(
+				'caption'         => lang('Unlock'),
+				'icon'            => 'unlock',
+				'enableClass'     => 'locked',
+				'group'           => $group,
 				'allowOnMultiple' => true,
-				'icon' => 'filesave',
-				'onExecute' => 'javaScript:app.filemanager.force_download',
-				'disableClass' => 'isDir',
-				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed',
-				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 83, 'caption' => 'Ctrl + Shift + S'),
+				'hideOnDisabled'  => true
+			),
+			'saveas'    => array(
+				'caption'         => lang('Save as'),
+				'group'           => $group,
+				'allowOnMultiple' => true,
+				'icon'            => 'filesave',
+				'onExecute'       => 'javaScript:app.filemanager.force_download',
+				'disableClass'    => 'isDir',
+				'enabled'         => 'javaScript:app.filemanager.is_multiple_allowed',
+				'shortcut'        => array('ctrl'    => true, 'shift' => true, 'keyCode' => 83,
+										   'caption' => 'Ctrl + Shift + S'),
 			),
 			'saveaszip' => array(
-				'caption' => lang('Save as ZIP'),
-				'group' => $group,
+				'caption'         => lang('Save as ZIP'),
+				'group'           => $group,
 				'allowOnMultiple' => true,
-				'icon' => 'save_zip',
-				'postSubmit' => true,
-				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 90, 'caption' => 'Ctrl + Shift + Z'),
+				'icon'            => 'save_zip',
+				'postSubmit'      => true,
+				'shortcut'        => array('ctrl'    => true, 'shift' => true, 'keyCode' => 90,
+										   'caption' => 'Ctrl + Shift + Z'),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -815,7 +825,7 @@ class filemanager_ui
 
 			case 'createdir':
 				$dst = Vfs::concat($dir, is_array($selected) ? $selected[0] : $selected);
-				if (Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+				if(Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
 				{
 					return lang("Directory successfully created.");
 				}
@@ -824,16 +834,36 @@ class filemanager_ui
 			case 'saveaszip':
 				Vfs::download_zip($selected);
 				exit;
-
+			case 'unlock':
+				foreach((array)$selected as $target)
+				{
+					$link = Vfs::concat($dir, Vfs::basename($target));
+					$lock = Vfs::checkLock($link);
+					if($lock && Vfs::unlock($link, $lock['token']))
+					{
+						$files++;
+					}
+					else
+					{
+						$errs++;
+					}
+				}
+				return lang('%1 files unlocked.', $files);
 			default:
 				list($action, $settings) = explode('_', $action, 2);
 				switch($action)
 				{
 					case 'document':
-						if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
+						if(!$settings)
+						{
+							$settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
+						}
 						$document_merge = new filemanager_merge(Vfs::decodePath($dir));
 						$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
-						if($msg) return $msg;
+						if($msg)
+						{
+							return $msg;
+						}
 						$errs = count($selected);
 						return false;
 				}
@@ -1009,16 +1039,27 @@ class filemanager_ui
 					$row['class'] .= 'noExecute';
 				}
 			}
-			elseif (!$dir_is_writable[Vfs::dirname($path)])
+			elseif(!$dir_is_writable[Vfs::dirname($path)])
 			{
 				$row['class'] .= 'noEdit ';
+			}
+			if($lock = Vfs::checkLock($path))
+			{
+				$row['locked'] = 'lock';
+				if($GLOBALS['egw_info']['user']['apps']['admin'] || Vfs::$is_admin || Vfs::$is_root ||
+					$lock['owner'] == $GLOBALS['egw_info']['user']['account_id'] ||
+					$lock['owner'] == 'mailto:' . $GLOBALS['egw_info']['user']['account_email']
+				)
+				{
+					$row['class'] .= ' locked ';
+				}
 			}
 
 			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
-			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
+			$row['gid'] = -abs($row['gid']);    // gid are positive, but we use negagive account_id for groups internal
 
-			foreach(['mtime','ctime'] as $date_field)
+			foreach(['mtime', 'ctime'] as $date_field)
 			{
 				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
 			}
