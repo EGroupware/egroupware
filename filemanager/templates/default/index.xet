@@ -33,7 +33,7 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<vfs-mime align="center" id="$row"/>
-                    <image src="${row}[locked]"/>
+                    <image src="${row}[locked]" statustext="$row_cont[locked_status]"/>
 					<vfs id="$row" no_lang="1"/>
 					<vfs-size align="right" id="${row}[size]"/>
 					<date-time id="${row}[mtime]" readonly="true"/>

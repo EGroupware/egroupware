@@ -1046,6 +1046,12 @@ class filemanager_ui
 			if($lock = Vfs::checkLock($path))
 			{
 				$row['locked'] = 'lock';
+				$row['locked_status'] = lang(
+					"LOCK from %1, created %2",
+					// Not sure why sometimes the lock is owned by a user ID, sometimes mailto:user@email
+					is_numeric($lock['owner']) ? $GLOBALS['egw']->accounts->username($lock['owner']) : str_replace('mailto:', '', $lock['owner']),
+					Api\DateTime::to(APi\DateTime::server2user($lock['created']), '')
+				);
 				if($GLOBALS['egw_info']['user']['apps']['admin'] || Vfs::$is_admin || Vfs::$is_root ||
 					$lock['owner'] == $GLOBALS['egw_info']['user']['account_id'] ||
 					$lock['owner'] == 'mailto:' . $GLOBALS['egw_info']['user']['account_email']
