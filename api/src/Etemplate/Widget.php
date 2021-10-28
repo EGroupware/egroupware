@@ -634,17 +634,22 @@ class Widget
 	 */
 	protected static function check_disabled($disabled, array $expand)
 	{
-		if (($not = $disabled[0] == '!'))
+		if(($not = $disabled[0] == '!'))
 		{
-			$disabled = substr($disabled,1);
+			$disabled = substr($disabled, 1);
 		}
-		list($value,$check) = $vals = explode('=',$disabled);
+		list($value, $check) = $vals = explode('=', $disabled);
 
 		// use expand_name to be able to use @ or $
 		$val = self::expand_name($value, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 		$check_val = self::expand_name($check, $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-		$result = count($vals) == 1 ? $val != '' : ($check_val[0] == '/' ? preg_match($check_val,$val) : $val == $check_val);
-		if ($not) $result = !$result;
+		$result = count($vals) == 1 ?
+			boolval($val) :
+			($check_val[0] == '/' ? preg_match($check_val, $val) : $val == $check_val);
+		if($not)
+		{
+			$result = !$result;
+		}
 
 		//error_log(__METHOD__."('".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False'));
 		return $result;
