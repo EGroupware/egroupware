@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+
 /**
  * EGroupware API: VFS - static methods to use the new eGW virtual file system
  *
@@ -1662,39 +1663,57 @@ class Vfs extends Vfs\Base
 	 * checkLock() helper
 	 *
 	 * @param string $url url or path, lock is granted for the path only, but url is used for access checks
-	 * @return array|boolean false if there's no lock, else array with lock info
+	 * @param int $depth=0 currently only 0 or >0 = infinit/whole tree is evaluated
+	 * @return array[]|array|boolean $depth > 0: array of path => lock info arrays for $depth > 0
+	 *  $depth=0: false if there's no lock, else array with lock info
 	 */
-	static function checkLock($url)
+	static function checkLock($url, int $depth=0)
 	{
 		$path = self::parse_url($url, PHP_URL_PATH);
-		if (isset(self::$lock_cache[$path]))
+		if (!$depth && isset(self::$lock_cache[$path]))
 		{
 			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$url],true)));
 			return self::$lock_cache[$path];
 		}
-		$where = 'lock_path='.self::$db->quote($path);
+		if ($depth > 0)
+		{
+			$where = ['lock_path LIKE '.self::$db->quote($path.'%')];
+		}
+		else
+		{
+			$where = 'lock_path='.self::$db->quote($path);
+		}
 		// ToDo: additional check parent dirs for locks and children of the requested directory
 		//$where .= ' OR '.self::$db->quote($path).' LIKE '.self::$db->concat('lock_path',"'%'").' OR lock_path LIKE '.self::$db->quote($path.'%');
 		// ToDo: shared locks can return multiple rows
-		if (($result = self::$db->select(self::LOCK_TABLE,'*',$where,__LINE__,__FILE__)->fetch()))
+		$results = [];
+		foreach(self::$db->select(self::LOCK_TABLE,'*',$where,__LINE__,__FILE__) as $result)
 		{
-			$result = Db::strip_array_keys($result,'lock_');
-			$result['type']  = Db::from_bool($result['write']) ? 'write' : 'read';
+			$result = Db::strip_array_keys($result, 'lock_');
+			$result['type'] = Db::from_bool($result['write']) ? 'write' : 'read';
 			$result['scope'] = Db::from_bool($result['exclusive']) ? 'exclusive' : 'shared';
 			$result['depth'] = Db::from_bool($result['recursive']) ? 'infinite' : 0;
-		}
-		if ($result && $result['expires'] < time())	// lock is expired --> remove it
-		{
-	        self::$db->delete(self::LOCK_TABLE,array(
-	        	'lock_path' => $result['path'],
-	        	'lock_token' => $result['token'],
-	        ),__LINE__,__FILE__);
+			if ($result['expires'] < time())    // lock is expired --> remove it
+			{
+				self::$db->delete(self::LOCK_TABLE, array(
+					'lock_path' => $result['path'],
+					'lock_token' => $result['token'],
+				), __LINE__, __FILE__);
 
-			if (self::LOCK_DEBUG) error_log(__METHOD__."($url) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
-	        $result = false;
+				if (self::LOCK_DEBUG) error_log(__METHOD__ . "($url) lock is expired at " . date('Y-m-d H:i:s', $result['expires']) . " --> removed");
+				$result = false;
+			}
+			else
+			{
+				if ($result['path'] === $path || str_starts_with($result['path'], $path))
+				{
+					$results[$result['path']] = $result;
+				}
+				self::$lock_cache[$result['path']] = $result;
+			}
 		}
-		if (self::LOCK_DEBUG) error_log(__METHOD__."($url) returns ".($result?array2string($result):'false'));
-		return self::$lock_cache[$path] = $result;
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($url, $depth) returns ".array2string($depth ? $result : ($result ?? false)));
+		return $depth ? $results : ($result ?? false);
 	}
 
 	/**
