@@ -408,13 +408,17 @@ class calendar_uilist extends calendar_ui
 			$col_filter = array();
 			foreach($params['col_filter'] as $name => $val)
 			{
-				if (!in_array($name, array('participant','row_id')) && (string)$val !== '')
+				if(!in_array($name, array('participant', 'row_id')) && (string)$val !== '')
 				{
 					$col_filter[$name] = $val;
 				}
-				else if ( $name == 'row_id' && (string)$val !== '')
+				elseif($name == 'row_id' && (string)$val !== '')
 				{
 					$col_filter['cal_id'] = $val;
+				}
+				if($name[0] == '#')
+				{
+					$search_params['cfs'][] = $name;
 				}
 			}
 			// Videocalls
