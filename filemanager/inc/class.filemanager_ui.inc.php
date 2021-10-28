@@ -1012,6 +1012,13 @@ class filemanager_ui
 		$GLOBALS['egw']->session->commit_session();
 		$rows = $dir_is_writable = array();
 		$vfs_options = $this->get_vfs_options($query);
+		// query and cache locks for whole directory
+		$locks = [];
+		foreach(!empty($query['col_filter']['dir']) ? (array)$query['col_filter']['dir'] : (array)$query['path'] as $path)
+		{
+			$locks += Vfs::checkLock($path, 999);
+		}
+		$n = 0;
 		foreach(Vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
@@ -1043,7 +1050,7 @@ class filemanager_ui
 			{
 				$row['class'] .= 'noEdit ';
 			}
-			if($lock = Vfs::checkLock($path))
+			if (!empty($lock = $locks[$path]))
 			{
 				$row['locked'] = 'lock';
 				$row['locked_status'] = lang(
