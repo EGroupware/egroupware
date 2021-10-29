@@ -192,6 +192,7 @@ link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 list view	filemanager	de	Listenansicht
 location	filemanager	de	Ort
+lock	filemanager	de	Gesperrt
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
@@ -302,6 +303,7 @@ to overwrite the existing file store again.	filemanager	de	Zum Überschreiben de
 total files	filemanager	de	Gesamtanzahl Dateien
 ui mode	filemanager	de	Benutzeroberfläche
 under directory	filemanager	de	unter dem Verzeichnis
+unlock	filemanager	de	entsperren
 unmount	filemanager	de	Unmount
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
