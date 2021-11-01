@@ -70,17 +70,17 @@ class Html
 			{
 				$additionalQuote="";//at the end, ...
 				// only one &quot at the end is found. chance is, it is not belonging to the URL
-				if ($match[5]==';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')===false)
+				if (!empty($match[5]) && $match[5]===';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')===false)
 				{
 					$match[4] = substr($match[4],0,strpos($match[4],'&quot',strlen($match[4])-6));
 					$additionalQuote = "&quot;";
 				}
 				// if there is quoted stuff within the URL then we have at least one more &quot; in match[4], so chance is the last &quot is matched by the one within
-				if ($match[5]==';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')!==false)
+				if (!empty($match[5]) && $match[5]===';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')!==false)
 				{
 					$match[4] .= $match[5];
 				}
-				if ($match[5]==';'&&$match[4]=="&quot")
+				if (!empty($match[5]) && $match[5]===';' && $match[4]==="&quot")
 				{
 					$match[4] ='';
 					$additionalQuote = "&quot;";
@@ -101,18 +101,18 @@ class Html
 			$result4 = preg_replace_callback( $Expr, function ($match) {
 					//error_log(__METHOD__.__LINE__.array2string($match));
 					$match += [null,null,null,null];
-					if ($match[4]==';' && (strlen($match[3])-4) >=0 && strpos($match[3],'&gt',strlen($match[3])-4)!==false)
+					if (!empty($match[4]) && $match[4]===';' && (strlen($match[3])-4) >=0 && strpos($match[3],'&gt',strlen($match[3])-4)!==false)
 					{
 						$match[3] = substr($match[3],0,strpos($match[3],'&gt',strlen($match[3])-4));
 						$match[4] = "&gt;";
 					}
-					if ($match[4]==';'&&$match[3]=="&gt")
+					if (!empty($match[4]) && $match[4]===';' && $match[3]=="&gt")
 					{
 						$match[3] ='';
 						$match[4] = "&gt;";
 					}
 					//error_log(__METHOD__.__LINE__.array2string($match));
-					return $match[1]."<a href=\"https://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
+					return $match[1]."<a href=\"https://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".($match[4]??'');
 				}, $result3 );
 		}
 		return $result4;

@@ -33,7 +33,6 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	public function beforeSendToClient($cname, array $expand=null)
 	{
 
-		Framework::includeJS('.','et2_widget_owner','calendar');
 		Framework::includeCSS('calendar','calendar');
 
 		$bo = new calendar_bo();
@@ -139,6 +138,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 */
 	public static function ajax_owner($id = null)
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
+
 		// Handle a request for a single ID
 		if($id && !is_array($id))
 		{

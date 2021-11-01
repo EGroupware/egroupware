@@ -31,7 +31,6 @@ class calendar_wizard_import_ical
 	 */
 	function __construct()
 	{
-		Api\Framework::includeJS('.','et2_widget_owner','calendar');
 		Api\Framework::includeCSS('calendar','calendar');
 		$this->steps = array(
 			'wizard_step55' => lang('Edit conditions'),
@@ -73,7 +72,7 @@ class calendar_wizard_import_ical
 			$content['step'] = 'wizard_step55';
 			foreach(array('skip_conflicts','empty_before_import','remove_past','remove_future','override_values') as $field)
 			{
-				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
+				if(!$content[$field] && is_array($content['plugin_options']) && array_key_exists($field, $content['plugin_options']))
 				{
 					$content[$field] = $content['plugin_options'][$field];
 				}

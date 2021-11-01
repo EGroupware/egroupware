@@ -117,7 +117,7 @@ trait UserContextTrait
 		}
 
 		// if we check writable and have a readonly mount --> return false, as backends dont know about r/o url parameter
-		if ($check == Vfs::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url']))
+		if ($check == Vfs::WRITABLE && Vfs\StreamWrapper::url_is_readonly($stat['url'] ?? null))
 		{
 			//error_log(__METHOD__."(path=$path, check=writable, ...) failed because mount is readonly");
 			return false;
@@ -125,7 +125,7 @@ trait UserContextTrait
 
 		// check if we use an EGroupwre stream wrapper, or a stock php one
 		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
-		if (($scheme = Vfs::parse_url($stat['url'], PHP_URL_SCHEME)) && !(class_exists(Vfs::scheme2class($scheme))))
+		if (($scheme = Vfs::parse_url($stat['url'] ?? null, PHP_URL_SCHEME)) && !(class_exists(Vfs::scheme2class($scheme))))
 		{
 			switch($check)
 			{

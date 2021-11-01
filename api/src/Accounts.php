@@ -986,7 +986,7 @@ class Accounts
 		}
 		if ($account_id && ($data = self::cache_read($account_id)))
 		{
-			$ret = $just_id && $data['memberships'] ? array_keys($data['memberships']) : $data['memberships'];
+			$ret = $just_id && $data['memberships'] ? array_keys($data['memberships']) : ($data['memberships'] ?? []);
 		}
 		//error_log(__METHOD__."($account_id, $just_id) data=".array2string($data)." returning ".array2string($ret));
 		return $ret ?? [];

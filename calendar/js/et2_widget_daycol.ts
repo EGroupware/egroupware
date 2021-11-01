@@ -927,7 +927,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					(new Date(b.options.value.end) - new Date(b.options.value.start)) -
 					(new Date(a.options.value.end) - new Date(a.options.value.start));
 
-				return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
+				return (Math.abs(duration) > 360000) ? duration : (a.options.value.title.localeCompare(b.options.value.title));
 			}
 			else if (a.options.value.whole_day || b.options.value.whole_day)
 			{

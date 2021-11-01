@@ -87,7 +87,7 @@ class Link extends Etemplate\Widget
 		// ToDo: implement on client-side
 		if (!$attrs['help']) self::setElementAttribute($form_name, 'help', 'view this linked entry in its application');
 
-		if($attrs['type'] == 'link-list')
+		if (!empty($attrs['type']) && $attrs['type'] === 'link-list')
 		{
 			$app = $value['to_app'];
 			$id  = $value['to_id'];

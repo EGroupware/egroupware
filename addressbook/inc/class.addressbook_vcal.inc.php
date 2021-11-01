@@ -971,11 +971,12 @@ class addressbook_vcal extends addressbook_bo
 				{
 					if (!empty($fieldName))
 					{
-						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+						$value = $vcardValues[$vcardKey]['values'][$fieldKey];
+						if (is_string($value)) $value = trim($value);
 
 						if ($pref_tel && (($vcardKey == $pref_tel) ||
-								($vcardValues[$vcardKey]['name'] == 'TEL') &&
-								($vcardValues[$vcardKey]['value'] == $vcardValues[$pref_tel]['value'])))
+							($vcardValues[$vcardKey]['name'] == 'TEL') &&
+							($vcardValues[$vcardKey]['value'] == $vcardValues[$pref_tel]['value'])))
 						{
 							$contact['tel_prefer'] = $fieldName;
 						}

@@ -397,9 +397,15 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_min(_value)
 	{
+		// minDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+		// @ts-ignore
+		if(typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value)
+		{
+			_value = parseInt(_value);
+		}
 		if(this.input_date)
 		{
-			if (this.is_mobile)
+			if(this.is_mobile)
 			{
 				this.input_date.attr('min', this._relativeDate(_value));
 			}
@@ -452,9 +458,15 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 	 */
 	set_max(_value)
 	{
+		// maxDate option checks the type, so make sure we're passing numbers as numbers (0, not "0")
+		// @ts-ignore
+		if(typeof _value === "string" && !isNaN(_value) && "" + parseInt(_value) == _value)
+		{
+			_value = parseInt(_value);
+		}
 		if(this.input_date)
 		{
-			if (this.is_mobile)
+			if(this.is_mobile)
 			{
 				this.input_date.attr('max', this._relativeDate(_value));
 			}
@@ -1516,12 +1528,18 @@ export class et2_date_range extends et2_inputWidget
 		this.from = <et2_date>et2_createWidget('date',{
 			id: this.id+'[from]',
 			blur: egw.lang('From'),
-			onchange() { widget.to.set_min(widget.from.getValue()); }
+			onchange(_node,_widget) {
+				widget.to.set_min(widget.from.getValue());
+				if (_node instanceof jQuery) widget.onchange.call(widget, _widget, widget);
+			}
 		},this);
 		this.to = <et2_date>et2_createWidget('date',{
 			id: this.id+'[to]',
 			blur: egw.lang('To'),
-			onchange() {widget.from.set_max(widget.to.getValue()); }
+			onchange(_node,_widget) {
+				widget.from.set_max(widget.to.getValue());
+				if (_node instanceof jQuery) widget.onchange.call(widget, _widget,widget);
+			}
 		},this);
 		this.select = <et2_selectbox><unknown>et2_createWidget('select',{
 			id: this.id+'[relative]',

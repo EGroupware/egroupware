@@ -8,8 +8,7 @@
  * @author Nathan Gray
  */
 
-import {et2_register_widget} from "../../api/js/etemplate/et2_core_widget";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {et2_register_widget} from "../../api/js/etemplate/et2_core_widget.ts";
 import {et2_taglist_email} from "../../api/js/etemplate/et2_widget_taglist";
 
 /**
@@ -20,7 +19,7 @@ import {et2_taglist_email} from "../../api/js/etemplate/et2_widget_taglist";
  *
  * Uses MagicSuggest library
  * @see http://nicolasbize.github.io/magicsuggest/
- * @augments et2_selectbox
+ * @augments et2_taglist_email
  */
 export class et2_calendar_owner extends et2_taglist_email
 {

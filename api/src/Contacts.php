@@ -207,8 +207,8 @@ class Contacts extends Contacts\Storage
 		$this->default_private = substr($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] ?? '',-1) == 'p';
 		if ($this->default_addressbook > 0 && $this->default_addressbook != $this->user &&
 			($this->default_private ||
-			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'] ||
-			$this->default_addressbook == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default']))
+			$this->default_addressbook == (int)($GLOBALS['egw']->preferences->forced['addressbook']['add_default'] ?? 0) ||
+			$this->default_addressbook == (int)($GLOBALS['egw']->preferences->default['addressbook']['add_default'] ?? 0)))
 		{
 			$this->default_addressbook = $this->user;	// admin set a default or forced pref for personal addressbook
 		}

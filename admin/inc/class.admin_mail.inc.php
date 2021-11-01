@@ -869,7 +869,14 @@ class admin_mail
 			// clear current account-data, as account has changed and we going to read selected one
 			$content = array_intersect_key($content, array_flip(array('called_for', 'accounts', 'acc_id', 'tabs')));
 
-			if ($content['acc_id'] > 0)
+			if ($content['acc_id'] === 'new')
+			{
+				$content['account_id'] = $content['called_for'];
+				$content['old_acc_id'] = $content['acc_id'];	// to not call add/wizard, if we return from to
+				unset($content['tabs']);
+				return $this->add($content);
+			}
+			elseif ($content['acc_id'] > 0)
 			{
 				try {
 					$account = Mail\Account::read($content['acc_id'], $this->is_admin && $content['called_for'] ?
@@ -898,13 +905,6 @@ class admin_mail
 					if (self::$debug) _egw_log_exception($e);
 					Framework::window_close($e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
 				}
-			}
-			elseif ($content['acc_id'] === 'new')
-			{
-				$content['account_id'] = $content['called_for'];
-				$content['old_acc_id'] = $content['acc_id'];	// to not call add/wizard, if we return from to
-				unset($content['tabs']);
-				return $this->add($content);
 			}
 		}
 		// some defaults for new accounts
@@ -1005,7 +1005,7 @@ class admin_mail
 							{
 								$account->imapServer()->retrieveRules();
 							}
-							$new_account = !($content['acc_id'] > 0);
+							$new_account = !((int)$content['acc_id'] > 0);
 							// check for deliveryMode="forwardOnly", if a forwarding-address is given
 							if ($content['acc_smtp_type'] != 'EGroupware\\Api\\Mail\\Smtp' &&
 								$content['deliveryMode'] == Mail\Smtp::FORWARD_ONLY &&
@@ -1340,7 +1340,7 @@ class admin_mail
 			$readonlys['button[multiple]'] = true;
 		}
 		// when called by admin for existing accounts, display further administrative actions
-		if ($content['called_for'] && $content['acc_id'] > 0)
+		if ($content['called_for'] && (int)$content['acc_id'] > 0)
 		{
 			$admin_actions = array();
 			foreach(Api\Hooks::process(array(
@@ -1471,8 +1471,8 @@ class admin_mail
 
 		$url = 'https://autoconfig.thunderbird.net/v1.1/'.$domain;
 		try {
-			$xml = @simplexml_load_file($url);
-			if (!$xml->emailProvider) throw new Api\Exception\NotFound();
+			$xml = simplexml_load_string(file_get_contents($url) ?: '');
+			if (!$xml || !$xml->emailProvider) throw new Api\Exception\NotFound();
 			$provider = array(
 				'displayName' => (string)$xml->emailProvider->displayName,
 			);
@@ -1604,11 +1604,11 @@ class admin_mail
 
 					if (strpos($_data['domain'], '.') !== false)
 					{
-						$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['domain'], $userData['mailLocalAddress']);
+						$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($ea_account->acc_domain, '/').'$/', '@'.$_data['domain'], $userData['mailLocalAddress']);
 
 						foreach($userData['mailAlternateAddress'] as &$alias)
 						{
-							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain).'$/', '@'.$_data['domain'], $alias);
+							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain, '/').'$/', '@'.$_data['domain'], $alias);
 						}
 					}
 					// fullfill the saveUserData requirements
@@ -1618,7 +1618,7 @@ class admin_mail
 				}
 				else
 				{
-					$msg .= lang('No profile defined for user %1', '#'.$_data['id'].' '.$account['account_fullname']."\n");
+					$msg = lang('No profile defined for user %1', '#'.$_data['id'].' '.$account['account_fullname']."\n");
 
 				}
 			}

@@ -785,7 +785,7 @@ class calendar_so
 		}
 		if (!empty($params['sql_filter']))
 		{
-			if (is_string($params['sql_filter']))
+			if(is_string($params['sql_filter']))
 			{
 				$where[] = $params['sql_filter'];
 			}
@@ -794,15 +794,45 @@ class calendar_so
 				$where = array_merge($where, $params['sql_filter']);
 			}
 		}
+		if(array_filter($where, fn($key) => str_contains($key, '#'), ARRAY_FILTER_USE_KEY))
+		{
+			$custom_fields = Api\Storage\Customfields::get('calendar');
+			foreach($where as $col => $data)
+			{
+				if($col[0] == '#' && $data)
+				{
+					unset($where[$col]);
+					$filtermethod = " $this->cal_table.cal_id IN (SELECT DISTINCT cal_id FROM $this->extra_table WHERE ";
+					if($custom_fields[substr($col, 1)]['type'] == 'select' && $custom_fields[substr($col, 1)]['rows'] > 1)
+					{
+						// Multi-select - any entry with the filter value selected matches
+						$filtermethod .= $this->db->expression($this->extra_table, array(
+								'cal_extra_name' => substr($col, 1),
+								$this->db->concat("','", 'cal_extra_value', "','") . ' ' . $this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote('%,' . $data . ',%'),
+							)) . ')';
+					}
+					else
+					{
+						$filtermethod .= $this->db->expression($this->extra_table, array(
+								'cal_extra_name'  => substr($col, 1),
+								'cal_extra_value' => $data,
+							)) . ')';
+					}
+					$where[] = $filtermethod;
+				}
+			}
+		}
+
 		$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
-		if ($users)
+
+		if($users)
 		{
 			$users_by_type = array();
 			foreach((array)$users as $user)
 			{
-				if (is_numeric($user))
+				if(is_numeric($user))
 				{
-					$users_by_type['u'][] = (int) $user;
+					$users_by_type['u'][] = (int)$user;
 				}
 				else
 				{

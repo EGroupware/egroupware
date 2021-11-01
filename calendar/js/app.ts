@@ -29,6 +29,7 @@ import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
 import {et2_calendar_daycol} from "./et2_widget_daycol";
+import {et2_calendar_planner} from "./et2_widget_planner";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_calendar_event} from "./et2_widget_event";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
@@ -256,10 +257,12 @@ export class CalendarApp extends EgwApp
 		if(sidebox.length == 0 && egw_getFramework() != null)
 		{
 			// Force rollup to load owner widget, it leaves it out otherwise
-			new et2_calendar_owner(_et2.widgetContainer,{});
+			new et2_calendar_owner(_et2.widgetContainer, {});
+			// Force rollup to load planner widget, it leaves it out otherwise
+			new et2_calendar_planner(_et2.widgetContainer, {});
 
 			var egw_fw = egw_getFramework();
-			sidebox= jQuery('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+			sidebox = jQuery('#favorite_sidebox_' + this.appname, egw_fw.sidemenuDiv);
 		}
 
 		var content = this.et2.getArrayMgr('content');
@@ -3051,21 +3054,28 @@ export class CalendarApp extends EgwApp
 			{
 				// Simple, easy case - just one widget for the selected time span. (planner)
 				// Update existing view's special attribute filters, defined in the view list
-				for(var updater in view)
+				for(let updater of Object.getOwnPropertyNames(view))
 				{
 					if(typeof view[updater] === 'function')
 					{
-						let value = view[updater].call(this,state.state);
-						if(updater === 'start_date') state.state.first = this.date.toString(value);
-						if(updater === 'end_date') state.state.last = this.date.toString(value);
+						let value = view[updater].call(this, state.state);
+						if(updater === 'start_date')
+						{
+							state.state.first = this.date.toString(value);
+						}
+						if(updater === 'end_date')
+						{
+							state.state.last = this.date.toString(value);
+						}
 
 						// Set value
 						for(var i = 0; i < view.etemplates.length; i++)
 						{
-							view.etemplates[i].widgetContainer.iterateOver(function(widget) {
-								if(typeof widget['set_'+updater] === 'function')
+							view.etemplates[i].widgetContainer.iterateOver(function(widget)
+							{
+								if(typeof widget['set_' + updater] === 'function')
 								{
-									widget['set_'+updater](value);
+									widget['set_' + updater](value);
 								}
 							}, this, et2_calendar_view);
 						}

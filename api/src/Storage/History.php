@@ -62,7 +62,7 @@ class History
 		$this->appname = $appname ?: $GLOBALS['egw_info']['flags']['currentapp'];
 		$this->user = $user ?: $GLOBALS['egw_info']['user']['account_id'];
 
-		if(is_object($GLOBALS['egw_setup']->db))
+		if (isset($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']->db))
 		{
 			$this->db = $GLOBALS['egw_setup']->db;
 		}

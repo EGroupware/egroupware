@@ -310,7 +310,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." fopen (may create a directory? mkdir) ($this->opened_fs_id,$mode,$options)");
 			// if creating a new file as root eg. via (docker exec) filemanager/cli.php do NOT create files unreadable by webserver
-			if ($new_file && function_exists('posix_getuid') && !posix_getuid())
+			if (!empty($new_file) && function_exists('posix_getuid') && !posix_getuid())
 			{
 				umask(0666);
 			}
@@ -1628,7 +1628,7 @@ GROUP BY A.fs_id';
 		// first check our stat-cache for the ids
 		foreach(self::$stat_cache as $path => $stat)
 		{
-			if (($key = array_search($stat['fs_id'],$ids)) !== false)
+			if ($stat && ($key = array_search($stat['fs_id'],$ids)) !== false)
 			{
 				$pathes[$stat['fs_id']] = $path;
 				unset($ids[$key]);
@@ -1948,7 +1948,7 @@ GROUP BY A.fs_id';
 		}
 		if (!is_array($path_ids))
 		{
-			$props = $props[$row['fs_id']] ? $props[$row['fs_id']] : array();	// return empty array for no props
+			$props = isset($row) && !empty($props[$row['fs_id']]) ? $props[$row['fs_id']] : [];	// return empty array for no props
 		}
 		elseif ($props && isset($stat) && is_array($id2path = self::id2path(array_keys($props))))	// need to map fs_id's to pathes
 		{

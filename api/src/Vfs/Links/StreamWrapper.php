@@ -262,7 +262,7 @@ class StreamWrapper extends LinksParent
 		if($path[0] != '/')
 		{
 			if (strpos($path,'?') !== false) $query = Vfs::parse_url($path,PHP_URL_QUERY);
-			$path = Vfs::parse_url($path,PHP_URL_PATH).($query ? '?'.$query : '');
+			$path = Vfs::parse_url($path,PHP_URL_PATH).(!empty($query) ? '?'.$query : '');
 		}
 		list(,$apps,$app,$id) = explode('/',$path);
 

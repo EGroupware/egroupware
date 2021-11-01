@@ -283,7 +283,7 @@ class Translation
 			self::add_app($apps);
 		}
 		$phrase = static::translate($message, $vars);
-		if($old_lang)
+		if (!empty($old_lang))
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $old_lang;
 			self::init(true);

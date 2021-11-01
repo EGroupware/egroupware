@@ -1723,7 +1723,7 @@ abstract class Merge
 				{
 					// If we send the real content it can result in infinite loop of lookups
 					// so we send only the used fields
-					$content = $expand_sub_cfs[$field] ? $expand_sub_cfs[$field] : '';
+					$content = $expand_sub_cfs[$field] ?? $matches[0][$index];
 					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#' . $field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$' . $sub[$index] . '$$'];
@@ -1793,7 +1793,7 @@ abstract class Merge
 	public function get_app_replacements($app, $id, $content, $prefix = '')
 	{
 		$replacements = array();
-		if(!$app || $id || !$content)
+		if(!$app || !$id || !$content)
 		{
 			return $replacements;
 		}
@@ -1820,7 +1820,7 @@ abstract class Merge
 			// Don't break merge, just log it
 			error_log($e->getMessage());
 		}
-		return $replacements;
+		return $replacements ?: [];
 	}
 
 	/**
@@ -2607,7 +2607,7 @@ abstract class Merge
 			$action_base,
 			array(
 				'icon'       => Api\Vfs::mime_icon($file['mime']),
-				'caption'    => Api\Vfs::decodePath($file['name']),
+				'caption'    => Api\Vfs::decodePath(Api\Vfs::basename($file['name'])),
 				'onExecute'  => 'javaScript:app.' . $GLOBALS['egw_info']['flags']['currentapp'] . '.merge',
 				'merge_data' => $edit_attributes
 			),
@@ -2832,7 +2832,7 @@ abstract class Merge
 		);
 
 		// Check for a configured preferred directory
-		if(($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
+		if(!empty($pref = $GLOBALS['egw_info']['user']['preferences'][$this->get_app()][Merge::PREF_STORE_LOCATION]) && Vfs::is_writable($pref))
 		{
 			$target = $pref;
 		}

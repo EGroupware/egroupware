@@ -4998,6 +4998,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		if(Mail::$debug) error_log(__METHOD__."->".array2string($_messageList));
 		$uidA = self::splitRowID($_messageList['msg'][0]);
+		if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($uidA['profileID']);
+		}
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$this->mail_bo->sendMDN($uidA['msgUID'],$folder);
 	}
@@ -5024,6 +5028,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				// we have both messageIds AND allFlag folder information
 				$uidA = self::splitRowID($_messageList['msg'][0]);
+				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
+				{
+					$this->changeProfile($uidA['profileID']);
+				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				if(!$folder && !$uidA['msg'] && $uidA['accountID'])
 				{
@@ -5161,6 +5169,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			else
 			{
 				$uidA = self::splitRowID($_messageList['msg'][0]);
+				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
+				{
+					$this->changeProfile($uidA['profileID']);
+				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 			}
 			if (!$alreadyFlagged)
@@ -5222,6 +5234,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				// we have both messageIds AND allFlag folder information
 				$uidA = self::splitRowID($_messageList['msg'][0]);
+				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
+				{
+					$this->changeProfile($uidA['profileID']);
+				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
@@ -5292,6 +5308,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			else
 			{
 				$uidA = self::splitRowID($_messageList['msg'][0]);
+				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
+				{
+					$this->changeProfile($uidA['profileID']);
+				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				foreach($_messageList['msg'] as $rowID)
 				{

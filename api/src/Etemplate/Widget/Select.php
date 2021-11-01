@@ -317,10 +317,10 @@ class Select extends Etemplate\Widget
 		{
 			// Check selection preference, we may be able to skip reading some data
 			$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
-			if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $select_pref == 'none')
+			if($this->attrs['type'] == 'select-account' && empty($GLOBALS['egw_info']['user']['apps']['admin']) && $select_pref == 'none')
 			{
 				// Preserve but do not send the value if preference is 'none'
-				self::$request->preserv[$this->id] = self::$request->content[$this->id];
+				self::$request->preserv[$this->id] = self::$request->content[$this->id] ?? null;
 				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;
 			}
@@ -335,7 +335,7 @@ class Select extends Etemplate\Widget
 				if (!isset($form_names_done[$form_name]) &&
 					($type_options = self::typeOptions($this,
 					// typeOptions thinks # of rows is the first thing in options
-					(!empty($this->attrs['rows']) && !empty($this->attrs['options']) && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
+					(!empty($this->attrs['rows']) && !empty($this->attrs['options']) && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : ($this->attrs['options']??null)),
 					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name)))
 				{
 					self::fix_encoded_options($type_options);
@@ -966,6 +966,9 @@ class Select extends Etemplate\Widget
 	 */
 	public static function ajax_get_options($type, $attributes, $value = null)
 	{
+		// close session now, to not block other user actions
+		$GLOBALS['egw']->session->commit_session();
+
 		$no_lang = false;
 		if(is_array($attributes))
 		{
