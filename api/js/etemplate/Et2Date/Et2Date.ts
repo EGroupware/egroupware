@@ -186,6 +186,11 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 
 	getValue()
 	{
+		if(this.readOnly)
+		{
+			return null;
+		}
+
 		// The supplied value was not understandable, return null
 		if(this.modelValue instanceof Unparseable || !this.modelValue)
 		{
@@ -237,11 +242,34 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	}
 
 	/**
+	 * Overriding from parent for read-only
+	 *
+	 * @return {TemplateResult}
+	 * @protected
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	_inputGroupInputTemplate()
+	{
+		if(this.readOnly)
+		{
+			return this.formattedValue;
+		}
+		else
+		{
+			return super._inputGroupInputTemplate();
+		}
+	}
+
+	/**
 	 * Overriding parent to add class to button, and use an image instead of unicode emoji
 	 */
 	// eslint-disable-next-line class-methods-use-this
 	_invokerTemplate()
 	{
+		if(this.readOnly)
+		{
+			return '';
+		}
 		let img = this.egw() ? this.egw().image("calendar") || '' : '';
 		return html`
             <button

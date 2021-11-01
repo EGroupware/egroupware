@@ -47,6 +47,21 @@ describe("Date widget", () =>
 		assert.equal(element.querySelector("[slot='label']").textContent, "Label set");
 	})
 
+	it('Readonly does not return a value', () =>
+	{
+		element.readOnly = true;
+		let test_time_string = '2008-09-22T12:00:00.000Z';
+
+		element.set_value(test_time_string);
+
+		// Use a Promise to wait for asychronous changes to the DOM
+		return Promise.resolve().then(() =>
+		{
+			// Read-only widget returns null
+			assert.equal(element.getValue(), null);
+		});
+	});
+
 	const tz_list = [
 		{name: "America/Edmonton", offset: 600},
 		{name: "UTC", offset: 0},
