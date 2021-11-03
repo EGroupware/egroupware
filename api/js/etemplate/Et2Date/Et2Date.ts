@@ -40,34 +40,26 @@ export function parseDate(dateString)
 		}
 	}
 
-	let formatString = <string>(egw.preference("dateformat") || 'Y-m-d');
+	let formatString = <string>(window.egw.preference("dateformat") || 'Y-m-d');
 	formatString = formatString.replaceAll(new RegExp('[-/\.]', 'ig'), '-');
 	let parsedString = "";
 	switch(formatString)
 	{
 		case 'd-m-Y':
-			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(
-				3,
-				5,
-			)}/${dateString.slice(0, 2)}`;
+			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(3, 5,)}/${dateString.slice(0, 2)}`;
 			break;
 		case 'm-d-Y':
-			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(
-				0,
-				2,
-			)}/${dateString.slice(3, 5)}`;
+			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(0, 2,)}/${dateString.slice(3, 5)}`;
 			break;
 		case 'Y-m-d':
-			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(
-				5,
-				7,
-			)}/${dateString.slice(8, 10)}`;
+			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(5, 7,)}/${dateString.slice(8, 10)}`;
+			break;
+		case 'Y-d-m':
+			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(8, 10)}/${dateString.slice(5, 7)}`;
 			break;
 		case 'd-M-Y':
-			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(
-				3,
-				5,
-			)}/${dateString.slice(0, 2)}`;
+			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(3, 5,)}/${dateString.slice(0, 2)}`;
+			break;
 		default:
 			parsedString = '0000/00/00';
 	}
@@ -90,6 +82,97 @@ export function parseDate(dateString)
 }
 
 /**
+ * To parse a time into the right format
+ * Date will be 1970-01-01
+ *
+ * @param {string} timeString
+ * @returns {Date | undefined}
+ */
+export function parseTime(timeString)
+{
+	// First try the server format
+	if(timeString.substr(-1) === "Z")
+	{
+		try
+		{
+			let date = new Date(timeString);
+			if(date instanceof Date)
+			{
+				return date;
+			}
+		}
+		catch(e)
+		{
+			// Nope, that didn't parse directly
+		}
+	}
+
+	let am_pm = timeString.endsWith("pm") || timeString.endsWith("PM") ? 12 : 0;
+	timeString = timeString.replaceAll(/[^0-9:]/gi, '');
+	const [hour, minute] = timeString.split(':').map(Number);
+
+	const parsedDate = new Date("1970-01-01T00:00:00Z");
+	parsedDate.setUTCHours(hour + am_pm);
+	parsedDate.setUTCMinutes(minute);
+
+	// Check if parsedDate is not `Invalid Date` or that the time has changed
+	if(
+		parsedDate.getUTCHours() === hour + am_pm &&
+		parsedDate.getUTCMinutes() === minute
+	)
+	{
+		return parsedDate;
+	}
+	return undefined;
+}
+
+/**
+ * To parse a date+time into an object
+ *
+ * @param {string} dateTimeString
+ * @returns {Date | undefined}
+ */
+export function parseDateTime(dateTimeString)
+{
+	// First try the server format
+	if(typeof dateTimeString === "string" && dateTimeString.substr(-1) === "Z" || !isNaN(dateTimeString))
+	{
+		if(!isNaN(dateTimeString) && parseInt(dateTimeString) == dateTimeString)
+		{
+			this.egw().debug("warn", "Invalid date/time string: " + dateTimeString);
+			dateTimeString *= 1000;
+		}
+		try
+		{
+			let date = new Date(dateTimeString);
+			if(date instanceof Date)
+			{
+				return date;
+			}
+		}
+		catch(e)
+		{
+			// Nope, that didn't parse directly
+		}
+	}
+
+	const date = parseDate(dateTimeString);
+
+	let explody = dateTimeString.split(" ");
+	explody.shift();
+	const time = parseTime(explody.join(" "));
+
+	if(typeof date === "undefined" || typeof time === "undefined")
+	{
+		return undefined;
+	}
+	date.setUTCHours(time.getUTCHours());
+	date.setUTCMinutes(time.getUTCMinutes());
+	date.setUTCSeconds(time.getUTCSeconds());
+	return date;
+}
+
+/**
  * Format dates according to user preference
  *
  * @param {Date} date
@@ -97,9 +180,9 @@ export function parseDate(dateString)
  * 	set 'dateFormat': "Y-m-d" to specify a particular format
  * @returns {string}
  */
-export function formatDate(date: Date, options): string
+export function formatDate(date : Date, options) : string
 {
-	if (!date || !(date instanceof Date))
+	if(!date || !(date instanceof Date))
 	{
 		return "";
 	}
@@ -107,7 +190,7 @@ export function formatDate(date: Date, options): string
 	// Add timezone offset back in, or formatDate will lose those hours
 	let formatDate = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
 
-	let dateformat = options.dateFormat || <string>egw.preference("dateformat") || 'Y-m-d';
+	let dateformat = options.dateFormat || <string>window.egw.preference("dateformat") || 'Y-m-d';
 
 	var replace_map = {
 		d: (date.getUTCDate() < 10 ? "0" : "") + date.getUTCDate(),
@@ -115,11 +198,59 @@ export function formatDate(date: Date, options): string
 		Y: "" + date.getUTCFullYear()
 	}
 	var re = new RegExp(Object.keys(replace_map).join("|"), "gi");
-	_value = dateformat.replace(re, function (matched)
+	_value = dateformat.replace(re, function(matched)
 	{
 		return replace_map[matched];
 	});
 	return _value;
+}
+
+/**
+ * Format dates according to user preference
+ *
+ * @param {Date} date
+ * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available
+ * 	set 'timeFormat': "12" to specify a particular format
+ * @returns {string}
+ */
+export function formatTime(date : Date, options) : string
+{
+	if(!date || !(date instanceof Date))
+	{
+		return "";
+	}
+	let _value = '';
+
+	let timeformat = options.timeFormat || <string>window.egw.preference("timeformat") || '24';
+	let hours = (timeformat == "12" && date.getUTCHours() > 12) ? (date.getUTCHours() - 12) : date.getUTCHours();
+	if(timeformat == "12" && hours == 0)
+	{
+		// 00:00 is 12:00 am
+		hours = 12;
+	}
+
+	_value = (timeformat == "24" && hours < 10 ? "0" : "") + hours + ":" +
+		(date.getUTCMinutes() < 10 ? "0" : "") + (date.getUTCMinutes()) +
+		(timeformat == "24" ? "" : (date.getUTCHours() < 12 ? " am" : " pm"));
+
+	return _value;
+}
+
+/**
+ * Format date+time according to user preference
+ *
+ * @param {Date} date
+ * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available
+ * 	set 'dateFormat': "Y-m-d", 'timeFormat': "12" to specify a particular format
+ * @returns {string}
+ */
+export function formatDateTime(date : Date, options) : string
+{
+	if(!date || !(date instanceof Date))
+	{
+		return "";
+	}
+	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
 export class Et2Date extends Et2InputWidget(LionInputDatepicker)
@@ -196,6 +327,10 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		{
 			return null;
 		}
+		this.modelValue.setUTCHours(0);
+		this.modelValue.setUTCMinutes(0);
+		this.modelValue.setSeconds(0, 0);
+
 		return this.modelValue.toJSON();
 	}
 

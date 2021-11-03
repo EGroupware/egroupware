@@ -63,7 +63,7 @@ describe("Date widget", () =>
 	});
 
 	const tz_list = [
-		{name: "America/Edmonton", offset: 600},
+		{name: "America/Edmonton", offset: -600},
 		{name: "UTC", offset: 0},
 		{name: "Australia/Adelaide", offset: 630}
 	];
@@ -85,8 +85,8 @@ describe("Date widget", () =>
 				// Use a Promise to wait for asychronous changes to the DOM
 				return Promise.resolve().then(() =>
 				{
-					// Widget gives time as a string so we can send to server
-					assert.equal(element.getValue(), test_time_string);
+					// Widget gives time as a string so we can send to server, but zeros the time
+					assert.equal(element.getValue().substr(0, 11), test_time_string.substr(0, 11));
 				});
 			});
 

@@ -282,4 +282,6 @@ class Date extends Transformer
 	}
 }
 
-\EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Date', array('et2-date', 'time_or_date'));
+\EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Date',
+												 array('et2-date', 'et2-datetime', 'time_or_date')
+);
