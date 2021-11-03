@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2720b854779a8593705635d20ce220a",
+    "content-hash": "96b0d7973a3487ec4a97ea7facec6c77",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -207,7 +207,7 @@
             "version": "v2.3.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:fengyuanchen/cropper.git",
+                "url": "https://github.com/fengyuanchen/cropper.git",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "dist": {
@@ -305,7 +305,7 @@
             "version": "1.12.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
@@ -1235,16 +1235,16 @@
         },
         {
             "name": "egroupware/imap-client",
-            "version": "2.30.2",
+            "version": "2.30.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Imap_Client.git",
-                "reference": "8d80312313188082733e45e6d674ecfe15b7eb8e"
+                "reference": "f7dd50133871e34a5a7560ac08626ee11e9ccc3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/8d80312313188082733e45e6d674ecfe15b7eb8e",
-                "reference": "8d80312313188082733e45e6d674ecfe15b7eb8e",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/f7dd50133871e34a5a7560ac08626ee11e9ccc3e",
+                "reference": "f7dd50133871e34a5a7560ac08626ee11e9ccc3e",
                 "shasum": ""
             },
             "require": {
@@ -1285,7 +1285,6 @@
                     "Horde_Imap_Client": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-2.1"
             ],
@@ -1298,6 +1297,9 @@
             ],
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
+            "support": {
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.30.4"
+            },
             "time": "2019-09-29T00:00:00+00:00"
         },
         {
