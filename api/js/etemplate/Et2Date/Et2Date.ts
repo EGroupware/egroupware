@@ -16,7 +16,8 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
 
 /**
- * To parse a date into the right format
+ * Parse a date string into a Date object
+ * Time will be 00:00:00 UTC
  *
  * @param {string} dateString
  * @returns {Date | undefined}
@@ -65,15 +66,15 @@ export function parseDate(dateString)
 	}
 
 	const [year, month, day] = parsedString.split('/').map(Number);
-	const parsedDate = new Date(year, month - 1, day);
+	const parsedDate = new Date(`${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}T00:00:00Z`);
 
 	// Check if parsedDate is not `Invalid Date` or that the date has changed (e.g. the not existing 31.02.2020)
-	if (
+	if(
 		year > 0 &&
 		month > 0 &&
 		day > 0 &&
-		parsedDate.getDate() === day &&
-		parsedDate.getMonth() === month - 1
+		parsedDate.getUTCDate() === day &&
+		parsedDate.getUTCMonth() === month - 1
 	)
 	{
 		return parsedDate;
@@ -82,8 +83,8 @@ export function parseDate(dateString)
 }
 
 /**
- * To parse a time into the right format
- * Date will be 1970-01-01
+ * To parse a time into a Date object
+ * Date will be 1970-01-01, time is in UTC to avoid browser issues
  *
  * @param {string} timeString
  * @returns {Date | undefined}
@@ -108,8 +109,16 @@ export function parseTime(timeString)
 	}
 
 	let am_pm = timeString.endsWith("pm") || timeString.endsWith("PM") ? 12 : 0;
-	timeString = timeString.replaceAll(/[^0-9:]/gi, '');
-	const [hour, minute] = timeString.split(':').map(Number);
+
+	let strippedString = timeString.replaceAll(/[^0-9:]/gi, '');
+	
+	if(timeString.startsWith("12") && strippedString != timeString)
+	{
+		// 12:xx am -> 0:xx, 12:xx pm -> 12:xx
+		am_pm -= 12;
+	}
+
+	const [hour, minute] = strippedString.split(':').map(Number);
 
 	const parsedDate = new Date("1970-01-01T00:00:00Z");
 	parsedDate.setUTCHours(hour + am_pm);
@@ -128,6 +137,7 @@ export function parseTime(timeString)
 
 /**
  * To parse a date+time into an object
+ * Time is in UTC to avoid browser issues
  *
  * @param {string} dateTimeString
  * @returns {Date | undefined}
@@ -180,7 +190,7 @@ export function parseDateTime(dateTimeString)
  * 	set 'dateFormat': "Y-m-d" to specify a particular format
  * @returns {string}
  */
-export function formatDate(date : Date, options) : string
+export function formatDate(date : Date, options = {dateFormat: ""}) : string
 {
 	if(!date || !(date instanceof Date))
 	{
@@ -213,7 +223,7 @@ export function formatDate(date : Date, options) : string
  * 	set 'timeFormat': "12" to specify a particular format
  * @returns {string}
  */
-export function formatTime(date : Date, options) : string
+export function formatTime(date : Date, options = {timeFormat: ""}) : string
 {
 	if(!date || !(date instanceof Date))
 	{
@@ -221,7 +231,7 @@ export function formatTime(date : Date, options) : string
 	}
 	let _value = '';
 
-	let timeformat = options.timeFormat || <string>window.egw.preference("timeformat") || '24';
+	let timeformat = options.timeFormat || <string>window.egw.preference("timeformat") || "24";
 	let hours = (timeformat == "12" && date.getUTCHours() > 12) ? (date.getUTCHours() - 12) : date.getUTCHours();
 	if(timeformat == "12" && hours == 0)
 	{
@@ -244,7 +254,7 @@ export function formatTime(date : Date, options) : string
  * 	set 'dateFormat': "Y-m-d", 'timeFormat': "12" to specify a particular format
  * @returns {string}
  */
-export function formatDateTime(date : Date, options) : string
+export function formatDateTime(date : Date, options = {dateFormat: "", timeFormat: ""}) : string
 {
 	if(!date || !(date instanceof Date))
 	{

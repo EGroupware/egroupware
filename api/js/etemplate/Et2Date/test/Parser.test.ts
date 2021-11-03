@@ -1,10 +1,8 @@
 /**
  * Test file for Etemplate date parsing
  */
-import {assert, fixture} from '@open-wc/testing';
-import {Et2Date, parseDate} from "../Et2Date";
-import {html} from "lit-element";
-import * as sinon from 'sinon';
+import {assert} from '@open-wc/testing';
+import {parseDate, parseTime} from "../Et2Date";
 
 describe("Date parsing", () =>
 {
@@ -36,7 +34,7 @@ describe("Date parsing", () =>
 	it("Handles Y-m-d", () =>
 	{
 		let test_string = '2021-09-22';
-		let test_date = new Date(2021, 8, 22, 0, 0, 0);
+		let test_date = new Date("2021-09-22T00:00:00Z");
 
 		let parsed = parser(test_string);
 
@@ -46,7 +44,7 @@ describe("Date parsing", () =>
 	it("Handles Y.d.m", () =>
 	{
 		let test_string = '2021.22.09';
-		let test_date = new Date(2021, 8, 22, 0, 0, 0);
+		let test_date = new Date("2021-09-22T00:00:00Z");
 
 		//@ts-ignore
 		window.egw = {
@@ -55,5 +53,79 @@ describe("Date parsing", () =>
 		let parsed = parser(test_string);
 
 		assert.equal(parsed.toJSON(), test_date.toJSON());
+	});
+});
+
+
+describe("Time parsing", () =>
+{
+	// Setup run before each test
+	beforeEach(async() =>
+	{
+		// Stub global egw for preference
+		// @ts-ignore
+		window.egw = {
+			preference: () => 'Y-m-d'
+		};
+	});
+
+
+	it("Handles 12h", () =>
+	{
+		const test_data = {
+			// As expected
+			"9:15 am": new Date('1970-01-01T09:15:00Z'),
+			"12:00 am": new Date('1970-01-01T00:00:00Z'),
+			"12:00 pm": new Date('1970-01-01T12:00:00Z'),
+			"5:00 pm": new Date('1970-01-01T17:00:00Z'),
+			"11:59 pm": new Date('1970-01-01T23:59:00Z'),
+
+			// Not valid, should be undefined
+			"invalid": undefined,
+			"23:45 pm": undefined
+		};
+		for(let test_string of Object.keys(test_data))
+		{
+			let test_date = test_data[test_string];
+			let parsed = parseTime(test_string);
+
+			if(typeof test_date == "undefined")
+			{
+				assert.isUndefined(parsed);
+			}
+			else
+			{
+				assert.equal(parsed.toJSON(), test_date.toJSON());
+			}
+		}
+	});
+
+	it("Handles 24h", () =>
+	{
+		const test_data = {
+			"09:15": new Date('1970-01-01T09:15:00Z'),
+			"00:00": new Date('1970-01-01T00:00:00Z'),
+			"12:00": new Date('1970-01-01T12:00:00Z'),
+			"17:00": new Date('1970-01-01T17:00:00Z'),
+			"23:59": new Date('1970-01-01T23:59:00Z'),
+
+			// Not valid, should be undefined
+			"invalid": undefined,
+			"23:45 pm": undefined
+		};
+		for(let test_string of Object.keys(test_data))
+		{
+			let test_date = test_data[test_string];
+			let parsed = parseTime(test_string);
+
+			if(typeof test_date == "undefined")
+			{
+				assert.isUndefined(parsed);
+			}
+			else
+			{
+				assert.equal(parsed.toJSON(), test_date.toJSON());
+			}
+		}
 	});
 });
