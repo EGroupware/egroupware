@@ -74,15 +74,26 @@ class importexport_arrayxml {
 	 * @param string $_xml
 	 * @return array
 	 */
-	public static function xml2array( $_xml ) {
-		if ( $_xml instanceof DOMElement ) {
+	public static function xml2array( $_xml )
+	{
+		if($_xml instanceof DOMElement)
+		{
 			$n = &$_xml;
-		} else {
+		}
+		elseif($_xml)
+		{
 			$n = new DOMDocument;
 			$loaded = $n->loadXML($_xml);
-			if(!$loaded) return array();
+			if(!$loaded)
+			{
+				return array();
+			}
 		}
 		$xml_array = array();
+		if(!$_xml || !$n)
+		{
+			return $xml_array;
+		}
 		
 		foreach($n->childNodes as $nc) {
 			
