@@ -154,9 +154,9 @@ class filemanager_admin extends filemanager_ui
 							throw new Api\Exception\NoPermission();
 						}
 						$url = $content['mounts']['url']['scheme'] . '://';
-						if (in_array($content['mounts']['url']['scheme'], ['smb', 'webdavs', 'vfs']))
+						if (in_array($content['mounts']['url']['scheme'], ['smb', 'vfs']) || !empty(trim($content['mounts']['url']['user'])))
 						{
-							if (empty(trim($content['mounts']['url']['user'])))
+							if (in_array($content['mounts']['url']['scheme'], ['smb', 'vfs']) && empty(trim($content['mounts']['url']['user'])))
 							{
 								throw new Api\Exception\WrongUserinput(lang('SMB, WebDAVs and VFS require a username!'));
 							}
