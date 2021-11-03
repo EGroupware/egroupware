@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rollup -c",
     "build:watch": "rollup -cw",
-    "jstest": "web-test-runner",
+    "jstest": "tsc &> /dev/null; web-test-runner",
     "jstest:watch": "web-test-runner --watch"
   },
   "devDependencies": {
@@ -65,8 +65,6 @@
     "jquery-ui-dist": "^1.12.1",
     "jquery-ui-themes": "^1.12.0",
     "jquery-ui-timepicker-addon": "^1.6.3",
-    "lit-element": "^2.5.1",
-    "lit-html": "^1.4.1",
     "sortablejs": "^1.14.0"
   },
   "engines": {
