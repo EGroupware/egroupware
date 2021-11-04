@@ -996,7 +996,7 @@ abstract class Ajax extends Api\Framework
 		{
 			$open_tabs = $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'];
 		}
-		$open_tabs = $open_tabs ? explode(',',$open_tabs) : array();
+		$open_tabs = $open_tabs && is_string($open_tabs) ? explode(',',$open_tabs) : (array)$open_tabs;
 		if ($active_tab && !in_array($active_tab,$open_tabs))
 		{
 			$open_tabs[] = $active_tab;
