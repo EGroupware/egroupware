@@ -86,10 +86,10 @@ class Base
 		if ($check_url === true || !isset($check_url) && strpos($url, '$') === false)
 		{
 			$check_url = strtr($url, [
-				'user' => $GLOBALS['egw_info']['user']['account_lid'],
-				'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
-				'host' => $GLOBALS['egw_info']['user']['domain'],
-				'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
+				'$user' => $GLOBALS['egw_info']['user']['account_lid'],
+				'$pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
+				'$host' => $GLOBALS['egw_info']['user']['domain'],
+				'$home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory']),
 			]);
 		}
 
