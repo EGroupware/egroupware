@@ -1,5 +1,8 @@
 /**
  * Test file for Etemplate date formatting
+ *
+ * For now, the best way to check if different timezones work is to change the TZ of your
+ * computer, then run the tests,
  */
 import {assert} from '@open-wc/testing';
 import {formatDate, formatTime} from "../Et2Date";
@@ -22,7 +25,7 @@ describe("Date formatting", () =>
 	it("Handles Y-m-d", () =>
 	{
 		let test_string = '2021-09-22';
-		let test_date = new Date(2021, 8, 22, 0, 0, 0);
+		let test_date = new Date("2021-09-22T12:34:56Z");
 
 		let formatted = formatter(test_date);
 
@@ -32,7 +35,7 @@ describe("Date formatting", () =>
 	it("Handles Y.d.m", () =>
 	{
 		let test_string = '2021.22.09';
-		let test_date = new Date(2021, 8, 22, 0, 0, 0);
+		let test_date = new Date("2021-09-22T12:34:56Z");
 
 		//@ts-ignore
 		window.egw = {
