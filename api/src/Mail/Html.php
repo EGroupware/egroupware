@@ -555,7 +555,7 @@ class Html
 			$searchFor = '<pre>';
 			$pos = stripos($html,$searchFor);
 		}
-		if ($pos === false)
+		if ($pos === false || !$html)
 		{
 			return $html;
 		}
