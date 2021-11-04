@@ -632,7 +632,7 @@ class Base
 					{
 						continue;	// no need to write that (unset) column
 					}
-					if ($this->table_def['fd'][$db_col]['type'] == 'varchar' &&
+					if ($this->table_def['fd'][$db_col]['type'] == 'varchar' && is_string($this->data[$col]) &&
 						strlen($this->data[$col]) > $this->table_def['fd'][$db_col]['precision'])
 					{
 						// truncate the field to mamimum length, if upper layers didn't care
