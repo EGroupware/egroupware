@@ -984,7 +984,8 @@ class calendar_uiforms extends calendar_ui
 							$exception['recurrence'] += $offset;
 							$exception['reference'] = $event['id'];
 							$exception['uid'] = $event['uid'];
-							$this->bo->update($exception, true, true, true, true, $msg=null, $content['no_notifications']);
+							$msg = null;
+							$this->bo->update($exception, true, true, true, true, $msg, $content['no_notifications']);
 						}
 					}
 				}
