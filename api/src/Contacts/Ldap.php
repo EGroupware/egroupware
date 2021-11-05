@@ -594,7 +594,7 @@ class Ldap
 				{
 					// dont convert the (binary) jpegPhoto!
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
-						Api\Translation::convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
+						Api\Translation::convert($data[$egwFieldName], $this->charset,'utf-8');
 				}
 				elseif($isUpdate && isset($data[$egwFieldName]))
 				{
