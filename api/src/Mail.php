@@ -5062,7 +5062,7 @@ class Mail
 	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false,  $useTidy = true)
 	{
 		$message='';
-		for($i=0, $cnt=count($bodyParts); $i < $cnt; $i++)
+		for($i=0, $cnt=count($bodyParts ?? []); $i < $cnt; $i++)
 		{
 			if (!isset($bodyParts[$i]['body'])) {
 				$bodyParts[$i]['body'] = self::getdisplayableBody($mailClass, $bodyParts[$i], $preserveHTML, $useTidy);
