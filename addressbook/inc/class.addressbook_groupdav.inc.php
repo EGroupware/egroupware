@@ -98,8 +98,11 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		}
 		if ($this->debug) error_log(__METHOD__."() contact_repository={$this->bo->contact_repository}, account_repository={$this->bo->account_repository}, REQUEST_URI=$_SERVER[REQUEST_URI] --> path_attr=".self::$path_attr.", path_extension=".self::$path_extension);
 
-		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
-		$this->home_set_pref = $this->home_set_pref ? explode(',',$this->home_set_pref) : array();
+		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'] ?? [];
+		if (!is_array($this->home_set_pref))
+		{
+			$this->home_set_pref = $this->home_set_pref ? explode(',', $this->home_set_pref) : array();
+		}
 
 		// silently switch "Sync all into one" preference on for OS X addressbook, as it only supports one AB
 		// this restores behavior before Lion (10.7), where AB synced all ABs contained in addressbook-home-set
