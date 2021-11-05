@@ -928,7 +928,7 @@ class calendar_ical extends calendar_boupdate
 
 				if ($alarmData['offset'])
 				{
-					$alarmData['time'] = $event['start'] - $alarmData['offset'];
+					$alarmData['time'] = Api\DateTime::to($event['start'], 'ts') - $alarmData['offset'];
 				}
 
 				$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $event['description']));
