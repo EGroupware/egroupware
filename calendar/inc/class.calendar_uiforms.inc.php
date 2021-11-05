@@ -1496,9 +1496,6 @@ class calendar_uiforms extends calendar_ui
 	 */
 	public function ajax_conflicts()
 	{
-		$participants = json_decode($_GET['participants'],true);
-		unset($_GET['participants']);
-
 		$content = $this->default_add_event();
 
 		// Process edit wants to see input values
