@@ -2291,8 +2291,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$content['mailDisplayBodySrc'] = Egw::link('/index.php',$linkData);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
 		$content['mail_id']=$rowID;
-		$content['mailDisplayContainerClass']=(count($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight");
-		$content['mailDisplayAttachmentsClass']=(count($attachments)?"mailDisplayAttachments":"mail_DisplayNone");
+		$content['mailDisplayContainerClass']=!empty($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight";
+		$content['mailDisplayAttachmentsClass']=!empty($attachments)?"mailDisplayAttachments":"mail_DisplayNone";
 
 		// DRAG attachments actions
 		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
