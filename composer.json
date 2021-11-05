@@ -94,7 +94,7 @@
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
 		"egroupware/compress": "^2.2.3",
-		"egroupware/crypt": "^2.7.13",
+		"egroupware/crypt": "^2.7.14",
 		"egroupware/icalendar": "^2.1.9",
 		"egroupware/imap-client": "2.30.4",
 		"egroupware/magicsuggest": "^2.1",

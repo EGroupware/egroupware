@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7caa16a5ff78c32472d6d8bd4c61814b",
+    "content-hash": "de144b0b6d74a96e1d0fa87a0ece2b7c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1032,16 +1032,16 @@
         },
         {
             "name": "egroupware/crypt",
-            "version": "2.7.13",
+            "version": "2.7.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Crypt.git",
-                "reference": "d25af6514c134426647dae2c47e5bf07bb7c4d1e"
+                "reference": "ae2d6bfc81b1c820183c355ae100f60d3133f47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Crypt/zipball/d25af6514c134426647dae2c47e5bf07bb7c4d1e",
-                "reference": "d25af6514c134426647dae2c47e5bf07bb7c4d1e",
+                "url": "https://api.github.com/repos/EGroupware/Crypt/zipball/ae2d6bfc81b1c820183c355ae100f60d3133f47e",
+                "reference": "ae2d6bfc81b1c820183c355ae100f60d3133f47e",
                 "shasum": ""
             },
             "require": {
@@ -1088,7 +1088,7 @@
             "description": "Cryptography library",
             "homepage": "https://www.horde.org/libraries/Horde_Crypt",
             "support": {
-                "source": "https://github.com/EGroupware/Crypt/tree/v2.7.13"
+                "source": "https://github.com/EGroupware/Crypt/tree/2.7.14"
             },
             "time": "2017-11-11T00:00:00+00:00"
         },
