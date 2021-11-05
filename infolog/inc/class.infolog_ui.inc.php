@@ -2220,7 +2220,7 @@ class infolog_ui
 
 		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
 
-		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
+		$old_pm_id = $content['pm_id'] ?: (is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id']);
 		unset($content['old_pm_id']);
 
 		if ($info_id && $this->bo->history)
