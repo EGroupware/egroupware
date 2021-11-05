@@ -2347,8 +2347,8 @@ class mail_compose
 				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true), ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
                 '-------------------------------------------------'."\r\n \r\n ";
 			$this->sessionData['mimeType']	= 'plain';
-
-			for($i=0; $i<count($bodyParts); $i++) {
+			$countBodyParts = count((array)$bodyParts);
+			for($i=0; $i<$countBodyParts; $i++) {
 				if($i>0) {
 					$this->sessionData['body'] .= "<hr>";
 				}

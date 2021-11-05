@@ -2844,7 +2844,7 @@ ORDER BY cal_user_type, cal_usre_id
 						$days[$locts]= $locts;
 					}
 				}
-				elseif (($filter == 'map' || filter == 'tz_map') &&
+				elseif (($filter == 'map' || $filter == 'tz_map') &&
 						!$tz_exception)
 				{
 					// no pseudo exception date

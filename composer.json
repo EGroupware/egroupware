@@ -94,8 +94,7 @@
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
 		"egroupware/compress": "^2.2.3",
-		"egroupware/crypt": "^2.7.13",
-		"egroupware/guzzlestream": "dev-master",
+		"egroupware/crypt": "^2.7.14",
 		"egroupware/icalendar": "^2.1.9",
 		"egroupware/imap-client": "2.30.4",
 		"egroupware/magicsuggest": "^2.1",
@@ -108,7 +107,7 @@
 		"egroupware/status": "self.version",
 		"egroupware/swoolepush": "self.version",
 		"egroupware/tracker": "self.version",
-		"egroupware/webdav": "^v0.3.1",
+		"egroupware/webdav": "^v0.3.2",
 		"egroupware/z-push-dev": "^2.5",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
@@ -129,7 +128,7 @@
 		"robrichards/xmlseclibs": "^3.1.1",
 		"simplesamlphp/simplesamlphp": "^1.19.0",
 		"simplesamlphp/twig-configurable-i18n": "~2.3.3",
-		"tinymce/tinymce": "5.9.*"
+		"tinymce/tinymce": "5.10.*"
 	},
 	"require-dev": {
 		"guzzlehttp/guzzle": "^6.5",

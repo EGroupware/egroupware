@@ -41,7 +41,7 @@ class File extends Etemplate\Widget
 	 */
 	public function __construct($xml='')
 	{
-		$this->bool_attr_default += array(
+		$this->bool_attr_default = ($this->bool_attr_default ?? []) + array(
 			'multiple' => false,
 		);
 

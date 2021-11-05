@@ -3067,7 +3067,7 @@ class Mail
 				$folders = $this->icServer->getMailboxes($path, $_search, true);
 			}
 
-			uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
+			if (is_array($folders)) uasort($folders, array($this,'sortByMailbox'));
 		}
 		elseif(!$_nodePath) // all
 		{
@@ -3088,7 +3088,7 @@ class Mail
 			if (self::$debugTimes) $starttime = microtime (true);
 			// Merge of all auto folders and specialusefolders
 			$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-			uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
+			if (is_array($folders)) uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
 			$tmpFolders = $folders;
 			$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
 			$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
@@ -5062,7 +5062,7 @@ class Mail
 	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false,  $useTidy = true)
 	{
 		$message='';
-		for($i=0, $cnt=count($bodyParts); $i < $cnt; $i++)
+		for($i=0, $cnt=count($bodyParts ?? []); $i < $cnt; $i++)
 		{
 			if (!isset($bodyParts[$i]['body'])) {
 				$bodyParts[$i]['body'] = self::getdisplayableBody($mailClass, $bodyParts[$i], $preserveHTML, $useTidy);
