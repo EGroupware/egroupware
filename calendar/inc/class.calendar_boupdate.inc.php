@@ -1550,7 +1550,7 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $save_event['created'] = $this->now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? abs($event['recur_enddate'] - $old_event['recur_enddate']) > 1 : false;
+		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'], 'utc') - Api\DateTime::to($old_event['recur_enddate'], 'utc')) > 1 : false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -1945,7 +1945,8 @@ class calendar_boupdate extends calendar_bo
 						if (!($exception = $this->read($id))) continue;
 						$exception['uid'] = Api\CalDAV::generate_uid('calendar', $id);
 						$exception['reference'] = $exception['recurrence'] = 0;
-						$this->update($exception, true, true, false, true, $msg=null, true);
+						$msg = null;
+						$this->update($exception, true, true, false, true, $msg, true);
 						++$exceptions_kept;
 					}
 				}
