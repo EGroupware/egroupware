@@ -1663,6 +1663,14 @@ ORDER BY cal_user_type, cal_usre_id
 				// check if recurrence enddate was adjusted
 				if(isset($event['recur_enddate']))
 				{
+					if (is_object($event['recur_enddate']))
+					{
+						$event['recur_enddate'] = Api\DateTime::user2server($event['recur_enddate'], 'ts');
+					}
+					if (is_object($old_repeats['recur_enddate']))
+					{
+						$old_repeats['recur_enddate'] = Api\DateTime::user2server($old_repeats['recur_enddate'], 'ts');
+					}
 					// recurrences need to be truncated
 					if((int)$event['recur_enddate'] > 0 &&
 						((int)$old_repeats['recur_enddate'] == 0 || (int)$old_repeats['recur_enddate'] > (int)$event['recur_enddate'])
