@@ -396,7 +396,7 @@ class Sharing
 		$class = strpos($status, '404') === 0 ? 'EGroupware\Api\Exception\NotFound' :
 			(strpos($status, '401') === 0 ? 'EGroupware\Api\Exception\NoPermission' :
 				'EGroupware\Api\Exception');
-		throw new $class($message, $status);
+		throw new $class($message, (int)$status);
 	}
 
 	/**
