@@ -291,7 +291,7 @@ class admin_config
 		// make everything readonly and remove save/apply button, if user has not rights to store config
 		if ($GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
-			$readonlys[__ALL__] = true;
+			$readonlys['__ALL__'] = true;
 			$readonlys['cancel'] = false;
 		}
 
