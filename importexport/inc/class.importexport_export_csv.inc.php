@@ -387,18 +387,16 @@ class importexport_export_csv implements importexport_iface_export_record
 				$record->$name = '';
 			}
 		}
-		foreach($fields['select-account'] ?? [] as $name) {
+		foreach($fields['select-account'] ?? [] as $name)
+		{
 			// Compare against null to deal with empty arrays
-			if ($record->$name !== null) {
-				if(is_array($record->$name)) {
-					$names = array();
-					foreach($record->$name as $_name) {
-						$names[] = Api\Accounts::username($_name);
-					}
-					$record->$name = implode(', ', $names);
-				} else {
-					$record->$name = Api\Accounts::username($record->$name);
+			if ($record->$name !== null)
+			{
+				$names = array();
+				foreach((array)$record->$name as $_name) {
+					$names[] = Api\Accounts::title((int)$_name ?: $_name);
 				}
+				$record->$name = implode(', ', $names);
 			}
 			else
 			{
