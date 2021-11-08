@@ -55,7 +55,7 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * default locking time for entries, that are opened by another user
 	 *
-	 * @var locktime in seconds
+	 * @var int lock time in seconds
 	 */
 	var $locktime_default=1;
 
@@ -262,7 +262,7 @@ class calendar_uiforms extends calendar_ui
 			);
 		}
 
-		return array(
+		$ret = array(
 			'participant_types' => $participant_types,
 			'participants' => $participants,
 			'owner' => $owner,
@@ -278,6 +278,7 @@ class calendar_uiforms extends calendar_ui
 			'videoconference' => !empty($_GET['videoconference']),
 			'##notify_externals' => !empty($_GET['videoconference']) ? 'yes' : $this->cal_prefs['notify_externals'],
 		);
+		return $ret;
 	}
 
 	/**
@@ -1872,7 +1873,7 @@ class calendar_uiforms extends calendar_ui
 
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
+				$readonlys['recur_exception'] = empty($content['recur_exception']);	// otherwise we get a delete button
 				//$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
 				//$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 			}
@@ -2843,7 +2844,7 @@ class calendar_uiforms extends calendar_ui
 		#error_log(__METHOD__.print_r($content,true));
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& $boical->exportVCal(array($cal_id),'2.0','PUBLISH',false)))
+			if (!($ical = $boical->exportVCal(array($cal_id),'2.0','PUBLISH',false)))
 			{
 				$msg = lang('Permission denied');
 
@@ -2872,7 +2873,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
+				$ical = $boical->exportVCal($events,'2.0','PUBLISH',false);
 				Api\Header\Content::type($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
 				exit();
