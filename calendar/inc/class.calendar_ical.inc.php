@@ -2706,6 +2706,11 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'RECURRENCE-ID':
 				case 'X-RECURRENCE-ID':
+					if (is_array($attributes['value'])) // whole-day event recurrence-id is returned as array
+					{
+						$attributes['value'] = mktime(0, 0, 0,
+							$attributes['value']['month'], $attributes['value']['mday'], $attributes['value']['year']);
+					}
 					$vcardData['recurrence'] = $attributes['value'];
 					break;
 				case 'LOCATION':
