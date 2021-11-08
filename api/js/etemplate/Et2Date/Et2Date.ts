@@ -144,7 +144,13 @@ export function parseTime(timeString)
  */
 export function parseDateTime(dateTimeString)
 {
-	// First try the server format
+	// First try some common invalid values
+	if(dateTimeString === "" || dateTimeString === "0" || dateTimeString === 0)
+	{
+		return undefined;
+	}
+
+	// Next try server format
 	if(typeof dateTimeString === "string" && dateTimeString.substr(-1) === "Z" || !isNaN(dateTimeString))
 	{
 		if(!isNaN(dateTimeString) && parseInt(dateTimeString) == dateTimeString)

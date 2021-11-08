@@ -54,6 +54,21 @@ describe("Date parsing", () =>
 
 		assert.equal(parsed.toJSON(), test_date.toJSON());
 	});
+
+
+	it("Handles '0'", () =>
+	{
+		let test_string = '0';
+		let test_date = undefined;
+
+		//@ts-ignore
+		window.egw = {
+			preference: () => 'Y.d.m'
+		};
+		let parsed = parser(test_string);
+
+		assert.equal(parsed, test_date);
+	});
 });
 
 
@@ -82,7 +97,9 @@ describe("Time parsing", () =>
 
 			// Not valid, should be undefined
 			"invalid": undefined,
-			"23:45 pm": undefined
+			"23:45 pm": undefined,
+			"0": undefined,
+			"": undefined
 		};
 		for(let test_string of Object.keys(test_data))
 		{
@@ -111,7 +128,9 @@ describe("Time parsing", () =>
 
 			// Not valid, should be undefined
 			"invalid": undefined,
-			"23:45 pm": undefined
+			"23:45 pm": undefined,
+			"0": undefined,
+			"": undefined
 		};
 		for(let test_string of Object.keys(test_data))
 		{

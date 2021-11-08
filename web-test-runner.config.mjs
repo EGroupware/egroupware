@@ -4,6 +4,8 @@
  * It uses "web-test-runner" to run the tests, which are written using
  * Mocha (https://mochajs.org/) &  Chai Assertion Library (https://www.chaijs.com/api/assert/)
  * Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
+ *
+ * Trouble getting tests to run?  Try manually compiling TypeScript (source & tests), that seems to help.
  */
 
 import fs from 'fs';

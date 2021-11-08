@@ -1,23 +1,23 @@
 /**
  * Test file for Etemplate webComponent Date
  */
-import {assert, elementUpdated, fixture} from '@open-wc/testing';
-import {Et2Date} from "../Et2Date";
+import {assert, elementUpdated, fixture, oneEvent} from '@open-wc/testing';
 import {html} from "lit-element";
 import * as sinon from 'sinon';
+import {Et2DateTime} from "../Et2DateTime";
 
-describe("Date widget", () =>
+describe("DateTime widget", () =>
 {
 	// Reference to component under test
-	let element : Et2Date;
+	let element : Et2DateTime;
 
 	// Setup run before each test
 	beforeEach(async() =>
 	{
 		// Create an element to test with, and wait until it's ready
 		// @ts-ignore
-		element = await fixture<Et2Date>(html`
-            <et2-date label="I'm a date"></et2-date>
+		element = await fixture<Et2DateTime>(html`
+            <et2-datetime label="I'm a date-time"></et2-datetime>
 		`);
 
 		// Stub egw()
@@ -37,7 +37,7 @@ describe("Date widget", () =>
 	// Make sure it works
 	it('is defined', () =>
 	{
-		assert.instanceOf(element, Et2Date);
+		assert.instanceOf(element, Et2DateTime);
 	});
 
 	it('has a label', () =>
@@ -54,9 +54,9 @@ describe("Date widget", () =>
 
 		element.set_value(test_time_string);
 
-
 		// wait for asychronous changes to the DOM
-		await elementUpdated(element);
+		await elementUpdated(<Element><unknown>element);
+
 		// Read-only widget returns null
 		assert.equal(element.getValue(), null);
 	});
