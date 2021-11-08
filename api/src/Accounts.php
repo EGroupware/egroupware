@@ -613,6 +613,20 @@ class Accounts
 	}
 
 	/**
+	 * Return formatted username for Links, does NOT throw if $account_id is not int
+	 *
+	 * @param $account_id
+	 */
+	static function title($account_id)
+	{
+		if (empty($account_id) || !is_numeric($account_id) && !($id = self::getInstance()->name2id($account_id)))
+		{
+			return '#'.$account_id;
+		}
+		return self::username($id ?? $account_id);
+	}
+
+	/**
 	 * Format an email address according to the system standard
 	 *
 	 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese

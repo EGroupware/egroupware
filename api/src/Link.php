@@ -154,7 +154,7 @@ class Link extends Link\Storage
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',
 			'query' => 'EGroupware\\Api\\Accounts::link_query',
-			'title' => 'EGroupware\\Api\\Accounts::username',
+			'title' => 'EGroupware\\Api\\Accounts::title',
 			'view' => array('menuaction'=>'addressbook.addressbook_ui.view','ajax'=>'true'),
 			'view_id' => 'account_id'
 		),
@@ -914,7 +914,12 @@ class Link extends Link\Storage
 				}
 				else
 				{
-					$title = self::title($app,$id);	// no titles method --> fallback to query each link separate
+					try {
+						$title = self::title($app, $id);    // no titles method --> fallback to query each link separate
+					}
+					catch (\Throwable $e) {
+						$title = lang('Error').': '.$e->getMessage();
+					}
 				}
 			}
 			$titles[$id] = $title;
