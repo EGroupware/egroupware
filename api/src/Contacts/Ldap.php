@@ -596,7 +596,7 @@ class Ldap
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
 						Api\Translation::convert($data[$egwFieldName], $this->charset,'utf-8');
 				}
-				elseif($isUpdate && isset($data[$egwFieldName]))
+				elseif($isUpdate && array_key_exists($egwFieldName, $data))
 				{
 					$ldapContact[$ldapFieldName] = array();
 				}
