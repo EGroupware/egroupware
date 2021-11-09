@@ -338,8 +338,8 @@ class Sql extends Api\Storage
 			{
 				if (!$this->grants[(int) $param['owner']]) return false;	// we have no access to that addressbook
 
-				$filter[$this->table_name.'.contact_owner'] = $param['owner'];
-				$filter[$this->table_name.'.private'] = 0;
+				$filter[$this->table_name . '.contact_owner'] = $param['owner'];
+				$filter[$this->table_name . '.contact_private'] = 0;
 				$join .= 'a2.contact_owner = ' . $this->db->quote($param['owner']) . ' AND ';
 				$join .= 'a2.contact_private = ' . $this->db->quote($filter['private']) . ' AND ';
 			}
