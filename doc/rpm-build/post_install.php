@@ -382,7 +382,10 @@ if (!isset($GLOBALS['egw_domain']) ||  $config['domain'] !== 'default' && !isset
 			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
 	run_cmd($setup_header);
 	// fix permissions of header.inc.php
-	chown($config['header'], $config['webserver_user']);
+    if (function_exists('posix_getuid') && posix_getuid() === 0)
+    {
+        chown($config['header'], $config['webserver_user']);
+    }
 	chmod($config['header'], 0600);
 
 	// install egroupware
