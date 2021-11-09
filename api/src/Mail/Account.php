@@ -1172,7 +1172,7 @@ class Account implements \ArrayAccess
 		}
 
 		// store account data
-		if (!($data['acc_id'] > 0))
+		if (!(int)$data['acc_id'])
 		{
 			// set not set values which, are NOT NULL and therefore would give an SQL error
 			$td = self::$db->get_table_definitions('api', self::TABLE);

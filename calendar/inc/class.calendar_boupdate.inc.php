@@ -375,7 +375,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		$checked = 0;
 		$start = microtime(true);
-		$duration = $event['end']-$event['start'];
+		$duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts');
 		foreach($recurences as $date)
 		{
 			$startts = $date->format('ts');

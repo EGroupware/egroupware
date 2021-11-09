@@ -979,7 +979,7 @@ class infolog_bo
 
 		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs, !isset($old))))
 		{
-			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
+			if(!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{
 				$values = $this->read($info_id, true, 'server', $ignore_acl);
 			}
@@ -987,21 +987,27 @@ class infolog_bo
 			$values['info_id'] = $info_id;
 			$to_write['info_id'] = $info_id;
 
-			// if the info responbsible array is not passed, fetch it from old.
-			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
-			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
+			// if the info responsible array is not passed, fetch it from old.
+			if(!array_key_exists('info_responsible', $values))
 			{
-				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
+				$values['info_responsible'] = $old['info_responsible'];
+			}
+			if(!is_array($values['info_responsible']))        // this should not happen, bug it does ;-)
+			{
+				$values['info_responsible'] = $values['info_responsible'] ? explode(',', $values['info_responsible']) : array();
 				$to_write['info_responsible'] = $values['info_responsible'];
 			}
 
 			// writing links for a new entry
-			if (!$old && is_array($to_write['link_to']['to_id']) && count($to_write['link_to']['to_id']))
+			if(!$old && is_array($to_write['link_to']['to_id']) && count($to_write['link_to']['to_id']))
 			{
 				//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
-				Link::link('infolog',$info_id,$to_write['link_to']['to_id']);
+				Link::link('infolog', $info_id, $to_write['link_to']['to_id']);
 				$values['link_to']['to_id'] = $info_id;
 			}
+		}
+		if($values['info_id'] && $info_id !== false)
+		{
 			$this->write_check_links($to_write);
 			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
 			{
@@ -1044,7 +1050,7 @@ class infolog_bo
 				$this->tracking = new infolog_tracking($this);
 			}
 
-			if ($old && ($missing_fields = array_diff_key($old,$values)))
+			if($old && ($missing_fields = array_diff_key($old, $values)))
 			{
 				// Some custom fields (multiselect with nothing selected) will be missing,
 				// and that's OK.  Don't put them back.
@@ -1055,20 +1061,24 @@ class infolog_bo
 						unset($missing_fields[$field]);
 					}
 				}
-				$values = array_merge($values,$missing_fields);
+				$values = array_merge($values, $missing_fields);
 			}
 			// Add keys missing in the $to_write array
-			if (($missing_fields = array_diff_key($values,$to_write)))
+			if(($missing_fields = array_diff_key($values, $to_write)))
 			{
-				$to_write = array_merge($to_write,$missing_fields);
+				$to_write = array_merge($to_write, $missing_fields);
 			}
-			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
-				null,$skip_notification);
+			$this->tracking->track($to_write, $old, $this->user, $values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
+								   null, $skip_notification
+			);
 
 			// Clear access cache after notifications, it may get modified as notifications switches user
 			unset(static::$access_cache[$info_id]);
 
-			if ($info_from_set) $values['info_from'] = '';
+			if($info_from_set)
+			{
+				$values['info_from'] = '';
+			}
 
 			// Change new values back to user time before sending them back
 			if($user2server)
@@ -1076,7 +1086,7 @@ class infolog_bo
 				$this->time2time($values);
 			}
 			// merge changes (keeping extra values from the UI)
-			$values_in = array_merge($values_in,$values);
+			$values_in = array_merge($values_in, $values);
 
 			// Update modified timestamp of parent
 			if($values['info_id_parent'] && $touch_modified)
@@ -1180,7 +1190,7 @@ class infolog_bo
 			if($values['pm_id'])
 			{
 				$link_id = Link::link('infolog', $values['info_id'], 'projectmanager', $values['pm_id']);
-				if(!$values['info_link_id'])
+				if(!$values['info_link_id'] || !Link::get_link($values['info_link_id']))
 				{
 					$values['info_link_id'] = $link_id;
 				}

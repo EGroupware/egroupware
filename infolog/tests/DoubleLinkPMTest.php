@@ -37,6 +37,7 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 	{
 		parent::setUp();
 
+		$_GET = $_POST = $_REQUEST = array();
 		$this->ui = new \infolog_ui();
 
 		$this->ui->tmpl = $this->createPartialMock(Etemplate::class, array('exec'));
@@ -53,7 +54,8 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		// Make sure projects are not there first
 		$pm_numbers = array(
 			'TEST 1',
-			'TEST 2'
+			'TEST 2',
+			'TEST 3'
 		);
 		foreach($pm_numbers as $number)
 		{
@@ -67,7 +69,6 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		$this->makeProject("1");
 
 		// Make another project, we need 2
-		$this->pm_bo->data = array();
 		$this->makeProject("2");
 	}
 
@@ -81,11 +82,14 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 			$this->bo->delete($this->info_id, False, False, True);
 		}
 
-		// Remove the test project
+		// Remove the test projects
 		$this->deleteProject();
 
 		$this->bo = null;
 		$this->pm_bo = null;
+
+		// Clean up the request
+		$_GET = $_POST = $_REQUEST = array();
 
 		parent::tearDown();
 	}
@@ -101,10 +105,8 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		$first_project = $this->pm_id[0];
 		$second_project = $this->pm_id[1];
 
+		// Create our test infolog
 		$info = $this->getTestInfolog();
-		// Set project by ID
-		//$info['pm_id'] = $first_project;
-
 		$this->info_id = $this->bo->write($info);
 		$this->assertIsInt($this->info_id);
 		$this->assertGreaterThan(0, $this->info_id);
@@ -114,19 +116,26 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		Link::run_notifies();
 
 		// Fake opening the edit dialog, important not to pass an array to accurately copy normal behaviour
+		// Set the initial project via the select
 		$this->ui->edit($this->info_id);
-		// Set button 'apply' to save, but not try to close the window since
-		// that would fail
 		$content = self::$mocked_exec_result;
-
 		$content['pm_id'] = $first_project;
-		$content['button'] = array('apply' => true);
+		// pm_id has an on change submit, so submit without button
 		$this->ui->edit($content);
 
 		// Force links to run notification now so we get valid testing - it
 		// usually waits until Egw::on_shutdown();
 		Link::run_notifies();
-		// Now load it again
+
+		// Then they click apply
+		// Set button 'apply' to save, but not try to close the window since
+		// that would fail
+		$content = self::$mocked_exec_result;
+		$content['button'] = ['apply' => true];
+		$this->ui->edit($content);
+		Link::run_notifies();
+
+		// Now load the infolog entry
 		$info = $this->bo->read($this->info_id);
 
 		// Check original pm_id is there
@@ -149,6 +158,43 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		$this->checkElements($first_project);
 		// Check infolog is in second project
 		$this->checkElements($second_project);
+
+		// Check changing project
+		$this->checkWeCanChangeTheProject();
+	}
+
+	/**
+	 * Test that after messing with the links in testInProjectLinkAnother(),
+	 * we can just change the pm_id and have it stored correctly
+	 */
+	protected function checkWeCanChangeTheProject()
+	{
+		// Make another project
+		$this->makeProject('3');
+		$new_project = $this->pm_id[2];
+
+		// Fake opening the edit dialog, important not to pass an array to accurately copy normal behaviour
+		$this->ui->edit($this->info_id);
+		$content = self::$mocked_exec_result;
+
+		$content['pm_id'] = $new_project;
+		$content['button'] = array('apply' => true);
+
+		// Set button 'apply' to save, but not try to close the window since
+		// that would fail
+		$this->ui->edit($content);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Link::run_notifies();
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Check new pm_id is there
+		$this->assertNotNull($info['pm_id'], 'Project was not set');
+		$this->assertNotEquals((string)$this->pm_id[0], (string)$info['pm_id'], 'Project did not get changed');
+		$this->assertEquals($new_project, $info['pm_id'], 'Project went missing');
 	}
 
 	public function mockExec($method, $content, $sel_options, $readonlys, $preserve)
@@ -251,6 +297,7 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		try
 		{
 			$result = true;
+			$this->pm_bo->data = array();
 			$result = $this->pm_bo->save($project, true, false);
 		}
 		catch (\Exception $e)
