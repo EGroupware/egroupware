@@ -15,7 +15,6 @@
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/jquery": "^3.5.5",
-    "@types/jqueryui": "^1.12.14",
     "grunt": "^1.3.0",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-newer": "^1.3.0",
@@ -46,8 +45,6 @@
   },
   "dependencies": {
     "@andxor/jquery-ui-touch-punch-fix": "^1.0.2",
-    "jquery-ui-dist": "^1.12.1",
-    "jquery-ui-themes": "^1.12.0",
     "jquery-ui-timepicker-addon": "^1.6.3",
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1",

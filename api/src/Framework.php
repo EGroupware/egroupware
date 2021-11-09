@@ -995,7 +995,7 @@ abstract class Framework extends Framework\Extra
 				self::includeCSS('/api/js/jquery/chosen/chosen.css');
 
 				// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-				self::includeCSS("/node_modules/jquery-ui-themes/themes/redmond/jquery-ui.css");
+				self::includeCSS("/api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css");
 
 				// eTemplate2 - load in top so sidebox has styles too
 				self::includeCSS('/api/templates/default/etemplate2.css');
@@ -1066,7 +1066,7 @@ abstract class Framework extends Framework\Extra
 			));
 		}
 		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
-		self::includeJS('/node_modules/jquery-ui-dist/jquery-ui.min.js');
+		self::includeJS('/api/js/jquery/jquery-ui/jquery-ui.min.js');
 		self::includeJS('/node_modules/jquery-ui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.js');
 		self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
