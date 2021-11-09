@@ -728,7 +728,7 @@ var et2_calendar_daycol = /** @class */ (function (_super) {
                 // Longer duration comes first so we have nicer bars across the top
                 var duration = (new Date(b.options.value.end) - new Date(b.options.value.start)) -
                     (new Date(a.options.value.end) - new Date(a.options.value.start));
-                return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
+                return (Math.abs(duration) > 360000) ? duration : (a.options.value.title.localeCompare(b.options.value.title));
             }
             else if (a.options.value.whole_day || b.options.value.whole_day) {
                 return a.options.value.whole_day ? -1 : 1;
