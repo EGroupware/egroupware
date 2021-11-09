@@ -2213,33 +2213,40 @@ class infolog_ui
 		if($content['info_type'] != $content['old_type'])
 		{
 			$content['no_notifications'] = in_array($content['info_type'], !is_array($this->prefs['no_notification_types']) ?
-					explode(',',$this->prefs['no_notification_types']):
-					$this->prefs['no_notification_types']
+				explode(',', $this->prefs['no_notification_types']) :
+				$this->prefs['no_notification_types']
 			);
 		}
 
-		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
+		$content['info_anz_subs'] = (int)$content['info_anz_subs'];    // gives javascript error if empty!
 
-		$old_pm_id = $content['pm_id'] ?: (is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id']);
+		if(is_array($pm_links))
+		{
+			$old_pm_id = $content['pm_id'] && in_array($content['pm_id'], $pm_links) ? $content['pm_id'] : array_shift($pm_links);
+		}
+		else
+		{
+			$old_pm_id = $content['old_pm_id'];
+		}
 		unset($content['old_pm_id']);
 
-		if ($info_id && $this->bo->history)
+		if($info_id && $this->bo->history)
 		{
 			$content['history'] = array(
-				'id'  => $info_id,
-				'app' => 'infolog',
+				'id'             => $info_id,
+				'app'            => 'infolog',
 				'status-widgets' => array(
-					'Ty' => $types,
+					'Ty'        => $types,
 					//'Li',	// info_link_id
-					'parent' => 'link-entry:infolog',
-					'Ca' => 'select-cat',
-					'Pr' => $this->bo->enums['priority'],
-					'Ow' => 'select-account',
+					'parent'    => 'link-entry:infolog',
+					'Ca'        => 'select-cat',
+					'Pr'        => $this->bo->enums['priority'],
+					'Ow'        => 'select-account',
 					//'Ac',	//	info_access: private||public
-					'St' => (array)$this->bo->status[$content['info_type']]+array('deleted' => 'deleted'),
-					'Pe' => 'select-percent',
-					'Co' => 'date-time',
-					'st' => 'date-time',
+					'St'        => (array)$this->bo->status[$content['info_type']] + array('deleted' => 'deleted'),
+					'Pe'        => 'select-percent',
+					'Co'        => 'date-time',
+					'st'        => 'date-time',
 					'Mo' => 'date-time',
 					'En' => 'date',
 					'Re' => 'select-account',
