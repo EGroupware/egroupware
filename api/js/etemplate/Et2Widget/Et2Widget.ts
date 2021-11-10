@@ -603,32 +603,42 @@ const Et2WidgetMixin = (superClass) =>
 		 *
 		 * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
 		 */
-		loadingFinished(promises)
+		loadingFinished(promises : Promise<any>[])
 		{
-			/**
-			 * This is needed mostly as a bridge between non-WebComponent widgets and
-			 * connectedCallback().  It's not really needed if the whole tree is WebComponent.
-			 * WebComponents can be added as children immediately after creation, and they handle the
-			 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
-			 * of the equivalent of doLoadingFinished()
-			 */
-			if(this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
+			// Note that WebComponents don't do anything here, their lifecycle is different
+			// This is just to support legacy widgets
+			let doLoadingFinished = () =>
 			{
-				this.getParent().getDOMNode(this).append(this);
-			}
+				/**
+				 * This is needed mostly as a bridge between non-WebComponent widgets and
+				 * connectedCallback().  It's not really needed if the whole tree is WebComponent.
+				 * WebComponents can be added as children immediately after creation, and they handle the
+				 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
+				 * of the equivalent of doLoadingFinished()
+				 */
+				if(this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
+				{
+					this.getParent().getDOMNode(this).append(this);
+				}
 
-			// An empty text node causes problems with legacy widget children
-			// It throws off their insertion indexing, making them get added in the wrong place
-			if(this.childNodes[0]?.nodeType == this.TEXT_NODE)
-			{
-				this.removeChild(this.childNodes[0]);
-			}
-			for(let i = 0; i < this.getChildren().length; i++)
-			{
-				let child = this.getChildren()[i];
+				// An empty text node causes problems with legacy widget children
+				// It throws off their insertion indexing, making them get added in the wrong place
+				if(this.childNodes[0]?.nodeType == this.TEXT_NODE)
+				{
+					this.removeChild(this.childNodes[0]);
+				}
+				for(let i = 0; i < this.getChildren().length; i++)
+				{
+					let child = this.getChildren()[i];
 
-				child.loadingFinished(promises);
+					child.loadingFinished(promises);
+				}
+			};
+			if(typeof promises === "undefined")
+			{
+				return doLoadingFinished();
 			}
+			Promise.all(promises).then(doLoadingFinished);
 		}
 
 		getWidgetById(_id)

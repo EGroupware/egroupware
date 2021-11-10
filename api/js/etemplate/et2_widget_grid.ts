@@ -945,6 +945,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			const cell = this.managementArray[i];
 			if(cell.widget)
 			{
+				this.removeChild(cell.widget);
 				cell.widget.destroy();
 			}
 		}

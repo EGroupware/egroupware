@@ -3848,14 +3848,31 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				return this.filter_div[0];
 			}
 		}
-		if(_sender == this.et2_searchbox) return this.search_box[0];
-		if(_sender.id == 'export') return this.right_div[0];
+		if(_sender == this.et2_searchbox)
+		{
+			return this.search_box[0];
+		}
+		if(_sender.id == 'export')
+		{
+			return this.right_div[0];
+		}
 
 		if(_sender && _sender._type == "template")
 		{
 			for(let i = 0; i < this.headers.length; i++)
 			{
-				if(_sender.id == this.headers[i].id && _sender._parent == this) return i == 2 ? this.header_row[0] : this.header_div[0];
+				if(_sender.id == this.headers[i].id && _sender._parent == this)
+				{
+					return i == 2 ? this.header_row[0] : this.header_div[0];
+				}
+			}
+		}
+
+		for(let header of this.headers)
+		{
+			if(header && header.getDOMNode && header.getDOMNode(this))
+			{
+				return header.getDOMNode(this);
 			}
 		}
 		return null;
