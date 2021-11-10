@@ -375,6 +375,7 @@ export class et2_tree extends et2_inputWidget
 			f(data, f);
 			options = data;
 		}
+		this.input.deleteChildItems("0");
 		// if no options given, but autoloading url, use that to load initial nodes
 		if (typeof options.id == 'undefined' && this.input.XMLsource)
 			this.input.loadJSON(this.input.XMLsource);
