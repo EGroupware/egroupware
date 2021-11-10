@@ -750,7 +750,7 @@ class resources_bo
 					$end = $start->format('ts') + 86399;
 				} else {
 					$start = $start->format('ts');
-					$end = $start + ($cal_info['duration']);
+					$end = $start + (int)$cal_info['duration'];
 				}
 
 				// search events matching our timestamps
