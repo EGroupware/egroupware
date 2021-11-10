@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 					"api/js/jsapi.min.js": [
 						"vendor/bower-asset/jquery/dist/jquery.js",
 						"api/js/jquery/jquery.noconflict.js",
-						"vendor/bower-asset/jquery-ui/jquery-ui.js",
+						"api/js/jquery/jquery-ui/jquery-ui.js",
 						"api/js/jsapi/jsapi.js",
 						"api/js/egw_json.js",
 						"api/js/jsapi/egw_core.js",
@@ -291,7 +291,7 @@ module.exports = function (grunt) {
 				files: {
 					"pixelegg/css/pixelegg.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -309,7 +309,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -344,7 +344,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/monochrome.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -362,7 +362,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/modern.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -384,7 +384,7 @@ module.exports = function (grunt) {
 				files: {
 					"jdots/css/high-contrast.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -405,7 +405,7 @@ module.exports = function (grunt) {
 					],
 					"jdots/css/jdots.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
@@ -425,7 +425,7 @@ module.exports = function (grunt) {
 					],
 					"jdots/css/orange-green.min.css": [
 						"api/js/jquery/chosen/chosen.css",
-						"vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css",
+						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
 						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",

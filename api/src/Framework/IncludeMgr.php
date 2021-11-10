@@ -28,7 +28,7 @@ namespace EGroupware\Api\Framework;
  * 2) Files in a certain application and package. The syntax is
  *    	[$app.]$package.$file
  *    The first "$app" part is optional. It defaults to phpgwapi. Examples:
- *    	/vendor/bower-asset/jquery-ui/jquery-ui.js; // Loads /vendor/bower-asset/jquery-ui/jquery-ui.js
+ *    	/api/js/jquery/jquery-ui/jquery-ui.js; // Loads /api/js/jquery/jquery-ui/jquery-ui.js
  *    	stylite.filemanager.filemanager; // Loads /stylite/filemanager/filemanager.js
  * 3) Absolute file paths starting with "/". Example:
  *    	/api/js/jquery/jquery-ui.js;
@@ -42,7 +42,7 @@ namespace EGroupware\Api\Framework;
  * 		egw_action_common;
  * 		egw_action;
  * 		vendor.bower-asset.jquery.dist.jquery; // Includes jquery.js from package jquery in phpgwapi
- * 		/vendor/bower-asset/jquery-ui/jquery-ui.js; // Includes jquery-ui.js
+ * 		/api/js/jquery/jquery-ui/jquery-ui.js; // Includes jquery-ui.js
  *
  * Class can be tested by opening it in browser:
  *

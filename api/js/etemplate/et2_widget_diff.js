@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.et2_diff = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
     /vendor/bower-asset/diff2html/dist/diff2html.min.js;
     et2_core_valueWidget;
 */

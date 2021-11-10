@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.et2_link_add = exports.et2_link_list = exports.et2_link_string = exports.et2_link = exports.et2_link_entry = exports.et2_link_apps = exports.et2_link_to = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
     et2_core_inputWidget;
     et2_core_valueWidget;
     et2_widget_selectbox;

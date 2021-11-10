@@ -14,7 +14,7 @@
 	egw_action_common;
 	egw_action_popup;
 	vendor.bower-asset.jquery.dist.jquery;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	/api/js/jquery/jquery-ui/jquery-ui.js;
 */
 
 /**

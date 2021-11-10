@@ -11,7 +11,7 @@
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	/api/js/jquery/jquery-ui/jquery-ui.js;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
 	et2_widget_selectbox;

@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.et2_date_range = exports.et2_date_ro = exports.et2_date_duration_ro = exports.et2_date_duration = exports.et2_date = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
     lib/date;
     et2_core_inputWidget;
     et2_core_valueWidget;

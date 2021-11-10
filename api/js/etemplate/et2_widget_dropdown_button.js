@@ -27,7 +27,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.et2_dropdown_button = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
     et2_baseWidget;
 */
 var et2_core_inputWidget_1 = require("./et2_core_inputWidget");

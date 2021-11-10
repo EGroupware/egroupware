@@ -994,7 +994,7 @@ abstract class Framework extends Framework\Extra
 				self::includeCSS('/api/js/jquery/chosen/chosen.css');
 
 				// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-				self::includeCSS("/vendor/bower-asset/jquery-ui/themes/redmond/jquery-ui.css");
+				self::includeCSS("/api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css");
 
 				// eTemplate2 - load in top so sidebox has styles too
 				self::includeCSS('/api/templates/default/etemplate2.css');

@@ -33,7 +33,7 @@ egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var token = ready.readyWaitFor();
 	files.includeJS([
 		this.webserverUrl + '/vendor/bower-asset/jquery/dist/jquery.js',
-		this.webserverUrl + '/vendor/bower-asset/jquery-ui/jquery-ui.js',
+		this.webserverUrl + '/api/js/jquery/jquery-ui/jquery-ui.js',
 		this.webserverUrl + '/api/js/jquery/jquery.html5_upload.js'
 	], function () {
 		this.constant('jquery', 'jQuery', _wnd.jQuery, _wnd);

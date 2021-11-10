@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.et2_dialog = void 0;
 /*egw:uses
         et2_core_widget;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
 */
 var et2_core_widget_1 = require("./et2_core_widget");
 var et2_core_widget_2 = require("./et2_core_widget");

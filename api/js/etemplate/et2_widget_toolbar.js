@@ -26,7 +26,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
-    /vendor/bower-asset/jquery-ui/jquery-ui.js;
+    /api/js/jquery/jquery-ui/jquery-ui.js;
     et2_DOMWidget;
 */
 var et2_core_DOMWidget_1 = require("./et2_core_DOMWidget");

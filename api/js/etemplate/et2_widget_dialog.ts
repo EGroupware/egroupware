@@ -11,7 +11,7 @@
 
 /*egw:uses
         et2_core_widget;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	/api/js/jquery/jquery-ui/jquery-ui.js;
 */
 
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";

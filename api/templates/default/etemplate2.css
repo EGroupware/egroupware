@@ -2260,7 +2260,6 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   float: left;
   margin-right: 1em;
   background-position: 3px;
-  padding-left: 15px;
   outline: none;
 }
 div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
