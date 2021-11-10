@@ -1855,7 +1855,10 @@ class addressbook_ui extends addressbook_bo
 			if ($query['grouped_view'])	// view the contacts of one organisation only
 			{
 				if (strpos($query['grouped_view'],'*AND*') !== false) $query['grouped_view'] = str_replace('*AND*','&',$query['grouped_view']);
-				$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
+				if (!is_array($fields = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?? []))
+				{
+					$fields = explode(',', $fields);
+				}
 				foreach(explode('|||',$query['grouped_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
@@ -2911,7 +2914,10 @@ class addressbook_ui extends addressbook_bo
 	 */
 	public function ajax_check_values($values, $name, $own_id=0)
 	{
-		$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
+		if (!is_array($fields = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?? []))
+		{
+			$fields = explode(',', $fields);
+		}
 		$threshold = (int)$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'];
 
 		$ret = array('doublicates' => array(), 'msg' => null);
