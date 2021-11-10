@@ -48,6 +48,13 @@ const Et2WidgetMixin = (superClass) =>
 		private supportedWidgetClasses = [];
 
 		/**
+		 * If we put the widget somewhere other than as a child of its parent, we need to record that so
+		 * we don't move it back to the parent.
+		 * @type {Element}
+		 * @protected
+		 */
+		protected _parent_node : Element;
+		/**
 		 * Not actually required by et2_widget, but needed to keep track of non-webComponent children
 		 */
 		private _legacy_children : et2_widget[] = [];
@@ -100,6 +107,12 @@ const Et2WidgetMixin = (superClass) =>
 					type: Boolean,
 					reflect: true
 				},
+
+				/**
+				 * Widget ID of another node to insert this node into instead of the normal location
+				 * This isn't a normal property...
+				 */
+				parent_node: {type: String},
 
 				/**
 				 * Tooltip which is shown for this element on hover
@@ -616,7 +629,7 @@ const Et2WidgetMixin = (superClass) =>
 				 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
 				 * of the equivalent of doLoadingFinished()
 				 */
-				if(this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
+				if(!this._parent_node && this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
 				{
 					this.getParent().getDOMNode(this).append(this);
 				}
@@ -676,6 +689,25 @@ const Et2WidgetMixin = (superClass) =>
 			};
 
 			return check_children(this.getChildren()) || null;
+		}
+
+		/**
+		 * Parent is different than what is specified in the template / hierarchy.
+		 * Find it and re-parent there.
+		 *
+		 * @param {string} parent
+		 */
+		set parent_node(parent : string | Element)
+		{
+			if(typeof parent === "string")
+			{
+				parent = document.querySelector("#" + parent);
+			}
+			if(parent)
+			{
+				parent.append(this);
+				this._parent_node = parent;
+			}
 		}
 
 		setParent(new_parent : Et2WidgetClass | et2_widget)
