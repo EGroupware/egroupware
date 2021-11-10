@@ -947,9 +947,14 @@ class Translation
 		{
 			return utf8_decode($data);
 		}
-		if (self::$mbstring && !$prefer_iconv && ($data = @mb_convert_encoding($data,$to,$from)) != '')
-		{
-			return $data;
+		try {
+			if (self::$mbstring && !$prefer_iconv && ($data = @mb_convert_encoding($data, $to, $from)) != '')
+			{
+				return $data;
+			}
+		}
+		catch (\ValueError $e) {
+			// ignore encodings unknown to mb_convert_encoding
 		}
 		if (function_exists('iconv'))
 		{
