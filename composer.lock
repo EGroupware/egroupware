@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e37a6fb7fe7e26aea30a69a5d4d9603",
+    "content-hash": "7081f3cbd90eb0de9c1ee7b8e8301c45",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1755,6 +1755,72 @@
             "time": "2021-06-01T14:35:24+00:00"
         },
         {
+            "name": "egroupware/util",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Util.git",
+                "reference": "c45016747dfdbb004891fd72f0ff41982aeb45c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Util/zipball/c45016747dfdbb004891fd72f0ff41982aeb45c0",
+                "reference": "c45016747dfdbb004891fd72f0ff41982aeb45c0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": "^5.3 || ^7 || ^8"
+            },
+            "replace": {
+                "pear-horde/horde_util": "2.*",
+                "pear-pear.horde.org/horde_util": "*"
+            },
+            "suggest": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-iconv": "*",
+                "ext-intl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-xml": "*",
+                "pear-pear.horde.org/Horde_Imap_Client": "^2",
+                "pear-pear.horde.org/Horde_Test": "^2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Jan Schneider",
+                    "email": "jan@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "developer"
+                }
+            ],
+            "description": "Utility library",
+            "homepage": "https://www.horde.org/libraries/Horde_Util",
+            "support": {
+                "source": "https://github.com/EGroupware/Util/tree/2.6.2"
+            },
+            "time": "2017-11-11T00:00:00+00:00"
+        },
+        {
             "name": "egroupware/webdav",
             "version": "0.3.2",
             "source": {
@@ -3489,34 +3555,6 @@
                 "LGPL-2.1"
             ],
             "description": "This class represents a single URL and provides methods for manipulating URLs."
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Util",
-            "version": "2.5.9",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.9.tgz"
-            },
-            "require": {
-                "ext-dom": "*",
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_util": "== 2.5.9.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",
