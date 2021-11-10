@@ -600,8 +600,8 @@ class calendar_ical extends calendar_boupdate
 						if (empty($event['whole_day']))
 						{
 							// Hack for CalDAVTester to export duration instead of endtime
-							if ($tzid == 'UTC' && $event['end'] - $event['start'] <= 86400)
-								$attributes['duration'] = $event['end'] - $event['start'];
+							if ($tzid == 'UTC' && ($duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts')) <= 86400)
+								$attributes['duration'] = $duration;
 							else
 								$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
