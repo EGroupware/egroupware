@@ -212,6 +212,10 @@ class infolog_tracking extends Api\Storage\Tracking
 		{
 			$id = ' #'.$data['info_id'];
 		}
+		if (is_array($data['info_cat']))
+		{
+			$data['info_cat'] = array_shift($data['info_cat']);
+		}
 		foreach(array(
 			'info_type'      => lang($this->infolog->enums['type'][$data['info_type']]).$id,
 			'info_from'      => $data['info_from'],
