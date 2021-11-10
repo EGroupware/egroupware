@@ -871,6 +871,24 @@ class calendar_ical extends calendar_boupdate
 						{
 							$attr_name = 'X-EGROUPWARE-'.$attr_name;
 						}
+						// fix certain stock fields like GEO, which are not in EGroupware schema, but Horde Icalendar requires a certain format
+						switch($name)
+						{
+							case '##GEO':
+								if (!is_array($value))
+								{
+									if (strpos($value, ';'))
+									{
+										list($lat, $long) = explode(';', $value);
+									}
+									else
+									{
+										list($long, $lat) = explode(',', $value);
+									}
+									$value = ['latitude' => $lat, 'logitude' => $long];
+								}
+								break;
+						}
 						if ($value[0] === '{' && ($attr = json_decode($value, true)) && is_array($attr))
 						{
 							// check if attribute was stored compressed --> uncompress it
