@@ -806,7 +806,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					}
 				}
 				//$BCCmail='';
-				if (count($mailAddr)>0) $mailObject->forceBccHeader();
+				if (!empty($mailAddr)) $mailObject->forceBccHeader();
 				//$BCCmail = $mailObject->AddrAppend("Bcc",$mailAddr);
 				foreach($folderArray as $folderName) {
 					if($this->mail->isSentFolder($folderName)) {
