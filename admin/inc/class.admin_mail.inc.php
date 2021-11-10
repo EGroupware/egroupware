@@ -431,12 +431,13 @@ class admin_mail
 			'acc_folder_archive' => array('', 'archive'),
 		) as $name => $common_names)
 		{
+			unset($content[$name]);
 			// first check special-use attributes
 			if (($special_use = array_shift($common_names)))
 			{
 				foreach((array)$attributes[$special_use] as $mailbox)
 				{
-					if (empty($content[$name]) || strlen($mailbox) < strlen($content[$name]))
+					if (empty($content[$name]) || is_string($mailbox) && strlen($mailbox) < strlen($content[$name]))
 					{
 						$content[$name] = $mailbox;
 					}
@@ -450,7 +451,7 @@ class admin_mail
 					$delimiter = !empty($data['delimiter']) ? $data['delimiter'] : '.';
 					$name_parts = explode($delimiter, strtolower($mailbox));
 					if (array_intersect($name_parts, $common_names) &&
-						(empty($content[$name]) || strlen($mailbox) < strlen($content[$name]) && substr($content[$name], 0, 6) != 'INBOX'.$delimiter))
+						(empty($content[$name]) || is_string($mailbox) && strlen($mailbox) < strlen($content[$name]) && substr($content[$name], 0, 6) != 'INBOX'.$delimiter))
 					{
 						//error_log(__METHOD__."() $mailbox --> ".substr($name, 11).' folder');
 						$content[$name] = $mailbox;
