@@ -779,6 +779,7 @@ class calendar_so
 		}
 		if(isset($params['sql_filter']['cal_id']))
 		{
+			if (!is_array($params['query'])) $params['query'] = [];
 			$params['query']['cal_id'] = $params['sql_filter']['cal_id'];
 			$where[] = $this->db->column_data_implode(", ", [$this->cal_table.'.cal_id' => $params['sql_filter']['cal_id']], True, False);
 			unset($params['sql_filter']['cal_id']);

@@ -403,8 +403,8 @@ class History
 	 */
 	public static function needs_diff($name, $value)
 	{
-		// No diff on encrypted content
-		if(strpos($value, static::BEGIN_PGP) == 0 && strpos($value, static::END_PGP) !== FALSE)
+		// No diff on arrays or encrypted content
+		if (is_array($value) || strpos($value, static::BEGIN_PGP) == 0 && strpos($value, static::END_PGP) !== FALSE)
 		{
 			return false;
 		}

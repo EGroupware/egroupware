@@ -168,6 +168,7 @@ class Widget
 		else
 		{
 			libxml_use_internal_errors(true);
+			libxml_clear_errors();
 			$reader = new XMLReader();
 			if (!$reader->XML($xml))
 			{

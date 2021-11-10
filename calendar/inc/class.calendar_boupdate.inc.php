@@ -1829,12 +1829,13 @@ class calendar_boupdate extends calendar_bo
 			}
 
 			// Update history
-			$event = $this->read($cal_id, $recur_date, $ignore_acl, 'server');
-			$tracking = new calendar_tracking($this);
-			$tracking->track($event, $old_event);
-
+			if (($event = $this->read($cal_id, $recur_date, $ignore_acl, 'server')))
+			{
+				$tracking = new calendar_tracking($this);
+				$tracking->track($event, $old_event);
+			}
 			// notify the link-class about the update, as other apps may be subscribed to it
-			Link::notify_update('calendar',$event['id'],$event,"update");
+			Link::notify_update('calendar', $cal_id, $event, "update");
 		}
 		return $Ok;
 	}

@@ -412,9 +412,30 @@ class infolog_ical extends infolog_bo
 			{
 				if (substr($name, 0, 2) == '##')
 				{
+					if (($v = json_php_unserialize($value)) && is_array($v))
+					{
+						$value = $v;
+					}
+					// fix certain stock fields like GEO, which are not in EGroupware schema, but Horde Icalendar requires a certain format
+					switch($name)
+					{
+						case '##GEO':
+							if (!is_array($value))
+							{
+								if (strpos($value, ';') !== false)
+								{
+									list($lat, $long) = explode(';', $value);
+								}
+								else
+								{
+									list($long, $lat) = explode(',', $value);
+								}
+								$value = ['latitude' => $lat, 'logitude' => $long];
+							}
+							break;
+					}
 					if ($name[2] == ':')
 					{
-						if (($v = json_php_unserialize($value)) && is_array($v)) $value = $v;
 						foreach((array)$value as $compvData)
 						{
 							$comp = Horde_Icalendar::newComponent(substr($name,3), $vevent);
@@ -422,9 +443,9 @@ class infolog_ical extends infolog_bo
 							$vevent->addComponent($comp);
 						}
 					}
-					elseif (($attr = json_php_unserialize($value)) && is_array($attr))
+					elseif (is_array($value))
 					{
-						$vevent->setAttribute(substr($name, 2), $attr['value'], $attr['params'], true, $attr['values']);
+						$vevent->setAttribute(substr($name, 2), $value['value'], $value['params'], true, $value['values']);
 					}
 					else
 					{

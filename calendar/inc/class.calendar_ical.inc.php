@@ -600,8 +600,8 @@ class calendar_ical extends calendar_boupdate
 						if (empty($event['whole_day']))
 						{
 							// Hack for CalDAVTester to export duration instead of endtime
-							if ($tzid == 'UTC' && $event['end'] - $event['start'] <= 86400)
-								$attributes['duration'] = $event['end'] - $event['start'];
+							if ($tzid == 'UTC' && ($duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts')) <= 86400)
+								$attributes['duration'] = $duration;
 							else
 								$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
@@ -870,6 +870,24 @@ class calendar_ical extends calendar_boupdate
 						if(in_array($attr_name,['videoconference','notify_externals']))
 						{
 							$attr_name = 'X-EGROUPWARE-'.$attr_name;
+						}
+						// fix certain stock fields like GEO, which are not in EGroupware schema, but Horde Icalendar requires a certain format
+						switch($name)
+						{
+							case '##GEO':
+								if (!is_array($value))
+								{
+									if (strpos($value, ';'))
+									{
+										list($lat, $long) = explode(';', $value);
+									}
+									else
+									{
+										list($long, $lat) = explode(',', $value);
+									}
+									$value = ['latitude' => $lat, 'logitude' => $long];
+								}
+								break;
 						}
 						if ($value[0] === '{' && ($attr = json_decode($value, true)) && is_array($attr))
 						{
