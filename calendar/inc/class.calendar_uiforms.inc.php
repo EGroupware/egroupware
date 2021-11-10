@@ -2192,7 +2192,7 @@ class calendar_uiforms extends calendar_ui
 						break;
 					case 'cancel':
 						// first participant is the (external) organizer (our iCal parser adds owner first!)
-						$parts = $event['participants'];
+						$parts = $event['participants'] ?? [];
 						unset($parts[$existing_event['owner']]);
 						$event['ical_sender_uid'] = key($parts);
 						if (empty($existing_event['id']) || !$this->bo->check_perms(Acl::DELETE, $existing_event['id']))
