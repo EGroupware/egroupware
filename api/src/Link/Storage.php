@@ -171,7 +171,7 @@ class Storage
 		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
 		// caused by non-ascii chars compared with ascii field uid
 		catch(Api\Db\Exception $e) {
-			_egw_log_exception($e);
+			//_egw_log_exception($e);
 		}
 		return is_array($id) ? $links : ($links[$id] ?? []);
 	}
