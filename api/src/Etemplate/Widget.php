@@ -123,6 +123,7 @@ class Widget
 		// read all attributes
 		$this->set_attrs($reader);
 
+		libxml_clear_errors();
 		while(($ok=$reader->read()) && $reader->depth > $depth)
 		{
 			if ($reader->nodeType == XMLReader::ELEMENT && $reader->depth > $depth)
