@@ -7405,6 +7405,12 @@ class Mail
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
 
+		// check we have an email to send the mdn to (otherwise Horde_Mime_Mdn throws a RuntimeException)
+		if (empty($mdn_to = $headers[strtoupper('Disposition-Notification-To')]) || strpos($mdn_to, '@') === false)
+		{
+			return false;
+		}
+
 		// Override Horde's translation with our own
 		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));
 		Preferences::setlocale();
