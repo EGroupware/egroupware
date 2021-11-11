@@ -284,7 +284,7 @@ else
 				error_log('login::'.__LINE__.' User '. $login. ' authenticated with an unsave password'.' '.$unsave_msg);
 				$message = lang('eGroupWare checked your password for safetyness. You have to change your password for the following reason:')."\n";
 				Egw::redirect_link('/index.php', array(
-					'menuaction' => 'preferences.uipassword.change',
+					'menuaction' => 'preferences.preferences_password.change',
 					'message' => $message . $unsave_msg,
 					'cd' => 'yes',
 				));
