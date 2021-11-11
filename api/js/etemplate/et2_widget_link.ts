@@ -657,84 +657,62 @@ export class et2_link_entry extends et2_inputWidget
 		this.request = null;
 	}
 
-	createInputWidget( )
+	createInputWidget()
 	{
 		var self = this;
 		this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
 
 		// Application selection
-		jQuery.widget( "custom.iconselectmenu", jQuery.ui.selectmenu, {
-			_setText: function(element, value)
-            {
-				if(element === this.buttonText)
-				{
-					this._setButtonText(value);
-				}
-				else
-                {
-					this._superApply(element, value);
-				}
-			},
-
-			_setButtonText: function(  value )
+		jQuery.widget("custom.iconselectmenu", jQuery.ui.selectmenu, {
+			_renderButtonItem: function (value)
 			{
-
-				var _value = this.focusIndex;
-
-				if(typeof this.focusIndex === 'undefined')
-				{
-					_value = this.element.find( "option:selected" ).val();
-				}
-				else
-				{
-					var selected = this.items[_value] || {};
-					_value = selected.value;
-				}
+				var _value = value.value;
 				var url = self.egw().image('navbar', _value);
-				var buttonItem = jQuery( "<span>", {
+				var buttonItem = jQuery("<span>", {
 					"class": "ui-selectmenu-text",
-					title: value
+					title: value.label
 				});
 
-				jQuery('.ui-selectmenu-text', this.button).replaceWith(buttonItem);
-				buttonItem.css('background-image', 'url('+url+')');
+				buttonItem.css('background-image', 'url(' + url + ')');
+				return buttonItem;
 			},
-			_renderItem: function(  ul, item )
+			_renderItem: function (ul, item)
 			{
-				var li = jQuery( "<li>", {class:"et2_link_entry_app_option"}),
-					wrapper = jQuery( "<div>", {text: item.label} );
+				var li = jQuery("<li>", {class: "et2_link_entry_app_option"}),
+					wrapper = jQuery("<div>", {text: item.label});
 
-				if ( item.disabled )
+				if (item.disabled)
 				{
-					li.addClass( "ui-state-disabled" );
+					li.addClass("ui-state-disabled");
 				}
 				ul.addClass(self.div.attr("class"));
 				var url = self.egw().image('navbar', item.value);
-				jQuery( "<span>", {
-					style: 'background-image: url("'+url+'");',
-					"class": "ui-icon " + item.element.attr( "data-class" ),
+				jQuery("<span>", {
+					style: 'background-image: url("' + url + '");',
+					"class": "ui-icon " + item.element.attr("data-class"),
 					title: item.label
 				})
-					.appendTo( wrapper );
+					.appendTo(wrapper);
 
-				return li.append( wrapper ).appendTo( ul );
+				return li.append(wrapper).appendTo(ul);
 			}
 		});
 
 		this.app_select = jQuery(document.createElement("select")).appendTo(this.div)
-			.change(function(e)
+			.change(function (e)
 			{
 				// Clear cache when app changes
 				self.cache = {};
 
 				// Update preference with new value
-				egw.set_preference(self.options.value.to_app || self.egw().getAppName(),'link_app',self.app_select.val());
+				egw.set_preference(self.options.value.to_app || self.egw().getAppName(), 'link_app', self.app_select.val());
 
-				if(typeof self.options.value != 'object') self.options.value = {};
+				if (typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
-			});
+			})
+			.attr("aria-label", egw.lang("linkapps"));
 		var opt_count = 0;
-		for(var key in this.options.select_options)
+		for (var key in this.options.select_options)
 		{
 			opt_count++;
 			var option = jQuery(document.createElement("option"))
@@ -742,11 +720,11 @@ export class et2_link_entry extends et2_inputWidget
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
 		}
-		if(this.options.only_app)
+		if (this.options.only_app)
 		{
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
-			if(this.options.app_icons && this.app_select.iconselectmenu('instance'))
+			if (this.options.app_icons && this.app_select.iconselectmenu('instance'))
 			{
 				this.app_select.iconselectmenu('widget').hide();
 			}
@@ -755,8 +733,8 @@ export class et2_link_entry extends et2_inputWidget
 		else
 		{
 			// Now that options are in, set to last used app
-			this.app_select.val(this.options.value.app||'');
-			if(this.app_select.iconselectmenu('instance'))
+			this.app_select.val(this.options.value.app || '');
+			if (this.app_select.iconselectmenu('instance'))
 			{
 				this.app_select.iconselectmenu('update');
 			}

@@ -507,30 +507,15 @@ var et2_link_entry = /** @class */ (function (_super) {
         this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
         // Application selection
         jQuery.widget("custom.iconselectmenu", jQuery.ui.selectmenu, {
-            _setText: function (element, value) {
-                if (element === this.buttonText) {
-                    this._setButtonText(value);
-                }
-                else {
-                    this._superApply(element, value);
-                }
-            },
-            _setButtonText: function (value) {
-                var _value = this.focusIndex;
-                if (typeof this.focusIndex === 'undefined') {
-                    _value = this.element.find("option:selected").val();
-                }
-                else {
-                    var selected = this.items[_value] || {};
-                    _value = selected.value;
-                }
+            _renderButtonItem: function (value) {
+                var _value = value.value;
                 var url = self.egw().image('navbar', _value);
                 var buttonItem = jQuery("<span>", {
                     "class": "ui-selectmenu-text",
-                    title: value
+                    title: value.label
                 });
-                jQuery('.ui-selectmenu-text', this.button).replaceWith(buttonItem);
                 buttonItem.css('background-image', 'url(' + url + ')');
+                return buttonItem;
             },
             _renderItem: function (ul, item) {
                 var li = jQuery("<li>", { class: "et2_link_entry_app_option" }), wrapper = jQuery("<div>", { text: item.label });
@@ -557,7 +542,8 @@ var et2_link_entry = /** @class */ (function (_super) {
             if (typeof self.options.value != 'object')
                 self.options.value = {};
             self.options.value.app = self.app_select.val();
-        });
+        })
+            .attr("aria-label", egw.lang("linkapps"));
         var opt_count = 0;
         for (var key in this.options.select_options) {
             opt_count++;
