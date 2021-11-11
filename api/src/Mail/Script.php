@@ -158,7 +158,7 @@ class Script
 						// <crnl>s will be encoded as \\n. undo this.
 						$rule['action_arg']	= preg_replace("/\\\\n/","\r\n",$rule['action_arg']);
 						$rule['action_arg']	= stripslashes($rule['action_arg']);
-						$rule['flg']		= $bits[8];   // bitwise flag
+						$rule['flg']		= $bits[8] = (int)$bits[8];   // bitwise flag
 						$rule['field']		= stripslashes($bits[9]);
 						$rule['field_val']	= stripslashes($bits[10]);
 						$rule['size']		= $bits[11];
