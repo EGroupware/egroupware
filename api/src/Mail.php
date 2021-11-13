@@ -5574,12 +5574,12 @@ class Mail
 	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param string $_folder folder to work on
 	 * @param boolean $_stream =false true: return a stream, false: return string, stream suppresses any caching
-	 * @return string the message body
+	 * @return ?string the message body or null if $_uid or $_partID not found
 	 */
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
 		static $rawBody;
-		$body = [];
+		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?: $this->icServer->getCurrentMailbox();
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
