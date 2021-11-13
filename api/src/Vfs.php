@@ -1482,7 +1482,7 @@ class Vfs extends Vfs\Base
 					$comment = self::find_prop($props,'comment');
 					if($comment)
 					{
-						$zip->setCommentName($_name, $comment);
+						$zip->setCommentName($_name, $comment['val']);
 					}
 				}
 				unset($props);
