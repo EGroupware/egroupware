@@ -1199,7 +1199,7 @@ class Sql extends Api\Storage
 			unset($this->data['etag']);
 			if (!($err = parent::save(array('contact_etag=contact_etag+1'),array('contact_etag' => $etag))))
 			{
-				$this->data['etag'] = $etag+1;
+				$this->data['etag'] = (int)$etag+1;
 			}
 			else
 			{
