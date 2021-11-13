@@ -2965,7 +2965,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$file = $tmp_file;
 			}
 
-			if (!($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
+			if (!is_string($message) || !($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
 				$res['msg'] = lang('Error saving %1!',$file);
 				$res['success'] = false;
