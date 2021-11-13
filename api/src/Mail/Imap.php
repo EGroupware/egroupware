@@ -687,7 +687,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 					'MAILBOX' => $k,
 					'ATTRIBUTES' => $box['attributes'],
 					'delimiter' => $box['delimiter'] ? $box['delimiter'] : $this->getDelimiter('personal'),
-					'SUBSCRIBED' => in_array(self::SUBSCRIBED_ATTRIBUTE, $box['attributes']),
+					'SUBSCRIBED' => in_array(self::SUBSCRIBED_ATTRIBUTE, $box['attributes'] ?? []),
 				];
 			}
 		}
