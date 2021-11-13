@@ -801,7 +801,7 @@ class infolog_so
 		}
 		$sortbycf='';
 		if (!empty($query['order']) && (preg_match('/^[a-z_0-9, ]+$/i',$query['order']) || stripos($query['order'],'#')!==FALSE ) &&
-			(empty($query['sort']) || preg_match('/^(DESC|ASC)$/i',$query['sort'])))
+			(empty($query['sort']) || is_string($query['sort']) && preg_match('/^(DESC|ASC)$/i',$query['sort'])))
 		{
 			$order = array();
 			foreach(explode(',',$query['order']) as $val)
