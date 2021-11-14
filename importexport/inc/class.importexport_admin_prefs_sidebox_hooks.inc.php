@@ -116,7 +116,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),false)."','_blank',850,440,'yes')",
 				'icon' => 'import',
 				'app' => 'importexport',
-				'text' => in_array($appname, array('sitemgr')) || count($plugins[$appname]['import']) > 1 ? 'Import' : 'Import CSV'
+				'text' => in_array($appname, array('sitemgr')) || count($plugins[$appname]['import'] ?? []) > 1 ? 'Import' : 'Import CSV'
 			);
 			if($GLOBALS['egw_info']['flags']['disable_importexport']['import']) {
 				$file['Import CSV']['link'] = '';
