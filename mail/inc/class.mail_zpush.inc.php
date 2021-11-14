@@ -877,7 +877,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
 		// fix for z-push bug returning additional bodypreference type 4, even if only 1 is requested and mimessupport = 0
-		if (!$mimesupport && ($key = array_search('4', $bodypreference))) unset($bodypreference[$key]);
+		if (!$mimesupport && $bodypreference !== false && ($key = array_search('4', $bodypreference))) unset($bodypreference[$key]);
 
 		//$this->debugLevel=4;
 		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
