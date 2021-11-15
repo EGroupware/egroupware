@@ -371,12 +371,12 @@ class importexport_helper_functions {
 							$val
 						);
 					}
-					$val = preg_replace_callback( "/($c_functions)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
+					$val = preg_replace_callback( "/($c_functions)\(([^)]*)\)/i", array(__CLASS__, 'c2_dispatcher') , $val );
 					break;
 				}
 			}
 			// clean each field
-			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{|\|INE\{)(.*)\}/", array( self, 'strclean'), $val );
+			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{|\|INE\{)(.*)\}/", array(__CLASS__, 'strclean'), $val );
 
 			$_record[$idx] = $val;
 		}
