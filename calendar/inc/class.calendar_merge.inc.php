@@ -888,9 +888,9 @@ class calendar_merge extends Api\Storage\Merge
 	 */
 	protected function normalize_event_id($id)
 	{
-		if(is_string($id) || is_array($id) && $id['id'] && !$id['start'])
+		if(is_string($id) || is_array($id) && !empty($id['id']) && empty($id['start']))
 		{
-			if(strpos($id, ':'))
+			if (is_string($id) && strpos($id, ':'))
 			{
 				$_id = $id;
 				$id = array();
