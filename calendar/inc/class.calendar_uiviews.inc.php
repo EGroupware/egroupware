@@ -734,7 +734,7 @@ class calendar_uiviews extends calendar_ui
 				$days == 1 // Showing just 1 day
 			)
 			{
-				$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
+				$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params)) +
 					array('owner' => $users);
 			}
 			else
@@ -1054,6 +1054,10 @@ class calendar_uiviews extends calendar_ui
 					$this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd);
 				}
 			}
+		}
+		else
+		{
+			$dayEvents = [];    // search returns false or null for nothing found!
 		}
 		return $dayEvents;
  	}
