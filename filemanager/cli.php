@@ -80,6 +80,7 @@ function usage($error_msg='')
 	exit;
 }
 $long = $numeric = $recursive = $perms = $all = $inode = false;
+$domain = 'default';
 $args = $_SERVER['argv'];
 $cmd = basename(array_shift($args),'.php');
 if ($args[0][0] != '-' && $args[0][0] != '/' && strpos($args[0],'://') === false)
@@ -186,7 +187,7 @@ while(!is_null($option = array_shift($args)))
 }
 if ($user && $passwd)
 {
-	load_egw($user,$passwd,$domain ? $domain : 'default');
+	load_egw($user, $passwd, $domain);
 }
 $argc = count($argv);
 
