@@ -777,7 +777,7 @@ class calendar_merge extends Api\Storage\Merge
 		else if((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false)
 			&& ((strpos($content, '$$range') === false && strpos($content, '{{range') === false)))
 		{
-			if(is_array($ids) && $ids[0] && !$ids[0]['id'])
+			if (is_array($ids) && !empty($ids[0]) && !(is_array($ids[0]) || isset($ids[0]['id'])))
 			{
 				foreach($ids as $range)
 				{
