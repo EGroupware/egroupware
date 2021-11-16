@@ -498,7 +498,7 @@ use EGroupware\Api\Etemplate;
 							$edit_link, $definition->name );
 					}
 					$actions[] = lang('Edit your file to match the definition:') . ' '
-					. implode(array_map('lang',array_intersect_key($options['csv_fields'],$options['field_mapping'])),', ');
+					. implode(', ', array_map('lang', array_intersect_key($options['csv_fields'], $options['field_mapping'])));
 					$message[] = "\n<li>".implode($actions,"\n<li>");
 				}
 			}
