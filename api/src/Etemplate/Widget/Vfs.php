@@ -155,11 +155,12 @@ class Vfs extends File
 		$type = $_REQUEST['type'];
 		$widget_id = $_REQUEST['widget_id'];
 		$file = $type == 'htmlarea' ? $_FILES['file'] : $_FILES['upload'];
-		if(!self::$request = Etemplate\Request::read($request_id))
+		// we still need to deal with old etemplate apps (eg. knowlegde base) uploading with no request_id available
+		if($request_id && !self::$request = Etemplate\Request::read($request_id))
 		{
 			$error = lang("Could not read session");
 		}
-		elseif (!($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
+		elseif (self::$request && !($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
 			// Can't use callback
