@@ -132,7 +132,7 @@ use EGroupware\Api\Etemplate;
 						}
 						if(count($check_message))
 						{
-							$this->message .= implode($check_message, "<br />\n") . "<br />\n";
+							$this->message .= implode("<br />\n", $check_message) . "<br />\n";
 						}
 						if($content['dry-run'])
 						{
@@ -489,17 +489,18 @@ use EGroupware\Api\Etemplate;
 						if($dst_file)
 						{
 							// Still have uploaded file, jump there
-							Api\Cache::setSession($definition->application,'csvfile',$dst_file);
+							Api\Cache::setSession($definition->application, 'csvfile', $dst_file);
 							$edit_link['step'] = 'wizard_step30';
 						}
-						$edit_link = Egw::link('/index.php',$edit_link);
+						$edit_link = Egw::link('/index.php', $edit_link);
 						$edit_link = "javascript:egw_openWindowCentered2('$edit_link','_blank',500,500,'yes')";
 						$actions[] = lang('Edit definition <a href="%1">%2</a> to match your file',
-							$edit_link, $definition->name );
+										  $edit_link, $definition->name
+						);
 					}
 					$actions[] = lang('Edit your file to match the definition:') . ' '
-					. implode(', ', array_map('lang', array_intersect_key($options['csv_fields'], $options['field_mapping'])));
-					$message[] = "\n<li>".implode($actions,"\n<li>");
+						. implode(', ', array_map('lang', array_intersect_key($options['csv_fields'], $options['field_mapping'])));
+					$message[] = "\n<li>" . implode("\n<li>", $actions);
 				}
 			}
 			return $ok;
