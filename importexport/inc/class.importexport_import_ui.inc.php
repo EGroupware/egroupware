@@ -62,7 +62,7 @@ use EGroupware\Api\Etemplate;
 			{
 				Api\Translation::add_app($appname);
 			}
-			if($content['import'] && $definition) {
+			if ($content['import'] && $definition && !empty($content['file']) && file_exists($content['file']['tmp_name'])) {
 				try {
 					if($content['dry-run']) {
 						// Set this so plugin doesn't do any data changes
@@ -200,7 +200,7 @@ use EGroupware\Api\Etemplate;
 			}
 			elseif($content['cancel'])
 			{
-				egw_framework::set_onload('window.close();');
+				Api\Framework::window_close();
 			}
 			elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
 			{
@@ -358,7 +358,7 @@ use EGroupware\Api\Etemplate;
 				foreach($plugin->get_errors() as $record => $message) {
 					$this->message .= "<br />\n$record: $message";
 				}
-				if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
+				$this->message .= "<br />\n".lang('Some records may not have been imported');
 				$this->message .= "<br />\n";
 			}
 			return '<div class="header">' . lang('Preview') . ' - ' . $plugin->get_name() . '</div>' . $preview;
