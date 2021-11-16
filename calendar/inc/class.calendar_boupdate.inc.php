@@ -2070,7 +2070,7 @@ class calendar_boupdate extends calendar_bo
 			'data'	=> $event['description']
 		);
 
-		foreach(explode(',',$event['category']) as $cat_id)
+		foreach(is_array($event['category']) ? $event['category'] : explode(',', $event['category']) as $cat_id)
 		{
 			$cat_string[] = stripslashes(Api\Categories::id2name($cat_id));
 		}
