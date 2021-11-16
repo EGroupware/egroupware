@@ -638,7 +638,7 @@ class calendar_boupdate extends calendar_bo
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		// Check if user is not participating, and does not want notifications
-		if($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants']))
+		if ($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants'] ?? []))
 		{
 			return false;
 		}
