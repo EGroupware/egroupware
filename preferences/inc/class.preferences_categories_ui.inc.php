@@ -47,10 +47,10 @@ class preferences_categories_ui extends admin_categories {
 	 *
 	 * @param array $content
 	 */
-	public function index(array $content=null)
+	public function index(array $content = null, $msg = '')
 	{
 		$GLOBALS['egw_info']['flags']['currentapp'] = $_GET['cats_app'];
 
-		parent::index($content);
+		parent::index($content, $msg);
 	}
 }
