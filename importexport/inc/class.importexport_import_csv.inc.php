@@ -83,12 +83,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @param string $_resource resource containing data. May be each valid php-stream
 	 * @param array $_options options for the resource array with keys: charset and fieldsep
 	 */
-	public function __construct( $_resource,  array $_options ) {
+	public function __construct( $_resource,  array $_options )
+	{
 		$this->resource = $_resource;
-		$this->csv_fieldsep = $_options['fieldsep'];
+		$this->csv_fieldsep = $_options['fieldsep'][0];
 		if($_options['charset'] == 'user') $_options['charset'] = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 		$this->csv_charset = $_options['charset'];
-		return;
 	} // end of member function __construct
 
 	/**
