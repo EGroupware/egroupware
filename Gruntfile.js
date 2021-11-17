@@ -184,6 +184,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_iframe.js",
 						"api/js/Resumable/resumable.js",
 						"api/js/etemplate/et2_widget_file.js",
+						"api/js/etemplate/et2_widget_placeholder.js",
 						"api/js/etemplate/et2_widget_progress.js",
 						"api/js/etemplate/et2_widget_portlet.js",
 						"api/js/etemplate/et2_widget_ajaxSelect.js",
