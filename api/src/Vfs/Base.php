@@ -704,6 +704,10 @@ class Base
 			else
 			{
 				$time = null;
+				if (in_array($name, ['readlink']))
+				{
+					return $name($url);
+				}
 				return $name($url, $time);
 			}
 		}
