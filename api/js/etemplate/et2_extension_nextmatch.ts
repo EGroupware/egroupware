@@ -1759,17 +1759,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				continue;
 			}
-			if(typeof _row[x] != "undefined" && _row[x].widget)
-			{
-				columnWidgets[x] = _row[x].widget;
 
-				// Append the widget to this container
-				this.addChild(_row[x].widget);
-			}
-			else
-			{
-				columnWidgets[x] = _row[x].widget;
-			}
+			columnWidgets[x] = _row[x].widget;
+
 			// Pass along column alignment
 			if(_row[x].align && columnWidgets[x])
 			{
@@ -3852,6 +3844,10 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		{
 			return this.search_box[0];
 		}
+		if(_sender == this.favorites)
+		{
+			return egwIsMobile() ? this.search_box.find('.nm_favorites_div').show() : this.right_div;
+		}
 		if(_sender.id == 'export')
 		{
 			return this.right_div[0];
@@ -3870,9 +3866,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 
 		for(let header of this.headers)
 		{
-			if(header && header.getDOMNode && header.getDOMNode(this))
+			if(header && header.getDOMNode && header.getDOMNode(_sender))
 			{
-				return header.getDOMNode(this);
+				return header.getDOMNode(_sender);
 			}
 		}
 		return null;
