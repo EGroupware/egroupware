@@ -1633,7 +1633,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($rv_messages));
 		$list=array();
 
-		$cnt = count($rv_messages['header']);
+		$cnt = count($rv_messages['header'] ?? []);
 		//$list['status'] = 1;
 		$list['searchtotal'] = $cnt;
 		$list["range"] = $_searchquery->GetSearchRange();
