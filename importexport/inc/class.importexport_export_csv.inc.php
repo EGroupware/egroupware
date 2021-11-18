@@ -288,7 +288,7 @@ class importexport_export_csv implements importexport_iface_export_record
 					break;
 				default:
 					list($type) = explode('-',$c_field['type'],2);
-					if(in_array($type, array_keys($GLOBALS['egw_info']['apps']))) {
+					if (in_array($type, array_keys($GLOBALS['egw_info']['apps'] ?? []))) {
 						$fields['links'][] = $name;
 						$links[$name] = $c_field['type'];
 					}

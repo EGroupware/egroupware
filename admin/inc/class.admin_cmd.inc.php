@@ -1257,7 +1257,7 @@ abstract class admin_cmd
 	 */
 	static function display_account($account)
 	{
-		$id = is_numeric($account) ? $account : $GLOBALS['egw']->accounts->id2name($account);
+		$id = is_numeric($account) ? $account : Api\Accounts::getInstance()->name2id($account);
 
 		return $account.' ('.Api\Accounts::username($id).')';
 	}

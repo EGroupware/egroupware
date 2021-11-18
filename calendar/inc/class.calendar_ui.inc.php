@@ -678,7 +678,7 @@ class calendar_ui
 				'filter' => $this->cal_prefs['saved_states']['status_filter'],
 				'num_rows' => 1
 			);
-			$filter_match = count($this->bo->search($filter_check, $this->bo->so->cal_table.".cal_id = {$event['id']}")) > 0;
+			$filter_match = (bool)$this->bo->search($filter_check, $this->bo->so->cal_table.".cal_id = {$event['id']}");
 		}
 
 		if(!$event || !$filter_match)

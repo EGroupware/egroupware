@@ -645,7 +645,7 @@ class calendar_boupdate extends calendar_bo
 		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		// Check if user is not participating, and does not want notifications
-		if($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants']))
+		if ($msg_is_response && !$part_prefs['calendar']['receive_not_participating'] && !array_key_exists($userid, $old_event['participants'] ?? []))
 		{
 			return false;
 		}
@@ -1591,7 +1591,7 @@ class calendar_boupdate extends calendar_bo
 				$save_event[$ts] = $save_event[$ts]->format('ts');
 			}
 		}
-		$tracking->track($save_event, $old_event);
+		$tracking->track($save_event, $old_event ?: null);
 
 		return $cal_id;
 	}
@@ -1832,7 +1832,7 @@ class calendar_boupdate extends calendar_bo
 			if (($event = $this->read($cal_id, $recur_date, $ignore_acl, 'server')))
 			{
 				$tracking = new calendar_tracking($this);
-				$tracking->track($event, $old_event);
+				$tracking->track($event, $old_event ?: null);
 			}
 			// notify the link-class about the update, as other apps may be subscribed to it
 			Link::notify_update('calendar', $cal_id, $event, "update");
@@ -2077,7 +2077,7 @@ class calendar_boupdate extends calendar_bo
 			'data'	=> $event['description']
 		);
 
-		foreach(explode(',',$event['category']) as $cat_id)
+		foreach(is_array($event['category']) ? $event['category'] : explode(',', $event['category']) as $cat_id)
 		{
 			$cat_string[] = stripslashes(Api\Categories::id2name($cat_id));
 		}

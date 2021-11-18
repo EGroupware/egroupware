@@ -94,7 +94,7 @@ class home_favorite_portlet extends home_portlet
 			$need_reload = true;
 		}
 
-		$this->favorite = $context['favorite'];
+		$this->favorite = (array)$context['favorite'];
 		$this->title = lang($context['appname']) . ': ' . $this->favorite['name'];
 		$this->context = $context;
 		if($this->favorite)

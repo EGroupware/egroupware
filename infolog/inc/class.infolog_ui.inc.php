@@ -355,7 +355,8 @@ class infolog_ui
 		}
 
 		// Querying for a particular ID.  If linked is a list of IDs, reset the linked or we won't find the ID we want.
-		if($query['col_filter']['info_id'] && $link_filters['linked'] && !$link_filters['linked']['app'])
+		if (!empty($query['col_filter']['info_id']) && !empty($link_filters['linked']) &&
+			(!is_array($link_filters['linked']) || empty($link_filters['linked']['app'])))
 		{
 			unset($links['linked']);
 			unset($link_filters['linked']);

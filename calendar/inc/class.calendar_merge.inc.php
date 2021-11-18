@@ -761,7 +761,7 @@ class calendar_merge extends Api\Storage\Merge
 		if((strpos($content, '$$range') !== false || strpos($content, '{{range') !== false) && is_array($ids))
 		{
 			// Merging into a template that uses range - need ranges, got events
-			if(is_array($ids) && (is_array($ids[0]) && $ids[0]['id'] || is_string($ids[0])))
+			if (is_array($ids) && (is_array($ids[0]) && isset($ids[0]['id']) || is_string($ids[0])))
 			{
 				// Passed an array of events, to be handled like a date range
 				$events = $ids;
@@ -777,7 +777,7 @@ class calendar_merge extends Api\Storage\Merge
 		else if((strpos($content, '$$pagerepeat') !== false || strpos($content, '{{pagerepeat') !== false)
 			&& ((strpos($content, '$$range') === false && strpos($content, '{{range') === false)))
 		{
-			if(is_array($ids) && $ids[0] && !$ids[0]['id'])
+			if (is_array($ids) && !(is_array($ids[0]) && isset($ids[0]['id']) || is_string($ids[0])))
 			{
 				foreach($ids as $range)
 				{
@@ -888,9 +888,9 @@ class calendar_merge extends Api\Storage\Merge
 	 */
 	protected function normalize_event_id($id)
 	{
-		if(is_string($id) || is_array($id) && $id['id'] && !$id['start'])
+		if(is_string($id) || is_array($id) && !empty($id['id']) && empty($id['start']))
 		{
-			if(strpos($id, ':'))
+			if (is_string($id) && strpos($id, ':'))
 			{
 				$_id = $id;
 				$id = array();

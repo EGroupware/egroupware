@@ -3247,7 +3247,7 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			// Group membership
-			foreach(array_keys($event['participants']) as $id)
+			foreach(array_keys($event['participants'] ?? []) as $id)
 			{
 				if($GLOBALS['egw']->accounts->get_type($id) == 'g' && in_array($uid,$GLOBALS['egw']->accounts->members($id,true)))
 				{

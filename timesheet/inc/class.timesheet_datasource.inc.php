@@ -7,8 +7,8 @@
  * @package timesheet
  * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
+
 use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
 
@@ -24,7 +24,7 @@ class timesheet_datasource extends datasource
 	 */
 	function __construct()
 	{
-		parent::__construct(TIMESHEET_APP);
+		parent::__construct('timesheet');
 
 		$this->valid = PM_REAL_START|PM_REAL_END|PM_USED_TIME|PM_USED_BUDGET|PM_USED_QUANTITY|
 			PM_PRICELIST_ID|PM_UNITPRICE|PM_RESOURCES|PM_DETAILS|PM_COMPLETION|PM_CAT_ID;
@@ -62,7 +62,7 @@ class timesheet_datasource extends datasource
 			'pl_id'          => $data['pl_id'],
 			'pe_unitprice'   => $data['ts_unitprice'],
 			'pe_used_quantity' => $data['ts_quantity'],
-			'pe_used_budget' => $data['ts_quantity'] * (float)$data['ts_unitprice'],
+			'pe_used_budget' => (float)$data['ts_quantity'] * (float)$data['ts_unitprice'],
 			'pe_completion'  => 100,
 			'cat_id'         => $data['cat_id'],
 		);

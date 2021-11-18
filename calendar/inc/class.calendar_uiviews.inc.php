@@ -345,7 +345,7 @@ class calendar_uiviews extends calendar_ui
 				'caption' => 'Weekend',
 				'icon' => '7_day_view',
 				'checkbox'	=> true,
-				'checked' => $this->cal_prefs['saved_states']['weekend'],
+				'checked' => is_array($this->cal_prefs['saved_states']) ? $this->cal_prefs['saved_states']['weekend']:false,
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Toggle weekend',
@@ -734,7 +734,7 @@ class calendar_uiviews extends calendar_ui
 				$days == 1 // Showing just 1 day
 			)
 			{
-				$content['view'][] = (array)$this->tagWholeDayOnTop($this->bo->search($search_params)) +
+				$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params)) +
 					array('owner' => $users);
 			}
 			else
@@ -1054,6 +1054,10 @@ class calendar_uiviews extends calendar_ui
 					$this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd);
 				}
 			}
+		}
+		else
+		{
+			$dayEvents = [];    // search returns false or null for nothing found!
 		}
 		return $dayEvents;
  	}

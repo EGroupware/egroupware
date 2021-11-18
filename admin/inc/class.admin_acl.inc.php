@@ -392,7 +392,7 @@ class admin_acl
 			}
 			if (!(int)$rights)
 			{
-				if (count($ids) > 1)
+				if (count((array)$ids) > 1)
 				{
 					$msg = lang('%1 ACL entries deleted.', count($ids));
 				}

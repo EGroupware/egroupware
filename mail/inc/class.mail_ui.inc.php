@@ -2757,10 +2757,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				//error_log(__METHOD__."about to call calendar_ical");
 				$calendar_ical = new calendar_ical();
-				$eventid = $calendar_ical->search($attachment['attachment'],-1);
-				//error_log(__METHOD__.array2string($eventid));
-				if (!$eventid) $eventid = -1;
-				$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true,0,'',null,$attachment['charset']);
+				$event = $calendar_ical->importVCal($attachment['attachment'],-1,null,true,0,'',null,$attachment['charset']);
 				//error_log(__METHOD__.$event);
 				if ((int)$event > 0)
 				{
@@ -2965,7 +2962,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$file = $tmp_file;
 			}
 
-			if (!($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
+			if (!is_string($message) || !($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
 				$res['msg'] = lang('Error saving %1!',$file);
 				$res['success'] = false;

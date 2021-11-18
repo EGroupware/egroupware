@@ -450,14 +450,20 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 * @param stream $stream
 	 * @param importexport_definition $definition
 	 * @return String HTML for preview
-         */
+     */
 	public function preview( $stream, importexport_definition $definition )
 	{
 		$this->import($stream, $definition);
 		rewind($stream);
 
 		// Set up result
-		$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+		$rows = array('h1' => array(), 'f1' => array(), '.h1' => 'class=th');
+
+		// Check for no results
+		if(!count($this->preview_records) || !is_object($this->preview_records[0]))
+		{
+			return Api\Html::table($rows);
+		}
 
 		// Load labels for app
 		$record_class = get_class($this->preview_records[0]);
@@ -467,16 +473,23 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		$plugin = get_called_class();
 		$wizard_name = $definition->application . '_wizard_' . str_replace($definition->application . '_', '', $plugin);
-		try {
+		try
+		{
 			$wizard = new $wizard_name;
 			$fields = $wizard->get_import_fields();
 			foreach($labels as $field => &$label)
 			{
-				if($fields[$field]) $label = $fields[$field];
+				if($fields[$field])
+				{
+					$label = $fields[$field];
+				}
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			Api\Translation::add_app($definition->application);
-			foreach($labels as $field => &$label) {
+			foreach($labels as $field => &$label)
+			{
 				$label = lang($label);
 			}
 		}

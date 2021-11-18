@@ -1226,7 +1226,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElementNs('C', 'schedule-response', Api\CalDAV::CALDAV);
 
-		foreach(array_keys($event['participants']) as $uid)
+		foreach(array_keys($event['participants'] ?? []) as $uid)
 		{
 			$xml->startElementNs('C', 'response', null);
 

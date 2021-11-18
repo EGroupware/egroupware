@@ -176,7 +176,7 @@ class Vfs extends File
 				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $file);
 
 			// store temp. vfs-path like links to be able to move it to correct location after entry is stored
-			if (!$data['to_id'] || is_array($data['to_id']))
+			if (is_array($data) && (empty($data['to_id']) || is_array($data['to_id'])))
 			{
 				Api\Link::link($data['to_app'], $data['to_id'], Api\Link::VFS_APPNAME, array(
 					'name' => $file['name'],

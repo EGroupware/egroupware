@@ -240,7 +240,7 @@ class calendar_hooks
 			$freebusy_help .= ' ' . $freebusy_url;
 
 			// Timezone for file exports
-			$export_tzs = array('0' => lang('Use Event TZ'));
+			$export_tzs = array(['value' => '0', 'label' => lang('Use Event TZ')]);
 			$export_tzs += Api\DateTime::getTimezones();
 		}
 		$link_title_options = calendar_bo::get_link_options();

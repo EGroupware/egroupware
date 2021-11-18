@@ -373,7 +373,7 @@ class Link extends Etemplate\Widget
 			$already = self::get_array($validated,$form_name);
 			if($already != null)
 			{
-				$value = array_merge($value,$already);
+				$value = array_merge((array)$value,  $already);
 			}
 			// Automatically do link if user selected entry but didn't click 'Link' button
 			$link = self::get_array($content, self::form_name($cname, $this->id . '_link_entry'));

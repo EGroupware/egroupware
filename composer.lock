@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de144b0b6d74a96e1d0fa87a0ece2b7c",
+    "content-hash": "beeabf26cf7c537dea75e236217d44c6",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1674,6 +1674,55 @@
             "time": "2021-07-02T11:13:29+00:00"
         },
         {
+            "name": "egroupware/stream-wrapper",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Stream_Wrapper.git",
+                "reference": "e274502d91c9615ac1c6e1ee133940a7252d0884"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Stream_Wrapper/zipball/e274502d91c9615ac1c6e1ee133940a7252d0884",
+                "reference": "e274502d91c9615ac1c6e1ee133940a7252d0884",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7 || ^8"
+            },
+            "replace": {
+                "pear-horde/horde_stream_wrapper": "2.*",
+                "pear-pear.horde.org/horde_stream_wrapper": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Stream_Wrapper": "lib/"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP stream wrappers library",
+            "homepage": "https://www.horde.org/libraries/Horde_Stream_Wrapper",
+            "support": {
+                "source": "https://github.com/EGroupware/Stream_Wrapper/tree/2.1.5"
+            },
+            "time": "2018-01-25T00:00:00+00:00"
+        },
+        {
             "name": "egroupware/swoolepush",
             "version": "dev-master",
             "source": {
@@ -1754,6 +1803,72 @@
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
             "time": "2021-08-31T17:21:00+00:00"
+        },
+        {
+            "name": "egroupware/util",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Util.git",
+                "reference": "c45016747dfdbb004891fd72f0ff41982aeb45c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Util/zipball/c45016747dfdbb004891fd72f0ff41982aeb45c0",
+                "reference": "c45016747dfdbb004891fd72f0ff41982aeb45c0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": "^5.3 || ^7 || ^8"
+            },
+            "replace": {
+                "pear-horde/horde_util": "2.*",
+                "pear-pear.horde.org/horde_util": "*"
+            },
+            "suggest": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-iconv": "*",
+                "ext-intl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-xml": "*",
+                "pear-pear.horde.org/Horde_Imap_Client": "^2",
+                "pear-pear.horde.org/Horde_Test": "^2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Jan Schneider",
+                    "email": "jan@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "developer"
+                }
+            ],
+            "description": "Utility library",
+            "homepage": "https://www.horde.org/libraries/Horde_Util",
+            "support": {
+                "source": "https://github.com/EGroupware/Util/tree/2.6.2"
+            },
+            "time": "2017-11-11T00:00:00+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -3323,33 +3438,6 @@
             "description": "A collection of various stream filters."
         },
         {
-            "name": "pear-pear.horde.org/Horde_Stream_Wrapper",
-            "version": "2.1.4",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz"
-            },
-            "require": {
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_stream_wrapper": "== 2.1.4.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "A collection of stream wrappers."
-        },
-        {
             "name": "pear-pear.horde.org/Horde_Support",
             "version": "2.2.0",
             "dist": {
@@ -3490,34 +3578,6 @@
                 "LGPL-2.1"
             ],
             "description": "This class represents a single URL and provides methods for manipulating URLs."
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Util",
-            "version": "2.5.9",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.9.tgz"
-            },
-            "require": {
-                "ext-dom": "*",
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_util": "== 2.5.9.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "A library that provides functionality useful for all kind of applications."
         },
         {
             "name": "pear/archive_tar",

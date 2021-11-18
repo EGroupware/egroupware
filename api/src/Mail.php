@@ -5574,12 +5574,12 @@ class Mail
 	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param string $_folder folder to work on
 	 * @param boolean $_stream =false true: return a stream, false: return string, stream suppresses any caching
-	 * @return string the message body
+	 * @return ?string the message body or null if $_uid or $_partID not found
 	 */
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
 		static $rawBody;
-		$body = [];
+		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?: $this->icServer->getCurrentMailbox();
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
@@ -7404,6 +7404,12 @@ class Mail
 		$identity = Mail\Account::read_identity($acc['ident_id'], true, null, $acc);
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
+
+		// check we have an email to send the mdn to (otherwise Horde_Mime_Mdn throws a RuntimeException)
+		if (empty($mdn_to = $headers[strtoupper('Disposition-Notification-To')]) || strpos($mdn_to, '@') === false)
+		{
+			return false;
+		}
 
 		// Override Horde's translation with our own
 		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));

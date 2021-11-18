@@ -414,8 +414,7 @@ class mail_integration {
 		$replace = array();
 		foreach($links as $link)
 		{
-			$matches = null;
-			if (is_array($link) && $link['id']['egw_data'] && strpos($html, self::INLINE_PREFIX . $link['id']['egw_data']) !== false)
+			if (is_array($link) && is_array($link['id']) && !empty($link['id']['egw_data']) && strpos($html, self::INLINE_PREFIX . $link['id']['egw_data']) !== false)
 			{
 				$replace[self::INLINE_PREFIX. $link['id']['egw_data']] =
 					Api\Egw::link(Api\Vfs::download_url(Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['name']))));

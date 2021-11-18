@@ -1271,7 +1271,7 @@ class Link extends Link\Storage
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
 			$Ok = Vfs::copy_uploaded($file, $p=Vfs::parse_url($entry_dir, PHP_URL_PATH), $comment, false);	// no is_uploaded_file() check!
-			if (!$Ok) error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called Vfs::copy_uploaded('$file[tmp_name]', '$p', '$comment', false)=".array2string($Ok));
+			if (!$Ok) error_log(__METHOD__."('$app', '$id', ".array2string($file).", '$comment') called Vfs::copy_uploaded(".json_encode($file).", '$p', '$comment', false)=".array2string($Ok));
 		}
 		else
 		{

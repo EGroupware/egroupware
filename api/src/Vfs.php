@@ -1482,7 +1482,7 @@ class Vfs extends Vfs\Base
 					$comment = self::find_prop($props,'comment');
 					if($comment)
 					{
-						$zip->setCommentName($_name, $comment);
+						$zip->setCommentName($_name, $comment['val']);
 					}
 				}
 				unset($props);
@@ -1909,6 +1909,10 @@ class Vfs extends Vfs\Base
 	 */
 	static public function copy_files(array $src, $dst, &$errs=null, array &$copied=null)
 	{
+		if (!is_array($copied))
+		{
+			$copied = [];
+		}
 		if (self::is_dir($dst))
 		{
 			foreach ($src as $file)

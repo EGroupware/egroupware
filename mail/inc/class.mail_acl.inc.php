@@ -205,11 +205,7 @@ class mail_acl
 		}
 		else
 		{
-			$button = @key($content['button']);
-			if (!empty ($content['grid']['delete']))
-			{
-				$button = 'delete';
-			}
+			$button = !empty ($content['grid']['delete']) ? 'delete' : @key((array)$content['button']);
 			$data = $content;
 			$data['mailbox'] = self::_extract_mailbox($content['mailbox'], $acc_id);
 			switch ($button)

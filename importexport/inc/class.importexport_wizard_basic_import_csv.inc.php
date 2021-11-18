@@ -426,7 +426,7 @@ class importexport_wizard_basic_import_csv
 		$sel_options['action'] = $this->actions;
 
 		// Make at least 1 (empty) conditions
-		$j = count($content['conditions']);
+		$j = count($content['conditions'] ?? []);
 		while ($j < 1)
 		{
 			$content['conditions'][] = array(

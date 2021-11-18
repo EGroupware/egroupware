@@ -278,7 +278,7 @@ class Base
 		{
 			if(self::LOG_LEVEL > 1)
 			{
-				error_log(__METHOD__ . "('$path') = '" . self::$resolve_url_cache[$path] . "' (from cache)");
+				error_log(__METHOD__ . "('$path') = '" . print_r(self::$resolve_url_cache[$path], true) . "' (from cache)");
 			}
 			$mounted = self::$resolve_url_cache[$path]['mounted'];
 			return self::$resolve_url_cache[$path]['url'];
@@ -704,6 +704,10 @@ class Base
 			else
 			{
 				$time = null;
+				if (in_array($name, ['readlink']))
+				{
+					return $name($url);
+				}
 				return $name($url, $time);
 			}
 		}
