@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7081f3cbd90eb0de9c1ee7b8e8301c45",
+    "content-hash": "3dfb6f5f3f38b5135ad5a1bb80bc93eb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1673,6 +1673,55 @@
             "time": "2021-05-25T07:37:53+00:00"
         },
         {
+            "name": "egroupware/stream-wrapper",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/Stream_Wrapper.git",
+                "reference": "e274502d91c9615ac1c6e1ee133940a7252d0884"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/Stream_Wrapper/zipball/e274502d91c9615ac1c6e1ee133940a7252d0884",
+                "reference": "e274502d91c9615ac1c6e1ee133940a7252d0884",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7 || ^8"
+            },
+            "replace": {
+                "pear-horde/horde_stream_wrapper": "2.*",
+                "pear-pear.horde.org/horde_stream_wrapper": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Stream_Wrapper": "lib/"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Michael Slusarz",
+                    "email": "slusarz@horde.org",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP stream wrappers library",
+            "homepage": "https://www.horde.org/libraries/Horde_Stream_Wrapper",
+            "support": {
+                "source": "https://github.com/EGroupware/Stream_Wrapper/tree/2.1.5"
+            },
+            "time": "2018-01-25T00:00:00+00:00"
+        },
+        {
             "name": "egroupware/swoolepush",
             "version": "21.1.x-dev",
             "source": {
@@ -2719,7 +2768,7 @@
             "version": "2.0.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery.git",
+                "url": "https://github.com/jquery/jquery.git",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "dist": {
@@ -3386,33 +3435,6 @@
                 "LGPL-2.1"
             ],
             "description": "A collection of various stream filters."
-        },
-        {
-            "name": "pear-pear.horde.org/Horde_Stream_Wrapper",
-            "version": "2.1.4",
-            "dist": {
-                "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.4.tgz"
-            },
-            "require": {
-                "php": "<8.0.0.0"
-            },
-            "replace": {
-                "pear-horde/horde_stream_wrapper": "== 2.1.4.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "description": "A collection of stream wrappers."
         },
         {
             "name": "pear-pear.horde.org/Horde_Support",
