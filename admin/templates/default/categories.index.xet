@@ -42,7 +42,7 @@
 						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
 					</menulist>
 					<checkbox align="center" id="${row}[access]" readonly="true" options="private,public"/>
-					<image align="center" label="{$row_cont[data][icon]}" src="${row}[icon_url]"/>
+					<image align="center" label="{$row_cont['data']['icon']}" src="${row}[icon_url]"/>
 					<description id="${row}[data][color]"/>
 					<date-time id="${row}[last_mod]" readonly="true"/>
 					<description align="center" id="${row}[subs]"/>
