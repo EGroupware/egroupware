@@ -479,7 +479,14 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 
 			//Audio effect for toggleMenu
 			var audio = jQuery('#egw_fw_menuAudioTag');
-			if (egw.preference('audio_effect','common') == '1')	audio[0].play();
+			if (egw.preference('audio_effect','common') == '1') {
+				try {
+				  audio[0].play();
+				}
+				catch(err) {
+				  console.log(err);
+				}
+			}
 		},
 
 		/**
