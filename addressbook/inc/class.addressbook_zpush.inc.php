@@ -557,7 +557,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 					case 'cat_id':
 						// for existing entries in all-in-one addressbook, remove addressbook name as category
-						if ($contact && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+						if ($contact && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] && is_array($message->$key) &&
 							($k=array_search($this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true),$message->$key)))
 						{
 							unset($message->categories[$k]);
