@@ -3846,7 +3846,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		}
 		if(_sender == this.favorites)
 		{
-			return egwIsMobile() ? this.search_box.find('.nm_favorites_div').show() : this.right_div;
+			return egwIsMobile() ? this.search_box.find('.nm_favorites_div').show()[0] : this.right_div[0];
 		}
 		if(_sender.id == 'export')
 		{
@@ -3861,14 +3861,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				{
 					return i == 2 ? this.header_row[0] : this.header_div[0];
 				}
-			}
-		}
-
-		for(let header of this.headers)
-		{
-			if(header && header.getDOMNode && header.getDOMNode(_sender))
-			{
-				return header.getDOMNode(_sender);
 			}
 		}
 		return null;
