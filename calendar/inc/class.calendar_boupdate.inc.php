@@ -1739,7 +1739,7 @@ class calendar_boupdate extends calendar_bo
 				static $memberships=null;
 				if (is_null($memberships))
 				{
-					$memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+					$memberships = $GLOBALS['egw']->accounts->memberships($user,true) ?: [];
 					$memberships[] = $user;
 				}
 				foreach($cat_rights as $uid => $value)
