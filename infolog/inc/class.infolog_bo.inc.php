@@ -1396,6 +1396,7 @@ class infolog_bo
 	 */
 	function import_mail($_addresses,$_subject,$_message,$_attachments,$_date)
 	{
+		$names = $emails = [];
 		foreach($_addresses as $address)
 		{
 			$names[] = $address['name'];
@@ -1407,7 +1408,7 @@ class infolog_bo
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(', ',$names) . implode(', ', $emails),
+			'info_from' => implode(', ', $names) . implode(', ', $emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => Api\DateTime::server2user($_date),
