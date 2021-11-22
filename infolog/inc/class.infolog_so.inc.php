@@ -584,7 +584,19 @@ class infolog_so
 		if (($this->data['info_id'] = $info_id) && !$force_insert)
 		{
 			$where = array('info_id' => $info_id);
-			if ($check_modified) $where['info_datemodified'] = $check_modified;
+			if ($check_modified)
+			{
+				$where['info_datemodified'] = $check_modified;
+
+				// also check etag, if we got it
+				if (isset($values['info_etag']))
+				{
+					$where['info_etag'] = $values['info_etag'];
+				}
+				unset($to_write['info_etag']);
+				// and increment it
+				$to_write[] = 'info_etag=info_etag+1';
+			}
 			if (!$this->db->update($this->info_table,$to_write,$where,__LINE__,__FILE__))
 			{
 				//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning false");
