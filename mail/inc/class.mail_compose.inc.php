@@ -2077,7 +2077,7 @@ class mail_compose
 			{
 				//error_log(__METHOD__."about to call calendar_ical");
 				$calendar_ical = new calendar_ical();
-				$eventid = $calendar_ical->search($attachment['attachment'],-1);
+				$eventid = $calendar_ical->iCalSearch($attachment['attachment'],-1);
 				//error_log(__METHOD__.array2string($eventid));
 				if (!$eventid) $eventid = -1;
 				$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true);
