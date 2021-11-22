@@ -1006,7 +1006,7 @@ class infolog_bo
 				$values['link_to']['to_id'] = $info_id;
 			}
 		}
-		if($values['info_id'] && $info_id !== false)
+		if($values['info_id'] && $info_id)
 		{
 			$this->write_check_links($to_write);
 			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
