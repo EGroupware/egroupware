@@ -961,6 +961,10 @@ class infolog_bo
 			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
 			$values['info_datemodified'] = $this->user_time_now;
 			$to_write['info_datemodified'] = $this->now;
+			if ($check_modified && isset($values['info_etag']))
+			{
+				++$values['info_etag'];
+			}
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
@@ -979,7 +983,7 @@ class infolog_bo
 
 		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs, !isset($old))))
 		{
-			if(!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
+			if(!isset($values['info_type']) || $status_only || empty($values['caldav_name']))
 			{
 				$values = $this->read($info_id, true, 'server', $ignore_acl);
 			}
@@ -1006,12 +1010,13 @@ class infolog_bo
 				$values['link_to']['to_id'] = $info_id;
 			}
 		}
-		if($values['info_id'] && $info_id)
+		if ($values['info_id'] && $info_id)
 		{
 			$this->write_check_links($to_write);
 			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
 			{
 				// Just got a link ID, need to save it
+				unset($to_write['info_etag']);  // we must not increment it again
 				$this->so->write($to_write);
 				$values['info_link_id'] = $to_write['info_link_id'];
 				$values['info_contact'] = $to_write['info_contact'];
