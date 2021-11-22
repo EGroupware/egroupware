@@ -551,7 +551,7 @@ class importexport_schedule_ui
 				foreach($po->get_warnings() as $record => $msg)
 				{
 					$data['warnings'][$target][] = "#$record: $msg";
-					$buffer += "$record\t$msg\n";
+					$buffer .= "$record\t$msg\n";
 				}
 				error_log($buffer);
 			}
@@ -561,7 +561,7 @@ class importexport_schedule_ui
 				foreach($po->get_errors() as $record => $error)
 				{
 					$data['errors'][$target][] = "#$record: $error";
-					$buffer += "$record\t$error\n";
+					$buffer .= "$record\t$error\n";
 				}
 				error_log($buffer);
 			}
