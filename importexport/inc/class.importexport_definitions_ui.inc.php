@@ -818,9 +818,9 @@ class importexport_definitions_ui
 			if($this->can_edit($content))
 			{
 				$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', Acl::READ,'importexport') ?
-					($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
+					($content['owner'] ?: $GLOBALS['egw_info']['user']['account_id']) :
 					null;
-				$content['allowed_users'] = $content['just_me'] ? '' : ($content['all_users'] ? 'all' : implode(',',$content['allowed_users']));
+				$content['allowed_users'] = $content['just_me'] ? '' : ($content['all_users'] ? 'all' : implode(',', (array)$content['allowed_users']));
 				unset($content['just_me']);
 			}
 
