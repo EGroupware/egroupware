@@ -281,7 +281,7 @@ class Account implements \ArrayAccess
 	public static function ssl2secure($ssl)
 	{
 		$secure = false;
-		switch($ssl & ~self::SSL_VERIFY)
+		switch((int)$ssl & ~self::SSL_VERIFY)
 		{
 			case self::SSL_STARTTLS:
 				$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
