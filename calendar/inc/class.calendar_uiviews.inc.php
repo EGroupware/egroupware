@@ -191,23 +191,6 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function index($content=array())
 	{
-		if($content['merge'])
-		{
-			// View from sidebox is JSON encoded
-			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
-			if($content['first'])
-			{
-				$this->first = Api\DateTime::to($content['first'],'ts');
-			}
-			if($content['last'])
-			{
-				$this->last = Api\DateTime::to($content['last'],'ts');
-			}
-			$_GET['merge'] = $content['merge'];
-			$this->merge();
-			return;
-		}
-
 		// handle views in other files
 		if (!isset($this->public_functions[$this->view]) && $this->view !== 'listview')
 		{
@@ -497,16 +480,6 @@ class calendar_uiviews extends calendar_ui
 			$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 			unset($this->last['raw']);
 			$this->last = $this->bo->date2ts($this->last);
-		}
-
-		$merge = $this->merge();
-		if($merge)
-		{
-			Egw::redirect_link('/index.php',array(
-				'menuaction' => 'calendar.calendar_uiviews.index',
-				'msg'        => $merge,
-				'ajax'       => 'true'
-			));
 		}
 
 		$search_params = $this->search_params;
