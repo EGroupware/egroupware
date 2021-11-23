@@ -308,7 +308,7 @@ class importexport_schedule_ui
 				'method'	=> 'HEAD',
 				'ignore_errors'	=> 1
 			)));
-			$headers = get_headers($data['target'],1);
+			$headers = get_headers($data['target'],1) ?: [];
 
 			// Reset...
 			stream_context_set_default(array('http'=>array(
