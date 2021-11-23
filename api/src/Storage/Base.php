@@ -513,7 +513,7 @@ class Base
 					$q = array();
 					foreach($col as $db_c => $c)
 					{
-						if ($this->data[$col] == '')
+						if ($this->data[$c] == '')
 						{
 							$q = null;
 							break;
