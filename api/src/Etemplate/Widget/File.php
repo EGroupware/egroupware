@@ -75,11 +75,32 @@ class File extends Etemplate\Widget
 			return;
 		}
 
-		if (!($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
-			self::$request->template['version'], self::$request->template['load_via'])))
-		{
-			// Can't use callback
-			error_log("Could not get template for file upload, callback skipped");
+		try {
+			if (!($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
+				self::$request->template['version'], self::$request->template['load_via'])))
+			{
+				// Can't use callback
+				error_log("Could not get template for file upload, callback skipped");
+			}
+		}
+		catch (\Error $e) {
+			// retry 3 times, in case the problem (Call to undefined method EGroupware\Api\Etemplate\Widget\Vfs::set_attrs()) is caused by something internal in PHP 8.0
+			if (!isset($_REQUEST['retry']) || $_REQUEST['retry'] < 3)
+			{
+				$url = Api\Header\Http::schema().'://'.Api\Header\Http::host().$_SERVER['REQUEST_URI'];
+				if (strpos($url, '&retry=') === false)
+				{
+					$url .= '&retry=1';
+				}
+				else
+				{
+					$url = preg_replace('/&retry=\d+/', '&retry='.($_REQUEST['retry']+1), $url);
+				}
+				header('Location: '.$url);
+				http_response_code(307);
+				exit;
+			}
+			throw new \Error('Error instantiating template '.json_encode(self::$request->template).', $_REQUEST='.json_encode($_REQUEST).': '.$e->getMessage(), $e->getCode(), $e);
 		}
 
 		$file_data = array();
