@@ -16,7 +16,8 @@ import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
-import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
+import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common.js";
+import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants.js";
 import {egw_keycode_translation_function, egw_keycode_makeValid} from "../../api/js/egw_action/egw_keymanager.js";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
@@ -198,7 +199,7 @@ app.classes.mail = AppJS.extend(
 				break;
 			case 'mail.index':
 				var self = this;
-				jQuery('iframe#mail-index_messageIFRAME').on('load', function()
+				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
 				{
 					// decrypt preview body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -207,20 +208,24 @@ app.classes.mail = AppJS.extend(
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 
+				// Stop list from focussing next row on keypress
+				egw_getObjectManager('nm').flags = egwSetBit(egw_getObjectManager('nm').flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
 
 				//Get initial folder status
-				this.mail_refreshFolderStatus(undefined,undefined,false);
+				this.mail_refreshFolderStatus(undefined, undefined, false);
 
 				// Bind to nextmatch refresh to update folder status
-				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
+				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
 					var self = this;
-					jQuery(nm).on('refresh',function(_event, _widget, _row_id, _type) {
+					jQuery(nm).on('refresh', function (_event, _widget, _row_id, _type)
+					{
 						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
 						{
-							self.mail_refreshFolderStatus.call(self,undefined,undefined,false);
+							self.mail_refreshFolderStatus.call(self, undefined, undefined, false);
 						}
 					});
 				}
@@ -2189,11 +2194,11 @@ app.classes.mail = AppJS.extend(
 		}
 
 		// Tell server
-		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
+		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
 			.sendRequest(true);
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
-		this.egw.message(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current Folder'))), 'success');
+		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
 	},
 
 	/**
@@ -2214,7 +2219,7 @@ app.classes.mail = AppJS.extend(
 		{
 			for (var i = 0; i < _msg['msg'].length; i++)
 			{
-				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/,''), 'delete');
+				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
 
 			// Nextmatch automatically selects the next row and calls preview.

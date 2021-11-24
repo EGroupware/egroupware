@@ -173,7 +173,12 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		$this->makeProject('3');
 		$new_project = $this->pm_id[2];
 
+		// Sleep for a bit to make the modified time different, or it will fail
+		sleep(1);
+
 		// Fake opening the edit dialog, important not to pass an array to accurately copy normal behaviour
+		// New BO to make sure we get a clean load, no caching
+		$this->ui->bo = $this->bo = new \infolog_bo();
 		$this->ui->edit($this->info_id);
 		$content = self::$mocked_exec_result;
 

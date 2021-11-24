@@ -875,23 +875,25 @@ class calendar_boupdate extends calendar_bo
 		$disinvited = $msg_type == MSG_DISINVITE ? array_keys($to_notify) : array();
 
 		$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
-		if ($owner && !isset($to_notify[$owner]) && $msg_type != MSG_ALARM)
+		if($owner && !isset($to_notify[$owner]) && $msg_type != MSG_ALARM)
 		{
-			$to_notify[$owner] = 'OCHAIR';	// always include the event-owner
+			$to_notify[$owner] = 'OCHAIR';    // always include the event-owner
 		}
 
 		// ignore events in the past (give a tolerance of 10 seconds for the script)
-		if($old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10))
+		if($new_event && $this->date2ts($new_event['start']) < ($this->now_su - 10) ||
+			!$new_event && $old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10)
+		)
 		{
 			return False;
 		}
 		// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
-		if ($GLOBALS['egw_info']['server']['server_timezone'] && ($tz = date_default_timezone_get()) != $GLOBALS['egw_info']['server']['server_timezone'])
+		if($GLOBALS['egw_info']['server']['server_timezone'] && ($tz = date_default_timezone_get()) != $GLOBALS['egw_info']['server']['server_timezone'])
 		{
 			$restore_tz = $tz;
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
-		$temp_user = $GLOBALS['egw_info']['user'];	// save user-date of the enviroment to restore it after
+		$temp_user = $GLOBALS['egw_info']['user'];    // save user-date of the enviroment to restore it after
 
 		if (!$user)
 		{
@@ -1746,7 +1748,7 @@ class calendar_boupdate extends calendar_bo
 				static $memberships=null;
 				if (is_null($memberships))
 				{
-					$memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+					$memberships = $GLOBALS['egw']->accounts->memberships($user,true) ?: [];
 					$memberships[] = $user;
 				}
 				foreach($cat_rights as $uid => $value)

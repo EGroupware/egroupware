@@ -492,7 +492,7 @@ class Base
 		$this->init($keys);
 		$this->data2db();
 
-		$query = false;
+		$query = [];
 		foreach ($this->db_key_cols as $db_col => $col)
 		{
 			if ($this->data[$col] != '')
@@ -513,7 +513,7 @@ class Base
 					$q = array();
 					foreach($col as $db_c => $c)
 					{
-						if ($this->data[$col] == '')
+						if ($this->data[$c] == '')
 						{
 							$q = null;
 							break;

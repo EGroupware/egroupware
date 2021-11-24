@@ -129,6 +129,106 @@ class calendar_merge extends Api\Storage\Merge
 		return parent::merge_string($content, $ids, $err, $mimetype, $fix, $charset);
 	}
 
+	public static function merge_entries(array $ids = null, \EGroupware\Api\Storage\Merge &$document_merge = null, $pdf = null)
+	{
+		$document_merge = new calendar_merge();
+
+		if(is_null(($ids)))
+		{
+			$ids = json_decode($_REQUEST['id'], true);
+		}
+
+		// Try to make time span into appropriate ranges to match
+		$template = $ids['view'] ?: '';
+		if(stripos($_REQUEST['document'], 'month') !== false || stripos($_REQUEST['document'], lang('month')) !== false)
+		{
+			$template = 'month';
+		}
+		if(stripos($_REQUEST['document'], 'week') !== false || stripos($_REQUEST['document'], lang('week')) !== false)
+		{
+			$template = 'week';
+		}
+
+		//error_log("Detected template $template");
+		$date = $ids['date'];
+		$first = $ids['first'];
+		$last = $ids['last'];
+
+		// Pull dates from session if they're not in the request
+		if(!array_key_exists('first', $ids))
+		{
+			$ui = new calendar_ui();
+			$date = $ui->date;
+			$first = $ui->first;
+			$last = $ui->last;
+		}
+		switch($template)
+		{
+			case 'month':
+				// Trim to _only_ the month, do not pad to week start / end
+				$time = new Api\DateTime($date);
+				$timespan = array(array(
+									  'start' => Api\DateTime::to($time->format('Y-m-01 00:00:00'), 'ts'),
+									  'end'   => Api\DateTime::to($time->format('Y-m-t 23:59:59'), 'ts')
+								  ));
+				break;
+			case 'week':
+				$timespan = array();
+				$start = new Api\DateTime($first);
+				$end = new Api\DateTime($last);
+				$t = clone $start;
+				$t->modify('+1 week')->modify('-1 second');
+				if($t < $end)
+				{
+					do
+					{
+						$timespan[] = array(
+							'start' => $start->format('ts'),
+							'end'   => $t->format('ts')
+						);
+						$start->modify('+1 week');
+						$t->modify('+1 week');
+					}
+					while($start < $end);
+					break;
+				}
+			// Fall through
+			default:
+				$timespan = array(array(
+									  'start' => $first,
+									  'end'   => $last
+								  ));
+		}
+
+		// Add path into document
+		static::check_document($_REQUEST['document'], $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+
+		return \EGroupware\Api\Storage\Merge::merge_entries(array_key_exists('0', $ids) ? $ids : $timespan, $document_merge);
+	}
+
+	public function get_filename_placeholders($document, $ids)
+	{
+		$placeholders = parent::get_filename_placeholders($document, $ids);
+
+		$request = json_decode($_REQUEST['id'], true) ?: [];
+		$template = $ids['view'] ?: '';
+		if(stripos($document, 'month') !== false || stripos($document, lang('month')) !== false)
+		{
+			$template = 'month';
+		}
+		if(stripos($document, 'week') !== false || stripos($document, lang('week')) !== false)
+		{
+			$template = 'week';
+		}
+
+		$placeholders['$$span$$'] = lang($template);
+		$placeholders['$$first$$'] = Api\DateTime::to($ids['first'] ?: $request['first'], true);
+		$placeholders['$$last$$'] = Api\DateTime::to($ids['last'] ?: $request['last'], true);
+		$placeholders['$$date$$'] = Api\DateTime::to($ids['date'] ?: $request['date'], true);
+
+		return $placeholders;
+	}
+
 	/**
 	 * Get replacements
 	 *
@@ -182,7 +282,7 @@ class calendar_merge extends Api\Storage\Merge
 			{
 				foreach(self::$range_tags as $key => $format)
 				{
-					$value = date($format, $key == 'end' ? $id['end'] : $id['start']);
+					$value = Api\DateTime::to($key == 'end' ? $id['end'] : $id['start'], $format);
 					if($key == 'month') $value = lang($value);
 					$values["$\$range/$key$$"] = $value;
 				}
@@ -440,8 +540,11 @@ class calendar_merge extends Api\Storage\Merge
 			}
 		}
 
-		$_date = $date['start'] ? $date['start'] : $date;
-		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
+		$_date = new Api\DateTime(['start'] ? $date['start'] : $date);
+		if($days[$_date->format('Ymd')][$plugin])
+		{
+			return $days[$_date->format('Ymd')][$plugin][$n];
+		}
 
 		$events = $this->bo->search($this->query + array(
 										'start'    => $date['end'] ? $date['start'] : mktime(0, 0, 0, date('m', $_date), date('d', $_date), date('Y', $_date)),
@@ -481,7 +584,7 @@ class calendar_merge extends Api\Storage\Merge
 					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23, 59, 59, 0, 0, 0));
 				}
 
-				$days[date('Ymd', $_date)][$dow][] = $replacements;
+				$days[$_date->format('Ymd')][$dow][] = $replacements;
 			}
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false)
 			{
@@ -489,24 +592,24 @@ class calendar_merge extends Api\Storage\Merge
 					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
 					'$$day/name$$' => lang(date('l', strtotime($day)))
 				);
-				if(!is_array($days[date('Ymd', $_date)][date('l', strtotime($day))]))
+				if(!is_array($days[$_date->format('Ymd')][date('l', strtotime($day))]))
 				{
 					$blank = $this->calendar_replacements(array());
 					foreach($blank as &$value)
 					{
 						$value = '';
 					}
-					$days[date('Ymd', $_date)][date('l', strtotime($day))][] = $blank;
+					$days[$_date->format('Ymd')][date('l', strtotime($day))][] = $blank;
 				}
-				$days[date('Ymd', $_date)][date('l', strtotime($day))][0] += $date_marker;
+				$days[$_date->format('Ymd')][date('l', strtotime($day))][0] += $date_marker;
 			}
 			// Add in birthdays
 			if(strpos($repeat, 'day/birthdays') !== false)
 			{
-				$days[date('Ymd', $_date)][date('l', strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
+				$days[$_date->format('Ymd')][date('l', strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
 			}
 		}
-		return $days[date('Ymd', $_date)][$plugin][0];
+		return $days[$_date->format('Ymd')][$plugin][0];
 	}
 
 	/**

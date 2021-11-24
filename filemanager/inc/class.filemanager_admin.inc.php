@@ -160,7 +160,7 @@ class filemanager_admin extends filemanager_ui
 							{
 								throw new Api\Exception\WrongUserinput(lang('SMB, WebDAVs and VFS require a username!'));
 							}
-							$url .= $content['mounts']['url']['user'] === '$user' ? '$user' : urlencode(trim($content['mounts']['url']['user']));
+							$url .= str_replace(urlencode('$user'), '$user', urlencode(trim($content['mounts']['url']['user'])));
 							if (!empty($content['mounts']['url']['pass']))
 							{
 								$url .= ':' . ($content['mounts']['url']['pass'] === '$pass' ? '$pass' : urlencode(trim($content['mounts']['url']['pass'])));
@@ -174,7 +174,7 @@ class filemanager_admin extends filemanager_ui
 						{
 							throw new Api\Exception\WrongUserinput(lang('Versioning requires EGroupware EPL'));
 						}
-						elseif (!Vfs::file_exists(Vfs::decodePath($path)) || Vfs::file_exists($path) && !Vfs::is_dir($path))
+						elseif (Vfs::file_exists($path) && !Vfs::is_dir($path))
 						{
 							throw new Api\Exception\WrongUserinput(lang('Path %1 not found or not a directory!', $path));
 						}
@@ -186,7 +186,8 @@ class filemanager_admin extends filemanager_ui
 						else
 						{
 							$msg = Vfs::mount($url, $path, true) ?
-								lang('Successful mounted %1 on %2.', $url, $path) : lang('Error mounting %1 on %2!', $url, $path);
+								lang('Successful mounted %1 on %2.', str_replace('%5C', '\\', $url), $path) :
+								lang('Error mounting %1 on %2!', str_replace('%5C', '\\', $url), $path);
 						}
 					}
 					if ($content['allow_delete_versions'] != $GLOBALS['egw_info']['server']['allow_delete_versions'])
@@ -297,7 +298,8 @@ class filemanager_admin extends filemanager_ui
 		{
 			$content['mounts'][$n++] = array(
 				'path' => $path,
-				'url'  => preg_replace('#://([^:@/]+):((?!\$pass)[^@/]+)@#', '://$1:****@', $url),
+				'url'  => preg_replace('#://([^:@/]+):((?!\$pass)[^@/]+)@#', '://$1:****@',
+					str_replace('%5c', '\\', $url)),
 			);
 			$readonlys["disable[$path]"] = !$this->versioning || !Vfs::$is_root ||
 				Vfs::parse_url($url,PHP_URL_SCHEME) != $this->versioning;
