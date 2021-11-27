@@ -2203,21 +2203,29 @@ var CalendarApp = /** @class */ (function (_super) {
                 nm.controller._selectionMgr.selectAll(true);
             }
             if (action && selected) {
-                action.execute(selected);
+                _super.prototype.merge.call(this, action, selected);
             }
         }
         else {
             // Set the hidden inputs to the current time span & submit
             widget.getRoot().getWidgetById('first').set_value(app.calendar.state.first);
             widget.getRoot().getWidgetById('last').set_value(app.calendar.state.last);
-            if (widget.getRoot().getArrayMgr('content').getEntry('collabora_enabled')) {
-                widget.getInstanceManager().submit();
-            }
-            else {
-                widget.getInstanceManager().postSubmit();
-                window.setTimeout(function () { widget.set_value(''); }, 100);
-            }
+            var vars = {
+                menuaction: 'calendar.calendar_merge.merge_entries',
+                document: widget.getValue(),
+                merge: 'calendar_merge',
+                pdf: false,
+                select_all: false,
+                id: JSON.stringify({
+                    first: app.calendar.state.first,
+                    last: app.calendar.state.last,
+                    date: app.calendar.state.first,
+                    view: app.calendar.state.view
+                })
+            };
+            egw.open_link(egw.link('/index.php', vars), '_blank');
         }
+        widget.set_value('');
         return false;
     };
     /**
