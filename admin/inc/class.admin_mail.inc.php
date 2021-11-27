@@ -176,7 +176,7 @@ class admin_mail
 	 * Step 1: IMAP account
 	 *
 	 * @param array $content
-	 * @param type $msg
+	 * @param string $msg
 	 */
 	public function add(array $content=array(), $msg='', $msg_type='success')
 	{
