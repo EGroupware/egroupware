@@ -482,13 +482,13 @@ class Sql extends Api\Storage
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
 		// fix cat_id criteria to search in comma-separated multiple cats and return subcats
-		if (is_array($criteria) && ($cats = $criteria['cat_id']))
+		if (is_array($criteria) && !empty($criteria['cat_id']))
 		{
 			$criteria = array_merge($criteria, $this->_cat_search($criteria['cat_id']));
 			unset($criteria['cat_id']);
 		}
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
-		if (($cats = $filter['cat_id']))
+		if (!empty($filter['cat_id']))
 		{
 			if ($filter['cat_id'][0] == '!')
 			{
@@ -680,7 +680,7 @@ class Sql extends Api\Storage
 		{
 			$extra_cols[$key] = "$shared_with AS shared_with";
 		}
-		switch ((string)$filter['shared_with'])
+		switch ($filter['shared_with'] ?? '')
 		{
 			case '':	// filter not set
 				break;
