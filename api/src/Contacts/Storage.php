@@ -655,7 +655,7 @@ class Storage
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
 		// Handle 'None' country option
-		if(is_array($filter) && $filter['adr_one_countrycode'] == '-custom-')
+		if(is_array($filter) && isset($filter['adr_one_countrycode']) && $filter['adr_one_countrycode'] === '-custom-')
 		{
 			$filter[] = 'adr_one_countrycode IS NULL';
 			unset($filter['adr_one_countrycode']);
