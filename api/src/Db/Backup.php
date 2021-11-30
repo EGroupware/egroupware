@@ -68,6 +68,10 @@ class Backup
 	 */
 	var $egw_tables = false;
 	/**
+	 * Regular expression to identify a Guacamole table OR view
+	 */
+	const GUACAMOLE_REGEXP = '/^guacamole_/';
+	/**
 	 * Backup directory.
 	 *
 	 * @var string
@@ -360,6 +364,8 @@ class Backup
 		if (substr($this->db->Type,0,5) == 'mysql')
 		{
 			$this->db->query("SET SESSION sql_mode=(SELECT REPLACE(REPLACE(@@sql_mode,'STRICT_ALL_TABLES',''),'STRICT_TRANS_TABLES',''))", __LINE__, __FILE__);
+			// disable foreign key checks, in case Guacamole is installed
+			$this->db->query('SET FOREIGN_KEY_CHECKS = 0');
 		}
 		else
 		{
@@ -371,7 +377,9 @@ class Backup
 		foreach($this->adodb->MetaTables('TABLES') as $table)
 		{
 			if ($this->system_tables && preg_match($this->system_tables,$table) ||
-				$this->egw_tables && !preg_match($this->egw_tables,$table))
+				$this->egw_tables && !preg_match($this->egw_tables,$table) ||
+				// do NOT drop Guacamole tables and views
+				preg_match(self::GUACAMOLE_REGEXP, $table))
 			{
 				 continue;
 			}
@@ -513,7 +521,7 @@ class Backup
 
 			if (substr($line,0,9) == 'version: ')
 			{
-				// currenty not used: $api_version = trim(substr($line,9));
+				// currently not used: $api_version = trim(substr($line,9));
 				continue;
 			}
 			if (substr($line,0,9) == 'charset: ')
@@ -536,6 +544,12 @@ class Backup
 				$this->schemas = json_php_unserialize(trim(substr($line,8)));
 				foreach($this->schemas as $table_name => $schema)
 				{
+					// do NOT create GUACAMOLE tables, just truncate them (as we have no abstraction to create the foreign keys)
+					if (preg_match(self::GUACAMOLE_REGEXP, $table_name))
+					{
+						$this->db->query('TRUNCATE TABLE '.$this->db->name_quote($table_name));
+						continue;
+					}
 					// if column is longtext in current schema, convert text to longtext, in case user already updated column
 					foreach($schema['fd'] as $col => &$def)
 					{
@@ -566,7 +580,7 @@ class Backup
 				{
 					if ($data['type'] == 'blob') $blobs[] = $col;
 				}
-				// check if we have an old PostgreSQL backup useing 't'/'f' for bool values
+				// check if we have an old PostgreSQL backup using 't'/'f' for bool values
 				// --> convert them to MySQL and our new PostgreSQL format of 1/0
 				$bools = array();
 				foreach($this->schemas[$table]['fd'] as $col => $def)
