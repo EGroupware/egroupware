@@ -118,7 +118,7 @@
 		"egroupware/tracker": "self.version",
 		"egroupware/util": "^2.6.2",
 		"egroupware/webdav": "^v0.3.2",
-		"egroupware/z-push-dev": "^2.5",
+		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
