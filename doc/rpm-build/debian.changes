@@ -1,3 +1,29 @@
+egroupware-docker (21.1.20211130) hardy; urgency=low
+
+  * PHP 8.0: tons of fixes to support 8.0, this is probably the last container using PHP 7.4 by default
+  * Addressbook: new REST API for contacts https://github.com/EGroupware/egroupware/tree/master/doc/REST-CalDAV-CardDAV
+  * LDAP/Addressbook: fix region contains for given country invalid value gives an LDAP error on update
+  * Admin/Filemanager: correctly encode user "WORKGROUP\$user" for SMB mounts and do NOT require mountpoints to exist
+  * Filemanager: fix not working variables eg. $user in GUI mount (Admin > Filemanager)
+  * Filemanager: fix video controller not working in filemanager gallery
+  * Filemanager: add action to unlock files
+  * Filemanager: fix super user could not remove other users' subscriptions
+  * Filemanager: add actions to convert editable files to PDF or PNG and a checkbox to merge file as PDF
+  * Collabora: merge placeholder dialogs
+  * All apps: add preference to set directory and filename of merged documents using placeholders
+  * Calendar: fix changing the recurrence end date did not add/remove the events in the UI
+  * InfoLog: fix not working overwrite check (optimistic locking) plus incrementing etag
+  * Mail: make sure pressing [del] key twice in a row does not delete the first row on the second press
+  * Mail: add set flags action into mail filters
+  * Mail: implements date extension for vacation rule. None imap admin user can also set vacation rule by date.
+  * Kanban: fix deleting card did not delete link to the board (includes a DB update to remove orphans from links)
+  * Resources: add inventory number to resource list columns
+  * smallPART/PostgreSQL: fix SQL error when opening a course
+  * smallPART/PostgreSQL: fix SQL error during update (you need to restore egw_smallpart* tables AND set egw_applications.app_version='21.1')
+  * API: update jQuery-ui to 1.13.0 and TinyMCE to 5.10.1
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 30 Nov 2021 09:11:56 +0100
+
 egroupware-docker (21.1.20210923) hardy; urgency=low
 
   * smallPART: many new features and improvements for the new semester:
