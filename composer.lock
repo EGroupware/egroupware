@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bd409b93600706246636c1b5eadd499",
+    "content-hash": "1f08f3d7c7eef5420f98523d1ae2e7eb",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -794,7 +794,7 @@
         },
         {
             "name": "egroupware/activesync",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
@@ -835,7 +835,7 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
@@ -889,16 +889,16 @@
         },
         {
             "name": "egroupware/bookmarks",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "26825e48b717835630c7db19af034485a964ca82"
+                "reference": "e616a70e3958118161cc424cdf123c885f41acdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/26825e48b717835630c7db19af034485a964ca82",
-                "reference": "26825e48b717835630c7db19af034485a964ca82",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/e616a70e3958118161cc424cdf123c885f41acdc",
+                "reference": "e616a70e3958118161cc424cdf123c885f41acdc",
                 "shasum": ""
             },
             "require": {
@@ -917,20 +917,20 @@
             ],
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-18T15:51:46+00:00"
+            "time": "2021-09-10T08:18:04+00:00"
         },
         {
             "name": "egroupware/collabora",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b"
+                "reference": "b5e69643328e05affcf3700342b9c783e20aaca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/0a35643b00c370930f189a3a2f6a20627b5ef06b",
-                "reference": "0a35643b00c370930f189a3a2f6a20627b5ef06b",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/b5e69643328e05affcf3700342b9c783e20aaca8",
+                "reference": "b5e69643328e05affcf3700342b9c783e20aaca8",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +957,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-06-18T14:33:23+00:00"
+            "time": "2021-11-13T16:10:47+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -1379,7 +1379,7 @@
         },
         {
             "name": "egroupware/news_admin",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
@@ -1411,16 +1411,16 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "cac3140cf96fbfd09a3209be1b3d1cfc6b508e55"
+                "reference": "f197be643d76c63847452157d4b03de8aad3786e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/cac3140cf96fbfd09a3209be1b3d1cfc6b508e55",
-                "reference": "cac3140cf96fbfd09a3209be1b3d1cfc6b508e55",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/f197be643d76c63847452157d4b03de8aad3786e",
+                "reference": "f197be643d76c63847452157d4b03de8aad3786e",
                 "shasum": ""
             },
             "require": {
@@ -1456,20 +1456,20 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-15T14:00:36+00:00"
+            "time": "2021-10-08T09:53:55+00:00"
         },
         {
             "name": "egroupware/projectmanager",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "325ed1ada24b05d5072dcde3b1859d3d2ba5fcda"
+                "reference": "ef437f3064767178ba99ea61186cccfe93d32c3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/325ed1ada24b05d5072dcde3b1859d3d2ba5fcda",
-                "reference": "325ed1ada24b05d5072dcde3b1859d3d2ba5fcda",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/ef437f3064767178ba99ea61186cccfe93d32c3a",
+                "reference": "ef437f3064767178ba99ea61186cccfe93d32c3a",
                 "shasum": ""
             },
             "require": {
@@ -1496,11 +1496,11 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-08-11T15:05:53+00:00"
+            "time": "2021-11-20T07:31:44+00:00"
         },
         {
             "name": "egroupware/registration",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
@@ -1549,16 +1549,16 @@
         },
         {
             "name": "egroupware/rocketchat",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988"
+                "reference": "bfe8d1ba04b24224f35facc88f82a931b9a2dfe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988",
-                "reference": "55b2f928a7dfd7adac3ea75f4ca2c4fbbb42d988",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/bfe8d1ba04b24224f35facc88f82a931b9a2dfe0",
+                "reference": "bfe8d1ba04b24224f35facc88f82a931b9a2dfe0",
                 "shasum": ""
             },
             "require": {
@@ -1585,20 +1585,20 @@
             ],
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-08T12:53:30+00:00"
+            "time": "2021-07-23T07:29:16+00:00"
         },
         {
             "name": "egroupware/smallpart",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164"
+                "reference": "84375d43c8b4e9ebc04f346ee743290295b76045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/dcf05ca49915f96d574233f218994a3ada0cc164",
-                "reference": "dcf05ca49915f96d574233f218994a3ada0cc164",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/84375d43c8b4e9ebc04f346ee743290295b76045",
+                "reference": "84375d43c8b4e9ebc04f346ee743290295b76045",
                 "shasum": ""
             },
             "require": {
@@ -1630,20 +1630,20 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-06-22T15:13:02+00:00"
+            "time": "2021-11-15T15:37:22+00:00"
         },
         {
             "name": "egroupware/status",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "7c77882347184ca96f6f22cefde84b4a211b0d29"
+                "reference": "7c47b38eca41af44448d055ee00231a98b744412"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/7c77882347184ca96f6f22cefde84b4a211b0d29",
-                "reference": "7c77882347184ca96f6f22cefde84b4a211b0d29",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/7c47b38eca41af44448d055ee00231a98b744412",
+                "reference": "7c47b38eca41af44448d055ee00231a98b744412",
                 "shasum": ""
             },
             "require": {
@@ -1670,7 +1670,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-25T07:37:53+00:00"
+            "time": "2021-11-11T08:55:43+00:00"
         },
         {
             "name": "egroupware/stream-wrapper",
@@ -1723,16 +1723,16 @@
         },
         {
             "name": "egroupware/swoolepush",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8"
+                "reference": "7552454c34faf2a718bed2481a9f487ec32f400f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
-                "reference": "525b0e8bfcee2a94a04d34a73288f291d13c2ef8",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/7552454c34faf2a718bed2481a9f487ec32f400f",
+                "reference": "7552454c34faf2a718bed2481a9f487ec32f400f",
                 "shasum": ""
             },
             "require": {
@@ -1761,20 +1761,20 @@
             ],
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-08T12:58:28+00:00"
+            "time": "2021-09-20T06:46:16+00:00"
         },
         {
             "name": "egroupware/tracker",
-            "version": "21.1.x-dev",
+            "version": "21.1.20211130",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b"
+                "reference": "5d6dfc671aa052aae54929c8243d6d11853da958"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
-                "reference": "16b09dbef4ab771eb61ae9e1e35ab57bbb1b626b",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/5d6dfc671aa052aae54929c8243d6d11853da958",
+                "reference": "5d6dfc671aa052aae54929c8243d6d11853da958",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1801,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-06-01T14:35:24+00:00"
+            "time": "2021-11-18T15:42:54+00:00"
         },
         {
             "name": "egroupware/util",
@@ -8886,6 +8886,20 @@
                 "constructor",
                 "instantiate"
             ],
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finstantiator",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
@@ -9174,6 +9188,12 @@
                 "duplicate",
                 "object",
                 "object graph"
+            ],
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-11-13T09:40:50+00:00"
         },
@@ -9607,6 +9627,12 @@
                 "testing",
                 "xunit"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2021-03-28T07:26:59+00:00"
         },
         {
@@ -9656,6 +9682,12 @@
             "keywords": [
                 "filesystem",
                 "iterator"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-09-28T05:57:25+00:00"
         },
@@ -9710,6 +9742,12 @@
             "keywords": [
                 "process"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:58:55+00:00"
         },
         {
@@ -9759,6 +9797,12 @@
             "keywords": [
                 "template"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T05:33:50+00:00"
         },
         {
@@ -9807,6 +9851,12 @@
             "homepage": "https://github.com/sebastianbergmann/php-timer/",
             "keywords": [
                 "timer"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-10-26T13:16:10+00:00"
         },
@@ -9897,6 +9947,16 @@
                 "testing",
                 "xunit"
             ],
+            "funding": [
+                {
+                    "url": "https://phpunit.de/donate.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-02T03:54:37+00:00"
         },
         {
@@ -9983,6 +10043,12 @@
             ],
             "description": "Library for parsing CLI options",
             "homepage": "https://github.com/sebastianbergmann/cli-parser",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:08:49+00:00"
         },
         {
@@ -10029,6 +10095,12 @@
             ],
             "description": "Collection of value objects that represent the PHP code units",
             "homepage": "https://github.com/sebastianbergmann/code-unit",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:08:54+00:00"
         },
         {
@@ -10074,6 +10146,12 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:30:19+00:00"
         },
         {
@@ -10138,6 +10216,12 @@
                 "compare",
                 "equality"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:49:45+00:00"
         },
         {
@@ -10185,6 +10269,12 @@
             ],
             "description": "Library for calculating the complexity of PHP code units",
             "homepage": "https://github.com/sebastianbergmann/complexity",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:52:27+00:00"
         },
         {
@@ -10241,6 +10331,12 @@
                 "unidiff",
                 "unified diff"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:10:38+00:00"
         },
         {
@@ -10293,6 +10389,12 @@
                 "Xdebug",
                 "environment",
                 "hhvm"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-09-28T05:52:38+00:00"
         },
@@ -10361,6 +10463,12 @@
                 "export",
                 "exporter"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:24:23+00:00"
         },
         {
@@ -10415,6 +10523,12 @@
             "keywords": [
                 "global state"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:55:19+00:00"
         },
         {
@@ -10462,6 +10576,12 @@
             ],
             "description": "Library for counting the lines of code in PHP source code",
             "homepage": "https://github.com/sebastianbergmann/lines-of-code",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-11-28T06:42:11+00:00"
         },
         {
@@ -10509,6 +10629,12 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:12:34+00:00"
         },
         {
@@ -10554,6 +10680,12 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:14:26+00:00"
         },
         {
@@ -10607,6 +10739,12 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:17:30+00:00"
         },
         {
@@ -10652,6 +10790,12 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -10698,6 +10842,12 @@
             ],
             "description": "Collection of value objects that represent the types of the PHP type system",
             "homepage": "https://github.com/sebastianbergmann/type",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:18:59+00:00"
         },
         {
@@ -10741,6 +10891,12 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
@@ -10781,6 +10937,12 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
+            "funding": [
+                {
+                    "url": "https://github.com/theseer",
+                    "type": "github"
+                }
+            ],
             "time": "2020-07-12T23:59:07+00:00"
         },
         {
@@ -10830,21 +10992,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "egroupware/activesync": 20,
-        "egroupware/adodb-php": 20,
-        "egroupware/bookmarks": 20,
-        "egroupware/collabora": 20,
-        "egroupware/news_admin": 20,
-        "egroupware/openid": 20,
-        "egroupware/projectmanager": 20,
-        "egroupware/registration": 20,
-        "egroupware/rocketchat": 20,
-        "egroupware/smallpart": 20,
-        "egroupware/status": 20,
-        "egroupware/swoolepush": 20,
-        "egroupware/tracker": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
