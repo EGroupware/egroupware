@@ -578,14 +578,30 @@ class calendar_ui
 			// ignore failed discovery
 			unset($e);
 		}
-		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+		if($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
-			$sel_options['merge'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null,'calendar');
+			$sel_options['merge'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null, 'calendar');
 
 		}
 		else
 		{
 			$readonlys['merge'] = true;
+		}
+
+		// Add integration UI into sidemenu
+		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
+		foreach($integration_data as $app => $app_hooks)
+		{
+			foreach($app_hooks as $data)
+			{
+				// App might have multiple hooks, let it specify something else
+				$app = $data['selects']['app'] ?: $app;
+
+				if(array_key_exists('sidebox_template', $data))
+				{
+					$cont['integration'][] = ['template' => $data['sidebox_template'], 'app' => $app];
+				}
+			}
 		}
 
 		// Sidebox?
