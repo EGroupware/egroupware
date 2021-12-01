@@ -861,10 +861,14 @@ export class CalendarApp extends EgwApp
 
 		if(action.checked)
 		{
-			integration_preference.push(app);
+			if(integration_preference.indexOf(app) === -1)
+			{
+				integration_preference.push(app);
+			}
 
 			// After the preference change is done, get new info which should now include the app
-			callback = callback ? callback : function() {
+			callback = callback ? callback : function()
+			{
 				this._fetch_data(this.state);
 			}.bind(this);
 		}

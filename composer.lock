@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "beeabf26cf7c537dea75e236217d44c6",
+    "content-hash": "393ec43e69c00afa115414c62789e29a",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -207,7 +207,7 @@
             "version": "v2.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fengyuanchen/cropper.git",
+                "url": "git@github.com:fengyuanchen/cropper.git",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "dist": {
@@ -305,7 +305,7 @@
             "version": "1.12.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
@@ -1924,16 +1924,16 @@
         },
         {
             "name": "egroupware/z-push-dev",
-            "version": "2.5.0",
+            "version": "2.5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/z-push.git",
-                "reference": "32da00e1024038a8f57c8a185c671179c3922ebe"
+                "reference": "7774018b19b5b55e24dbd1107693496597ab70ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/32da00e1024038a8f57c8a185c671179c3922ebe",
-                "reference": "32da00e1024038a8f57c8a185c671179c3922ebe",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/7774018b19b5b55e24dbd1107693496597ab70ee",
+                "reference": "7774018b19b5b55e24dbd1107693496597ab70ee",
                 "shasum": ""
             },
             "require": {

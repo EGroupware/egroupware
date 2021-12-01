@@ -1630,9 +1630,10 @@ class Db
 				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
 
 				$maxlength = null;
-				if ($truncate_varchar)
+				if ($truncate_varchar && !is_int($col) && isset($column_definitions[$col]) &&
+					in_array($column_definitions[$col]['type'], ['varchar','ascii']))
 				{
-					$maxlength = in_array($column_definitions[$col]['type'], array('varchar','ascii')) ? $column_definitions[$col]['precision'] : null;
+					$maxlength = $column_definitions[$col]['precision'];
 				}
 				// dont use IN ( ), if there's only one value, it's slower for MySQL
 				if (is_array($data) && count($data) <= 1)

@@ -569,7 +569,10 @@ class Widget
 				$types = $paramType instanceof \ReflectionUnionType
 					? $paramType->getTypes()
 					: [$paramType];
-				if(in_array('array', array_map(fn(\ReflectionNamedType $t) => $t->getName(), $types)) && !is_array($params[$index]))
+				if(in_array('array', array_map(static function(\ReflectionNamedType $t)
+				{
+					return $t->getName();
+				}, $types)) && !is_array($params[$index]))
 				{
 					error_log("$method_name expects an array for {$param->getPosition()}: {$param->getName()}");
 					$params[$index] = (array)$params[$index];
