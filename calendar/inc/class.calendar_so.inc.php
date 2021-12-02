@@ -795,7 +795,7 @@ class calendar_so
 				$where = array_merge($where, $params['sql_filter']);
 			}
 		}
-		if(array_filter($where, fn($key) => str_contains($key, '#'), ARRAY_FILTER_USE_KEY))
+		if(array_filter($where, static function($key) { return str_contains($key, '#');}, ARRAY_FILTER_USE_KEY))
 		{
 			$custom_fields = Api\Storage\Customfields::get('calendar');
 			foreach($where as $col => $data)
