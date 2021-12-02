@@ -798,6 +798,11 @@ class Ldap
 			if (is_int($key) && preg_match('/^(contact_)?(modified|created)([<=>]+)([0-9]+)$/', $value, $matches) &&
 				($attr = array_search($matches[2], $this->timestamps2egw)))
 			{
+				// Microsoft AD can NOT filter by (modify|create)TimeStamp, we have to use when(Created|Changed) attribute
+				if (static::class === Ads::class)
+				{
+					$attr = $attr === 'modifytimestamp' ? 'whenChanged' : 'whenCreated';
+				}
 				$append = '';
 				if ($matches[3] == '>')
 				{
