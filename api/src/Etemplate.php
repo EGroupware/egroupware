@@ -119,22 +119,22 @@ class Etemplate extends Etemplate\Widget\Template
 			{
 				if (!empty($extra['data']) && is_array($extra['data']))
 				{
-					$content = array_merge_recursive($content, $extra['data']);
+					$content = self::complete_array_merge($content, $extra['data']);
 				}
 
 				if (!empty($extra['preserve']) && is_array($extra['preserve']))
 				{
-					$preserv = array_merge_recursive($preserv, $extra['preserve']);
+					$preserv = self::complete_array_merge($preserv, $extra['preserve']);
 				}
 
 				if (!empty($extra['readonlys']) && is_array($extra['readonlys']))
 				{
-					$readonlys = array_merge_recursive($readonlys, $extra['readonlys']);
+					$readonlys = self::complete_array_merge($readonlys, $extra['readonlys']);
 				}
 
 				if (!empty($extra['sel_options']) && is_array($extra['sel_options']))
 				{
-					$sel_options = array_merge_recursive($sel_options, $extra['sel_options']);
+					$sel_options = self::complete_array_merge($sel_options, $extra['sel_options']);
 				}
 			}
 		}
