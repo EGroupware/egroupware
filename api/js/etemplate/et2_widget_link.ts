@@ -2074,7 +2074,8 @@ export class et2_link_list extends et2_link_string
 					download_url:_link_data.download_url,
 					name:_link_data.title,
 					mime:_link_data.type,
-					path:_link_data.icon
+					path:_link_data.icon,
+					mode: _link_data.mode
 				});
 				icon.append(vfs_widget.getDOMNode());
 			}

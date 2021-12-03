@@ -198,11 +198,17 @@ class Link extends Etemplate\Widget
 				$link['help'] = lang('Delete this file');
 				$link['title'] = Api\Vfs::decodePath($link['title']);
 				$link['icon'] = Api\Link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
+
 				$link['download_url'] = Api\Vfs::download_url($link['icon']);
 				// Make links to directories load in filemanager
 				if($link['type'] == Api\Vfs::DIR_MIME_TYPE)
 				{
 					$link['target'] = 'filemanager';
+				}
+				else
+				{
+					$stat = Api\Vfs::lstat($link['icon']);
+					$link['mode'] = $stat['mode'];
 				}
 			}
 			else

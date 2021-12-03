@@ -1683,7 +1683,8 @@ var et2_link_list = /** @class */ (function (_super) {
                     download_url: _link_data.download_url,
                     name: _link_data.title,
                     mime: _link_data.type,
-                    path: _link_data.icon
+                    path: _link_data.icon,
+                    mode: _link_data.mode
                 });
                 icon.append(vfs_widget.getDOMNode());
             }
