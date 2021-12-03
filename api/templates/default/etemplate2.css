@@ -2717,25 +2717,36 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 	float: left;
 }
 .et2_toolbar_more span.et2_checkbox_slideSwitch > input {
-	display: none;
+    display: none;
 }
 
 .et2_radiobox {
-	margin-right: 10px;
+    margin-right: 10px;
 }
+
 .et2_radiobox[disabled] {
     opacity: 0.5;
 }
+
+.overlayContainer {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    vertical-align: bottom;
+    text-align: right;
+}
+
 /**
  * Do not wrap content of a single widget incl. a label or children of a hbox.
  * Taking into eg. select-account widget rendered as ul and prefixed with a label
  * and maintaining some space between widgets.
  */
-.et2_nowrap{
-	white-space: nowrap;
+.et2_nowrap {
+    white-space: nowrap;
 }
-ul.et2_nowrap, div.et2_nowrap{
-	display: inline-block;
+
+ul.et2_nowrap, div.et2_nowrap {
+    display: inline-block;
 }
 .et2_nowrap > *{
 	padding-left: 5px;
