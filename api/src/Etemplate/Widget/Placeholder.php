@@ -129,7 +129,7 @@ class Placeholder extends Etemplate\Widget
 				$entry = ['id' => $GLOBALS['egw_info']['user']['person_id']];
 			// fall through
 			default:
-				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain');
+				$merged = $merge->merge_string($content, [$entry['id']], $err, 'text/plain', null, 'utf8');
 		}
 		$response = Api\Json\Response::get();
 		$response->data($merged);
