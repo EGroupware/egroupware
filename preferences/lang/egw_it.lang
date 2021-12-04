@@ -30,6 +30,7 @@ country	preferences	it	Paese
 current password	preferences	it	Password attuale
 custom login box color, defaults to above color darkened	preferences	it	Colore personalizzato per il box di login.
 custom sidebar menu active color, defaults to above color darkened	preferences	it	Colore della barra di menù attiva.
+dark mode theme	preferences	it	Tema Scuro
 dark moono theme	preferences	it	Tema Dark Moono
 data exchange settings	preferences	it	Impostazioni di scambio dati
 date format	preferences	it	Formato data
@@ -68,6 +69,7 @@ error	preferences	it	Errore
 failed to change password.	preferences	it	Impossibile cambiare la password.
 failed to delete secret!	preferences	it	Non è stato possibile eliminare il codice segreto!
 failed to store secret!	preferences	it	Non è stato possibile salvare il codice segreto!
+fast	preferences	it	Veloce
 features of the editor	preferences	it	Funzioni dell'editor
 font size unit	preferences	it	Unità misura dimensione font
 forced preferences	preferences	it	Preferenze Forzate
@@ -112,6 +114,7 @@ numbers	preferences	it	numeri
 old password and new password are the same. this is invalid. you must enter a new password	preferences	it	La vecchia e la nuova password coincidono. Devi inserire una password nuova!
 or other compatible apps	preferences	it	Oppure altre app compatibili
 p: paragraph	preferences	it	p: Paragrafo
+paragraph	preferences	it	Paragrafo
 password changed	preferences	it	Password modificata
 password contains only %1 of required %2 character classes: no %3	preferences	it	la password contiene solo %1 di %2 classi di caratteri richieste: no %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	it	la password contiene "%1" una parte o tutto il tuo nome (3 o più caratteri di lunghezza)
@@ -123,12 +126,15 @@ please select your timezone.	preferences	it	Seleziona il fuso orario
 please, select a new theme	preferences	it	Per favore, selezionare un nuovo tema
 popup with search	preferences	it	Popup con ricerca
 preferences saved.	preferences	it	Preferenze salvate
+preformatted	preferences	it	Preformattato
 pt: points (1/72 inch)	preferences	it	pt: Punti  (1/72 pollici)
 px: display pixels	preferences	it	px: Pixel
 re-enter your password	preferences	it	Reinserisci la password
 read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
 reset qrcode	preferences	it	Reimposta codice QR
+revoke	preferences	it	Revoca
 revoke acccess tokens	preferences	it	Revoca i token di accesso
+revoke this token	preferences	it	Revoca questo token
 rich text editor theme	preferences	it	Tema editor avanzato
 scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con una apposita app:
 secret deleted, two factor authentication disabled.	preferences	it	Codice segreto eliminato, la autenticazione a due fattori è stata disabilitata.
