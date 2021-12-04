@@ -1,9 +1,12 @@
+%1 %2 rights for %3 on %4 to %5	admin	it	%1 %2 diritti per %3 su %4 a %5
 %1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 account utenti
 %1 - %2 of %3 user groups	admin	it	%1 - %2 di %3 gruppi utenti
 %1 access to other data	admin	it	%1 accesso ad altri dati
+%1 accounts being activated	admin	it	%1 account attivati
 %1 acl entries deleted.	admin	it	%1 voci ACL eliminate
 %1 acl records of not (longer) existing accounts deleted.	admin	it	%1 record ACL di account non (più) esistenti cancellati.
 %1 categories of not (longer) existing accounts deleted.	admin	it	%1 categorie di account non più esistenti, eliminate
+%1 category '%2' %3	admin	it	%1 categoria '%2' %3
 %1 category(s) %2	admin	it	%1 categoria(e) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	it	%1 categoria(e) %2, %3 fallito per mancanza di permessi sufficienti!
 %1 class not instanciated	admin	it	%1 classe not istanziata
@@ -24,6 +27,12 @@
 (stored password will not be shown here)	admin	it	La password memorizzata non verrà mostrata qui
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestione Applicazioni] !!!)
 -  type	admin	it	- tipo
+1 year	admin	it	1 anno
+2 month	admin	it	2 mesi
+2 weeks	admin	it	2 settimane
+2-factor-authentication for interactive login	admin	it	Autenticazione a 2 fattori per accesso interattivo
+3 month	admin	it	3 mesi
+6 month	admin	it	6 mesi
 access by	admin	it	Accesso da
 access control	admin	it	Controllo di accesso
 access to %1 data by others	admin	it	Accesso ai dati di %1 da parte degli altri
@@ -47,6 +56,7 @@ account preferences	admin	it	Preferenze account
 account saved.	admin	it	Account salvato.
 account-id's have to be integers!	admin	it	Gli ID Account devono essere numeri interi!
 acl added.	admin	it	ACL aggiunta
+acl csv export	admin	it	Salva ACL in CSV
 acl deleted.	admin	it	ACL eliminata
 acl entry deleted.	admin	it	Voce ACL eliminata
 acl entry not found!	admin	it	Voce ACL non trovata!
@@ -58,6 +68,8 @@ action	admin	it	Azione
 actions	admin	it	Azioni
 activate	admin	it	Attiva
 activate wysiwyg-editor	admin	it	attiva editor WYSIWYG
+activated	admin	it	attivato
+active mail accounts	admin	it	Account email attivo
 active templates	admin	it	Modelli attivi
 add a category	admin	it	aggiungi una categoria
 add a group	admin	it	aggiungi un gruppo
@@ -79,6 +91,7 @@ add profile	admin	it	Aggiungi Profilo
 add sub-category	admin	it	Aggiungi sotto-categoria
 add user	admin	it	Aggiungi utente
 add user or group	admin	it	Aggiungi utente o gruppo
+added	admin	it	aggiunto
 admin dn	admin	it	dn amministratore
 admin email	admin	it	Email Amministratore
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	it	Indirizzo e-mail dell'amministratore (separato da virgole) che sarà avvisato del blocco (vuoto per nessun avviso)
@@ -92,6 +105,8 @@ advanced options	admin	it	opzioni avanzate
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di accesso dovrebbe essere bloccato un account. Predefinito = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
 aliases	admin	it	Alias
+all accounts	admin	it	Tutti gli account
+all acls	admin	it	Tutte le ACL
 all applications	admin	it	Tutte le applicazioni
 all categories	admin	it	Tutte le categorie
 all groups	admin	it	Tutti i gruppi
@@ -99,14 +114,18 @@ all records and account information will be lost!	admin	it	Tutte le registrazion
 all users	admin	it	Tutti gli utenti
 allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
 allow remote administration from following install id's (comma separated)	admin	it	Permetti l'amministrazione remota dai seguenti ID di installazione, separati da virgola.
+allow user to set 'remember me' token	admin	it	Consenti di impostare l'opzione "Ricordami"
 allow users to change forwards	admin	it	Permetti agli utenti di modificare gli inoltri
 allow users to create identities for aliases	admin	it	Permettere agli utenti di creare identità per gli alias
+allowed for get requests, default in modern browsers, if attribute is not set	admin	it	consentito per le richieste di ricezione, impostazione predefinita nei browser moderni, se l'attributo non è impostato
+allowed just as second factor	admin	it	consentito solo come secondo fattore
 alternate email address	admin	it	indirizzo email alternativo
 and logged in	admin	it	e collegato
 anonymous user	admin	it	Utente anonimo
 anonymous user (not shown in list sessions)	admin	it	Utente Anonimo (non visualizzato nella lista delle sessioni)
 anonymous user does not exist!	admin	it	L'Utente Anonimo NON esiste!
 anonymous user has no run-rights for the application!	admin	it	L'Utente Anonimo NON ha diritti di esecuzione per l'applicazione!
+anonymous user. not shown in list sessions.	admin	it	Utente anonimo. Non visualizzato nella lista delle sessioni attive.
 any application	admin	it	ogni applicazione
 any group	admin	it	ogni gruppo
 any user	admin	it	Qualsiasi utente
@@ -120,8 +139,10 @@ applications available on mobile devices	admin	it	Applicazioni disponibili sui d
 applications list	admin	it	Elenco applicazioni
 applications run rights updated.	admin	it	Permessi di esecuzione applicazioni aggiornati.
 applies the changes	admin	it	applica le modifiche
+apply changes	admin	it	Applica modifiche
 apply the changes	admin	it	Applica le modifiche
 archive: zip or tar	admin	it	Archivia: zip o tar
+are you sure you want to %1 mail for selected accounts?	admin	it	Sei sicuro di voler %1 mail per gli account selezionati?
 are you sure you want to delete the application %1 ?	admin	it	Sei sicuro di voler cancellare l'applicazione %1 ?
 are you sure you want to delete this account ?	admin	it	Vuoi davvero eliminare questo account ?
 are you sure you want to delete this application ?	admin	it	Vuoi davvero eliminare questa applicazione ?
@@ -139,8 +160,10 @@ attribute mail explained	admin	it	Questo gestisce l'attributo <b><i>-mail-</i></
 attribute mailalternateaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailAlternateAddress-</i></b> dallo schema QMAIL e può essere gestito come mappe virtuali o alias.
 attribute mailforwardingaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailForwardingAddress-</i></b> dallo schema QMAIL e non deve essere vuoto se assegnato.
 attributes	admin	it	Attributi
+authentication	admin	it	Autenticazione
 authentication / accounts	admin	it	Autenticazione / Account
 auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
+automatically transfer entries owned by the user:	admin	it	Trasferisci automaticamente le voci dell'utente:
 available placeholders	admin	it	Variabili disponibili
 back to admin/grouplist	admin	it	Indietro alla lista Admin / Group
 back to admin/userlist	admin	it	Indietro alla lista Admin / User
@@ -151,6 +174,7 @@ bad or malformed request. server responded: %s	admin	it	Richiesta errata o mal c
 bad request: %s	admin	it	Richiesta errata: %s
 bi-dir passthrough	admin	it	passthrough bidirezionale
 bi-directional	admin	it	bidirezionale
+blocking after wrong password	admin	it	Blocca dopo password errata
 bottom	admin	it	in fondo
 bulk password reset	admin	it	Reimpostazione massiva password
 calculate next run	admin	it	Calcola prossima esecuzione
@@ -160,20 +184,25 @@ can be used by group	admin	it	può essere usato da gruppo
 can be used by user	admin	it	può essere usato dall'utente
 can change password	admin	it	Può cambiare la password
 can not change users into groups, same sign required!	admin	it	Non è possibile cambiare gli utenti in gruppi, è richiesto lo stesso segno!
+cancel changes	admin	it	Annulla modifiche
 cancel testjob!	admin	it	Annulla TestJob!
 cancel this scheduled command	admin	it	Cancella questo comando programmato
 categories list	admin	it	Elenco categorie
 category %1 has been saved !	admin	it	La categoria %1 è stata salvata!
+category '%1' deleted	admin	it	La categoria %1 è stata eliminata
 category deleted.	admin	it	Categoria eliminata
 category list	admin	it	Elenco categorie
 category saved.	admin	it	Categoria salvata
 certificate	admin	it	Certificato
+certificate details	admin	it	Dettagli del certificato
+certificate validation in days	admin	it	Convalida del certificato in giorni
 change account_id	admin	it	Cambia ID Account
 change acl rights	admin	it	Cambia i permessi ACL
 change config settings	admin	it	Cambia le impostazioni di configurazione
 change domain of email address and aliases	admin	it	modifica dominio dell'indirizzo email e degli alias
 change login screen message	admin	it	Cambia il messaggio della schermata principale
 change owner	admin	it	Cambia proprietario
+change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	it	I documenti in /home avranno come proprietario il nuovo utente. La cartella inizio verrà spostata in /home/nuovo-utente/vecchio-inizio-utente.
 change password for %1	admin	it	Cambia password per %1
 change password hash to	admin	it	Cambia hash della password a
 changed password hash for %1 to %2.	admin	it	Modificato hash per %1 in %2.
@@ -185,11 +214,17 @@ check ip address of all sessions	admin	it	Controlla l'indirizzo IP di tutte le s
 check items to <b>%1</b> to %2 for %3	admin	it	Controlla voci a <b>%1</b> a %2 per %3
 children	admin	it	Figli
 clear cache and register hooks	admin	it	Pulisci la memoria temporanea e registra gli agganci
+clear credentials	admin	it	Elimina credenziali
+clear mail credentials	admin	it	Elimina credenziali email
+clear security tokens	admin	it	Elimina token di sicurezza
 click to select a color	admin	it	Clicca per selezionare un colore
 color	admin	it	Colore
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	it	Indirizzi IP inseriti nella lista bianca, separati da virgole (:numero di tentativi opzionale)
 command scheduled to run at %1	admin	it	Comando programmato per le %1
+command was run %1 on %2	admin	it	Il comando è stato eseguito %1 su %2
 commercial: all sorts of companies	admin	it	Commerciale: tutti i tipi di aziende
 config password or md5 hash from the header.inc.php	admin	it	Password di configurazione oppure hash md5 da header.inc.php
+configuration	admin	it	Configurazione
 configuration saved.	admin	it	Configurazione salvata
 connection dropped by imap server.	admin	it	Connessione interrotta dal sever IMAP.
 connection is not secure! everyone can read eg. your credentials.	admin	it	La connessione NON è sicura! Chiunque può leggere, per esempio, le tue credenziali
@@ -198,6 +233,7 @@ cookie domain (default empty means use full domain name, for sitemgr eg. ".domai
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	it	Percorso del cookie. Permette sessioni multiple con differenti cartelle.
 could not append message:	admin	it	Impossibile accodare il Messaggio:
 could not complete request. reason given: %s	admin	it	Impossibile completare la richiesta. Motivazione data: %s
+could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	it	Impossibile estrarre la chiave privata dal file p12 specificato. Il file p12 è danneggiato o la password è errata!
 could not open secure connection to the imap server. %s : %s.	admin	it	Non è possibile aprire una connessione sicura al server IMAP. %s : %s.
 could not remote execute the command	admin	it	Comando non eseguibile da remoto
 country	admin	it	Paese
@@ -212,9 +248,20 @@ creates / updates user accounts from csv file	admin	it	Crea / aggiorna account d
 creates / updates user groups from csv file	admin	it	Crea / aggiorna gruppi da file CSV
 creates a new field	admin	it	Crea un nuovo campo
 crontab only (recomended)	admin	it	Solo crontab (raccomandato)
+current certificate	admin	it	Certificato corrente
+current default	admin	it	Predefinito attuale
 current hash	admin	it	Hash attuale
+currently:	admin	it	Attualmente:
+custom 1	admin	it	Personale 1
+custom 2	admin	it	Personale 2
+custom 3	admin	it	Personale 3
 custom fields	admin	it	Campi Personalizzati
 custom translation	admin	it	Traduzione personalizzata
+customfield '%1' added	admin	it	Personalizzato '%1' aggiunto
+customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso
+customfield '%1' modified	admin	it	Personalizzato '%1' modificato
+customfield deleted	admin	it	Personalizzato eliminato
+customfield saved.	admin	it	Personalizzato salvato
 cyrus imap server	admin	it	Server IMAP Cyrus
 cyrus imap server administration	admin	it	Amministrazione Server IMAP Cyrus
 data	admin	it	Dati
@@ -223,16 +270,20 @@ day	admin	it	Giorno
 day of week<br>(0-6, 0=sun)	admin	it	Giorno della settimana<br>(0-6, 0=Dom)
 db backup and restore	admin	it	Backup e ripristino DB
 deactivate	admin	it	Disattiva
+deactivated	admin	it	Disattivato
 debug	admin	it	Correggi errori
 default	admin	it	predefinito
 default file system space per user	admin	it	Spazio sul filesystem predefinito per l'utente
 default file system space per user/group ?	admin	it	Spazio sul filesystem predefinito per utente/gruppo ?
+default of currently	admin	it	predefinito attuale
 deinstall crontab	admin	it	Rimuovi crontab
 delete account	admin	it	Elimina account
+delete account %1	admin	it	Elimina account %1
 delete account %s	admin	it	Elimina account %s
 delete all records	admin	it	Elimina tutto
 delete application	admin	it	Cancella applicazione
 delete category	admin	it	Cancella categoria
+delete certificate	admin	it	Elimina certificato
 delete group	admin	it	Cancella gruppo
 delete identity	admin	it	Cancella identità
 delete including sub-entries	admin	it	Elimina insieme alle sottovoci
@@ -241,6 +292,7 @@ delete selected entries	admin	it	Rimuovi le voci selezionate
 delete the category	admin	it	cancella la categoria
 delete the group	admin	it	cancella il gruppo
 delete the selected entries	admin	it	Rimuovi le voci selezionate
+delete this access control	admin	it	Elimina Controllo di accesso
 delete this account	admin	it	Cancella questo account
 delete this category	admin	it	Cancella questa categoria
 delete this group	admin	it	Cancella questo gruppo
@@ -270,12 +322,16 @@ deny all users access to preferences ?	admin	it	Nega l'accesso alle preferenze a
 description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più lunga di 255 caratteri!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	it	L'account di destinazione #%1 non esiste e non viene rinominato autonomamente! Non è possibile fondere gli account, violerebbe le regole di univocità. Eliminare trasferendo prima i dati.
 determines the order the fields are displayed	admin	it	Determina l'ordine di visualizzazione dei campi
+direct login without password or second factor	admin	it	login diretto senza password o doppio fattore
 disable	admin	it	Disabilita
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
 disable all	admin	it	Disabilitare tutto
 disable minifying of javascript and css files	admin	it	Disabilita la compressione di file javascript e css
+disable pgp encryption (mailvelope)	admin	it	Disabilita codifica PGP (Mailvelope)
 disable wysiwyg-editor	admin	it	disabilita editor WYSIWYG
+disabled	admin	it	disattivato
 disabled (not recomended)	admin	it	disabilitato (non consigliato)
+disabled, do not show on login page	admin	it	disabilitato, non mostrare nella pagina di accesso
 display	admin	it	Visualizza
 displayed length of input field (set rows=1 to limit length)	admin	it	lunghezza del campo di inserimento (impostare righe=1 per limitare la lunghezza)
 displaying html messages is disabled	admin	it	la visualizzazione html dei messaggi è disabilitata
@@ -283,6 +339,8 @@ displaying plain messages is disabled	admin	it	la visualizzazione semplice dei m
 do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
 do not generate email addresses	admin	it	Non generare indirizzi email
 do not offer introduction video	admin	it	Non proporre i video di introduzione
+do not send cookie	admin	it	non inviare cookie
+do not set attribute	admin	it	Non impostare attributo
 do not validate certificate	admin	it	Non convalidare il certificato
 do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
 do you really want to delete this profile	admin	it	Vuoi davvero cancellare questo profilo?
@@ -309,6 +367,7 @@ edit this group	admin	it	modifica questo gruppo
 edit this user	admin	it	modifica questo utente
 edit user	admin	it	modifica utente
 edit user account	admin	it	Modifica account dell'utente
+edited	admin	it	modificato
 educational: universities, schools, ...	admin	it	Enti formativi: Università, Scuole, ...
 egroupware directory	admin	it	Directory di EGroupware
 egroupware tutorial	admin	it	Tutorial EGroupware
@@ -328,11 +387,14 @@ enable sieve	admin	it	abilita Sieve
 enable spellcheck in rich text editor	admin	it	Abilita il controllo ortografico nell'editor di testo
 enable the soap service	admin	it	Attiva servizio soap
 enable the xmlrpc service	admin	it	Attiva servizio xmlrpc
+enabled	admin	it	abilitato
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
 enabled - popup window	admin	it	Attivo - Finestra Popup
 encrypted connection	admin	it	Connessione criptata
+encryption	admin	it	codifica
 encryption settings	admin	it	impostazioni cifratura
 enter a description for the category	admin	it	inserisci una descrizione per la categoria
+enter a passphrase if you would like to protect your private key by password.	admin	it	Inserisci una parola d'ordine se vuoi proteggere la tua chiave privata con password.
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per la cifratura di app_session (richiede mcrypt)
 enter the background color for the login page	admin	it	Inserisci il colore di background per la pagina di login
 enter the background color for the site title	admin	it	Inserisci il colore di background per il titolo del sito
@@ -356,6 +418,8 @@ enter your http proxy server	admin	it	Inserire il proxy HTTP
 enter your http proxy server port	admin	it	Inserire la porta del proxy HTTP
 enter your smtp server hostname or ip address	admin	it	Inserisci l'host o l'IP del server SMTP
 enter your smtp server port	admin	it	Inserisci la porta del server SMTP
+entries	admin	it	Inserimenti
+entries owned by the user:	admin	it	Inserimenti dell utente:
 entry saved	admin	it	Inserimento salvato
 error canceling timer, maybe there's none set !!!	admin	it	Errore cancellando il timer, forse non è impostato !!!
 error changing the password for %1 !!!	admin	it	Errore durante il cambio password per %1 !
@@ -377,13 +441,16 @@ exists	admin	it	Esiste
 expired	admin	it	Scaduto
 expires	admin	it	Scade
 explanation of ldapman	admin	it	Questo modulo è stato testato fino ad oggi per POSTFIX, LDAP, Courier-IMAP e necessita degli schemi CORE e QMAIL(OID7914). Ulteriori dettagli riguardo l'uso e la configurazione di questo sistema possono essere trovati in README.ldap nella cartella documenti di ADMIN.
-exports groups into a csv file.	admin	it	Esporta gruppi in un file CSV
-exports users into a csv file.	admin	it	Esporta account in un file CSV
+export certificate as p12	admin	it	salva come certificato p12
+exports groups into a csv file.	admin	it	Esporta gruppi in un file CSV.
+exports permission settings into a csv file.	admin	it	Esporta permessi in un file CSV.
+exports users into a csv file.	admin	it	Esporta account in un file CSV.
 failed to change password for account "%1"!	admin	it	Modifica della password fallita per l'account "%1"!
 failed to change password.	admin	it	Impossibile cambiare la password.
 failed to delete account!	admin	it	Errore nella cancellazione dell'account
 failed to mount backup directory!	admin	it	Non è stato possibile montare la cartella di backup!
 failed to save user!	admin	it	Non è stato possibile salvare i dati dell'utente
+failed to upload %1	admin	it	Impossibile caricare %1
 fallback (after each pageview)	admin	it	fallback (dopo ogni cambio pagina)
 false	admin	it	Falso
 field '%1' already exists !!!	admin	it	Il campo '%1' esiste già !!!
@@ -405,9 +472,14 @@ forward only	admin	it	Inoltra solo
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	it	L'inoltro esclusivo disabilita l'archiviazione delle email degli account IMAP e si limita ad inoltrarle all'indirizzo specificato.
 full name	admin	it	Nome completo
 general	admin	it	Generale
+generate certificate	admin	it	Genera Certificato
+git clone	admin	it	Git Clone
 global categories	common	it	Categorie Globali
 global options	admin	it	Opzioni globali
 go directly to admin menu, returning here the next time you click on administration.	admin	it	Vai direttamentte al menù di amministrazione, tornando qui la prossima volta che fai click su "Amministra"
+google recaptcha	admin	it	Google recaptcha
+google recaptcha secret key	admin	it	Chive segreta di Google recaptcha
+google recaptcha site key	admin	it	Google recaptcha chiave per il sito
 governmental: incl. state or municipal authorities or services	admin	it	Governativo: incluse autorità o servizi municipali
 grant	admin	it	Consenti
 group #%1 must have negative sign!	admin	it	Il gruppo #%1 deve avere segno negativo!
@@ -427,6 +499,7 @@ hash	admin	it	Hash
 hide php information	admin	it	Nascondi informazioni php
 hide sidebox video tutorials	admin	it	Nascondi il box laterale con i tutorial video
 home directory	admin	it	Cartella Personale
+home screen message	admin	it	Messaggio nella schermata principale
 host information	admin	it	Informazioni host
 hostname or ip	admin	it	Nome del computer o indirizzo IP
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
@@ -436,16 +509,21 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
 how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti ?
 how username get constructed	admin	it	Come viene costruito il nome utente
+html/plaintext	admin	it	html/testo
 icon	admin	it	Icona
+identity	admin	it	Identità
 identity deleted	admin	it	Identità cancellata
 identity saved.	admin	it	identità salvata
 idle	admin	it	inattivo
 if different from email address	admin	it	se diverso dall'indirizzo email
+if disabled existing tokens immediatly stop working.	admin	it	Se disattivato i token attivi smetteranno di funzionare immediatamente.
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	it	Se stai usando SSL oppure TLS, devi aver caricato l'estensione SSL in PHP
+if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	it	Se elimini un account senza selezionare un nuovo utente intestatario, i dati verranno rimossi!
 if you ignore that error as admin, you should check "%1"!	admin	it	Se si ignorerà questo errore come amministratore, si dovrà selezionare "%1"!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	it	se viene indicata la porta 5190 come porta del server sieve, verrà abilitato SSL per sieve (il serve deve supportarlo)
+if you wish to have randomly selected images you may upload multiple images.	admin	it	Se vuoi utilizzare immagini selezionate casualmente, puoi caricare più di un'immagine.
 imap admin password	admin	it	Password amministratore IMAP
 imap admin user	admin	it	User amministratore IMAP
 imap c-client version < 2001	admin	it	Versione C-Cliente < 2001
@@ -472,9 +550,12 @@ instance	admin	it	Istanza
 interface	admin	it	Interfaccia
 international use	admin	it	Uso Internazionale
 invalid argument '%1' !!!	admin	it	Argomento '%1' non valido
+invalid email	admin	it	Indirizzo email non valido
 invalid formated date "%1"!	admin	it	Formato data non valido
 invalid remote id or name "%1"!	admin	it	ID remoto o nome "%1" non validi!
+invalid type "%1"!	admin	it	Tipo "%1" non valido !
 invalid value "%1" use yes or no!	admin	it	Valore "%1" non valido, usare "sì" o "no"
+invalid value "%1", use only:	admin	it	Valore "%1" non valido, utilizza solo:
 ip	admin	it	IP
 jobs	admin	it	Jobs
 kill	admin	it	Termina
@@ -485,6 +566,7 @@ languages	admin	it	Lingue
 last %1 logins	admin	it	Ultimi %1 login
 last %1 logins for %2	admin	it	Ultimi %1 login per %2
 last action	admin	it	Ultima azione
+last ip	admin	it	Ultimo IP
 last login	admin	it	ultimo login
 last login from	admin	it	ultimo login da
 last password change	admin	it	Ultima modifica password
@@ -513,6 +595,7 @@ leave without saveing the entry	admin	it	Esci senza salvare la voce
 leaves without saveing	admin	it	esce senza salvare
 length	admin	it	Lunghezza
 length<br>rows	admin	it	Lunghezza<br>Righe
+lifetime of 'remember me' token	admin	it	Tempo di validità per "Ricordami"
 limit global category to members of a certain group	admin	it	Limita la categoria globale ai soli membri di un certo gruppo.
 limit to members of	admin	it	Limita ai membri di
 list config settings	admin	it	Lista impostazioni di configurazione
@@ -521,10 +604,12 @@ list of current users	admin	it	lista utenti attivi
 log user-agent and action of changes in history-log of entries	admin	it	Registra lo user-agent e operazioni di modifica nelle voci dello storico
 logged out	admin	it	Uscito
 login history	admin	it	Cronologia Collegamenti
+login id	admin	it	ID di Login
 login message	admin	it	Messaggio di Login
 login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
+login-id	admin	it	Login-ID
 login-status	admin	it	Stato di accesso
 loginid	admin	it	ID di Login
 logintime	admin	it	Orario ingresso
@@ -533,7 +618,7 @@ lowercase email addresses	admin	it	Rendere indirizzi email in minuscolo
 mail account	admin	it	Account posta elettronica
 mail settings	admin	it	Impostazioni Posta
 main email-address	admin	it	Indirizzo email Principale
-home screen message	admin	it	Messaggio nella schermata principale
+main screen message	admin	it	Messaggio della schermata principale
 manage mapping	admin	it	Gestisci la mappatura
 manage stationery templates	admin	it	Amministra i modelli
 manager	admin	it	Manager
@@ -553,6 +638,7 @@ more secure	admin	it	Molto sicuro
 mount backup directory to %1	admin	it	Monta la cartella di backup su %1
 must change password upon next login	admin	it	Deve cambiare password al prossimo accesso
 name must not be empty !!!	admin	it	Il nome non può essere vuoto !!!
+name of account	admin	it	Nome Utente
 name of organisation	admin	it	Nome dell'organizzazione
 name of the egroupware instance, eg. default	admin	it	Nome della istanza EGroupware
 new group name	admin	it	Nome nuovo gruppo
@@ -578,6 +664,7 @@ no profile defined for user %1	admin	it	Profilo non definito per l'utente %1
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	it	Non è stato rilevato il supporto per sieve, verificare la configurazione manualmente o disabilitarlo.
 no supported imap authentication method could be found.	admin	it	Non è stato trovato alcun metodo di autenticazione supportato da IMAP
 non profit: clubs, associations, ...	admin	it	Non profit: Club, Associazioni, ...
+not enabled	admin	it	Non abilitato
 note: ssl available only if php is compiled with curl support	admin	it	Nota: SSL dispobile solo con il PHP compilato con il supporto curl
 notification mail	admin	it	Email di notifica
 notify user by email	admin	it	Avvisa l'utente per email
@@ -598,15 +685,18 @@ only below displayed information is directly submitted to %s.	admin	it	Solo le i
 operating system	admin	it	Sistema operativo
 order	admin	it	Ordine
 organisation	admin	it	Organizzazione
+other security configuration	admin	it	Altra configurazione di sicurezza
 outbound	admin	it	In uscita
 own categories	admin	it	Proprie categorie
 own install id	admin	it	Tuo ID installazione
 own install id:	admin	it	Tuo ID installazione
 owner "%1" removed, please select group-owner	admin	it	Proprietario "%1" rimosso. Per favore selezionare un proprietario per il gruppo
+passphrase	admin	it	parola d'ordine
 passthrough	admin	it	Passthrough
 password for smtp-authentication	admin	it	Password per autenticazione SMTP
 password to unlock encrypted p12	admin	it	Password per sbloccare p12 criptato
 password updated	admin	it	Password aggiornata
+passwords	admin	it	Password
 passwords and/or attributes of %1 accounts changed	admin	it	Password e/o attributi per %1 account modificate
 passwords require a minimum number of characters	admin	it	Le password richiedono un numero minimo di caratteri
 passwords requires this number of different character classes	admin	it	Le password richiedono questo numero di classi di caratteri diverse
@@ -616,8 +706,8 @@ peer servers	admin	it	Peer servers
 percent of users that logged out	admin	it	Percentuale di utenti che sono usciti dal sistema in maniera corretta
 percent this user has logged out	admin	it	Percentuale di logout di quest'utente
 permission denied	admin	it	Permesso negato
-permission denied !!!	admin	it	Permesso negato
-permission denied!!!	admin	it	Permesso negato!
+permission denied !!!	admin	it	Permesso negato!
+permission denied!!!	admin	it	Permesso negato!!!
 permissions	admin	it	Permessi
 permissions this group has	admin	it	Permessi che questo gruppo ha
 personal: eg. within a family	admin	it	Personale: per esempio in una famiglia
@@ -625,8 +715,10 @@ php version	admin	it	Versione PHP
 phpinfo	admin	it	Informazioni sul PHP
 phrase	admin	it	Frase
 phrase deleted	admin	it	Frase eliminata
+please check email.  it gets automatically deleted if email integration is used.	admin	it	Controllare l'indirizzo di posta. Sarà eliminato automaticamente se email integration è in uso.
 please enter a name	admin	it	Per favore inserisci un nome
 please enter a name for that server !	admin	it	Per favore inserisci un nome per quel server
+please manually deal with entries owned by the user:	admin	it	Gestisci manualmente le voci dell'utente:
 please run setup to become current	admin	it	Per favore lancia il setup
 please select	admin	it	Per favore selezionare
 please submit (or postpone) statistic first	admin	it	Per favore inviare i dati statistici adesso, o rimandare, prima di continuare
@@ -656,7 +748,8 @@ register application hooks	admin	it	Registra gli agganci alle chiamate dell'appl
 reject passwords containing part of username or full name (3 or more characters long)	admin	it	Rifiuta password che contengono parte del nome utente o il nome e cognome (3 o più caratteri di lunghezza)
 relay access checked	admin	it	Accesso Relay verificato
 remote administration instances	admin	it	Istanze di amministrazione remota
-remote administration need to be enabled in the remote instance under admin > site configuration!	admin	it	L'amministrazione remota deve essere abilitata nella istanza remota sotto Admin > Configurazione per tutto il sito
+remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	it	L'amministrazione remota deve essere abilitata nell'istanza remota sotto Admin -> Configurazione per tutto il sito!
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	it	L'amministrazione remota deve essere abilitata nella istanza remota sotto Admin > Configurazione per tutto il sito!
 remote instance saved	admin	it	Istanza remota salvata
 remove	admin	it	rimuovi
 remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
@@ -665,14 +758,16 @@ removing access for groups may cause problems for data in this category.  are yo
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	it	Rinominare l'utente "anonimo" (anonymous) renderà inutilizzabile la condivisione di file e Collabora Online Office!
 requested	admin	it	Richiesto
 required pear class mail/mimedecode.php not found.	admin	it	Non è stata trovata la classe PEAR Mail/mimeDecode.php
+requires 'openid / oauth2 server' app.	admin	it	Richiede l'app 'OpenID / OAuth2 Server'
 reset filter	admin	it	Reimposta filtro
-return to view account	admin	it	Ritorna alla visualizzazone dell'account
 rights	admin	it	Diritti
 route all mails to	admin	it	Indirizza tutte le mail a
 rows	admin	it	Righe
 rpm or debian package	admin	it	Pacchetto RPM o Debian
 run	admin	it	esegui
 run asynchronous services	admin	it	Esegui lo Schedulatore
+save as default	admin	it	salva come predefinito
+save changes	admin	it	salva modifiche
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	it	Salvataggio del messaggio %1 fallito. Non è possibile salvare messaggi nella cartella %2 in quanto %3
 save the category	admin	it	salva la categoria
 save the category and return back to the list	admin	it	salva la categoria e ritorna alla lista
