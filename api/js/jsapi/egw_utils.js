@@ -268,8 +268,12 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			var oldProps = [];
 			$hiddenParents.each(function() {
 				var old = {};
-				for ( var name in props ) {
-					old[ name ] = this.style[ name ];
+				if (this.styles)
+				{
+					for (var name in props)
+					{
+						old[name] = this.style[name];
+					}
 				}
 				jQuery(this).show();
 				oldProps.push(old);
@@ -282,8 +286,12 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 
 			$hiddenParents.each(function(i) {
 				var old = oldProps[i];
-				for ( var name in props ) {
-					this.style[ name ] = old[ name ];
+				if (this.style)
+				{
+					for (var name in props)
+					{
+						this.style[name] = old[name];
+					}
 				}
 			});
 			//$.log(”w: ” + dim.w + ”, h:” + dim.h)
