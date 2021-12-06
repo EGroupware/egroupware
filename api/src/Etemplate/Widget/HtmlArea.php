@@ -84,7 +84,7 @@ class HtmlArea extends Etemplate\Widget
 	 * @var array
 	 */
 	public static $toolbar_list = [
-		'undo', 'redo', 'bold', 'italic', 'strikethrough', 'forecolor', 'backcolor',
+		'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'forecolor', 'backcolor',
 		'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
 		'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl','pastetext',
 		'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen', 'table'
@@ -96,7 +96,7 @@ class HtmlArea extends Etemplate\Widget
 	 */
 	public static $toolbar_default_list = [
 		'undo', 'redo','formatselect', 'fontselect', 'fontsizeselect',
-		'bold' ,'italic', 'removeformat', 'forecolor', 'backcolor', 'alignleft',
+		'bold' ,'italic', 'underline', 'removeformat', 'forecolor', 'backcolor', 'alignleft',
 		'aligncenter', 'alignright', 'alignjustify', 'numlist', 'bullist', 'outdent',
 		'indent', 'link', 'image', 'pastetext', 'table'
 	];
