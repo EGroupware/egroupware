@@ -743,8 +743,9 @@ class AddressbookApp extends EgwApp
 		if(!selectbox) return;
 		var custom_field_name = selectbox.id.replace("countrycode", "countryname");
 		var custom_field = <HTMLInputElement>document.getElementById(custom_field_name);
+		let display = "inline";
 		if(custom_field && selectbox.value == "-custom-") {
-			custom_field.style.display = "inline";
+			display = "inline";
 		}
 		else if (custom_field)
 		{
@@ -754,15 +755,20 @@ class AddressbookApp extends EgwApp
 				// Chosen needs this to update
 				jQuery(selectbox).trigger("liszt:updated");
 
-				custom_field.style.display = "inline";
+				display = "inline";
 			}
 			else
 			{
-				custom_field.style.display = "none";
+				display = "none";
 			}
 		}
+		if(custom_field.attributeStyleMap)
+		{
+			custom_field.attributeStyleMap.set("display", display);
+		}
+
 		var region = this.et2.getWidgetById(selectbox.name.replace('countrycode', 'region'));
-		if (region)
+		if(region)
 		{
 			region.set_country_code(selectbox.value);
 		}
