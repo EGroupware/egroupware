@@ -455,21 +455,21 @@ var et2_htmlarea = /** @class */ (function (_super) {
      * arranged toolbars as simple mode
      * @constant
      */
-    et2_htmlarea.TOOLBAR_SIMPLE = "undo redo|formatselect fontselect fontsizeselect | bold italic removeformat forecolor backcolor | " +
+    et2_htmlarea.TOOLBAR_SIMPLE = "undo redo|formatselect fontselect fontsizeselect | bold italic underline removeformat forecolor backcolor | " +
         "alignleft aligncenter alignright alignjustify | bullist " +
         "numlist outdent indent| link image pastetext | table";
     /**
      * arranged toolbars as extended mode
      * @constant
      */
-    et2_htmlarea.TOOLBAR_EXTENDED = "fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | " +
+    et2_htmlarea.TOOLBAR_EXTENDED = "fontselect fontsizeselect | bold italic underline strikethrough forecolor backcolor | " +
         "link | alignleft aligncenter alignright alignjustify  | numlist " +
         "bullist outdent indent | removeformat | image | fullscreen | table";
     /**
      * arranged toolbars as advanced mode
      * @constant
      */
-    et2_htmlarea.TOOLBAR_ADVANCED = "undo redo| formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | " +
+    et2_htmlarea.TOOLBAR_ADVANCED = "undo redo| formatselect | fontselect fontsizeselect | bold italic underline strikethrough forecolor backcolor | " +
         "alignleft aligncenter alignright alignjustify | bullist " +
         "numlist outdent indent ltr rtl | removeformat code| link image pastetext | searchreplace | fullscreen | table";
     /**
