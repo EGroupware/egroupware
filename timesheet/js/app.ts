@@ -194,8 +194,7 @@ class TimesheetApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		var widget = this.et2.getWidgetById('ts_title');
-		if(widget) return widget.options.value;
+		return this.et2.getValueById('ts_title');
 	}
 
 	/**
