@@ -83,9 +83,7 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox  class="city_state_postcode" width="100%">
-						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" submit="1" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
-						</menulist>
+						<select type="select-country" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
 					</vbox>
 					<description/>
@@ -116,9 +114,9 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
 					<vbox width="100%" tabindex="16">
-						<menulist tabindex="16">
-							<menupopup type="select-country" tabindex="16" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
-						</menulist>
+						<select-country tabindex="16" tags="true" width="100%" class="countrySelect et2_fullWidth"
+                                        id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);"
+                                        options="Select one,0,1" autocomplete="country"/>
 						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" tabindex="16" autocomplete="country-name"/>
 					</vbox>
 					<description/>
@@ -137,9 +135,7 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_car,&amp;hearts;"/>
 					<description disabled="@no_tid" for="tid" value="Type"/>
 					<hbox width="102%">
-						<menulist disabled="@no_tid">
-							<menupopup id="tid" no_lang="1" class="et2_fullWidth" onchange="1"/>
-						</menulist>
+                        <select id="tid" no_lang="1" class="et2_fullWidth" onchange="1" disabled="@no_tid"/>
 					</hbox>
 					<description/>
 				</row>
@@ -247,9 +243,9 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%" class="city_state_postcode">
-						<menulist class="et2_fullWidth">
-							<menupopup type="select-country" tabindex="37" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
-						</menulist>
+                        <select-country tabindex="37" tags="true" width="100%" class="countrySelect et2_fullWidth"
+                                        id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);"
+                                        options="Select one,0,1" autocomplete="section-two country"/>
 						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
 					<description/>
@@ -280,9 +276,9 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 					<description for="adr_two_countryname" value="country"/>
 					<vbox width="100%">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" tags="true" width="100%" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="section-two country" />
-						</menulist>
+                        <select-country class="countrySelect et2_fullWidth" tags="true" width="100%"
+                                        id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);"
+                                        options="Select one,0,1" autocomplete="section-two country"/>
 						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
 					</vbox>
 					<description/>
@@ -416,9 +412,9 @@
 				</row>
 				<row class="dialogOperators">
 					<description value="Addressbook"/>
-					<menulist class="et2_fullWidth">
-						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
-					</menulist>
+                    <select class="owner et2_fullWidth" statustext="Addressbook the contact should be saved to"
+                            id="owner" no_lang="1"
+                            onchange="widget.getInstanceManager().submit(null,false,true); return false;"/>
 					<description/>
 					<description value="own sorting"/>
 					<menulist>

@@ -238,7 +238,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 
 			// Append this node at its index
 			var idx = this.getDOMIndex();
-			if (idx < 0 || idx >= this.parentNode.childNodes.length - 1)
+			if(idx < 0 || idx > this.parentNode.childNodes.length - 1)
 			{
 				this.parentNode.appendChild(node);
 			}
@@ -283,9 +283,19 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 			}
 		}
 		// _node is actually a Web Component
-		else if (_node instanceof Element )
+		else if(_node instanceof Element)
 		{
-			this.getDOMNode().append(_node);
+			if(this.getDOMNode(_node))
+			{
+				this.getDOMNode(_node).append(_node);
+			}
+			else
+			{
+				// Warn about it.  This slows down loading, as it requires a second pass (loadingFinished) to get the child
+				// properly added.
+				console.warn("Legacy widget " + this.getType() + "[#" + this.options.id + "] could not handle adding a child (" +
+					_node.getType() + (_node.id ? "#" + _node.id : "") + ")");
+			}
 		}
 	}
 

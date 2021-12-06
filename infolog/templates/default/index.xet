@@ -222,21 +222,21 @@
 			</rows>
 		</grid>
 		<styles>
-			/**
- * Add / remove link or category popup used for actions on multiple entries
- */
+            /**
+            * Add / remove link or category popup used for actions on multiple entries
+            */
 
-div.action_popup[id] {
-	position: fixed;
-	top: 200px;
-	left: 450px;
-	width: 76ex;
-	z-index: 20000;
-	display: none;
-	border-collapse:collapse;
-	border-spacing:0px
-}
-.action_popup-content {
+            .action_popup[id] {
+            position: fixed;
+            top: 200px;
+            left: 450px;
+            width: 76ex;
+            z-index: 20000;
+            display: none;
+            border-collapse:collapse;
+            border-spacing:0px
+            }
+            .action_popup-content {
 	display:block;
 	padding:2ex;
 	color:#666666;

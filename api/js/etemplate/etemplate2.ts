@@ -23,7 +23,12 @@ import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch
 import {et2_tabbox} from "./et2_widget_tabs";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
-//import './et2-button';
+import './Et2Box/Et2Box';
+import './Et2Button/Et2Button';
+import './Et2Date/Et2DateTime';
+import './Et2Textarea/Et2Textarea';
+import './Et2Textbox/Et2Textbox';
+import './Et2Colorpicker/Et2Colorpicker';
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
 import './et2_widget_template';
@@ -113,7 +118,7 @@ export class etemplate2
 	private app_obj: EgwApp;
 	app: string;
 
-	constructor(_container : HTMLElement, _menuaction? : string, _uniqueId?: string)
+	constructor(_container: HTMLElement, _menuaction?: string, _uniqueId?: string)
 	{
 		if (typeof _menuaction == "undefined")
 		{
@@ -165,13 +170,15 @@ export class etemplate2
 	 *
 	 * @param {jQuery.event} e
 	 */
-	public resize(e) {
+	public resize(e)
+	{
 		const event = e;
 		const self = this;
 		let excess_height: number | boolean = false;
 
 		// Check if the framework has an specific excess height calculation
-		if (typeof window.framework != 'undefined' && typeof window.framework.get_wExcessHeight != 'undefined') {
+		if (typeof window.framework != 'undefined' && typeof window.framework.get_wExcessHeight != 'undefined')
+		{
 			excess_height = window.framework.get_wExcessHeight(window);
 		}
 
@@ -200,7 +207,7 @@ export class etemplate2
 
 					// If we're visible, call the "resize" event of all functions which implement the
 					// "IResizeable" interface
-					if(jQuery(self.DOMContainer).is(":visible"))
+					if (jQuery(self.DOMContainer).is(":visible"))
 					{
 						self._widgetContainer.iterateOver(function (_widget)
 						{
@@ -227,7 +234,7 @@ export class etemplate2
 	 * @param _keep_app_object keep app object
 	 * @param _keep_session keep server-side et2 session eg. for vfs-select
 	 */
-	public clear(_keep_app_object?:boolean, _keep_session?: boolean)
+	public clear(_keep_app_object?: boolean, _keep_session?: boolean)
 	{
 		jQuery(this._DOMContainer).trigger('clear');
 
@@ -267,11 +274,11 @@ export class etemplate2
 		}
 
 		// If using a private app object, remove all of them
-		if(!_keep_app_object && this.app_obj !== window.app)
+		if (!_keep_app_object && this.app_obj !== window.app)
 		{
-			for(const app_name in this.app_obj)
+			for (const app_name in this.app_obj)
 			{
-				if(this.app_obj[app_name] instanceof EgwApp)
+				if (this.app_obj[app_name] instanceof EgwApp)
 				{
 					this.app_obj[app_name].destroy();
 				}
@@ -310,7 +317,7 @@ export class etemplate2
 
 		// Create all neccessary _data entries
 		const neededEntries = ["content", "sel_options", "readonlys", "modifications",
-		                       "validation_errors"];
+			"validation_errors"];
 		for (let i = 0; i < neededEntries.length; i++)
 		{
 			if (typeof _data[neededEntries[i]] == "undefined" || !_data[neededEntries[i]])
@@ -353,7 +360,7 @@ export class etemplate2
 	bind_unload()
 	{
 		// Prompt user to save for dirty popups
-		if(window !== egw_topWindow() && !this.close_prompt)
+		if (window !== egw_topWindow() && !this.close_prompt)
 		{
 			this.close_prompt = this._close_changed_prompt.bind(this);
 			window.addEventListener("beforeunload", this.close_prompt);
@@ -364,22 +371,22 @@ export class etemplate2
 			{
 				// need to use async === "keepalive" to run via beforeunload
 				egw.json("EGroupware\\Api\\Etemplate::ajax_destroy_session",
-				         [this._etemplate_exec_id], null, null, "keepalive").sendRequest();
+					[this._etemplate_exec_id], null, null, "keepalive").sendRequest();
 			}, this);
 
 			window.addEventListener("beforeunload", this.destroy_session);
 		}
 	}
 
-	private _close_changed_prompt(e : BeforeUnloadEvent)
+	private _close_changed_prompt(e: BeforeUnloadEvent)
 	{
-		if(this._skip_close_prompt || !this.isDirty())
+		if (this._skip_close_prompt || !this.isDirty())
 		{
 			return;
 		}
 
 		// Cancel the event
-        e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+		e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
 
 		// Chrome requires returnValue to be set
 		e.returnValue = '';
@@ -507,12 +514,15 @@ export class etemplate2
 
 		// require necessary translations from server AND the app.js file, if not already loaded
 		let promisses = [window.egw_ready];	// to wait for legacy-loaded JS
-		if (Array.isArray(_data.langRequire)) {
+		if (Array.isArray(_data.langRequire))
+		{
 			promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
 		}
-		return Promise.all(promisses).catch((err) => {
-			console.log("et2.load(): error loading lang-files and app.js: "+err.message);
-		}).then(() => {
+		return Promise.all(promisses).catch((err) =>
+		{
+			console.log("et2.load(): error loading lang-files and app.js: " + err.message);
+		}).then(() =>
+		{
 			this.clear();
 
 			// Initialize application js
@@ -564,7 +574,8 @@ export class etemplate2
 			const _load = function ()
 			{
 				egw.debug("log", "Loading template...");
-				if (egw.debug_level() >= 4 && console.timeStamp) {
+				if (egw.debug_level() >= 4 && console.timeStamp)
+				{
 					console.timeStamp("Begin rendering template");
 				}
 
@@ -628,11 +639,11 @@ export class etemplate2
 							// Date fields open the calendar popup on focus
 							.not('.et2_date')
 							.filter(function ()
-							        {
-								        // Skip inputs that are out of tab ordering
-								        const $this = jQuery(this);
-								        return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-							        }).first();
+							{
+								// Skip inputs that are out of tab ordering
+								const $this = jQuery(this);
+								return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+							}).first();
 
 						// mobile device, focus only if the field is empty (usually means new entry)
 						// should focus always for non-mobile one
@@ -670,17 +681,19 @@ export class etemplate2
 					// Profiling
 					if (egw.debug_level() >= 4)
 					{
-						if (console.timeEnd) {
+						if (console.timeEnd)
+						{
 							console.timeEnd(_name);
 						}
-						if (console.profileEnd) {
+						if (console.profileEnd)
+						{
 							console.profileEnd(_name);
 						}
 						const end_time = (new Date).getTime();
 						let gen_time_div = jQuery('#divGenTime_' + appname);
 						if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 						gen_time_div.find('.et2RenderTime').remove();
-						gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', ''+((end_time - start_time) / 1000)) + '</span>');
+						gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
 					}
 				}, this));
 			};
@@ -819,7 +832,8 @@ export class etemplate2
 					indexes = [indexes.shift(), indexes.join('[')];
 					indexes[1] = indexes[1].substring(0, indexes[1].length - 1);
 					const children = indexes[1].split('][');
-					if (children.length) {
+					if (children.length)
+					{
 						indexes = jQuery.merge([indexes[0]], children);
 					}
 				}
@@ -974,7 +988,7 @@ export class etemplate2
 			this.unbind_unload();
 
 			const form = jQuery("<form id='form' action='" + egw().webserverUrl +
-				                    "/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
+				"/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
 
 			const etemplate_id = jQuery(document.createElement("input"))
 				.attr("name", 'etemplate_exec_id')
@@ -1009,7 +1023,8 @@ export class etemplate2
 		_root.iterateOver(function (_widget)
 		{
 			// The widget must have an id to be included in the values array
-			if (_widget.id === undefined || _widget.id === "") {
+			if (_widget.id === undefined || _widget.id === "")
+			{
 				return;
 			}
 
@@ -1024,7 +1039,8 @@ export class etemplate2
 				indexes = [indexes.shift(), indexes.join('[')];
 				indexes[1] = indexes[1].substring(0, indexes[1].length - 1);
 				const children = indexes[1].split('][');
-				if (children.length) {
+				if (children.length)
+				{
 					indexes = jQuery.merge([indexes[0]], children);
 				}
 				path = path.concat(indexes);
@@ -1146,7 +1162,7 @@ export class etemplate2
 	 * @param {(string|null)} _type type of change.  One of 'update','edit', 'delete', 'add' or null
 	 * @return {boolean} true if nextmatch found and refreshed, false if not
 	 */
-	static app_refresh (_msg, _app, _id, _type)
+	static app_refresh(_msg, _app, _id, _type)
 	{
 		let refresh_done = false;
 		let app = _app.split('-');
@@ -1260,7 +1276,7 @@ export class etemplate2
 	 * @param {string} id DOM ID of the container node
 	 * @returns {etemplate2|null}
 	 */
-	public static getById (id)
+	public static getById(id)
 	{
 		for (let name in etemplate2._byTemplate)
 		{
@@ -1425,38 +1441,48 @@ export class etemplate2
 	 * @returns {Boolean} Handled by this plugin
 	 * @throws Invalid parameters if the required res.data parameters are missing
 	 */
-	public handle_assign(type, res, req) {
+	public handle_assign(type, res, req)
+	{
 		//type, req;	// unused, but required by plugin signature
 
 		//Check whether all needed parameters have been passed and call the alertHandler function
 		if ((typeof res.data.id != 'undefined') &&
 			(typeof res.data.key != 'undefined') &&
 			(typeof res.data.value != 'undefined')
-		) {
+		)
+		{
 			if (typeof res.data.etemplate_exec_id == 'undefined' ||
-				res.data.etemplate_exec_id != this._etemplate_exec_id) {
+				res.data.etemplate_exec_id != this._etemplate_exec_id)
+			{
 				// Not for this etemplate, but not an error
 				return false;
 			}
-			if (res.data.key == 'etemplate_exec_id') {
+			if (res.data.key == 'etemplate_exec_id')
+			{
 				this._etemplate_exec_id = res.data.value;
 				return true;
 			}
-			if (this._widgetContainer == null) {
+			if (this._widgetContainer == null)
+			{
 				// Right etemplate, but it's already been cleared.
 				egw.debug('warn', "Tried to call assign on an un-loaded etemplate", res.data);
 				return false;
 			}
 			const widget = this._widgetContainer.getWidgetById(res.data.id);
-			if (widget) {
-				if (typeof widget['set_' + res.data.key] != 'function') {
+			if (widget)
+			{
+				if (typeof widget['set_' + res.data.key] != 'function')
+				{
 					egw.debug('warn', "Cannot set %s attribute %s via JSON assign, no set_%s()", res.data.id, res.data.key, res.data.key);
 					return false;
 				}
-				try {
+				try
+				{
 					widget['set_' + res.data.key].call(widget, res.data.value);
 					return true;
-				} catch (e) {
+				}
+				catch (e)
+				{
 					egw.debug("error", "When assigning %s on %s via AJAX, \n" + (e.message || e + ""), res.data.key, res.data.id, widget);
 				}
 			}

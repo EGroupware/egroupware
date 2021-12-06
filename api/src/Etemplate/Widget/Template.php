@@ -205,29 +205,16 @@ class Template extends Etemplate\Widget
 	/**
 	 * Convert relative template path from relPath to an url incl. cache-buster modification time postfix
 	 *
+	 * This adds the server-side modification of eTemplates for web-components /api/etemplate.php.
+	 *
 	 * @param string $path
 	 * @return string url
 	 */
 	public static function rel2url($path)
 	{
-		if ($path)
-		{
-			if ($path[0] === '/')
-			{
-				$url = $GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.filemtime(self::rel2path($path));
-			}
-			else
-			{
-				$url = Api\Vfs::download_url($path);
-
-				if ($url[0] == '/') $url = Api\Framework::link($url);
-
-				// mtime postfix has to use '?download=', as our WebDAV treats everything else literal and not ignore them like Apache for static files!
-				$url .= '?download='.filemtime($path);
-			}
-		}
-		//error_log(__METHOD__."('$path') returning $url");
-		return $url;
+		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/etemplate.php'.
+			($path[0] === '/' ? $path : preg_replace('#^'.self::VFS_TEMPLATE_PATH.'#', '',
+				Api\Vfs::parse_url($path, PHP_URL_PATH))).'?'.filemtime(self::rel2path($path));
 	}
 
 	/**

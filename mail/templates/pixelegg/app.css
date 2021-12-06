@@ -850,15 +850,15 @@ span#mail-compose_replyto_expander {
   padding: 0;
 }
 /*Make file uploads in compose dialog invisible*/
-div.mail-compose_toolbar_assist div.mail-compose_fileselector,
+.mail-compose_toolbar_assist div.mail-compose_fileselector,
 #mail-compose_selectFromVFSForCompose,
-div.mail-compose_toolbar_assist {
+.mail-compose_toolbar_assist {
   display: none;
 }
 /*Make file uploads in compose dialog invisible*/
-div.mail-compose_toolbar_assist div.mail-compose_fileselector,
+.mail-compose_toolbar_assist div.mail-compose_fileselector,
 #mail-compose_selectFromVFSForCompose,
-div.mail-compose_toolbar_assist {
+.mail-compose_toolbar_assist {
   display: none;
 }
 div.mailComposeHeaderSection > table {
@@ -2072,6 +2072,7 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
 #mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {
   border-left: 12px solid #B4B4B4;
 }
-#mail-index_nm.et2_nextmatch.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
+#mail-index_nm.et2_nextmatch .egwGridView_outer thead tr.row_category td:first-child > div {
   margin-left: 0px;
+  padding-left: 0px;
 }

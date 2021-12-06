@@ -66,7 +66,7 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 	 * @param {object} _node
 	 */
 	loadFromXML(_node) {
-		if(this.getType() != "box")
+		if(this.getType() != "old-box")
 		{
 			return super.loadFromXML(_node);
 		}
@@ -162,7 +162,7 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 	}
 
 }
-et2_register_widget(et2_box, ["vbox", "box"]);
+et2_register_widget(et2_box, ["old-vbox", "old-box"]);
 
 /**
  * Details widget implementation

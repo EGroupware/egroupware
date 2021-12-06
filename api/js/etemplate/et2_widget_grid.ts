@@ -96,14 +96,14 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			description: "Defines sortable start callback function"
 		}
 	};
-	private table: JQuery;
-	private thead: JQuery;
-	private tfoot: JQuery;
-	private tbody: JQuery;
+	private table : JQuery;
+	private thead : JQuery;
+	private tfoot : JQuery;
+	private tbody : JQuery;
 
 	// Counters for rows and columns
-	private rowCount: number = 0;
-	private columnCount: number = 0;
+	private rowCount : number = 0;
+	private columnCount : number = 0;
 
 	// 2D-Array which holds references to the DOM td tags
 	private cells = [];
@@ -116,9 +116,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 	// Wrapper div for height & overflow, if needed
 	private wrapper = null;
-	private lastRowNode: null;
+	private lastRowNode : null;
 
 	private sortablejs : Sortable = null;
+
 	/**
 	 * Constructor
 	 *
@@ -139,19 +140,20 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			.appendTo(this.table);
 	}
 
-	_initCells(_colData : ColumnEntry[], _rowData : RowEntry[]) {
+	_initCells(_colData : ColumnEntry[], _rowData : RowEntry[])
+	{
 		// Copy the width and height
 		const w = _colData.length;
 		const h = _rowData.length;
 
 		// Create the 2D-Cells array
 		const cells = new Array(h);
-		for (let y = 0; y < h; y++)
+		for(let y = 0; y < h; y++)
 		{
 			cells[y] = new Array(w);
 
 			// Initialize the cell description objects
-			for (let x = 0; x < w; x++)
+			for(let x = 0; x < w; x++)
 			{
 				// Some columns (nm) we do not parse into a boolean
 				const col_disabled = _colData[x].disabled;
@@ -178,7 +180,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 	_getColDataEntry() : ColumnEntry
 	{
-		return  {
+		return {
 			width: "auto",
 			class: "",
 			align: "",
@@ -200,10 +202,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 	_getCell(_cells, _x, _y)
 	{
-		if ((0 <= _y) && (_y < _cells.length))
+		if((0 <= _y) && (_y < _cells.length))
 		{
 			const row = _cells[_y];
-			if ((0 <= _x) && (_x < row.length))
+			if((0 <= _x) && (_x < row.length))
 			{
 				return row[_x];
 			}
@@ -214,7 +216,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 	_forceNumber(_val)
 	{
-		if (isNaN(_val))
+		if(isNaN(_val))
 		{
 			throw(_val + " is not a number!");
 		}
@@ -226,7 +228,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	{
 		// Some things cannot be done inside a nextmatch - nm will do the expansion later
 		var nm = false;
-		let widget: et2_widget = this;
+		let widget : et2_widget = this;
 		while(!nm && widget != this.getRoot())
 		{
 			nm = (widget.getType() == 'nextmatch');
@@ -234,14 +236,15 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 
 		// Parse the columns tag
-		et2_filteredNodeIterator(columns, function(node, nodeName) {
+		et2_filteredNodeIterator(columns, function(node, nodeName)
+		{
 			const colDataEntry = this._getColDataEntry();
 			// This cannot be done inside a nm, it will expand it later
 			colDataEntry["disabled"] = nm ?
-				et2_readAttrWithDefault(node, "disabled", "") :
-				this.getArrayMgr("content")
-					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
-			if (nodeName == "column")
+									   et2_readAttrWithDefault(node, "disabled", "") :
+									   this.getArrayMgr("content")
+										   .parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
+			if(nodeName == "column")
 			{
 				colDataEntry["width"] = et2_readAttrWithDefault(node, "width", "auto");
 				colDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
@@ -266,11 +269,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}, this);
 
 		// Parse the rows tag
-		et2_filteredNodeIterator(rows, function(node, nodeName) {
+		et2_filteredNodeIterator(rows, function(node, nodeName)
+		{
 			const rowDataEntry = this._getRowDataEntry();
 			rowDataEntry["disabled"] = this.getArrayMgr("content")
-					.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
-			if (nodeName == "row")
+				.parseBoolExpression(et2_readAttrWithDefault(node, "disabled", ""));
+			if(nodeName == "row")
 			{
 				// Remember this row for auto-repeat - it'll eventually be the last one
 				this.lastRowNode = node;
@@ -300,8 +304,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		if(this.getArrayMgr("content"))
 		{
 			const content = this.getArrayMgr("content");
-			var rowDataEntry = rowData[rowData.length-1];
-			rowIndex = rowData.length-1;
+			var rowDataEntry = rowData[rowData.length - 1];
+			rowIndex = rowData.length - 1;
 			// Find out if we have any content rows, and how many
 			let cont = true;
 			while(cont)
@@ -313,7 +317,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					rowIndex++;
 				}
 
-				else if (this.lastRowNode != null)
+				else if(this.lastRowNode != null)
 				{
 					// Have to look through actual widgets to support const[$row]
 					// style names - should be avoided so we can remove this extra check
@@ -328,41 +332,49 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 					// Not in a nextmatch, so we can expand with abandon
 					const currentPerspective = jQuery.extend({}, content.perspectiveData);
-					const check = function (node, nodeName) {
-						if (nodeName == 'box' || nodeName == 'hbox' || nodeName == 'vbox') {
+					const check = function(node, nodeName)
+					{
+						if(nodeName == 'box' || nodeName == 'hbox' || nodeName == 'vbox')
+						{
 							return et2_filteredNodeIterator(node, check, this);
 						}
 						content.perspectiveData.row = rowIndex;
-						for (let attr in node.attributes) {
+						for(let attr in node.attributes)
+						{
 							const value = et2_readAttrWithDefault(node, node.attributes[attr].name, "");
 							// Don't include first char, those should be handled by normal means
 							// and it would break nextmatch
-							if (value.indexOf('@') > 0 || value.indexOf('$') > 0) {
+							if(value.indexOf('@') > 0 || value.indexOf('$') > 0)
+							{
 								// Ok, we found something.  How many? Check for values.
 								let ident = content.expandName(value);
 								// expandName() handles index into content (@), but we have to look up
 								// regular values
-								if (value[0] != '@') {
+								if(value[0] != '@')
+								{
 									// Returns null if there isn't an actual value
 									ident = content.getEntry(ident, false, true);
 								}
-								while (ident != null && rowIndex < 1000) {
+								while(ident != null && rowIndex < 1000)
+								{
 									rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
 									content.perspectiveData.row = ++rowIndex;
 									ident = content.expandName(value);
-									if (value[0] != '@') {
+									if(value[0] != '@')
+									{
 										// Returns null if there isn't an actual value
 										ident = content.getEntry(ident, false, true);
 									}
 								}
-								if (rowIndex >= 1000) {
+								if(rowIndex >= 1000)
+								{
 									egw.debug("error", "Problem in autorepeat fallback: too many rows for '%s'.  Use a nextmatch, or start debugging.", value);
 								}
 								return;
 							}
 						}
 					};
-					et2_filteredNodeIterator(this.lastRowNode, check,this);
+					et2_filteredNodeIterator(this.lastRowNode, check, this);
 					cont = false;
 					content.perspectiveData = currentPerspective;
 				}
@@ -381,7 +393,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 	}
 
-	_fillCells(cells, columns : object[], rows : object[]) {
+	_fillCells(cells, columns : object[], rows : object[])
+	{
 		const h = cells.length;
 		const w = (h > 0) ? cells[0].length : 0;
 		const currentPerspective = jQuery.extend({}, this.getArrayMgr("content").perspectiveData);
@@ -389,10 +402,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		// Read the elements inside the columns
 		let x = 0;
 
-		et2_filteredNodeIterator(columns, function(node, nodeName) {
+		et2_filteredNodeIterator(columns, function(node, nodeName)
+		{
 
-			function _readColNode(node, nodeName) {
-				if (y >= h)
+			function _readColNode(node, nodeName)
+			{
+				if(y >= h)
 				{
 					this.egw().debug("warn", "Skipped grid cell in column, '" +
 						nodeName + "'");
@@ -402,7 +417,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				const cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
-				if (node.getAttribute("span"))
+				if(node.getAttribute("span"))
 				{
 					cell.rowSpan = node.getAttribute("span");
 				}
@@ -412,7 +427,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					cell.autoRowSpan = true;
 				}
 
-				if (cell.rowSpan == "all")
+				if(cell.rowSpan == "all")
 				{
 					cell.rowSpan = cells.length;
 				}
@@ -423,7 +438,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				const widget = this.createElementFromNode(node, nodeName);
 
 				// Fill all cells the widget is spanning
-				for (let i = 0; i < span && y < cells.length; i++, y++)
+				for(let i = 0; i < span && y < cells.length; i++, y++)
 				{
 					this._getCell(cells, x, y).widget = widget;
 				}
@@ -432,7 +447,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			// If the node is a column, create the widgets which belong into
 			// the column
 			var y = 0;
-			if (nodeName == "column")
+			if(nodeName == "column")
 			{
 				et2_filteredNodeIterator(node, _readColNode, this);
 			}
@@ -455,10 +470,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			nm = (widget.getType() == 'nextmatch');
 			widget = widget.getParent();
 		}
-		et2_filteredNodeIterator(rows, function(node, nodeName) {
+		et2_filteredNodeIterator(rows, function(node, nodeName)
+		{
 
-			readRowNode = function _readRowNode(node, nodeName) {
-				if (x >= w)
+			readRowNode = function _readRowNode(node, nodeName)
+			{
+				if(x >= w)
 				{
 					if(nodeName != "description")
 					{
@@ -473,7 +490,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				let cell = this._getCell(cells, x, y);
 
 				// Read the span value of the element
-				if (node.getAttribute("span"))
+				if(node.getAttribute("span"))
 				{
 					cell.colSpan = node.getAttribute("span");
 				}
@@ -483,7 +500,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					cell.autoColSpan = true;
 				}
 
-				if (cell.colSpan == "all")
+				if(cell.colSpan == "all")
 				{
 					cell.colSpan = cells[y].length;
 				}
@@ -491,13 +508,13 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				const span = cell.colSpan = this._forceNumber(cell.colSpan);
 
 				// Read the align value of the element
-				if (node.getAttribute("align"))
+				if(node.getAttribute("align"))
 				{
 					cell.align = node.getAttribute("align");
 				}
 
 				// store id of nextmatch-*headers, so it is available for disabled widgets, which get not instanciated
-				if (nodeName.substr(0, 10) == 'nextmatch-')
+				if(nodeName.substr(0, 10) == 'nextmatch-')
 				{
 					cell.nm_id = node.getAttribute('id');
 				}
@@ -540,10 +557,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				}
 
 				// Fill all cells the widget is spanning
-				for (let i = 0; i < span && x < cells[y].length; i++, x++)
+				for(let i = 0; i < span && x < cells[y].length; i++, x++)
 				{
 					cell = this._getCell(cells, x, y);
-					if (cell.widget == null)
+					if(cell.widget == null)
 					{
 						cell.widget = widget;
 					}
@@ -562,7 +579,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			{
 				return;
 			}
-			if (nodeName == "row")
+			if(nodeName == "row")
 			{
 				// Adjust for the row
 				for(var name in this.getArrayMgrs())
@@ -570,7 +587,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					//this.getArrayMgr(name).perspectiveData.row = y;
 				}
 
-				let cell = this._getCell(cells, x,y);
+				let cell = this._getCell(cells, x, y);
 				if(cell.rowData.id)
 				{
 					this.getArrayMgr("content").expandName(cell.rowData.id);
@@ -595,7 +612,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}, this);
 
 		// Extra content rows
-		for(y; y < h; y++) {
+		for(y; y < h; y++)
+		{
 			x = 0;
 
 			et2_filteredNodeIterator(this.lastRowNode, readRowNode, this);
@@ -614,15 +632,15 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 		// Determine the last cell in each row and expand its span value if
 		// the span has not been explicitly set.
-		for (var y = 0; y < h; y++)
+		for(var y = 0; y < h; y++)
 		{
-			for (var x = w - 1; x >= 0; x--)
+			for(var x = w - 1; x >= 0; x--)
 			{
 				var cell = _cells[y][x];
 
-				if (cell.widget != null)
+				if(cell.widget != null)
 				{
-					if (cell.autoColSpan)
+					if(cell.autoColSpan)
 					{
 						cell.colSpan = w - x;
 					}
@@ -633,15 +651,15 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 		// Determine the last cell in each column and expand its span value if
 		// the span has not been explicitly set.
-		for (var x = 0; x < w; x++)
+		for(var x = 0; x < w; x++)
 		{
-			for (var y = h - 1; y >= 0; y--)
+			for(var y = h - 1; y >= 0; y--)
 			{
 				var cell = _cells[y][x];
 
-				if (cell.widget != null)
+				if(cell.widget != null)
 				{
-					if (cell.autoRowSpan)
+					if(cell.autoRowSpan)
 					{
 						cell.rowSpan = h - y;
 					}
@@ -655,6 +673,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	{
 		return true;
 	}
+
 	/**
 	 * As the does not fit very well into the default widget structure, we're
 	 * overwriting the loadFromXML function and doing a two-pass reading -
@@ -662,7 +681,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 *
 	 * @param {object} _node xml node to process
 	 */
-	loadFromXML(_node ) {
+	loadFromXML(_node)
+	{
 		// Keep the node for later changing / reloading
 		this.template_node = _node;
 
@@ -670,12 +690,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		const rowsElems = et2_directChildrenByTagName(_node, "rows");
 		const columnsElems = et2_directChildrenByTagName(_node, "columns");
 
-		if (rowsElems.length == 1 && columnsElems.length == 1)
+		if(rowsElems.length == 1 && columnsElems.length == 1)
 		{
 			const columns = columnsElems[0];
 			const rows = rowsElems[0];
-			const colData: ColumnEntry[] = [];
-			const rowData: RowEntry[] = [];
+			const colData : ColumnEntry[] = [];
+			const rowData : RowEntry[] = [];
 
 			// Fetch the column and row data
 			this._fetchRowColData(columns, rows, colData, rowData);
@@ -698,7 +718,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 	}
 
-	createTableFromCells(_cells, _colData: any[], _rowData: any[])
+	createTableFromCells(_cells, _colData : any[], _rowData : any[])
 	{
 		this.managementArray = [];
 		this.cells = _cells;
@@ -710,19 +730,19 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		const w = this.columnCount = (h > 0) ? _cells[0].length : 0;
 
 		// Create the table rows.
-		for (let y = 0; y < h; y++)
+		for(let y = 0; y < h; y++)
 		{
 			let parent = this.tbody;
 			switch(this.rowData[y]["part"])
 			{
 				case 'header':
-					if (!this.tbody.children().length && !this.tfoot.children().length)
+					if(!this.tbody.children().length && !this.tfoot.children().length)
 					{
 						parent = this.thead;
 					}
 					break;
 				case 'footer':
-					if (!this.tbody.children().length)
+					if(!this.tbody.children().length)
 					{
 						parent = this.tfoot;
 					}
@@ -731,17 +751,17 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			const tr = jQuery(document.createElement("tr")).appendTo(parent)
 				.addClass(this.rowData[y]["class"]);
 
-			if (this.rowData[y].disabled)
+			if(this.rowData[y].disabled)
 			{
 				tr.hide();
 			}
 
-			if (this.rowData[y].height != "auto")
+			if(this.rowData[y].height != "auto")
 			{
 				tr.height(this.rowData[y].height);
 			}
 
-			if (this.rowData[y].valign)
+			if(this.rowData[y].valign)
 			{
 				tr.attr("valign", this.rowData[y].valign);
 			}
@@ -752,31 +772,39 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			}
 			// Create the cells. x is incremented by the colSpan value of the
 			// cell.
-			for (let x = 0; x < w;)
+			for(let x = 0; x < w;)
 			{
 				// Fetch a cell from the cells
 				const cell = this._getCell(_cells, x, y);
 
-				if (cell.td == null && cell.widget != null)
+				if(cell.td == null && cell.widget != null)
 				{
 					// Create the cell
 					const td = jQuery(document.createElement("td")).appendTo(tr)
 						.addClass(cell["class"]);
 
-					if (cell.disabled)
+					if(cell.disabled)
 					{
 						td.hide();
-						cell.widget.options.disabled = cell.disabled;
+						// Need to do different things with webComponents
+						if(typeof cell.widget.options !== "undefined")
+						{
+							cell.widget.options.disabled = cell.disabled;
+						}
+						else if(cell.widget.nodeName)
+						{
+							cell.widget.disabled = cell.disabled;
+						}
 					}
 
-					if (cell.width != "auto")
+					if(cell.width != "auto")
 					{
 						td.width(cell.width);
 					}
 
-					if (cell.align)
+					if(cell.align)
 					{
-						td.attr("align",cell.align);
+						td.attr("align", cell.align);
 					}
 
 					// Add the entry for the widget to the management array
@@ -791,18 +819,20 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					const rs = (y == h - 1) ? h - y : Math.min(h - y, cell.rowSpan);
 
 					// Set the col and row span values
-					if (cs > 1) {
+					if(cs > 1)
+					{
 						td.attr("colspan", cs);
 					}
 
-					if (rs > 1) {
+					if(rs > 1)
+					{
 						td.attr("rowspan", rs);
 					}
 
 					// Assign the td to the cell
-					for (let sx = x; sx < x + cs; sx++)
+					for(let sx = x; sx < x + cs; sx++)
 					{
-						for (let sy = y; sy < y + rs; sy++)
+						for(let sy = y; sy < y + rs; sy++)
 						{
 							this._getCell(_cells, sx, sy).td = td;
 						}
@@ -822,15 +852,15 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	{
 		// If the parent class functions are asking for the DOM-Node, return the
 		// outer table.
-		if (_sender == this || typeof _sender == 'undefined')
+		if(_sender == this || typeof _sender == 'undefined')
 		{
 			return this.wrapper != null ? this.wrapper[0] : this.table[0];
 		}
 
 		// Check whether the _sender object exists inside the management array
-		for (let i = 0; i < this.managementArray.length; i++)
+		for(let i = 0; i < this.managementArray.length; i++)
 		{
-			if (this.managementArray[i].widget == _sender)
+			if(this.managementArray[i].widget == _sender)
 			{
 				return this.managementArray[i].cell;
 			}
@@ -839,22 +869,22 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		return null;
 	}
 
-	isInTree(_sender?:et2_widget) : boolean
+	isInTree(_sender? : et2_widget) : boolean
 	{
 		let vis = true;
 
-		if (typeof _sender != "undefined" && _sender != this)
+		if(typeof _sender != "undefined" && _sender != this)
 		{
 			vis = false;
 
 			// Check whether the _sender object exists inside the management array
-			for (let i = 0; i < this.managementArray.length; i++)
+			for(let i = 0; i < this.managementArray.length; i++)
 			{
-				if (this.managementArray[i].widget == _sender)
+				if(this.managementArray[i].widget == _sender)
 				{
 					vis = !(typeof this.managementArray[i].disabled === 'boolean' ?
-						this.managementArray[i].disabled :
-						this.getArrayMgr("content").parseBoolExpression(this.managementArray[i].disabled)
+							this.managementArray[i].disabled :
+							this.getArrayMgr("content").parseBoolExpression(this.managementArray[i].disabled)
 					);
 					break;
 				}
@@ -873,7 +903,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 *
 	 * @param {string} _value Overflow value, must be a valid CSS overflow value, default 'visible'
 	 */
-	set_overflow(_value: string)
+	set_overflow(_value : string)
 	{
 		let wrapper = this.wrapper || this.table.parent('[id$="_grid_wrapper"]');
 
@@ -881,7 +911,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 
 		if(wrapper.length == 0 && _value && _value !== 'visible')
 		{
-			this.wrapper = wrapper = this.table.wrap('<div id="'+this.id+'_grid_wrapper"></div>').parent();
+			this.wrapper = wrapper = this.table.wrap('<div id="' + this.id + '_grid_wrapper"></div>').parent();
 			if(this.height)
 			{
 				wrapper.css('height', this.height);
@@ -889,7 +919,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		}
 		wrapper.css('overflow', _value);
 
-		if(wrapper.length && (!_value || _value === 'visible')) {
+		if(wrapper.length && (!_value || _value === 'visible'))
+		{
 			this.table.unwrap();
 		}
 	}
@@ -906,7 +937,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 * @param {Object} [_value.sel_options] New select options
 	 * @param {Object} [_value.readonlys] New read-only values
 	 */
-	set_value(_value : {content? : object, sel_options? : object, readonlys? : object})
+	set_value(_value : { content? : object, sel_options? : object, readonlys? : object })
 	{
 		// Destroy children, empty grid
 		for(let i = 0; i < this.managementArray.length; i++)
@@ -914,6 +945,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			const cell = this.managementArray[i];
 			if(cell.widget)
 			{
+				this.removeChild(cell.widget);
 				cell.widget.destroy();
 			}
 		}
@@ -943,7 +975,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 *
 	 * @param {boolean|function} sortable Callback or false to disable
 	 */
-	set_sortable(sortable: boolean | Function)
+	set_sortable(sortable : boolean | Function)
 	{
 		const self = this;
 		let tbody = this.getDOMNode().getElementsByTagName('tbody')[0];
@@ -954,32 +986,37 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			return;
 		}
 
-		for (let i =0; i < tbody.children.length; i++)
+		for(let i = 0; i < tbody.children.length; i++)
 		{
-			if (!tbody.children[i].classList.contains('th') && !tbody.children[i].id)
+			if(!tbody.children[i].classList.contains('th') && !tbody.children[i].id)
 			{
 				tbody.children[i].setAttribute('id', i.toString());
 			}
 		}
 
-		this.sortablejs = new Sortable(tbody,{
+		this.sortablejs = new Sortable(tbody, {
 			group: this.options.sortable_connectWith,
 			draggable: "tr:not(.th)",
 			filter: this.options.sortable_cancel,
 			ghostClass: this.options.sortable_placeholder,
 			dataIdAttr: 'id',
-			onAdd:function (event) {
-				if (typeof self.options.sortable_recieveCallback == 'function') {
+			onAdd: function(event)
+			{
+				if(typeof self.options.sortable_recieveCallback == 'function')
+				{
 					self.options.sortable_recieveCallback.call(self, event, this, self.id);
 				}
 			},
-			onStart: function (event, ui) {
-				if (typeof self.options.sortable_startCallback == 'function') {
+			onStart: function(event, ui)
+			{
+				if(typeof self.options.sortable_startCallback == 'function')
+				{
 					self.options.sortable_startCallback.call(self, event, this, self.id);
 				}
 			},
-			onSort: function (event) {
-				self.egw().json(sortable,[
+			onSort: function(event)
+			{
+				self.egw().json(sortable, [
 						self.getInstanceManager().etemplate_exec_id,
 						self.sortablejs.toArray(),
 						self.id],
@@ -998,13 +1035,14 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	_link_actions(actions : object[])
 	{
-		 // Get the top level element for the tree
+		// Get the top level element for the tree
 		// get appObjectManager for the actual app, it might not always be the current app(e.g. running app content under admin tab)
 		// @ts-ignore
 		let objectManager = egw_getAppObjectManager(true, this.getInstanceManager().app);
-		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
+		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId, 2) || objectManager;
 		let widget_object = objectManager.getObjectById(this.id);
-		if (widget_object == null) {
+		if(widget_object == null)
+		{
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			widget_object = objectManager.insertObject(false, new egwActionObject(
@@ -1024,7 +1062,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		let i = 0, r = 0;
 		for(; i < this.rowData.length; i++)
 		{
-			if (this.rowData[i].part != 'body') continue;
+			if(this.rowData[i].part != 'body') continue;
 			const content = this.getArrayMgr('content').getEntry(i);
 			if(content)
 			{
@@ -1073,33 +1111,33 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	_getColumnName()
 	{
 		const ids = [];
-		for(let r=0; r < this.cells.length; ++r)
+		for(let r = 0; r < this.cells.length; ++r)
 		{
 			const cols = this.cells[r];
-			for(let c=0; c < cols.length; ++c)
+			for(let c = 0; c < cols.length; ++c)
 			{
-				if (cols[c].nm_id) ids.push(cols[c].nm_id);
+				if(cols[c].nm_id) ids.push(cols[c].nm_id);
 			}
 		}
 		return ids.join('_');
 	}
 
-	resize (_height)
+	resize(_height)
 	{
-		if (typeof this.options != 'undefined' && _height
-				&& typeof this.options.resize_ratio != 'undefined' && this.options.resize_ratio)
+		if(typeof this.options != 'undefined' && _height
+			&& typeof this.options.resize_ratio != 'undefined' && this.options.resize_ratio)
 		{
 			// apply the ratio
-			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
-			if (_height != 0)
+			_height = (this.options.resize_ratio != '') ? _height * this.options.resize_ratio : _height;
+			if(_height != 0)
 			{
-				if (this.wrapper)
+				if(this.wrapper)
 				{
 					this.wrapper.height(this.wrapper.height() + _height);
 				}
 				else
 				{
-					this.table.height(this.table.height() + _height );
+					this.table.height(this.table.height() + _height);
 				}
 			}
 
@@ -1119,28 +1157,32 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	 */
 	getRow(_sender : et2_widget) : et2_widget
 	{
-		if (!_sender || !this.cells) return;
+		if(!_sender || !this.cells) return;
 
-		for(let r=0; r < this.cells.length; ++r)
+		for(let r = 0; r < this.cells.length; ++r)
 		{
 			const row = this.cells[r];
-			for(var c=0; c < row.length; ++c)
+			for(var c = 0; c < row.length; ++c)
 			{
-				if (!row[c].widget) continue;
+				if(!row[c].widget) continue;
 
 				let found = row[c].widget === _sender;
-				if (!found) row[c].widget.iterateOver(function(_widget) {if (_widget === _sender) found = true;});
-				if (found)
+				if(!found) row[c].widget.iterateOver(function(_widget)
+				{
+					if(_widget === _sender) found = true;
+				});
+				if(found)
 				{
 					// return a fake row object allowing to iterate over it's children
-					const row_obj: et2_widget = new et2_widget(this, {});
-					for(var c=0; c < row.length; ++c)
+					const row_obj : et2_widget = new et2_widget(this, {});
+					for(var c = 0; c < row.length; ++c)
 					{
-						if (row[c].widget) row_obj.addChild(row[c].widget);
+						if(row[c].widget) row_obj.addChild(row[c].widget);
 					}
 					row_obj.isInTree = jQuery.proxy(this.isInTree, this);
 					// we must not free the children!
-					row_obj.destroy = function(){
+					row_obj.destroy = function()
+					{
 						// @ts-ignore
 						delete row_obj._children;
 					};
@@ -1153,28 +1195,30 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 	/**
 	 * Needed for the align interface, but we're not doing anything with it...
 	 */
-	get_align(): string {
+	get_align() : string
+	{
 		return "";
 	}
 }
+
 et2_register_widget(et2_grid, ["grid"]);
 
 interface ColumnEntry
 {
 	id? : string,
-	width: string | number, // 'auto'
-	class: string,          // "",
-	align: string,          // "",
-	span: string | number   // "1",
-	disabled: boolean       // false
+	width : string | number, // 'auto'
+	class : string,          // "",
+	align : string,          // "",
+	span : string | number   // "1",
+	disabled : boolean       // false
 }
 
 interface RowEntry
 {
 	id? : string
-	height: string | number, // "auto",
-	class: string,           // "",
-	valign: string,          // "top",
-	span: string | number,   // "1",
-	disabled: boolean        // false
+	height : string | number, // "auto",
+	class : string,           // "",
+	valign : string,          // "top",
+	span : string | number,   // "1",
+	disabled : boolean        // false
 }

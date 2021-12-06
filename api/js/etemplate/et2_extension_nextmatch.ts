@@ -1759,17 +1759,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				continue;
 			}
-			if(typeof _row[x] != "undefined" && _row[x].widget)
-			{
-				columnWidgets[x] = _row[x].widget;
 
-				// Append the widget to this container
-				this.addChild(_row[x].widget);
-			}
-			else
-			{
-				columnWidgets[x] = _row[x].widget;
-			}
+			columnWidgets[x] = _row[x].widget;
+
 			// Pass along column alignment
 			if(_row[x].align && columnWidgets[x])
 			{
@@ -3848,14 +3840,27 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				return this.filter_div[0];
 			}
 		}
-		if(_sender == this.et2_searchbox) return this.search_box[0];
-		if(_sender.id == 'export') return this.right_div[0];
+		if(_sender == this.et2_searchbox)
+		{
+			return this.search_box[0];
+		}
+		if(_sender == this.favorites)
+		{
+			return egwIsMobile() ? this.search_box.find('.nm_favorites_div').show()[0] : this.right_div[0];
+		}
+		if(_sender.id == 'export')
+		{
+			return this.right_div[0];
+		}
 
 		if(_sender && _sender._type == "template")
 		{
 			for(let i = 0; i < this.headers.length; i++)
 			{
-				if(_sender.id == this.headers[i].id && _sender._parent == this) return i == 2 ? this.header_row[0] : this.header_div[0];
+				if(_sender.id == this.headers[i].id && _sender._parent == this)
+				{
+					return i == 2 ? this.header_row[0] : this.header_div[0];
+				}
 			}
 		}
 		return null;

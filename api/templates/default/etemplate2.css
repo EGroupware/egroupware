@@ -26,6 +26,7 @@
   padding: 0px;
   background-color: white;
   height: 99%;
+  max-width: 100%
 }
 .et2_container > div:not([class]) {
   height: 100%;
@@ -314,6 +315,9 @@ button.et2_button_with_image {
 }
 button.et2_button_with_image.et2_button_text {
 	background-position: 4px center;
+}
+button.et2_buttonFitContent, et2-button.et2_buttonFitContent {
+	max-width: fit-content;
 }
 /* et2_box_widget ###*/
 button[id="cancel"],
