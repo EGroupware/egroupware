@@ -40,11 +40,28 @@ class setup_process
 	var $api_version_target;
 
 	/**
+	 * @var Api\Db\Schema
+	 */
+	protected $oProc;
+	/**
+	 * @var Api\Db
+	 */
+	protected $db;
+
+	/**
 	 * create schema_proc object
 	 */
 	function init_process()
 	{
-		$GLOBALS['egw_setup']->oProc = new Api\Db\Schema();
+		if (empty($GLOBALS['egw_setup']->oProc))
+		{
+			$this->oProc = $GLOBALS['egw_setup']->oProc = new Api\Db\Schema();
+		}
+		else
+		{
+			$this->oProc = $GLOBALS['egw_setup']->oProc;
+		}
+		$this->db = $this->oProc->m_odb ?? $GLOBALS['egw_setup']->db;
 	}
 
 	/**
@@ -354,40 +371,39 @@ class setup_process
 	 */
 	function droptables(array $setup_info,$DEBUG=False)
 	{
-		if(!@$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
 		/* The following is built so below we won't try to drop a table that isn't there. */
-		$tablenames = $GLOBALS['egw_setup']->db->table_names();
-		if (!is_array($setup_info) || !is_array($tablenames))
+		$tables = $this->db->table_names(true);
+		$views = $this->db->Link_ID->MetaTables('VIEWS');
+		if (!is_array($setup_info) || !$tables && !$views)
 		{
 			return $setup_info;	// nothing to do
 		}
-		$tables = array();
-		foreach($tablenames as $data)
-		{
-			$tables[] = $data['table_name'];
-		}
 
-		if (!is_array($setup_info))
-		{
-			return $setup_info;
-		}
 		foreach($setup_info as $app_name => $data)
 		{
-			if(is_array($data['tables']))
+			// drop views first
+			foreach($data['views'] ?? [] as $view)
 			{
-				foreach($data['tables'] as $table)
+				if (in_array($view, $views))
 				{
-					//echo $table;
-					if(in_array($table,$tables))
-					{
-						if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $app_name . ' table: ' . $table; }
-						$GLOBALS['egw_setup']->oProc->DropTable($table);
-						// Update the array values for return below
-						$setup_info[$app_name]['status'] = 'U';
-					}
+					if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $app_name . ' view: ' . $view; }
+					$this->db->query("DROP VIEW $view", __LINE__, __FILE__);
+				}
+			}
+			// drop them in reverse order, in case the have constrains
+			foreach(array_reverse($data['tables'] ?? []) as $table)
+			{
+				//echo $table;
+				if (in_array($table, $tables))
+				{
+					if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $app_name . ' table: ' . $table; }
+					$this->oProc->DropTable($table);
+					// Update the array values for return below
+					$setup_info[$app_name]['status'] = 'U';
 				}
 			}
 		}
@@ -406,7 +422,7 @@ class setup_process
 	function current(array $setup_info,$DEBUG=False)
 	{
 		//echo __METHOD__; _debug_array($setup_info);
-		if(!isset($GLOBALS['egw_setup']->oProc))
+		if(!isset($this->oProc))
 		{
 			$this->init_process();
 		}
@@ -419,7 +435,7 @@ class setup_process
 
 			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
-			if($appdata['tables'] && file_exists($appdir.'tables_current.inc.php'))
+			if ($appdata['tables'] && file_exists($appdir.'tables_current.inc.php') && empty($appdata['skip_create_tables']))
 			{
 				if($DEBUG) { echo '<br>process->current(): Including: ' . $appdir.'tables_current.inc.php'; }
 				$phpgw_baseline = null;
@@ -454,7 +470,7 @@ class setup_process
 				 A manual sql script install is needed, but we do add the hooks
 				*/
 				$enabled = 99;
-				if($appdata['tables'][0] != '')
+				if (count($appdata['tables']) && empty($appdata['skip_create_tables']))
 				{
 					$enabled = False;
 				}
@@ -489,7 +505,7 @@ class setup_process
 	function default_records(array $setup_info,$DEBUG=False)
 	{
 		//echo __METHOD__; _debug_array($setup_info);
-		if(!@$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
@@ -503,7 +519,7 @@ class setup_process
 				{
 					echo '<br>process->default_records(): Including default records for ' . $appname . "\n";
 				}
-				$oProc = &$GLOBALS['egw_setup']->oProc;	// to be compatible with old apps
+				$oProc = &$this->oProc;	// to be compatible with old apps
 				include ($appdir.'default_records.inc.php');
 			}
 			/* $appdata['status'] = 'C'; */
@@ -528,7 +544,7 @@ class setup_process
 	 */
 	function test_data(array $setup_info,$DEBUG=False)
 	{
-		if(!@$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
@@ -542,9 +558,9 @@ class setup_process
 				{
 					echo '<br>process->test_data(): Including baseline test data for ' . $appname . "\n";
 				}
-				$GLOBALS['egw_setup']->oProc->m_odb->transaction_begin();
+				$this->oProc->m_odb->transaction_begin();
 				include ($appdir.'test_data.inc.php');
-				$GLOBALS['egw_setup']->oProc->m_odb->transaction_commit();
+				$this->oProc->m_odb->transaction_commit();
 			}
 		}
 		unset($appdata);
@@ -562,7 +578,7 @@ class setup_process
 	 */
 	function baseline(array $setup_info,$DEBUG=False)
 	{
-		if(!@$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
@@ -578,7 +594,7 @@ class setup_process
 				}
 				$phpgw_baseline = null;
 				include ($appdir.'tables_baseline.inc.php');
-				$GLOBALS['egw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
+				$this->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
 				$this->post_process($phpgw_baseline,$DEBUG);
 
 				/* Update the array values for return below */
@@ -609,11 +625,11 @@ class setup_process
 	function upgrade($setup_info,$DEBUG=False)
 	{
 		//echo __METHOD__; _debug_array($setup_info);
-		if(!@$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
-		$GLOBALS['egw_setup']->oProc->m_odb->HaltOnError = 'yes';
+		$this->oProc->m_odb->HaltOnError = 'yes';
 
 		foreach($setup_info as $appname => &$appdata)
 		{
@@ -753,7 +769,7 @@ class setup_process
 		{
 			return False;
 		}
-		return $GLOBALS['egw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
+		return $this->oProc->ExecuteScripts($tables,$DEBUG);
 	}
 
 	/**
@@ -768,22 +784,22 @@ class setup_process
 			return False;
 		}
 
-		if(!$GLOBALS['egw_setup']->oProc)
+		if(!$this->oProc)
 		{
 			$this->init_process();
 		}
 
 		$sColumns = null;
-		$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns);
+		$this->oProc->m_oTranslator->_GetColumns($this->oProc, $tablename, $sColumns);
 
-		foreach($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol as $tbldata)
+		foreach($this->oProc->m_oTranslator->sCol as $tbldata)
 		{
 			$arr .= $tbldata;
 		}
-		$pk = $GLOBALS['egw_setup']->oProc->m_oTranslator->pk;
-		$fk = $GLOBALS['egw_setup']->oProc->m_oTranslator->fk;
-		$ix = $GLOBALS['egw_setup']->oProc->m_oTranslator->ix;
-		$uc = $GLOBALS['egw_setup']->oProc->m_oTranslator->uc;
+		$pk = $this->oProc->m_oTranslator->pk;
+		$fk = $this->oProc->m_oTranslator->fk;
+		$ix = $this->oProc->m_oTranslator->ix;
+		$uc = $this->oProc->m_oTranslator->uc;
 
 		return array($arr,$pk,$fk,$ix,$uc);
 	}
@@ -799,7 +815,7 @@ class setup_process
 	function remove(array $apps, array $setup_info, $DEBUG=false)
 	{
 		$historylog = new Api\Storage\History();
-		$historylog->db = $GLOBALS['egw_setup']->db;
+		$historylog->db = $this->db = $GLOBALS['egw_setup']->db;
 
 		foreach($apps as $appname)
 		{
@@ -823,8 +839,8 @@ class setup_process
 			}
 
 			// delete all application categories and ACL
-			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->cats_table,array('cat_appname' => $appname),__LINE__,__FILE__);
-			$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->acl_table,array('acl_appname' => $appname),__LINE__,__FILE__);
+			$this->db->delete($GLOBALS['egw_setup']->cats_table,array('cat_appname' => $appname),__LINE__,__FILE__);
+			$this->db->delete($GLOBALS['egw_setup']->acl_table,array('acl_appname' => $appname),__LINE__,__FILE__);
 		}
 		return count($apps);
 	}

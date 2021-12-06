@@ -72,6 +72,7 @@ billed	infolog	it	fatturato
 both	infolog	it	entrambi
 call	infolog	it	chiamata
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	it	Può essere usato per mostrare ulteriori tipi di schede Attività nel calendario, oppure essere limitato alla visualizzazione di p.es. solo task
+can not return an exact number of rows and therefore hides the count.	admin	it	Non può restituire un numero esatto di righe e quindi nasconde il conteggio
 cancel	infolog	it	Annulla
 cancelled	infolog	it	Annullato
 categories	infolog	it	Categorie
@@ -276,6 +277,7 @@ leave it empty for a full week	infolog	it	Lascia vuoto per una settimana complet
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
 length	infolog	it	Lunghezza
+limit list to last n month, if ordering by last-modified and not searching.	admin	it	Limita l'elenco all'ultimo N mese, se ordini in base all'ultima modifica e non stai cercando.
 limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita il numero di righe di descrizione. Predefinito = 5, 0 = nessun limite
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite
 link	infolog	it	Link

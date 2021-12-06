@@ -839,12 +839,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
-                "reference": "0e81540e95af14daf2dd9358f6571ed835a72ac1"
+                "reference": "94051ad29f81f656ff9cb4fc4f4e5a3e0200f4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/0e81540e95af14daf2dd9358f6571ed835a72ac1",
-                "reference": "0e81540e95af14daf2dd9358f6571ed835a72ac1",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/94051ad29f81f656ff9cb4fc4f4e5a3e0200f4ef",
+                "reference": "94051ad29f81f656ff9cb4fc4f4e5a3e0200f4ef",
                 "shasum": ""
             },
             "require": {
@@ -885,7 +885,7 @@
                 "library",
                 "php"
             ],
-            "time": "2021-09-27T14:50:45+00:00"
+            "time": "2021-10-07T08:18:43+00:00"
         },
         {
             "name": "egroupware/bookmarks",

@@ -109,6 +109,7 @@ all in one	groupdav	it	Tutto in uno
 all languages	common	it	Tutte le lingue
 all operations save the template!	common	it	tutte le operazioni salvano il template!
 all users	common	it	Tutti gli utenti
+allow editing the %1	common	it	Consenti la modifica di %1
 allowed file type: %1	common	it	Tipo file consentito: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	it	Permette di modificare gli utenti responsabili da dispositivi che non li supportano, impostando l'indirizzo email di un utente come categoria
 alt	common	it	Alt
@@ -116,7 +117,7 @@ alternate style-sheet:	common	it	Foglio di stile alternativo:
 am	common	it	am
 american samoa	common	it	SAMOA AMERICANA
 an admin required that you must change your password upon login.	common	it	L'amministratore richiede che tu cambi la tua password dopo l'accesso.
-an error happened	common	it	Un errore è occorso!
+an error happened	common	it	È intervenuto un errore!
 an existing and by the webserver readable directory enables the image browser and upload.	common	it	Una directory esistente e leggibile dal server consente di sfogliare e caricare immagini
 an indexed column speeds up querys using that column (cost space on the disk !!!)	common	it	una colonna indicizzata velocizza le ricerche che utilizzano quella colonna (costa spazio sul disco!!!)
 and	common	it	e
@@ -151,6 +152,7 @@ attachment	common	it	Allegato
 august	common	it	Agosto
 australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
+authenticate	common	it	Autentica
 author	common	it	Autore
 autohide sidebox menu's	common	it	Nascondi automaticamente i menù laterali
 autohide sidebox menus	common	it	Nascondi automaticamente i menù laterali
@@ -165,6 +167,7 @@ back to user login	common	it	Torna al Login utente
 background color:	common	it	Colore di sfondo:
 backup key	common	it	Chiave di backup
 backup/restore	common	it	Backup/Ripristino
+backup/restore ...	common	it	Backup/Ripristino ...
 backupdir '%1' is not writeable by the webserver	common	it	directory di backup '%1' non è scrivibile dal webserver
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
@@ -272,6 +275,7 @@ click here to upload the file	common	it	Premi qui per caricare il file
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
 click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
 click this image on the navbar: %1	common	it	Clicca su questa immagine sulla barra di navigazione: %1
+click to open colorpicker	common	it	Clicca per aprire il selettore dei colori
 click to order after that criteria	common	it	premi qui per ordinare con questo criterio
 clickable path	common	it	percorso cliccabile
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	it	I client che non esplicitano un limite, saranno limitati a questo numero di giorni. Un limite alto può causare problemi con alcuni client
@@ -282,8 +286,10 @@ cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 collection empty.	common	it	Collezione vuota
 collection listing	common	it	Elenco collezione
 colombia	common	it	COLOMBIA
+colour	common	it	Colore
 column...	common	it	Colonna...
 columnname	common	it	NomeColonna
+columns to print	common	it	Colonne da stampare
 command ⌘	common	it	Comando ⌘
 comment	common	it	Commento
 common preferences	common	it	Preferenze generiche
@@ -305,6 +311,7 @@ cook islands	common	it	ISOLE COOK
 cookies are required to login to this site	login	it	Sono necessari i cookie per effettuare il login
 copy	common	it	Copia
 copy "%1"	common	it	Copia "%1"
+copy of:	common	it	Copia di:
 copy to clipboard	common	it	Copia negli appunti
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
@@ -312,6 +319,7 @@ could not contact server. operation timed out!	common	it	Impossibile contattare 
 create	common	it	Crea
 create a new table for the application	common	it	Crea una nuova tabella per l'applicazione
 create link	common	it	Crea collegamento
+created	common	it	Creati
 created by	common	it	Creato da
 created by %1	common	it	Creato da %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	it	creates an english ('en') langfile from label and helptexts (for application in Name)
@@ -333,6 +341,7 @@ custom javascript for onchange	common	it	javascript personalizzato per onChange
 cut	common	it	Taglia
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
+dark mode	common	it	Modalità scura
 dark moono theme	common	it	Tema Dark Moono
 data type	common	it	Tipo di dati
 database error	common	it	Errore del database!
@@ -373,6 +382,7 @@ delete this column	common	it	cancella questa colonna
 delete this entry	common	it	Elimina questa voce
 delete this etemplate	common	it	cancella questo eTemplate
 delete this file	common	it	Cancella questo file
+delete this photo?	common	it	Eliminare questa foto?
 delete this row	common	it	cancella questa riga
 delete whole column (can not be undone!!!)	common	it	cancella intera colonna  (NON si può annullare!!!)
 deletes the above spez. etemplate from the database, can not be undone	common	it	cancella il suddetto eTemplate dal database, NON può essere annullato
@@ -400,6 +410,7 @@ distribution lists as groups	groupdav	it	Liste di distribuzione come gruppi
 djibouti	common	it	DJIBOUTI
 do not notify	common	it	Non avvisare
 do not notify of these changes	common	it	Non avvisare di questi cambiamenti
+do not use on public computers!	common	it	NON usare su computer pubblici!
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
 do you want to save the changes you made in table %s?	common	it	Vuoi salvare i cambiamenti fatti nella tabella %s?
 do you want to send the message to all selected entries, without further editing?	common	it	Vuoi inviare il messaggio a tutte le voci selezionate, SENZA effettuare ulteriori modifiche?
@@ -419,6 +430,7 @@ done	common	it	Finito
 dos international	common	it	DOS International
 download	common	it	Scarica
 download link	common	it	Link per il download
+drag markers to pick a color	common	it	Sposta la penna per selezionare un colore
 drop a table - this can not be undone	common	it	Drop di una tabella - questo NON può essere annullato
 drop table	common	it	Drop Table
 dump4setup	common	it	Dump4Setup
@@ -468,6 +480,8 @@ enter filename to upload and attach, use [browse...] to search for it	common	it	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
 enter the new version number here (> old_version), empty for no update-file	common	it	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	common	it	inserisci il numero della nuova versione qui (deve essere > old_version)
+enter your file name	common	it	Inserisci il nome del file
+enter your password	common	it	Inserisci la password
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
 entry not found!	common	it	Voce non trovata!
 entry saved	common	it	Voce salvata
@@ -623,6 +637,7 @@ hold [%1] key to select text eg. to copy it	common	it	Premere [%1] per seleziona
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITTA' DEL VATICANO)
 home	common	it	Home
 home email	common	it	e-mail abitazione
+home screen	common	it	Schermata principale
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 horizontal rule	common	it	Righello Orrizzontale
@@ -661,6 +676,7 @@ indexoptions	common	it	Indexoptions
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
 infolog types to sync	common	it	Tipi di Attività da sincronizzare
+initial	common	it	Iniziale
 input required	common	it	Input richiesto
 insert a column before	common	it	inserisci una colonna prima
 insert a column behind	common	it	inserisci una colonna dopo
@@ -783,7 +799,6 @@ mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 mailvelope addon installation failed! please try again.	common	it	Installazione componente aggiuntivo Mailvelope fallita! Per favore riprovare.
 mailvelope addon installation succeded. now you may configure the options.	common	it	L'installazione di Mailvelope è stata portata a termine con successo. Ora potrai configurarne le opzioni.
 main category	common	it	Categoria principale
-home screen	common	it	Schermata principale
 maintainer	common	it	Manutentore
 malawi	common	it	MALAWI
 malaysia	common	it	MALESIA
@@ -1037,12 +1052,15 @@ read this list of methods.	common	it	Leggi questo elenco di metodi.
 reading	common	it	leggendo
 readonly	common	it	sola lettura
 readonly share	common	it	Condivisione in sola lettura
+redo	common	it	Ripeti
 refresh	common	it	Aggiorna
 register	common	it	Registra
 regular	common	it	Regolare
 reject	common	it	Rifiuta
 remember me	common	it	Memorizza
-remove row (can not be undone!!!)	common	it	remove Row (can NOT be undone!!!)
+remember me for %1	common	it	Ricordami per %1
+remove	api	it	Rimuovi
+remove row (can not be undone!!!)	common	it	Rimuovi riga
 remove selected accounts	common	it	rimuovi gli account selezionati
 remove shortcut	common	it	Rimuovi scorciatoie
 remove this link (not the entry itself)	common	it	Remove this link (not the entry itself)
@@ -1057,6 +1075,7 @@ required directory "%1" created.	admin	it	La cartella "%1" è stata creata
 required directory "%1" has wrong mode %2 instead of %3!	admin	it	La cartella richiesta "%1" ha permessi errati %2 al posto di %3!
 required directory "%1" not found!	admin	it	La directory richiesta "%1" non è stata trovata!
 reset	common	it	Reimposta
+reset all to default	common	it	Reimposta tutto ai valori predefiniti
 reset all user's column preferences	common	it	Reimpostare le preferenze di colonne visibili per tutti gli utenti
 resource calendars	groupdav	it	Calendari risorse
 resource type	common	it	Tipo di risorsa
@@ -1099,6 +1118,7 @@ save as zip	common	it	Salva come file compresso (zip)
 save selected columns as default preference for all users.	common	it	Salva le colonne come preferenza predefinita per tutti gli utenti
 save the changes made and close the window	common	it	Salva le modifiche fatte e chiude la finestra
 save the etemplate under the above keys (name, ...), change them for a saveas	common	it	save the eTemplate under the above keys (name, ...), change them for a SaveAs
+saved column sizes to preferences.	common	it	Larghezza colonne salvata nelle preferenze.
 saves changes to tables_current.inc.php	common	it	saves changes to tables_current.inc.php
 saves the template with given version number and closes the window	common	it	salva il template con il numero di versione dato e chiude la finestra
 scale	common	it	Scala
@@ -1112,9 +1132,11 @@ search for '%1'	common	it	Cerca '%1'
 search letter	common	it	Cerca per lettera
 search or select accounts	common	it	Cerca o seleziona account
 search...	common	it	Cerca...
+searchreplace	common	it	Cerca e Sostituisci
 second	common	it	secondo
 section	common	it	Sezione
 securest	common	it	più sicuro
+security & password	common	it	Sicurezza e Password
 select	common	it	Seleziona
 select "%1", if your client does not support multiple addressbooks.	groupdav	it	Seleziona "%1", se il tuo client non supporta rubriche multiple
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	it	Seleziona "%1", se il tuo client supporta gruppi, p.es. rubrica OS X oppure iOS
@@ -1164,6 +1186,7 @@ select the default width for the application windows	common	it	Seleziona la larg
 select the indexed columns in their desired order	common	it	Seleziona le colonne indicizzate nel loro ordine desiderato
 select this etemplate to delete it	common	it	seleziona questo eTemplate per cancellarlo
 select user	common	it	Selezione utente
+select user or group	common	it	Seleziona Utente o Gruppo
 select which accounts to show	common	it	seleziona quali account mostrare
 select which values to show	common	it	seleziona quali valori mostrare
 select work email address	common	it	Selezione indirizzio e-mail ufficio
@@ -1187,9 +1210,13 @@ set these columns as the default	common	it	Imposta queste colonne come predefini
 set user as only responsible user, but keeping groups	groupdav	it	imposta utente come unico responsabile, mantenendo i gruppi
 set user as only responsible, removing all existing responsibles	groupdav	it	imposta utente come unico responsabile, rimuovendo tutti gli esistenti
 sets today as date	common	it	imposta oggi come data
+settings saved.	common	it	Impostazioni salvate.
 setup	common	it	Setup
 setup main menu	common	it	Menù Principale Setup
 seychelles	common	it	SEYCHELLES
+share	common	it	Condividi
+share files	common	it	Condividi documenti
+share link	common	it	Condividi indirizzo
 shift	common	it	Maiusc
 shift ⇧	common	it	Maiusc ⇧
 should the form be submitted or any custom javascript be executed	common	it	Il form andrebbe inviato oppure del javascript andrebbe eseguito?
@@ -1210,6 +1237,7 @@ show now	common	it	Mostra adesso
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
 show page generation time?	common	it	Mostrare tempo generazione pagina?
+show password	common	it	Mostra password
 show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di EGroupware e di x-desktop sul desktop.
 show values	common	it	Mostra Valori
 show_more_apps	common	it	show_more_apps
@@ -1219,6 +1247,7 @@ showing %1 - %2 of %3	common	it	visualizzati da %1 a %2 di %3
 shows / allows you to enter values into the etemplate for testing	common	it	shows / allows you to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	it	shows/displays eTemplate for testing, does NOT save it before
 sierra leone	common	it	SIERRA LEONE
+sign up	common	it	Accedi
 simple	common	it	Semplice
 singapore	common	it	SINGAPORE
 site configuration	common	it	Configurazione per tutto il Sito
@@ -1257,6 +1286,7 @@ submitbutton	common	it	Submitbutton
 substitutions and their meanings:	common	it	Sostituzioni e loro significati:
 successful created new directory %1 for unconnected nods.	admin	it	Creato nuova directory %1 per i nodi disconnessi con successo
 sudan	common	it	SUDAN
+suggest password	common	it	Suggerisci password
 sunday	common	it	Domenica
 sure	common	it	Sicuro
 suriname	common	it	SURINAME
@@ -1298,6 +1328,7 @@ the following document-types are supported:	preferences	it	I seguenti tipi di do
 the mail server returned	common	it	Il mail server ha risposto
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	it	C'è già un sistema con questo nome. Per favore usane un altro.
 they will be sub-folders in users home (%1 attribute).	common	it	Saranno sottocartelle nella home dell'utente (attributo %1)
+this feature is only available in epl version.	common	it	Questa funzionalità è disponibile solo con la versione EPL.
 this name has been used already	common	it	Questo nome è già stato usato!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	it	this text gets displayed if the input-field is empty and has no focus (blur)
 thursday	common	it	Giovedì
@@ -1344,6 +1375,7 @@ uncheck all	common	it	Deseleziona tutto
 unconnected nodes will be moved to %1.	admin	it	I file disconnessi saranno sposati a %1.
 undefined	common	it	non definito
 underline	common	it	Sottolineato
+undo	common	it	Annulla
 unicode	common	it	Unicode
 unique	common	it	Unico
 united arab emirates	common	it	EMIRATI ARABI UNITI
@@ -1476,5 +1508,3 @@ your settings have been updated	common	it	Le tue impostazioni sono state aggiorn
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
 zoom	common	it	Zoom
-initial	common	it	Iniziale
-id	common	it	ID

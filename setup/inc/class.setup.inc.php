@@ -19,6 +19,9 @@ use EGroupware\Api\Vfs;
 
 class setup
 {
+	/**
+	 * @var Api\Db
+	 */
 	var $db;
 	var $config_table       = 'egw_config';
 	var $applications_table = 'egw_applications';
@@ -29,6 +32,9 @@ class setup
 	var $languages_table    = 'egw_languages';
 	var $hooks_table        = 'egw_hooks';
 	var $cats_table         = 'egw_categories';
+	/**
+	 * @var Api\Db\Schema
+	 */
 	var $oProc;
 	var $cookie_domain;
 
