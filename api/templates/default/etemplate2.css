@@ -1664,6 +1664,10 @@ table.et2_grid {
 .et2_grid td[align="right"] {
 	padding-right: 8px;
 }
+table.egwGridView_grid img {
+    /* Keep images in a grid from growing if they're in a box */
+    flex-grow: 0;
+}
 /**
  * Sortable grid
  */
