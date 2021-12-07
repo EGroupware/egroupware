@@ -597,7 +597,7 @@ class calendar_ui
 				// App might have multiple hooks, let it specify something else
 				$app = $data['selects']['app'] ?: $app;
 
-				if(array_key_exists('sidebox_template', $data))
+				if (is_array($data) && array_key_exists('sidebox_template', $data))
 				{
 					$cont['integration'][] = ['template' => $data['sidebox_template'], 'app' => $app];
 				}
