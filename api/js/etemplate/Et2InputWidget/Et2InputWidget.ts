@@ -71,11 +71,13 @@ const Et2InputWidgetMixin = (superclass) =>
 			super(...args);
 
 		}
+
 		connectedCallback()
 		{
 			super.connectedCallback();
 			this.node = this.getInputNode();
 		}
+
 		set_value(new_value)
 		{
 			this.value = new_value;
@@ -84,6 +86,11 @@ const Et2InputWidgetMixin = (superclass) =>
 		get_value()
 		{
 			return this.getValue();
+		}
+
+		set_readonly(new_value)
+		{
+			this.readonly = this.readOnly = new_value;
 		}
 
 		getValue()
