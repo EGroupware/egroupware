@@ -514,8 +514,7 @@
   .et2_link_list tr:active {
     background-color: rgba(255, 194, 0, 0.01);
   }
-  .et2_link_list .icon img,
-  .et2_link_list .icon {
+  .et2_link_list .icon img {
     width: 14px !important;
     height: 14px !important;
   }

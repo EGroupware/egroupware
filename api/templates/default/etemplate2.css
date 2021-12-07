@@ -1053,8 +1053,7 @@ ul.et2_link_string {
   padding: 0px;
 }
 .et2_link_list .icon img,
-.et2_link_list .icon,
-.et2_vfs .icon img, .et2_vfs .icon {
+.et2_vfs .icon img {
   width: 16px;
   height: 16px;
   display: inline-block;
