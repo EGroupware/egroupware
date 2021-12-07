@@ -3014,6 +3014,8 @@ td.avatar {
 	background-position: center;
 	bottom:25%;
 	top:25%;
+    flex-grow: 0;
+    margin: 0;
 }
 .avatar img{
 	padding-top:0 !important;
