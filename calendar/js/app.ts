@@ -2125,6 +2125,10 @@ export class CalendarApp extends EgwApp
 		  close: function( ev, ui ) {
 			  // Wait a bit to make sure etemplate button finishes processing, or it will error
 			  window.setTimeout(function() {
+				if(event && event.destroy)
+				{
+					event.destroy();
+				}
 				var template = etemplate2.getById('calendar-add');
 				if(template && template.name === 'calendar.add')
 				{
