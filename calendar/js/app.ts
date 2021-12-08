@@ -50,6 +50,8 @@ import {et2_template} from "../../api/js/etemplate/et2_widget_template";
 import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import "../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.min.js";
+import {Et2InputWidgetInterface} from "../../api/js/etemplate/Et2InputWidget/Et2InputWidget";
+import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 
 /**
  * UI for calendar
@@ -290,8 +292,8 @@ export class CalendarApp extends EgwApp
 				break;
 
 			case 'calendar.add':
-				this.et2.getWidgetById('title').input.select();
-				// Fall through to get all the edit stuff too
+				this.et2.getWidgetById('title').focus();
+			// Fall through to get all the edit stuff too
 			case 'calendar.edit':
 				if (typeof content.data['conflicts'] == 'undefined')
 				{
@@ -323,7 +325,7 @@ export class CalendarApp extends EgwApp
 				// If title is pre-filled for a new (no ID) event, highlight it
 				if(content.data && !content.data.id && content.data.title)
 				{
-					this.et2.getWidgetById('title').input.select();
+					(<Et2Textbox><unknown>this.et2.getWidgetById('title')).focus();
 				}
 
 				// Disable loading prompt (if loaded nopopup)
@@ -755,7 +757,10 @@ export class CalendarApp extends EgwApp
 		else if (this.sidebox_et2)
 		{
 			var iframe = <et2_iframe><unknown>this.sidebox_et2.getWidgetById('iframe');
-			if(!iframe) return false;
+			if(!iframe)
+			{
+				return false;
+			}
 			iframe.set_src(_url);
 			jQuery(this.sidebox_et2.parentNode).show();
 			// Hide other views
@@ -3904,7 +3909,10 @@ export class CalendarApp extends EgwApp
 				{
 					this.egw.dataStoreUID(cache_id, updated_days[day]);
 				}
-				if(!multiple_owner) break;
+				if(!multiple_owner)
+				{
+					break;
+				}
 			}
 		}
 
@@ -3962,8 +3970,14 @@ export class CalendarApp extends EgwApp
 				var last_format = new Date(last.valueOf() + last.getTimezoneOffset() * 60 * 1000);
 			}
 
-			if(!display_time) display_time = false;
-			if(!display_day) display_day = false;
+			if(!display_time)
+			{
+				display_time = false;
+			}
+			if(!display_day)
+			{
+				display_day = false;
+			}
 
 			var range = '';
 
