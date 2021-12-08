@@ -566,7 +566,6 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
-	 * @todo check if there is a real change, not assume every save is a change
 	 */
 	function check4update($new_event,$old_event)
 	{
@@ -574,15 +573,23 @@ class calendar_boupdate extends calendar_bo
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
+		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location'] as $field)
+		{
+			if($new_event[$field] !== $old_event[$field])
+			{
+				$modified = $new_event['participants'];
+				break;
+			}
+		}
 
 		// Find modified and deleted participants ...
 		foreach ((array)$old_event['participants'] as $old_userid => $old_status)
 		{
-			if (isset($new_event['participants'][$old_userid]))
+			if (isset($new_event['participants'][$old_userid]) && $old_status !== $new_event['participants'][$old_userid])
 			{
 				$modified[$old_userid] = $new_event['participants'][$old_userid];
 			}
-			else
+			else if (!isset($new_event['participants'][$old_userid]))
 			{
 				$deleted[$old_userid] = $old_status;
 			}
@@ -956,6 +963,7 @@ class calendar_boupdate extends calendar_bo
 
 		// Event is passed in user time, make sure that's taken into account for date calculations
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
+		$date = new Api\DateTime('now',new DateTimeZone($user_prefs['common']['tz']));
 		$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
 		$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
 		$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
@@ -1061,6 +1069,7 @@ class calendar_boupdate extends calendar_bo
 				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
+				$details['fullname'] = Api\Accounts::username($userid);
 				$details['to-fullname'] = $fullname;
 				$details['to-firstname'] = isset($tfn)? $tfn: '';
 				$details['to-lastname'] = isset($tln)? $tln: '';
@@ -1101,6 +1110,10 @@ class calendar_boupdate extends calendar_bo
 				$modified->setTimezone($timezone);
 				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
 				$cleared_event['updated'] = $modified;
+
+				// Current date doesn't need to go into the cleared event, just for details
+				$date->setTimezone($timezone);
+				$details['date'] = $date->format($timeformat);
 
 				if ($old_event != False)
 				{
