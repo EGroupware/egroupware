@@ -2073,6 +2073,11 @@ export class CalendarApp extends EgwApp
 	{
 		if(this.egw.preference('new_event_dialog', 'calendar') === 'edit')
 		{
+			// We lose control after this, so remove the placeholder now
+			if(event && event.destroy)
+			{
+				event.destroy();
+			}
 			// Set this to open the add template in a popup
 			//options.template = 'calendar.add';
 			return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
