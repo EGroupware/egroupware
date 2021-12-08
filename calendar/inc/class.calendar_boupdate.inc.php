@@ -577,7 +577,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			if($new_event[$field] !== $old_event[$field])
 			{
-				$modified = array_keys($new_event['participants']);
+				$modified = $new_event['participants'];
 				break;
 			}
 		}
@@ -963,6 +963,7 @@ class calendar_boupdate extends calendar_bo
 
 		// Event is passed in user time, make sure that's taken into account for date calculations
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
+		$date = new Api\DateTime('now',new DateTimeZone($user_prefs['common']['tz']));
 		$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
 		$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
 		$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
@@ -1068,6 +1069,7 @@ class calendar_boupdate extends calendar_bo
 				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
+				$details['fullname'] = Api\Accounts::username($userid);
 				$details['to-fullname'] = $fullname;
 				$details['to-firstname'] = isset($tfn)? $tfn: '';
 				$details['to-lastname'] = isset($tln)? $tln: '';
@@ -1108,6 +1110,10 @@ class calendar_boupdate extends calendar_bo
 				$modified->setTimezone($timezone);
 				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
 				$cleared_event['updated'] = $modified;
+
+				// Current date doesn't need to go into the cleared event, just for details
+				$date->setTimezone($timezone);
+				$details['date'] = $date->format($timeformat);
 
 				if ($old_event != False)
 				{
