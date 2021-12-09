@@ -1109,7 +1109,18 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 				attrValue = mgr.expandName(attrValue);
 				if(!_template_node.getAttribute("no_lang") && widget_class.translate[attribute])
 				{
-					attrValue = widget.egw().lang(attrValue);
+					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
+					if(attrValue.indexOf('{') !== -1)
+					{
+						attrValue = attrValue.replace(/{([^}]+)}/g, function(str, p1)
+						{
+							return this.egw().lang(p1);
+						}.bind(widget));
+					}
+					else
+					{
+						attrValue = widget.egw().lang(attrValue);
+					}
 				}
 				break;
 		}
