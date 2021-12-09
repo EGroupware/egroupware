@@ -329,11 +329,14 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		_handleClick(_ev : MouseEvent) : boolean
 		{
-			if (typeof this.onclick == 'function')
+			if(typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
 				var args = Array.prototype.slice.call(arguments);
-				if(args.indexOf(this) == -1) args.splice(1, 0, this);
+				if(args.indexOf(this) == -1)
+				{
+					args.splice(1, 0, this);
+				}
 
 				return this.onclick(...args);
 			}
@@ -522,7 +525,10 @@ const Et2WidgetMixin = (superClass) =>
 					if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
 					{
 						var mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
-						if(typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
+						if(typeof mod.options != "undefined")
+						{
+							attrValue = _attrsObj[i].value = mod.options;
+						}
 					}
 					// expand legacyOptions with content
 					if(attrValue.charAt(0) == '@' || attrValue.indexOf('$') != -1)
@@ -536,7 +542,10 @@ const Et2WidgetMixin = (superClass) =>
 					for(var j = 0; j < splitted.length && j < legacy.length; j++)
 					{
 						// Blank = not set, unless there's more legacy options provided after
-						if(splitted[j].trim().length === 0 && legacy.length >= splitted.length) continue;
+						if(splitted[j].trim().length === 0 && legacy.length >= splitted.length)
+						{
+							continue;
+						}
 
 						// Check to make sure we don't overwrite a current option with a legacy option
 						if(typeof _target[legacy[j]] === "undefined")
@@ -618,6 +627,10 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		loadingFinished(promises : Promise<any>[])
 		{
+			if(typeof promises === "undefined")
+			{
+				promises = [];
+			}
 			// Note that WebComponents don't do anything here, their lifecycle is different
 			// This is just to support legacy widgets
 			let doLoadingFinished = () =>
@@ -647,11 +660,8 @@ const Et2WidgetMixin = (superClass) =>
 					child.loadingFinished(promises);
 				}
 			};
-			if(typeof promises === "undefined")
-			{
-				return doLoadingFinished();
-			}
-			Promise.all(promises).then(doLoadingFinished);
+
+			doLoadingFinished();
 		}
 
 		getWidgetById(_id)
@@ -999,7 +1009,10 @@ const Et2WidgetMixin = (superClass) =>
 			var path = this.getArrayMgr("content").getPath();
 
 			// Prevent namespaced widgets with value from going an extra layer deep
-			if(this.id && this._createNamespace() && path[path.length - 1] == this.id) path.pop();
+			if(this.id && this._createNamespace() && path[path.length - 1] == this.id)
+			{
+				path.pop();
+			}
 
 			return path;
 		}
@@ -1071,7 +1084,10 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 		let attrValue = _template_node.getAttribute(attribute);
 
 		// If there is not attribute set, ignore it.  Widget sets its own default.
-		if(typeof attrValue === "undefined") return;
+		if(typeof attrValue === "undefined")
+		{
+			return;
+		}
 		const property = widget_class.getPropertyOptions(attribute);
 
 		switch(property.type)
