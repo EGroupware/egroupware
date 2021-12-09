@@ -4736,7 +4736,7 @@ app.classes.mail = AppJS.extend(
 			{
 				widgets[widget] = this.et2.getWidgetById(widget);
 
-				if (widgets[widget].get_value().length)
+				if (widgets[widget].get_value() && widgets[widget].get_value().length)
 				{
 					switch (widget)
 					{
