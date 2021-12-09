@@ -436,6 +436,11 @@ export class et2_description extends expose(class et2_description extends et2_ba
 				})
 				.tooltip("open");
 			}, {widget: this, span: this.span}));
+		this.span.on('mouseout', function(){
+			if(jQuery(this).tooltip('instance')) {
+				jQuery(this).tooltip('close');
+			}
+		});
 	}
 }){};
 et2_register_widget(et2_description, ["description", "label"]);
