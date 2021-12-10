@@ -191,7 +191,7 @@ class mail_compose
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
-				'icon' => 'notification_message',
+				'icon' => 'notification',
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)',
