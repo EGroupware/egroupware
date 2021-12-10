@@ -25,6 +25,8 @@ export declare class Et2InputWidgetInterface
 
 	public getValue() : any;
 
+	public set_readonly(boolean) : void;
+
 	public isDirty() : boolean;
 
 	public resetDirty() : void;
