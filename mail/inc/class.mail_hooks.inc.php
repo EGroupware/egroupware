@@ -469,7 +469,8 @@ class mail_hooks
 					1 => lang('Real name'),
 					2 => lang('Email'),
 					4 => lang('Organization'),
-					8 => lang('Ident name')
+					8 => lang('Ident name'),
+					16 => lang('Organization | Real name Email')
 				),
 				'default' => 7
 			),
