@@ -18,10 +18,11 @@ import {assert, elementUpdated} from "@open-wc/testing";
  * 	element = await fixture<Et2Date>(html`
  *         <et2-date label="I'm a date"></et2-date>
  * 	`);
+ * 	return element;
  * 	}
  * inputBasicTests(before, "2008-09-22T00:00:00.000Z", "input");
  *
- * @param {Function} beforeEach function to create / setup the widget
+ * @param {Function} before function to create / setup the widget.  It is run before each test and must return the widget to test
  * @param {string} test_value A "good" value
  * @param {string} value_selector Passed to document.querySelector() to check that the value is displayed
  */
