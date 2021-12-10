@@ -47,6 +47,11 @@ class mail_tree
 	const IDENT_NAME_IDENTITY= 8;
 
 	/**
+	 * bit flag: org | name email
+	 */
+	const ORG_NAME_EMAIL = 16;
+
+	/**
 	 * Icons used for nodes different states
 	 *
 	 * @var array
@@ -558,6 +563,11 @@ class mail_tree
 		if ($identLabel & self::IDENT_ORG)
 		{
 			$name[] = $_account['ident_org'];
+		}
+
+		if ($identLabel & self::ORG_NAME_EMAIL)
+		{
+			$name[] = $_account['ident_org']." | ".$_account['ident_realname'].' '.' <'.$_account['ident_email'].'>';
 		}
 
 		if ($identLabel & self::IDENT_EMAIL || empty($name))
