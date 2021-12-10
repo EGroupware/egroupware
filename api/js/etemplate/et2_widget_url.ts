@@ -450,6 +450,11 @@ export class et2_url_ro extends et2_valueWidget
 							);
 						}
 					},{widget: this, span: this.span, value: this.value}));
+					this.span.on('mouseout', function(){
+						if(jQuery(this).tooltip('instance')) {
+							jQuery(this).tooltip('close');
+						}
+					});
 				}
 				break;
 		}

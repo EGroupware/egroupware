@@ -271,6 +271,11 @@ var et2_description = /** @class */ (function (_super) {
                 })
                     .tooltip("open");
             }, { widget: this, span: this.span }));
+            this.span.on('mouseout', function () {
+                if (jQuery(this).tooltip('instance')) {
+                    jQuery(this).tooltip('close');
+                }
+            });
         };
         return et2_description;
     }(et2_core_baseWidget_1.et2_baseWidget)),

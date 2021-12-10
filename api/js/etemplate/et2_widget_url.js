@@ -394,6 +394,11 @@ var et2_url_ro = /** @class */ (function (_super_1) {
                             this.widget.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', this.value, this.widget._add_contact_tooltip, this);
                         }
                     }, { widget: this, span: this.span, value: this.value }));
+                    this.span.on('mouseout', function () {
+                        if (jQuery(this).tooltip('instance')) {
+                            jQuery(this).tooltip('close');
+                        }
+                    });
                 }
                 break;
         }
