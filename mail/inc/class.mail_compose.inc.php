@@ -191,7 +191,7 @@ class mail_compose
 			),
 			'disposition' => array(
 				'caption' => 'Notification',
-				'icon' => 'notification_message',
+				'icon' => 'notification',
 				'group' => ++$group,
 				'checkbox' => true,
 				'hint' => 'check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)',
@@ -2463,7 +2463,7 @@ class mail_compose
 		$email_From =  $_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'];
 		// Try to fix identity email with no domain part set
 		$_mailObject->setFrom(Mail::fixInvalidAliasAddress(Api\Accounts::id2name($_identity['account_id'], 'account_email'), $email_From),
-			Mail::generateIdentityString($_identity,false));
+			mail_tree::getIdentityName($_identity));
 
 		$_mailObject->addHeader('X-Priority', $_formData['priority']);
 		$_mailObject->addHeader('X-Mailer', 'EGroupware-Mail');
