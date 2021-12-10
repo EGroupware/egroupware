@@ -52,13 +52,13 @@ describe("Date widget", () =>
 	})
 
 
-	it("'0' shows no value", async() =>
+	it("'0' shows nothing", async() =>
 	{
 		element.set_value("0");
 		// wait for asychronous changes to the DOM
 		await elementUpdated(element);
 		assert.equal(element.querySelector("input").value, "");
-		assert.equal(element.get_value(), null);
+		assert.equal(element.get_value(), '');
 	});
 
 	const tz_list = [

@@ -111,7 +111,7 @@ export function parseTime(timeString)
 	let am_pm = timeString.endsWith("pm") || timeString.endsWith("PM") ? 12 : 0;
 
 	let strippedString = timeString.replaceAll(/[^0-9:]/gi, '');
-	
+
 	if(timeString.startsWith("12") && strippedString != timeString)
 	{
 		// 12:xx am -> 0:xx, 12:xx pm -> 12:xx
@@ -336,6 +336,12 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		if(this.readOnly)
 		{
 			return null;
+		}
+		
+		// Empty field, return ''
+		if(!this.modelValue)
+		{
+			return '';
 		}
 
 		// The supplied value was not understandable, return null

@@ -31,14 +31,14 @@ let element : Et2InputWidgetInterface;
 
 export function inputBasicTests(before : Function, test_value : string, value_selector : string)
 {
-	describe("Readonly tests", () =>
+	describe("Readonly", () =>
 	{
 		beforeEach(async() =>
 		{
 			element = await before();
 		});
 
-		it('Does not return a value (via attribute)', async() =>
+		it("does not return a value (via attribute)", async() =>
 		{
 			element.readOnly = true;
 
@@ -50,7 +50,7 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 			assert.equal(element.getValue(), null);
 		});
 
-		it('Does not return a value (via method)', async() =>
+		it("does not return a value (via method)", async() =>
 		{
 			(<Et2InputWidgetInterface>element).set_readonly(true);
 
@@ -62,7 +62,7 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 			assert.equal(element.getValue(), null);
 		});
 
-		it('Does not return a value if it goes readonly after having a value', async() =>
+		it("does not return a value if it goes readonly after having a value", async() =>
 		{
 			element.set_value(test_value);
 
@@ -81,13 +81,13 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 		{
 			element = await before();
 		});
-		it('No value shows no value', () =>
+		it("no value gives empty string", () =>
 		{
 			assert.equal((<Element><unknown>element).querySelector(value_selector).textContent, "");
-			assert.equal(element.get_value(), null);
+			assert.equal(element.get_value(), "");
 		});
 
-		it('Value out matches value in', async() =>
+		it("value out matches value in", async() =>
 		{
 			element.set_value(test_value);
 
