@@ -6789,7 +6789,10 @@ class Mail
 						$ext = pathinfo($attachmentData['name'], PATHINFO_EXTENSION);
 						$attachmentData['type'] = MimeMagic::ext2mime($ext);
 						if ( strlen($directory) > 1 && !str_ends_with($directory, '/')) { $directory .= '/'; }
-						$myUrl = $directory.$attachmentData['name'];
+
+						//decode entities because tinymce encodes (e.g. Umlautes) them otherwise file can't be found.
+						$myUrl = html_entity_decode($directory.$attachmentData['name']);
+
 						if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
 						{
 							$basedir = Framework::getUrl('/');
