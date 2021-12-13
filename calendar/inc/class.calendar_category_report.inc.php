@@ -418,13 +418,8 @@ class calendar_category_report extends calendar_ui{
 
 				foreach ($raw_csv as &$row)
 				{
-					$check_row = 0;
-					foreach ($row as $val)
-					{
-						$check_row += $val;
-					}
 					//check if all values of the row is zero then escape the row
-					if (!$check_row) continue;
+					if (!array_sum($row)) continue;
 
 					// printout each row into file
 					fputcsv($fp, array_values($row));
