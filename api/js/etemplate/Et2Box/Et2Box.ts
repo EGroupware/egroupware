@@ -28,10 +28,10 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             	flex-wrap: nowrap;
             	justify-content: flex-start;
             	align-items: stretch;
+            	gap: 5px;
 			}
 			/* CSS for child elements */
             ::slotted(*) {
-            	margin: 0px 2px;
             	flex: 1 0 auto;
             }
             ::slotted(img) {
@@ -126,7 +126,7 @@ export class Et2VBox extends Et2Box
 			css`
             :host > div {
             	flex-direction: column;
-						}`
+			}`
 		];
 	}
 }
