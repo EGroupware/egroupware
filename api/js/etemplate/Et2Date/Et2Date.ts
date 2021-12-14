@@ -13,6 +13,7 @@ import {css, html} from "@lion/core";
 import {LionInputDatepicker} from "@lion/input-datepicker";
 import {Unparseable} from "@lion/form-core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {dateStyles} from "./DateStyles";
 
 
 /**
@@ -155,7 +156,7 @@ export function parseDateTime(dateTimeString)
 	{
 		if(!isNaN(dateTimeString) && parseInt(dateTimeString) == dateTimeString)
 		{
-			this.egw().debug("warn", "Invalid date/time string: " + dateTimeString);
+			console.warn("Invalid date/time string: " + dateTimeString);
 			dateTimeString *= 1000;
 		}
 		try
@@ -275,6 +276,7 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	{
 		return [
 			...super.styles,
+			dateStyles,
 			css`
 			:host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
 				display: inline-block;
@@ -337,7 +339,7 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 		{
 			return null;
 		}
-		
+
 		// Empty field, return ''
 		if(!this.modelValue)
 		{

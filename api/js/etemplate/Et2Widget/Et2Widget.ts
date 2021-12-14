@@ -94,6 +94,12 @@ const Et2WidgetMixin = (superClass) =>
 				...super.properties,
 
 				/**
+				 * Widget ID.  Optional, and not always the same as the DOM ID if the widget is inside something
+				 * else that also has an ID.
+				 */
+				id: {type: String, reflect: false},
+
+				/**
 				 * CSS Class.  This class is applied to the _outside_, on the web component itself.
 				 * Due to how WebComponents work, this might not change anything inside the component.
 				 */
@@ -606,6 +612,11 @@ const Et2WidgetMixin = (superClass) =>
 			}
 		}
 
+		transformAttributes(attrs)
+		{
+			transformAttributes(this, this.getArrayMgr("content"), attrs);
+		}
+
 		iterateOver(_callback : Function, _context, _type)
 		{
 			if(typeof _type == "undefined" || et2_implements_registry[_type] && et2_implements_registry[_type](this))
@@ -817,8 +828,12 @@ const Et2WidgetMixin = (superClass) =>
 			// Create the copy
 			var copy = <Et2WidgetClass>this.cloneNode();
 
-			let widget_class = window.customElements.get(this.nodeName);
-			let properties = widget_class ? widget_class.properties() : {};
+			let widget_class = window.customElements.get(this.localName);
+			let properties = widget_class ? widget_class.properties : [];
+			for(let key in properties)
+			{
+				copy[key] = this[key];
+			}
 
 			if(_parent)
 			{
@@ -1078,10 +1093,28 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 						  _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
 						  typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
 
-	// Apply any set attributes - widget will do its own coercion
+	let attrs = {};
 	_template_node.getAttributeNames().forEach(attribute =>
 	{
-		let attrValue = _template_node.getAttribute(attribute);
+		attrs[attribute] = _template_node.getAttribute(attribute);
+	});
+	widget.transformAttributes(attrs);
+
+	// Children need to be loaded
+	widget.loadFromXML(_template_node);
+
+	return widget;
+}
+
+function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
+{
+
+	const widget_class = window.customElements.get(widget.localName);
+
+	// Apply any set attributes - widget will do its own coercion
+	for(let attribute in attributes)
+	{
+		let attrValue = attributes[attribute];
 
 		// If there is not attribute set, ignore it.  Widget sets its own default.
 		if(typeof attrValue === "undefined")
@@ -1095,7 +1128,7 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 			case Boolean:
 				// If the attribute is marked as boolean, parse the
 				// expression as bool expression.
-				attrValue = mgr.parseBoolExpression(attrValue);
+				attrValue = mgr ? mgr.parseBoolExpression(attrValue) : attrValue;
 				break;
 			case Function:
 				// We parse it into a function here so we can pass in the widget as context.
@@ -1106,8 +1139,8 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 				}
 				break;
 			default:
-				attrValue = mgr.expandName(attrValue);
-				if(!_template_node.getAttribute("no_lang") && widget_class.translate[attribute])
+				attrValue = mgr ? mgr.expandName(attrValue) : attrValue;
+				if(!attributes.no_lang && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
 					if(attrValue.indexOf('{') !== -1)
@@ -1136,7 +1169,7 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 			// Set as property, not attribute
 			widget[attribute] = attrValue;
 		}
-	});
+	}
 
 	if(widget_class.getPropertyOptions("value") && widget.set_value)
 	{
@@ -1149,9 +1182,4 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 			}
 		}
 	}
-
-	// Children need to be loaded
-	widget.loadFromXML(_template_node);
-
-	return widget;
 }
