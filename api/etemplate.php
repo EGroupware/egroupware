@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button|colorpicker))(/?|\s[^>]*)>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
