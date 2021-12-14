@@ -113,3 +113,6 @@ div#infolog-edit_infolog-edit-description {
 	color: transparent;
 	text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
+span#infolog-index_\$\{row\}\[info_des\] {
+	flex: unset;
+}
