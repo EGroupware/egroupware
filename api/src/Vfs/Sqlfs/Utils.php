@@ -14,6 +14,7 @@ namespace EGroupware\Api\Vfs\Sqlfs;
 
 use EGroupware\Api\Vfs;
 use EGroupware\Api;
+use PDO, PDOException;
 
 /**
  * sqlfs stream wrapper utilities: migration db-fs, fsck
@@ -33,7 +34,7 @@ class Utils extends StreamWrapper
 		}
 		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
 			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL'.
-			' ORDER BY fs_id LIMIT 5 OFFSET :offset';
+			' ORDER BY fs_id LIMIT 500 OFFSET :offset';
 
 		$fs_id = $fs_name = $fs_size = $fs_content = null;
 		$n = 0;
@@ -41,8 +42,8 @@ class Utils extends StreamWrapper
 		$stmt->bindColumn(1,$fs_id);
 		$stmt->bindColumn(2,$fs_name);
 		$stmt->bindColumn(3,$fs_size);
-		$stmt->bindColumn(4,$fs_content,\PDO::PARAM_LOB);
-		$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
+		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
+		$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 
 		while ($stmt->execute())	// && $stmt->rowCount() does not work for all dbs :(
 		{
@@ -50,7 +51,7 @@ class Utils extends StreamWrapper
 			foreach($stmt as $row)
 			{
 				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
-				// PDOStatement::bindColumn(,,\PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
+				// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
 				if (is_string($fs_content))
 				{
 					$content = fopen('php://temp', 'wb');
@@ -87,7 +88,7 @@ class Utils extends StreamWrapper
 			}
 			if (!$n || $n == $start) break;	// just in case nothing is found, statement will execute just fine
 
-			$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
+			$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
 		}
 		unset($row);	// not used, as we access bound variables
 		unset($stmt);
@@ -180,7 +181,7 @@ class Utils extends StreamWrapper
 							'fs_creator' => 0,
 						));
 					}
-					catch (\PDOException $e)
+					catch (PDOException $e)
 					{
 						$ok = false;
 						unset($e);	// ignore exception
@@ -194,7 +195,7 @@ class Utils extends StreamWrapper
 						try {
 							$ok = $delete_stmt->execute(array('fs_id' => $id)) && $stmt->execute($data);
 						}
-						catch (\PDOException $e)
+						catch (PDOException $e)
 						{
 							unset($e);	// ignore exception
 						}
@@ -248,37 +249,50 @@ class Utils extends StreamWrapper
 	{
 		$stmt = null;
 		$msgs = array();
-		foreach(self::$pdo->query('SELECT fs_id FROM '.self::TABLE.
-			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL") as $row)
-		{
-			if (!file_exists($phy_path=self::_fs_path($row['fs_id'])))
+		$limit = 500;
+		$offset = 0;
+		$select_stmt = self::$pdo->prepare('SELECT fs_id FROM '.self::TABLE.
+			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL LIMIT $limit OFFSET :offset");
+		$select_stmt->setFetchMode(PDO::FETCH_ASSOC);
+		do {
+			$num = 0;
+			$select_stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+			foreach($select_stmt->execute() as $row)
 			{
-				$path = self::id2path($row['fs_id']);
-				if ($check_only)
+				++$num;
+				if (!file_exists($phy_path=self::_fs_path($row['fs_id'])))
 				{
-					$msgs[] = lang('File %1 has no content in physical filesystem %2!',
-						$path.' (#'.$row['fs_id'].')',$phy_path);
-				}
-				else
-				{
-					if (!isset($stmt))
+					$path = self::id2path($row['fs_id']);
+					if ($check_only)
 					{
-						$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
-						$stmt_props = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id');
-					}
-					if ($stmt->execute(array('fs_id' => $row['fs_id'])) &&
-						$stmt_props->execute(array('fs_id' => $row['fs_id'])))
-					{
-						$msgs[] = lang('File %1 has no content in physical filesystem %2 --> file removed!',$path,$phy_path);
+						++$offset;
+						$msgs[] = lang('File %1 has no content in physical filesystem %2!',
+							$path.' (#'.$row['fs_id'].')',$phy_path);
 					}
 					else
 					{
-						$msgs[] = lang('File %1 has no content in physical filesystem %2 --> failed to remove file!',
-							$path.' (#'.$row['fs_id'].')',$phy_path);
+						if (!isset($stmt))
+						{
+							$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+							$stmt_props = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id');
+						}
+						if ($stmt->execute(array('fs_id' => $row['fs_id'])) &&
+							$stmt_props->execute(array('fs_id' => $row['fs_id'])))
+						{
+							$msgs[] = lang('File %1 has no content in physical filesystem %2 --> file removed!',$path,$phy_path);
+						}
+						else
+						{
+							++$offset;
+							$msgs[] = lang('File %1 has no content in physical filesystem %2 --> failed to remove file!',
+								$path.' (#'.$row['fs_id'].')',$phy_path);
+						}
 					}
 				}
 			}
 		}
+		while ($num >= $limit);
+
 		if ($check_only && $msgs)
 		{
 			$msgs[] = lang('Files without content in physical filesystem will be removed.');
@@ -309,55 +323,69 @@ class Utils extends StreamWrapper
 		$lostnfound = null;
 		$msgs = array();
 		$sqlfs = new StreamWrapper();
-		foreach(self::$pdo->query('SELECT fs.* FROM '.self::TABLE.' fs'.
-			' LEFT JOIN '.self::TABLE.' dir ON dir.fs_id=fs.fs_dir'.
-			' WHERE fs.fs_id > 1 AND dir.fs_id IS NULL') as $row)
+		$limit = 500;
+		$offset = 0;
+		$stmt = self::$pdo->prepare('SELECT fs.* FROM ' . self::TABLE . ' fs' .
+			' LEFT JOIN ' . self::TABLE . ' dir ON dir.fs_id=fs.fs_dir' .
+			" WHERE fs.fs_id > 1 AND dir.fs_id IS NULL LIMIT $limit OFFSET :offset");
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		do
 		{
-			if ($check_only)
+			$num = 0;
+			$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+			foreach ($stmt->execute() as $row)
 			{
-				$msgs[] = lang('Found unconnected %1 %2!',
-					Api\MimeMagic::mime2label($row['fs_mime']),
-					Vfs::decodePath($row['fs_name']).' (#'.$row['fs_id'].')');
-				continue;
-			}
-			if (!isset($lostnfound))
-			{
-				// check if we already have /lost+found, create it if not
-				if (!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
+				++$num;
+				if ($check_only)
 				{
-					Vfs::$is_root = true;
-					if (!$sqlfs->mkdir(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD, 0) ||
-						!(!($admins = $GLOBALS['egw']->accounts->name2id(self::LOST_N_FOUND_GRP)) ||
-						   self::chgrp(self::LOST_N_FOUND, $admins) && self::chmod(self::LOST_N_FOUND,self::LOST_N_FOUND_MOD)) ||
-						!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
-					{
-						$msgs[] = lang("Can't create directory %1 to connect found unconnected nodes to it!",self::LOST_N_FOUND);
-					}
-					else
-					{
-						$msgs[] = lang('Successful created new directory %1 for unconnected nods.',self::LOST_N_FOUND);
-					}
-					Vfs::$is_root = false;
-					if (!$lostnfound) break;
+					++$offset;
+					$msgs[] = lang('Found unconnected %1 %2!',
+						Api\MimeMagic::mime2label($row['fs_mime']),
+						Vfs::decodePath($row['fs_name']) . ' (#' . $row['fs_id'] . ')');
+					continue;
 				}
-				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir WHERE fs_id=:fs_id');
-			}
-			if ($stmt->execute(array(
-				'fs_dir' => $lostnfound['ino'],
-				'fs_id'  => $row['fs_id'],
-			)))
-			{
-				$msgs[] = lang('Moved unconnected %1 %2 to %3.',
-					Api\MimeMagic::mime2label($row['fs_mime']),
-					Vfs::decodePath($row['fs_name']).' (#'.$row['fs_id'].')',
-					self::LOST_N_FOUND);
-			}
-			else
-			{
-				$msgs[] = lang('Failed to move unconnected %1 %2 to %3!',
-					Api\MimeMagic::mime2label($row['fs_mime']), Vfs::decodePath($row['fs_name']), self::LOST_N_FOUND);
+				if (!isset($lostnfound))
+				{
+					// check if we already have /lost+found, create it if not
+					if (!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
+					{
+						Vfs::$is_root = true;
+						if (!$sqlfs->mkdir(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD, 0) ||
+							!(!($admins = $GLOBALS['egw']->accounts->name2id(self::LOST_N_FOUND_GRP)) ||
+								self::chgrp(self::LOST_N_FOUND, $admins) && self::chmod(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD)) ||
+							!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
+						{
+							$msgs[] = lang("Can't create directory %1 to connect found unconnected nodes to it!", self::LOST_N_FOUND);
+						}
+						else
+						{
+							$msgs[] = lang('Successful created new directory %1 for unconnected nods.', self::LOST_N_FOUND);
+						}
+						Vfs::$is_root = false;
+						if (!$lostnfound) break;
+					}
+					$stmt = self::$pdo->prepare('UPDATE ' . self::TABLE . ' SET fs_dir=:fs_dir WHERE fs_id=:fs_id');
+				}
+				if ($stmt->execute(array(
+					'fs_dir' => $lostnfound['ino'],
+					'fs_id' => $row['fs_id'],
+				)))
+				{
+					$msgs[] = lang('Moved unconnected %1 %2 to %3.',
+						Api\MimeMagic::mime2label($row['fs_mime']),
+						Vfs::decodePath($row['fs_name']) . ' (#' . $row['fs_id'] . ')',
+						self::LOST_N_FOUND);
+				}
+				else
+				{
+					++$offset;
+					$msgs[] = lang('Failed to move unconnected %1 %2 to %3!',
+						Api\MimeMagic::mime2label($row['fs_mime']), Vfs::decodePath($row['fs_name']), self::LOST_N_FOUND);
+				}
 			}
 		}
+		while ($num >= $limit);
+
 		if ($check_only && $msgs)
 		{
 			$msgs[] = lang('Unconnected nodes will be moved to %1.',self::LOST_N_FOUND);
