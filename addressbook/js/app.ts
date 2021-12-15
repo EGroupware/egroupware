@@ -762,7 +762,7 @@ class AddressbookApp extends EgwApp
 				display = "none";
 			}
 		}
-		if(custom_field.attributeStyleMap)
+		if(custom_field?.attributeStyleMap)
 		{
 			custom_field.attributeStyleMap.set("display", display);
 		}
