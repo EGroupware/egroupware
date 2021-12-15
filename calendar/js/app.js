@@ -1844,6 +1844,10 @@ var CalendarApp = /** @class */ (function (_super) {
      */
     CalendarApp.prototype.add = function (options, event) {
         if (this.egw.preference('new_event_dialog', 'calendar') === 'edit') {
+            // We lose control after this, so remove the placeholder now
+            if (event && event.destroy) {
+                event.destroy();
+            }
             // Set this to open the add template in a popup
             //options.template = 'calendar.add';
             return this.egw.open(null, 'calendar', 'edit', options, '_blank', 'calendar');
@@ -1886,6 +1890,9 @@ var CalendarApp = /** @class */ (function (_super) {
             close: function (ev, ui) {
                 // Wait a bit to make sure etemplate button finishes processing, or it will error
                 window.setTimeout(function () {
+                    if (event && event.destroy) {
+                        event.destroy();
+                    }
                     var template = etemplate2_1.etemplate2.getById('calendar-add');
                     if (template && template.name === 'calendar.add') {
                         template.clear();
