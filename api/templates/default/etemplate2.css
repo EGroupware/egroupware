@@ -372,7 +372,7 @@ button.et2_button_with_image.et2_button_text {
 }
 
 button.et2_buttonFitContent, et2-button.et2_buttonFitContent {
-    max-width: fit-content;
+    min-width: max-content;
 }
 
 /* et2_box_widget ###*/
