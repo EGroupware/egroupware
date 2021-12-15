@@ -289,7 +289,7 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			let oldValue = this._widget_id;
 			this._widget_id = value;
-			this.setAttribute("id", this._widget_id ? this.getInstanceManager().uniqueId + '_' + this._widget_id.replace(/\./g, '-') : "");
+			this.setAttribute("id", this._widget_id ? this.getInstanceManager()?.uniqueId + '_' + this._widget_id.replace(/\./g, '-') : "");
 			this.requestUpdate("id", oldValue);
 		}
 
@@ -828,13 +828,6 @@ const Et2WidgetMixin = (superClass) =>
 			// Create the copy
 			var copy = <Et2WidgetClass>this.cloneNode();
 
-			let widget_class = window.customElements.get(this.localName);
-			let properties = widget_class ? widget_class.properties : [];
-			for(let key in properties)
-			{
-				copy[key] = this[key];
-			}
-
 			if(_parent)
 			{
 				copy.setParent(_parent);
@@ -846,6 +839,13 @@ const Et2WidgetMixin = (superClass) =>
 
 				// Pass on instance too
 				copy.setInstanceManager(this.getInstanceManager());
+			}
+
+			let widget_class = window.customElements.get(this.localName);
+			let properties = widget_class ? widget_class.properties : [];
+			for(let key in properties)
+			{
+				copy[key] = this[key];
 			}
 
 			// Create a clone of all child widgets of the given object
