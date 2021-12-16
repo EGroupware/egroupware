@@ -5,60 +5,60 @@
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<appicon class="onlyPrint"/>
 		<html id="msg"/>
-		<vbox class="mailDisplay">
-			<hbox>
+		<old-vbox class="mailDisplay">
+			<old-hbox>
 				<toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
-			</hbox>
-			<hbox>
-				<hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
+			</old-hbox>
+			<old-hbox>
+				<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
 					<description value="From"/>
-					<hbox id="FROM" class="mail_extraEmails">
-					</hbox>
+					<old-hbox id="FROM" class="mail_extraEmails">
+					</old-hbox>
 					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-				</hbox>
-				<hbox class="mailDisplayHeaders" align="right" width="30%">
+				</old-hbox>
+				<old-hbox class="mailDisplayHeaders" align="right" width="30%">
 					<description value="Date"/>
 					<date-time id="mail_displaydate" readonly="true"/>
-				</hbox>
-			</hbox>
+				</old-hbox>
+			</old-hbox>
 
-			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
+			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
 				<description value="on behalf of"/>
 				<url-email id="SENDER" readonly="true"/>
-			</hbox>
-			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
+			</old-hbox>
+			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
 				<description value="To"/>
-				<hbox id="TO" class="mail_extraEmails">
-				</hbox>
+				<old-hbox id="TO" class="mail_extraEmails">
+				</old-hbox>
 				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</hbox>
-			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
+			</old-hbox>
+			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
 				<description value="Cc"/>
-				<hbox id="CC" class="mail_extraEmails">
-				</hbox>
+				<old-hbox id="CC" class="mail_extraEmails">
+				</old-hbox>
 				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</hbox>
-			<hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
+			</old-hbox>
+			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
 				<description value="Bcc"/>
-				<hbox id="BCC" class="mail_extraEmails">
-				</hbox>
+				<old-hbox id="BCC" class="mail_extraEmails">
+				</old-hbox>
 				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</hbox>
-			<hbox  class="mailDisplayHeaders" width="100%">
+			</old-hbox>
+			<old-hbox  class="mailDisplayHeaders" width="100%">
 				<description value="Subject"/>
 				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
-			</hbox>
-			<hbox>
+			</old-hbox>
+			<old-hbox>
 				<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true" align="right" width="24"/>
 				<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
-			</hbox>
-		</vbox>
-		<vbox class="mailDisplay">
-			<box class="$cont[mailDisplayContainerClass]">
+			</old-hbox>
+		</old-vbox>
+		<old-vbox class="mailDisplay">
+			<old-box class="$cont[mailDisplayContainerClass]">
 				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
-			</box>
+			</old-box>
 
-			<box class="$cont[mailDisplayAttachmentsClass]">
+			<old-box class="$cont[mailDisplayAttachmentsClass]">
 				<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
 						<columns>
 							<column disabled="!@showtempname"/>
@@ -87,7 +87,7 @@
 							</row>
 						</rows>
 					</grid>
-			</box>
-		</vbox>
+			</old-box>
+		</old-vbox>
 	</template>
 </overlay>
