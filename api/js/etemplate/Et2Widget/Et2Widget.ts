@@ -96,8 +96,10 @@ const Et2WidgetMixin = (superClass) =>
 				/**
 				 * Widget ID.  Optional, and not always the same as the DOM ID if the widget is inside something
 				 * else that also has an ID.
+				 * Putting this in the properties() list causes the parent portion of the DOM ID to be duplicated
+				 * due to how LitElement processes the change
 				 */
-				id: {type: String, reflect: false},
+				//id: {type: String, reflect: false},
 
 				/**
 				 * CSS Class.  This class is applied to the _outside_, on the web component itself.
@@ -289,8 +291,18 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			let oldValue = this._widget_id;
 			this._widget_id = value;
-			this.setAttribute("id", this._widget_id ? this.getInstanceManager()?.uniqueId + '_' + this._widget_id.replace(/\./g, '-') : "");
-			this.requestUpdate("id", oldValue);
+			let dom_id = "";
+			if(this._widget_id)
+			{
+				let path = this.getPath();
+				if(this.getInstanceManager())
+				{
+					path.unshift(this.getInstanceManager().uniqueId);
+				}
+				path.push(value);
+				dom_id = path.join("_");
+			}
+			this.setAttribute("id", dom_id);
 		}
 
 		/**
@@ -827,6 +839,7 @@ const Et2WidgetMixin = (superClass) =>
 
 			// Create the copy
 			var copy = <Et2WidgetClass>this.cloneNode();
+			copy.id = this._widget_id;
 
 			if(_parent)
 			{
@@ -993,7 +1006,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 			else if(this.getParent())
 			{
-				return this.getParent().getInstanceManager();
+				return this.getParent().getInstanceManager ? this.getParent().getInstanceManager() : null;
 			}
 
 			return null;
@@ -1021,7 +1034,7 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		getPath()
 		{
-			var path = this.getArrayMgr("content").getPath();
+			var path = this.getArrayMgr("content")?.getPath() ?? [];
 
 			// Prevent namespaced widgets with value from going an extra layer deep
 			if(this.id && this._createNamespace() && path[path.length - 1] == this.id)

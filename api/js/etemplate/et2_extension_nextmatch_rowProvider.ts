@@ -304,6 +304,8 @@ export class et2_nextmatch_rowProvider
 			if(_widget.getDetachedAttributes)
 			{
 				_widget.getDetachedAttributes(attrs);
+				// Manually add in ID for consideration, value won't get pulled without it
+				attrs.push("id");
 			}
 			for(let key of attrs)
 			{
