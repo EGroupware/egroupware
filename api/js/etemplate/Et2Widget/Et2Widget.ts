@@ -1153,7 +1153,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 			default:
 				attrValue = mgr ? mgr.expandName(attrValue) : attrValue;
-				if(!attributes.no_lang && widget_class.translate[attribute])
+				if(attrValue && !attributes.no_lang && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
 					if(attrValue.indexOf('{') !== -1)
