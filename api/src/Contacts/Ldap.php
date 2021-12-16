@@ -1129,6 +1129,11 @@ class Ldap
 		{
 			if (($attr = array_search($matches[2], $this->timestamps2egw)))
 			{
+				// Microsoft AD can NOT VLV sort by (modify|create)TimeStamp, we have to use when(Created|Changed) attribute
+				if (static::class === Ads::class)
+				{
+					$attr = $attr === 'modifytimestamp' ? 'whenChanged' : 'whenCreated';
+				}
 				$values[] = [
 					'attr' => $attr,
 					// use default match 'oid' => '',
