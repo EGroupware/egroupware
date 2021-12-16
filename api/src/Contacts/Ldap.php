@@ -1476,7 +1476,7 @@ class Ldap
 	function _inetorgperson2egw(&$contact, $data, $cn='cn')
 	{
 		$matches = null;
-		if(empty($data['givenname'][0]))
+		if (empty($data['givenname'][0]) && !empty($data['sn'][0]))
 		{
 			$parts = explode($data['sn'][0], $data[$cn][0]);
 			$contact['n_prefix'] = trim($parts[0]);
