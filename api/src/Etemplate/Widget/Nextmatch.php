@@ -602,6 +602,19 @@ class Nextmatch extends Etemplate\Widget
 		}
 		$raw_rows = array();
 		if (!is_array($readonlys)) $readonlys = array();
+
+		// allow other apps to mess with query
+		Api\Hooks::process(
+			array(
+				'hook_location' => 'etemplate2_before_get_rows',
+				'get_rows'      => $method,
+				'value'         => &$value,
+				'rows'          => &$rows,
+				'readonlys'     => &$readonlys,
+				'total'         => &$total,
+			), array(), true
+		);
+
 		if(is_callable($method))	// php5.2.3+ static call (value is always a var param!)
 		{
 			$total = call_user_func_array($method,array(&$value,&$raw_rows,&$readonlys));
