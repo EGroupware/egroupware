@@ -1073,8 +1073,8 @@ export class etemplate2
 
 			// check if id contains a hierachical name, eg. "button[save]"
 			let id = _widget.id;
-			let indexes = id.split('[');
-			if(indexes.length > 1)
+			let indexes = id?.split('[');
+			if(indexes?.length > 1)
 			{
 				indexes = [indexes.shift(), indexes.join('[')];
 				indexes[1] = indexes[1].substring(0, indexes[1].length - 1);
