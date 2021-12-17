@@ -144,6 +144,14 @@ const Et2WidgetMixin = (superClass) =>
 
 				/*** Style type attributes ***/
 				/**
+				 * Disable any translations for the widget
+				 */
+				no_lang: {
+					type: Boolean,
+					reflect: false
+				},
+
+				/**
 				 * Used by Et2Box to determine alignment.
 				 * Allowed values are left, right
 				 */
@@ -1172,7 +1180,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		}
 
 		// Set as attribute or property, as appropriate
-		if(widget.getAttributeNames().indexOf(attribute) >= 0)
+		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect)
 		{
 			// Set as attribute (reflected in DOM)
 			widget.setAttribute(attribute, attrValue);
@@ -1196,3 +1204,4 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		}
 	}
 }
+
