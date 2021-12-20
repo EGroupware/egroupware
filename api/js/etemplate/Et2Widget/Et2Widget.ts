@@ -1144,7 +1144,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		}
 		const property = widget_class.getPropertyOptions(attribute);
 
-		switch(property.type)
+		switch(typeof property === "object" ? property.type : property)
 		{
 			case Boolean:
 				// If the attribute is marked as boolean, parse the

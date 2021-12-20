@@ -24,6 +24,11 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			css`
 			:host {
 				white-space: pre-wrap;
+			}
+			:host a {
+				cursor: pointer;
+				color: #26537c;
+				text-decoration: none;
 			}`
 		];
 	}
@@ -32,8 +37,48 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	{
 		return {
 			...super.properties,
+			/**
+			 * Scan the value, and if there are any links (URL, mailto:) then wrap them in a clickable
+			 * <a/> tag
+			 */
+			activate_links: {
+				type: Boolean,
+				reflect: true
+			},
+			/**
+			 * Extra link target
+			 * Goes with href.  If provided, that's the target for opening the link.
+			 */
+			extra_link_target: {
+				type: String
+			},
+			/**
+			 * widthxheight, if popup should be used, eg. 640x480
+			 */
+			extra_link_popup: {
+				type: String
+			},
+			/**
+			 * Link URL
+			 * If provided, will be clickable and open this URL
+			 */
+			href: {
+				type: String
+			},
 			value: String,
 		}
+	}
+
+	constructor()
+	{
+		super();
+
+		// Initialize properties
+		this.activate_links = false;
+		this.extra_link_popup = "";
+		this.extra_link_target = "_browser";
+		this.href = "";
+		this.value = "";
 	}
 
 	set_value(value)
@@ -72,33 +117,55 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	render()
 	{
+		let render = null;
 
 		// Add hover action button (Edit)
 		if(this.hover_action)
 		{
 			// TODO
 		}
-		if(this.extra_link_popup || this.mime)
-		{
-			// TODO
-		}
-		
+
 
 		// If there's a link, wrap that
 		if(this.href && this._value)
 		{
-			return this.wrapLink(this.href, this._value);
+			render = this.wrapLink(this.href, this._value);
 		}
 		// If we want to activate links inside, do that
-		else if(this.activateLinks && this._value)
+		else if(this.activate_links && this._value)
 		{
-			return this.getActivatedValue(this._value, this.href ? this.extra_link_target : '_blank');
+			render = this.getActivatedValue(this._value, this.href ? this.extra_link_target : '_blank');
 		}
 		// Just do the value
 		else
 		{
-			return html`${this._value}`;
+			render = html`${this._value}`;
 		}
+		return html`${render}`;
+	}
+
+	async firstUpdated()
+	{
+		this.removeEventListener('click.extra_link');
+		if(this.extra_link_popup || this.mime)
+		{
+			// Add click listener
+			this.addEventListener('click.extra_link', this._handleClick.bind(this));
+		}
+	}
+
+	_handleClick(_ev : MouseEvent) : boolean
+	{
+		if(this.expose_view && typeof this.mime != 'undefined' && this.mime.match(this.mime_regexp, 'ig'))
+		{
+			this._init_blueimp_gallery(_ev, this.href);
+		}
+		else
+		{
+			egw(window).open_link(this.mime_data || this.href, this.extra_link_target, this.extra_link_popup, null, null, this.mime);
+		}
+		_ev.preventDefault();
+		return false;
 	}
 
 	protected wrapLink(href, value)
@@ -123,7 +190,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class");
+		attrs.push("id", "value", "class", "href");
 	}
 
 	getDetachedNodes() : HTMLElement[]
