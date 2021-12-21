@@ -766,7 +766,7 @@ const Et2WidgetMixin = (superClass) =>
 			this._parent.addChild(this);
 		}
 
-		getParent() : HTMLElement | et2_widget
+		getParent() : Et2WidgetClass | et2_widget
 		{
 			let parentNode = this.parentNode;
 
@@ -776,7 +776,7 @@ const Et2WidgetMixin = (superClass) =>
 				return this._parent;
 			}
 
-			return <HTMLElement>parentNode;
+			return null;
 		}
 
 		addChild(child : et2_widget | Et2WidgetClass)
