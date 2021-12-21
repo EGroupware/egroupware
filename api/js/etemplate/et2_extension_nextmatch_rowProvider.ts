@@ -178,15 +178,19 @@ export class et2_nextmatch_rowProvider
 				data[set.attribute] = mgrs["content"].expandName(set.expression);
 			}
 			// WebComponent IS the node, and we've already cloned it
-			// N.B. it's missing its unreflected (internal) properties
 			if(typeof window.customElements.get(widget.localName) != "undefined")
 			{
-				// Use the clone, not the original
+				/*
+				// N.B. cloneNode widget is missing its unreflected properties and we need to use widget.clone()
+				// instead to get them.  This slows things down.
 				let c = widget.clone();
 				let partial = entry.nodeFuncs[0](row);
 				partial.parentNode.insertBefore(c, partial);
 				partial.parentNode.removeChild(partial);
 				widget = c;
+				 */
+				// Use the clone, not the original
+				widget = entry.nodeFuncs[0](row);
 			}
 			else
 			{

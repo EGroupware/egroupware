@@ -50,20 +50,23 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			 * Goes with href.  If provided, that's the target for opening the link.
 			 */
 			extra_link_target: {
-				type: String
+				type: String,
+				reflect: true
 			},
 			/**
 			 * widthxheight, if popup should be used, eg. 640x480
 			 */
 			extra_link_popup: {
-				type: String
+				type: String,
+				reflect: true
 			},
 			/**
 			 * Link URL
 			 * If provided, will be clickable and open this URL
 			 */
 			href: {
-				type: String
+				type: String,
+				reflect: true
 			},
 			value: String,
 		}
