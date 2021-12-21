@@ -79,6 +79,8 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		this.extra_link_target = "_browser";
 		this.href = "";
 		this.value = "";
+
+		this._handleClick = this._handleClick.bind(this);
 	}
 
 	set_value(value)
@@ -101,7 +103,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		}
 
 		// Do we do this here, or in transformAttributes()?
-		if(!this.no_lang)
+		if(_value && !this.no_lang)
 		{
 			_value = this.egw().lang(_value);
 		}
@@ -146,11 +148,11 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	async firstUpdated()
 	{
-		this.removeEventListener('click.extra_link');
+		this.removeEventListener('click.extra_link', this._handleClick);
 		if(this.extra_link_popup || this.mime)
 		{
 			// Add click listener
-			this.addEventListener('click.extra_link', this._handleClick.bind(this));
+			this.addEventListener('click.extra_link', this._handleClick);
 		}
 	}
 
@@ -206,11 +208,6 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	loadFromXML()
 	{
 		// nope
-	}
-
-	loadingFinished()
-	{
-		// already done, I'm a wc with no children
 	}
 }
 

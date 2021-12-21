@@ -82,11 +82,6 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 	{
 		// nope
 	}
-
-	loadingFinished()
-	{
-		// already done, I'm a wc with no children
-	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
