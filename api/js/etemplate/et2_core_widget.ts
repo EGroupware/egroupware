@@ -803,6 +803,10 @@ export class et2_widget extends ClassWithAttributes
 		}
 		else
 		{
+			if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
+			{
+				_nodeName += "_ro";
+			}
 			widget = loadWebComponent(_nodeName, _node, this);
 		}
 		return widget;
