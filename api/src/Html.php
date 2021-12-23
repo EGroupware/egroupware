@@ -762,6 +762,10 @@ tinymce.init({
 			parse_str($v,$v);
 			$vars += $v;
 		}
+		if (preg_match('#^https?://#', $url))
+		{
+			return $url.($vars ? '?'.http_build_query($vars) : '');
+		}
 		return Framework::link($url,$vars);
 	}
 
