@@ -97,6 +97,7 @@ class filemanager_hooks
 			//'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
 			'Custom fields' => Egw::link('/index.php','menuaction=admin.admin_customfields.index&appname='.self::$appname.'&ajax=true'),
 			'Check virtual filesystem' => Egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
+			'Recalculate quota' => Egw::link('/index.php','menuaction=filemanager.filemanager_admin.quotaRecalc'),
 			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index&ajax=true'),
 		);
 		if ($location == 'admin')

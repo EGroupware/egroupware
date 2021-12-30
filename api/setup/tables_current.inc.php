@@ -320,7 +320,7 @@ $phpgw_baseline = array(
 			'fs_created' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_modified' => array('type' => 'timestamp','precision' => '8','nullable' => False),
 			'fs_mime' => array('type' => 'ascii','precision' => '96','nullable' => False),
-			'fs_size' => array('type' => 'int','precision' => '8','nullable' => False),
+			'fs_size' => array('type' => 'int','precision' => '8', 'default' => '0'),
 			'fs_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'fs_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'fs_active' => array('type' => 'bool','nullable' => False,'default' => 't'),

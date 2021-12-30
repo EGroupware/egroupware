@@ -128,6 +128,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	protected $opened_fs_id;
 	/**
+	 * Initial size of opened file for adjustDirSize call
+	 *
+	 * @var int
+	 */
+	protected $opened_size;
+	/**
 	 * Cache containing stat-infos from previous url_stat calls AND dir_opendir calls
 	 *
 	 * It's values are the columns read from the DB (fs_*), not the ones returned by url_stat!
@@ -326,6 +332,16 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			$this->stream_seek(0,SEEK_END);
 		}
+		// remember initial size and directory for adjustDirSize call in close
+		if (is_resource($this->opened_stream))
+		{
+			$this->opened_size = empty($stat) ? $stat['size'] : 0;
+			if (empty($dir_stat))
+			{
+				$dir_stat = $this->url_stat($dir,STREAM_URL_STAT_QUIET);
+			}
+			$this->opened_dir = $dir_stat['ino'];
+		}
 		if (!is_resource($this->opened_stream)) error_log(__METHOD__."($url,$mode,$options) NO stream, returning false!");
 
 		return is_resource($this->opened_stream);
@@ -348,10 +364,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if ($this->opened_mode != 'r')
 		{
 			$this->stream_seek(0,SEEK_END);
+			$size = $this->stream_tell();
 
 			// we need to update the mime-type, size and content (if STORE2DB)
 			$values = array(
-				'fs_size' => $this->stream_tell(),
+				'fs_size' => $size,
 				// todo: analyse the file for the mime-type
 				'fs_mime' => Api\MimeMagic::filename2mime($this->opened_path),
 				'fs_id'   => $this->opened_fs_id,
@@ -380,6 +397,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				{
 					error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
 				}
+			}
+			// adjust directory size, if changed
+			if ($ret && $size != $this->opened_size && $this->opened_dir)
+			{
+				$this->adjustDirSize($this->opened_dir, $size-$this->opened_size);
 			}
 		}
 		else
@@ -584,8 +606,49 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			unset($stmt);
 			$stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=?');
 			$stmt->execute(array($stat['ino']));
+
+			if ($stat['mime'] !== self::SYMLINK_MIME_TYPE)
+			{
+				$this->adjustDirSize($parent_stat['ino'], -$stat['size']);
+			}
 		}
 		return $ret;
+	}
+
+	/**
+	 * Adjust directory sizes
+	 *
+	 * Adjustment is always relative, so concurrency does not matter.
+	 * Adjustment is made to all parent directories too!
+	 *
+	 * @param int $fs_id fs_id of directory to adjust
+	 * @param int $fs_size size adjustment
+	 * @param bool $fs_id_is_dir=true false: $fs_id is the file causing the change (only adjust its directories)
+	 */
+	protected function adjustDirSize(int $fs_id, int $fs_size, bool $fs_id_is_dir=true)
+	{
+		if (!$fs_size) return;  // nothing to do
+
+		static $stmt=null,$parent_stmt;
+		if (!isset($stmt))
+		{
+			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=fs_size+:fs_size WHERE fs_id=:fs_id');
+			$parent_stmt = self::$pdo->prepare('SELECT fs_dir FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+		}
+
+		$max_depth = 100;
+		do
+		{
+			if ($fs_id_is_dir || $max_depth < 100)
+			{
+				$stmt->execute([
+					'fs_id' => $fs_id,
+					'fs_size' => $fs_size,
+				]);
+			}
+			$parent_stmt->execute(['fs_id' => $fs_id]);
+		}
+		while (($fs_id = $parent_stmt->fetchColumn()) && --$max_depth > 0);
 	}
 
 	/**
@@ -666,6 +729,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				'fs_id'   => $from_stat['ino'],
 			));
 			unset(self::$stat_cache[$path_to]);
+		}
+
+		if ($ok && $to_dir_stat['ino'] !== $from_dir_stat['ino'] && $new_mime !== self::SYMLINK_MIME_TYPE)
+		{
+			$this->adjustDirSize($from_dir_stat['ino'], -$from_stat['size']);
+			$this->adjustDirSize($to_dir_stat['ino'], $from_stat['size']);
 		}
 		return $ok;
 	}
@@ -1390,7 +1459,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			'fs_modified' => self::_pdo_timestamp(time()),
 			'fs_creator'  => Vfs::$user,
 			'fs_mime'     => self::SYMLINK_MIME_TYPE,
-			'fs_size'     => bytes($target),
+			'fs_size'     => 0,
 			'fs_link'     => $target,
 		));
 	}

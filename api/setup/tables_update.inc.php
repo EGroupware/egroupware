@@ -804,3 +804,36 @@ function api_upgrade21_1()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '21.1.001';
 }
+
+/**
+ * Allow fs_size to be NULL for quota recalculation
+ *
+ * @return string
+ */
+function api_upgrade21_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sqlfs','fs_size',array(
+		'type' => 'int',
+		'precision' => '8',
+		'default' => '0'
+	));
+	// ADOdb does not support dropping NOT NULL for PostgreSQL :(
+	if ($GLOBALS['egw_setup']->db->Type === 'pgsql')
+	{
+		$GLOBALS['egw_setup']->db->query('ALTER TABLE "egw_sqlfs" ALTER COLUMN "fs_size" DROP NOT NULL', __LINE__, __FILE__);
+	}
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '21.1.002';
+}
+
+/**
+ * Recalculate quota / directory sizes
+ *
+ * @return string
+ */
+function api_upgrade21_1_002()
+{
+	Vfs\Sqlfs\Utils::quotaRecalc();
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '21.1.003';
+}

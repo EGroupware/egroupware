@@ -103,7 +103,7 @@ class Utils extends StreamWrapper
 	}
 
 	/**
-	 * Check and optionaly fix corruption in sqlfs
+	 * Check and optionally fix corruption in sqlfs
 	 *
 	 * @param boolean $check_only =true
 	 * @return array with messages / found problems
@@ -126,12 +126,17 @@ class Utils extends StreamWrapper
 		}
 
 		foreach (Api\Hooks::process(array(
-			'location' => 'fsck',
-			'check_only' => $check_only)
+				'location' => 'fsck',
+				'check_only' => $check_only)
 		) as $app_msgs)
 		{
 			if ($app_msgs) $msgs = array_merge($msgs, $app_msgs);
 		}
+
+		// also run quota recalc as fsck might have (re-)moved files
+		list($dirs, $iterations, $time) = Vfs\Sqlfs\Utils::quotaRecalc();
+		$msgs[] = lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1));
+
 		return $msgs;
 	}
 
@@ -500,6 +505,52 @@ class Utils extends StreamWrapper
 			}
 		}
 		return $msgs;
+	}
+
+	/**
+	 * Recalculate directory sizes
+	 *
+	 * @return int[] directories recalculated, iterations necessary, time
+	 */
+	static function quotaRecalc()
+	{
+		if (!is_object(self::$pdo))
+		{
+			self::_pdo();
+		}
+		$start = microtime(true);
+		$table = self::TABLE;
+		self::$pdo->query("UPDATE $table SET fs_size=NULL WHERE fs_mime='".self::DIR_MIME_TYPE."' AND fs_active");
+		self::$pdo->query("UPDATE $table SET fs_size=0 WHERE fs_mime='".self::SYMLINK_MIME_TYPE."'");
+
+		$stmt = self::$pdo->prepare("SELECT $table.fs_id, SUM(child.fs_size) as total
+FROM $table
+LEFT JOIN $table child ON $table.fs_id=child.fs_dir AND child.fs_active
+WHERE $table.fs_active AND $table.fs_mime='httpd/unix-directory' AND $table.fs_size IS NULL
+GROUP BY $table.fs_id
+HAVING COUNT(child.fs_id)=0 OR COUNT(CASE WHEN child.fs_size IS NULL THEN 1 ELSE NULL END)=0
+ORDER BY $table.fs_id DESC
+LIMIT 500");
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$update = self::$pdo->prepare("UPDATE $table SET fs_size=:fs_size WHERE fs_id=:fs_id");
+		$iterations = $dirs = 0;
+		do
+		{
+			$rows = 0;
+			$stmt->execute();
+			foreach ($stmt as $row)
+			{
+				$update->execute([
+					'fs_size' => $row['total'] ?? 0,
+					'fs_id' => $row['fs_id'],
+				]);
+				++$rows;
+			}
+			$dirs += $rows;
+		}
+		while ($rows > 0 && ++$iterations < 100);
+
+		return [$dirs, $iterations, microtime(true)-$start];
 	}
 }
 

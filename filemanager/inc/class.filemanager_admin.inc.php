@@ -29,6 +29,7 @@ class filemanager_admin extends filemanager_ui
 	public $public_functions = array(
 		'index' => true,
 		'fsck' => true,
+		'quotaRecalc' => true,
 	);
 
 	/**
@@ -364,5 +365,15 @@ class filemanager_admin extends filemanager_ui
 			'','/index.php',array('menuaction'=>'filemanager.filemanager_admin.fsck'));
 
 		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
+	}
+
+	/**
+	 * Recalculate directory sizes
+	 */
+	function quotaRecalc()
+	{
+		list($dirs, $iterations, $time) = Vfs\Sqlfs\Utils::quotaRecalc();
+
+		echo lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1))."\n";
 	}
 }
