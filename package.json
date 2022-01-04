@@ -59,6 +59,7 @@
     "@lion/input": "^0.15.4",
     "@lion/input-date": "^0.12.6",
     "@lion/input-datepicker": "^0.23.6",
+    "@lion/select": "^0.14.7",
     "@lion/textarea": "^0.13.4",
     "jquery-ui-timepicker-addon": "^1.6.3",
     "sortablejs": "^1.14.0"

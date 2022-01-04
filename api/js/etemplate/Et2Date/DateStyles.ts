@@ -1,3 +1,7 @@
+/**
+ * Sharable date styles constant
+ */
+
 import {css} from "@lion/core";
 
 export const dateStyles = css`

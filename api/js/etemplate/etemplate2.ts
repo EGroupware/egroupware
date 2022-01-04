@@ -30,6 +30,8 @@ import './Et2Date/Et2DateReadonly'
 import './Et2Date/Et2DateTime';
 import './Et2Date/Et2DateTimeReadonly';
 import './Et2Description/Et2Description';
+import './Et2Select/Et2Select';
+import './Et2Select/Et2SelectReadonly';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textbox/Et2Textbox';
 import './Et2Colorpicker/Et2Colorpicker';
