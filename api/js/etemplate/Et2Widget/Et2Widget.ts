@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin} from "@lion/core";
+import {css, dedupeMixin, unsafeCSS, CSSResult} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -1205,3 +1205,35 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 	}
 }
 
+/**
+ * Take the name of one of our images, find the full URL (including theme), and wrap it up so you can use it in a
+ * widget's css block.
+ *
+ * @example
+ * import {cssImage} from Et2Widget;
+ * ...
+ * static get styles()
+ * {
+ * 		return [
+ * 			...super.styles,
+ * 			css`
+ * 			:host {
+ * 				background-image: cssImage("save");
+ *			}
+ *		`];
+ *	}
+ * @param image_name
+ * @returns {CSSResult}
+ */
+export function cssImage(image_name : string, app_name? : string)
+{
+	let url = egw.image(image_name, app_name);
+	if(url)
+	{
+		return css`url(${unsafeCSS(url)})`;
+	}
+	else
+	{
+		return css``;
+	}
+}

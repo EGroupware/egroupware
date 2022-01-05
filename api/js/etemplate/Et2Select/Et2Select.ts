@@ -11,7 +11,8 @@
 import {LionSelect} from "@lion/select";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
-import {css, html, repeat} from "@lion/core";
+import {css, html, repeat, TemplateResult} from "@lion/core";
+import {cssImage} from "../Et2Widget/Et2Widget";
 
 export interface SelectOption
 {
@@ -19,8 +20,7 @@ export interface SelectOption
 	label : String;
 	// Hover help text
 	title? : String;
-};
-
+}
 
 export class Et2Select extends Et2InputWidget(LionSelect)
 {
@@ -50,7 +50,7 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 				-moz-appearance: none;
 				margin: 0;
 				background: #fff no-repeat center right;
-				background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8P3htbC1zdHlsZXNoZWV0IHR5cGU9InRleHQvY3NzIiBocmVmPSIuLi9sZXNzL3N2Zy5jc3MiID8+CjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0icGl4ZWxlZ2dfYXJyb3dfZG93biIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMzIgMzIiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gZmlsbD0iIzY5Njk2OSIgcG9pbnRzPSIxLjc1LDUgMS43NDksNSAxNiwyOC40OSAzMC4yNTEsNSAiLz4NCjwvc3ZnPg0K');
+				background-image: ${cssImage('arrow_down')};
 				background-size: 8px auto;
 				background-position-x: calc(100% - 8px);
 				text-indent: 5px;
@@ -135,7 +135,7 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 	 *
 	 * @param {SelectOption[]} new_options
 	 */
-	set_select_options(new_options : SelectOption[])
+	set_select_options(new_options : SelectOption[] | { [key : string] : string })
 	{
 		if(!Array.isArray(new_options))
 		{
@@ -204,7 +204,7 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		// Read the option-tags
 		let options = _node.querySelectorAll("option");
 		let new_options = this._options;
-		for(var i = 0; i < options.length; i++)
+		for(let i = 0; i < options.length; i++)
 		{
 			new_options.push({
 				value: et2_readAttrWithDefault(options[i], "value", options[i].textContent),
@@ -300,16 +300,20 @@ export function find_select_options(widget, attr_options?, attrs?)
 	if(widget.getArrayMgr("sel_options"))
 	{
 		// Try first according to ID
-		content_options = widget.getArrayMgr("sel_options").getEntry(widget.id);
+		let options = widget.getArrayMgr("sel_options").getEntry(widget.id);
 		// ID can get set to an array with 0 => ' ' - not useful
-		if(content_options && (content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '' ||
+		if(options && (options.length == 1 && typeof options[0] == 'string' && options[0].trim() == '' ||
 			// eg. autorepeated id "cat[3]" would pick array element 3 from cat
-			typeof content_options.value != 'undefined' && typeof content_options.label != 'undefined' && widget.id.match(/\[\d+\]$/)))
+			typeof options.value != 'undefined' && typeof options.label != 'undefined' && widget.id.match(/\[\d+]$/)))
 		{
 			content_options = null;
 		}
+		else
+		{
+			content_options = options;
+		}
 		// We could wind up too far inside options if label,title are defined
-		if(content_options && !isNaN(name_parts[name_parts.length - 1]) && content_options.label && content_options.title)
+		if(options && !isNaN(name_parts[name_parts.length - 1]) && options.label && options.title)
 		{
 			name_parts.pop();
 			content_options = widget.getArrayMgr("sel_options").getEntry(name_parts.join('['));
@@ -334,7 +338,7 @@ export function find_select_options(widget, attr_options?, attrs?)
 			let pop_that = JSON.parse(JSON.stringify(name_parts));
 			while(pop_that.length > 1 && (!content_options || content_options.length == 0))
 			{
-				var last = pop_that.pop();
+				let last = pop_that.pop();
 				content_options = widget.getArrayMgr('sel_options').getEntry(pop_that.join('['));
 
 				// Double check, might have found a normal parent namespace ( eg subgrid in subgrid[selectbox] )
@@ -347,7 +351,7 @@ export function find_select_options(widget, attr_options?, attrs?)
 				else if(content_options)
 				{
 					// Check for real values
-					for(var key in content_options)
+					for(let key in content_options)
 					{
 						if(!(isNaN(<number><unknown>key) && typeof content_options[key] === 'string' ||
 							!isNaN(<number><unknown>key) && typeof content_options[key] === 'object' && typeof content_options[key]['value'] !== 'undefined'))
@@ -363,7 +367,7 @@ export function find_select_options(widget, attr_options?, attrs?)
 
 		// Maybe in a row, and options got stuck in ${row} instead of top level
 		// not sure this code is still needed, as server-side no longer creates ${row} or {$row} for select-options
-		var row_stuck = ['${row}', '{$row}'];
+		let row_stuck = ['${row}', '{$row}'];
 		for(let i = 0; i < row_stuck.length && (!content_options || content_options.length == 0); i++)
 		{
 			// perspectiveData.row in nm, data["${row}"] in an auto-repeat grid
@@ -392,7 +396,7 @@ export function find_select_options(widget, attr_options?, attrs?)
 		{
 			attr_options = content_options;
 		}
-		var content_mgr = widget.getArrayMgr('content');
+		let content_mgr = widget.getArrayMgr('content');
 		if(content_mgr)
 		{
 			// If that didn't work, check according to ID
@@ -419,11 +423,11 @@ export function find_select_options(widget, attr_options?, attrs?)
 	{
 		for(let i in content_options)
 		{
-			var value = typeof content_options[i] == 'object' && typeof content_options[i].value !== 'undefined' ? content_options[i].value : i;
-			var added = false;
+			let value = typeof content_options[i] == 'object' && typeof content_options[i].value !== 'undefined' ? content_options[i].value : i;
+			let added = false;
 
 			// Override any existing
-			for(var j in type_options)
+			for(let j in type_options)
 			{
 				if('' + type_options[j].value === '' + value)
 				{
@@ -434,7 +438,7 @@ export function find_select_options(widget, attr_options?, attrs?)
 			}
 			if(!added)
 			{
-				type_options.splice(i, 0, content_options[i]);
+				type_options.splice(parseInt(i), 0, content_options[i]);
 			}
 		}
 		content_options = type_options;
