@@ -41,11 +41,13 @@ const Et2WidgetMixin = (superClass) =>
 	class Et2WidgetClass extends superClass implements et2_IDOMNode
 	{
 
-		/** et2_widget compatability **/
 		protected _mgrs : et2_arrayMgr[] = [];
 		protected _parent : Et2WidgetClass | et2_widget | null = null;
 		private _inst : etemplate2 | null = null;
-		private supportedWidgetClasses = [];
+
+		/** et2_widget compatability **/
+			// @ts-ignore Some legacy widgets check their parent to see whats allowed
+		public supportedWidgetClasses = [];
 
 		/**
 		 * If we put the widget somewhere other than as a child of its parent, we need to record that so
@@ -297,7 +299,6 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set id(value)
 		{
-			let oldValue = this._widget_id;
 			this._widget_id = value;
 			let dom_id = "";
 			if(this._widget_id)
@@ -358,7 +359,7 @@ const Et2WidgetMixin = (superClass) =>
 			if(typeof this.onclick == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
-				var args = Array.prototype.slice.call(arguments);
+				let args = Array.prototype.slice.call(arguments);
 				if(args.indexOf(this) == -1)
 				{
 					args.splice(1, 0, this);
@@ -390,10 +391,10 @@ const Et2WidgetMixin = (superClass) =>
 		loadFromXML(_node)
 		{
 			// Load the child nodes.
-			for(var i = 0; i < _node.childNodes.length; i++)
+			for(let i = 0; i < _node.childNodes.length; i++)
 			{
-				var node = _node.childNodes[i];
-				var widgetType = node.nodeName.toLowerCase();
+				let node = _node.childNodes[i];
+				let widgetType = node.nodeName.toLowerCase();
 
 				if(widgetType == "#comment")
 				{
@@ -430,7 +431,7 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		createElementFromNode(_node, _name?)
 		{
-			var attributes = {};
+			let attributes = {};
 
 			// Parse the "readonly" and "type" flag for this element here, as they
 			// determine which constructor is used
@@ -442,7 +443,7 @@ const Et2WidgetMixin = (superClass) =>
 														  typeof this.readonly !== "undefined" ? this.readonly : false) : false;
 
 			// Check to see if modifications change type
-			var modifications = this.getArrayMgr("modifications");
+			let modifications = this.getArrayMgr("modifications");
 			if(modifications && _node.getAttribute("id"))
 			{
 				let entry : any = modifications.getEntry(_node.getAttribute("id"));
@@ -475,12 +476,12 @@ const Et2WidgetMixin = (superClass) =>
 				_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
 			}
 
-			let widget = null;
+			let widget;
 			if(undefined == window.customElements.get(_nodeName))
 			{
 				// Get the constructor - if the widget is readonly, use the special "_ro"
 				// constructor if it is available
-				var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
+				let constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
 				if(readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 				{
 					constructor = et2_registry[_nodeName + "_ro"];
@@ -522,6 +523,9 @@ const Et2WidgetMixin = (superClass) =>
 		 * and adds the given attributes to the _target associative array. This
 		 * function also parses the legacyOptions.
 		 *
+		 * N.B. This is only used for legacy widgets.  WebComponents use transformAttributes() and
+		 * do their own handling of attributes.
+		 *
 		 * @param _attrsObj is the XML DOM attributes object
 		 * @param {object} _target is the object to which the attributes should be written.
 		 * @param {et2_widget} _proto prototype with attributes and legacyOptions attribute
@@ -535,22 +539,21 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			// Iterate over the given attributes and parse them
-			var mgr = this.getArrayMgr("content");
-			for(var i = 0; i < _attrsObj.length; i++)
+			let mgr = this.getArrayMgr("content");
+			for(let i = 0; i < _attrsObj.length; i++)
 			{
-				var attrName = _attrsObj[i].name;
-				var attrValue = _attrsObj[i].value;
+				let attrName = _attrsObj[i].name;
+				let attrValue = _attrsObj[i].value;
 
 				// Special handling for the legacy options
 				if(attrName == "options" && _proto.constructor.legacyOptions && _proto.constructor.legacyOptions.length > 0)
 				{
 					let legacy = _proto.constructor.legacyOptions || [];
-					let attrs = et2_attribute_registry[Object.getPrototypeOf(_proto).constructor.name] || {};
 					// Check for modifications on legacy options here.  Normal modifications
 					// are handled in widget constructor, but it's too late for legacy options then
 					if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
 					{
-						var mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
+						let mod : any = this.getArrayMgr("modifications").getEntry(_target.id);
 						if(typeof mod.options != "undefined")
 						{
 							attrValue = _attrsObj[i].value = mod.options;
@@ -563,9 +566,9 @@ const Et2WidgetMixin = (superClass) =>
 					}
 
 					// Parse the legacy options (as a string, other types not allowed)
-					var splitted = et2_csvSplit(attrValue + "");
+					let splitted = et2_csvSplit(attrValue + "");
 
-					for(var j = 0; j < splitted.length && j < legacy.length; j++)
+					for(let j = 0; j < splitted.length && j < legacy.length; j++)
 					{
 						// Blank = not set, unless there's more legacy options provided after
 						if(splitted[j].trim().length === 0 && legacy.length >= splitted.length)
@@ -587,7 +590,7 @@ const Et2WidgetMixin = (superClass) =>
 								attrValue = splitted.slice(j);
 							}
 
-							var attr = et2_attribute_registry[_proto.constructor.name][legacy[j]] || {};
+							let attr = et2_attribute_registry[_proto.constructor.name][legacy[j]] || {};
 
 							// If the attribute is marked as boolean, parse the
 							// expression as bool expression.
@@ -612,7 +615,7 @@ const Et2WidgetMixin = (superClass) =>
 					let attrs = et2_attribute_registry[_proto.constructor.name] || {};
 					if(mgr != null && typeof attrs[attrName] != "undefined")
 					{
-						var attr = attrs[attrName];
+						let attr = attrs[attrName];
 
 						// If the attribute is marked as boolean, parse the
 						// expression as bool expression.
@@ -673,9 +676,11 @@ const Et2WidgetMixin = (superClass) =>
 				 * rest themselves with their normal lifecycle (especially connectedCallback(), which is kind
 				 * of the equivalent of doLoadingFinished()
 				 */
+				// @ts-ignore this is not an et2_widget, so getDOMNode(this) is bad
 				if(!this._parent_node && this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
 				{
-					this.getParent().getDOMNode(this).append(this);
+					// @ts-ignore this is not an et2_widget, and Et2Widget is not a Node
+					(<et2_DOMWidget>this.getParent()).getDOMNode(this).append(this);
 				}
 
 				// An empty text node causes problems with legacy widget children
@@ -708,9 +713,9 @@ const Et2WidgetMixin = (superClass) =>
 
 			let check_children = children =>
 			{
-				for(var i = 0; i < children.length; i++)
+				for(let i = 0; i < children.length; i++)
 				{
-					var elem = children[i].getWidgetById(_id);
+					let elem = children[i].getWidgetById(_id);
 
 					if(elem != null)
 					{
@@ -719,9 +724,9 @@ const Et2WidgetMixin = (superClass) =>
 				}
 				if(this.id && _id.indexOf('[') > -1 && children.length)
 				{
-					var ids = (new et2_arrayMgr()).explodeKey(_id);
-					var widget : Et2WidgetClass = this;
-					for(var i = 0; i < ids.length && widget !== null; i++)
+					let ids = (new et2_arrayMgr()).explodeKey(_id);
+					let widget : Et2WidgetClass = this;
+					for(let i = 0; i < ids.length && widget !== null; i++)
 					{
 						widget = widget.getWidgetById(ids[i]);
 					}
@@ -746,7 +751,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 			if(parent)
 			{
-				parent.append(this);
+				parent.append(<Node><unknown>this);
 				this._parent_node = parent;
 			}
 		}
@@ -763,14 +768,12 @@ const Et2WidgetMixin = (superClass) =>
 					this.checkCreateNamespace();
 				}
 			}
+			// @ts-ignore
 			this._parent.addChild(this);
 		}
 
 		getParent() : Et2WidgetClass | et2_widget
 		{
-			let parentNode = this.parentNode;
-
-			// If parent is an old et2_widget, use it
 			if(this._parent)
 			{
 				return this._parent;
@@ -787,6 +790,9 @@ const Et2WidgetMixin = (superClass) =>
 			}
 			if(child instanceof et2_widget)
 			{
+				// Type of et2_widget._parent is et2_widget, not Et2Widget.  This might cause problems, but they
+				// should be fixed by getting rid of the legacy widget with problems
+				// @ts-ignore
 				child._parent = this;
 
 				// During legacy widget creation, the child's DOM node won't be available yet.
@@ -794,6 +800,7 @@ const Et2WidgetMixin = (superClass) =>
 				let child_node = null;
 				try
 				{
+					//@ts-ignore Technically getDOMNode() is from et2_DOMWidget
 					child_node = typeof child.getDOMNode !== "undefined" ? child.getDOMNode(child) : null;
 				}
 				catch(e)
@@ -846,7 +853,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			// Create the copy
-			var copy = <Et2WidgetClass>this.cloneNode();
+			let copy = <Et2WidgetClass>this.cloneNode();
 			copy.id = this._widget_id;
 
 			if(_parent)
@@ -870,7 +877,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			// Create a clone of all child widgets of the given object
-			for(var i = 0; i < this.getChildren().length; i++)
+			for(let i = 0; i < this.getChildren().length; i++)
 			{
 				this.getChildren()[i].clone(copy);
 			}
@@ -934,7 +941,7 @@ const Et2WidgetMixin = (superClass) =>
 
 			// Add all managers of this object to the result, if they have not already
 			// been set in the result
-			for(var key in this._mgrs)
+			for(let key in this._mgrs)
 			{
 				if(typeof _mgrs[key] == "undefined")
 				{
@@ -961,11 +968,11 @@ const Et2WidgetMixin = (superClass) =>
 		checkCreateNamespace()
 		{
 			// Get the content manager
-			var mgrs = this.getArrayMgrs();
+			let mgrs = this.getArrayMgrs();
 
-			for(var key in mgrs)
+			for(let key in mgrs)
 			{
-				var mgr = mgrs[key];
+				let mgr = mgrs[key];
 
 				// Get the original content manager if we have already created a
 				// perspective for this node
@@ -975,7 +982,7 @@ const Et2WidgetMixin = (superClass) =>
 				}
 
 				// Check whether the manager has a namespace for the id of this object
-				var entry = mgr.getEntry(this.id);
+				let entry = mgr.getEntry(this.id);
 				if(typeof entry === 'object' && entry !== null || this.id)
 				{
 					// The content manager has an own node for this object, so
@@ -1042,7 +1049,7 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		getPath()
 		{
-			var path = this.getArrayMgr("content")?.getPath() ?? [];
+			let path = this.getArrayMgr("content")?.getPath() ?? [];
 
 			// Prevent namespaced widgets with value from going an extra layer deep
 			if(this.id && this._createNamespace() && path[path.length - 1] == this.id)
@@ -1066,11 +1073,11 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			// Get the window this object belongs to
-			var wnd = null;
+			let wnd = null;
 			// @ts-ignore Technically this doesn't have implements(), but it's mixed in
 			if(this.implements(et2_IDOMNode))
 			{
-				var node = (<et2_IDOMNode><unknown>this).getDOMNode();
+				let node = (<et2_IDOMNode><unknown>this).getDOMNode();
 				if(node && node.ownerDocument)
 				{
 					wnd = node.ownerDocument.parentNode || node.ownerDocument.defaultView;
@@ -1080,7 +1087,7 @@ const Et2WidgetMixin = (superClass) =>
 			// If we're the root object, return the phpgwapi API instance
 			return typeof egw === "function" ? egw('phpgwapi', wnd) : null;
 		}
-	};
+	}
 
 	// Add some more stuff in
 	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
@@ -1093,7 +1100,9 @@ export const Et2Widget = dedupeMixin(Et2WidgetMixin);
  * Load a Web Component
  * @param _nodeName
  * @param _template_node
+ * @param parent Parent widget
  */
+// @ts-ignore Et2Widget is I guess not the right type
 export function loadWebComponent(_nodeName : string, _template_node, parent : Et2Widget | et2_widget) : HTMLElement
 {
 	// @ts-ignore
@@ -1106,7 +1115,6 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 		throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
 	}
 	widget.setParent(parent);
-	var mgr = widget.getArrayMgr("content");
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
 	widget.readOnly = parent.getArrayMgr("readonlys") ?
@@ -1222,7 +1230,8 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
  *			}
  *		`];
  *	}
- * @param image_name
+ * @param image_name Name of the image
+ * @param app_name Optional, image is from an app instead of api
  * @returns {CSSResult}
  */
 export function cssImage(image_name : string, app_name? : string)

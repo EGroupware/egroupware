@@ -45,6 +45,18 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 
 	transformAttributes(_attrs)
 	{
+		/*
+		TODO: Check with more / different nextmatch data to see if this becomes faster.
+		Currently it's faster for the nextmatch to re-do transformAttributes() and find_select_options()
+		 on every row than it is to use widget.clone()
+
+		// If there's no parent, there's a good chance we're in a nextmatch row so skip the transform
+		if(!this.getParent())
+		{
+			return;
+		}
+		 */
+
 		super.transformAttributes(_attrs);
 
 		let sel_options = find_select_options(this, _attrs['select_options'], _attrs);
