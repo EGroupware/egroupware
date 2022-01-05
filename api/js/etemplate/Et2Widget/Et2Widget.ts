@@ -1218,7 +1218,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
  * 			...super.styles,
  * 			css`
  * 			:host {
- * 				background-image: cssImage("save");
+ * 				background-image: ${cssImage("save")};
  *			}
  *		`];
  *	}
