@@ -12,7 +12,6 @@ import {LionSelect} from "@lion/select";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {css, html, repeat} from "@lion/core";
-import arrow_down from "../../../../pixelegg/images/arrow_down.svg";
 
 export interface SelectOption
 {
