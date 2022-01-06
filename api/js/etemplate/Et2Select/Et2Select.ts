@@ -11,7 +11,7 @@
 import {LionSelect} from "@lion/select";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
-import {css, html, repeat, TemplateResult} from "@lion/core";
+import {css, html, render, repeat, TemplateResult} from "@lion/core";
 import {cssImage} from "../Et2Widget/Et2Widget";
 
 export interface SelectOption
@@ -22,10 +22,16 @@ export interface SelectOption
 	title? : String;
 }
 
+/**
+ * LionSelect (and any other LionField) use slots to wrap a real DOM node.  ET2 doesn't expect this,
+ * so we have to create the input node (via slots()) and respect that it is _external_ to the Web Component.
+ * This complicates things like adding the options, since we can't just override _inputGroupInputTemplate()
+ * and include them when rendering - the parent expects to find the <select> added via a slot, render() would
+ * put it inside the shadowDOM.  That's fine, but then it doesn't get created until render(), and the parent
+ * (LionField) can't find it when it looks for it before then.
+ */
 export class Et2Select extends Et2InputWidget(LionSelect)
 {
-
-	protected _value : string = "";
 	protected _options : SelectOption[] = [];
 
 	static get styles()
@@ -78,11 +84,18 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 	constructor()
 	{
 		super();
-
-		// Initialize properties
-		this.value = "";
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Add in actual options as children to select
+		render(html`${this._emptyLabelTemplate()}
+                ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
+			this._inputNode
+		);
+	}
 
 	/**
 	 * Set the ID of the widget
@@ -112,24 +125,6 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		return this._widget_id;
 	}
 
-	set_value(value)
-	{
-		this.value = value;
-	}
-
-	get value()
-	{
-		return this._value;
-	}
-
-	set value(_value : string)
-	{
-		let oldValue = this.value;
-
-		this._value = _value;
-		this.requestUpdate('value', oldValue);
-	}
-
 	/**
 	 * Set the select options
 	 *
@@ -145,9 +140,11 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 				fixed_options.push({value: key, label: new_options[key]});
 			}
 			this._options = fixed_options;
-			return;
 		}
-		this._options = new_options;
+		else
+		{
+			this._options = new_options;
+		}
 	}
 
 	get_select_options()
@@ -166,24 +163,7 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		}
 	}
 
-	/**
-	 * @return {TemplateResult}
-	 * @protected
-	 */
-	// eslint-disable-next-line class-methods-use-this
-	_inputGroupInputTemplate()
-	{
-		return html`
-            <div class="input-group__input">
-                <select>
-                    ${this._emptyLabelTemplate()}
-                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}
-                </select>
-            </div>
-		`;
-	}
-
-	_emptyLabelTemplate()
+	_emptyLabelTemplate() : TemplateResult
 	{
 		if(!this.empty_label)
 		{
@@ -193,7 +173,7 @@ export class Et2Select extends Et2InputWidget(LionSelect)
             <option value="">${this.empty_label}</option>`;
 	}
 
-	_optionTemplate(option : SelectOption)
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
             <option value="${option.value}" title="${option.title}">${option.label}</option>`;

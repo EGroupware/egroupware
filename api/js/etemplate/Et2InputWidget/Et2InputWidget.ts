@@ -64,20 +64,50 @@ const Et2InputWidgetMixin = (superclass) =>
 				// I put this in here so loadWebComponent finds it when it tries to set it from the template
 				readonly: {
 					type: Boolean
-				}
+				},
+
+				onchange: {
+					type: Function
+				},
 			};
 		}
 
 		constructor(...args : any[])
 		{
 			super(...args);
-
 		}
 
 		connectedCallback()
 		{
 			super.connectedCallback();
 			this.node = this.getInputNode();
+		}
+
+		/**
+		 * Change handler calling custom handler set via onchange attribute
+		 *
+		 * @param _ev
+		 * @returns
+		 */
+		_onChange(_ev : Event) : boolean
+		{
+			if(typeof super._onChange == "function")
+			{
+				super._onChange(_ev);
+			}
+			if(typeof this.onchange == 'function')
+			{
+				// Make sure function gets a reference to the widget, splice it in as 2. argument if not
+				let args = Array.prototype.slice.call(arguments);
+				if(args.indexOf(this) == -1)
+				{
+					args.splice(1, 0, this);
+				}
+
+				return this.onchange(...args);
+			}
+
+			return true;
 		}
 
 		set_value(new_value)
