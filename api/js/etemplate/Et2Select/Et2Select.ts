@@ -90,11 +90,14 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 	{
 		super.connectedCallback();
 
-		// Add in actual options as children to select
-		render(html`${this._emptyLabelTemplate()}
-                ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
-			this._inputNode
-		);
+		// Add in actual options as children to select, if not already there
+		if(this._inputNode.children.length == 0)
+		{
+			render(html`${this._emptyLabelTemplate()}
+                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
+				this._inputNode
+			);
+		}
 	}
 
 	/**
@@ -125,6 +128,12 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		return this._widget_id;
 	}
 
+	getValue()
+	{
+		return this.readOnly ? null : this.value;
+	}
+
+
 	/**
 	 * Set the select options
 	 *
@@ -144,6 +153,14 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		else
 		{
 			this._options = new_options;
+		}
+		// Add in actual options as children to select
+		if(this._inputNode)
+		{
+			render(html`${this._emptyLabelTemplate()}
+                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
+				this._inputNode
+			);
 		}
 	}
 

@@ -84,8 +84,10 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 		});
 		it("no value gives empty string", () =>
 		{
-			assert.equal((<Element><unknown>element).querySelector(value_selector).textContent, "");
-			assert.equal(element.get_value(), "");
+			// Shows as empty / no value
+			assert.equal((<Element><unknown>element).querySelector(value_selector).textContent.trim(), "", "Displaying something when there is no value");
+			// Gives no value
+			assert.equal(element.get_value(), "", "Value mismatch");
 		});
 
 		it("value out matches value in", async() =>
