@@ -470,7 +470,7 @@ class setup_process
 				 A manual sql script install is needed, but we do add the hooks
 				*/
 				$enabled = 99;
-				if (count($appdata['tables']) && empty($appdata['skip_create_tables']))
+				if (!empty($appdata['tables']) && empty($appdata['skip_create_tables']))
 				{
 					$enabled = False;
 				}
