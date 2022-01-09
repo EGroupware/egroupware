@@ -134,9 +134,11 @@ class Utils extends StreamWrapper
 		}
 
 		// also run quota recalc as fsck might have (re-)moved files
-		list($dirs, $iterations, $time) = Vfs\Sqlfs\Utils::quotaRecalc();
-		$msgs[] = lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1));
-
+		if (!$check_only && $msgs)
+		{
+			list($dirs, $iterations, $time) = Vfs\Sqlfs\Utils::quotaRecalc();
+			$msgs[] = lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1));
+		}
 		return $msgs;
 	}
 
