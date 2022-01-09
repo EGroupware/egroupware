@@ -334,7 +334,7 @@
 						}
 					});
 				}
-				var et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
+				var et2 = new etemplate2(node, data.data.menuaction);
 				et2.load(data.name,data.url,data.data);
 				if (typeof data.response != 'undefined')
 				{
