@@ -371,7 +371,7 @@ window.app = {classes: {}};
 					// Resize popup when et2 load is done
 					jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
 				}
-				const et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
+				const et2 = new etemplate2(node, data.data.menuaction);
 				et2.load(data.name, data.url, data.data);
 				if (typeof data.response !== 'undefined') {
 					const json_request = egw(window).json("");

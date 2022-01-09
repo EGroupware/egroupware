@@ -207,6 +207,7 @@ class Etemplate extends Etemplate\Widget\Template
 			'validation_errors' => self::$validation_errors,
 			'langRequire' => array_values($langRequire),
 			'currentapp' => $currentapp,
+			'menuaction' => $method.(strpos($method, '::') !== false ? '::' : '.').'et2_process',
 		);
 
 		if (!empty($data['content']['nm']['rows']) && is_array($data['content']['nm']['rows']))
