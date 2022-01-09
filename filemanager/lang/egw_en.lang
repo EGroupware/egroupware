@@ -19,7 +19,7 @@
 %1 starts with '%2'	filemanager	en	%1 starts with '%2'
 %1 successful unmounted.	filemanager	en	%1 successful unmounted.
 %1 successful uploaded.	filemanager	en	%1 successfully uploaded.
-%1 the following files into current directory	filemanager	en	%1 the following files into current directory
+%1 the following files into current directory	filemanager	en	%1 the following files into current folder
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard
 %d errors while copying, %d files successfully copied.	filemanager	en	%d errors while copying, %d files successfully copied.
 %d errors while moving, %d files successfully moved.	filemanager	en	%d errors while moving, %d files successfully moved.
@@ -45,10 +45,10 @@ applications	common	en	Applications
 backend	filemanager	en	Backend
 backend url	filemanager	en	Backend URL
 backend url to mount	filemanager	en	Backend URL to mount
-basedirectory	filemanager	en	Base directory
-can't open directory %1!	filemanager	en	Can't open directory %1!
+basedirectory	filemanager	en	Base folder
+can't open directory %1!	filemanager	en	Can't open folder %1!
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
-cannot create directory because it begins or ends in a space	filemanager	en	Can not create directory because it begins or ends in a space.
+cannot create directory because it begins or ends in a space	filemanager	en	Can not create folder because it begins or ends in a space.
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
 check virtual filesystem	common	en	Check virtual filesystem
@@ -72,13 +72,13 @@ could not delete %1	filemanager	en	Could not delete %1
 could not move %1 to %2	filemanager	en	Could not move %1 to %2
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
 create a link	filemanager	en	Create a link
-create directory	filemanager	en	Create directory
+create directory	filemanager	en	Create folder
 create file	filemanager	en	Create file
 create folder	filemanager	en	Create folder
 created	filemanager	en	Created
 created %1,%2	filemanager	en	Created %1,%2
-created directory %1	filemanager	en	Created directory %1
-current directory	filemanager	en	Current directory
+created directory %1	filemanager	en	Created folder %1
+current directory	filemanager	en	Current folder
 custom fields	filemanager	en	Custom fields
 cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
@@ -91,22 +91,22 @@ delete all older versions and deleted files older then %s days	filemanager	en	De
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
 delete this extended acl?	filemanager	en	Delete this extended ACL?
-delete this file or directory	filemanager	en	Delete this file or directory
+delete this file or directory	filemanager	en	Delete this file or folder
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
-directory	filemanager	en	Directory
-directory "%1" not found!	filemanager	en	Directory "%1" NOT found!
-directory %1 already exists	filemanager	en	Directory %1 already exists.
-directory %1 does not exist	filemanager	en	Directory %1 does not exist.
-directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
-directory successfully created.	filemanager	en	Directory successfully created.
-directory with documents to insert entries	filemanager	en	Directory with documents to insert entries
+directory	filemanager	en	Folder
+directory "%1" not found!	filemanager	en	Folder "%1" NOT found!
+directory %1 already exists	filemanager	en	Folder %1 already exists.
+directory %1 does not exist	filemanager	en	Folder %1 does not exist.
+directory not found or no permission to access it!	filemanager	en	Folder not found or no permission to access it!
+directory successfully created.	filemanager	en	Folder successfully created.
+directory with documents to insert entries	filemanager	en	Folder with documents to insert entries
 disable	filemanager	en	Disable
 disable versioning for this mountpoint	filemanager	en	Disable versioning for this mountpoint
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
 do you want more information about epl subscription?	common	en	Do you want more information about EPL subscription?
-do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in directory %2?
+do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in folder %2?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
 download documents	filemanager	en	download documents
@@ -126,7 +126,7 @@ error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error mounting %1 on %2!	filemanager	en	Error mounting %1 on %2!
 error unmounting %1!	filemanager	en	Error unmounting %1!
 error uploading file!	filemanager	en	Error uploading file!
-error while creating directory.	filemanager	en	Error while creating directory
+error while creating directory.	filemanager	en	Error while creating folder
 everyone	filemanager	en	Everyone
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
@@ -140,7 +140,7 @@ export definition to use for nextmatch export	filemanager	en	Export definition t
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
-failed to create directory!	filemanager	en	Failed to create directory!
+failed to create directory!	filemanager	en	Failed to create folder!
 favorites	filemanager	en	Favorites
 file	common	en	File
 file %1 already exists	filemanager	en	File %1 already exists
@@ -149,7 +149,7 @@ file %1 may be too big. contact your systemadministrator for further info	filema
 file a file is only available with an epl subscription.	filemanager	en	File a file is only available with an EPL subscription.
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
-file or directory not found!	filemanager	en	File or directory not found!
+file or directory not found!	filemanager	en	File or folder not found!
 file successful uploaded.	filemanager	en	File successfully uploaded.
 filemanager	common	en	File Manager
 filemanager configuration	admin	en	File Manager configuration
@@ -158,12 +158,12 @@ filename must not be empty!	filemanager	en	File name must not be empty!
 files	common	en	Files
 files from links	filemanager	en	Files from links
 files from subdirectories	filemanager	en	Files from sub directories
-files in this directory	filemanager	en	Files in this directory
+files in this directory	filemanager	en	Files in this Folder
 filesystem	filemanager	en	Filesystem
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem
 finally delete	filemanager	en	Finally delete
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder.\n\nThis can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
@@ -174,14 +174,14 @@ general	filemanager	en	General
 general fields:	filemanager	en	General fields:
 go home	filemanager	en	Go home
 go to	filemanager	en	Go to
-go to your home directory	filemanager	en	Go to your home directory
+go to your home directory	filemanager	en	Go to your home folder
 go up	filemanager	en	Go up
 hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
 hostname/ip for webdav and smb	filemanager	en	Hostname/IP for WebDAV and SMB
 id	filemanager	en	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a folder (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a folder (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
 if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
@@ -211,11 +211,11 @@ move into folder	filemanager	en	Move into folder
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
 name of current user, all other contact fields are valid too	filemanager	en	Name of current user, all other contact fields are valid too
-new directory	common	en	New directory
+new directory	common	en	New folder
 no access	filemanager	en	No access
-no files in this directory.	filemanager	en	No files in this directory.
+no files in this directory.	filemanager	en	No files in this folder.
 no preview available	filemanager	en	No preview available.
-no version history for this file/directory	filemanager	en	No version history for this file/directory.
+no version history for this file/directory	filemanager	en	No version history for this file/folder.
 noone	filemanager	en	Noone
 notebookbar	filemanager	en	Tabbed
 older versions or deleted files	filemanager	en	Older versions or deleted files
@@ -226,7 +226,7 @@ open odt documents with collabeditor	filemanager	en	open odt documents with Coll
 operation	filemanager	en	Operation
 password for webdav and smb, use $pass for password of logged in user	filemanager	en	Password for WebDAV and SMB, use $pass for password of logged in user
 paste link	filemanager	en	Paste Link
-path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a directory!
+path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a folder!
 path and query-parameters, smb: share and optional path (with /)	filemanager	en	Path and query-parameters, SMB: share and optional path (with /)
 percentage	filemanager	en	Percentage
 permission denied!	filemanager	en	Permission denied!
@@ -265,7 +265,7 @@ saving setting for document merge failed!	filemanager	en	Saving setting for docu
 search for '%1'	filemanager	en	Search for '%1'
 searchstring	filemanager	en	Search string
 select action...	filemanager	en	Select action...
-select file to upload in current directory	filemanager	en	Select file to upload in current directory
+select file to upload in current directory	filemanager	en	Select file to upload in current folder
 select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 share files	filemanager	en	Share files
@@ -278,9 +278,9 @@ show hidden files	filemanager	en	Show hidden files
 show link "%1" in side box menu?	filemanager	en	Show link "%1" in side menu
 show link "users and groups" in side box menu?	filemanager	en	Show link "Users and groups" in side box menu?
 show link "users and groups*" in side box menu?*	filemanager	en	Show link "Users and groups*" in side box menu?*
-show link "your home directory" in side box menu?	filemanager	en	Show link "Your home directory" in side box menu?
-show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
+show link "your home directory" in side box menu?	filemanager	en	Show link "Your home folder" in side box menu?
+show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home folder*" in side box menu?*
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base folder (/) in side menu?
 size	filemanager	en	Size
 smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAVs and VFS require a username!
 smb: mount samba or windows fileserver shares	filemanager	en	SMB: mount Samba or Windows fileserver shares
@@ -298,13 +298,13 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the following document-types are supported:	filemanager	en	The following document-types are supported:
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	en	The uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.
-there's already a directory with that name!	filemanager	en	There's already a directory with that name!
+there's already a directory with that name!	filemanager	en	There's already a folder with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 tile view	filemanager	en	Tile view
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
 total files	filemanager	en	Total files
 ui mode	filemanager	en	Standard Toolbar
-under directory	filemanager	en	under directory
+under directory	filemanager	en	under folder
 unlock	filemanager	en	Unlock
 unmount	filemanager	en	Unmount
 unused space	filemanager	en	Unused space
@@ -331,10 +331,10 @@ you are not allowed to upload a script!	filemanager	en	You are NOT allowed to up
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
 you can use regular upload [+] button to upload files.	filemanager	en	You can use regular upload [+] button to upload files.
 you do not have access to %1	filemanager	en	You do not have access to %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become root, to enable or disable versioning on a directory!
+you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become root, to enable or disable versioning on a folder!
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
-you will be redirected to your home directory.	filemanager	en	You will be redirected to your home directory.
+you will be redirected to your home directory.	filemanager	en	You will be redirected to your home folder.
 you will be redirected to your start folder.	filemanager	en	You will be redirected to your start folder.
 your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, EGroupware created a new one.
-your home directory	filemanager	en	Home directory
+your home directory	filemanager	en	Home folder

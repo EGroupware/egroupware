@@ -1,5 +1,6 @@
 all of	mail	et	kõik välja
 always show html emails	mail	et	Alati näita HTML emaile
+answered	mail	et	vastas
 any status	mail	et	kõik staatused
 by date	mail	et	Kuupäeva järgi
 contains	mail	et	sisaldab
@@ -18,6 +19,7 @@ displaying html messages is disabled	mail	et	html kirjade näitamine on välja l
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
+draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
 empty trash	mail	et	tühjenda prügi
 enable	mail	et	luba
@@ -49,6 +51,7 @@ remove immediately	mail	et	Eemalda koheselt!
 replied	mail	et	vastatud
 reply	mail	et	Vasta
 select all	mail	et	Märgi kõik
+set flags	mail	et	Märgista e-kiri kui
 size(...->0)	mail	et	Suurus (...->0)
 size(0->...)	mail	et	Suurus (0->...)
 small view	mail	et	väike vaade

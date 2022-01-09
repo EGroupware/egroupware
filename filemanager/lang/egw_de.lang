@@ -1,10 +1,10 @@
 %1 already exists as a file	filemanager	de	%1 existiert schon als Datei
 %1 already mounted on %2!	filemanager	de	%1 bereits auf %2 gemounted!
-%1 directories and %2 files copied.	filemanager	de	%1 Verzeichnisse und %2 Dateien kopiert
-%1 directories and %2 files deleted.	filemanager	de	%1 Verzeichnisse und %2 Dateien gelöscht
+%1 directories and %2 files copied.	filemanager	de	%1 Ordner und %2 Dateien kopiert
+%1 directories and %2 files deleted.	filemanager	de	%1 Ordner und %2 Dateien gelöscht
 %1 elements linked.	filemanager	de	%1 Elemente verknüpft
-%1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Verzeichnisse und %3 Dateien kopiert)!
-%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Verzeichnisse und %3 Dateien gelöscht)!
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Ordner und %3 Dateien kopiert)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Ordner und %3 Dateien gelöscht)!
 %1 errors deleting!	filemanager	de	%1 Fehler beim Löschen!
 %1 errors linking (%2)!	filemanager	de	%1 Fehler beim Verknüpfen (%2)!
 %1 errors moving (%2 files moved)!	filemanager	de	%1 Fehler beim Verschieben (%2 Dateien verschoben)!
@@ -13,12 +13,13 @@
 %1 files copied.	filemanager	de	%1 Dateien kopiert
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht
 %1 files moved.	filemanager	de	%1 Dateien verschoben
-%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateinen oder Verzeichnisse in %2 Sekunden gelöscht
+%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateinen oder Ordner in %2 Sekunden gelöscht
+%1 files unlocked.	filemanager	de	%1 Dateien entsperrt
 %1 shares deleted.	filemanager	de	%1 Freigaben gelöscht
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful unmounted.	filemanager	de	%1 erfolgreich unmounted
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen
-%1 the following files into current directory	filemanager	de	Die folgenden Dateien in das aktuelle Verzeichnis %1
+%1 the following files into current directory	filemanager	de	die folgenden Dateien in den aktuellen Ordner %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2
 %d errors while copying, %d files successfully copied.	filemanager	de	%d Fehler beim Kopieren (%d Dateien erfolgreich kopiert)!
 %d errors while moving, %d files successfully moved.	filemanager	de	%d Fehler beim Verschieben (%d Dateien erfolgreich verschoben)!
@@ -35,20 +36,20 @@ actions	filemanager	de	Befehle
 add to clipboard	filemanager	de	In die Zwischenablage hinzufügen
 administrators	filemanager	de	Administratoren
 all files	filemanager	de	Alle Dateien
-all subdirectories	filemanager	de	Alle Unterverzeichnisse
+all subdirectories	filemanager	de	Alle Unterordner
 all types	filemanager	de	Alle Typen
-allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
+allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Ordnerverweise
 and all it's childeren	filemanager	de	und alle seine Kinderelemente
 application fields	filemanager	de	Anwendungsfelder
 applications	common	de	Anwendungen
 backend	filemanager	de	Backend
 backend url	filemanager	de	Backend URL
 backend url to mount	filemanager	de	Backend URL zum mounten
-basedirectory	filemanager	de	Basisverzeichnis
-can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
+basedirectory	filemanager	de	Basisordner
+can't open directory %1!	filemanager	de	Kann Ordner %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
-cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
-cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Verzeichnisses '%1' aus Vorsicht zurück gewiesen!
+cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Ordners schlug fehl, da es mit einem Leerzeichen beginnt oder endet
+cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Ordners '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
 classic	filemanager	de	Symbolleisten
@@ -71,41 +72,41 @@ could not delete %1	filemanager	de	Konnte %1 nicht löschen
 could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht in %2 umbenennen
 create a link	filemanager	de	Verknüpfung anlegen
-create directory	filemanager	de	Verzeichnis anlegen
+create directory	filemanager	de	Ordner anlegen
 create file	filemanager	de	Datei erstellen
-create folder	filemanager	de	Verzeichnis erstellen
+create folder	filemanager	de	Ordner erstellen
 created	filemanager	de	erstellt
 created %1,%2	filemanager	de	erstellt %1, %2
-created directory %1	filemanager	de	Verzeichnis %1 erstellt
-current directory	filemanager	de	Aktuelles Verzeichnis
+created directory %1	filemanager	de	Ordner %1 erstellt
+current directory	filemanager	de	Aktueller Ordner
 custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default action on double-click	filemanager	de	Aktion beim Doppelklick einer Datei
-default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Ordner navigieren, Sie können aber den Ordner als Startordner oder als Ordnerverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen MIME-Typen werden vom Browser selbst behandelt.
 defines how to open a merge print document	filemanager	de	Definiert, wie ein Seriendruckdokument geöffnet wird.
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelöschte Dateien älter als %s Tage
-delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
+delete these files or directories?	filemanager	de	Diese Dateien oder Ordner löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
 delete this extended acl?	filemanager	de	Diese erweiterten Zugriffrechte löschen?
-delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
+delete this file or directory	filemanager	de	Datei oder Ordner löschen
 deleted %1	filemanager	de	%1 gelöscht
-directories sorted in	filemanager	de	Verzeichnisse einsortiert
-directory	filemanager	de	Verzeichnis
-directory "%1" not found!	filemanager	de	Verzeichnis "%1" NICHT gefunden!
-directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
-directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
-directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
-directory successfully created.	filemanager	de	Verzeichnis erfolgreich angelegt
-directory with documents to insert entries	filemanager	de	Verzeichnis mit Dokumenten zum Einfügen von Daten
+directories sorted in	filemanager	de	Ordner einsortiert
+directory	filemanager	de	Ordner
+directory "%1" not found!	filemanager	de	Ordner "%1" NICHT gefunden!
+directory %1 already exists	filemanager	de	Ordner %1 existiert bereits
+directory %1 does not exist	filemanager	de	Ordner %1 existiert nicht
+directory not found or no permission to access it!	filemanager	de	Ordner wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
+directory successfully created.	filemanager	de	Ordner erfolgreich angelegt
+directory with documents to insert entries	filemanager	de	Ordner mit Dokumenten zum Einfügen von Daten
 disable	filemanager	de	Ausschalten
 disable versioning for this mountpoint	filemanager	de	Versionierung für diesen Mountpoint ausschalten
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
 do you want more information about epl subscription?	common	de	Wollen Sie mehr Informationen über die EGroupware Vollversion EPL?
-do you want to overwrite existing file %1 in directory %2?	filemanager	de	Wollen Sie die bestehende Datei %1 im Verzeichnis %2 überschreiben?
+do you want to overwrite existing file %1 in directory %2?	filemanager	de	Wollen Sie die bestehende Datei %1 im Ordner %2 überschreiben?
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
 download documents	filemanager	de	Dokument herunterladen
@@ -117,7 +118,7 @@ enable versioning for given mountpoint	filemanager	de	Versionierung für angegeb
 enter setup user and password	filemanager	de	Superuser Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Superuser Benutzer und Passwort eingeben um Superuser-Rechte zu erhalten
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
-enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
+enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsordner ein
 enter your file name	filemanager	de	Dateiname
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
@@ -125,7 +126,7 @@ error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsre
 error mounting %1 on %2!	filemanager	de	Fehler beim mounten von %1 nach %2!
 error unmounting %1!	filemanager	de	Fehler beim unmounten von %1!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
-error while creating directory.	filemanager	de	Fehler beim Anlegen des Verzeichnisses
+error while creating directory.	filemanager	de	Fehler beim Anlegen des Ordners
 everyone	filemanager	de	Jeder
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	de	Beispiel: {{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}} - Suche im Feld "n_prefix", wenn es "Herr" enthält, dann schreibe "Sehr geehrter", wenn nicht schreibe "Sehr geehrte".
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. Hans Müller
@@ -139,7 +140,7 @@ export definition to use for nextmatch export	filemanager	de	Exportdefinition f�
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
-failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
+failed to create directory!	filemanager	de	Konnte Ordner nicht anlegen!
 favorites	filemanager	de	Favoriten
 file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
@@ -148,7 +149,7 @@ file %1 may be too big. contact your systemadministrator for further info	filema
 file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einem EPL-Vertrag verfügbar.
 file deleted.	filemanager	de	Datei gelöscht
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
-file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
+file or directory not found!	filemanager	de	Datei oder Ordner nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen
 filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Konfiguration Dateimanager
@@ -156,30 +157,30 @@ filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateiname darf nicht leer sein!
 files	common	de	Dateien
 files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
-files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
-files in this directory	filemanager	de	Dateien in diesem Verzeichnis
+files from subdirectories	filemanager	de	Dateien aus Unterordners
+files in this directory	filemanager	de	Dateien in diesem Ordner
 filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Verzeichnis endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
 fix reported problems	filemanager	de	Gefundene Probleme beheben
-folder up	filemanager	de	Übergeordnetes Verzeichnis
+folder up	filemanager	de	Übergeordneter Ordner
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	de	Nutzen Sie dieses Symbol für Serienbriefe. Stellen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Symbole
 general	filemanager	de	Allgemein
 general fields:	filemanager	de	Allgemeine Platzhalter
-go home	filemanager	de	Gehe zum Heimverzeichnis
+go home	filemanager	de	Gehe zum Heimordner
 go to	filemanager	de	Gehe zu
-go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
-go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
+go to your home directory	filemanager	de	Zu Ihrem Heimordner wechseln
+go up	filemanager	de	in den übergeordneten Ordner wechseln
 hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
 hostname/ip for webdav and smb	filemanager	de	Hostname/IP für WebDAV und SMB
 id	filemanager	de	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Verzeichnis angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	de	Wenn Sie hier ein Ordner angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 einen Befehl für jedes Dokument an. Dieser Befehl erlaubt es, das Dokument mit %1 Daten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	de	Wenn Sie hier ein Dokument angeben (vollständiger Pfad des virtuellen Dateisystems), zeigt %1 ein zusätzliches Dokumentsymbol für jeden Eintrag an. Dieses Symbol erlaubt es, das Dokument mit eingefügten Daten herunterzuladen.
 if you specify an export definition, it will be used when you export	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
 if you specify an export definition, it will be used when you export*	filemanager	de	Wenn Sie eine Exportdefinition angeben wird diese für den Export angewendet.
@@ -187,7 +188,7 @@ inherited	filemanager	de	Geerbt
 last accessed	filemanager	de	Letzter Zugriff
 link	filemanager	de	verknüpfen
 link %1: %2	filemanager	de	%1. Verknüpfung: %2
-link into folder	filemanager	de	Verknüpfung in ein Verzeichnis
+link into folder	filemanager	de	Verknüpfung in ein Ordner
 link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 list view	filemanager	de	Listenansicht
@@ -196,12 +197,12 @@ lock	filemanager	de	Gesperrt
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
-max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
+max folderlinks	admin	de	maximale Anzahl von Links zu Ordner
 merge print open handler	filemanager	de	Handler für das Einfügen in Dokument
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert
 modified between	filemanager	de	verändert zwischen
-modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterverzeichnisse und ihre Inhalte anwenden
+modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
 mountpoints	filemanager	de	Mountpoints
@@ -210,11 +211,11 @@ move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder können Sie hier auch verwenden.
-new directory	common	de	Neues Verzeichnis
+new directory	common	de	Neuer Ordner
 no access	filemanager	de	Kein Zugriff
-no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis
+no files in this directory.	filemanager	de	Keine Dateien in diesem Ordner
 no preview available	filemanager	de	Keine Vorschau verfügbar
-no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
+no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder diesen Ordner
 noone	filemanager	de	Niemand
 notebookbar	filemanager	de	In Registern
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
@@ -225,7 +226,7 @@ open odt documents with collabeditor	filemanager	de	odt Dokumente mit CollabEdit
 operation	filemanager	de	Vorgang
 password for webdav and smb, use $pass for password of logged in user	filemanager	de	Passwort für WebDAV und SMB, benutzer $pass für das Passwort des angemeldeten Benutzers
 paste link	filemanager	de	Als Verknüpfung einfügen
-path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Verzeichnis!
+path %1 not found or not a directory!	filemanager	de	Pfad %1 nicht gefunden oder kein Ordner!
 path and query-parameters, smb: share and optional path (with /)	filemanager	de	Pfad und Suchparameter, SMB: Freigabe und optionaler Pfad (mit /)
 percentage	filemanager	de	Prozentual
 permission denied!	filemanager	de	Zugriff verweigert!
@@ -255,7 +256,7 @@ root	filemanager	de	root
 root access granted.	filemanager	de	Superuser Zugriff gewährt
 root access stopped.	filemanager	de	Superuser Zugriff gestoppt
 save %1	filemanager	de	%1 speichern
-save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
+save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Ordneransicht
 save as zip	filemanager	de	Als ZIP-Datei speichern
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
@@ -264,7 +265,7 @@ saving setting for document merge failed!	filemanager	de	Speichern der Einstellu
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
-select file to upload in current directory	filemanager	de	Datei(en) zum hochladen in das aktuelle Verzeichnis auswählen
+select file to upload in current directory	filemanager	de	Datei(en) zum hochladen in den aktuellen Ordner auswählen
 select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
 share files	filemanager	de	Dateien freigeben
@@ -276,9 +277,9 @@ show hidden files	filemanager	de	Zeige versteckte Dateien
 show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü
 show link "users and groups" in side box menu?	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
 show link "users and groups*" in side box menu?*	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
-show link "your home directory" in side box menu?	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
-show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
+show link "your home directory" in side box menu?	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Heimatordner" innerhalb des Seitenmenüs angezeigt bekommen?
+show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Heimatordner" innerhalb des Seitenmenüs angezeigt bekommen?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisordner (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
 smb: mount samba or windows fileserver shares	filemanager	de	SMB: mounten von Freigaben eines Samba oder Windows Dateiserver
@@ -291,18 +292,18 @@ superuser	filemanager	de	Superuser
 superuser (root)	filemanager	de	Superuser (root)
 symlink to %1 created.	filemanager	de	Verknüpfung nach %1 angelegt
 tag to mark positions for address labels	filemanager	de	Symbol um die Position von Adressetiketten anzuzeigen
-the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr persönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsordner ist Ihr persönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, diese werden mit den entsprechenden Daten ersetzt (%1Liste der Platzhalter%2)
 the following document-types are supported:	filemanager	de	Die folgenden Dokumenttypen werden unterstützt:
-the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung
+the requested path %1 is not available.	filemanager	de	Der angeforderte Ordnerpfad %1 steht nicht zur Verfügung
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	de	Die hochgeladene Datei ist nur für die Person sichtbar, die Ihnen diese Dateien zur Verfügung gestellt hat, nicht für Sie selbst oder andere Personen die diesen Sharing Link kennen.
-there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
+there's already a directory with that name!	filemanager	de	Es gibt bereits ein Ordner mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
 tile view	filemanager	de	Kachelansicht
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
 ui mode	filemanager	de	Benutzeroberfläche
-under directory	filemanager	de	unter dem Verzeichnis
+under directory	filemanager	de	unter dem Ordner
 unlock	filemanager	de	entsperren
 unmount	filemanager	de	Unmount
 unused space	filemanager	de	Nicht benutzter Platz
@@ -329,10 +330,10 @@ you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie können nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
 you can use regular upload [+] button to upload files.	filemanager	de	Sie können Dateien über den regulären [+] Button hochladen.
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	de	Sie müssen Superuser sein, um die Versionierung für ein Verzeichnis ein- oder auszuschalten!
+you need to become root, to enable or disable versioning on a directory!	filemanager	de	Sie müssen Superuser sein, um die Versionierung für ein Ordner ein- oder auszuschalten!
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
-you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatverzeichnis geleitet
-you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Startverzeichnis geleitet
-your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatverzeichnis hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
-your home directory	filemanager	de	Ihr persönliches Verzeichnis
+you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatordner geleitet
+you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Startordner geleitet
+your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatordner hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
+your home directory	filemanager	de	Ihr persönlicher Ordner

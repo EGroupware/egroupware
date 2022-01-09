@@ -522,7 +522,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	it	Se stai usando SSL oppure TLS, devi aver caricato l'estensione SSL in PHP
 if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	it	Se elimini un account senza selezionare un nuovo utente intestatario, i dati verranno rimossi!
 if you ignore that error as admin, you should check "%1"!	admin	it	Se si ignorerà questo errore come amministratore, si dovrà selezionare "%1"!
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	it	se viene indicata la porta 5190 come porta del server sieve, verrà abilitato SSL per sieve (il serve deve supportarlo)
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	it	se viene indicata la porta 5190 come porta del server Sieve, verrà abilitato SSL per Sieve (il serve deve supportarlo)
 if you wish to have randomly selected images you may upload multiple images.	admin	it	Se vuoi utilizzare immagini selezionate casualmente, puoi caricare più di un'immagine.
 imap admin password	admin	it	Password amministratore IMAP
 imap admin user	admin	it	User amministratore IMAP
@@ -661,7 +661,7 @@ no permission to add users	admin	it	nessun permesso di aggiunta utenti
 no permission to create groups	admin	it	nessun permesso di creazione gruppi
 no plain text part found	admin	it	non è stata trovata una parte in testo semplice
 no profile defined for user %1	admin	it	Profilo non definito per l'utente %1
-no sieve support detected, either fix configuration manually or leave it switched off.	admin	it	Non è stato rilevato il supporto per sieve, verificare la configurazione manualmente o disabilitarlo.
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	it	Non è stato rilevato il supporto per Sieve, verificare la configurazione manualmente o disabilitarlo.
 no supported imap authentication method could be found.	admin	it	Non è stato trovato alcun metodo di autenticazione supportato da IMAP
 non profit: clubs, associations, ...	admin	it	Non profit: Club, Associazioni, ...
 not enabled	admin	it	Non abilitato
@@ -816,7 +816,7 @@ show phpinfo()	admin	it	Visualizza phpinfo()
 show session ip address	admin	it	Visualizza l'indirizzo IP della sessione
 sieve server hostname or ip address	admin	it	Nome host o IP server Sieve
 sieve server port	admin	it	porta server Sieve
-sieve settings	admin	it	impostazioni SIeve
+sieve settings	admin	it	impostazioni Sieve
 site	admin	it	Sito
 skip imap	admin	it	Salta IMAP
 skipping imap configuration!	admin	it	Salta la configurazione IMAP

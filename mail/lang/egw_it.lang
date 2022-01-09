@@ -51,6 +51,7 @@ always allow external sources from %1	mail	it	Permetti sempre sorgenti esterne/r
 always show html emails	mail	it	Visualizza sempre le e-mail HTML
 an error happend while trying to remove acl rights from the account %1!	mail	it	Errore di rimozione permessi ACL dall'account %1!
 and the rule with priority %1, now got the priority %2	mail	it	E la regola con priorità %1, ha adesso priorità %2
+answered	mail	it	ha risposto
 any of	mail	it	qualsiasi di
 any status	mail	it	qualsiasi stato
 append	mail	it	apponi
@@ -145,9 +146,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	it	Sicuro di voler cambiare l'etichetta %1 per tutti i messaggi nella vista corrente?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	it	Vuoi una richiesta di conferma prima di allegare i messaggi selezionati al nuovo email?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	it	Vuoi una richiesta di conferma prima di spostare i messaggi selezionati ad un altra cartella?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione di regole di filtraggio, anche se SIEVE è abilitato?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica per email ad altri indirizzi email se arrivassero messaggi, anche se SIEVE è abilitato?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica di assenza/vacanza, anche se SIEVE è abilitato?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione di regole di filtraggio, anche se Sieve è abilitato?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica per email ad altri indirizzi email se arrivassero messaggi, anche se Sieve è abilitato?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	it	Vuoi inibire la modifica/impostazione della notifica di assenza/vacanza, anche se Sieve è abilitato?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	it	Vuoi inibire la gestione delle cartelle? (creazione, accesso e sottoscrizione)
 does not contain	mail	it	non contiene
 does not exist on imap server.	mail	it	Non esiste sul server IMAP
@@ -158,6 +159,7 @@ don't use sent	mail	it	Non usare Posta Inviata
 don't use template folder	mail	it	Non usare la cartella Modelli
 don't use trash	mail	it	Non usare il Cestino
 download attachments	mail	it	Scarica allegati
+draft	mail	it	Bozza
 draft folder	mail	it	Cartella Bozze
 drafts	mail	it	Bozze
 drafts folder	mail	it	Cartella bozze
@@ -482,10 +484,11 @@ sender	mail	it	Mittente
 sent	mail	it	Inviata
 sent folder	mail	it	Cartella Posta Inviata
 server supports special-use folders	mail	it	Il server supporta le cartelle speciali
-serverside filterrules (sieve) are not activated	mail	it	Le regole di filtro (sieve) non sono attivate
-serverside vacationnotice (via sieve) are not activated	mail	it	Le notifiche di assenza lato server (via sieve) non sono abilitate
+serverside filterrules (sieve) are not activated	mail	it	Le regole di filtro (Sieve) non sono attivate
+serverside vacationnotice (via sieve) are not activated	mail	it	Le notifiche di assenza lato server (via Sieve) non sono abilitate
 set / remove flags	mail	it	Imposta / Rimuovi flag
 set / remove labels	mail	it	Imposta / Rimuovi etichette
+set flags	mail	it	Segna l'e-mail come
 set it as default:	mail	it	imposta come predefinito
 should new messages show up on the home page	mail	it	I nuovi messaggi devono apparire in Home Page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	it	La firma dovrebbe essere inserita dopo (standard) o prima del testo di risposta o inoltro? La firma deve essere visibile e modificabile in fase di composizione?
@@ -503,10 +506,10 @@ show them this time only	mail	it	Mostrali solo per questa volta
 show vertical	mail	it	mostra in verticale
 show/hide preview pane in mail list view	mail	it	Mostra/Nascondi pannello di anteprima nella vista elenco mail
 sieve	mail	it	Sieve
-sieve connection status	mail	it	Salva lo stato della connessione
+sieve connection status	mail	it	Stato della connessione Sieve
 sieve not activated	mail	it	Sieve non attivato
-sieve script name	mail	it	Nome script sieve
-sieve server	mail	it	Server sieve
+sieve script name	mail	it	Nome script Sieve
+sieve server	mail	it	Server Sieve
 sieve_edit_instructions	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide. Per il punto esclamativo quando non usato come operatore "NOT", usare regex e backslash (\) (p.es. \!)
 signature	mail	it	Firma
 signature at top	mail	it	firma in cima

@@ -2,8 +2,6 @@
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	cs	(*) Můžete použít zástupné znaky (*,?). Pokud chcete hledat znaky * nebo ? jako takové, je nutné před ně vložit zpětné lomítko \. Pokud zaškrtnete možnost regulárního dotazu, musíte zadat platný regulární výraz.
-sieve_edit_instructions	mail	cs	(*) Můžete použít zástupné znaky (*,?). Pokud chcete hledat znaky * nebo ? jako takové, je nutné před ně vložit zpětné lomítko \. Pokud zaškrtnete možnost regulárního dotazu, musíte zadat platný regulární výraz. Pokud v regulárním výrazu potřebujete použít vykřičník, který ale nemá reprezentovat negaci (NOT),  je nutné před něj vložit zpětné lomítko \ (např. \!).
 (leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
 (no subject)	mail	cs	(žádný předmět)
 (not connected)	mail	cs	(nepřipojeno)
@@ -36,6 +34,7 @@ allways a new window	mail	cs	Vždy nové okno
 always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
 an error happend while trying to remove acl rights from the account %1!	mail	cs	Při pokusu o odebrání ACL práv z účtu %1 došlo k chybě!
 and the rule with priority %1, now got the priority %2	mail	cs	a pravidlo s prioritou %1 nyní získalo prioritu %2
+answered	mail	cs	odpověděl
 any of	mail	cs	kterýkoli z
 any status	mail	cs	jakýkoli status
 append	mail	cs	Doplnit
@@ -126,9 +125,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	cs	Opravdu chcete přidělit štítek %1 pro všechny zprávy v aktuálním pohledu?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	cs	Chcete být před přidáním vybraných e-mailů do nové zprávy požádáni o potvrzení?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	cs	Chcete být požádáni o potvrzení při přesouvání vybraných zpráv do jiné složky?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v pravidlech pro filtrování pošty (i když je povolen SIEVE)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v zasílání upozornění na příchod zprávy (i když je povolen SIEVE)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny ve zprávách o nepřítomnosti (i když je povolen SIEVE)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v pravidlech pro filtrování pošty (i když je povolen Sieve)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v zasílání upozornění na příchod zprávy (i když je povolen Sieve)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny ve zprávách o nepřítomnosti (i když je povolen Sieve)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	cs	Chcete zablokovat správu poštovních složek (vytváření, přidělování přístupových práv a přihlášení k odebírání)?
 does not contain	mail	cs	neobsahuje
 does not exist on imap server.	mail	cs	neexistuje na IMAP serveru.
@@ -139,6 +138,7 @@ don't use sent	mail	cs	Nepoužívat Odeslané
 don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
 download attachments	mail	cs	Stáhnout přílohy
+draft	mail	cs	návrh
 draft folder	mail	cs	Rozepsané
 drafts	mail	cs	Rozepsané
 drafts folder	mail	cs	Složka pro koncepty
@@ -168,7 +168,6 @@ error: could not save message as draft	mail	cs	Chyba: Zprávu nebylo možné ulo
 error: could not save rule	mail	cs	Chyba:  Nelze uložit pravidlo
 error: could not send message.	mail	cs	Chyba: Zprávu není možné odeslat
 error: message could not be displayed.	mail	cs	Chyba: Zprávu nelze zobrazit.
-error:could not save the acl because some names are empty	mail	cs	Chyba: Není možné uložit ACL, protože některá jména jsou prázdná!
 esync will fail without a working email configuration!	mail	cs	Synchronizace eSync nebude bez správné konfigurace eMailu funkční!
 event details follow	mail	cs	Následují detaily události
 everyone	mail	cs	všichni
@@ -220,7 +219,6 @@ get acl rights failed from imap server!	mail	cs	Získání práv ACL ze serveru 
 greater than	mail	cs	větší než
 header	mail	cs	Záhlaví
 header lines	mail	cs	Řádky hlavičky
-hide	mail	cs	Schovat
 hold %1 to drag files to your computer	mail	cs	Stiskněte a držte %1 pro přetažení souborů do vašeho počítače
 home page folders	mail	cs	Složky domovské stránky
 hostname or ip	mail	cs	Jméno nebo IP adresa serveru
@@ -404,14 +402,11 @@ save as infolog	mail	cs	Uložit jako úkol
 save as infolog on send	mail	cs	Uložit jako úkol při odeslání
 save as ticket	mail	cs	Uložit do sledovacího systému
 save as tracker on send	mail	cs	Uložit do sledovacího systému při odeslání
-save into vfs	mail	cs	Uložit do VFS
 save message to disk	mail	cs	Uložit zprávu na disk
-save message to filemanager	mail	cs	Uložení správce souborů EGroupware
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	cs	Uložení zprávy %1 nebylo úspěšné. Není možné uložit zprávu do složky %2 z důvodu: %3
 save the drafted message as eml file into vfs	mail	cs	Uložit zozepsanou zprávu jako EML fo VFS
 save to disk	mail	cs	Uložit jako ...
 save to filemanager	mail	cs	Uložit do správce souborů
-save to vfs	mail	cs	Uložit do VFS
 save:	mail	cs	Uložit:
 saves subscription changes	mail	cs	Uložit změny v odebírání
 saves this acl	mail	cs	Uložit tato ACL
@@ -440,6 +435,7 @@ serverside filterrules (sieve) are not activated	mail	cs	Pravidla na serveru (Si
 serverside vacationnotice (via sieve) are not activated	mail	cs	Automatický odpovídač na serveru (přes Sieve) není aktivován
 set / remove flags	mail	cs	Označit / Odznačit
 set / remove labels	mail	cs	Přidat / odebrat štítek
+set flags	mail	cs	Označit e-mail jako
 set it as default:	mail	cs	Nastavit jako výchozí
 should new messages show up on the home page	mail	cs	Mají se nové zprávy zobrazit na Hlavní stránce?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	cs	Má se podpis vložit za (výchozí), nebo před odpověď při odpovědi nebo přeposílání zprávy a má být podpis viditelný a upravitelný během vytváření odpovědi?
@@ -455,8 +451,9 @@ show/hide preview pane in mail list view	mail	cs	Zobrazit / skrýt náhled v sez
 sieve	mail	cs	Sieve
 sieve connection status	mail	cs	Stav podmínek Sieve
 sieve not activated	mail	cs	Sieve není aktivovaný
-sieve script name	mail	cs	Jméno sieve skriptu
+sieve script name	mail	cs	Jméno Sieve skriptu
 sieve server	mail	cs	Sieve server
+sieve_edit_instructions	mail	cs	(*) Můžete použít zástupné znaky (*,?). Pokud chcete hledat znaky * nebo ? jako takové, je nutné před ně vložit zpětné lomítko \. Pokud zaškrtnete možnost regulárního dotazu, musíte zadat platný regulární výraz. Pokud v regulárním výrazu potřebujete použít vykřičník, který ale nemá reprezentovat negaci (NOT),  je nutné před něj vložit zpětné lomítko \ (např. \!).
 signature	mail	cs	Podpis
 signature at top	mail	cs	Podpis nahoře
 signature position and visibility	mail	cs	Pozice a viditelnost podpisu

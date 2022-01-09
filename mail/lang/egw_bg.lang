@@ -6,8 +6,6 @@
 %1 is not writable by you!	mail	bg	% 1 НЕ е писан от вас!
 %1 mails selected	mail	bg	% 1 избрани писма
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	bg	(*) Моля, да имате в предвид, че пренасочването към няколко адреса няма да работи, ако броят на адресите надвишава зададения лимит. За повечето Пощенски сървъри лимитът е 4 (по подразбиране). Моля, свържете се с Администратора на вашия Пощенски сървър за допълнителна информация.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази.
-sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 (no subject)	mail	bg	(без тема)
 (not connected)	mail	bg	(няма връзка)
 (select mails by clicking on the line, like a checkbox)	mail	bg	(изберете имейли, като щракнете върху линията, като например: квадратче за отметка)
@@ -50,6 +48,7 @@ always allow external sources from %1	mail	bg	Винаги позволява в
 always show html emails	mail	bg	Винаги показва HTML съобщения
 an error happend while trying to remove acl rights from the account %1!	mail	bg	Възникна грешка, докато се опитвате да премахнете ACL права от акаунта %1!
 and the rule with priority %1, now got the priority %2	mail	bg	И правилото с приоритет %1, сега получи приоритет %2
+answered	mail	bg	отговори
 any of	mail	bg	някой от
 any status	mail	bg	без значение
 append	mail	bg	Добавяне
@@ -68,7 +67,6 @@ attachments	mail	bg	Приложения
 attachments, ...	mail	bg	приложения, ...
 authentication	mail	bg	Заверка
 available personal email-accounts/profiles	mail	bg	налични лични имейл акаунти / профили
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	bg	Имайте в предвид, че като добавите всички избрани файлове като стил %1, той също така ще промени всички съществуващи прикачени файлове в списъка в стил %2. \n\r\n\r Искате ли да продължите?
 be aware that all attachments will be sent as %1!	mail	bg	Имайте предвид, че всички прикачени файлове ще бъдат изпратени като %1!
 before reply, visible during compose	mail	bg	Да бъде видим докато се съставя, преди отговор
 blacklisted mails are marked as spam	mail	bg	Имейли от "черния списък" да се маркират като спам
@@ -152,9 +150,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	bg	Наистина ли искате да превключите етикета %1 за ВСИЧКИ съобщения в текущия изглед?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	bg	Искате ли да ви бъде поискано потвърждение, преди да прикачите избрани съобщения към нов имейл?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	bg	Потвърждение преди преместване на избрани съобщения в друга папка?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на правила за филтриране (, дори и при активиран SIEVE)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известията по пощата на други e-mail адреси, ако пристигнат (, дори и при активиран SIEVE)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известието за отсъствие/почивка (, дори и при активиран SIEVE)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на правила за филтриране (, дори и при активиран Sieve)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известията по пощата на други e-mail адреси, ако пристигнат (, дори и при активиран Sieve)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	bg	Искате ли да предотвратите редактирането/настройката на известието за отсъствие/почивка (, дори и при активиран Sieve)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	bg	Желаете ли да забраните управлението на папките (създаване, права на достъп И абонамент)?
 does not contain	mail	bg	не съдържа
 does not exist on imap server.	mail	bg	не съществува на IMAP сървъра.
@@ -165,6 +163,7 @@ don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
 download attachments	mail	bg	Изтеглете прикачени файлове
+draft	mail	bg	Проект
 draft folder	mail	bg	папка "Чернови"
 drafts	mail	bg	Чернови
 drafts folder	mail	bg	Папка "Чернови"
@@ -288,9 +287,11 @@ import of message %1 failed. could not save message to folder %2 due to: %3	mail
 import of message %1 failed. destination folder %2 does not exist.	mail	bg	Импортирането на съобщение% 1 не бе успешно. Дестинация папка% 2 не съществува.
 inbox	mail	bg	Входящи
 junk	mail	bg	Нежелани
+junk folder	mail	bg	Папка с нежелани файлове
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
 less than	mail	bg	по-малко от
+mail filter	mail	bg	Пощенски филтър
 mail settings	mail	bg	Настройки на пощата
 mark as deleted	mail	bg	Маркирай като изтрито
 matches	mail	bg	съвпада с
@@ -333,7 +334,11 @@ save message to disk	mail	bg	запис на съобщението на дис�
 select all	mail	bg	Избиране на всичко
 sent	mail	bg	Изпратени
 sent folder	mail	bg	Папка "Изпратени"
+serverside filterrules (sieve) are not activated	mail	bg	Филтърните правила от страна на сървъра (Sieve) не са активирани
+serverside vacationnotice (via sieve) are not activated	mail	bg	Съобщенията за отсъствие от страна на сървъра (чрез Sieve) не са активирани
+set flags	mail	bg	Маркирайте имейл като
 sieve script name	mail	bg	име на sieve скрипт
+sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 signature	mail	bg	Подпис
 size(...->0)	mail	bg	Размер (...->0)
 size(0->...)	mail	bg	Размер (0->...)

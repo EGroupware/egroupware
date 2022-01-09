@@ -54,6 +54,7 @@ always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
+answered	mail	de	beantworted
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
 append	mail	de	hinzufügen
@@ -130,7 +131,6 @@ default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktione
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	z.B. Ihr Name und Ihre E-Mail-Adresse
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was als Kontaktbeschriftung für hinzugefügte Kontakte in An/Kopie/Blindkopie
- beim Verfassen einer E-Mail angezeigt werden soll. Standard ist Vorname Nachname und leer bedeutet, dass alles mögliche verwendet wird.
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
@@ -141,7 +141,7 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail-Modul einschränken.
-directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
+directories have to be shared.	mail	de	Ordner müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable caching of flags	mail	de	Caching von Flags ausschalten
 disable horizontal rule for separation of mail body from signature	mail	de	Signatur-Trennzeichen ausblenden
@@ -167,9 +167,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für das Schlagwort %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via Sieve) unterbinden?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via Sieve), wenn neue Nachrichten eintreffen, unterbinden?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via Sieve) unterbinden?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren, Zugriffsrechte)?
 does not contain	mail	de	enthält nicht
 does not exist on imap server.	mail	de	existiert nicht auf dem IMAP Server
@@ -180,6 +180,7 @@ don't use sent	mail	de	Keinen gesendeten E-Mails speichern
 don't use template folder	mail	de	Keinen Vorlagen-Ordner verwenden
 don't use trash	mail	de	Keinen Papierkorb verwenden
 download attachments	mail	de	Anhänge herunterladen
+draft	mail	de	Entwurf
 draft folder	mail	de	Entwurfs-Ordner
 drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
@@ -548,6 +549,7 @@ serverside filterrules (sieve) are not activated	mail	de	Serverseitige Filterreg
 serverside vacationnotice (via sieve) are not activated	mail	de	Serverseitige Abwesenheitsbenachrichtigungen (via Sieve) sind nicht aktiviert
 set / remove flags	mail	de	Markierung
 set / remove labels	mail	de	Schlagworte setzen / entfernen
+set flags	mail	de	E-Mail markieren als
 set it as default:	mail	de	als Vorgabe speichern
 set predefined values for compose...	mail	de	Vordefinierte Werte für das Verfassen ...
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
@@ -687,7 +689,7 @@ yes, show all debug information available for the user	mail	de	Ja, zeige alle de
 yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
 you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das Enddatum verwenden.
-you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn dieser Signatur trauen.
+you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope Plugin für Chrome oder Firefox von %1 installieren.
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.

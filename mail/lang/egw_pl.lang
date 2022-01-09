@@ -6,6 +6,7 @@ all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
 allways a new window	mail	pl	zawsze w nowym oknie
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
+answered	mail	pl	odpowiedział
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 attachments	mail	pl	Załączniki
@@ -30,9 +31,9 @@ display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
 display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
 displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	pl	Czy chcesz być pytany o potwierdzenie przed przeniesieniem wybranej wiadomości do innego folderu?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli SITO jest włączone)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli SITO jest włączone)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli Sieve jest włączone)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli Sieve jest włączone)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli Sieve jest włączone)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	pl	Czy chcesz zapobiec zarządzaniu folderami (tworzenie, prawa dostępu i subskrypcja)?
 does not contain	mail	pl	nie zawiera
 does not exist on imap server.	mail	pl	nie istnije na serwerze IMAP
@@ -42,6 +43,7 @@ don't use draft folder	mail	pl	Nie używaj folderu szkiców
 don't use sent	mail	pl	Nie używaj Wysłanych
 don't use template folder	mail	pl	Nie używaj folderu szablonów
 don't use trash	mail	pl	Nie używaj Kosza
+draft	mail	pl	Szkic
 draft folder	mail	pl	folder szkiców
 drafts	mail	pl	Szkice
 edit account	mail	pl	Edytuj konto użytkownika
@@ -148,7 +150,9 @@ selected date range (with quicksearch)	mail	pl	Zakres dat ( z szybkim wyszukiwan
 sender	mail	pl	nadawca
 sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
-sieve script name	mail	pl	Nazwa skryptu sita ('sieve')
+set flags	mail	pl	Oznacz e-mail jako
+sieve	mail	pl	Sieve
+sieve script name	mail	pl	Nazwa skryptu Sieve
 signature	mail	pl	Sygnaturka
 size(...->0)	mail	pl	Rozmiar (...->0)
 size(0->...)	mail	pl	Rozmiar (0->...)
