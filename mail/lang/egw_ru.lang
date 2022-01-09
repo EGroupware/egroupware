@@ -12,6 +12,7 @@ allow external images	mail	ru	Разрешить внешние изображе
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML
 allways a new window	mail	ru	Всегда новое окно
 always show html emails	mail	ru	Всегда показывать письма формата HTML
+answered	mail	ru	ответил
 any of	mail	ru	Любой из
 any status	mail	ru	Любое состояние
 append	mail	ru	Дополнить
@@ -58,9 +59,9 @@ displaying plain messages is disabled	mail	ru	Показ сообщений ка
 do not auto create folders	mail	ru	Не создавать заголовки автоматически
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ru	Вы хотите получать запрос на подтверждение о вложении выбранных сообщений в новое письмо?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ru	Вы хотите получать запрос на подтверждение перемещения выбранных сообщений в другую папку?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку правил фильтрации, даже если SIEVE включен?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку уведомлений по эл.почте на другие адреса эл.почты когда приходят сообщения, даже если SIEVE включен?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку автоответчика,даже если SIEVE включен?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку правил фильтрации, даже если Sieve включен?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку уведомлений по эл.почте на другие адреса эл.почты когда приходят сообщения, даже если Sieve включен?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	ru	Вы хотите предотвратить редактирование/установку автоответчика,даже если Sieve включен?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	ru	Вы хотите предотвратить управление папками-создание, права доступа и подписки?
 does not contain	mail	ru	Не содержит
 does not exist on imap server.	mail	ru	Не существует на сервере IMAP.
@@ -70,6 +71,7 @@ don't use draft folder	mail	ru	Не использовать папку Draft (�
 don't use sent	mail	ru	Не использовать папку Sent (Отправленные)
 don't use template folder	mail	ru	Не использовать папку шаблонов
 don't use trash	mail	ru	Не использовать Trash (Корзина)
+draft	mail	ru	Каталог
 draft folder	mail	ru	Каталог черновиков
 drafts	mail	ru	Черновики
 edit account	mail	ru	Редактировать учётную запись
@@ -238,14 +240,15 @@ send message and move to send folder (if configured)	mail	ru	Отправить 
 sender	mail	ru	Отправитель
 sent	mail	ru	Отправленные
 sent folder	mail	ru	Отправленные
+set flags	mail	ru	Пометить электронную почту как
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 show all folders	mail	ru	Отображать все каталоги
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ru	Отображать в панели команд главной страницы все каталоги, как подписные, так и те, на которые пользователь не подписан
 show new messages on home page	mail	ru	отображать новые сообщения на домашней странице
 show test connection section and control the level of info displayed?	mail	ru	показать пункт меню "Проверка подключения"?
-sieve	mail	ru	SIEVE
+sieve	mail	ru	Sieve
 sieve connection status	mail	ru	Статус соединения Sieve
-sieve script name	mail	ru	название скрипта sieve
+sieve script name	mail	ru	название скрипта Sieve
 signature	mail	ru	Подпись
 signature at top	mail	ru	Подпись сверху
 size(...->0)	mail	ru	Размер (...->0)

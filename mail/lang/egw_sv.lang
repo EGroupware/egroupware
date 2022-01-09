@@ -3,6 +3,7 @@ add to addressbook	mail	sv	Lägg till i Adressbok
 all of	mail	sv	Alla
 allways a new window	mail	sv	Alltid nytt fönster
 always show html emails	mail	sv	Visa alltid HTML e-post
+answered	mail	sv	svarade
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
 attachments	mail	sv	Bilagor
@@ -31,7 +32,10 @@ does not match regexp	mail	sv	Matchar inte regexp
 don't use draft folder	mail	sv	Använd inte Utkast
 don't use sent	mail	sv	Använd inte Skickat
 don't use trash	mail	sv	Använd inte Borttaget
+draft	mail	sv	Utkast
 draft folder	mail	sv	Utkast katalog
+drafts	mail	sv	Utkast
+drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
 emailaddress	admin	sv	E-post adress
@@ -101,6 +105,8 @@ save as infolog	mail	sv	Spara som InfoLogg
 save message to disk	mail	sv	Spara meddelanden till disk
 select all	mail	sv	Välj samtliga
 sent folder	mail	sv	Skickat katalog
+set flags	mail	sv	Markera e-post som
+sieve	mail	sv	Sieve
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur
 size(...->0)	mail	sv	Storlek (...->0)

@@ -23,6 +23,7 @@ allow images from external sources in html emails	mail	pt	permitir imagens de fo
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allways a new window	mail	pt	Sempre numa nova janela
 always show html emails	mail	pt	Exibir sempre mensagens HTML
+answered	mail	pt	respondeu
 any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
 append	mail	pt	anexar
@@ -87,6 +88,8 @@ don't use draft folder	mail	pt	Não use pasta de rascunhos
 don't use sent	mail	pt	Não utilizar a pasta Enviados
 don't use template folder	mail	pt	Não use pasta de modelo
 don't use trash	mail	pt	Não utilizar a pasta Lixo
+download attachments	mail	pt	Descarregar anexos
+draft	mail	pt	rascunho
 draft folder	mail	pt	pasta de rascunhos
 drafts	mail	pt	Rascunhos
 drafts folder	mail	pt	Pasta Rascunhos
@@ -144,7 +147,6 @@ forward inline	mail	pt	linha para a frente
 forward messages to:	mail	pt	Encaminhar mensagens para:
 forward messages:	mail	pt	Encaminhar mensagens:
 forward to	mail	pt	encaminhar à
-forward to address:	mail	pt	Encaminhar para o endereço:
 forwards	mail	pt	Forwards
 from	mail	pt	De
 from(a->z)	mail	pt	De (A->Z)
@@ -309,6 +311,7 @@ server supports special-use folders	mail	pt	Server suporta Special-Use pastas
 serverside filterrules (sieve) are not activated	mail	pt	Serverside Filterrules (Sieve) não são ativados
 set / remove flags	mail	pt	Set / Remover Bandeiras
 set / remove labels	mail	pt	Set / Remover Rótulos
+set flags	mail	pt	Bandeiras de bandeira
 set it as default:	mail	pt	defini-lo como padrão:
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 show all folders	mail	pt	mostrar todas as pastas

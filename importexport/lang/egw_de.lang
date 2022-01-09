@@ -147,7 +147,7 @@ use definition filter	importexport	de	Definitionsfilter benutzen
 use field from csv if possible	importexport	de	Verwendet Werte der CSV-Datei, falls dort vorhanden.
 use search results	common	de	Suchergebnis nutzen
 user preference	importexport	de	Einstellen verwenden
-user template folder	importexport	de	Vorlagenverzeichnis verwenden
+user template folder	importexport	de	Vorlagenordner verwenden
 users allowed to create their own definitions	importexport	de	Benutzern erlauben, Ihre eigenen Definitionen zu erstellen.
 users allowed to share their own definitions	importexport	de	Benutzer dürfen Ihre Profile auch anderen Nutzern zur Verfügung stellen.
 warnings	importexport	de	Warnungen

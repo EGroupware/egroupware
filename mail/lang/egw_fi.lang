@@ -6,6 +6,7 @@ all of	mail	fi	kaikki /
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allways a new window	mail	fi	Aina uusi ikkuna
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
+answered	mail	fi	vastasi
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
 attachments	mail	fi	Liitteet
@@ -31,9 +32,9 @@ display only when no plain text is available	mail	fi	Näytä vain kun "pelkkä t
 displaying html messages is disabled	mail	fi	HTML viestien näyttäminen on estetty
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	fi	haluatko, että sinulta varmistetaan asia ennenkuin liität tiedostoja?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fi	Haluatko, että sinulta varmistetaan asia ennenkuin siirrät valitut viestit toiseen kansioon?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fi	Haluatko estää suodatinsääntöjen (Filter rules) muokkauksen/käyttöönoton, (vaikka SIEVE on käytössä)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fi	Haluatko estää houmautussviestien muokkauksen /käyttöönoton, kun sähköpostin saapuessa tiettyyn kansioon huomautusvieti lähetettäisiin toiseen kansioon, (vaikka SIEVE on käytössä)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	fi	Haluatko estää lomaviestien (Vacation notice) muokkauksen /käyttöönoton, (vaikka SIEVE on käytössä)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fi	Haluatko estää suodatinsääntöjen (Filter rules) muokkauksen/käyttöönoton, (vaikka Sieve on käytössä)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fi	Haluatko estää houmautussviestien muokkauksen /käyttöönoton, kun sähköpostin saapuessa tiettyyn kansioon huomautusvieti lähetettäisiin toiseen kansioon, (vaikka Sieve on käytössä)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	fi	Haluatko estää lomaviestien (Vacation notice) muokkauksen /käyttöönoton, (vaikka Sieve on käytössä)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	fi	Haluatko estää kansioiden muokkauksen /käyttöönoton, (Kansioiden luominen, ACL-oikeuksien myöntäminen ja kansioiden näkyvyys sähköpostitilillä)?
 does not contain	mail	fi	Ei sisällä
 does not exist on imap server.	mail	fi	Ei löydy IMAP palvelimelta.
@@ -43,6 +44,7 @@ don't use draft folder	mail	fi	Älä käytä Luonnokset -kansiota
 don't use sent	mail	fi	Älä käytä Lähetetyt -kansiota
 don't use template folder	mail	fi	Älä käytä Mallipohjat -kansiota
 don't use trash	mail	fi	Älä käytä Roskakori -kansiota
+draft	mail	fi	Luonnos
 draft folder	mail	fi	Luonnokset -kansio
 drafts	mail	fi	Luonnokset
 edit account	mail	fi	Muokkaa käyttäjätiliä
@@ -150,7 +152,9 @@ send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja 
 sender	mail	fi	Lähettäjä
 sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
-sieve script name	mail	fi	SIEVE skriptin nimi
+set flags	mail	fi	Merkitse sähköposti
+sieve	mail	fi	Sieve
+sieve script name	mail	fi	Sieve skriptin nimi
 signature	mail	fi	Allekirjoitus
 size(...->0)	mail	fi	Koko (...->0)
 size(0->...)	mail	fi	Koko (0->...)

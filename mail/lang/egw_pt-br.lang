@@ -23,6 +23,7 @@ allow images from external sources in html emails	mail	pt-br	Todas as imagens de
 allow users to create further identities	mail	pt-br	permitir aos usuários criar novas identidades
 allways a new window	mail	pt-br	sempre uma nova janela
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
+answered	mail	pt-br	respondeu
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
 append	mail	pt-br	anexar
@@ -88,6 +89,8 @@ don't use draft folder	mail	pt-br	Não usar pasta Rascunhos
 don't use sent	mail	pt-br	Não usar pasta Mensagens Enviadas
 don't use template folder	mail	pt-br	Não usar pasta Modelos
 don't use trash	mail	pt-br	Não usar pasta Lixeira
+download attachments	mail	pt-br	Download de anexos
+draft	mail	pt-br	rascunho
 draft folder	mail	pt-br	Pasta Rascunho
 drafts	mail	pt-br	Rascunhos
 drafts folder	mail	pt-br	pasta Rascunhos
@@ -194,6 +197,9 @@ save message to disk	mail	pt-br	Salvar mensagem no disco
 select file(s) from vfs	mail	pt-br	Selecione o arquivo (s) a partir de VFS
 sent	mail	pt-br	Enviado
 sent folder	mail	pt-br	Pasta Enviadas
+set / remove flags	mail	pt-br	Colocar / Remover Bandeiras
+set / remove labels	mail	pt-br	Ajustar / Remover Etiquetas
+set flags	mail	pt-br	Bandeiras de bandeira
 sieve script name	mail	pt-br	nome do script sieve
 signature	mail	pt-br	Assinatura
 size(...->0)	mail	pt-br	Tamanho (...->0)

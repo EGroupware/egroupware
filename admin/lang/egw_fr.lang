@@ -44,7 +44,6 @@ account '%1' deleted.	admin	fr	Compte '%' supprimé.
 account '%1' not found !!!	admin	fr	Le compte %1 n'a pas été trouvé!!!
 account active	admin	fr	Compte actif
 account deleted.	admin	fr	Compte supprimé.
-account editable by user	admin	fr	compte modifiable par l'utilisateur
 account has been created	common	fr	Le compte a été créé.
 account has been deleted	common	fr	Le compte a été supprimé.
 account has been updated	common	fr	Le compte a été mis à jour.
@@ -98,7 +97,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	fr	Nom de l'administrateur
 admin password	admin	fr	Mot de passe administrateur
 admin queue and history	admin	fr	Adminstration des files et historiques
-admin user	admin	fr	Administrateur
 admin username	admin	fr	Nom d'utilisateur de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
@@ -106,8 +104,6 @@ advanced options	admin	fr	Options avancées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué. (3 par défaut)
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée. (15 par défaut)
 aliases	admin	fr	Alias
-aliases+forwards	admin	fr	Alias+Transferts
-aliases, forwarding, quota, ...	admin	fr	Alias,Transferts, Quota,...
 all accounts	admin	fr	Tous les comptes
 all acls	admin	fr	Tous les ACLs
 all applications	admin	fr	Toutes les applications
@@ -119,7 +115,6 @@ allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette 
 allow remote administration from following install id's (comma separated)	admin	fr	Autoriser l'administration à distance depuis les ID d'installation suivantes, séparé par des virgules.
 allow user to set 'remember me' token	admin	fr	AUtoriser les utilisateurs à utiliser "Se souvenir de moi"
 allow users to change forwards	admin	fr	Autoriser les utilisateurs à changer les transferts
-allow users to create further identities	admin	fr	autoriser les utilisateurs à créer d'autres identités
 allow users to create identities for aliases	admin	fr	Autoriser les utilisateurs à créer des identités pour les alias
 allowed just as second factor	admin	fr	autorisé uniquement en second facteur
 alternate email address	admin	fr	Adresse email alternative
@@ -144,14 +139,12 @@ applications run rights updated.	admin	fr	Droits d'execution de l'application mi
 applies the changes	admin	fr	Appliquer les changements
 apply changes	admin	fr	Appliquer les changements
 apply the changes	admin	fr	Appliquer les changements
-archive folder	admin	fr	Répertoire d'archives
 archive: zip or tar	admin	fr	Archiver: zip ou tar
 are you sure you want to %1 mail for selected accounts?	admin	fr	Etes-vous sûr de vouloir %1 email pour les comptes sélectionnés ?
 are you sure you want to delete the application %1 ?	admin	fr	Etes-vous sûr de vouloir supprimer l'application %1 ?
 are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir supprimer ce compte ?
 are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir supprimer cette application ?
 are you sure you want to delete this category ?	common	fr	Etes-vous sûr de vouloir supprimer cette catégorie ?
-are you sure you want to delete this category?	admin	fr	Etes-vous sûr de vouloir supprimer cette catégorie ?
 are you sure you want to delete this global category ?	admin	fr	Etes-vous sûr de vouloir supprimer cette catégorie globale ?
 are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir supprimer ce groupe ?
 are you sure you want to delete this server?	admin	fr	Etes-vous sûr de vouloir supprimer ce serveur ?
@@ -169,7 +162,6 @@ authentication	admin	fr	Authentication
 authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 available placeholders	admin	fr	Mots clés disponibles
-b	admin	fr	B
 back to admin/grouplist	admin	fr	Retour à l'admin / liste des groupes
 back to admin/userlist	admin	fr	Retour à l'admin / liste des utilisateurs
 back to the list	admin	fr	Retour à la liste
@@ -440,20 +432,17 @@ file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 filtered by account	admin	fr	Filtrage par compte
 filtered by group	admin	fr	Filtrage par groupe
-folder	admin	fr	Répertoire
 folder acl	admin	fr	ACL sur le dossier
 for the times above	admin	fr	pour le timing ci-dessus
 for the times below (empty values count as '*', all empty = every minute)	admin	fr	Pour le timing ci-dessous (les valeurs vides comptent comme '*', tout vide = chaque minute)
 forbid users to create identities	admin	fr	Interdire aux utilisateurs de créer des identités
 force selectbox	admin	fr	Forcer la boîte de sélection
 force users to change their password regularily?(empty for no,number for after that number of days	admin	fr	Définir la récurrence du changement forcé de mot de passe. Définir le nombre de jours. Vide = Non
-forced preferences	admin	fr	Préférences forcées
 forward also to	admin	fr	Transférer aussi à
 forward email's to	admin	fr	Transférer les emails à
 forward emails to	admin	fr	Transférer le emails à
 forward only	admin	fr	Seulement transférer
 full name	admin	fr	Nom complet
-gb	admin	fr	Go
 general	admin	fr	Général
 generate certificate	admin	fr	Générer le Certificat
 git clone	admin	fr	Git clone
@@ -497,19 +486,17 @@ icon	admin	fr	Icône
 identity	admin	fr	Identité
 identity deleted	admin	fr	Identité supprimée
 identity saved.	admin	fr	Identité enregistrée.
-identity&amp;signature	admin	fr	Identité&Signature
-identity+signature	admin	fr	Identité+Signature
 idle	admin	fr	Disponible
 if different from email address	admin	fr	Si différent de l'adresse mail
 if no acl records for user or any group the user is a member of	admin	fr	Si pas d'enregistrements dans les droits d'accès pour l'utilisateur ou n'importe quel groupe, l'utilisateur est membre de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire maison et shell de connexion?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	fr	Si vous utilisez SSl ou TLS, vous devez avoir chargé l'extension PHP openssl
+if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	fr	Si vous supprimez l'utilisateur sans sélectionner un compte vers lequel déplacer les données, toutes les entrées sont supprimées !
 if you ignore that error as admin, you should check "%1"!	admin	fr	Si vous ignorer cette erreur en tant qu'administrateur, vous devez cocher "%1" !
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	fr	Si vous spécifiez le port 5190 comme port du serveur SIEVE, vous forcer le SSL pour SIEVE (et le serveur doit le supporter...)
-imap	admin	fr	IMAP
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	fr	Si vous spécifiez le port 5190 comme port du serveur Sieve, vous forcer le SSL pour Sieve (et le serveur doit le supporter...)
+if you wish to have randomly selected images you may upload multiple images.	admin	fr	Si vous souhaitez avoir des images sélectionnées au hasard, vous pouvez télécharger plusieurs images.
 imap admin password	admin	fr	Mot de passe de l'administrateur IMAP
 imap admin user	admin	fr	ID administrateur IMAP
-imap administration	admin	fr	Administration IMAP
 imap c-client version < 2001	admin	fr	IMAP C-Client Version < 2001
 imap server	admin	fr	Serveur IMAP
 imap server closed the connection.	admin	fr	Le serveur IMAP a interrompu la connexion.
@@ -523,8 +510,6 @@ importance	admin	fr	Importance
 in mbyte	admin	fr	en Mo
 inactive	admin	fr	Inactif
 inbound	admin	fr	Entrant
-inbox	admin	fr	Boîte de réception
-incoming mail	admin	fr	Courrier entrant
 initial	admin	fr	Initial
 install crontab	admin	fr	Installer le crontab
 install id	admin	fr	ID d'installation
@@ -544,8 +529,6 @@ invalid value "%1" use yes or no!	admin	fr	Valeur "%1" invalide, utilisez oui ou
 invalid value "%1", use only:	admin	fr	Valeur "%1" invalide, utilisez seulement :
 ip	admin	fr	IP
 jobs	admin	fr	Travaux
-junk folder	admin	fr	Dossier des indésirables
-kb	admin	fr	Ko
 kill	admin	fr	Tuer
 kill session	admin	fr	Tuer la session
 kill these sessions	admin	fr	Tuer ces sessions
@@ -613,7 +596,6 @@ manager	admin	fr	Gestionnaire
 manual entry	admin	fr	Entrée manuelle
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
 maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
-mb	admin	fr	Mo
 mb used	admin	fr	Mo utilisés
 members	admin	fr	Membres
 message has been updated	admin	fr	Le message a été mis à jour
@@ -650,13 +632,12 @@ no permission to add users	admin	fr	Aucune permission pour ajouter des utilisate
 no permission to create groups	admin	fr	Aucune permission pour créer des groupes !
 no plain text part found	admin	fr	aucune section texte plein trouvée
 no profile defined for user %1	admin	fr	Aucun profil défini pour l'utilisateur %1
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	fr	Aucun support Sieve n'a été détecté, corrigez la configuration manuellement ou laissez-le désactivé.
 no supported imap authentication method could be found.	admin	fr	Il n'a été trouvé aucune méthode d'authentification IMAP supportée
 non profit: clubs, associations, ...	admin	fr	Sans but lucratif : clubs, associations, ...
 not enabled	admin	fr	Désactivé
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
-notification folders updated.	admin	fr	Dossiers de notification mis à jour
 notification mail	admin	fr	Email de notification
-notify about new mail in this folders	admin	fr	Notifer des nouveaux message dans ces dossiers
 notify user by email	admin	fr	Notifier l'utilisateur par email
 notifying account "%1" %2 failed!	admin	fr	Echec de la notification du compte "%1" %2 !
 number applications serially	admin	fr	Numéroter les applications séquentiellement
@@ -677,7 +658,6 @@ order	admin	fr	Ordre
 organisation	admin	fr	Organisation
 other security configuration	admin	fr	Autres paramètres de sécurité
 outbound	admin	fr	sortant
-outgoing mail	admin	fr	courrier sortant
 own categories	admin	fr	Catégories personnelles
 own install id	admin	fr	ID d'installation propre
 own install id:	admin	fr	ID d'installation propre :
@@ -723,14 +703,12 @@ port	admin	fr	port
 postfix with ldap	admin	fr	Postfix avec support LDAP
 postpone for	admin	fr	Reporter à
 preferences	admin	fr	Préférences
-preferences saved.	admin	fr	Préférences enregistrées.
 primary group	admin	fr	Groupe primaire
 profile access rights	admin	fr	Droits d'accès du profil
 profile is active	admin	fr	Le profil est actif
 profile list	admin	fr	Liste des profils
 profile name	admin	fr	Nom de profil
 qmaildotmode	admin	fr	qmaildotmode
-quota (mb)	admin	fr	Quota (Mo)
 quota settings	admin	fr	Paramètres de quota
 quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Entrez à nouveau le mot de passe
@@ -755,7 +733,6 @@ rows	admin	fr	Lignes
 rpm or debian package	admin	fr	Paquet RPM ou Debian
 run	admin	fr	exécuter
 run asynchronous services	admin	fr	Exécuter les Services asynchrones
-s/mime	admin	fr	S/MIME
 save as default	admin	fr	Sauvegarder comme défaut
 save changes	admin	fr	Sauvegarder les modifications
 save the category	admin	fr	Enregistrer la catégorie
@@ -785,7 +762,6 @@ select where you want to store/retrieve user accounts	admin	fr	Choisissez où vo
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fr	Choisissez à quel endroit cette application devra apparaître dans la barre de navigation, du plus bas (ou à gauche) au plus haut (ou à droite)
 selectbox	admin	fr	Boîte de sélection
 send using this email-address	admin	fr	Envoyer en utilisant cette adresse email
-sent folder	admin	fr	Dossiers Envoyés
 server %1 has been updated	admin	fr	Le serveur %1 a été mis à jour
 server list	admin	fr	Liste de serveurs
 server password	admin	fr	Mot de passe du serveur
@@ -793,7 +769,6 @@ server settings	admin	fr	Configuration du serveur
 server type(mode)	admin	fr	Type de serveur (mode)
 server url	admin	fr	URL du serveur
 server username	admin	fr	Nom d'utilisateur du serveur
-serverside filtering	admin	fr	filtrage côté serveur
 sessions	admin	fr	Sessions
 sessions last 30 days	admin	fr	Sessions des 30 derniers jours
 set a random password	admin	fr	Définir un mot de passe aléatoire
@@ -808,16 +783,12 @@ show error log	admin	fr	Afficher le journal des erreurs
 show members	admin	fr	Afficher les membres
 show phpinfo()	admin	fr	Afficher phpinfo()
 show session ip address	admin	fr	Afficher les adresses IP des sessions
-sieve	admin	fr	Sieve
-sieve server	admin	fr	Serveur Sieve
 sieve server hostname or ip address	admin	fr	Nom ou adresse IP du serveur Sieve
 sieve server port	admin	fr	Port Sieve
 sieve settings	admin	fr	Paramètres Sieve
 site	admin	fr	Site
 skip imap	admin	fr	Sauter la configuration IMAP
 skipping imap configuration!	admin	fr	Sauter la configuration IMAP !
-smime	admin	fr	SMIME
-smtp	admin	fr	SMTP
 smtp authentication	admin	fr	Authentication SMTP
 smtp options	admin	fr	Options SMTP
 smtp server	admin	fr	Serveur SMTP
@@ -841,10 +812,6 @@ start	admin	fr	Début
 start testjob!	admin	fr	Démarrer le Travail de test!
 starts with	admin	fr	commence par
 stationery	admin	fr	Entrepôt
-step 1: imap - incoming mail	admin	fr	Etape 1 : IMAP - Courrier entrant
-step 2: folder	admin	fr	Etape 2 : Dossier
-step 3: sieve - server side mail filtering	admin	fr	Etape 3 : Sieve - filtrage côté serveur
-step 4: smtp - outgoing mail	admin	fr	Etape 4 : SMTP - Courrier sortant
 strictly required, user can not login without	admin	fr	absolument nécessaire, l'utilisateur ne pas se connecter sans
 submit changes	admin	fr	Soumettre les changements
 submit displayed information?	admin	fr	Envoyer les informations affichées
@@ -858,7 +825,6 @@ successful connected to %1 server%2.	admin	fr	Connexion réussie sur %1 serveur%
 switch it off, if users are randomly thrown out	admin	fr	Décocher si des utilisateurs sont déconnectés par hasard
 template selection	admin	fr	Sélection du style
 templates	admin	fr	Templates
-templates folder	admin	fr	Dossiers modèles
 text entry	admin	fr	Entrée de texte
 that application name already exists.	admin	fr	Ce nom d'application existe déjà.
 that application order must be a number.	admin	fr	Cet ordre d'application doit être un nombre.
@@ -896,7 +862,6 @@ total of %1 accounts deleted.	admin	fr	Total de %1 compte(s) supprimé(s)
 total of %1 id's changed.	admin	fr	Total de %1 id changés
 total records	admin	fr	Enregistrements totaux
 translation	admin	fr	Traduction
-trash folder	admin	fr	Dosseir Corbeille
 true	admin	fr	Vrai
 trust level	admin	fr	Niveau de confiance
 trust relationship	admin	fr	Relation de confiance
@@ -973,7 +938,6 @@ we ask for the data to improve our profile in the press and to get a better unde
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fr	Nous n'enregistrons aucune donnée concernant votre identité.
 who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé ?
 who would you like to transfer records owned by the deleted user to?	admin	fr	Souhaitez vous aussi transférer les enregistrements dont l'utilisateur est propriétaire ?
-wizard	admin	fr	Assistant
 would you like egroupware to cache the egw info array ?	admin	fr	Voulez-vous qu'EGroupware mette le tableau d'informations egw en cache ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	fr	Voulez-vous que EGroupware vérifie les mises à jour<br>quand un administrateur se connecte ?
 would you like egroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que EGroupware vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?

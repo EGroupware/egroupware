@@ -1,6 +1,7 @@
 (no subject)	mail	da	(ingen emne)
 add to addressbook	mail	da	tilføj til adressebog
 always show html emails	mail	da	Vis altid HTML e-mails
+answered	mail	da	besvaret
 attachments	mail	da	vedhæftet filer
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
@@ -19,6 +20,10 @@ does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
 don't use sent	mail	da	Brug ikke Sendt
 don't use trash	mail	da	Brug ikke skraldespand
+draft	mail	da	Udkast
+draft folder	mail	da	Udkast til mappe
+drafts	mail	da	Udkast
+drafts folder	mail	da	Mappe med udkast
 edit account	mail	da	Redigér konto
 empty trash	mail	da	tøm skraldespanden
 enable	mail	da	aktivere
@@ -63,6 +68,7 @@ replyto	mail	da	Besvar Til
 save all	mail	da	Gem alle
 select all	mail	da	Vælg alle
 sent folder	mail	da	Sendt Mappe
+set flags	mail	da	Markér e-mail som
 signature	mail	da	Signatur
 size(...->0)	mail	da	Størrelse (...->0)
 size(0->...)	mail	da	Størrelse (0->...)

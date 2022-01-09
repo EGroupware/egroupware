@@ -215,8 +215,8 @@ check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 fo
 children	admin	en	Children
 clear cache and register hooks	admin	en	Clear cache and register hooks
 clear credentials	admin	en	Clear credentials
-clear security tokens	admin	en	Clear security tokens
 clear mail credentials	admin	en	Clear mail credentials
+clear security tokens	admin	en	Clear security tokens
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	en	Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)
@@ -522,7 +522,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
 if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	en	If you delete the user without selecting an account to move the data to, all entries get deleted!
 if you ignore that error as admin, you should check "%1"!	admin	en	If you ignore that error as admin, you should check "%1"!
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as Sieve server port, you enforce ssl for Sieve (server must support that)
 if you wish to have randomly selected images you may upload multiple images.	admin	en	If you wish to have randomly selected images you may upload multiple images.
 imap admin password	admin	en	IMAP admin password
 imap admin user	admin	en	IMAP admin user
@@ -661,7 +661,7 @@ no permission to add users	admin	en	No permission to add users!
 no permission to create groups	admin	en	No permission to create groups!
 no plain text part found	admin	en	no plain text part found
 no profile defined for user %1	admin	en	No profile defined for user %1
-no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No sieve support detected, either fix configuration manually or leave it switched off.
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No Sieve support detected, either fix configuration manually or leave it switched off.
 no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
 not enabled	admin	en	Not enabled

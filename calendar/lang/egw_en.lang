@@ -164,7 +164,7 @@ delete this recurrence	calendar	en	Delete this recurrence
 delete this series of recurring events	calendar	en	Delete this series of recurring events
 deleted	calendar	en	Deleted.
 deny resources reservation for private events	calendar	en	Deny resources reservation for private events
-directory with documents to insert entries	calendar	en	Directory with documents to insert entries
+directory with documents to insert entries	calendar	en	Folder with documents to insert entries
 display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
@@ -309,7 +309,7 @@ ical successful imported	calendar	en	iCal successful imported.
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	en	If you specify a folder (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
 ignore conflict	calendar	en	Ignore conflict

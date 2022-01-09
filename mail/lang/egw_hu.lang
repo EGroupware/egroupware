@@ -6,6 +6,7 @@ all of	mail	hu	összes innnen
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben
 allways a new window	mail	hu	mindig új ablak
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
+answered	mail	hu	válaszolt
 any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
 attachments	mail	hu	Mellékletek
@@ -30,9 +31,9 @@ display of html emails	mail	hu	HTML email-ek megjelenítése
 display only when no plain text is available	mail	hu	Csak akkor jelenítse meg, ha nincs egyszerű szöveg
 displaying html messages is disabled	mail	hu	HTML levelek megjelenítése tiltva
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	hu	Szeretnél megerősítést a kijelölt üzenetek áthelyezése előtt?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett SIEVE esetén is)
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett SIEVE esetén is)
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét? (engedélyezett SIEVE esetén is)
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett Sieve esetén is)
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett Sieve esetén is)
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét? (engedélyezett Sieve esetén is)
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	hu	Meg szeretnéd akadályozni a mappák létrehozásának és módosításának lehetőségét? (létrehozás, hozzáférés korlátozás, feliratkozás)
 does not contain	mail	hu	nem tartalmazza
 does not exist on imap server.	mail	hu	nincs létrehozva az IMAP szerveren
@@ -42,6 +43,8 @@ don't use draft folder	mail	hu	Ne használd a 'Vázlat' mappát
 don't use sent	mail	hu	Ne használja a 'Elküldött' mappát
 don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
 don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
+download attachments	mail	hu	Letöltés mellékletek
+draft	mail	hu	Vázlat
 draft folder	mail	hu	vázlat mappa
 drafts	mail	hu	Piszkozatok
 edit account	mail	hu	Azonosító szerkesztése
@@ -133,7 +136,9 @@ select all	mail	hu	Minden kiválasztása
 sender	mail	hu	Feladó
 sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
-sieve script name	mail	hu	sieve szűrő szkript neve
+set flags	mail	hu	Jelölje meg az e-mailt
+sieve	mail	hu	Sieve
+sieve script name	mail	hu	Sieve szűrő szkript neve
 signature	mail	hu	Aláírás
 size(...->0)	mail	hu	Méret (...->0)
 size(0->...)	mail	hu	Méret (0->...)

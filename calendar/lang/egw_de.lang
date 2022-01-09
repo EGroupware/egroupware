@@ -164,7 +164,7 @@ delete this recurrence	calendar	de	Diese Wiederholung löschen
 delete this series of recurring events	calendar	de	Diese Serie von wiederholenden Terminen löschen
 deleted	calendar	de	Gelöscht
 deny resources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
-directory with documents to insert entries	calendar	de	Verzeichnis mit Dokumenten zum Einfügen von Kalendereinträgen
+directory with documents to insert entries	calendar	de	Ordner mit Dokumenten zum Einfügen von Kalendereinträgen
 display holidays or birthdays as events in dayview	calendar	de	Zeige Feier- oder Geburtstage in der Tagesansicht als Termine
 display in header	calendar	de	Im Titel anzeigen
 display status of events	calendar	de	Status von Terminen anzeigen
@@ -309,7 +309,7 @@ ical successful imported	calendar	de	iCal erfolgreich importiert
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	de	Wenn Sie hier ein Ordner (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify an export definition, it will be used when you export	calendar	de	Wählen Sie eine Export Definition für den Export.
 ignore conflict	calendar	de	Konflikt ignorieren

@@ -512,7 +512,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	es-es	Si usa SSL o TLS, debe tener cargada la extensión openssl de PHP.
 if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	es-es	Si elimina al usuario sin seleccionar una cuenta para mover los datos, ¡todas las entradas se eliminarán!
 if you ignore that error as admin, you should check "%1"!	admin	es-es	Si ignora ese error como administrador, ¡debería marcar "%1"!
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	es-es	si especifica el puerto 5190 como puerto del servidor de sieve, aplicará SSL para el sieve (el servidor debe admitirlo)
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	es-es	si especifica el puerto 5190 como puerto del servidor de Sieve, aplicará SSL para el Sieve (el servidor debe admitirlo)
 if you wish to have randomly selected images you may upload multiple images.	admin	es-es	Si desea tener imágenes seleccionadas al azar, puede cargar varias imágenes.
 imap admin password	admin	es-es	contraseña del administrador IMAP
 imap admin user	admin	es-es	usuario administrador IMAP
@@ -651,7 +651,7 @@ no permission to add users	admin	es-es	No tiene permiso para añadir usuarios
 no permission to create groups	admin	es-es	No tiene permiso para crear grupos
 no plain text part found	admin	es-es	No se encontró ninguna parte con texto sencillo
 no profile defined for user %1	admin	es-es	No se ha definido un perfil para el usuario %1
-no sieve support detected, either fix configuration manually or leave it switched off.	admin	es-es	No se detectó soporte de sieve, arregle la configuración manualmente o déjelo apagado.
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	es-es	No se detectó soporte de Sieve, arregle la configuración manualmente o déjelo apagado.
 no supported imap authentication method could be found.	admin	es-es	No se pudo encontrar ningún método soportado de identificación IMAP.
 non profit: clubs, associations, ...	admin	es-es	Sin ánimo de lucro: clubs, asociaciones...
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl

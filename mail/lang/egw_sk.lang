@@ -6,8 +6,6 @@
 %1 is not writable by you!	mail	sk	na %1 NEmáte právo zápisu!
 %1 mails selected	mail	sk	%1 správ označených
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sk	Prosím, zvážte to. Preposlanie správy na mnoho adries nebude fungovať ak počet adries presiahne určený limit. Pre väčšinu poštových serverov je maximum 4 adresy. Informácie o vašom limite si vyžiadajte od správcu vášho poštového servera.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	sk	(*) Dajú sa použiť žolíky (*,?). Ak chcete hľadať práve tieto znaky (* alebo ?), musíte pred ne vložiť opačnú lomku (\). Keď zaškrtnete "použiť regulérne výrazy", musíte používať platné regulérne výrazy.
-sieve_edit_instructions	mail	sk	(*) Dajú sa použiť žolíky (*,?). Ak chcete hľadať práve tieto znaky (* alebo ?), musíte pred ne vložiť opačnú lomku (\). Keď zaškrtnete "použiť regulérne výrazy", musíte používať platné regulérne výrazy. Výkričník sa používa ako logický negátor (znak NIE). Ak chcete použiť výkričník ako bežný znak, musíte predeň vložiť opačnú lomku (\).
 (leave empty for no quota)	mail	sk	(Ak nechcete kvótu, ponechajte prázdne)
 (no subject)	mail	sk	(bez predmetu)
 (not connected)	mail	sk	(nepripojené)
@@ -73,7 +71,6 @@ attachments	mail	sk	Prílohy
 attachments, ...	mail	sk	prílohy, ...
 authentication	mail	sk	Overenie
 available personal email-accounts/profiles	mail	sk	Dostupné osobné e-mailové účty/profily
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. \n\r \n\r would you like to proceed?	mail	sk	Upozornenie: pridaním všetkých označených súborov do režimu %1, rovnako sa zmenia aj všetky existujúce prílohy v zozname do režimu %2. \n\r \n\r Chcete pokračovať?
 be aware that all attachments will be sent as %1!	mail	sk	Upozornenie: všetky prílohy budú odoslané ako %1!
 before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas písania
 blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
@@ -157,9 +154,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	sk	Naozaj chcete nastaviť menovku %1 pre VŠETKY správy v súčasnom zobrazení?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sk	Vyžadovať potvrdenie pred priložením vybraných správ k e-mailu?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	sk	Vyžadovať potvrdenie pred presunutím vybraných správ do iného priečinka?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre filtrovacie pravidlá (, aj keď je povolený SIEVE)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre e-mailové upozornenia na iné e-mailové adresy (, aj keď je povolený SIEVE)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre správy o absencii/dovolenke (aj keď je povolený SIEVE)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre filtrovacie pravidlá (, aj keď je povolený Sieve)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre e-mailové upozornenia na iné e-mailové adresy (, aj keď je povolený Sieve)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	sk	Zabrániť úpravám/nastaveniam pre správy o absencii/dovolenke (aj keď je povolený Sieve)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	sk	Zabrániť správe priečinkov (vytváranie, prístupové práva A členstvo)?
 does not contain	mail	sk	Neobsahuje
 does not exist on imap server.	mail	sk	Neexistuje na IMAP serveri.
@@ -529,6 +526,7 @@ sieve connection status	mail	sk	Stav spojenia Sieve
 sieve not activated	mail	sk	Sieve nie je zapnutý
 sieve script name	mail	sk	Názov Sieve skriptu
 sieve server	mail	sk	Sieve server
+sieve_edit_instructions	mail	sk	(*) Dajú sa použiť žolíky (*,?). Ak chcete hľadať práve tieto znaky (* alebo ?), musíte pred ne vložiť opačnú lomku (\). Keď zaškrtnete "použiť regulérne výrazy", musíte používať platné regulérne výrazy. Výkričník sa používa ako logický negátor (znak NIE). Ak chcete použiť výkričník ako bežný znak, musíte predeň vložiť opačnú lomku (\).
 sign your message with smime certificate	mail	sk	Podpísať správu pomocou S/MIME certifikátu
 signature	mail	sk	Podpis
 signature at top	mail	sk	Podpis navrchu

@@ -6,8 +6,6 @@
 %1 is not writable by you!	mail	es-es	¡NO tiene permiso de escritura en %1!
 %1 mails selected	mail	es-es	%1 correos seleccionados
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	es-es	(*) Por favor considere, reenviar a varias direcciones no funcionará si el número de direcciones excede el límite. Para la mayoría de los servidores de correo, el límite es 4 por defecto; póngase en contacto con el administrador del servidor de correo para obtener más información.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	es-es	(*) Se pueden utilizar comodines (*,?). Si está intentando igualar * o? en sí, debe escapar estos con una barra invertida (\). Si marca "Utilizar expresiones regulares" debe utilizar expresiones regulares válidas.
-sieve_edit_instructions	mail	es-es	(*) Se pueden utilizar comodines (*,?). Si está intentando igualar * o? en sí, debe escapar estos con una barra invertida (\). Si marca "Utilizar expresiones regulares" debe utilizar expresiones regulares válidas. Con el fin de escapar de signo de exclamación (!) en el inicio no siendo usado "NO", utilizar regex y barra invertida (\) (e.g. \!)
 (leave empty for no quota)	mail	es-es	(Dejar vacío para sin cuota)
 (no subject)	mail	es-es	(sin asunto)
 (not connected)	mail	es-es	(no conectado)
@@ -54,6 +52,7 @@ always allow external sources from %1	mail	es-es	Siempre permitir fuentes extern
 always show html emails	mail	es-es	Mostrar siempre los correos HTML
 an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (lista de control de acceso) de la cuenta %1.
 and the rule with priority %1, now got the priority %2	mail	es-es	Y la regla con prioridad% 1, ahora tiene la prioridad %2
+answered	mail	es-es	respondió
 any of	mail	es-es	cualquiera de
 any status	mail	es-es	cualquier estado
 append	mail	es-es	adjuntar
@@ -153,9 +152,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	es-es	¿Desea realmente cambiar la etiqueta %1 para TODOS los mensajes en la vista actual?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	es-es	¿Desea que se le pida confirmación antes de adjuntar los mensajes seleccionados al correo nuevo?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	es-es	¿Desea que se le pida confirmación antes de mover los mensajes seleccionados a otra carpeta?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de las reglas de filtrado (incluso si SIEVE está activado)?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación a otras direcciones si llegan correos (incluso si SIEVE está activado)?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación de ausencia o vacaciones (incluso si SIEVE está activado)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de las reglas de filtrado (incluso si Sieve está activado)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación a otras direcciones si llegan correos (incluso si Sieve está activado)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación de ausencia o vacaciones (incluso si Sieve está activado)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	es-es	¿Desea prevenir la gestión de carpetas (creación, derechos de acceso Y suscripción)?
 does not contain	mail	es-es	No contiene
 does not exist on imap server.	mail	es-es	No existe en el servidor IMAP
@@ -166,6 +165,7 @@ don't use sent	mail	es-es	No usar Enviados
 don't use template folder	mail	es-es	No usar la carpeta de plantillas
 don't use trash	mail	es-es	No usar Papelera
 download attachments	mail	es-es	Descargas adjuntos
+draft	mail	es-es	Borrador
 draft folder	mail	es-es	carpeta de borradores
 drafts	mail	es-es	Borradores
 drafts folder	mail	es-es	Carpeta de borradores
@@ -459,8 +459,11 @@ send files as	mail	es-es	Enviar archivos como
 sender	mail	es-es	remitente
 sent	mail	es-es	Enviados
 sent folder	mail	es-es	carpeta de enviados
+serverside filterrules (sieve) are not activated	mail	es-es	Las reglas de filtrado del lado del servidor (Sieve) no están activadas
+serverside vacationnotice (via sieve) are not activated	mail	es-es	Los mensajes de aviso de ausencia del servidor (vía Sieve) no están activados
 set / remove flags	mail	es-es	Establecer / quitar marcas
 set / remove labels	mail	es-es	Establecer / quitar etiquetas
+set flags	mail	es-es	Marcar el correo electrónico como
 set it as default:	mail	es-es	establezca como predeterminado:
 should new messages show up on the home page	mail	es-es	Nuevos mensajes deberían aparecer en la página principal
 show	mail	es-es	Mostrar
@@ -471,7 +474,12 @@ show horizontal	mail	es-es	mostrar horizontal
 show horizontal, hide if none selected	mail	es-es	mostrar horizontal, ocultar si no hay seleccionados
 show new messages on home page	mail	es-es	mostrar nuevos mensajes en la página principal
 show vertical	mail	es-es	mostrar vertical
+sieve	mail	es-es	Sieve
+sieve connection status	mail	es-es	Estado de la conexión Sieve
+sieve not activated	mail	es-es	Sieve no está activado
 sieve script name	mail	es-es	nombre del script sieve
+sieve server	mail	es-es	Servidor Sieve
+sieve_edit_instructions	mail	es-es	(*) Se pueden utilizar comodines (*,?). Si está intentando igualar * o? en sí, debe escapar estos con una barra invertida (\). Si marca "Utilizar expresiones regulares" debe utilizar expresiones regulares válidas. Con el fin de escapar de signo de exclamación (!) en el inicio no siendo usado "NO", utilizar regex y barra invertida (\) (e.g. \!)
 signature	mail	es-es	Firma
 signature at top	mail	es-es	firma en la parte superior
 signature position and visibility	mail	es-es	Posición y visibilidad de la firma

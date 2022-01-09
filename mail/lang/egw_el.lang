@@ -50,6 +50,7 @@ always allow external sources from %1	mail	el	Να επιτρέπονται πά
 always show html emails	mail	el	να εμφανίζονται πάντοτε τα μυνήματα τύπου HTML
 an error happend while trying to remove acl rights from the account %1!	mail	el	Συνέβη κάποιο σφάλμα κατά την προσπάθεια αφαίρεσης δικαιωμάτων ACL από τον λογαριασμό %1!
 and the rule with priority %1, now got the priority %2	mail	el	Και ο κανόνας με την προτεραιότητα %1 τώρα έλαβε την προτεραιότητα %2
+answered	mail	el	απάντησε το
 any of	mail	el	οποιοδήποτε
 any status	mail	el	οποιαδήποτε κατάσταση
 append	mail	el	προσάρτηση
@@ -156,6 +157,7 @@ don't use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντ
 don't use template folder	mail	el	Απενεργοποίηση φακέλου προτύπων
 don't use trash	mail	el	Απενεργοποίηση κάδου απορριμάτων
 download attachments	mail	el	Λήψη συνημμένων
+draft	mail	el	Σχέδιο
 draft folder	mail	el	Φάκελος για προσχέδια
 drafts	mail	el	Προσχέδια
 drafts folder	mail	el	φάκελος για προσχέδια
@@ -413,6 +415,7 @@ send files as	mail	el	Αποστολή αρχείου ως
 sender	mail	el	αποστολέας
 sent	mail	el	Αποστολή
 sent folder	mail	el	Φάκελος σταλθέντων
+set flags	mail	el	Σημειώστε το e-mail ως
 set it as default:	mail	el	ορίστε το ως προεπιλογή:
 show	mail	el	εμφάνιση
 show all addresses	mail	el	Εμφάνιση όλων των διευθύνσεων
@@ -426,10 +429,10 @@ show them this time only	mail	el	Εφάνισε τα μόνο αυτή τη φο
 show vertical	mail	el	εμφάνιση κάθετα
 show/hide preview pane in mail list view	mail	el	Εμφάνιση/απόκρυψη περιοχής πορεπικόπισης στην λίστα των μηνυμάτων
 sieve	mail	el	Sieve
-sieve connection status	mail	el	Κατάσταση επικοινωνίας sieve
-sieve not activated	mail	el	Η λειτουργία sieve δεν είναι ενεργοποιημένη
-sieve script name	mail	el	όνομα sieve σεναρίου
-sieve server	mail	el	Εξυπηρετητής sieve
+sieve connection status	mail	el	Κατάσταση επικοινωνίας Sieve
+sieve not activated	mail	el	Η λειτουργία Sieve δεν είναι ενεργοποιημένη
+sieve script name	mail	el	όνομα Sieve σεναρίου
+sieve server	mail	el	Εξυπηρετητής Sieve
 sign your message with smime certificate	mail	el	Εφαρμόστε ένα πιστοποιητικό  S/MIME στο μήνυμά σας
 signature	mail	el	Υπογραφή
 signature at top	mail	el	υπογραφή στο πάνω μέρος

@@ -156,7 +156,7 @@ deletes this field	infolog	de	löscht dieses Feld
 deletes this status	infolog	de	löscht diesen Status
 description	infolog	de	Beschreibung
 determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
-directory with documents to insert entries	infolog	de	Verzeichnis mit Dokumenten zum Einfügen von InfoLogs
+directory with documents to insert entries	infolog	de	Ordner mit Dokumenten zum Einfügen von InfoLogs
 disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu löschen
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	Wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
 do you want a notification if items owned by groups you are part of get updated ?	infolog	de	Wollen Sie eine Benachrichtigung erhalten, wenn Einträge einer Benutzergruppe aktualisiert werden, deren Sie angehören?
@@ -234,7 +234,7 @@ id	infolog	de	ID
 id#	infolog	de	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Ordner (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export-Definition für den Export
 import next set	infolog	de	Nächsten Satz importieren

@@ -1,8 +1,6 @@
 %1 attachments	mail	nl	%1 bijlagen
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	nl	(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions.
-sieve_edit_instructions	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
 (not connected)	mail	nl	(niet verbonden)
@@ -31,6 +29,7 @@ allow users to create further identities	mail	nl	Sta gebruikers toe meer identit
 allways a new window	mail	nl	altijd in een nieuw venster
 always show html emails	mail	nl	Altijd HTML-emails weergeven
 and the rule with priority %1, now got the priority %2	mail	nl	Regel met pioriteit %1, heeft nu prioriteit %2
+answered	mail	nl	beantwoord
 any of	mail	nl	iedere van
 any status	mail	nl	iedere status
 append	mail	nl	Voeg toe
@@ -96,12 +95,11 @@ do not auto create folders	mail	nl	Maak niet automatisch mappen aan
 do you really want to apply %1 to all messages in the current view?	mail	nl	Wilt u werkelijk ALLE berichten %1 in het huidige overzicht ?
 do you really want to delete folder %1 ?	mail	nl	Wilt u werkelijk map %1 verwijderen
 do you really want to mark all messages as read in the current folder?	mail	nl	Wilt u werkelijk ALLE berichten markeren als gelezen in de huidige map?
-do you really want to toggle flag %1 for all messages in current view?	mail	nl	Wilt u werkelijk ALLE berichten toggle %1 in het huidig overzicht ?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	nl	Wilt u om bevestiging gevraagd worden voordat u het geslecteerde bericht aan nieuwe berichten toevoegt ?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	nl	Wilt u een bevestigingsvraag krijgen voordat de geselecteerde berichten naar een andere folder worden verplaatst?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van filters op regels voorkomen (, zelfs als SIEVE actief is)
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van meldingen van berichten van andere adressen voorkomen, als een bericht wordt ontvangen(; zelfs als SIEVE actief is)
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van niet aanwezig/vakantie berichten voorkomen (, zelfs als SIEVE actief is)
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van filters op regels voorkomen (, zelfs als Sieve actief is)
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van meldingen van berichten van andere adressen voorkomen, als een bericht wordt ontvangen(; zelfs als Sieve actief is)
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van niet aanwezig/vakantie berichten voorkomen (, zelfs als Sieve actief is)
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	nl	Wilt het beheren van mappen voorkomen (aanmaken, toegangsrechten en abonneren) ?
 does not contain	mail	nl	bevat niet
 does not exist on imap server.	mail	nl	bestaat niet op IMAP server.
@@ -111,6 +109,8 @@ don't use draft folder	mail	nl	Concepten map niet gebruiken
 don't use sent	mail	nl	'Map Verzonden' niet gebruiken
 don't use template folder	mail	nl	Sjablonen map niet gebruiken
 don't use trash	mail	nl	'Prullenmand' niet gebruiken
+download attachments	mail	nl	Bijlagen downloaden
+draft	mail	nl	Concept
 draft folder	mail	nl	concepten map
 drafts	mail	nl	Concepten
 drafts folder	mail	nl	Concept map
@@ -137,7 +137,6 @@ error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opg
 error: could not save rule	mail	nl	Fout: Kon regel niet bewaren
 error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden
 error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond
-error:could not save the acl because some names are empty	mail	nl	Fout: Kan de ACL niet bewaren! Sommige namen zijn leeg !
 esync will fail without a working email configuration!	mail	nl	eSync zal NIET WERKEN zonder een eMail configuratie
 event details follow	mail	nl	Afspraak details volgen
 everyone	mail	nl	Iedereen
@@ -174,7 +173,6 @@ forward inline	mail	nl	doorsturen in het bericht
 forward messages to:	mail	nl	Stuur berichten door aan:
 forward messages:	mail	nl	Suur bercihten door :
 forward to	mail	nl	doorsturen naar
-forward to address:	mail	nl	Stuur door aan adres
 forwards	mail	nl	Doorgestuurd
 from	mail	nl	Van
 from(a->z)	mail	nl	Van (A->Z)
@@ -359,9 +357,11 @@ sender	mail	nl	Afzender
 sent	mail	nl	Verzonden
 sent folder	mail	nl	Verzondenmap
 server supports special-use folders	mail	nl	Server ondersteund Speciaal gebruik mappen
-serverside filterrules (sieve) are not activated	mail	nl	Filter regels ISieve) zijn niet geactiveerd op de Server
+serverside filterrules (sieve) are not activated	mail	nl	Filter regels (Sieve) zijn niet geactiveerd op de Server
+serverside vacationnotice (via sieve) are not activated	mail	nl	Serverside afwezigheidsberichten (via Sieve) zijn niet geactiveerd
 set / remove flags	mail	nl	Maak / Verwijder flags
 set / remove labels	mail	nl	Maak / Verwijder labels
+set flags	mail	nl	Markeer e-mail als
 set it as default:	mail	nl	Maak dit standaard
 should new messages show up on the home page	mail	nl	Moeten nieuwe bercihten getoond worden op beginpagina
 show all folders	mail	nl	Toon alle mappen
@@ -374,6 +374,7 @@ sieve connection status	mail	nl	Status Sieve connectie
 sieve not activated	mail	nl	Sieve niet geactiveerd
 sieve script name	mail	nl	sieve script naam
 sieve server	mail	nl	Sieve server
+sieve_edit_instructions	mail	nl	*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the begining not being used as "NOT", use regex and backslash (\) (e.g. \!)
 signature	mail	nl	Handtekening
 signature at top	mail	nl	Ondertekeing bovenaan
 size(...->0)	mail	nl	Grootte (...->0)
