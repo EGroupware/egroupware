@@ -1048,7 +1048,7 @@ var etemplate2 = /** @class */ (function () {
                     if (data['open_target'] && !uniqueId.match(data['open_target'])) {
                         uniqueId = data.DOMNodeID.replace('.', '-') + '-' + data['open_target'];
                     }
-                    var et2 = new etemplate2(node, data.data.menuaction, uniqueId);
+                    var et2 = new etemplate2(node, data.menuaction, uniqueId);
                     et2.load(data.name, data.url, data.data, null, null, null, data['fw-target']);
                     return true;
                 }

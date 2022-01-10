@@ -159,9 +159,6 @@ class Request
 			case 'etemplate':	// eg. ajax code in an eTemplate widget
 				$menuaction = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
 				break;
-			case 'et2_process':
-				$menuaction = ($className=Api\Etemplate::class).'::'.($functionName='ajax_process_content');
-				break;
 			case 'template':	// calling current template / framework object
 				$menuaction = $appName.'.'.$className.'.'.$functionName;
 				$className = get_class($GLOBALS['egw']->framework);
