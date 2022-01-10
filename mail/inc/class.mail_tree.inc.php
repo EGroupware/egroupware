@@ -543,9 +543,10 @@ class mail_tree
 	 * Build folder tree parent identity label
 	 *
 	 * @param array $_account
+	 * @param bool $_fullString = true full or false=NamePart only is returned
 	 * @return string
 	 */
-	static function getIdentityName ($_account)
+	static function getIdentityName ($_account, bool $_fullString=true)
 	{
 		$identLabel = $GLOBALS['egw_info']['user']['preferences']['mail']['identLabel'];
 		$name = array();
@@ -567,12 +568,12 @@ class mail_tree
 
 		if ($identLabel & self::ORG_NAME_EMAIL)
 		{
-			$name[] = $_account['ident_org']." | ".$_account['ident_realname'].' '.' <'.$_account['ident_email'].'>';
+			$name[] = $_account['ident_org']." | ".$_account['ident_realname'].($_fullString ? ' '.' <'.$_account['ident_email'].'>' : '');
 		}
 
 		if ($identLabel & self::IDENT_EMAIL || empty($name))
 		{
-			if (strpos($_account['ident_email'], '@') !== false || trim($_account['ident_email']) !='')
+			if ($_fullString && (strpos($_account['ident_email'], '@') !== false || trim($_account['ident_email']) !=''))
 			{
 				$name[] = ' <'.$_account['ident_email'].'>';
 			}
