@@ -119,7 +119,7 @@ abstract class Extra
 		self::$extra['window-close'] = $alert_msg ? $alert_msg : true;
 
 		// are we in ajax_process_content -> just return extra data, with close instructions
-		if (preg_match('/(Etemplate|etemplate_new)(::|\.)ajax_process_content/', $_GET['menuaction']))
+		if (preg_match('/(Etemplate::ajax_process_content|(::|\.)et2_process)$/', $_GET['menuaction']))
 		{
 			$response = Json\Response::get();
 			$response->generic('et2_load', self::get_extra());
