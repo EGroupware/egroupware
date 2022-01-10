@@ -199,6 +199,7 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			super(...args);
 
+			this.disabled = false;
 			this.addEventListener("click", this._handleClick.bind(this));
 		}
 
@@ -267,14 +268,7 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set_disabled(value : boolean)
 		{
-			if(value)
-			{
-				this.setAttribute("disabled", "")
-			}
-			else
-			{
-				this.removeAttribute("disabled");
-			}
+			this.disabled = value;
 		}
 
 		/**
@@ -1188,7 +1182,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		}
 
 		// Set as attribute or property, as appropriate
-		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect)
+		if(widget.getAttributeNames().indexOf(attribute) >= 0/* || property.reflect*/)
 		{
 			// Set as attribute (reflected in DOM)
 			widget.setAttribute(attribute, attrValue);
