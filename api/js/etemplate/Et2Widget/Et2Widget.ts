@@ -471,7 +471,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			let widget;
-			if(undefined == window.customElements.get(_nodeName))
+			if(undefined == window.customElements.get(_node.nodeName.toLowerCase()))
 			{
 				// Get the constructor - if the widget is readonly, use the special "_ro"
 				// constructor if it is available
@@ -496,10 +496,6 @@ const Et2WidgetMixin = (superClass) =>
 			}
 			else
 			{
-				if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
-				{
-					_nodeName += "_ro";
-				}
 				widget = loadWebComponent(_nodeName, _node, this);
 
 				if(this.addChild)
@@ -1099,15 +1095,35 @@ export const Et2Widget = dedupeMixin(Et2WidgetMixin);
 // @ts-ignore Et2Widget is I guess not the right type
 export function loadWebComponent(_nodeName : string, _template_node, parent : Et2Widget | et2_widget) : HTMLElement
 {
+	// Try to find the class for the given node
+	let widget_class = window.customElements.get(_nodeName);
+	if(!widget_class)
+	{
+		// Given node has no registered class.  Try some of our special things (remove type, fallback to actual node)
+		let tries = [_nodeName.split('-')[0], _template_node.nodeName.toLowerCase()];
+		for(let i = 0; i < tries.length && !window.customElements.get(_nodeName); i++)
+		{
+			_nodeName = tries[i];
+		}
+		widget_class = window.customElements.get(_nodeName);
+		if(!widget_class)
+		{
+			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
+		}
+	}
+	const readonly = parent.getArrayMgr("readonlys") ?
+					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
+						 _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
+						 typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
+	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
+	{
+		_nodeName += "_ro";
+	}
+
 	// @ts-ignore
 	let widget = <Et2Widget>document.createElement(_nodeName);
 	widget.textContent = _template_node.textContent;
 
-	const widget_class = window.customElements.get(_nodeName);
-	if(!widget_class)
-	{
-		throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class");
-	}
 	widget.setParent(parent);
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
@@ -1182,7 +1198,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		}
 
 		// Set as attribute or property, as appropriate
-		if(widget.getAttributeNames().indexOf(attribute) >= 0/* || property.reflect*/)
+		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
 			// Set as attribute (reflected in DOM)
 			widget.setAttribute(attribute, attrValue);
