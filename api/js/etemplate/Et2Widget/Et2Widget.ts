@@ -268,7 +268,9 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set_disabled(value : boolean)
 		{
+			let oldValue = this.disabled;
 			this.disabled = value;
+			this.requestUpdate("disabled", oldValue);
 		}
 
 		/**
