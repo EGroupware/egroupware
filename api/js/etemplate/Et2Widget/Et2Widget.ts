@@ -69,13 +69,13 @@ const Et2WidgetMixin = (superClass) =>
 		private _children : (et2_widget | Et2WidgetClass)[] = [];
 
 		/**
-		 * Properties - default values, and actually creating them as fields
+		 * Internal Properties - default values, and actually creating them as fields
+		 * Do not include public property defined in properties()
 		 */
 		protected _widget_id : string = "";
 		protected _dom_id : string = "";
 		protected _label : string = "";
 		private statustext : string = "";
-		protected disabled : boolean = false;
 
 
 		/** WebComponent **/
@@ -1197,7 +1197,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 		}
 
-		// Set as attribute or property, as appropriate
+		// Set as attribute or property, as appropriate.  Don't set missing attributes.
 		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
 			// Set as attribute (reflected in DOM)
