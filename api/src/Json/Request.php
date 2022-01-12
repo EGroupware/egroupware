@@ -126,13 +126,6 @@ class Request
 			{
 				list($appName) = explode('_',$className);
 			}
-
-			// Check for a real static method, avoid instantiation if it is
-			$m = new ReflectionMethod($className.'::'.$functionName);
-			if($m->isStatic())
-			{
-				$ajaxClass = $className;
-			}
 		}
 		else
 		{
@@ -169,6 +162,16 @@ class Request
 				break;
 		}
 
+		// Check for a real static method, avoid instantiation if it is
+		if (strpos($menuaction,'::') !== false && strpos($menuaction,'.') === false)
+		{
+			$m = new ReflectionMethod($menuaction);
+			if($m->isStatic())
+			{
+				$ajaxClass = $className;
+			}
+		}
+
 		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
 			$menuaction != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
 			!preg_match('/^[A-Za-z0-9_\\\\-]+(\.[A-Za-z0-9_\\\\]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
@@ -184,7 +187,7 @@ class Request
 		{
 			$ajaxClass = $GLOBALS['egw']->framework;
 		}
-		else if (!$ajaxClass)
+		elseif (!isset($ajaxClass))
 		{
 			$ajaxClass = class_exists($className) ? new $className() : CreateObject($appName.'.'.$className);
 		}
