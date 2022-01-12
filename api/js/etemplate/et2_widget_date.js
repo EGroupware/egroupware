@@ -1060,6 +1060,7 @@ var et2_date_ro = /** @class */ (function (_super) {
         return _this;
     }
     et2_date_ro.prototype.set_value = function (_value) {
+        var _this = this;
         if (typeof _value == 'undefined')
             _value = 0;
         this.value = _value;
@@ -1156,9 +1157,16 @@ var et2_date_ro = /** @class */ (function (_super) {
                 var d = new Date();
                 var diff = Math.round(d.valueOf() / 1000) - Math.round(this.date.valueOf() / 1000);
                 display = '';
+                // limit units used to display
+                var smallest = 's';
+                if (this.options.units) {
+                    var valid = Object.entries(unit2s).filter(function (e) { return _this.options.units.includes(e[0]); });
+                    unit2s = Object.fromEntries(valid);
+                    smallest = (valid.pop() || [])[0];
+                }
                 for (var unit in unit2s) {
                     var unit_s = unit2s[unit];
-                    if (diff >= unit_s || unit == 's') {
+                    if (diff >= unit_s || unit === smallest) {
                         display = Math.round(diff / unit_s) + ' ' + this.egw().lang(unit2label[unit]);
                         break;
                     }
@@ -1231,6 +1239,10 @@ var et2_date_ro = /** @class */ (function (_super) {
         "data_format": {
             "ignore": true,
             "description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
+        },
+        units: {
+            "type": "string",
+            "descriptions": "Used units for date-since, default 'YmdHis', e.g. 'd' to display a value in days"
         },
         min: { ignore: true },
         max: { ignore: true },

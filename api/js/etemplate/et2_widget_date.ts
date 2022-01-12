@@ -1227,6 +1227,10 @@ export class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 			"ignore": true,
 			"description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
 		},
+		units: {
+			"type": "string",
+			"descriptions": "Used units for date-since, default 'YmdHis', e.g. 'd' to display a value in days"
+		},
 		min: {ignore: true},
 		max: {ignore: true},
 		year_range: {ignore: true}
@@ -1360,7 +1364,7 @@ export class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 					'i': 'minutes',
 					's': 'seconds'
 				};
-				var unit2s = {
+				var unit2s : Object = {
 					'Y': 31536000,
 					'm': 2628000,
 					'd': 86400,
@@ -1372,10 +1376,19 @@ export class et2_date_ro extends et2_valueWidget implements et2_IDetachedDOM
 				var diff = Math.round(d.valueOf() / 1000) - Math.round(this.date.valueOf()/1000);
 				display = '';
 
+				// limit units used to display
+				let smallest = 's';
+				if (this.options.units)
+				{
+					const valid = Object.entries(unit2s).filter((e) => (<string>this.options.units).includes(e[0]));
+					unit2s = Object.fromEntries(valid);
+					smallest = (valid.pop() || [])[0];
+				}
+
 				for(var unit in unit2s)
 				{
 					var unit_s = unit2s[unit];
-					if (diff >= unit_s || unit == 's')
+					if (diff >= unit_s || unit === smallest)
 					{
 						display = Math.round(diff/unit_s)+' '+this.egw().lang(unit2label[unit]);
 						break;
