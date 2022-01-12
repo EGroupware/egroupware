@@ -127,8 +127,8 @@ class Request
 				list($appName) = explode('_',$className);
 			}
 
-			// Check for a real static method, avoid instanciation if it is
-			$m = new ReflectionMethod($menuaction);
+			// Check for a real static method, avoid instantiation if it is
+			$m = new ReflectionMethod($className.'::'.$functionName);
 			if($m->isStatic())
 			{
 				$ajaxClass = $className;
