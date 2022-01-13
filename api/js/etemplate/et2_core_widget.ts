@@ -781,12 +781,16 @@ export class et2_widget extends ClassWithAttributes
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
 		var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
-		if (readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
+		if(readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
 
-		if (undefined == window.customElements.get(_nodeName))
+		if(typeof window.customElements.get(_node.nodeName.toLowerCase()) !== "undefined")
+		{
+			widget = loadWebComponent(_node.nodeName.toLowerCase(), _node, this);
+		}
+		else
 		{
 			// Parse the attributes from the given XML attributes object
 			this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
@@ -800,14 +804,6 @@ export class et2_widget extends ClassWithAttributes
 
 			// Load the widget itself from XML
 			widget.loadFromXML(_node);
-		}
-		else
-		{
-			if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
-			{
-				_nodeName += "_ro";
-			}
-			widget = loadWebComponent(_nodeName, _node, this);
 		}
 		return widget;
 	}

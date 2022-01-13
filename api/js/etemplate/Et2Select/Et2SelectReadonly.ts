@@ -12,6 +12,9 @@ import {html, LitElement} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {find_select_options, SelectOption} from "./Et2Select";
+import {StaticOptions} from "./StaticOptions";
+
+const so = new StaticOptions();
 
 /**
  * This is a stripped-down read-only widget used in nextmatch
@@ -34,13 +37,27 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 		return {
 			...super.properties,
 			value: String,
-			select_options: Object
+			select_options: Object,
+			/**
+			 * Specific sub-type of select.  Most are just static lists (percent, boolean)
+			 */
+			type: {type: String}
 		}
 	}
 
 	constructor()
 	{
 		super();
+		this.type = "";
+	}
+
+	protected find_select_options(_attrs)
+	{
+		let sel_options = find_select_options(this, _attrs['select_options'], _attrs);
+		if(sel_options.length > 0)
+		{
+			this.set_select_options(sel_options);
+		}
 	}
 
 	transformAttributes(_attrs)
@@ -59,11 +76,7 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 
 		super.transformAttributes(_attrs);
 
-		let sel_options = find_select_options(this, _attrs['select_options'], _attrs);
-		if(sel_options.length > 0)
-		{
-			this.set_select_options(sel_options);
-		}
+		this.find_select_options(_attrs)
 	}
 
 	set_value(value)
@@ -125,3 +138,32 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select_ro", Et2SelectReadonly);
+
+export class Et2SelectBoolReadonly extends Et2SelectReadonly
+{
+	constructor()
+	{
+		super();
+		this._options = so.bool(this);
+	}
+
+	protected find_select_options(_attrs) {}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-bool_ro", Et2SelectBoolReadonly);
+
+
+export class Et2SelectPercentReadonly extends Et2SelectReadonly
+{
+	constructor()
+	{
+		super();
+		this._options = so.percent(this, {});
+	}
+
+	protected find_select_options(_attrs) {}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-percent_ro", Et2SelectPercentReadonly);

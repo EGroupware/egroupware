@@ -13,6 +13,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {css, html, render, repeat, TemplateResult} from "@lion/core";
 import {cssImage} from "../Et2Widget/Et2Widget";
+import {StaticOptions} from "./StaticOptions";
 
 export interface SelectOption
 {
@@ -23,50 +24,20 @@ export interface SelectOption
 }
 
 /**
+ * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
+ * selectboxes, also for common handling of properties for more special selectboxes.
+ *
  * LionSelect (and any other LionField) use slots to wrap a real DOM node.  ET2 doesn't expect this,
  * so we have to create the input node (via slots()) and respect that it is _external_ to the Web Component.
  * This complicates things like adding the options, since we can't just override _inputGroupInputTemplate()
  * and include them when rendering - the parent expects to find the <select> added via a slot, render() would
  * put it inside the shadowDOM.  That's fine, but then it doesn't get created until render(), and the parent
  * (LionField) can't find it when it looks for it before then.
+ *
  */
-export class Et2Select extends Et2InputWidget(LionSelect)
+export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 {
 	protected _options : SelectOption[] = [];
-
-	static get styles()
-	{
-		return [
-			...super.styles,
-			css`
-			:host {
-				display: inline-block;
-			}
-			select {
-				color: var(--input-text-color, #26537c);
-				border-radius: 3px;
-				flex: 1 0 auto;
-				padding-top: 4px;
-				padding-bottom: 4px;
-				padding-right: 20px;
-				border-width: 1px;
-				border-style: solid;
-				border-color: #e6e6e6;
-				-webkit-appearance: none;
-				-moz-appearance: none;
-				margin: 0;
-				background: #fff no-repeat center right;
-				background-image: ${cssImage('arrow_down')};
-				background-size: 8px auto;
-				background-position-x: calc(100% - 8px);
-				text-indent: 5px;
-			}
-
-			select:hover {
-				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
-			}`
-		];
-	}
 
 	static get properties()
 	{
@@ -77,27 +48,19 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 			 */
 			empty_label: String,
 
-			select_options: Object
+			/**
+			 * Select box options
+			 *
+			 * Will be found automatically based on ID and type, or can be set explicitly in the template using
+			 * <option/> children, or using widget.set_select_options(SelectOption[])
+			 */
+			select_options: Object,
 		}
 	}
 
 	constructor()
 	{
 		super();
-	}
-
-	connectedCallback()
-	{
-		super.connectedCallback();
-
-		// Add in actual options as children to select, if not already there
-		if(this._inputNode.children.length == 0)
-		{
-			render(html`${this._emptyLabelTemplate()}
-                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
-				this._inputNode
-			);
-		}
 	}
 
 	/**
@@ -154,14 +117,6 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		{
 			this._options = new_options;
 		}
-		// Add in actual options as children to select
-		if(this._inputNode)
-		{
-			render(html`${this._emptyLabelTemplate()}
-                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
-				this._inputNode
-			);
-		}
 	}
 
 	get_select_options()
@@ -169,31 +124,14 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 		return this._options;
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () =>
-			{
-				return document.createElement("select");
-			}
-		}
-	}
-
 	_emptyLabelTemplate() : TemplateResult
 	{
-		if(!this.empty_label)
-		{
-			return html``;
-		}
-		return html`
-            <option value="">${this.empty_label}</option>`;
+		return html`${this.empty_label}`;
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		return html`
-            <option value="${option.value}" title="${option.title}">${option.label}</option>`;
+		return html``;
 	}
 
 	loadFromXML(_node : Element)
@@ -242,56 +180,121 @@ export class Et2Select extends Et2InputWidget(LionSelect)
 			this.set_select_options(sel_options);
 		}
 	}
-
 }
 
+export class Et2Select extends Et2WidgetWithSelect
+{
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+			:host {
+				display: inline-block;
+				width: 100%;
+			}
+			select {
+				width: 100%
+				color: var(--input-text-color, #26537c);
+				border-radius: 3px;
+				flex: 1 0 auto;
+				padding-top: 4px;
+				padding-bottom: 4px;
+				padding-right: 20px;
+				border-width: 1px;
+				border-style: solid;
+				border-color: #e6e6e6;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				margin: 0;
+				background: #fff no-repeat center right;
+				background-image: ${cssImage('arrow_down')};
+				background-size: 8px auto;
+				background-position-x: calc(100% - 8px);
+				text-indent: 5px;
+			}
+
+			select:hover {
+				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
+			}`
+		];
+	}
+
+	get slots()
+	{
+		return {
+			...super.slots,
+			input: () =>
+			{
+				return document.createElement("select");
+			}
+		}
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Add in actual options as children to select, if not already there
+		if(this._inputNode.children.length == 0)
+		{
+			render(html`${this._emptyLabelTemplate()}
+                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
+				this._inputNode
+			);
+		}
+	}
+
+	set_select_options(new_options : SelectOption[] | { [p : string] : string })
+	{
+		super.set_select_options(new_options);
+
+		// Add in actual options as children to select
+		if(this._inputNode)
+		{
+			render(html`${this._emptyLabelTemplate()}
+                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
+				this._inputNode
+			);
+		}
+	}
+
+	_emptyLabelTemplate() : TemplateResult
+	{
+		if(!this.empty_label)
+		{
+			return html``;
+		}
+		return html`
+            <option value="">${this.empty_label}</option>`;
+	}
+
+	_optionTemplate(option : SelectOption) : TemplateResult
+	{
+		return html`
+            <option value="${option.value}" title="${option.title}">${option.label}</option>`;
+	}
+}
+
+/**
+ * Use a single StaticOptions, since it should have no state
+ * @type {StaticOptions}
+ */
+const so = new StaticOptions();
 
 /**
  * Find the select options for a widget, out of the many places they could be.
  * @param {Et2Widget} widget to check for.  Should be some sort of select widget.
  * @param {object} attr_options Select options in attributes array
  * @param {object} attrs Widget attributes
- * @return {object} Select options, or empty object
+ * @return {SelectOption[]} Select options, or empty array
  */
-export function find_select_options(widget, attr_options?, attrs?)
+export function find_select_options(widget, attr_options?, attrs = {}) : SelectOption[]
 {
 	let name_parts = widget.id.replace(/&#x5B;/g, '[').replace(/]|&#x5D;/g, '').split('[');
 
 	let type_options : SelectOption[] = [];
 	let content_options : SelectOption[] = [];
-
-	// First check type, there may be static options.
-	// TODO
-	/*
-	var type = widget._type;
-	var type_function = type.replace('select-', '').replace('taglist-', '').replace('_ro', '') + '_options';
-	if(typeof this[type_function] == 'function')
-	{
-		var old_type = widget._type;
-		widget._type = type.replace('taglist-', 'select-');
-		if(typeof attrs.other == 'string')
-		{
-			attrs.other = attrs.other.split(',');
-		}
-		// Copy, to avoid accidental modification
-		//
-		// type options used to use jQuery.extend deep copy to get a clone object of options
-		// but as jQuery.extend deep copy is very expensive operation in MSIE (in this case almost 400ms)
-		// we use JSON parsing instead to copy the options object
-		type_options = this[type_function].call(this, widget, attrs);
-		try
-		{
-			type_options = JSON.parse(JSON.stringify(type_options));
-		}
-		catch(e)
-		{
-			egw.debug(e);
-		}
-
-		widget._type = old_type;
-	}
-
-	 */
 
 	// Try to find the options inside the "sel-options"
 	if(widget.getArrayMgr("sel_options"))
@@ -445,3 +448,25 @@ export function find_select_options(widget, attr_options?, attrs?)
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select", Et2Select);
+
+export class Et2SelectBool extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.bool(this);
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-bool", Et2SelectBool);
+
+export class Et2SelectPercent extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.percent(this, {});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-percent", Et2SelectPercent);
