@@ -34,6 +34,7 @@ import './Et2Select/Et2Select';
 import './Et2Select/Et2SelectReadonly';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textbox/Et2Textbox';
+import './Et2Textbox/Et2TextboxReadonly';
 import './Et2Colorpicker/Et2Colorpicker';
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
