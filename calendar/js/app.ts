@@ -887,6 +887,29 @@ export class CalendarApp extends EgwApp
 			// Clear any events from that app
 			this._clear_cache(app);
 		}
+		if(action.id == "integration_projectmanager" &&
+			this.egw.preference("calendar_integration","projectmanager").indexOf("#") == 0)
+		{
+			if(!action.checked)
+			{
+				// Still need to re-fetch in this case, clearing won't bring the others back
+				callback = function()
+				{
+					this._fetch_data(this.state);
+				}.bind(this);
+			}
+			else
+			{
+				// Clear all events, we're filtering real events now
+				callback = function()
+				{
+					this._clear_cache();
+
+					// Force redraw to current state
+					this.setState({state: this.state});
+				}.bind(this);
+			}
+		}
 		if(typeof callback === "undefined")
 		{
 			callback = function() {};
