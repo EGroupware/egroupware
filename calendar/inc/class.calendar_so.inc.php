@@ -2125,7 +2125,7 @@ ORDER BY cal_user_type, cal_usre_id
 				// for new or changed group-invitations, remove previously deleted members, so they show up again
 				if ($uid < 0)
 				{
-					$delete_deleted = array_merge($delete_deleted, $GLOBALS['egw']->accounts->members($uid, true));
+					$delete_deleted = array_merge($delete_deleted, (array)$GLOBALS['egw']->accounts->members($uid, true));
 				}
 			}
 			if ($delete_deleted)
