@@ -460,6 +460,17 @@ export class Et2SelectBool extends Et2Select
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-bool", Et2SelectBool);
 
+export class Et2SelectCategory extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.cat(this, {});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-cat", Et2SelectCategory);
+
 export class Et2SelectPercent extends Et2Select
 {
 	get_select_options() : SelectOption[]

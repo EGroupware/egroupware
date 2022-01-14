@@ -153,6 +153,20 @@ export class Et2SelectBoolReadonly extends Et2SelectReadonly
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-bool_ro", Et2SelectBoolReadonly);
 
+export class Et2SelectCategoryReadonly extends Et2SelectReadonly
+{
+	constructor()
+	{
+		super();
+
+		this._options = so.cat(this, {});
+	}
+
+	protected find_select_options(_attrs) {}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-cat_ro", Et2SelectCategoryReadonly);
 
 export class Et2SelectPercentReadonly extends Et2SelectReadonly
 {

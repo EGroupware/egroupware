@@ -7,9 +7,7 @@
  *
  * @param {type} widget
  */
-import {
-	Et2WidgetWithSelect, find_select_options, SelectOption
-} from "./Et2Select";
+import {Et2WidgetWithSelect, find_select_options, SelectOption} from "./Et2Select";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Et2SelectReadonly";
 
@@ -26,12 +24,12 @@ import {Et2SelectReadonly} from "./Et2SelectReadonly";
  */
 export class StaticOptions
 {
-	cached_server_side(widget : Et2WidgetWithSelect | Et2SelectReadonly, options_string, attrs) : SelectOption[]
+	cached_server_side(widget : Et2WidgetWithSelect | Et2SelectReadonly, type : string, options_string) : SelectOption[]
 	{
 		// normalize options by removing trailing commas
 		options_string = options_string.replace(/,+$/, '');
 
-		const cache_id = widget._type + '_' + options_string;
+		const cache_id = widget.nodeName + '_' + options_string;
 		const cache_owner = widget.egw().getCache('Et2Select');
 		let cache = cache_owner[cache_id];
 
@@ -40,9 +38,9 @@ export class StaticOptions
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			const req = egw.json(
+			const req = widget.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
-				[widget.type, options_string, attrs.value]
+				[type, options_string, widget.value]
 			).sendRequest();
 			if(typeof cache === 'undefined')
 			{
@@ -58,7 +56,7 @@ export class StaticOptions
 				cache = cache_owner[cache_id] = response.response[0].data || undefined;
 				// Set select_options in attributes in case we get a response before
 				// the widget is finished loading (otherwise it will re-set to {})
-				attrs.select_options = cache;
+				//widget.select_options = cache;
 
 				// Avoid errors if widget is destroyed before the timeout
 				if(widget && typeof widget.id !== 'undefined')
@@ -74,12 +72,12 @@ export class StaticOptions
 			// Make sure we are not requesting server for an empty value option or
 			// other widgets but select-timezone as server won't find anything and
 			// it will fall into an infinitive loop, e.g. select-cat widget.
-			if(attrs.value && attrs.value != "" && attrs.value != "0" && attrs.type == "select-timezone")
+			if(widget.value && widget.value != "" && widget.value != "0" && type == "select-timezone")
 			{
 				var missing_option = true;
 				for(var i = 0; i < cache.length && missing_option; i++)
 				{
-					if(cache[i].value == attrs.value)
+					if(cache[i].value == widget.value)
 					{
 						missing_option = false;
 					}
@@ -88,11 +86,11 @@ export class StaticOptions
 				if(missing_option)
 				{
 					delete cache_owner[cache_id];
-					return this.cached_server_side(widget, options_string, attrs);
+					return this.cached_server_side(widget, type, options_string);
 				}
 				else
 				{
-					if(attrs.value && widget && widget.get_value() !== attrs.value)
+					if(widget.value && widget && widget.get_value() !== widget.value)
 					{
 						egw.window.setTimeout(jQuery.proxy(function()
 						{
@@ -232,7 +230,7 @@ export class StaticOptions
 	app(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-app', options);
 	}
 
 	cat(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
@@ -244,39 +242,42 @@ export class StaticOptions
 		}
 		if(typeof attrs.other[3] == 'undefined')
 		{
-			attrs.other[3] = attrs.application || widget.getInstanceManager().app;
+			attrs.other[3] = attrs.application ||
+				// When the widget is first created, it doesn't have a parent and can't find it's instanceManager
+				(widget.getInstanceManager() && widget.getInstanceManager().app) ||
+				widget.egw().app_name();
 		}
 		var options = (attrs.other || []).join(',');
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-cat', options);
 	}
 
 	country(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = ',';
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-country', options);
 	}
 
 	state(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = attrs.country_code ? attrs.country_code : 'de';
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-state', options);
 	}
 
 	dow(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-dow', options);
 	}
 
 	lang(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
 	timezone(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
-		return this.cached_server_side(widget, options, attrs);
+		return this.cached_server_side(widget, 'select-timezone', options);
 	}
 }
