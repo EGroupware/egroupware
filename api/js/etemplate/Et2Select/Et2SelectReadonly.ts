@@ -147,9 +147,6 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select_ro", Et2SelectReadonly);
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-access_ro", Et2SelectAccessReadonly);
-
 export class Et2SelectAppReadonly extends Et2SelectReadonly
 {
 	constructor()
