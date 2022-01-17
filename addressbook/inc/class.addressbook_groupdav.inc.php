@@ -306,7 +306,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				{
 					$content = $is_jscontact ? JsContact::getJsCard($contact['id'], false) :
 						$handler->getVCard($contact['id'],$this->charset,false);
-					$props['getcontentlength'] = bytes($content);
+					$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
 					$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 				}
 				$files[] = $this->add_resource($path, $contact, $props);
@@ -374,7 +374,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						if ($address_data)
 						{
 							$content = $is_jscontact ? JsContact::getJsCardGroup($list, false) : $handler->getGroupVCard($list);
-							$props['getcontentlength'] = bytes($content);
+							$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
 							$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
 						}
 						$files[] = $this->add_resource($path, $list, $props);
