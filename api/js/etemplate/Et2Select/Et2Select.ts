@@ -17,10 +17,10 @@ import {StaticOptions} from "./StaticOptions";
 
 export interface SelectOption
 {
-	value : String;
-	label : String;
+	value : string;
+	label : string;
 	// Hover help text
-	title? : String;
+	title? : string;
 }
 
 /**
@@ -449,12 +449,48 @@ export function find_select_options(widget, attr_options?, attrs = {}) : SelectO
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select", Et2Select);
 
+export class Et2SelectApp extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.app(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-app", Et2SelectApp);
+
+export class Et2SelectBitwise extends Et2Select
+{
+	set value(new_value)
+	{
+		let oldValue = this._value;
+		let expanded_value = [];
+		let options = this.get_select_options();
+		for(let index in options)
+		{
+			let right = parseInt(options[index].value);
+			if(!!(new_value & right))
+			{
+				expanded_value.push(right);
+			}
+		}
+		this._value = expanded_value;
+
+		this.requestUpdate("value", oldValue);
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-bitwise", Et2SelectBitwise);
+
 export class Et2SelectBool extends Et2Select
 {
 	get_select_options() : SelectOption[]
 	{
 		return so.bool(this);
 	}
+
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -464,7 +500,7 @@ export class Et2SelectCategory extends Et2Select
 {
 	get_select_options() : SelectOption[]
 	{
-		return so.cat(this, {});
+		return so.cat(this, {other: this.other || []});
 	}
 }
 
@@ -481,3 +517,113 @@ export class Et2SelectPercent extends Et2Select
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-percent", Et2SelectPercent);
+
+export class Et2SelectCountry extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.country(this, {});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-country", Et2SelectCountry);
+
+export class Et2SelectDay extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.day(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-day", Et2SelectDay);
+
+export class Et2SelectDayOfWeek extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.dow(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-dow", Et2SelectDayOfWeek);
+
+export class Et2SelectHour extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.hour(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-hour", Et2SelectHour);
+
+export class Et2SelectMonth extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.month(this);
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-month", Et2SelectMonth);
+
+export class Et2SelectNumber extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.number(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-number", Et2SelectNumber);
+
+export class Et2SelectPriority extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.priority(this);
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-priority", Et2SelectPriority);
+
+export class Et2SelectState extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.state(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-state", Et2SelectState);
+
+export class Et2SelectTimezone extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.timezone(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-timezone", Et2SelectTimezone);
+
+export class Et2SelectYear extends Et2Select
+{
+	get_select_options() : SelectOption[]
+	{
+		return so.year(this, {other: this.other || []});
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-year", Et2SelectYear);

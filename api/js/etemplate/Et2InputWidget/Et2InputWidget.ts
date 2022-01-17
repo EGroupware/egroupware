@@ -38,7 +38,7 @@ const Et2InputWidgetMixin = (superclass) =>
 {
 	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode
 	{
-		protected value : string | number | Object;
+		protected _value : string | number | Object;
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
 
@@ -112,7 +112,7 @@ const Et2InputWidgetMixin = (superclass) =>
 
 		set_value(new_value)
 		{
-			this.value = new_value;
+			this._value = new_value;
 		}
 
 		get_value()
