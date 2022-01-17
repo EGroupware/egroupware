@@ -420,7 +420,7 @@ var et2_calendar_event = /** @class */ (function (_super) {
         // Activate links in description
         var description_node = document.createElement("p");
         description_node.className = "calendar_calEvent_description";
-        et2_insertLinkText(et2_activateLinks(egw.htmlspecialchars(this.options.value.description)), description_node, '_blank');
+        et2_insertLinkText(et2_activateLinks(this.options.value.description), description_node, '_blank');
         // Location + Videoconference
         var location = '';
         if (this.options.value.location || this.options.value['##videoconference']) {
