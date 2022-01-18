@@ -965,6 +965,10 @@ var et2_calendar_event = /** @class */ (function (_super) {
                 [parent.options.owner] :
                 parent.options.owner);
             owner_match = false;
+            if (!options) {
+                // Could not find the owner options.  Probably on home, just let it go.
+                owner_match = true;
+            }
             var length_1 = parent_owner.length;
             for (var i = 0; i < length_1; i++) {
                 // Handle groups & grouped resources like mailing lists, they won't match so

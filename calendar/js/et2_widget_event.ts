@@ -1233,6 +1233,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				[parent.options.owner] :
 				parent.options.owner);
 			owner_match = false;
+			if(!options)
+			{
+				// Could not find the owner options.  Probably on home, just let it go.
+				owner_match = true;
+			}
 			const length = parent_owner.length;
 			for(var i = 0; i < length; i++ )
 			{
