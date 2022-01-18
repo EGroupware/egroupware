@@ -1253,31 +1253,36 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				}
 				if (event.participants && typeof parent.options.owner != 'undefined' && parent.options.owner.length > 0)
 				{
-						var parent_owner = jQuery.extend([], typeof parent.options.owner !== 'object' ?
-								[parent.options.owner] :
-																								 parent.options.owner);
-						owner_match = false;
-						const length = parent_owner.length;
-						for (var i = 0; i < length; i++)
+					var parent_owner = jQuery.extend([], typeof parent.options.owner !== 'object' ?
+						[parent.options.owner] :
+														 parent.options.owner);
+					owner_match = false;
+					if(!options)
+					{
+						// Could not find the owner options.  Probably on home, just let it go.
+						owner_match = true;
+					}
+					const length = parent_owner.length;
+					for(var i = 0; i < length; i++)
+					{
+						// Handle groups & grouped resources like mailing lists, they won't match so
+						// we need the list - pull it from sidebox owner
+						if((isNaN(parent_owner[i]) || parent_owner[i] < 0) && options && typeof options.find == "function")
 						{
-								// Handle groups & grouped resources like mailing lists, they won't match so
-								// we need the list - pull it from sidebox owner
-								if ((isNaN(parent_owner[i]) || parent_owner[i] < 0) && options && typeof options.find == "function")
-								{
-										var resource = options.find(function (element)
-										{
-												return element.id == parent_owner[i];
-										}) || {};
-										if (resource && resource.resources)
-										{
-												parent_owner.splice(i, 1);
-												i--;
-												parent_owner = parent_owner.concat(resource.resources);
+							var resource = options.find(function(element)
+							{
+								return element.id == parent_owner[i];
+							}) || {};
+							if(resource && resource.resources)
+							{
+								parent_owner.splice(i, 1);
+								i--;
+								parent_owner = parent_owner.concat(resource.resources);
 
-										}
-								}
+							}
 						}
-						let participants = jQuery.extend([], Object.keys(event.participants));
+					}
+					let participants = jQuery.extend([], Object.keys(event.participants));
 						for (var i = 0; i < participants.length; i++)
 						{
 								const id = participants[i];
