@@ -13,6 +13,7 @@ import {css, html} from "@lion/core";
 import {LionButton} from "@lion/button";
 import {SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {buttonStyles} from "./ButtonStyles";
 
 export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 {
@@ -55,13 +56,12 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	{
 		return [
 			...super.styles,
+			buttonStyles,
 			css`
             :host {
                 padding: 1px 8px;
                 /* These should probably come from somewhere else */
-                border-radius: 3px;
-                background-color: #e6e6e6;
-                max-width: 125px;
+               	max-width: 125px;
             }
             :host([readonly]) {
             	display: none;
