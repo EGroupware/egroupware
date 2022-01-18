@@ -1069,7 +1069,7 @@ class calendar_boupdate extends calendar_bo
 				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
-				$details['fullname'] = is_numeric($userid) ? Api\Accounts::username($userid) : $fullname;
+				$details['fullname'] = is_numeric($user) ? Api\Accounts::username($user) : $fullname;
 				$details['to-fullname'] = $fullname;
 				$details['to-firstname'] = isset($tfn)? $tfn: '';
 				$details['to-lastname'] = isset($tln)? $tln: '';
