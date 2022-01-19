@@ -8,7 +8,7 @@
  */
 
 
-import {html, LitElement, TemplateResult} from "@lion/core";
+import {css, html, LitElement, repeat, TemplateResult} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {find_select_options, SelectOption} from "./Et2Select";
@@ -27,7 +27,20 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 	static get styles()
 	{
 		return [
-			...super.styles
+			...super.styles,
+			css`
+ul {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+}
+
+li {
+    text-decoration: none;
+    list-style-image: none;
+    list-style-type: none;
+}
+			`
 		];
 	}
 
@@ -76,6 +89,10 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 
 	set_value(value)
 	{
+		if(typeof value == "string" && value.indexOf(",") > 0)
+		{
+			value = value.split(",");
+		}
 		this.value = value;
 	}
 
@@ -103,23 +120,30 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 	render()
 	{
 		let label = "";
-		if(this.value)
+		if(!this.value)
 		{
-			let current = this._options.find(option => option.value == this.value);
-			label = current ? current.label : "";
-		}
-		else if(this.empty_text)
-		{
-			label = this.empty_text;
+			return this._readonlyRender({label: this.empty_text, value: ""});
 		}
 
-		return this._readonlyRender(label)
+		return html`
+            <ul>
+                ${repeat(this.value, (val : string) => val, (val) =>
+                {
+                    let option = this._options.find(option => option.value == val);
+                    if(!option)
+                    {
+                        return "";
+                    }
+                    return this._readonlyRender(option);
+                })}
+            </ul>
+		`;
 	}
 
-	_readonlyRender(label) : TemplateResult
+	_readonlyRender(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <span>${label}</span>
+            <li>${option.label}</li>
 		`;
 	}
 
@@ -147,6 +171,58 @@ export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDet
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select_ro", Et2SelectReadonly);
 
+export class Et2SelectAccountReadonly extends Et2SelectReadonly
+{
+
+	protected find_select_options(_attrs) {}
+
+	set value(new_value)
+	{
+		if(!new_value)
+		{
+			super.value = new_value;
+			return;
+		}
+
+		if(typeof new_value == "string" && new_value.indexOf(",") > 0)
+		{
+			new_value = new_value.split(",");
+		}
+		if(typeof new_value == "string" || typeof new_value == "number")
+		{
+			new_value = ["" + new_value];
+		}
+		for(let id of new_value)
+		{
+			let account_name = null;
+			let option = <SelectOption>{value: id, label: id + " ..."};
+			this._options.push(option);
+			if(new_value && (account_name = this.egw().link_title('api-accounts', id)))
+			{
+				option.label = account_name;
+			}
+			else if(!account_name)
+			{
+				// Not already cached, need to fetch it
+				this.egw().link_title('api-accounts', id, function(title)
+				{
+					this.option.label = title;
+					this.select.requestUpdate();
+				}, {select: this, option: option});
+			}
+		}
+		super.value = new_value;
+	}
+
+	get value()
+	{
+		return super.value;
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-account_ro", Et2SelectAccountReadonly);
+
 export class Et2SelectAppReadonly extends Et2SelectReadonly
 {
 	constructor()
@@ -167,16 +243,28 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
 	render()
 	{
 		let new_value = [];
-		for(var index in this.options.select_options)
+		for(let index in this._options)
 		{
-			var option = this.options.select_options[index];
-			var right = option && option.value ? option.value : index;
+			let option = this._options[index];
+			let right = parseInt(option && option.value ? option.value : index);
 			if(!!(this.value & right))
 			{
 				new_value.push(right);
 			}
 		}
-		return this._readonlyRender(new_value);
+		return html`
+            <ul>
+                ${repeat(new_value, (val : string) => val, (val) =>
+                {
+                    let option = this._options.find(option => option.value == val);
+                    if(!option)
+                    {
+                        return "";
+                    }
+                    return this._readonlyRender(option);
+                })}
+            </ul>`;
+		return
 	}
 }
 

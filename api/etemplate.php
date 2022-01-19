@@ -82,12 +82,7 @@ function send_template()
 		{
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
-			// fix not understood <et2-select-account --> <et2-select type="select-account", ToDo: Nathan
-			if ($matches[1] === 'select' && $matches[2] === '-account')
-			{
-				$matches[2] = '';
-				$matches[3] = 'type="select-account" '.$matches[3];
-			}
+
 			// add et2-prefix for <select-* or <date-* readonly="true"
 			if (($matches[1] === 'select' || in_array($matches[1].$matches[2], ['date','date-time'])) &&
 					isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
