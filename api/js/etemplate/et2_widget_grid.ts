@@ -787,7 +787,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					{
 						td.hide();
 						// Need to do different things with webComponents
-						if(typeof cell.widget.options !== "undefined")
+						if(typeof cell.widget.options === "object")
 						{
 							cell.widget.options.disabled = cell.disabled;
 						}
