@@ -119,7 +119,6 @@ li {
 
 	render()
 	{
-		let label = "";
 		if(!this.value)
 		{
 			return this._readonlyRender({label: this.empty_text, value: ""});
@@ -264,7 +263,6 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
                     return this._readonlyRender(option);
                 })}
             </ul>`;
-		return
 	}
 }
 
