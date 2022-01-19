@@ -21,4 +21,11 @@ export const buttonStyles = [
 	:host(:active) {
 		box-shadow: inset 1px 2px 1px rgb(0 0 0 / 50%);
 	}
+	div {
+		flex: 1 1 auto;
+		background-repeat: no-repeat;
+		background-position: left center;
+		background-size: contain;
+		margin: 2px;
+	}
 `];
