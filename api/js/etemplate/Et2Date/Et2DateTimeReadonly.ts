@@ -24,4 +24,4 @@ export class Et2DateTimeReadonly extends Et2DateReadonly
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Date is a LitElement
-customElements.define("et2-datetime_ro", Et2DateTimeReadonly);
+customElements.define("et2-date-time_ro", Et2DateTimeReadonly);

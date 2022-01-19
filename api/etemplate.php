@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button|colorpicker))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button|colorpicker|description))(/?|\s[^>]*)>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -75,7 +75,29 @@ function send_template()
 			return '<' . $matches[2] . 'et2-' . $matches[3] .
 				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
 				(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1) . '></et2-' . $matches[3] : $matches[4]) . '>';
-		},                           $str);
+		}, $str);
+
+		// handling of partially implemented select and date widget (only readonly or simple select without tags or search attribute or options)
+		$str = preg_replace_callback('#<(select|date)(-[^ ]+)? ([^>]+)/>#', static function (array $matches)
+		{
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[3], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+			// fix not understood <et2-select-account --> <et2-select type="select-account", ToDo: Nathan
+			if ($matches[1] === 'select' && $matches[2] === '-account')
+			{
+				$matches[2] = '';
+				$matches[3] = 'type="select-account" '.$matches[3];
+			}
+			// add et2-prefix for <select-* or <date-* readonly="true"
+			if (($matches[1] === 'select' || in_array($matches[1].$matches[2], ['date','date-time'])) &&
+					isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
+				// also add it for untyped/simple <select without search or tags attribute
+				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags']))
+			{
+				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
+			}
+			return $matches[0];
+		}, $str);
 
 		$processing = microtime(true);
 

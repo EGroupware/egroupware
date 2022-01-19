@@ -66,4 +66,4 @@ export class Et2DateTime extends Et2Date
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2DateTime is a LitElement
-customElements.define("et2-datetime", Et2DateTime);
+customElements.define("et2-date-time", Et2DateTime);
