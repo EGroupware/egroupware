@@ -89,7 +89,7 @@ li {
 
 	set_value(value)
 	{
-		if(typeof value == "string" && value.indexOf(",") > 0)
+		if(typeof value == "string")
 		{
 			value = value.split(",");
 		}
