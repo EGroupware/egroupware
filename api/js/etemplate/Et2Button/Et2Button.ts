@@ -68,8 +68,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
             	display: none;
             }
             /* Set size for icon */
+            ::slotted(img.imageOnly) {
+    			padding-right: 0px !important;
+    			width: 16px !important;
+			}
             ::slotted([slot="icon"][src]) {
                 width: 20px;
+                padding-right: 4px;
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;
@@ -201,10 +206,10 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 
 		this._iconNode.src = this._image;
-
+		if (!this._label) this._iconNode.classList.add('imageOnly');
 		return html`
             <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}">
-           		<slot name="icon"></slot>
+           		<slot name="icon" class="${this._label?'':'imageOnly'}"></slot>
                 <slot name="label">${this._label}</slot>
             </div> `;
 	}
