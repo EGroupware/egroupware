@@ -11,7 +11,7 @@
 		</hbox>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
-		<buttononly statustext="Add" id="add" onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"/>
+		<buttononly statustext="Add" id="add" image="add" onclick="app.timesheet.add_with_extras(widget,'','$cont[action]','$cont[action_id]');"/>
 	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
