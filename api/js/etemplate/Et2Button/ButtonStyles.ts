@@ -24,5 +24,8 @@ export const buttonStyles = [
 	div {
 		margin: 2px;
 		height:20px;
+		font-size: 9pt;
+		color: var(--btn-label-color);
+		text-shadow: 0 0;
 	}
 `];

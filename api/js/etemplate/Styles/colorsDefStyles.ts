@@ -21,6 +21,8 @@ export const colorsDefStyles = css`
 		--gray_5 : #F2F2F2;
 		--gray_0 : #FFFFFF;
 		
+		--btn-label-color: #000000;
+		
 		/****** Backgrounds *******/
 		--bg_color_0_gray : #FFFFFF;
 		--bg_color_5_gray : #FAFAFA;
