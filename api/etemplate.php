@@ -59,7 +59,9 @@ function send_template()
 		$cache_read = microtime(true);
 	}
 	else*/
-	if(($str = file_get_contents($path)) !== false)
+	if(($str = file_get_contents($path)) !== false &&
+		// eTemplate marked as legacy, return unchanged template without web-components / et2-prefix
+		!preg_match('/<overlay[^>]* legacy="true"/', $str))
 	{
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
@@ -85,9 +87,9 @@ function send_template()
 
 			// add et2-prefix for <select-* or <date-* readonly="true"
 			if (($matches[1] === 'select' || in_array($matches[1].$matches[2], ['date','date-time'])) &&
-					isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
+					isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) /*||
 				// also add it for untyped/simple <select without search or tags attribute
-				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags']))
+				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags'])*/)
 			{
 				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
 			}
