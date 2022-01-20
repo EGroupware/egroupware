@@ -130,7 +130,7 @@
 		</grid>
 	</template>
 	<template id="mail.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose"/>
+		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add"/>
 	</template>
 	<template id="mail.index.header_right" template="" lang="" group="0" version="1.9.001">
 		<hbox id="mail.index.vacationnotice" class="mail-index_vacation"><vbox>

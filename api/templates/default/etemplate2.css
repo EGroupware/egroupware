@@ -2793,7 +2793,9 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-h
     padding-left: 0;
     background-color: #fafafa;
 }
-
+.nextmatch_header_row et2-button {
+    background-color: #fafafa;
+}
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text {
     width: auto;
     background-position: 6px center;

@@ -27,5 +27,6 @@ export const buttonStyles = [
 		background-position: left center;
 		background-size: contain;
 		margin: 2px;
+		height:20px;
 	}
 `];

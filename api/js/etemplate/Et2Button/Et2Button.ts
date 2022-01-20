@@ -62,6 +62,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
                 padding: 0;
                 /* These should probably come from somewhere else */
                	max-width: 125px;
+               	min-width: fit-content;
             }
             :host([readonly]) {
             	display: none;
@@ -69,15 +70,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
             /* Set size for icon */
             ::slotted([slot="icon"][src]) {
                 width: 20px;
-                padding-right: 3px;
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;
 			}
 			.imageOnly {
-				width:20px;
-				height: 20px;
-				background-color: var(--bg_color_5_gray);
+				width:18px;
+				height: 18px;
 			}
             `,
 		];
@@ -91,6 +90,16 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			icon: () =>
+			{
+				return document.createElement("img");
+			}
+		}
+	}
 
 	constructor()
 	{
@@ -190,9 +199,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		{
 			return '';
 		}
+
+		this._iconNode.src = this._image;
+
 		return html`
-           <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}" style="background-image: url(${this._image})">
-                 <slot name="label">${this._label}</slot>
+            <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}">
+           		<slot name="icon"></slot>
+                <slot name="label">${this._label}</slot>
             </div> `;
 	}
 
