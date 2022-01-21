@@ -319,7 +319,8 @@ abstract class setup_cmd extends admin_cmd
 					self::$apps_to_upgrade = self::$apps_to_install = array();
 					foreach($setup_info as $app => $data)
 					{
-						if ($data['currentver'] && $data['version'] && $data['version'] != 'deleted' && $data['version'] != $data['currentver'])
+						if ($data['currentver'] && $data['version'] && $data['version'] != 'deleted' && $data['version'] != $data['currentver'] &&
+							$data['currentversion'] !== 'uninstalled')
 						{
 							self::$apps_to_upgrade[] = $app;
 						}
@@ -366,7 +367,7 @@ abstract class setup_cmd extends admin_cmd
 		$ret = array_filter(self::$apps_to_install, function($app)
 		{
 			global $setup_info;
-			return $setup_info[$app]['autoinstall'];
+			return !empty($setup_info[$app]['autoinstall']) && !isset($setup_info[$app]['currentversion']);
 		});
 		//error_log(__METHOD__."() apps_to_install=".array2string(self::$apps_to_install).' returning '.array2string($ret));
 		return $ret;
