@@ -484,7 +484,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$to_upgrade = $to_install = array();
 		foreach($setup_info as $app => $data)
 		{
-			if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
+			if (!empty($data['currentver']) && $data['currentver'] !== 'uninstalled' && $data['version'] && $data['version'] != $data['currentver'])
 			{
 				$to_upgrade[] = lang(!empty($data['title']) ? $data['title'] : $app);
 				$setup_tpl->set_var('apps_status_img',$incomplete);

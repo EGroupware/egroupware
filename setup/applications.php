@@ -446,7 +446,7 @@ else
 				case 'U':
 					$setup_tpl->set_var('instimg','incomplete.png');
 					$setup_tpl->set_var('instalt',lang('Not Completed'));
-					if (!@$value['currentver'])
+					if (empty($value['currentver']) || $value['currentver'] === 'uninstalled')
 					{
 						if ($value['tables'] && $GLOBALS['egw_setup']->detection->check_app_tables($value['name'],True))
 						{
