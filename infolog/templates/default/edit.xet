@@ -165,9 +165,10 @@
 					</menulist>
 					<description/>
 					<description value="Startdate" for="info_startdate"/>
-					<et2-datetime
+					<date-time
                             statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"
-                            id="info_startdate" class="et2_fullWidth"></et2-datetime>
+                            id="info_startdate" class="et2_fullWidth">
+					</date-time>
 				</row>
 				<row class="dialogHeader3">
 					<description value="Contact"/>
