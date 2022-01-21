@@ -26,7 +26,10 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Et2Box/Et2Box';
 import './Et2Button/Et2Button';
 import './Et2Date/Et2Date';
-import './Et2Date/Et2DateReadonly'
+import './Et2Date/Et2DateDuration';
+import './Et2Date/Et2DateDurationReadonly';
+import './Et2Date/Et2DateReadonly';
+import './Et2Date/Et2DateSinceReadonly';
 import './Et2Date/Et2DateTime';
 import './Et2Date/Et2DateTimeReadonly';
 import './Et2Description/Et2Description';
