@@ -130,4 +130,4 @@ export class Et2DateSinceReadonly extends Et2DateReadonly
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-date-since_ro", Et2DateSinceReadonly);
+customElements.define("et2-date-since", Et2DateSinceReadonly);
