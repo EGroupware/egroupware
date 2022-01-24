@@ -14,7 +14,7 @@
 					<description value="From"/>
 					<old-hbox id="FROM" class="mail_extraEmails">
 					</old-hbox>
-					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
+					<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</old-hbox>
 				<old-hbox class="mailDisplayHeaders" align="right" width="30%">
 					<description value="Date"/>
@@ -30,19 +30,19 @@
 				<description value="To"/>
 				<old-hbox id="TO" class="mail_extraEmails">
 				</old-hbox>
-				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
+				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</old-hbox>
 			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
 				<description value="Cc"/>
 				<old-hbox id="CC" class="mail_extraEmails">
 				</old-hbox>
-				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
+				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</old-hbox>
 			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
 				<description value="Bcc"/>
 				<old-hbox id="BCC" class="mail_extraEmails">
 				</old-hbox>
-				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
+				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 			</old-hbox>
 			<old-hbox  class="mailDisplayHeaders" width="100%">
 				<description value="Subject"/>
@@ -80,10 +80,10 @@
 								<description id="${row}[winmailFlag]" />
 								<description class="useEllipsis et2_link" id="${row}[filename]" extra_link_target="$row_cont[windowName]" extra_link_popup="$row_cont[popup]" expose_view="true" mime="$row_cont[type]" no_lang="1" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
 								<description align="right" id="${row}[size]" />
-								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" label="Save to disk"/>
-								<buttononly id="${row}[saveAsVFS]" disabled="$row_cont[no_vfs]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" label="Save to filemanager"/>
-								<buttononly  class="$row_cont[classSaveAllPossiblyDisabled]" disabled="$row_cont[no_vfs]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" label="Save all attachments to filemanager"/>
-								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
+								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" statustext="Save to disk"/>
+								<buttononly id="${row}[saveAsVFS]" disabled="$row_cont[no_vfs]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" statustext="Save to filemanager"/>
+								<buttononly  class="$row_cont[classSaveAllPossiblyDisabled]" disabled="$row_cont[no_vfs]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" statustext="Save all attachments to filemanager"/>
+								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" statustext="Save as Zip"/>
 							</row>
 						</rows>
 					</grid>

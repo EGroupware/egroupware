@@ -2804,6 +2804,15 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-h
 .nextmatch_header_row et2-button img {
     width: 16px;
 }
+et2-button.transparent-button {
+    border: none;
+    background: transparent;
+}
+et2-button.transparent-button::part(container) {
+    width: auto;
+    height: auto;
+    background: none;
+}
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text {
     width: auto;
     background-position: 6px center;
