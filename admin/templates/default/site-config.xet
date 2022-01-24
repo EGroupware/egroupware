@@ -13,9 +13,9 @@
 			</tabpanels>
 		</tabbox>
 		<hbox class="dialogFooterToolbar">
-			<button id="save" label="Save" image="save"/>
-			<button id="apply" label="Apply" image="apply"/>
-			<button id="cancel" label="Cancel" image="cancel"/>
+			<button id="save" label="Save"/>
+			<button id="apply" label="Apply"/>
+			<button id="cancel" label="Cancel"/>
 		</hbox>
 	</template>
 </overlay>
