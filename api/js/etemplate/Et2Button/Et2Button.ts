@@ -133,7 +133,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 		else
 		{
-			this._image = this.egw().image(new_image, 'etemplate');
+			this._image = this.egw().image(new_image);
 		}
 		this.requestUpdate("image", oldValue);
 	}
