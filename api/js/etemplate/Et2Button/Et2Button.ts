@@ -208,7 +208,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		this._iconNode.src = this._image;
 		if (!this._label) this._iconNode.classList.add('imageOnly');
 		return html`
-            <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}">
+            <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}" part="container">
            		<slot name="icon" class="${this._label?'':'imageOnly'}"></slot>
                 <slot name="label">${this._label}</slot>
             </div> `;

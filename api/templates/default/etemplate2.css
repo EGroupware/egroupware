@@ -2795,6 +2795,14 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-h
 }
 .nextmatch_header_row et2-button, .et2_toolbar et2-button {
     background-color: #fafafa;
+    margin: 1px 4px 0 0;
+    border-color: silver;
+}
+.nextmatch_header_row et2-button::part(container){
+    height: 18px;
+}
+.nextmatch_header_row et2-button img {
+    width: 16px;
 }
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_hasCaption, .nextmatch_header_row .et2_button_text {
     width: auto;
