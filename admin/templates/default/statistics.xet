@@ -73,7 +73,7 @@
 					<button label="Submit" statustext="Submit to egroupware.org" onclick="$cont[onclick]" id="submit"/>
 					<hbox>
 						<select id="postpone" options="Postpone for" onchange="1"/>
-						<button id="cancel" label="Cancel" statustext="Go directly to admin menu, returning here the next time you click on administration." align="right"/>
+						<button id="cancel" label="Cancel" image="cancel" statustext="Go directly to admin menu, returning here the next time you click on administration." align="right"/>
 					</hbox>
 				</row>
 			</rows>
