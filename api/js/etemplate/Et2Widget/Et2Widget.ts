@@ -308,6 +308,7 @@ const Et2WidgetMixin = (superClass) =>
 				dom_id = path.join("_");
 			}
 			this.setAttribute("id", dom_id);
+			this.requestUpdate("id");
 		}
 
 		/**
