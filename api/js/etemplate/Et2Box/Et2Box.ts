@@ -30,6 +30,12 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             	align-items: stretch;
             	gap: 5px;
 			}
+			:host([align="right"]) > div {
+				justify-content: flex-end;
+			}
+			:host([align="left"]) > div {
+				justify-content: flex-start;
+			}
 			/* CSS for child elements */
             ::slotted(*) {
             	flex: 1 0 auto;
