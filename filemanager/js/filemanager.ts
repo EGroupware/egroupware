@@ -933,7 +933,7 @@ export class filemanagerAPP extends EgwApp
 		actions.push({
 			id:_action.id+'_current', caption: current_dir, path: current_dir,
 			enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
-				!dir && path_widget && !path_widget.options.readonly
+				!dir && path_widget && !path_widget.options?.readonly
 		});
 
 		// Target, if directory
