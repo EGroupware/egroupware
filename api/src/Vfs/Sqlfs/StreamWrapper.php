@@ -1639,22 +1639,33 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * Get the lowest file id (fs_id) for a given path
 	 *
 	 * @param string $path
-	 * @return integer
+	 * @return ?integer null if path not found
 	 */
 	static function get_minimum_file_id($path)
 	{
 		$vfs = new self();
-		$stat = $vfs->url_stat($path,0);
+		$stat = $vfs->url_stat($path, 0);
 		if ($stat['readlink'])
 		{
 			$stat = $vfs->url_stat($stat['readlink'], 0);
 		}
 		$fs_id = $stat['ino'];
 
+		//error_log(__METHOD__."('$path') stat[ino]=$fs_id");
+		return $fs_id ? self::get_minimum_fs_id($fs_id) : null;
+	}
+
+	/**
+	 * Get the lowest file id (fs_id) for a given fs_id
+	 *
+	 * @param string $path
+	 * @return ?integer null if fs_id is NOT found
+	 */
+	static function get_minimum_fs_id($fs_id)
+	{
 		$query = 'SELECT MIN(B.fs_id)
 FROM ' . self::TABLE . ' as A
-JOIN ' . self::TABLE . ' AS B ON A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = ' .
-			self::_pdo_boolean(true) . ' AND B.fs_active = ' . self::_pdo_boolean(false) . '
+JOIN ' . self::TABLE . ' AS B ON A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir
 WHERE A.fs_id=?
 GROUP BY A.fs_id';
 		if (self::LOG_LEVEL > 2)
@@ -1666,7 +1677,8 @@ GROUP BY A.fs_id';
 		$stmt->execute(array($fs_id));
 		$min = $stmt->fetchColumn();
 
-		return $min ? $min : $fs_id;
+		//error_log(__METHOD__."($fs_id) returning ".($min ?: null));
+		return $min ?: null;
 	}
 
 	/**
