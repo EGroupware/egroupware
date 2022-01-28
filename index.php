@@ -100,24 +100,7 @@ if (isset($_GET['tz']))
 	}
 }
 
-// 	Check if we are using windows or normal webpage
-$windowed = false;
-$tpl_info = EGW_SERVER_ROOT . '/api/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
-if (!file_exists($tpl_info))
-{
-	$tpl_info = EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
-}
-if(@file_exists($tpl_info))
-{
-	include_once($tpl_info);
-	if($GLOBALS['egw_info']['template'][$GLOBALS['egw_info']['user']['preferences']['common']['template_set']]['windowed'])
-	{
-		$windowed = true;
-	}
-}
-
-
-if($app == 'api' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !Api\Header\UserAgent::mobile()) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
+if($app == 'api' && !$class && !$api_requested && !($_GET['cd'] === 'yes' && !Api\Header\UserAgent::mobile()) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
 	{
@@ -133,7 +116,7 @@ if($app == 'api' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 
 	}
 }
 
-if($windowed && $_GET['cd'] == 'yes')
+if ($_GET['cd'] == 'yes' || empty($class))
 {
 	$GLOBALS['egw_info']['flags'] = array(
 		'noheader'   => False,
