@@ -19,6 +19,7 @@ import { et2_baseWidget } from './et2_core_baseWidget'
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 import {et2_IDOMNode} from "./et2_core_interfaces";
+import  "./CustomHtmlElements/multi-video";
 
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
@@ -60,6 +61,12 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             "name": "Source type",
             "type": "string",
             "description": "Defines the type the stream source provided"
+        },
+        "multi_src": {
+            "name": "Multi Video source",
+            "type": "boolean",
+            "default": false,
+            "description": "creates a multi-video tag in order to render all provided video sources"
         },
         "muted": {
             "name": "Audio control",
@@ -167,7 +174,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             return;
         }
         //Create Video tag
-		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video"))
+		this.video = jQuery(document.createElement(this._isYoutube()?"div":(this.options.multi_src ? "multi-video" : "video")))
             .addClass('et2_video')
             .attr('id', this.dom_id);
 
