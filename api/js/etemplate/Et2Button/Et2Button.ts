@@ -185,7 +185,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			if(!this.image)
 			{
 				let image = this._get_default_image(this._widget_id);
-				if(image != this._image)
+				if(image && image != this._image)
 				{
 					this.image = image;
 				}
