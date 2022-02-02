@@ -1153,17 +1153,7 @@ class mail_compose
 		{
 			$disableRuler = true;
 		}
-		$font_span = $font_part = '';
-		if($content['mimeType'] == 'html') {
-			// User preferences for style
-			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-			$font_size = Etemplate\Widget\HtmlArea::font_size_from_prefs();
-			$font_part = '<span style="width:100%; display: inline; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
-			$font_span = $font_part.'&#8203;</span>';
-			if (empty($font) && empty($font_size)) $font_span = '';
-		}
-		// the font span should only be applied on first load or on switch plain->html and the absence of the font_part of the span
-		if (!$isFirstLoad && !empty($font_span) && stripos($content['body'],$font_part)===false) $font_span = '';
+
 		//remove possible html header stuff
 		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
 		//error_log(__METHOD__.__LINE__.array2string($this->mailPreferences));
