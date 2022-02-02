@@ -201,6 +201,10 @@ services:
     # needs to be initialised via: docker run --rm -v dev_collabora-config:/mnt --entrypoint '/bin/cp -r /etc/loolwsd /mnt' quay.io/egroupware/collabora-key:stable
     volumes:
     - collabora-config:/etc/loolwsd
+      # support for Collabora/CODE 21.11+
+    - collabora-config:/etc/coolwsd
+    - $PWD/data/default/loolwsd/loolwsd.xml:/etc/coolwsd/coolwsd.xml
+    - $PWD/data/default/loolwsd/loolkitconfig.xcu:/etc/coolwsd/loolkitconfig.xcu
     # dont try to regenerate the (not used certificate) as volumn is readonly
     environment:
     - DONT_GEN_SSL_CERT=1
