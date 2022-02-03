@@ -13,4 +13,7 @@ import {filemanagerAPP} from "./filemanager";
 /**
  * This is the app.ts endpoint, code is in ./filemanager.ts to ensure proper loading/cache-invalidation for Collabora extending filemanagerAPP!
  */
-app.classes.filemanager = filemanagerAPP;
+if(typeof app.classes.filemanager === "undefined")
+{
+	app.classes.filemanager = filemanagerAPP;
+}

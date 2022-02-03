@@ -1444,4 +1444,3 @@ export class filemanagerAPP extends EgwApp
 		}
 	}
 }
-app.classes.filemanager = filemanagerAPP;
