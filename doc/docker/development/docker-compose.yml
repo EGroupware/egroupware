@@ -58,8 +58,8 @@ volumes:
 
 services:
   egroupware:
-    # you can also use tags like: 7.3, 7.3.12 or 7.4
-    image: egroupware/development:master
+    # you can also use tags like: 7.4, 8.0 or 8.1 depending on the PHP version you want to use
+    image: egroupware/development:latest
     # setting a default language for a new installation
     #environment:
     #- LANG=de
@@ -113,7 +113,6 @@ services:
     #
     # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
     - XDEBUG_REMOTE_HOST=docker.for.mac.localhost
-
     restart: always
     depends_on:
     - db
@@ -136,7 +135,7 @@ services:
     # AND uncomment the three lines starting with "listen 443", "ssl_certificate", "ssl_certificate_key" in nginx.conf
     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-    # if no webserver is running on the host, change (first) number to 80 or 443
+    # if no webserver is running on the host, change (first) number to 80 and 443
     - "8080:80"
     - "4443:443"
     depends_on:
@@ -145,28 +144,35 @@ services:
     - collabora-key
     - rocketchat
     container_name: egroupware-nginx
+    restart: always
 
-  # run an own MariaDB:10.4 (you can use EGroupware's database backup and restore to add your existing database)
+  # run an own MariaDB:10.5 (you can use EGroupware's database backup and restore to add your existing database)
   db:
-    image: mariadb
+    image: mariadb:10.5
     environment:
     #- MYSQL_ROOT=root
     - MYSQL_ROOT_PASSWORD=secret
     volumes:
     - db:/var/lib/mysql
+    # to add an own persistent configuration
+    #- ./mariadb.cnf:/etc/mysql/mariadb.conf.d/egroupware.cnf
     container_name: egroupware-db
+    restart: always
     # make mysql also available on the host
     #ports:
     #- "3306:3306"
 
   # push server using phpswoole
   push:
-    image: phpswoole/swoole:latest-dev
+    image: phpswoole/swoole:latest-alpine
+    command:
+      - /var/www/server.php
     volumes:
     - sources-push:/var/www
     - sessions:/var/lib/php/sessions
     - push-config:/var/lib/egroupware-push
     container_name: egroupware-push
+    restart: always
     depends_on:
       - egroupware
 
@@ -198,14 +204,11 @@ services:
   collabora-key:
     image: "quay.io/egroupware/collabora-key:stable"
     #image: collabora/code:latest
-    # needs to be initialised via: docker run --rm -v dev_collabora-config:/mnt --entrypoint '/bin/cp -r /etc/loolwsd /mnt' quay.io/egroupware/collabora-key:stable
     volumes:
     - collabora-config:/etc/loolwsd
       # support for Collabora/CODE 21.11+
     - collabora-config:/etc/coolwsd
-    - $PWD/data/default/loolwsd/loolwsd.xml:/etc/coolwsd/coolwsd.xml
-    - $PWD/data/default/loolwsd/loolkitconfig.xcu:/etc/coolwsd/loolkitconfig.xcu
-    # dont try to regenerate the (not used certificate) as volumn is readonly
+    # don't try to regenerate the (not used certificate) as volume is readonly
     environment:
     - DONT_GEN_SSL_CERT=1
     restart: always
@@ -214,6 +217,15 @@ services:
     # can access EGroupware without the need to go over your firewall
     #extra_hosts:
     #- "my.host.name:ip-address"
+    depends_on:
+      - collabora-init
+
+  # initialise the collabora-config volume
+  collabora-init:
+    image: "quay.io/egroupware/collabora-key:latest"
+    command:  bash -c "test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd && cd /tmp/coolwsd && ln -s coolwsd.conf loolwsd.conf)"
+    volumes:
+      - collabora-config:/tmp/coolwsd
 
   # Rocket.Chat server
   rocketchat:
@@ -245,7 +257,7 @@ services:
 
   # MongoDB for Rocket.Chat
   mongo:
-    image: mongo:4.0
+    image: mongo:4.2
     restart: unless-stopped
     volumes:
       - mongo:/data/db
@@ -255,7 +267,7 @@ services:
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
   mongo-init-replica:
-    image: mongo:4.0
+    image: mongo:4.2
     command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
     depends_on:
       - mongo
