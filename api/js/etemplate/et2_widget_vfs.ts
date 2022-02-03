@@ -936,6 +936,12 @@ export class et2_vfsUpload extends et2_file
 			"description": "Upload files to the specified VFS path",
 			"type": "string",
 			"default": ''
+		},
+		"listonly": {
+			"name": "List Only",
+			"description": "Display given file objects only as list (removes span,input and progress from the dom)",
+			"type": "boolean",
+			"default": false
 		}
 	};
 
@@ -967,6 +973,12 @@ export class et2_vfsUpload extends et2_file
 			this.set_multiple(true);
 		}
 		this.list = jQuery(document.createElement('table')).appendTo(this.node);
+		if (this.options.listonly)
+		{
+			this.input.remove();
+			this.span.remove();
+			this.progress.remove();
+		}
 	}
 
 	/**
