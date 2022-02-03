@@ -79,12 +79,14 @@ class Vfs extends File
 	/**
 	 * Find all attachments, can be used to prepare the data for the widget on client-side
 	 *
-	 * @param string $path eg. "/apps/$app/$id/$rel_path"
+	 * @param string $path eg. "/apps/$app/$id/$relpath"
 	 * @return array
 	 * @throws Api\Exception\AssertionFailed
 	 */
 	public static function findAttachments($path)
 	{
+		list(,,,, $relpath) = explode('/', $path, 5);
+
 		$value = [];
 		// Single file, already existing
 		if (substr($path,-1) != '/' && Api\Vfs::file_exists($path) && !Api\Vfs::is_dir($path))
