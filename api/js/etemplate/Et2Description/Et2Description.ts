@@ -8,7 +8,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {html, css, LitElement} from "@lion/core";
+import {css, html, LitElement} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 
@@ -80,7 +80,8 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		this.activate_links = false;
 		this.extra_link_popup = "";
 		this.extra_link_target = "_browser";
-		this.href = "";
+		// Don't initialize this to avoid href(unknown) when rendered
+		//this.href = "";
 		this.value = "";
 
 		this._handleClick = this._handleClick.bind(this);
@@ -165,7 +166,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		{
 			this._init_blueimp_gallery(_ev, this.href);
 		}
-		else
+		else if(this.mime_data || this.href)
 		{
 			egw(window).open_link(this.mime_data || this.href, this.extra_link_target, this.extra_link_popup, null, null, this.mime);
 		}
