@@ -39,10 +39,10 @@ class Vfs extends File
 	{
 		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
 		{
-			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
+			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont' => self::$request->content));
 			if (!empty($this->attrs['path']))
 			{
-				$path = self::expand_name($this->attrs['path'], $expand['c']??null, $expand['row'], $expand['c_']??null, $expand['row_']??null, $expand['cont']);
+				$path = self::expand_name($this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
 			}
 			else
 			{
@@ -51,13 +51,13 @@ class Vfs extends File
 
 			self::setElementAttribute($form_name, 'path', $path);
 			// ID maps to path - check there for any existing files
-			list($app,$id,$relpath) = explode(':',$path,3);
-			if($app && $id)
+			list($app, $id, $relpath) = explode(':', $path, 3);
+			if ($app && $id)
 			{
-				if(!is_numeric($id))
+				if (!is_numeric($id))
 				{
-					$_id = self::expand_name($id,0,0,0,0,self::$request->content);
-					if($_id != $id && $_id)
+					$_id = self::expand_name($id, 0, 0, 0, 0, self::$request->content);
+					if ($_id != $id && $_id)
 					{
 						$id = $_id;
 						$form_name = "$app:$id:$relpath";
@@ -68,54 +68,66 @@ class Vfs extends File
 					}
 				}
 				$value =& self::get_array(self::$request->content, $form_name, true);
-				$path = Api\Link::vfs_path($app,$id,'',true);
-				if (!empty($relpath)) $path .= '/'.$relpath;
+				$path = Api\Link::vfs_path($app, $id, '', true);
+				if (!empty($relpath)) $path .= '/' . $relpath;
 
-				if (true) $value = array();
-
-				// Single file, already existing
-				if (substr($path,-1) != '/' && Api\Vfs::file_exists($path) && !Api\Vfs::is_dir($path))
-				{
-					$file = Api\Vfs::stat($path);
-					$file['path'] = $path;
-					$file['name'] = Api\Vfs::basename($file['path']);
-					$file['mime'] = Api\Vfs::mime_content_type($file['path']);
-					$file['download_url'] = Api\Vfs::download_url($file['path']);
-					$value = array($file);
-				}
-				// Single file, missing extension in path
-				else if (substr($path, -1) != '/' && !Api\Vfs::file_exists($path) && $relpath && substr($relpath,-4,1) !== '.')
-				{
-					$find = Api\Vfs::find(Api\Vfs::dirname($path), array(
-						'type' => 'f',
-						'maxdepth' => 1,
-						'name' => Api\Vfs::basename($path).'.*',
-					));
-					foreach($find as $file)
-					{
-						$file_info = Api\Vfs::stat($file);
-						$file_info['path'] = $file;
-						$file_info['name'] = Api\Vfs::basename($file_info['path']);
-						$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
-						$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
-						$value[] = $file_info;
-					}
-				}
-				else if (substr($path, -1) == '/' && Api\Vfs::is_dir($path))
-				{
-					$scan = Api\Vfs::scandir($path);
-					foreach($scan as $file)
-					{
-						$file_info = Api\Vfs::stat("$path$file");
-						$file_info['path'] = "$path$file";
-						$file_info['name'] = Api\Vfs::basename($file_info['path']);
-						$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
-						$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
-						$value[] = $file_info;
-					}
-				}
+				$value = self::findAttachments($path);
 			}
 		}
+	}
+
+	/**
+	 * Find all attachments, can be used to prepare the data for the widget on client-side
+	 *
+	 * @param string $path eg. "/apps/$app/$id/$rel_path"
+	 * @return array
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public static function findAttachments($path)
+	{
+		$value = [];
+		// Single file, already existing
+		if (substr($path,-1) != '/' && Api\Vfs::file_exists($path) && !Api\Vfs::is_dir($path))
+		{
+			$file = Api\Vfs::stat($path);
+			$file['path'] = $path;
+			$file['name'] = Api\Vfs::basename($file['path']);
+			$file['mime'] = Api\Vfs::mime_content_type($file['path']);
+			$file['download_url'] = Api\Vfs::download_url($file['path']);
+			$value = array($file);
+		}
+		// Single file, missing extension in path
+		else if (substr($path, -1) != '/' && !Api\Vfs::file_exists($path) && $relpath && substr($relpath,-4,1) !== '.')
+		{
+			$find = Api\Vfs::find(Api\Vfs::dirname($path), array(
+				'type' => 'f',
+				'maxdepth' => 1,
+				'name' => Api\Vfs::basename($path).'.*',
+			));
+			foreach($find as $file)
+			{
+				$file_info = Api\Vfs::stat($file);
+				$file_info['path'] = $file;
+				$file_info['name'] = Api\Vfs::basename($file_info['path']);
+				$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+				$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
+				$value[] = $file_info;
+			}
+		}
+		else if (substr($path, -1) == '/' && Api\Vfs::is_dir($path))
+		{
+			$scan = Api\Vfs::scandir($path);
+			foreach($scan as $file)
+			{
+				$file_info = Api\Vfs::stat("$path$file");
+				$file_info['path'] = "$path$file";
+				$file_info['name'] = Api\Vfs::basename($file_info['path']);
+				$file_info['mime'] = Api\Vfs::mime_content_type($file_info['path']);
+				$file_info['download_url'] = Api\Vfs::download_url($file_info['path']);
+				$value[] = $file_info;
+			}
+		}
+		return $value;
 	}
 
 	public static function ajax_upload()
