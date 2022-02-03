@@ -9,7 +9,7 @@
  */
 
 
-import {css, html} from "@lion/core";
+import {css} from "@lion/core";
 import {LionInput} from "@lion/input";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
@@ -21,7 +21,9 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 		return [
 			...super.styles,
 			css`
-			/* Custom CSS */
+			:host([type="hidden"]) {
+				display: none;
+			}
 			`,
 		];
 	}
