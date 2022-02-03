@@ -443,6 +443,17 @@ export function find_select_options(widget, attr_options?, attrs = {}) : SelectO
 		}
 		content_options = type_options;
 	}
+
+	// Clean up
+	if(!Array.isArray(content_options) && typeof content_options === "object" && Object.values(content_options).length > 0)
+	{
+		let fixed_options = [];
+		for(let key in <object>content_options)
+		{
+			fixed_options.push({value: key, label: content_options[key]});
+		}
+		content_options = fixed_options;
+	}
 	return content_options;
 }
 
