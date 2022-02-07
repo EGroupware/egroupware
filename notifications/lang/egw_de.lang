@@ -78,6 +78,7 @@ please enter your password	notifications	de	Bitte geben Sie Ihr Passwort ein.
 poll interval	notifications	de	Abfrageintervall
 preferences for notification	notifications	de	Benachrichtigungs-Einstellungen
 received	notifications	de	Erhalten
+refresh notifications	notifications	de	Benachrichtigungen aktualisieren
 repeat login?	notifications	de	Anmeldung erneut versuchen?
 run application	notifications	de	Anwendung ausführen
 save password	notifications	de	Passwort speichern

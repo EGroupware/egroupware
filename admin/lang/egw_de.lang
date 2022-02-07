@@ -113,7 +113,7 @@ all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Install IDs
+allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installations IDs
 allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich erinnern" Token zu setzen
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
@@ -369,7 +369,7 @@ educational: universities, schools, ...	admin	de	Ausbildung: Universitäten, Sch
 egroupware directory	admin	de	EGroupware Verzeichnis
 egroupware tutorial	admin	de	EGroupware Video-Anleitungen
 egroupware version	admin	de	EGroupware Version
-either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID UND das Konfigurationspasswort ODER den Remote Hash!
+either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Installations ID UND das Konfigurationspasswort ODER den Remote Hash!
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
 email settings	common	de	E-Mail-Konto

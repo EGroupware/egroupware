@@ -75,6 +75,7 @@ please enter your password	notifications	sk	Prosím zadajte svoje heslo
 poll interval	notifications	sk	Interval delenia
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
 received	notifications	sk	Doručené
+refresh notifications	notifications	sk	Obnovenie oznámení
 repeat login?	notifications	sk	Opakovať prihlásnie?
 run application	notifications	sk	otvoriť aplikáciu
 save password	notifications	sk	uložiť heslo

@@ -145,7 +145,7 @@ favorites	filemanager	de	Favoriten
 file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
-file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu groß. Kontaktieren Sie Ihren Systemadministrator für weitere Informationen.
 file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einem EPL-Vertrag verfügbar.
 file deleted.	filemanager	de	Datei gelöscht
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
@@ -157,7 +157,7 @@ filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateiname darf nicht leer sein!
 files	common	de	Dateien
 files from links	filemanager	de	Zeige Dateien aus verknüpften Einträgen
-files from subdirectories	filemanager	de	Dateien aus Unterordners
+files from subdirectories	filemanager	de	Dateien aus Unterordner
 files in this directory	filemanager	de	Dateien in diesem Ordner
 filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystems ergab keine Probleme
@@ -174,7 +174,7 @@ general	filemanager	de	Allgemein
 general fields:	filemanager	de	Allgemeine Platzhalter
 go home	filemanager	de	Gehe zum Heimordner
 go to	filemanager	de	Gehe zu
-go to your home directory	filemanager	de	Zu Ihrem Heimordner wechseln
+go to your home directory	filemanager	de	Zu Ihrem persönlichen Ordner wechseln
 go up	filemanager	de	in den übergeordneten Ordner wechseln
 hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
@@ -194,6 +194,7 @@ link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 list view	filemanager	de	Listenansicht
 location	filemanager	de	Ort
 lock	filemanager	de	Gesperrt
+lock from %1, created %2	filemanager	de	GESPERRT von %1, am %2
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
@@ -270,6 +271,7 @@ select file(s) from vfs	common	de	Datei(en) aus dem EGroupware Dateimanager ausw
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert
 share files	filemanager	de	Dateien freigeben
 share link copied into clipboard	filemanager	de	Link in die Zwischenablage kopiert
+share mounted at %1.<br/>please close this tab.	filemanager	de	Freigabe gemounted auf %1.<br/>Bitte schließen Sie dieses Fenster.
 shared files	filemanager	de	Freigegebene Dateien
 shared with	filemanager	de	Geteilt mit
 show	filemanager	de	Zeige
@@ -277,8 +279,8 @@ show hidden files	filemanager	de	Zeige versteckte Dateien
 show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü
 show link "users and groups" in side box menu?	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
 show link "users and groups*" in side box menu?*	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
-show link "your home directory" in side box menu?	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Heimatordner" innerhalb des Seitenmenüs angezeigt bekommen?
-show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Heimatordner" innerhalb des Seitenmenüs angezeigt bekommen?
+show link "your home directory" in side box menu?	filemanager	de	Möchten Sie den Verknüpfung  "Persönlicher Ordner" innerhalb des Seitenmenüs angezeigt bekommen?
+show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Persönlicher Ordner" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisordner (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
@@ -333,7 +335,7 @@ you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte f�
 you need to become root, to enable or disable versioning on a directory!	filemanager	de	Sie müssen Superuser sein, um die Versionierung für ein Ordner ein- oder auszuschalten!
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
-you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem Heimatordner geleitet
+you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem persönlichen Ordner geleitet
 you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Startordner geleitet
-your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr Heimatordner hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
+your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr persönlicher Ordner hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
 your home directory	filemanager	de	Ihr persönlicher Ordner

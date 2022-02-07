@@ -4,6 +4,7 @@ message from	notifications	sv	Meddelande från
 minutes	notifications	sv	Minuter
 notification	common	sv	Meddelande
 permission	notifications	sv	Behörighet
+refresh notifications	notifications	sv	Uppdatera meddelanden
 settings	notifications	sv	Alternativ
 signature	admin	sv	Signatur
 step	notifications	sv	Steg

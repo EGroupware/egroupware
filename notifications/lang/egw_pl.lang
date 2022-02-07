@@ -31,6 +31,7 @@ optimize e-mails for external mail client	notifications	pl	Optymalizuj emaile dl
 poll interval	notifications	pl	okres odpytywania
 preferences for notification	notifications	pl	Preferencje dla powiadomienia
 received	notifications	pl	odebrano
+refresh notifications	notifications	pl	Odśwież powiadomienia
 settings	notifications	pl	Ustawienia
 signature	admin	pl	Sygnaturka
 step	notifications	pl	Krok

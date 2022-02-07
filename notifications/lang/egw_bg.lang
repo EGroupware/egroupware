@@ -2,5 +2,6 @@ folder	notifications	bg	папка
 from	notifications	bg	От
 message from	notifications	bg	Съобщение от
 minutes	notifications	bg	минути
+refresh notifications	notifications	bg	Обновяване на известията
 signature	admin	bg	Подпис
 warning	notifications	bg	Внимание

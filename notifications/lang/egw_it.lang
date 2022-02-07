@@ -78,6 +78,7 @@ please enter your password	notifications	it	Per favore inserisci la tua password
 poll interval	notifications	it	Intervallo di controllo
 preferences for notification	notifications	it	Preferenze per Notifica
 received	notifications	it	Ricevuti
+refresh notifications	notifications	it	Aggiorna le notifiche
 repeat login?	notifications	it	Ripetere il login?
 run application	notifications	it	esegui applicazione
 save password	notifications	it	salva password

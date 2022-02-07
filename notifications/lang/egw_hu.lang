@@ -3,6 +3,7 @@ from	notifications	hu	Tól:
 message from	notifications	hu	Üzenet innen:
 minutes	notifications	hu	perc
 permission	notifications	hu	Engedélyek
+refresh notifications	notifications	hu	Értesítések frissítése
 signature	admin	hu	Aláírás
 step	notifications	hu	Lépés
 warning	notifications	hu	Figyelmeztetés

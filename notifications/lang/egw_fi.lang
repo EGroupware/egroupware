@@ -49,6 +49,7 @@ please enter your password	notifications	fi	Syötä salasana
 poll interval	notifications	fi	Äänestysten aikajakso
 preferences for notification	notifications	fi	Huomautuksen asetukset
 received	notifications	fi	Vastaanotettu
+refresh notifications	notifications	fi	Päivitä ilmoitukset
 save password	notifications	fi	Tallenna salasana
 setting	notifications	fi	Asetukset
 settings	notifications	fi	Asetukset

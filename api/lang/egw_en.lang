@@ -1,5 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	en	%1 (%2 new) messages written for application '%3' and languages '%4'
-%1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as directory inactivated!
+%1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as folder inactivated!
 %1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited
 %1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
@@ -19,7 +19,7 @@
 %1 setting "%2" = %3 disallows access via http!	admin	en	%1 setting "%2" = %3 disallows access via http!
 %1 to sync	groupdav	en	%1 to sync
 %1, duplicate id	common	en	%1, duplicate ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writable by web server.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other folder%2<br />or make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 %s disabled	common	en	%s disabled
 %s needed	common	en	%s needed
@@ -130,7 +130,7 @@ am	common	en	am
 american samoa	common	en	AMERICAN SAMOA
 an admin required that you must change your password upon login.	common	en	Administrator requires that you must change your password upon log in.
 an error happened	common	en	An error happened!
-an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the web server readable directory enables the image browser and upload.
+an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the web server readable folder enables the image browser and upload.
 an indexed column speeds up querys using that column (cost space on the disk !!!)	common	en	An indexed column speeds up query using that column, cost space on the disk!
 and	common	en	AND
 andorra	common	en	ANDORRA
@@ -229,7 +229,7 @@ can not have special sql-value null	common	en	Can not have special SQL-value NUL
 can't create directory %1 to connect found unconnected nodes to it!	admin	en	Can't create directory %1 to connect found unconnected nodes to it!
 canada	common	en	CANADA
 cancel	common	en	Cancel
-cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory.
+cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a folder.
 cannot set a category as parent, which is part of this categorys subtree!	common	en	Cannot set a category as parent, which is part of this category's sub tree!
 cannot set this cat as its own parent!	common	en	Can not set this category as its own parent!
 cant delete a single widget from a grid !!!	common	en	Can't delete a single widget from a grid!
@@ -338,6 +338,7 @@ cote d ivoire	common	en	COTE D IVOIRE
 could not contact server. operation timed out!	common	en	Could not contact server. Operation timed out!
 create	common	en	Create
 create a new table for the application	common	en	Create a new table for the application
+create directory	common	en	Create folder
 create link	common	en	Create link
 created	common	en	Created
 created by	common	en	Created by
@@ -417,10 +418,10 @@ detail	common	en	Detail
 details	common	en	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in .png images?
 direction left to right	common	en	Direction left to right
-directory	common	en	Directory
+directory	common	en	Folder
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
-directory for storing merged documents	preferences	en	Directory for storing merged documents
-directory with documents to insert entries	preferences	en	Directory with documents to insert entries
+directory for storing merged documents	preferences	en	Folder for storing merged documents
+directory with documents to insert entries	preferences	en	Folder with documents to insert entries
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png image bugfix
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page.
@@ -515,11 +516,11 @@ equatorial guinea	common	en	EQUATORIAL GUINEA
 eritrea	common	en	ERITREA
 error	common	en	Error
 error copying uploaded file to vfs!	common	en	Error copying uploaded file to VFS!
-error create parent directory %1!	common	en	Error creating parent directory %1!
-error creating %1 %2 directory	common	en	Error creating %1 %2 directory!
-error deleting %1 %2 directory	common	en	Error deleting %1 %2 directory!
+error create parent directory %1!	common	en	Error creating parent folder %1!
+error creating %1 %2 directory	common	en	Error creating %1 %2 folder!
+error deleting %1 %2 directory	common	en	Error deleting %1 %2 folder!
 error deleting %1!	common	en	Error deleting %1!
-error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory!
+error renaming %1 %2 directory	common	en	Error renaming %1 %2 folder!
 error uploading file!	filemanager	en	Error uploading file!
 error: template not found !!!	common	en	Error: Template not found!
 error: webserver is not allowed to write into '%1' !!!	common	en	Error: web server is not allowed to write into '%1' !!!
@@ -547,10 +548,10 @@ expiration	common	en	Expiration
 export the loaded etemplate into a xml-file	common	en	Export the loaded eTemplate into a xml-file
 export xml	common	en	Export XML
 extensions loaded:	common	en	Extensions loaded:
-failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required directory "%1" to %2!
+failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required folder "%1" to %2!
 failed to change password.	common	en	Failed to change password.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
-failed to create required directory "%1"!	admin	en	Failed to create required directory "%1"!
+failed to create required directory "%1"!	admin	en	Failed to create required folder "%1"!
 failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
@@ -690,11 +691,11 @@ if field is disabled an empty table-cell is displayed, for (temporal) removement
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	en	If the error persists, contact your administrator for help and ask to check the error-log of the webserver.
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a folder, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you use "2-factor-authentication", please enter the code here.	common	en	If you use "2-Factor-Authentication", please enter the code here.
 image	common	en	Image
-image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
+image directory relative to document root (use / !), example:	common	en	Image folder relative to document root (use / !), example:
 image url	common	en	Image URL
 import	common	en	Import
 import an etemplate from a xml-file	common	en	Import an eTemplate from a xml-file
@@ -873,7 +874,7 @@ minute	common	en	minute
 minutes	common	en	minutes
 missing: %1	common	en	Missing: %1
 mo	common	en	Mo
-mode of required directory "%1" changed to %2.	admin	en	Mode of required directory "%1" changed to %2.
+mode of required directory "%1" changed to %2.	admin	en	Mode of required folder "%1" changed to %2.
 modifier	preferences	en	Modifier
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
@@ -889,7 +890,7 @@ more than 1 match for '%1'	common	en	More than 1 match for '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
 move	common	en	move
-moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from directory fs_id=%2 to %3
+moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from folder fs_id=%2 to %3
 moved unconnected %1 %2 to %3.	admin	en	Moved unconnected %1 %2 to %3.
 mozambique	common	en	MOZAMBIQUE
 multicolumn indices	common	en	Multi column indices
@@ -1038,7 +1039,7 @@ path	common	en	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 permission denied!	common	en	Permission denied!
 permission denied! this is an administration only feature.	common	en	Permission denied! This is an administration only feature.
-permissions to the files/users directory	common	en	Permissions to the files/users directory
+permissions to the files/users directory	common	en	Permissions to the files/users folder
 permisson denied!	common	en	Permission denied!
 personal	common	en	Personal
 peru	common	en	PERU
@@ -1104,7 +1105,7 @@ read etemplate from database (for the keys above)	common	en	Read eTemplate from 
 read this list of methods.	common	en	Read this list of methods
 reading	common	en	Reading
 readonly	common	en	Read only
-readonly filemanager directory	common	en	Readonly filemanager directory
+readonly filemanager directory	common	en	Readonly filemanager folder
 readonly share	common	en	Readonly share
 redo	common	en	Redo
 refresh	common	en	Refresh
@@ -1118,7 +1119,7 @@ remove row (can not be undone!!!)	common	en	Remove row
 remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
 remove this link (not the entry itself)	common	en	Remove link
-removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty directory fs_id=%1
+removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty folder fs_id=%1
 removeformat	common	en	Removeformat
 rename	common	en	Rename
 replace	common	en	Replace
@@ -1127,9 +1128,9 @@ request could not be processed, please reload your window (press f5 or cmd r)!	c
 requests and full responses to files directory	common	en	Requests and full responses to files directory
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
 required	common	en	Required
-required directory "%1" created.	admin	en	Required directory "%1" created.
-required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required directory "%1" has wrong mode %2 instead of %3!
-required directory "%1" not found!	admin	en	Required directory "%1" not found!
+required directory "%1" created.	admin	en	Required folder "%1" created.
+required directory "%1" has wrong mode %2 instead of %3!	admin	en	Required folder "%1" has wrong mode %2 instead of %3!
+required directory "%1" not found!	admin	en	Required folder "%1" not found!
 reset	common	en	Reset
 reset all to default	common	en	Reset all to default
 reset all user's column preferences	common	en	Reset all user's column preferences
@@ -1274,9 +1275,9 @@ setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
 share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account
-share filemanager directory	common	en	Filemanager directory
+share filemanager directory	common	en	Filemanager folder
 share files	common	en	Share files
-share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager directory, not the %1
+share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager folder, not the %1
 share link	common	en	Share link
 share this %1 via url	common	en	Share this %1 via URL
 shift	common	en	Shift
@@ -1332,7 +1333,7 @@ sri lanka	common	en	SRI LANKA
 stack	common	en	Stack
 start a new search, cancel this link	common	en	Start new search, cancel this link
 start date	common	en	Start date
-start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	en	Start directory for image browser of rich text editor in EGroupware File Manager
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	en	Start folder for image browser of rich text editor in EGroupware File Manager
 start new search for the above pattern	common	en	Start new search for the above pattern
 start time	common	en	Start time
 start with	common	en	Start with
@@ -1347,7 +1348,7 @@ submit	common	en	Submit
 submit form	common	en	Submit form
 submitbutton	common	en	Submit button
 substitutions and their meanings:	common	en	Substitutions and their meanings:
-successful created new directory %1 for unconnected nods.	admin	en	Successful created new directory %1 for unconnected nods.
+successful created new directory %1 for unconnected nods.	admin	en	Successful created new folder %1 for unconnected nods.
 sudan	common	en	SUDAN
 suggest password	common	en	Suggest password
 sunday	common	en	Sunday
@@ -1455,10 +1456,10 @@ update from version '%s' to	common	en	Update from version '%s' to
 update the clock per minute or per second	common	en	Update the clock per minute or per second
 updating your account with new data from your identity provider failed!	common	en	Updating your account with new data from your identity provider failed!
 upload	common	en	Upload
-upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writable by web server.
+upload directory does not exist, or is not writeable by webserver	common	en	Upload folder does not exist, or is not writable by web server.
 upload file(s) from filemanager...	common	en	Upload file(s) from Filemanager...
 upload new photo	common	en	Upload new photo
-upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the web server!
+upload requires the directory to be writable by the webserver!	common	en	Upload requires the folder to be writable by the web server!
 uppercase letters	common	en	uppercase letters
 url	common	en	URL
 uruguay	common	en	URUGUAY
@@ -1484,7 +1485,7 @@ venezuela	common	en	VENEZUELA
 version	common	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	en	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	en	Vertical alignment of row
-vfs upload directory	common	en	VFS upload directory
+vfs upload directory	common	en	VFS upload folder
 video tutorials	common	en	Video Tutorials
 viet nam	common	en	VIET NAM
 view	common	en	View
@@ -1505,7 +1506,7 @@ western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 what style would you like the image to have?	common	en	Image style
-when you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (%1)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here.  If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	en	Which groups
@@ -1523,7 +1524,7 @@ working days	common	en	Working days
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
 writable	common	en	Writable
-writable filemanager directory	common	en	Writable filemanager directory
+writable filemanager directory	common	en	Writable filemanager folder
 writable share	common	en	Writable share
 write <app>/setup/tables_current.inc.php	common	en	Write <app>/setup/tables_current.inc.php
 write langfile	common	en	Write language file
