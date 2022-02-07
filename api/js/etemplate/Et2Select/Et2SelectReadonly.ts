@@ -89,11 +89,28 @@ li {
 
 	set_value(value)
 	{
-		if(typeof value == "string")
-		{
-			value = value.split(",");
-		}
 		this.value = value;
+	}
+
+	set value(new_value)
+	{
+		// Split anything that is still a CSV
+		if(typeof new_value == "string" && new_value.indexOf(",") > 0)
+		{
+			new_value = new_value.split(",");
+		}
+		// Wrap any single value into an array for consistent rendering
+		if(typeof new_value == "string" || typeof new_value == "number")
+		{
+			new_value = ["" + new_value];
+		}
+
+		super.value = new_value;
+	}
+
+	get value()
+	{
+		return super.value;
 	}
 
 	/**
@@ -183,14 +200,6 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 			return;
 		}
 
-		if(typeof new_value == "string" && new_value.indexOf(",") > 0)
-		{
-			new_value = new_value.split(",");
-		}
-		if(typeof new_value == "string" || typeof new_value == "number")
-		{
-			new_value = ["" + new_value];
-		}
 		for(let id of new_value)
 		{
 			let account_name = null;
