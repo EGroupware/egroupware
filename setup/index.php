@@ -301,7 +301,8 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 			{
 				case 'dbcreate':
 					$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'], 'utf8',	// create all new db's with utf8
-						!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
+						!preg_match('/^([0-9.a-z_%-]+|([0-9]{1,3}\.){3}[0-9]{1,3}(\/\d+)?)$/i', $_POST['db_grant_host']) ?
+							'localhost' : $_POST['db_grant_host']);
 					break;
 				case 'drop':
 					Api\Csrf::validate($_POST['csrf_token'], __FILE__);
