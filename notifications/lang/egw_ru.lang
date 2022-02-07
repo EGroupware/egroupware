@@ -67,6 +67,7 @@ please enter your password	notifications	ru	Пароль
 poll interval	notifications	ru	Интервал опросов
 preferences for notification	notifications	ru	Настройки Извещений
 received	notifications	ru	Получено
+refresh notifications	notifications	ru	Обновить уведомления
 repeat login?	notifications	ru	Повторить имя пользователя?
 run application	notifications	ru	Запустить приложение
 save password	notifications	ru	Сохранить пароль

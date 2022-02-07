@@ -72,6 +72,7 @@ please enter your password	notifications	fr	Veuillez entrer votre mot de passe
 poll interval	notifications	fr	Intervalle de sondage
 preferences for notification	notifications	fr	Préférences de notification
 received	notifications	fr	Reçu
+refresh notifications	notifications	fr	Rafraîchir les notifications
 repeat login?	notifications	fr	Répeter la connexion ?
 run application	notifications	fr	exécuter l'application
 save password	notifications	fr	enregistrer le mot de passe
@@ -95,7 +96,6 @@ windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup wi
 windows-popup only	notifications	fr	Popup windows seulement
 yesterday	notifications	fr	hier
 you can also use	admin	fr	Vous pouvez aussi utiliser
-you can also use addressbook placeholders with user/ prefix	notifications	fr	Vous pouvez aussi utiliser les balises du carnet d'adresses avec l'utilisateur/préfixe
 you have %1 unread notifications	notifications	fr	Vous avez %1 notification(s) non lue(s)
 you have been successfully logged out	notifications	fr	Vous avez été déconnecté avec succès
 you've got new mail	notifications	fr	Vous avez un nouveau message

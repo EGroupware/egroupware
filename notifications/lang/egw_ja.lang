@@ -34,8 +34,8 @@ egroupware-popup backend	admin	ja	EGroupware ポップアップ・バックエ�
 egroupware-popup first, if that fails notify me by e-mail	notifications	ja	EGroupware ポップアップ（ポップアップ失敗時のみ電子メール）
 egroupware-popup only	notifications	ja	EGroupware ポップアップのみ
 egroupware-popup verbosity	notifications	ja	EGroupware ポップアップの冗長度
-emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	ja	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
 email notifications only, if user is not logged in	notifications	ja	電子メールのみ（ユーザがログインしていない場合）
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	ja	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
 enable egroupware-popup backend	admin	ja	EGroupware ポップアップ・バックエンドを有効化
 enable windows-popup backend	admin	ja	Windows ポップアップ・バックエンドを有効化
 enabled chains	notifications	ja	有効チェーン
@@ -51,8 +51,6 @@ if set, embedded links get rendered special for external clients	notifications	j
 info on load config file: create config file.	notifications	ja	Info on load config file: create config file.
 issuer dn:	notifications	ja	Issuer DN:
 java desktop notification app	preferences	ja	Java デスクトップ通知アプリ
-java-windows-popup and egroupware-popup only	preferences	ja	Java-Windows ポップアップとEGroupware ポップアップのみ
-java-windows-popup, egroupware-popup and email	preferences	ja	Java-Windows ポップアップとEGroupware ポップアップと電子メール
 last month	notifications	ja	先月
 linked entries:	common	ja	リンク項目:
 login aborted, application exit?	notifications	ja	ログインを中断し、アプリケーションを終了しますか？
@@ -80,6 +78,7 @@ please enter your password	notifications	ja	パスワードを入力してくだ
 poll interval	notifications	ja	ポーリング間隔
 preferences for notification	notifications	ja	通知設定
 received	notifications	ja	受信済み
+refresh notifications	notifications	ja	お知らせを更新する
 repeat login?	notifications	ja	もういちどログインしますか？
 run application	notifications	ja	アプリケーションを起動
 save password	notifications	ja	パスワードを保存
@@ -95,7 +94,6 @@ the server certificate is not a valid trust center certificate!	notifications	ja
 this egroupware notification has been sent to you by mail because your	notifications	ja	This EGroupware notification has been sent to you by mail because your
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	ja	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
 this month	notifications	ja	今月
-you have %1 unread notifications	notifications	ja	%1 個の未読通知があります。
 user:	notifications	ja	ユーザ:
 warning	notifications	ja	警告
 windows-popup and e-mail	notifications	ja	Windows ポップアップと電子メール
@@ -104,6 +102,7 @@ windows-popup first, if that fails notify me by e-mail	notifications	ja	Windows 
 windows-popup only	notifications	ja	Windows ポップアップのみ
 yesterday	notifications	ja	昨日
 you can also use	admin	ja	You can also use
+you have %1 unread notifications	notifications	ja	%1 個の未読通知があります。
 you have been successfully logged out	notifications	ja	ログアウトしました。
 you've got new mail	notifications	ja	新着メールがあります!
 your session could not be verified.	notifications	ja	セッションが検証できません。

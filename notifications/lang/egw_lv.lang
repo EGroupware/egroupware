@@ -2,6 +2,7 @@ folder	notifications	lv	Mape
 from	notifications	lv	No
 message from	notifications	lv	Ziņa no
 minutes	notifications	lv	minūtes
+refresh notifications	notifications	lv	Atjaunināt paziņojumus
 settings	notifications	lv	Uzstādījumi
 signature	admin	lv	Paraksts
 step	notifications	lv	Solis
