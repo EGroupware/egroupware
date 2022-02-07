@@ -372,7 +372,7 @@ class Login
 	/**
 	* displays a login denied message
 	*/
-	function denylogin_screen()
+	function deny_screen()
 	{
 		try {
 			$tmpl = new Template(EGW_SERVER_ROOT.$this->framework->template_dir);
