@@ -1,3 +1,21 @@
+egroupware-docker (21.1.20220207) hardy; urgency=low
+
+  * Calendar: fix not working placeholders $$date$$ & $$fullname$$
+  * CardDAV/Addressbook: fix GET request regression after REST API introduction
+  * CardDAV/ActiveDirectory: fix empty account-addressbook if sync-collection-report is used
+  * Etemplate: Add link icon overlay to link list
+  * Collabora: fix direct edits and such via a share end up in different Collabora edit-sessions
+  * Collabora: support for version 21.11+ (needs new egroupware-collabora-key package too!)
+  * Kanban/PostgreSQL: fix SQL error by replacing MySQL specific syntax with a sub-query
+  * OpenID Connect: implement "groups" claim and scope return memberships
+  * ProjectManager: Fix SQL error adding project list to Home
+  * Guacamole/Backup/Restore: fix not working restore for Guacamole
+  * EPL/Placetel: support more the one number-prefix / area-code
+  * EPL: CTI for Asterisk using ARI (Asterisk Rest API): click2dial, CRM-view and call-lists
+  * Setup/EPL: do not autoinstall uninstalled EPL apps when container restarts
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 07 Feb 2022 11:13:39 +0100
+
 egroupware-docker (21.1.20211130) hardy; urgency=low
 
   * PHP 8.0: tons of fixes to support 8.0, this is probably the last container using PHP 7.4 by default
