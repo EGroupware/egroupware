@@ -134,7 +134,7 @@
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
 		var check_framework = egw_script.getAttribute('data-check-framework');
 		if (typeof window.framework == 'undefined' &&
-			!window.location.pathname.match(/\/(smallpart\/|login.php)/) && // not for login page
+			!window.location.pathname.match(/\/(registration\/|smallpart\/|login.php)/) && // not for login page
 			!window.location.search.match(/[&?]cd=/) &&
 			// for popups check if required files are not about to be loaded (saved additional redirect and fixes LTI launches)
 			(check_framework || include.filter(function(_uri){return _uri.match(/api\/(config|user)\.php/);}).length < 2))
