@@ -1898,7 +1898,8 @@ var et2_calendar_planner = /** @class */ (function (_super) {
             do {
                 row = document.elementFromPoint(x, y);
                 if (this.div.has(row).length == 0) {
-                    hidden_nodes.push(jQuery(row).hide());
+                    hidden_nodes.push({ element: row, display: row.style.display });
+                    row.style.display = "none";
                 }
                 else {
                     break;
@@ -1908,7 +1909,7 @@ var et2_calendar_planner = /** @class */ (function (_super) {
                 return false;
             // Restore hidden nodes
             for (var i = 0; i < hidden_nodes.length; i++) {
-                hidden_nodes[i].show();
+                hidden_nodes[i].element.style.display = hidden_nodes[i].display;
             }
             row = jQuery(row).closest('.calendar_plannerRowWidget');
             var row_widget = null;
