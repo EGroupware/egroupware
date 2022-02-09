@@ -1308,7 +1308,10 @@ class calendar_ical extends calendar_boupdate
 					// if the client does not return a status, we restore the original one
 					foreach ($event['participants'] as $uid => $status)
 					{
-						if ($status[0] == 'X')
+						// Work around problems with Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
+						// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
+						// --> allow only updates with other status then NEEDS-ACTION and therefore allow accepting or denying meeting requests for the user himself
+						if ($status[0] === 'X' || calendar_groupdav::get_agent() === 'caldavsynchronizer' && $status[0] === 'U')
 						{
 							if (isset($event_info['stored_event']['participants'][$uid]))
 							{

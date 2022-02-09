@@ -954,10 +954,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
 			if (!$this->check_access(Acl::EDIT, $oldEvent) ||
-				// Work around problems with Outlook CalDAV Synchroniser (https://caldavsynchronizer.org/)
-				// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
-				// --> allow full updates only for organizer
-				self::get_agent() == 'caldavsynchronizer' && $oldEvent['owner'] != $user ||
 				// we ignored Lightings If-None-Match: "*" --> do not overwrite event, just change status
 				!empty($workaround_lightning_if_none_match))
 			{
