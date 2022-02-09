@@ -37,10 +37,10 @@ docker build --no-cache --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=
 	# further tags are only for the default PHP version
 	[ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && exit
 	# tag only stable releases as latest
-	#[ $TAG != "master" ] && {
-	#	docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
-	#	docker push egroupware/egroupware:latest
-	#}
+	[ $TAG != "master" ] && {
+		docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
+		docker push egroupware/egroupware:latest
+	}
 	[ "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
 		docker tag egroupware/egroupware:$TAG egroupware/egroupware:$BRANCH
 		docker push egroupware/egroupware:$BRANCH
