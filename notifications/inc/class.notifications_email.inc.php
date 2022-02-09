@@ -79,14 +79,21 @@ class notifications_email implements notifications_iface {
 
 		// Use configured mail ac
 		$ident = null;
-		if($this->config->async_account)
+		if($this->config->async_identity)
 		{
-			$mail_identities = Api\Mail\Account::identities([], true, 'params', $this->config->async_account);
-			foreach ($mail_identities as $mi)
+			$ident = Api\Mail\Account::read($this->config->async_identity);
+		}
+		else
+		{
+			if($this->config->async_account)
 			{
-				if ($mi['ident_email'] == $this->config->async_email || !$this->config->async_email)
+				$mail_identities = Api\Mail\Account::identities([], true, 'params', $this->config->async_account);
+				foreach($mail_identities as $mi)
 				{
-					$ident = Api\Mail\Account::read($mi['acc_id']);
+					if($mi['ident_email'] == $this->config->async_email || !$this->config->async_email)
+					{
+						$ident = Api\Mail\Account::read($mi['acc_id']);
+					}
 				}
 			}
 		}

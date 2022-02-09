@@ -55,6 +55,7 @@ last month	notifications	en	Last month
 linked entries:	common	en	Linked entries:
 login aborted, application exit?	notifications	en	Login aborted, application exit?
 login in egroupware:	notifications	en	login in EGroupware:
+mail account to use for notifications	admin	en	Mail account to use for notifications
 mail backend	admin	en	Mail backend
 mark all as read	notifications	en	mark all as read
 mark as read	notifications	en	mark as read

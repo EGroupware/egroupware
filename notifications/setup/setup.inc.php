@@ -33,6 +33,7 @@ $setup_info[NOTIFICATION_APP]['hooks'][] = 'after_navbar';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'settings';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'admin';
 $setup_info[NOTIFICATION_APP]['hooks']['deleteaccount'] = 'notifications.notifications.deleteaccount';
+$setup_info[NOTIFICATION_APP]['hooks']['config'] = 'notifications.notifications.config';
 
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(

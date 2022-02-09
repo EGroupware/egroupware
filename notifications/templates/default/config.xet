@@ -35,11 +35,11 @@
 					<description value="Account" span="all" class="subHeader"/>
 				</row>
 				<row>
-					<description value="User to use for async notifications"/>
-					<select-account id="newsettings[async_account]"/>
-				</row>
+                    <description value="Mail account to use for notifications"/>
+                    <select id="newsettings[async_identity]"/>
+                </row>
 				<row>
-					<description value="Email address to use for async notifications"/>
+                    <description value="Email address to use for notifications"/>
 					<url-email id="newsettings[async_email]"/>
 				</row>
 				<row>
