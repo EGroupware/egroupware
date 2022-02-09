@@ -215,20 +215,25 @@ class notifications {
 	 * it's an int with the account id or the e-mail address of a non-eGW user
 	 */
 	public function set_sender($_sender) {
-		if(is_object($_sender)) {
+		if(is_object($_sender))
+		{
 			$this->sender = $_sender;
 			return true;
-		} else {
+		}
+		else
+		{
 			// no object atm, we have to handle this and make a pseudo-object
-			if(is_numeric($_sender)) {
-				$this->sender = (object) $GLOBALS['egw']->accounts->read($_sender);
+			if(is_numeric($_sender))
+			{
+				$this->sender = (object)$GLOBALS['egw']->accounts->read($_sender);
 				return true;
 			}
-			if(is_string($_sender) && strpos($_sender,'@')) {
-				$this->sender = (object) array (
-									'account_email' => $this->get_addresspart($_sender,'email'),
-									'account_fullname' => $this->get_addresspart($_sender,'fullname'),
-									);
+			if(is_string($_sender) && strpos($_sender, '@'))
+			{
+				$this->sender = (object)array(
+					'account_email'    => $this->get_addresspart($_sender, 'email'),
+					'account_fullname' => $this->get_addresspart($_sender, 'fullname'),
+				);
 				return true;
 			}
 		}
@@ -821,12 +826,45 @@ class notifications {
 	 * @param array $_data
 	 * @return boolean
 	 */
-	public function set_popupdata($_appname, $_data) {
+	public function set_popupdata($_appname, $_data)
+	{
 		$this->popup_data = array(
 			'appname' => $_appname,
-			'data' => $_data
+			'data'    => $_data
 		);
 
 		return true;
+	}
+
+	/**
+	 * Hook for site configuration
+	 * Gets the appropriate mail accounts to offer to use for notifications
+	 *
+	 * @param $data
+	 * @return void
+	 */
+	public function config($data)
+	{
+		$result = ['sel_options' => ['async_identity' => []]];
+		$identities = iterator_to_array(EGroupware\Api\Mail\Account::search(false, 'params', 'ABS(egw_ea_valid.account_id) ASC, '));
+
+		// We only want identities for all users, and prefer SMTP only
+		$smtp_only = [];
+		$others = [];
+		foreach($identities as $id => $identity)
+		{
+			// Identities should be sorted so all users are first.  Stop when we get to the others.
+			if(!in_array('0', $identity['account_id']))
+			{
+				break;
+			}
+			$destination = $identity['acc_imap_host'] ? 'others' : 'smtp_only';
+			$$destination[$id] = $identity['acc_name'];
+		}
+
+		// Put SMTP only identities first
+		$result['sel_options']['async_identity'] = $smtp_only + $others;
+
+		return $result;
 	}
 }

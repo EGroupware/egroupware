@@ -32,6 +32,17 @@
 					</select>
 				</row>
 				<row>
+					<description value="Account" span="all" class="subHeader"/>
+				</row>
+				<row>
+                    <description value="Mail account to use for notifications"/>
+                    <select id="newsettings[async_identity]"/>
+                </row>
+				<row>
+                    <description value="Email address to use for notifications"/>
+					<url-email id="newsettings[async_email]"/>
+				</row>
+				<row>
 					<description value="Signature" span="all" class="subHeader"/>
 				</row>
 				<row>
