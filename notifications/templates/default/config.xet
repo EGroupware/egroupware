@@ -38,20 +38,6 @@
                     <description value="Mail account to use for notifications"/>
                     <select id="newsettings[async_identity]"/>
                 </row>
-				<row>
-                    <description value="Email address to use for notifications"/>
-					<url-email id="newsettings[async_email]"/>
-				</row>
-				<row>
-					<description value="Signature" span="all" class="subHeader"/>
-				</row>
-				<row>
-					<vbox>
-						<description value="Signature added to every change notification"/>
-						<description value="You can also use Addressbook placeholders with user/ prefix" href="/index.php?menuaction=addressbook.addressbook_merge.show_replacements" extra_link_popup="800x600"/>
-					</vbox>
-					<textbox id="newsettings[signature]" rows="7" cols="50"/>
-				</row>
 			</rows>
 		</grid>
 	</template>
