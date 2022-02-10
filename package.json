@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@andxor/jquery-ui-touch-punch-fix": "^1.0.2",
+    "@bundled-es-modules/pdfjs-dist": "^2.5.207-rc1",
     "@lion/button": "^0.14.2",
     "@lion/core": "^0.18.2",
     "@lion/input": "^0.15.4",

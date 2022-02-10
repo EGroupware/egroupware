@@ -20,6 +20,7 @@ import {ClassWithAttributes} from "./et2_core_inheritance";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 import {et2_IDOMNode} from "./et2_core_interfaces";
 import  "./CustomHtmlElements/multi-video";
+import  "./CustomHtmlElements/pdf-player";
 
 /**
  * This widget represents the HTML5 video tag with all its optional attributes
@@ -174,7 +175,8 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             return;
         }
         //Create Video tag
-		this.video = jQuery(document.createElement(this._isYoutube()?"div":(this.options.multi_src ? "multi-video" : "video")))
+		this.video = jQuery(document.createElement(this._isYoutube() ? "div" :
+            (_type.match('pdf') ? "pdf-player" : (this.options.multi_src ? 'multi-video' : 'video' ))))
             .addClass('et2_video')
             .attr('id', this.dom_id);
 
