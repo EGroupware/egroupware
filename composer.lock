@@ -207,7 +207,7 @@
             "version": "v2.3.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:fengyuanchen/cropper.git",
+                "url": "https://github.com/fengyuanchen/cropper.git",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
             "dist": {
@@ -215,48 +215,9 @@
                 "url": "https://api.github.com/repos/fengyuanchen/cropper/zipball/30c58b29ee21010e17e58ebab165fbd84285c685",
                 "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/cropper.js",
-                    "dist/cropper.css"
-                ],
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "tests",
-                    "test",
-                    "examples",
-                    "assets",
-                    "demo",
-                    "docs",
-                    "gulpfile.js",
-                    "CONTRIBUTING.md",
-                    "ISSUE_TEMPLATE.md"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "MIT"
-            ],
-            "description": "A simple jQuery image cropping plugin.",
-            "keywords": [
-                "crop",
-                "cropper",
-                "cropping",
-                "css",
-                "development",
-                "front-end",
-                "html",
-                "image",
-                "javascript",
-                "jquery",
-                "move",
-                "plugin",
-                "rotate",
-                "scale",
-                "web",
-                "zoom"
             ]
         },
         {
@@ -272,7 +233,7 @@
                 "url": "https://api.github.com/repos/rtfpessoa/diff2html/zipball/4c15a9ca93e50c78f8d02e37273076994888d499",
                 "reference": "4c15a9ca93e50c78f8d02e37273076994888d499"
             },
-            "type": "bower-asset-library"
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/fastclick",
@@ -287,18 +248,7 @@
                 "url": "https://api.github.com/repos/ftlabs/fastclick/zipball/9977a916739360ad4ffd7aa19b0016bf375e934b",
                 "reference": "9977a916739360ad4ffd7aa19b0016bf375e934b"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "lib/fastclick.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "component.json",
-                    "package.json",
-                    "Makefile",
-                    "tests",
-                    "examples"
-                ]
-            }
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/jquery",
@@ -313,21 +263,9 @@
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/5e89585e0121e72ff47de177c5ef604f3089a53d",
                 "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "dist/jquery.js",
-                "bower-asset-ignore": [
-                    "package.json"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "MIT"
-            ],
-            "keywords": [
-                "browser",
-                "javascript",
-                "jquery",
-                "library"
             ]
         },
         {
@@ -343,10 +281,7 @@
                 "url": "https://api.github.com/repos/mattbryson/TouchSwipe-Jquery-Plugin/zipball/f0d71bf645779358e1458e212102c5d59b7702ec",
                 "reference": "f0d71bf645779358e1458e212102c5d59b7702ec"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "./jquery.touchSwipe.js"
-            }
+            "type": "bower-asset"
         },
         {
             "name": "celtic/lti",
@@ -925,12 +860,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "8907ef1786cb9030dfdbb334f58a7c0c5fabb18f"
+                "reference": "ee9adb1c801dda38598647b2c0500a7111f4c08f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/8907ef1786cb9030dfdbb334f58a7c0c5fabb18f",
-                "reference": "8907ef1786cb9030dfdbb334f58a7c0c5fabb18f",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/ee9adb1c801dda38598647b2c0500a7111f4c08f",
+                "reference": "ee9adb1c801dda38598647b2c0500a7111f4c08f",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +892,7 @@
             ],
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-09-28T20:48:25+00:00"
+            "time": "2022-02-03T19:59:14+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -1254,12 +1189,12 @@
                 {
                     "name": "Chuck Hagenbuch",
                     "email": "chuck@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Jan Schneider",
                     "email": "jan@horde.org",
-                    "role": "lead"
+                    "role": "Lead"
                 },
                 {
                     "name": "Michael J Rubinsky",
@@ -1375,7 +1310,7 @@
             ],
             "description": "Compiled version of magicsuggest customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/magicsuggest",
-            "time": "2018-06-21T10:14:03+00:00"
+            "time": "2018-06-21T13:36:37+00:00"
         },
         {
             "name": "egroupware/news_admin",
@@ -1383,12 +1318,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "b3ccc6d17b782f3e477d6459280cdd0e28a23b09"
+                "reference": "f4803fc3466190aec3e83764ca5139c4b0d80b4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/b3ccc6d17b782f3e477d6459280cdd0e28a23b09",
-                "reference": "b3ccc6d17b782f3e477d6459280cdd0e28a23b09",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/f4803fc3466190aec3e83764ca5139c4b0d80b4d",
+                "reference": "f4803fc3466190aec3e83764ca5139c4b0d80b4d",
                 "shasum": ""
             },
             "require": {
@@ -1407,7 +1342,7 @@
             ],
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-07-06T20:04:59+00:00"
+            "time": "2021-10-06T14:07:45+00:00"
         },
         {
             "name": "egroupware/openid",
@@ -1415,12 +1350,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "bc4ae5d5ed013f14df73819ddd164168a408e5e7"
+                "reference": "cb72081297501c4ba8082c4a4e49cb5b39f161f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/bc4ae5d5ed013f14df73819ddd164168a408e5e7",
-                "reference": "bc4ae5d5ed013f14df73819ddd164168a408e5e7",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/cb72081297501c4ba8082c4a4e49cb5b39f161f1",
+                "reference": "cb72081297501c4ba8082c4a4e49cb5b39f161f1",
                 "shasum": ""
             },
             "require": {
@@ -1456,7 +1391,7 @@
             ],
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-28T15:22:24+00:00"
+            "time": "2022-01-12T09:28:00+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -1464,12 +1399,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "b542fb6a847a52760e6d23270ac467d8b80126c4"
+                "reference": "37d00545e7c01a1ff24eb2754583447f82f4f8df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/b542fb6a847a52760e6d23270ac467d8b80126c4",
-                "reference": "b542fb6a847a52760e6d23270ac467d8b80126c4",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/37d00545e7c01a1ff24eb2754583447f82f4f8df",
+                "reference": "37d00545e7c01a1ff24eb2754583447f82f4f8df",
                 "shasum": ""
             },
             "require": {
@@ -1496,7 +1431,7 @@
             ],
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-09-20T13:49:49+00:00"
+            "time": "2022-01-20T12:32:26+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -1504,12 +1439,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "88a6125932438caa4566c708e7c30409e5c23111"
+                "reference": "eeb232ee468463f657649d4329e8ff7bf40c871e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/88a6125932438caa4566c708e7c30409e5c23111",
-                "reference": "88a6125932438caa4566c708e7c30409e5c23111",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/eeb232ee468463f657649d4329e8ff7bf40c871e",
+                "reference": "eeb232ee468463f657649d4329e8ff7bf40c871e",
                 "shasum": ""
             },
             "require": {
@@ -1545,7 +1480,7 @@
             ],
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-05-20T15:05:41+00:00"
+            "time": "2022-02-08T22:26:51+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -1593,12 +1528,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "d614f2e6bad60d1e8a333084368e43006b08e150"
+                "reference": "3ba41009b8aefa8c4899a016053e797a09a11e84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/d614f2e6bad60d1e8a333084368e43006b08e150",
-                "reference": "d614f2e6bad60d1e8a333084368e43006b08e150",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/3ba41009b8aefa8c4899a016053e797a09a11e84",
+                "reference": "3ba41009b8aefa8c4899a016053e797a09a11e84",
                 "shasum": ""
             },
             "require": {
@@ -1630,7 +1565,7 @@
             ],
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
-            "time": "2021-09-29T15:00:13+00:00"
+            "time": "2022-02-10T17:13:01+00:00"
         },
         {
             "name": "egroupware/status",
@@ -1638,12 +1573,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "ab0451b009207a163a1f68eb38c83c4194defa9a"
+                "reference": "7f5b4e290e05faf77e5748782242482b05c4792d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/ab0451b009207a163a1f68eb38c83c4194defa9a",
-                "reference": "ab0451b009207a163a1f68eb38c83c4194defa9a",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/7f5b4e290e05faf77e5748782242482b05c4792d",
+                "reference": "7f5b4e290e05faf77e5748782242482b05c4792d",
                 "shasum": ""
             },
             "require": {
@@ -1671,7 +1606,7 @@
             ],
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-07-02T11:13:29+00:00"
+            "time": "2021-10-20T11:53:19+00:00"
         },
         {
             "name": "egroupware/stream-wrapper",
@@ -1770,12 +1705,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "0eee499c6d1cf75c15e4dd089e09c8e6b8516e73"
+                "reference": "5aa06226be852ed5c836b399ef234989164e9c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/0eee499c6d1cf75c15e4dd089e09c8e6b8516e73",
-                "reference": "0eee499c6d1cf75c15e4dd089e09c8e6b8516e73",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/5aa06226be852ed5c836b399ef234989164e9c2c",
+                "reference": "5aa06226be852ed5c836b399ef234989164e9c2c",
                 "shasum": ""
             },
             "require": {
@@ -1802,7 +1737,7 @@
             ],
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
-            "time": "2021-08-31T17:21:00+00:00"
+            "time": "2022-01-21T13:38:56+00:00"
         },
         {
             "name": "egroupware/util",
@@ -2628,12 +2563,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "FastRoute\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "FastRoute\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2657,119 +2592,43 @@
             "version": "1.0.8",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/as-jqplot/-/as-jqplot-1.0.8.tgz",
-                "shasum": "97061e0f32167597b87c98dfd42c93f10a2fb249"
+                "url": "https://registry.npmjs.org/as-jqplot/-/as-jqplot-1.0.8.tgz"
             },
-            "type": "npm-asset-library",
-            "extra": {
-                "npm-asset-main": "index.js",
-                "npm-asset-directories": [],
-                "npm-asset-scripts": {
-                    "test": "echo \"Error: no test specified\" && exit 1"
-                }
-            },
+            "type": "npm-asset",
             "license": [
                 "ISC"
-            ],
-            "authors": [
-                ""
-            ],
-            "description": "AS jqPlot Shim"
+            ]
         },
         {
             "name": "npm-asset/dhtmlx-gantt",
             "version": "6.2.7",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/dhtmlx-gantt/-/dhtmlx-gantt-6.2.7.tgz",
-                "shasum": "86689f36c1f10e2bfaa5126445b4c560d82b4587"
+                "url": "https://registry.npmjs.org/dhtmlx-gantt/-/dhtmlx-gantt-6.2.7.tgz"
             },
-            "type": "npm-asset-library",
-            "extra": {
-                "npm-asset-bugs": {
-                    "url": "https://github.com/DHTMLX/gantt/issues"
-                },
-                "npm-asset-main": "codebase/dhtmlxgantt.js",
-                "npm-asset-directories": [],
-                "npm-asset-repository": {
-                    "type": "git",
-                    "url": "git+https://github.com/DHTMLX/gantt.git"
-                }
-            },
+            "type": "npm-asset",
             "license": [
                 "GPL-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "DHTMLX"
-                }
-            ],
-            "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart.",
-            "homepage": "https://github.com/DHTMLX/gantt#readme",
-            "keywords": [
-                "browser",
-                "calendar",
-                "chart",
-                "dhtmlx",
-                "dhtmlxgantt",
-                "gantt",
-                "gantt chart",
-                "scheduler",
-                "timeline"
-            ],
-            "time": "2019-10-11T10:48:39+00:00"
+            ]
         },
         {
             "name": "npm-asset/gridster",
             "version": "0.5.6",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz",
-                "shasum": "4024713aabd559093a72e9b713f1e41f9bded76f"
+                "url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz"
             },
             "require": {
                 "npm-asset/jquery": "2.0.3"
             },
-            "require-dev": {
-                "npm-asset/bower": "~0.9.2",
-                "npm-asset/grunt": "~0.4.1",
-                "npm-asset/grunt-bump": "0.0.11",
-                "npm-asset/grunt-contrib-concat": "~0.1.3",
-                "npm-asset/grunt-contrib-cssmin": "~0.5.0",
-                "npm-asset/grunt-contrib-jshint": "~0.3.0",
-                "npm-asset/grunt-contrib-uglify": "~0.2.0",
-                "npm-asset/grunt-contrib-watch": "~0.3.1",
-                "npm-asset/grunt-contrib-yuidoc": "~0.4.0",
-                "npm-asset/grunt-conventional-changelog": "~1.0.0",
-                "npm-asset/qunitjs": "~1.11.0"
-            },
-            "type": "npm-asset-library",
-            "extra": {
-                "npm-asset-bugs": {
-                    "url": "https://github.com/ducksboard/gridster.js/issues"
-                },
-                "npm-asset-directories": [],
-                "npm-asset-repository": {
-                    "type": "git",
-                    "url": "git://github.com/ducksboard/gridster.js.git"
-                },
-                "npm-asset-scripts": []
-            },
-            "authors": [
-                {
-                    "name": "ducksboard",
-                    "email": "hackers@ducksboard.com"
-                }
-            ],
-            "description": "a drag-and-drop multi-column jQuery grid plugin",
-            "homepage": "http://gridster.net/"
+            "type": "npm-asset"
         },
         {
             "name": "npm-asset/jquery",
             "version": "2.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery.git",
+                "url": "git@github.com:jquery/jquery.git",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "dist": {
@@ -2777,36 +2636,7 @@
                 "url": "https://api.github.com/repos/jquery/jquery/zipball/f852e631ba85af7da4ad7594785e122504e7b233",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
-            "require-dev": {
-                "npm-asset/archiver": "~0.4.2",
-                "npm-asset/grunt": "0.4.1",
-                "npm-asset/grunt-compare-size": "~0.4.0",
-                "npm-asset/grunt-contrib-jshint": "0.3.0",
-                "npm-asset/grunt-contrib-uglify": "0.2.0",
-                "npm-asset/grunt-contrib-watch": "0.3.1",
-                "npm-asset/grunt-git-authors": "1.2.0",
-                "npm-asset/grunt-update-submodules": "0.2.0",
-                "npm-asset/gzip-js": "0.3.1",
-                "npm-asset/testswarm": "~1.1.0"
-            },
-            "type": "npm-asset-library",
-            "extra": {
-                "npm-asset-bugs": {
-                    "url": "http://bugs.jquery.com"
-                },
-                "npm-asset-repository": {
-                    "type": "git",
-                    "url": "https://github.com/jquery/jquery.git"
-                }
-            },
-            "authors": [
-                {
-                    "name": "jQuery Foundation and other contributors",
-                    "url": "https://github.com/jquery/jquery/blob/master/AUTHORS.txt"
-                }
-            ],
-            "description": "JavaScript library for DOM operations",
-            "homepage": "http://jquery.com"
+            "type": "npm-asset"
         },
         {
             "name": "oomphinc/composer-installers-extender",
@@ -3465,7 +3295,7 @@
             "license": [
                 "BSD-2-Clause"
             ],
-            "description": "Support classes not tied to Horde but is used by it. These classes can be used outside of Horde as well."
+            "description": "Support library not tied to Horde but used by it."
         },
         {
             "name": "pear-pear.horde.org/Horde_Text_Diff",
@@ -4278,6 +4108,12 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "funding": [
+                {
+                    "url": "https://github.com/Synchro",
+                    "type": "github"
+                }
+            ],
             "time": "2021-06-16T14:33:43+00:00"
         },
         {
@@ -4368,6 +4204,20 @@
                 "twofish",
                 "x.509",
                 "x509"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/terrafrost",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpseclib",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                    "type": "tidelift"
+                }
             ],
             "time": "2021-04-06T13:56:45+00:00"
         },
@@ -5047,12 +4897,12 @@
             },
             "type": "project",
             "autoload": {
-                "psr-4": {
-                    "SimpleSAML\\": "lib/SimpleSAML"
-                },
                 "files": [
                     "lib/_autoload_modules.php"
-                ]
+                ],
+                "psr-4": {
+                    "SimpleSAML\\": "lib/SimpleSAML"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -6227,6 +6077,7 @@
                 "riak",
                 "simplesamlphp"
             ],
+            "abandoned": true,
             "time": "2019-12-03T08:28:45+00:00"
         },
         {
@@ -6652,6 +6503,20 @@
                 "caching",
                 "psr6"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2021-03-16T09:10:13+00:00"
         },
         {
@@ -6713,6 +6578,20 @@
                 "interfaces",
                 "interoperability",
                 "standards"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2021-03-23T23:28:01+00:00"
         },
@@ -6778,6 +6657,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6850,6 +6743,20 @@
             ],
             "description": "Eases the creation of beautiful and testable command line interfaces",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2021-03-26T09:23:24+00:00"
         },
         {
@@ -6907,6 +6814,20 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-10T07:47:39+00:00"
         },
         {
@@ -6980,6 +6901,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T10:09:30+00:00"
         },
         {
@@ -7037,6 +6972,20 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
@@ -7180,6 +7129,20 @@
                 "interoperability",
                 "standards"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-06T13:19:58+00:00"
         },
         {
@@ -7230,6 +7193,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -7274,6 +7251,20 @@
             ],
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2021-02-15T18:55:04+00:00"
         },
         {
@@ -7400,6 +7391,20 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-12-11T16:32:02+00:00"
         },
         {
@@ -7455,6 +7460,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T07:39:58+00:00"
         },
         {
@@ -7546,6 +7565,20 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-09-02T08:09:29+00:00"
         },
         {
@@ -7608,24 +7641,41 @@
                 "mime",
                 "mime-type"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T09:56:45+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.22.1",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e"
+                "reference": "30885182c981ab175d4d034db0f6f469898070ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/c6c942b1ac76c82448322025e084cadc56048b4e",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/30885182c981ab175d4d034db0f6f469898070ab",
+                "reference": "30885182c981ab175d4d034db0f6f469898070ab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
+            },
+            "provide": {
+                "ext-ctype": "*"
             },
             "suggest": {
                 "ext-ctype": "For best performance"
@@ -7633,7 +7683,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.22-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -7670,7 +7720,21 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-20T20:35:02+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -7706,12 +7770,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7740,6 +7804,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-08-04T06:02:08+00:00"
         },
@@ -7774,12 +7852,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -7808,24 +7886,41 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.18.1",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a"
+                "reference": "0abb51d2f102e00a4eefcf46ba7fec406d245825"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/a6977d63bf9a0ad4c65cd352709e230876f9904a",
-                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/0abb51d2f102e00a4eefcf46ba7fec406d245825",
+                "reference": "0abb51d2f102e00a4eefcf46ba7fec406d245825",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=7.1"
+            },
+            "provide": {
+                "ext-mbstring": "*"
             },
             "suggest": {
                 "ext-mbstring": "For best performance"
@@ -7833,7 +7928,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.18-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -7871,7 +7966,21 @@
                 "portable",
                 "shim"
             ],
-            "time": "2020-07-14T12:35:20+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-11-30T18:21:41+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -7990,6 +8099,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-07-14T12:35:20+00:00"
         },
         {
@@ -8020,12 +8143,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php72\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php72\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -8048,6 +8171,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -8079,12 +8216,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php73\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php73\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -8110,6 +8247,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -8141,12 +8292,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
-                },
                 "files": [
                     "bootstrap.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php80\\": ""
+                },
                 "classmap": [
                     "Resources/stubs"
                 ]
@@ -8176,6 +8327,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-07-14T12:35:20+00:00"
         },
@@ -8304,6 +8469,20 @@
                 "routing",
                 "uri",
                 "url"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-30T11:41:10+00:00"
         },
@@ -8440,6 +8619,20 @@
                 "debug",
                 "dump"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-08-17T07:31:35+00:00"
         },
         {
@@ -8495,6 +8688,20 @@
                 "hydrate",
                 "instantiate",
                 "serialize"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2021-01-27T10:01:46+00:00"
         },
@@ -8555,6 +8762,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:41:10+00:00"
         },
         {
@@ -8669,31 +8890,32 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.12.5",
+            "version": "v2.14.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "18772e0190734944277ee97a02a9a6c6555fcd94"
+                "reference": "66baa66f29ee30e487e05f1679903e36eb01d727"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/18772e0190734944277ee97a02a9a6c6555fcd94",
-                "reference": "18772e0190734944277ee97a02a9a6c6555fcd94",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66baa66f29ee30e487e05f1679903e36eb01d727",
+                "reference": "66baa66f29ee30e487e05f1679903e36eb01d727",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
+                "php": ">=7.1.3",
                 "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-mbstring": "^1.3"
+                "symfony/polyfill-mbstring": "^1.3",
+                "symfony/polyfill-php72": "^1.8"
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/phpunit-bridge": "^4.4|^5.0"
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.12-dev"
+                    "dev-master": "2.14-dev"
                 }
             },
             "autoload": {
@@ -8730,7 +8952,17 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2020-02-11T15:31:23+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-02-04T06:57:25+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -8898,6 +9130,20 @@
                 "constructor",
                 "instantiate"
             ],
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finstantiator",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
@@ -9054,12 +9300,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -9116,12 +9362,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -9134,6 +9380,12 @@
                 "duplicate",
                 "object",
                 "object graph"
+            ],
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-11-13T09:40:50+00:00"
         },
@@ -9567,6 +9819,12 @@
                 "testing",
                 "xunit"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2021-03-28T07:26:59+00:00"
         },
         {
@@ -9616,6 +9874,12 @@
             "keywords": [
                 "filesystem",
                 "iterator"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-09-28T05:57:25+00:00"
         },
@@ -9670,6 +9934,12 @@
             "keywords": [
                 "process"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:58:55+00:00"
         },
         {
@@ -9719,6 +9989,12 @@
             "keywords": [
                 "template"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T05:33:50+00:00"
         },
         {
@@ -9767,6 +10043,12 @@
             "homepage": "https://github.com/sebastianbergmann/php-timer/",
             "keywords": [
                 "timer"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-10-26T13:16:10+00:00"
         },
@@ -9832,11 +10114,11 @@
                 }
             },
             "autoload": {
-                "classmap": [
-                    "src/"
-                ],
                 "files": [
                     "src/Framework/Assert/Functions.php"
+                ],
+                "classmap": [
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9856,6 +10138,16 @@
                 "phpunit",
                 "testing",
                 "xunit"
+            ],
+            "funding": [
+                {
+                    "url": "https://phpunit.de/donate.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-10-02T03:54:37+00:00"
         },
@@ -9943,6 +10235,12 @@
             ],
             "description": "Library for parsing CLI options",
             "homepage": "https://github.com/sebastianbergmann/cli-parser",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:08:49+00:00"
         },
         {
@@ -9989,6 +10287,12 @@
             ],
             "description": "Collection of value objects that represent the PHP code units",
             "homepage": "https://github.com/sebastianbergmann/code-unit",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:08:54+00:00"
         },
         {
@@ -10034,6 +10338,12 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:30:19+00:00"
         },
         {
@@ -10098,6 +10408,12 @@
                 "compare",
                 "equality"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:49:45+00:00"
         },
         {
@@ -10145,6 +10461,12 @@
             ],
             "description": "Library for calculating the complexity of PHP code units",
             "homepage": "https://github.com/sebastianbergmann/complexity",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:52:27+00:00"
         },
         {
@@ -10201,6 +10523,12 @@
                 "unidiff",
                 "unified diff"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:10:38+00:00"
         },
         {
@@ -10253,6 +10581,12 @@
                 "Xdebug",
                 "environment",
                 "hhvm"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
             ],
             "time": "2020-09-28T05:52:38+00:00"
         },
@@ -10321,6 +10655,12 @@
                 "export",
                 "exporter"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T05:24:23+00:00"
         },
         {
@@ -10375,6 +10715,12 @@
             "keywords": [
                 "global state"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T15:55:19+00:00"
         },
         {
@@ -10422,6 +10768,12 @@
             ],
             "description": "Library for counting the lines of code in PHP source code",
             "homepage": "https://github.com/sebastianbergmann/lines-of-code",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-11-28T06:42:11+00:00"
         },
         {
@@ -10469,6 +10821,12 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:12:34+00:00"
         },
         {
@@ -10514,6 +10872,12 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:14:26+00:00"
         },
         {
@@ -10567,6 +10931,12 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:17:30+00:00"
         },
         {
@@ -10612,6 +10982,12 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -10658,6 +11034,12 @@
             ],
             "description": "Collection of value objects that represent the types of the PHP type system",
             "homepage": "https://github.com/sebastianbergmann/type",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-10-26T13:18:59+00:00"
         },
         {
@@ -10701,6 +11083,12 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
@@ -10741,6 +11129,12 @@
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
+            "funding": [
+                {
+                    "url": "https://github.com/theseer",
+                    "type": "github"
+                }
+            ],
             "time": "2020-07-12T23:59:07+00:00"
         },
         {
