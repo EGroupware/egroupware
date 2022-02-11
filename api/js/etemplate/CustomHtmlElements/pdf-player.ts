@@ -187,14 +187,11 @@ class pdf_player extends HTMLElement {
 			let viewport = page.getViewport({scale:self.__pdfViewState.zoom});
 			self._canvas.width = viewport.width;
 			self._canvas.height = viewport.height;
-			// don't ty to render if page is under proccess
-			if (typeof page.intentStates.display == 'undefined')
-			{
-				page.render({
-					canvasContext: canvasContext,
-					viewport: viewport
-				});
-			}
+
+			page.render({
+				canvasContext: canvasContext,
+				viewport: viewport
+			});
 		});
 	}
 
