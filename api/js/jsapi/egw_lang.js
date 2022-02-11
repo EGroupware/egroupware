@@ -116,7 +116,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 			}
 			langs.push({app: 'custom', lang: 'en'});
 
-			egw.langRequire(_window, langs, _callback, _context);
+			this.langRequire(_window, langs, _callback, _context);
 		},
 
 		/**

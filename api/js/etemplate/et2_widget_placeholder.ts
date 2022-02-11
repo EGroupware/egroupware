@@ -241,6 +241,8 @@ export class et2_placeholder_select extends et2_inputWidget
 			}
 			else
 			{
+				// Load app translations
+				this.egw().langRequireApp(this.egw().window, widget.get_value());
 				entry.set_disabled(false);
 				entry.app_select.val(widget.get_value());
 				entry.set_value({app: widget.get_value(), id: '', query: ''});
@@ -424,6 +426,23 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 
 	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
 	protected TEMPLATE = '/api/templates/default/placeholder_snippet.xet?1';
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param _parent
+	 * @param _attrs
+	 * @memberOf et2_vfsSelect
+	 */
+	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
+	{
+		// Call the inherited constructor
+		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_placeholder_select._attributes, _child || {}));
+
+		// Load app translations
+		this.egw().langRequireApp(this.egw().window, "addressbook");
+	}
 
 	/**
 	 * Post-load of the dialog

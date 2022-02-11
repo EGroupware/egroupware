@@ -373,6 +373,7 @@ multiple vcard	addressbook	de	Mehrere vCards
 name for the distribution list	addressbook	de	Name für die Verteilerliste
 name of current user, all other contact fields are valid too	addressbook	de	Name des aktuellen Benutzers, auch alle anderen Kontaktfelder sind erlaubt
 name, address	addressbook	de	Name, Adresse
+name, email, phone	addressbook	de	Name, E-Mail, Telefon
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
 new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum Erstellen des InfoLog-Eintrags geöffnet
 next date	addressbook	de	Nächster Termin

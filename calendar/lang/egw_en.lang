@@ -461,6 +461,7 @@ re-edit event	calendar	en	Re-edit event
 receive email updates	calendar	en	Receive email updates
 receive notifications about events you created/modified/deleted	calendar	en	Receive notifications about events you created/modified/deleted.
 receive summary of appointments	calendar	en	Receive summary of appointments
+recordings	calendar	en	Recordings
 recover	calendar	en	Recover
 recovered	calendar	en	Recovered.
 recurrence	calendar	en	Recurrence
@@ -617,6 +618,7 @@ to many might exceed your execution-time-limit	calendar	en	Too many might exceed
 to-firstname	calendar	en	To first name
 to-fullname	calendar	en	To full name
 to-lastname	calendar	en	To last name
+toggle weekend	calendar	en	Toggle weekend
 tomorrow	calendar	en	Tomorrow
 translation	calendar	en	Translation
 tue	calendar	en	Tue

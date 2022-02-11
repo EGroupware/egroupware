@@ -373,6 +373,7 @@ multiple vcard	addressbook	en	Multiple vCard
 name for the distribution list	addressbook	en	Name for the distribution list
 name of current user, all other contact fields are valid too	addressbook	en	Name of current user, all other contact fields are valid too.
 name, address	addressbook	en	Name, Address
+name, email, phone	addressbook	en	Name, email, phone
 new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2 .
 new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog.
 next date	addressbook	en	Next date

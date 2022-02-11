@@ -461,6 +461,7 @@ re-edit event	calendar	de	Termin erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail-Updates
 receive notifications about events you created/modified/deleted	calendar	de	Empfange Benachrichtigungen über eigene Änderungen (Erstellung/Modifikation/Löschung)
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
+recordings	calendar	de	Aufnahmen
 recover	calendar	de	Wiederherstellen
 recovered	calendar	de	wieder hergestellt
 recurrence	calendar	de	Wiederholung
@@ -617,6 +618,7 @@ to many might exceed your execution-time-limit	calendar	de	zu viele können Ihre
 to-firstname	calendar	de	An Vorname
 to-fullname	calendar	de	An Vor- und Nachname
 to-lastname	calendar	de	An Nachname
+toggle weekend	calendar	de	Wochenende umschalten
 tomorrow	calendar	de	Morgen
 translation	calendar	de	Übersetzung
 tue	calendar	de	Di
