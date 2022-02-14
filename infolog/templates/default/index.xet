@@ -126,11 +126,9 @@
 						</hbox>
 					</vbox>
 					<vbox>
-						<menulist>
-							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
-						</menulist>
-						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
-					</vbox>
+                        <et2-select-account id="${row}[info_owner]" readonly="true"/>
+                        <et2-select-account id="${row}[info_responsible]" readonly="true" rows="5"/>
+                    </vbox>
 					<vbox>
 						<date-time id="${row}[info_datemodified]" readonly="true"/>
 						<menulist>
