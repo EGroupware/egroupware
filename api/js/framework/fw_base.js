@@ -12,6 +12,7 @@
 	egw_inheritance.js;
 */
 import '../jsapi/egw_inheritance.js';
+import {et2_IPrint} from "../etemplate/et2_core_interfaces";
 
 window.fw_base = (function(){ "use strict"; return Class.extend(
 {
@@ -1266,9 +1267,10 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 						appWindow.setTimeout(function() {
 							for(var i = 0; i < et2_list.length; i++)
 							{
-								et2_list[i].widgetContainer.iterateOver(function(_widget) {
+								et2_list[i].widgetContainer.iterateOver(function (_widget)
+								{
 									_widget.afterPrint();
-								},et2_list[i],appWindow.et2_IPrint);
+								}, et2_list[i], et2_IPrint);
 							}
 							egw.loading_prompt(app.appName,false);
 						},100);
