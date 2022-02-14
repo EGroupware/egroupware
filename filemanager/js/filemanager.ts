@@ -1285,8 +1285,9 @@ export class filemanagerAPP extends EgwApp
 			egw.message('Failed to copy the link!');
 		};
 		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-		et2_createWidget("dialog", {
-			callback: function() {
+		let dialog = et2_createWidget("dialog", {
+			callback: function()
+			{
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
@@ -1296,6 +1297,10 @@ export class filemanagerAPP extends EgwApp
 			template: _data.template,
 			width: 450,
 			value: {content:{ "share_link": _data.share_link }}
+		});
+		jQuery(dialog.template.DOMContainer).on("load", () =>
+		{
+			dialog.template.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
 		});
 	}
 
