@@ -9,9 +9,8 @@
  */
 
 
-import {css, html} from "@lion/core";
-import {Et2Date, formatDateTime, parseDateTime} from "./Et2Date";
-import {Unparseable} from "@lion/form-core";
+import {css} from "@lion/core";
+import {Et2Date} from "./Et2Date";
 
 
 export class Et2DateTime extends Et2Date
@@ -44,24 +43,15 @@ export class Et2DateTime extends Et2Date
 	constructor()
 	{
 		super();
-		this.parser = parseDateTime;
-		this.formatter = formatDateTime;
-	}
 
-	getValue()
-	{
-		if(this.readOnly)
-		{
-			return null;
-		}
-
-		// The supplied value was not understandable, return null
-		if(this.modelValue instanceof Unparseable || !this.modelValue)
-		{
-			return null;
-		}
-
-		return this.modelValue.toJSON();
+		// Configure flatpickr
+		let dateFormat = (this.egw().preference("dateformat") || "Y-m-d");
+		let timeFormat = ((<string>window.egw.preference("timeformat") || "24") == "24" ? "H:i" : "h:i K");
+		this.altFormat = dateFormat + " " + timeFormat;
+		this.enableTime = true;
+		this.time_24hr = this.egw().preference("timeformat", "common") == "24";
+		this.dateFormat = "Y-m-dTH:i:00\\Z";
+		this.defaultHour = new Date().getHours();
 	}
 }
 

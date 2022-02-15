@@ -63,6 +63,7 @@
     "@lion/select": "^0.14.7",
     "@lion/textarea": "^0.13.4",
     "jquery-ui-timepicker-addon": "^1.6.3",
+    "lit-flatpickr": "^0.3.0",
     "sortablejs": "^1.14.0"
   },
   "engines": {

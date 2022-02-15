@@ -9,11 +9,11 @@
  */
 
 
-import {css, html} from "@lion/core";
-import {LionInputDatepicker} from "@lion/input-datepicker";
-import {Unparseable} from "@lion/form-core";
+import {css} from "@lion/core";
+import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
+import {LitFlatpickr} from "lit-flatpickr";
 
 
 /**
@@ -43,6 +43,7 @@ export function parseDate(dateString)
 	}
 
 	let formatString = <string>(window.egw.preference("dateformat") || 'Y-m-d');
+	//@ts-ignore replaceAll() does not exist
 	formatString = formatString.replaceAll(new RegExp('[-/\.]', 'ig'), '-');
 	let parsedString = "";
 	switch(formatString)
@@ -204,17 +205,14 @@ export function formatDate(date : Date, options = {dateFormat: ""}) : string
 		return "";
 	}
 	let _value = '';
-	// Add timezone offset back in, or formatDate will lose those hours
-	let formatDate = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
-
 	let dateformat = options.dateFormat || <string>window.egw.preference("dateformat") || 'Y-m-d';
 
-	var replace_map = {
+	let replace_map = {
 		d: (date.getUTCDate() < 10 ? "0" : "") + date.getUTCDate(),
 		m: (date.getUTCMonth() < 9 ? "0" : "") + (date.getUTCMonth() + 1),
 		Y: "" + date.getUTCFullYear()
 	}
-	var re = new RegExp(Object.keys(replace_map).join("|"), "gi");
+	let re = new RegExp(Object.keys(replace_map).join("|"), "gi");
 	_value = dateformat.replace(re, function(matched)
 	{
 		return replace_map[matched];
@@ -270,22 +268,16 @@ export function formatDateTime(date : Date, options = {dateFormat: "", timeForma
 	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
-export class Et2Date extends Et2InputWidget(LionInputDatepicker)
+export class Et2Date extends Et2InputWidget(LitFlatpickr)
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
-			dateStyles,
+			...dateStyles,
 			css`
-			:host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
-				display: inline-block;
-			}
-            ::slotted(.calendar_button) {
-            	border: none;
-            	background: transparent;
-            	margin-left: -20px;
-                display: none;
+			:host {
+				width: auto;
 			}
             `,
 		];
@@ -301,36 +293,45 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 	constructor()
 	{
 		super();
-		this.parser = parseDate;
-		this.formatter = formatDate;
-	}
 
-	connectedCallback()
-	{
-		super.connectedCallback();
+		// Override some flatpickr defaults how we like it
+		this.altFormat = this.egw().preference("dateformat") || "Y-m-d";
+		this.altInput = true;
+		this.allowInput = true;
+		this.dateFormat = "Y-m-d\T00:00:00\Z";
+		this.weekNumbers = true;
 	}
 
 	/**
-	 * @param {Date} modelValue
+	 * Override parent to skip call to CDN
+	 * @returns {Promise<void>}
 	 */
-	// eslint-disable-next-line class-methods-use-this
-	serializer(modelValue : Date)
+	async init()
 	{
-		// isValidDate() is hidden inside LionInputDate, and not exported
-		// @ts-ignore Can't call isNan(Date), but we're just checking
-		if(!(modelValue instanceof Date) || isNaN(modelValue))
+		if(this.locale)
 		{
-			return '';
+			//	await loadLocale(this.locale);
 		}
-		// modelValue is localized, so we take the timezone offset in milliseconds and subtract it
-		// before converting it to ISO string.
-		const offset = modelValue.getTimezoneOffset() * 60000;
-		return new Date(modelValue.getTime() - offset).toJSON().replace(/\.\d{3}Z$/, 'Z');
+		this.initializeComponent();
 	}
 
 	set_value(value)
 	{
-		this.modelValue = this.parser(value);
+		if(!value || value == 0 || value == "0")
+		{
+			value = '';
+		}
+		// Handle timezone offset, flatpickr uses local time
+		let date = new Date(value);
+		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+		if(!this._instance)
+		{
+			this.defaultDate = formatDate;
+		}
+		else
+		{
+			this.setDate(formatDate);
+		}
 	}
 
 	getValue()
@@ -340,108 +341,20 @@ export class Et2Date extends Et2InputWidget(LionInputDatepicker)
 			return null;
 		}
 
+		// Copied from flatpickr, since Et2InputWidget overwrote flatpickr.getValue()
+		if(!this._inputElement)
+		{
+			return '';
+		}
+		let value = this._inputElement.value;
+
 		// Empty field, return ''
-		if(!this.modelValue)
+		if(!value)
 		{
 			return '';
 		}
 
-		// The supplied value was not understandable, return null
-		if(this.modelValue instanceof Unparseable || !this.modelValue)
-		{
-			return null;
-		}
-		this.modelValue.setUTCHours(0);
-		this.modelValue.setUTCMinutes(0);
-		this.modelValue.setSeconds(0, 0);
-
-		return this.modelValue.toJSON();
-	}
-
-	get _overlayReferenceNode()
-	{
-		return this.getInputNode();
-	}
-
-	/**
-	 * @override Configures OverlayMixin
-	 * @desc overrides default configuration options for this component
-	 * @returns {Object}
-	 */
-	_defineOverlayConfig()
-	{
-		this.hasArrow = false;
-		if(window.innerWidth >= 600)
-		{
-			return {
-				hidesOnOutsideClick: true,
-				placementMode: 'local',
-				popperConfig: {
-					placement: 'bottom-end',
-				},
-			};
-		}
-		return super.withBottomSheetConfig();
-	}
-
-	/**
-	 * The LionCalendar shouldn't know anything about the modelValue;
-	 * it can't handle Unparseable dates, but does handle 'undefined'
-	 * @param {?} modelValue
-	 * @returns {Date|undefined} a 'guarded' modelValue
-	 */
-	static __getSyncDownValue(modelValue)
-	{
-		if(!(modelValue instanceof Date))
-		{
-			return undefined;
-		}
-		const offset = modelValue.getTimezoneOffset() * 60000;
-		return new Date(modelValue.getTime() + offset);
-	}
-
-	/**
-	 * Overriding from parent for read-only
-	 *
-	 * @return {TemplateResult}
-	 * @protected
-	 */
-	// eslint-disable-next-line class-methods-use-this
-	_inputGroupInputTemplate()
-	{
-		if(this.readOnly)
-		{
-			return this.formattedValue;
-		}
-		else
-		{
-			return super._inputGroupInputTemplate();
-		}
-	}
-
-	/**
-	 * Overriding parent to add class to button, and use an image instead of unicode emoji
-	 */
-	// eslint-disable-next-line class-methods-use-this
-	_invokerTemplate()
-	{
-		if(this.readOnly)
-		{
-			return '';
-		}
-		let img = this.egw() ? this.egw().image("calendar") || '' : '';
-		return html`
-            <button
-                    type="button"
-                    class="calendar_button"
-                    @click="${this.__openCalendarOverlay}"
-                    id="${this.__invokerId}"
-                    aria-label="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
-                    title="${this.msgLit('lion-input-datepicker:openDatepickerLabel')}"
-            >
-                <img src="${img}" style="width:16px"/>
-            </button>
-		`;
+		return value;
 	}
 }
 
