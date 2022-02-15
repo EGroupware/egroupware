@@ -1,9 +1,8 @@
 /**
  * Test file for Etemplate webComponent base widget Et2Colorpicker
  */
-import {assert, fixture} from '@open-wc/testing';
+import {assert, fixture, html} from '@open-wc/testing';
 import {Et2Colorpicker} from "../Et2Colorpicker";
-import {html} from "lit-element";
 
 
 describe("Colorpicker widget", () =>

@@ -1,9 +1,8 @@
 /**
  * Test file for Etemplate webComponent Textbox
  */
-import {assert, fixture} from '@open-wc/testing';
+import {assert, fixture, html} from '@open-wc/testing';
 import {Et2Textbox} from "../Et2Textbox";
-import {html} from "lit-element";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 
 // Reference to component under test

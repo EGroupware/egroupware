@@ -1,5 +1,4 @@
-import {assert, elementUpdated, fixture} from '@open-wc/testing';
-import {html} from "lit-element";
+import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Box} from "../../Et2Box/Et2Box";
 import {Et2Select, SelectOption} from "../Et2Select";
 import * as sinon from "sinon";

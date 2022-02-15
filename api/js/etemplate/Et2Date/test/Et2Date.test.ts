@@ -1,9 +1,8 @@
 /**
  * Test file for Etemplate webComponent Date
  */
-import {assert, elementUpdated, fixture} from '@open-wc/testing';
+import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Date} from "../Et2Date";
-import {html} from "lit-element";
 import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 

@@ -2,8 +2,7 @@
  * Testing Et2Textbox input / values
  */
 
-import {assert, fixture} from "@open-wc/testing";
-import {html} from "lit-html";
+import {fixture, html} from "@open-wc/testing";
 import {Et2Textbox} from "../Et2Textbox";
 
 describe("Textbox input / values", () =>

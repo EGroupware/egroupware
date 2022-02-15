@@ -1,9 +1,8 @@
 /**
  * Test file for Etemplate webComponent Description
  */
-import {assert, elementUpdated, fixture} from '@open-wc/testing';
+import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Description} from "../Et2Description";
-import {html} from "lit-element";
 import * as sinon from "sinon";
 
 // Reference to component under test

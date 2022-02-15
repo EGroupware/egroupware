@@ -1,8 +1,7 @@
 /**
  * Test file for Etemplate webComponent Date
  */
-import {assert, elementUpdated, fixture, oneEvent} from '@open-wc/testing';
-import {html} from "lit-element";
+import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import * as sinon from 'sinon';
 import {Et2DateTime} from "../Et2DateTime";
 
