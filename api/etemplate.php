@@ -86,9 +86,9 @@ function send_template()
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
 			// add et2-prefix for <select-* or <date-* readonly="true"
-			if (isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) /*||
+			if (isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
 				// also add it for untyped/simple <select without search or tags attribute
-				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags'])*/)
+				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags']))
 			{
 				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
 			}
