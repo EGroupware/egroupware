@@ -191,7 +191,6 @@ export class Et2Select extends Et2WidgetWithSelect
 			css`
 			:host {
 				display: inline-block;
-				width: 100%;
 			}
 			select {
 				width: 100%
