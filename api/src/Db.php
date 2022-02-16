@@ -110,11 +110,17 @@ class Db
 	var $Debug         = 0;
 
 	/**
-	 * Log update querys to error_log
+	 * Log update queries to error_log or file given below
 	 *
-	 * @var boolean
+	 * @var boolean|string|string[] true: all tables, table-name(s) or false: disabled
 	 */
 	var $log_updates = false;
+	/**
+	 * Only log update from given table(s)
+	 *
+	 * @var string|null string with filename eg. /var/lib/egroupware/sql-update.log or null to use error_log
+	 */
+	var $log_updates_to;
 
 	/**
 	* @var array $Record current record
@@ -766,9 +772,25 @@ class Db
 		{
 			$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		}
-		if (($this->readonly || $this->log_updates) && !preg_match('/^\(?(SELECT|SET|SHOW)/i', $Query_String))
+		if (($this->readonly || $this->log_updates === true) && !preg_match('/^\(?(SELECT|SET|SHOW)/i', $Query_String))
 		{
-			if ($this->log_updates) error_log($Query_String.': '.function_backtrace());
+			if ($this->log_updates === true)
+			{
+				$msg = $Query_String."\n".implode("\n", array_map(static function($level)
+					{
+						$args = substr(json_encode($level['args'], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 1, -1);
+						if (strlen($args) > 120) $args = substr($args, 0, 120).'...';
+						return str_replace(EGW_SERVER_ROOT.'/', '', $level['file']).'('.$level['line'].'): '.
+							(empty($level['class']) ? '' : str_replace('EGroupware\\', '', $level['class']).$level['type']).$level['function'].'('.$args.')';
+					}, debug_backtrace()));
+
+				if (!empty($this->log_updates_to))
+				{
+					$msg = date('Y-m-d H:i:s: ').$_SERVER['REQUEST_METHOD'].' '.Framework::getUrl($_SERVER['REQUEST_URI'])."\n".$msg."\n".
+						'User: '.$GLOBALS['egw_info']['user']['account_lid'].', User-agent: '.$_SERVER['HTTP_USER_AGENT']."\n\n";
+				}
+				error_log($msg, empty($this->log_updates_to) ? 0 : 3, $this->log_updates_to);
+			}
 			if ($this->readonly)
 			{
 				$this->Error = 'Database is readonly';
@@ -973,7 +995,7 @@ class Db
 	*/
 	function affected_rows()
 	{
-		if ($this->log_updates) return 0;
+		if ($this->readonly) return 0;
 
 		if (!$this->Link_ID && !$this->connect())
 		{
@@ -1963,7 +1985,15 @@ class Db
 		{
 			$sql = "$cmd INTO $table ".$this->column_data_implode(',',$data,'VALUES',true,$table_def['fd']).$sql_append;
 		}
-		if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app') sql='$sql'</p>\n";
+
+		if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
+		{
+			$backup = $this->log_updates;
+			$this->log_updates = true;
+			$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
+			$this->log_updates = $backup;
+			return $ret;
+		}
 		return $this->query($sql,$line,$file,0,-1,$inputarr);
 	}
 
@@ -2041,7 +2071,17 @@ class Db
 				$sql = "UPDATE $table SET ".
 					$this->column_data_implode(',',$data,True,true,$table_def['fd']).' WHERE '.$where_str;
 			}
-			$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
+			if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
+			{
+				$backup = $this->log_updates;
+				$this->log_updates = true;
+				$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
+				$this->log_updates = $backup;
+			}
+			else
+			{
+				$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
+			}
 			if ($this->Debug) echo "<p>db::query('$sql',$line,$file)</p>\n";
 		}
 		// if we have any blobs to update, we do so now
@@ -2081,6 +2121,14 @@ class Db
 		$sql = "DELETE FROM $table WHERE ".
 			$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 
+		if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
+		{
+			$backup = $this->log_updates;
+			$this->log_updates = true;
+			$ret = $this->query($sql,$line,$file);
+			$this->log_updates = $backup;
+			return $ret;
+		}
 		return $this->query($sql,$line,$file);
 	}
 
