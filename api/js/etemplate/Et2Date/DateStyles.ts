@@ -32,12 +32,3 @@ export const dateStyles = [
 		background-size: 18px;
 	}
 `];
-
-// The lit-flatpickr package uses a CDN, in violation of best practices
-// I've downloaded it
-const themeUrl = "api/js/etemplate/Et2Date/flatpickr_material_blue.css";
-const styleElem = document.createElement('link');
-styleElem.rel = 'stylesheet';
-styleElem.type = 'text/css';
-styleElem.href = themeUrl;
-document.head.append(styleElem);

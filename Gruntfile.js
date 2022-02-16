@@ -40,6 +40,7 @@ module.exports = function (grunt) {
 			pixelegg: {
 				files: {
 					"pixelegg/css/pixelegg.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -58,6 +59,7 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					],
 					"pixelegg/css/mobile.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -76,6 +78,7 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -93,6 +96,7 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					],
 					"pixelegg/css/monochrome.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
@@ -111,6 +115,7 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					],
 					"pixelegg/css/modern.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
