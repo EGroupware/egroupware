@@ -87,9 +87,15 @@ function send_template()
 
 			// add et2-prefix for <select-* or <date-* readonly="true"
 			if (isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
-				// also add it for untyped/simple <select without search or tags attribute
-				$matches[1] === 'select' && empty($matches[2]) && !isset($attrs['type']) && !isset($attrs['search']) && !isset($attrs['tags']))
+				// also add it for <date* and <select* without search or tags attribute
+				$matches[1] === 'date' || $matches[1] === 'select' && !isset($attrs['search']) && !isset($attrs['tags']))
 			{
+				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
+				if (empty($matches[2]) && isset($attrs['type']))
+				{
+					$matches[1] = $attrs['type'];
+					$matches[3] = str_replace('type="'.$attrs['type'].'"', '', $matches[3]);
+				}
 				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
 			}
 			return $matches[0];

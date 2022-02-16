@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<et2-textarea id="info_des" no_lang="1"/>
+		<textbox id="info_des" no_lang="1" multiline="true"/>
 		<checkbox id="clean_history"/>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
@@ -154,7 +154,7 @@
 			<rows>
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
-					<et2-textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"></et2-textbox>
+					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"></textbox>
 					<textbox type="integer" id="info_number" readonly="true"/>
                     <appicon src="infolog" for="info_number"/>
 				</row>
@@ -165,10 +165,8 @@
 					</menulist>
 					<description/>
 					<description value="Startdate" for="info_startdate"/>
-					<date-time
-                            statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"
-                            id="info_startdate" class="et2_fullWidth">
-					</date-time>
+					<date-time id="info_startdate" class="et2_fullWidth"
+						statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
 				</row>
 				<row class="dialogHeader3">
 					<description value="Contact"/>
@@ -220,16 +218,16 @@
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
-					<et2-hbox>
+					<hbox>
 						<select-account id="info_owner" readonly="true"/>
 						<date-time id="info_created" readonly="true" align="right"/>
-					</et2-hbox>
+					</hbox>
 					<description/>
 					<description value="Last modified"/>
-					<et2-hbox>
+					<hbox>
 						<select-account id="info_modifier" readonly="true"/>
 						<date-time id="info_datemodified" readonly="true" align="right"/>
-					</et2-hbox>
+					</hbox>
 				</row>
 				<row class="dialogFooterToolbar">
                     <hbox span="all">
