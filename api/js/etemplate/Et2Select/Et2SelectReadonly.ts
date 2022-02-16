@@ -199,7 +199,11 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 			super.value = new_value;
 			return;
 		}
-
+		// fix scalar (number or string) values
+		if (typeof new_value !== 'object')
+		{
+			new_value = [new_value];
+		}
 		for(let id of new_value)
 		{
 			let account_name = null;
