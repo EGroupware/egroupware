@@ -235,6 +235,9 @@ export class Et2Select extends Et2WidgetWithSelect
 		super.connectedCallback();
 
 		// Add in actual options as children to select, if not already there
+		//MOVE options inside SELECT:
+		this.querySelector('select').append(...this.querySelectorAll('option'));
+
 		if(this._inputNode.children.length == 0)
 		{
 			render(html`${this._emptyLabelTemplate()}

@@ -9,9 +9,11 @@
  */
 
 
-import {css, LitElement} from "@lion/core";
-import {Unparseable} from "@lion/form-core";
+import {css, html, LitElement} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {sprintf} from "../../egw_action/egw_action_common";
+import {dateStyles} from "./DateStyles";
+import {cssImage} from "../Et2Widget/Et2Widget";
 
 export interface formatOptions
 {
@@ -114,9 +116,37 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	{
 		return [
 			...super.styles,
+			...dateStyles,
 			css`
-			:host([focused]) ::slotted(button), :host(:hover) ::slotted(button) {
-				display: inline-block;
+			:host {
+				display: inline-flex;
+			    border-width: 1px;
+				border-style: solid;
+				border-image: initial;
+				border-color: var(--input-border-color);
+			}
+			select {
+				color: var(--input-text-color);
+				border: none;
+				border-left: 1px solid var(--input-border-color);
+				flex: 2 1 auto;
+				
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				margin: 0;
+				background: #fff no-repeat center right;
+				background-image: ${cssImage('arrow_down')};
+				background-size: 8px auto;
+				background-position-x: calc(100% - 8px);
+				text-indent: 5px;
+			}
+			input {
+				color: var(--input-text-color);
+				padding-top: 4px;
+				padding-bottom: 4px;
+				border: none;
+				flex: 1 1 auto;
+				max-width: 4.5em;
 			}
             `,
 		];
@@ -201,6 +231,9 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		}
 	}
 
+	protected static time_formats = {d: "d", h: "h", m: "m", s: "s"};
+	protected _display = {value: "", unit: ""};
+
 	constructor()
 	{
 		super();
@@ -224,18 +257,286 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			return null;
 		}
 
-		// The supplied value was not understandable, return null
-		if(this.modelValue instanceof Unparseable || !this.modelValue)
+		return this.value;
+	}
+
+	get value() : string
+	{
+		let value = 0;
+
+		if(!this.select_unit)
 		{
-			return null;
+			for(let i = this._durationNode.length; --i >= 0;)
+			{
+				value += parseInt(<string>this._durationNode[i].value) * this._unit2seconds(this._durationNode[i].name);
+			}
+			if(this.data_format !== 's')
+			{
+				value /= this._unit2seconds(this.data_format);
+			}
+			return "" + (this.data_format === 'm' ? Math.round(value) : value);
 		}
 
-		return this.modelValue.toJSON();
+		let val = this._durationNode.length ? this._durationNode[0].value.replace(',', '.') : "";
+		if(val === '')
+		{
+			return this.empty_not_0 ? '' : "0";
+		}
+		value = parseFloat(val);
+
+		// Put value into minutes for further processing
+		switch(this._formatNode && this._formatNode.value ? this._formatNode.value : this.display_format)
+		{
+			case 'd':
+				value *= this.hours_per_day;
+			// fall-through
+			case 'h':
+				value *= 60;
+				break;
+		}
+		// Minutes should be an integer.  Floating point math.
+		if(this.data_format !== 's')
+		{
+			value = Math.round(value);
+		}
+		switch(this.data_format)
+		{
+			case 'd':
+				value /= this.hours_per_day;
+			// fall-through
+			case 'h':
+				value /= 60.0;
+				break;
+			case 's':
+				value = Math.round(value * 60.0);
+				break;
+		}
+
+		return "" + value;
 	}
+
+	set value(_value)
+	{
+		this._display = this._convert_to_display(parseFloat(_value));
+		this.requestUpdate();
+	}
+
 
 	render()
 	{
-		// TODO
+		return html`
+            ${this._inputTemplate()}
+            ${this._formatTemplate()}`;
+	}
+
+
+	/**
+	 * Converts the value in data format into value in display format.
+	 *
+	 * @param _value int/float Data in data format
+	 *
+	 * @return Object {value: Value in display format, unit: unit for display}
+	 */
+	protected _convert_to_display(_value)
+	{
+		if(!this.select_unit)
+		{
+			let vals = [];
+			for(let i = 0; i < this.display_format.length; ++i)
+			{
+				let unit = this.display_format[i];
+				let val = this._unit_from_value(_value, unit, i === 0);
+				if(unit === 's' || unit === 'm' || unit === 'h' && this.display_format[0] === 'd')
+				{
+					vals.push(sprintf('%02d', val));
+				}
+				else
+				{
+					vals.push(val);
+				}
+			}
+			return {value: vals.join(':'), unit: ''};
+		}
+		if(_value)
+		{
+			// Put value into minutes for further processing
+			switch(this.data_format)
+			{
+				case 'd':
+					_value *= this.hours_per_day;
+				// fall-through
+				case 'h':
+					_value *= 60;
+					break;
+				case 's':
+					_value /= 60.0;
+					break;
+			}
+		}
+
+		// Figure out best unit for display
+		var _unit = this.display_format == "d" ? "d" : "h";
+		if(this.display_format.indexOf('m') > -1 && _value && _value < 60)
+		{
+			_unit = 'm';
+		}
+		else if(this.display_format.indexOf('d') > -1 && _value >= 60 * this.hours_per_day)
+		{
+			_unit = 'd';
+		}
+		_value = this.empty_not_0 && _value === '' || !this.empty_not_0 && !_value ? '' :
+				 (_unit == 'm' ? parseInt(_value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.hours_per_day : 1)) * 100) / 100));
+
+		if(_value === '')
+		{
+			_unit = '';
+		}
+
+		// use decimal separator from user prefs
+		var format = this.egw().preference('number_format');
+		var sep = format ? format[0] : '.';
+		if(typeof _value == 'string' && format && sep && sep != '.')
+		{
+			_value = _value.replace('.', sep);
+		}
+
+		return {value: _value, unit: _unit};
+	}
+
+	private _unit2seconds(_unit)
+	{
+		switch(_unit)
+		{
+			case 's':
+				return 1;
+			case 'm':
+				return 60;
+			case 'h':
+				return 3600;
+			case 'd':
+				return 3600 * this.hours_per_day;
+		}
+	}
+
+	private _unit_from_value(_value, _unit, _highest)
+	{
+		_value *= this._unit2seconds(this.data_format);
+		// get value for given _unit
+		switch(_unit)
+		{
+			case 's':
+				return _highest ? _value : _value % 60;
+			case 'm':
+				_value = Math.floor(_value / 60);
+				return _highest ? _value : _value % 60;
+			case 'h':
+				_value = Math.floor(_value / 3600);
+				return _highest ? _value : _value % this.options.hours_per_day;
+			case 'd':
+				return Math.floor(_value / 3600 * this.options.hours_per_day);
+		}
+	}
+
+	/**
+	 * Render the needed number inputs according to select_unit & display_format properties
+	 *
+	 * @returns {any}
+	 * @protected
+	 */
+	protected _inputTemplate()
+	{
+		let inputs = [];
+		let value = typeof this._display.value === "number" ? this._display.value : (this._display.value.split(":") || []);
+		for(let i = this.select_unit ? 1 : this.display_format.length; i > 0; --i)
+		{
+			let input = {
+				name: "",
+				title: "",
+				value: value,
+				min: undefined,
+				max: undefined
+			};
+			if(!this.select_unit)
+			{
+				input.min = 0;
+				input.name = this.display_format[this.display_format.length - i];
+				input.value = <string>(value[this.display_format.length - i]);
+				switch(this.display_format[this.display_format.length - i])
+				{
+					case 's':
+						input.max = 60;
+						input.title = this.egw().lang('Seconds');
+						break;
+					case 'm':
+						input.max = 60;
+						input.title = this.egw().lang('Minutes');
+						break;
+					case 'h':
+						input.max = 24;
+						input.title = this.egw().lang('Hours');
+						break;
+					case 'd':
+						input.title = this.egw().lang('Days');
+						break;
+				}
+			}
+			inputs.push(input);
+		}
+		return html`${inputs.map((input : any) =>
+                html`<input type="number" name=${input.name} min=${input.min} max=${input.max} title=${input.title}
+                            value=${input.value}/>`
+        )}
+		`;
+	}
+
+	/**
+	 * Generate the format selector according to the select_unit and display_format properties
+	 *
+	 * @returns {any}
+	 * @protected
+	 */
+	protected _formatTemplate()
+	{
+		// If no formats or only 1 format, no need for a selector
+		if(!this.display_format || this.display_format.length < 1 ||
+			(!this.select_unit && this.display_format.length > 1))
+		{
+			return html``;
+		}
+		// Get translations
+		this.time_formats = this.time_formats || {
+			d: this.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
+			h: this.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
+			m: this.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes"),
+			s: this.short_labels ? this.egw().lang("s") : this.egw().lang("Seconds")
+		};
+		return html`
+            <select>
+                ${[...this.display_format].map((format : string) =>
+                        html`
+                            <option value=${format} ?selected=${this._display.unit === format}>
+                                ${this.time_formats[format]}
+                            </option>`
+                )}
+            </select>
+		`;
+	}
+
+	/**
+	 * @returns {HTMLInputElement}
+	 */
+	get _durationNode() : HTMLInputElement[]
+	{
+		return this.shadowRoot ? this.shadowRoot.querySelectorAll("input") || [] : [];
+	}
+
+
+	/**
+	 * @returns {HTMLSelectElement}
+	 */
+	get _formatNode() : HTMLSelectElement
+	{
+		return this.shadowRoot ? this.shadowRoot.querySelector("select") : null;
 	}
 }
 

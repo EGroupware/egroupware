@@ -8,8 +8,9 @@
  */
 
 
-import {html} from "@lion/core";
+import {css, html} from "@lion/core";
 import {Et2DateDuration, formatOptions} from "./Et2DateDuration";
+import {dateStyles} from "./DateStyles";
 
 
 /**
@@ -17,9 +18,33 @@ import {Et2DateDuration, formatOptions} from "./Et2DateDuration";
  */
 export class Et2DateDurationReadonly extends Et2DateDuration
 {
+	static get styles()
+	{
+		return [
+			...super.styles,
+			...dateStyles,
+			css`
+			:host {
+			border: none;
+			min-width: 2em;
+			}
+			`
+		];
+	}
+
+	get value()
+	{
+		return this.__value;
+	}
+
+	set value(_value)
+	{
+		this.__value = _value;
+	}
+
 	render()
 	{
-		let parsed = this.value;
+		let parsed = this.__value;
 
 		const format_options = <formatOptions>{
 			select_unit: this.select_unit,

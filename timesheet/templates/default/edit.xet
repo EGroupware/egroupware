@@ -109,7 +109,7 @@
 				</row>
 				<row class="row dialogHeader3">
 					<description value="Duration" for="ts_duration"/>
-					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth" />
+					<date-duration id="ts_duration" display_format="hm" class="et2_fullWidth"/>
 					<description/>
 					<description value="or endtime" class="et2_noWrap"/>
 					<date-timeonly id="end_time" class="et2_fullWidth"/>
