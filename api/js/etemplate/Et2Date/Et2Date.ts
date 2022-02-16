@@ -298,7 +298,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		this.altFormat = this.egw().preference("dateformat") || "Y-m-d";
 		this.altInput = true;
 		this.allowInput = true;
-		this.dateFormat = "Y-m-d\T00:00:00\Z";
+		this.dateFormat = "Y-m-dT00:00:00\\Z";
 		this.weekNumbers = true;
 	}
 
