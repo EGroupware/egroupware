@@ -214,7 +214,8 @@ class Template extends Etemplate\Widget
 	{
 		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/etemplate.php'.
 			($path[0] === '/' ? $path : preg_replace('#^'.self::VFS_TEMPLATE_PATH.'#', '',
-				Api\Vfs::parse_url($path, PHP_URL_PATH))).'?'.filemtime(self::rel2path($path));
+				Api\Vfs::parse_url($path, PHP_URL_PATH))).'?'.
+					max(filemtime(self::rel2path($path)), filemtime(EGW_SERVER_ROOT.'/api/etemplate.php'));
 	}
 
 	/**
