@@ -31,6 +31,7 @@ import './Et2Date/Et2DateDurationReadonly';
 import './Et2Date/Et2DateReadonly';
 import './Et2Date/Et2DateSinceReadonly';
 import './Et2Date/Et2DateTime';
+import './Et2Date/Et2DateTimeOnly';
 import './Et2Date/Et2DateTimeReadonly';
 import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
