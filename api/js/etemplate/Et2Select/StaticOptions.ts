@@ -61,7 +61,7 @@ export class StaticOptions
 				// Avoid errors if widget is destroyed before the timeout
 				if(widget && typeof widget.id !== 'undefined')
 				{
-					widget.set_select_options(find_select_options(widget, {}, widget.options));
+					widget.set_select_options(find_select_options(widget, {}, cache));
 				}
 			});
 			return [];

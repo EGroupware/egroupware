@@ -22,8 +22,6 @@ const so = new StaticOptions();
  */
 export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
-	protected _options : SelectOption[] = [];
-
 	static get styles()
 	{
 		return [
@@ -49,7 +47,7 @@ li {
 		return {
 			...super.properties,
 			value: String,
-			select_options: Object
+			select_options: Array
 		}
 	}
 
@@ -57,11 +55,12 @@ li {
 	{
 		super();
 		this.type = "";
+		this.select_options = [];
 	}
 
 	protected find_select_options(_attrs)
 	{
-		let sel_options = find_select_options(this, _attrs['select_options'], _attrs);
+		let sel_options = find_select_options(this, _attrs['select_options']);
 		if(sel_options.length > 0)
 		{
 			this.set_select_options(sel_options);
@@ -128,24 +127,24 @@ li {
 				fixed_options.push(<SelectOption>{value: key, label: new_options[key]});
 			}
 			console.warn(this.id + " passed a key => value map instead of array");
-			this._options = fixed_options;
+			this.select_options = fixed_options;
 			return;
 		}
-		this._options = new_options;
+		this.select_options = new_options;
 	}
 
 	render()
 	{
 		if(!this.value)
 		{
-			return this._readonlyRender({label: this.empty_text, value: ""});
+			return this._readonlyRender({label: this.empty_label, value: ""});
 		}
 
 		return html`
             <ul>
                 ${repeat(this.value, (val : string) => val, (val) =>
                 {
-                    let option = this._options.find(option => option.value == val);
+                    let option = this.select_options.find(option => option.value == val);
                     if(!option)
                     {
                         return "";
@@ -189,9 +188,6 @@ customElements.define("et2-select_ro", Et2SelectReadonly);
 
 export class Et2SelectAccountReadonly extends Et2SelectReadonly
 {
-
-	protected find_select_options(_attrs) {}
-
 	set value(new_value)
 	{
 		if(!new_value)
@@ -208,7 +204,7 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 		{
 			let account_name = null;
 			let option = <SelectOption>{value: id, label: id + " ..."};
-			this._options.push(option);
+			this.select_options.push(option);
 			if(new_value && (account_name = this.egw().link_title('api-accounts', id)))
 			{
 				option.label = account_name;
@@ -241,7 +237,7 @@ export class Et2SelectAppReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.app(this, {other: this.other || []});
+		this.select_options = so.app(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -255,9 +251,9 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
 	render()
 	{
 		let new_value = [];
-		for(let index in this._options)
+		for(let index in this.select_options)
 		{
-			let option = this._options[index];
+			let option = this.select_options[index];
 			let right = parseInt(option && option.value ? option.value : index);
 			if(!!(this.value & right))
 			{
@@ -268,7 +264,7 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
             <ul>
                 ${repeat(new_value, (val : string) => val, (val) =>
                 {
-                    let option = this._options.find(option => option.value == val);
+                    let option = this.select_options.find(option => option.value == val);
                     if(!option)
                     {
                         return "";
@@ -287,7 +283,7 @@ export class Et2SelectBoolReadonly extends Et2SelectReadonly
 	constructor()
 	{
 		super();
-		this._options = so.bool(this);
+		this.select_options = so.bool(this);
 	}
 
 	protected find_select_options(_attrs) {}
@@ -302,7 +298,7 @@ export class Et2SelectCategoryReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.cat(this, {other: this.other || []});
+		this.select_options = so.cat(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -316,7 +312,7 @@ export class Et2SelectPercentReadonly extends Et2SelectReadonly
 	constructor()
 	{
 		super();
-		this._options = so.percent(this, {});
+		this.select_options = so.percent(this, {});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -330,7 +326,7 @@ export class Et2SelectCountryReadonly extends Et2SelectReadonly
 	constructor()
 	{
 		super();
-		this._options = so.country(this, {});
+		this.select_options = so.country(this, {});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -345,7 +341,7 @@ export class Et2SelectDayReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.day(this, {other: this.other || []});
+		this.select_options = so.day(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -360,7 +356,7 @@ export class Et2SelectDayOfWeekReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.dow(this, {other: this.other || []});
+		this.select_options = so.dow(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -375,7 +371,7 @@ export class Et2SelectHourReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.hour(this, {other: this.other || []});
+		this.select_options = so.hour(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -390,7 +386,7 @@ export class Et2SelectMonthReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.month(this);
+		this.select_options = so.month(this);
 	}
 
 	protected find_select_options(_attrs) {}
@@ -405,7 +401,7 @@ export class Et2SelectNumberReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.number(this, {other: this.other || []});
+		this.select_options = so.number(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -419,7 +415,7 @@ export class Et2SelectPriorityReadonly extends Et2SelectReadonly
 	constructor()
 	{
 		super();
-		this._options = so.priority(this);
+		this.select_options = so.priority(this);
 	}
 
 	protected find_select_options(_attrs) {}
@@ -434,7 +430,7 @@ export class Et2SelectStateReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.state(this, {other: this.other || []});
+		this.select_options = so.state(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -449,7 +445,7 @@ export class Et2SelectTimezoneReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.timezone(this, {other: this.other || []});
+		this.select_options = so.timezone(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
@@ -464,7 +460,7 @@ export class Et2SelectYearReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this._options = so.year(this, {other: this.other || []});
+		this.select_options = so.year(this, {other: this.other || []});
 	}
 
 	protected find_select_options(_attrs) {}
