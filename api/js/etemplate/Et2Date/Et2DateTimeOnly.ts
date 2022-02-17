@@ -44,23 +44,27 @@ export class Et2DateTimeOnly extends Et2DateTime
 
 	set_value(value)
 	{
+		let adjustedValue : Date | string = '';
 		if(!value || value == 0 || value == "0")
 		{
 			value = '';
 		}
 		// Handle timezone offset, flatpickr uses local time
-		let date = new Date(value);
-		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-		formatDate.setDate(1);
-		formatDate.setMonth(0)
-		formatDate.setFullYear(1970);
+		if(value)
+		{
+			let date = new Date(value);
+			adjustedValue = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+			adjustedValue.setDate(1);
+			adjustedValue.setMonth(0)
+			adjustedValue.setFullYear(1970);
+		}
 		if(!this._instance)
 		{
-			this.defaultDate = formatDate;
+			this.defaultDate = adjustedValue;
 		}
 		else
 		{
-			this.setDate(formatDate);
+			this.setDate(adjustedValue);
 		}
 	}
 }
