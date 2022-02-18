@@ -104,12 +104,12 @@
   margin-bottom: 10px;
 }
 #calendar-sidebox_cat_id ~ * {
-  vertical-align: top;
-  display: inline-block;
-  background-color: transparent;
-  background-image: url(../../../node_modules/jquery-ui-themes/themes/redmond/images/ui-icons_469bdd_256x240.png);
-  border: none;
-  box-shadow: none;
+    vertical-align: top;
+    display: inline-block;
+    background-color: transparent;
+    background-image: url(../../../api/js/jquery/jquery-ui/themes/themes/redmond/images/ui-icons_469bdd_256x240.png);
+    border: none;
+    box-shadow: none;
 }
 #calendar-sidebox_buttons tbody {
   width: 100%;
@@ -1416,11 +1416,6 @@ Hide subsequent headers in week view with non-consolidated owners
   bottom: 0px;
   right: 0px;
 }
-#calendar-edit_action {
-  width: 10em;
-  padding-left: 10px;
-  margin-left: 5px;
-}
 #calendar-list_undelete_popup,
 #calendar-list_delete_popup {
   display: none;
@@ -2070,12 +2065,6 @@ div.calendar {
 }
 #calendar-edit tr.dialogFooterToolbar label.et2_label {
   top: 0px !important;
-}
-#calendar-edit #calendar-edit_action {
-  margin-left: 5px;
-  padding-left: 10px;
-  width: 10em;
-  padding: 3px 0 5px 10px;
 }
 #calendar-edit #calendar-edit_recur_enddate input.et2_date {
   margin: 0px -1px;
