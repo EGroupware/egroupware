@@ -66,6 +66,50 @@ function send_template()
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
 
+		// fix legacy options, so new client-side has not to deal with them
+		$str = preg_replace_callback('#<([^- ]+)(-[^ ]+)?[^>]* (options="([^"]+)")[ />]#', static function($matches)
+		{
+			// take care of (static) type attribute, if used
+			if (preg_match('/ type="([a-z-]+)"/', $matches[0], $type))
+			{
+				str_replace('<'.$matches[1].$matches[2], '<'.$type[1], $matches[0]);
+				str_replace($type[0], '', $matches[0]);
+				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
+			}
+			static $legacy_options = array(
+				'select' => 'empty_label',
+				'box' => ',cellpadding,cellspacing,keep',
+				'hbox' => 'cellpadding,cellspacing,keep',
+				'vbox' => 'cellpadding,cellspacing,keep',
+				'groupbox' => 'cellpadding,cellspacing,keep',
+				'checkbox' => 'selected_value,unselected_value,ro_true,ro_false',
+				'radio' => 'set_value,ro_true,ro_false',
+				'customfields' => 'sub-type,use-private,field-names',
+				'date' => 'data_format,mode',
+				'description' => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
+			);
+			// prefer more specific type-subtype over just type
+			$names = $legacy_options[$matches[1].$matches[2]] ?? $legacy_options[$matches[1]] ?? null;
+			if (isset($names))
+			{
+				$names = explode(',', $names);
+				$attrs = array_diff(array_combine($names, explode(',', $matches[4], count($names))), ['', null]);
+				// fix select options can be either multiple or empty_label
+				if ($matches[1] === 'select' && !empty($attrs['empty_label']) && (int)$attrs['empty_label'] > 0)
+				{
+					$attrs['multiple'] = (int)$attrs['empty_label'];
+					unset($matches['empty_label']);
+				}
+				$options = '';
+				foreach($attrs as $attr => $value)
+				{
+					$options .= $attr.'="'.$value.'" ';
+				}
+				return str_replace($matches[3], $options, $matches[0]);
+			}
+			return $matches[0];
+		}, $str);
+
 		// fix <textbox multiline="true" .../> --> <textarea .../> (et2-prefix and self-closing is handled below)
 		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#u', '<textarea$1$2/>', $str);
 
