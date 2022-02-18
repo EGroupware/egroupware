@@ -69,10 +69,10 @@ describe("Select widget", () =>
 		{
 			/** SETUP **/
 				// Create an element to test with, and wait until it's ready
-			let node = '<et2-select id="select"></et2-select>';
 			container.setArrayMgr("sel_options", new et2_arrayMgr({
 				select: options
 			}));
+			let node = '<et2-select id="select"></et2-select>';
 			container.loadFromXML(parser.parseFromString(node, "text/xml"));
 
 			// wait for asychronous changes to the DOM
@@ -106,7 +106,7 @@ describe("Select widget", () =>
 			let option_keys = Object.values(element.querySelector("select").children).map(o => o.value);
 			assert.include(option_keys, "option", "Static option missing");
 			assert.includeMembers(option_keys, ["1", "2", "option"], "Option mis-match");
-			assert.equal(options.length, 3);
+			assert.equal(option_keys.length, 3);
 		});
 	});
 

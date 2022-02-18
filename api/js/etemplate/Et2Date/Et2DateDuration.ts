@@ -460,6 +460,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			{
 				input.min = 0;
 				input.name = this.display_format[this.display_format.length - i];
+				// @ts-ignore - it doesn't like that it may have been an array
 				input.value = <string>(value[this.display_format.length - i]);
 				switch(this.display_format[this.display_format.length - i])
 				{
@@ -510,6 +511,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			m: this.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes"),
 			s: this.short_labels ? this.egw().lang("s") : this.egw().lang("Seconds")
 		};
+		// It would be nice to use an et2-select here, but something goes weird with the styling
 		return html`
             <select>
                 ${[...this.display_format].map((format : string) =>

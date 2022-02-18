@@ -11,7 +11,7 @@
 import {LionSelect} from "@lion/select";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
-import {css, html, render, repeat, TemplateResult} from "@lion/core";
+import {css, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
 import {cssImage} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 
@@ -37,8 +37,6 @@ export interface SelectOption
  */
 export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 {
-	protected _options : SelectOption[] = [];
-
 	static get properties()
 	{
 		return {
@@ -61,41 +59,33 @@ export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 	constructor()
 	{
 		super();
+
+		this.select_options = <StaticOptions[]>[];
 	}
 
-	/**
-	 * Set the ID of the widget
-	 *
-	 * Overridden from parent to update select options
-	 *
-	 * @param {string} value
-	 */
-	set id(value)
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	updated(changedProperties : PropertyValues)
 	{
-		let oldValue = this.id;
-		super.id = value;
-		if(value !== oldValue)
+		super.updated(changedProperties);
+
+		// If the ID changed (or was just set) find the select options
+		if(changedProperties.has("id"))
 		{
 			this.set_select_options(find_select_options(this));
 		}
 	}
 
-	/**
-	 * Get the ID of the widget
-	 * Overridden from parent because we overrode setter
-	 *
-	 * @returns {string}
-	 */
-	get id()
-	{
-		return this._widget_id;
-	}
-
 	getValue()
 	{
-		return this.readOnly ? null : this.value;
+		return this.readOnly ? null : this.modalValue;
 	}
 
+	set_value(val)
+	{
+		let oldValue = this.modalValue;
+		this.modalValue = val
+		this.requestUpdate("value", oldValue);
+	}
 
 	/**
 	 * Set the select options
@@ -111,19 +101,24 @@ export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 			{
 				fixed_options.push({value: key, label: new_options[key]});
 			}
-			this._options = fixed_options;
+			this.select_options = fixed_options;
 		}
 		else
 		{
-			this._options = new_options;
+			this.select_options = new_options;
 		}
 	}
 
 	get_select_options()
 	{
-		return this._options;
+		return this.select_options;
 	}
 
+	/**
+	 * Render the "empty label", used when the selectbox does not currently have a value
+	 *
+	 * @returns {}
+	 */
 	_emptyLabelTemplate() : TemplateResult
 	{
 		return html`${this.empty_label}`;
@@ -134,11 +129,16 @@ export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 		return html``;
 	}
 
+	/**
+	 * Load extra stuff from the template node.  In particular, we're looking for any <option/> tags added.
+	 *
+	 * @param {Element} _node
+	 */
 	loadFromXML(_node : Element)
 	{
 		// Read the option-tags
 		let options = _node.querySelectorAll("option");
-		let new_options = this._options;
+		let new_options = [];
 		for(let i = 0; i < options.length; i++)
 		{
 			new_options.push({
@@ -152,33 +152,11 @@ export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 			});
 		}
 
+		if(this.id)
+		{
+			new_options = find_select_options(this, {}, new_options);
+		}
 		this.set_select_options(new_options);
-	}
-
-	transformAttributes(_attrs)
-	{
-		super.transformAttributes(_attrs);
-
-		// If select_options are already known, skip the rest
-		if(this._options && this._options.length > 0 ||
-			_attrs.select_options && Object.keys(_attrs.select_options).length > 0 ||
-			// Allow children to skip select_options - check to make sure default got set to something (should be {})
-			typeof _attrs.select_options == 'undefined' || _attrs.select_options === null
-		)
-		{
-			// do not return inside nextmatch, as get_rows data might have changed select_options
-			// for performance reasons we only do it for first row, which should have id "0[...]"
-			if(this.getParent() && this.getParent().getType() != 'rowWidget' || !_attrs.id || _attrs.id[0] != '0')
-			{
-				return;
-			}
-		}
-
-		let sel_options = find_select_options(this, _attrs['select_options'], _attrs);
-		if(sel_options.length > 0)
-		{
-			this.set_select_options(sel_options);
-		}
 	}
 }
 
@@ -233,31 +211,31 @@ export class Et2Select extends Et2WidgetWithSelect
 	connectedCallback()
 	{
 		super.connectedCallback();
-
-		// Add in actual options as children to select, if not already there
-		//MOVE options inside SELECT:
+		//MOVE options that were set as children inside SELECT:
 		this.querySelector('select').append(...this.querySelectorAll('option'));
-
-		if(this._inputNode.children.length == 0)
-		{
-			render(html`${this._emptyLabelTemplate()}
-                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
-				this._inputNode
-			);
-		}
 	}
 
-	set_select_options(new_options : SelectOption[] | { [p : string] : string })
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	updated(changedProperties : PropertyValues)
 	{
-		super.set_select_options(new_options);
-
-		// Add in actual options as children to select
-		if(this._inputNode)
+		super.updated(changedProperties);
+		if(changedProperties.has('select_options'))
 		{
-			render(html`${this._emptyLabelTemplate()}
-                    ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate)}`,
-				this._inputNode
-			);
+			// Add in actual options as children to select
+			if(this._inputNode)
+			{
+				// We use this.get_select_options() instead of this.select_options so children can override
+				// This is how sub-types get their options in
+				render(html`${this._emptyLabelTemplate()}
+                        ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+					this._inputNode
+				);
+			}
+		}
+		if(changedProperties.has('select_options') || changedProperties.has("value"))
+		{
+			// Re-set value, the option for it may have just shown up
+			this._inputNode.value = this.modalValue || "";
 		}
 	}
 
@@ -268,13 +246,15 @@ export class Et2Select extends Et2WidgetWithSelect
 			return html``;
 		}
 		return html`
-            <option value="">${this.empty_label}</option>`;
+            <option value="" ?selected=${!this.modalValue}>${this.empty_label}</option>`;
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <option value="${option.value}" title="${option.title}">${option.label}</option>`;
+            <option value="${option.value}" title="${option.title}" ?selected=${option.value == this.modalValue}>
+                ${option.label}
+            </option>`;
 	}
 }
 
@@ -286,16 +266,21 @@ const so = new StaticOptions();
 
 /**
  * Find the select options for a widget, out of the many places they could be.
+ *
+ * This will give valid, correct array of SelectOptions.  It will check:
+ * - sel_options ArrayMgr, taking into account namespaces and checking the root
+ * - content ArrayMgr, looking for "options-<id>"
+ * - passed options, used by specific select types
+ *
  * @param {Et2Widget} widget to check for.  Should be some sort of select widget.
  * @param {object} attr_options Select options in attributes array
- * @param {object} attrs Widget attributes
+ * @param {SelectOption[]} options Known options, passed in if you've already got some.  Cached type options, for example.
  * @return {SelectOption[]} Select options, or empty array
  */
-export function find_select_options(widget, attr_options?, attrs = {}) : SelectOption[]
+export function find_select_options(widget, attr_options?, options : SelectOption[] = []) : SelectOption[]
 {
 	let name_parts = widget.id.replace(/&#x5B;/g, '[').replace(/]|&#x5D;/g, '').split('[');
 
-	let type_options : SelectOption[] = [];
 	let content_options : SelectOption[] = [];
 
 	// Try to find the options inside the "sel-options"
@@ -420,8 +405,8 @@ export function find_select_options(widget, attr_options?, attrs = {}) : SelectO
 		content_options = [];
 	}
 
-	// Include type options, preferring any content options
-	if(type_options.length || Object.keys(type_options).length > 0)
+	// Include passed options, preferring any content options
+	if(options.length || Object.keys(options).length > 0)
 	{
 		for(let i in content_options)
 		{
@@ -429,21 +414,21 @@ export function find_select_options(widget, attr_options?, attrs = {}) : SelectO
 			let added = false;
 
 			// Override any existing
-			for(let j in type_options)
+			for(let j in options)
 			{
-				if('' + type_options[j].value === '' + value)
+				if('' + options[j].value === '' + value)
 				{
 					added = true;
-					type_options[j] = content_options[i];
+					options[j] = content_options[i];
 					break;
 				}
 			}
 			if(!added)
 			{
-				type_options.splice(parseInt(i), 0, content_options[i]);
+				options.splice(parseInt(i), 0, content_options[i]);
 			}
 		}
-		content_options = type_options;
+		content_options = options;
 	}
 
 	// Clean up
@@ -452,7 +437,18 @@ export function find_select_options(widget, attr_options?, attrs = {}) : SelectO
 		let fixed_options = [];
 		for(let key in <object>content_options)
 		{
-			fixed_options.push({value: key, label: content_options[key]});
+			let option = {value: key, label: content_options[key]}
+			// This could be an option group - not sure we have any
+			if(typeof option.label !== "string")
+			{
+				// @ts-ignore Yes, option.label.label is not supposed to exist but that's what we're checking
+				if(typeof option.label.label !== "undefined")
+				{
+					// @ts-ignore Yes, option.label.label is not supposed to exist but that's what we're checking
+					option.label = option.label.label;
+				}
+			}
+			fixed_options.push(option);
 		}
 		content_options = fixed_options;
 	}
@@ -488,7 +484,7 @@ export class Et2SelectBitwise extends Et2Select
 				expanded_value.push(right);
 			}
 		}
-		this._value = expanded_value;
+		this.modalValue = expanded_value;
 
 		this.requestUpdate("value", oldValue);
 	}
