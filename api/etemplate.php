@@ -93,7 +93,12 @@ function send_template()
 			if (isset($names))
 			{
 				$names = explode(',', $names);
-				$attrs = array_diff(array_combine($names, explode(',', $matches[4], count($names))), ['', null]);
+				$values = Api\Etemplate\Widget::csv_split($matches[4], count($names));
+				if (count($values) < count($names))
+				{
+					$values = array_merge($values, array_fill(count($values), count($names)-count($values), ''));
+				}
+				$attrs = array_diff(array_combine($names, $values), ['', null]);
 				// fix select options can be either multiple or empty_label
 				if ($matches[1] === 'select' && !empty($attrs['empty_label']) && (int)$attrs['empty_label'] > 0)
 				{
