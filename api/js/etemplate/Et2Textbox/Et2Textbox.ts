@@ -45,15 +45,6 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 	{
 		super.connectedCallback();
 	}
-
-	getValue()
-	{
-		if(this.readOnly)
-		{
-			return null;
-		}
-		return this.value;
-	}
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement

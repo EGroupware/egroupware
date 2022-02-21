@@ -75,11 +75,6 @@ export class Et2WidgetWithSelect extends Et2InputWidget(LionSelect)
 		}
 	}
 
-	getValue()
-	{
-		return this.readOnly ? null : this.modalValue;
-	}
-
 	set_value(val)
 	{
 		let oldValue = this.modalValue;

@@ -250,16 +250,6 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		this.formatter = formatDuration;
 	}
 
-	getValue()
-	{
-		if(this.readOnly)
-		{
-			return null;
-		}
-
-		return this.value;
-	}
-
 	get value() : string
 	{
 		let value = 0;

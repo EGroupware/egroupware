@@ -126,11 +126,7 @@ const Et2InputWidgetMixin = (superclass) =>
 
 		getValue()
 		{
-			if(this.readOnly)
-			{
-				return null;
-			}
-			return this.serializedValue !== "undefined" ? this.serializedValue : this.modalValue;
+			return this.readOnly ? null : this.value;
 		}
 
 
