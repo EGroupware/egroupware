@@ -73,6 +73,15 @@ egw_ready.then(function()
 			this.form.method = 'get';
 			jQuery(this.form).append('<input type="hidden" name="auth" value="saml"/>');
 		});
+		// prefer [Login] button below over maybe existing SAML login button above
+		jQuery('input').on('keypress', function(e)
+		{
+			if (e.which == 13)
+			{
+				this.form.submit();
+				return false;
+			}
+		});
 		//cleanup darkmode session value
 		egw.setSessionItem('api', 'darkmode','');
 
