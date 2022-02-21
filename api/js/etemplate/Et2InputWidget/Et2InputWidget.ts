@@ -191,6 +191,11 @@ const Et2InputWidgetMixin = (superclass) =>
 			// From LionInput
 			return this._inputNode;
 		}
+
+		set_validation_error(err : string)
+		{
+			// ToDo, just a stub to silence TypeErrors
+		}
 	}
 
 	return Et2InputWidgetClass;
