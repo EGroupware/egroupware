@@ -33,13 +33,24 @@ export class Et2DateTimeOnly extends Et2DateTime
 		super();
 
 		// Configure flatpickr
+
+	}
+
+	/**
+	 * Override some flatpickr defaults to get things how we like it
+	 *
+	 * @see https://flatpickr.js.org/options/
+	 * @returns {any}
+	 */
+	protected getOptions()
+	{
+		let options = super.getOptions();
 		let timeFormat = ((<string>window.egw.preference("timeformat") || "24") == "24" ? "H:i" : "h:i K");
-		this.altFormat = timeFormat;
-		this.enableTime = true;
-		this.noCalendar = true;
-		this.time_24hr = this.egw().preference("timeformat", "common") == "24";
-		this.dateFormat = "1970-01-01TH:i:00\\Z";
-		this.defaultHour = new Date().getHours();
+		options.altFormat = timeFormat;
+		options.noCalendar = true;
+		options.dateFormat = "1970-01-01TH:i:00\\Z";
+
+		return options;
 	}
 
 	set_value(value)

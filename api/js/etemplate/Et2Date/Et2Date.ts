@@ -14,6 +14,7 @@ import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
+import "flatpickr/dist/plugins/scrollPlugin.js";
 
 
 /**
@@ -293,13 +294,6 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	constructor()
 	{
 		super();
-
-		// Override some flatpickr defaults how we like it
-		this.altFormat = this.egw().preference("dateformat") || "Y-m-d";
-		this.altInput = true;
-		this.allowInput = true;
-		this.dateFormat = "Y-m-dT00:00:00\\Z";
-		this.weekNumbers = true;
 	}
 
 	/**
@@ -313,6 +307,28 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 			//	await loadLocale(this.locale);
 		}
 		this.initializeComponent();
+	}
+
+	/**
+	 * Override some flatpickr defaults to get things how we like it
+	 *
+	 * @see https://flatpickr.js.org/options/
+	 * @returns {any}
+	 */
+	protected getOptions()
+	{
+		let options = super.getOptions();
+
+		options.altFormat = this.egw().preference("dateformat") || "Y-m-d";
+		options.altInput = true;
+		options.allowInput = true;
+		options.dateFormat = "Y-m-dT00:00:00\\Z";
+		options.weekNumbers = true;
+
+		// Turn on scroll wheel support
+		options.plugins = [new scrollPlugin()];
+
+		return options;
 	}
 
 	set_value(value)
