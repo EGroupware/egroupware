@@ -120,15 +120,10 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			css`
 			:host {
 				display: inline-flex;
-			    border-width: 1px;
-				border-style: solid;
-				border-image: initial;
-				border-color: var(--input-border-color);
 			}
 			select {
 				color: var(--input-text-color);
-				border: none;
-				border-left: 1px solid var(--input-border-color);
+				border: 1px solid var(--input-border-color);
 				flex: 2 1 auto;
 				
 				-webkit-appearance: none;
@@ -144,7 +139,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 				color: var(--input-text-color);
 				padding-top: 4px;
 				padding-bottom: 4px;
-				border: none;
+			    border: 1px solid var(--input-border-color);
+				border-right: none;
 				flex: 1 1 auto;
 				max-width: 4.5em;
 			}
