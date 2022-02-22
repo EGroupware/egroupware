@@ -102,7 +102,7 @@
 				</row>
 				<row class="dialogHeader2">
 					<description value="Date" for="ts_start"/>
-					<date id="ts_start" needed="1" options=",8" class="et2_fullWidth"/>
+					<date id="ts_start" needed="1" class="et2_fullWidth"/>
 					<description/>
 					<description value="Starttime"/>
 					<date-timeonly id="start_time" class="et2_fullWidth"/>

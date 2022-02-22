@@ -77,16 +77,16 @@ function send_template()
 				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
 			}
 			static $legacy_options = array(
-				'select' => 'empty_label',
-				'box' => ',cellpadding,cellspacing,keep',
-				'hbox' => 'cellpadding,cellspacing,keep',
-				'vbox' => 'cellpadding,cellspacing,keep',
-				'groupbox' => 'cellpadding,cellspacing,keep',
-				'checkbox' => 'selected_value,unselected_value,ro_true,ro_false',
-				'radio' => 'set_value,ro_true,ro_false',
+				'select'       => 'empty_label',
+				'box'          => ',cellpadding,cellspacing,keep',
+				'hbox'         => 'cellpadding,cellspacing,keep',
+				'vbox'         => 'cellpadding,cellspacing,keep',
+				'groupbox'     => 'cellpadding,cellspacing,keep',
+				'checkbox'     => 'selected_value,unselected_value,ro_true,ro_false',
+				'radio'        => 'set_value,ro_true,ro_false',
 				'customfields' => 'sub-type,use-private,field-names',
-				'date' => 'data_format,mode',
-				'description' => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
+				'date'         => 'data_format', // Legacy option "mode" was never implemented in et2
+				'description'  => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
 			);
 			// prefer more specific type-subtype over just type
 			$names = $legacy_options[$matches[1].$matches[2]] ?? $legacy_options[$matches[1]] ?? null;
