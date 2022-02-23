@@ -17,14 +17,15 @@ export const dateStyles = [
 	.overdue {
 		color: red; // var(--whatever the theme color)
 	}
-	input.flatpickr-input {
+	input.flatpickr {
 		border: 1px solid;
 		border-color: var(--input-border-color);
 		color: var(--input-text-color);
 		padding-top: 4px;
 		padding-bottom: 4px;
+		flex: 1 1 auto;
 	}
-	input.flatpickr-input:hover {
+	input.flatpickr:hover {
 		background-image: ${cssImage("datepopup")};
 		background-repeat: no-repeat;
 		background-position-x: right;

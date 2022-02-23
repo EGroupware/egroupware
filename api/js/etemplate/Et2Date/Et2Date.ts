@@ -9,7 +9,8 @@
  */
 
 
-import {css} from "@lion/core";
+import {css, html} from "@lion/core";
+import {FormControlMixin} from "@lion/form-core";
 import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
@@ -269,7 +270,7 @@ export function formatDateTime(date : Date, options = {dateFormat: "", timeForma
 	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
-export class Et2Date extends Et2InputWidget(LitFlatpickr)
+export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 {
 	static get styles()
 	{
@@ -326,6 +327,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		options.weekNumbers = true;
 
 		// Turn on scroll wheel support
+		// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
 		options.plugins = [new scrollPlugin()];
 
 		return options;
@@ -371,6 +373,36 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 
 		return value;
+	}
+
+	_inputGroupInputTemplate()
+	{
+		return html`
+            <div class="input-group__input">
+                <slot name="input">
+                    <input class="lit-flatpickr flatpickr flatpickr-input"
+                           placeholder=${this.placeholder}/>
+                </slot>
+            </div>
+		`;
+	}
+
+	/**
+	 * Override from flatpickr
+	 * @returns {any}
+	 */
+	findInputField()
+	{
+		return this._inputNode;
+	}
+
+	/**
+	 * The interactive (form) element.  Override from Lion
+	 * @protected
+	 */
+	get _inputNode()
+	{
+		return /** @type {HTMLElementWithValue} */ (this.shadowRoot.querySelector('input'));
 	}
 }
 

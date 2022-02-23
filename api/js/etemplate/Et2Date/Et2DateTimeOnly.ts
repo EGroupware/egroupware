@@ -50,6 +50,19 @@ export class Et2DateTimeOnly extends Et2DateTime
 		options.noCalendar = true;
 		options.dateFormat = "1970-01-01TH:i:00\\Z";
 
+		// Time only does not have year & month, which scrollPlugin blindly tries to use
+		// This causes an error and interrupts the initialization
+		options.plugins.push(instance =>
+		{
+			return {
+				onReady: function()
+				{
+					this.yearElements = []
+					this.monthElements = []
+				}
+			}
+		});
+
 		return options;
 	}
 

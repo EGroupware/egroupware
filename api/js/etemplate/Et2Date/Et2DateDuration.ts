@@ -14,6 +14,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
 import {cssImage} from "../Et2Widget/Et2Widget";
+import {FormControlMixin} from "@lion/form-core";
 
 export interface formatOptions
 {
@@ -110,7 +111,7 @@ export function formatDuration(value : number | string, options : formatOptions)
  * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
  * but this can be specified with the properties.
  */
-export class Et2DateDuration extends Et2InputWidget(LitElement)
+export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement))
 {
 	static get styles()
 	{
@@ -118,8 +119,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 			...super.styles,
 			...dateStyles,
 			css`
-			:host {
-				display: inline-flex;
+			.form-field__group-two {
+				width: 100%;
 			}
 			select {
 				color: var(--input-text-color);
@@ -307,14 +308,22 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		this.requestUpdate();
 	}
 
-
-	render()
+	/**
+	 * @return {TemplateResult}
+	 * @protected
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	_inputGroupInputTemplate()
 	{
 		return html`
-            ${this._inputTemplate()}
-            ${this._formatTemplate()}`;
+            <div class="input-group__input">
+                <slot name="input">
+                    ${this._inputTemplate()}
+                    ${this._formatTemplate()}
+                </slot>
+            </div>
+		`;
 	}
-
 
 	/**
 	 * Converts the value in data format into value in display format.
