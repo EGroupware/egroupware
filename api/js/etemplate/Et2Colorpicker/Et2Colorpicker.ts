@@ -17,7 +17,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
 export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput)))
 {
-	private cleared : boolean = true;
+	private readonly cleared_value = '#FEFEFE';	// as input type=color interprets everything not a "#rrggbb" string as black, we use this for no value selected for now
 
 	static get styles()
 	{
@@ -28,6 +28,7 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput
 				display: flex;
 			}
 			.input-group__suffix{
+				width: 12px;
 				height: 12px;
 			}
 			.input-group__container {
@@ -90,7 +91,7 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput
 	_inputTemplate()
 	{
 		return html`
-            <input type="color" onchange="${this._handleChange}"/>
+            <input type="color" .value="${this.value || this.cleared_value}" onchange="${this._handleChange}"/>
 		`;
 	}
 
@@ -131,21 +132,20 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput
 
 	getValue()
 	{
-		let value = this._inputNode.value;
-		if (this.cleared || value === '#FFFFFF' || value === '#ffffff') {
+		if (this.value.toUpperCase() === this.cleared_value)
+		{
 			return '';
 		}
-		return value;
+		return this.value;
 	}
 
 	set_value(color)
 	{
-		if(!color)
+		if (!color)
 		{
-			color = '';
+			color = this.cleared_value;
 		}
-		this.cleared = !color;
-		this._inputNode.value = color;
+		this.value = color;
 	}
 }
 customElements.define('et2-colorpicker', Et2Colorpicker);
