@@ -145,6 +145,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				flex: 1 1 auto;
 				max-width: 4.5em;
 			}
+			input:last-child {
+				border-right: 1px solid var(--input-border-color);
+			}
+				
             `,
 		];
 	}

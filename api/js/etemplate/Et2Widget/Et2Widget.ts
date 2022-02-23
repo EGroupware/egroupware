@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin, unsafeCSS, CSSResult} from "@lion/core";
+import {css, dedupeMixin, unsafeCSS} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -86,6 +86,14 @@ const Et2WidgetMixin = (superClass) =>
 				css`
 				:host([disabled]) {
 					display: none;
+				}
+				
+				/* CSS to align internal inputs according to box alignment */
+				:host([align="center"]) .input-group__input {
+					justify-content: center;
+				}
+				:host([align="right"]) .input-group__input {
+					justify-content: flex-end;
 				}
             `];
 		}
