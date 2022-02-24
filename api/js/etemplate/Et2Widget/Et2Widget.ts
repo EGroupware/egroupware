@@ -1156,6 +1156,17 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
 	return widget;
 }
 
+/**
+ * Take attributes from a node in a .xet file and apply those to a WebComponent widget
+ *
+ * Any attributes provided that match a property (or attribute) on the widget will be adjusted according to
+ * the passed arrayManager, coerced into the proper type, and set.
+ * It is here that we find values or set attributes that should come from content.
+ *
+ * @param widget
+ * @param {et2_arrayMgr} mgr
+ * @param attributes
+ */
 function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 {
 

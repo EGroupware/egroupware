@@ -1,7 +1,8 @@
-import {et2_IInput, et2_IInputNode} from "../et2_core_interfaces";
+import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {dedupeMixin} from "@lion/core";
-import {ManualMessage} from "./ManualMessage";
+import {dedupeMixin, PropertyValues} from "@lion/core";
+import {ManualMessage} from "../Validators/ManualMessage";
+import {Required} from "../Validators/Required";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -37,7 +38,7 @@ export declare class Et2InputWidgetInterface
 
 const Et2InputWidgetMixin = (superclass) =>
 {
-	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode
+	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode, et2_ISubmitListener
 	{
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
@@ -66,6 +67,11 @@ const Et2InputWidgetMixin = (superclass) =>
 					type: Boolean
 				},
 
+				needed: {
+					type: Boolean,
+					reflect: true
+				},
+
 				onchange: {
 					type: Function
 				},
@@ -81,6 +87,32 @@ const Et2InputWidgetMixin = (superclass) =>
 		{
 			super.connectedCallback();
 			this.node = this.getInputNode();
+		}
+
+		/**
+		 * A property has changed, and we want to make adjustments to other things
+		 * based on that
+		 *
+		 * @param {import('@lion/core').PropertyValues } changedProperties
+		 */
+		updated(changedProperties : PropertyValues)
+		{
+			super.updated(changedProperties);
+
+			// Needed changed, add / remove validator
+			if(changedProperties.has('needed'))
+			{
+				// Remove class
+				this.classList.remove("et2_required")
+				// Remove all existing Required validators (avoids duplicates)
+				this.validators = (this.validators || []).filter((validator) => validator instanceof Required)
+				this.setAttribute("required", this.needed);
+				if(this.needed)
+				{
+					this.validators.push(new Required());
+					this.classList.add("et2_required");
+				}
+			}
 		}
 
 		/**
@@ -169,12 +201,19 @@ const Et2InputWidgetMixin = (superclass) =>
 			this._oldValue = this.getValue();
 		}
 
+		/**
+		 * Used by etemplate2 to determine if we can submit or not
+		 *
+		 * @param messages
+		 * @returns {boolean}
+		 */
 		isValid(messages)
 		{
 			var ok = true;
+			debugger;
 
 			// Check for required
-			if(this.options && this.options.needed && !this.options.readonly && !this.disabled &&
+			if(this.needed && !this.readonly && !this.disabled &&
 				(this.getValue() == null || this.getValue().valueOf() == ''))
 			{
 				messages.push(this.egw().lang('Field must not be empty !!!'));
@@ -214,6 +253,29 @@ const Et2InputWidgetMixin = (superclass) =>
 			// Force a validate - not needed normally, but if you call set_validation_error() manually,
 			// it won't show up without validate()
 			this.validate();
+		}
+
+		/**
+		 * Called whenever the template gets submitted. We return false if the widget
+		 * is not valid, which cancels the submission.
+		 *
+		 * @param _values contains the values which will be sent to the server.
+		 * 	Listeners may change these values before they get submitted.
+		 */
+		async submit(_values) : Promise<boolean>
+		{
+			this.submitted = true;
+
+			// If using Lion validators, run them now
+			if(this.validate)
+			{
+				// Force update now
+				this.validate(true);
+				await this.validateComplete;
+
+				return (this.hasFeedbackFor || []).indexOf("error") == -1;
+			}
+			return true;
 		}
 	}
 

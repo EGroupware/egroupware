@@ -2,8 +2,7 @@ import {ResultValidator} from "@lion/form-core";
 
 /**
  * Manual validator for server-side validation messages passed
- * from Etemplate.  It is always "activated", and just gives whatever
- * message is passed in when created.
+ * from Etemplate.  It just gives whatever message is passed in when created.
  *
  */
 export class ManualMessage extends ResultValidator

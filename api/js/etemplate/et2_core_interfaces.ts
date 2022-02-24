@@ -158,7 +158,7 @@ export interface et2_ISubmitListener
 	 * @param _values contains the values which will be sent to the server.
 	 * 	Listeners may change these values before they get submitted.
 	 */
-	submit(_values) : void
+	submit(_values) : boolean | Promise<boolean>
 }
 export const et2_ISubmitListener = "et2_ISubmitListener";
 et2_implements_registry.et2_ISubmitListener = function(obj : et2_widget)

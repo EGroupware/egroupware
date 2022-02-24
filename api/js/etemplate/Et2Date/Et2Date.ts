@@ -10,7 +10,7 @@
 
 
 import {css, html} from "@lion/core";
-import {FormControlMixin} from "@lion/form-core";
+import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
@@ -270,7 +270,7 @@ export function formatDateTime(date : Date, options = {dateFormat: "", timeForma
 	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
-export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
+export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFlatpickr)))
 {
 	static get styles()
 	{

@@ -905,9 +905,9 @@ export class etemplate2
 	 *
 	 * @param container
 	 * @param values
-	 * @return et2_widget|null first invalid widget or null, if all are valid
+	 * @return Promise<et2_widget>|Promise<Et2Widget>|null
 	 */
-	isInvalid(container : et2_container | undefined, values : object | undefined) : et2_widget | null
+	async isInvalid(container : et2_container | undefined, values : object | undefined) : Promise<et2_ISubmitListener> | null
 	{
 		if(typeof container === 'undefined')
 		{
@@ -917,19 +917,27 @@ export class etemplate2
 		{
 			values = this.getValues(container);
 		}
-		let invalid = null;
+		let invalid = [];
 		container.iterateOver(function(_widget)
 		{
-			if(_widget.submit(values) === false)
+			let submit = _widget.submit(values);
+			if(submit === false)
 			{
 				if(!invalid && !_widget.isValid([]))
 				{
-					invalid = _widget;
+					invalid.push(_widget);
 				}
+			}
+			else if(submit instanceof Promise)
+			{
+				invalid.push(submit.then(function(sub)
+				{
+					return sub ? false : this;
+				}.bind(_widget)));
 			}
 		}, this, et2_ISubmitListener);
 
-		return invalid;
+		return Promise.all(invalid);
 	}
 
 	/**
@@ -962,8 +970,27 @@ export class etemplate2
 		{
 			canSubmit = !(invalid = this.isInvalid(container, values));
 		}
+		invalid.then((widgets) =>
+		{
+			let invalid_widgets = widgets.filter((widget) => widget);
 
-		if(canSubmit)
+			if(invalid_widgets.length)
+			{
+				// Show the first invalid widget, not the last
+				if(invalid_widgets[0] && invalid_widgets[0] instanceof et2_widget)
+				{
+					let messages = [];
+					let valid = invalid.isValid(messages);
+					invalid.set_validation_error(messages);
+				}
+			}
+			else
+			{
+				doSubmit();
+			}
+		});
+
+		let doSubmit = function()
 		{
 			if(typeof async == 'undefined' || typeof async == 'string')
 			{
@@ -996,14 +1023,9 @@ export class etemplate2
 			{
 				this._widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
 			}
-		}
-		else if(invalid !== null)
-		{
-			// Show the first invalid widget, not the last
-			let messages = [];
-			let valid = invalid.isValid(messages);
-			invalid.set_validation_error(messages);
-		}
+		}.bind(this);
+
+
 		return canSubmit;
 	}
 
