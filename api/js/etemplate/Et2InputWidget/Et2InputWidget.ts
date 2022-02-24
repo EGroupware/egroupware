@@ -1,6 +1,7 @@
 import {et2_IInput, et2_IInputNode} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {dedupeMixin} from "@lion/core";
+import {ManualMessage} from "./ManualMessage";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -188,9 +189,31 @@ const Et2InputWidgetMixin = (superclass) =>
 			return this._inputNode;
 		}
 
+		transformAttributes(attrs)
+		{
+			super.transformAttributes(attrs);
+			// Check whether an validation error entry exists
+			if(this.id && this.getArrayMgr("validation_errors"))
+			{
+				let val = this.getArrayMgr("validation_errors").getEntry(this.id);
+				if(val)
+				{
+					this.set_validation_error(val);
+				}
+			}
+		}
+
 		set_validation_error(err : string)
 		{
-			// ToDo, just a stub to silence TypeErrors
+			// ToDo - implement Lion validators properly, most likely by adding to this.validators
+
+			// Need to change interaction state so messages show up
+			this.prefilled = true;
+			// Add validator
+			this.validators.push(new ManualMessage(err));
+			// Force a validate - not needed normally, but if you call set_validation_error() manually,
+			// it won't show up without validate()
+			this.validate();
 		}
 	}
 
