@@ -95,10 +95,10 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 		{
 			$content['title'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
-			if(!array_key_exists($content['contact_owner']) && $content['plugin_options']) {
+			if (!array_key_exists('contact_owner', $content) && $content['plugin_options']) {
 				$content['contact_owner'] = $content['plugin_options']['contact_owner'];
 			}
-			if(!array_key_exists($content['change_owner']) && $content['plugin_options']) {
+			if(!array_key_exists('change_owner', $content) && $content['plugin_options']) {
 				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
