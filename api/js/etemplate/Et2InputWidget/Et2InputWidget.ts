@@ -1,6 +1,6 @@
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {dedupeMixin, PropertyValues} from "@lion/core";
+import {css, dedupeMixin, PropertyValues} from "@lion/core";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Required} from "../Validators/Required";
 
@@ -47,7 +47,12 @@ const Et2InputWidgetMixin = (superclass) =>
 		static get styles()
 		{
 			return [
-				...super.styles
+				super.styles,
+				css`
+				/* Needed so required can show through */
+				::slotted(input), input {
+					background-color: transparent;
+				}`
 			];
 		}
 
@@ -67,11 +72,10 @@ const Et2InputWidgetMixin = (superclass) =>
 					type: Boolean
 				},
 
-				needed: {
+				required: {
 					type: Boolean,
 					reflect: true
 				},
-
 				onchange: {
 					type: Function
 				},
@@ -100,14 +104,13 @@ const Et2InputWidgetMixin = (superclass) =>
 			super.updated(changedProperties);
 
 			// Needed changed, add / remove validator
-			if(changedProperties.has('needed'))
+			if(changedProperties.has('required'))
 			{
 				// Remove class
 				this.classList.remove("et2_required")
 				// Remove all existing Required validators (avoids duplicates)
 				this.validators = (this.validators || []).filter((validator) => validator instanceof Required)
-				this.setAttribute("required", this.needed);
-				if(this.needed)
+				if(this.required)
 				{
 					this.validators.push(new Required());
 					this.classList.add("et2_required");
@@ -231,6 +234,7 @@ const Et2InputWidgetMixin = (superclass) =>
 		transformAttributes(attrs)
 		{
 			super.transformAttributes(attrs);
+
 			// Check whether an validation error entry exists
 			if(this.id && this.getArrayMgr("validation_errors"))
 			{

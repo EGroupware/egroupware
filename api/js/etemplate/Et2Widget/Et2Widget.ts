@@ -1180,8 +1180,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		// If there is not attribute set, ignore it.  Widget sets its own default.
 		if(typeof attrValue === "undefined")
 		{
-			return;
+			continue;
 		}
+
+		// "needed" is deprecated, use "required"
+		if(attribute == "needed")
+		{
+			attribute = "required";
+		}
+
 		const property = widget_class.getPropertyOptions(attribute);
 
 		switch(typeof property === "object" ? property.type : property)

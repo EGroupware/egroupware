@@ -930,9 +930,9 @@ export class etemplate2
 			}
 			else if(submit instanceof Promise)
 			{
-				invalid.push(submit.then(function(sub)
+				invalid.push(submit.then(function(ok)
 				{
-					return sub ? false : this;
+					return ok ? false : this;
 				}.bind(_widget)));
 			}
 		}, this, et2_ISubmitListener);
