@@ -251,7 +251,8 @@ const Et2InputWidgetMixin = (superclass) =>
 			// ToDo - implement Lion validators properly, most likely by adding to this.validators
 
 			// Need to change interaction state so messages show up
-			this.prefilled = true;
+			// submitted is a little heavy-handed, especially on first load, but it works
+			this.submitted = true;
 			// Add validator
 			this.validators.push(new ManualMessage(err));
 			// Force a validate - not needed normally, but if you call set_validation_error() manually,
