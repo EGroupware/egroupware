@@ -72,8 +72,8 @@ export function formatDuration(value : number | string, options : formatOptions)
 		case 'h':
 			value *= 60;
 			break;
-		case 's':
-			value /= 60.0;
+		case 's':	// round to full minutes, unless this would give 0, use 1 digit instead
+			value = value < 30 ? Math.round(value / 6.0)/10.0 : Math.round(value / 60.0);
 			break;
 	}
 
@@ -164,6 +164,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int).
 			 */
 			data_format: {
+				reflect: true,
 				type: String
 			},
 			/**
@@ -174,6 +175,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Default is 'dh' = days or hours with selectbox.
 			 */
 			display_format: {
+				reflect: true,
 				type: String
 			},
 
@@ -202,7 +204,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Number of hours in a day, used for converting between hours and (working) days.
 			 * Default 8
 			 */
-			hours_per_day: {type: Number},
+			hours_per_day: {
+				reflect: true,
+				type: Number
+			},
 
 			/**
 			 * 0 or empty
@@ -210,7 +215,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Should the widget differ between 0 and empty, which get then returned as NULL
 			 * Default false, empty is considered as 0
 			 */
-			empty_not_0: {type: Boolean},
+			empty_not_0: {
+				reflect: true,
+				type: Boolean
+			},
 
 			/**
 			 * Short labels
@@ -218,6 +226,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * use d/h/m instead of day/hour/minute
 			 */
 			short_labels: {
+				reflect: true,
 				type: Boolean
 			},
 
