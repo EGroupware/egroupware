@@ -58,11 +58,11 @@ class Password extends Etemplate\Widget\Textbox
 			$preserv =& self::get_array(self::$request->preserv, $form_name, true);
 			$preserv = (string)$value;
 
-			if (!empty($value) && ((array_key_exists('viewable', $this->attrs) && $this->attrs['viewable'] === 'false') || $plaintext))
+			// only send password (or hash) to client-side, if explicitly requested
+			if (!empty($value) && (!array_key_exists('viewable', $this->attrs) || !in_array($this->attrs['viewable'], ['1', 'true', true], true)))
 			{
 				$value = str_repeat('*', strlen($preserv));
 			}
-			//$value = str_repeat('*', strlen($preserv));
 		}
 	}
 
