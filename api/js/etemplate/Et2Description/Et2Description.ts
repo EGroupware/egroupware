@@ -162,6 +162,9 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	_handleClick(_ev : MouseEvent) : boolean
 	{
+		// call super to get the onclick handling running
+		super._handleClick(_ev);
+
 		if(this.expose_view && typeof this.mime != 'undefined' && this.mime.match(this.mime_regexp, 'ig'))
 		{
 			this._init_blueimp_gallery(_ev, this.href);
