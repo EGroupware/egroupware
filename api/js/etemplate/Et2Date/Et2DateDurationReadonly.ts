@@ -32,6 +32,14 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		];
 	}
 
+	constructor()
+	{
+		super();
+
+		// Property defaults
+		this.select_unit = false;	// otherwise just best matching unit will be used for eg. display_format "h:m:s"
+	}
+
 	get value()
 	{
 		return this.__value;

@@ -260,6 +260,16 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		this.formatter = formatDuration;
 	}
 
+	transformAttributes(attrs)
+	{
+		// Clean formats
+		if (typeof attrs.display_format === 'string')
+		{
+			attrs.display_format = attrs.display_format.replace(/[^dhms]/g,'');
+		}
+		super.transformAttributes(attrs);
+	}
+
 	get value() : string
 	{
 		let value = 0;

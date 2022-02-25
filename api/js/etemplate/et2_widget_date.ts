@@ -767,7 +767,7 @@ export class et2_date_duration extends et2_date
 		}
 
 		// Clean formats
-		this.options.display_format = this.options.display_format.replace(/[^dhms]/,'');
+		this.options.display_format = this.options.display_format.replace(/[^dhms]/g,'');
 		if(!this.options.display_format)
 		{
 			// @ts-ignore
