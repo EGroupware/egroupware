@@ -636,7 +636,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
   box-shadow: 5px 5px 5px #aaa;
   border: 1px solid gray;
 }
-div.mailComposeBody {
+.mailComposeBody {
   white-space: normal !important;
 }
 #mail-compose_mail_plaintext {
@@ -1189,24 +1189,14 @@ body {
 #mail-compose .mailComposeHeadersSection #mail-compose_to input {
   width: auto;
 }
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander {
+#mail-compose .mailComposeHeaders #mail-compose_cc_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_cc_expander,
+#mail-compose .mailComposeHeaders #mail-compose_bcc_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_bcc_expander,
+#mail-compose .mailComposeHeaders #mail-compose_folder_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_folder_expander,
+#mail-compose .mailComposeHeaders #mail-compose_replyto_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_replyto_expander {
   background: transparent;
   border: none;
   color: #26537c;
@@ -1215,6 +1205,7 @@ body {
   width: auto;
   white-space: nowrap;
   text-align: left;
+  cursor: pointer;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_subject,
 #mail-compose .mailComposeHeadersSection input#mail-compose_subject {

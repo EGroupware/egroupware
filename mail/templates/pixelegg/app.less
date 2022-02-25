@@ -265,12 +265,11 @@ body {
 		/*An*/
 		#mail-compose_to input {width:auto;}
 		/*Kopie*/
-		span#mail-compose_cc_expander,
+		#mail-compose_cc_expander,
 		/*Blindkopie*/
-		span#mail-compose_cc_expander, span#mail-compose_cc_expander,
-		span#mail-compose_bcc_expander, span#mail-compose_bcc_expander,
-		span#mail-compose_folder_expander, span#mail-compose_folder_expander,
-		span#mail-compose_replyto_expander, span#mail-compose_replyto_expander
+		#mail-compose_bcc_expander,
+		#mail-compose_folder_expander,
+		#mail-compose_replyto_expander
 		{
 			background: transparent;
 			border: none;
@@ -280,6 +279,7 @@ body {
 			width: auto;
 			white-space: nowrap;
 			text-align: left;
+			cursor: pointer;
 		}
 		/*Betreff*/
 		input#mail-compose_subject {
