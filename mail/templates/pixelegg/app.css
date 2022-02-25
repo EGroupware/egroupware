@@ -85,32 +85,32 @@ tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
-span.status_img {
+.status_img {
   display: inline-block;
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
   background-image: url(../default/images/kmmsgread.png);
 }
-tr.deleted span.status_img {
+tr.deleted .status_img {
   background-image: url(../default/images/kmmsgdel.png);
 }
-tr.unseen span.status_img {
+tr.unseen .status_img {
   background-image: url(../default/images/kmmsgunseen.png);
 }
-tr.flagged_seen span.status_img {
+tr.flagged_seen .status_img {
   background-image: url(../default/images/read_flagged_small.png) !important;
 }
-tr.flagged_unseen span.status_img {
+tr.flagged_unseen .status_img {
   background-image: url(../default/images/unread_flagged_small.png) !important;
 }
-tr.recent span.status_img {
+tr.recent .status_img {
   background-image: url(../default/images/kmmsgnew.png) !important;
 }
-tr.replied span.status_img {
+tr.replied .status_img {
   background-image: url(../default/images/kmmsgreplied.png) !important;
 }
-tr.forwarded span.status_img {
+tr.forwarded .status_img {
   background-image: url(../default/images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
@@ -1651,7 +1651,7 @@ tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
-span.status_img {
+.status_img {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -1659,25 +1659,25 @@ span.status_img {
   background-image: url(../pixelegg/images/kmmsgread.svg);
   background-size: 16px 16px;
 }
-tr.deleted span.status_img {
+tr.deleted .status_img {
   background-image: url(../pixelegg/images/kmmsgdel.svg);
 }
-tr.unseen span.status_img {
+tr.unseen .status_img {
   background-image: url(../pixelegg/images/kmmsgunseen.svg);
 }
-tr.flagged_seen span.status_img {
+tr.flagged_seen .status_img {
   background-image: url(../pixelegg/images/read_flagged_small.svg) !important;
 }
-tr.flagged_unseen span.status_img {
+tr.flagged_unseen .status_img {
   background-image: url(../pixelegg/images/unread_flagged_small.svg) !important;
 }
-tr.recent span.status_img {
+tr.recent .status_img {
   background-image: url(../pixelegg/images/kmmsgnew.svg) !important;
 }
-tr.replied span.status_img {
+tr.replied .status_img {
   background-image: url(../pixelegg/images/mail_reply.svg) !important;
 }
-tr.forwarded span.status_img {
+tr.forwarded .status_img {
   background-image: url(../pixelegg/images/mail_forward.svg) !important;
 }
 .subjectBold {
