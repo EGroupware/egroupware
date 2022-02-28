@@ -395,6 +395,24 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		return value;
 	}
 
+	/**
+	 * Set the minimum allowed date
+	 * @param {string | Date} min
+	 */
+	set_min(min : string | Date)
+	{
+		this.minDate = min;
+	}
+
+	/**
+	 * Set the minimum allowed date
+	 * @param {string | Date} max
+	 */
+	set_max(max : string | Date)
+	{
+		this.maxDate = max;
+	}
+
 	_inputGroupInputTemplate()
 	{
 		return html`
