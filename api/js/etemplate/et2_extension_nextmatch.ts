@@ -3879,12 +3879,12 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		const bind_change = function(_widget)
 		{
 			// Previously set change function
-			const widget_change = _widget.change;
+			const widget_change = (window.customElements.get(_widget.localName)) ? _widget.onchange : _widget.change;
 
 			let change = function(_node)
 			{
 				// Call previously set change function
-				const result = widget_change.call(_widget, _node, header.nextmatch);
+				const result = widget_change.call(_widget, _node, header.nextmatch, _widget);
 
 				// Find current value in activeFilters
 				let entry = header.nextmatch.activeFilters;
@@ -3929,7 +3929,18 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				return true;
 			};
 
-			_widget.change = change;
+			if(window.customElements.get(_widget.localName) !== "undefined")
+			{
+				// @ts-ignore
+				_widget.onchange = (ev) =>
+				{
+					return change.call(this, _widget, _widget);
+				}
+			}
+			else
+			{
+				_widget.change = change;
+			}
 
 			// Set activeFilters to current value
 			// Use an array mgr to hande non-simple IDs
@@ -3944,7 +3955,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		}
 		else
 		{
-			sub_header.iterateOver(bind_change, this, et2_inputWidget);
+			sub_header.iterateOver(bind_change, this, et2_IInput);
 		}
 	}
 }
