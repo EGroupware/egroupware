@@ -82,6 +82,26 @@ const Et2InputWidgetMixin = (superclass) =>
 			};
 		}
 
+		/**
+		 * Compatibility for deprecated name "needed"
+		 *
+		 * @deprecated use required instead
+		 * @param val
+		 */
+		set needed(val : boolean)
+		{
+			this.required = val;
+		}
+		/**
+		 * Compatibility for deprecated name "needed"
+		 *
+		 * @deprecated use required instead
+		 */
+		get needed()
+		{
+			return this.required;
+		}
+
 		constructor(...args : any[])
 		{
 			super(...args);
@@ -103,7 +123,7 @@ const Et2InputWidgetMixin = (superclass) =>
 		{
 			super.updated(changedProperties);
 
-			// Needed changed, add / remove validator
+			// required changed, add / remove validator
 			if(changedProperties.has('required'))
 			{
 				// Remove class
@@ -216,7 +236,7 @@ const Et2InputWidgetMixin = (superclass) =>
 			debugger;
 
 			// Check for required
-			if(this.needed && !this.readonly && !this.disabled &&
+			if(this.required && !this.readonly && !this.disabled &&
 				(this.getValue() == null || this.getValue().valueOf() == ''))
 			{
 				messages.push(this.egw().lang('Field must not be empty !!!'));
