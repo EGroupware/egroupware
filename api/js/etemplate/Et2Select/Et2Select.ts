@@ -238,7 +238,7 @@ export class Et2Select extends Et2WidgetWithSelect
 				!(typeof this.empty_label !== 'undefined' && (this.modalValue||"") === ""))
 			{
 				// --> use first option
-				this.modalValue = this.get_select_options()[0]?.value || "";
+				this.modalValue = ""+this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
 			this._inputNode.value = this.modalValue || "";
