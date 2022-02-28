@@ -231,11 +231,13 @@ export class Et2Select extends Et2WidgetWithSelect
 				);
 			}
 		}
-		if(changedProperties.has('select_options') || changedProperties.has("value"))
+		if (changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
-			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modalValue).length === 0)
+			// value not in options AND NOT (having an empty label and value)
+			if (this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modalValue).length === 0 &&
+				!(typeof this.empty_label !== 'undefined' && (this.modalValue||"") === ""))
 			{
-				// Not in list, use first option
+				// --> use first option
 				this.modalValue = this.get_select_options()[0]?.value || "";
 			}
 			// Re-set value, the option for it may have just shown up
