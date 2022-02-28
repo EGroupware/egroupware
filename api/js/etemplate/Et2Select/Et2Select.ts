@@ -235,8 +235,8 @@ export class Et2Select extends Et2WidgetWithSelect
 		{
 			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modalValue).length === 0)
 			{
-				// Not in list, clear it
-				this.modalValue = "";
+				// Not in list, use first option
+				this.modalValue = this.get_select_options()[0]?.value || "";
 			}
 			// Re-set value, the option for it may have just shown up
 			this._inputNode.value = this.modalValue || "";
