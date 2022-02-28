@@ -77,7 +77,7 @@ function send_template()
 				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
 			}
 			static $legacy_options = array(
-				'select'       => 'empty_label',
+				'select'       => 'empty_label,dummy',
 				'box'          => ',cellpadding,cellspacing,keep',
 				'hbox'         => 'cellpadding,cellspacing,keep',
 				'vbox'         => 'cellpadding,cellspacing,keep',
