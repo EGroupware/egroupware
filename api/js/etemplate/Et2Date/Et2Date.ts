@@ -297,6 +297,19 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		super();
 	}
 
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this._onChange = this._onChange.bind(this);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this._inputNode.removeEventListener('change', this._onChange);
+	}
+
 	/**
 	 * Override parent to skip call to CDN
 	 * @returns {Promise<void>}
@@ -308,6 +321,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			//	await loadLocale(this.locale);
 		}
 		this.initializeComponent();
+
+		// This has to go in init() rather than connectedCallback() because flatpickr creates its nodes in
+		// initializeComponent() so this._inputNode is not available before this
+		this._inputNode.addEventListener('change', this._onChange);
 	}
 
 	/**
