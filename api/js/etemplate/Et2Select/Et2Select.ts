@@ -15,7 +15,10 @@ import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 
-export class Et2Select extends Et2widgetWithSelectMixin(LionSelect)
+// export Et2WidgetWithSelect which is used as type in other modules
+export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(LionSelect){};
+
+export class Et2Select extends Et2WidgetWithSelect
 {
 	static get styles()
 	{

@@ -7,9 +7,10 @@
  *
  * @param {type} widget
  */
-import {Et2WidgetWithSelect, find_select_options, SelectOption} from "./Et2Select";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Et2SelectReadonly";
+import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {Et2WidgetWithSelect} from "./Et2Select";
 
 /**
  * Some options change, or are too complicated to have twice, so we get the
