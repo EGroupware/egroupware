@@ -270,13 +270,20 @@ const Et2InputWidgetMixin = (superclass) =>
 			}
 		}
 
-		set_validation_error(err : string)
+		set_validation_error(err : string | false)
 		{
 			// ToDo - implement Lion validators properly, most likely by adding to this.validators
 
+			if(err === false)
+			{
+				// Remove all Manual validators
+				this.validators = (this.validators || []).filter((validator) => validator instanceof ManualMessage)
+				return;
+			}
 			// Need to change interaction state so messages show up
 			// submitted is a little heavy-handed, especially on first load, but it works
 			this.submitted = true;
+
 			// Add validator
 			this.validators.push(new ManualMessage(err));
 			// Force a validate - not needed normally, but if you call set_validation_error() manually,
