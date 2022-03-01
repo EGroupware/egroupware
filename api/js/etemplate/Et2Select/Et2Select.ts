@@ -71,6 +71,12 @@ export class Et2Select extends Et2WidgetWithSelect
 		super.connectedCallback();
 		//MOVE options that were set as children inside SELECT:
 		this.querySelector('select').append(...this.querySelectorAll('option'));
+
+		// if _inputNode was not available by the time set_value() got called
+		if (this.getValue() !== this.modelValue)
+		{
+			this.set_value(this.modelValue);
+		}
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
