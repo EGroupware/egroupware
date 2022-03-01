@@ -396,6 +396,21 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	}
 
 	/**
+	 * Change handler setting modelValue for validation
+	 *
+	 * @param _ev
+	 * @returns
+	 */
+	_onChange(_ev : Event) : boolean
+	{
+		const ret = super._onChange(_ev);
+
+		this.modelValue = this.getValue();
+
+		return ret;
+	}
+
+	/**
 	 * Set the minimum allowed date
 	 * @param {string | Date} min
 	 */
