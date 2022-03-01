@@ -263,9 +263,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	transformAttributes(attrs)
 	{
 		// Clean formats
-		if (typeof attrs.display_format === 'string')
+		if(typeof attrs.display_format === 'string')
 		{
-			attrs.display_format = attrs.display_format.replace(/[^dhms]/g,'');
+			attrs.display_format = attrs.display_format.replace(/[^dhms]/g, '');
 		}
 		super.transformAttributes(attrs);
 	}
@@ -449,9 +449,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				return _highest ? _value : _value % 60;
 			case 'h':
 				_value = Math.floor(_value / 3600);
-				return _highest ? _value : _value % this.options.hours_per_day;
+				return _highest ? _value : _value % this.hours_per_day;
 			case 'd':
-				return Math.floor(_value / 3600 * this.options.hours_per_day);
+				return Math.floor(_value / 3600 * this.hours_per_day);
 		}
 	}
 
