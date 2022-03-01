@@ -970,7 +970,7 @@ export class etemplate2
 		{
 			canSubmit = !(invalid = this.isInvalid(container, values));
 		}
-		invalid.then((widgets) =>
+		invalid?.then((widgets) =>
 		{
 			let invalid_widgets = widgets.filter((widget) => widget);
 
