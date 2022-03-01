@@ -110,7 +110,15 @@ const Et2InputWidgetMixin = (superclass) =>
 		connectedCallback()
 		{
 			super.connectedCallback();
+			this._oldChange = this._oldChange.bind(this);
+			this.addEventListener("change", this._oldChange);
 			this.node = this.getInputNode();
+		}
+
+		disconnectedCallback()
+		{
+			super.disconnectedCallback();
+			this.removeEventListener("change", this._oldChange);
 		}
 
 		/**
@@ -144,12 +152,8 @@ const Et2InputWidgetMixin = (superclass) =>
 		 * @param _ev
 		 * @returns
 		 */
-		_onChange(_ev : Event) : boolean
+		_oldChange(_ev : Event) : boolean
 		{
-			if(typeof super._onChange == "function")
-			{
-				super._onChange(_ev);
-			}
 			if(typeof this.onchange == 'function')
 			{
 				// Make sure function gets a reference to the widget, splice it in as 2. argument if not

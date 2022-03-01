@@ -2185,6 +2185,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	get_columns()
 	{
 		const colMgr = this.dataview.getColumnMgr();
+		if(!colMgr)
+		{
+			return [];
+		}
 		const visibility = colMgr.getColumnVisibilitySet();
 		const colDisplay = [];
 		const custom_fields = [];
@@ -3931,11 +3935,12 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 
 			if(_widget.localName && window.customElements.get(_widget.localName) !== "undefined")
 			{
+				// We could use addEventListener(), but callbacks expect these arguments
 				// @ts-ignore
 				_widget.onchange = (ev) =>
 				{
 					return change.call(this, _widget, _widget);
-				}
+				};
 			}
 			else
 			{
