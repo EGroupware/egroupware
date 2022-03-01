@@ -93,14 +93,14 @@ export class Et2Select extends Et2WidgetWithSelect
 		if (changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
 			// value not in options AND NOT (having an empty label and value)
-			if (this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modalValue).length === 0 &&
-				!(typeof this.empty_label !== 'undefined' && (this.modalValue||"") === ""))
+			if (this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modelValue).length === 0 &&
+				!(typeof this.empty_label !== 'undefined' && (this.modelValue||"") === ""))
 			{
 				// --> use first option
-				this.modalValue = ""+this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
+				this.modelValue = ""+this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
-			this._inputNode.value = this.modalValue || "";
+			this._inputNode.value = this.modelValue || "";
 		}
 	}
 
@@ -111,13 +111,13 @@ export class Et2Select extends Et2WidgetWithSelect
 			return html``;
 		}
 		return html`
-            <option value="" ?selected=${!this.modalValue}>${this.empty_label}</option>`;
+            <option value="" ?selected=${!this.modelValue}>${this.empty_label}</option>`;
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <option value="${option.value}" title="${option.title}" ?selected=${option.value == this.modalValue}>
+            <option value="${option.value}" title="${option.title}" ?selected=${option.value == this.modelValue}>
                 ${option.label}
             </option>`;
 	}
@@ -158,7 +158,7 @@ export class Et2SelectBitwise extends Et2Select
 				expanded_value.push(right);
 			}
 		}
-		this.modalValue = expanded_value;
+		this.modelValue = expanded_value;
 
 		this.requestUpdate("value", oldValue);
 	}

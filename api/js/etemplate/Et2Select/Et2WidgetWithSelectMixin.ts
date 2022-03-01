@@ -67,14 +67,30 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			}
 		}
 
+		/**
+		 * Overwritten as sometimes called before this._inputNode is available
+		 *
+		 * @param {*} v - modelValue: can be an Object, Number, String depending on the
+		 * input type(date, number, email etc)
+		 * @returns {string} formattedValue
+		 */
+		formatter(v)
+		{
+			if (!this._inputNode)
+			{
+				return v;
+			}
+			return super.formatter(v);
+		}
+
 		set_value(val)
 		{
-			let oldValue = this.modalValue;
+			let oldValue = this.modelValue;
 
 			// Make sure it's a string
 			val = "" + val;
 
-			this.modalValue = val
+			this.modelValue = val
 			this.requestUpdate("value", oldValue);
 		}
 
