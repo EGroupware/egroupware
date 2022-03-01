@@ -63,8 +63,9 @@ export class Et2Iframe extends Et2Widget(SlotMixin(LitElement))
 
 	render() {
 		return html`
-			<iframe ${this.id ? html`id="${this.id}"` : ''} allowfullscreen="${this.fullscreen}" seamless="${this.seamless}" name="${this.name}" allow="${this.allow}"></iframe>
-            <slot>${this._label}</slot>
+            <iframe ${this.id ? html`id="${this.id}"` : ''} allowfullscreen="${this.fullscreen}"
+                    seamless="${this.seamless}" name="${this.name}" allow="${this.allow}"></iframe>
+            <slot>${this.label}</slot>
 		`;
 	}
 

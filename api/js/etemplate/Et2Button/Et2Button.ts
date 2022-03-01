@@ -9,9 +9,8 @@
  */
 
 
-import {css, html} from "@lion/core";
+import {css, html, SlotMixin} from "@lion/core";
 import {LionButton} from "@lion/button";
-import {SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {buttonStyles} from "./ButtonStyles";
 
@@ -143,6 +142,8 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		// ignore click on readonly button
 		if(this.disabled || this.readonly)
 		{
+			event.preventDefault();
+			event.stopImmediatePropagation();
 			return false;
 		}
 
@@ -206,11 +207,15 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 
 		this._iconNode.src = this._image;
-		if (!this._label) this._iconNode.classList.add('imageOnly');
+		if(!this.label)
+		{
+			this._iconNode.classList.add('imageOnly');
+		}
 		return html`
-            <div class="button-content et2_button ${this._label?'':'imageOnly'}" id="${this._buttonId}" part="container">
-           		<slot name="icon" class="${this._label?'':'imageOnly'}"></slot>
-                <slot name="label">${this._label}</slot>
+            <div class="button-content et2_button ${this.label ? '' : 'imageOnly'}" id="${this._buttonId}"
+                 part="container">
+                <slot name="icon" class="${this.label ? '' : 'imageOnly'}"></slot>
+                <slot name="label">${this.label}</slot>
             </div> `;
 	}
 

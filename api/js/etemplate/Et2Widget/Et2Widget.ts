@@ -7,7 +7,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin, unsafeCSS} from "@lion/core";
+import {css, dedupeMixin, PropertyValues, unsafeCSS} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -74,7 +74,6 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		protected _widget_id : string = "";
 		protected _dom_id : string = "";
-		protected _label : string = "";
 		private statustext : string = "";
 
 
@@ -215,8 +214,6 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			super.connectedCallback();
 
-			this.set_label(this._label);
-
 			if(this.statustext)
 			{
 				this.egw().tooltipBind(this, this.statustext);
@@ -240,7 +237,7 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		set_label(value : string)
 		{
-			let oldValue = this._label;
+			let oldValue = this.label;
 
 			// Remove old
 			let oldLabels = this.getElementsByClassName("et2_label");
@@ -249,18 +246,18 @@ const Et2WidgetMixin = (superClass) =>
 				this.removeChild(oldLabels[0]);
 			}
 
-			this._label = value;
+			this.__label = value;
 			if(value)
 			{
 				if(this._labelNode)
 				{
-					this._labelNode.textContent = this._label;
+					this._labelNode.textContent = this.__label;
 				}
 				else
 				{
 					let label = document.createElement("span");
 					label.classList.add("et2_label");
-					label.textContent = this._label;
+					label.textContent = this.__label;
 					// We should have a slot in the template for the label
 					//label.slot="label";
 					this.appendChild(label);
@@ -329,11 +326,59 @@ const Et2WidgetMixin = (superClass) =>
 			return this._widget_id;
 		}
 
-		set label(value : string)
+		/**
+		 * A property has changed, and we want to make adjustments to other things
+		 * based on that
+		 *
+		 * @param {import('@lion/core').PropertyValues } changedProperties
+		 */
+		updated(changedProperties : PropertyValues)
 		{
-			let oldValue = this.label;
-			this._label = value;
-			this.requestUpdate('label', oldValue);
+			super.updated(changedProperties);
+
+			// required changed, add / remove validator
+			if(changedProperties.has('label'))
+			{
+				this._set_label(this.label);
+			}
+		}
+
+		/**
+		 * Do some fancy stuff on the label, splitting it up if there's a %s in it
+		 *
+		 * Normally called from updated(), the "normal" setter stuff has already been run before
+		 * this is called.  We only override our special cases (%s) because the normal label has
+		 * been set by the parent
+		 *
+		 * @param value
+		 * @protected
+		 */
+		protected _set_label(value : string)
+		{
+			if(!this._labelNode)
+			{
+				return;
+			}
+			// Remove any existing post label
+			let existing = (Array.from(this.children)).find(
+				(el : Element) => el.slot === "after" && el.tagName === "LABEL",
+			)
+			if(existing)
+			{
+				this.removeChild(existing);
+			}
+
+			// Split the label at the "%s"
+			let parts = et2_csvSplit(value, 2, "%s");
+			if(parts.length > 1)
+			{
+				let after = document.createElement("label");
+				after.slot = "after";
+				after.textContent = parts[1];
+				this.appendChild(after);
+
+				this._labelNode.textContent = parts[0];
+			}
 		}
 
 		set class(value : string)
@@ -386,6 +431,35 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			// TODO: Probably should watch the state or something
 			return true;
+		}
+
+		/**
+		 * Get property-values as object
+		 *
+		 * @deprecated use widget methods
+		 */
+		get options() : object
+		{
+			const options : { [key : string] : any } = {};
+			// @ts-ignore not sure how to tell TS this is a ReactiveElement and properties is a static getter
+			for(const name in this.constructor.properties)
+			{
+				options[name] = this[name];
+			}
+			// adding attributes too
+			this.getAttributeNames().forEach(name =>
+			{
+				options[name] = this.getAttribute(name);
+			});
+			// add some (not declared) known properties
+			if(typeof this.get_value === 'function')
+			{
+				options.value = this.get_value();
+			}
+			console.groupCollapsed("Deprecated widget.options use")
+			console.trace("Something called widget.options on ", this);
+			console.groupEnd();
+			return options;
 		}
 
 		/**
@@ -1188,6 +1262,12 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		{
 			attribute = "required";
 		}
+		// Skip these ones
+		// options is legacy / read-only
+		if(["options"].indexOf(attribute) > -1)
+		{
+			continue;
+		}
 
 		const property = widget_class.getPropertyOptions(attribute);
 
@@ -1226,6 +1306,13 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 		}
 
+		// TODO: Figure out how to bind handlers directly, since we can do that now
+		/* (handlers can only be bound _after_ the widget is added to the DOM
+		if(attribute.startsWith("on") && typeof attrValue == "function")
+		{
+			widget.addEventListener(attribute, attrValue);
+		}
+		 */
 		// Set as attribute or property, as appropriate.  Don't set missing attributes.
 		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
