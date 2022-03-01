@@ -3929,7 +3929,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				return true;
 			};
 
-			if(window.customElements.get(_widget.localName) !== "undefined")
+			if(_widget.localName && window.customElements.get(_widget.localName) !== "undefined")
 			{
 				// @ts-ignore
 				_widget.onchange = (ev) =>
