@@ -9,9 +9,10 @@
  */
 
 
-import {css} from "@lion/core";
+import {css, PropertyValues} from "@lion/core";
 import {LionInput} from "@lion/input";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {Regex} from "../Validators/Regex";
 
 export class Et2Textbox extends Et2InputWidget(LionInput)
 {
@@ -32,6 +33,12 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 	{
 		return {
 			...super.properties,
+			/**
+			 * Perl regular expression eg. '/^[0-9][a-f]{4}$/i'
+			 *
+			 * Not to be confused with this.validators, which is a list of validators for this widget
+			 */
+			validator: String,
 			onkeypress: Function,
 		}
 	}
@@ -44,6 +51,41 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 	connectedCallback()
 	{
 		super.connectedCallback();
+	}
+
+	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+		if(changedProperties.has('validator'))
+		{
+			// Remove all existing Pattern validators (avoids duplicates)
+			this.validators = (this.validators || []).filter((validator) => validator instanceof Regex)
+			this.validators.push(new Regex(this.validator));
+		}
+	}
+
+	get validator()
+	{
+		return this.__validator;
+	}
+
+	set validator(value)
+	{
+		if(typeof value == 'string')
+		{
+			let parts = value.split('/');
+			let flags = parts.pop();
+			if(parts.length < 2 || parts[0] !== '')
+			{
+				this.egw().debug(this.egw().lang("'%1' has an invalid format !!!", value));
+				return;
+			}
+			parts.shift();
+			this.__validator = new RegExp(parts.join('/'), flags);
+
+			this.requestUpdate("validator");
+		}
 	}
 }
 
