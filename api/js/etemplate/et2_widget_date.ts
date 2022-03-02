@@ -938,7 +938,7 @@ export class et2_date_duration extends et2_date
 				_value = Math.floor(_value / 3600);
 				return _highest ? _value : _value % this.options.hours_per_day;
 			case 'd':
-				return Math.floor(_value / 3600*this.options.hours_per_day);
+				return Math.floor(_value / 3600 / this.options.hours_per_day);
 		}
 	}
 

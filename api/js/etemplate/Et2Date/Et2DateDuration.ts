@@ -186,6 +186,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Default is true
 			 */
 			select_unit: {
+				reflect: true,
 				type: Boolean
 			},
 
@@ -451,7 +452,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				_value = Math.floor(_value / 3600);
 				return _highest ? _value : _value % this.hours_per_day;
 			case 'd':
-				return Math.floor(_value / 3600 * this.hours_per_day);
+				return Math.floor(_value / 3600 / this.hours_per_day);
 		}
 	}
 

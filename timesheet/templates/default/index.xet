@@ -81,7 +81,7 @@
 					<menulist class="noWrap">
 						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
 					</menulist>
-					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1" align="right"/>
+					<date-duration id="${row}[ts_duration]" readonly="true" display_format="h" select_unit="true" align="right"/>
 					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
 					<description id="${row}[ts_unitprice]" no_lang="1"/>
 					<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>

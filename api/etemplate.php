@@ -76,8 +76,8 @@ function send_template()
 				str_replace($type[0], '', $matches[0]);
 				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
 			}
-			static $legacy_options = array(
-				'select'       => 'empty_label,dummy',
+			static $legacy_options = array( // use "ignore" to ignore further comma-sep. values, otherwise they are all in last attribute
+				'select'       => 'empty_label,ignore',
 				'box'          => ',cellpadding,cellspacing,keep',
 				'hbox'         => 'cellpadding,cellspacing,keep',
 				'vbox'         => 'cellpadding,cellspacing,keep',
@@ -85,7 +85,7 @@ function send_template()
 				'checkbox'     => 'selected_value,unselected_value,ro_true,ro_false',
 				'radio'        => 'set_value,ro_true,ro_false',
 				'customfields' => 'sub-type,use-private,field-names',
-				'date'         => 'data_format', // Legacy option "mode" was never implemented in et2
+				'date'         => 'data_format,ignore', // Legacy option "mode" was never implemented in et2
 				'description'  => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
 			);
 			// prefer more specific type-subtype over just type
@@ -99,6 +99,7 @@ function send_template()
 					$values = array_merge($values, array_fill(count($values), count($names)-count($values), ''));
 				}
 				$attrs = array_diff(array_combine($names, $values), ['', null]);
+				unset($attrs['ignore']);
 				// fix select options can be either multiple or empty_label
 				if ($matches[1] === 'select' && !empty($attrs['empty_label']) && (int)$attrs['empty_label'] > 0)
 				{
