@@ -263,11 +263,17 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 
 	transformAttributes(attrs)
 	{
-		// Clean formats
-		if(typeof attrs.display_format === 'string')
+		// Clean formats, but avoid things that need to be expanded like $cont[display_format]
+		const check = new RegExp('[\$\@' + Object.keys(Et2DateDuration.time_formats).join('') + ']');
+		for(let attr in ["display_format", "data_format"])
 		{
-			attrs.display_format = attrs.display_format.replace(/[^dhms]/g, '');
+			if(typeof attrs[attrs] === 'string' && !check.test(attrs[attr]))
+			{
+				console.warn("Invalid format for " + attr + "'" + attrs[attr] + "'", this);
+				attrs[attr] = attrs[attr].replace(/[^dhms]/g, '');
+			}
 		}
+
 		super.transformAttributes(attrs);
 	}
 

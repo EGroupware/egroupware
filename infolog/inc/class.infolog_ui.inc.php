@@ -55,7 +55,7 @@ class infolog_ui
 	 *
 	 * @var string
 	 */
-	var $duration_format = ',';	// comma is necessary!
+	var $duration_format = '';
 
 	var $icons = array(
 		'type' => array(
@@ -1009,7 +1009,7 @@ class infolog_ui
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
-		$values['duration_format'] = ','.$this->duration_format;
+		$values['duration_format'] = $this->duration_format;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 
