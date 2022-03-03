@@ -2206,6 +2206,11 @@ class infolog_ui
 			$readonlys['tabs']['project'] = true;	// disable the project tab
 		}
 
+		// Don't send '0' if there is no category
+		if(!$content['info_cat'])
+		{
+			unset($content['info_cat']);
+		}
 		$content['duration_format'] = $this->duration_format;
 		$content['hours_per_workday'] = $this->hours_per_workday;
 		if ($this->prefs['show_id']) $content['info_number'] = $info_id;
