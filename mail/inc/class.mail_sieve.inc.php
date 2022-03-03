@@ -238,7 +238,6 @@ class mail_sieve
 
 				$rules = $this->rulesByID;
 				$content= $rules;
-				$content['no_forward'] = $this->account->acc_smtp_type !== Api\Mail\Smtp::class && !$this->account->acc_user_forward;
 				$content ['ruleID'] = $_GET['ruleID'];
 				switch ($rules['action'])
 				{
@@ -394,6 +393,9 @@ class mail_sieve
 			'ctype' => Mail\Script::$btransform_ctype_array,
 
 		);
+
+		// No forward should be applied regardless of content/rules
+		$content['no_forward'] = $this->account->acc_smtp_type !== Api\Mail\Smtp::class && !$this->account->acc_user_forward;
 
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
 		$sel_options['action_folder_text'] = $this->ajax_getFolders(0,true,null,true);
