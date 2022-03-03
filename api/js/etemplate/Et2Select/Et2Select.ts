@@ -9,7 +9,7 @@
 
 
 import {LionSelect} from "@lion/select";
-import {css, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
+import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {cssImage} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
@@ -73,37 +73,35 @@ export class Et2Select extends Et2WidgetWithSelect
 		this.querySelector('select').append(...this.querySelectorAll('option'));
 
 		// if _inputNode was not available by the time set_value() got called
-		if (this.getValue() !== this.modelValue)
+		if(this.getValue() !== this.modelValue)
 		{
 			this.set_value(this.modelValue);
 		}
+	}
+
+	/**
+	 * Get the node where we're putting the selection options
+	 *
+	 * @returns {HTMLElement}
+	 */
+	get _optionTargetNode() : HTMLElement
+	{
+		return this._inputNode;
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
-		if(changedProperties.has('select_options'))
-		{
-			// Add in actual options as children to select
-			if(this._inputNode)
-			{
-				// We use this.get_select_options() instead of this.select_options so children can override
-				// This is how sub-types get their options in
-				render(html`${this._emptyLabelTemplate()}
-                        ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
-					this._inputNode
-				);
-			}
-		}
-		if (changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
+
+		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
 			// value not in options AND NOT (having an empty label and value)
-			if (this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modelValue).length === 0 &&
-				!(typeof this.empty_label !== 'undefined' && (this.modelValue||"") === ""))
+			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modelValue).length === 0 &&
+				!(typeof this.empty_label !== 'undefined' && (this.modelValue || "") === ""))
 			{
 				// --> use first option
-				this.modelValue = ""+this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
+				this.modelValue = "" + this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
 			this._inputNode.value = this.modelValue || "";
