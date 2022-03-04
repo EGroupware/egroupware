@@ -8,25 +8,30 @@
  * @author Hadi Nategh
  */
 
-import { LionOption } from '@lion/listbox';
+import {LionOption} from '@lion/listbox';
 import {css, html} from "@lion/core";
 
-export class EgwOption extends LionOption {
+export class EgwOption extends LionOption
+{
 
-	static get properties() {
+	static get properties()
+	{
 		return {
 			...super.properties,
 			title: {type: String},
 			icon: {type: String}
 		};
 	}
-	constructor() {
+
+	constructor()
+	{
 		super();
 		this.title = '';
-		this.icon  = '';
+		this.icon = '';
 	}
 
-	static get styles() {
+	static get styles()
+	{
 		return [
 			...super.styles,
 			css`
@@ -37,13 +42,13 @@ export class EgwOption extends LionOption {
 		];
 	}
 
-	render ()
+	render()
 	{
 		return html`
-			${this.icon
-					? html` <img class="egw-option__icon" src="${this.icon}" alt="" />`
-					: '' }
-			${super.render()}
+            ${this.icon
+              ? html` <img class="egw-option__icon" src="${this.icon}" alt=""/>`
+              : ''}
+            ${super.render()}
 		`;
 	}
 }

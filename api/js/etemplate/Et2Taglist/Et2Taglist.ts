@@ -14,9 +14,11 @@ import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {LionCombobox} from "@lion/combobox";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {EgwOption} from "./EgwOption";
+import {TaglistSelection} from "./TaglistSelection";
 
 // Force the include, we really need this and without it the file will be skipped
 const really_import_me = EgwOption;
+const really_import_me2 = TaglistSelection;
 
 /**
  * Taglist base class implementation
@@ -48,10 +50,11 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	get slots() {
 		return {
 			...super.slots,
-			"selection-display": () => {
-				return html `<taglist-selection
-                        slot="selection-display"
-                        style="display: contents;"></taglist-selection>`;
+			"selection-display": () =>
+			{
+				let display = document.createElement("taglist-selection");
+				display.setAttribute("slot", "selection-display");
+				return display;
 			}
 		}
 	}
@@ -59,6 +62,13 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	constructor()
 	{
 		super();
+
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this.addEventListener('model-value-changed', () => {this._selectionDisplayNode.requestUpdate();});
 
 	}
 

@@ -11,7 +11,6 @@
 
 
 import {css, html, LitElement} from "@lion/core";
-import {TaglistComboBox} from "./TaglistComboBox";
 import {taglistStyles} from "./TaglistStyles";
 
 
@@ -21,10 +20,9 @@ import {taglistStyles} from "./TaglistStyles";
 export class TaglistSelection extends LitElement {
 	static get properties() {
 		return {
-			selectedTags: Array,
-			comboxElement: TaglistComboBox,
-			canBeClosed: Boolean,
-			canBeEdited: Boolean
+			comboxElement: {type: Object},
+			canBeClosed: {type: Boolean},
+			canBeEdited: {type: Boolean}
 		}
 	};
 
@@ -73,13 +71,14 @@ export class TaglistSelection extends LitElement {
 				background-image: var(--tag-closeBtn-img);
 			}
 			`
-    	];
+		];
 	}
 
 	/**
 	 *
 	 */
-	get _inputNode() {
+	get _inputNode()
+	{
 		return this._getComboBoxElement()._inputNode;
 	}
 
@@ -90,7 +89,7 @@ export class TaglistSelection extends LitElement {
 	_getComboBoxElement()
 	{
 		// @ts-ignore
-		return this.comboboxElement;
+		return this.parentElement;
 	}
 
 	/**
@@ -112,7 +111,6 @@ export class TaglistSelection extends LitElement {
 	constructor() {
 		super();
 
-		this.selectedTags = [];
 		this.__handleCloseBtn = this.__handleCloseBtn.bind(this);
 		this.__handleEditBtn = this.__handleEditBtn.bind(this);
 		this.__inputOnKeyup = this.__inputOnKeyup.bind(this);
@@ -131,15 +129,6 @@ export class TaglistSelection extends LitElement {
 		}
 	}
 
-	/**
-	 *
-	 * @param changedProperties
-	 */
-	onComboboxElementUpdated(changedProperties) {
-		if (changedProperties.has('modelValue')) {
-			this.selectedTags = this.__getSelectedTags();
-		}
-	}
 
 	__handleEditBtn()
 	{
@@ -155,14 +144,15 @@ export class TaglistSelection extends LitElement {
 	 *
 	 * @param option
 	 */
-	_selectedTagTemplate(option) {
+	_selectedTagTemplate(option)
+	{
 		return html`
-			<div class="taglist-selection__tag">
-                ${this._canBeEdited? html`<span class="tag-editBtn" @click="${this.__handleEditBtn}"></span>`:''}
-				<span class="tag-label">${option.value}</span>
-				${this._canBeClosed? html`<span class="tag-closeBtn" @click="${this.__handleCloseBtn}"></span>`:''}
-			</div>
-    `;
+            <div class="taglist-selection__tag">
+                ${this.canBeEdited ? html`<span class="tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
+                <span class="tag-label">${option.value}</span>
+                ${this.canBeClosed ? html`<span class="tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
+            </div>
+		`;
 	}
 
 	/**
@@ -170,12 +160,13 @@ export class TaglistSelection extends LitElement {
 	 */
 	_selectedTagsTemplate() {
 		return html`
-		  <div class="taglist-selection__tags">
-			${this.selectedTags.map((option) => {
-				return this._selectedTagTemplate(option);
-			})}
-		  </div>
-    `;
+            <div class="taglist-selection__tags">
+                ${this.__getSelectedTags().map((option) =>
+                {
+                    return this._selectedTagTemplate(option);
+                })}
+            </div>
+		`;
 	}
 
 	/**
