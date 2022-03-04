@@ -10,17 +10,16 @@
 
 
 
-import {css, html, LitElement} from "@lion/core";
-import { ScopedElementsMixin } from '@open-wc/scoped-elements';
-import {TaglistOption, TaglistOptionEmail} from "./TaglistOption";
-import {TaglistComboBox} from "./TaglistComboBox";
+import {css, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
+import {LionCombobox} from "@lion/combobox";
 import {TaglistSelection} from "./TaglistSelection";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 /**
  * Taglist base class implementation
  */
-export class Et2Taglist extends Et2widgetWithSelectMixin(ScopedElementsMixin(LitElement))
+export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 {
 	static get styles()
 	{
@@ -37,9 +36,21 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(ScopedElementsMixin(Lit
 	{
 		return {
 			...super.properties,
-			multiple : {type : Boolean},
+			multiple: {type : Boolean},
+		}
+	}
 
-
+	/**
+	 * @type {SlotsMap}
+	 */
+	get slots() {
+		return {
+			...super.slots,
+			"selection-display": () => {
+				return html `<taglist-selection
+                        slot="selection-display"
+                        style="display: contents;"></taglist-selection>`;
+			}
 		}
 	}
 
@@ -49,37 +60,42 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(ScopedElementsMixin(Lit
 
 	}
 
-	// can be overriden for other taglist type implementations
-	static get taglistOptionImp () {return TaglistOption};
-	static get taglistComboboxImp () {return TaglistComboBox};
-	static get taglistSelectionImp () {return TaglistSelection};
-
-	static get scopedElements() {
-		return {
-			'taglist-combobox': this.taglistComboboxImp,
-			'taglist-option': this.taglistOptionImp,
-			'taglist-selection': this.taglistSelectionImp
-		};
+	/**
+	 * Get the node where we're putting the options
+	 *
+	 * If this were a normal selectbox, this would be just the <select> tag (this._inputNode) but in a more
+	 * complicated widget, this could be anything.
+	 *
+	 * @overridable
+	 * @returns {HTMLElement}
+	 */
+	get _optionTargetNode() : HTMLElement
+	{
+		return this._listboxNode;
 	}
 
-	_setOptionTemplate()
+	/**
+	 * Render the "empty label", used when the selectbox does not currently have a value
+	 *
+	 * @overridable
+	 * @returns {TemplateResult}
+	 */
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            ${this.get_select_options().map(entry => html` <taglist-option .choiceValue="${entry.value}">${entry.label}</taglist-option> `)}
-		`;
+            <egw-option .choiceValue="${option.value}" ?checked=${option.value == this.modelValue} ?icon="${option.icon}">${option.label}</egw-option>`;
 	}
 
-	render()
+	set multiple (value)
 	{
-		return html`
-		  <taglist-combobox name="combo" multiple-choice show-all-on-empty>
-			  <taglist-selection
-			  slot="selection-display"
-			  style="display: contents;"></taglist-selection> 
-			  ${this._setOptionTemplate()}
-		  </taglist-combobox>
-		`;
+		this.multipleChoice = value;
 	}
+
+	get multiple ()
+	{
+		return this.multipleChoice;
+	}
+
 }
 customElements.define('et2-taglist', Et2Taglist);
 
@@ -89,18 +105,13 @@ customElements.define('et2-taglist', Et2Taglist);
  */
 export class Et2TaglistEmail extends Et2Taglist
 {
-	static get taglistOptionImp () {return TaglistOptionEmail};
 
-	_setOptionTemplate()
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
-		//@todo: needs to be implemented
-		return super._setOptionTemplate();
-	}
-
-	get_select_options(): any
-	{
-		//@todo: needs to be implemented
-		return super.get_select_options();
+		return html`
+            <egw-option-email .choiceValue="${option.value}" ?checked=${option.value == this.modelValue} ?icon="${option.icon}">
+				${option.label}
+			</egw-option-email>`;
 	}
 }
 customElements.define('et2-taglist-email', Et2TaglistEmail);
