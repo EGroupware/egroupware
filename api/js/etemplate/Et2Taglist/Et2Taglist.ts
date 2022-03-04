@@ -9,12 +9,14 @@
  */
 
 
-
-import {css, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {LionCombobox} from "@lion/combobox";
-import {TaglistSelection} from "./TaglistSelection";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {EgwOption} from "./EgwOption";
+
+// Force the include, we really need this and without it the file will be skipped
+const really_import_me = EgwOption;
 
 /**
  * Taglist base class implementation
@@ -66,12 +68,16 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	 * If this were a normal selectbox, this would be just the <select> tag (this._inputNode) but in a more
 	 * complicated widget, this could be anything.
 	 *
+	 * It doesn't really matter what we return here in Et2Taglist, since LionListbox will find the options and put them
+	 * where it wants them, and bind any needed handlers (and listen for new options).
+	 * We just return the parent.
+	 *
 	 * @overridable
 	 * @returns {HTMLElement}
 	 */
 	get _optionTargetNode() : HTMLElement
 	{
-		return this._listboxNode;
+		return super._optionTargetNode;
 	}
 
 	/**
