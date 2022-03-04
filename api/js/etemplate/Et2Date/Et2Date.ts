@@ -276,7 +276,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		return [
 			...super.styles,
-			...dateStyles,
+			dateStyles,
 			css`
 			:host {
 				width: auto;
@@ -337,7 +337,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		let options = super.getOptions();
 
-		options.altFormat = this.egw().preference("dateformat") || "Y-m-d";
+		options.altFormat = this.egw()?.preference("dateformat") || "Y-m-d";
 		options.altInput = true;
 		options.allowInput = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
@@ -369,7 +369,6 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		{
 			this.setDate(formatDate);
 		}
-		this.modelValue = formatDate.toISOString();
 	}
 
 	getValue()

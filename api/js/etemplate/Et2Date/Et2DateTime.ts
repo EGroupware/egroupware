@@ -56,11 +56,11 @@ export class Et2DateTime extends Et2Date
 	{
 		let options = super.getOptions();
 
-		let dateFormat = (this.egw().preference("dateformat") || "Y-m-d");
-		let timeFormat = ((<string>window.egw.preference("timeformat") || "24") == "24" ? "H:i" : "h:i K");
+		let dateFormat = (this.egw()?.preference("dateformat") || "Y-m-d");
+		let timeFormat = ((<string>this.egw()?.preference("timeformat") || "24") == "24" ? "H:i" : "h:i K");
 		options.altFormat = dateFormat + " " + timeFormat;
 		options.enableTime = true;
-		options.time_24hr = this.egw().preference("timeformat", "common") == "24";
+		options.time_24hr = this.egw()?.preference("timeformat", "common") == "24";
 		options.dateFormat = "Y-m-dTH:i:00\\Z";
 		options.defaultHour = new Date().getHours();
 

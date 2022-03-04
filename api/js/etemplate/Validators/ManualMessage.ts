@@ -7,7 +7,10 @@ import {ResultValidator} from "@lion/form-core";
  */
 export class ManualMessage extends ResultValidator
 {
-	static validatorName = "ManualMessage";
+	static get validatorName()
+	{
+		return "ManualMessage";
+	}
 
 	static async getMessage({fieldName, modelValue, formControl, params})
 	{
