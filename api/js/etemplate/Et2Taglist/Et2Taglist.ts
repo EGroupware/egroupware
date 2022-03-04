@@ -94,7 +94,9 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 
 	set multiple (value)
 	{
+		let oldValue = this.multipleChoice;
 		this.multipleChoice = value;
+		this.requestUpdate("multipleChoice", oldValue);
 	}
 
 	get multiple ()
