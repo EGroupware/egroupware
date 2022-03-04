@@ -308,6 +308,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		super.disconnectedCallback();
 		this._inputNode.removeEventListener('change', this._onChange);
+		this.destroy();
 	}
 
 	/**
