@@ -526,9 +526,15 @@ function patch_header($filename,&$user,$password)
 	}
 	//error_log(__FUNCTION__."('$filename', '$user', '$password') header_admin_password was '$pmatches[1]'");
 
-	file_put_contents($filename,$header_new=preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",
-		// $ in password needs to be escaped as they otherwise address captures in the regualar expression
-		"\$GLOBALS['egw_info']['server']['header_admin_password'] = '".str_replace('$', '\\$', $password)."';",$header));
+	$header_new = preg_replace('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",
+        // $ in password needs to be escaped as they otherwise address captures in the regular expression
+        "\$GLOBALS['egw_info']['server']['header_admin_password'] = '".str_replace('$', '\\$', $password)."';",$header);
+	rename($filename, $backup=substr($filename, 0, -8).'-backup.inc.php');
+	if (strlen($header_new) !== file_put_contents($filename, $header_new))
+	{
+		rename($backup, $filename);
+        bail_out(99, "Failed to update $filename, maybe disk full!");
+    }
 
 	/*$xmatches = null;
 	preg_match('/'.preg_quote("\$GLOBALS['egw_info']['server']['header_admin_password'] = '", '/')."([^']*)';/m",$header_new,$xmatches);
