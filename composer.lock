@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bd409b93600706246636c1b5eadd499",
+    "content-hash": "07513f4b42828dd6c71d297f6508d1c0",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1094,21 +1094,21 @@
         },
         {
             "name": "egroupware/guzzlehttp",
-            "version": "3.9.3",
+            "version": "3.9.4",
             "target-dir": "Guzzle/Http",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/guzzlehttp.git",
-                "reference": "761951f0cb98109275cfd95776ab3725a903389c"
+                "reference": "5df009753f6ccca988dc506c74d0928471bc9e7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/guzzlehttp/zipball/761951f0cb98109275cfd95776ab3725a903389c",
-                "reference": "761951f0cb98109275cfd95776ab3725a903389c",
+                "url": "https://api.github.com/repos/EGroupware/guzzlehttp/zipball/5df009753f6ccca988dc506c74d0928471bc9e7c",
+                "reference": "5df009753f6ccca988dc506c74d0928471bc9e7c",
                 "shasum": ""
             },
             "require": {
-                "egroupware/guzzlestream": "^3.9.3",
+                "egroupware/guzzlestream": "^3.9.4",
                 "guzzle/common": "^3.9.2",
                 "guzzle/parser": "^3.9.2",
                 "php": ">=5.3.2"
@@ -1150,23 +1150,23 @@
                 "http client"
             ],
             "support": {
-                "source": "https://github.com/EGroupware/guzzlehttp/tree/3.9.3"
+                "source": "https://github.com/EGroupware/guzzlehttp/tree/3.9.4"
             },
-            "time": "2021-11-03T17:38:18+00:00"
+            "time": "2022-03-05T08:13:47+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
-            "version": "3.9.3",
+            "version": "3.9.4",
             "target-dir": "Guzzle/Stream",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/guzzlestream.git",
-                "reference": "d29fc35ebf3bd752308520aa5f17a3e5500f6af3"
+                "reference": "f4f8fd3281b800630259ca111031fbf3bca6448e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/guzzlestream/zipball/d29fc35ebf3bd752308520aa5f17a3e5500f6af3",
-                "reference": "d29fc35ebf3bd752308520aa5f17a3e5500f6af3",
+                "url": "https://api.github.com/repos/EGroupware/guzzlestream/zipball/f4f8fd3281b800630259ca111031fbf3bca6448e",
+                "reference": "f4f8fd3281b800630259ca111031fbf3bca6448e",
                 "shasum": ""
             },
             "require": {
@@ -1208,7 +1208,7 @@
                 "component",
                 "stream"
             ],
-            "time": "2020-09-23T16:33:47+00:00"
+            "time": "2022-03-05T08:11:44+00:00"
         },
         {
             "name": "egroupware/icalendar",
@@ -1871,20 +1871,20 @@
         },
         {
             "name": "egroupware/webdav",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/WebDAV.git",
-                "reference": "639ea0b979ffb75107bcc7f8a37a74acc9410720"
+                "reference": "e2b2d7b1c66e040c71eaef5ac40f55d7dfc2c9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/639ea0b979ffb75107bcc7f8a37a74acc9410720",
-                "reference": "639ea0b979ffb75107bcc7f8a37a74acc9410720",
+                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/e2b2d7b1c66e040c71eaef5ac40f55d7dfc2c9f6",
+                "reference": "e2b2d7b1c66e040c71eaef5ac40f55d7dfc2c9f6",
                 "shasum": ""
             },
             "require": {
-                "egroupware/guzzlehttp": "^3.9.3",
+                "egroupware/guzzlehttp": "^3.9.4",
                 "php": ">=5.3.0",
                 "psr/log": "~1.0"
             },
@@ -1919,7 +1919,7 @@
                 "stream",
                 "wrapper"
             ],
-            "time": "2021-11-03T18:16:48+00:00"
+            "time": "2022-03-05T08:21:43+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -2768,7 +2768,7 @@
             "version": "2.0.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery.git",
+                "url": "https://github.com/jquery/jquery.git",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "dist": {
