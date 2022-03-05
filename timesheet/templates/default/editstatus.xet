@@ -49,9 +49,9 @@
 												<description id="${row}[id]"/>
 												<textbox size="80" maxlength="150" blur="--&gt; enter new name" id="${row}[name]"/>
 												<menulist>
-													<menupopup id="${row}[parent]" options="please select"/>
+													<menupopup id="${row}[parent]" options="Select one ..."/>
 												</menulist>
-												<checkbox id="${row}[admin]" statustext="Only Admin can change this Status"/>
+												<checkbox id="${row}[admin]" statustext="Only admin can edit this status"/>
 												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"/>
 											</row>
 										</rows>

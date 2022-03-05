@@ -1,6 +1,6 @@
 %1 timesheets(s) %2	timesheet	en	%1 timesheets(s) %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	en	%1 timesheets(s) %2, %3 failed because of insufficient rights !!!
---> enter new name	timesheet	en	--> enter new name
+--> enter new name	admin	en	--> enter new name
 2 month ago	timesheet	en	2 month ago
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
@@ -21,7 +21,7 @@ creates a new field	timesheet	en	Creates a new field
 creating new entry	timesheet	en	Creating new entry
 custom fields	timesheet	en	Custom fields
 default document to insert entries	timesheet	en	Default document to insert entries
-delete this status	timesheet	en	Delete this status
+delete this status	admin	en	Delete this status
 deleted	timesheet	en	Deleted
 deletes this field	timesheet	en	Deletes this field
 determines the order the fields are displayed	timesheet	en	Determines the order the fields are displayed
@@ -86,11 +86,11 @@ no project	timesheet	en	No project
 no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	Number of row for a multi-line input field or line of a multi select box
-only admin	timesheet	en	Only admin
-only admin can edit this status	timesheet	en	Only admins can edit timesheets with this status
+only admin	admin	en	Only admin
+only admin can edit this status	admin	en	Only admins can edit timesheets with this status
 or endtime	timesheet	en	or end time
 order	timesheet	en	Order
-parent	timesheet	en	Parent
+parent	admin	en	Parent
 permission denied!!!	timesheet	en	Permission denied!
 permissions error - %1 could not %2	timesheet	en	Permissions error - %1 could not %2
 prevent deleting	admin	en	Prevent deleting
