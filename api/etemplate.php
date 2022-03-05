@@ -67,7 +67,7 @@ function send_template()
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
 
 		// fix legacy options, so new client-side has not to deal with them
-		$str = preg_replace_callback('#<([^- ]+)(-[^ ]+)?[^>]* (options="([^"]+)")[ />]#', static function($matches)
+		$str = preg_replace_callback('#<([^- />]+)(-[^ ]+)?[^>]* (options="([^"]+)")[ />]#', static function($matches)
 		{
 			// take care of (static) type attribute, if used
 			if (preg_match('/ type="([a-z-]+)"/', $matches[0], $type))
@@ -114,6 +114,17 @@ function send_template()
 				return str_replace($matches[3], $options, $matches[0]);
 			}
 			return $matches[0];
+		}, $str);
+
+		// fix deprecated attributes: needed, blur, ...
+		static $deprecated = [
+			'needed' => 'required',
+			'blur'   => 'placeholder',
+		];
+		$str = preg_replace_callback('#<[^ ]+[^>]* ('.implode('|', array_keys($deprecated)).')="([^"]+)"[ />]#',
+			static function($matches) use ($deprecated)
+		{
+			return str_replace($matches[1].'="', $deprecated[$matches[1]].'="', $matches[0]);
 		}, $str);
 
 		// fix <textbox multiline="true" .../> --> <textarea .../> (et2-prefix and self-closing is handled below)
