@@ -1243,7 +1243,6 @@ export function loadWebComponent(_nodeName : string, _template_node, parent : Et
  */
 function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 {
-
 	const widget_class = window.customElements.get(widget.localName);
 
 	// Apply any set attributes - widget will do its own coercion
@@ -1251,20 +1250,8 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 	{
 		let attrValue = attributes[attribute];
 
-		// If there is not attribute set, ignore it.  Widget sets its own default.
+		// If there is no attribute set, ignore it.  Widget sets its own default.
 		if(typeof attrValue === "undefined")
-		{
-			continue;
-		}
-
-		// "needed" is deprecated, use "required"
-		if(attribute == "needed")
-		{
-			attribute = "required";
-		}
-		// Skip these ones
-		// options is legacy / read-only
-		if(["options"].indexOf(attribute) > -1)
 		{
 			continue;
 		}

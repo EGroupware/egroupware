@@ -83,6 +83,20 @@ const Et2InputWidgetMixin = (superclass) =>
 		}
 
 		/**
+		 * List of properties that get translated
+		 * Done separately to not interfere with properties - if we re-define label property,
+		 * labels go missing.
+		 * @returns object
+		 */
+		static get translate()
+		{
+			return {
+				...super.translate,
+				placeholder: true,
+			}
+		}
+
+		/**
 		 * Compatibility for deprecated name "needed"
 		 *
 		 * @deprecated use required instead
