@@ -130,6 +130,22 @@ function send_template()
 		// fix <textbox multiline="true" .../> --> <textarea .../> (et2-prefix and self-closing is handled below)
 		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#u', '<textarea$1$2/>', $str);
 
+		// fix <(textbox|int(eger)?|float) precision="int(eger)?|float" .../> --> <et2-number precision=...></et2-number>
+		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number).*?\s(type="(int(eger)?|float)")?.*?/>#u',
+			static function($matches)
+		{
+			if ($matches[1] === 'textbox' && !in_array($matches[4], ['float', 'int', 'integer'], true))
+			{
+				return $matches[0]; // regular textbox --> nothing to do
+			}
+			$type =  $matches[1] === 'float' || $matches[4] === 'float' ? 'float' : 'int';
+			$tag = str_replace('<'.$matches[1], '<et2-number', substr($matches[0], 0, -2));
+			if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
+			if ($type !== 'float') $tag .= ' precision="0"';
+			return $tag.'></et2-number>';
+
+		}, $str);
+
 		// fix <buttononly.../> --> <button type="buttononly".../>
 		$str = preg_replace('#<buttononly\s(.*?)/>#u', '<button type="buttononly" $1/>', $str);
 

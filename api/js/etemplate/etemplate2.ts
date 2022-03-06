@@ -42,6 +42,8 @@ import './Et2Select/Et2SelectReadonly';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textbox/Et2Textbox';
 import './Et2Textbox/Et2TextboxReadonly';
+import './Et2Textbox/Et2Number';
+import './Et2Textbox/Et2NumberReadonly';
 import './Et2Colorpicker/Et2Colorpicker';
 import './Et2Taglist/Et2Taglist';
 
