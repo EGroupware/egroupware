@@ -108,7 +108,10 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		return html`
-            <egw-option .choiceValue="${option.value}" ?checked=${option.value == this.modelValue} ?icon="${option.icon}">${option.label}</egw-option>`;
+            <egw-option .choiceValue="${option.value}" ?checked=${option.value == this.modelValue} ?icon="${option.icon}"
+						.label="${option.label}">
+				${option.label}
+			</egw-option>`;
 	}
 
 	set multiple (value)

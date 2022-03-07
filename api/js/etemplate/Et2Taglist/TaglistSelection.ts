@@ -66,20 +66,20 @@ export class TaglistSelection extends LitElement {
 				flex-grow: 1;
 				justify-content: center;
 			}
-			.tag-closeBtn{
+			.tag-btn {
 				width: 10px;
 				height: 10px;
 				background-position: 0px -10px;
 				background-size: cover;
 				background-repeat: no-repeat;
 				display: flex;
-				background-image: var(--tag-closeBtn-img);
 				align-self: center;
 				cursor: pointer;
 			}
-			.tag-closeBtn:hover {
-				background-position: 0px 0px;
-			}
+			.tag-editBtn{background-image: var(--tag-editBtn-img);}
+			.tag-editBtn:hover{background-position: 0 0px;}
+			.tag-closeBtn{background-image: var(--tag-closeBtn-img);}
+			.tag-closeBtn:hover {background-position: 0px 0px;}
 			`
 		];
 	}
@@ -149,14 +149,16 @@ export class TaglistSelection extends LitElement {
 	}
 
 
-	__handleEditBtn()
+	__handleEditBtn(e)
 	{
-		console.log('editBtn')
+		const selected = this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)];
+		this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)].checked = false;
+		this._getComboBoxElement()._inputNode.value = selected.value;
 	}
 
-	__handleCloseBtn(_v)
+	__handleCloseBtn(e)
 	{
-		this.__getSelectedTags()[parseInt(_v.target.parentElement.dataset.index)].checked = false;
+		this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)].checked = false;
 	}
 
 	/**
@@ -167,9 +169,9 @@ export class TaglistSelection extends LitElement {
 	{
 		return html`
             <div class="taglist-selection__tag" data-index=${index}>
-                ${this._getComboBoxElement().editModeEnabled ? html`<span class="tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
-                <span class="tag-label">${option.value}</span>
-                ${this._canBeClosed() ? html`<span class="tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
+                ${this._getComboBoxElement().editModeEnabled ? html`<span class="tag-btn tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
+                <span class="tag-label">${option.label}</span>
+                ${this._canBeClosed() ? html`<span class="tag-btn tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
             </div>
 		`;
 	}
