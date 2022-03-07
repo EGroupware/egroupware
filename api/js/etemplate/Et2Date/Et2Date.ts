@@ -435,6 +435,17 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		this.minDate = min;
 	}
 
+	set minDate(min : string | Date)
+	{
+		if(this._instance)
+		{
+			// Handle timezone offset, flatpickr uses local time
+			let date = new Date(min);
+			let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+			this._instance.set('minDate', formatDate)
+		}
+	}
+
 	/**
 	 * Set the minimum allowed date
 	 * @param {string | Date} max
@@ -442,6 +453,17 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	set_max(max : string | Date)
 	{
 		this.maxDate = max;
+	}
+
+	set maxDate(max : string | Date)
+	{
+		if(this._instance)
+		{
+			// Handle timezone offset, flatpickr uses local time
+			let date = new Date(max);
+			let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+			this._instance.set('maxDate', formatDate)
+		}
 	}
 
 	/**
