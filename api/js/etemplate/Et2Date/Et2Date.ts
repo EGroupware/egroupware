@@ -348,6 +348,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
 		options.plugins = [new scrollPlugin()];
 
+		// Listen for flatpickr change so we can update internal value, needed for validation
+		options.onChange = options.onReady = () => {this.modelValue = this._inputNode.value;};
+
 		return options;
 	}
 
