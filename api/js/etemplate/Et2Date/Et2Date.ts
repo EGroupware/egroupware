@@ -9,7 +9,7 @@
  */
 
 
-import {css, html} from "@lion/core";
+import {css} from "@lion/core";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
@@ -292,6 +292,19 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		}
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			input: () =>
+			{
+				const text = document.createElement('input');
+				text.type = "text";
+				return text;
+			}
+		}
+	}
+
 	constructor()
 	{
 		super();
@@ -301,7 +314,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this._onChange = this._onChange.bind(this);
+		this._updateValueOnChange = this._updateValueOnChange.bind(this);
 	}
 
 	disconnectedCallback()
@@ -321,11 +334,15 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		{
 			//	await loadLocale(this.locale);
 		}
-		this.initializeComponent();
+		if(typeof this._instance === "undefined")
+		{
+			this.initializeComponent();
 
-		// This has to go in init() rather than connectedCallback() because flatpickr creates its nodes in
-		// initializeComponent() so this._inputNode is not available before this
-		this._inputNode.addEventListener('change', this._onChange);
+			// This has to go in init() rather than connectedCallback() because flatpickr creates its nodes in
+			// initializeComponent() so this._inputNode is not available before this
+			this._inputNode.setAttribute("slot", "input");
+			this._inputNode.addEventListener('change', this._updateValueOnChange);
+		}
 	}
 
 	/**
@@ -349,7 +366,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.plugins = [new scrollPlugin()];
 
 		// Listen for flatpickr change so we can update internal value, needed for validation
-		options.onChange = options.onReady = () => {this.modelValue = this._inputNode.value;};
+		options.onChange = options.onReady = this._updateValueOnChange;
 
 		return options;
 	}
@@ -404,13 +421,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 * @param _ev
 	 * @returns
 	 */
-	_onChange(_ev : Event) : boolean
+	_updateValueOnChange(_ev : Event)
 	{
-		const ret = super._onChange(_ev);
-
 		this.modelValue = this.getValue();
-
-		return ret;
 	}
 
 	/**
@@ -431,18 +444,6 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		this.maxDate = max;
 	}
 
-	_inputGroupInputTemplate()
-	{
-		return html`
-            <div class="input-group__input">
-                <slot name="input">
-                    <input class="lit-flatpickr flatpickr flatpickr-input"
-                           placeholder=${this.placeholder}/>
-                </slot>
-            </div>
-		`;
-	}
-
 	/**
 	 * Override from flatpickr
 	 * @returns {any}
@@ -458,7 +459,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 */
 	get _inputNode()
 	{
-		return /** @type {HTMLElementWithValue} */ (this.shadowRoot.querySelector('input'));
+		return /** @type {HTMLElementWithValue} */ (this.querySelector('input[type="text"]'));
 	}
 }
 
