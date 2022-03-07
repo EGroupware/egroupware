@@ -1584,7 +1584,11 @@ class calendar_boupdate extends calendar_bo
 
 		// Update history
 		$tracking = new calendar_tracking($this);
-		if (empty($event['id']) && !empty($cal_id)) $event['id'] = $cal_id;
+		if(empty($event['id']) && !empty($cal_id))
+		{
+			$event['id'] = $cal_id;
+			$save_event['id'] = $cal_id;
+		}
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
 		// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
 		foreach ($timestamps as $ts)
@@ -1592,7 +1596,7 @@ class calendar_boupdate extends calendar_bo
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? calendar_bo::date2ts($save_event[$ts], true) : 0;
 		}
-		foreach(['start','end','recur_enddate'] as $ts)
+		foreach(['start', 'end', 'recur_enddate'] as $ts)
 		{
 			if(is_object($save_event[$ts]))
 			{
