@@ -4005,3 +4005,9 @@ span.et2_countdown_seconds {
 .et2_audio audio {
     outline: none;
 }
+
+
+/** Hide flatpickr calendar when initially created */
+body .flatpickr-calendar {
+    display: none;
+}
