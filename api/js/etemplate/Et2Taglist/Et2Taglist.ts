@@ -41,6 +41,7 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		return {
 			...super.properties,
 			multiple: {type : Boolean},
+			editModeEnabled : {type : Boolean}
 		}
 	}
 
@@ -70,6 +71,14 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		super.connectedCallback();
 		this.addEventListener('model-value-changed', () => {this._selectionDisplayNode.requestUpdate();});
 
+	}
+
+
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
+
+		// If there are select options, enable toggle on click so user can see them
+		this.showAllOnEmpty = this.select_options.length>0;
 	}
 
 	/**

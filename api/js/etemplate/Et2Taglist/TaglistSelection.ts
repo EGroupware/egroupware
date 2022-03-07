@@ -21,8 +21,6 @@ export class TaglistSelection extends LitElement {
 	static get properties() {
 		return {
 			comboxElement: {type: Object},
-			canBeClosed: {type: Boolean},
-			canBeEdited: {type: Boolean}
 		}
 	};
 
@@ -35,7 +33,9 @@ export class TaglistSelection extends LitElement {
 			}
 			
 			.taglist-selection__tags {
-				flex: none;
+				flex: 0 0 auto;
+				display: flex;
+				flex-direction: row;
 			}
 			
 			.combobox__input {
@@ -43,8 +43,8 @@ export class TaglistSelection extends LitElement {
 			}
 			
 			.taglist-selection__tag {
-				margin: 0 5px 3px 0;
-				padding: 3px 20px 3px 5px;
+				margin: 0px 5px 3px 0px;
+				padding: 3px 5px;
 				border: 1px solid var(--taglist-selection__tag-boder-color);
 				border-radius: 3px;
 				background-color: var(--taglist-selection__tag-bg-color);
@@ -55,20 +55,30 @@ export class TaglistSelection extends LitElement {
 				line-height: 13px;
 				font-size: 11px;
 				white-space: normal;
-				max-width: calc(100% - 30px);
-				display:flex;
+				display: flex;
+				gap: 10px;
+				flex-direction: row;
 			}
 			.tag-label {
-				display:flex;
+				display: flex;
+				flex-basis: auto;
+				flex-direction: column;
+				flex-grow: 1;
+				justify-content: center;
 			}
 			.tag-closeBtn{
 				width: 10px;
 				height: 10px;
-				background-position: 0 -10px;
+				background-position: 0px -10px;
 				background-size: cover;
 				background-repeat: no-repeat;
-				display:flex;
+				display: flex;
 				background-image: var(--tag-closeBtn-img);
+				align-self: center;
+				cursor: pointer;
+			}
+			.tag-closeBtn:hover {
+				background-position: 0px 0px;
 			}
 			`
 		];
@@ -84,19 +94,28 @@ export class TaglistSelection extends LitElement {
 
 
 	/**
-	 * @return {TaglistComboBox} returns comboboxElement from TaglistComboBox
+	 * @return {Et2Taglist} returns comboboxElement from TaglistComboBox
 	 */
-	_getComboBoxElement()
+	protected _getComboBoxElement()
 	{
 		// @ts-ignore
-		return this.parentElement;
+		return <Et2Taglist> this.parentElement;
+	}
+
+	/**
+	 * check if the tag can be closed
+	 * @protected
+	 */
+	protected _canBeClosed()
+	{
+		return this._getComboBoxElement().multiple && !this._getComboBoxElement().readonly;
 	}
 
 	/**
 	 * @private
 	 * @return returns checked formElements
 	 */
-	__getSelectedTags() {
+	private __getSelectedTags() {
 		return this._getComboBoxElement().formElements.filter((_tags) => {
 				return _tags.checked;
 			}
@@ -137,20 +156,20 @@ export class TaglistSelection extends LitElement {
 
 	__handleCloseBtn(_v)
 	{
-		console.log('closeBtn')
+		this.__getSelectedTags()[parseInt(_v.target.parentElement.dataset.index)].checked = false;
 	}
 
 	/**
 	 *
 	 * @param option
 	 */
-	_selectedTagTemplate(option)
+	_selectedTagTemplate(option, index)
 	{
 		return html`
-            <div class="taglist-selection__tag">
-                ${this.canBeEdited ? html`<span class="tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
+            <div class="taglist-selection__tag" data-index=${index}>
+                ${this._getComboBoxElement().editModeEnabled ? html`<span class="tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
                 <span class="tag-label">${option.value}</span>
-                ${this.canBeClosed ? html`<span class="tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
+                ${this._canBeClosed() ? html`<span class="tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
             </div>
 		`;
 	}
@@ -161,9 +180,9 @@ export class TaglistSelection extends LitElement {
 	_selectedTagsTemplate() {
 		return html`
             <div class="taglist-selection__tags">
-                ${this.__getSelectedTags().map((option) =>
+                ${this.__getSelectedTags().map((option, index) =>
                 {
-                    return this._selectedTagTemplate(option);
+                    return this._selectedTagTemplate(option, index);
                 })}
             </div>
 		`;
@@ -182,7 +201,7 @@ export class TaglistSelection extends LitElement {
 	 */
 	__inputOnKeyup(ev) {
 		if (ev.key === 'Backspace') {
-			if (!this._inputNode.value) {
+			if (!this._inputNode.value && this._canBeClosed()) {
 				if (this.__getSelectedTags().length) {
 					this.__getSelectedTags()[this.__getSelectedTags().length - 1].checked = false;
 				}
