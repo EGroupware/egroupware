@@ -183,8 +183,8 @@ export class TaglistSelection extends LitElement {
 	__inputOnKeyup(ev) {
 		if (ev.key === 'Backspace') {
 			if (!this._inputNode.value) {
-				if (this.selectedTags.length) {
-					this.selectedTags[this.selectedTags.length - 1].checked = false;
+				if (this.__getSelectedTags().length) {
+					this.__getSelectedTags()[this.__getSelectedTags().length - 1].checked = false;
 				}
 			}
 		}
