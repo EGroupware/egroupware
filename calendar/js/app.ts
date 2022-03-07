@@ -1498,7 +1498,7 @@ export class CalendarApp extends EgwApp
 			}
 
 			// Update end date, min duration is 1 minute
-			let end = <et2_date> widget.getRoot().getDOMWidgetById('end');
+			let end = <et2_date>widget.getRoot().getWidgetById('end');
 			let start_time = new Date(widget.getValue());
 			let end_time = new Date(end.getValue());
 			if(end.getValue() && end_time <= start_time)
