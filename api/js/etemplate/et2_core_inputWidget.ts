@@ -18,7 +18,7 @@ import {et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from './et2_core_valueWidget'
-import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "./et2_core_interfaces";
+import {et2_IInput, et2_ISubmitListener} from "./et2_core_interfaces";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 // fixing circular dependencies by only importing the type (not in compiled .js)
 import type {et2_tabbox} from "./et2_widget_tabs";
@@ -107,7 +107,7 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 	/**
 	 * Make sure dirty flag is properly set
 	 */
-	doLoadingFinished(): boolean | JQueryPromise<unknown>
+	doLoadingFinished() : boolean | Promise<unknown>
 	{
 		let result = super.doLoadingFinished();
 

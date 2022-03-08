@@ -41,7 +41,13 @@
 */
 
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
-import {et2_IInput, et2_IPrint, et2_IResizeable, implements_methods, et2_implements_registry} from "./et2_core_interfaces";
+import {
+	et2_IInput,
+	et2_implements_registry,
+	et2_IPrint,
+	et2_IResizeable,
+	implements_methods
+} from "./et2_core_interfaces";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
@@ -292,6 +298,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		row_selector: '',
 		orientation_style: null
 	};
+	/**
+	 * When loading the row template, we have to wait for the template before we try to process it.
+	 * During the legacy load process, we need to return this from doLoadingFinished() so it can be waited on so we
+	 * have to store it.
+	 */
+	private template_promise : Promise<void>;
 
 	/**
 	 * Constructor
@@ -497,8 +509,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.controller._grid.doInvalidate = true;
 			}
 		}, this));
-
-		return true;
+		return this.template_promise ? this.template_promise : true;
 	}
 
 	/**
@@ -2521,8 +2532,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		template.loadingFinished(promise);
 
 		// Wait until template (& children) are done
-		jQuery.when.apply(null, promise).done(
-			jQuery.proxy(function()
+		// Keep promise so we can return it from doLoadingFinished
+		this.template_promise = Promise.all(promise).then(() =>
 			{
 				parse.call(this, template);
 				if(!this.dynheight)
@@ -2531,9 +2542,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				this.dynheight.initialized = false;
 				this.resize();
-			}, this)
-		);
-		return promise;
+			}
+		).finally(() => this.template_promise = null);
+
+		return this.template_promise;
 	}
 
 	// Some accessors to match conventions

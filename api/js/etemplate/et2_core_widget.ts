@@ -900,12 +900,12 @@ export class et2_widget extends ClassWithAttributes
 		};
 
 		var result = this.doLoadingFinished();
-		if (typeof result == "boolean" && result)
+		if(typeof result == "boolean" && result)
 		{
 			// Simple widget finishes nicely
 			loadChildren.apply(this, arguments);
 		}
-		else if (typeof result == "object" && result.done)
+		else if(typeof result == "object" && result.then)
 		{
 			// Warn if list was not provided
 			if (warn_if_deferred)
@@ -916,7 +916,7 @@ export class et2_widget extends ClassWithAttributes
 			// Widget is waiting.  Add to the list
 			promises.push(result);
 			// Fihish loading when it's finished
-			result.done(jQuery.proxy(loadChildren, this));
+			result.then(loadChildren.bind(this));
 		}
 	}
 
@@ -956,9 +956,9 @@ export class et2_widget extends ClassWithAttributes
 	 * @return {boolean|Promise} True if the widget is fully loaded, false to avoid procesing children,
 	 * or a Promise if loading is not actually finished (eg. waiting for AJAX)
 	 *
-	 * @see {@link http://api.jquery.com/deferred.promise/|jQuery Promise}
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise Promise}
 	 */
-	doLoadingFinished(): JQueryPromise<any> | boolean
+	doLoadingFinished() : Promise<any> | boolean
 	{
 		return true;
 	}

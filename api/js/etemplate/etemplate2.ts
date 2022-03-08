@@ -638,24 +638,9 @@ export class etemplate2
 				{
 					egw.window.console.groupEnd();
 				}
-				if(deferred.length > 0)
-				{
-					let still_deferred = 0;
-					jQuery(deferred).each(function()
-					{
-						if(this.state() == "pending")
-						{
-							still_deferred++;
-						}
-					});
-					if(still_deferred > 0)
-					{
-						egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...", still_deferred, deferred.length);
-					}
-				}
 
 				// Wait for everything to be loaded, then finish it up
-				jQuery.when.apply(jQuery, deferred).done(jQuery.proxy(function()
+				Promise.all(deferred).then(() =>
 				{
 					egw.debug("log", "Finished loading %s, triggering load event", _name);
 
@@ -736,7 +721,7 @@ export class etemplate2
 						gen_time_div.find('.et2RenderTime').remove();
 						gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
 					}
-				}, this));
+				});
 			};
 
 

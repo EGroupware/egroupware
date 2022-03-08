@@ -112,7 +112,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		this.options.status_id = _new_id;
 	}
 
-	doLoadingFinished( ) : boolean | JQueryPromise<unknown>
+	doLoadingFinished() : boolean | Promise<unknown>
 	{
 		super.doLoadingFinished();
 
@@ -121,7 +121,8 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if(tab)
 		{
 			// Bind the action to when the tab is selected
-			const handler = function (e) {
+			const handler = function(e)
+			{
 				e.data.div.unbind("click.history");
 				// Bind on click tap, because we need to update history size
 				// after a rezise happend and history log was not the active tab

@@ -395,6 +395,17 @@ const Et2WidgetMixin = (superClass) =>
 		}
 
 		/**
+		 * Set the widget class
+		 *
+		 * @deprecated Use this.class or this.classList instead
+		 * @param {string} new_class
+		 */
+		set_class(new_class : string)
+		{
+			this.class = new_class;
+		}
+
+		/**
 		 * Event handlers
 		 */
 
@@ -771,8 +782,9 @@ const Et2WidgetMixin = (superClass) =>
 					child.loadingFinished(promises);
 				}
 			};
-
 			doLoadingFinished();
+
+			promises.push(this.getUpdateComplete());
 		}
 
 		getWidgetById(_id)

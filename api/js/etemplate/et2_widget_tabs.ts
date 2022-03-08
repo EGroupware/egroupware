@@ -14,10 +14,9 @@
 	et2_core_valueWidget;
 */
 
-import { ClassWithAttributes } from "./et2_core_inheritance";
-import { et2_widget, et2_createWidget, et2_register_widget, WidgetConfig } from "./et2_core_widget";
-import { et2_DOMWidget } from './et2_core_DOMWidget'
-import { et2_valueWidget } from './et2_core_valueWidget'
+import {ClassWithAttributes} from "./et2_core_inheritance";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {et2_no_init} from "./et2_core_common";
 import {et2_IInput, et2_IPrint, et2_IResizeable} from "./et2_core_interfaces";
@@ -26,7 +25,7 @@ import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithD
 /**
  * Class which implements the tabbox-tag
  */
-export class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResizeable,et2_IPrint
+export class et2_tabbox extends et2_valueWidget implements et2_IInput, et2_IResizeable, et2_IPrint
 {
 	static readonly _attributes : any = {
 		'tabs': {
@@ -252,15 +251,17 @@ export class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResiz
 	 */
 	doLoadingFinished()
 	{
-		var tab_deferred = jQuery.Deferred();
 		var promises = [];
 		var tabs = this;
 
 		// Specially process the selected index so it shows up right away
-		this._loadTab(this.selected_index,promises);
+		this._loadTab(this.selected_index, promises);
 
 		// Avoid reloading if tabs were modified by data
-		if(this.isInTree() && this.isAttached()) return;
+		if(this.isInTree() && this.isAttached())
+		{
+			return;
+		}
 
 		// Apply parent now, which actually puts into the DOM
 		// This has to be before loading the child, so the dom sub-tree is not
@@ -271,20 +272,27 @@ export class et2_tabbox extends et2_valueWidget implements et2_IInput,et2_IResiz
 		// which has special handling
 		this._children[0].loadingFinished(promises);
 
-		// Defer parsing & loading of other tabs until later
-		window.setTimeout(function() {
-			for (var i = 0; i < tabs.tabData.length; i++)
+		let tab_deferred = new Promise<any>((resolve, reject) =>
+		{
+			// Defer parsing & loading of other tabs until later
+			window.setTimeout(function()
 			{
-				if (i == tabs.selected_index) continue;
-				tabs._loadTab(i,promises);
-			}
-			jQuery.when.apply(jQuery,promises).then(function() {
-				tab_deferred.resolve();
-				tabs.resetDirty();
-			});
-		},0);
-
-		return tab_deferred.promise();
+				for(var i = 0; i < tabs.tabData.length; i++)
+				{
+					if(i == tabs.selected_index)
+					{
+						continue;
+					}
+					tabs._loadTab(i, promises);
+				}
+				Promise.all(promises).then(function()
+				{
+					resolve();
+					tabs.resetDirty();
+				});
+			}, 0);
+		});
+		return tab_deferred;
 	}
 
 	/**

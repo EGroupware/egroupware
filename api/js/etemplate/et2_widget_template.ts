@@ -72,9 +72,9 @@ export class et2_template extends et2_DOMWidget
 		}
 	};
 
-	content: string;
-	div: HTMLDivElement;
-	loading: JQueryDeferred<unknown>;
+	content : string;
+	div : HTMLDivElement;
+	loading : Promise<any>;
 
 	/**
 	 * Constructor
@@ -94,66 +94,78 @@ export class et2_template extends et2_DOMWidget
 		this.div = document.createElement("div");
 
 		// Deferred object so we can load via AJAX
-		this.loading = jQuery.Deferred();
-
-		// run transformAttributes now, to get server-side modifications (url!)
-		if (_attrs.template)
+		this.loading = new Promise<any>((resolve, reject) =>
 		{
-			this.id = _attrs.template;
-			this.transformAttributes(_attrs);
-			this.options = et2_cloneObject(_attrs);
-			_attrs = {};
-		}
-		if (this.id != "" || this.options.template)
-		{
-			var parts = (this.options.template || this.id).split('?');
-			var cache_buster = parts.length > 1 ? parts.pop() : null;
-			var template_name = parts.pop();
 
-			// Check to see if XML is known
-			var xml = null;
-			var templates = etemplate2.templates;	// use global eTemplate cache
-			if(!(xml = templates[template_name]))
+			// run transformAttributes now, to get server-side modifications (url!)
+			if(_attrs.template)
 			{
-				// Check to see if ID is short form --> prepend parent/top-level name
-				if(template_name.indexOf('.') < 0)
+				this.id = _attrs.template;
+				this.transformAttributes(_attrs);
+				this.options = et2_cloneObject(_attrs);
+				_attrs = {};
+			}
+			if(this.id != "" || this.options.template)
+			{
+				var parts = (this.options.template || this.id).split('?');
+				var cache_buster = parts.length > 1 ? parts.pop() : null;
+				var template_name = parts.pop();
+
+				// Check to see if XML is known
+				var xml = null;
+				var templates = etemplate2.templates;	// use global eTemplate cache
+				if(!(xml = templates[template_name]))
 				{
-					var root = _parent ? _parent.getRoot() : null;
-					var top_name = root && root._inst ? root._inst.name : null;
-					if (top_name && template_name.indexOf('.') < 0) template_name = top_name+'.'+template_name;
-				}
-				xml = templates[template_name];
-				if(!xml)
-				{
-					// Ask server
-					var url = this.options.url;
-					if (!this.options.url)
+					// Check to see if ID is short form --> prepend parent/top-level name
+					if(template_name.indexOf('.') < 0)
 					{
-						var splitted = template_name.split('.');
-						var app = splitted.shift();
-						// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-						url = this.getRoot()._inst.template_base_url + app + "/templates/default/" +
-							splitted.join('.')+ ".xet" + (cache_buster ? '?download='+cache_buster : '');
+						var root = _parent ? _parent.getRoot() : null;
+						var top_name = root && root._inst ? root._inst.name : null;
+						if(top_name && template_name.indexOf('.') < 0)
+						{
+							template_name = top_name + '.' + template_name;
+						}
 					}
-					// if server did not give a cache-buster, fall back to current time
+					xml = templates[template_name];
+					if(!xml)
+					{
+						// Ask server
+						var url = this.options.url;
+						if(!this.options.url)
+						{
+							var splitted = template_name.split('.');
+							var app = splitted.shift();
+							// use template base url from initial template, to continue using webdav, if that was loaded via webdav
+							url = this.getRoot()._inst.template_base_url + app + "/templates/default/" +
+								splitted.join('.') + ".xet" + (cache_buster ? '?download=' + cache_buster : '');
+						}
+						// if server did not give a cache-buster, fall back to current time
 					if (url.indexOf('?') == -1) url += '?download='+(new Date).valueOf();
 
 					if(this.options.url || splitted.length)
 					{
-						var fetch_url_callback = function(_xmldoc) {
+						var fetch_url_callback = function(_xmldoc)
+						{
 							// Scan for templates and store them
-							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+							for(var i = 0; i < _xmldoc.childNodes.length; i++)
+							{
 								var template = _xmldoc.childNodes[i];
-								if(template.nodeName.toLowerCase() != "template") continue;
+								if(template.nodeName.toLowerCase() != "template")
+								{
+									continue;
+								}
 								templates[template.getAttribute("id")] = template;
 							}
 
 							// Read the XML structure of the requested template
-							if (typeof templates[template_name] != 'undefined') this.loadFromXML(templates[template_name]);
+							if(typeof templates[template_name] != 'undefined')
+							{
+								this.loadFromXML(templates[template_name]);
+							}
 
 							// Update flag
-							this.loading.resolve();
-						};
+							resolve();
+						}.bind(this);
 
 						et2_loadXMLFromURL(url, fetch_url_callback, this, function( error) {
 							url = egw.link('/'+ app + "/templates/default/" +
@@ -173,19 +185,20 @@ export class et2_template extends et2_DOMWidget
 				//this.loadingFinished();
 
 				// But resolve the promise
-				this.loading.resolve();
+				resolve();
 			}
 			else
 			{
 				this.egw().debug("warn", "Unable to find XML for ", template_name);
-				this.loading.reject();
+				reject()
 			}
-		}
-		else
-		{
-			// No actual template
-			this.loading.resolve();
-		}
+			}
+			else
+			{
+				// No actual template
+				reject();
+			}
+		});
 	}
 
 	/**
@@ -252,10 +265,10 @@ export class et2_template extends et2_DOMWidget
 		super.doLoadingFinished();
 
 		// Fire load event when done loading
-		this.loading.done(jQuery.proxy(function() {jQuery(this).trigger("load");},this.div));
+		this.loading.then(function() {jQuery(this).trigger("load");}.bind(this.div));
 
 		// Not done yet, but widget will let you know
-		return this.loading.promise();
+		return this.loading;
 	}
 }
 et2_register_widget(et2_template, ["template"]);
