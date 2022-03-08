@@ -97,6 +97,37 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		this.showAllOnEmpty = this.select_options.length>0;
 	}
 
+	getValue(): any
+	{
+		return this.modelValue;
+	}
+
+	/**
+	 * Set value(s) of taglist
+	 *
+	 * @param value (array of) ids
+	 */
+	set_value(value)
+	{
+		if (value === '' || value === null)
+		{
+			value = [];
+		}
+		else if (typeof value === 'string' && this.multiple)
+		{
+			value = value.split(',');
+		}
+
+		let values = Array.isArray(value) ? value : [value];
+
+		// Switch multiple according to attribute and more than 1 value
+		if(this.multiple !== true)
+		{
+			this.multiple = this.multiple ? values.length > 1 : false;
+		}
+		this.modelValue = values;
+	}
+
 	/**
 	 * Get the node where we're putting the options
 	 *
