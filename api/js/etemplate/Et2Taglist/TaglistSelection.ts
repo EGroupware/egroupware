@@ -30,12 +30,15 @@ export class TaglistSelection extends LitElement {
 			css`
 			:host {
 				display: flex;
+				padding: 2px;
+    			padding-top: 0px;
 			}
 			
 			.taglist-selection__tags {
 				flex: 0 0 auto;
 				display: flex;
 				flex-direction: row;
+				gap:5px;
 			}
 			
 			.combobox__input {
@@ -43,7 +46,7 @@ export class TaglistSelection extends LitElement {
 			}
 			
 			.taglist-selection__tag {
-				margin: 0px 5px 3px 0px;
+				margin: 2px 0px 0px 0px;
 				padding: 3px 5px;
 				border: 1px solid var(--taglist-selection__tag-boder-color);
 				border-radius: 3px;

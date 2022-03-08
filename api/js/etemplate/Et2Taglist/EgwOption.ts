@@ -10,6 +10,8 @@
 
 import {LionOption} from '@lion/listbox';
 import {css, html} from "@lion/core";
+import {taglistStyles} from "./TaglistStyles";
+import {colorsDefStyles} from "../Styles/colorsDefStyles";
 
 export class EgwOption extends LionOption
 {
@@ -34,9 +36,17 @@ export class EgwOption extends LionOption
 	{
 		return [
 			...super.styles,
+			colorsDefStyles,
 			css`
 			:host([checked]) {
-				visibility: hidden;
+				display: none;
+			}
+			:host {
+				line-height: 20px;
+    			padding: 8px;
+			}
+			:host(:hover) {
+				background-color: var(--row_hover);
 			}
       	`,
 		];

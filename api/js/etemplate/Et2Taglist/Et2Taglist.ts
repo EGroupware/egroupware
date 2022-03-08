@@ -15,6 +15,7 @@ import {LionCombobox} from "@lion/combobox";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {EgwOption} from "./EgwOption";
 import {TaglistSelection} from "./TaglistSelection";
+import {taglistStyles} from "./TaglistStyles";
 
 // Force the include, we really need this and without it the file will be skipped
 const really_import_me = EgwOption;
@@ -29,10 +30,25 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	{
 		return [
 			...super.styles,
+			taglistStyles,
 			css`
 			  :host {
 				display: block;
+				border: 1px solid var(--taglist-combobox__container-boder-color);
+    			border-radius: 3px;
+    			min-height: 24px;
 			  }
+			  * > ::slotted([slot="input"]){min-height:24px;}
+			  .input-group__container{border:none;}
+			  * > ::slotted([role="listbox"]) {
+			  	border: 1px solid;
+			  	border-color: var(--taglist-combobox__container-boder-color);
+			  	border-bottom-left-radius: 3px;
+			  	border-bottom-right-radius: 3px;
+			  	border-top: none;
+			  	margin-top: 1px;
+			  }
+			  
 			`
 		];
 	}

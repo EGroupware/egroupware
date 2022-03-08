@@ -12,7 +12,7 @@ export const taglistStyles = css`
 		--taglist-selection__tag-bg-img : linear-gradient(#f4f4f4 20%,#f0f0f0 50%,#e8e8e8 52%,#eee 100%);
 		
 		/****** colors ************/
-		--taglist-combobox__container-boder-color : silver;
+		--taglist-combobox__container-boder-color : #c0c0c0;
 		--taglist-selection__tag-boder-color : #aaa;
 		--taglist-selection__tag-bg-color : #e4e4e4;
 		--taglist-selection__tag-color : #333;
