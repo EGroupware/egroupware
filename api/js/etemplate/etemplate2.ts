@@ -46,6 +46,8 @@ import './Et2Textbox/Et2Number';
 import './Et2Textbox/Et2NumberReadonly';
 import './Et2Colorpicker/Et2Colorpicker';
 import './Et2Taglist/Et2Taglist';
+import './Et2Url/Et2UrlEmail';
+import './Et2Url/Et2UrlPhone';
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle

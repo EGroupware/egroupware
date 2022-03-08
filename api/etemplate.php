@@ -143,7 +143,6 @@ function send_template()
 			if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
 			if ($type !== 'float') $tag .= ' precision="0"';
 			return $tag.'></et2-number>';
-
 		}, $str);
 
 		// fix <buttononly.../> --> <button type="buttononly".../>
@@ -156,16 +155,14 @@ function send_template()
 				(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1) . '></et2-' . $matches[3] : $matches[4]) . '>';
 		}, $str);
 
-		// handling of partially implemented select and date widget (only readonly or simple select without tags or search attribute or options)
+		// handling of date and partially implemented select widget (no search or tags attribute), incl. removing of type attribute
 		$str = preg_replace_callback('#<(select|date)(-[^ ]+)? ([^>]+)/>#', static function (array $matches)
 		{
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
-			// add et2-prefix for <select-* or <date-* readonly="true"
-			if (isset($attrs['readonly']) && !in_array($attrs['readonly'], ['false', '0']) ||
-				// also add it for <date* and <select* without search or tags attribute
-				$matches[1] === 'date' || $matches[1] === 'select' && !isset($attrs['search']) && !isset($attrs['tags']))
+			// add et2-prefix for <date-* and <select-* without search or tags attribute
+			if ($matches[1] === 'date' || $matches[1] === 'select' && !isset($attrs['search']) && !isset($attrs['tags']))
 			{
 				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
 				if (empty($matches[2]) && isset($attrs['type']))
@@ -176,6 +173,14 @@ function send_template()
 				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
 			}
 			return $matches[0];
+		}, $str);
+
+		// add et2- prefix to url widget, as far as it is currently implemented
+		$str = preg_replace_callback('#<url-(email|phone) (.*?)/>#', static function($matches)
+		{
+			if (strpos($matches[2], 'readonly="true"')) return $matches[0];    // leave readonly alone for now
+			return str_replace('<url-'.$matches[1], '<et2-url-'.$matches[1], substr($matches[0], 0, -2)).
+				'></et2-url-'.$matches[1].'>';
 		}, $str);
 
 		$processing = microtime(true);

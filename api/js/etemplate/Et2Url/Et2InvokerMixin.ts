@@ -1,0 +1,139 @@
+/**
+ * EGroupware eTemplate2 - InvokerMixing
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @link https://www.egroupware.org
+ * @author Ralf Becker
+ */
+
+/* eslint-disable import/no-extraneous-dependencies */
+import {dedupeMixin, html, render} from '@lion/core';
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+
+/**
+ * Invoker mixing adds an invoker button to a widget to trigger some action, e.g.:
+ * - searchbox to delete input
+ * - url to open url
+ * - url-email to open mail compose
+ *
+ * Inspired by Lion date-picker.
+ */
+export const Et2InvokerMixin = dedupeMixin((superclass) =>
+{
+	class Et2Invoker extends Et2InputWidget(superclass)
+	{
+		/** @type {any} */
+		static get properties()
+		{
+			return {
+				_invokerLabel: {
+					type: String,
+				},
+				_invokerTitle: {
+					type: String,
+				},
+				_invokerAction: {
+					type: Function,
+				}
+			};
+		}
+
+		get slots()
+		{
+			return {
+				...super.slots,
+				suffix: () =>
+				{
+					const renderParent = document.createElement('div');
+					render(
+						this._invokerTemplate(),
+						renderParent
+					);
+					return /** @type {HTMLElement} */ (renderParent.firstElementChild);
+				},
+			};
+		}
+
+		/**
+		 * @protected
+		 */
+		get _invokerNode()
+		{
+			return /** @type {HTMLElement} */ (this.querySelector(`#${this.__invokerId}`));
+		}
+
+		constructor()
+		{
+			super();
+			/** @private */
+			this.__invokerId = this.__createUniqueIdForA11y();
+			// default for properties
+			this._invokerLabel = '⎆';
+			this._invokerTitle = 'Click to open';
+			this._invokerAction = () => alert('Invoked :)');
+		}
+
+		/** @private */
+		__createUniqueIdForA11y()
+		{
+			return `${this.localName}-${Math.random().toString(36).substr(2, 10)}`;
+		}
+
+		/**
+		 * @param {PropertyKey} name
+		 * @param {?} oldValue
+		 */
+		requestUpdate(name, oldValue)
+		{
+			super.requestUpdate(name, oldValue);
+
+			if (name === 'disabled' || name === 'showsFeedbackFor' || name === 'modelValue')
+			{
+				this._toggleInvokerDisabled();
+			}
+		}
+
+		/**
+		 * Method to check if invoker can be activated: not disabled, empty or invalid
+		 *
+		 * @protected
+		 * */
+		_toggleInvokerDisabled()
+		{
+			if (this._invokerNode)
+			{
+				const invokerNode = /** @type {HTMLElement & {disabled: boolean}} */ (this._invokerNode);
+				invokerNode.disabled = this.disabled || this._isEmpty() || this.hasFeedbackFor.length > 0;
+			}
+		}
+
+		/** @param {import('@lion/core').PropertyValues } changedProperties */
+		firstUpdated(changedProperties)
+		{
+			super.firstUpdated(changedProperties);
+			this._toggleInvokerDisabled();
+		}
+
+		/**
+		 * Subclassers can replace this with their custom extension invoker,
+		 * like `<my-button><calendar-icon></calendar-icon></my-button>`
+		 */
+		// eslint-disable-next-line class-methods-use-this
+		_invokerTemplate()
+		{
+			return html`
+                <button
+                        type="button"
+                        @click="${this._invokerAction}"
+                        id="${this.__invokerId}"
+                        aria-label="${this.egw().lang(this._invokerTitle)}"
+                        title="${this.egw().lang(this._invokerTitle)}"
+                >
+                    ${this._invokerLabel}
+                </button>
+			`;
+		}
+	}
+	return Et2Invoker;
+})
