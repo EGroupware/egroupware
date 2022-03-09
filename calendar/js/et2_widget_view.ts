@@ -694,9 +694,9 @@ export class et2_calendar_view extends et2_valueWidget
 	 *
 	 * @param {et2_calendar_timegrid} widget
 	 * @param {string|numeric} year
-	 * @returns {Array}
+	 * @returns Promise<{[key: string]: Array<object>}>|{[key: string]: Array<object>}
 	 */
-	static get_holidays(widget,year)
+	static get_holidays(year) : Promise<{[key: string]: Array<object>}>|{[key: string]: Array<object>}
 	{
 		// Loaded in an iframe or something
 		var view = egw.window.et2_calendar_view ? egw.window.et2_calendar_view : this;
@@ -704,39 +704,17 @@ export class et2_calendar_view extends et2_valueWidget
 		// No country selected causes error, so skip if it's missing
 		if(!view || !egw.preference('country','common')) return {};
 
-		var cache = view.holiday_cache[year];
-		if (typeof cache == 'undefined')
+		if (typeof view.holiday_cache[year] === 'undefined')
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			view.holiday_cache[year] = jQuery.getJSON(
+			view.holiday_cache[year] = window.fetch(
 				egw.link('/calendar/holidays.php', {year: year})
-			);
+			).then((response) => {
+				return view.holiday_cache[year] = response.json();
+			});
 		}
-		cache = view.holiday_cache[year];
-		if(typeof cache.done == 'function')
-		{
-			// pending, wait for it
-			cache.done(jQuery.proxy(function(response) {
-				view.holiday_cache[this.year] = response||undefined;
-
-				egw.window.setTimeout(jQuery.proxy(function() {
-					// Make sure widget hasn't been destroyed while we wait
-					if(typeof this.widget.free == 'undefined')
-					{
-						this.widget.day_class_holiday();
-					}
-				},this),1);
-			},{widget:widget,year:year}))
-			.fail(jQuery.proxy(function() {
-				view.holiday_cache[this.year] = undefined;
-			}, {widget: widget, year: year}));
-			return {};
-		}
-		else
-		{
-			return cache;
-		}
+		return view.holiday_cache[year];
 	}
 }

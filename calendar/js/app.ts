@@ -4157,7 +4157,7 @@ export class CalendarApp extends EgwApp
 	 * are set up here.
 	 *
 	 */
-	_setup_sidebox_filters()
+	async _setup_sidebox_filters()
 	{
 		// Further date customizations
 		var date_widget = <et2_date>this.sidebox_et2.getWidgetById('date');
@@ -4197,7 +4197,8 @@ export class CalendarApp extends EgwApp
 				}
 			};
 
-			var datepicker = date_widget.input_date.datepicker("option", {
+			const holidays = await et2_calendar_view.get_holidays((new Date).getFullYear());
+			const datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
 				onChangeMonthYear: function(year, month, inst)
 				{
@@ -4221,19 +4222,18 @@ export class CalendarApp extends EgwApp
 				// Mark holidays
 				beforeShowDay: function (date)
 				{
-					var holidays = et2_calendar_view.get_holidays({day_class_holiday: function() {}}, date.getFullYear());
-					var day_holidays = holidays[''+date.getFullYear() +
-						sprintf("%02d",date.getMonth()+1) +
-						sprintf("%02d",date.getDate())];
+					var day_holidays = holidays['' + date.getFullYear() +
+					sprintf("%02d", date.getMonth() + 1) +
+					sprintf("%02d", date.getDate())];
 					var css_class = '';
 					var tooltip = '';
-					if(typeof day_holidays !== 'undefined' && day_holidays.length)
+					if (typeof day_holidays !== 'undefined' && day_holidays.length)
 					{
-						for(var i = 0; i < day_holidays.length; i++)
+						for (var i = 0; i < day_holidays.length; i++)
 						{
 							if (typeof day_holidays[i]['birthyear'] !== 'undefined')
 							{
-								css_class +='calendar_calBirthday ';
+								css_class += 'calendar_calBirthday ';
 							}
 							else
 							{

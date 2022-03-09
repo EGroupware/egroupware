@@ -453,7 +453,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	/**
 	 * Applies class for today, and any holidays for current day
 	 */
-	day_class_holiday( )
+	async day_class_holiday( )
 	{
 		this.title
 			// Remove all special day classes
@@ -472,7 +472,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		);
 
 		// Holidays and birthdays
-		let holidays = et2_calendar_view.get_holidays(this, this.options.date.substring(0, 4));
+		let holidays = await et2_calendar_view.get_holidays(this.options.date.substring(0, 4));
 		const holiday_list = [];
 		let holiday_pref = (egw.preference('birthdays_as_events', 'calendar') || []);
 		if(typeof holiday_pref === 'string')

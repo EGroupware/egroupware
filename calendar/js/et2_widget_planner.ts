@@ -388,7 +388,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				return this.egw().lang('User');
 			},
 			// Column headers
-			headers: function()
+			headers: async function()
 			{
 				var start = new Date(this.options.start_date);
 				var end = new Date(this.options.end_date);
@@ -407,7 +407,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				}
 				if(day_count < 60)
 				{
-					var days = this._header_days(start, day_count);
+					var days = await this._header_days(start, day_count);
 					this.headers.append(days);
 					this.grid.append(days);
 				}
@@ -691,7 +691,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		category:
 		{
 			title: function() { return this.egw().lang('Category');},
-			headers: function() {
+			headers: async function() {
 				var start = new Date(this.options.start_date);
 				var end = new Date(this.options.end_date);
 				var start_date = new Date(start.getUTCFullYear(), start.getUTCMonth(),start.getUTCDate());
@@ -710,7 +710,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				}
 				if(day_count < 60)
 				{
-					var days = this._header_days(start, day_count);
+					var days = await this._header_days(start, day_count);
 					this.headers.append(days);
 					this.grid.append(days);
 				}
@@ -937,7 +937,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 * @private
 	 *
 	 */
-	_drawGrid()
+	async _drawGrid()
 	{
 
 		this.div.css('height', this.options.height);
@@ -961,7 +961,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		// Headers
 		this.headers.empty();
 		this.headerTitle.text(grouper.title.apply(this));
-		grouper.headers.apply(this);
+		await grouper.headers.apply(this);
 		this.grid.find('*').contents().filter(function(){
 			return this.nodeType === 3;
 		}).remove();
@@ -1229,7 +1229,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 * @param {number} days
 	 * @returns {string} HTML snippet
 	 */
-	_header_days(start, days)
+	async _header_days(start, days)
 	{
 		var day_width = 100 / days;
 		var content = '<div class="calendar_plannerScale'+(days > 3 ? 'Day' : '')+'" data-planner_view="day" >';
@@ -1244,7 +1244,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			tempDate.setMinutes(tempDate.getMinutes()-tempDate.getTimezoneOffset());
 			var title = '';
 			let state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
-			var day_class = this.day_class_holiday(state,holidays, days);
+			var day_class = await this.day_class_holiday(state,holidays, days);
 
 			if (days <= 3)
 			{
@@ -1322,25 +1322,23 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 *
 	 * @return {string} CSS Classes for the day.  calendar_calBirthday, calendar_calHoliday, calendar_calToday and calendar_weekend as appropriate
 	 */
-	day_class_holiday( date,holiday_list, days?)
+	async day_class_holiday(date, holiday_list, days?)
 	{
-
 		if(!date) return '';
 
-		var day_class = '';
-
 		// Holidays and birthdays
-		var holidays = et2_calendar_view.get_holidays(this,date.getUTCFullYear());
+		const holidays = await et2_calendar_view.get_holidays(date.getUTCFullYear());
+		var day_class = '';
 
 		// Pass a string rather than the date object, to make sure it doesn't get changed
 		this.date_helper.set_value(date.toJSON());
 		var date_key = ''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date());
-		if(holidays && holidays[date_key])
+		if (holidays && holidays[date_key])
 		{
-			holidays = holidays[date_key];
-			for(var i = 0; i < holidays.length; i++)
+			const dates = holidays[date_key];
+			for(var i = 0; i < dates.length; i++)
 			{
-				if (typeof holidays[i]['birthyear'] !== 'undefined')
+				if (typeof dates[i]['birthyear'] !== 'undefined')
 				{
 					day_class += ' calendar_calBirthday ';
 					if(typeof days == 'undefined' || days <= 21)
@@ -1348,17 +1346,16 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 						day_class += ' calendar_calBirthdayIcon ';
 					}
 
-					holiday_list.push(holidays[i]['name']);
+					holiday_list.push(dates[i]['name']);
 				}
 				else
 				{
 					day_class += 'calendar_calHoliday ';
 
-					holiday_list.push(holidays[i]['name']);
+					holiday_list.push(dates[i]['name']);
 				}
 			}
 		}
-		holidays = holiday_list.join(',');
 		var today = new Date();
 		if(date_key === ''+today.getFullYear()+
 			sprintf("%02d",today.getMonth()+1)+
