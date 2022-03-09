@@ -351,6 +351,13 @@ export class et2_arrayMgr
 
 	parseBoolExpression(_expression : string)
 	{
+		// Check whether "$" occurs in the given identifier, don't parse rows if we're not in a row
+		// This saves booleans in repeating rows from being parsed too early - we'll parse again when repeating
+		if(_expression.indexOf('$') >= 0 && this.perspectiveData.row == null && _expression.match(/\$\{?row\}?/))
+		{
+			return _expression;
+		}
+
 		// If the first char of the expression is a '!' this means, that the value
 		// is to be negated.
 		if(_expression.charAt(0) == '!')
