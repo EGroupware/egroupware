@@ -11,6 +11,7 @@
  */
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {egw} from "../../api/js/jsapi/egw_global";
+import {date} from "../../api/js/etemplate/lib/date.js";
 
 export abstract class View
 {
