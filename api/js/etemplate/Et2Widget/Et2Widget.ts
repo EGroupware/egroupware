@@ -76,6 +76,13 @@ const Et2WidgetMixin = (superClass) =>
 		protected _dom_id : string = "";
 		private statustext : string = "";
 
+		/**
+		 * TypeScript & LitElement ensure type correctness, so we can't have a string value like "$row_cont[disable_me]"
+		 * as a boolean property so we store them here, and parse them when expanding.  Strings do not have this problem,
+		 * since $row_cont[disable_me] is still a valid string.
+		 */
+		protected _deferred_properties : { [key : string] : string } = {};
+
 
 		/** WebComponent **/
 		static get styles()
@@ -341,6 +348,20 @@ const Et2WidgetMixin = (superClass) =>
 			{
 				this._set_label(this.label);
 			}
+		}
+
+		/**
+		 * Any attribute that refers to row content cannot be resolved immediately, but some like booleans cannot stay a
+		 * string because it's a boolean attribute.  We store them for later, and parse when they're fully in their row.
+		 */
+		get deferredProperties()
+		{
+			return this._deferred_properties;
+		}
+
+		set deferredProperties(value)
+		{
+			this._deferred_properties = value;
 		}
 
 		/**
@@ -963,6 +984,9 @@ const Et2WidgetMixin = (superClass) =>
 				copy[key] = this[key];
 			}
 
+			// Keep the deferred properties
+			copy._deferred_properties = this._deferred_properties;
+
 			// Create a clone of all child widgets of the given object
 			for(let i = 0; i < this.getChildren().length; i++)
 			{
@@ -1276,6 +1300,14 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				// If the attribute is marked as boolean, parse the
 				// expression as bool expression.
 				attrValue = mgr ? mgr.parseBoolExpression(attrValue) : attrValue;
+				if(typeof attrValue === "string")
+				{
+					// Parse decided we still needed a string ($row most likely) so we'll defer it until later
+					// Repeating rows & nextmatch will parse it again when doing the row
+					widget.deferredProperties[attribute] = attrValue;
+					// Leave the current value at whatever the default is
+					continue;
+				}
 				break;
 			case Function:
 				// We parse it into a function here so we can pass in the widget as context.

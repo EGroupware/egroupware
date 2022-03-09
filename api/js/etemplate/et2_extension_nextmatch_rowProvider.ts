@@ -23,7 +23,6 @@ import {et2_arrayMgrs_expand} from "./et2_core_arrayMgr";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {egw} from "../jsapi/egw_global";
 import {et2_IDetachedDOM, et2_IDOMNode} from "./et2_core_interfaces";
-import {Et2DateTimeReadonly} from "./Et2Date/Et2DateTimeReadonly";
 
 /**
  * The row provider contains prototypes (full clonable dom-trees)
@@ -180,17 +179,7 @@ export class et2_nextmatch_rowProvider
 			// WebComponent IS the node, and we've already cloned it
 			if(typeof window.customElements.get(widget.localName) != "undefined")
 			{
-				/*
-				// N.B. cloneNode widget is missing its unreflected properties and we need to use widget.clone()
-				// instead to get them.  This slows things down.
-				let c = widget.clone();
-				let partial = entry.nodeFuncs[0](row);
-				partial.parentNode.insertBefore(c, partial);
-				partial.parentNode.removeChild(partial);
-				widget = c;
-				 */
-				// Use the clone, not the original
-				widget = entry.nodeFuncs[0](row);
+				widget = this._cloneWebComponent(entry, row, data);
 			}
 			else
 			{
@@ -267,6 +256,30 @@ export class et2_nextmatch_rowProvider
 		return rowWidget;
 	}
 
+	/**
+	 * Get the cloned web component
+	 */
+	_cloneWebComponent(entry, row, data)
+	{
+		/*
+		// N.B. cloneNode widget is missing its unreflected properties and we need to use widget.clone()
+		// instead to get them.  This slows things down and is to be avoided if we can.
+		let c = widget.clone();
+		let partial = entry.nodeFuncs[0](row);
+		partial.parentNode.insertBefore(c, partial);
+		partial.parentNode.removeChild(partial);
+		widget = c;
+		 */
+
+		// Use the clone, not the original
+		let widget = entry.nodeFuncs[0](row);
+
+		// Deal with the deferred properties like booleans with string values - we can't reflect them, and we don't want to lose them
+		// No need to transform here, that happens later
+		Object.assign(data, entry.widget.deferredProperties);
+
+		return widget;
+	}
 
 	/**
 	 * Placeholder for empty row
