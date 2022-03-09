@@ -140,58 +140,58 @@ export class et2_template extends et2_DOMWidget
 								splitted.join('.') + ".xet" + (cache_buster ? '?download=' + cache_buster : '');
 						}
 						// if server did not give a cache-buster, fall back to current time
-					if (url.indexOf('?') == -1) url += '?download='+(new Date).valueOf();
+						if (url.indexOf('?') == -1) url += '?download='+(new Date).valueOf();
 
-					if(this.options.url || splitted.length)
-					{
-						var fetch_url_callback = function(_xmldoc)
+						if(this.options.url || splitted.length)
 						{
-							// Scan for templates and store them
-							for(var i = 0; i < _xmldoc.childNodes.length; i++)
+							var fetch_url_callback = function(_xmldoc)
 							{
-								var template = _xmldoc.childNodes[i];
-								if(template.nodeName.toLowerCase() != "template")
+								// Scan for templates and store them
+								for(var i = 0; i < _xmldoc.childNodes.length; i++)
 								{
-									continue;
+									var template = _xmldoc.childNodes[i];
+									if(template.nodeName.toLowerCase() != "template")
+									{
+										continue;
+									}
+									templates[template.getAttribute("id")] = template;
 								}
-								templates[template.getAttribute("id")] = template;
-							}
 
-							// Read the XML structure of the requested template
-							if(typeof templates[template_name] != 'undefined')
-							{
-								this.loadFromXML(templates[template_name]);
-							}
+								// Read the XML structure of the requested template
+								if(typeof templates[template_name] != 'undefined')
+								{
+									this.loadFromXML(templates[template_name]);
+								}
 
-							// Update flag
-							resolve();
-						}.bind(this);
+								// Update flag
+								resolve();
+							}.bind(this);
 
-						et2_loadXMLFromURL(url, fetch_url_callback, this, function( error) {
-							url = egw.link('/'+ app + "/templates/default/" +
-								splitted.join('.')+ ".xet", {download:cache_buster? cache_buster :(new Date).valueOf()});
+							et2_loadXMLFromURL(url, fetch_url_callback, this, function( error) {
+								url = egw.link('/'+ app + "/templates/default/" +
+									splitted.join('.')+ ".xet", {download:cache_buster? cache_buster :(new Date).valueOf()});
 
-							et2_loadXMLFromURL(url, fetch_url_callback, this);
-						});
+								et2_loadXMLFromURL(url, fetch_url_callback, this);
+							});
+						}
+						return;
 					}
-					return;
 				}
-			}
-			if(xml !== null && typeof xml !== "undefined")
-			{
-				this.egw().debug("log", "Loading template from XML: ", template_name);
-				this.loadFromXML(xml);
-				// Don't call this here - done by caller, or on whole widget tree
-				//this.loadingFinished();
+				if(xml !== null && typeof xml !== "undefined")
+				{
+					this.egw().debug("log", "Loading template from XML: ", template_name);
+					this.loadFromXML(xml);
+					// Don't call this here - done by caller, or on whole widget tree
+					//this.loadingFinished();
 
-				// But resolve the promise
-				resolve();
-			}
-			else
-			{
-				this.egw().debug("warn", "Unable to find XML for ", template_name);
-				reject()
-			}
+					// But resolve the promise
+					resolve();
+				}
+				else
+				{
+					this.egw().debug("warn", "Unable to find XML for ", template_name);
+					reject()
+				}
 			}
 			else
 			{
@@ -272,4 +272,3 @@ export class et2_template extends et2_DOMWidget
 	}
 }
 et2_register_widget(et2_template, ["template"]);
-
