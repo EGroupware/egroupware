@@ -71,9 +71,14 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		`;
 	}
 
+	/**
+	 * These are the attributes we allow to change for each row
+	 *
+	 * @param attrs
+	 */
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class");
+		attrs.push("id", "value", "class", "disabled");
 	}
 
 	getDetachedNodes() : HTMLElement[]
