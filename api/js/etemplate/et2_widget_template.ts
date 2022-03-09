@@ -190,13 +190,13 @@ export class et2_template extends et2_DOMWidget
 				else
 				{
 					this.egw().debug("warn", "Unable to find XML for ", template_name);
-					reject()
+					reject("Unable to find XML for " + template_name);
 				}
 			}
 			else
 			{
-				// No actual template
-				reject();
+				// No actual template - not an error, just nothing to do
+				resolve();
 			}
 		});
 	}
