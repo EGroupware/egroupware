@@ -117,7 +117,7 @@
                         <hbox id="r_used_time">
                             <image label="Times" src="timesheet"/>
                             <date-duration id="${row}[info_used_time]" readonly="true"
-                                           display_format="@@duration_format"/>
+                                           display_format="@@duration_format" disabled="!$row_cont[info_used_time]"/>
                             <date-duration id="${row}[info_sum_timesheets]" readonly="true"
                                            display_format="@@duration_format" class="timesheet"/>
                         </hbox>
