@@ -23,15 +23,20 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 		this.defaultValidators.push(new IsEmail());
 		this._invokerLabel = '@';
 		this._invokerTitle = 'Compose mail to';
-		this._invokerAction = () => this.__invokerAction();
+		this._invokerAction = () =>
+		{
+			if (!this._isEmpty() && !this.hasFeedbackFor.length)
+			{
+				Et2UrlEmail.action(this.value);
+			}
+		}
 	}
 
-	__invokerAction()
+	static action(value)
 	{
-		if (!this._isEmpty() && !this.hasFeedbackFor.length &&
-			this.egw().user('apps').mail && this.egw().preference('force_mailto','addressbook') != '1' )
+		if (egw.user('apps').mail && egw.preference('force_mailto','addressbook') != '1' )
 		{
-			egw.open_link('mailto:'+this.value);
+			egw.open_link('mailto:'+value);
 		}
 	}
 }

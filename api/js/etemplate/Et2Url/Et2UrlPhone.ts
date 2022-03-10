@@ -22,12 +22,13 @@ export class Et2UrlPhone extends Et2InvokerMixin(Et2Textbox)
 		//this.defaultValidators.push(...);
 		this._invokerLabel = '✆';
 		this._invokerTitle = 'Call';
-		this._invokerAction = () => this.__invokerAction();
+		this._invokerAction = () => {
+			Et2UrlPhone.action(this.value);
+		}
 	}
 
-	__invokerAction()
+	static action(value)
 	{
-		let value = this.value;
 		// Clean number
 		value = value.replace('&#9829;','').replace('(0)','');
 		value = value.replace(/[abc]/gi,2).replace(/[def]/gi,3).replace(/[ghi]/gi,4).replace(/[jkl]/gi,5).replace(/[mno]/gi,6);
@@ -41,15 +42,15 @@ export class Et2UrlPhone extends Et2InvokerMixin(Et2Textbox)
 		{
 			window.open("tel:"+value);
 		}
-		else if (this.egw().config("call_link"))
+		else if (egw.config("call_link"))
 		{
-			var link = this.egw().config("call_link")
+			var link = egw.config("call_link")
 				// tel: links use no URL encoding according to rfc3966 section-5.1.4
-				.replace("%1", this.egw().config("call_link").substr(0, 4) == 'tel:' ?
+				.replace("%1", egw.config("call_link").substr(0, 4) == 'tel:' ?
 					value : encodeURIComponent(value))
-				.replace("%u",this.egw().user('account_lid'))
-				.replace("%t",this.egw().user('account_phone'));
-			var popup = this.egw().config("call_popup");
+				.replace("%u",egw.user('account_lid'))
+				.replace("%t",egw.user('account_phone'));
+			var popup = egw.config("call_popup");
 			if (popup && popup !== '_self' || !link.match(/^https?:/))	// execute non-http(s) links eg. tel: like before
 			{
 				egw.open_link(link, '_phonecall', popup);

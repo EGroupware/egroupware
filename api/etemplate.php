@@ -13,7 +13,8 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button|colorpicker|description))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|textbox|textarea|button|colorpicker|description|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -152,7 +153,8 @@ function send_template()
 		{
 			return '<' . $matches[2] . 'et2-' . $matches[3] .
 				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
-				(substr($matches[4], -1) === '/' ? substr($matches[4], 0, -1) . '></et2-' . $matches[3] : $matches[4]) . '>';
+				(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
+					'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
 		}, $str);
 
 		// handling of date and partially implemented select widget (no search or tags attribute), incl. removing of type attribute
@@ -173,14 +175,6 @@ function send_template()
 				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
 			}
 			return $matches[0];
-		}, $str);
-
-		// add et2- prefix to url widget, as far as it is currently implemented
-		$str = preg_replace_callback('#<url-(email|phone) (.*?)/>#', static function($matches)
-		{
-			if (strpos($matches[2], 'readonly="true"')) return $matches[0];    // leave readonly alone for now
-			return str_replace('<url-'.$matches[1], '<et2-url-'.$matches[1], substr($matches[0], 0, -2)).
-				'></et2-url-'.$matches[1].'>';
 		}, $str);
 
 		$processing = microtime(true);
