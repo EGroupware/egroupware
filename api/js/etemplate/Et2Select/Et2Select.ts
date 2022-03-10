@@ -89,6 +89,29 @@ export class Et2Select extends Et2WidgetWithSelect
 		return this._inputNode;
 	}
 
+	static get properties()
+	{
+		return {
+			...super.properties,
+			/**
+			 * Toggle between single and multiple selection
+			 */
+			multiple: {
+				type: Boolean,
+				reflect: true,
+			},
+		}
+	}
+
+	set_multiple(multi)
+	{
+		if (typeof multi !== 'boolean')
+		{
+			multi = multi && !(multi === 'false' || multi === '0');
+		}
+		this.multiple = multi;
+	}
+
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
 	updated(changedProperties : PropertyValues)
 	{
@@ -105,6 +128,12 @@ export class Et2Select extends Et2WidgetWithSelect
 			}
 			// Re-set value, the option for it may have just shown up
 			this._inputNode.value = this.modelValue || "";
+		}
+
+		// propagate multiple to selectbox
+		if (changedProperties.has('multiple'))
+		{
+			this._inputNode.multiple = this.multiple;
 		}
 	}
 
