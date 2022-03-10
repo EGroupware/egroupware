@@ -79,6 +79,7 @@ function send_template()
 			}
 			static $legacy_options = array( // use "ignore" to ignore further comma-sep. values, otherwise they are all in last attribute
 				'select'       => 'empty_label,ignore',
+				'select-account' => 'empty_label,account_type,ignore',
 				'box'          => ',cellpadding,cellspacing,keep',
 				'hbox'         => 'cellpadding,cellspacing,keep',
 				'vbox'         => 'cellpadding,cellspacing,keep',
