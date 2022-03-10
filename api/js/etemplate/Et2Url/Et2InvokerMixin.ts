@@ -8,8 +8,9 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {dedupeMixin, html, render} from '@lion/core';
+import {css, dedupeMixin, html, render} from '@lion/core';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {colorsDefStyles} from "../Styles/colorsDefStyles";
 
 /**
  * Invoker mixing adds an invoker button to a widget to trigger some action, e.g.:
@@ -38,7 +39,35 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 				}
 			};
 		}
-
+		static get styles()
+		{
+			return [
+				...super.styles,
+				colorsDefStyles,
+				css`
+				::slotted(input), input {
+					background-color: transparent;
+					border: none !important;
+				}
+				.input-group {
+					border: 1px solid var(--input-border-color);
+				}
+				.input-group__suffix{
+				}
+				.input-group__container {
+					align-items: center
+				}
+				::slotted([slot="suffix"]) {
+					border: none !important;
+					background-color: transparent !important;
+				}
+				::slotted(:disabled) {cursor: default !important;}
+				:host(:hover) ::slotted([slot="suffix"]) {
+					cursor: pointer;
+				}
+			`,
+			];
+		}
 		get slots()
 		{
 			return {
