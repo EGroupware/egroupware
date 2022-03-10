@@ -39,6 +39,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 				}
 			};
 		}
+
 		static get styles()
 		{
 			return [
@@ -58,6 +59,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 					align-items: center
 				}
 				::slotted([slot="suffix"]) {
+					width: 12px;
 					border: none !important;
 					background-color: transparent !important;
 				}
@@ -68,6 +70,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 			`,
 			];
 		}
+
 		get slots()
 		{
 			return {

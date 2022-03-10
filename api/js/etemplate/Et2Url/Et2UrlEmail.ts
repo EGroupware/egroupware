@@ -11,12 +11,27 @@
 import {Et2InvokerMixin} from "./Et2InvokerMixin";
 import {IsEmail} from "../Validators/IsEmail";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
+import {colorsDefStyles} from "../Styles/colorsDefStyles";
+import {css} from "@lion/core";
 
 /**
  * @customElement et2-url-email
  */
 export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 {
+	static get styles()
+	{
+		return [
+			...super.styles,
+			colorsDefStyles,
+			css`
+				::slotted([slot="suffix"]) {
+					font-size: 90% !important;
+				}
+			`,
+		];
+	}
+
 	constructor()
 	{
 		super();

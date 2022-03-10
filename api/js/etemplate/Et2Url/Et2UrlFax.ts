@@ -10,12 +10,29 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import {Et2UrlPhone} from "./Et2UrlPhone";
 import {Et2UrlEmail} from "./Et2UrlEmail";
+import {colorsDefStyles} from "../Styles/colorsDefStyles";
+import {css} from "@lion/core";
 
 /**
  * @customElement et2-url-phone
  */
 export class Et2UrlFax extends Et2UrlPhone
 {
+	static get styles()
+	{
+		return [
+			...super.styles,
+			colorsDefStyles,
+			css`
+				::slotted([slot="suffix"]) {
+					font-size: 90% !important;
+					position: relative;
+					left: -2px;
+				}
+			`,
+		];
+	}
+
 	constructor()
 	{
 		super();
