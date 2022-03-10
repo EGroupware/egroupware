@@ -237,16 +237,16 @@ class calendar_uiforms extends calendar_ui
 		$alarm_pref = $whole_day ? 'default-alarm-wholeday' : 'default-alarm';
 		// if default alarm set in prefs --> add it
 		// we assume here that user does NOT have a whole-day but no regular default-alarm, no whole-day!
-		if ((string)$this->cal_prefs[$alarm_pref] !== '')
+		if((string)$this->cal_prefs[$alarm_pref] !== '')
 		{
 			$offset = 60 * $this->cal_prefs[$alarm_pref];
-			$alarms[1] =  array(
+			$alarms[1] = array(
 				'default' => 1,
-				'offset' => $offset,
-				'time'   => $start - $offset,
-				'all'    => false,
-				'owner'  => $owner,
-				'id'	=> 1,
+				'offset'  => $offset,
+				'time'    => $start - $offset,
+				'all'     => $this->cal_prefs['default-alarm-for'] === 'all',
+				'owner'   => $owner,
+				'id'      => 1,
 			);
 		}
 		// add automatic alarm 5min before videoconference for all participants

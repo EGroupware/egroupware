@@ -376,17 +376,17 @@ class calendar_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
-			'default_category' => array(
-				'type'	=> 'multiselect',
-				'label'	=> 'New event category',
-				'name'	=> 'default_category',
-				'help'	=> 'Category automatically added to new events',
-				'values' => $default_cat_seloptions,
-				'default'	=> '',
-				'xmlrpc' => False,
-				'admin'  => False
+			'default_category'       => array(
+				'type'    => 'multiselect',
+				'label'   => 'New event category',
+				'name'    => 'default_category',
+				'help'    => 'Category automatically added to new events',
+				'values'  => $default_cat_seloptions,
+				'default' => '',
+				'xmlrpc'  => False,
+				'admin'   => False
 			),
-			'default-alarm' => array(
+			'default-alarm'          => array(
 				'type'   => 'date-duration',//'select',
 				'label'  => lang('Default alarm for regular events').' ('.lang('empty = no alarm').')',
 				'name'   => 'default-alarm',
@@ -396,12 +396,22 @@ class calendar_hooks
 				'default' => '',
 			),
 			'default-alarm-wholeday' => array(
-				'type'   => 'date-duration',//'select',
-				'label'  => lang('Default alarm for whole-day events').' ('.lang('empty = no alarm').')',
-				'name'   => 'default-alarm-wholeday',
-				'help'   => lang('Alarm added automatic to new events before event start-time').' ('.lang('Midnight').')',
-				'xmlrpc' => True,
-				'admin'  => False,
+				'type'    => 'date-duration',//'select',
+				'label'   => lang('Default alarm for whole-day events') . ' (' . lang('empty = no alarm') . ')',
+				'name'    => 'default-alarm-wholeday',
+				'help'    => lang('Alarm added automatic to new events before event start-time') . ' (' . lang('Midnight') . ')',
+				'xmlrpc'  => True,
+				'admin'   => False,
+				'default' => '',
+			),
+			'default-alarm-for'      => array(
+				'type'    => 'select',
+				'label'   => lang('Default alarm for'),
+				'name'    => 'default-alarm-for',
+				'values'  => [lang("just me"), 'all' => lang('all participants')],
+				'help'    => lang('Default alarm added for yourself or all participants'),
+				'xmlrpc'  => True,
+				'admin'   => False,
 				'default' => '',
 			),
 		);
