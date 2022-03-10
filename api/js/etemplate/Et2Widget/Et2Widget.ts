@@ -1350,6 +1350,10 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			// Set as attribute (reflected in DOM)
 			widget.setAttribute(attribute, attrValue);
 		}
+		else if (attribute === 'options')
+		{
+			console.trace('Ignored setting depricated "options" attribute for widget #'+widget.id, widget);
+		}
 		else
 		{
 			// Set as property, not attribute

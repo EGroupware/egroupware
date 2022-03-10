@@ -88,6 +88,8 @@ function send_template()
 				'customfields' => 'sub-type,use-private,field-names',
 				'date'         => 'data_format,ignore', // Legacy option "mode" was never implemented in et2
 				'description'  => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
+				'button'       => 'image,ro_image',
+				'buttononly'   => 'image,ro_image',
 			);
 			// prefer more specific type-subtype over just type
 			$names = $legacy_options[$matches[1].$matches[2]] ?? $legacy_options[$matches[1]] ?? null;
