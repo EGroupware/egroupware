@@ -274,6 +274,18 @@ const Et2WidgetMixin = (superClass) =>
 		}
 
 		/**
+		 * supports legacy set_statustext
+		 * @param value
+		 */
+		set_statustext(value : string)
+		{
+			let oldValue = this.statustext;
+			this.statustext = value;
+			this.egw().tooltipBind(this, this.statustext);
+			this.requestUpdate("statustext", oldValue);
+		}
+
+		/**
 		 * Wrapper on this.disabled because legacy had it.
 		 *
 		 * @param {boolean} value

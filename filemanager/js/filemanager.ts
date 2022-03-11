@@ -800,17 +800,17 @@ export class filemanagerAPP extends EgwApp
 		{
 			button_widget = (<et2_nextmatch><unknown>nm).getWidgetById('button[change_view]');
 		}
-		if(button_widget && button_widget.instanceOf(et2_button))
+		if(button_widget && button_widget.type === "buttononly")
 		{
 			// Switch view based on button icon, since controller can get re-created
 			if(typeof view != 'string')
 			{
-				view = button_widget.options.image.replace('list_','');
+				view = button_widget.image.split('list_')[1].replace('.svg','');
 			}
 
 			// Toggle button icon to the other view
 			//todo: nm.controller needs to be changed to nm.getController after merging typescript branch into master
-			button_widget.set_image("list_"+(view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
+			button_widget.image = ("list_"+(view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
 
 			button_widget.set_statustext(view == et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
 		}
@@ -827,7 +827,7 @@ export class filemanagerAPP extends EgwApp
 		template = nm.getWidgetById(template);
 		if(template && template.loading)
 		{
-			template.loading.done(function() {
+			template.loading.then(function() {
 				nm.applyFilters({view: view});
 			});
 		}

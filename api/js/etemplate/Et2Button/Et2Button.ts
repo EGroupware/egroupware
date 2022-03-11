@@ -137,6 +137,11 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		this.requestUpdate("image", oldValue);
 	}
 
+	get image ()
+	{
+		return this._image;
+	}
+
 	_handleClick(event : MouseEvent) : boolean
 	{
 		// ignore click on readonly button
