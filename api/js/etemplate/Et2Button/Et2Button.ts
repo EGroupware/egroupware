@@ -18,7 +18,6 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 {
 	protected _created_icon_node : HTMLImageElement;
 	protected clicked : boolean = false;
-	private _image : string;
 
 	/**
 	 * images to be used as background-image, if none is explicitly applied and id matches given regular expression
@@ -110,7 +109,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		super();
 
 		// Property default values
-		this._image = '';
+		this.__image = '';
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -128,11 +127,11 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		let oldValue = this._image;
 		if(new_image.indexOf("http") >= 0)
 		{
-			this._image = new_image
+			this.__image = new_image
 		}
 		else
 		{
-			this._image = this.egw().image(new_image);
+			this.__image = this.egw().image(new_image);
 		}
 		this.requestUpdate("image", oldValue);
 	}
@@ -211,7 +210,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			return '';
 		}
 
-		this._iconNode.src = this._image;
+		this._iconNode.src = this.__image;
 		if(!this.label)
 		{
 			this._iconNode.classList.add('imageOnly');
