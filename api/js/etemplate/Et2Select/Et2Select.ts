@@ -14,11 +14,12 @@ import {cssImage} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
+import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(LionSelect){};
 
-export class Et2Select extends Et2WidgetWithSelect
+export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 {
 	static get styles()
 	{
@@ -47,6 +48,15 @@ export class Et2Select extends Et2WidgetWithSelect
 				background-size: 8px auto;
 				background-position-x: calc(100% - 8px);
 				text-indent: 5px;
+			}
+			
+			::slotted([slot="suffix"]) {
+				font-size: 120% !important;
+				font-weight: bold;
+				color: gray !important;
+				position: relative;
+				left: -2px;
+				top: -2px;
 			}
 
 			select:hover {
@@ -100,16 +110,57 @@ export class Et2Select extends Et2WidgetWithSelect
 				type: Boolean,
 				reflect: true,
 			},
+			/**
+			 * Add a button to switch to multiple with given number of rows
+			 */
+			expand_multiple_rows: {
+				type: Number,
+			}
 		}
 	}
 
+	/**
+	 * @deprecated use this.multiple = multi
+	 *
+	 * @param multi
+	 */
 	set_multiple(multi)
 	{
-		if (typeof multi !== 'boolean')
-		{
-			multi = multi && !(multi === 'false' || multi === '0');
-		}
 		this.multiple = multi;
+	}
+
+	set expand_multiple_rows(rows)
+	{
+		if (rows && !this.multiple)
+		{
+			this._invokerAction = () => {
+				this.multiple = true;
+				this._inputNode.size = parseInt(rows) || 4;
+				this._invokerNode.style.display = 'none';
+			}
+			this._invokerTitle = egw.lang('Switch to multiple');
+			this._invokerLabel = '+';
+		}
+		else
+		{
+			this._invokerLabel = undefined;
+		}
+	}
+
+	/**
+	 * Method to check if invoker can be activated: not disabled, empty or invalid
+	 *
+	 * Overwritten to NOT disable if empty.
+	 *
+	 * @protected
+	 * */
+	_toggleInvokerDisabled()
+	{
+		if (this._invokerNode)
+		{
+			const invokerNode = /** @type {HTMLElement & {disabled: boolean}} */ (this._invokerNode);
+			invokerNode.disabled = this.disabled || this.hasFeedbackFor.length > 0;
+		}
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -134,6 +185,11 @@ export class Et2Select extends Et2WidgetWithSelect
 		if (changedProperties.has('multiple'))
 		{
 			this._inputNode.multiple = this.multiple;
+			// switch the expand button off
+			if (this.multiple)
+			{
+				this.expand_multiple_rows = 0;
+			}
 		}
 	}
 

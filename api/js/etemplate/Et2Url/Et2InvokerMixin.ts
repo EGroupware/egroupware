@@ -46,7 +46,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 				...super.styles,
 				colorsDefStyles,
 				css`
-				::slotted(input), input {
+				::slotted(input), input, ::slotted(select) {
 					background-color: transparent;
 					border: none !important;
 				}
@@ -101,9 +101,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 			/** @private */
 			this.__invokerId = this.__createUniqueIdForA11y();
 			// default for properties
-			this._invokerLabel = '⎆';
 			this._invokerTitle = 'Click to open';
-			this._invokerAction = () => alert('Invoked :)');
 		}
 
 		/** @private */
@@ -123,6 +121,31 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 			if (name === 'disabled' || name === 'showsFeedbackFor' || name === 'modelValue')
 			{
 				this._toggleInvokerDisabled();
+			}
+
+			if (name === '_invokerLabel' || name === '_invokerTitle')
+			{
+				this._toggleInvoker();
+			}
+			if (name === '_invokerAction')
+			{
+				if (oldValue) this._invokerNode?.removeEventListener('click', oldValue);
+				this._invokerNode?.addEventListener('click', this._invokerAction.bind(this), true);
+			}
+		}
+
+		/**
+		 * (Un)Hide invoker, if no label or action defined
+		 *
+		 * @protected
+		 * */
+		_toggleInvoker()
+		{
+			if (this._invokerNode)
+			{
+				this._invokerNode.style.display = !this._invokerLabel ? 'none' : 'inline-block';
+				this._invokerNode.innerHTML = this._invokerLabel || '';
+				this._invokerNode.title = this._invokerTitle || '';
 			}
 		}
 
@@ -145,6 +168,7 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 		{
 			super.firstUpdated(changedProperties);
 			this._toggleInvokerDisabled();
+			this._toggleInvoker();
 		}
 
 		/**
