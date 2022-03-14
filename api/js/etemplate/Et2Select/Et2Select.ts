@@ -129,6 +129,79 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		this.multiple = multi;
 	}
 
+	/**
+	 * Reimplemented to return string[] for multiple
+	 */
+	get value() : string|string[]
+	{
+		if (!this._inputNode || !this.select_options?.length)
+		{
+			return this.__value || '';
+		}
+		if (!this.multiple)
+		{
+			return this._inputNode.value || this.__value || '';
+		}
+		// multi-selection value
+		const selected = this._inputNode.querySelectorAll('option:checked');
+		return Array.from(selected).map(el => (<HTMLOptionElement>el).value);
+	}
+
+	/**
+	 * Reimplemented to select options for multiple
+	 *
+	 * @param value
+	 */
+	set value(value: string|string[])
+	{
+		// if not yet connected to dom can't change the value
+		if (this._inputNode && this.select_options?.length)
+		{
+			// split multiple comma-separated values for multiple or expand_multiple_rows
+			if (typeof value === 'string' && (this.multiple || this.expand_multiple_rows) && value.indexOf(',') !== -1)
+			{
+				value = value.split(',');
+			}
+			// if we get more than one value AND expand_multiple_rows is set --> switch to multiple
+			if (!this.multiple && this.expand_multiple_rows && Array.isArray(value) && value.length > 1)
+			{
+				this.multiple = true;
+				this.size = this.expand_multiple_rows;
+			}
+			if (!this.multiple)
+			{
+				this._inputNode.value = value;
+			}
+			else
+			{
+				this._inputNode.querySelectorAll('option').forEach((el : HTMLOptionElement) =>
+				{
+					el.selected = [].concat(value).find(val => val == el.value);
+				});
+			}
+			/** @type {string | undefined} */
+			this.__value = undefined;
+		}
+		else
+		{
+			this.__value = value;
+		}
+	}
+
+	/**
+	 * Reimplemented to allow/keep string[] as value
+	 *
+	 * @param value string|string[]
+	 */
+	_callParser(value = this.formattedValue)
+	{
+		if (this.multiple && Array.isArray(value))
+		{
+			return value;
+		}
+		return super._callParser(value);
+	}
+
 	set expand_multiple_rows(rows)
 	{
 		if (rows && !this.multiple)
@@ -145,6 +218,12 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		{
 			this._invokerLabel = undefined;
 		}
+		this.__expand_multiple_rows = rows;
+	}
+
+	get expand_multiple_rows()
+	{
+		return this.__expand_multiple_rows;
 	}
 
 	/**
@@ -170,15 +249,16 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
+			const modelValueArr = Array.isArray(this.modelValue) ? this.modelValue : this.modelValue.split(',');
 			// value not in options AND NOT (having an empty label and value)
-			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => option.value == this.modelValue).length === 0 &&
+			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => modelValueArr.find(val => val == option.value)).length === 0 &&
 				!(typeof this.empty_label !== 'undefined' && (this.modelValue || "") === ""))
 			{
 				// --> use first option
 				this.modelValue = "" + this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
-			this._inputNode.value = this.modelValue || "";
+			this.value = this.modelValue || "";
 		}
 
 		// propagate multiple to selectbox
