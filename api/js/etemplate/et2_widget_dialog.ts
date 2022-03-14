@@ -13,8 +13,7 @@
 	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 */
 
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
-import {et2_widget} from "./et2_core_widget";
+import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_button} from "./et2_widget_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {etemplate2} from "./etemplate2";
@@ -906,5 +905,5 @@ export class et2_dialog extends et2_widget {
     }
 }
 // make et2_dialog publicly available as we need to call it from templates
-if (typeof window.et2_dialog === 'undefined') window['et2_dialog'] = et2_dialog;
+//if (typeof window.et2_dialog === 'undefined') window['et2_dialog'] = et2_dialog;
 et2_register_widget(et2_dialog, ["dialog"]);
