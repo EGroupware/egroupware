@@ -1159,8 +1159,7 @@ class Accounts
 	{
 		$owner_columns = static::get_owner_columns();
 
-		$selects = array();
-
+		$selects = $counts = [];
 		foreach($owner_columns as $app => $column)
 		{
 			list($table, $column_name) = explode('.', $column['column']);
@@ -1184,15 +1183,11 @@ class Accounts
 					break;
 			}
 			$selects[] = $select;
+			$counts[$app] = ['total' => 0];
 		}
 
-		$counts = array();
 		foreach($GLOBALS['egw']->db->union($selects, __LINE__ , __FILE__) as $row)
 		{
-			if(!is_array($counts[$row['app']]))
-			{
-				$counts[$row['app']] = array('total' => 0);
-			}
 			$counts[$row['app']][$row['type']] = $row['count'];
 			if($row['type'] != 'total')
 			{
