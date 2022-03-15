@@ -174,6 +174,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 			}
 			else
 			{
+				this._inputNode.multiple = true;	// in case property is not yet set, selectbox will unselect all other options
 				this._inputNode.querySelectorAll('option').forEach((el : HTMLOptionElement) =>
 				{
 					el.selected = [].concat(value).find(val => val == el.value);
