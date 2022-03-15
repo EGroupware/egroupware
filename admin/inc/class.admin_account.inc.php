@@ -376,7 +376,11 @@ class admin_account
 				$content['delete_apps'][] = $app;
 				$sel_options['delete_apps'][] = array(
 						'value' => $app,
-						'label' => lang($app) . (is_array($counts) ? (': ' . $counts['total'] . ' ' . $entry) : '')
+						'label' => lang($app) . (is_array($counts) ? (': ' . $counts['total'] . ' ' . $entry.
+								(count($counts) > 1 ? ' ('.implode(', ', array_map(static function($type) use ($counts)
+									{
+										return $type.': '.$counts[$type];
+									}, array_diff(array_keys($counts), ['total']))).')' : '')) : '')
 				);
 			}
 			else if (is_array($counts) && $counts['total'])
