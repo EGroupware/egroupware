@@ -120,10 +120,17 @@ export class et2_countdown extends et2_valueWidget {
 		let distance = this.time.getTime() - now.getTime();
 
 		if (distance < 0) return 0;
-		if (this.options.alarm > 0 && this.options.alarm == distance/1000 && typeof this.onAlarm == 'function')
+
+		let alarms = Array.isArray(this.options.alarm) ? this.options.alarm : [this.options.alarm];
+
+		for (let i=0;i<=alarms.length;i++)
 		{
-			this.onAlarm();
+			if (alarms[i] > 0 && alarms[i] == distance/1000 && typeof this.onAlarm == 'function')
+			{
+				this.onAlarm();
+			}
 		}
+
 		let values = {
 			days: Math.floor(distance / (1000 * 60 * 60 * 24)),
 			hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
