@@ -88,7 +88,7 @@ var et2_countdown = /** @class */ (function (_super) {
             return 0;
         var alarms = Array.isArray(this.options.alarm) ? this.options.alarm : [this.options.alarm];
         for (var i = 0; i <= alarms.length; i++) {
-            if (alarms[i] > 0 && alarms[i] == distance / 1000 && typeof this.onAlarm == 'function') {
+            if (alarms[i] > 0 && alarms[i] == Math.floor(distance / 1000) && typeof this.onAlarm == 'function') {
                 this.onAlarm();
             }
         }
