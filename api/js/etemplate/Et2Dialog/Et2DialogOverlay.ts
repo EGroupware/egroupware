@@ -1,15 +1,13 @@
 import {css, html, LitElement, repeat, SlotMixin} from '@lion/core';
 import {DialogButton, Et2Dialog} from "./Et2Dialog";
+import {Et2Widget} from "../Et2Widget/Et2Widget";
 
 /**
  * This handles the visible portion of the dialog, including the title & close button.
  *
- * Note we can't extend Et2Widget.  If I try, something in the render / creation breaks and calling open() gives an
- * error
  */
-export class Et2DialogOverlay extends SlotMixin(LitElement)
+export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 {
-	private egw : IegwAppLocal;
 
 	protected buttons : DialogButton[];
 
@@ -25,6 +23,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
           background: white;
           position: relative;
           border: 1px solid silver;
+          min-width: 200px
         }
 
         :host([hidden]) {
@@ -52,6 +51,20 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
           padding: 0;
           font-size: 24px;
         }
+        #overlay-content-buttons {
+        	display: flex;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			align-items: stretch;
+			gap: 5px;
+        }
+        ::slotted([slot="buttons"]) {
+			flex: 1 0 auto;
+		}
+		::slotted([align="right"]) {
+			margin-left: auto;
+			order: 1;
+		}
       `,
 		];
 	}
@@ -77,7 +90,34 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	firstUpdated(_changedProperties)
 	{
 		super.firstUpdated(_changedProperties);
-		debugger;
+		// Tell content about its parent, but don't move it
+		//@ts-ignore
+		(<Et2Widget><unknown>this.querySelector("[slot='content']"))._parent = this._dialog;
+	}
+
+
+	// Need to wait for Overlay
+	async getUpdateComplete()
+	{
+		await super.getUpdateComplete();
+		await this._contentNode.getUpdateComplete();
+	}
+
+	/**
+	 * Dialog might not be part of an etemplate, use dialog's egw
+	 *
+	 * @returns {IegwAppLocal}
+	 */
+	egw() : IegwAppLocal
+	{
+		if(this._dialog)
+		{
+			return this._dialog.egw();
+		}
+		else
+		{
+			return egw();
+		}
 	}
 
 	/**
@@ -90,6 +130,11 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	{
 		await new Promise((resolve) => setTimeout(() => resolve()));
 		return super.performUpdate();
+	}
+
+	get _contentNode()
+	{
+		return this.querySelector("[slot='content']");
 	}
 
 	/** @private */
@@ -111,8 +156,8 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
                     <button
                             @click="${this.__dispatchCloseEvent}"
                             id="close-button"
-                            title="${this.egw.lang("Close")}"
-                            aria-label="${this.egw.lang("Close dialog")}"
+                            title="${this.egw().lang("Close")}"
+                            aria-label="${this.egw().lang("Close dialog")}"
                             class="overlay__close-button"
                     >
                         <slot name="close-icon">&times;</slot>
@@ -130,8 +175,15 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 
 	_buttonsTemplate()
 	{
-		return html`${repeat(this.buttons, (button : DialogButton) => button.id, (button, index) => html`
-            <et2-button id=${button.id} button_id=${button.button_id} .image=${button.image || ""} ?label=${button.text}></et2-button>
-		`)}`;
+		// Set button._parent here, otherwise button will have trouble finding our egw()
+		return html`${repeat(this.buttons, (button : DialogButton) => button.id, (button, index) =>
+		{
+			return html`
+                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id} .image=${button.image}
+                            label=${button.text}
+                            ?align=${button.align}>
+                </et2-button>
+			`
+		})}`;
 	}
 }

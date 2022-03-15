@@ -7,20 +7,25 @@ import {css, html, LitElement} from "@lion/core";
  */
 export class Et2DialogContent extends Et2Widget(LitElement)
 {
-	get styles()
+	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
 			:host {
 			display: block;
-			
-	min-width: 200px;
+			min-width: 200px;
+			min-height: 60px;
 			}
-.dialog-title {
-font-size: 120%;
-}`
-		]
+			.dialog {
+				padding: 5px;
+			}
+			.dialog_icon {
+				margin-right: 2ex;
+				vertical-align: middle;
+			}
+			`
+		];
 	}
 
 	get properties()
@@ -59,13 +64,24 @@ font-size: 120%;
 		this.dialog_type = 0;
 	}
 
+	/**
+	 * Block until after the paint - This is needed to deal with children not fully "done" before the OverlayController
+	 * tries to do things with them
+	 *
+	 * @returns {Promise<any>}
+	 */
+	async performUpdate()
+	{
+		await new Promise((resolve) => setTimeout(() => resolve()));
+		return super.performUpdate();
+	}
 
 	render()
 	{
-		let icon = this.icon || this.egw().image(this._dialog_types[this.dialog_type]) || "";
+		let icon = this.icon || this.parentNode.egw().image(this._dialog_types[this.dialog_type]) || "";
 		return html`
             <div class="dialog ${this._dialog_types[this.dialog_type]}">
-                <img ?src=${icon}/>
+                <img class="dialog_icon" src=${icon}/>
                 <slot>Empty dialog - add some content</slot>
             </div>
 		`;

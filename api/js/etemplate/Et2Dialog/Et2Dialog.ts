@@ -25,6 +25,7 @@ export interface DialogButton
 	text : string,
 	image? : string,
 	default? : boolean
+	align? : string
 }
 
 /**
@@ -49,23 +50,23 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 * Types
 	 * @constant
 	 */
-	public static PLAIN_MESSAGE : number = 0;
-	public static INFORMATION_MESSAGE : number = 1;
-	public static QUESTION_MESSAGE : number = 2;
-	public static WARNING_MESSAGE : number = 3;
-	public static ERROR_MESSAGE : number = 4;
+	public static readonly PLAIN_MESSAGE : number = 0;
+	public static readonly INFORMATION_MESSAGE : number = 1;
+	public static readonly QUESTION_MESSAGE : number = 2;
+	public static readonly WARNING_MESSAGE : number = 3;
+	public static readonly ERROR_MESSAGE : number = 4;
 
 	/* Pre-defined Button combos */
-	public static BUTTONS_OK : number = 0;
-	public static BUTTONS_OK_CANCEL : number = 1;
-	public static BUTTONS_YES_NO : number = 2;
-	public static BUTTONS_YES_NO_CANCEL : number = 3;
+	public static readonly BUTTONS_OK : number = 0;
+	public static readonly BUTTONS_OK_CANCEL : number = 1;
+	public static readonly BUTTONS_YES_NO : number = 2;
+	public static readonly BUTTONS_YES_NO_CANCEL : number = 3;
 
 	/* Button constants */
-	public static CANCEL_BUTTON : number = 0;
-	public static OK_BUTTON : number = 1;
-	public static YES_BUTTON : number = 2;
-	public static NO_BUTTON : number = 3;
+	public static readonly CANCEL_BUTTON : number = 0;
+	public static readonly OK_BUTTON : number = 1;
+	public static readonly YES_BUTTON : number = 2;
+	public static readonly NO_BUTTON : number = 3;
 
 	get properties()
 	{
@@ -73,10 +74,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			...super.properties(),
 			callback: Function,
 			modal: Boolean,
+			title: String,
 			buttons: Number,
 
 			// We just pass these on to Et2DialogContent
-			title: String,
 			message: String,
 			dialog_type: Number,
 			icon: String,
@@ -112,7 +113,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		//BUTTONS_OK_CANCEL: 1,
 		[
 			{"button_id": Et2Dialog.OK_BUTTON, "text": 'ok', id: 'dialog[ok]', image: 'check', "default": true},
-			{"button_id": Et2Dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel'}
+			{
+				"button_id": Et2Dialog.CANCEL_BUTTON,
+				"text": 'cancel',
+				id: 'dialog[cancel]',
+				image: 'cancel',
+				align: "right"
+			}
 		],
 		//BUTTONS_YES_NO: 2,
 		[
@@ -123,7 +130,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		[
 			{"button_id": Et2Dialog.YES_BUTTON, "text": 'yes', id: 'dialog[yes]', image: 'check', "default": true},
 			{"button_id": Et2Dialog.NO_BUTTON, "text": 'no', id: 'dialog[no]', image: 'cancelled'},
-			{"button_id": Et2Dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel'}
+			{
+				"button_id": Et2Dialog.CANCEL_BUTTON,
+				"text": 'cancel',
+				id: 'dialog[cancel]',
+				image: 'cancel',
+				align: "rignt"
+			}
 		]
 	];
 
@@ -141,25 +154,23 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	connectedCallback()
 	{
 		super.connectedCallback();
+	}
 
-		// Need to wait for Overlay
-		this.updateComplete
-			.then(async() =>
-			{
-				if(this._overlayContentNode)
-				{
-					await this._overlayContentNode.getUpdateComplete();
-					// This calls _onClose() when the dialog is closed
-					this._overlayContentNode.addEventListener(
-						'close-overlay',
-						this._onClose,
-					);
-					this._overlayContentNode.addEventListener(
-						'click',
-						this._onClick
-					)
-				}
-			});
+	// Need to wait for Overlay
+	async getUpdateComplete()
+	{
+		await super.getUpdateComplete();
+		await this._overlayContentNode.getUpdateComplete();
+
+		// This calls _onClose() when the dialog is closed
+		this._overlayContentNode.addEventListener(
+			'close-overlay',
+			this._onClose,
+		);
+		this._overlayContentNode.addEventListener(
+			'click',
+			this._onClick
+		)
 	}
 
 	_onClose(ev : PointerEvent)
@@ -229,7 +240,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		return html`
             <div id="overlay-content-node-wrapper">
                 <et2-dialog-overlay-frame class="dialog__overlay-frame"
-                                          .egw=${this.egw()}
+                                          ._dialog=${this}
                                           .buttons=${this._getButtons()}>
                     <span slot="heading">${this.title}</span>
                     ${this._contentTemplate()}
@@ -259,7 +270,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 		return html`
             <et2-dialog-content slot="content" ?icon=${this.icon}
-                                .value=${this.value}>
+                                .dialog_type=${this.dialog_type}
+                                .value=${this.value}
+            >
                 ${this.message}
             </et2-dialog-content>
 		`;
