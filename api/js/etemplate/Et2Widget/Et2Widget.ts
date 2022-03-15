@@ -74,7 +74,6 @@ const Et2WidgetMixin = (superClass) =>
 		 */
 		protected _widget_id : string = "";
 		protected _dom_id : string = "";
-		private statustext : string = "";
 
 		/**
 		 * TypeScript & LitElement ensure type correctness, so we can't have a string value like "$row_cont[disable_me]"
@@ -141,7 +140,11 @@ const Et2WidgetMixin = (superClass) =>
 				/**
 				 * Tooltip which is shown for this element on hover
 				 */
-				statustext: {type: String, translate: true},
+				statustext: {
+					type: String,
+					reflect: true,
+					translate: true
+				},
 
 				/**
 				 * The label of the widget
@@ -275,14 +278,25 @@ const Et2WidgetMixin = (superClass) =>
 
 		/**
 		 * supports legacy set_statustext
+		 * @deprecated use this.statustext
 		 * @param value
 		 */
 		set_statustext(value : string)
 		{
-			let oldValue = this.statustext;
 			this.statustext = value;
-			this.egw().tooltipBind(this, this.statustext);
+		}
+
+		set statustext(value : string)
+		{
+			let oldValue = this.__statustext;
+			this.__statustext = value;
+			this.egw().tooltipBind(this, this.__statustext);
 			this.requestUpdate("statustext", oldValue);
+		}
+
+		get statustext() : string
+		{
+			return this.__statustext;
 		}
 
 		/**
