@@ -86,8 +86,11 @@ var et2_countdown = /** @class */ (function (_super) {
         var distance = this.time.getTime() - now.getTime();
         if (distance < 0)
             return 0;
-        if (this.options.alarm > 0 && this.options.alarm == distance / 1000 && typeof this.onAlarm == 'function') {
-            this.onAlarm();
+        var alarms = Array.isArray(this.options.alarm) ? this.options.alarm : [this.options.alarm];
+        for (var i = 0; i <= alarms.length; i++) {
+            if (alarms[i] > 0 && alarms[i] == distance / 1000 && typeof this.onAlarm == 'function') {
+                this.onAlarm();
+            }
         }
         var values = {
             days: Math.floor(distance / (1000 * 60 * 60 * 24)),
