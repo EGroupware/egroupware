@@ -89,6 +89,8 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	{
 		return {
 			...super.properties,
+			// LionButton doesn't have a label property & Et2Widget avoids re-defining it
+			label: {type: String},
 			image: {type: String}
 		}
 	}
