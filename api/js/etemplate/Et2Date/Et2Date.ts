@@ -377,6 +377,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		{
 			value = "";
 			this.modelValue = "";
+			this.clear();
 			return;
 		}
 		// Handle timezone offset, flatpickr uses local time
