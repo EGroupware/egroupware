@@ -19,6 +19,7 @@ import {CRMView} from "../../addressbook/js/CRM";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
 import {egw} from "../../api/js/jsapi/egw_global";
+import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 
 /**
  * UI for Infolog
@@ -410,77 +411,72 @@ class InfologApp extends EgwApp
 	/**
 	* If one of info_status, info_percent or info_datecompleted changed --> set others to reasonable values
 	*
-	* @param {string} changed_id id of changed element
-	* @param {string} status_id
-	* @param {string} percent_id
-	* @param {string} datecompleted_id
+	* @param _event
+	* @param {et2_widget} _widget
 	*/
-	status_changed(changed_id, status_id, percent_id, datecompleted_id)
+	statusChanged(_event, _widget)
 	{
 		// Make sure this doesn't get executed while template is loading
-		if(this.et2 == null || this.et2.getInstanceManager() == null) return;
+		if (!this.et2?.getInstanceManager()) return;
 
-		var status = <HTMLInputElement>document.getElementById(status_id);
-		var percent = <HTMLInputElement>document.getElementById(percent_id);
-		var datecompleted = <HTMLInputElement>document.getElementById(datecompleted_id+'[str]');
-		if(!datecompleted)
-		{
-			datecompleted = <HTMLInputElement>jQuery('#'+datecompleted_id +' input').get(0);
-		}
-		var completed;
+		const status = <et2_selectbox>this.et2.getWidgetById('info_status');
+		const percent = <et2_selectbox>this.et2.getWidgetById('info_percent');
+		const datecompleted = <et2_date>this.et2.getWidgetById('info_datecompleted');
+		const old_status = status.get_value();
+		const old_percent = parseInt(percent.get_value());
+		let completed : boolean;
 
-		switch(changed_id)
+		switch(_widget.id)
 		{
-			case status_id:
-				completed = status.value == 'done' || status.value == 'billed';
-				if (completed || status.value == 'not-started' ||
-					(status.value == 'ongoing') != (parseFloat(percent.value) > 0 && parseFloat(percent.value) < 100))
+			case 'info_status':
+				completed = old_status === 'done' || old_status === 'billed';
+				if (completed || old_status === 'not-started' ||
+					(old_status === 'ongoing') !== (0 < old_percent && old_percent < 100))
 				{
-					if(completed)
+					if (completed)
 					{
-						percent.value = '100';
+						percent.set_value('100');
 					}
-					else if (status.value == 'not-started')
+					else if (old_status == 'not-started')
 					{
-						percent.value = '0';
+						percent.set_value('0');
 					}
-					else if (!completed && (parseInt(percent.value) == 0 || parseInt(percent.value) == 100))
+					else if (!completed && !old_percent || old_percent === 100)
 					{
-						percent.value = '10';
+						percent.set_value('10');
 					}
 				}
 				break;
 
-			case percent_id:
-				completed = parseInt(percent.value) == 100;
-				if (completed != (status.value == 'done' || status.value == 'billed') ||
-					(status.value == 'not-started') != (parseInt(percent.value) == 0))
+			case 'info_percent':
+				completed = old_percent === 100;
+				if (completed !== (old_status === 'done' || old_status === 'billed') ||
+					(old_status === 'not-started') !== !old_percent)
 				{
-					status.value = parseInt(percent.value) == 0 ? (jQuery('[value="not-started"]',status).length ?
-						'not-started':'ongoing') : (parseInt(percent.value) == 100 ? 'done' : 'ongoing');
+					status.set_value(!old_percent ? (old_status === 'not-started' ? 'not-started' : 'ongoing') :
+						(old_percent === 100 ? 'done' : 'ongoing'));
 				}
 				break;
 
-			case datecompleted_id+'[str]':
-			case datecompleted_id:
-				completed = datecompleted.value != '';
-				if (completed != (status.value == 'done' || status.value == 'billed'))
+			case 'info_datecompleted':
+				completed = !datecompleted.get_value();
+				if (completed !== (old_status === 'done' || old_status === 'billed'))
 				{
-					status.value = completed ? 'done' : 'not-started';
+					status.set_value(completed ? 'done' : 'not-started');
 				}
-				if (completed != (parseInt(percent.value) == 100))
+				if (completed !== (old_percent === 100))
 				{
-					percent.value = completed ? '100' : '0';
+					percent.set_value(completed ? '100' : '0');
 				}
 				break;
 		}
-		if (!completed && datecompleted && datecompleted.value != '')
+		if (!completed && datecompleted && datecompleted.get_value())
 		{
-			datecompleted.value = '';
+			datecompleted.set_value('');
 		}
-		else if (completed && datecompleted && datecompleted.value == '')
+		else if (completed && datecompleted && !datecompleted.get_value())
 		{
-			// todo: set current date in correct format
+			datecompleted.set_value(new Date());
 		}
 	}
 

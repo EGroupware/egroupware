@@ -124,7 +124,7 @@
 							</row>
 							<row>
 								<description value="Date completed" for="info_datecompleted"/>
-								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))" class="et2_fullWidth"/>
+								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged" class="et2_fullWidth"/>
 							</row>
 							<row class="row">
 								<description value="Location" for="info_location"/>
@@ -207,14 +207,10 @@
 				</row>
 				<row class="dialogOperators">
 					<description value="Status" for="info_status"/>
-					<menulist class="et2_fullWidth">
-						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
-					</menulist>
+					<select class="et2_fullWidth" statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"/>
 					<description/>
 					<description value="Completed" for="info_percent"/>
-					<menulist class="et2_fullWidth">
-						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
-					</menulist>
+					<select-percent class="et2_fullWidth" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"/>
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>

@@ -92,13 +92,11 @@
 				</row>
 				<row>
 					<description value="Priority" for="info_priority"/>
-					<menulist class="et2_fullWidth">
-							<menupopup statustext="select a priority for this task" id="info_priority"/>
-					</menulist>
+					<select class="et2_fullWidth" statustext="select a priority for this task" id="info_priority"/>
 				</row>
 				<row>
 					<description value="Date completed" for="info_datecompleted"/>
-					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))" class="et2_fullWidth"/>
+					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="Contact" for="info_from"/>
@@ -190,15 +188,11 @@
 				</row>
 				<row>
 					<description value="Status" for="info_status"/>
-					<menulist class="et2_fullWidth">
-						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
-					</menulist>
+					<select class="et2_fullWidth" statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"/>
 				</row>
 				<row>
 					<description value="Completed" for="info_percent"/>
-					<menulist class="et2_fullWidth" span="4">
-						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog.status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
-					</menulist>
+					<select-percent class="et2_fullWidth" span="4" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"/>
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" width="100%" align_tabs="v">
