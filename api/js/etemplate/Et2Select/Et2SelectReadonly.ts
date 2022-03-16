@@ -55,7 +55,7 @@ li {
 	{
 		super();
 		this.type = "";
-		this.select_options = [];
+		this.__select_options = <SelectOption[]>[];
 	}
 
 	protected find_select_options(_attrs)
@@ -63,7 +63,7 @@ li {
 		let sel_options = find_select_options(this, _attrs['select_options']);
 		if(sel_options.length > 0)
 		{
-			this.set_select_options(sel_options);
+			this.select_options = sel_options;
 		}
 	}
 
@@ -86,6 +86,10 @@ li {
 		this.find_select_options(_attrs)
 	}
 
+	/**
+	 * @deprecated assign to value
+	 * @param value
+	 */
 	set_value(value)
 	{
 		this.value = value;
@@ -117,7 +121,7 @@ li {
 	 *
 	 * @param {SelectOption[]} new_options
 	 */
-	set_select_options(new_options : SelectOption[] | { [key : string] : string })
+	set select_options(new_options : SelectOption[] | { [key : string] : string })
 	{
 		if(!Array.isArray(new_options))
 		{
@@ -130,7 +134,23 @@ li {
 			this.select_options = fixed_options;
 			return;
 		}
+		this.__select_options = new_options;
+	}
+
+	/**
+	 * Set the select options
+	 *
+	 * @deprecated assign to select_options
+	 * @param new_options
+	 */
+	set_select_options(new_options : SelectOption[] | { [key : string] : string })
+	{
 		this.select_options = new_options;
+	}
+
+	get select_options() : SelectOption[] | { [key : string] : string }
+	{
+		return this.__select_options;
 	}
 
 	render()
@@ -144,7 +164,7 @@ li {
             <ul>
                 ${repeat(this.value, (val : string) => val, (val) =>
                 {
-                    let option = this.select_options.find(option => option.value == val);
+                    let option = (<SelectOption[]>this.select_options).find(option => option.value == val);
                     if(!option)
                     {
                         return "";
@@ -204,7 +224,7 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 		{
 			let account_name = null;
 			let option = <SelectOption>{value: id, label: id + " ..."};
-			this.select_options.push(option);
+			this.select_options = [].concat(this.select_options, option);
 			if(new_value && (account_name = this.egw().link_title('api-accounts', id)))
 			{
 				option.label = account_name;
@@ -264,7 +284,7 @@ export class Et2SelectBitwiseReadonly extends Et2SelectReadonly
             <ul>
                 ${repeat(new_value, (val : string) => val, (val) =>
                 {
-                    let option = this.select_options.find(option => option.value == val);
+                    let option = (<SelectOption[]>this.select_options).find(option => option.value == val);
                     if(!option)
                     {
                         return "";

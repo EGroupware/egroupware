@@ -134,7 +134,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	 */
 	get value() : string|string[]
 	{
-		if (!this._inputNode || !this.select_options?.length)
+		if (!this._inputNode || !this.select_options.length)
 		{
 			return this.__value || '';
 		}
@@ -155,7 +155,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	set value(value: string|string[])
 	{
 		// if not yet connected to dom can't change the value
-		if (this._inputNode && this.select_options?.length)
+		if (this._inputNode && this.select_options.length)
 		{
 			// split multiple comma-separated values for multiple or expand_multiple_rows
 			if (typeof value === 'string' && (this.multiple || this.expand_multiple_rows) && value.indexOf(',') !== -1)
@@ -252,11 +252,11 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		{
 			const modelValueArr = Array.isArray(this.modelValue) ? this.modelValue : this.modelValue.split(',');
 			// value not in options AND NOT (having an empty label and value)
-			if(this.get_select_options().length > 0 && this.get_select_options().filter((option) => modelValueArr.find(val => val == option.value)).length === 0 &&
+			if(this.select_options.length > 0 && this.select_options.filter((option) => modelValueArr.find(val => val == option.value)).length === 0 &&
 				!(typeof this.empty_label !== 'undefined' && (this.modelValue || "") === ""))
 			{
 				// --> use first option
-				this.modelValue = "" + this.get_select_options()[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
+				this.modelValue = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
 			this.value = this.modelValue || "";
@@ -304,9 +304,11 @@ customElements.define("et2-select", Et2Select);
 
 export class Et2SelectApp extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.app(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.app(this, {other: this.other || []});
 	}
 }
 
@@ -319,7 +321,7 @@ export class Et2SelectBitwise extends Et2Select
 	{
 		let oldValue = this._value;
 		let expanded_value = [];
-		let options = this.get_select_options();
+		let options = this.select_options;
 		for(let index in options)
 		{
 			let right = parseInt(options[index].value);
@@ -339,11 +341,12 @@ customElements.define("et2-select-bitwise", Et2SelectBitwise);
 
 export class Et2SelectBool extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.bool(this);
-	}
+		super();
 
+		this.select_options = so.bool(this);
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
@@ -351,9 +354,11 @@ customElements.define("et2-select-bool", Et2SelectBool);
 
 export class Et2SelectCategory extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.cat(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.cat(this, {other: this.other || []});
 	}
 }
 
@@ -362,9 +367,11 @@ customElements.define("et2-select-cat", Et2SelectCategory);
 
 export class Et2SelectPercent extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.percent(this, {});
+		super();
+
+		this.select_options = so.percent(this, {});
 	}
 }
 
@@ -373,9 +380,11 @@ customElements.define("et2-select-percent", Et2SelectPercent);
 
 export class Et2SelectCountry extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.country(this, {});
+		super();
+
+		this.select_options = so.country(this, {});
 	}
 }
 
@@ -384,9 +393,11 @@ customElements.define("et2-select-country", Et2SelectCountry);
 
 export class Et2SelectDay extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.day(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.day(this, {other: this.other || []});
 	}
 }
 
@@ -395,9 +406,11 @@ customElements.define("et2-select-day", Et2SelectDay);
 
 export class Et2SelectDayOfWeek extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.dow(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.dow(this, {other: this.other || []});
 	}
 }
 
@@ -406,9 +419,11 @@ customElements.define("et2-select-dow", Et2SelectDayOfWeek);
 
 export class Et2SelectHour extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.hour(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.hour(this, {other: this.other || []});
 	}
 }
 
@@ -417,9 +432,11 @@ customElements.define("et2-select-hour", Et2SelectHour);
 
 export class Et2SelectMonth extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.month(this);
+		super();
+
+		this.select_options = so.month(this);
 	}
 }
 
@@ -428,9 +445,11 @@ customElements.define("et2-select-month", Et2SelectMonth);
 
 export class Et2SelectNumber extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.number(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.number(this, {other: this.other || []});
 	}
 }
 
@@ -439,9 +458,11 @@ customElements.define("et2-select-number", Et2SelectNumber);
 
 export class Et2SelectPriority extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.priority(this);
+		super();
+
+		this.select_options = so.priority(this);
 	}
 }
 
@@ -450,9 +471,11 @@ customElements.define("et2-select-priority", Et2SelectPriority);
 
 export class Et2SelectState extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.state(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.state(this, {other: this.other || []});
 	}
 }
 
@@ -461,9 +484,11 @@ customElements.define("et2-select-state", Et2SelectState);
 
 export class Et2SelectTimezone extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.timezone(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.timezone(this, {other: this.other || []});
 	}
 }
 
@@ -472,9 +497,11 @@ customElements.define("et2-select-timezone", Et2SelectTimezone);
 
 export class Et2SelectYear extends Et2Select
 {
-	get_select_options() : SelectOption[]
+	constructor()
 	{
-		return so.year(this, {other: this.other || []});
+		super();
+
+		this.select_options = so.year(this, {other: this.other || []});
 	}
 }
 

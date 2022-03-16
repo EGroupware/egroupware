@@ -32,20 +32,25 @@ export class Et2SelectAccount extends Et2Select
 	{
 		super();
 
-		this.account_type = 'accounts';
+		this.__account_type = 'accounts';
 	}
 
-	set_account_type(type : AccountType)
+	set account_type(type : AccountType)
 	{
-		this.account_type = type;
+		this.__account_type = type;
 
-		this.set_select_options(this.get_select_options());
+		super.select_options = this.select_options;
+	}
+
+	get account_type() : AccountType
+	{
+		return this.__account_type;
 	}
 
 	/**
 	 * Get account info for select options from common client-side account cache
 	 */
-	get_select_options() : Array<SelectOption>
+	get select_options() : Array<SelectOption>
 	{
 		const type = this.egw().preference('account_selection', 'common');
 		if (type === 'none' && typeof egw.user('apps').admin === 'undefined')

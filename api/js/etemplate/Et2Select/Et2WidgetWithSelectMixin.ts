@@ -73,7 +73,7 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 				 * Select box options
 				 *
 				 * Will be found automatically based on ID and type, or can be set explicitly in the template using
-				 * <option/> children, or using widget.set_select_options(SelectOption[])
+				 * <option/> children, or using widget.select_options = SelectOption[]
 				 */
 				select_options: Object,
 			}
@@ -83,7 +83,7 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		{
 			super();
 
-			this.select_options = <StaticOptions[]>[];
+			this.__select_options = <StaticOptions[]>[];
 		}
 
 		/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -94,7 +94,8 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			// If the ID changed (or was just set) find the select options
 			if(changedProperties.has("id"))
 			{
-				this.set_select_options(find_select_options(this));
+				const options = find_select_options(this);
+				if (options.length) this.select_options = options;
 			}
 
 			// Add in actual option tags to the DOM based on the new select_options
@@ -103,10 +104,8 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 				// Add in options as children to the target node
 				if(this._optionTargetNode)
 				{
-					// We use this.get_select_options() instead of this.select_options so children can override
-					// This is how the sub-types with static options (day of week, month, etc.) get their options in
 					render(html`${this._emptyLabelTemplate()}
-                            ${repeat(this.get_select_options(), (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+                            ${repeat(<SelectOption[]>this.select_options, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
 						this._optionTargetNode
 					);
 				}
@@ -143,10 +142,11 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		/**
 		 * Set the select options
 		 *
-		 * @param {SelectOption[]} new_options
+		 * @param new_options
 		 */
-		set_select_options(new_options : SelectOption[] | { [key : string] : string })
+		set select_options(new_options : SelectOption[] | { [key : string] : string })
 		{
+			const old_options = this.__select_options;
 			if(!Array.isArray(new_options))
 			{
 				let fixed_options = [];
@@ -154,17 +154,29 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 				{
 					fixed_options.push({value: key, label: new_options[key]});
 				}
-				this.select_options = fixed_options;
+				this.__select_options = fixed_options;
 			}
 			else
 			{
-				this.select_options = new_options;
+				this.__select_options = new_options;
 			}
+			this.requestUpdate("select_options", old_options);
 		}
 
-		get_select_options()
+		/**
+		 * Set select options
+		 *
+		 * @deprecated assign to select_options
+		 * @param new_options
+		 */
+		set_select_options(new_options : SelectOption[] | { [key : string] : string })
 		{
-			return this.select_options;
+			this.select_options = new_options;
+		}
+
+		get select_options()
+		{
+			return this.__select_options;
 		}
 
 		/**
@@ -245,7 +257,10 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			{
 				new_options = find_select_options(this, {}, new_options);
 			}
-			this.set_select_options(new_options);
+			if (new_options.length)
+			{
+				this.select_options = new_options;
+			}
 		}
 	}
 	return Et2WidgetWithSelect;

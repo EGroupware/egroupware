@@ -10,7 +10,9 @@
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Et2SelectReadonly";
 import {find_select_options, SelectOption} from "./FindSelectOptions";
-import {Et2WidgetWithSelect} from "./Et2Select";
+import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
+
+export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
 /**
  * Some options change, or are too complicated to have twice, so we get the
@@ -25,7 +27,7 @@ import {Et2WidgetWithSelect} from "./Et2Select";
  */
 export class StaticOptions
 {
-	cached_server_side(widget : Et2WidgetWithSelect | Et2SelectReadonly, type : string, options_string) : SelectOption[]
+	cached_server_side(widget : Et2SelectWidgets, type : string, options_string) : SelectOption[]
 	{
 		// normalize options by removing trailing commas
 		options_string = options_string.replace(/,+$/, '');
@@ -93,14 +95,14 @@ export class StaticOptions
 				{
 					if(widget.value && widget && widget.get_value() !== widget.value)
 					{
-						egw.window.setTimeout(jQuery.proxy(function()
+						egw.window.setTimeout(function()
 						{
 							// Avoid errors if widget is destroyed before the timeout
 							if(this.widget && typeof this.widget.id !== 'undefined')
 							{
 								this.widget.set_value(this.widget.options.value);
 							}
-						}, {widget: widget}), 1);
+						}.bind({widget: widget}), 1);
 					}
 				}
 			}
@@ -108,7 +110,7 @@ export class StaticOptions
 		}
 	}
 
-	priority(widget : Et2WidgetWithSelect | Et2SelectReadonly) : SelectOption[]
+	priority(widget : Et2SelectWidgets) : SelectOption[]
 	{
 		return [
 			{value: "1", label: 'low'},
@@ -118,7 +120,7 @@ export class StaticOptions
 		];
 	}
 
-	bool(widget : Et2WidgetWithSelect | Et2SelectReadonly) : SelectOption[]
+	bool(widget : Et2SelectWidgets) : SelectOption[]
 	{
 		return [
 			{value: "0", label: 'no'},
@@ -126,7 +128,7 @@ export class StaticOptions
 		];
 	}
 
-	month(widget : Et2WidgetWithSelect | Et2SelectReadonly) : SelectOption[]
+	month(widget : Et2SelectWidgets) : SelectOption[]
 	{
 		return [
 			{value: "1", label: 'January'},
@@ -144,7 +146,7 @@ export class StaticOptions
 		];
 	}
 
-	number(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	number(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		if(typeof attrs.other != 'object')
 		{
@@ -180,7 +182,7 @@ export class StaticOptions
 		return options;
 	}
 
-	percent(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	percent(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		if(typeof attrs.other != 'object')
 		{
@@ -193,7 +195,7 @@ export class StaticOptions
 		return this.number(widget, attrs);
 	}
 
-	year(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	year(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		if(typeof attrs.other != 'object')
 		{
@@ -206,13 +208,13 @@ export class StaticOptions
 		return this.number(widget, attrs);
 	}
 
-	day(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	day(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		attrs.other = [1, 31, 1];
 		return this.number(widget, attrs);
 	}
 
-	hour(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	hour(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = [];
 		var timeformat = widget.egw().preference('common', 'timeformat');
@@ -228,13 +230,13 @@ export class StaticOptions
 		return options;
 	}
 
-	app(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	app(widget : Et2SelectWidgets | Et2Select, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-app', options);
 	}
 
-	cat(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	cat(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		// Add in application, if not there
 		if(typeof attrs.other == 'undefined')
@@ -252,31 +254,31 @@ export class StaticOptions
 		return this.cached_server_side(widget, 'select-cat', options);
 	}
 
-	country(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	country(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = ',';
 		return this.cached_server_side(widget, 'select-country', options);
 	}
 
-	state(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	state(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = attrs.country_code ? attrs.country_code : 'de';
 		return this.cached_server_side(widget, 'select-state', options);
 	}
 
-	dow(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	dow(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-dow', options);
 	}
 
-	lang(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	lang(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-lang', options);
 	}
 
-	timezone(widget : Et2WidgetWithSelect | Et2SelectReadonly, attrs) : SelectOption[]
+	timezone(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
 		var options = ',' + (attrs.other || []).join(',');
 		return this.cached_server_side(widget, 'select-timezone', options);
