@@ -459,7 +459,7 @@ class InfologApp extends EgwApp
 				break;
 
 			case 'info_datecompleted':
-				completed = !datecompleted.get_value();
+				completed = !!datecompleted.get_value();
 				if (completed !== (old_status === 'done' || old_status === 'billed'))
 				{
 					status.set_value(completed ? 'done' : 'not-started');
@@ -476,7 +476,9 @@ class InfologApp extends EgwApp
 		}
 		else if (completed && datecompleted && !datecompleted.get_value())
 		{
-			datecompleted.set_value(new Date());
+			const now = new Date();
+			const localtime = new Date(now.valueOf()-now.getTimezoneOffset()*60000);
+			datecompleted.set_value(localtime);
 		}
 	}
 
