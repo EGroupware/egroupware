@@ -17,6 +17,8 @@ import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {html, LitElement, ScopedElementsMixin, SlotMixin} from "@lion/core";
 import {Et2DialogOverlay} from "./Et2DialogOverlay";
 import {Et2DialogContent} from "./Et2DialogContent";
+import {et2_template} from "../et2_widget_template";
+import {etemplate2} from "../etemplate2";
 
 export interface DialogButton
 {
@@ -47,6 +49,16 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	protected __egw : IegwAppLocal
 
 	/**
+	 * As long as the template is a legacy widget, we want to hold on to the widget
+	 * When it becomes a WebComponent, we can just include it in render()
+	 *
+	 * @type {et2_template | null}
+	 * @protected
+	 */
+	protected __template_widget : etemplate2 | null;
+	protected __template_promise : Promise<boolean>;
+
+	/**
 	 * Types
 	 * @constant
 	 */
@@ -73,9 +85,17 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		return {
 			...super.properties(),
 			callback: Function,
+
+			// There's an issue with Et2DialogContent.style being undefined, so this has to stay false until it gets
+			// figured out
 			modal: Boolean,
 			title: String,
 			buttons: Number,
+
+			template: String,
+
+			width: Number,
+			height: Number,
 
 			// We just pass these on to Et2DialogContent
 			message: String,
@@ -140,11 +160,16 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		]
 	];
 
-	constructor()
+	constructor(parent_egw? : string | IegwAppLocal)
 	{
 		super();
 
-		this.modal = true;
+		if(parent_egw)
+		{
+			this._setApiInstance(parent_egw);
+		}
+		// Needs to not be modal until the style thing is figured out
+		this.modal = false;
 		this.__value = {};
 
 		this._onClose = this._onClose.bind(this);
@@ -154,6 +179,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	connectedCallback()
 	{
 		super.connectedCallback();
+
+		// Wait for everything to complete, then auto-open
+		this.getUpdateComplete().then(() =>
+		{
+			window.setTimeout(this.open, 0);
+		});
 	}
 
 	// Need to wait for Overlay
@@ -162,15 +193,18 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		await super.getUpdateComplete();
 		await this._overlayContentNode.getUpdateComplete();
 
+		// Wait for template to finish loading
+		if(this.__template_widget)
+		{
+			await this.__template_promise;
+		}
+
 		// This calls _onClose() when the dialog is closed
 		this._overlayContentNode.addEventListener(
 			'close-overlay',
 			this._onClose,
 		);
-		this._overlayContentNode.addEventListener(
-			'click',
-			this._onClick
-		)
+		this._overlayContentNode.querySelectorAll("et2-button").forEach((button) => button.addEventListener("click", this._onClick));
 	}
 
 	_onClose(ev : PointerEvent)
@@ -185,23 +219,36 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		const button_id = parseInt(ev.target?.getAttribute("button_id")) || ev.target?.getAttribute("id") || null;
 
 		// Handle anything bound via et2 onclick property
-		let et2_widget_result = super._handleClick(ev);
-
-		if(!et2_widget_result)
+		try
 		{
-			ev.preventDefault();
-			ev.stopPropagation();
-			return false;
+			let et2_widget_result = super._handleClick(ev);
+			if(!et2_widget_result)
+			{
+				ev.preventDefault();
+				ev.stopPropagation();
+				return false;
+			}
+		}
+		catch(e)
+		{
+			console.log(e);
 		}
 
-		// Callback expects (button_id, value)
-		let callback_result = this.callback ? this.callback(button_id, this.value) : true;
 
-		if(callback_result === false)
+		// Callback expects (button_id, value)
+		try
 		{
-			ev.preventDefault();
-			ev.stopPropagation();
-			return false;
+			let callback_result = this.callback ? this.callback(button_id, this.value) : true;
+			if(callback_result === false)
+			{
+				ev.preventDefault();
+				ev.stopPropagation();
+				return false;
+			}
+		}
+		catch(e)
+		{
+			console.log(e);
 		}
 		this.close();
 	}
@@ -213,16 +260,95 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	get value() : Object
 	{
 		let value = this.__value;
-		if(this.template)
+		if(this.__template_widget)
 		{
-			value = this.template.getValues(this.template.widgetContainer);
+			value = this.__template_widget.getValues(this.__template_widget.widgetContainer);
 		}
 		return value;
+	}
+
+	/**
+	 * Fire the close-overlay event to use all registered listeners
+	 * @deprecated
+	 */
+	destroy()
+	{
+		this._overlayContentNode.dispatchEvent(new Event('close-overlay'));
+	}
+
+	/**
+	 * @deprecated
+	 * @returns {Object}
+	 */
+	get_value() : Object
+	{
+		console.warn("Deprecated get_value() called");
+		return this.value;
 	}
 
 	set value(new_value)
 	{
 		this.__value = new_value;
+	}
+
+	set template(new_template_name)
+	{
+		let old_template = this.template;
+		this.__template = new_template_name;
+		this.requestUpdate("template", old_template);
+	}
+
+	get template()
+	{
+		return this.__template;
+	}
+
+
+	updated(changedProperties)
+	{
+		super.updated(changedProperties);
+		if(changedProperties.has("template"))
+		{
+			this._loadTemplate();
+		}
+	}
+
+	_loadTemplate()
+	{
+		if(this.__template_widget)
+		{
+			this.__template_widget.clear();
+		}
+		this.__template_widget = new etemplate2(this._overlayContentNode._contentNode);
+		if(this.template.indexOf('.xet') > 0)
+		{
+			// File name provided, fetch from server
+			this.__template_promise = this.__template_widget.load("", this.template, this.__value || {content: {}},);
+		}
+		else
+		{
+			// Just template name, it better be loaded already
+			this.__template_promise = this.__template_widget.load(this.template, '', this.__value || {},
+				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
+				undefined, undefined, true);
+		}
+
+		// Don't let dialog closing destroy the parent session
+		if(this.__template_widget.etemplate_exec_id && this.__template_widget.app)
+		{
+			for(let et of etemplate2.getByApplication(this.__template_widget.app))
+			{
+				if(et !== this.__template_widget && et.etemplate_exec_id === this.__template_widget.etemplate_exec_id)
+				{
+					// Found another template using that exec_id, don't destroy when dialog closes.
+					this.__template_widget.unbind_unload();
+					break;
+				}
+			}
+		}
+		// set template-name as id, to allow to style dialogs
+		//this.div.children().attr('id', new_template_name.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
+
 	}
 
 	render()
@@ -240,6 +366,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		return html`
             <div id="overlay-content-node-wrapper">
                 <et2-dialog-overlay-frame class="dialog__overlay-frame"
+                                          .width=${this.width}
+                                          .height=${this.height}
                                           ._dialog=${this}
                                           .buttons=${this._getButtons()}>
                     <span slot="heading">${this.title}</span>
@@ -267,16 +395,22 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 	_contentTemplate()
 	{
-
-		return html`
-            <et2-dialog-content slot="content" ?icon=${this.icon}
-                                .dialog_type=${this.dialog_type}
-                                .value=${this.value}
-            >
-                ${this.message}
-            </et2-dialog-content>
-		`;
-
+		if(this.template)
+		{
+			return html`
+                <div slot="content"></div>`;
+		}
+		else
+		{
+			return html`
+                <et2-dialog-content slot="content" ?icon=${this.icon}
+                                    .dialog_type=${this.dialog_type}
+                                    .value=${this.value}
+                >
+                    ${this.message}
+                </et2-dialog-content>
+			`;
+		}
 	}
 
 	_getButtons()
@@ -379,12 +513,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			icon: _icon,
 			value: _value,
 			width: 'auto',
+			/*
+			 TODO: There's something going on with our Et2Widgets that they don't get a proper .style property
+			 This lack of .style causes problems when we go modal.  Non-modal works.
+			 */
 			modal: false
 		});
 		// Let other things run, then open
 		dialog.getUpdateComplete().then(() =>
 		{
-			window.setTimeout(dialog.open, 0);
 		});
 		document.body.appendChild(<LitElement><unknown>dialog);
 		return dialog;

@@ -1,5 +1,5 @@
+import {css, CSSResultArray, html, LitElement} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement} from "@lion/core";
 
 /**
  * Widget for the actual content of a dialog, used when we're not doing a template
@@ -7,11 +7,8 @@ import {css, html, LitElement} from "@lion/core";
  */
 export class Et2DialogContent extends Et2Widget(LitElement)
 {
-	static get styles()
-	{
-		return [
-			...super.styles,
-			css`
+	static styles : CSSResultArray = [
+		css`
 			:host {
 			display: block;
 			min-width: 200px;
@@ -25,8 +22,8 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 				vertical-align: middle;
 			}
 			`
-		];
-	}
+	];
+
 
 	get properties()
 	{

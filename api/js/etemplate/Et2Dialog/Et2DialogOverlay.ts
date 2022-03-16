@@ -1,12 +1,15 @@
 import {css, html, LitElement, repeat, SlotMixin} from '@lion/core';
 import {DialogButton, Et2Dialog} from "./Et2Dialog";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {et2_template} from "../et2_widget_template";
+import {Et2DialogContent} from "./Et2DialogContent";
 
 /**
  * This handles the visible portion of the dialog, including the title & close button.
  *
+ * Note we can't extend Et2Widget.  If I try, something in the render / creation breaks and calling open() gives an
+ * error with modal: true
  */
-export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
+export class Et2DialogOverlay extends SlotMixin(LitElement)
 {
 
 	protected buttons : DialogButton[];
@@ -30,6 +33,10 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
           display: none;
         }
 
+		.overlay {
+			display: flex;
+			flex-direction: column;
+		}
         .overlay__header {
           display: flex;
         }
@@ -38,6 +45,9 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 			margin: 0px;
 			padding: 6px 16px 8px;
 			flex: 1;
+        }
+        #overlay-content-node-wrapper {
+        	flex: 1 1 auto;
         }
 
         .overlay__heading > .overlay__close-button {
@@ -69,6 +79,15 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 		];
 	}
 
+	get properties()
+	{
+		return {
+			// Allow to force size, otherwise it sizes to contents
+			width: Number,
+			height: Number,
+		}
+	}
+
 	get slots()
 	{
 		return {
@@ -84,7 +103,6 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 	{
 		super();
 		this.buttons = [];
-
 	}
 
 	firstUpdated(_changedProperties)
@@ -92,22 +110,39 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 		super.firstUpdated(_changedProperties);
 		// Tell content about its parent, but don't move it
 		//@ts-ignore
-		(<Et2Widget><unknown>this.querySelector("[slot='content']"))._parent = this._dialog;
+		//(<Et2Widget><unknown>this.querySelector("[slot='content']"))._parent = this._dialog;
 	}
 
 
 	// Need to wait for Overlay
 	async getUpdateComplete()
 	{
-		await super.getUpdateComplete();
-		await this._contentNode.getUpdateComplete();
+		let result = await super.getUpdateComplete();
+		if(this._contentNode && this._contentNode.getUpdateComplete)
+		{
+			await this._contentNode.getUpdateComplete();
+		}
+		return result;
 	}
 
-	/**
-	 * Dialog might not be part of an etemplate, use dialog's egw
-	 *
-	 * @returns {IegwAppLocal}
-	 */
+	connectedCallback()
+	{
+		super.connectedCallback();
+		// Need to wait for Overlay
+		this.updateComplete
+			.then(async() =>
+			{
+				if(this._contentNode && this._contentNode.getUpdateComplete)
+				{
+
+					// Re-do render to get proper images
+					this._contentNode.requestUpdate();
+
+					await this._contentNode.getUpdateComplete();
+				}
+			});
+	}
+
 	egw() : IegwAppLocal
 	{
 		if(this._dialog)
@@ -132,8 +167,9 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 		return super.performUpdate();
 	}
 
-	get _contentNode()
+	get _contentNode() : Et2DialogContent | et2_template
 	{
+		// @ts-ignore
 		return this.querySelector("[slot='content']");
 	}
 
@@ -145,8 +181,17 @@ export class Et2DialogOverlay extends Et2Widget(SlotMixin(LitElement))
 
 	render()
 	{
-		// eslint-disable-line class-methods-use-this
+		// This style is just for this dialog
+		let style = html`
+            <style>
+                .overlay {
+                    ${this.width ? "width: " + this.width + "px" : ""};
+                    ${this.height ? "height: " + this.height + "px" : ""};
+                }
+            </style>`;
+
 		return html`
+            ${(this.width || this.height) ? style : ""}
             <div class="overlay">
                 <div class="overlay__header">
                     <h1 class="overlay__heading">
