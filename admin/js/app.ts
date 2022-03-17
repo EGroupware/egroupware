@@ -14,19 +14,20 @@
 
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
-import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw} from "../../api/js/jsapi/egw_global.js";
-import {egwActionObject, egwAction} from '../../api/js/egw_action/egw_action.js';
+import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action.js';
+import {LitElement} from "@lion/core";
+
 /**
  * UI for Admin
  *
  * @augments AppJS
  */
 class AdminApp extends EgwApp
-/**
- * @lends app.classes.admin
- */
+	/**
+	 * @lends app.classes.admin
+	 */
 {
 
 	/**
@@ -560,12 +561,19 @@ class AdminApp extends EgwApp
 	_acl_delete(ids)
 	{
 		var app = egw.app_name();	// can be either admin or preferences!
-		if (app != 'admin') app = 'preferences';
-		var className = app+'_acl';
-		var callback = function(_button_id, _value) {
-			if(_button_id != et2_dialog.OK_BUTTON) return;
+		if(app != 'admin')
+		{
+			app = 'preferences';
+		}
+		var className = app + '_acl';
+		var callback = function(_button_id, _value)
+		{
+			if(_button_id != Et2Dialog.OK_BUTTON)
+			{
+				return;
+			}
 
-			var request = egw.json(className+'::ajax_change_acl', [ids, null, _value, this.et2._inst.etemplate_exec_id], this._acl_callback,this,false,this)
+			var request = egw.json(className + '::ajax_change_acl', [ids, null, _value, this.et2._inst.etemplate_exec_id], this._acl_callback, this, false, this)
 				.sendRequest();
 		}.bind(this);
 
@@ -573,32 +581,33 @@ class AdminApp extends EgwApp
 		var dialog_options = {
 			callback: callback,
 			title: this.egw.lang('Delete'),
-			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: {},
 				sel_options: {},
 				modifications: modifications,
 				readonlys: {}
 			},
-			template: egw.webserverUrl+'/admin/templates/default/acl.delete.xet'
+			template: egw.webserverUrl + '/admin/templates/default/acl.delete.xet'
 		};
 
 		// Handle policy documentation tab here
 		if(this.egw.user('apps').policy)
 		{
 			dialog_options['width'] = 550;
-			dialog_options['height'] = 350,
 			modifications.tabs = {
-				add_tabs:   true,
+				add_tabs: true,
 				tabs: [{
-					label:    egw.lang('Documentation'),
+					label: egw.lang('Documentation'),
 					template: 'policy.admin_cmd',
-					prepend:  false
+					prepend: false
 				}]
 			};
 		}
 		// Create the dialog
-		this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
+		this.acl_dialog = new Et2Dialog(app);
+		this.acl_dialog.transformAttributes(dialog_options);
+		document.body.appendChild(this.acl_dialog);
 	}
 
 	/**
@@ -710,12 +719,19 @@ class AdminApp extends EgwApp
 		}
 
 		var dialog_options = {
-			callback: jQuery.proxy(function(_button_id, _value) {
+			callback: (_button_id, _value) =>
+			{
 				this.acl_dialog = null;
-				if(_button_id != et2_dialog.OK_BUTTON) return;
+				if(_button_id != Et2Dialog.OK_BUTTON)
+				{
+					return;
+				}
 
 				// Restore account if it's readonly in dialog
-				if(!_value.acl_account) _value.acl_account = content.acl_account;
+				if(!_value.acl_account)
+				{
+					_value.acl_account = content.acl_account;
+				}
 
 				// Handle no applications selected
 				if(typeof _value.apps == 'undefined' && content.acl_location == 'run')
@@ -768,16 +784,16 @@ class AdminApp extends EgwApp
 						// Remove any removed
 						if(removed.length > 0)
 						{
-							this.egw.json(className+'::ajax_change_acl', [removed, 0, [], this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback,this,false,this)
+							this.egw.json(className + '::ajax_change_acl', [removed, 0, [], this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
 								.sendRequest();
 						}
 					}
-					this.egw.json(className+'::ajax_change_acl', [id, rights, _value, this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback,this,false,this)
+					this.egw.json(className + '::ajax_change_acl', [id, rights, _value, this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
 						.sendRequest();
 				}
-			},this),
+			},
 			title: this.egw.lang('Access control'),
-			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: content,
 				// @todo: we need to investigate more on et2_widget_selectbox type of apps
@@ -787,7 +803,7 @@ class AdminApp extends EgwApp
 				modifications: modifications,
 				readonlys: readonlys
 			},
-			template: egw.webserverUrl+'/admin/templates/default/acl.edit.xet'
+			template: egw.webserverUrl + '/admin/templates/default/acl.edit.xet'
 		};
 
 		// Handle policy documentation tab here
@@ -796,17 +812,20 @@ class AdminApp extends EgwApp
 			dialog_options['width'] = 550;
 			dialog_options['height'] = 450,
 			modifications.tabs = {
-				add_tabs:   true,
+				add_tabs: true,
 				tabs: [{
-					label:    egw.lang('Documentation'),
+					label: egw.lang('Documentation'),
 					template: 'policy.admin_cmd',
-					prepend:  false
+					prepend: false
 				}]
 			};
 		}
 
 		// Create the dialog
-		this.acl_dialog = et2_createWidget("dialog", dialog_options, et2_dialog._create_parent(app));
+		this.acl_dialog = new Et2Dialog(app);
+		this.acl_dialog.transformAttributes(dialog_options);
+
+		document.body.appendChild(<LitElement><unknown>this.acl_dialog);
 	}
 
 	/**
@@ -919,7 +938,7 @@ class AdminApp extends EgwApp
 				if(removed_cat_label)
 				{
 					var msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
-					return et2_dialog.confirm(button,msg + removed_cat_label.join(','));
+					return Et2Dialog.confirm(button, msg + removed_cat_label.join(','));
 				}
 			}
 		}
@@ -1013,14 +1032,14 @@ class AdminApp extends EgwApp
 		}
 		else
 		{
-			et2_dialog.show_dialog(function(_button)
-			{
-				if (_button == et2_dialog.YES_BUTTON)
+			Et2Dialog.show_dialog(function(_button)
 				{
-					submit();
-				}
-			}, this.egw.lang('Submit displayed information?'), '', {},
-				et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE, undefined, egw);
+					if(_button == Et2Dialog.YES_BUTTON)
+					{
+						submit();
+					}
+				}, this.egw.lang('Submit displayed information?'), '', {},
+				Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE, undefined, egw);
 		}
 		return false;
 	}
@@ -1049,7 +1068,7 @@ class AdminApp extends EgwApp
 	{
 		var callback = function(button, value)
 		{
-			if(button === et2_dialog.YES_BUTTON)
+			if(button === Et2Dialog.YES_BUTTON)
 			{
 				var values = jQuery.extend(
 					{},
@@ -1081,27 +1100,29 @@ class AdminApp extends EgwApp
 
 		if(egw.app('policy'))
 		{
-			import(egw.link('/policy/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())).then(() => {
+			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400 | 0).toString())).then(() =>
+			{
 				if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
 				{
 					app.policy = new app.classes.policy();
 				}
 
-				var parent = et2_dialog._create_parent(widget.egw());
-				var dialog = et2_createWidget("dialog", {
+				let dialog = new Et2Dialog(widget.egw());
+				dialog.transformAttributes({
 					callback: callback,
 					template: egw.link('/policy/templates/default/admin_cmd_narrow.xet'),
-					title: egw.lang('Delete'),
-					buttons: et2_dialog.BUTTONS_YES_NO,
-					value: {content:{}},
+					title: 'Delete',
+					buttons: Et2Dialog.BUTTONS_YES_NO,
+					value: {content: {}},
 					width: 'auto'
-				}, parent);
+				});
+				widget.egw().window.document.body.appendChild(dialog);
 				dialog.egw().message("Entries with a deleted type can cause problems.\nCheck for entries with this type before deleting.", 'warning');
 			});
 		}
 		else
 		{
-			callback(et2_dialog.YES_BUTTON);
+			callback(Et2Dialog.YES_BUTTON);
 		}
 		return false;
 	}
@@ -1123,13 +1144,14 @@ class AdminApp extends EgwApp
 			accounts[i] = [{id:_selected[i]['id'].split('::')[1],qouta:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2._inst.etemplate_exec_id];
 		}
 		var callbackDialog = function (btn){
-			if (btn === et2_dialog.YES_BUTTON)
+			if(btn === Et2Dialog.YES_BUTTON)
 			{
 				// long task dialog for de/activation accounts
-				et2_dialog.long_task(function(_val, _resp){
-					if (_val && _resp.type !== 'error')
+				Et2Dialog.long_task(function(_val, _resp)
+				{
+					if(_val && _resp.type !== 'error')
 					{
-						console.log(_val,_resp);
+						console.log(_val, _resp);
 					}
 					else
 					{
@@ -1139,8 +1161,8 @@ class AdminApp extends EgwApp
 			}
 		};
 		// confirmation dialog
-		et2_dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), egw.lang('Active Mail Accounts'), {},
-			et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+		Et2Dialog.show_dialog(callbackDialog, egw.lang('Are you sure you want to %1 mail for selected accounts?', egw.lang(_action.id)), 'Active Mail Accounts', {},
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw);
 	}
 
 	/**
@@ -1432,19 +1454,22 @@ class AdminApp extends EgwApp
 	smime_genCertificate()
 	{
 		var self = this;
-		et2_createWidget("dialog",
-		{
+		let dialog = new Et2Dialog("mail");
+		dialog.transformAttributes({
 			callback(_button_id, _value)
 			{
-				if (_button_id == 'create' && _value)
+				if(_button_id == 'create' && _value)
 				{
 					var isValid = true;
 					var required = ['countryName', 'emailAddress'];
 					var widget;
 					// check the required fields
-					for (var i=0;i<required.length;i++)
+					for(var i = 0; i < required.length; i++)
 					{
-						if (_value[required[i]]) continue;
+						if(_value[required[i]])
+						{
+							continue;
+						}
 						widget = this.template.widgetContainer.getWidgetById(required[i]);
 						widget.set_validation_error('This field is required!');
 						isValid = false;
@@ -1488,16 +1513,18 @@ class AdminApp extends EgwApp
 			title: egw.lang('Generate Certificate'),
 			buttons: [
 				{text: this.egw.lang("Create"), id: "create", "class": "ui-priority-primary", "default": true},
-				{text: this.egw.lang("Cancel"), id:"cancel"}
+				{text: this.egw.lang("Cancel"), id: "cancel"}
 			],
-			value:{
-				content:{
+			value: {
+				content: {
 					value: ''
-			}},
-			template: egw.webserverUrl+'/mail/templates/default/smimeCertGen.xet?'+Date.now(),
+				}
+			},
+			template: egw.webserverUrl + '/mail/templates/default/smimeCertGen.xet?' + Date.now(),
 			resizable: false,
 			position: 'left top'
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.appendChild(<LitElement><unknown>dialog);
 	}
 
 	/**
