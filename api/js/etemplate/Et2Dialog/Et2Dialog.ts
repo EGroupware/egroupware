@@ -55,8 +55,24 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 * @type {et2_template | null}
 	 * @protected
 	 */
-	protected __template_widget : etemplate2 | null;
-	protected __template_promise : Promise<boolean>;
+	protected _template_widget : etemplate2 | null;
+	protected _template_promise : Promise<boolean>;
+
+	/**
+	 * Treat the dialog as an atomic operation, and use this promise to notify when
+	 * "done" instead of (or in addition to) using the callback function.
+	 * It gives the button ID and the dialog value.
+	 */
+	protected _complete_promise : Promise<[number, Object]>;
+
+	/**
+	 * The ID of the button that was clicked.  Always one of the button constants,
+	 * unless custom buttons were used
+	 *
+	 * @type {number|null}
+	 * @protected
+	 */
+	protected _button_id : number | null;
 
 	/**
 	 * Types
@@ -172,8 +188,16 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this.modal = false;
 		this.__value = {};
 
+		this._onOpen = this._onOpen.bind(this);
 		this._onClose = this._onClose.bind(this);
 		this._onClick = this._onClick.bind(this);
+
+		// Create this here so we have something, otherwise the creator might continue with undefined while we
+		// wait for the dialog to complete & open
+		this._complete_promise = new Promise<[number, Object]>((resolve) =>
+		{
+			this._completeResolver = value => resolve(value);
+		});
 	}
 
 	connectedCallback()
@@ -183,8 +207,19 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// Wait for everything to complete, then auto-open
 		this.getUpdateComplete().then(() =>
 		{
+			// _overlayCtrl is not available earlier
+			this._overlayCtrl?.addEventListener("show", this._onOpen);
+			this._overlayCtrl.addEventListener('hide', this._onClose);
+
 			window.setTimeout(this.open, 0);
 		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this._overlayCtrl.removeEventListener("hide", this._onClose);
+		this._overlayCtrl.removeEventListener("show", this._onOpen);
 	}
 
 	// Need to wait for Overlay
@@ -194,21 +229,33 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		await this._overlayContentNode.getUpdateComplete();
 
 		// Wait for template to finish loading
-		if(this.__template_widget)
+		if(this._template_widget)
 		{
-			await this.__template_promise;
+			await this._template_promise;
 		}
 
 		// This calls _onClose() when the dialog is closed
-		this._overlayContentNode.addEventListener(
-			'close-overlay',
-			this._onClose,
-		);
 		this._overlayContentNode.querySelectorAll("et2-button").forEach((button) => button.addEventListener("click", this._onClick));
+	}
+
+	getComplete() : Promise<[number, Object]>
+	{
+		return this._complete_promise;
+	}
+
+	_onOpen()
+	{
+		this._button_id = null;
+		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
 	}
 
 	_onClose(ev : PointerEvent)
 	{
+		this._completeResolver([this._button_id, this.value]);
+		this._button_id = null;
+		this._complete_promise = undefined;
+
+		// No real need to do this automatically, dialog could be reused without this
 		this._overlayCtrl.teardown();
 		this.remove();
 	}
@@ -216,7 +263,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	_onClick(ev : MouseEvent)
 	{
 		// @ts-ignore
-		const button_id = parseInt(ev.target?.getAttribute("button_id")) || ev.target?.getAttribute("id") || null;
+		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
 
 		// Handle anything bound via et2 onclick property
 		try
@@ -238,7 +285,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// Callback expects (button_id, value)
 		try
 		{
-			let callback_result = this.callback ? this.callback(button_id, this.value) : true;
+			let callback_result = this.callback ? this.callback(this._button_id, this.value) : true;
 			if(callback_result === false)
 			{
 				ev.preventDefault();
@@ -260,9 +307,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	get value() : Object
 	{
 		let value = this.__value;
-		if(this.__template_widget)
+		if(this._template_widget)
 		{
-			value = this.__template_widget.getValues(this.__template_widget.widgetContainer);
+			value = this._template_widget.getValues(this._template_widget.widgetContainer);
 		}
 		return value;
 	}
@@ -315,33 +362,33 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 	_loadTemplate()
 	{
-		if(this.__template_widget)
+		if(this._template_widget)
 		{
-			this.__template_widget.clear();
+			this._template_widget.clear();
 		}
-		this.__template_widget = new etemplate2(this._overlayContentNode._contentNode);
+		this._template_widget = new etemplate2(this._overlayContentNode._contentNode);
 		if(this.template.indexOf('.xet') > 0)
 		{
 			// File name provided, fetch from server
-			this.__template_promise = this.__template_widget.load("", this.template, this.__value || {content: {}},);
+			this._template_promise = this._template_widget.load("", this.template, this.__value || {content: {}},);
 		}
 		else
 		{
 			// Just template name, it better be loaded already
-			this.__template_promise = this.__template_widget.load(this.template, '', this.__value || {},
+			this._template_promise = this._template_widget.load(this.template, '', this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
 				undefined, undefined, true);
 		}
 
 		// Don't let dialog closing destroy the parent session
-		if(this.__template_widget.etemplate_exec_id && this.__template_widget.app)
+		if(this._template_widget.etemplate_exec_id && this._template_widget.app)
 		{
-			for(let et of etemplate2.getByApplication(this.__template_widget.app))
+			for(let et of etemplate2.getByApplication(this._template_widget.app))
 			{
-				if(et !== this.__template_widget && et.etemplate_exec_id === this.__template_widget.etemplate_exec_id)
+				if(et !== this._template_widget && et.etemplate_exec_id === this._template_widget.etemplate_exec_id)
 				{
 					// Found another template using that exec_id, don't destroy when dialog closes.
-					this.__template_widget.unbind_unload();
+					this._template_widget.unbind_unload();
 					break;
 				}
 			}
@@ -498,6 +545,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 * @param {integer} _type One of the message constants.  This defines the style of the message.
 	 * @param {string} _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
 	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
+	 *
+	 * @return {Et2Dialog} You can use dialog.getComplete().then(...) to wait for the dialog to close.
 	 */
 	static show_dialog(_callback? : Function, _message? : string, _title? : string, _value? : object, _buttons?, _type? : number, _icon? : string, _egw_or_appname? : string | IegwAppLocal)
 	{
@@ -519,10 +568,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			 */
 			modal: false
 		});
-		// Let other things run, then open
-		dialog.getUpdateComplete().then(() =>
-		{
-		});
+
 		document.body.appendChild(<LitElement><unknown>dialog);
 		return dialog;
 	};
@@ -533,44 +579,45 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 * @param {string} _message Message to be place in the dialog.
 	 * @param {string} _title Text in the top bar of the dialog.
 	 * @param {integer} _type One of the message constants.  This defines the style of the message.
+	 *
+	 * @return Promise<[ button_id : number, value : Object ]> will resolve when the dialog closes
 	 */
 	static alert(_message? : string, _title? : string, _type?)
 	{
-		let parent = et2_dialog._create_parent(et2_dialog._create_parent().egw());
-		et2_createWidget("dialog", {
-			callback: function()
-			{
-			},
+		let dialog = <Et2Dialog><unknown>document.createElement('et2-dialog');
+		dialog._setApiInstance();
+		dialog.transformAttributes({
+			callback: function() {},
 			message: _message,
 			title: _title,
 			buttons: et2_dialog.BUTTONS_OK,
 			dialog_type: _type || et2_dialog.INFORMATION_MESSAGE
-		}, parent);
+		});
+
+		document.body.appendChild(<LitElement><unknown>dialog);
+
+		return dialog.getComplete();
 	}
 
 	/**
 	 * Show a prompt dialog
 	 *
-	 * @param {function} _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param {function} _callback Function called when the user clicks a button.  The button constant is passed in along with the value.
 	 * @param {string} _message Message to be place in the dialog.
 	 * @param {string} _title Text in the top bar of the dialog.
 	 * @param {string} _value for prompt, passed to callback as 2. parameter
 	 * @param {integer|array} _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
 	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
+	 *
+	 * @return {Et2Dialog} You can use dialog.getComplete().then(...) to wait for the dialog to close.
 	 */
 	static show_prompt(_callback, _message, _title?, _value?, _buttons?, _egw_or_appname?)
 	{
-		var callback = _callback;
-		// Just pass them along, widget handles defaults & missing
-		return et2_createWidget("dialog", {
-			callback: function(_button_id, _value)
-			{
-				if(typeof callback == "function")
-				{
-					callback.call(this, _button_id, _value.value);
-				}
-			},
-			title: _title || egw.lang('Input required'),
+		let dialog = <Et2Dialog><unknown>document.createElement('et2-dialog');
+		dialog._setApiInstance();
+		dialog.transformAttributes({
+			callback: _callback,
+			title: _title || 'Input required',
 			buttons: _buttons || et2_dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: {
@@ -580,7 +627,11 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			},
 			template: egw.webserverUrl + '/api/templates/default/prompt.xet',
 			class: "et2_prompt"
-		}, et2_dialog._create_parent(_egw_or_appname));
+		});
+
+		document.body.appendChild(<LitElement><unknown>dialog);
+
+		return dialog
 	}
 
 	/**
@@ -594,16 +645,16 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 *
 	 * @description submit the form contents including the button that has been pressed
 	 */
-	static confirm(_senders, _dialogMsg, _titleMsg, _postSubmit)
+	static confirm(_senders, _dialogMsg, _titleMsg, _postSubmit?)
 	{
-		var senders = _senders;
-		var buttonId = _senders.id;
-		var dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
-		var titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-		var egw = _senders instanceof et2_widget ? _senders.egw() : et2_dialog._create_parent().egw();
-		var callbackDialog = function(button_id)
+		let senders = _senders;
+		let buttonId = _senders.id;
+		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
+		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
+		let egw = _senders instanceof et2_widget ? _senders.egw() : undefined;
+		let callbackDialog = function(button_id)
 		{
-			if(button_id == et2_dialog.YES_BUTTON)
+			if(button_id == Et2Dialog.YES_BUTTON)
 			{
 				if(_postSubmit)
 				{
@@ -621,7 +672,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 				}
 			}
 		};
-		et2_dialog.show_dialog(callbackDialog, egw.lang(dialogMsg), egw.lang(titleMsg), {},
+		Et2Dialog.show_dialog(callbackDialog, dialogMsg, titleMsg, {},
 			et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	};
 
@@ -831,7 +882,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 customElements.define("et2-dialog", Et2Dialog);
 // make et2_dialog publicly available as we need to call it from templates
-//if(typeof window.et2_dialog === 'undefined')
 {
 	window['et2_dialog'] = Et2Dialog;
+	window['Et2Dialog'] = Et2Dialog;
 }

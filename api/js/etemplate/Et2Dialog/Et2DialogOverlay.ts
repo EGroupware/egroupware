@@ -105,13 +105,6 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		this.buttons = [];
 	}
 
-	firstUpdated(_changedProperties)
-	{
-		super.firstUpdated(_changedProperties);
-		// Tell content about its parent, but don't move it
-		//@ts-ignore
-		//(<Et2Widget><unknown>this.querySelector("[slot='content']"))._parent = this._dialog;
-	}
 
 
 	// Need to wait for Overlay
