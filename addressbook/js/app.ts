@@ -15,11 +15,12 @@
 
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
-import {nm_action, fetchAll, nm_compare_field} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
+import {LitElement} from "@lion/core";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -386,7 +387,7 @@ class AddressbookApp extends EgwApp
 				this.egw.open(id, 'addressbook', 'edit', { makecp: 1});
 				break;
 			case 'button[delete]':
-				et2_dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
+				Et2Dialog.confirm(_widget, egw.lang('Delete this contact?'), egw.lang('Delete'));
 				break;
 			case 'button[close]':
 				framework.activeApp.tab.closeButton.click();
@@ -657,34 +658,35 @@ class AddressbookApp extends EgwApp
 	{
 		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname?)
 		{
-			return et2_createWidget("dialog",
-			{
-				callback(_buttons, _value)
+			let dialog = new Et2Dialog(_egw_or_appname);
+			dialog.transformAttributes({
+				callback: function(_buttons, _value)
 				{
-					if (_buttons == et2_dialog.OK_BUTTON)
+					if(_buttons == Et2Dialog.OK_BUTTON)
 					{
 						var id = '';
-						var content = this.template.widgetContainer.getArrayMgr('content').data;
-						for (var row in _value.grid)
+						//var content = this.template.widgetContainer.getArrayMgr('content').data;
+						for(var row in _value.grid)
 						{
-							if (_value.grid[row].confirm == "true" && typeof content.grid !='undefined')
+							if(_value.grid[row].confirm == "true" && typeof content[row] != 'undefined')
 							{
-								id = this.options.value.content.grid[row].confirm;
+								id = content[row].confirm;
 								egw.open(id, 'addressbook');
 
 							}
 						}
 					}
 				},
-				title: _title||egw.lang('Input required'),
-				buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+				title: _title || egw.lang('Input required'),
+				buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 				value: {
 					content: {
 						grid: _value
 					}
 				},
-				template: egw.webserverUrl+'/addressbook/templates/default/dupconfirmdialog.xet'
-			}, et2_dialog._create_parent(_egw_or_appname));
+				template: egw.webserverUrl + '/addressbook/templates/default/dupconfirmdialog.xet'
+			});
+			document.body.appendChild(<LitElement><unknown>dialog);
 		};
 
 		if (_data.msg && _data.doublicates)
@@ -695,7 +697,7 @@ class AddressbookApp extends EgwApp
 			{
 				content.push({"confirm":id,"name":_data.doublicates[id]});
 			}
-			confirmdialog(this.egw.lang('Duplicate warning'),content,et2_dialog.BUTTONS_OK_CANCEL);
+			confirmdialog(this.egw.lang('Duplicate warning'), content, Et2Dialog.BUTTONS_OK_CANCEL, this.egw);
 		}
 		if (typeof _data.fileas_options == 'object' && this.et2)
 		{
@@ -823,16 +825,19 @@ class AddressbookApp extends EgwApp
 		var lists = <et2_selectbox><unknown>this.et2.getWidgetById('filter2');
 		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		let callback = function(button, values) {
-			if(button == et2_dialog.OK_BUTTON)
+			if(button == Et2Dialog.OK_BUTTON)
 			{
-				egw.json('addressbook.addressbook_ui.ajax_set_list',[0, values.name, values.owner, contacts],
+				egw.json('addressbook.addressbook_ui.ajax_set_list', [0, values.name, values.owner, contacts],
 					function(result)
 					{
-						if(typeof result == 'object') return; // This response not for us
+						if(typeof result == 'object')
+						{
+							return;
+						} // This response not for us
 						// Update list
 						if(result)
 						{
-							lists.options.select_options.unshift({value:result,label:values.name});
+							lists.options.select_options.unshift({value: result, label: values.name});
 							lists.set_select_options(lists.options.select_options);
 
 							// Set to new list so they can see it easily
@@ -860,23 +865,25 @@ class AddressbookApp extends EgwApp
 			}
 		};
 
+		let dialog = new Et2Dialog(this.egw);
+		dialog.transformAttributes({
+			callback: callback,
+			title: 'Add a new list',
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: {
+					owner: owner
+				},
+				sel_options: {
+					owner: owner_options
+				}
+			},
+			template: egw.webserverUrl + '/addressbook/templates/default/add_list_dialog.xet',
+			class: "et2_prompt",
+			width: 400
+		});
 
-		let dialog = et2_createWidget("dialog", {
-            callback: callback,
-            title: this.egw.lang('Add a new list'),
-            buttons: et2_dialog.BUTTONS_OK_CANCEL,
-            value: {
-                content: {
-                    owner: owner
-                },
-	            sel_options: {
-                	owner: owner_options
-	            }
-            },
-            template: egw.webserverUrl + '/addressbook/templates/default/add_list_dialog.xet',
-            class: "et2_prompt",
-			minWidth: 400
-        }, this.et2);
+		document.body.appendChild(<LitElement><unknown>dialog);
 	}
 
 	/**
@@ -900,14 +907,18 @@ class AddressbookApp extends EgwApp
 				value = lists.options.select_options[i];
 			}
 		}
-		et2_dialog.show_prompt(
-			function(button, name) {
-				if(button == et2_dialog.OK_BUTTON)
+		Et2Dialog.show_prompt(
+			function(button, name)
+			{
+				if(button == Et2Dialog.OK_BUTTON)
 				{
-					egw.json('addressbook.addressbook_ui.ajax_set_list',[list, name],
+					egw.json('addressbook.addressbook_ui.ajax_set_list', [list, name],
 						function(result)
 						{
-							if(typeof result == 'object') return; // This response not for us
+							if(typeof result == 'object')
+							{
+								return;
+							} // This response not for us
 							// Update list
 							if(result)
 							{
@@ -1133,24 +1144,26 @@ class AddressbookApp extends EgwApp
 		if(action && action.data && selected.length > 1)
 		{
 			var callback = function(button, value) {
-				if(button == et2_dialog.OK_BUTTON)
+				if(button == Et2Dialog.OK_BUTTON)
 				{
 					var _action = jQuery.extend(true, {}, action);
 					if(value.infolog)
 					{
-						_action.data.menuaction += '&to_app=infolog&info_type='+value.info_type;
+						_action.data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
 					}
 					nm_action(_action, selected, target);
 				}
 			};
-			et2_createWidget("dialog",{
+			let dialog = new Et2Dialog(this.egw);
+			dialog.transformAttributes({
 				callback: callback,
 				title: action.caption,
-				buttons: et2_dialog.BUTTONS_OK_CANCEL,
-				type: et2_dialog.QUESTION_MESSAGE,
-				template: egw.webserverUrl+'/addressbook/templates/default/mail_merge_dialog.xet',
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+				type: Et2Dialog.QUESTION_MESSAGE,
+				template: egw.webserverUrl + '/addressbook/templates/default/mail_merge_dialog.xet',
 				value: {content: {info_type: 'email'}, sel_options: this.et2.getArrayMgr('sel_options').data}
 			});
+			document.body.appendChild(<LitElement><unknown>dialog);
 		}
 		else
 		{
