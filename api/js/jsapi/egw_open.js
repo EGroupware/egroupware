@@ -15,6 +15,7 @@
 	egw_links;
 */
 import './egw_core.js';
+import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * @augments Class
@@ -492,10 +493,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 
 			if (!popup||popup == 'undefined'||popup == null)
 			{
-				et2_dialog.show_dialog(function(){
-					window.egw.open_link(_link, _target, _popup, _target_app);
-				},egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1",window.location.hostname) ,
-				"Popup Blocker Warning",{},et2_dialog.BUTTONS_OK,et2_dialog.WARNING_MESSAGE);
+				Et2Dialog.show_dialog(function ()
+					{
+						window.egw.open_link(_link, _target, _popup, _target_app);
+					}, egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1", window.location.hostname),
+					"Popup Blocker Warning", {}, Et2Dialog.BUTTONS_OK, Et2Dialog.WARNING_MESSAGE);
 				return true;
 			}
 			else
@@ -507,8 +509,8 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 
 		/**
 		 * This function helps to append content/ run commands into an already
-		 * opened popup window. Popup winodws now are getting stored in framework
-		 * object and can be retrived/closed from framework.
+		 * opened popup window. Popup windows now are getting stored in framework
+		 * object and can be retrieved/closed from framework.
 		 *
 		 * @param {string} _app name of application to be requested its popups
 		 * @param {string} _method application method implemented in app.js
@@ -605,17 +607,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			else if (popups.length > 1)
 			{
 				var buttons = [
-					{text: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-					{text: this.lang("Cancel"), id:"cancel"}
+					{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+					{label: this.lang("Cancel"), id: "cancel"}
 				];
 				var c = [];
-				for(var i = 0; i < popups.length; i++)
+				for (var i = 0; i < popups.length; i++)
 				{
-					c.push({label:popups[i].document.title || this.lang(_app), index:i});
+					c.push({label: popups[i].document.title || this.lang(_app), index: i});
 				}
-				et2_createWidget("dialog",
-				{
-					callback: function(_button_id, _value) {
+				let dialog = new Et2Dialog(this.app_name());
+				dialog.transformAttributes({
+					callback: function (_button_id, _value)
+					{
 						if (_value && _value.grid)
 						{
 							switch (_button_id)
@@ -629,10 +632,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 					},
 					title: this.lang("Select an opened dialog"),
 					buttons: buttons,
-					value:{content:{grid:c}},
-					template: this.webserverUrl+'/api/templates/default/promptOpenedDialog.xet?1',
+					value: {content: {grid: c}},
+					template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
 					resizable: false
-				}, et2_dialog._create_parent(this.app_name()));
+				});
+				document.body.appendChild(dialog);
 			}
 			else
 			{

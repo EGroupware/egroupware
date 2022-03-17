@@ -13,12 +13,13 @@
 import {etemplate2} from "../etemplate/etemplate2";
 import type {et2_container} from "../etemplate/et2_core_baseWidget";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
-import {et2_dialog} from "../etemplate/et2_widget_dialog";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {et2_favorites} from "../etemplate/et2_widget_favorites";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
+import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
+import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * Type for push-message
@@ -478,13 +479,13 @@ export abstract class EgwApp
 		{
 			var that = this;
 			var action_id = _action.id;
-			et2_dialog.show_dialog(function(button_id, value)
+			Et2Dialog.show_dialog(function(button_id, value)
 			{
-				if(button_id != et2_dialog.NO_BUTTON)
+				if(button_id != Et2Dialog.NO_BUTTON)
 				{
 					that._do_action(action_id, _elems);
 				}
-			}, confirm_msg, egw.lang('Confirmation required'), null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+			}, confirm_msg, 'Confirmation required', null, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 		}
 		else if(typeof this._do_action == 'function')
 		{
@@ -1169,7 +1170,7 @@ export abstract class EgwApp
 		// Make sure first
 		var do_delete = function(button_id)
 		{
-			if(button_id != et2_dialog.YES_BUTTON)
+			if(button_id != Et2Dialog.YES_BUTTON)
 			{
 				line.removeClass('loading');
 				return;
@@ -1205,8 +1206,8 @@ export abstract class EgwApp
 			);
 			request.sendRequest(true);
 		};
-		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"),
-			egw.lang("Delete"), null, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		Et2Dialog.show_dialog(do_delete, (egw.lang("Delete") + " " + name + "?"),
+			"Delete", null, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 
 		return false;
 	}
@@ -1802,9 +1803,9 @@ export abstract class EgwApp
 	mailvelopeDeleteBackup()
 	{
 		var self = this;
-		et2_dialog.show_dialog(function(_button_id)
+		Et2Dialog.show_dialog(function(_button_id)
 			{
-				if(_button_id == et2_dialog.YES_BUTTON)
+				if(_button_id == Et2Dialog.YES_BUTTON)
 				{
 					self._mailvelopeBackupFileOperator(undefined, 'DELETE', function()
 					{
@@ -1815,9 +1816,9 @@ export abstract class EgwApp
 					});
 				}
 			},
-			self.egw.lang('Are you sure, you would like to delete the backup key?'),
-			self.egw.lang('Delete backup key'),
-			{}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+			'Are you sure, you would like to delete the backup key?',
+			'Delete backup key',
+			{}, Et2Dialog.BUTTONS_YES_NO_CANCEL, Et2Dialog.QUESTION_MESSAGE, undefined, self.egw);
 	}
 
 	/**
@@ -2013,12 +2014,12 @@ export abstract class EgwApp
 						{
 							if(_status == 0)
 							{
-								et2_dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
+								Et2Dialog.alert(egw.lang('Mailvelope addon installation succeded. Now you may configure the options.'));
 								return;
 							}
 							else
 							{
-								et2_dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
+								Et2Dialog.alert(egw.lang('Mailvelope addon installation failed! Please try again.'));
 							}
 						});
 				}
@@ -2111,41 +2112,41 @@ export abstract class EgwApp
 												var buttons = [
 													{
 														button_id: 2,
-														text: 'Yes',
+														label: 'Yes',
 														id: 'dialog[yes]',
 														image: 'check',
 														default: true
 													},
-													{button_id: 3, text: 'No', id: 'dialog[no]', image: 'cancelled'}
+													{button_id: 3, label: 'No', id: 'dialog[no]', image: 'cancelled'}
 												];
 												if(egw.user('apps').admin)
 												{
 													buttons.unshift({
 														button_id: 5,
-														text: 'Yes and allow non-admin users to do that too (recommended)',
+														label: 'Yes and allow non-admin users to do that too (recommended)',
 														id: 'dialog[yes_allow]',
 														image: 'check',
 														default: true
 													});
 													delete buttons[1].default;
 												}
-												et2_dialog.show_dialog(function(_button_id)
+												Et2Dialog.show_dialog(function(_button_id)
 													{
-														if(_button_id != et2_dialog.NO_BUTTON)
+														if(_button_id != Et2Dialog.NO_BUTTON)
 														{
 															var keys = {};
 															keys[self.egw.user('account_id')] = _pubKey;
 															self.egw.json('addressbook.addressbook_bo.ajax_set_pgp_keys',
-																[keys, _button_id != et2_dialog.YES_BUTTON ? true : undefined]).sendRequest()
+																[keys, _button_id != Et2Dialog.YES_BUTTON ? true : undefined]).sendRequest()
 																.then(function(_data)
 																{
 																	self.egw.message(_data.response['0'].data);
 																});
 														}
 													},
-													self.egw.lang('It is recommended to store your public key in addressbook, so other users can write you encrypted mails.'),
-													self.egw.lang('Store your public key in Addressbook?'),
-													{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, self.egw);
+													'It is recommended to store your public key in addressbook, so other users can write you encrypted mails.',
+													'Store your public key in Addressbook?',
+													{}, buttons, Et2Dialog.QUESTION_MESSAGE, undefined, self.egw);
 											},
 											function(_err)
 											{

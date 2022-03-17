@@ -669,13 +669,13 @@ egwAction.prototype._check_confirm_mass_selections = function(_senders, _target)
 		var callback = function(_button)
 		{
 			// YES = unchecked, NO = checked
-			check.set_checked(_button === et2_dialog.NO_BUTTON);
-			if(_button !== et2_dialog.CANCEL_BUTTON)
+			check.set_checked(_button === Et2Dialog.NO_BUTTON);
+			if (_button !== Et2Dialog.CANCEL_BUTTON)
 			{
 				self._check_confirm(_senders, _target);
 			}
 		};
-		et2_dialog.show_dialog(callback, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.QUESTION_MESSAGE);
+		Et2Dialog.show_dialog(callback, msg, self.data.hint, {}, Et2Dialog.BUTTONS_YES_NO_CANCEL, Et2Dialog.QUESTION_MESSAGE);
 		return true;
 	}
 	return false;
@@ -687,18 +687,21 @@ egwAction.prototype._check_confirm_mass_selections = function(_senders, _target)
 egwAction.prototype._check_confirm = function(_senders, _target)
 {
 	// check if actions needs to be confirmed first
-	if (this.data && (this.data.confirm || this.data.confirm_multiple) && this.onExecute.fcnt != window.nm_action &&
-		typeof et2_dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
+	if (this.data && (this.data.confirm || this.data.confirm_multiple) && this.onExecute.fnct != window.nm_action &&
+		typeof Et2Dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
 	{
 		var msg = this.data.confirm || '';
 		if (_senders.length > 1)
 		{
-			if (this.data.confirm_multiple) msg = this.data.confirm_multiple;
+			if (this.data.confirm_multiple)
+			{
+				msg = this.data.confirm_multiple;
+			}
 			// check if we have all rows selected
 			var obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
 			if (obj_manager && obj_manager.getAllSelected())
 			{
-				msg += "\n\n"+egw().lang('Attention: action will be applied to all rows, not only visible ones!');
+				msg += "\n\n" + egw().lang('Attention: action will be applied to all rows, not only visible ones!');
 			}
 		}
 		var self = this;
@@ -715,13 +718,13 @@ egwAction.prototype._check_confirm = function(_senders, _target)
 				});
 				return;
 			}
-			et2_dialog.show_dialog(function(_button)
+			Et2Dialog.show_dialog(function (_button)
 			{
-				if (_button == et2_dialog.YES_BUTTON)
+				if (_button == Et2Dialog.YES_BUTTON)
 				{
 					return self.onExecute.exec(self, _senders, _target);
 				}
-			}, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+			}, msg, self.data.hint, {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 			return;
 		}
 	}

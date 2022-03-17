@@ -10,7 +10,6 @@
 
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {et2_dialog} from "../et2_widget_dialog";
 import {et2_button} from "../et2_widget_button";
 import {LionDialog} from "@lion/dialog";
 import {et2_widget} from "../et2_core_widget";
@@ -617,8 +616,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			callback: function() {},
 			message: _message,
 			title: _title,
-			buttons: et2_dialog.BUTTONS_OK,
-			dialog_type: _type || et2_dialog.INFORMATION_MESSAGE
+			buttons: Et2Dialog.BUTTONS_OK,
+			dialog_type: _type || Et2Dialog.INFORMATION_MESSAGE
 		});
 
 		document.body.appendChild(<LitElement><unknown>dialog);
@@ -645,7 +644,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		dialog.transformAttributes({
 			callback: _callback,
 			title: _title || 'Input required',
-			buttons: _buttons || et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: {
 					value: _value,
@@ -700,7 +699,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			}
 		};
 		Et2Dialog.show_dialog(callbackDialog, dialogMsg, titleMsg, {},
-			et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw);
 	};
 
 
@@ -736,13 +735,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// Special action for cancel
 		let buttons = [
 			// OK starts disabled
-			{"button_id": et2_dialog.OK_BUTTON, label: 'ok', "default": true, "disabled": true, image: "check"},
+			{"button_id": Et2Dialog.OK_BUTTON, label: 'ok', "default": true, "disabled": true, image: "check"},
 			{
-				"button_id": et2_dialog.CANCEL_BUTTON, label: 'cancel', image: "cancel", click: function()
+				"button_id": Et2Dialog.CANCEL_BUTTON, label: 'cancel', image: "cancel", click: function()
 				{
 					// Cancel run
 					cancel = true;
-					jQuery("button[button_id=" + et2_dialog.CANCEL_BUTTON + "]", dialog.div.parent()).button("disable");
+					jQuery("button[button_id=" + Et2Dialog.CANCEL_BUTTON + "]", dialog.div.parent()).button("disable");
 					update.call(_list.length, '');
 				}
 			}
@@ -830,7 +829,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 							{label: egw.lang("Retry"), id: 'dialog[retry]'},
 							{label: egw.lang("Skip"), id: 'dialog[skip]', default: true}
 						],
-						dialog_type: et2_dialog.ERROR_MESSAGE
+						dialog_type: Et2Dialog.ERROR_MESSAGE
 					});
 					dialog.egw().window.document.body.appendChild(<LitElement><unknown>retry);
 					// Early exit

@@ -435,33 +435,33 @@ window.app = {classes: {}};
 			}
 			try {
 				// Open tutorial popup with an introduction video about egroupware
-				if (window.framework === window.top.framework && typeof et2_dialog != 'undefined' &&
+				if (window.framework === window.top.framework && typeof Et2Dialog != 'undefined' &&
 					!egw.preference('egw_tutorial_noautoload', 'common') &&
 					!parseInt(egw_script.getAttribute('data-framework-reload')) &&
 					(!egw.config('egw_tutorial_disable', 'phpgwapi') || egw.config('egw_tutorial_disable', 'phpgwapi') == 'sidebox'))
 				{
 					// we need to wait until common translations are loaded
-					egw.langRequireApp(window, 'common', function()
+					egw.langRequireApp(window, 'common', function ()
 					{
 						var buttons = [
-							{text:egw.lang("Show now"), id:"show", image: "check", default:"true"},
-							{text:egw.lang("Show next login"), id:"later", image: "right"},
-							{text:egw.lang("No thanks"), id:"never", image: "cancel"}
+							{label: egw.lang("Show now"), id: "show", image: "check", default: "true"},
+							{label: egw.lang("Show next login"), id: "later", image: "right"},
+							{label: egw.lang("No thanks"), id: "never", image: "cancel"}
 						];
-						et2_dialog.show_dialog(function (_button_id)
-						{
-							if (_button_id == "show" )
+						Et2Dialog.show_dialog(function (_button_id)
 							{
-								egw.open_link(egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
-							}
-							if(_button_id != "later")
-							{
-								egw.set_preference('common', 'egw_tutorial_noautoload',true);
-							}
-						},
-						egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
-						egw.lang('Introduction'),
-						{}, buttons, et2_dialog.QUESTION_MESSAGE, undefined, egw(window));
+								if (_button_id == "show")
+								{
+									egw.open_link(egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid=introduction-' + egw.preference('lang') + '-0-a'), '_blank', '960x580');
+								}
+								if (_button_id != "later")
+								{
+									egw.set_preference('common', 'egw_tutorial_noautoload', true);
+								}
+							},
+							egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
+							egw.lang('Introduction'),
+							{}, buttons, Et2Dialog.QUESTION_MESSAGE, undefined, egw(window));
 					}, this);
 				}
 
