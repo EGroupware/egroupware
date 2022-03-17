@@ -15,7 +15,6 @@
 	egw_links;
 */
 import './egw_core.js';
-import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * @augments Class
