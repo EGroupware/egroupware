@@ -13,7 +13,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_dialog} from "../et2_widget_dialog";
 import {et2_button} from "../et2_widget_button";
 import {LionDialog} from "@lion/dialog";
-import {et2_createWidget, et2_widget} from "../et2_core_widget";
+import {et2_widget} from "../et2_core_widget";
 import {html, LitElement, ScopedElementsMixin, SlotMixin} from "@lion/core";
 import {Et2DialogOverlay} from "./Et2DialogOverlay";
 import {Et2DialogContent} from "./Et2DialogContent";
@@ -24,10 +24,11 @@ export interface DialogButton
 {
 	id : string,
 	button_id? : number,
-	text : string,
+	label : string,
 	image? : string,
 	default? : boolean
-	align? : string
+	align? : string,
+	disabled? : boolean
 }
 
 /**
@@ -140,18 +141,32 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		};
 	}
 
+	/*
+	* List of properties that get translated
+	* Done separately to not interfere with properties - if we re-define label property,
+	* labels go missing.
+	*/
+	static get translate()
+	{
+		return {
+			...super.translate,
+			title: true,
+			message: true
+		}
+	}
+
 	private readonly _buttons : DialogButton[][] = [
 		/*
 		Pre-defined Button combos
 		*/
 		//BUTTONS_OK: 0,
-		[{"button_id": Et2Dialog.OK_BUTTON, "text": 'ok', id: 'dialog[ok]', image: 'check', "default": true}],
+		[{"button_id": Et2Dialog.OK_BUTTON, label: 'ok', id: 'dialog[ok]', image: 'check', "default": true}],
 		//BUTTONS_OK_CANCEL: 1,
 		[
-			{"button_id": Et2Dialog.OK_BUTTON, "text": 'ok', id: 'dialog[ok]', image: 'check', "default": true},
+			{"button_id": Et2Dialog.OK_BUTTON, label: 'ok', id: 'dialog[ok]', image: 'check', "default": true},
 			{
 				"button_id": Et2Dialog.CANCEL_BUTTON,
-				"text": 'cancel',
+				label: 'cancel',
 				id: 'dialog[cancel]',
 				image: 'cancel',
 				align: "right"
@@ -159,19 +174,19 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		],
 		//BUTTONS_YES_NO: 2,
 		[
-			{"button_id": Et2Dialog.YES_BUTTON, "text": 'yes', id: 'dialog[yes]', image: 'check', "default": true},
-			{"button_id": Et2Dialog.NO_BUTTON, "text": 'no', id: 'dialog[no]', image: 'cancelled'}
+			{"button_id": Et2Dialog.YES_BUTTON, label: 'yes', id: 'dialog[yes]', image: 'check', "default": true},
+			{"button_id": Et2Dialog.NO_BUTTON, label: 'no', id: 'dialog[no]', image: 'cancel'}
 		],
 		//BUTTONS_YES_NO_CANCEL: 3,
 		[
-			{"button_id": Et2Dialog.YES_BUTTON, "text": 'yes', id: 'dialog[yes]', image: 'check', "default": true},
-			{"button_id": Et2Dialog.NO_BUTTON, "text": 'no', id: 'dialog[no]', image: 'cancelled'},
+			{"button_id": Et2Dialog.YES_BUTTON, label: 'yes', id: 'dialog[yes]', image: 'check', "default": true},
+			{"button_id": Et2Dialog.NO_BUTTON, label: 'no', id: 'dialog[no]', image: 'cancelled'},
 			{
 				"button_id": Et2Dialog.CANCEL_BUTTON,
-				"text": 'cancel',
+				label: 'cancel',
 				id: 'dialog[cancel]',
 				image: 'cancel',
-				align: "rignt"
+				align: "right"
 			}
 		]
 	];
@@ -247,6 +262,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		this._button_id = null;
 		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
+
+		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
+		this.dispatchEvent(new Event('open'));
 	}
 
 	_onClose(ev : PointerEvent)
@@ -254,6 +272,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._completeResolver([this._button_id, this.value]);
 		this._button_id = null;
 		this._complete_promise = undefined;
+
+		this.dispatchEvent(new Event('close'));
 
 		// No real need to do this automatically, dialog could be reused without this
 		this._overlayCtrl.teardown();
@@ -340,14 +360,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 	set template(new_template_name)
 	{
-		let old_template = this.template;
+		let old_template = this.__template;
 		this.__template = new_template_name;
 		this.requestUpdate("template", old_template);
 	}
 
 	get template()
 	{
-		return this.__template;
+		// Can't return undefined or requestUpdate() will not notice a change
+		return this._template_widget || null;
 	}
 
 
@@ -367,15 +388,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			this._template_widget.clear();
 		}
 		this._template_widget = new etemplate2(this._overlayContentNode._contentNode);
-		if(this.template.indexOf('.xet') > 0)
+		if(this.__template.indexOf('.xet') > 0)
 		{
 			// File name provided, fetch from server
-			this._template_promise = this._template_widget.load("", this.template, this.__value || {content: {}},);
+			this._template_promise = this._template_widget.load("", this.__template, this.__value || {content: {}},);
 		}
 		else
 		{
 			// Just template name, it better be loaded already
-			this._template_promise = this._template_widget.load(this.template, '', this.__value || {},
+			this._template_promise = this._template_widget.load(this.__template, '', this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
 				undefined, undefined, true);
 		}
@@ -442,7 +463,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 	_contentTemplate()
 	{
-		if(this.template)
+		if(this.__template)
 		{
 			return html`
                 <div slot="content"></div>`;
@@ -464,7 +485,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		if(Number.isInteger(this.buttons))
 		{
-			return this._buttons[this.buttons];
+			// Translate as needed, since we're not calling transformAttributes() on the buttons
+			// when we create them in a render()
+			return this._buttons[this.buttons].map((but) =>
+			{
+				but.label = this.egw().lang(but.label);
+				return but
+			});
 		}
 		else if(Array.isArray(this.buttons))
 		{
@@ -706,14 +733,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 */
 	static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
 	{
-		let parent = et2_dialog._create_parent(_egw_or_appname);
-		let egw = parent.egw();
-
 		// Special action for cancel
 		let buttons = [
-			{"button_id": et2_dialog.OK_BUTTON, "text": egw.lang('ok'), "default": true, "disabled": true},
+			// OK starts disabled
+			{"button_id": et2_dialog.OK_BUTTON, label: 'ok', "default": true, "disabled": true, image: "check"},
 			{
-				"button_id": et2_dialog.CANCEL_BUTTON, "text": egw.lang('cancel'), click: function()
+				"button_id": et2_dialog.CANCEL_BUTTON, label: 'cancel', image: "cancel", click: function()
 				{
 					// Cancel run
 					cancel = true;
@@ -722,7 +747,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 				}
 			}
 		];
-		let dialog = et2_createWidget("dialog", {
+		let dialog = new Et2Dialog(_egw_or_appname);
+		dialog.transformAttributes({
 			template: egw.webserverUrl + '/api/templates/default/long_task.xet',
 			value: {
 				content: {
@@ -731,7 +757,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			},
 			callback: function(_button_id, _value)
 			{
-				if(_button_id == et2_dialog.CANCEL_BUTTON)
+				if(_button_id == Et2Dialog.CANCEL_BUTTON)
 				{
 					cancel = true;
 				}
@@ -740,12 +766,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 					_callback.call(this, _button_id, _value.value);
 				}
 			},
-			title: _title || egw.lang('please wait...'),
+			title: _title || 'please wait...',
 			buttons: buttons
-		}, parent);
-
-		// OK starts disabled
-		jQuery("button[button_id=" + et2_dialog.OK_BUTTON + "]", dialog.div.parent()).button("disable");
+		});
+		dialog.egw().window.document.body.appendChild(<LitElement><unknown>dialog);
 
 		let log = null;
 		let progressbar = null;
@@ -770,16 +794,19 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			switch(response.type)
 			{
 				case 'error':
-					jQuery("<div class='message error'></div>")
-						.text(response.data)
-						.appendTo(log);
+					let div = document.createElement("DIV");
+					div.className = "message error";
+					div.textContent = response.data
+					log.appendChild(div);
 
 					totals.failed++;
 
 					// Ask to retry / ignore / abort
-					et2_createWidget("dialog", {
+					let retry = new Et2Dialog(dialog.egw());
+					retry.transformAttributes({
 						callback: function(button)
 						{
+							debugger;
 							switch(button)
 							{
 								case 'dialog[cancel]':
@@ -799,32 +826,35 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 						title: '',
 						buttons: [
 							// These ones will use the callback, just like normal
-							{text: egw.lang("Abort"), id: 'dialog[cancel]'},
-							{text: egw.lang("Retry"), id: 'dialog[retry]'},
-							{text: egw.lang("Skip"), id: 'dialog[skip]', class: "ui-priority-primary", default: true}
+							{label: egw.lang("Abort"), id: 'dialog[cancel]'},
+							{label: egw.lang("Retry"), id: 'dialog[retry]'},
+							{label: egw.lang("Skip"), id: 'dialog[skip]', default: true}
 						],
 						dialog_type: et2_dialog.ERROR_MESSAGE
-					}, parent);
+					});
+					dialog.egw().window.document.body.appendChild(<LitElement><unknown>retry);
 					// Early exit
 					return;
 				default:
 					if(response && typeof response === "string")
 					{
 						totals.success++;
-						jQuery("<div class='message'></div>")
-							.text(response)
-							.appendTo(log);
+						let div = document.createElement("DIV");
+						div.className = "message";
+						div.textContent = response
+						log.appendChild(div);
 					}
-					else
+					else if(response)
 					{
-						jQuery("<div class='message error'></div>")
-							.text(JSON.stringify(response))
-							.appendTo(log);
+						let div = document.createElement("DIV");
+						div.className = "message error";
+						div.textContent = JSON.stringify(response)
+						log.appendChild(div);
 					}
 			}
 			// Scroll to bottom
-			let height = log[0].scrollHeight;
-			log.scrollTop(height);
+			let height = log.scrollHeight;
+			log.scrollTop = height;
 
 			// Update totals
 			totals.widget.set_value(egw.lang(
@@ -852,8 +882,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 				{
 					progressbar.set_value(100);
 				}
-				jQuery("button[button_id=" + et2_dialog.CANCEL_BUTTON + "]", dialog.div.parent()).button("disable");
-				jQuery("button[button_id=" + et2_dialog.OK_BUTTON + "]", dialog.div.parent()).button("enable");
+
+				// Disable cancel (it's too late), enable OK
+				dialog._overlayContentNode.querySelector('et2-button[button_id="' + Et2Dialog.CANCEL_BUTTON + '"]').setAttribute("disabled")
+				dialog._overlayContentNode.querySelector('et2-button[button_id="' + Et2Dialog.OK_BUTTON + '"]').removeAttribute("disabled")
 				if(!cancel && typeof _callback == "function")
 				{
 					_callback.call(dialog, true, response);
@@ -861,10 +893,11 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			}
 		};
 
-		jQuery(dialog.template.DOMContainer).on('load', function()
+		// Wait for dialog, then start the process
+		dialog.getUpdateComplete().then(function()
 		{
 			// Get access to template widgets
-			log = jQuery(dialog.template.widgetContainer.getWidgetById('log').getDOMNode());
+			log = dialog.template.widgetContainer.getDOMWidgetById('log').getDOMNode();
 			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
 			progressbar.set_label('0 / ' + _list.length);
 			totals.widget = dialog.template.widgetContainer.getWidgetById('totals');
