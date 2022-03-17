@@ -1,4 +1,4 @@
-import {css, html, LitElement, repeat, SlotMixin} from '@lion/core';
+import {css, html, ifDefined, LitElement, repeat, SlotMixin} from '@lion/core';
 import {DialogButton, Et2Dialog} from "./Et2Dialog";
 import {et2_template} from "../et2_widget_template";
 import {Et2DialogContent} from "./Et2DialogContent";
@@ -217,7 +217,8 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		return html`${repeat(this.buttons, (button : DialogButton) => button.id, (button, index) =>
 		{
 			return html`
-                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id} .image=${button.image}
+                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id}
+                            .image=${ifDefined(button.image)}
                             label=${button.text}
                             ?align=${button.align}>
                 </et2-button>
