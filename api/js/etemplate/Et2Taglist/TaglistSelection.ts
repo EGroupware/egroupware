@@ -212,6 +212,9 @@ export class TaglistSelection extends LitElement {
 				}
 			}
 		}
+		//todo: setting a new option value changes option indexes therefore the last activeIndex should be adopted according
+		// to our new options' indexes. We need to figure out how to set that index before the last selected option gets unchecked.
+		this._getComboBoxElement().activeIndex = this.__getSelectedTags().length;
 	}
 }
 customElements.define('taglist-selection', TaglistSelection);

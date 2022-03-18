@@ -9,10 +9,10 @@
  */
 
 
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {LionCombobox} from "@lion/combobox";
-import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
 import {EgwOption} from "./EgwOption";
 import {TaglistSelection} from "./TaglistSelection";
 import {taglistStyles} from "./TaglistStyles";
@@ -57,7 +57,8 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		return {
 			...super.properties,
 			multiple: {type : Boolean},
-			editModeEnabled : {type : Boolean}
+			editModeEnabled : {type : Boolean},
+			allowFreeEntries : {type : Boolean}
 		}
 	}
 
@@ -95,9 +96,55 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 
 		// If there are select options, enable toggle on click so user can see them
 		this.showAllOnEmpty = this.select_options.length>0;
+
+		if (this.allowFreeEntries)
+		{
+			this.value.forEach(_v => {
+				this.__appendSelOption(_v);
+			})
+		}
 	}
 
-	getValue(): any
+	__appendSelOption(_value)
+	{
+		const optionsMappedValues = (<SelectOption[]>this.select_options).map(({value}) =>{return value});
+		if (!optionsMappedValues.includes(_value))
+		{
+			this.select_options = (<SelectOption[]>this.select_options).concat({label:_value, value:_value});
+		}
+
+		// we need to wait for the actuall rendering of select options before being able to set our newly added value.
+		// So far the only way to make sure of that is binding set_value into form-element-register event which does get
+		// called when the option gets attached to dom. We make sure to unbind that event because we only want that set
+		// value for a newly added value and not all selected values.
+		const modelValueChanged = (ev) => {
+			if (this._inputNode.value == _value)
+			{
+				this.set_value(this.getValue().concat([this._inputNode.value]));
+			}
+			this.removeEventListener('form-element-register', modelValueChanged);
+		};
+		this.addEventListener('form-element-register', modelValueChanged);
+
+	}
+
+	/**
+	 * @param {string} v
+	 * @protected
+	 */
+	_setTextboxValue(v) {
+		// Make sure that we don't loose inputNode.selectionStart and inputNode.selectionEnd
+		if (!this.allowFreeEntries && this._inputNode.value !== v) {
+			this._inputNode.value = v;
+		}
+		else if (this._inputNode.value !='' && !(<SelectOption[]>this.select_options).filter((_option)=>{return _option.value == this._inputNode.value}).length)
+		{
+			this.__appendSelOption(this._inputNode.value);
+		}
+	}
+
+
+	getValue(): String[]
 	{
 		return this.modelValue;
 	}
@@ -125,6 +172,7 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		{
 			this.multiple = this.multiple ? values.length > 1 : false;
 		}
+		this.value = values;
 		this.modelValue = values;
 	}
 
