@@ -49,7 +49,7 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 
 	static action(value)
 	{
-		if (egw.user('apps').mail && egw.preference('force_mailto','addressbook') != '1' )
+		if (value && egw.user('apps').mail && egw.preference('force_mailto','addressbook') != '1' )
 		{
 			egw.open_link('mailto:'+value);
 		}

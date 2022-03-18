@@ -51,6 +51,8 @@ export class Et2UrlPhone extends Et2InvokerMixin(Et2Textbox)
 		// remove everything but numbers and plus, as telephon software might not like it
 		value = value.replace(/[^0-9+]/g, '');
 
+		if (!value) return;	// don't try to dial an empty number
+
 		// mobile Webkit (iPhone, Android) have precedence over server configuration!
 		if (navigator.userAgent.indexOf('AppleWebKit') !== -1 &&
 			(navigator.userAgent.indexOf("iPhone") !== -1 || navigator.userAgent.indexOf("Android") !== -1))
