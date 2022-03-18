@@ -646,7 +646,14 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		let dialog = <Et2Dialog><unknown>document.createElement('et2-dialog');
 		dialog._setApiInstance();
 		dialog.transformAttributes({
-			callback: _callback,
+			// Wrap callback to _only_ return _value.value, not the whole object like we normally would
+			callback: function(_button_id, _value)
+			{
+				if(typeof _callback == "function")
+				{
+					_callback.call(this, _button_id, _value.value);
+				}
+			},
 			title: _title || 'Input required',
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
