@@ -275,6 +275,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this.dispatchEvent(new Event('close'));
 
 		// No real need to do this automatically, dialog could be reused without this
+		if(this._template_widget)
+		{
+			this._template_widget.clear();
+		}
 		this._overlayCtrl.teardown();
 		this.remove();
 	}
