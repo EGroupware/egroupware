@@ -203,17 +203,31 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		return super._callParser(value);
 	}
 
+	private _set_invoker(rows)
+	{
+		this._invokerAction = () => {
+			this.multiple = true;
+			this._inputNode.size = parseInt(rows) || 4;
+			this._invokerNode.style.display = 'none';
+		}
+		this._invokerTitle = egw.lang('Switch to multiple');
+		this._invokerLabel = '+';
+	}
+
+	transformAttributes(attrs)
+	{
+		if (attrs.expand_multiple_rows)
+		{
+			this._set_invoker(attrs.expand_multiple_rows);
+		}
+		super.transformAttributes(attrs);
+	}
+
 	set expand_multiple_rows(rows)
 	{
 		if (rows && !this.multiple)
 		{
-			this._invokerAction = () => {
-				this.multiple = true;
-				this._inputNode.size = parseInt(rows) || 4;
-				this._invokerNode.style.display = 'none';
-			}
-			this._invokerTitle = egw.lang('Switch to multiple');
-			this._invokerLabel = '+';
+			this._set_invoker(rows);
 		}
 		else
 		{
