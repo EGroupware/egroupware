@@ -14,9 +14,8 @@
 import {EgwApp} from "../../api/js/jsapi/egw_app";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
-import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
 import {egw, egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
@@ -430,21 +429,24 @@ export class filemanagerAPP extends EgwApp
 			{
 				let buttons = [
 					{
-						text: this.egw.lang("Yes"),
+						label: this.egw.lang("Yes"),
 						id: "overwrite",
 						class: "ui-priority-primary",
 						"default": true,
 						image: 'check'
 					},
-					{text: this.egw.lang("Rename"), id: "rename", image: 'edit'},
-					{text: this.egw.lang("Cancel"), id: "cancel"}
+					{label: this.egw.lang("Rename"), id: "rename", image: 'edit'},
+					{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 				];
-				if (_data.uploaded[file].confirm === "is_dir")
+				if(_data.uploaded[file].confirm === "is_dir")
+				{
 					buttons.shift();
-				let dialog = et2_dialog.show_prompt(function(_button_id, _value) {
+				}
+				let dialog = Et2Dialog.show_prompt(function(_button_id, _value)
+					{
 						let uploaded = {};
 						uploaded[this.my_data.file] = this.my_data.data;
-						switch (_button_id)
+						switch(_button_id)
 						{
 							case "overwrite":
 								uploaded[this.my_data.file].confirmed = true;
@@ -625,28 +627,32 @@ export class filemanagerAPP extends EgwApp
 	createdir(action, selected)
 	{
 		let self = this;
-		et2_dialog.show_prompt(function(button, dir){
-			if (button && dir)
+		Et2Dialog.show_prompt(function(button, dir)
+		{
+			if(button && dir)
 			{
 				let path = self.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
 				if(action && action instanceof egwAction)
 				{
 					let paths = self._elems2paths(selected);
-					if(paths[0]) path = paths[0];
+					if(paths[0])
+					{
+						path = paths[0];
+					}
 					// check if target is a file --> use it's directory instead
 					if(selected[0].id || path)
 					{
-						let data = egw.dataGetUIDdata(selected[0].id || 'filemanager::'+path );
-						if (data && data.data.mime != 'httpd/unix-directory')
+						let data = egw.dataGetUIDdata(selected[0].id || 'filemanager::' + path);
+						if(data && data.data.mime != 'httpd/unix-directory')
 						{
 							path = self.dirname(path);
 						}
 					}
 				}
 				self._do_action('createdir', egw.encodePathComponent(dir), true, path);	// true=synchronous request
-				self.change_dir((path == '/' ? '' : path)+'/'+ egw.encodePathComponent(dir));
+				self.change_dir((path == '/' ? '' : path) + '/' + egw.encodePathComponent(dir));
 			}
-		},this.egw.lang('New directory'),this.egw.lang('Create directory'));
+		}, 'New directory', 'Create directory');
 	}
 
 	/**
@@ -655,12 +661,13 @@ export class filemanagerAPP extends EgwApp
 	symlink()
 	{
 		let self = this;
-		et2_dialog.show_prompt(function (button, target) {
-			if (button && target)
+		Et2Dialog.show_prompt(function(button, target)
+		{
+			if(button && target)
 			{
 				self._do_action('symlink', target);
 			}
-		},this.egw.lang('Link target'), this.egw.lang('Create link'));
+		}, 'Link target', 'Create link');
 	}
 
 	/**
@@ -1215,14 +1222,17 @@ export class filemanagerAPP extends EgwApp
 		else
 		{
 			// This is shown if stylite code is there, but the app is not available
-			et2_dialog.show_dialog(function(_button)
+			Et2Dialog.show_dialog(function(_button)
 				{
-					if (_button == et2_dialog.YES_BUTTON) window.open('http://www.egroupware.org/EPL', '_blank');
+					if(_button == Et2Dialog.YES_BUTTON)
+					{
+						window.open('http://www.egroupware.org/EPL', '_blank');
+					}
 					return true;
-				}, this.egw.lang('this feature is only available in epl version.')+"\n\n"+
-				this.egw.lang('You can use regular upload [+] button to upload files.')+"\n\n"+
+				}, this.egw.lang('this feature is only available in epl version.') + "\n\n" +
+				this.egw.lang('You can use regular upload [+] button to upload files.') + "\n\n" +
 				this.egw.lang('Do you want more information about EPL subscription?'),
-				this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+				this.egw.lang('File a file'), undefined, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
 		}
 	}
 
