@@ -25,7 +25,7 @@ import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view
@@ -1398,20 +1398,25 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				}
 				if (parseInt(event_data.recur_type))
 				{
-						const buttons = [
-								{text: egw.lang("Edit exception"), id: "exception", class: "ui-priority-primary", "default": true},
-								{text: egw.lang("Edit series"), id: "series"},
-								{text: egw.lang("Cancel"), id: "cancel"}
-						];
-						et2_dialog.show_dialog(
-								function (button_id)
-								{
-										callback.call(that, button_id, event_data);
-								},
-								(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
-								egw.lang("Do you want to edit this event as an exception or the whole series?"),
-								egw.lang("This event is part of a series"), {}, buttons, et2_dialog.QUESTION_MESSAGE
-						);
+					const buttons = [
+						{
+							label: egw.lang("Edit exception"),
+							id: "exception",
+							class: "ui-priority-primary",
+							"default": true
+						},
+						{label: egw.lang("Edit series"), id: "series"},
+						{label: egw.lang("Cancel"), id: "cancel"}
+					];
+					Et2Dialog.show_dialog(
+						function(button_id)
+						{
+							callback.call(that, button_id, event_data);
+						},
+						(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+						egw.lang("Do you want to edit this event as an exception or the whole series?"),
+						"This event is part of a series", {}, buttons, Et2Dialog.QUESTION_MESSAGE
+					);
 				}
 				else
 				{
@@ -1464,15 +1469,15 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 
 				if (parseInt(event_data.recur_type))
 				{
-						et2_dialog.show_dialog(
-								function (button_id)
-								{
-										callback.call(that, button_id, event_data);
-								},
-								(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
-								egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
-								egw.lang("This event is part of a series"), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.WARNING_MESSAGE
-						);
+					Et2Dialog.show_dialog(
+						function(button_id)
+						{
+							callback.call(that, button_id, event_data);
+						},
+						(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+						egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
+						"This event is part of a series", {}, Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.WARNING_MESSAGE
+					);
 				}
 		}
 

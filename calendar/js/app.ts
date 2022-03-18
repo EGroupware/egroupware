@@ -32,7 +32,7 @@ import {et2_calendar_daycol} from "./et2_widget_daycol";
 import {et2_calendar_planner} from "./et2_widget_planner";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_calendar_event} from "./et2_widget_event";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
@@ -49,8 +49,6 @@ import {et2_number} from "../../api/js/etemplate/et2_widget_number";
 import {et2_template} from "../../api/js/etemplate/et2_widget_template";
 import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
-import "../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.min.js";
-import {Et2InputWidgetInterface} from "../../api/js/etemplate/Et2InputWidget/Et2InputWidget";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 
 /**
@@ -1419,7 +1417,7 @@ export class CalendarApp extends EgwApp
 			{
 				widget.series_split_prompt(function(_button_id)
 					{
-						if (_button_id == et2_dialog.OK_BUTTON)
+						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
 							_send();
 						}
@@ -1630,27 +1628,27 @@ export class CalendarApp extends EgwApp
 				{
 					button_id: 'keep',
 					title: this.egw.lang('All exceptions are converted into single events.'),
-					text: this.egw.lang('Keep exceptions'),
+					label: this.egw.lang('Keep exceptions'),
 					id: 'button[delete_keep_exceptions]',
-					image: 'keep', "default":true
+					image: 'keep', "default": true
 				},
 				{
 					button_id: 'delete',
 					title: this.egw.lang('The exceptions are deleted together with the series.'),
-					text: this.egw.lang('Delete exceptions'),
+					label: this.egw.lang('Delete exceptions'),
 					id: 'button[delete_exceptions]',
 					image: 'delete'
 				},
 				{
 					button_id: 'cancel',
-					text: this.egw.lang('Cancel'),
+					label: this.egw.lang('Cancel'),
 					id: 'dialog[cancel]',
 					image: 'cancel'
 				}
 
 			];
 			var self = this;
-			et2_dialog.show_dialog
+			Et2Dialog.show_dialog
 			(
 					function(_button_id)
 					{
@@ -1665,17 +1663,17 @@ export class CalendarApp extends EgwApp
 							return false;
 						}
 					},
-					this.egw.lang("Do you want to keep the series exceptions in your calendar?"),
-					this.egw.lang("This event is part of a series"), {}, buttons , et2_dialog.WARNING_MESSAGE
+				"Do you want to keep the series exceptions in your calendar?",
+				"This event is part of a series", {}, buttons, Et2Dialog.WARNING_MESSAGE
 			);
 		}
 		else if (content['recur_type'] !== 0)
 		{
-			et2_dialog.confirm(widget,'Delete this series of recurring events','Delete Series');
+			Et2Dialog.confirm(widget, 'Delete this series of recurring events', 'Delete Series');
 		}
 		else
 		{
-			et2_dialog.confirm(widget,'Delete this event','Delete');
+			Et2Dialog.confirm(widget, 'Delete this event', 'Delete');
 		}
 	}
 
@@ -2109,16 +2107,25 @@ export class CalendarApp extends EgwApp
 		this.quick_add = options;
 
 		// Open dialog to use as target
-		var add_dialog = et2_dialog.show_dialog(null, '', ' ', null, [], et2_dialog.PLAIN_MESSAGE, this.egw);
+		let add_dialog = Et2Dialog.show_dialog(null, '', ' ', null, [], Et2Dialog.PLAIN_MESSAGE, this.egw);
+		add_dialog.id = "quick_add";
+		// Position by the event
+		if(event)
+		{
+			add_dialog.config = {...add_dialog.config, referenceNode: event.getDOMNode()};
+		}
 
 		// Call the server, get it into the dialog
 		options = jQuery.extend({menuaction: 'calendar.calendar_uiforms.ajax_add', template: 'calendar.add'}, options);
 		this.egw.json(
 			this.egw.link('/json.php', options),
-			//menuaction + options.join('&'),
 			[options],
-			function(data) {
-				if(data.type) return false;
+			function(data)
+			{
+				if(data.type)
+				{
+					return false;
+				}
 				var content = {
 					html: data[0],
 					js: ''
@@ -2127,49 +2134,36 @@ export class CalendarApp extends EgwApp
 				egw_seperateJavaScript(content);
 
 				// Check for right template in the response
-				if(content.html.indexOf('calendar-add') <= 0) return false;
-
+				if(content.html.indexOf('calendar-add') <= 0)
+				{
+					return false;
+				}
 				// Insert the content
-				jQuery(add_dialog.div).append(content.html);
-
-				// Run the javascript code
-				jQuery(add_dialog.div).append(content.js);
-
-				// Re-position after load
-				jQuery('form', add_dialog.div).one('load', function() {
-					// Hide close button
-					jQuery(".ui-dialog-titlebar-close", add_dialog.div.parent()).hide();
-
-					// Position by event
-					add_dialog.div.dialog('widget').position({
-						my: 'center top', at: event ? 'bottom' : 'center', of: event ? event.node : window,
-						collision: 'flipfit'
-					});
-				});
+				add_dialog._overlayContentNode._contentNode.insertAdjacentHTML("beforeend", content.html);
 			}
 		).sendRequest();
 
-		add_dialog.div.dialog({
-		  close: function( ev, ui ) {
-			  // Wait a bit to make sure etemplate button finishes processing, or it will error
-			  window.setTimeout(function() {
+		add_dialog.addEventListener("close", (ev) =>
+		{
+			// Wait a bit to make sure etemplate button finishes processing, or it will error
+			window.setTimeout(function()
+			{
 				if(event && event.destroy)
 				{
 					event.destroy();
 				}
-				var template = etemplate2.getById('calendar-add');
+				let template = etemplate2.getById('calendar-add');
 				if(template && template.name === 'calendar.add')
 				{
 					template.clear();
-					this.dialog.destroy();
 					delete app.calendar.quick_add;
 				}
-				else if (template || (template = etemplate2.getById("calendar-conflicts")))
+				else if(template || (template = etemplate2.getById("calendar-conflicts")))
 				{
 					// Open conflicts
 					var data = jQuery.extend(
-					{menuaction: 'calendar.calendar_uiforms.ajax_conflicts'},
-				        template.widgetContainer.getArrayMgr('content').data,
+						{menuaction: 'calendar.calendar_uiforms.ajax_conflicts'},
+						template.widgetContainer.getArrayMgr('content').data,
 						app.calendar.quick_add
 					);
 
@@ -2184,15 +2178,11 @@ export class CalendarApp extends EgwApp
 
 					delete app.calendar.quick_add;
 
-					// Close the JS dialog
-					this.dialog.destroy();
-
 					// Do not submit this etemplate
 					return false;
 				}
 
 			  }.bind({dialog: add_dialog, event: ev}), 1000);
-		  }
 		});
 	}
 
@@ -2207,15 +2197,20 @@ export class CalendarApp extends EgwApp
 	{
 		// Include all sent values so we can pass on things that we don't have UI widgets for
 		this.quick_add = this._add_dialog_values(widget);
-
-		// Close the dialog
-		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
+		widget.getInstanceManager().isInvalid().then((invalid) =>
+		{
+			if(invalid.filter((widget) => widget).length == 0)
+			{
+				// Close the dialog, if everything is OK
+				(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).close();
+			}
+		});
 
 		// Mess with opener so update opener in response works
 		window.opener = window;
-		window.setTimeout(function() {window.opener = null;},1000);
+		window.setTimeout(function() {window.opener = null;}, 1000);
 
-		// Proceed with submit
+		// Proceed with submit, though it will fail if something is invalid
 		return true;
 	}
 
@@ -2240,7 +2235,7 @@ export class CalendarApp extends EgwApp
 		egw.open(null,'calendar','edit',options);
 
 		// Close the dialog
-		jQuery(widget.getInstanceManager().DOMContainer.parentNode).dialog('close');
+		(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).close()
 
 		// Do not submit this etemplate
 		return false;
@@ -2492,7 +2487,7 @@ export class CalendarApp extends EgwApp
 				et2_calendar_event.series_split_prompt(
 					content, instance_date, function(_button_id)
 					{
-						if (_button_id == et2_dialog.OK_BUTTON)
+						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
 							that.et2.getInstanceManager().submit(button);
 

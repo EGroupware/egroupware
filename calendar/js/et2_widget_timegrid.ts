@@ -23,9 +23,9 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_calendar_event} from "./et2_widget_event";
-import {egwActionObject, egw_getObjectManager} from "../../api/js/egw_action/egw_action.js";
+import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
 
@@ -567,7 +567,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 						if (event_widget.options.value.recur_type && button_id === 'series')
 						{
 							event_widget.series_split_prompt(function(_button_id) {
-								if (_button_id === et2_dialog.OK_BUTTON)
+								if(_button_id === Et2Dialog.OK_BUTTON)
 								{
 									_send(event_widget.options.value.recur_date);
 								}
