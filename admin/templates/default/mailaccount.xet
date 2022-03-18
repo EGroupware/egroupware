@@ -338,8 +338,7 @@
 				<row class="emailadmin_no_user dialogHeader2">
 					<description for="account_id" value="Valid for"/>
 					<hbox>
-						<select-account account_type="both" id="account_id" onchange="app.admin.account_hide_not_applying" empty_label="Everyone" multiple="dynamic"/>
-						<buttononly label="Select multiple" id="button[multiple]" onclick="app.admin.edit_multiple" options="users"/>
+						<select-account account_type="both" id="account_id" onchange="app.admin.account_hide_not_applying" empty_label="Everyone" expand_multiple_rows="4"/>
 						<checkbox label="account editable by user" id="acc_user_editable"/>
 					</hbox>
 					<description/>

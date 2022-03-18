@@ -1292,22 +1292,6 @@ class AdminApp extends EgwApp
 	}
 
 	/**
-	 * Switch to select multiple accounts
-	 *
-	 * @param {object} _event event-object or information about event
-	 * @param {et2_baseWidget} _widget widget causing the event
-	 */
-	edit_multiple(_event, _widget)
-	{
-		// hide multiple button
-		_widget.set_disabled(true);
-
-		// switch account-selection to multiple
-		var account_id = this.et2.getWidgetById('account_id');
-		account_id.set_multiple(true);
-	}
-
-	/**
 	 * Hide not applying fields, used as:
 	 * - onchange handler on account_id
 	 * - called from et2_ready for emailadmin.account template
@@ -1339,7 +1323,6 @@ class AdminApp extends EgwApp
 			{
 				// switch back to single selectbox
 				account_id.set_multiple(false);
-				this.et2.getWidgetById('button[multiple]').set_disabled(false);
 			}
 		}
 		// switched to single user
