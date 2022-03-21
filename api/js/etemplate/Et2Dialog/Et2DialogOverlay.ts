@@ -48,6 +48,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
         }
         #overlay-content-node-wrapper {
         	flex: 1 1 auto;
+        	padding: 10px;
         }
 
         .overlay__heading > .overlay__close-button {
@@ -111,9 +112,9 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	async getUpdateComplete()
 	{
 		let result = await super.getUpdateComplete();
-		if(this._contentNode && this._contentNode.getUpdateComplete)
+		if(this._contentNode && this._contentNode instanceof LitElement)
 		{
-			await this._contentNode.getUpdateComplete();
+			await (<LitElement>this._contentNode).updateComplete;
 		}
 		return result;
 	}
@@ -125,13 +126,12 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		this.updateComplete
 			.then(async() =>
 			{
-				if(this._contentNode && this._contentNode.getUpdateComplete)
+				if(this._contentNode && this._contentNode instanceof LitElement)
 				{
-
 					// Re-do render to get proper images
 					this._contentNode.requestUpdate();
 
-					await this._contentNode.getUpdateComplete();
+					await this._contentNode.updateComplete;
 				}
 			});
 	}
