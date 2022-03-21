@@ -121,7 +121,7 @@
 		"egroupware/swoolepush": "self.version",
 		"egroupware/tracker": "self.version",
 		"egroupware/util": "^2.6.2",
-		"egroupware/webdav": "^0.3.3",
+		"egroupware/webdav": "^0.3.4",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
