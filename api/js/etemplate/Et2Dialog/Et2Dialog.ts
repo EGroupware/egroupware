@@ -33,10 +33,94 @@ export interface DialogButton
 /**
  * Et2Dialog widget
  *
- * You can use the static methods to get a dialog.
+ * A common dialog widget that makes it easy to inform users or prompt for information.
+ *
+ * It is possible to have a custom dialog by using a template, but you can also use
+ * the static method Et2Dialog.show_dialog().  At its simplest, you can just use:
+ * ```ts
+ *	Et2Dialog.show_dialog(false, "Operation completed");
+ * ```
+ *
+ * Or a more complete example:
+ * ```js
+ * 	let callback = function (button_id)
+ *	{
+ *		if(button_id == Et2Dialog.YES_BUTTON)
+ *		{
+ *			// Do stuff
+ *		}
+ *		else if (button_id == Et2Dialog.NO_BUTTON)
+ *		{
+ *			// Other stuff
+ *		}
+ *		else if (button_id == Et2Dialog.CANCEL_BUTTON)
+ *		{
+ *			// Abort
+ *		}
+ *	}.
+ *	let dialog = Et2Dialog.show_dialog(
+ *		callback, "Erase the entire database?","Break things", {} // value
+ *		et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE
+ *	);
+ * ```
+ *
+ * Or, using Promises instead of a callback:
+ * ```ts
+ * let result = await Et2Dialog.show_prompt(null, "Name").getComplete();
+ * if(result.button_id == Et2Dialog.OK_BUTTON)
+ * {
+ *     // Do stuff with result.value
+ * }
+ * ```
+ *
+ * The parameters for the above are all optional, except callback (which can be null) and message:
+ *	callback - function called when the dialog closes, or false/null.
+ *		The ID of the button will be passed.  Button ID will be one of the Et2Dialog.*_BUTTON constants.
+ *		The callback is _not_ called if the user closes the dialog with the X in the corner, or presses ESC.
+ * 	message - (plain) text to display
+ *	title - Dialog title
+ *	value (for prompt)
+ *	buttons - Et2Dialog BUTTONS_* constant, or an array of button settings.  Use DialogButton interface.
+ *	dialog_type - Et2Dialog *_MESSAGE constant
+ *	icon - URL of icon
+ *
+ * Note that these methods will _not_ block program flow while waiting for user input unless you use "await" on getComplete().
+ * The user's input will be provided to the callback.
+ *
+ * You can also create a custom dialog using an etemplate, even setting all the buttons yourself.
+ * ```ts
+ *  // Pass egw in the constructor
+ * 	let dialog = new Et2Dialog(my_egw_reference);
+ *
+ * 	// Set attributes.  They can be set in any way, but this is convenient.
+ * 	dialog.transformAttributes({
+ * 		// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+ * 		callback: function(button_id, value) {...},	// return false to prevent dialog closing
+ * 		buttons: [
+ * 			// These ones will use the callback, just like normal.  Use DialogButton interface.
+ * 			{label: egw.lang("OK"),id:"OK", default: true},
+ * 			{label: egw.lang("Yes"),id:"Yes"},
+ * 			{label: egw.lang("Sure"),id:"Sure"},
+ * 			{label: egw.lang("Maybe"),click: function() {
+ * 				// If you override, 'this' will be the dialog DOMNode.
+ * 				// Things get more complicated.
+ * 				// Do what you like here
+ * 			}},
+ *
+ * 		],
+ * 		title: 'Why would you want to do this?',
+ * 		template:"/egroupware/addressbook/templates/default/edit.xet",
+ * 		value: { content: {...default values}, sel_options: {...}...}
+ * 	});
+ *	// Add to DOM, dialog will auto-open
+ *	document.body.appendChild(dialog);
+ *	// If you want, wait for close
+ *	let result = await dialog.getComplete();
+ *```
  *
  * Because of how LionDialog does its layout and rendering, it's easiest to separate the dialog popup from
- * the dialog content.  This allows us to easily preserve the WebComponent styling.
+ * the dialog content.  This allows us to easily preserve the WebComponent styling.  You should interact with the
+ * Et2Dialog though, and ignore the Et2DialogOverlay & Et2DialogContent.
  */
 export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialog)))
 {
