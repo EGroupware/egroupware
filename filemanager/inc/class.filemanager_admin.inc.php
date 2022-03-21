@@ -120,7 +120,7 @@ class filemanager_admin extends filemanager_ui
 						{
 							$path = @key($content['mounts']['disable']);
 						}
-						// set umounted url for a (changed) remount
+						// set unmounted url for a (changed) remount
 						$mounts = Vfs::mount();
 						$content['mounts']['path'] = $path;
 						$content['mounts']['url'] = Vfs::parse_url($mounts[$path]);
@@ -169,6 +169,12 @@ class filemanager_admin extends filemanager_ui
 						}
 						$url .= $content['mounts']['url']['host'] ?: 'default';
 						$url .= $content['mounts']['url']['path'] ?: $path;
+
+						// WebDAV needs a trailing slash and while EGroupware redirects, NextCloud e.g. gives an error
+						if (preg_match('#^webdavs?://#', $url) && !substr($url, -1) !== '/')
+						{
+							$url .= '/';
+						}
 
 						if (($content['mounts']['enable'] || substr($content['mounts']['url']['scheme'], 0, 8) === 'stylite.') && !$this->versioning)
 						{
