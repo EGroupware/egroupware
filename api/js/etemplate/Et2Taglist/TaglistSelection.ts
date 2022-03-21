@@ -154,24 +154,28 @@ export class TaglistSelection extends LitElement {
 
 	__handleEditBtn(e)
 	{
-		const selected = this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)];
-		this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)].checked = false;
-		this._getComboBoxElement()._inputNode.value = selected.value;
+		const selected = this.__getSelectedTags().filter(_option => {
+			return (_option.choiceValue == e.target.parentElement.dataset.value);
+		});
+		selected[0].checked = false;
+		this._getComboBoxElement()._inputNode.value = selected[0].choiceValue;
 	}
 
 	__handleCloseBtn(e)
 	{
-		this.__getSelectedTags()[parseInt(e.target.parentElement.dataset.index)].checked = false;
+		this.__getSelectedTags().forEach(_option=>{
+			if (_option.choiceValue == e.target.parentElement.dataset.value) _option.checked = false;
+		});
 	}
 
 	/**
 	 *
 	 * @param option
 	 */
-	_selectedTagTemplate(option, index)
+	_selectedTagTemplate(option)
 	{
 		return html`
-            <div class="taglist-selection__tag" data-index=${index}>
+            <div class="taglist-selection__tag" data-value=${option.value}>
                 ${this._getComboBoxElement().editModeEnabled ? html`<span class="tag-btn tag-editBtn" @click="${this.__handleEditBtn}"></span>` : ''}
                 <span class="tag-label">${option.label}</span>
                 ${this._canBeClosed() ? html`<span class="tag-btn tag-closeBtn" @click="${this.__handleCloseBtn}"></span>` : ''}
@@ -185,9 +189,9 @@ export class TaglistSelection extends LitElement {
 	_selectedTagsTemplate() {
 		return html`
             <div class="taglist-selection__tags">
-                ${this.__getSelectedTags().map((option, index) =>
+                ${this.__getSelectedTags().map((option) =>
                 {
-                    return this._selectedTagTemplate(option, index);
+                    return this._selectedTagTemplate(option);
                 })}
             </div>
 		`;
