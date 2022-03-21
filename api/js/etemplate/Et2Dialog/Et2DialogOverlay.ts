@@ -26,6 +26,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
           background: white;
           position: relative;
           border: 1px solid silver;
+          box-shadow: -2px 1px 9px 3px #b4b4b4;
           min-width: 200px
         }
 
@@ -43,8 +44,10 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 
         .overlay__heading {
 			margin: 0px;
-			padding: 6px 16px 8px;
+			padding: 6px 16px 5px;
 			flex: 1;
+			font-size: 110%;
+			font-weight: 400;
         }
         #overlay-content-node-wrapper {
         	flex: 1 1 auto;
@@ -56,8 +59,8 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
         }
 
         .overlay__close-button {
-          min-width: 40px;
-          min-height: 32px;
+          min-width: 24px;
+          min-height: 24px;
           border-width: 0;
           padding: 0;
           font-size: 24px;
@@ -68,6 +71,9 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 			justify-content: flex-start;
 			align-items: stretch;
 			gap: 5px;
+			border-top: 1px solid silver;
+			margin-top: 0.5em;
+			padding: 5px;
         }
         ::slotted([slot="buttons"]) {
 			flex: 1 0 auto;
