@@ -41,38 +41,6 @@
 		{
 			"type": "composer",
 			"url": "https://asset-packagist.org"
-		},
-		{
-			"type": "pear",
-			"url": "https://pear.horde.org"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/Crypt"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/Compress"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/Imap_Client"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/Util"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/Stream_Wrapper"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/egroupware/guzzlehttp"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/IMSGlobal/lti-1-3-php-library"
 		}
 	],
 	"config": {
@@ -82,7 +50,12 @@
 		"fxp-asset": {
 			"enabled": false
 		},
-		"sort-packages": true
+		"sort-packages": true,
+		"allow-plugins": {
+			"composer/installers": true,
+			"simplesamlphp/composer-module-installer": true,
+			"oomphinc/composer-installers-extender": true
+		}
 	},
 	"require": {
 		"php": ">=7.3,<=8.0",
@@ -105,34 +78,49 @@
 		"egroupware/adodb-php": "self.version",
 		"egroupware/bookmarks": "self.version",
 		"egroupware/collabora": "self.version",
-		"egroupware/compress": "^2.2.3",
-		"egroupware/crypt": "^2.7.14",
-		"egroupware/icalendar": "^2.1.9",
-		"egroupware/imap-client": "2.30.4",
+		"egroupware/compress": "^2.3.0",
+		"egroupware/crypt": "^2.8.0",
+		"egroupware/crypt-blowfish": "^1.2.0",
+		"egroupware/date": "^2.5.0",
+		"egroupware/exception": "^2.1.0",
+		"egroupware/hstream": "^1.7.0",
+		"egroupware/http": "^2.2.0",
+		"egroupware/icalendar": "^2.2.0",
+		"egroupware/idna": "^1.2.0",
+		"egroupware/imap-client": "^2.31.0",
+		"egroupware/listheaders": "^1.3.0",
 		"egroupware/magicsuggest": "^2.1",
+		"egroupware/mail": "^2.7.0",
+		"egroupware/managesieve": "^1.1.0",
+		"egroupware/mapi": "^1.1.0",
+		"egroupware/mime": "^2.13.0",
 		"egroupware/news_admin": "self.version",
+		"egroupware/nls": "^2.3.0",
 		"egroupware/openid": "self.version",
 		"egroupware/projectmanager": "self.version",
 		"egroupware/registration": "self.version",
 		"egroupware/rocketchat": "self.version",
+		"egroupware/secret": "^2.1.0",
 		"egroupware/smallpart": "self.version",
+		"egroupware/smtp": "^1.10.0",
+		"egroupware/socket-client": "^2.2.0",
 		"egroupware/status": "self.version",
-		"egroupware/stream-wrapper": "^2.1.5",
+		"egroupware/stream-filter": "^2.1.0",
+		"egroupware/stream-wrapper": "^2.2.0",
+		"egroupware/support": "^2.3.0",
 		"egroupware/swoolepush": "self.version",
+		"egroupware/text-diff": "^2.3.0",
+		"egroupware/text-flowed": "^2.1.0",
 		"egroupware/tracker": "self.version",
-		"egroupware/util": "^2.6.2",
-		"egroupware/webdav": "^0.3.4",
+		"egroupware/translation": "^2.3.0",
+		"egroupware/url": "^2.3.0",
+		"egroupware/util": "^2.7.0",
+		"egroupware/webdav": "^0.3.5",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^8.12",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
-		"oomphinc/composer-installers-extender": "^1.1",
-		"pear-pear.horde.org/horde_mail": "^2.1.2",
-		"pear-pear.horde.org/horde_managesieve": "^1.0.2",
-		"pear-pear.horde.org/horde_mapi": "^1.0.9",
-		"pear-pear.horde.org/horde_nls": "^2.0.3",
-		"pear-pear.horde.org/horde_smtp": "^1.3.0",
-		"pear-pear.horde.org/horde_text_diff": "^2.2",
+		"oomphinc/composer-installers-extender": "^2.0.1",
 		"pear/auth_sasl": "*",
 		"pear/log": "*",
 		"pear/pear": "*",
