@@ -180,10 +180,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	public static readonly YES_BUTTON : number = 2;
 	public static readonly NO_BUTTON : number = 3;
 
-	get properties()
+	static get properties()
 	{
 		return {
-			...super.properties(),
+			...super.properties,
 			callback: Function,
 
 			// There's an issue with Et2DialogContent.style being undefined, so this has to stay false until it gets
