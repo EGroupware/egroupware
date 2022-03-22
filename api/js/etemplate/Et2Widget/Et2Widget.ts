@@ -337,6 +337,12 @@ const Et2WidgetMixin = (superClass) =>
 			let dom_id = "";
 			if(this._widget_id)
 			{
+				// Create a namespace for this object with new ID
+				if(this._createNamespace())
+				{
+					this.checkCreateNamespace();
+				}
+
 				let path = this.getPath();
 				if(this.getInstanceManager())
 				{
