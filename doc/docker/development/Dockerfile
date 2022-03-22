@@ -64,7 +64,6 @@ else \
 	RESULT=$?; \
 fi; \
 rm composer-setup.php; \
-composer.phar self-update --1; \
 exit $RESULT' \
 	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
 	&& echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
