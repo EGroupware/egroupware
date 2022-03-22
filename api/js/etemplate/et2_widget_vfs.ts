@@ -26,7 +26,6 @@ import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_description} from "./et2_widget_description";
 import {et2_selectAccount_ro} from "./et2_widget_selectAccount";
 import {et2_file} from "./et2_widget_file";
-import {et2_dialog} from "./et2_widget_dialog";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
@@ -35,6 +34,7 @@ import {expose} from "./expose";
 import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * Class which implements the "vfs" XET-Tag
@@ -1144,9 +1144,10 @@ export class et2_vfsUpload extends et2_file
 				// We don't use ui-icon because it assigns a bg image
 				.addClass("delete icon")
 				.bind( 'click', function() {
-					et2_createWidget("dialog", {
+					let d = new Et2Dialog('api');
+					d.transformAttributes({
 						callback: function(button) {
-							if(button == et2_dialog.YES_BUTTON)
+							if(button == Et2Dialog.YES_BUTTON)
 							{
 								egw.json("filemanager_ui::ajax_action", [
 										'delete',
@@ -1164,10 +1165,11 @@ export class et2_vfsUpload extends et2_file
 						},
 						message: self.egw().lang('Delete file')+'?',
 						title: self.egw().lang('Confirmation required'),
-						buttons: et2_dialog.BUTTONS_YES_NO,
-						dialog_type: et2_dialog.QUESTION_MESSAGE,
+						buttons: Et2Dialog.BUTTONS_YES_NO,
+						dialog_type: Et2Dialog.QUESTION_MESSAGE,
 						width: 250
-					}, self);
+					});
+					document.body.appendChild(<HTMLElement><unknown>d);
 				});
 		}
 	}
@@ -1257,7 +1259,7 @@ export class et2_vfsSelect extends et2_inputWidget
 
 	button : JQuery;
 	submit_callback : any;
-	dialog : et2_dialog;
+	dialog : Et2Dialog;
 	private value : any;
 	/**
 	 * Constructor
@@ -1412,7 +1414,7 @@ export class et2_vfsSelect extends et2_inputWidget
 										{text: self.egw().lang("Rename"), id:"rename", image: 'edit'},
 										{text: self.egw().lang("Cancel"), id:"cancel"}
 									];
-									return et2_dialog.show_prompt(function(_button_id, _value) {
+									return Et2Dialog.show_prompt(function(_button_id, _value) {
 											switch (_button_id)
 											{
 												case "overwrite":
@@ -1450,8 +1452,9 @@ export class et2_vfsSelect extends et2_inputWidget
 				return true;
 			}
 		};
+		this.dialog = new Et2Dialog('api');
 
-		this.dialog = <et2_dialog> et2_createWidget("dialog",
+		this.dialog.transformAttributes(
 			{
 				callback: this.submit_callback,
 				title: this.options.dialog_title,
@@ -1462,12 +1465,11 @@ export class et2_vfsSelect extends et2_inputWidget
 				value: data,
 				template: egw.webserverUrl+'/api/templates/default/vfsSelectUI.xet?1',
 				resizable: false
-			}, et2_dialog._create_parent('api'));
+			});
+		document.body.appendChild(<HTMLElement><unknown>this.dialog);
 		this.dialog.template.uniqueId = 'api.vfsSelectUI';
 
-		// Keep the dialog always at the top
-		this.dialog.div.parent().css({"z-index": 100000});
-		this.dialog.div.on('load', function(e) {
+		this.dialog.on('open', function(e) {
 			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
