@@ -75,6 +75,12 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 			margin-top: 0.5em;
 			padding: 5px;
         }
+        /* Override style for legacy nextmatch action dialogs */
+        ::slotted([slot="content"]) {
+        	display: block !important;
+        	position: relative  !important;
+        	inset: initial !important;
+        }
         ::slotted([slot="buttons"]) {
 			flex: 1 0 auto;
 		}
@@ -219,6 +225,11 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 
 	_buttonsTemplate()
 	{
+		if(!this.buttons)
+		{
+			return;
+		}
+
 		// Set button._parent here, otherwise button will have trouble finding our egw()
 		return html`${repeat(this.buttons, (button : DialogButton) => button.id, (button, index) =>
 		{

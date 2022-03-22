@@ -189,11 +189,23 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			// There's an issue with Et2DialogContent.style being undefined, so this has to stay false until it gets
 			// figured out
 			modal: Boolean,
+
+			/**
+			 * Title for the dialog, goes in the header
+			 */
 			title: String,
+
+			/**
+			 * Pre-defined group of buttons, one of the BUTTONS_*
+			 */
 			buttons: Number,
 
+			/**
+			 * Instead of a message, show this template file instead
+			 */
 			template: String,
 
+			// Force size on the dialog.  Normally it sizes to content.
 			width: Number,
 			height: Number,
 
@@ -203,6 +215,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			icon: String,
 			value: Object,
 
+			/**
+			 * Automatically destroy the dialog when it closes.  Set to false to keep the dialog around.
+			 */
+			destroy_on_close: Boolean,
 		}
 	}
 
@@ -284,6 +300,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		}
 		// Needs to not be modal until the style thing is figured out
 		this.modal = false;
+		this.dialog_type = Et2Dialog.PLAIN_MESSAGE;
+		this.destroy_on_close = true;
 		this.__value = {};
 
 		this._onOpen = this._onOpen.bind(this);
@@ -358,13 +376,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 		this.dispatchEvent(new Event('close'));
 
-		// No real need to do this automatically, dialog could be reused without this
-		if(this._template_widget)
+		if(this.destroy_on_close)
 		{
-			this._template_widget.clear();
+			if(this._template_widget)
+			{
+				this._template_widget.clear();
+			}
+			this._overlayCtrl.teardown();
+			this.remove();
 		}
-		this._overlayCtrl.teardown();
-		this.remove();
 	}
 
 	_onClick(ev : MouseEvent)
@@ -509,6 +529,17 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	render()
 	{
 		return this._overlayTemplate();
+	}
+
+	/**
+	 * Don't allow any children here, pass them on to the content node
+	 *
+	 * @param {HTMLElement} node
+	 * @returns {any}
+	 */
+	appendChild(node : HTMLElement)
+	{
+		return this._overlayContentNode.appendChild(node);
 	}
 
 	/**

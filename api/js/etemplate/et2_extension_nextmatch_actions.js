@@ -428,94 +428,69 @@ export function nm_open_popup(_action, _selected)
 	//Check if there is nextmatch on _action otherwise gets the uniqueid from _ids
 	var uid;
 	if (typeof _action.data.nextmatch !== 'undefined')
+	{
 		uid = _action.data.nextmatch.getInstanceManager().uniqueId;
-	else if(typeof _selected[0] !== 'undefined')
+	}
+	else if (typeof _selected[0] !== 'undefined')
+	{
 		uid = _selected[0].manager.data.nextmatch.getInstanceManager().uniqueId;
+	}
+	let action = _action;
+	let selected = _selected;
+
 	// Find the popup div
-	var popup = jQuery("#"+(uid||"") + "_"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
-	if (popup) {
+	var popup = document.body.querySelector("et2-dialog[id*='" + _action.id + "_popup']") || document.body.querySelector("#" + (uid || "") + "_" + _action.id + "_popup") || document.body.querySelector("[id*='" + _action.id + "_popup']");
+	if (popup && popup instanceof Et2Dialog)
+	{
+		popup.open();
+	}
+	else if (popup)
+	{
 		nm_popup_action = _action;
-		if(_selected.length && typeof _selected[0] == 'object')
+		if (_selected.length && typeof _selected[0] == 'object')
 		{
 			_action.data.nextmatch = _selected[0]._context._widget;
 			nm_popup_ids = _selected;
 		}
 		else
 		{
-			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject',_selected);
+			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject', _selected);
 			nm_popup_ids = _selected;
 		}
 
-		var dialog = jQuery('.action_popup-content',popup);
-		if(dialog.length == 0)
+		let dialog = new Et2Dialog();
+		dialog.destroy_on_close = false;
+		dialog.id = popup.id;
+		popup.setAttribute("id", "_" + popup.id);
+		dialog.getUpdateComplete().then(() =>
 		{
-			// Couldn't get the dialog, use the div less the first (header) & last (buttons) nodes
-			dialog = jQuery(document.createElement('div'))
-				.addClass('action_popup-content');
-			if(popup.children().length == 1)
+			let title = popup.querySelector(".promptheader")
+			if (title)
 			{
-				dialog.append(popup.children().children().slice(1,popup.children().children().length-1));
+				title.slot = "heading"
+				dialog.appendChild(title);
 			}
-			else
-			{
-				dialog.append(popup.children().slice(1,popup.children().length-1));
-			}
-			dialog.appendTo(popup);
-		}
-		if(dialog.length == 1)
-		{
-			// Set up the buttons
-			var dialog_parent = dialog.parent();
-			var d_buttons = [];
-			var action = _action;
-			let selected = _selected;
-			popup.show();
-			var close_function = function()
-			{
-				dialog_parent.append(dialog);
-			};
-			jQuery('button:visible',popup).each(function(index) {
-				var but = jQuery(this);
-				if(but.attr("id"))
-				{
-					// Find the associated widget
-					var widget_id = but.attr("id").replace(_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
-					var button = nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id);
-				}
-				var button_data = {
-					text: but.text(),
-					id: widget_id,
-					click: button && button.onclick ? function(e) {
-						jQuery(this).dialog("close");
-						nm_popup_action = action;
-						nm_popup_ids = selected;
-						button.onclick.apply(button, e.currentTarget);
-						close_function();
-					} : function(e) {
-						jQuery(this).dialog("close");
-						nm_popup_action = null;
-						close_function();
-					}
-				};
-				if(button && button.options && button.options.image)
-				{
-					button_data.image = button.options.image;
-				}
-				d_buttons.push(button_data);
-			});
+			popup.slot = "content";
 
-			popup.hide();
-			var _dialog = et2_dialog.show_dialog(
-				close_function,
-				'',
-				jQuery('.promptheader',popup).text(),
-				{},
-				d_buttons
-			);
-			_dialog.set_dialog_type('');
-			_dialog.div.append(dialog)
-					.css('overflow', 'initial');
-		}
+			// Move buttons
+			popup.querySelectorAll('et2-button').forEach((button) =>
+			{
+				button.slot = "buttons";
+				let button_click = button.onclick;
+				button.onclick = (e) =>
+				{
+					window.nm_popup_action = button_click ? _action : null;
+					window.nm_popup_ids = selected;
+					dialog.close();
+
+					return button_click?.apply(button, e.currentTarget);
+				};
+				dialog.appendChild(button);
+			})
+			dialog.appendChild(popup);
+		});
+
+		document.body.appendChild(dialog);
 
 		// Reset global variables
 		nm_popup_action = null;
@@ -534,9 +509,7 @@ window.nm_submit_popup = function(button)
 {
 	if (nm_popup_action.data.nextmatch)
 	{
-		// Find the associated widget
-		var widget_id = jQuery(button).attr("id").replace(nm_popup_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
-		nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id).clicked = true;
+		button.clicked = true;
 	}
 
 	// Mangle senders to get IDs where nm_action() wants them
@@ -569,12 +542,13 @@ window.nm_submit_popup = function(button)
  */
 window.nm_hide_popup = function(element, div_id)
 {
-	var prefix = element.id.substring(0,element.id.indexOf('['));
-	var popup = div_id ? document.getElementById(div_id) : jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
+	var prefix = element.id.substring(0, element.id.indexOf('['));
+	var popup = div_id ? document.getElementById(div_id) : document.querySelector("#" + prefix + "_popup") || document.querySelector("[id*='" + prefix + "_popup']");
 
 	// Hide popup
-	if(popup) {
-		popup.style.display = 'none';
+	if (popup)
+	{
+		popup.close();
 	}
 	nm_popup_action = null;
 	nm_popup_ids = null;

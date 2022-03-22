@@ -343,7 +343,7 @@ class InfologApp extends EgwApp
 	confirm_delete(_action, _senders)
 	{
 		let children = false;
-		let child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+		let child_button = document.body.querySelector('#delete_sub') || document.body.querySelector('[id*="delete_sub"]');
 		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
 		this._action_ids = [];
 		if(child_button)
@@ -352,13 +352,13 @@ class InfologApp extends EgwApp
 			{
 				this._action_ids.push(_senders[i].id.split("::").pop());
 
-				if (jQuery(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs'))
+				if(_senders[i].iface.getDOMNode().classList.contains("infolog_rowHasSubs"))
 				{
 					children = true;
 					break;
 				}
 			}
-			child_button.style.display = children ? 'block' : 'none';
+			child_button.disabled = !children;
 		}
 		nm_open_popup(_action, _senders);
 	}
