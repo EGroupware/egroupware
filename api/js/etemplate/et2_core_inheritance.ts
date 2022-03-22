@@ -13,8 +13,8 @@
 */
 
 import {egw, IegwAppLocal} from "../jsapi/egw_global";
-import {et2_checkType, et2_cloneObject, et2_no_init, et2_validateAttrib} from "./et2_core_common";
-import {et2_IDOMNode, et2_IInput, et2_IInputNode, et2_implements_registry} from "./et2_core_interfaces";
+import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
+import {et2_implements_registry} from "./et2_core_interfaces";
 
 export class ClassWithInterfaces
 {
@@ -200,11 +200,11 @@ export class ClassWithAttributes extends ClassWithInterfaces
 				let n = 0;
 				do
 				{
-						n++;
-						class_tree.push(class_prototype);
-						class_prototype = Object.getPrototypeOf(class_prototype);
+					n++;
+					class_tree.push(class_prototype);
+					class_prototype = Object.getPrototypeOf(class_prototype);
 				}
-				while (class_prototype !== ClassWithAttributes && n < 50);
+				while(class_prototype && class_prototype !== ClassWithAttributes && n < 50);
 
 				for (let i = class_tree.length - 1; i >= 0; i--)
 				{
