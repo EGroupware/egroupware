@@ -494,6 +494,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			this._template_widget.clear();
 		}
+
+		// Etemplate wants a content
+		if(typeof this.__value.content === "undefined")
+		{
+			this.__value.content = {};
+		}
 		this._template_widget = new etemplate2(this._overlayContentNode._contentNode);
 		if(this.__template.indexOf('.xet') > 0)
 		{
