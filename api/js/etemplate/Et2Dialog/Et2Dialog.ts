@@ -522,7 +522,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			}
 		}
 		// set template-name as id, to allow to style dialogs
-		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
+		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)$/, '$2').replace(/\./g, '-'));
 
 	}
 
