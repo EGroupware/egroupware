@@ -38,6 +38,10 @@ export class et2_dialog extends Et2Dialog
 		super.template = value;
 	}
 
+	/**
+	 * @deprecated
+	 * @returns {any}
+	 */
 	get div()
 	{
 		return this;
@@ -82,6 +86,7 @@ for(const [key, value] of Object.entries(et2_dialog.properties))
 
 	attrs[key] = {type: type_map[attr.type?.name || attr.name] || "string"};
 }
+attrs["value"] = {type: "any"};
 et2_attribute_registry[et2_dialog.name] = attrs
 
 customElements.define("legacy-dialog", et2_dialog);

@@ -696,7 +696,12 @@ export class etemplate2
 						app[this.app].et2_ready(this, this.name);
 					}
 
-					jQuery(this._DOMContainer).trigger('load', this);
+					// Dispatch an event that will bubble through shadow DOM boundary (pass through custom elements)
+					this._DOMContainer.dispatchEvent(new CustomEvent('load', {
+						bubbles: true,
+						composed: true,
+						detail: this
+					}));
 
 					if(etemplate2.templates[this.name].attributes.onload)
 					{
