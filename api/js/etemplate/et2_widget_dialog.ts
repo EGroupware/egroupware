@@ -13,6 +13,39 @@ import {et2_attribute_registry, et2_register_widget, et2_widget} from "./et2_cor
 
 /**
  * Just a stub that wraps Et2Dialog
+ *
+ * Replace calls like:
+ * ```ts
+ * this.dialog = <et2_dialog>et2_createWidget("dialog",
+	{
+		callback: this.submit_callback,
+		title: this.egw().lang(this.dialog_title),
+		buttons: buttons,
+		minWidth: 500,
+		minHeight: 400,
+		width: 400,
+		value: data,
+		template: this.egw().webserverUrl + this.TEMPLATE,
+		resizable: true
+	}, et2_dialog._create_parent('api'));
+ * ```
+ *
+ * with this:
+ * ```ts
+ * this.dialog = new Et2Dialog(this.egw());
+ * this.dialog.transformAttributes({
+		callback: this.submit_callback,
+		title: this.dialog_title,
+		buttons: buttons,
+		width: 400,
+		value: data,
+		template: this.egw().webserverUrl + this.TEMPLATE
+	});
+ document.body.appendChild(this.dialog);
+ * ```
+ * Dialog size now comes from contents, so it's better to leave width & height unset.
+ * Set minimum dimensions in CSS.
+ * Title & message are translated by Et2Dialog
  * @deprecated
  */
 export class et2_dialog extends Et2Dialog
