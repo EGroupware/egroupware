@@ -121,11 +121,38 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 			if (this._inputNode.value == _value)
 			{
 				this.set_value(this.getValue().concat([this._inputNode.value]));
+				// reset the entered value otherwise to clean up the inputbox after
+				// new entry has been set as new value and option.
+				this._inputNode.value = '';
 			}
 			this.removeEventListener('form-element-register', modelValueChanged);
 		};
 		this.addEventListener('form-element-register', modelValueChanged);
 
+	}
+
+
+	/**
+	 * @override of _listboxOnKeyDown
+	 * @desc
+	 * Handle various keyboard controls; UP/DOWN will shift focus; SPACE selects
+	 * an item.
+	 *
+	 * @param {KeyboardEvent} ev - the keydown event object
+	 * @protected
+	 */
+	_listboxOnKeyDown(ev) {
+		const { key } = ev;
+
+		// make sure we don't mess up with activeIndex after a free entry gets added into options
+		// it's very important to intercept the key down handler before the listbox (parent) happens.
+		if (key === 'Enter' && this.allowFreeEntries && this._inputNode.value
+			&& !this.formElements.filter(_o=>{return _o.choiceValue == this._inputNode.value;}).length)
+		{
+			this.activeIndex = -1;
+		}
+
+		super._listboxOnKeyDown(ev);
 	}
 
 	/**

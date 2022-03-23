@@ -18,6 +18,11 @@ import {taglistStyles} from "./TaglistStyles";
  * Implementation of selection tags
  */
 export class TaglistSelection extends LitElement {
+	/**
+	 * keeps last backspace status
+	 */
+	protected _removeOnBackspace = false;
+
 	static get properties() {
 		return {
 			comboxElement: {type: Object},
@@ -209,16 +214,24 @@ export class TaglistSelection extends LitElement {
 	 * @param ev
 	 */
 	__inputOnKeyup(ev) {
-		if (ev.key === 'Backspace') {
-			if (!this._inputNode.value && this._canBeClosed()) {
-				if (this.__getSelectedTags().length) {
-					this.__getSelectedTags()[this.__getSelectedTags().length - 1].checked = false;
+
+		const { key } = ev;
+		switch(key)
+		{
+			case 'Backspace':
+				if (!this._inputNode.value && this._canBeClosed()) {
+					if (this.__getSelectedTags().length && this._removeOnBackspace) {
+						this.__getSelectedTags()[this.__getSelectedTags().length - 1].checked = false;
+					}
+					this._removeOnBackspace = true;
 				}
-			}
+				else
+				{
+					this._removeOnBackspace = false;
+				}
+				break;
 		}
-		//todo: setting a new option value changes option indexes therefore the last activeIndex should be adopted according
-		// to our new options' indexes. We need to figure out how to set that index before the last selected option gets unchecked.
-		this._getComboBoxElement().activeIndex = this.__getSelectedTags().length;
+		if (key !== 'Backspace') this._removeOnBackspace = false;
 	}
 }
 customElements.define('taglist-selection', TaglistSelection);
