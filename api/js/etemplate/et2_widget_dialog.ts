@@ -117,7 +117,7 @@ for(const [key, value] of Object.entries(et2_dialog.properties))
 {
 	let attr = et2_dialog.properties[key];
 
-	attrs[key] = {type: type_map[attr.type?.name || attr.name] || "string"};
+	attrs[key] = {type: type_map[attr.type?.name || attr.name] || "any"};
 }
 attrs["value"] = {type: "any"};
 et2_attribute_registry[et2_dialog.name] = attrs
