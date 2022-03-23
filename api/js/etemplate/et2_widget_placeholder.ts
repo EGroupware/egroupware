@@ -15,7 +15,7 @@
 	et2_widget_description;
 */
 
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_dialog} from "./et2_widget_dialog";
 import {et2_inputWidget} from "./et2_core_inputWidget";
@@ -24,6 +24,7 @@ import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_description} from "./et2_widget_description";
 import {et2_link_entry} from "./et2_widget_link";
 import type {et2_button} from "./et2_widget_button";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 
 /**
@@ -48,7 +49,7 @@ export class et2_placeholder_select extends et2_inputWidget
 
 	button : JQuery;
 	submit_callback : any;
-	dialog : et2_dialog;
+	dialog : Et2Dialog;
 	protected value : any;
 
 	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';
@@ -116,7 +117,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		let self = this;
 		let buttons = [
 			{
-				text: this.egw().lang("Insert"),
+				label: this.egw().lang("Insert"),
 				id: "submit",
 				image: "export"
 			}
@@ -133,7 +134,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			}
 
 		}
-		buttons.push({text: this.egw().lang("Cancel"), id: "cancel", image: "cancel"});
+		buttons.push({label: this.egw().lang("Cancel"), id: "cancel", image: "cancel"});
 
 		let data = {
 			content: {app: '', group: '', entry: {}},
@@ -178,22 +179,17 @@ export class et2_placeholder_select extends et2_inputWidget
 			}
 		}.bind(this);
 
-		this.dialog = <et2_dialog>et2_createWidget("dialog",
-			{
-				callback: this.submit_callback,
-				title: this.egw().lang(this.options.dialog_title) || this.egw().lang("Insert Placeholder"),
-				buttons: buttons,
-				minWidth: 500,
-				minHeight: 400,
-				width: 400,
-				value: data,
-				template: this.egw().webserverUrl + this.TEMPLATE,
-				resizable: true
-			}, et2_dialog._create_parent('api'));
-		this.dialog.template.uniqueId = 'api.insert_merge_placeholder';
-
-
-		this.dialog.div.on('load', this._on_template_load.bind(this));
+		this.dialog = new Et2Dialog(this.egw());
+		this.dialog.transformAttributes({
+			callback: this.submit_callback,
+			title: this.options.dialog_title || "Insert Placeholder",
+			buttons: buttons,
+			value: data,
+			template: this.egw().webserverUrl + this.TEMPLATE,
+			resizable: true
+		});
+		document.body.appendChild(<HTMLElement><unknown>this.dialog);
+		this.dialog.addEventListener('load', this._on_template_load.bind(this));
 	}
 
 	doLoadingFinished()

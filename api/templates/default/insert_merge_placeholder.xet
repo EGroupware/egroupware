@@ -25,17 +25,17 @@
         </vbox>
         <styles>
             /** Structural stuff **/
-            #api\.insert_merge_placeholder_outer_box > #api\.insert_merge_placeholder_selects {
+            #insert_merge_placeholder #_outer_box > #api\.insert_merge_placeholder_selects {
             flex: 1 1 80%;
             }
-            #api\.insert_merge_placeholder_outer_box > label.et2_label {
+            #insert_merge_placeholder #_outer_box > label.et2_label {
             flex: 0 1 auto;
             }
-            #api\.insert_merge_placeholder_outer_box .preview {
+            #insert_merge_placeholder #_outer_box .preview {
             flex: 1 1 2em;
             font-size: larger;
             }
-            select#api\.insert_merge_placeholder_app {
+            select#_app {
             flex-grow: 0;
             }
             .ui-dialog-content, div.et2_box_widget, div.et2_box_widget > div.et2_box_widget {
@@ -78,7 +78,11 @@
             }
 
             /** Cosmetics **/
-            #api\.insert_merge_placeholder_outer_box option:first-letter {
+            #insert_merge_placeholder {
+            min-width: 500px;
+            min-height: 250px;
+            }
+            #_outer_box option:first-letter {
             text-transform: capitalize;
             }
         </styles>
