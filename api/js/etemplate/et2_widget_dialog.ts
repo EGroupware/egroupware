@@ -71,6 +71,23 @@ export class et2_dialog extends Et2Dialog
 		super.template = value;
 	}
 
+	_getButtons() : any
+	{
+		if(Array.isArray(this.buttons) && this.buttons[0].text)
+		{
+			console.warn("Button definitions should follow DialogButton interface", this, this.buttons);
+			return this.buttons.map((button) =>
+			{
+				if(button.text)
+				{
+					button.label = button.text;
+				}
+				return button;
+			});
+		}
+		return super._getButtons();
+	}
+
 	/**
 	 * @deprecated
 	 * @returns {any}
