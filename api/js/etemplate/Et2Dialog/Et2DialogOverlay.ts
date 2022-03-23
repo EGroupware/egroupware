@@ -40,13 +40,14 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		}
         .overlay__header {
           display: flex;
+          border-bottom: 1px inset;
         }
 
         .overlay__heading {
 			margin: 0px;
-			padding: 6px 16px 5px;
+			padding: 6px 10px 0px;
 			flex: 1;
-			font-size: 110%;
+			font-size: 130%;
 			font-weight: 400;
         }
         #overlay-content-node-wrapper {
