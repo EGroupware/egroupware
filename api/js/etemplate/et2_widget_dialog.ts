@@ -51,9 +51,9 @@ import {et2_attribute_registry, et2_register_widget, et2_widget} from "./et2_cor
 export class et2_dialog extends Et2Dialog
 {
 
-	constructor(parent, attrs?)
+	constructor(parent?, attrs?)
 	{
-		super(parent.egw());
+		super(parent?.egw() || egw);
 		if(attrs)
 		{
 			this.transformAttributes(attrs);
