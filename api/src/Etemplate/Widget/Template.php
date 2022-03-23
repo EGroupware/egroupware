@@ -208,10 +208,14 @@ class Template extends Etemplate\Widget
 	 * This adds the server-side modification of eTemplates for web-components /api/etemplate.php.
 	 *
 	 * @param string $path
-	 * @return string url
+	 * @return string|null url
 	 */
 	public static function rel2url($path)
 	{
+		if (empty($path))
+		{
+			return null;  // do not prefix empty path with preprocessor script, as it prevents client-side expansion
+		}
 		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/etemplate.php'.
 			($path[0] === '/' ? $path : preg_replace('#^'.self::VFS_TEMPLATE_PATH.'#', '',
 				Api\Vfs::parse_url($path, PHP_URL_PATH))).'?'.
