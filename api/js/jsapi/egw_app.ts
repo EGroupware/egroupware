@@ -1901,7 +1901,8 @@ export abstract class EgwApp
 
 		var dialog = function(_content, _callback?)
 		{
-			return et2_createWidget("dialog", {
+			let dialog = new Et2Dialog(this.egw);
+			dialog.transformAttributes({
 				callback: function(_button_id, _value)
 				{
 					if(typeof _callback == "function")
@@ -1912,7 +1913,7 @@ export abstract class EgwApp
 				title: egw.lang('Backup/Restore'),
 				buttons: [{
 					"button_id": 'close',
-					"text": egw.lang('Close'),
+					"label": egw.lang('Close'),
 					id: 'dialog[close]',
 					image: 'cancelled',
 					"default": true
@@ -1926,6 +1927,7 @@ export abstract class EgwApp
 				class: "pgp_backup_restore",
 				modal: true
 			});
+			return dialog;
 		};
 		if(typeof mailvelope != 'undefined')
 		{

@@ -74,6 +74,7 @@ import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
@@ -2954,9 +2955,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this.set_columns(jQuery.extend([], this.egw().preference(pref, app)));
 		}
 
-		const callback = jQuery.proxy(function(button, value)
+		const callback = function(button, value)
 		{
-			if(button === et2_dialog.CANCEL_BUTTON)
+			if(button === Et2Dialog.CANCEL_BUTTON)
 			{
 				// Give dialog a chance to close, or it will be in the print
 				window.setTimeout(function()
@@ -3007,7 +3008,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 
 			// If they want the whole thing, style it as all
-			if(button === et2_dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount())
+			if(button === Et2Dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount())
 			{
 				// Add the class, gives more reliable sizing
 				this.div.addClass('print');
@@ -3021,7 +3022,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				let fetchedCount = 0;
 				let cancel = false;
 				const nm = this;
-				const dialog = et2_dialog.show_dialog(
+				const dialog = Et2Dialog.show_dialog(
 					// Abort the long task if they canceled the data load
 					function()
 					{
@@ -3033,7 +3034,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						}, 0);
 					},
 					egw.lang('Loading'), egw.lang('please wait...'), {}, [
-						{"button_id": et2_dialog.CANCEL_BUTTON, "text": 'cancel', id: 'dialog[cancel]', image: 'cancel'}
+						{"button_id": Et2Dialog.CANCEL_BUTTON, label: 'cancel', id: 'dialog[cancel]', image: 'cancel'}
 					]
 				);
 
@@ -3080,13 +3081,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 							jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
 
 							// Grid needs to redraw before it can be printed, so wait
-							window.setTimeout(jQuery.proxy(function()
+							window.setTimeout(function()
 							{
-								dialog.destroy();
+								dialog.close();
 
 								// Should be OK to print now
 								defer.resolve();
-							}, nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+							}.bind(nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
 
 						}
 
@@ -3116,7 +3117,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					defer.resolve();
 				}, 0);
 			}
-		}, this);
+		}.bind(this);
 		var value = {
 			content: {
 				row_count: Math.min(100, total),
@@ -3153,6 +3154,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const tab = this.get_tab_info();
 		// Get title for print dialog from settings or tab, if available
 		const title = this.options.settings.label ? this.options.settings.label : (tab ? tab.label : '');
+		debugger;
 		const dialog = et2_createWidget("dialog", {
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing

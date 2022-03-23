@@ -17,17 +17,17 @@
 
 import {egw} from "../jsapi/egw_global";
 import {et2_bounds} from "./et2_core_common";
-import {et2_dialog} from "./et2_widget_dialog";
-import {et2_createWidget} from "./et2_core_widget";
 import {et2_dataview_rowAOI} from "./et2_dataview_view_aoi";
+import {egwActionObjectInterface} from "../egw_action/egw_action.js";
 import {
-	egwActionObjectInterface
-} from "../egw_action/egw_action.js";
-import {
-	EGW_AO_SHIFT_STATE_BLOCK, EGW_AO_SHIFT_STATE_MULTI,
-	EGW_AO_STATE_FOCUSED, EGW_AO_STATE_NORMAL, EGW_AO_STATE_SELECTED
+	EGW_AO_SHIFT_STATE_BLOCK,
+	EGW_AO_SHIFT_STATE_MULTI,
+	EGW_AO_STATE_FOCUSED,
+	EGW_AO_STATE_NORMAL,
+	EGW_AO_STATE_SELECTED
 } from "../egw_action/egw_action_constants.js";
 import {egwBitIsSet, egwSetBit} from "../egw_action/egw_action_common.js";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * The selectioManager is internally used by the et2_dataview_controller class
@@ -673,50 +673,63 @@ export class et2_dataview_selectionManager
 		var range_index = 0;
 		var range_count = queryRanges.length;
 		var cont = true;
-		var fetchPromise = new Promise(function (resolve) {
+		var fetchPromise = new Promise(function(resolve)
+		{
 			resolve();
 		});
 		// Found after dialog loads
 		var progressbar;
 
-		var parent = et2_dialog._create_parent();
-		var dialog = et2_createWidget("dialog", {
+		let dialog = new Et2Dialog(this._context._widget.egw());
+		dialog.transformAttributes({
 			callback:
-				// Abort the long task if they canceled the data load
+			// Abort the long task if they canceled the data load
 				function() {cont = false},
-			template: egw.webserverUrl+'/api/templates/default/long_task.xet',
+			template: egw.webserverUrl + '/api/templates/default/long_task.xet',
 			message: egw.lang('Loading'),
 			title: egw.lang('please wait...'),
-			buttons: [{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'),id: 'dialog[cancel]',image: 'cancel'}],
+			buttons: [{
+				button_id: Et2Dialog.CANCEL_BUTTON,
+				label: egw.lang('cancel'),
+				id: 'dialog[cancel]',
+				image: 'cancel'
+			}],
 			width: 300
-		}, parent);
-		jQuery(dialog.template.DOMContainer).on('load', function() {
+		});
+		(this._context._widget.getDOMNode() || document.body).appendChild(dialog);
+		dialog.addEventListener('load', function()
+		{
 			// Get access to template widgets
 			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
 		});
 
-		for (var i = 0; i < queryRanges.length; i++)
+		for(var i = 0; i < queryRanges.length; i++)
 		{
-			if(record_count + (queryRanges[i].bottom - queryRanges[i].top+1) > that.MAX_SELECTION)
+			if(record_count + (queryRanges[i].bottom - queryRanges[i].top + 1) > that.MAX_SELECTION)
 			{
 				egw.message(egw.lang('Too many rows selected.<br />Select all, or less than %1 rows', that.MAX_SELECTION));
 				break;
 			}
 			else
 			{
-				record_count += (queryRanges[i].bottom - queryRanges[i].top+1);
-				fetchPromise = fetchPromise.then((function ()
+				record_count += (queryRanges[i].bottom - queryRanges[i].top + 1);
+				fetchPromise = fetchPromise.then((function()
 				{
 					// Check for abort
-					if(!cont) return;
+					if(!cont)
+					{
+						return;
+					}
 
-					return new Promise(function(resolve) {
-					that._queryRangeCallback.call(that._context, this,
-						function (_order) {
-							for (var j = 0; j < _order.length; j++)
+					return new Promise(function(resolve)
+					{
+						that._queryRangeCallback.call(that._context, this,
+							function(_order)
 							{
-								// Check for no_actions flag via data since entry isn't there/available
-								var data = egw.dataGetUIDdata(_order[j]);
+								for(var j = 0; j < _order.length; j++)
+								{
+									// Check for no_actions flag via data since entry isn't there/available
+									var data = egw.dataGetUIDdata(_order[j]);
 								if(!data || data && data.data && !data.data.no_actions)
 								{
 									var entry = this._getRegisteredRowsEntry(_order[j]);
@@ -732,7 +745,7 @@ export class et2_dataview_selectionManager
 			}
 		}
 		fetchPromise.finally(function() {
-			dialog.destroy();
+			dialog.close();
 		});
 	}
 
