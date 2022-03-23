@@ -3153,7 +3153,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const tab = this.get_tab_info();
 		// Get title for print dialog from settings or tab, if available
 		const title = this.options.settings.label ? this.options.settings.label : (tab ? tab.label : '');
-		debugger;
 		const dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
