@@ -60,7 +60,6 @@ import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_link_entry, et2_link_to} from "./et2_widget_link";
-import {et2_dialog} from "./et2_widget_dialog";
 import {et2_grid} from "./et2_widget_grid";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_taglist} from "./et2_widget_taglist";
@@ -3155,14 +3154,16 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Get title for print dialog from settings or tab, if available
 		const title = this.options.settings.label ? this.options.settings.label : (tab ? tab.label : '');
 		debugger;
-		const dialog = et2_createWidget("dialog", {
+		const dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
-			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			title: this.egw().lang('Print') + ' ' + this.egw().lang(title),
 			template: this.egw().link(base_url + '/api/templates/default/nm_print_dialog.xet'),
 			value: value
 		});
+		document.body.appendChild(dialog);
 	}
 
 	/**
