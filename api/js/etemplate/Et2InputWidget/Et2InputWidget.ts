@@ -186,6 +186,11 @@ const Et2InputWidgetMixin = (superclass) =>
 		set_value(new_value)
 		{
 			this.value = new_value;
+
+			if(typeof this._callParser == "function")
+			{
+				this.modelValue = this._callParser(new_value);
+			}
 		}
 
 		get_value()
