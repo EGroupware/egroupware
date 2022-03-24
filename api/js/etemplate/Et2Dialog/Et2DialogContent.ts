@@ -11,7 +11,7 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 		css`
 			:host {
 			display: block;
-			min-width: 200px;
+			min-width: 300px;
 			min-height: 32px;
 			}
 			.dialog {
