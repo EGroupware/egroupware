@@ -437,6 +437,18 @@ export function nm_open_popup(_action, _selected)
 	}
 	let action = _action;
 	let selected = _selected;
+	nm_popup_action = _action;
+
+	if (_selected.length && typeof _selected[0] == 'object')
+	{
+		_action.data.nextmatch = _selected[0]._context._widget;
+		nm_popup_ids = _selected;
+	}
+	else
+	{
+		egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject', _selected);
+		nm_popup_ids = _selected;
+	}
 
 	// Find the popup div
 	var popup = document.body.querySelector("et2-dialog[id*='" + _action.id + "_popup']") || document.body.querySelector("#" + (uid || "") + "_" + _action.id + "_popup") || document.body.querySelector("[id*='" + _action.id + "_popup']");
@@ -446,22 +458,16 @@ export function nm_open_popup(_action, _selected)
 	}
 	else if (popup)
 	{
-		nm_popup_action = _action;
-		if (_selected.length && typeof _selected[0] == 'object')
-		{
-			_action.data.nextmatch = _selected[0]._context._widget;
-			nm_popup_ids = _selected;
-		}
-		else
-		{
-			egw().debug("warn", 'Not proper format for IDs, should be array of egwActionObject', _selected);
-			nm_popup_ids = _selected;
-		}
+
 
 		let dialog = new Et2Dialog();
 		dialog.destroy_on_close = false;
 		dialog.id = popup.id;
 		popup.setAttribute("id", "_" + popup.id);
+		dialog.addEventListener("close", () =>
+		{
+			window.nm_popup_action = null;
+		})
 		dialog.getUpdateComplete().then(() =>
 		{
 			let title = popup.querySelector(".promptheader")
@@ -479,7 +485,7 @@ export function nm_open_popup(_action, _selected)
 				let button_click = button.onclick;
 				button.onclick = (e) =>
 				{
-					window.nm_popup_action = button_click ? _action : null;
+					window.nm_popup_action = button_click ? action : null;
 					window.nm_popup_ids = selected;
 					dialog.close();
 
