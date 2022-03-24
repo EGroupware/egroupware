@@ -18,7 +18,6 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
 import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
 import {egw, egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
-import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 
@@ -1291,24 +1290,29 @@ export class filemanagerAPP extends EgwApp
 					return true;
 				}
 			}
-			catch (e) {}
+			catch(e)
+			{
+			}
 			egw.message('Failed to copy the link!');
 		};
 		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-		let dialog = et2_createWidget("dialog", {
+		let dialog = new Et2Dialog(this.egw);
+		dialog.transformAttributes({
 			callback: function()
 			{
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : (_data.writable || _data.action ==='shareWritableLink' ?
-					this.egw.lang("Writable share link") : this.egw.lang("Readonly share link")
+			title: _data.title ? _data.title : (_data.writable || _data.action === 'shareWritableLink' ?
+												this.egw.lang("Writable share link") : this.egw.lang("Readonly share link")
 			),
+			buttons: Et2Dialog.BUTTONS_OK,
 			template: _data.template,
 			width: 450,
-			value: {content:{ "share_link": _data.share_link }}
+			value: {content: {"share_link": _data.share_link}}
 		});
-		jQuery(dialog.template.DOMContainer).on("load", () =>
+		document.body.appendChild(dialog);
+		dialog.addEventListener("load", () =>
 		{
 			dialog.template.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
 		});
