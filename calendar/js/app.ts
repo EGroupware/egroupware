@@ -2085,7 +2085,9 @@ export class CalendarApp extends EgwApp
 	 * Open a smaller dialog/popup to add a new entry
 	 *
 	 * This is opened inside a dialog widget, not a popup.  This causes issues
-	 * with the submission, handling of the response, and cleanup.
+	 * with the submission, handling of the response, and cleanup.  We're doing this because the server sets a lot
+	 * of default values, but this could probably also be done more cleanly by getting the values via AJAX and passing
+	 * them into the dialog
 	 *
 	 * @param {Object} options Array of values for new
 	 * @param {et2_calendar_event} event Placeholder showing where new event goes
@@ -2107,7 +2109,7 @@ export class CalendarApp extends EgwApp
 		this.quick_add = options;
 
 		// Open dialog to use as target
-		let add_dialog = Et2Dialog.show_dialog(null, '', ' ', null, [], Et2Dialog.PLAIN_MESSAGE, this.egw);
+		let add_dialog = Et2Dialog.show_dialog(null, '', 'Add new event', null, [], Et2Dialog.PLAIN_MESSAGE, this.egw);
 		add_dialog.id = "quick_add";
 		// Position by the event
 		if(event)
@@ -2138,8 +2140,15 @@ export class CalendarApp extends EgwApp
 				{
 					return false;
 				}
-				// Insert the content
-				add_dialog._overlayContentNode._contentNode.insertAdjacentHTML("beforeend", content.html);
+				// Insert the content into the correct place
+				add_dialog._overlayContentNode._contentNode.remove();
+				add_dialog._overlayContentNode.insertAdjacentHTML("beforeend", content.html);
+				let template = add_dialog._overlayContentNode.querySelector("[id='calendar-add']");
+				if(template)
+				{
+					template.slot = "content";
+					template.addEventListener("load", add_dialog._adoptTemplateButtons);
+				}
 			}
 		).sendRequest();
 
