@@ -307,6 +307,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._onOpen = this._onOpen.bind(this);
 		this._onClose = this._onClose.bind(this);
 		this._onClick = this._onClick.bind(this);
+		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
 		// Create this here so we have something, otherwise the creator might continue with undefined while we
 		// wait for the dialog to complete & open
@@ -530,6 +531,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// set template-name as id, to allow to style dialogs
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)$/, '$2').replace(/\./g, '-'));
 
+		// Look for buttons after load
+		this._templateWidget.addEventListener("load", this._adoptTemplateButtons.bind(this));
 	}
 
 	render()
@@ -621,10 +624,31 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			return this.buttons;
 		}
-		else
+	}
+
+	/**
+	 * Search for buttons in the template, and try to slot them
+	 *
+	 * We don't want to just grab them all, as there may be other buttons.
+	 */
+	_adoptTemplateButtons()
+	{
+		// Check for something with buttons slot set
+		let search_in = this._template_widget?.DOMContainer || this._overlayContentNode._contentNode;
+		let template_buttons = search_in.querySelectorAll('[slot="buttons"]') ||
+			// Look for a dialog footer, which will contain several buttons and possible other widgets
+			search_in.querySelectorAll(".dialogFooterToolbar") ||
+			// Look for buttons anywhere
+			search_in.querySelectorAll("et2-button");
+		if(template_buttons)
 		{
-			// TODO: Find buttons in template
+			template_buttons.forEach((button) =>
+			{
+				button.setAttribute("slot", "buttons");
+				this._overlayContentNode.appendChild(button);
+			})
 		}
+		return template_buttons;
 	}
 
 	/**

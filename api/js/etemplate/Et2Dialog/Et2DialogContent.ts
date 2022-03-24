@@ -12,10 +12,9 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 			:host {
 			display: block;
 			min-width: 200px;
-			min-height: 60px;
+			min-height: 32px;
 			}
 			.dialog {
-				padding: 5px;
 			}
 			.dialog_icon {
 				margin-right: 2ex;
