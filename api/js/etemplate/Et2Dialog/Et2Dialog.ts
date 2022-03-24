@@ -502,6 +502,17 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			this.__value.content = {};
 		}
 		this._template_widget = new etemplate2(this._overlayContentNode._contentNode);
+
+		// Fire an event so consumers can do their thing - etemplate will fire its own load event when its done
+		if(!this.dispatchEvent(new CustomEvent("before-load", {
+			bubbles: true,
+			cancelable: true,
+			detail: this._template_widget
+		})))
+		{
+			return;
+		}
+
 		if(this.__template.indexOf('.xet') > 0)
 		{
 			// File name provided, fetch from server
@@ -532,7 +543,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)$/, '$2').replace(/\./g, '-'));
 
 		// Look for buttons after load
-		this._templateWidget.addEventListener("load", this._adoptTemplateButtons.bind(this));
+		this.addEventListener("load", this._adoptTemplateButtons);
 	}
 
 	render()

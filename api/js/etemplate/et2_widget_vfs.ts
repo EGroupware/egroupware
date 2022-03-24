@@ -1336,8 +1336,8 @@ export class et2_vfsSelect extends et2_inputWidget
 		let self = this;
 		let buttons = [
 			{
-				text: egw.lang(_data.content.label),
-				id:"submit",
+				label: egw.lang(_data.content.label),
+				id: "submit",
 				image: _data.content.mode.match(/saveas|select-dir/) ? "save" : this.options.button_icon
 			}
 		];
@@ -1353,7 +1353,7 @@ export class et2_vfsSelect extends et2_inputWidget
 			}
 
 		}
-		buttons.push({text: egw.lang("Close"), id:"close", image:"cancel"});
+		buttons.push({label: egw.lang("Close"), id: "close", image: "cancel"});
 
 
 		// Don't rely only on app_name to fetch et2 object as app_name may not
@@ -1461,15 +1461,19 @@ export class et2_vfsSelect extends et2_inputWidget
 				buttons: buttons,
 				minWidth: 500,
 				minHeight: 400,
-				width:400,
+				width: 400,
 				value: data,
-				template: egw.webserverUrl+'/api/templates/default/vfsSelectUI.xet?1',
+				template: egw.webserverUrl + '/api/templates/default/vfsSelectUI.xet?1',
 				resizable: false
 			});
+		this.dialog.addEventListener("before-load", (ev) =>
+		{
+			this.dialog.template.uniqueId = 'api.vfsSelectUI';
+		});
 		document.body.appendChild(<HTMLElement><unknown>this.dialog);
-		this.dialog.template.uniqueId = 'api.vfsSelectUI';
 
-		this.dialog.on('open', function(e) {
+		this.dialog.addEventListener('open', function(e)
+		{
 			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
