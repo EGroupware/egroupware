@@ -2898,238 +2898,241 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const total = this.controller._grid.getTotalCount();
 
 		// Defer the printing to ask about columns & rows
-		const defer = jQuery.Deferred();
-
-
-		let pref = this.options.settings.columnselection_pref;
-		if(pref.indexOf('nextmatch') == 0)
+		return new Promise((resolve, reject) =>
 		{
-			pref = 'nextmatch-' + pref;
-		}
-		const app = this.getInstanceManager().app;
-
-		const columns = {};
-		const columnMgr = this.dataview.getColumnMgr();
-		pref += '_print';
-		const columns_selected = [];
-
-		// Get column names
-		for(let i = 0; i < columnMgr.columns.length; i++)
-		{
-			const col = columnMgr.columns[i];
-			const widget = this.columns[i].widget;
-			let colName = this._getColumnName(widget);
-
-			if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-				col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
+			let pref = this.options.settings.columnselection_pref;
+			if (pref.indexOf('nextmatch') == 0)
 			{
-				columns[colName] = col.caption;
-				if(col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(colName);
+				pref = 'nextmatch-' + pref;
 			}
-			// Custom fields get listed separately
-			if(widget.instanceOf(et2_nextmatch_customfields))
+			const app = this.getInstanceManager().app;
+
+			const columns = {};
+			const columnMgr = this.dataview.getColumnMgr();
+			pref += '_print';
+			const columns_selected = [];
+
+			// Get column names
+			for (let i = 0; i < columnMgr.columns.length; i++)
 			{
-				delete (columns[colName]);
-				colName = widget.id;
-				if(col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE && !
-					jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields)
-				)
+				const col = columnMgr.columns[i];
+				const widget = this.columns[i].widget;
+				let colName = this._getColumnName(widget);
+
+				if (col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+					col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
 				{
 					columns[colName] = col.caption;
-					for(let field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
-					{
-						columns[et2_nextmatch_customfields.PREFIX + field_name] = " - " + (<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
-						if(widget.options.fields[field_name] && columns_selected.indexOf(colName) >= 0)
-						{
-							columns_selected.push(et2_nextmatch_customfields.PREFIX + field_name);
-						}
-					}
+					if (col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(colName);
 				}
-			}
-		}
-
-		// Preference exists?  Set it now
-		if(this.egw().preference(pref, app))
-		{
-			this.set_columns(jQuery.extend([], this.egw().preference(pref, app)));
-		}
-
-		const callback = function(button, value)
-		{
-			if(button === Et2Dialog.CANCEL_BUTTON)
-			{
-				// Give dialog a chance to close, or it will be in the print
-				window.setTimeout(function()
+				// Custom fields get listed separately
+				if (widget.instanceOf(et2_nextmatch_customfields))
 				{
-					defer.reject();
-				}, 0);
-				return;
-			}
-
-			// Set CSS for orientation
-			this.div.addClass(value.orientation);
-			this.egw().set_preference(app, pref + '_orientation', value.orientation);
-
-
-			// Try to tell browser about orientation
-			const css = '@page { size: ' + value.orientation + '; }',
-				head = document.head || document.getElementsByTagName('head')[0],
-				style = document.createElement('style');
-
-			style.type = 'text/css';
-			style.media = 'print';
-
-			// @ts-ignore
-			if(style.styleSheet)
-			{
-				// @ts-ignore
-				style.styleSheet.cssText = css;
-			}
-			else
-			{
-				style.appendChild(document.createTextNode(css));
-			}
-
-			head.appendChild(style);
-			this.print.orientation_style = style;
-
-			// Trigger resize, so we can fit on a page
-			this.dynheight.outerNode.css('max-width', this.div.css('max-width'));
-
-			// Handle columns
-			this.set_columns(value.columns);
-			this.egw().set_preference(app, pref, value.columns);
-
-			let rows = parseInt(value.row_count);
-			if(rows > total)
-			{
-				rows = total;
-			}
-
-			// If they want the whole thing, style it as all
-			if(button === Et2Dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount())
-			{
-				// Add the class, gives more reliable sizing
-				this.div.addClass('print');
-				// Show it all
-				jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
-			}
-			// We need more rows
-			if(button === 'dialog[all]' || rows > loaded_count)
-			{
-				let count = 0;
-				let fetchedCount = 0;
-				let cancel = false;
-				const nm = this;
-				const dialog = Et2Dialog.show_dialog(
-					// Abort the long task if they canceled the data load
-					function()
+					delete (columns[colName]);
+					colName = widget.id;
+					if (col.visibility === et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE && !
+						jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields)
+					)
 					{
-						count = total;
-						cancel = true;
-						window.setTimeout(function()
+						columns[colName] = col.caption;
+						for (let field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
 						{
-							defer.reject();
-						}, 0);
-					},
-					egw.lang('Loading'), egw.lang('please wait...'), {}, [
-						{"button_id": Et2Dialog.CANCEL_BUTTON, label: 'cancel', id: 'dialog[cancel]', image: 'cancel'}
-					]
-				);
-
-				// dataFetch() is asynchronous, so all these requests just get fired off...
-				// 200 rows chosen arbitrarily to reduce requests.
-				do
-				{
-					const ctx = {
-						"self": this.controller,
-						"start": count,
-						"count": Math.min(rows, 200),
-						"lastModification": this.controller._lastModification
-					};
-					if(nm.controller.dataStorePrefix)
-					{
-						// @ts-ignore
-						ctx.prefix = nm.controller.dataStorePrefix;
-					}
-					nm.controller.dataFetch({start: count, num_rows: Math.min(rows, 200)}, function(data)
-					{
-						// Keep track
-						if(data && data.order)
-						{
-							fetchedCount += data.order.length;
-						}
-						nm.controller._fetchCallback.apply(this, arguments);
-
-						if(fetchedCount >= rows)
-						{
-							if(cancel)
+							columns[et2_nextmatch_customfields.PREFIX + field_name] = " - " + (<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
+							if (widget.options.fields[field_name] && columns_selected.indexOf(colName) >= 0)
 							{
-								dialog.destroy();
-								defer.reject();
-								return;
+								columns_selected.push(et2_nextmatch_customfields.PREFIX + field_name);
 							}
-							// Use CSS to hide all but the requested rows
-							// Prevents us from showing more than requested, if actual height was less than average
-							nm.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
-							egw.css(nm.print.row_selector, 'display: none');
-
-							// No scrollbar in print view
-							jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
-							// Show it all
-							jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
-
-							// Grid needs to redraw before it can be printed, so wait
-							window.setTimeout(function()
-							{
-								dialog.close();
-
-								// Should be OK to print now
-								defer.resolve();
-							}.bind(nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
-
 						}
-
-					}, ctx);
-					count += 200;
+					}
 				}
-				while(count < rows);
-				nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (rows + 1));
 			}
-			else
+
+			// Preference exists?  Set it now
+			if (this.egw().preference(pref, app))
 			{
-				// Don't need more rows, limit to requested and finish
+				this.set_columns(jQuery.extend([], this.egw().preference(pref, app)));
+			}
 
-				// Show it all
-				jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
-
-				// Use CSS to hide all but the requested rows
-				// Prevents us from showing more than requested, if actual height was less than average
-				this.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
-				egw.css(this.print.row_selector, 'display: none');
-
-				// No scrollbar in print view
-				jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
-				// Give dialog a chance to close, or it will be in the print
-				window.setTimeout(function()
+			const callback = function (button, value)
+			{
+				if (button === Et2Dialog.CANCEL_BUTTON)
 				{
-					defer.resolve();
-				}, 0);
-			}
-		}.bind(this);
-		var value = {
-			content: {
-				row_count: Math.min(100, total),
-				columns: this.egw().preference(pref, app) || columns_selected,
-				orientation: this.egw().preference(pref + '_orientation', app)
-			},
-			sel_options: {
-				columns: columns
-			}
-		};
-		this._create_print_dialog.call(this, value, callback);
+					// Give dialog a chance to close, or it will be in the print
+					window.setTimeout(function ()
+					{
+						reject();
+					}, 0);
+					return;
+				}
 
-		return defer;
+				// Set CSS for orientation
+				this.div.addClass(value.orientation);
+				this.egw().set_preference(app, pref + '_orientation', value.orientation);
+
+
+				// Try to tell browser about orientation
+				const css = '@page { size: ' + value.orientation + '; }',
+					head = document.head || document.getElementsByTagName('head')[0],
+					style = document.createElement('style');
+
+				style.type = 'text/css';
+				style.media = 'print';
+
+				// @ts-ignore
+				if (style.styleSheet)
+				{
+					// @ts-ignore
+					style.styleSheet.cssText = css;
+				}
+				else
+				{
+					style.appendChild(document.createTextNode(css));
+				}
+
+				head.appendChild(style);
+				this.print.orientation_style = style;
+
+				// Trigger resize, so we can fit on a page
+				this.dynheight.outerNode.css('max-width', this.div.css('max-width'));
+
+				// Handle columns
+				this.set_columns(value.columns);
+				this.egw().set_preference(app, pref, value.columns);
+
+				let rows = parseInt(value.row_count);
+				if (rows > total)
+				{
+					rows = total;
+				}
+
+				// If they want the whole thing, style it as all
+				if (button === Et2Dialog.OK_BUTTON && rows == this.controller._grid.getTotalCount())
+				{
+					// Add the class, gives more reliable sizing
+					this.div.addClass('print');
+					// Show it all
+					jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
+				}
+				// We need more rows
+				if (button === 'dialog[all]' || rows > loaded_count)
+				{
+					let count = 0;
+					let fetchedCount = 0;
+					let cancel = false;
+					const nm = this;
+					const dialog = Et2Dialog.show_dialog(
+						// Abort the long task if they canceled the data load
+						function ()
+						{
+							count = total;
+							cancel = true;
+							window.setTimeout(function ()
+							{
+								reject();
+							}, 0);
+						},
+						egw.lang('Loading'), egw.lang('please wait...'), {}, [
+							{
+								"button_id": Et2Dialog.CANCEL_BUTTON,
+								label: 'cancel',
+								id: 'dialog[cancel]',
+								image: 'cancel'
+							}
+						]
+					);
+
+					// dataFetch() is asynchronous, so all these requests just get fired off...
+					// 200 rows chosen arbitrarily to reduce requests.
+					do
+					{
+						const ctx = {
+							"self": this.controller,
+							"start": count,
+							"count": Math.min(rows, 200),
+							"lastModification": this.controller._lastModification
+						};
+						if (nm.controller.dataStorePrefix)
+						{
+							// @ts-ignore
+							ctx.prefix = nm.controller.dataStorePrefix;
+						}
+						nm.controller.dataFetch({start: count, num_rows: Math.min(rows, 200)}, function (data)
+						{
+							// Keep track
+							if (data && data.order)
+							{
+								fetchedCount += data.order.length;
+							}
+							nm.controller._fetchCallback.apply(this, arguments);
+
+							if (fetchedCount >= rows)
+							{
+								if (cancel)
+								{
+									dialog.destroy();
+									reject();
+									return;
+								}
+								// Use CSS to hide all but the requested rows
+								// Prevents us from showing more than requested, if actual height was less than average
+								nm.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
+								egw.css(nm.print.row_selector, 'display: none');
+
+								// No scrollbar in print view
+								jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
+								// Show it all
+								jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
+
+								// Grid needs to redraw before it can be printed, so wait
+								window.setTimeout(function ()
+								{
+									dialog.close();
+
+									// Should be OK to print now
+									resolve();
+								}.bind(nm), et2_dataview_grid.ET2_GRID_INVALIDATE_TIMEOUT);
+
+							}
+
+						}, ctx);
+						count += 200;
+					}
+					while (count < rows);
+					nm.controller._grid.setScrollHeight(nm.controller._grid.getAverageHeight() * (rows + 1));
+				}
+				else
+				{
+					// Don't need more rows, limit to requested and finish
+
+					// Show it all
+					jQuery('.egwGridView_scrollarea', this.div).css('height', 'auto');
+
+					// Use CSS to hide all but the requested rows
+					// Prevents us from showing more than requested, if actual height was less than average
+					this.print.row_selector = ".egwGridView_grid > tbody > tr:not(:nth-child(-n+" + rows + "))";
+					egw.css(this.print.row_selector, 'display: none');
+
+					// No scrollbar in print view
+					jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
+					// Give dialog a chance to close, or it will be in the print
+					window.setTimeout(function ()
+					{
+						resolve();
+					}, 0);
+				}
+			}.bind(this);
+			var value = {
+				content: {
+					row_count: Math.min(100, total),
+					columns: this.egw().preference(pref, app) || columns_selected,
+					orientation: this.egw().preference(pref + '_orientation', app)
+				},
+				sel_options: {
+					columns: columns
+				}
+			};
+			this._create_print_dialog.call(this, value, callback);
+		});
 	}
 
 	/**
@@ -3592,7 +3595,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		header.loadingFinished(deferred);
 
 		// Wait until all child widgets are loaded, then bind
-		jQuery.when.apply(jQuery, deferred).then(function()
+		Promise.all(deferred).then(() =>
 		{
 			// fix order in DOM by reattaching templates in correct position
 			switch(id)

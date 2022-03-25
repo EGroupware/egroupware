@@ -96,9 +96,6 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 		this.left = jQuery("<div>Top / Left</div>").appendTo(this.div);
 		this.right = jQuery("<div>Bottom / Right</div>").appendTo(this.div);
 
-		// Deferred object so we can wait for children
-		this.loading = jQuery.Deferred();
-
 		// Flag to temporarily ignore resizing
 		this.stop_resize = false;
 	}
@@ -163,21 +160,18 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 	{
 		super.doLoadingFinished();
 
-		// Use a timeout to give the children a chance to finish
-		var self = this;
-		window.setTimeout(function() {
-			self._init_splitter();
-		},1);
-
 		// Not done yet, but widget will let you know
-		return this.loading.promise();
+		return new Promise((resolve) => {
+			// Use a timeout to give the children a chance to finish
+			window.setTimeout(()  => this._init_splitter(resolve),1);
+		});
 	}
 
 	/**
 	 * Initialize the splitter UI
 	 * Internal.
 	 */
-	private _init_splitter()
+	private _init_splitter(resolve? : Function)
 	{
 		if(!this.isAttached()) return;
 
@@ -299,10 +293,10 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 				// Ok, update children
 				self.iterateOver(function(widget) {
 					// Extra resize would cause stalling chrome
-					// as resize might confilict with bottom download bar
+					// as resize might conflict with bottom download bar
 					// in chrome which does a window resize, so better to not
 					// trigger second resize and leave that to an application
-					// if it is neccessary.
+					// if it is necessary.
 
 					// Above forcing is not enough for Firefox, defer
 					window.setTimeout(jQuery.proxy(function() {this.resize();}, widget),200);
@@ -310,7 +304,7 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 			});
 		}
 
-		this.loading.resolve();
+		if (resolve) resolve();
 	}
 
 	/**
@@ -460,4 +454,3 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 	}
 }
 et2_register_widget(et2_split, ["split"]);
-

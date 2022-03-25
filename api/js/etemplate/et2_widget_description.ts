@@ -180,18 +180,19 @@ export class et2_description extends expose(class et2_description extends et2_ba
 			else
 			{
 				// Target widget is not done yet, need to wait
-				var tab_deferred = jQuery.Deferred();
-				window.setTimeout(function() {
-					for_id = for_widget.dom_id;
-					if(for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode()?.id)
+				return new Promise((resolve) =>
+				{
+					window.setTimeout(() =>
 					{
-						for_id = for_widget.getInputNode().id;
-					}
-					this.span.attr("for", for_id);
-					tab_deferred.resolve();
-				}.bind(this),0);
-
-				return tab_deferred.promise();
+						for_id = for_widget.dom_id;
+						if (for_widget.instanceOf(et2_inputWidget) && for_widget.getInputNode() && for_widget.dom_id !== for_widget.getInputNode()?.id)
+						{
+							for_id = for_widget.getInputNode().id;
+						}
+						this.span.attr("for", for_id);
+						resolve();
+					}, 0);
+				});
 			}
 		}
 		return true;
@@ -199,7 +200,7 @@ export class et2_description extends expose(class et2_description extends et2_ba
 
 	set_label(_value)
 	{
-		// Abort if ther was no change in the label
+		// Abort if there was no change in the label
 		if (_value == this.label)
 		{
 			return;
