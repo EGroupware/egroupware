@@ -91,7 +91,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			...super.properties,
 			// LionButton doesn't have a label property & Et2Widget avoids re-defining it
 			label: {type: String},
-			image: {type: String}
+			image: {type: String},
+
+			/**
+			 * Button should submit the etemplate
+			 * Return false from the click handler to cancel the submit, or set doSubmit to false to skip submitting.
+			 */
+			doSubmit: {type: Boolean, reflect: false}
 		}
 	}
 
@@ -112,6 +118,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 		// Property default values
 		this.__image = '';
+		this.doSubmit = true;
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -168,7 +175,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 
 		// Submit the form
-		if(this.getType() !== "buttononly")
+		if(this.doSubmit)
 		{
 			return this.getInstanceManager().submit();
 		}

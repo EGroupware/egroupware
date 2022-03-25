@@ -1299,7 +1299,10 @@ export class et2_vfsSelect extends et2_inputWidget
 		let self = this;
 		if (typeof app.vfsSelectUI !="undefined")
 		{
-			if (this.dialog && this.dialog.div) this.dialog.div.dialog('close');
+			if(this.dialog)
+			{
+				this.dialog.close();
+			}
 			delete app.vfsSelectUI;
 		}
 		let attrs = {
@@ -1449,6 +1452,7 @@ export class et2_vfsSelect extends et2_inputWidget
 					jQuery(self.node).change();
 				}
 				delete app.vfsSelectUI;
+				self.dialog.close();
 				return true;
 			}
 		};
@@ -1464,7 +1468,9 @@ export class et2_vfsSelect extends et2_inputWidget
 				width: 400,
 				value: data,
 				template: egw.webserverUrl + '/api/templates/default/vfsSelectUI.xet?1',
-				resizable: false
+				resizable: false,
+				// Don't destroy on close, it would take out the opening etemplate
+				destroy_on_close: false
 			});
 		this.dialog.addEventListener("before-load", (ev) =>
 		{
@@ -1477,6 +1483,10 @@ export class et2_vfsSelect extends et2_inputWidget
 			app.vfsSelectUI.et2 = self.dialog.template.widgetContainer;
 			app.vfsSelectUI.vfsSelectWidget = self;
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
+		});
+		this.dialog.addEventListener("close", () =>
+		{
+			self.dialog = undefined;
 		});
 	}
 
