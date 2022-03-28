@@ -352,7 +352,7 @@ class Vfs extends File
 				parent::validate($cname, $expand, $content, $validated);
 				break;
 		}
-		if (true) $valid = $value;
+		if (!empty($this->id)) $valid = $value;
 	}
 
 	/**
