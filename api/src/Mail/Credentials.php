@@ -210,6 +210,12 @@ class Credentials
 					$on_login = array(__CLASS__.'::migrate', $acc_id);
 				}
 			}
+			// do NOT attempt to use credentials encrypted with user password in an async context (where user password is not available)
+			// otherwise an s/mime certificate or user specific password will stall sending notification, even if no smtp authentication required
+			if (!empty($GLOBALS['egw_info']['flags']['async-service']) && in_array($row['cred_pw_enc'], [self::USER_AES, self::USER]))
+			{
+				continue;
+			}
 			$password = self::decrypt($row);
 
 			// Remove special x char added to the end for \0 trimming escape.
