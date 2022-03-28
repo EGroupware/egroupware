@@ -47,6 +47,9 @@ class File extends Etemplate\Widget
 
 		if($xml) parent::__construct($xml);
 
+		// set fallback-id client-side uses
+		if (empty($this->id)) $this->id = 'file_widget';
+
 		// Legacy multiple - id ends in []
 		if(substr($this->id,-2) == '[]')
 		{
