@@ -17,10 +17,14 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	protected _dialog : Et2Dialog;
 
 
-	static get styles()
+	/**
+	 * I don't know what's going on with styles here, but if we define Et2DialogOverlay.styles it breaks
+	 * dialog display in Firefox.
+	 * The styles are added in render(), which is bad from a performance standpoint, but good in that it works.
+	 */
+	static get _styles()
 	{
-		return [
-			css`
+		return css`
         :host {
           display: inline-block;
           background: white;
@@ -89,8 +93,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 			margin-left: auto;
 			order: 1;
 		}
-      `,
-		];
+      `;
 	}
 
 	get properties()
@@ -188,16 +191,18 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	render()
 	{
 		// This style is just for this dialog
-		let style = html`
-            <style>
-                .overlay {
-                    ${this.width ? "width: " + this.width + "px" : ""};
-                    ${this.height ? "height: " + this.height + "px" : ""};
-                }
-            </style>`;
+		let styles = [Et2DialogOverlay._styles];
 
+		if(this.width && Number.isInteger(this.width))
+		{
+			styles.push(css`.overlay {width: ${this.width}px}`);
+		}
+		if(this.height && Number.isInteger(this.height))
+		{
+			styles.push(css`.overlay {height: ${this.height}px}`);
+		}
 		return html`
-            ${(this.width || this.height) ? style : ""}
+            <style>${styles}</style>
             <div class="overlay">
                 <div class="overlay__header">
                     <h1 class="overlay__heading">
