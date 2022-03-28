@@ -327,6 +327,13 @@ class infolog_tracking extends Api\Storage\Tracking
 		unset($old);	// not used, but required function signature
 		switch($name)
 		{
+			case 'reply_to':    // for async notification use owner of infolog, otherwise the user causing the change
+				if (($reply_to = Api\Accounts::getInstance()->id2name(!empty($GLOBALS['egw_info']['flags']['async-service']) ?
+					$data['info_owner'] : $GLOBALS['egw_info']['user']['account_id'], 'account_email')))
+				{
+					$config = $reply_to;
+				}
+				break;
 			case 'sender':
 				// Use infolog owner as the notification sender
 				$config = $data['info_owner'];
