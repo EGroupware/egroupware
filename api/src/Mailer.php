@@ -75,12 +75,12 @@ class Mailer extends Horde_Mime_Mail
 		Preferences::setlocale(LC_MESSAGES);
 
 		parent::__construct();
-		if ($account ==='initbasic')
+		if ($account === 'initbasic')
 		{
 			$this->_headers = new Horde_Mime_Headers();
 			$this->clearAllRecipients();
 			$this->clearReplyTos();
-			return $this;
+			return;
 		}
 		if ($account !== false)
 		{
