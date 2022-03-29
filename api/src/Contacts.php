@@ -509,13 +509,14 @@ class Contacts extends Contacts\Storage
 		{
 			foreach($this->fileas_types as $type)
 			{
-				if ($this->fileas($contact,$type) == $file_as)
+				if ($this->fileas($contact,$type) === $file_as)
 				{
 					return $type;
 				}
 			}
 		}
-		return $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
+		// if none of our types matches, but a non-empty value is set, keep it
+		return $file_as ?: $this->prefs['fileas_default'] ?: $this->fileas_types[0];
 	}
 
 	/**
@@ -558,9 +559,16 @@ class Contacts extends Contacts\Storage
 		{
 			if ($contact[$name]) $labels[$name] = $contact[$name];
 		}
+		$found = false;
 		foreach($this->fileas_types as $fileas_type)
 		{
-			$options[$fileas_type] = $this->fileas($labels,$fileas_type);
+			$options[$fileas_type] = $value = $this->fileas($labels,$fileas_type);
+			$found = $found || $value === $contact['n_fileas'];
+		}
+		// if we have a custom fileAs, add it as first option to keep it
+		if (!empty($contact['n_fileas']) && !$found)
+		{
+			$options = array_merge([$contact['n_fileas'] => lang('Custom').': '.$contact['n_fileas']], $options);
 		}
 		return $options;
 	}

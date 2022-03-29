@@ -2922,6 +2922,9 @@ class addressbook_ui extends addressbook_bo
 
 		$ret = array('doublicates' => array(), 'msg' => null);
 
+		// set not returned n_fileas value, to keep custom fileas value
+		$values['n_fileas'] = $this->fileas($values, $values['fileas_type']);
+
 		// if email changed, check for doublicates
 		if (in_array($name, array('email', 'email_home')) && in_array('contact_'.$name, $fields))
 		{
