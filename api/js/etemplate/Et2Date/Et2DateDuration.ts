@@ -339,6 +339,30 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	}
 
 	/**
+	 * Set the format for displaying the duration
+	 *
+	 * @param {string} value
+	 */
+	set display_format(value : string)
+	{
+		this.__display_format = "";
+		// Display format must be in decreasing size order (dhms) or the calculations
+		// don't work out nicely
+		for(let f of Object.keys(Et2DateDuration.time_formats))
+		{
+			if(value.indexOf(f) !== -1)
+			{
+				this.__display_format += f;
+			}
+		}
+	}
+
+	get display_format()
+	{
+		return this.__display_format;
+	}
+
+	/**
 	 * @return {TemplateResult}
 	 * @protected
 	 */
