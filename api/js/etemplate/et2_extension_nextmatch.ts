@@ -2826,6 +2826,38 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		return null;
 	}
 
+	/**
+	 * Called when loading the widget (sub-tree) is finished. First when this
+	 * function is called, the DOM-Tree is created. loadingFinished is
+	 * recursively called for all child elements. Do not directly override this
+	 * function but the doLoadingFinished function which is executed before
+	 * descending deeper into the DOM-Tree.
+	 *
+	 * Some widgets (template) do not load immediately because they request
+	 * additional resources via AJAX.  They will return a Deferred Promise object.
+	 * If you call loadingFinished(promises) after creating such a widget
+	 * programmatically, you might need to wait for it to fully complete its
+	 * loading before proceeding.
+	 *
+	 * Overridden to skip children in the sub-templates since we handle those directly.
+	 * Putting the children's promises into the list will stall the load, since those children
+	 * will never actually get completed - we clone them, and use the clones instead.
+	 *
+	 * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
+	 */
+	loadingFinished(promises?)
+	{
+		// Call all availble setters
+		this.initAttributes(this.options);
+
+		var result = this.doLoadingFinished();
+		if(typeof result == "object" && result.then)
+		{
+			// Widget is waiting.  Add to the list
+			promises.push(result);
+		}
+	}
+
 	// Input widget
 
 	/**
