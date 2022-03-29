@@ -22,7 +22,7 @@ use Horde_Mail_Transport_Smtphorde;
 /**
  * Mail accounts supports 3 types of accounts:
  *
- * a) personal mail accounts either created by admin or user themselfs
+ * a) personal mail accounts either created by admin or user themselves
  * b) accounts for multiple users or groups created by admin
  * c) configuration to administrate a mail-server
  *
@@ -90,7 +90,7 @@ use Horde_Mail_Transport_Smtphorde;
  * @property-read int $acc_imap_timeout timeout for imap connection, default 20s
  * @property-read array $notif_folders folders user wants to be notified about new mails
  *
- * @todo remove comments from protected in __construct and db2data, once we require PHP 5.4 (keeping class contect in closures)
+ * You can overwrite values in all mail accounts by creating a file /var/www/mail-overwrites.inc.php, see method getParamOverwrites.
  */
 class Account implements \ArrayAccess
 {
@@ -245,14 +245,11 @@ class Account implements \ArrayAccess
 	/**
 	 * Constructor
 	 *
-	 * Should be protected, but php5.3 does NOT keep class context in closures.
-	 * So 'til we require 5.4, it is public BUT SHOULD NOT BE USED!
-	 *
 	 * @param array $params
 	 * @param int $called_for=null if set access to given user (without smtp credentials!),
 	 *	default current user AND read username/password from current users session
 	 */
-	/*protected*/ function __construct(array $params, $called_for=null)
+	protected function __construct(array $params, $called_for=null)
 	{
 		// read credentials from database
 		$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
@@ -363,6 +360,40 @@ class Account implements \ArrayAccess
 	}
 
 	/**
+	 * Get params incl. overwrites from /var/www/mail-overwrites.inc.php:
+	 *
+	 * $overwrites = [
+	 *  'mail.mycompany.com' => [   // overwrites all mail-accounts with acc_imap_host='mail.mycompany.com'
+	 *      'acc_imap_host' => 'other host or IP',
+	 *      // further imap, smtp or mail settings to use, instead what's in the DB
+	 *  ],
+	 *  // other imap-server to overwrite ...
+	 * ];
+	 *
+	 * @return array
+	 */
+	function getParamOverwrites()
+	{
+		static $overwrites = null;
+		if (!isset($overwrites))
+		{
+			if (file_exists($f='/var/www/mail-overwrites.inc.php'))
+			{
+				include($f);
+			}
+			else
+			{
+				$overwrites = [];
+			}
+		}
+		if (isset($overwrites[$this->acc_imap_host]))
+		{
+			return array_merge($this->params, $overwrites[$this->acc_imap_host]);
+		}
+		return $this->params;
+	}
+
+	/**
 	 * Get new Horde_Imap_Client imap server object
 	 *
 	 * @param bool|int|string $_adminConnection create admin connection if true or account_id or imap username
@@ -378,8 +409,9 @@ class Account implements \ArrayAccess
 			if (is_null($func_overload)) $func_overload = extension_loaded('mbstring') ? ini_get('mbstring.func_overload') : 0;
 			if ($func_overload) throw new Api\Exception\AssertionFailed('Fatal Error: EGroupware requires mbstring.func_overload=0 set in your php.ini!');
 
-			$class = $this->params['acc_imap_type'];
-			$this->imapServer = new $class($this->params, $_adminConnection, $_timeout);
+			$params = $this->getParamOverwrites();
+			$class = $params['acc_imap_type'];
+			$this->imapServer = new $class($params, $_adminConnection, $_timeout);
 
 			// if Credentials class told us to run something on successful login, tell it to Imap class
 			if ($this->on_login)
@@ -429,7 +461,7 @@ class Account implements \ArrayAccess
 	}
 
 	/**
-	 * Factory method to instanciate smtp server object
+	 * Factory method to instantiate smtp server object
 	 *
 	 * @return Smtp
 	 */
@@ -437,12 +469,13 @@ class Account implements \ArrayAccess
 	{
 		if (!isset($this->smtpServer))
 		{
-			$class = $this->params['acc_smtp_type'];
-			$this->smtpServer = new $class($this->params);
+			$params = $this->getParamOverwrites();
+			$class = $params['acc_smtp_type'];
+			$this->smtpServer = new $class($params);
 			$this->smtpServer->editForwardingAddress = false;
-			$this->smtpServer->host = $this->params['acc_smtp_host'];
-			$this->smtpServer->port = $this->params['acc_smtp_port'];
-			switch($this->params['acc_smtp_ssl'])
+			$this->smtpServer->host = $params['acc_smtp_host'];
+			$this->smtpServer->port = $params['acc_smtp_port'];
+			switch($params['acc_smtp_ssl'])
 			{
 				case self::SSL_TLS:
 					$this->smtpServer->host = 'tlsv1://'.$this->smtpServer->host;
@@ -453,11 +486,11 @@ class Account implements \ArrayAccess
 				case self::SSL_STARTTLS:
 					$this->smtpServer->host = 'tls://'.$this->smtpServer->host;
 			}
-			$this->smtpServer->smtpAuth = !empty($this->params['acc_smtp_username']);
-			$this->smtpServer->username = $this->params['acc_smtp_username'] ?? null;
-			$this->smtpServer->password = $this->params['acc_smtp_password'] ?? null;
-			$this->smtpServer->defaultDomain = $this->params['acc_domain'];
-			$this->smtpServer->loginType = $this->params['acc_imap_login_type'] ?? null;
+			$this->smtpServer->smtpAuth = !empty($params['acc_smtp_username']);
+			$this->smtpServer->username = $params['acc_smtp_username'] ?? null;
+			$this->smtpServer->password = $params['acc_smtp_password'] ?? null;
+			$this->smtpServer->defaultDomain = $params['acc_domain'];
+			$this->smtpServer->loginType = $params['acc_imap_login_type'] ?? null;
 		}
 		return $this->smtpServer;
 	}
@@ -471,8 +504,9 @@ class Account implements \ArrayAccess
 	{
 		if (!isset($this->smtpTransport))
 		{
+			$params = $this->getParamOverwrites();
 			$secure = false;
-			switch($this->acc_smtp_ssl & ~self::SSL_VERIFY)
+			switch($params['acc_smtp_ssl'] & ~self::SSL_VERIFY)
 			{
 				case self::SSL_STARTTLS:
 					$secure = 'tls';	// Horde uses 'tls' for STARTTLS, not ssl connection with tls version >= 1 and no sslv2/3
@@ -488,10 +522,10 @@ class Account implements \ArrayAccess
 			Api\Preferences::setlocale(LC_MESSAGES);
 
 			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
-				'username' => $this->acc_smtp_username,
-				'password' => $this->acc_smtp_password,
-				'host' => $this->acc_smtp_host,
-				'port' => $this->acc_smtp_port,
+				'username' => $params['acc_smtp_username'],
+				'password' => $params['acc_smtp_password'],
+				'host' => $params['acc_smtp_host'],
+				'port' => $params['acc_smtp_port'],
 				'secure' => $secure,
 				'debug' => self::SMTP_DEBUG_LOG,
 				//'timeout' => self::TIMEOUT,
@@ -509,7 +543,7 @@ class Account implements \ArrayAccess
 	 * @param boolean $replace_placeholders =false should placeholders like {{n_fn}} be replaced
 	 * @param string $field ='name' what to return as value: "ident_(realname|org|email|signature)" or default "name"=result from identity_name
 	 * @param int $user =null account_id to use if not current user
-	 * @return Iterator ident_id => identity_name of identity
+	 * @return \Iterator ident_id => identity_name of identity
 	 */
 	public static function identities($account, $replace_placeholders=true, $field='name', $user=null)
 	{
@@ -818,7 +852,7 @@ class Account implements \ArrayAccess
 	 *
 	 * To get $this->params you need to call getUserData before! It is never automatically loaded.
 	 *
-	 * @param type $name
+	 * @param string $name
 	 * @return mixed
 	 */
 	public function __get($name)
@@ -843,7 +877,7 @@ class Account implements \ArrayAccess
 	/**
 	 * Give read access to protected parameters in $this->params
 	 *
-	 * @param type $name
+	 * @param string $name
 	 * @return mixed
 	 */
 	public function __isset($name)
@@ -984,7 +1018,7 @@ class Account implements \ArrayAccess
 	 * @param int $acc_id
 	 * @param int $called_for =null if set admin access to given user, default current user
 	 *	AND read username/password from current users session, 0: find accounts from all users
-	 * @return email_account
+	 * @return self
 	 * @throws Api\Exception\NotFound if account was not found (or not valid for current user)
 	 */
 	public static function read($acc_id, $called_for=null)
@@ -1058,7 +1092,7 @@ class Account implements \ArrayAccess
 		{
 			if (isset($data[$name]))
 			{
-				$data[$name] = self::$db->from_bool($data[$name]);
+				$data[$name] = Api\Db::from_bool($data[$name]);
 			}
 		}
 		if (isset($data['account_id']) && !is_array($data['account_id']))
@@ -1288,7 +1322,7 @@ class Account implements \ArrayAccess
 
 		// store notification folders
 		Notifications::write($data['acc_id'], $data['notify_save_default'] ? 0 :
-			($data['called_for'] ? $data['called_for'] : $GLOBALS['egw_info']['user']['account_id']),
+			($data['called_for'] ?: $GLOBALS['egw_info']['user']['account_id']),
 			(array)$data['notify_folders']);
 
 		// store domain of an account for all user like before as "mail_suffix" config
@@ -1351,9 +1385,9 @@ class Account implements \ArrayAccess
 			self::$db->delete(self::TABLE, array('acc_id' => $acc_id), __LINE__, __FILE__, self::APP);
 
 			// invalidate caches
-			foreach((array)$acc_id as $acc_id)
+			foreach((array)$acc_id as $id)
 			{
-				self::cache_invalidate($acc_id);
+				self::cache_invalidate($id);
 			}
 			return self::$db->affected_rows();
 		}
@@ -1392,7 +1426,7 @@ class Account implements \ArrayAccess
 	 * @param int|boolean $offset =false offset or false to return all
 	 * @param int $num_rows =0 number of rows to return, 0=default from prefs (if $offset !== false)
 	 * @param boolean $replace_placeholders =true should placeholders like {{n_fn}} be replaced
-	 * @return Iterator with acc_id => acc_name or Account objects
+	 * @return \Iterator with acc_id => acc_name or Account objects
 	 */
 	public static function search($only_current_user=true, $just_name=true, $order_by=null, $offset=false, $num_rows=0, $replace_placeholders=true)
 	{
@@ -1484,7 +1518,7 @@ class Account implements \ArrayAccess
 				{
 					return $just_name == 'params' ? $row : $row[$just_name];
 				}
-				elseif ($just_name)
+				if ($just_name)
 				{
 					return self::identity_name($row, false, $account_id);
 				}
@@ -1503,7 +1537,7 @@ class Account implements \ArrayAccess
 	 * @param boolean $smtp =false false: usable for IMAP, true: usable for SMTP
 	 * @param boolean $return_id =false true: return acc_id, false return account object
 	 * @param boolean $log_no_default =true true: error_log if no default found, false be silent
-	 * @return Account|null
+	 * @return Account|int|null
 	 */
 	static function get_default($smtp=false, $return_id=false, $log_no_default=true)
 	{
@@ -1677,7 +1711,7 @@ class Account implements \ArrayAccess
 	/**
 	 * Get memberships of current or given user incl. our 0=Everyone
 	 *
-	 * @param type $user
+	 * @param int $user=null
 	 * @return array
 	 */
 	protected static function memberships($user=null)
@@ -1686,7 +1720,7 @@ class Account implements \ArrayAccess
 
 		$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 		$memberships[] = $user;
-		$memberships[] = 0;	// marks accounts valid for everyone
+		$memberships[] = 0;	// marks account valid for everyone
 
 		return $memberships;
 	}
