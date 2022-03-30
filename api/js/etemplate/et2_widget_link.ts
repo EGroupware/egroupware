@@ -27,7 +27,6 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_button} from "./et2_widget_button";
-import {et2_dialog} from "./et2_widget_dialog";
 import {et2_file} from "./et2_widget_file";
 import {et2_vfsSelect} from "./et2_widget_vfs";
 import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
@@ -36,6 +35,7 @@ import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
 import {expose} from "./expose";
 import {egwMenu} from "../egw_action/egw_menu.js";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * UI widgets for Egroupware linking system
@@ -1892,16 +1892,19 @@ export class et2_link_list extends et2_link_string
 		{
 			var link_id = typeof self.context.data.link_id == 'number' ? self.context.data.link_id : self.context.data.link_id.replace(/[:\.]/g, '_');
 
-			et2_dialog.show_prompt(
-				function (button, comment)
+			Et2Dialog.show_prompt(
+				function(button, comment)
 				{
-					if (button != et2_dialog.OK_BUTTON) return;
+					if(button != Et2Dialog.OK_BUTTON)
+					{
+						return;
+					}
 					var remark = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : link_id), self.list).children('.remark');
-					if (isNaN(self.context.data.link_id))	// new entry, not yet stored
+					if(isNaN(self.context.data.link_id))	// new entry, not yet stored
 					{
 						remark.text(comment);
 						// Look for a link-to with the same ID, refresh it
-						if (self.context.data.link_id)
+						if(self.context.data.link_id)
 						{
 							var _widget = link_id.widget || null;
 							self.getRoot().iterateOver(
@@ -2034,10 +2037,13 @@ export class et2_link_list extends et2_link_string
 		{
 			var link_id = isNaN(self.context.data.link_id) ? self.context.data : self.context.data.link_id;
 			var row = jQuery('#link_' + (self.context.data.dom_id ? self.context.data.dom_id : self.context.data.link_id), self.list);
-			et2_dialog.show_dialog(
-				function (button)
+			Et2Dialog.show_dialog(
+				function(button)
 				{
-					if (button == et2_dialog.YES_BUTTON) self._delete_link(link_id, row);
+					if(button == Et2Dialog.YES_BUTTON)
+					{
+						self._delete_link(link_id, row);
+					}
 				},
 				egw.lang('Delete link?')
 			);
@@ -2231,10 +2237,10 @@ export class et2_link_list extends et2_link_string
 				.addClass("delete icon")
 				.bind('click', function ()
 				{
-					et2_dialog.show_dialog(
-						function (button)
+					Et2Dialog.show_dialog(
+						function(button)
 						{
-							if (button == et2_dialog.YES_BUTTON)
+							if(button == Et2Dialog.YES_BUTTON)
 							{
 								self._delete_link(
 									self.value && typeof self.value.to_id != 'object' && _link_data.link_id ? _link_data.link_id : _link_data,

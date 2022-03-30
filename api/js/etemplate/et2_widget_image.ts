@@ -18,13 +18,13 @@
 */
 
 import {et2_baseWidget} from './et2_core_baseWidget';
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
-import {et2_dialog} from "./et2_widget_dialog";
 import '../../../vendor/bower-asset/cropper/dist/cropper.min.js';
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * Class which implements the "image" XET-Tag
@@ -546,41 +546,43 @@ export class et2_avatar extends et2_image
 			.addClass('emlEdit')
 			.click(function(){
 				let buttons = [
-					{"button_id": 1,"text": self.egw().lang('save'), id: 'save', image: 'check', "default":true},
-					{"button_id": 0,"text": self.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
+					{"button_id": 1, label: self.egw().lang('save'), id: 'save', image: 'check', "default": true},
+					{"button_id": 0, label: self.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
 				];
 				let dialog = function(_title, _value, _buttons, _egw_or_appname)
 				{
-					return et2_createWidget("dialog",
+					let dialog = new Et2Dialog(self.egw());
+					dialog.transformAttributes({
+						callback: function(_buttons, _value)
 						{
-							callback: function(_buttons, _value)
+							if(_buttons == 'save')
 							{
-								if (_buttons == 'save')
-								{
-									let canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
-									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
-									self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-										[self.getInstanceManager().etemplate_exec_id, canvas.toDataURL('image/jpeg',1.0)],
-										function(res)
+								let canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
+								self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
+								self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+									[self.getInstanceManager().etemplate_exec_id, canvas.toDataURL('image/jpeg', 1.0)],
+									function(res)
+									{
+										if(res)
 										{
-											if (res)
-											{
-												del.show();
-											}
-										}).sendRequest();
-								}
-							},
-							title: _title||egw.lang('Input required'),
-							buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
-							value: {
-								content: _value
-							},
-							width: "90%",
-							height:"450",
-							resizable: false,
-							position:"top+10",
-							template: egw.webserverUrl+'/api/templates/default/avatar_edit.xet?2'
-						}, et2_dialog._create_parent(_egw_or_appname));
+											del.show();
+										}
+									}).sendRequest();
+							}
+						},
+						title: _title || egw.lang('Input required'),
+						buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
+						value: {
+							content: _value
+						},
+						width: "90%",
+						height: "450",
+						resizable: false,
+						position: "top+10",
+						template: egw.webserverUrl + '/api/templates/default/avatar_edit.xet?2'
+					});
+					document.body.appendChild(dialog);
+					return dialog;
 				};
 
 				dialog(egw.lang('Edit avatar'),self.options, buttons, null);
@@ -590,23 +592,25 @@ export class et2_avatar extends et2_image
 		// delete button
 		var del = jQuery(document.createElement('div'))
 			.addClass('emlDelete')
-			.click(function(){
-				et2_dialog.show_dialog(function(_btn){
-					if (_btn == et2_dialog.YES_BUTTON)
+			.click(function()
+			{
+				Et2Dialog.show_dialog(function(_btn)
+				{
+					if(_btn == Et2Dialog.YES_BUTTON)
 					{
 						self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
 							[self.getInstanceManager().etemplate_exec_id, null],
 							function(res)
 							{
-								if (res)
+								if(res)
 								{
-									self.image.attr('src','');
+									self.image.attr('src', '');
 									del.hide();
 									egw.refresh('Avatar Deleted.', egw.app_name());
 								}
 							}).sendRequest();
 					}
-				}, egw.lang('Delete this photo?'), egw.lang('Delete'), null, et2_dialog.BUTTONS_YES_NO);
+				}, egw.lang('Delete this photo?'), egw.lang('Delete'), null, Et2Dialog.BUTTONS_YES_NO);
 			})
 			.appendTo(eml);
 		if (_noDelete) del.hide();

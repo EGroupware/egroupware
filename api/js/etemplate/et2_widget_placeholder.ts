@@ -17,7 +17,6 @@
 
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_dialog} from "./et2_widget_dialog";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import type {egw} from "../jsapi/egw_global";
 import {et2_selectbox} from "./et2_widget_selectbox";
@@ -417,7 +416,7 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 
 	button : JQuery;
 	submit_callback : any;
-	dialog : et2_dialog;
+	dialog : Et2Dialog;
 	protected value : any;
 
 	protected LIST_URL = 'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_get_placeholders';

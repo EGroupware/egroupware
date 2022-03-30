@@ -15,12 +15,12 @@
 import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
 import {egw} from "../jsapi/egw_global";
-import {et2_dialog} from "./et2_widget_dialog";
 import {et2_file} from "./et2_widget_file";
 import {et2_textbox} from "./et2_widget_textbox";
 import {et2_button} from "./et2_widget_button";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {et2_checkbox} from "./et2_widget_checkbox";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 
 /**
@@ -142,16 +142,25 @@ export class vfsSelectUI extends EgwApp
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				let buttons = [
-					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check'},
-					{text: this.egw.lang("Rename"), id:"rename", image: 'edit'},
-					{text: this.egw.lang("Cancel"), id:"cancel"}
+					{
+						label: this.egw.lang("Yes"),
+						id: "overwrite",
+						class: "ui-priority-primary",
+						"default": true,
+						image: 'check'
+					},
+					{label: this.egw.lang("Rename"), id: "rename", image: 'edit'},
+					{label: this.egw.lang("Cancel"), id: "cancel"}
 				];
-				if (_data.uploaded[file].confirm === "is_dir")
+				if(_data.uploaded[file].confirm === "is_dir")
+				{
 					buttons.shift();
-				let dialog = et2_dialog.show_prompt(function(_button_id, _value) {
+				}
+				let dialog = Et2Dialog.show_prompt(function(_button_id, _value)
+					{
 						let uploaded = {};
 						uploaded[this.my_data.file] = this.my_data.data;
-						switch (_button_id)
+						switch(_button_id)
 						{
 							case "overwrite":
 								uploaded[this.my_data.file].confirmed = true;
@@ -199,16 +208,18 @@ export class vfsSelectUI extends EgwApp
 	createdir(action, selected)
 	{
 		let self = this;
-		et2_dialog.show_prompt(function(button, dir){
-			if (button && dir)
+		Et2Dialog.show_prompt(function(button, dir)
+		{
+			if(button && dir)
 			{
 				let path = self.get_path();
-				self.egw.json('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_create_dir', [dir, path], function(msg){
+				self.egw.json('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_create_dir', [dir, path], function(msg)
+				{
 					self.egw.message(msg);
-					self.change_dir((path == '/' ? '' : path)+'/'+ dir);
+					self.change_dir((path == '/' ? '' : path) + '/' + dir);
 				}).sendRequest(false);
 			}
-		},this.egw.lang('New directory'),this.egw.lang('Create directory'));
+		}, this.egw.lang('New directory'), this.egw.lang('Create directory'));
 	}
 
 	/**

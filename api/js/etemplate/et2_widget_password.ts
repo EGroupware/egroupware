@@ -20,8 +20,8 @@ import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_wi
 import {et2_inputWidget} from './et2_core_inputWidget'
 import {et2_button} from './et2_widget_button'
 import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
-import {et2_dialog} from "./et2_widget_dialog";
 import {egw} from "../jsapi/egw_global";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * Class which implements the "textbox" XET-Tag
@@ -248,7 +248,7 @@ export class et2_password extends et2_textbox
 		// Need username & password to decrypt
 		let callback = function(button, user_password)
 		{
-			if(button == et2_dialog.CANCEL_BUTTON)
+			if(button == Et2Dialog.CANCEL_BUTTON)
 			{
 				return this.toggle_visibility(false);
 			}
@@ -264,17 +264,18 @@ export class et2_password extends et2_textbox
 						this.input.attr("type", "textbox");
 		            }
 		            else
-		            {
-		            	this.set_validation_error(this.egw().lang("invalid password"));
-		            	window.setTimeout(function() {
-		            		this.set_validation_error(false);
-			            }.bind(this), 2000);
-		            }
-				},
-				this,true,this
+					{
+						this.set_validation_error(this.egw().lang("invalid password"));
+						window.setTimeout(function()
+						{
+							this.set_validation_error(false);
+						}.bind(this), 2000);
+					}
+			   },
+				this, true, this
 			).sendRequest();
 		}.bind(this);
-		let prompt = et2_dialog.show_prompt(
+		let prompt = Et2Dialog.show_prompt(
 			callback,
 			this.egw().lang("Enter your password"),
 			this.egw().lang("Authenticate")

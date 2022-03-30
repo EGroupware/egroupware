@@ -14,15 +14,20 @@
         et2_core_baseWidget;
 */
 
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
 import {egw} from "../jsapi/egw_global";
 import {et2_no_init} from "./et2_core_common";
 import {et2_IResizeable} from "./et2_core_interfaces";
-import {et2_dialog} from "./et2_widget_dialog";
-import {egw_getAppObjectManager, egwActionObject, egwAction, egwActionObjectInterface} from "../egw_action/egw_action.js";
+import {
+	egw_getAppObjectManager,
+	egwAction,
+	egwActionObject,
+	egwActionObjectInterface
+} from "../egw_action/egw_action.js";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * Class which implements the UI of a Portlet
@@ -268,21 +273,25 @@ export class et2_portlet extends et2_valueWidget
 	 */
 	edit_settings()
 	{
-		let dialog = <et2_dialog>et2_createWidget("dialog", {
-			callback: jQuery.proxy(this._process_edit, this),
+		let dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
+			callback: this._process_edit.bind(this),
 			template: this.options.edit_template,
 			value: {
 				content: this.options.settings
 			},
-			buttons: et2_dialog.BUTTONS_OK_CANCEL
-		},this);
-		// Set seperately to avoid translation
-		dialog.set_title(this.egw().lang("Edit") + " " + (this.options.title || ''));
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL
+		});
+		// Set separately to avoid translation
+		dialog.title = this.egw().lang("Edit") + " " + (this.options.title || '');
 	}
 
 	_process_edit(button_id, value)
 	{
-		if(button_id != et2_dialog.OK_BUTTON) return;
+		if(button_id != Et2Dialog.OK_BUTTON)
+		{
+			return;
+		}
 
 
 		// Save settings - server might reply with new content if the portlet needs an update,
@@ -343,13 +352,17 @@ export class et2_portlet extends et2_valueWidget
 	remove_portlet()
 	{
 		let self = this;
-		et2_dialog.show_dialog(function(button_id) {
-				if(button_id != et2_dialog.OK_BUTTON) return;
+		Et2Dialog.show_dialog(function(button_id)
+			{
+				if(button_id != Et2Dialog.OK_BUTTON)
+				{
+					return;
+				}
 				self._process_edit(button_id, '~remove~');
 				self.getParent().removeChild(self);
 				self.destroy();
-			},this.egw().lang("Remove"), this.options.title,{},
-			et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE
+			}, this.egw().lang("Remove"), this.options.title, {},
+			Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.QUESTION_MESSAGE
 		);
 	}
 

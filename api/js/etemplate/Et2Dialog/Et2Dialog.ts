@@ -540,7 +540,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			}
 		}
 		// set template-name as id, to allow to style dialogs
-		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)$/, '$2').replace(/\./g, '-'));
+		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
 
 		// Look for buttons after load
 		this.addEventListener("load", this._adoptTemplateButtons);
@@ -818,7 +818,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 					message: _message
 				}
 			},
-			template: egw.webserverUrl + '/api/templates/default/prompt.xet',
+			template: egw.webserverUrl + '/api/etemplate.php/api/templates/default/prompt.xet',
 			class: "et2_prompt"
 		});
 
@@ -915,7 +915,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		];
 		let dialog = new Et2Dialog(_egw_or_appname);
 		dialog.transformAttributes({
-			template: egw.webserverUrl + '/api/templates/default/long_task.xet',
+			template: egw.webserverUrl + '/api/etemplate.php/api/templates/default/long_task.xet',
 			value: {
 				content: {
 					message: _message

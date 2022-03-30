@@ -2692,6 +2692,12 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
     padding-bottom: 10px;
 }
 
+.et2_prompt .dialog_icon {
+    margin-right: 2ex;
+    vertical-align: middle;
+    align-self: center;
+}
+
 .et2_prompt #value {
     width: 100%;
 }

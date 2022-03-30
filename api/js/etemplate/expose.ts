@@ -16,13 +16,12 @@
 "use strict";
 
 
-import {et2_createWidget} from "./et2_core_widget";
-import {et2_dialog} from "./et2_widget_dialog";
 import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
 import {et2_nextmatch} from "./et2_extension_nextmatch";
 import {ET2_DATAVIEW_STEPSIZE} from "./et2_dataview_controller";
 import "../jquery/blueimp/js/blueimp-gallery.min.js";
 import "../../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
@@ -465,14 +464,17 @@ export function expose<TBase extends Constructor>(Base: TBase)
 
 			// @ts-ignore
 			let mediaContent = this.getMedia(_value)[0];
-			et2_createWidget("dialog",{
-				callback: function(_btn, value){
-					if (_btn == et2_dialog.OK_BUTTON)
+			let dialog = new Et2Dialog();
+			dialog.transformAttributes({
+				callback: function(_btn, value)
+				{
+					if(_btn == Et2Dialog.OK_BUTTON)
 					{
 
 					}
 				},
-				beforeClose: function(){
+				beforeClose: function()
+				{
 
 				},
 				title: mediaContent.title,
@@ -480,16 +482,17 @@ export function expose<TBase extends Constructor>(Base: TBase)
 				minWidth: 350,
 				minHeight: 200,
 				modal: false,
-				position:"right bottom,right-50 bottom-10",
+				position: "right bottom,right-50 bottom-10",
 				value: {
 					content: {
-						src:mediaContent.download_href
+						src: mediaContent.download_href
 					}
 				},
 				resizable: false,
-				template: egw.webserverUrl+'/api/templates/default/audio_player.xet',
-				dialogClass:"audio_player"
+				template: egw.webserverUrl + '/api/templates/default/audio_player.xet',
+				dialogClass: "audio_player"
 			});
+			document.body.appendChild(dialog);
 		}
 
 		/**

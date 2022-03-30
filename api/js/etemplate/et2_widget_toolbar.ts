@@ -18,13 +18,14 @@
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {egwActionObject, egw_getObjectManager, egwActionObjectManager} from '../egw_action/egw_action.js';
-import {et2_dialog} from "./et2_widget_dialog";
+import {egw_getObjectManager, egwActionObject, egwActionObjectManager} from '../egw_action/egw_action.js';
 import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {et2_checkbox} from "./et2_widget_checkbox";
 import {et2_IInput} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+
 /**
  * This toolbar gets its contents from its actions
  *
@@ -32,7 +33,7 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
  */
 export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 {
-	static readonly	_attributes : any = {
+	static readonly _attributes : any = {
 		"view_range": {
 			"name": "View range",
 			"type": "string",
@@ -781,8 +782,8 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	private _admin_settings_dialog(_actions, _default_prefs)
 	{
 		let buttons = [
-			{text: egw.lang("Save"), id:"save"},
-			{text: egw.lang("Close"), id:"close"}
+			{label: egw.lang("Save"), id: "save"},
+			{label: egw.lang("Close"), id: "close"}
 		];
 		let self = this;
 		let sel_options = {actions:[]};
@@ -805,34 +806,44 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			else
 			{
 				sel_options.actions.push({
-					id:key,
+					id: key,
 					value: key,
 					label: _actions[key]['caption'],
 					app: self.options.preference_app,
 					icon: _actions[key]['iconUrl']
 				});
 			}
-			if ((!_default_prefs || _default_prefs.length == 0) && _actions[key]['toolbarDefault']) content.actions.push(key);
-		}
-		if (_default_prefs && _default_prefs.length > 0) content.actions = _default_prefs;
-		et2_createWidget("dialog",
+			if((!_default_prefs || _default_prefs.length == 0) && _actions[key]['toolbarDefault'])
 			{
+				content.actions.push(key);
+			}
+		}
+		if(_default_prefs && _default_prefs.length > 0)
+		{
+			content.actions = _default_prefs;
+		}
+		let dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
 				callback: function(_button_id, _value)
 				{
-					if (_button_id == 'save' && _value)
+					if(_button_id == 'save' && _value)
 					{
-						if (_value.actions)
+						if(_value.actions)
 						{
 							let pref = jQuery.extend({}, self.preference);
-							for (let i in pref)
+							for(let i in pref)
 							{
 								pref[i] = true;
-								if (_value.actions.includes(i)) pref[i] = false;
+								if(_value.actions.includes(i))
+								{
+									pref[i] = false;
+								}
 							}
 							_value.actions = pref;
 						}
 						egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
-							[_value, self.options.preference_id, self.options.preference_app],function(_result){
+							[_value, self.options.preference_id, self.options.preference_app], function(_result)
+							{
 								egw.message(_result);
 							}).sendRequest(true);
 					}
@@ -841,10 +852,12 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				buttons: buttons,
 				minWidth: 600,
 				minHeight: 300,
-				value:{content: content, sel_options: sel_options},
-				template: egw.webserverUrl+'/api/templates/default/toolbarAdminSettings.xet?1',
+				value: {content: content, sel_options: sel_options},
+				template: egw.webserverUrl + '/api/templates/default/toolbarAdminSettings.xet?1',
 				resizable: false
-			}, et2_dialog._create_parent('api'));
+			}
+		);
+		document.body.appendChild(dialog);
 	}
 }
 et2_register_widget(et2_toolbar, ["toolbar"]);
