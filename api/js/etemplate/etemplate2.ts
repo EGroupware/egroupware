@@ -646,97 +646,93 @@ export class etemplate2
 					egw.window.console.groupEnd();
 				}
 
-				// Wait for everything to be loaded, then finish it up.  Use timeout to give anything else a chance
-				// to run.
-				setTimeout(() =>
+				// Wait for everything to be loaded, then finish it up
+				Promise.all(deferred).then(() =>
 				{
-					Promise.all(deferred).then(() =>
+					egw.debug("log", "Finished loading %s, triggering load event", _name);
+
+					if(typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
 					{
-						egw.debug("log", "Finished loading %s, triggering load event", _name);
+						//Call loading finished method of the framework with local window
+						window.framework.et2_loadingFinished(egw(window).window);
+					}
+					// Trigger the "resize" event
+					this.resize();
 
-						if(typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
-						{
-							//Call loading finished method of the framework with local window
-							window.framework.et2_loadingFinished(egw(window).window);
-						}
-						// Trigger the "resize" event
-						this.resize();
-
-						// Automatically set focus to first visible input for popups
-						if(this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
-						{
-							const $input = jQuery('input:visible', this._DOMContainer)
-								// Date fields open the calendar popup on focus
-								.not('.et2_date')
-								.filter(function()
-								{
-									// Skip inputs that are out of tab ordering
-									const $this = jQuery(this);
-									return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-								}).first();
-
-							// mobile device, focus only if the field is empty (usually means new entry)
-							// should focus always for non-mobile one
-							if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
+					// Automatically set focus to first visible input for popups
+					if(this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
+					{
+						const $input = jQuery('input:visible', this._DOMContainer)
+							// Date fields open the calendar popup on focus
+							.not('.et2_date')
+							.filter(function()
 							{
-								$input.focus();
-							}
-						}
+								// Skip inputs that are out of tab ordering
+								const $this = jQuery(this);
+								return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+							}).first();
 
-						// Tell others about it
-						if(typeof _callback == "function")
+						// mobile device, focus only if the field is empty (usually means new entry)
+						// should focus always for non-mobile one
+						if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
 						{
-							_callback.call(window, this, _name);
+							$input.focus();
 						}
-						if(app_callback && _callback != app_callback && !_no_et2_ready)
-						{
-							app_callback.call(window, this, _name);
-						}
-						if(appname && appname != this.app && typeof app[this.app] == "object" && !_no_et2_ready)
-						{
-							// Loaded a template from a different application?
-							// Let the application that loaded it know too
-							app[this.app].et2_ready(this, this.name);
-						}
+					}
 
-						// Dispatch an event that will bubble through shadow DOM boundary (pass through custom elements)
-						this._DOMContainer.dispatchEvent(new CustomEvent('load', {
-							bubbles: true,
-							composed: true,
-							detail: this
-						}));
+					// Tell others about it
+					if(typeof _callback == "function")
+					{
+						_callback.call(window, this, _name);
+					}
+					if(app_callback && _callback != app_callback && !_no_et2_ready)
+					{
+						app_callback.call(window, this, _name);
+					}
+					if(appname && appname != this.app && typeof app[this.app] == "object" && !_no_et2_ready)
+					{
+						// Loaded a template from a different application?
+						// Let the application that loaded it know too
+						app[this.app].et2_ready(this, this.name);
+					}
 
-						if(etemplate2.templates[this.name].attributes.onload)
-						{
-							let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
-							if(typeof onload === 'string')
-							{
-								onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
-							}
-							onload.call(this._widgetContainer);
-						}
+					// Dispatch an event that will bubble through shadow DOM boundary (pass through custom elements)
+					this._DOMContainer.dispatchEvent(new CustomEvent('load', {
+						bubbles: true,
+						composed: true,
+						detail: this
+					}));
 
-						// Profiling
-						if(egw.debug_level() >= 4)
+					if(etemplate2.templates[this.name].attributes.onload)
+					{
+						let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
+						if(typeof onload === 'string')
 						{
-							if(console.timeEnd)
-							{
-								console.timeEnd(_name);
-							}
-							if(console.profileEnd)
-							{
-								console.profileEnd(_name);
-							}
-							const end_time = (new Date).getTime();
-							let gen_time_div = jQuery('#divGenTime_' + appname);
-							if(!gen_time_div.length)
-							{
-								gen_time_div = jQuery('.pageGenTime');
-							}
-							gen_time_div.find('.et2RenderTime').remove();
-							gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
+							onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
 						}
-					});
+						onload.call(this._widgetContainer);
+					}
+
+					// Profiling
+					if(egw.debug_level() >= 4)
+					{
+						if(console.timeEnd)
+						{
+							console.timeEnd(_name);
+						}
+						if(console.profileEnd)
+						{
+							console.profileEnd(_name);
+						}
+						const end_time = (new Date).getTime();
+						let gen_time_div = jQuery('#divGenTime_' + appname);
+						if(!gen_time_div.length)
+						{
+							gen_time_div = jQuery('.pageGenTime');
+						}
+						gen_time_div.find('.et2RenderTime').remove();
+						gen_time_div.append('<span class="et2RenderTime">' + egw.lang('eT2 rendering took %1s', '' + ((end_time - start_time) / 1000)) + '</span>');
+					}
 				});
 			};
 

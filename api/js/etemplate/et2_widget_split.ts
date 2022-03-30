@@ -161,12 +161,10 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 		super.doLoadingFinished();
 
 		// Not done yet, but widget will let you know
-		let p = new Promise((resolve) =>
-		{
+		return new Promise((resolve) => {
 			// Use a timeout to give the children a chance to finish
-			window.setTimeout(() => this._init_splitter(resolve), 1);
+			window.setTimeout(()  => this._init_splitter(resolve),1);
 		});
-		return p;
 	}
 
 	/**
@@ -218,17 +216,12 @@ export class et2_split extends et2_DOMWidget implements et2_IResizeable, et2_IPr
 			let pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
 			if(pref)
 			{
-				// Change from percent back to numeric
-				if(typeof pref.sizeLeft !== "undefined")
+				if(this.orientation == "v" && pref['sizeLeft'] < this.dynheight.outerNode.width() ||
+					this.orientation == "h" && pref['sizeTop'] < this.dynheight.outerNode.height())
 				{
-					pref.sizeLeft = ((parseFloat(pref.sizeLeft) / 100) * widget.dynheight.outerNode.width());
+					options = jQuery.extend(options, pref);
+					this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 				}
-				if(typeof pref.sizeTop !== "undefined")
-				{
-					pref.sizeTop = ((parseFloat(pref.sizeTop) / 100) * widget.dynheight.outerNode.height());
-				}
-				options = jQuery.extend(options, pref);
-				this.prefSize = pref[this.orientation == "v" ? 'sizeLeft' : 'sizeTop'];
 			}
 			// If there is no preference yet, set it to half size
 			// Otherwise the right pane gets the fullsize
