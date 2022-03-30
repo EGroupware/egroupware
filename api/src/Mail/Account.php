@@ -249,23 +249,27 @@ class Account implements \ArrayAccess
 	 * @param int $called_for=null if set access to given user (without smtp credentials!),
 	 *	default current user AND read username/password from current users session
 	 */
-	protected function __construct(array $params, $called_for=null)
+	public function __construct(array $params, $called_for=null)
 	{
-		// read credentials from database
-		$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
+		// tracker_mailhandling instantiates class without our database (acc_id==="tracker*")
+		if ((int)$params['acc_id'] > 0)
+		{
+			// read credentials from database
+			$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
 
-		if (!isset($params['notify_folders']))
-		{
-			$params += Notifications::read($params['acc_id'], $called_for ? array(0, $called_for) : $called_for);
-		}
-		if (!empty($params['acc_imap_logintype']) && empty($params['acc_imap_username']) &&
-			$GLOBALS['egw_info']['user']['account_id'] &&
-			(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
-		{
-			// get usename/password from current user, let it overwrite credentials for all/no session
-			$params = Credentials::from_session(
-				(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
-			) + $params;
+			if (!isset($params['notify_folders']))
+			{
+				$params += Notifications::read($params['acc_id'], $called_for ? array(0, $called_for) : $called_for);
+			}
+			if (!empty($params['acc_imap_logintype']) && empty($params['acc_imap_username']) &&
+				$GLOBALS['egw_info']['user']['account_id'] &&
+				(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
+			{
+				// get usename/password from current user, let it overwrite credentials for all/no session
+				$params = Credentials::from_session(
+						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
+					) + $params;
+			}
 		}
 		$this->params = $params;
 		unset($this->imapServer);
