@@ -371,7 +371,7 @@ export class et2_container extends et2_baseWidget
 	getDOMWidgetById(_id) : et2_DOMWidget | null
 	{
 		let widget = this.getWidgetById(_id);
-		if(widget && widget.instanceOf(et2_DOMWidget))
+		if(widget && (widget instanceof HTMLElement || widget.instanceOf(et2_DOMWidget)))
 		{
 			return <et2_DOMWidget>widget;
 		}

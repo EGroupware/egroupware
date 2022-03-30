@@ -20,6 +20,7 @@ import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
+import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
 /**
  * Class that displays the diff between two [text] values
@@ -90,36 +91,37 @@ export class et2_diff extends et2_valueWidget implements et2_IDetachedDOM
 		jQuery('<span class="ui-icon ui-icon-circle-plus">&nbsp;</span>')
 			.appendTo(self.div)
 			.css("cursor", "pointer")
-			.click({diff: view, div: self.div, label: self.options.label}, function(e) {
+			.click({diff: view, div: self.div, label: self.options.label}, function(e)
+			{
 				var diff = e.data.diff;
 				var div = e.data.div;
 				self.un_minify(diff);
-				var dialog_div = jQuery('<div>')
-					.append(diff);
+				let dialog = new Et2Dialog(self.egw());
 
-				dialog_div.dialog({
+				dialog.transformAttributes({
 					title: e.data.label,
-					width: 'auto',
-					modal: true,
-					buttons: [{text: self.egw().lang('ok'), click: function() {jQuery(this).dialog("close");}}],
-					open( )
+					//modal: true,
+					buttons: [{label: 'ok'}],
+					class: "et2_diff",
+				});
+				diff.attr("slot", "content");
+				dialog.addEventListener("open", () =>
+				{
+					diff.appendTo(dialog);
+					if(jQuery(this).parent().height() > jQuery(window).height())
 					{
-						if(jQuery(this).parent().height() > jQuery(window).height())
-						{
-							jQuery(this).height(jQuery(window).height() *0.7);
-						}
-						jQuery(this).addClass('et2_diff').dialog({position: "center"});
-					},
-					close( event, ui)
-					{
-						// Need to destroy the dialog, etemplate widget needs divs back where they were
-						dialog_div.dialog("destroy");
-						self.minify(this);
-
-						// Put it back where it came from, or et2 will error when clear() is called
-						diff.prependTo(div);
+						jQuery(this).height(jQuery(window).height() * 0.7);
 					}
 				});
+				dialog.addEventListener("close", () =>
+				{
+					// Need to destroy the dialog, etemplate widget needs divs back where they were
+					self.minify(this);
+
+					// Put it back where it came from, or et2 will error when clear() is called
+					diff.prependTo(div);
+				});
+				document.body.appendChild(dialog);
 			});
 	}
 	set_label( _label)
@@ -138,7 +140,7 @@ export class et2_diff extends et2_valueWidget implements et2_IDetachedDOM
 		view = jQuery(view)
 			.addClass('mini')
 			// Dialog changes these, if resized
-			.width('100%').css('height', 'inherit')
+			.css('height', 'inherit')
 			.show();
 		jQuery('th', view).hide();
 		jQuery('td.equal',view).hide()

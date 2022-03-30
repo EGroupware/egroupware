@@ -73,9 +73,9 @@ export class et2_placeholder_select extends et2_inputWidget
 	_content(_content, _callback)
 	{
 		let self = this;
-		if(this.dialog && this.dialog.div)
+		if(this.dialog)
 		{
-			this.dialog.div.dialog('close');
+			this.dialog.close();
 		}
 
 		var callback = _callback || this._buildDialog;
@@ -112,8 +112,6 @@ export class et2_placeholder_select extends et2_inputWidget
 	 */
 	protected _buildDialog(_data)
 	{
-
-		let self = this;
 		let buttons = [
 			{
 				label: this.egw().lang("Insert"),
@@ -188,7 +186,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			resizable: true
 		});
 		document.body.appendChild(<HTMLElement><unknown>this.dialog);
-		this.dialog.addEventListener('load', this._on_template_load.bind(this));
+		this.dialog.addEventListener('open', this._on_template_load.bind(this));
 	}
 
 	doLoadingFinished()

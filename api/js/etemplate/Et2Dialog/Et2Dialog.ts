@@ -543,7 +543,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
 
 		// Look for buttons after load
-		this.addEventListener("load", this._adoptTemplateButtons);
+		this._overlayContentNode._contentNode.addEventListener("load", this._adoptTemplateButtons);
 	}
 
 	render()
