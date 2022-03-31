@@ -2849,13 +2849,35 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	{
 		// Call all availble setters
 		this.initAttributes(this.options);
-
+		let childPromises = [];
+		let loadChildren = () =>
+		{
+			// Descend recursively into the tree
+			for(var i = 0; i < this._children.length; i++)
+			{
+				try
+				{
+					this._children[i].loadingFinished(childPromises);
+				}
+				catch(e)
+				{
+					egw.debug("error", "There was an error with a widget:\nError:%o\nProblem widget:%o", e.valueOf(), this._children[i], e.stack);
+				}
+			}
+		};
 		var result = this.doLoadingFinished();
 		if(typeof result == "object" && result.then)
 		{
 			// Widget is waiting.  Add to the list
 			promises.push(result);
+			result.then(loadChildren);
 		}
+		else
+		{
+			loadChildren()
+		}
+
+
 	}
 
 	// Input widget
