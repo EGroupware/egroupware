@@ -484,7 +484,7 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 * span.overlayContainer is optional and only generated for symlinks
 * @augments et2_valueWidget
 */
-class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
+export class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -918,7 +918,7 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
 *
 * @augments et2_file
 */
-class et2_vfsUpload extends et2_file
+export class et2_vfsUpload extends et2_file
 {
 	static readonly _attributes : any = {
 		"value": {
@@ -929,6 +929,12 @@ class et2_vfsUpload extends et2_file
 			"description": "Upload files to the specified VFS path",
 			"type": "string",
 			"default": ''
+		},
+		"listonly": {
+			"name": "List Only",
+			"description": "Display given file objects only as list (removes span,input and progress from the dom)",
+			"type": "boolean",
+			"default": false
 		}
 	};
 
@@ -960,6 +966,12 @@ class et2_vfsUpload extends et2_file
 			this.set_multiple(true);
 		}
 		this.list = jQuery(document.createElement('table')).appendTo(this.node);
+		if (this.options.listonly)
+		{
+			this.input.remove();
+			this.span.remove();
+			this.progress.remove();
+		}
 	}
 
 	/**

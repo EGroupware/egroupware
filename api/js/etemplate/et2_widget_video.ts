@@ -14,6 +14,8 @@
 	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_interfaces;
 	et2_core_baseWidget;
+	/api/js/etemplate/CustomHtmlElements/multi-video.js;
+    /api/js/etemplate/CustomHtmlElements/pdf-player.js;
 */
 
 import { et2_baseWidget } from './et2_core_baseWidget'
@@ -60,6 +62,12 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             "name": "Source type",
             "type": "string",
             "description": "Defines the type the stream source provided"
+        },
+        "multi_src": {
+            "name": "Multi Video source",
+            "type": "boolean",
+            "default": false,
+            "description": "creates a multi-video tag in order to render all provided video sources"
         },
         "muted": {
             "name": "Audio control",
@@ -167,7 +175,8 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             return;
         }
         //Create Video tag
-		this.video = jQuery(document.createElement(this._isYoutube()?"div":"video"))
+		this.video = jQuery(document.createElement(this._isYoutube() ? "div" :
+            (_type.match('pdf') ? "pdf-player" : (this.options.multi_src ? 'multi-video' : 'video' ))))
             .addClass('et2_video')
             .attr('id', this.dom_id);
 

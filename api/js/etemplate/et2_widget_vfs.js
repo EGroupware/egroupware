@@ -24,7 +24,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.et2_vfsSelect = exports.et2_vfsPath = exports.et2_vfs = void 0;
+exports.et2_vfsSelect = exports.et2_vfsUpload = exports.et2_vfsMime = exports.et2_vfsPath = exports.et2_vfs = void 0;
 /*egw:uses
     /vendor/bower-asset/jquery/dist/jquery.js;
     vfsSelectUI;
@@ -620,6 +620,7 @@ var et2_vfsMime = /** @class */ (function (_super) {
     },
     _a.legacyOptions = ["size"],
     _a))));
+exports.et2_vfsMime = et2_vfsMime;
 ;
 et2_core_widget_1.et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 /**
@@ -839,6 +840,11 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             _this.set_multiple(true);
         }
         _this.list = jQuery(document.createElement('table')).appendTo(_this.node);
+        if (_this.options.listonly) {
+            _this.input.remove();
+            _this.span.remove();
+            _this.progress.remove();
+        }
         return _this;
     }
     /**
@@ -1011,11 +1017,18 @@ var et2_vfsUpload = /** @class */ (function (_super) {
             "description": "Upload files to the specified VFS path",
             "type": "string",
             "default": ''
+        },
+        "listonly": {
+            "name": "List Only",
+            "description": "Display given file objects only as list (removes span,input and progress from the dom)",
+            "type": "boolean",
+            "default": false
         }
     };
     et2_vfsUpload.legacyOptions = ["mime"];
     return et2_vfsUpload;
 }(et2_widget_file_1.et2_file));
+exports.et2_vfsUpload = et2_vfsUpload;
 et2_core_widget_1.et2_register_widget(et2_vfsUpload, ["vfs-upload"]);
 var et2_vfsSelect = /** @class */ (function (_super) {
     __extends(et2_vfsSelect, _super);

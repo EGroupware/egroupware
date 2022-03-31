@@ -304,7 +304,7 @@ class multi_video extends HTMLElement {
 	 */
 	get paused()
 	{
-		return this.__getActiveVideo()[0].node.paused;
+		return this.__getActiveVideo()[0]?.node?.paused;
 	}
 
 	/**
@@ -323,7 +323,7 @@ class multi_video extends HTMLElement {
 	 */
 	get muted()
 	{
-		return this.__getActiveVideo()[0].node.muted;
+		return this.__getActiveVideo()[0]?.node?.muted;
 	}
 
 	/**
@@ -331,7 +331,7 @@ class multi_video extends HTMLElement {
 	 */
 	get ended()
 	{
-		return this._videos[this._videos.length-1].node.ended;
+		return this._videos[this._videos.length-1]?.node?.ended;
 	}
 
 	/**
@@ -350,7 +350,7 @@ class multi_video extends HTMLElement {
 	 */
 	get playbackRate()
 	{
-		return this.__getActiveVideo()[0].node.playbackRate;
+		return this.__getActiveVideo()[0]?.node?.playbackRate;
 	}
 
 	/**
@@ -368,7 +368,7 @@ class multi_video extends HTMLElement {
 	 */
 	get volume()
 	{
-		return this.__getActiveVideo()[0].node.volume;
+		return this.__getActiveVideo()[0]?.node?.volume;
 	}
 
 
@@ -380,7 +380,7 @@ class multi_video extends HTMLElement {
 	play()
 	{
 		this.__playing = true;
-		return this.__getActiveVideo()[0].node.play();
+		return this.__getActiveVideo()[0]?.node?.play();
 	}
 
 	/**
@@ -389,7 +389,7 @@ class multi_video extends HTMLElement {
 	pause()
 	{
 		this.__playing = false;
-		this.__getActiveVideo()[0].node.pause();
+		this.__getActiveVideo()[0]?.node?.pause();
 	}
 }
 

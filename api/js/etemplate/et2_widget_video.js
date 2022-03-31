@@ -29,6 +29,8 @@ exports.et2_video = void 0;
     /vendor/bower-asset/jquery/dist/jquery.js;
     et2_core_interfaces;
     et2_core_baseWidget;
+    /api/js/etemplate/CustomHtmlElements/multi-video.js;
+    /api/js/etemplate/CustomHtmlElements/pdf-player.js;
 */
 var et2_core_baseWidget_1 = require("./et2_core_baseWidget");
 var et2_core_inheritance_1 = require("./et2_core_inheritance");
@@ -80,7 +82,8 @@ var et2_video = /** @class */ (function (_super) {
             return;
         }
         //Create Video tag
-        this.video = jQuery(document.createElement(this._isYoutube() ? "div" : "video"))
+        this.video = jQuery(document.createElement(this._isYoutube() ? "div" :
+            (_type.match('pdf') ? "pdf-player" : (this.options.multi_src ? 'multi-video' : 'video'))))
             .addClass('et2_video')
             .attr('id', this.dom_id);
         if (this._isYoutube()) {
@@ -492,6 +495,12 @@ var et2_video = /** @class */ (function (_super) {
             "name": "Source type",
             "type": "string",
             "description": "Defines the type the stream source provided"
+        },
+        "multi_src": {
+            "name": "Multi Video source",
+            "type": "boolean",
+            "default": false,
+            "description": "creates a multi-video tag in order to render all provided video sources"
         },
         "muted": {
             "name": "Audio control",
