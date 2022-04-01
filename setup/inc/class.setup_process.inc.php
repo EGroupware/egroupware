@@ -395,7 +395,7 @@ class setup_process
 				}
 			}
 			// drop them in reverse order, in case the have constrains
-			foreach(array_reverse($data['tables'] ?? []) as $table)
+			foreach(array_reverse((array)($data['tables'] ?? [])) as $table)
 			{
 				//echo $table;
 				if (in_array($table, $tables))
