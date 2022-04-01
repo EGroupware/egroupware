@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc2767a2e8d5ea83f853ddcf4fa991b6",
+    "content-hash": "72491a62f4c23bca02b53c3d163e5fbc",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1283,23 +1283,73 @@
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
+            "name": "egroupware/guzzlecommon",
+            "version": "3.9.3",
+            "target-dir": "Guzzle/Common",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/guzzlecommon.git",
+                "reference": "e9bff7ea2c72a137791813fe38ca8acf4778d940"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/guzzlecommon/zipball/e9bff7ea2c72a137791813fe38ca8acf4778d940",
+                "reference": "e9bff7ea2c72a137791813fe38ca8acf4778d940",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "replace": {
+                "guzzle/common": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Common": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "collection",
+                "common",
+                "event",
+                "exception"
+            ],
+            "support": {
+                "source": "https://github.com/EGroupware/guzzlecommon/tree/3.9.3"
+            },
+            "time": "2022-04-01T06:46:39+00:00"
+        },
+        {
             "name": "egroupware/guzzlehttp",
-            "version": "3.9.4",
+            "version": "3.9.5",
             "target-dir": "Guzzle/Http",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/guzzlehttp.git",
-                "reference": "5df009753f6ccca988dc506c74d0928471bc9e7c"
+                "reference": "1fd040d7a05acef142a44981af78ddcbe5b8f349"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/guzzlehttp/zipball/5df009753f6ccca988dc506c74d0928471bc9e7c",
-                "reference": "5df009753f6ccca988dc506c74d0928471bc9e7c",
+                "url": "https://api.github.com/repos/EGroupware/guzzlehttp/zipball/1fd040d7a05acef142a44981af78ddcbe5b8f349",
+                "reference": "1fd040d7a05acef142a44981af78ddcbe5b8f349",
                 "shasum": ""
             },
             "require": {
+                "egroupware/guzzlecommon": "^3.9.3",
                 "egroupware/guzzlestream": "^3.9.4",
-                "guzzle/common": "^3.9.2",
                 "guzzle/parser": "^3.9.2",
                 "php": ">=5.3.2"
             },
@@ -1341,27 +1391,27 @@
                 "http client"
             ],
             "support": {
-                "source": "https://github.com/EGroupware/guzzlehttp/tree/3.9.4"
+                "source": "https://github.com/EGroupware/guzzlehttp/tree/3.9.5"
             },
-            "time": "2022-03-05T08:13:47+00:00"
+            "time": "2022-04-01T06:51:58+00:00"
         },
         {
             "name": "egroupware/guzzlestream",
-            "version": "3.9.4",
+            "version": "3.9.5",
             "target-dir": "Guzzle/Stream",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/guzzlestream.git",
-                "reference": "f4f8fd3281b800630259ca111031fbf3bca6448e"
+                "reference": "44f534474e1e2507a9d30d7c615b4c5e2a3619a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/guzzlestream/zipball/f4f8fd3281b800630259ca111031fbf3bca6448e",
-                "reference": "f4f8fd3281b800630259ca111031fbf3bca6448e",
+                "url": "https://api.github.com/repos/EGroupware/guzzlestream/zipball/44f534474e1e2507a9d30d7c615b4c5e2a3619a5",
+                "reference": "44f534474e1e2507a9d30d7c615b4c5e2a3619a5",
                 "shasum": ""
             },
             "require": {
-                "guzzle/common": "^3.9.2",
+                "egroupware/guzzlecommon": "^3.9.3",
                 "php": ">=5.3.2"
             },
             "replace": {
@@ -1400,9 +1450,9 @@
                 "stream"
             ],
             "support": {
-                "source": "https://github.com/EGroupware/guzzlestream/tree/3.9.4"
+                "source": "https://github.com/EGroupware/guzzlestream/tree/3.9.5"
             },
-            "time": "2022-03-05T08:11:44+00:00"
+            "time": "2022-04-01T06:52:50+00:00"
         },
         {
             "name": "egroupware/hstream",
@@ -3068,20 +3118,20 @@
         },
         {
             "name": "egroupware/webdav",
-            "version": "0.3.5",
+            "version": "0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/WebDAV.git",
-                "reference": "a4875047918bec91b50fb6d20ea44cb5d24de2fa"
+                "reference": "6226eb5f4026d5e0f6fc970550af2a7befaa3ae8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/a4875047918bec91b50fb6d20ea44cb5d24de2fa",
-                "reference": "a4875047918bec91b50fb6d20ea44cb5d24de2fa",
+                "url": "https://api.github.com/repos/EGroupware/WebDAV/zipball/6226eb5f4026d5e0f6fc970550af2a7befaa3ae8",
+                "reference": "6226eb5f4026d5e0f6fc970550af2a7befaa3ae8",
                 "shasum": ""
             },
             "require": {
-                "egroupware/guzzlehttp": "^3.9.4",
+                "egroupware/guzzlehttp": "^3.9.5",
                 "php": ">=5.3.0",
                 "psr/log": "~1.0"
             },
@@ -3117,9 +3167,9 @@
                 "wrapper"
             ],
             "support": {
-                "source": "https://github.com/EGroupware/WebDAV/tree/0.3.5"
+                "source": "https://github.com/EGroupware/WebDAV/tree/0.3.6"
             },
-            "time": "2022-03-21T17:47:25+00:00"
+            "time": "2022-04-01T06:56:59+00:00"
         },
         {
             "name": "egroupware/z-push-dev",
@@ -3484,54 +3534,6 @@
                 "source": "https://github.com/giggsey/Locale/tree/master"
             },
             "time": "2020-07-07T11:16:24+00:00"
-        },
-        {
-            "name": "guzzle/common",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Common",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Guzzle3/common.git",
-                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Guzzle3/common/zipball/2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
-                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/event-dispatcher": ">=2.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle\\Common": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Common libraries used by Guzzle",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "collection",
-                "common",
-                "event",
-                "exception"
-            ],
-            "support": {
-                "source": "https://github.com/Guzzle3/common/tree/v3.9.2"
-            },
-            "abandoned": "guzzle/guzzle",
-            "time": "2014-08-11T04:32:36+00:00"
         },
         {
             "name": "guzzle/parser",
