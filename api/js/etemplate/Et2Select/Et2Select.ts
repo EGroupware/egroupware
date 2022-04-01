@@ -80,10 +80,15 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	{
 		super.connectedCallback();
 		//MOVE options that were set as children inside SELECT:
-		this.querySelector('select').append(...this.querySelectorAll('option'));
+		//this.querySelector('select').append(...this.querySelectorAll('option'));
+	}
+
+	firstUpdated(changedProperties)
+	{
+		super.firstUpdated(changedProperties);
 
 		// if _inputNode was not available by the time set_value() got called
-		if(this.getValue() !== this.modelValue)
+		if(this.getValue() !== this.value)
 		{
 			this.set_value(this.modelValue);
 		}
