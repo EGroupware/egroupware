@@ -333,14 +333,19 @@ var et2_vfsPath = /** @class */ (function (_super) {
                     text = this_2.egw().lang(path_parts[2]);
                     image = this_2.egw().image('navbar', path_parts[2].toLowerCase());
                 }
-                else if (!isNaN(text)) {
-                    var link_title = this_2.egw().link_title(path_parts[2], path_parts[3], function (title) {
-                        if (!title)
-                            return;
-                        jQuery('li', this.span).first().text(title);
-                    }, this_2);
-                    if (link_title && typeof link_title !== 'undefined')
+                else if (i === 3 && !isNaN(text)) {
+                    // we first need to call link_title without callback, as callback would be called for cache-hits too!
+                    var link_title = this_2.egw().link_title(path_parts[2], path_parts[3]);
+                    if (link_title && typeof link_title !== 'undefined') {
                         text = link_title;
+                    }
+                    else {
+                        this_2.egw().link_title(path_parts[2], path_parts[3], function (title) {
+                            if (!title)
+                                return;
+                            jQuery('li', this.span).first().text(title);
+                        }, this_2);
+                    }
                 }
             }
             var self_2 = this_2;

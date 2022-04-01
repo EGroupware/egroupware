@@ -383,17 +383,24 @@ export class et2_vfsPath extends et2_vfsName
 					text = this.egw().lang(path_parts[2]);
 					image = this.egw().image('navbar',path_parts[2].toLowerCase());
 				}
-				else if(!isNaN(<number><unknown>text))
+				else if(i === 3 && !isNaN(<number><unknown>text))
 				{
-					let link_title = this.egw().link_title(path_parts[2],path_parts[3],
-						function(title) {
-							if(!title) return;
-							jQuery('li',this.span).first().text(title);
-						}, this
-					);
-					if(link_title && typeof link_title !== 'undefined') text = link_title;
+					// we first need to call link_title without callback, as callback would be called for cache-hits too!
+					let link_title = this.egw().link_title(path_parts[2], path_parts[3]);
+					if(link_title && typeof link_title !== 'undefined')
+					{
+						text = link_title;
+					}
+					else
+					{
+						this.egw().link_title(path_parts[2], path_parts[3],
+							function(title) {
+								if(!title) return;
+								jQuery('li',this.span).first().text(title);
+							}, this
+						);
+					}
 				}
-
 			}
 			let self = this;
 			let node = jQuery(document.createElement("li"))
@@ -1575,4 +1582,3 @@ export class et2_vfsSelect extends et2_inputWidget
 	}
 };
 et2_register_widget(et2_vfsSelect, ["vfs-select"]);
-
