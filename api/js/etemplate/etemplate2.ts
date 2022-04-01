@@ -970,34 +970,7 @@ export class etemplate2
 		// Get the form values
 		const values = this.getValues(container);
 
-		// Trigger the submit event
-		let canSubmit = true;
-		let invalid = null;
-		if(!no_validation)
-		{
-			canSubmit = !(invalid = this.isInvalid(container, values));
-		}
-		invalid?.then((widgets) =>
-		{
-			let invalid_widgets = widgets.filter((widget) => widget);
-
-			if(invalid_widgets.length)
-			{
-				// Show the first invalid widget, not the last
-				if(invalid_widgets[0] && invalid_widgets[0] instanceof et2_widget)
-				{
-					let messages = [];
-					let valid = invalid.isValid(messages);
-					invalid.set_validation_error(messages);
-				}
-			}
-			else
-			{
-				doSubmit();
-			}
-		});
-
-		let doSubmit = function()
+		const doSubmit = () =>
 		{
 			if(typeof async == 'undefined' || typeof async == 'string')
 			{
@@ -1030,9 +1003,39 @@ export class etemplate2
 			{
 				this._widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
 			}
-		}.bind(this);
+		}
 
+		// Trigger the submit event
+		let canSubmit = true;
+		let invalid = null;
+		if(!no_validation)
+		{
+			canSubmit = !(invalid = this.isInvalid(container, values));
 
+			invalid?.then((widgets) =>
+			{
+				let invalid_widgets = widgets.filter((widget) => widget);
+
+				if(invalid_widgets.length)
+				{
+					// Show the first invalid widget, not the last
+					if(invalid_widgets[0] && invalid_widgets[0] instanceof et2_widget)
+					{
+						let messages = [];
+						let valid = invalid.isValid(messages);
+						invalid.set_validation_error(messages);
+					}
+				}
+				else
+				{
+					doSubmit();
+				}
+			});
+		}
+		else
+		{
+			doSubmit();
+		}
 		return canSubmit;
 	}
 
