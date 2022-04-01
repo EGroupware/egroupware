@@ -183,8 +183,8 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
                         type="button"
                         @click="${this._invokerAction}"
                         id="${this.__invokerId}"
-                        aria-label="${this.egw().lang(this._invokerTitle)}"
-                        title="${this.egw().lang(this._invokerTitle)}"
+                        aria-label="${this._invokerTitle}"
+                        title="${this._invokerTitle}"
                 >
                     ${this._invokerLabel}
                 </button>

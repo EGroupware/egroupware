@@ -57,7 +57,7 @@ describe("Date widget", () =>
 		element.set_value("0");
 		// wait for asychronous changes to the DOM
 		await elementUpdated(element);
-		assert.equal(element.shadowRoot.querySelector("input").value, "");
+		assert.equal(element.querySelector("input").value, "");
 		assert.equal(element.get_value(), '');
 	});
 

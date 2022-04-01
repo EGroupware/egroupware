@@ -33,6 +33,8 @@ describe("Select widget", () =>
 		element = await fixture<Et2Select>(html`
             <et2-select></et2-select>
 		`);
+		// Stub egw()
+		sinon.stub(element, "egw").returns(window.egw);
 		assert.instanceOf(element, Et2Select);
 		element.remove();
 
