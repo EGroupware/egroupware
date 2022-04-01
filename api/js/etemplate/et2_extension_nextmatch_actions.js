@@ -260,18 +260,6 @@ export function nm_action(_action, _senders, _target, _ids)
 				{
 					nextmatch.getInstanceManager().submit();
 				}
-
-				if(_action.data.nm_action == 'open_popup')
-				{
-					// Force nextmatch to re-load affected rows
-					// Must be after submit, so server gives us up to date info
-					// Otherwise, old info will be sent and could overwrite the new,
-					// depending on timing.
-					nextmatch.refresh(idsArr);
-
-					// Reset action in case there's another one
-					nextmatch.getValue = old_value;
-				}
 			}
 			else
 			{
