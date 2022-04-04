@@ -227,9 +227,12 @@ class Egw extends Egw\Base
 		// for the migration: reference us to the old phpgw object
 		$GLOBALS['phpgw'] =& $this;
 
-		if ($GLOBALS['egw_info']['server']['system_charset'])
-		{
-			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
+		try {
+			// set our default charset
+			$this->db->Link_ID->SetCharSet($this->db->Type === 'mysql' ? 'utf8' : 'utf-8');
+		}
+		catch (\Throwable $e) {
+			_egw_log_exception($e);
 		}
 		// restoring server timezone, to avoid warnings under php5.3
 		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
