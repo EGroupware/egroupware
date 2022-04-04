@@ -127,7 +127,10 @@ mobile	addressbook	da	Mobil
 mobile phone	addressbook	da	Mobiltelefonnummer
 modem phone	addressbook	da	Modem telefonnummer
 more ...	addressbook	da	Mere ...
+move to addressbook	addressbook	da	Flyt til adressebog
 multiple vcard	addressbook	da	Flere VCards
+no country selected	addressbook	da	Intet land valgt
+no distribution list	addressbook	da	Ingen distributionsliste
 no vcard	addressbook	da	Ingen VCard
 number	addressbook	da	Nummer
 number of records to read (%1)	addressbook	da	Antal posteringer at læse (%1)
@@ -143,6 +146,7 @@ please enter a name for that field !	addressbook	da	Skriv venligst et navn for d
 postal	common	da	Post
 pref	addressbook	da	foretrukket
 prefix	addressbook	da	Prefix
+prevent deleting of contacts	admin	da	Forhindrer sletning af kontakter
 public key	addressbook	da	Offentlig Nøgle
 read a list / search for entries.	addressbook	da	Læs liste / søg for elementer
 read a list of entries.	addressbook	da	Læs en liste af indtastninger

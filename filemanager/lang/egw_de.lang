@@ -194,7 +194,6 @@ link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 list view	filemanager	de	Listenansicht
 location	filemanager	de	Ort
 lock	filemanager	de	Gesperrt
-lock from %1, created %2	filemanager	de	GESPERRT von %1, am %2
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
 mail paste	filemanager	de	per E-Mail versenden
@@ -206,7 +205,8 @@ modified between	filemanager	de	verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
-mountpoints	filemanager	de	Mountpoints
+mount permanently	filemanager	de	Dauerhaft mounten
+mountpoints	filemanager	de	Mountpunkte
 move	filemanager	de	verschieben
 move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach

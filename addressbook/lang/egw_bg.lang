@@ -369,6 +369,7 @@ new contact submitted by %1 at %2	addressbook	bg	Новият контакт е 
 new window opened to edit infolog for your selection	addressbook	bg	Отворен е нов прoзoрец за редакция в Дневника на избраните елементи
 next date	addressbook	bg	Следваща дата
 no categories selected	addressbook	bg	Няма избрани категории
+no country selected	addressbook	bg	Не е избрана държава
 no distribution list	addressbook	bg	Липсва списък за разпределение
 no fallback	addressbook	bg	Без други опции
 no vcard	addressbook	bg	Липсва VCard

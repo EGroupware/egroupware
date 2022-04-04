@@ -12,9 +12,8 @@
 %s please calculate the result	addressbook	ja	%s 結果を計算してください
 (e.g. 1969)	addressbook	ja	(例 1969)
 (empty = use global limit, no = no export at all)	admin	ja	空 = グローバル・リミットを使用, no = エクスポートしない
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ &lt;none&gt; が見つかりません。</b>  一覧から変換タイプを選択してください。
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ <none> が見つかりません。</b>  一覧から変換タイプを選択してください。
 @-eval() is only availible to admins!!!	addressbook	ja	@-eval() は管理者専用です!
-access by	addressbook	ja	アクセスするユーザ/グループ
 account id	addressbook	ja	アカウント ID
 account repository	admin	ja	アカウント・リポジトリ
 accounts	addressbook	ja	アカウント
@@ -122,7 +121,6 @@ company	common	ja	会社
 company name	addressbook	ja	会社名
 configuration	common	ja	環境設定
 contact	common	ja	連絡先
-contact	addressbook	ja	連絡先
 contact application	admin	ja	コンタクト・アプリケーション
 contact data	addressbook	ja	コンタクト・データ
 contact deleted	addressbook	ja	コンタクトを削除しました。
@@ -163,7 +161,6 @@ custom	addressbook	ja	カスタム
 custom etemplate for the contactform	addressbook	ja	eTemplate をコンタクト・フォーム用にカスタマイズ
 custom fields	addressbook	ja	カスタム項目
 data exchange settings	addressbook	ja	データ交換設定
-data from	addressbook	ja	データの取得元
 debug output in browser	addressbook	ja	ブラウザにデバッグ情報を出力
 default	addressbook	ja	既定値
 default action on double-click	addressbook	ja	ダブル・クリック時の既定のアクション
@@ -226,11 +223,10 @@ enter the path to the exported file here	addressbook	ja	エクスポート・フ
 error deleting the contact !!!	addressbook	ja	エラー: コンタクトの削除失敗!
 error saving the contact !!!	addressbook	ja	エラー: コンタクトの保存失敗!
 error: the entry has been updated since you opened it for editing!	addressbook	ja	エラー: この項目は、既に他画面で編集中です!
-Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	addressbook	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
-Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example	addressbook	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
-Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	addressbook	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
-Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
-Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	addressbook	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
 existing links	addressbook	ja	定義済みリンク
 exists	addressbook	ja	定義済み
 export as csv	addressbook	ja	CSV としてエクスポート
@@ -296,9 +292,6 @@ how many fields must match for the record to be considered a duplicate.	addressb
 html link to the current record	addressbook	ja	このレコードに対する HTML リンク
 icon	addressbook	ja	アイコン
 if accounts are already in ldap	admin	ja	アカウントが LDAP に既に存在する場合
-If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.	addressbook	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
-If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.	addressbook	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
-if you specify an export definition, it will be used when you export	addressbook	ja	エクスポート時に使用する設定を指定します。
 ignore first line	addressbook	ja	先頭行を無視
 import	addressbook	ja	インポート
 import contacts	addressbook	ja	インポート
@@ -371,6 +364,7 @@ new contact submitted by %1 at %2	addressbook	ja	新規コンタクトは %1 に
 new window opened to edit infolog for your selection	addressbook	ja	インフォログ編集ウィンドウを新規に開きました。
 next date	addressbook	ja	次の日付
 no categories selected	addressbook	ja	カテゴリ未選択
+no country selected	addressbook	ja	国が選択されていません
 no distribution list	addressbook	ja	配信リスト無し
 no fallback	addressbook	ja	既定値無し
 no vcard	addressbook	ja	vCard 無し
@@ -388,7 +382,6 @@ organisations by departments	addressbook	ja	部署別 組織・団体
 organisations by location	addressbook	ja	地域別 組織・団体
 other number	addressbook	ja	その他番号
 other phone	addressbook	ja	その他電話番号
-Other Phone	addressbook	ja	その他電話番号
 own sorting	addressbook	ja	独自並べ変え
 pager	common	ja	ページャー
 parcel	addressbook	ja	区画
@@ -427,7 +420,6 @@ rename selected distribution list	addressbook	ja	配信リストの名前を変�
 repetition	addressbook	ja	繰返し
 replacements for inserting contacts into documents	addressbook	ja	ドキュメントにコンタクトを埋め込む際の置換値
 required fields *	addressbook	ja	必須項目 *
-rights	addressbook	ja	権限
 role	addressbook	ja	職業
 room	addressbook	ja	部屋番号
 search letter	addressbook	ja	文字検索
@@ -479,7 +471,6 @@ that field name has been used already !	addressbook	ja	項目名は既に存在�
 the anonymous user has probably no add rights for this addressbook.	addressbook	ja	追加権限がありません。
 the anonymous user needs add rights for it!	addressbook	ja	追加権限が必要です!
 the anonymous user needs read it!	addressbook	ja	読み取り権限が必要です!
-The document can contain placeholder like {{%1}}, to be replaced with the data.	addressbook	ja	ドキュメントにはプレース・ホルダー（例: {{%1}}）を埋め込むことがで
 the following document-types are supported:	addressbook	ja	下記のドキュメント・タイプがサポートされます:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	ja	コンタクト・データをオフィス（OpenOffice / マイクロソフト・オフィス）に挿入するためには拡張子が ZIP である必要があります。
 there was an error saving your data :-(	addressbook	ja	エラー: データ保存失敗!

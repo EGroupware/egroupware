@@ -178,11 +178,14 @@ deletes the photo	addressbook	es-es	Borra la foto
 department	common	es-es	Departamento
 departments	addressbook	es-es	departamentos
 directory with documents to insert contacts	addressbook	es-es	Directorio con documentos para insertar contactos
+disable	addressbook	es-es	Desactivar
+disable last/next event column	addressbook	es-es	Desactivar la columna de último/siguiente evento
 display contact	addressbook	es-es	Mostrar contacto
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en EGroupware o pulsar en el icono de inicio).
 distribution list deleted	addressbook	es-es	Lista de distribución borrada
 distribution list renamed	addressbook	es-es	Lista de distribución renombrada
 distribution lists	addressbook	es-es	Listas de distribución
+distribution lists as groups	addressbook	es-es	Listas de distribución como grupos
 distribution lists, ...	addressbook	es-es	Listas de distribución, ...
 do you really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	es-es	¿Desea una libreta de direcciones privada, que no pueden ver otros usuarios (a menos que conceda acceso a su libreta de direcciones personal)?
@@ -193,6 +196,7 @@ don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
 download	addressbook	es-es	Descargar
 download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
 download this contact as vcard file	addressbook	es-es	descargar este contacto como fichero vCard
+duplicate threshold	addressbook	es-es	Umbral de duplicación
 duplicate warning	addressbook	es-es	Advertencia duplicada
 duplicates	addressbook	es-es	Duplicados
 duration	addressbook	es-es	Duración
@@ -348,6 +352,7 @@ new contact submitted by %1 at %2	addressbook	es-es	Nuevo contacto enviado por %
 new window opened to edit infolog for your selection	addressbook	es-es	Se ha abierto una ventana nueva para editar la nota para su selección
 next date	addressbook	es-es	Fecha siguiente
 no categories selected	addressbook	es-es	no se seleccionaron categorías
+no country selected	addressbook	es-es	No hay país seleccionado
 no fallback	addressbook	es-es	Sin respaldo
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número

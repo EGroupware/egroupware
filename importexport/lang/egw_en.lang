@@ -47,6 +47,7 @@ database values	importexport	en	Database values
 day of week	importexport	en	Day of week
 define imports|exports	common	en	Define Imports|Exports
 definition	importexport	en	Definition
+definition filter	importexport	en	Definition filter
 delete all selected definitions	importexport	en	Delete ALL selected definitions
 delete files after import	importexport	en	Delete files after import
 deleted	importexport	en	Deleted.

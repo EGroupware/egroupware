@@ -105,7 +105,6 @@ company name	addressbook	ru	Название компании
 configuration	common	ru	Конфигурирование
 contact	common	ru	Контакт
 contact application	admin	ru	Приложение контакта
-contact copied	addressbook	ru	Контакт скопирован
 contact deleted	addressbook	ru	Контакт удалён
 contact fields to show	addressbook	ru	Поля контакта для просмотра
 contact fields:	addressbook	ru	Поля контакта:
@@ -320,6 +319,8 @@ new contact submitted by %1 at %2	addressbook	ru	Новый контакт от�
 new window opened to edit infolog for your selection	addressbook	ru	Открыто новое окно редактирования выбранной записи ИнфоЖурнала
 next date	addressbook	ru	Следующая дата
 no categories selected	addressbook	ru	Не выбрано категорий
+no country selected	addressbook	ru	Страна не выбрана
+no distribution list	addressbook	ru	Нет списка рассылки
 no fallback	addressbook	ru	Нет резерва
 no vcard	addressbook	ru	Нет визитной карточки VCard
 number	addressbook	ru	Номер
@@ -436,7 +437,6 @@ updated	addressbook	ru	Обновлено
 upload or delete the photo	addressbook	ru	Выгрузить или удалить фото
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ru	URL для связи с телефонными номерами (используйте %1 = номер для звонка,%u = наименование учётной записи, %t = телефон учётной записи)
 use addressbooks "own sorting" attribute	addressbook	ru	Используйте атрибут адресной книги «собственная сортировка»
-use an extra category tab?	addressbook	ru	Использовать дополнительную вкладку категории
 use an extra tab for private custom fields?	admin	ru	Использовать дополнительную закладку для частных пользовательских полей?
 use country list	addressbook	ru	Использовать список стран
 use setup for a full account-migration	admin	ru	Использовать установку для полной миграции учётных записей

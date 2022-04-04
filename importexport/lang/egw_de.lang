@@ -47,6 +47,7 @@ database values	importexport	de	Werte der Datenbank
 day of week	importexport	de	Wochentag
 define imports|exports	common	de	Profil definieren
 definition	importexport	de	Definition
+definition filter	importexport	de	Definition Filter
 delete all selected definitions	importexport	de	Alle ausgewählten Definitionen löschen
 delete files after import	importexport	de	Dateien nach dem Import löschen
 deleted	importexport	de	Gelöscht

@@ -90,7 +90,6 @@ company name	addressbook	pt-br	Nome da empresa
 configuration	common	pt-br	Configuração
 contact	common	pt-br	Contato
 contact application	admin	pt-br	Aplicação de Contatos
-contact copied	addressbook	pt-br	Contato copiado
 contact deleted	addressbook	pt-br	Contato removido
 contact fields to show	addressbook	pt-br	Campos a serem exibidos
 contact fields:	addressbook	pt-br	Campos de contatos:
@@ -266,6 +265,7 @@ mobile	addressbook	pt-br	Celular
 mobile phone	addressbook	pt-br	Telefone celular
 modem phone	addressbook	pt-br	Telefone de Dados (Modem)
 more ...	addressbook	pt-br	Mais...
+move to addressbook	addressbook	pt-br	Mudar para o livro de endereços
 moved	addressbook	pt-br	movido
 multiple vcard	addressbook	pt-br	Múltiplo VCard
 name for the distribution list	addressbook	pt-br	Nome da lista de distribuição
@@ -275,6 +275,8 @@ new contact submitted by %1 at %2	addressbook	pt-br	Novo contato informado por %
 new window opened to edit infolog for your selection	addressbook	pt-br	Nova janela aberta para editar sua seleção de Tarefas
 next date	addressbook	pt-br	Próxima data
 no categories selected	addressbook	pt-br	nenhuma categoria selecionada
+no country selected	addressbook	pt-br	Nenhum país selecionado
+no distribution list	addressbook	pt-br	Sem lista de distribuição
 no vcard	addressbook	pt-br	Nenhum VCard
 number	addressbook	pt-br	Número
 number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
@@ -301,6 +303,7 @@ preferred email address to use in distribution lists	addressbook	pt-br	Endereço
 preferred phone	addressbook	pt-br	telefone preferencial
 preferred type of email address to add for distribution lists	addressbook	pt-br	Tipo de endereço de email padrão para adicionar em listas de distribuição
 prefix	addressbook	pt-br	Prefixo
+prevent deleting of contacts	admin	pt-br	Impedir a exclusão de contatos
 public key	addressbook	pt-br	Chave pública
 publish into groups:	addressbook	pt-br	Publicar nos grupos:
 read a list / search for entries.	addressbook	pt-br	Ler um lista / pesquisar por entradas
@@ -369,7 +372,6 @@ updated	addressbook	pt-br	Atualizado
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
 use addressbooks "own sorting" attribute	addressbook	pt-br	usar catálogos de endereços "possuir classificação" atributo
-use an extra category tab?	addressbook	pt-br	Usar uma aba extra para categoria ?
 use an extra tab for private custom fields?	admin	pt-br	Usar uma aba extra para campos privados personalizados?
 use country list	addressbook	pt-br	Usar lista de países
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa

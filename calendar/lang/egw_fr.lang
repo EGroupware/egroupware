@@ -1,4 +1,3 @@
-#%s	calendar	fr	#%s
 %1 %2 in %3	calendar	fr	%1 %2 dans %3
 %1 days	calendar	fr	%1 jours
 %1 event(s) %2	calendar	fr	%1 événement(s) %2
@@ -11,7 +10,6 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fr	%1 enregistrements lus (pas encore importés, vous pouvez revenir en arrière et décocher Tester l'import)
 %1 weeks	calendar	fr	%1 semaines
 %s the event	calendar	fr	%s l'événement
-&#8629;	calendar	fr	↵
 (%1 events in %2 seconds)	calendar	fr	(%1 événement en %2 secondes)
 (empty = use global limit, no = no export at all)	admin	fr	(vide = pas de limite globale, no = pas d'export du tout)
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	fr	(En l'absence d'URL, le pays des préférences de l'utilisateur est utilisé pour chargé les jours fériés de %s)
@@ -83,7 +81,7 @@ calendar - list	calendar	fr	Calendrier - Vue Liste
 calendar - multi-weekly	calendar	fr	Calendrier - Vue multi-semaines
 calendar - planner	calendar	fr	Calendrier - planificateur
 calendar csv export	calendar	fr	Export csv du calendrier
-calendar csv import	calendar	fr	Import cvs du calendrier
+calendar csv import	calendar	fr	Import csv du calendrier
 calendar event	calendar	fr	Evénement de Calendrier
 calendar fields:	calendar	fr	Champ calendrier :
 calendar ical export	calendar	fr	Export iCal du calendrier
@@ -93,6 +91,7 @@ calendar menu	calendar	fr	Menu du Calendrier
 calendar preferences	calendar	fr	Préférences du Calendrier
 calendar settings	admin	fr	Réglages Calendrier
 calendar-fieldname	calendar	fr	Calendrier - Nom des champs
+can not send any notifications because notifications app is not installed!	calendar	fr	Impossible d'envoyer les notifications car l'application notifications n'est pas installée !
 can't add alarms in the past !!!	calendar	fr	Impossible d'ajouter des alarmes sur des dates révolues !!!
 can't aquire lock!	calendar	fr	Ne peut prendre le verrou sur l'enregistrement !
 canceled	calendar	fr	Annulé
@@ -111,7 +110,6 @@ close the window	calendar	fr	Fermer la fenêtre
 compose a mail to all participants after the event is saved	calendar	fr	Écrire un email à tous les participants après l'enregistrement de l'événement
 configuration settings	calendar	fr	Paramètres
 conflict	calendar	fr	Conflit
-copy of:	calendar	fr	Copie de :
 copy this event	calendar	fr	Copier cet événement
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	fr	Copie vos changements vers le presse-papiers, %1recharger l'entrée%2 et les fusionne.
 countries	calendar	fr	Pays
@@ -175,6 +173,7 @@ displays this calendar view on the home page (page you get when you enter egroup
 distribution list	calendar	fr	Liste de distribution
 do not import conflicting events	calendar	fr	Ne pas importer les événements en conflit
 do not include events of group members	calendar	fr	Ne pas inclure les événements des membres du groupe.
+do not notify externals (non-users) about this event	calendar	fr	Ne PAS notifier les adresses externes (sans compte utilisateur) à propos de cet événement
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	fr	Confirmez-vous vouloir changer le début de cette série ?  Si oui, la série d'origine sera terminée à %1 et une nouvelle série sera créée dans le futur pour prendre en compte vos changements.
 do you want a weekview with or without weekend?	calendar	fr	Voulez-vous voir les semaines avec ou sans week-end ?
 do you want non-egroupware participants of events you created to be automatically notified about new or changed appointments?	calendar	fr	Souhaitez-vous que des participants non issus de EGroupware soient automatiquement notifiés des rendez-vous créés ou modifié ?
@@ -242,7 +241,6 @@ fieldseparator	calendar	fr	Séparateur de champs
 filemanager	calendar	fr	Gestionnaire de fichiers
 filename	calendar	fr	Nom du fichier
 filename of the download	calendar	fr	Nom du fichier téléchargé
-filters	calendar	fr	Filtres
 find free timeslots where the selected participants are available for the given timespan	calendar	fr	Trouver des plages de temps libres sur lesquelles les participants sélectionnés sont disponibles
 firstname of person to notify	calendar	fr	Prénom de la personne à prévenir
 for	calendar	fr	pour
@@ -424,7 +422,6 @@ optional	calendar	fr	Optionnel
 organizer	calendar	fr	Organisateur
 overlap holiday	calendar	fr	Jour fériés chevauchant
 owner too	calendar	fr	Aussi les "propriétaires"
-participant	calendar	fr	Participant
 participant names by type	calendar	fr	Nom des participants par type
 participant table	calendar	fr	Tableau des participants
 participants	calendar	fr	Participants
@@ -470,7 +467,6 @@ repetition	calendar	fr	Répétition
 repetitiondetails (or empty)	calendar	fr	Détails de répétition (ou vide)
 replacements for inserting events into documents	calendar	fr	Remplacement pour insérer des événements dans des documents
 reply to meeting request	calendar	fr	Répondre à une demande de rendez-vous
-report	calendar	fr	Report
 requested	calendar	fr	Requis
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	fr	Date demandée %1 en dehors de la plage autorisée de %2 jours : événements récurrents omis !
 requested meeting is in the past!	calendar	fr	Le rendez-vous demandé est dans le passé !
@@ -491,7 +487,6 @@ saves the changes made	calendar	fr	Enregistre les modifications.
 saves the event ignoring the conflict	calendar	fr	Enregistre l'événement en ignorant le conflit
 scheduling conflict	calendar	fr	Conflit de planification
 search string for the events	calendar	fr	Chaîne de recherche sur les événements
-security	calendar	fr	Sécurité
 select a %1	calendar	fr	Sélectionnez un %1
 select a color for this calendar	calendar	fr	Sélectionner une couleur pour le calendrier
 select a time	calendar	fr	Sélectionnez une heure
@@ -536,8 +531,6 @@ show this month	calendar	fr	afficher ce mois
 show this week	calendar	fr	afficher cette semaine
 show year and age	calendar	fr	Afficher l'année et l'âge
 single event	calendar	fr	événement unique
-skip notifications	calendar	fr	Sauter les notifications
-sort by	calendar	fr	trier par
 specify where url of the day links to	calendar	fr	Spécifier où pointe l'url du jour
 start	calendar	fr	Début
 start date/time	calendar	fr	Date/Heure de début
@@ -628,9 +621,6 @@ user selectable css file for the calendar setup	calendar	fr	Fichier css sélecti
 users + groups: inviting both always requires an invite grant	admin	fr	Utilisateurs + groupes : inviter les deux nécessite une autorisation d'invitation
 using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur
 utilities	calendar	fr	Utilitaires
-vfs file not found	calendar	fr	Fichier VFS non trouvé
-video conference	calendar	fr	Visioconférence
-videoconference	calendar	fr	Visioconférence
 view exception	calendar	fr	Voir l'exception
 view series	calendar	fr	Voir la série
 view settings	calendar	fr	Voir les paramètres
@@ -678,11 +668,9 @@ you have a meeting scheduled for %1	calendar	fr	Vous avez une réunion planifié
 you have been uninvited from the meeting at %1	calendar	fr	Votre invitation au rendez-vous de %1 a été annulée
 you need to select an account, contact or resource first!	calendar	fr	Vous devez d'abord sélectionner un compte, un contact ou une ressource !
 you need to select an ical file first	calendar	fr	Vous devez d'abord sélectionner un fichier iCal
-you need to select some entries first	calendar	fr	Vous devez d'abord sélectionner des événements.
 you need to select some events first	calendar	fr	Vous devez d'abord sélectionner des événements.
 you need to set either a day or a occurrence !!!	calendar	fr	Vous devez définir soit un jour soit une occurrence !
 you requested more than available for the selected resource:	calendar	fr	Vous avez demandé plus que ce qui est disponible pour cette ressource :
 your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planifiée pour %1 a été annulée
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
 your php extension pdo_sqlite is broken!	calendar	fr	Votre extension php pdo_sqlite ne fonctionne pas !
-•	calendar	fr	•

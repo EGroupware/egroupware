@@ -377,6 +377,7 @@ new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %
 new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum Erstellen des InfoLog-Eintrags geöffnet
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	keine Kategorien ausgewählt
+no country selected	addressbook	de	Kein Land ausgewählt
 no distribution list	addressbook	de	Keine Verteilerliste
 no fallback	addressbook	de	Keine Ausweichlösung
 no vcard	addressbook	de	Keine vCard
@@ -544,6 +545,7 @@ warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefund
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 when viewing a contact, show linked entries from the selected application	addressbook	de	Bei der Ansicht eine Kontaktes werden nur Links zu folgenden Anwendungen gezeigt.
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	de	Wenn Sie Einträge zu Dokumenten zusammenführen, werden sie hier gespeichert. Wenn kein Verzeichnis angegeben wird, werden sie in Ihrem Heimatverzeichnis (/home/...) gespeichert.
 where to add the email address	addressbook	de	wo soll die E-Mail-Adresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
