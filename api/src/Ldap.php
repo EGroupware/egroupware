@@ -74,12 +74,12 @@ class Ldap
 	 *
 	 * Use this factory method to open only a single connection to LDAP server!
 	 *
-	 * @param boolean $ressource =true true: return LDAP ressource for ldap_*-methods,
+	 * @param boolean $ressource =true true: return LDAP object/ressource for ldap_*-methods,
 	 *	false: return connected instances of this Api\Ldap class
 	 * @param string $host ='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
 	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
 	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
-	 * @return resource|Ldap resource from ldap_connect() or false on error
+	 * @return object|resource|self|false resource/object from ldap_connect(), self or false on error
 	 * @throws Exception\AssertionFailed 'LDAP support unavailable!' (no ldap extension)
 	 * @throws Exception\NoPermission if bind fails
 	 */
@@ -273,7 +273,7 @@ class Ldap
 	 */
 	function ldapDisconnect()
 	{
-		if(is_resource($this->ds))
+		if ($this->ds)
 		{
 			ldap_unbind($this->ds);
 			unset($this->ds);
