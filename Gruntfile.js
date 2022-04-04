@@ -120,6 +120,8 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_hbox.js",
 						"api/js/etemplate/et2_widget_groupbox.js",
 						"api/js/jquery/splitter.js",
+						"api/js/etemplate/CustomHtmlElements/multi-video.js",
+						"api/js/etemplate/CustomHtmlElements/pdf-player.js",
 						"api/js/etemplate/et2_widget_split.js",
 						"api/js/etemplate/et2_widget_button.js",
 						"api/js/etemplate/et2_core_valueWidget.js",
