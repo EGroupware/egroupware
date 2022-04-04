@@ -294,7 +294,7 @@ class multi_video extends HTMLElement {
 
 
 	get paused() {
-		return this.__getActiveVideo()[0]?.node?.paused;
+		return this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.paused : undefined) : undefined;
 	}
 	/**
 	 * set muted attribute
@@ -313,7 +313,8 @@ class multi_video extends HTMLElement {
 
 
 	get muted() {
-		return this.__getActiveVideo()[0]?.node?.muted;
+
+		return this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.muted : undefined) : undefined;;
 	}
 	/**
 	 * get video ended attribute
@@ -321,7 +322,7 @@ class multi_video extends HTMLElement {
 
 
 	get ended() {
-		return this._videos[this._videos.length - 1]?.node?.ended;
+		return this._videos[this._videos.length - 1] ? (this._videos[this._videos.length - 1].node ? this._videos[this._videos.length - 1].node.ended : undefined) : undefined;
 	}
 	/**
 	 * set playbackRate
@@ -340,7 +341,7 @@ class multi_video extends HTMLElement {
 
 
 	get playbackRate() {
-		return this.__getActiveVideo()[0]?.node?.playbackRate;
+		return this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.playbackRate : undefined) : undefined;
 	}
 	/**
 	 * set volume
@@ -358,7 +359,7 @@ class multi_video extends HTMLElement {
 
 
 	get volume() {
-		return this.__getActiveVideo()[0]?.node?.volume;
+		return this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.volume : undefined) : undefined;
 	}
 	/************************************************* METHODES ******************************************/
 
@@ -369,7 +370,7 @@ class multi_video extends HTMLElement {
 
 	play() {
 		this.__playing = true;
-		return this.__getActiveVideo()[0]?.node?.play();
+		return this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.play() : undefined) : undefined;
 	}
 	/**
 	 * pause video
@@ -378,7 +379,7 @@ class multi_video extends HTMLElement {
 
 	pause() {
 		this.__playing = false;
-		this.__getActiveVideo()[0]?.node?.pause();
+		this.__getActiveVideo()[0] ? (this.__getActiveVideo()[0].node ? this.__getActiveVideo()[0].node.pause() : undefined) : undefined;
 	}
 
 } // Define the new multi-video element
