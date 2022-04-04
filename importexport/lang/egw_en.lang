@@ -47,6 +47,7 @@ database values	importexport	en	Database values
 day of week	importexport	en	Day of week
 define imports|exports	common	en	Define Imports|Exports
 definition	importexport	en	Definition
+definition filter	importexport	en	Definition filter
 delete all selected definitions	importexport	en	Delete ALL selected definitions
 delete files after import	importexport	en	Delete files after import
 deleted	importexport	en	Deleted.
@@ -137,7 +138,6 @@ too many matches	importexport	en	too many matches
 translation	importexport	en	custom modifocation
 true	importexport	en	True
 try	importexport	en	Try
-unable to access files with '%1'    importexport    en  Unable to access files with '%1'
 unable to delete	importexport	en	Unable to delete
 unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.

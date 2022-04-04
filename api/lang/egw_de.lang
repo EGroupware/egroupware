@@ -496,7 +496,7 @@ empty file	common	de	Datei leeren
 enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enable logging	groupdav	de	Logging einschalten
 enabled	common	de	Verfügbar
-enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das loggen des CalDAV/CardDAV Daten-Verkehrs zur Diagnose von Problemen mit Geräten ein.
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	de	Schaltet das Loggen des CalDAV/CardDAV Daten-Verkehrs zur Diagnose von Problemen mit Geräten ein.
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
@@ -861,7 +861,7 @@ maybe	common	de	Vieleicht
 mayotte	common	de	MAYOTTE
 medium	common	de	Mittel
 menu	common	de	Menü
-merged document filename	preferences	de	Dateiname zusammengeführtes Dokument
+merged document filename	preferences	de	Dateiname des zusammengeführten Dokuments
 message	common	de	Nachricht
 message ...	common	de	Nachricht ...
 message prepared for sending.	common	de	Nachricht zum Versand vorbereitet
@@ -1277,9 +1277,9 @@ share	common	de	Teilen
 share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	de	Freigabe als schreibgeschützt, aber Uploads erlauben. Uploads sind verborgen und nur für Personen mit einem Konto zugänglich.
 share filemanager directory	common	de	Dateimanager Ordner
 share files	common	de	Dateien teilen
-share just the associated filemanager directory, not the %1	common	de	Teile nur das verbundene Dateimanager Ordners, nicht %1
+share just the associated filemanager directory, not the %1	common	de	Teile nur den verbundenen Dateimanager Ordner, nicht %1
 share link	common	de	Link teilen
-share this %1 via url	common	de	Teile diesen %1 über den Link
+share this %1 via url	common	de	Teile diesen %1 über einen Link
 shift	common	de	Shift
 shift ⇧	common	de	Umschalten ⇧
 should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden

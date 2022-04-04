@@ -42,10 +42,14 @@ infolog	addressbook	et	InfoLog
 last modified	addressbook	et	Viimati muudetud
 links	addressbook	et	Lingid
 location	addressbook	et	Asukoht
+move to addressbook	addressbook	et	Liikumine aadressiraamatusse
+no country selected	addressbook	et	Riik ei ole valitud
+no distribution list	addressbook	et	Jaotamisloend puudub
 organisation	addressbook	et	Organisatsioon
 participants	addressbook	et	Osalejad
 permission denied !!!	addressbook	et	Õigused puuduvad !!!
 photo	addressbook	et	Foto
+prevent deleting of contacts	admin	et	Kontaktide kustutamise vältimine
 repetition	addressbook	et	Kordus
 select all	addressbook	et	Märgi kõik
 show	addressbook	et	Näita

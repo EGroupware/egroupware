@@ -275,6 +275,7 @@ mobile	addressbook	pl	Komórka
 mobile phone	addressbook	pl	Komórka
 modem phone	addressbook	pl	Numer modemu
 more ...	addressbook	pl	Więcej ...
+move to addressbook	addressbook	pl	Przenieś do książki adresowej
 moved	addressbook	pl	przesunięto
 multiple vcard	addressbook	pl	VCard z wieloma kontaktami
 name for the distribution list	addressbook	pl	Nazwa dla listy dystrybucyjnej
@@ -284,6 +285,8 @@ new contact submitted by %1 at %2	addressbook	pl	Nowy kontakt przesłany przez %
 new window opened to edit infolog for your selection	addressbook	pl	Otwarto nowe okno do edycji Dziennika dla twojej selekcji
 next date	addressbook	pl	Następna data
 no categories selected	addressbook	pl	nie wybrano kategorii
+no country selected	addressbook	pl	Nie wybrano kraju
+no distribution list	addressbook	pl	Brak listy dystrybucyjnej
 no fallback	addressbook	pl	Bez zapasu
 no vcard	addressbook	pl	Bez VCard
 number	addressbook	pl	Numer
@@ -311,6 +314,7 @@ preferred email address to use in distribution lists	addressbook	pl	Preferowany 
 preferred phone	addressbook	pl	preferowany nr. telefonu
 preferred type of email address to add for distribution lists	addressbook	pl	preferowany typ adresu email do dodania dla list dystrybucyjnych
 prefix	addressbook	pl	Prefiks (Pan/Pani)
+prevent deleting of contacts	admin	pl	Zapobieganie usuwaniu kontaktów
 private custom fields	addressbook	pl	Prywatne pola własne
 public key	addressbook	pl	Klucz publiczny
 publish into groups:	addressbook	pl	Opublikuj do grup:

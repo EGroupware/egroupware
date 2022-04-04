@@ -100,7 +100,6 @@ company name	addressbook	fi	Yrityksen nimi
 configuration	common	fi	Konfigurointi
 contact	common	fi	Yhteystieto
 contact application	admin	fi	Yhteystietojen sovellus
-contact copied	addressbook	fi	Yhteystieto kopioitu
 contact deleted	addressbook	fi	Yhteystieto poistettu
 contact fields to show	addressbook	fi	Näytä yhteytietojen kentät
 contact fields:	addressbook	fi	Yhteystiedon kentät:
@@ -297,6 +296,7 @@ migration finished	addressbook	fi	Sulauttaminen valmis
 migration to ldap	admin	fi	Sulauta LDAP:iin
 mobile	addressbook	fi	GSM
 mobile phone	addressbook	fi	Matkapuhelin
+mobile phone (private)	addressbook	fi	matkapuhelin (yksityinen)
 modem phone	addressbook	fi	Modem Phone
 more ...	addressbook	fi	Lisää ...
 move to addressbook	addressbook	fi	Siirrä osoitekirjaan
@@ -309,6 +309,8 @@ new contact submitted by %1 at %2	addressbook	fi	Uusi yhteystieto lisätty: %1, 
 new window opened to edit infolog for your selection	addressbook	fi	Uusi ikkuna avattu, voit muokata valitsemaasi InfoLogia.
 next date	addressbook	fi	Seuraava tapaaminen
 no categories selected	addressbook	fi	Kategorioita ei ole valittu
+no country selected	addressbook	fi	Ei valittua maata
+no distribution list	addressbook	fi	Ei jakelulistaa
 no fallback	addressbook	fi	Ei fallbackiä
 no vcard	addressbook	fi	Ei vCard
 number	addressbook	fi	Numero
@@ -422,7 +424,6 @@ updated	addressbook	fi	Päivitetty
 upload or delete the photo	addressbook	fi	Lataa tai poista kuva
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	fi	URL linkki puhelinnumeroon (käytä %1 = soitettava numero, %u = käyttäjän nimi, %t = käyttäjän puhelin)
 use addressbooks "own sorting" attribute	addressbook	fi	Käytä osoitekirjan "oma lajittelu" vaihtoehtoa
-use an extra category tab?	addressbook	fi	Käytä ylimääräistä kategoria välilehteä.
 use an extra tab for private custom fields?	admin	fi	Käytä ylimääräistä välilehteä yksityisille lisäkentille.
 use country list	addressbook	fi	Käytä maaluetteloa
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fi	Käytä tägiä esim. osoitetarroihin. Lisää haluamasi kentät kahden tägin väliin.

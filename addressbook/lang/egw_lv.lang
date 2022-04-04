@@ -1,7 +1,7 @@
 %1 records imported	addressbook	lv	Tika importēti %1 ieraksti
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari atgriezties %2 atpakaļ %3 un izslēgt Importēšanas pārbaudi)
 (e.g. 1969)	addressbook	lv	(piem?ram, 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	lv	<b>nav pārveidošanas tipa &lt;neviens&gt; nevar tikt novienots.</b> Lūdzu izvēlies pārveidošanas veidu no saraksta.
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	lv	<b>nav pārveidošanas tipa <neviens> nevar tikt novienots.</b> Lūdzu izvēlies pārveidošanas veidu no saraksta.
 @-eval() is only availible to admins!!!	addressbook	lv	@-eval() ir pieejams tikai administratoriem!!!
 actions	addressbook	lv	Darbības
 add a single entry by passing the fields.	addressbook	lv	Pievienot vienu ierakstu apejot laukus
@@ -120,7 +120,10 @@ middle name	addressbook	lv	Otrais vārds
 mobile	addressbook	lv	Mobīlais
 mobile phone	addressbook	lv	Mobīlais tālrunis
 modem phone	addressbook	lv	Modēma tālrunis
+move to addressbook	addressbook	lv	Pārvietot uz adrešu grāmatu
 multiple vcard	addressbook	lv	Vairākas VCard
+no country selected	addressbook	lv	Nav izvēlēta neviena valsts
+no distribution list	addressbook	lv	Nav izplatīšanas saraksta
 no vcard	addressbook	lv	Nav VCard
 number of records to read (%1)	addressbook	lv	Lasāmo ierakstu skaits (%1)
 other number	addressbook	lv	Cits nummurs
@@ -134,6 +137,7 @@ phone numbers	common	lv	Telefona numuri
 please enter a name for that field !	addressbook	lv	Lūdzu, ievadiet lauka nosaukumu !
 pref	addressbook	lv	prim
 prefix	addressbook	lv	Prefiks
+prevent deleting of contacts	admin	lv	Aizliegt kontaktu dzēšanu
 public key	addressbook	lv	Publiskā atslēga
 read a list of entries.	addressbook	lv	Lasīt ierakstu sarakstu.
 read a single entry by passing the id and fieldlist.	addressbook	lv	Lasīt vienu ierakstu, apejot id un lauku sarakstu

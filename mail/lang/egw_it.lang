@@ -90,6 +90,7 @@ compose as new	mail	it	Componi come nuovo
 compress folder	mail	it	Comprimi cartella
 condition	mail	it	Condizione
 configuration settings	mail	it	Impostazioni di configurazione
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	it	I valori configurati saranno impostati automaticamente nel dialogo di composizione per il campo rispettato quando si compone una nuova email.
 confirm	mail	it	Confermare
 confirm attach message	mail	it	Conferma allegato al messaggio
 confirm move to folder	mail	it	Conferma lo spostamento alla cartella
@@ -105,6 +106,7 @@ copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
 could not save the acl because some names are empty	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
 create new account	mail	it	Crea nuovo account
+cross account forward attachment is not allowed!	mail	it	Non è consentito l'attacco incrociato di conti in avanti!
 current folder	mail	it	cartella corrente
 currently:	mail	it	Al momento:
 date(newest first)	mail	it	Data (prima più recenti)
@@ -490,6 +492,7 @@ set / remove flags	mail	it	Imposta / Rimuovi flag
 set / remove labels	mail	it	Imposta / Rimuovi etichette
 set flags	mail	it	Segna l'e-mail come
 set it as default:	mail	it	imposta come predefinito
+set predefined values for compose...	mail	it	Impostare valori predefiniti per comporre ...
 should new messages show up on the home page	mail	it	I nuovi messaggi devono apparire in Home Page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	it	La firma dovrebbe essere inserita dopo (standard) o prima del testo di risposta o inoltro? La firma deve essere visibile e modificabile in fase di composizione?
 show	mail	it	Mostra

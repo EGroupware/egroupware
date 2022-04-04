@@ -65,6 +65,8 @@ all addressbooks	addressbook	cs	Všechny adresáře
 all contacts	addressbook	cs	Všechny kontakty
 all in one field	addressbook	cs	Vše v jednom poli
 all types	addressbook	cs	Všechny typy
+allow	addressbook	cs	Povolit
+allow for contacts only	addressbook	cs	Povolit pouze kontakty
 allow members of following groups to edit contact-data of accounts	addressbook	cs	Dovolit uživatelům patřících do těchto skupin upravovat kontaktní údaje účtů
 allow users to maintain their own account-data	admin	cs	Povolit uživatelům měnit jejich vlastní data
 alt. csv import	addressbook	cs	Alternativní import z CSV
@@ -182,6 +184,7 @@ deletes the photo	addressbook	cs	Maže fotografii
 department	common	cs	Oddělení
 departments	addressbook	cs	oddělení
 directory with documents to insert contacts	addressbook	cs	Adresář s dokumenty pro vložení kontaktů
+disable last/next event column	addressbook	cs	Zakázat sloupec Poslední/následující událost
 display contact	addressbook	cs	Zobrazit kontakt
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	cs	Zobrazuje připomínku narozenin na úvodní straně (stránka, na kterou se dostanete když se přihlásíte do EGroupware a kliknete na ikonu Hlavní strana).
 distribution list deleted	addressbook	cs	Rozesílací seznam byl smazán
@@ -224,7 +227,6 @@ error: the entry has been updated since you opened it for editing!	addressbook	c
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	cs	Příklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Příklad: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	cs	Příklad {{NELFNV role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
 existing links	addressbook	cs	Stávající odkazy
 exists	addressbook	cs	Stávající
 export as csv	addressbook	cs	Exportovat jako CSV
@@ -303,6 +305,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	cs	Importu
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 income	addressbook	cs	Hospodářský výsledek
 infolog	addressbook	cs	InfoLog
+infolog-organisation	addressbook	cs	Otevření zobrazení organizace v aplikaci Infolog CRM
 insert	addressbook	cs	Vložit
 insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
 insufficent rights to edit this list!	addressbook	cs	Nemáte dostatečná oprávnění k úpravě tohoto seznamu!
@@ -357,6 +360,7 @@ new contact submitted by %1 at %2	addressbook	cs	Nový kontakt odeslal(a) %1 v %
 new window opened to edit infolog for your selection	addressbook	cs	Otevřeno nové okno pro editaci Infologu na základě vašeho výběru
 next date	addressbook	cs	Následující datum
 no categories selected	addressbook	cs	nebyly vybrány žádné kategorie
+no country selected	addressbook	cs	Žádná vybraná země
 no distribution list	addressbook	cs	Neexistuje rozesílací seznam
 no fallback	addressbook	cs	Žádné nouzové řešení
 no vcard	addressbook	cs	Žádná VCard
@@ -380,6 +384,7 @@ parcel	addressbook	cs	Pozemek
 participants	addressbook	cs	Účastníci
 permission denied !!!	addressbook	cs	Přístup zablokován!!!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	cs	Nemáte oprávnění! Požádejte svého správce o povolení aktualizace veřejných klíčů pro standardní uživatele.
+pgp key	addressbook	cs	PGP klíč
 phone number	common	cs	Telefonní číslo
 phone numbers	common	cs	Telefonní čísla
 photo	addressbook	cs	Fotografie
@@ -407,6 +412,7 @@ region	addressbook	cs	Region
 remove from distribution list	addressbook	cs	Odebrat z rozesílacího seznamu
 remove selected contacts from distribution list	addressbook	cs	Odstranit vybrané kontakty z distribučního seznamu
 removed from distribution list	addressbook	cs	odstraněno z distribučního seznamu
+rename list	addressbook	cs	Přejmenovat seznam
 rename selected distribution list	addressbook	cs	Přejmenovat vybraný rozesílací seznam
 repetition	addressbook	cs	Opakování
 replacements for inserting contacts into documents	addressbook	cs	Náhrady pro vkládání kontaktů do dokumentů
@@ -421,6 +427,7 @@ select addressbook type	addressbook	cs	Vybrat typ adresáře
 select all	addressbook	cs	Vybrat vše
 select an action or addressbook to move to	addressbook	cs	Vybrat akci nebo adresář kam se přesunout
 select an action or addressbook to move to...	addressbook	cs	Vybrat akci nebo adresář kam se přesunout...
+select an opened dialog	addressbook	cs	Výběr otevřeného dialogového okna
 select migration type	admin	cs	Vybrat typ migrace
 select multiple contacts for a further action	addressbook	cs	Vybrat více kontaktů pro další akci
 select phone number as prefered way of contact	addressbook	cs	vybrat telefonní číslo jako preferovaný způsob kontaktu
@@ -435,10 +442,13 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	cs	Nastavit jen celé jméno
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	cs	Mají být sloupce fotografie a domovská adresa vždy zobrazeny i když jsou prázdné
 show	addressbook	cs	Zobrazit
+show active accounts	addressbook	cs	Zobrazit aktivní účty
+show all accounts	addressbook	cs	Zobrazit všechny účty
 show infolog entries for this organisation	addressbook	cs	Zobrazit záznamy InfoLogu pro tuto organizaci
 show the contacts of this organisation	addressbook	cs	Zobrazit kontakty této organizace
 similar contacts found:	addressbook	cs	Nalezeny podobné kontakty:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	cs	Velikost překryvného okna (ŠxV, např. 400x300, pokud má být překryvné okno používáno)
+smime key	addressbook	cs	S/MIME Klíč
 special	addressbook	cs	Zvláštní
 stadt	addressbook	cs	Město
 start	admin	cs	Start

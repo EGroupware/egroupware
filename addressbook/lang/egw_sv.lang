@@ -71,7 +71,6 @@ company name	addressbook	sv	Företagsnamn
 configuration	common	sv	Inställningar
 contact	common	sv	Kontakt
 contact application	admin	sv	Kontaktapplikation
-contact copied	addressbook	sv	Kontakten kopierad
 contact deleted	addressbook	sv	Kontakten raderad
 contact id	addressbook	sv	Kontakt ID
 contact repository	admin	sv	Kontaktdatabas
@@ -204,9 +203,12 @@ mobile	addressbook	sv	Mobil
 mobile phone	addressbook	sv	Mobilnummer
 modem phone	addressbook	sv	Modemnummer
 more ...	addressbook	sv	Mer ...
+move to addressbook	addressbook	sv	Flytta till adressboken
 moved	addressbook	sv	Flyttad
 multiple vcard	addressbook	sv	Multipla VCard
 name, address	addressbook	sv	Namn, adress
+no country selected	addressbook	sv	Inget land har valts
+no distribution list	addressbook	sv	Ingen distributionslista
 no vcard	addressbook	sv	Inget VCard
 number	addressbook	sv	Nummer
 number of records to read (%1)	addressbook	sv	Antal poster att läsa (%1)
@@ -231,6 +233,7 @@ postal	common	sv	Post
 pref	addressbook	sv	pref
 preferred phone	addressbook	sv	Förvald telefon
 prefix	addressbook	sv	Prefix
+prevent deleting of contacts	admin	sv	Förhindra radering av kontakter
 public key	addressbook	sv	Publik kryptonyckel
 publish into groups:	addressbook	sv	Publicera i grupperna:
 read a list / search for entries.	addressbook	sv	Titta på lista/sök efter poster
@@ -279,7 +282,6 @@ type	addressbook	sv	Typ
 update a single entry by passing the fields.	addressbook	sv	Updatera enskild post genom att ange fälten
 updated	addressbook	sv	Uppdaterad
 upload or delete the photo	addressbook	sv	Ladda upp eller radera foto
-use an extra category tab?	addressbook	sv	Använd extra kategori kolumn
 use country list	addressbook	sv	Använd nationslista
 use setup for a full account-migration	admin	sv	Använd installationen för en komplett konto migrering
 used for links and for the own sorting of the list	addressbook	sv	Används för länkar och sortering av listan

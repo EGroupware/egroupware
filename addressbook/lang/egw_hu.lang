@@ -77,7 +77,6 @@ company name	addressbook	hu	Cégnév
 configuration	common	hu	Konfiguráció
 contact	common	hu	Kapcsolat
 contact application	admin	hu	Kapcsolat alkalmazás
-contact copied	addressbook	hu	Kapcsolat másolva
 contact deleted	addressbook	hu	Kapcsolat törölve
 contact fields to show	addressbook	hu	A következő Kapcsolat mezők megjelenítése
 contact fields:	addressbook	hu	Kapcsolat mezők:
@@ -235,11 +234,14 @@ mobile	addressbook	hu	Mobiltelefon
 mobile phone	addressbook	hu	Mobiltelefon
 modem phone	addressbook	hu	Modem telefon
 more ...	addressbook	hu	Tovább...
+move to addressbook	addressbook	hu	Címjegyzékbe áthelyezés
 moved	addressbook	hu	átmozgatva
 multiple vcard	addressbook	hu	Több vCard
 name for the distribution list	addressbook	hu	Disztribúciós lista neve
 name, address	addressbook	hu	Név, Cím
 new contact submitted by %1 at %2	addressbook	hu	Új kapcsolat elküldve %1 által ekkor: %2
+no country selected	addressbook	hu	Nincs kiválasztott ország
+no distribution list	addressbook	hu	Nincs elosztási lista
 no vcard	addressbook	hu	Nem VCard
 number	addressbook	hu	Szám
 number of records to read (%1)	addressbook	hu	Bejegyzések száma olvasáshoz (%1)
@@ -263,6 +265,7 @@ postal	common	hu	Postai
 pref	addressbook	hu	előtag
 preferred phone	addressbook	hu	preferált telefon
 prefix	addressbook	hu	Előtag
+prevent deleting of contacts	admin	hu	Kapcsolattartók törlésének megakadályozása
 public key	addressbook	hu	Nyilvános kulcs
 publish into groups:	addressbook	hu	Megjelenítés a Csoportokban:
 read a list / search for entries.	addressbook	hu	Bejegyzések listája/keresése.
@@ -320,7 +323,6 @@ type	addressbook	hu	Típus
 update a single entry by passing the fields.	addressbook	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
 updated	addressbook	hu	frissítve
 upload or delete the photo	addressbook	hu	Fotó feltöltése vagy törlése
-use an extra category tab?	addressbook	hu	Használjunk egy extra kategória fület?
 use country list	addressbook	hu	Ország lista használata
 vcard	common	hu	vCard
 vcards require a first name entry.	addressbook	hu	A vCard igényel egy vezetéknév bejegyzést.

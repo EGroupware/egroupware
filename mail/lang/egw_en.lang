@@ -317,7 +317,7 @@ important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
-initialization of mail failed. please use the wizard to cope with the problem.	mail	en	Initialization of mail failed. Please use the Wizard to cope with the problem.
+initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job

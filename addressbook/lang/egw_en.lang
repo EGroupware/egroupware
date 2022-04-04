@@ -378,6 +378,7 @@ new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at 
 new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog.
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	No categories selected
+no country selected	addressbook	en	No country selected
 no distribution list	addressbook	en	No distribution list
 no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
@@ -545,6 +546,7 @@ warning: all contacts found will be deleted!	addressbook	en	WARNING: All contact
 weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	Address book links displayed in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 when viewing a contact, show linked entries from the selected application	addressbook	en	When viewing a contact, show linked entries from the selected application
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	en	When you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (/home/...)
 where to add the email address	addressbook	en	Where to add the email address
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Select which address format should be used for countries with unknown address format.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	The address book to add contacts, when you have no rights to add to the current address book.
