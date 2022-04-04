@@ -14,7 +14,13 @@ export const buttonStyles = [
 		background-color: var(--gray_10, #e6e6e6);
 		border-radius: 3px;
 	}
-	:host(:hover) {
+	:host([disabled]) {
+		display: flex;
+	}
+	:host([disabled]) ::slotted(img) {
+		filter: grayscale(1) contrast(0.2);
+	}
+	:host(:hover):not([disabled]) {
 		box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
 		background-color: var(--bg_color_15_gray, #d9d9d9);
 	}
@@ -25,7 +31,9 @@ export const buttonStyles = [
 		margin: 2px;
 		height:20px;
 		font-size: 9pt;
-		color: var(--btn-label-color);
 		text-shadow: 0 0;
+	}
+	:not([disabled]) div {
+		color: var(--btn-label-color);
 	}
 `];

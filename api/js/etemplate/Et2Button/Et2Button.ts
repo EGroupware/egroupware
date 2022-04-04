@@ -62,9 +62,6 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
                	max-width: 125px;
                	min-width: fit-content;
             }
-            :host([readonly]) {
-            	display: none;
-            }
             /* Set size for icon */
             ::slotted(img.imageOnly) {
     			padding-right: 0px !important;
@@ -94,10 +91,21 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			image: {type: String},
 
 			/**
+			 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
+			 * (default)
+			 */
+			hideOnReadonly: {type: Boolean},
+
+			/**
 			 * Button should submit the etemplate
 			 * Return false from the click handler to cancel the submit, or set doSubmit to false to skip submitting.
 			 */
-			doSubmit: {type: Boolean, reflect: false}
+			doSubmit: {type: Boolean, reflect: false},
+
+			/**
+			 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
+			 */
+			noValidation: {type: Boolean}
 		}
 	}
 
@@ -119,6 +127,8 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		// Property default values
 		this.__image = '';
 		this.doSubmit = true;
+		this.hideOnReadonly = false;
+		this.noValidation = false;
 
 		// Do not add icon here, no children can be added in constructor
 
@@ -177,7 +187,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		// Submit the form
 		if(this.doSubmit)
 		{
-			return this.getInstanceManager().submit();
+			return this.getInstanceManager().submit(this, undefined, this.noValidation);
 		}
 		this.clicked = false;
 		this.getInstanceManager()?.skip_close_prompt(false);
@@ -191,6 +201,19 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	requestUpdate(name : PropertyKey, oldValue)
 	{
 		super.requestUpdate(name, oldValue);
+
+		// "disabled" is the attribute from the spec
+		if(name == 'readonly')
+		{
+			if(this.readonly)
+			{
+				this.setAttribute('disabled', "");
+			}
+			else
+			{
+				this.removeAttribute("disabled");
+			}
+		}
 
 		// Default image & class are determined based on ID
 		if(name == "id" && this._widget_id)
@@ -214,7 +237,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 	render()
 	{
-		if(this.readonly)
+		if(this.readonly && this.hideOnReadonly)
 		{
 			return '';
 		}
