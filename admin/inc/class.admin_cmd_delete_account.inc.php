@@ -194,13 +194,15 @@ class admin_cmd_delete_account extends admin_cmd
 	 */
 	protected function delete_account($is_user, $account_id, $account_lid=null, $new_user=null)
 	{
+		set_time_limit(0);
+
 		// delete the account
 		$GLOBALS['hook_values'] = array(
-			'account_id'  => $account_id,
-			'account_lid' => $account_lid,
-			'account_name'=> $account_lid,		// depericated name for deletegroup hook
-			'new_owner'   => (int)$new_user,	// deleteaccount only
-			'location'    => $is_user ? 'deleteaccount' : 'deletegroup',
+			'account_id'   => $account_id,
+			'account_lid'  => $account_lid,
+			'account_name' => $account_lid,        // depericated name for deletegroup hook
+			'new_owner'    => (int)$new_user,    // deleteaccount only
+			'location'     => $is_user ? 'deleteaccount' : 'deletegroup',
 		);
 		// First do apps that were not selected
 		$skip_apps = array();
