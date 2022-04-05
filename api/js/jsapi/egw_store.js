@@ -76,7 +76,7 @@ egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd)
 		 * @returns {@exp;window@pro;sessionStorage@call;removeItem}
 		 */
 		removeSessionItem: function(application, key) {
-			key = uniqueKey(application, key);
+			key = mapKey(application, key);
 			return _wnd.sessionStorage.removeItem(key);
 		},
 
