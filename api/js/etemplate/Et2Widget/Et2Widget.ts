@@ -132,6 +132,13 @@ const Et2WidgetMixin = (superClass) =>
 				},
 
 				/**
+				 * Accesskey provides a hint for generating a keyboard shortcut for the current element.
+				 * The attribute value must consist of a single printable character.
+				 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
+				 */
+				accesskey: {type: String, reflect: true},
+
+				/**
 				 * Widget ID of another node to insert this node into instead of the normal location
 				 * This isn't a normal property...
 				 */
