@@ -149,8 +149,8 @@ function send_template()
 			return $tag.'></et2-number>';
 		}, $str);
 
-		// fix <buttononly.../> --> <button type="buttononly".../>
-		$str = preg_replace('#<buttononly\s(.*?)/>#u', '<button type="buttononly" $1/>', $str);
+		// fix <buttononly.../> --> <button doSubmit="false".../>
+		$str = preg_replace('#<buttononly\s(.*?)/>#u', '<button doSubmit="false" $1/>', $str);
 
 		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches)
 		{
