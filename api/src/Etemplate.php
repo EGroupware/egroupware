@@ -270,6 +270,10 @@ class Etemplate extends Etemplate\Widget\Template
 			}
 			if ($output_mode != 1)
 			{
+				// Turn compression off so Ajax::headers() does not send a compression header
+				// echo (used below) is not compatible with browser expecting compressed content
+				ini_set('zlib.output_compression', 0);
+
 				echo $GLOBALS['egw']->framework->header();
 				if ($output_mode != 2 && !$GLOBALS['egw_info']['flags']['nonavbar'])
 				{
