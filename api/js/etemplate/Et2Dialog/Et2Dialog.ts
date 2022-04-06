@@ -186,8 +186,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			...super.properties,
 			callback: Function,
 
-			// There's an issue with Et2DialogContent.style being undefined, so this has to stay false until it gets
-			// figured out
+			/**
+			 * Allow other controls to be accessed while the dialog is visible
+			 */
 			modal: Boolean,
 
 			/**
@@ -298,8 +299,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			this._setApiInstance(parent_egw);
 		}
-		// Needs to not be modal until the style thing is figured out
-		this.modal = false;
+		this.modal = true;
 		this.dialog_type = Et2Dialog.PLAIN_MESSAGE;
 		this.destroy_on_close = true;
 		this.__value = {};
@@ -746,13 +746,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			buttons: typeof _buttons != 'undefined' ? _buttons : Et2Dialog.BUTTONS_YES_NO,
 			dialog_type: typeof _type != 'undefined' ? _type : Et2Dialog.QUESTION_MESSAGE,
 			icon: _icon,
-			value: _value,
-			width: 'auto',
-			/*
-			 TODO: There's something going on with our Et2Widgets that they don't get a proper .style property
-			 This lack of .style causes problems when we go modal.  Non-modal works.
-			 */
-			modal: false
+			value: _value
 		});
 
 		document.body.appendChild(<LitElement><unknown>dialog);
