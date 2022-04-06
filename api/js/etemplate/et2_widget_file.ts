@@ -198,7 +198,6 @@ export class et2_file extends et2_inputWidget
 					jQuery(span).removeClass('et2_file_spanActive');
 				}
 			});
-		if (this.options.accept) this.input.attr('accept', this.options.accept);
 		let self = this;
 		// trigger native input upload file
 		if (!this.options.readonly) this.span.click(function(){self.input.click()});
@@ -216,6 +215,8 @@ export class et2_file extends et2_inputWidget
 		{
 			// This may be a problem submitting via ajax
 		}
+		if (this.options.accept) this.input.attr('accept', this.options.accept);
+
 		if(this.options.progress)
 		{
 			let widget = this.getRoot().getWidgetById(this.options.progress);

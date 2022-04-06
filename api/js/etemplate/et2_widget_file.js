@@ -114,8 +114,6 @@ var et2_file = /** @class */ (function (_super) {
                 jQuery(span).removeClass('et2_file_spanActive');
             }
         });
-        if (this.options.accept)
-            this.input.attr('accept', this.options.accept);
         var self = this;
         // trigger native input upload file
         if (!this.options.readonly)
@@ -132,6 +130,8 @@ var et2_file = /** @class */ (function (_super) {
         else {
             // This may be a problem submitting via ajax
         }
+        if (this.options.accept)
+            this.input.attr('accept', this.options.accept);
         if (this.options.progress) {
             var widget = this.getRoot().getWidgetById(this.options.progress);
             if (widget) {
