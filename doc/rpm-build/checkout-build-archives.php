@@ -360,8 +360,8 @@ function do_tag()
 	// might require more then one run, as pushed tags need to be picked up by packagist
 	$output = $ret = null;
 	$timeout = 30;
-    $try = 0;
-	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev egroupware/\*';
+	$try = 0;
+	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev --prefer-source egroupware/\*';
 	while(run_cmd($cmd, $output, 2))
 	{
         ++$try;
