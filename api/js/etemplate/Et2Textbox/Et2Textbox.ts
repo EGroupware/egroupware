@@ -20,7 +20,7 @@ export class Et2Textbox extends Et2InputWidget(LionInput)
 	static get styles()
 	{
 		return [
-			super.styles,
+			...super.styles,
 			css`
 			:host([type="hidden"]) {
 				display: none;
