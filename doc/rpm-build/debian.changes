@@ -1,3 +1,28 @@
+egroupware-docker (21.1.20220406) hardy; urgency=low
+
+  * smallPART: annotate PDF files in realtime with multiple people like it was already possible for videos
+  * smallPART: new graphical question types for tests: mark-choice and mill-out
+  * smallPART: use an office document (opened via Collabora) to make notes about the video or PDF
+  * smallPART: test now blocks clicks outside test-area until test is finished or paused (if allowed)
+  * smallPART: experimental cognitive load measurement allow to use smallPART for research projects
+  * Api: splitter widget did not restore size from preference
+  * Addressbook: allow keeping custom fileAs value (LDAP: displayname) by adding it as first option
+  * Filemanager/WebDAV: add (missing) trailing slash in mount URL for WebDAV, as NextCloud requires it
+  * Filemanager/WebDAV: fix errors mounting and reading files via WebDAV from other EGroupware or *Cloud
+  * Filemanager/WebDAV: fix PHP error if mounted WebDAV server got eg. a wrong password (did not return a 207 on PROPFIND)
+  * InfoLog: set replyTo for async notification to owner of InfoLog, otherwise the user causing the change
+  * Calendar: New preference so default alarm can be for current user or all participants
+  * Calendar/CalDAV: ignore Outlook CalDAV Synchronizer setting participant status back to unknown/needs-action (other status will be updated)
+  * Notifications: Admins now configure the mail account to use for email notifications instead of the user account
+  * Admin: fix delete user account always displayed 0 entries
+  * InfoLog: fix saving an InfoLog twice gave error that entry was modified, if user timezone was different from server
+  * Collabora: do NOT show menubars for readonyl files
+  * EPL/Projectmanager/Calendar: Add calendar integration so projects can be shown as events in calendar
+  * EPL/CTI: new user-specific preference when to show CRM view: for incoming or outgoing calls, both directions or never
+  * EPL/Placetel: fix not working voice mail playback
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 06 Apr 2022 07:52:45 +0200
+
 egroupware-docker (21.1.20220207) hardy; urgency=low
 
   * Calendar: fix not working placeholders $$date$$ & $$fullname$$
