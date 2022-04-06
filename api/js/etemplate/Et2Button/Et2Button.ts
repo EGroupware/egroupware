@@ -10,9 +10,9 @@
 
 
 import {css, html, SlotMixin} from "@lion/core";
+import {buttonStyles} from "./ButtonStyles";
 import {LionButton} from "@lion/button";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {buttonStyles} from "./ButtonStyles";
 
 export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 {
@@ -98,9 +98,9 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 			/**
 			 * Button should submit the etemplate
-			 * Return false from the click handler to cancel the submit, or set doSubmit to false to skip submitting.
+			 * Return false from the click handler to cancel the submit, or set noSubmit to true to skip submitting.
 			 */
-			doSubmit: {type: Boolean, reflect: false},
+			noSubmit: {type: Boolean, reflect: false},
 
 			/**
 			 * When submitting, skip the validation step.  Allows to submit etemplates directly to the server.
@@ -126,7 +126,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 		// Property default values
 		this.__image = '';
-		this.doSubmit = true;
+		this.noSubmit = false;
 		this.hideOnReadonly = false;
 		this.noValidation = false;
 
@@ -185,7 +185,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 
 		// Submit the form
-		if(this.doSubmit)
+		if(!this.noSubmit)
 		{
 			return this.getInstanceManager().submit(this, undefined, this.noValidation);
 		}
