@@ -35,7 +35,11 @@ docker pull ubuntu:20.04
 docker build --no-cache --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" -t egroupware/egroupware:$TAG . && {
 	docker push egroupware/egroupware:$TAG
 	# further tags are only for the default PHP version
-	[ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && exit
+	[ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && {
+		docker tag egroupware/egroupware:$TAG egroupware/egroupware:$BRANCH-$PHP_VERSION
+		docker push egroupware/egroupware:$BRANCH-$PHP_VERSION
+	  exit
+	}
 	# tag only stable releases as latest
 	[ $TAG != "master" ] && {
 		docker tag egroupware/egroupware:$TAG egroupware/egroupware:latest
