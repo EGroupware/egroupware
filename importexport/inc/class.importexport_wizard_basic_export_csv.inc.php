@@ -220,7 +220,11 @@ class importexport_wizard_basic_export_csv
 
                         // Add in extra allowed charsets
                         $config = Api\Config::read('importexport');
-                        $extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
+						if (!is_array($config['import_charsets']))
+						{
+							$config['import_charsets'] = explode(',',$config['import_charsets']);
+						}
+                        $extra_charsets = array_intersect($config['import_charsets'], mb_list_encodings());
                         if($extra_charsets)
                         {
                                 $sel_options['charset'] += array(lang('Extra encodings') => array_combine($extra_charsets,$extra_charsets));
