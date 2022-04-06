@@ -184,16 +184,6 @@ const Et2WidgetMixin = (superClass) =>
 				align: {
 					type: String,
 					reflect: true
-				},
-
-				/**
-				 * Allow styles to be set on widgets.
-				 * Any valid CSS will work.  Mostly for testing, maybe we won't use this?
-				 * That kind of style should normally go in the app.css
-				 */
-				style: {
-					type: String,
-					reflect: true
 				}
 			};
 		}
