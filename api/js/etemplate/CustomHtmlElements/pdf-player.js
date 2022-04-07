@@ -20,75 +20,74 @@ import(egw.webserverUrl+"/node_modules/@bundled-es-modules/pdfjs-dist/build/pdf.
 	methodes are mostley identical as video html. No controls attribute supported yet.
 	*/
 	class pdf_player extends HTMLElement {
-		/**
-		 * shadow dom container
-		 * @private
-		 */
-		_shadow = null;
-		/**
-		 * wrapper container holds canvas
-		 * @private
-		 */
-
-		/**
-		 * keeps duration time internally
-		 * @private
-		 */
-		_duration = 0;
-		/**
-		 * keeps currentTime internally
-		 * @private
-		 */
-
-		_currentTime = 0;
-		/**
-		 * Keeps playing state internally
-		 * @private
-		 */
-
-		__playing = false;
-		/**
-		 * keeps playing interval id
-		 * @private
-		 */
-
-		__playingInterval = 0;
-		/**
-		 * keeps play back rate
-		 * @private
-		 */
-
-		_playBackRate = 1000;
-		/**
-		 * keeps ended state of playing pdf
-		 * @private
-		 */
-
-		_ended = false;
-		/**
-		 * keep paused state
-		 * @private
-		 */
-
-		_paused = false;
-		/**
-		 * keeps pdf doc states
-		 * @private
-		 */
-
-		__pdfViewState = {
-			pdf: null,
-			currentPage: 1,
-			zoom: 1
-		};
 
 		constructor() {
 			super(); // Create a shadow root
 
+			/**
+			 * keeps duration time internally
+			 * @private
+			 */
+			_duration = 0;
+			/**
+			 * keeps currentTime internally
+			 * @private
+			 */
+
+			_currentTime = 0;
+			/**
+			 * Keeps playing state internally
+			 * @private
+			 */
+
+			__playing = false;
+			/**
+			 * keeps playing interval id
+			 * @private
+			 */
+
+			__playingInterval = 0;
+			/**
+			 * keeps play back rate
+			 * @private
+			 */
+
+			_playBackRate = 1000;
+			/**
+			 * keeps ended state of playing pdf
+			 * @private
+			 */
+
+			_ended = false;
+			/**
+			 * keep paused state
+			 * @private
+			 */
+
+			_paused = false;
+			/**
+			 * keeps pdf doc states
+			 * @private
+			 */
+
+			__pdfViewState = {
+				pdf: null,
+				currentPage: 1,
+				zoom: 1
+			};
+
+			/**
+			 * shadow dom container
+			 * @private
+			 */
 			this._shadow = this.attachShadow({
 				mode: 'open'
 			}); // Create wrapper
 
+			/**
+			 * wrapper container holds canvas
+			 * @private
+			 */
 			this._wrapper = document.createElement('div');
 
 			this._wrapper.setAttribute('class', 'wrapper'); // Create some CSS to apply to the shadow dom

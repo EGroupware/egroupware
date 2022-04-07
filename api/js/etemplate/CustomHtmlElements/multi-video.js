@@ -17,47 +17,46 @@
  */
 // Create a class for the element
 class multi_video extends HTMLElement {
-	/**
-	 * shadow dom container
-	 * @private
-	 */
-	_shadow = null;
-	/**
-	 * wrapper container holds video tags
-	 * @private
-	 */
-
-	/**
-	 * contains video objects of type VideoTagsArray
-	 * @private
-	 */
-	_videos = [];
-	/**
-	 * keeps duration time internally
-	 * @private
-	 */
-
-	_duration = 0;
-	/**
-	 * keeps currentTime internally
-	 * @private
-	 */
-
-	_currentTime = 0;
-	/**
-	 * Keeps video playing state internally
-	 * @private
-	 */
-
-	__playing = false;
 
 	constructor() {
 		super(); // Create a shadow root
+		
+		/**
+		 * contains video objects of type VideoTagsArray
+		 * @private
+		 */
+		_videos = [];
+		/**
+		 * keeps duration time internally
+		 * @private
+		 */
 
+		_duration = 0;
+		/**
+		 * keeps currentTime internally
+		 * @private
+		 */
+
+		_currentTime = 0;
+		/**
+		 * Keeps video playing state internally
+		 * @private
+		 */
+
+		__playing = false;
+
+		/**
+		 * shadow dom container
+		 * @private
+		 */
 		this._shadow = this.attachShadow({
 			mode: 'open'
 		}); // Create videos wrapper
 
+		/**
+		 * wrapper container holds video tags
+		 * @private
+		 */
 		this._wrapper = document.createElement('div');
 
 		this._wrapper.setAttribute('class', 'wrapper'); // Create some CSS to apply to the shadow dom
