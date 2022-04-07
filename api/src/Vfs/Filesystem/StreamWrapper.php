@@ -45,6 +45,9 @@ use EGroupware\Api\Vfs;
  */
 class StreamWrapper implements Vfs\StreamWrapperIface
 {
+
+	use Vfs\UserContextTrait;
+
 	/**
 	 * Scheme / protocol used for this stream-wrapper
 	 */
@@ -52,7 +55,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	/**
 	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
 	 */
-	const DIR_MIME_TYPE = Vfs::DIR_MIME_TYPE ;
+	const DIR_MIME_TYPE = Vfs::DIR_MIME_TYPE;
 
 	/**
 	 * mode-bits, which have to be set for files
@@ -572,6 +575,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 */
 	function url_stat ( $url, $flags )
 	{
+		$this->check_set_context($url);
 		$parts = Vfs::parse_url($url);
 		$path = Vfs::decodePath($parts['path']);
 
