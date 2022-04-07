@@ -346,7 +346,7 @@ class Base
 				}
 				if (isset($parts['query']))
 				{
-					$url .= '?' . $parts['query'];
+					$url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . $parts['query'];
 				}
 				if (isset($parts['fragment']))
 				{
