@@ -149,8 +149,31 @@ function send_template()
 			return $tag.'></et2-number>';
 		}, $str);
 
-		// fix <buttononly.../> --> <button doSubmit="false".../>
-		$str = preg_replace('#<buttononly\s(.*?)/>#u', '<button doSubmit="false" $1/>', $str);
+		// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
+		$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function($matches)
+		{
+			$tag = 'et2-button';
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[2], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+			// replace buttononly tag with noSubmit="true" attribute
+			if (!empty($matches[1])) $attrs['noSubmit'] = 'true';
+			// replace not set background_image attribute with new et2-button-image tag
+			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false'))
+			{
+				$tag = 'et2-button-image';
+			}
+			// novalidation --> noValidation
+			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))
+			{
+				unset($attrs['novalidation']);
+				$attrs['noValidation'] = 'true';
+			}
+			unset($attrs['background_image']);
+			return "<$tag ".implode(' ', array_map(function($name, $value)
+				{
+					return $name.'="'.$value.'"';
+				}, array_keys($attrs), $attrs)).'></'.$tag.'>';
+		}, $str);
 
 		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches)
 		{
