@@ -156,11 +156,6 @@ span#admin-mailaccount_acc_id {
   width: 16px;
   vertical-align: top;
 }
-#admin-mailaccount_button\[placeholders\] {
-  height: 16px;
-  padding-left: 5px;
-  vertical-align: middle;
-}
 #admin-mailaccount_mailLocalAddress {
   width: 98%;
 }
@@ -170,7 +165,6 @@ select#admin-mailaccount_ident_id {
 /**
  * new et2 site configuration
  */
-#admin-index_ajax_target > form[id$="-config"] tr.th > td,
 #admin-site-config > div > span.subHeader {
   border-bottom: 3px solid #696969;
   padding-left: 3px;
@@ -214,7 +208,7 @@ Admin command
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: rgba(102, 153, 204, 0.7);
-    color: #1e1e1e;
+    color: #1E1E1E;
   }
   /* #############################################################################
 	// iframe

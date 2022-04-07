@@ -22,12 +22,27 @@ export class Et2ButtonImage extends Et2Button
 			/* Important needed to override boxes trying to stretch children */
 			flex: 0 0 !important;
 		}
-		::slotted[slot="label"] {
-			display: none;
-		}
 		`
-
 	];
+
+	/**
+	 * Handle changes that have to happen based on changes to properties
+	 *
+	 */
+	requestUpdate(name : PropertyKey, oldValue)
+	{
+		super.requestUpdate(name, oldValue);
+
+		// image only don't have labels, but we'll set hover instead
+		if(name == 'label')
+		{
+			if(!this.statustext)
+			{
+				this.statustext = this.label;
+			}
+			this.__label = "";
+		}
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2Button is a LitElement

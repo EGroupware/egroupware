@@ -161,6 +161,11 @@ function send_template()
 			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false'))
 			{
 				$tag = 'et2-button-image';
+				if($attrs['label'])
+				{
+					$attrs['statustext'] = $attrs['label'];
+					unset($attrs['label']);
+				}
 			}
 			// novalidation --> noValidation
 			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))
