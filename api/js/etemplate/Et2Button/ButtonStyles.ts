@@ -13,12 +13,17 @@ export const buttonStyles = [
 		color: var(--gray_70, #505050);
 		background-color: var(--gray_10, #e6e6e6);
 		border-radius: 3px;
+		cursor: pointer;
 	}
 	:host([disabled]) {
-		display: flex;
+		display: inline-flex;
+		opacity: .5;
+		box-shadow: none!important;
+		cursor: default!important;
 	}
 	:host([disabled]) ::slotted(img) {
-		filter: grayscale(1) contrast(0.2);
+		filter: grayscale(1);
+		opacity: .5;
 	}
 	:host(:hover):not([disabled]) {
 		box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
