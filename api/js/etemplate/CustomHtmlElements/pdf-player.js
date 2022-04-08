@@ -28,49 +28,49 @@ import(egw.webserverUrl+"/node_modules/@bundled-es-modules/pdfjs-dist/build/pdf.
 			 * keeps duration time internally
 			 * @private
 			 */
-			_duration = 0;
+			this._duration = 0;
 			/**
 			 * keeps currentTime internally
 			 * @private
 			 */
 
-			_currentTime = 0;
+			this._currentTime = 0;
 			/**
 			 * Keeps playing state internally
 			 * @private
 			 */
 
-			__playing = false;
+			this.__playing = false;
 			/**
 			 * keeps playing interval id
 			 * @private
 			 */
 
-			__playingInterval = 0;
+			this.__playingInterval = 0;
 			/**
 			 * keeps play back rate
 			 * @private
 			 */
 
-			_playBackRate = 1000;
+			this._playBackRate = 1000;
 			/**
 			 * keeps ended state of playing pdf
 			 * @private
 			 */
 
-			_ended = false;
+			this._ended = false;
 			/**
 			 * keep paused state
 			 * @private
 			 */
 
-			_paused = false;
+			this._paused = false;
 			/**
 			 * keeps pdf doc states
 			 * @private
 			 */
 
-			__pdfViewState = {
+			this.__pdfViewState = {
 				pdf: null,
 				currentPage: 1,
 				zoom: 1

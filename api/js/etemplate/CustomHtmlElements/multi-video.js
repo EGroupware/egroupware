@@ -20,30 +20,30 @@ class multi_video extends HTMLElement {
 
 	constructor() {
 		super(); // Create a shadow root
-		
+
 		/**
 		 * contains video objects of type VideoTagsArray
 		 * @private
 		 */
-		_videos = [];
+		this._videos = [];
 		/**
 		 * keeps duration time internally
 		 * @private
 		 */
 
-		_duration = 0;
+		this._duration = 0;
 		/**
 		 * keeps currentTime internally
 		 * @private
 		 */
 
-		_currentTime = 0;
+		this._currentTime = 0;
 		/**
 		 * Keeps video playing state internally
 		 * @private
 		 */
 
-		__playing = false;
+		this.__playing = false;
 
 		/**
 		 * shadow dom container
