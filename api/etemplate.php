@@ -160,12 +160,7 @@ function send_template()
 			// replace not set background_image attribute with new et2-button-image tag
 			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false'))
 			{
-				$tag = 'et2-button-image';
-				if($attrs['label'])
-				{
-					$attrs['statustext'] = $attrs['label'];
-					unset($attrs['label']);
-				}
+				$tag = 'et2-image';
 			}
 			// novalidation --> noValidation
 			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))

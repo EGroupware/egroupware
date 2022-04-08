@@ -141,20 +141,29 @@ span#admin-mailaccount_acc_id {
   float: right;
 }
 #admin-mailaccount_acc_smtp_account_id {
-  padding-left: 5px;
+    padding-left: 5px;
 }
+
 #admin-mailaccount_button\[multiple\] {
-  height: auto;
-  padding-left: 5px;
-  margin:2px;
-  width: 16px;
-  vertical-align: top;
+    height: auto;
+    padding-left: 5px;
+    margin: 2px;
+    width: 16px;
+    vertical-align: top;
 }
+
+#admin-mailaccount_button\[placeholders\] {
+    height: 16px;
+    padding-left: 5px;
+    align-self: center;
+}
+
 #admin-mailaccount_mailLocalAddress {
-  width: 98%;
+    width: 98%;
 }
+
 select#admin-mailaccount_ident_id {
-  width: 95%;
+    width: 95%;
 }
 
 /**
