@@ -626,7 +626,7 @@ class Base
 		if(!isset($ret))
 		{
 			$matches = null;
-			$ret = preg_match('/\?(.*&)?ro=([^&]+)/', $url, $matches) && $matches[2];
+			$ret = preg_match('/[?&]ro=([^&]+)/', $url, $matches) && $matches[1];
 		}
 		return $ret;
 	}

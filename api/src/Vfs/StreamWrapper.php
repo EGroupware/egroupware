@@ -197,7 +197,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$this->check_set_context($url);
 
 		if (!($this->opened_stream = $this->context ?
-			fopen($url, $mode, false, $this->context) : fopen($url, $mode, false)))
+			fopen(self::sanitizeUrl($url), $mode, false, $this->context) : fopen(self::sanitizeUrl($url), $mode, false)))
 		{
 			return false;
 		}
@@ -380,24 +380,24 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		switch($option)
 		{
 			case STREAM_META_TOUCH:
-				return touch($url, $value[0]);	// atime is not supported
+				return touch(self::sanitizeUrl($url), $value[0]);	// atime is not supported
 
 			case STREAM_META_ACCESS:
-				return chmod($url, $value);
+				return chmod(self::sanitizeUrl($url), $value);
 
 			case STREAM_META_OWNER_NAME:
 				if (($value = $GLOBALS['egw']->accounts->name2id($value, 'account_lid', 'u')) === false)
 					return false;
 				// fall through
 			case STREAM_META_OWNER:
-				return chown($url, $value);
+				return chown(self::sanitizeUrl($url), $value);
 
 			case STREAM_META_GROUP_NAME:
 				if (($value = $GLOBALS['egw']->accounts->name2id($value, 'account_lid', 'g')) === false)
 					return false;
 				// fall through
 			case STREAM_META_GROUP:
-				return chgrp($url, $value);
+				return chgrp(self::sanitizeUrl($url), $value);
 		}
 		return false;
 	}
@@ -426,7 +426,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
-		$ok = unlink($url, $this->context);
+		$ok = unlink(self::sanitizeUrl($url), $this->context);
 
 		// call "vfs_unlink" hook only after successful unlink, with data from (not longer possible) stat call
 		if ($ok && !class_exists('setup_process', false))
@@ -477,9 +477,9 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		if (Vfs::parse_url($url_from,PHP_URL_SCHEME) == Vfs::parse_url($url_to,PHP_URL_SCHEME))
 		{
 			self::symlinkCache_remove($path_from);
-			$ret = rename($url_from, $url_to, $this->context);
+			$ret = rename(self::sanitizeUrl($url_from), self::sanitizeUrl($url_to), $this->context);
 		}
-		elseif (($from = fopen($url_from,'r', false, $this->context)) && ($to = fopen($url_to,'w')))
+		elseif (($from = fopen(self::sanitizeUrl($url_from),'r', false, $this->context)) && ($to = fopen(self::sanitizeUrl($url_to),'w')))
 		{
 			$ret = stream_copy_to_stream($from,$to) !== false;
 			fclose($from);
@@ -553,7 +553,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			$options &= ~STREAM_MKDIR_RECURSIVE;
 		}
 
-		$ret = mkdir($url, $mode, $options, $this->context);
+		$ret = mkdir(self::sanitizeUrl($url), $mode, $options, $this->context);
 
 		// call "vfs_mkdir" hook
 		if ($ret && !class_exists('setup_process', false))
@@ -601,7 +601,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 			$this->check_set_context($url);
 		}
 		self::symlinkCache_remove($path);
-		$ok = rmdir($url, $this->context);
+		$ok = rmdir(self::sanitizeUrl($url), $this->context);
 		clearstatcache();	// otherwise next stat call still returns it
 
 		// call "vfs_rmdir" hook, only after successful rmdir
@@ -638,7 +638,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$this->check_set_context($this->opened_dir_url);
 
 		if (!($this->opened_dir = $this->context ?
-			opendir($this->opened_dir_url, $this->context) : opendir($this->opened_dir_url)))
+			opendir(self::sanitizeUrl($this->opened_dir_url), $this->context) : opendir(self::sanitizeUrl($this->opened_dir_url))))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) opendir($this->opened_dir_url) failed!");
 			return false;
@@ -719,11 +719,11 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		try {
 			if ($flags & STREAM_URL_STAT_LINK)
 			{
-				$stat = @lstat($url);	// suppressed the stat failed warnings
+				$stat = @lstat(self::sanitizeUrl($url));	// suppressed the stat failed warnings
 			}
 			else
 			{
-				$stat = @stat($url);	// suppressed the stat failed warnings
+				$stat = @stat(self::sanitizeUrl($url));	// suppressed the stat failed warnings
 
 				if ($stat && ($stat['mode'] & self::MODE_LINK) === self::MODE_LINK)
 				{
@@ -967,6 +967,26 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$this->opened_dir = $this->extra_dirs = null;
 
 		return $ret;
+	}
+
+	/**
+	 * Remove parts of an url which should not be sent to PHP / another stream-wrapper like currently only our ro=1 parameter
+	 *
+	 * SMB stream-wrapper eg. quits with an invalid context, when getting ?ro=1
+	 *
+	 * We must keep the ro=1 parameter when talking to another vfs:// stream-wrapper, as we might have a writable share of a readonly share!
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	protected static function sanitizeUrl($url)
+	{
+		if (substr($url, 0, 6) !== 'vfs://' && preg_match('/([&?])ro=([^&]*)/', $url, $matches))
+		{
+			$url = $matches[1] === '?' ? preg_replace('/\?ro=([^&]*)&?/', '?', $url) :
+				preg_replace('/&ro=([^&]*)/', '', $url);
+		}
+		return $url;
 	}
 
 	/**
