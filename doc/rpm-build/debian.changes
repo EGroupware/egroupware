@@ -1,3 +1,10 @@
+egroupware-docker (21.1.20220408) hardy; urgency=low
+
+  * All: fix regression causing older browsers (Firefox < 69 and Safari < 14.1) to display EGroupware
+  * Filemanager/SMB: fix not working sharing of SMB shares (with fixed credentials!)
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 08 Apr 2022 11:58:09 +0200
+
 egroupware-docker (21.1.20220406) hardy; urgency=low
 
   * smallPART: annotate PDF files in realtime with multiple people like it was already possible for videos
