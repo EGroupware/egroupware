@@ -122,6 +122,11 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 
+	get src()
+	{
+		return this.__src;
+	}
+
 	_handleClick(_ev : MouseEvent) : boolean
 	{
 		if(this.href)
