@@ -150,18 +150,20 @@ function send_template()
 		}, $str);
 
 		// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
-		$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function($matches)
+		$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function($matches) use ($name)
 		{
 			$tag = 'et2-button';
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[2], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 			// replace buttononly tag with noSubmit="true" attribute
 			if (!empty($matches[1])) $attrs['noSubmit'] = 'true';
-			// replace not set background_image attribute with new et2-button-image tag
-			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false'))
+			// replace not set background_image attribute with et2-image tag, if not in NM / lists
+			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
+				!preg_match('/^(index|list)/', $name))
 			{
 				$tag = 'et2-image';
 				$attrs['src'] = $attrs['image'];
+				unset($attrs['image']);
 			}
 			// novalidation --> noValidation
 			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))
