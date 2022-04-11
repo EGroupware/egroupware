@@ -274,6 +274,10 @@ export class et2_nextmatch_rowProvider
 		// Use the clone, not the original
 		let widget = entry.nodeFuncs[0](row);
 
+		// Need to set the parent to the nm or egw() (and probably others) will not be as expected, using window instead
+		// of app.  arrayMgrs are fine without this though
+		widget._parent = this._context;
+
 		// Deal with the deferred properties like booleans with string values - we can't reflect them, and we don't want to lose them
 		// No need to transform here, that happens later
 		Object.assign(data, entry.widget.deferredProperties);
