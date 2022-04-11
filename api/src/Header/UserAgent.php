@@ -32,11 +32,11 @@ class UserAgent
 	/**
 	 * Version of user-agent as specified by browser
 	 *
-	 * @return string
+	 * @return integer
 	 */
 	public static function version()
 	{
-		return self::$ua_version;
+		return (int)self::$ua_version;
 	}
 
 	/**
