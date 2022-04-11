@@ -34,6 +34,17 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	static get properties()
 	{
 		return {
+			...super.properties,
+
+			/**
+			 * The label of the image
+			 * Actually not used as label, but we put it as title
+			 * Added here as there's no Lion parent
+			 */
+			label: {
+				type: String,
+				translate: true
+			},
 
 			/**
 			 * Image
@@ -77,8 +88,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		super();
 		this.src = "";
-		this.default_src = egw?.image("help");
+		this.default_src = "";
 		this.href = "";
+		this.label = "";
 		this.extra_link_target = "_self";
 		this.extra_link_popup = "";
 		this.expose_view = false;
@@ -94,37 +106,26 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
-                 src="${this.src || this.default_src}"
+                 src="${this.parse_href(this.src) || this.parse_href(this.default_src)}"
                  alt="${this.label}"
                  title="${this.statustext || this.label}"
             >`;
 	}
 
-	/**
-	 * Set image src
-	 *
-	 * @param {string} _value image, app/image or url
-	 */
-	set src(_value : string)
-	{
-		this.__src = _value;
 
+	protected parse_href(img_href : string) : string
+	{
 		// allow url's too
-		if(_value[0] == '/' || _value.substr(0, 4) == 'http' || _value.substr(0, 5) == 'data:')
+		if(img_href[0] == '/' || img_href.substr(0, 4) == 'http' || img_href.substr(0, 5) == 'data:')
 		{
-			this.setAttribute('src', _value);
-			return;
+			return img_href;
 		}
-		let src = this.egw().image(_value);
+		let src = this.egw()?.image(img_href);
 		if(src)
 		{
-			this.setAttribute('src', src);
+			return src;
 		}
-	}
-
-	get src()
-	{
-		return this.__src;
+		return "";
 	}
 
 	_handleClick(_ev : MouseEvent) : boolean
@@ -163,25 +164,17 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 */
 	getDetachedAttributes(_attrs)
 	{
-		_attrs.push('data');
+		_attrs.push("src", "label", "href");
 	}
 
 	getDetachedNodes()
 	{
-		return [this.getDOMNode()];
+		return [<HTMLElement><unknown>this];
 	}
 
 	setDetachedAttributes(_nodes, _values)
 	{
-		if(_values.data)
-		{
-			var pairs = _values.data.split(/,/g);
-			for(var i = 0; i < pairs.length; ++i)
-			{
-				var name_value = pairs[i].split(':');
-				jQuery(_nodes[0]).attr('data-' + name_value[0], name_value[1]);
-			}
-		}
+		// Do nothing, setting attribute / property just sets it
 	}
 }
 
