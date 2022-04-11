@@ -100,7 +100,7 @@
 					</vbox>
 				</row>
 				<row class="$row_cont[class] $row_cont[cat_id]" valign="top">
-					<image align="center" label="$row_cont[type_label]" src="${row}[type]" no_lang="1"/>
+					<et2-image align="center" label="$row_cont[type_label]" src="$row_cont[type]" no_lang="1"/>
 					<vbox id="${row}[id]">
 						<description id="${row}[line1]" no_lang="1"/>
 						<description id="${row}[line2]" no_lang="1"/>

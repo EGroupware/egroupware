@@ -155,6 +155,29 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 
+	transformAttributes(_attrs : any)
+	{
+		super.transformAttributes(_attrs);
+
+		// Expand src with additional stuff.  Copy & paste from legacy.
+		if(typeof _attrs["src"] != "undefined")
+		{
+			let manager = this.getArrayMgr("content");
+			if(manager && _attrs["src"])
+			{
+				let src = manager.getEntry(_attrs["src"], false, true);
+				if(typeof src != "undefined" && src !== null)
+				{
+					if(typeof src == "object")
+					{
+						src = egw().link('/index.php', src);
+					}
+					this.src = src;
+				}
+			}
+		}
+	}
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 *
