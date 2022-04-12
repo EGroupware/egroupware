@@ -156,20 +156,28 @@ function send_template()
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[2], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 			// replace buttononly tag with noSubmit="true" attribute
-			if (!empty($matches[1])) $attrs['noSubmit'] = 'true';
+			if(!empty($matches[1]))
+			{
+				$attrs['noSubmit'] = 'true';
+			}
+			// novalidation --> noValidation
+			if(!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))
+			{
+				unset($attrs['novalidation']);
+				$attrs['noValidation'] = 'true';
+			}
 			// replace not set background_image attribute with et2-image tag, if not in NM / lists
-			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
+			if(!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
 				!preg_match('/^(index|list)/', $name))
 			{
 				$tag = 'et2-image';
 				$attrs['src'] = $attrs['image'];
 				unset($attrs['image']);
-			}
-			// novalidation --> noValidation
-			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))
-			{
-				unset($attrs['novalidation']);
-				$attrs['noValidation'] = 'true';
+				// Was expected to submit.  Images don't have noValidation, so add directly
+				if(!array_key_exists('onclick', $attrs) && empty($attrs['noSubmit']))
+				{
+					$attrs['onclick'] = 'this.getInstanceManager().submit(this, undefined, ' . $attrs['noValidation'] . ')';
+				}
 			}
 			unset($attrs['background_image']);
 			return "<$tag ".implode(' ', array_map(function($name, $value)
