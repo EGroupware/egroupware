@@ -260,6 +260,7 @@ change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
 charset	common	de	UTF-8
 check all	common	de	Alle auswählen
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	de	Sie können auch auf EMPTY prüfen in If-Abfragen. Beispiel {{IF url~EMPTY~~Webseite: }}{{IF url~EMPTY~~url}} - fügt Webseite & URL ein, falls das Feld url nicht leer ist.
 check if content should only be displayed but not altered (the content is not send back then!)	common	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
 check if field has to be filled by user	common	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
 check installation	common	de	Installation überprüfen
