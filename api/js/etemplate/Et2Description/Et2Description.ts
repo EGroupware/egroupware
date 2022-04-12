@@ -19,6 +19,10 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	static get styles()
 	{
+		/**
+		 * No styles for Et2Description due to how we're rendering content directly into light DOM
+		 * anything added here won't work
+		 */
 		return [
 			...super.styles,
 			css`
@@ -148,6 +152,15 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			render = html`${this._value}`;
 		}
 		return html`${render}`;
+	}
+
+	/**
+	 * Put everything into the light DOM
+	 * @returns {this}
+	 */
+	createRenderRoot()
+	{
+		return this;
 	}
 
 	async firstUpdated()
