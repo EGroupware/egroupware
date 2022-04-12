@@ -260,6 +260,7 @@ change owner	common	en	Change Owner
 changed	common	en	Changed
 charset	common	en	utf-8
 check all	common	en	Check all
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	en	Check for empty values in IF statements.  Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	en	Should content be displayed only, but not altered.
 check if field has to be filled by user	common	en	Check if field has to be filled by user
 check installation	common	en	Check installation
