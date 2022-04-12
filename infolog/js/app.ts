@@ -753,7 +753,11 @@ class InfologApp extends EgwApp
 	 */
 	toggleEncrypt(_event, _widget, _node)
 	{
-		if (!this.egw.user('apps').stylite)
+		if(!_node && _widget instanceof HTMLElement)
+		{
+			_node = _widget;
+		}
+		if(!this.egw.user('apps').stylite)
 		{
 			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
 			return;
