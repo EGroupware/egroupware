@@ -132,9 +132,35 @@ export abstract class View
 			   parseInt(<string>egw.preference('interval', 'calendar')) || 30;
 	}
 
-	public static extend(sub)
+	/**
+	 * You can't iterate through a class's methods normally and get parent methods as well.
+	 * This lets us get the methods from class + parent
+	 *
+	 * @param view
+	 * @returns {string[]}
+	 */
+	public static getAllFuncs(view)
 	{
-		return jQuery.extend({}, this, {_super: this}, sub);
+		const props = [];
+		let obj = view;
+		do
+		{
+			props.push(...Object.getOwnPropertyNames(obj));
+		}
+		while((obj = Object.getPrototypeOf(obj)) && obj !== View);
+		props.push(...Object.getOwnPropertyNames(View));
+
+		return props.sort().filter((e, i, arr) =>
+		{
+			if(e[0] === "_" || ["getAllFuncs"].indexOf(e) !== -1)
+			{
+				return false;
+			}
+			if(e != arr[i + 1] && typeof view[e] == 'function')
+			{
+				return true;
+			}
+		});
 	}
 
 	/**

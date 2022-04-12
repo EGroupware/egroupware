@@ -1008,7 +1008,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		// Adjust header if there's a scrollbar
 		if(this.rows.children().last().length)
 		{
-			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
+			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px');
 		}
 		// Add actual events
 		for(var key in this._deferred_row_updates)
@@ -2034,7 +2034,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		// in some cases
 		if(this.rows.children().last().length)
 		{
-			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
+			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().first().width()) + 'px');
 		}
 	}
 

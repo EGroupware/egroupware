@@ -3106,7 +3106,7 @@ export class CalendarApp extends EgwApp
 			{
 				// Simple, easy case - just one widget for the selected time span. (planner)
 				// Update existing view's special attribute filters, defined in the view list
-				for(let updater of Object.getOwnPropertyNames(view))
+				for(let updater of view.getAllFuncs(view))
 				{
 					if(typeof view[updater] === 'function')
 					{
