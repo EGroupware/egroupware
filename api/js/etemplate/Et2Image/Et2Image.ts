@@ -42,8 +42,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			 * Added here as there's no Lion parent
 			 */
 			label: {
-				type: String,
-				translate: true
+				type: String
 			},
 
 			/**
@@ -150,14 +149,14 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 * Handle changes that have to happen based on changes to properties
 	 *
 	 */
-	requestUpdate(name : PropertyKey, oldValue)
+	updated(changedProperties)
 	{
-		super.requestUpdate(name, oldValue);
+		super.updated(changedProperties);
 
-		// if there's an href, make it look clickable
-		if(name == 'href')
+		// if there's an href or onclick, make it look clickable
+		if(changedProperties.has("href") || changedProperties.has("onclick"))
 		{
-			this.classList.toggle("et2_clickable", this.href)
+			this.classList.toggle("et2_clickable", this.href || this.onclick)
 		}
 	}
 
