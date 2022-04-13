@@ -9,11 +9,11 @@
  */
 
 
-import {css, html, LitElement} from "@lion/core";
+import {css, html, LitElement, SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
-export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
+export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_IDetachedDOM
 {
 	static get styles()
 	{
@@ -23,9 +23,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
             :host {
 				display: inline-block;
             }
-            img {
-            	height: 100%;
-            	width: 100%;
+            ::slotted(img) {
+            	max-height: 100%;
+            	max-width: 100%;
             }
             `,
 		];
@@ -83,6 +83,16 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 
+	get slots()
+	{
+		return {
+			'': () =>
+			{
+				return this._imageTemplate();
+			}
+		}
+	}
+
 	constructor()
 	{
 		super();
@@ -101,7 +111,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		this._handleClick = this._handleClick.bind(this);
 	}
 
-	render()
+	eTemplate()
 	{
 		let src = this.parse_href(this.src) || this.parse_href(this.default_src);
 		if(!src)
@@ -115,6 +125,12 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
                  alt="${this.label}"
                  title="${this.statustext || this.label}"
             >`;
+	}
+
+	render()
+	{
+		return html`
+            <slot></slot>`;
 	}
 
 
@@ -145,6 +161,11 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 
+	get _img()
+	{
+		return this.__getDirectSlotChild('img');
+	}
+
 	/**
 	 * Handle changes that have to happen based on changes to properties
 	 *
@@ -157,6 +178,13 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		if(changedProperties.has("href") || changedProperties.has("onclick"))
 		{
 			this.classList.toggle("et2_clickable", this.href || this.onclick)
+		}
+		for(const changedPropertiesKey in changedProperties)
+		{
+			if(Et2Image.getPropertyOptions()[changedPropertiesKey])
+			{
+				this._img[changedPropertiesKey] = this[changedPropertiesKey];
+			}
 		}
 	}
 
