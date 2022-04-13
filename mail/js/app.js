@@ -209,7 +209,8 @@ app.classes.mail = AppJS.extend(
 				this.mail_isMainWindow = true;
 
 				// Stop list from focussing next row on keypress
-				egw_getObjectManager('nm').flags = egwSetBit(egw_getObjectManager('nm').flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+				let aom = egw_getObjectManager('mail').getObjectById('nm');
+				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
 
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
