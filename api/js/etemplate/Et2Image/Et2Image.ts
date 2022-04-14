@@ -111,7 +111,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		this._handleClick = this._handleClick.bind(this);
 	}
 
-	eTemplate()
+	_imageTemplate()
 	{
 		let src = this.parse_href(this.src) || this.parse_href(this.default_src);
 		if(!src)
