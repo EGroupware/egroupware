@@ -204,15 +204,40 @@ function send_template()
 			if ($matches[1] === 'date' || $matches[1] === 'select' && !isset($attrs['search']) && !isset($attrs['tags']))
 			{
 				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
-				if (empty($matches[2]) && isset($attrs['type']))
+				if(empty($matches[2]) && isset($attrs['type']))
 				{
 					$matches[1] = $attrs['type'];
-					$matches[3] = str_replace('type="'.$attrs['type'].'"', '', $matches[3]);
+					$matches[3] = str_replace('type="' . $attrs['type'] . '"', '', $matches[3]);
 				}
-				return '<et2-'.$matches[1].$matches[2].' '.$matches[3].'></et2-'.$matches[1].$matches[2].'>';
+				return '<et2-' . $matches[1] . $matches[2] . ' ' . $matches[3] . '></et2-' . $matches[1] . $matches[2] . '>';
 			}
 			return $matches[0];
-		}, $str);
+		},                           $str);
+
+		// Change splitter dockside -> primary + vertical
+		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', function ($matches) use ($name)
+		{
+			$tag = 'et2-split';
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[1], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+
+			$attrs['vertical'] = $attrs['orientation'] == 'v' ? "true" : "false";
+			if(str_contains($attrs['dock_side'], 'top') || str_contains($attrs['dock_side'], 'left'))
+			{
+				$attrs['primary'] = "end";
+			}
+			elseif(str_contains($attrs['dock_side'], 'bottom') || str_contains($attrs['dock_side'], 'right'))
+			{
+				$attrs['primary'] = "start";
+			}
+			unset($attrs['dock_side']);
+
+			return "<$tag " . implode(' ', array_map(function ($name, $value)
+										 {
+											 return $name . '="' . $value . '"';
+										 }, array_keys($attrs), $attrs)
+				) . '>' . $matches[2] . "</$tag>";
+		},                           $str);
 
 		$processing = microtime(true);
 
