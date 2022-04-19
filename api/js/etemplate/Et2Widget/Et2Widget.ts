@@ -87,7 +87,7 @@ const Et2WidgetMixin = (superClass) =>
 		static get styles()
 		{
 			return [
-				...(super.styles ? super.styles : []),
+				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
 				:host([disabled]) {
 					display: none;
