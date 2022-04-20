@@ -24,6 +24,7 @@
 					<vbox>
 						<nextmatch-sortheader statustext="How many of this resource are usable" label="Useable" id="useable"/>
 						<nextmatch-sortheader statustext="How many of this resource exists" label="Quantity" id="quantity"/>
+						<nextmatch-sortheader statustext="Is the ressource bookable?" label="Bookable" id="bookable"/>
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Category" id="cat_id"/>
@@ -46,6 +47,7 @@
 					<vbox align="left">
 						<description align="left" id="${row}[useable]" no_lang="1"/>
 						<description align="left" id="${row}[quantity]" no_lang="1"/>
+						<description align="left" id="${row}[bookable]" no_lang="1"/>
 					</vbox>
 					<vbox>
 						<menulist>
