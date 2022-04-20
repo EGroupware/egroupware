@@ -774,6 +774,12 @@ const Et2WidgetMixin = (superClass) =>
 		transformAttributes(attrs)
 		{
 			transformAttributes(this, this.getArrayMgr("content"), attrs);
+
+			// Add in additional modifications
+			if(this.id && this.getArrayMgr("modifications").getEntry(this.id))
+			{
+				transformAttributes(this, this.getArrayMgr("content"), this.getArrayMgr("modifications").getEntry(this.id));
+			}
 		}
 
 		iterateOver(_callback : Function, _context, _type)
@@ -1326,6 +1332,11 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		switch(typeof property === "object" ? property.type : property)
 		{
 			case Boolean:
+				if(typeof attrValue == "boolean")
+				{
+					// Already boolean, nothing needed
+					break;
+				}
 				// If the attribute is marked as boolean, parse the
 				// expression as bool expression.
 				attrValue = mgr ? mgr.parseBoolExpression(attrValue) : attrValue;
@@ -1347,7 +1358,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 				break;
 			default:
-				attrValue = mgr ? mgr.expandName(attrValue) : attrValue;
+				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
 				if(attrValue && !attributes.no_lang && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
