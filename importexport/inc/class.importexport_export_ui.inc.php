@@ -446,18 +446,14 @@ class importexport_export_ui {
 		$appname = $_GET['_appname'];
 		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
 
-		// Turn off all output buffering
-		while (@ob_end_clean());
-
-		$file = fopen($tmpfname,'rb');
-
 		// Get charset
 		$charset = Api\Cache::getSession('importexport', $tmpfname);
 
 		Api\Header\Content::type($nicefname.'.'.$_GET['_suffix'],
 			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
 			filesize($tmpfname));
-		fpassthru($file);
+
+		fpassthru($tmpfname);
 
 		unlink($tmpfname);
 
