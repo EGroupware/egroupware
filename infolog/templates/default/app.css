@@ -71,19 +71,14 @@ button.infologExtraButton:hover {
     position: relative;
 }
 
-button#infolog-edit_encrypt {
-    position: absolute;
-    right: 0px;
-    top: 3px;
+.tab_toolbar > button, .tab_toolbar > et2-button {
+    margin: 0px;
 }
+
 td.infologTimestamp {
-	position: relative;
+    position: relative;
 }
-button#infolog-edit_timestamp {
-	position: absolute;
-	right: 29px;
-	top: 3px;
-}
+
 div#infolog-edit_infolog-edit-description {
 	height: 250px;
 }
