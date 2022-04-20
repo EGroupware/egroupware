@@ -47,7 +47,7 @@ const Et2InputWidgetMixin = (superclass) =>
 		static get styles()
 		{
 			return [
-				super.styles,
+				...super.styles,
 				css`
 				/* Needed so required can show through */
 				::slotted(input), input {

@@ -8,7 +8,7 @@
  */
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, html, LitElement} from "@lion/core";
+import {css, html, LitElement, render} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 
@@ -19,15 +19,11 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	static get styles()
 	{
-		/**
-		 * No styles for Et2Description due to how we're rendering content directly into light DOM
-		 * anything added here won't work
-		 */
 		return [
 			...super.styles,
 			css`
 			:host {
-				white-space: pre-wrap;
+				white-space: pre-line;
 			}
 			:host a {
 				cursor: pointer;
@@ -91,6 +87,17 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		this._handleClick = this._handleClick.bind(this);
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Put content directly in DOM
+		if(this.value)
+		{
+			render(this._renderContent(), this);
+		}
+	}
+
 	set_value(value)
 	{
 		this.value = value;
@@ -125,7 +132,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		this.requestUpdate('value', oldValue);
 	}
 
-	render()
+	_renderContent()
 	{
 		let render = null;
 
@@ -151,17 +158,15 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		{
 			render = html`${this._value}`;
 		}
-		return html`${render}`;
+		return render;
 	}
 
-	/**
-	 * Put everything into the light DOM
-	 * @returns {this}
-	 */
-	createRenderRoot()
+	render()
 	{
-		return this;
+		return html`
+            <slot></slot>`;
 	}
+
 
 	async firstUpdated()
 	{

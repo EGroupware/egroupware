@@ -231,7 +231,7 @@ div.et2_hbox > div {
 /**
  * Label widget, and labels for other widgets
  */
-.et2_label, et2-description {
+.et2_label {
     color: #101050;
     white-space: pre-wrap;
 }
