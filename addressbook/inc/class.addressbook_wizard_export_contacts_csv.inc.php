@@ -90,7 +90,7 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 			unset ($preserv['button']);
 			$field_list = $this->get_field_list($content);
 
-			$settings = $content['explode_multiselects'] ? $content['explode_multiselects'] : $content['plugin_options']['explode_multiselects'];
+			$settings = $content['explode_multiselects'] ?: $content['plugin_options']['explode_multiselects'] ?: [];
 
 			// Skip this step if no fields applicable
 			if(count($field_list) == 0) {
