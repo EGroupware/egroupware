@@ -150,21 +150,19 @@ span#admin-mailaccount_acc_id {
   padding-left: 5px;
 }
 #admin-mailaccount_button\[multiple\] {
-    height: auto;
-    padding-left: 5px;
-    margin: 2px;
-    width: 16px;
-    vertical-align: top;
+  height: auto;
+  padding-left: 5px;
+  margin: 2px;
+  width: 16px;
+  vertical-align: top;
 }
-
 #admin-mailaccount_button\[placeholders\] {
-    height: 16px;
-    padding-left: 5px;
-    align-self: center;
+  height: 16px;
+  padding-left: 5px;
+  align-self: center;
 }
-
 #admin-mailaccount_mailLocalAddress {
-    width: 98%;
+  width: 98%;
 }
 select#admin-mailaccount_ident_id {
   width: 95%;
@@ -196,6 +194,9 @@ select#admin-mailaccount_ident_id {
 /*
 Admin command
 */
+#admin-index_ajax_target {
+  height: 100%;
+}
 #admin-cmds_nm {
   min-height: 100px;
 }

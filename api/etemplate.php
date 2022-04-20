@@ -221,7 +221,7 @@ function send_template()
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[1], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
-			$attrs['vertical'] = $attrs['orientation'] == 'v' ? "true" : "false";
+			$attrs['vertical'] = $attrs['orientation'] == 'h' ? "true" : "false";
 			if(str_contains($attrs['dock_side'], 'top') || str_contains($attrs['dock_side'], 'left'))
 			{
 				$attrs['primary'] = "end";

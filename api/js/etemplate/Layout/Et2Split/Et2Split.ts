@@ -37,6 +37,9 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 				background-position: center;
 				background-repeat: no-repeat;
 			}
+			:host([vertical]) ::slotted(.split-handle) {
+				background-image: ${cssImage("splitter_horz")};
+			}
 			`
 		];
 	}
@@ -51,14 +54,17 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			 */
 			position: Number,
 			/**
-			 * Draws the split panel in a vertical orientation with the start panel above the end panel
-			 */
-			vertical: Boolean,
-			/**
 			 * If no primary panel is designated, both panels will resize proportionally and docking is disabled
 			 * "start" | "end" | undefined
 			 */
-			primary: String
+			primary: String,
+
+			/**
+			 * Legacy orientation
+			 * "v" | "h"
+			 * @deprecated use vertical=true|false instead
+			 */
+			orientation: String
 		}
 	}
 
@@ -121,9 +127,10 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 						height: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).height) - 3,
 						offset: () => 0
 					};
-					widget.dynheight.initialized = false;
-					widget.dynheight._initialize();
-					widget.dynheight.bottomNodes = widget.dynheight.bottomNodes.filter((node) => (node[0].parentNode != this));
+					widget.dynheight._collectBottomNodes = function()
+					{
+						this.bottomNodes = [];//widget.dynheight.bottomNodes.filter((node) => (node[0].parentNode != this));
+					};
 				}
 				if(widget.resize)
 				{
@@ -173,7 +180,28 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		this.position = dock ? (this.primary == 'start' ? 100 : 0) : undocked;
 	}
 
+	dock() { return this.toggleDock(true);}
+
 	undock() { return this.toggleDock(false)}
+
+	/**
+	 * Set the orientation of the splitter
+	 *
+	 * "h" for the splitter bar to be horizontal (children are stacked vertically)
+	 * "v" for the splitter bar to be vertical (children are side by side horizontally)
+	 *
+	 * @param {string} orientation
+	 */
+	set orientation(orientation)
+	{
+		this.vertical = orientation == "h";
+		this.requestUpdate("vertical");
+	}
+
+	get orientation()
+	{
+		return this.vertical ? "h" : "v";
+	}
 
 	/**
 	 * Load user's size preference
@@ -190,7 +218,12 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		let pref = this.egw().preference(Et2Split.PREF_PREFIX + this.id, this.egw().getAppName());
 		if(pref)
 		{
-			this.position = parseInt(pref[this.vertical ? 'sizeLeft' : 'sizeTop']);
+			// Doesn't matter if it's left or top or what, we just want the number
+			this.position = parseInt(Object.values(pref)[0]);
+			if(typeof this.position != "number" || isNaN(this.position))
+			{
+				this.position = 50;
+			}
 		}
 		this._undock_position = this.position;
 	}
@@ -208,7 +241,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		}
 
 		// Store current position in preferences
-		let size = this.vertical ? {sizeLeft: Math.round(this.position)} : {sizeTop: Math.round(this.position)};
+		let size = this.vertical ? {sizeTop: Math.round(this.position)} : {sizeLeft: Math.round(this.position)};
 		this.egw().set_preference(this.egw().getAppName(), Et2Split.PREF_PREFIX + this.id, size);
 
 	}
@@ -225,6 +258,30 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		if(changedProperties.has("id") && this.id)
 		{
 			this._loadPreference();
+		}
+	}
+
+	/**
+	 * Override parent to avoid resizing when not visible, as that breaks size calculations
+	 *
+	 * @returns {any}
+	 */
+	handlePositionChange()
+	{
+		if(this.offsetParent !== null)
+		{
+			return super.handlePositionChange();
+		}
+	}
+
+	/**
+	 * Override parent to avoid resizing when not visible, as that breaks size calculations
+	 */
+	handleResize(entries)
+	{
+		if(this.offsetParent !== null)
+		{
+			return super.handleResize(entries);
 		}
 	}
 

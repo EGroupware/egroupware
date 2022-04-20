@@ -191,6 +191,9 @@ select#admin-mailaccount_ident_id {
 /*
 Admin command
 */
+#admin-index_ajax_target {
+    height: 100%;
+}
 
 #admin-cmds_nm {min-height: 100px;}
 #admin-cmds .et2_split {padding-right: 10px;}
