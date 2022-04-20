@@ -17,7 +17,9 @@ RUN apt-get update \
 	&& apt-get install -y software-properties-common \
 	&& LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
 	&& apt-get update \
-	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,apcu,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp,memcached}" \
+	&& bash -c "apt-get install -y php$PHP_VERSION-{cli,mysql,gd,xsl,bz2,opcache,tidy,zip,bcmath,mbstring,smbclient,ldap,curl,fpm,pgsql,gmp,memcached}" \
+	# php8.{0,1}-apcu recommends (not needed) php-apcu-bc, which cause PHP 7.4 to be installed :(
+    && apt-get install --no-install-recommends -y php$PHP_VERSION-apcu \
 	&& bash -c "[[ $PHP_VERSION =~ ^8\..* ]] || apt-get install -y php$PHP_VERSION-json" \
 	# fpm and php.ini settings
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
@@ -69,7 +71,8 @@ fi; \
 rm composer-setup.php; \
 exit $RESULT' \
 	&& cd /usr/share \
-	&& [ $PHP_VERSION = "8.0" ] && COMPOSER_EXTRA=--ignore-platform-reqs || true \
+    # not all dependencies already allow PHP 8.x, thought what we use from them works
+    && bash -c "[[ $PHP_VERSION  =~ ^8\..* ]]" && COMPOSER_EXTRA=--ignore-platform-reqs || true \
 	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	&& cd egroupware \
 	&& npm install \
