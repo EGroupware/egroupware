@@ -347,13 +347,6 @@ function do_tag()
 	// push tags in all apps (not main-dir!)
 	run_cmd('./install-cli.php --git-apps push -f origin '.escapeshellarg($config['tag']));
 
-	// tag and push stuff now in vendor
-	foreach(array('adodb-php') as $package)
-	{
-		run_cmd("cd vendor/egroupware/$package; git tag -f ".escapeshellarg($config['tag']).' -m '.escapeshellarg('Creating '.$config['tag']));
-		run_cmd("cd vendor/egroupware/$package; git push -f origin ".escapeshellarg($config['tag']));
-	}
-
 	// checkout tag, update composer.{json,lock}, move tag to include them
 	run_cmd($config['git'].' checkout '.$config['tag']);
 	update_composer_json_version($config['tag']);
