@@ -974,8 +974,9 @@ abstract class Framework extends Framework\Extra
 			{
 				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
-			$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
-			if (!$debug_minify && file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
+			// no longer available in config, of you don't want minified CSS on a developer install, don't install grunt/generate the files
+			//$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+			if (/*!$debug_minify &&*/ file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{
 				//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 				self::includeCSS($theme_min_css);

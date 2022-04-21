@@ -276,11 +276,11 @@ $cmd = $composer.' install '.implode(' ', $composer_args);
 run_cmd($cmd, 'composer');
 
 // update npm dependencies, run grunt to minify css and rollup to build javascript
-if ($npm && $grunt)
+if ($npm)
 {
-	run_cmd($npm.' install', 'npm install');
+	run_cmd($npm.' install --legacy-peer-deps', 'npm install');
 
-	run_cmd($grunt, 'grunt');
+	if ($grunt) run_cmd($grunt, 'grunt');
 
 	run_cmd($npm .' run build', 'rollup (npm run build)');
 }
