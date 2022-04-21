@@ -13,6 +13,7 @@ import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {et2_IDOMNode, et2_IResizeable} from "../../et2_core_interfaces";
 import {et2_DOMWidget} from "../../et2_core_DOMWidget";
 import {css, html, SlotMixin} from "@lion/core";
+import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 
 export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 {
@@ -21,6 +22,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 	{
 		return [
 			...super.styles,
+			colorsDefStyles,
 			css`
 			:host {
 				height: 100%;
@@ -39,6 +41,9 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			}
 			:host([vertical]) ::slotted(.split-handle) {
 				background-image: ${cssImage("splitter_horz")};
+			}
+			.divider {
+				background-color: var(--gray_10)
 			}
 			`
 		];
