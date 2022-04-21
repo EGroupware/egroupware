@@ -474,6 +474,12 @@ abstract class admin_cmd
 		{
 			$data['data'] = json_php_unserialize($data['data']);
 		}
+		// "Readonly" policy need to be renamed (to "Readonlys") as readonly is a reserved word in PHP 8.1+
+		if ($data['type'] === 'Policy\\Policies\\Readonly')
+		{
+			$data['type'] .= 's';
+			$data['policy'] .= 's';
+		}
 		if (!(class_exists($class = 'EGroupware\\'.$data['type']) ||	// namespaced class
 			class_exists($class = $data['type'])) || $data['type'] == 'admin_cmd')
 		{
@@ -601,7 +607,9 @@ abstract class admin_cmd
 				{
 					$label = $class::name();
 				}
-				elseif (class_exists('EGroupware\\' . $class))
+				elseif (class_exists('EGroupware\\' . $class) ||
+					// "Readonly" policy need to be renamed (to "Readonlys") as readonly is a reserved word in PHP 8.1+
+					class_exists('EGroupware\\' . ($class .= 's')))
 				{
 					$class = 'EGroupware\\' . $class;
 					$label = $class::name();
