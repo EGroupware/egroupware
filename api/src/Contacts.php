@@ -565,8 +565,8 @@ class Contacts extends Contacts\Storage
 			$options[$fileas_type] = $value = $this->fileas($labels,$fileas_type);
 			$found = $found || $value === $contact['n_fileas'];
 		}
-		// if we have a custom fileAs, add it as first option to keep it
-		if (!empty($contact['n_fileas']) && !$found)
+		// if we have a custom fileAs for an existing entry, add it as first option to keep it
+		if (!empty($contact['n_fileas']) && !$found && !empty($contact['id']))
 		{
 			$options = array_merge([$contact['n_fileas'] => lang('Custom').': '.$contact['n_fileas']], $options);
 		}
