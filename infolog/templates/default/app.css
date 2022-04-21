@@ -69,6 +69,7 @@ button.infologExtraButton:hover {
 
 .tab_toolbar {
     position: relative;
+    top: 19px;
 }
 
 .tab_toolbar > button, .tab_toolbar > et2-button {
