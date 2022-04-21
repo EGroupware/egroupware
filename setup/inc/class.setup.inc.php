@@ -145,7 +145,8 @@ class setup
 					}
 					if (!$api_version || !$this->alessthanb($api_version,'1.0.1.019'))
 					{
-						$this->db->Link_ID->SetCharSet($this->system_charset);
+						$this->db->Link_ID->SetCharSet($this->system_charset === 'utf-8' &&
+							$this->db->Type === 'mysql' ? 'utf8' : $this->system_charset);
 					}
 				}
 			}
