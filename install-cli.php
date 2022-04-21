@@ -278,7 +278,7 @@ run_cmd($cmd, 'composer');
 // update npm dependencies and run grunt to minify javascript and css
 if ($npm && $grunt)
 {
-	run_cmd($npm.' install', 'npm');
+	run_cmd($npm.' install --legacy-peer-deps', 'npm');
 
 	run_cmd($grunt, 'grunt');
 }
