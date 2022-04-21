@@ -22,8 +22,8 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		return [
 			...super.styles,
 			css`
-			:host {
-				white-space: pre-line;
+			* {
+				white-space: pre-wrap;
 			}
 			:host a {
 				cursor: pointer;
@@ -163,8 +163,10 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	render()
 	{
-		return html`
-            <slot></slot>`;
+		// Turn off IDE reformatting, or it will add an extra line break into the template
+		// @formatter:off
+		return html`<slot></slot>`;
+		// @formatter:on
 	}
 
 
