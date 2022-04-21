@@ -453,7 +453,7 @@ class importexport_export_ui {
 			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
 			filesize($tmpfname));
 
-		fpassthru($tmpfname);
+		readfile($tmpfname);
 
 		unlink($tmpfname);
 
