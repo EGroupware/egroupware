@@ -57,6 +57,20 @@ const Et2InputWidgetMixin = (superclass) =>
 				.input-group__container > .input-group__input ::slotted(.form-control) {
 					width: 100%;
 				}
+				/* Validation error styles */
+				::slotted(lion-validation-feedback[type]) {
+					position: absolute;
+					padding: 1ex;
+					background-color: white;
+					border-top: 2px solid;
+					border-bottom: 1px solid;
+					border-color: var(--primary-color);
+					z-index: 1;
+				}
+				::slotted(lion-validation-feedback[type=error])
+				{
+					border-color: red;
+				}
 				`
 			];
 		}
