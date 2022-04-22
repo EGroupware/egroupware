@@ -9,143 +9,163 @@
 				<column width="210"/>
 			</columns>
 			<rows>
-				<row>
-					<description for="n_prefix" value="prefix"/>
-					<textbox id="n_prefix" tabindex="1" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="honorific-prefix" />
-				</row>
-				<row>
-					<description for="n_given" value="first name"/>
-					<textbox id="n_given" tabindex="2" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="given-name" />
-				</row>
-				<row>
-					<description for="n_middle" value="middle name"/>
-					<textbox id="n_middle" tabindex="3" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="additional-name" />
-				</row>
-				<row>
-					<description for="n_family" value="last name"/>
-					<textbox id="n_family" tabindex="4" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="family-name" />
-				</row>
-				<row>
-					<description for="n_suffix" value="suffix"/>
-					<textbox id="n_suffix" tabindex="5" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64" autocomplete="honorific-suffix" />
-				</row>
-				<row>
-					<description/>
-					<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); jQuery('#'+form::name('org_name')).focus(); return false;" image="check" background_image="1"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%">
-			<columns>
-				<column width="92"/>
-				<column width="230"/>
-				<column width="50"/>
-				<column width="92"/>
-				<column width="230"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row>
-					<description for="role" value="Role"/>
-					<hbox width="100%">
-						<textbox id="role" tabindex="20" width="60%" maxlength="64" autocomplete="section-one" />
-						<textbox id="room" tabindex="21" width="34%" blur="Room"/>
-					</hbox>
-					<description/>
-					<description for="adr_one_street" value="street"/>
-					<textbox id="adr_one_street" tabindex="11" class="et2_fullWidth" maxlength="64" autocomplete="address-line1"/>
-					<description/>
-				</row>
-				<row>
-					<description for="assistent" value="Assistent"/>
-					<textbox id="assistent" tabindex="22" class="et2_fullWidth"/>
-					<description/>
-					<description/>
-					<textbox statustext="address line 2" id="adr_one_street2" tabindex="12" class="et2_fullWidth" maxlength="64" autocomplete="address-line2"/>
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_assistent" value="Assistent phone"/>
-					<url-phone id="tel_assistent" tabindex="23" class="et2_fullWidth"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
-					<description for="adr_one_locality" value="city" />
-					<hbox class="city_state_postcode">
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="24%" maxlength="64" autocomplete="postal-code"/>
-						<textbox statustext="City" id="adr_one_locality" tabindex="14" maxlength="64"  width="70%" autocomplete="address-level2"/>
-					</hbox>
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_fax" value="fax"/>
-					<url-fax id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
-					<description for="adr_one_countryname" value="country"/>
-					<vbox  class="city_state_postcode" width="100%">
-						<select type="select-country" tags="true" width="100%" class="countrySelect et2_fullWidth" id="adr_one_countrycode" tabindex="15" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
-						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
-					</vbox>
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_other" value="Other phone"/>
-					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth"  autocomplete="tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
-					<description value="Region"/>
-					<taglist-state  class="city_state_postcode et2_fullWidth" statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="16" maxlength="64"/>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_assistent" value="Assistent phone"/>
-					<url-phone id="tel_assistent" tabindex="23" class="et2_fullWidth"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
-					<description value="City"/>
-					<hbox>
-						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13" autocomplete="address-level2"/>
-						<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14" width="130"/>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15" autocomplete="postal-code"/>
-					</hbox>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_fax" value="fax"/>
-					<url-fax id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
-					<description for="adr_one_countryname" value="country"/>
-					<vbox width="100%" tabindex="16">
-						<select-country tabindex="16" tags="true" width="100%" class="countrySelect et2_fullWidth"
+                <row>
+                    <description for="n_prefix" value="prefix"/>
+                    <textbox id="n_prefix" tabindex="1" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                             maxlength="64" autocomplete="honorific-prefix"/>
+                </row>
+                <row>
+                    <description for="n_given" value="first name"/>
+                    <textbox id="n_given" tabindex="2" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                             maxlength="64" autocomplete="given-name"/>
+                </row>
+                <row>
+                    <description for="n_middle" value="middle name"/>
+                    <textbox id="n_middle" tabindex="3" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                             maxlength="64" autocomplete="additional-name"/>
+                </row>
+                <row>
+                    <description for="n_family" value="last name"/>
+                    <textbox id="n_family" tabindex="4" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                             maxlength="64" autocomplete="family-name"/>
+                </row>
+                <row>
+                    <description for="n_suffix" value="suffix"/>
+                    <textbox id="n_suffix" tabindex="5" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                             maxlength="64" autocomplete="honorific-suffix"/>
+                </row>
+                <row>
+                    <description/>
+                    <button label="Ok" tabindex="6" id="button[ok]" class="button_ok"
+                            onclick="jQuery('table.editname').css('display','none'); jQuery('#'+form::name('org_name')).focus(); return false;"
+                            image="check" background_image="1"/>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
+        <grid width="100%">
+            <columns>
+                <column width="92"/>
+                <column width="230"/>
+                <column width="50"/>
+                <column width="92"/>
+                <column width="230"/>
+            </columns>
+            <rows>
+                <row>
+                    <description for="role" value="Role"/>
+                    <hbox width="100%">
+                        <textbox id="role" tabindex="20" width="60%" maxlength="64" autocomplete="section-one"/>
+                        <textbox id="room" tabindex="21" width="34%" blur="Room"/>
+                    </hbox>
+                    <description/>
+                    <description for="adr_one_street" value="street"/>
+                    <textbox id="adr_one_street" tabindex="11" maxlength="64" autocomplete="address-line1"/>
+                </row>
+                <row>
+                    <description for="assistent" value="Assistent"/>
+                    <textbox id="assistent" tabindex="22"/>
+                    <description/>
+                    <description/>
+                    <textbox statustext="address line 2" id="adr_one_street2" tabindex="12" maxlength="64"
+                             autocomplete="address-line2"/>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="tel_assistent" value="Assistent phone"/>
+                    <url-phone id="tel_assistent" tabindex="23"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_assistent,&amp;hearts;"/>
+                    <description for="adr_one_locality" value="city"/>
+                    <hbox class="city_state_postcode">
+                        <textbox statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="24%" maxlength="64"
+                                 autocomplete="postal-code"/>
+                        <textbox statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" width="70%"
+                                 autocomplete="address-level2"/>
+                    </hbox>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="tel_fax" value="fax"/>
+                    <url-fax id="tel_fax" tabindex="24" autocomplete="fax"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_fax,&amp;hearts;"/>
+                    <description for="adr_one_countryname" value="country"/>
+                    <vbox class="city_state_postcode" width="100%">
+                        <select type="select-country" tags="true" width="100%" class="countrySelect"
+                                id="adr_one_countrycode" tabindex="15"
+                                onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1"
+                                autocomplete="country"/>
+                        <textbox id="adr_one_countryname" class="custom_country"
+                                 autocomplete="country-name"/>
+                    </vbox>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="tel_other" value="Other phone"/>
+                    <url-phone id="tel_other" tabindex="25" autocomplete="tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_other,&amp;hearts;"/>
+                    <description value="Region"/>
+                    <taglist-state class="city_state_postcode" statustext="State" maxSelection="1"
+                                   multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]"
+                                   id="adr_one_region" tabindex="16" maxlength="64"/>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="tel_assistent" value="Assistent phone"/>
+                    <url-phone id="tel_assistent" tabindex="23"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_assistent,&amp;hearts;"/>
+                    <description value="City"/>
+                    <hbox>
+                        <textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13"
+                                 autocomplete="address-level2"/>
+                        <taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false"
+                                       country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14"
+                                       width="130"/>
+                        <textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15"
+                                 autocomplete="postal-code"/>
+                    </hbox>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="tel_fax" value="fax"/>
+                    <url-fax id="tel_fax" tabindex="24" autocomplete="fax"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_fax,&amp;hearts;"/>
+                    <description for="adr_one_countryname" value="country"/>
+                    <vbox width="100%" tabindex="16">
+                        <select-country tabindex="16" tags="true" width="100%" class="countrySelect"
                                         id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);"
                                         options="Select one,0,1" autocomplete="country"/>
-						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" tabindex="16" autocomplete="country-name"/>
-					</vbox>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_other" value="Other Phone"/>
-					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth" autocomplete="tel"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<description for="tel_car" value="car phone"/>
-					<url-phone id="tel_car" tabindex="26" class="et2_fullWidth"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_car,&amp;hearts;"/>
-					<description disabled="@no_tid" for="tid" value="Type"/>
-					<hbox width="102%">
-                        <select id="tid" no_lang="1" class="et2_fullWidth" onchange="1" disabled="@no_tid"/>
-					</hbox>
-					<description/>
-				</row>
-				<row disabled="@shared_disabled">
-					<description for="shared" value="Shared with"/>
-					<taglist-account account_type="both" id="shared_values" multiple="true"
-						onchange="app.addressbook.shared_changed" select_options="@shared_options" span="4"/>
-					<checkbox id="shared_writable" label="writable" statustext="Create new shares writable"/>
-				</row>
-			</rows>
+                        <textbox id="adr_one_countryname" class="custom_country" tabindex="16"
+                                 autocomplete="country-name"/>
+                    </vbox>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="tel_other" value="Other Phone"/>
+                    <url-phone id="tel_other" tabindex="25" autocomplete="tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_other,&amp;hearts;"/>
+                    <description/>
+                    <description/>
+                </row>
+                <row>
+                    <description for="tel_car" value="car phone"/>
+                    <url-phone id="tel_car" tabindex="26"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_car,&amp;hearts;"/>
+                    <description disabled="@no_tid" for="tid" value="Type"/>
+                    <hbox width="102%">
+                        <select id="tid" no_lang="1" onchange="1" disabled="@no_tid"/>
+                    </hbox>
+                </row>
+                <row disabled="@shared_disabled">
+                    <description for="shared" value="Shared with"/>
+                    <hbox span="all">
+                        <taglist-account account_type="both" id="shared_values" multiple="true"
+                                         onchange="app.addressbook.shared_changed" select_options="@shared_options"/>
+                        <checkbox id="shared_writable" label="writable" statustext="Create new shares writable"/>
+                    </hbox>
+                </row>
+            </rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
@@ -170,7 +190,7 @@
 						<rows>
 							<row valign="top">
 								<description value="Notes"/>
-								<textbox multiline="true" id="note" rows="10" class="et2_fullWidth" height="100"/>
+                                <textbox multiline="true" id="note" rows="10" height="100"/>
 							</row>
 							<row disabled="@hidebuttons">
 								<description value="Last date"/>
@@ -179,127 +199,151 @@
 							<row disabled="@hidebuttons">
 								<description value="Next date"/>
 								<link id="next_link"/>
-							</row>
-							<row valign="top" class="smime_section_border">
-								<description value="SMIME key"/>
-								<vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" callback="addressbook.addressbook_ui.pubkey_uploaded"/>
-							</row>
-							<row valign="top">
-								<description value="PGP key"/>
-								<vfs-upload id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" callback="addressbook.addressbook_ui.pubkey_uploaded"/>
-							</row>
-							<row valign="top">
-								<description for="pubkey" value="Public key"/>
-								<textbox multiline="true" id="pubkey" rows="4" resize_ratio="0" class="et2_fullWidth"/>
-							</row>
-						</rows>
-					</grid>
-					<description/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="92"/>
-				<column width="230"/>
-				<column width="50"/>
-				<column width="92"/>
-				<column width="230"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row>
-					<description for="tel_home" value="Home phone"/>
-					<url-phone id="tel_home" tabindex="27" class="et2_fullWidth" autocomplete="section-two home tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
-					<description for="adr_two_street" tabindex="32" value="street"/>
-					<textbox id="adr_two_street" tabindex="33" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line1" />
-					<description/>
-				</row>
-				<row>
-					<description for="tel_cell_private" value="mobile phone"/>
-					<url-phone id="tel_cell_private" tabindex="28" class="et2_fullWidth" autocomplete="section-two mobile tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell_private,&amp;hearts;"/>
-					<description/>
-					<textbox statustext="address line 2" id="adr_two_street2" tabindex="34" class="et2_fullWidth" maxlength="64" autocomplete="section-two address-line2" />
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_fax_home" value="fax"/>
-					<url-fax id="tel_fax_home" tabindex="29" class="et2_fullWidth" autocomplete="section-two fax tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
-					<description for="adr_two_locality" value="city"/>
-					<hbox class="city_state_postcode">
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="24%" maxlength="64" autocomplete="section-two postal-code" />
-						<textbox statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" width="70%" autocomplete="section-two address-level2" />
-					</hbox>
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="tel_pager" value="pager" autocomplete="section-two pager tel" />
-					<url-phone id="tel_pager" tabindex="30" class="et2_fullWidth"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
-					<description for="adr_two_countryname" value="country"/>
-					<vbox width="100%" class="city_state_postcode">
-                        <select-country tabindex="37" tags="true" width="100%" class="countrySelect et2_fullWidth"
+                            </row>
+                            <row valign="top" class="smime_section_border">
+                                <description value="SMIME key"/>
+                                <vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt"
+                                            accept=".crt,.pem,application/x-x509-ca-cert,application/x-x509-user-cert"
+                                            mime="/application\/(x-x509-(ca|user)|pkix)-cert/"
+                                            callback="addressbook.addressbook_ui.pubkey_uploaded"/>
+                            </row>
+                            <row valign="top">
+                                <description value="PGP key"/>
+                                <vfs-upload id="addressbook:$cont[id]:.files/pgp-pubkey.asc"
+                                            accept=".asc,application/pgp-keys"
+                                            mime="/(application\/pgp-keys|text\/plain)/"
+                                            callback="addressbook.addressbook_ui.pubkey_uploaded"/>
+                            </row>
+                            <row valign="top">
+                                <description for="pubkey" value="Public key"/>
+                                <textbox multiline="true" id="pubkey" rows="4" resize_ratio="0"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <description/>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
+        <grid width="100%">
+            <columns>
+                <column width="92"/>
+                <column width="230"/>
+                <column width="50"/>
+                <column width="92"/>
+                <column width="230"/>
+                <column width="50"/>
+            </columns>
+            <rows>
+                <row>
+                    <description for="tel_home" value="Home phone"/>
+                    <url-phone id="tel_home" tabindex="27" autocomplete="section-two home tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_home,&amp;hearts;"/>
+                    <description for="adr_two_street" tabindex="32" value="street"/>
+                    <textbox id="adr_two_street" tabindex="33" maxlength="64" autocomplete="section-two address-line1"/>
+                    <description/>
+                </row>
+                <row>
+                    <description for="tel_cell_private" value="mobile phone"/>
+                    <url-phone id="tel_cell_private" tabindex="28" autocomplete="section-two mobile tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_cell_private,&amp;hearts;"/>
+                    <description/>
+                    <textbox statustext="address line 2" id="adr_two_street2" tabindex="34" maxlength="64"
+                             autocomplete="section-two address-line2"/>
+                    <description/>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="tel_fax_home" value="fax"/>
+                    <url-fax id="tel_fax_home" tabindex="29" autocomplete="section-two fax tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_fax_home,&amp;hearts;"/>
+                    <description for="adr_two_locality" value="city"/>
+                    <hbox class="city_state_postcode">
+                        <textbox statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="24%" maxlength="64"
+                                 autocomplete="section-two postal-code"/>
+                        <textbox statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" width="70%"
+                                 autocomplete="section-two address-level2"/>
+                    </hbox>
+                    <description/>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="tel_pager" value="pager" autocomplete="section-two pager tel"/>
+                    <url-phone id="tel_pager" tabindex="30"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_pager,&amp;hearts;"/>
+                    <description for="adr_two_countryname" value="country"/>
+                    <vbox width="100%" class="city_state_postcode">
+                        <select-country tabindex="37" tags="true" width="100%" class="countrySelect"
                                         id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);"
                                         options="Select one,0,1" autocomplete="section-two country"/>
-						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
-					</vbox>
-					<description/>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<description for="bday" value="Birthday"/>
-					<date id="bday" tabindex="31" options="Y-m-d"  year_range="c-90:c+2" class="et2_fullWidth"/>
-					<description/>
-					<description value="Region"/>
-					<taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_two_countrycode]" id="adr_two_region" tabindex="38" maxlength="64" class="et2_fullWidth city_state_postcode"/>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_fax_home" value="fax"/>
-					<url-fax id="tel_fax_home" class="et2_fullWidth" autocomplete="fax tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
-					<description value="City"/>
-					<hbox>
-						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64" autocomplete="section-two address-level2" />
-						<taglist-state maxSelection="1" multiple="toggle" editModeEnabled="false" country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region" width="130"  autocomplete="section-two address-level1"/>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64" autocomplete="section-two postal-code" />
-					</hbox>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="tel_pager" value="pager"/>
-					<url-phone id="tel_pager" class="et2_fullWidth"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
-					<description for="adr_two_countryname" value="country"/>
-					<vbox width="100%">
-                        <select-country class="countrySelect et2_fullWidth" tags="true" width="100%"
+                        <textbox id="adr_two_countryname" class="custom_country"
+                                 autocomplete="section-two country-name"/>
+                    </vbox>
+                    <description/>
+                </row>
+                <row disabled="@addr_format=city_state_postcode">
+                    <description for="bday" value="Birthday"/>
+                    <date id="bday" tabindex="31" options="Y-m-d" year_range="c-90:c+2"/>
+                    <description/>
+                    <description value="Region"/>
+                    <taglist-state statustext="State" maxSelection="1" multiple="toggle" editModeEnabled="false"
+                                   country_code="$cont[adr_two_countrycode]" id="adr_two_region" tabindex="38"
+                                   maxlength="64" class="city_state_postcode"/>
+                    <description/>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="tel_fax_home" value="fax"/>
+                    <url-fax id="tel_fax_home" autocomplete="fax tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_fax_home,&amp;hearts;"/>
+                    <description value="City"/>
+                    <hbox>
+                        <textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"
+                                 autocomplete="section-two address-level2"/>
+                        <taglist-state maxSelection="1" multiple="toggle" editModeEnabled="false"
+                                       country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region"
+                                       width="130" autocomplete="section-two address-level1"/>
+                        <textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"
+                                 autocomplete="section-two postal-code"/>
+                    </hbox>
+                    <description/>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="tel_pager" value="pager"/>
+                    <url-phone id="tel_pager"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_pager,&amp;hearts;"/>
+                    <description for="adr_two_countryname" value="country"/>
+                    <vbox width="100%">
+                        <select-country class="countrySelect" tags="true" width="100%"
                                         id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);"
                                         options="Select one,0,1" autocomplete="section-two country"/>
-						<textbox id="adr_two_countryname" class="custom_country et2_fullWidth" autocomplete="section-two country-name" />
-					</vbox>
-					<description/>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<description for="bday" value="Birthday"/>
-					<date id="bday" options="Y-m-d" class="et2_fullWidth"/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<description for="email_home" value="EMail"/>
-					<url-email id="email_home" tabindex="32" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="section-two home email" />
-					<description/>
-					<description for="url_home" value="URL"/>
-					<url id="url_home" tabindex="39" class="et2_fullWidth" autocomplete="section-two url" />
-					<description/>
-				</row>
-			</rows>
+                        <textbox id="adr_two_countryname" class="custom_country"
+                                 autocomplete="section-two country-name"/>
+                    </vbox>
+                    <description/>
+                </row>
+                <row disabled="!@addr_format=city_state_postcode">
+                    <description for="bday" value="Birthday"/>
+                    <date id="bday" options="Y-m-d"/>
+                    <description/>
+                    <description/>
+                    <description/>
+                    <description/>
+                </row>
+                <row>
+                    <description for="email_home" value="EMail"/>
+                    <url-email id="email_home" tabindex="32" onchange="app.addressbook.check_value(widget,'$cont[id]');"
+                               autocomplete="section-two home email"/>
+                    <description/>
+                    <description for="url_home" value="URL"/>
+                    <url id="url_home" tabindex="39" autocomplete="section-two url"/>
+                    <description/>
+                </row>
+            </rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
@@ -318,111 +362,120 @@
 					<link-list id="link_to"/>
 				</row>
 			</rows>
-		</grid>
-	</template>
-	<template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<description id="distrib_lists" span="all"/>
-		</box>
-	</template>
-	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<customfields options=",$cont[no_private_cfs]" type_filter="$cont[tid]"/>
-		</box>
-	</template>
-	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
-		<box width="100%" overflow="auto">
-			<customfields id="private_cfs" options=",1" type_filter="$cont[tid]"/>
-		</box>
-	</template>
-	<template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
-		<historylog id="history" width="100%"/>
-	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
-		<template id="addressbook.editname"/>
-		<grid class="addressbook_edit" border="1" width="100%">
-			<columns>
-				<column width="100"/>
-				<column width="250"/>
-				<column width="50"/>
-				<column width="100"/>
-				<column width="250"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<box align="center">
-						<hbox disabled="@hidebuttons">
-							<avatar id="jpegphoto" contact_id="$cont[id]" src="$cont[photo]" crop="false" editable="true"/>
-						</hbox>
-					</box>
-					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name"/>
-					<description/>
-					<description for="org_name" value="Organisation"/>
-					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" tabindex="7" class="et2_fullWidth" autocomplete="organization" />
-					<appicon/>
-				</row>
-				<row class="dialogHeader2">
-					<description for="tel_work" value="Business phone"/>
-					<url-phone id="tel_work" tabindex="17" class="telNumbers et2_fullWidth" autocomplete="work tel"/>
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
-					<description for="org_unit" value="department"/>
-					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" class="et2_fullWidth" maxlength="64"/>
-					<description/>
-				</row>
-				<row class="dialogHeader3">
-					<description for="tel_cell" value="mobile phone"/>
-					<url-phone id="tel_cell" tabindex="18" class="telNumbers et2_fullWidth" autocomplete="mobile tel" />
-					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
-					<description for="title" value="Title"/>
-					<textbox id="title" size="36" maxlength="64" tabindex="9" class="et2_fullWidth" autocomplete="organization-title" />
-					<description/>
-				</row>
-				<row class="dialogHeader4">
-					<description for="email" value="email"/>
-					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="19" class="et2_fullWidth" autocomplete="work email"/>
-					<description/>
-					<description for="url" value="url"/>
-					<url id="url" tabindex="10" class="et2_fullWidth" autocomplete="url" />
-					<description/>
-				</row>
-				<row>
-					<tabbox id="tabs" span="all" width="100%" tab_height="250">
-						<tabs>
-							<tab id="general" label="Organisation"/>
-							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
-							<tab id="links" label="Links" statustext="Links"/>
-							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-							<tab id="custom" label="Extra" statustext="Custom fields"/>
-							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
-							<tab id="history" label="History"/>
-						</tabs>
-						<tabpanels>
-							<template id="addressbook.edit.general"/>
-							<template id="addressbook.edit.home"/>
-							<template id="addressbook.edit.details"/>
-							<template id="addressbook.edit.links"/>
-							<template id="addressbook.edit.distribution_list"/>
-							<template id="addressbook.edit.custom"/>
-							<template id="addressbook.edit.custom_private"/>
-							<template id="addressbook.edit.history"/>
-						</tabpanels>
-					</tabbox>
-				</row>
-				<row class="dialogOperators">
-					<description value="Addressbook"/>
-                    <select class="owner et2_fullWidth" statustext="Addressbook the contact should be saved to"
+        </grid>
+    </template>
+    <template id="addressbook.edit.distribution_list" template="" lang="" group="0" version="1.9.001">
+        <box width="100%" overflow="auto">
+            <description id="distrib_lists" span="all"/>
+        </box>
+    </template>
+    <template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
+        <box width="100%" overflow="auto">
+            <customfields options=",$cont[no_private_cfs]" type_filter="$cont[tid]"/>
+        </box>
+    </template>
+    <template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
+        <box width="100%" overflow="auto">
+            <customfields id="private_cfs" options=",1" type_filter="$cont[tid]"/>
+        </box>
+    </template>
+    <template id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
+        <historylog id="history" width="100%"/>
+    </template>
+    <template id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
+        <template id="addressbook.editname"/>
+        <grid class="addressbook_edit" border="1" width="100%">
+            <columns>
+                <column width="100"/>
+                <column width="250"/>
+                <column width="50"/>
+                <column width="100"/>
+                <column width="250"/>
+                <column width="50"/>
+            </columns>
+            <rows>
+                <row class="dialogHeader">
+                    <box align="center">
+                        <hbox disabled="@hidebuttons">
+                            <avatar id="jpegphoto" contact_id="$cont[id]" src="$cont[photo]" crop="false"
+                                    editable="true"/>
+                        </hbox>
+                    </box>
+                    <textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand"
+                             onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();"
+                             autocomplete="name"/>
+                    <description/>
+                    <description for="org_name" value="Organisation"/>
+                    <textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128"
+                             tabindex="7" autocomplete="organization"/>
+                    <appicon/>
+                </row>
+                <row class="dialogHeader2">
+                    <description for="tel_work" value="Business phone"/>
+                    <url-phone id="tel_work" tabindex="17" class="telNumbers" autocomplete="work tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_work,&amp;hearts;"/>
+                    <description for="org_unit" value="department"/>
+                    <textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8"
+                             maxlength="64"/>
+                    <description/>
+                </row>
+                <row class="dialogHeader3">
+                    <description for="tel_cell" value="mobile phone"/>
+                    <url-phone id="tel_cell" tabindex="18" class="telNumbers" autocomplete="mobile tel"/>
+                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
+                           options="tel_cell,&amp;hearts;"/>
+                    <description for="title" value="Title"/>
+                    <textbox id="title" size="36" maxlength="64" tabindex="9" autocomplete="organization-title"/>
+                    <description/>
+                </row>
+                <row class="dialogHeader4">
+                    <description for="email" value="email"/>
+                    <url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="19"
+                               autocomplete="work email"/>
+                    <description/>
+                    <description for="url" value="url"/>
+                    <url id="url" tabindex="10" autocomplete="url"/>
+                    <description/>
+                </row>
+                <row>
+                    <tabbox id="tabs" span="all" width="100%" tab_height="250">
+                        <tabs>
+                            <tab id="general" label="Organisation"/>
+                            <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
+                            <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
+                            <tab id="links" label="Links" statustext="Links"/>
+                            <tab id="distribution_list" label="Distribution lists"
+                                 statustext="Distribution lists, ..."/>
+                            <tab id="custom" label="Extra" statustext="Custom fields"/>
+                            <tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
+                            <tab id="history" label="History"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="addressbook.edit.general"/>
+                            <template id="addressbook.edit.home"/>
+                            <template id="addressbook.edit.details"/>
+                            <template id="addressbook.edit.links"/>
+                            <template id="addressbook.edit.distribution_list"/>
+                            <template id="addressbook.edit.custom"/>
+                            <template id="addressbook.edit.custom_private"/>
+                            <template id="addressbook.edit.history"/>
+                        </tabpanels>
+                    </tabbox>
+                </row>
+                <row class="dialogOperators">
+                    <description value="Addressbook"/>
+                    <select class="owner" statustext="Addressbook the contact should be saved to"
                             id="owner" no_lang="1"
                             onchange="widget.getInstanceManager().submit(null,false,true); return false;"/>
-					<description/>
-					<description value="own sorting"/>
-					<menulist>
-						<menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas et2_fullWidth"/>
-					</menulist>
-					<description/>
-				</row>
-				<row class="dialogOperators">
+                    <description/>
+                    <description value="own sorting"/>
+                    <menulist>
+                        <menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas"/>
+                    </menulist>
+                    <description/>
+                </row>
+                <row class="dialogOperators">
 					<description value="Created"/>
 					<hbox width="100%">
 						<menulist>

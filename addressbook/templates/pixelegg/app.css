@@ -88,11 +88,7 @@ div.addressbook_edit_general_picture img {
 .custom_country {
   display: none;
 }
-input.et2_radiobox {
-  position: relative;
-  left: 7px;
-}
-#addressbook-edit_tel_prefer-tel_work,
+#addressbook-edit #addressbook-edit_tel_prefer-tel_work,
 #addressbook-edit_tel_prefer-tel_cell {
   left: 7px;
 }
@@ -117,23 +113,9 @@ input.et2_radiobox {
   top: 0;
   padding-top: 0;
 }
-#addressbook-edit_adr_one_locality,
-#addressbook-edit_adr_two_locality,
-#addressbook-edit_adr_one_postalcode,
-#addressbook-edit_adr_two_postalcode {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-#addressbook-edit_adr_one_postalcode,
-#addressbook-edit_adr_two_postalcode {
-  margin-right: -4px;
-}
 div.city_state_postcode #addressbook-edit_adr_two_postalcode,
 div.city_state_postcode #addressbook-edit_adr_one_postalcode {
   margin-right: 5px !important;
-}
-#addressbook-edit_role {
-  margin-right: 5px;
 }
 .addressbookHooked .egwGridView_grid label > span.et2_link {
   display: none;
