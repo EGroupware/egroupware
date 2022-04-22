@@ -54,9 +54,6 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 				font-size: 120% !important;
 				font-weight: bold;
 				color: gray !important;
-				position: relative;
-				left: -2px;
-				top: -2px;
 			}
 
 			select:hover {
