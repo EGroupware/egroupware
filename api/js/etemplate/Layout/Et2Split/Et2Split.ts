@@ -45,6 +45,9 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			.divider {
 				background-color: var(--gray_10)
 			}
+			.divider:hover {
+				filter: brightness(85%);
+			}
 			`
 		];
 	}
