@@ -36,12 +36,6 @@
 /**
  * Basic rules
  */
-input,
-button,
-select {
-    margin: 1px;
-    padding: 0px;
-}
 
 /*Hide element*/
 .hideme {
@@ -588,7 +582,6 @@ ul.et2_selectbox {
 /* padding between selectbox/textbox and it's label */
 input, select {
     text-indent: 5px;
-    max-width: 99% !important;
 }
 
 .et2_selectbox li {

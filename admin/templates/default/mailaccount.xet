@@ -75,14 +75,14 @@
 					<textbox blur="Hostname or IP" id="acc_imap_host" size="32" maxlength="128" span="all"/>
 				</row>
 				<row>
-					<description for="acc_imap_ssl" value="Secure connection"/>
-					<hbox>
-						<select class="emailadmin_ssl" id="acc_imap_ssl" needed="1" onchange="app.admin.wizard_imap_ssl_onchange"/>
-						<textbox type="integer" label="Port" id="acc_imap_port" needed="1" class="emailadmin_port"/>
-					</hbox>
-					<description/>
-					<description/>
-				</row>
+                    <description for="acc_imap_ssl" value="Secure connection"/>
+                    <hbox>
+                        <select class="emailadmin_ssl" id="acc_imap_ssl" needed="1"
+                                onchange="app.admin.wizard_imap_ssl_onchange"/>
+                    </hbox>
+                    <description for="acc_imap_port" value="Port"/>
+                    <textbox type="integer" id="acc_imap_port" needed="1" class="emailadmin_port"/>
+                </row>
 				<row class="emailadmin_no_single">
 					<groupbox span="all" class="emailadmin_imap_admin">
 						<caption label="IMAP administration"/>
@@ -327,7 +327,7 @@
 			<rows>
 				<row disabled="!@accounts" class="dialogHeader">
 					<description for="acc_id" value="Mail account"/>
-					<select id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
+                    <select id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth" span="2"/>
 					<description/>
 				</row>
 				<row class="dialogHeader">
@@ -335,14 +335,15 @@
 					<textbox id="acc_name" needed="1" size="80" class="et2_fullWidth"/>
 					<description align="right" value="$cont[acc_id]" class="emailadmin_diagnostic"/>
 				</row>
-				<row class="emailadmin_no_user dialogHeader2">
-					<description for="account_id" value="Valid for"/>
-					<hbox>
-						<select-account account_type="both" id="account_id" onchange="app.admin.account_hide_not_applying" empty_label="Everyone" expand_multiple_rows="4"/>
-						<checkbox label="account editable by user" id="acc_user_editable"/>
-					</hbox>
-					<description/>
-				</row>
+                <row class="emailadmin_no_user dialogHeader2">
+                    <description for="account_id" value="Valid for"/>
+                    <hbox span="all">
+                        <select-account account_type="both" id="account_id"
+                                        onchange="app.admin.account_hide_not_applying" empty_label="Everyone"
+                                        expand_multiple_rows="4"/>
+                        <checkbox label="account editable by user" id="acc_user_editable"/>
+                    </hbox>
+                </row>
 				<row>
 					<tabbox id="tabs" span="all" tab_height="420">
 						<tabs>

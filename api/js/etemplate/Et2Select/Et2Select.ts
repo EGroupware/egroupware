@@ -27,7 +27,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 			...super.styles,
 			css`
 			:host {
-				display: inline-block;
+				display: block;
 			}
 			select {
 				width: 100%
