@@ -67,9 +67,13 @@ button.infologExtraButton:hover {
     background-size: 16px;
 }
 
-.tab_toolbar {
+#infolog-edit .et2_toolbar {
     position: relative;
-    top: 19px;
+}
+
+.tab_toolbar {
+    position: absolute;
+    top: 8px;
 }
 
 .tab_toolbar > button, .tab_toolbar > et2-button {
