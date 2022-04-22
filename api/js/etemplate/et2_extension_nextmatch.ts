@@ -2348,6 +2348,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		if(time > 0)
 		{
+			if(!this.controller)
+			{
+				// Controller is not ready yet, come back later
+				setTimeout(() => {this._set_autorefresh(time)}, 1000);
+				return;
+			}
 			this._autorefresh_timer = setInterval(jQuery.proxy(this.controller.update, this.controller), time * 1000);
 
 			// Bind to tab show/hide events, so that we don't bother refreshing in the background
