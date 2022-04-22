@@ -1504,12 +1504,6 @@ class Vfs extends Vfs\Base
 
 		//error_log("Total files: " . $total_files . " Peak memory to zip: " . self::hsize(memory_get_peak_usage(true)));
 
-		// Stop any buffering
-		while(ob_get_level() > 0)
-		{
-			ob_end_clean();
-		}
-
 		// Stream the file to the client
 		header("Content-Type: application/zip");
 		header("Content-Length: " . filesize($zip_file));
