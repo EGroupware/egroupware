@@ -39,7 +39,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			}
 			/* CSS for child elements */
             ::slotted(*) {
-            	flex: 1 0 auto;
+            	flex: 1 1 auto;
             }
             ::slotted(img),::slotted(et2-image) {
             	/* Stop images from growing.  In general we want them to stay */

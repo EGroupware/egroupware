@@ -54,12 +54,13 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 					border: 1px solid var(--input-border-color);
 				}
 				.input-group__suffix{
+					text-align: center;
 				}
 				.input-group__container {
 					align-items: center
 				}
 				::slotted([slot="suffix"]) {
-					width: 12px;
+					width: 14px;
 					border: none !important;
 					background-color: transparent !important;
 				}
