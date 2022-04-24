@@ -570,7 +570,7 @@ class Select extends Etemplate\Widget
 				$decr = $type > 0 ? $type : 10;
 				for ($i=0; $i <= 100; $i += $decr)
 				{
-					$options[intval($i)] = intval($i).'%';
+					$options[(int)$i] = (int)$i.'%';
 				}
 				$options[100] = '100%';
 				if (!$rows || !empty($value))
@@ -669,8 +669,14 @@ class Select extends Etemplate\Widget
 				if ($type <= 0)  $type  = 3;
 				if ($type2 <= 0) $type2 = 2;
 				if ($type > 100 && $type2 > 100 && $type > $type) { $y = $type; $type=$type2; $type2=$y; }
-				$y = date('Y')-$type;
-				if ($value && $value-$type < $y || $type > 100) $y = $type > 100 ? $type : $value-$type;
+				if ($value && $value-$type < $y || $type > 100)
+				{
+					$y = $type > 100 ? $type : $value-$type;
+				}
+				else
+				{
+					$y = (int)date('Y')-$type;
+				}
 				$to = date('Y')+$type2;
 				if ($value && $value+$type2 > $to || $type2 > 100) $to = $type2 > 100 ? $type2 : $value+$type2;
 				for ($n = 0; $y <= $to && $n < 200; ++$n)
@@ -682,7 +688,7 @@ class Select extends Etemplate\Widget
 
 			case 'select-month':
 				$options = self::$monthnames;
-				$value = intval($value);
+				$value = (int)$value;
 				break;
 
 			case 'select-dow':	// options: rows[,0=summaries befor days, 1=summaries after days, 2=no summaries[,extraStyleMultiselect]]
@@ -731,7 +737,7 @@ class Select extends Etemplate\Widget
 				}
 				if (!is_array($value))
 				{
-					$value_in = $value;
+					$value_in = (int)$value;
 					$value = array();
 					foreach (array_keys($options) as $val)
 					{
@@ -757,14 +763,14 @@ class Select extends Etemplate\Widget
 				// fall-through
 
 			case 'select-number':	// options: rows,min,max,decrement,suffix
-				$type = $type === '' ? 1 : intval($type);		// min
-				$type2 = $type2 === '' ? 10 : intval($type2);	// max
+				$type = $type === '' ? 1 : (int)$type;		// min
+				$type2 = $type2 === '' ? 10 : (int)$type2;	// max
 				$format = '%d';
 				if (!empty($type3) && $type3[0] == '0')			// leading zero
 				{
 					$format = '%0'.strlen($type3).'d';
 				}
-				$type3 = !$type3 ? 1 : intval($type3);			// decrement
+				$type3 = !$type3 ? 1 : (int)$type3;			// decrement
 				if (($type <= $type2) != ($type3 > 0))
 				{
 					$type3 = -$type3;	// void infinite loop
