@@ -895,20 +895,20 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "5.20.4",
+            "version": "5.20.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
-                "reference": "d1f2e70dd2364280e19d4fce3aa2341166e37829"
+                "reference": "383c17083872fe60b6c8a312b5472fd7decc7a04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/d1f2e70dd2364280e19d4fce3aa2341166e37829",
-                "reference": "d1f2e70dd2364280e19d4fce3aa2341166e37829",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/383c17083872fe60b6c8a312b5472fd7decc7a04",
+                "reference": "383c17083872fe60b6c8a312b5472fd7decc7a04",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0 || ^8.0"
+                "php": "^7.3 || ^8.0"
             },
             "type": "library",
             "autoload": {
@@ -949,7 +949,7 @@
                 "issues": "https://github.com/ADOdb/ADOdb/issues",
                 "source": "https://github.com/ADOdb/ADOdb"
             },
-            "time": "2022-04-20T19:24:47+00:00"
+            "time": "2022-04-24T19:13:51+00:00"
         },
         {
             "name": "egroupware/bookmarks",
