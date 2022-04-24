@@ -31,7 +31,7 @@ $interfaces = [
 		'valid' => 'bool',
 	],
 	'IteratorAggregate' => [
-		'getIterator' => 'Traversable',
+		'getIterator' => '\Traversable',
 	],
 	'ArrayAccess' => [
 		'offsetExists' => 'bool',
