@@ -1401,7 +1401,7 @@ class calendar_boupdate extends calendar_bo
 				$rrule->next_no_exception();
 				$occurrence = $rrule->current();
 			}
-			while ($rrule->valid($event['whole_day']) && ($enddate = $occurrence));
+			while ($rrule->validDate($event['whole_day']) && ($enddate = $occurrence));
 			$enddate->modify(($event['end'] - $event['start']).' second');
 			$event['recur_enddate'] = $save_event['recur_enddate'] = $enddate->format('ts');
 			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
