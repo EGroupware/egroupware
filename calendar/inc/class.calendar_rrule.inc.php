@@ -385,9 +385,9 @@ class calendar_rrule implements Iterator
 	/**
 	 * Return the current element
 	 *
-	 * @return DateTime
+	 * @return Api\DateTime
 	 */
-	public function current()
+	public function current(): Api\DateTime
 	{
 		return clone $this->current;
 	}
@@ -397,7 +397,7 @@ class calendar_rrule implements Iterator
 	 *
 	 * @return int
 	 */
-	public function key()
+	public function key(): int
 	{
 		return (int)$this->current->format('Ymd');
 	}
@@ -476,9 +476,9 @@ class calendar_rrule implements Iterator
 	}
 
 	/**
-	 * Move forward to next recurence, taking into account exceptions
+	 * Move forward to next recurrence, taking into account exceptions
 	 */
-	public function next()
+	public function next(): void
 	{
 		do
 		{
@@ -555,7 +555,7 @@ class calendar_rrule implements Iterator
 	/**
 	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->current = clone $this->time;
 		while ($this->valid() &&
@@ -569,20 +569,30 @@ class calendar_rrule implements Iterator
 	/**
 	 * Checks if current position is valid
 	 *
-	 * @param boolean $use_just_date =false default use also time
+	 * @param boolean? $use_just_date true: use just date, false|null: use also time
 	 * @return boolean
 	 */
-	public function valid($use_just_date=false)
+	public function validDate(bool $use_just_date=null): bool
 	{
 		if ($use_just_date)
 		{
 			return $this->current->format('Ymd') <= $this->enddate_ymd;
 		}
+		return $this->valid();
+	}
+
+	/**
+	 * Checks if current position is valid
+	 *
+	 * @return boolean
+	 */
+	public function valid(): bool
+	{
 		return $this->current->format('ts') < $this->enddate_ts;
 	}
 
 	/**
-	 * Return string represenation of RRule
+	 * Return string representation of RRule
 	 *
 	 * @return string
 	 */
@@ -592,7 +602,7 @@ class calendar_rrule implements Iterator
 		// Repeated Events
 		if($this->type != self::NONE)
 		{
-			$str = lang(self::$types[$this->type]);
+			$str = (string)lang(self::$types[$this->type]);
 
 			$str_extra = array();
 			switch ($this->type)
@@ -1186,6 +1196,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 
 	$rrule = new calendar_rrule($time,$_REQUEST['type'],$_REQUEST['interval'],$enddate,$weekdays,$exceptions);
 	echo "<h3>".$time->format('l').', '.$time.' ('.$tz->getName().') '.$rrule."</h3>\n";
+	$n = 0;
 	foreach($rrule as $rtime)
 	{
 		$rtime->setTimezone(Api\DateTime::$user_timezone);

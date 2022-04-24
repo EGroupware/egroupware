@@ -94,7 +94,7 @@ class Customfields implements \IteratorAggregate
 	 *
 	 * @return Api\Db\CallbackIterator
 	 */
-	function getIterator()
+	function getIterator(): Api\Db\CallbackIterator
 	{
 		return new Api\Db\CallbackIterator($this->iterator, function($_row)
 		{

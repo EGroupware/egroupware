@@ -118,9 +118,9 @@ class CallbackIterator implements \Iterator
 	/**
 	 * Return the current element
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function current()
+	public function current(): mixed
 	{
 		if (is_a($this->rs,'iterator'))
 		{
@@ -136,7 +136,7 @@ class CallbackIterator implements \Iterator
 	 *
 	 * @return int
 	 */
-	public function key()
+	public function key(): int
 	{
 		if (is_a($this->rs,'iterator'))
 		{
@@ -150,22 +150,22 @@ class CallbackIterator implements \Iterator
 	/**
 	 * Move forward to next element (called after each foreach loop)
 	 */
-	public function next()
+	public function next(): void
 	{
 		if (is_a($this->rs,'iterator'))
 		{
-			return $this->rs->next();
+			$this->rs->next();
 		}
 	}
 
 	/**
 	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		if (is_a($this->rs,'iterator'))
 		{
-			return $this->rs->rewind();
+			$this->rs->rewind();
 		}
 	}
 
@@ -174,7 +174,7 @@ class CallbackIterator implements \Iterator
 	 *
 	 * @return boolean
 	 */
-	public function valid ()
+	public function valid (): bool
 	{
 		if (is_a($this->rs,'iterator'))
 		{

@@ -908,7 +908,7 @@ class Account implements \ArrayAccess
 	 * @param string $offset
 	 * @return mixed
 	 */
-	public function offsetGet($offset)
+	public function offsetGet($offset): mixed
 	{
 		return $this->__get($offset);
 	}
@@ -919,7 +919,7 @@ class Account implements \ArrayAccess
 	 * @param string $offset
 	 * @return boolean
 	 */
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return $this->__isset($offset);
 	}
@@ -933,7 +933,7 @@ class Account implements \ArrayAccess
 	 * @param mixed $value
 	 * @throws Api\Exception\WrongParameter
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		throw new Api\Exception\WrongParameter(__METHOD__."($offset, $value) No write access through ArrayAccess interface of Account!");
 	}
@@ -946,7 +946,7 @@ class Account implements \ArrayAccess
 	 * @param string $offset
 	 * @throws Api\Exception\WrongParameter
 	 */
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		throw new Api\Exception\WrongParameter(__METHOD__."($offset) No write access through ArrayAccess interface of Account!");
 	}
