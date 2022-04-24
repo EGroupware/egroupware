@@ -134,9 +134,9 @@ class CallbackIterator implements \Iterator
 	/**
 	 * Return the key of the current element
 	 *
-	 * @return int
+	 * @return mixed
 	 */
-	public function key(): int
+	public function key(): mixed
 	{
 		if (is_a($this->rs,'iterator'))
 		{
