@@ -47,6 +47,10 @@
 		"platform": {
 			"php": "7.3"
 		},
+		"preferred-install": {
+			"egroupware/*": "source",
+			"*": "dist"
+		},
 		"fxp-asset": {
 			"enabled": false
 		},
