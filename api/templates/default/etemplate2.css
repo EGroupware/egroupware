@@ -2721,35 +2721,36 @@ div.ui-dialog div.ui-dialog-content > div {
 div.et2_toolbar.ui-widget-header {
     background: none;
 }
-
-div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
-    background-image: url(../../../pixelegg/images/dots.svg);
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short {
+    background-image: url(pixelegg/images/dots.svg);
     background-size: 16px;
     height: 24px;
     width: 20px;
     margin-top: 0px;
+    background-repeat: no-repeat;
 }
 
-div.et2_toolbar_more h.ui-accordion-header.header_list-short {
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short {
     padding: 0px !important;
     width: 40px;
     height: 24px;
     margin-top: 0px;
 }
 
-div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short::marker {
     top: 0px;
     left: auto;
+    content: '';
 }
 
-.et2_toolbar_more .ui-accordion-header-active.header_list-short.ui-state-active span.ui-accordion-header-icon {
+.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.header_list-short{
     background-position: bottom !important;
     margin-top: 2px;
     left: 0;
     top: 0;
 }
 
-.et2_toolbar .et2_toolbar_more h .toolbar-admin-pref {
+.et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
     background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;
     background-size: 12px;
@@ -2762,18 +2763,18 @@ div.et2_toolbar_more h.ui-accordion-header.header_list-short span.ui-accordion-h
     background-position: center;
 }
 
-.et2_toolbar .et2_toolbar_more h .toolbar-admin-pref:hover {
+.et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref:hover {
     background-color: #ffd555;
 }
 
-.et2_toolbar .et2_toolbar_more span.ui-accordion-header-icon {
+.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader {
     background-image: url(../../../pixelegg/images/arrow_right.svg);
     background-position: center;
     background-size: 12px;
     background-repeat: no-repeat;
 }
 
-.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader.ui-accordion-header-active.ui-state-active span.ui-accordion-header-icon {
+.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader {
     background-image: url(../../../pixelegg/images/arrow_down.svg);
     background-size: 12px;
     background-position: center;

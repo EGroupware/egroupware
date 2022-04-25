@@ -119,7 +119,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			this.options.preference_app = this.egw().app_name();
 		}
 
-		this.actionbox = jQuery(document.createElement('div'))
+		this.actionbox = jQuery(document.createElement('details'))
 			.addClass("et2_toolbar_more")
 			.attr('id',this.id +'-'+ 'actionbox');
 
@@ -249,7 +249,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionlist.empty();
 		let admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="'+egw.lang('Admin settings')+' ..."></span>': '';
 		const header_list = this.options.header_list == 'more'?true:false;
-		this.actionbox.append('<h class="ui-toolbar-menulistHeader'+(!header_list?' header_list-short':' ')+'">'+(header_list?egw.lang('more')+' ...':'')+admin_setting+'</h>');
+		this.actionbox.append('<summary class="ui-toolbar-menulistHeader'+(!header_list?' header_list-short':' ')+'">'+(header_list?egw.lang('more')+' ...':'')+admin_setting+'</summary>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		let that = this;
 		if (this.options.is_admin)
@@ -498,43 +498,6 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),false);
 				ui.draggable.appendTo(that.actionlist);
 				that._build_menu(actions);
-			}
-		});
-		toolbox.accordion({
-			heightStyle:"fill",
-			collapsible: true,
-			active:'none',
-			animate: 10,
-			activate: function (event, ui) {
-				var menubox = jQuery(event.target);
-				if (ui.oldHeader.length == 0)
-				{
-					jQuery('html').on('click.outsideOfMenu', function (event){
-						if (menubox.accordion('instance'))
-						{
-							menubox.accordion( "option", "active", 2);
-						}
-						jQuery(this).unbind(event);
-						// Remove the focus class, user clicked elsewhere
-						menubox.children().removeClass('ui-state-focus');
-					});
-				}
-			},
-			create: function (event, ui) {
-				jQuery('html').unbind('click.outsideOfMenu');
-			},
-			beforeActivate: function ()
-			{
-				if (egwIsMobile())
-				{
-					menulist.height(screen.availHeight - 50);
-				}
-				else
-				{
-					menulist.css({height:'inherit'})
-				}
-				// Nothing to show in menulist
-				if (menulist.children().length == 0)	return false;
 			}
 		});
 	}
