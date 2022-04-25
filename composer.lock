@@ -1619,12 +1619,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
-                "reference": "01960a7b12d50558870c7878b30452784ee9cbc5"
+                "reference": "435450bb9393b785545e6b74e5f6089ee423c69a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/01960a7b12d50558870c7878b30452784ee9cbc5",
-                "reference": "01960a7b12d50558870c7878b30452784ee9cbc5",
+                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/435450bb9393b785545e6b74e5f6089ee423c69a",
+                "reference": "435450bb9393b785545e6b74e5f6089ee423c69a",
                 "shasum": ""
             },
             "require": {
