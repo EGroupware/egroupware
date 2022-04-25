@@ -60,10 +60,9 @@ const Et2InputWidgetMixin = (superclass) =>
 				/* Validation error styles */
 				::slotted(lion-validation-feedback[type]) {
 					position: absolute;
-					padding: 1ex;
+					padding: 5px 1ex;
 					background-color: white;
-					border-top: 2px solid;
-					border-bottom: 1px solid;
+					border: 1px solid;
 					border-color: var(--primary-color);
 					z-index: 1;
 				}
