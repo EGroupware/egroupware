@@ -275,6 +275,17 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 						old[name] = this.style[name];
 					}
 				}
+				else if (this.computedStyleMap)
+				{
+					for (var name in props)
+					{
+						let s = this.computedStyleMap().get(name)
+						if (s)
+						{
+							old[name] = s.value || "";
+						}
+					}
+				}
 				jQuery(this).show();
 				oldProps.push(old);
 			});
