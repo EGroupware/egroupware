@@ -833,7 +833,7 @@ class calendar_boupdate extends calendar_bo
 			$msg = $prefs['notifyAdded'];	// use a default
 		}
 		//error_log(__METHOD__."($msg_type) action='$action', $msg='$msg' returning '$method'");
-		return $method;
+		return $method ?? null;
 	}
 
 	/**
@@ -994,7 +994,7 @@ class calendar_boupdate extends calendar_bo
 					//$cleared_event = $this->read($event['id'], null, true, 'server');
 					$this->clear_private_infos($cleared_event, array($userid));
 				}
-				$userid = $res_info['responsible'];
+				$userid = $res_info['responsible'] ?? null;
 
 				if (empty($userid))	// no resource responsible: $userid===0
 				{
@@ -1247,7 +1247,7 @@ class calendar_boupdate extends calendar_bo
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
 						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
 
-						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
+						if(!empty($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
 						$errors = notifications::errors(true);
 					}
@@ -1289,7 +1289,7 @@ class calendar_boupdate extends calendar_bo
 			Api\Translation::init();
 		}
 		// restore timezone, in case we had to reset it to server-timezone
-		if ($restore_tz) date_default_timezone_set($restore_tz);
+		if (!empty($restore_tz)) date_default_timezone_set($restore_tz);
 
 		return true;
 	}
@@ -2131,7 +2131,7 @@ class calendar_boupdate extends calendar_bo
 
 		$var['updated'] = Array(
 			'field'	=> lang('Updated'),
-			'data'	=> $this->format_date($event['modtime']).', '.Api\Accounts::username($event['modifier'])
+			'data'	=> $this->format_date($event['modtime'] ?? null).', '.Api\Accounts::username($event['modifier'])
 		);
 
 		$var['access'] = Array(

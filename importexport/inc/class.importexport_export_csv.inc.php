@@ -249,7 +249,7 @@ class importexport_export_csv implements importexport_iface_export_record
 					break;
 				case 'date':
 				case 'date-time':
-					if ($c_field['values']['format'])
+					if (!empty($c_field['values']['format']))
 					{
 						// Date has custom format.  Convert so it's standard, don't do normal processing
 						$type = $c_field['type'];
@@ -312,7 +312,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	{
 		if($appname)
 		{
-			if(!self::$cf_parse_cache[$appname])
+			if(empty(self::$cf_parse_cache[$appname]))
 			{
 				$c_fields = self::convert_parse_custom_fields($record, $appname, $selects, $links, $methods);
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
@@ -343,7 +343,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		foreach($fields['select'] ?? [] as $name)
 		{
-			if($record->$name != null && is_array($selects) && $selects[$name])
+			if($record->$name != null && is_array($selects) && !empty($selects[$name]))
 			{
 				$record->$name = is_string($record->$name) ? explode(',', $record->$name) : $record->$name;
 				if(is_array($record->$name))
@@ -368,7 +368,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		foreach($fields['links'] ?? [] as $name) {
 			if($record->$name) {
-				if(is_numeric($record->$name) && !$links[$name]) {
+				if(is_numeric($record->$name) && empty($links[$name])) {
 					$link = Link::get_link($record->$name);
 					$links[$name] = ($link['link_app1'] == $appname ? $link['link_app2'] : $link['link_app1']);
 					$record->$name = ($link['link_app1'] == $appname ? $link['link_id2'] : $link['link_id1']);
@@ -428,13 +428,13 @@ class importexport_export_csv implements importexport_iface_export_record
 			{
 				$dec_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];
 				if (empty($dec_separator)) $dec_separator = '.';
-				$thousands_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][1];
+				$thousands_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][1] ?? '';
 			}
 			if($record->$name && (string)$record->$name != '')
 			{
 				if(!is_numeric($record->$name))
 				{
-					$record->$name = floatval(str_replace($dec_separator, '.', preg_replace('/[^\d'.preg_quote($dec_separator).']/', '', $record->$name)));
+					$record->$name = (float)(str_replace($dec_separator, '.', preg_replace('/[^\d'.preg_quote($dec_separator, '/').']/', '', $record->$name)));
 				}
 				$record->$name = number_format(str_replace(' ','',$record->$name), 2,
 					$dec_separator,$thousands_separator

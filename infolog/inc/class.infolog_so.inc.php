@@ -798,7 +798,7 @@ class infolog_so
 		// query children independent of action
 		if (empty($query['col_filter']['info_id_parent']))
 		{
-			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : ($query['action'] ?? null);
+			$action = isset($action2app[$query['action']??null]) ? $action2app[$query['action']] : ($query['action'] ?? null);
 			if ($action)
 			{
 				$links = Link\Storage::get_links($action=='sp'?'infolog':$action,
@@ -947,7 +947,7 @@ class infolog_so
 		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] != '1' && $action != 'sp' ||
-			(string)$query['col_filter']['info_id_parent'] !== '' ||
+			($query['col_filter']['info_id_parent']??'') !== '' ||
 			 isset($query['subs']) && $query['subs'] || $action != 'sp' && !empty($query['search']))
 		{
 			$pid = '';

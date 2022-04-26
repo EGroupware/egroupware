@@ -419,11 +419,11 @@ class addressbook_hooks
 	{
 		unset($location);	// not used, but required by function signature
 
-		return $GLOBALS['egw_info']['server']['contact_export_limit'];
+		return $GLOBALS['egw_info']['server']['contact_export_limit'] ?? null;
 	}
 
 	/**
-	 * Register contacts as calendar resources (items which can be sheduled by the calendar)
+	 * Register contacts as calendar resources (items which can be scheduled by the calendar)
 	 *
 	 * @param array $args hook-params (not used)
 	 * @return array
@@ -433,7 +433,7 @@ class addressbook_hooks
 		unset($args);	// not used, but required by function signature
 
 		return array(
-			'type' => 'c',// one char type-identifiy for this resources
+			'type' => 'c',// one char type-identifier for this resource
 			'info' => 'api.EGroupware\\Api\\Contacts.calendar_info',// info method, returns array with id, type & name for a given id
 		);
 	}

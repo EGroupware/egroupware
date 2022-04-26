@@ -84,7 +84,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		$cals_pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'];
+		$cals_pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-cals'] ?? null;
 		$cals = $cals_pref ? explode(',',$cals_pref) : array('P');	// implicit default of 'P'
 		$folderlist = array();
 

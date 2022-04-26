@@ -97,8 +97,8 @@ class notifications_email implements notifications_iface {
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false, $_data = false)
 	{
-		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient);
-		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient)."</body>\n</html>\n";
+		$body_plain = $_messages['plain'].$this->render_links($_links, false, $this->preferences->external_mailclient??false);
+		$body_html = "<html><body>\n".$_messages['html'].$this->render_links($_links, true, $this->preferences->external_mailclient??false)."</body>\n</html>\n";
 
 		$this->mail->ClearAddresses();
 		$this->mail->ClearAttachments();

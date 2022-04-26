@@ -129,7 +129,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 		if (!isset($abs) || !$return_all_in_one)
 		{
-			if ($return_all_in_one && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+			if ($return_all_in_one && ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] ?? null))
 			{
 				$abs = array(
 					$GLOBALS['egw_info']['user']['account_id'] => lang('All'),
@@ -141,7 +141,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 				if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
-				$pref_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
+				$pref_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'] ?? [];
 				if (!is_array($pref_abs))
 				{
 					$pref_abs = $pref_abs ? explode(',',$pref_abs) : [];

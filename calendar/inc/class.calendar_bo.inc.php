@@ -262,7 +262,7 @@ class calendar_bo
 		//error_log(__METHOD__ . " registered resources=". array2string($this->resources));
 
 		$this->config = Api\Config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
-		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
+		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'] ?? null;
 
 		$this->categories = new Api\Categories($this->user,'calendar');
 
@@ -1686,7 +1686,7 @@ class calendar_bo
 				$id2email[$id] = $GLOBALS['egw']->accounts->id2name($id,'account_email');
 			}
 		}
-		return $id2lid[$id].(($append_email || $id[0] == 'e') && $id2email[$id] ? ' <'.$id2email[$id].'>' : '');
+		return $id2lid[$id].(($append_email || $id[0] == 'e') && !empty($id2email[$id]) ? ' <'.$id2email[$id].'>' : '');
 	}
 
 	/**
