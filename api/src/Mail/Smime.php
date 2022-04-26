@@ -295,7 +295,7 @@ class Smime extends Horde_Crypt_Smime
 			// remove other imap stuffs but smime
 			if (!preg_match("/acc_smime/", $key)) unset($acc_smime[$key]);
 		}
-		if ($acc_smime['acc_smime_password'])
+		if (!empty($acc_smime['acc_smime_password']))
 		{
 			$extracted = self::extractCertPKCS12(
 					$acc_smime['acc_smime_password'],
