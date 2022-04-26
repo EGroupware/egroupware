@@ -327,13 +327,13 @@ class mail_compose
 		$_contentHasMimeType = $_content? array_key_exists('mimeType',(array)$_content):false;
 
 		// fetch appendix data which is an assistance input value consisiting of json data
-		if ($_content['appendix_data'])
+		if (!empty($_content['appendix_data']))
 		{
 			$appendix_data = json_decode($_content['appendix_data'], true);
 			$_content['appendix_data'] = '';
 		}
 
-		if ($appendix_data['emails'])
+		if (!empty($appendix_data['emails']))
 		{
 			try {
 				if ($appendix_data['emails']['processedmail_id']) $_content['processedmail_id'] .= ','.$appendix_data['emails']['processedmail_id'];
@@ -350,11 +350,11 @@ class mail_compose
 		}
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
-		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
+		if (empty($replyID) && isset($_GET['id'])) $replyID = $_GET['id'];
 
 		// Process different places we can use as a start for composing an email
 		$actionToProcess = 'compose';
-		if($_GET['from'] && $replyID)
+		if(!empty($_GET['from']) && $replyID)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(
 				// Parameters needed for fetching appropriate data
@@ -382,7 +382,7 @@ class mail_compose
 		}
 
 		$composeCache = array();
-		if (isset($_content['composeID'])&&!empty($_content['composeID']))
+		if (!empty($_content['composeID']))
 		{
 			$isFirstLoad = false;
 			$composeCache = Api\Cache::getCache(Api\Cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$_content['composeID'],$callback=null,$callback_params=array(),$expiration=60*60*2);
@@ -407,7 +407,7 @@ class mail_compose
 			}
 		}
 		// VFS Selector was used
-		if (is_array($_content['selectFromVFSForCompose']))
+		if (!empty($_content['selectFromVFSForCompose']))
 		{
 			$suppressSigOnTop = true;
 			foreach ($_content['selectFromVFSForCompose'] as $i => $path)
@@ -422,7 +422,7 @@ class mail_compose
 			unset($_content['selectFromVFSForCompose']);
 		}
 		// check everything that was uploaded
-		if (is_array($_content['uploadForCompose']))
+		if (!empty($_content['uploadForCompose']))
 		{
 			$suppressSigOnTop = true;
 			foreach ($_content['uploadForCompose'] as $i => &$upload)
@@ -487,7 +487,7 @@ class mail_compose
 		// at several locations and not neccesaryly initialized before
 		$acc = Mail\Account::read($composeProfile);
 		$buttonClicked = false;
-		if ($_content['composeToolbar'] === 'send')
+		if (!empty($_content['composeToolbar']) && $_content['composeToolbar'] === 'send')
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
@@ -638,7 +638,7 @@ class mail_compose
 
 		}
 		// user might have switched desired mimetype, so we should convert
-		if ($content['is_html'] && $content['mimeType']=='plain')
+		if (!empty($content['is_html']) && $content['mimeType'] === 'plain')
 		{
 			//error_log(__METHOD__.__LINE__.$content['mail_htmltext']);
 			$suppressSigOnTop = true;
@@ -662,7 +662,7 @@ class mail_compose
 			$content['is_html'] = false;
 			$content['is_plain'] = true;
 		}
-		if ($content['is_plain'] && $content['mimeType']=='html')
+		if (!empty($content['is_plain']) && $content['mimeType'] === 'html')
 		{
 			// the possible font span should only be applied on first load or on switch plain->html
 			$isFirstLoad = "switchedplaintohtml";
@@ -831,7 +831,7 @@ class mail_compose
 		// On submit reads external_vcard widget's value and addes them as attachments.
 		// this happens when we send vcards from addressbook to an opened compose
 		// dialog.
-		if ($appendix_data['files'])
+		if (!empty($appendix_data['files']))
 		{
 			$_REQUEST['preset']['file'] = $appendix_data['files']['file'];
 			$_REQUEST['preset']['type'] = $appendix_data['files']['type'];
@@ -897,11 +897,11 @@ class mail_compose
 				}
 			}
 			// handle preset info/values
-			if (is_array($_REQUEST['preset']))
+			if (!empty($_REQUEST['preset']))
 			{
 				$alreadyProcessed=array();
 				//_debug_array($_REQUEST);
-				if ($_REQUEST['preset']['mailto']) {
+				if (!empty($_REQUEST['preset']['mailto'])) {
 					// handle mailto strings such as
 					// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
 					// the above string may be htmlentyty encoded, then multiple body tags are supported
@@ -928,7 +928,7 @@ class mail_compose
 					}
 				}
 
-				if ($_REQUEST['preset']['mailtocontactbyid']) {
+				if (!empty($_REQUEST['preset']['mailtocontactbyid'])) {
 					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 						$contacts_obj = new Api\Contacts();
 						$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
@@ -1002,7 +1002,7 @@ class mail_compose
 					}
 				}
 
-				if (isset($_REQUEST['preset']['file']))
+				if (!empty($_REQUEST['preset']['file']))
 				{
 					$content['filemode'] = !empty($_REQUEST['preset']['filemode']) &&
 							(isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) || isset(Vfs\HiddenUploadSharing::$modes[$_REQUEST['preset']['filemode']])) ?
@@ -1026,14 +1026,14 @@ class mail_compose
 				foreach(array('to','cc','bcc','subject','body','mimeType') as $name)
 				{
 					//always handle mimeType
-					if ($name=='mimeType' && $_REQUEST['preset'][$name])
+					if ($name=='mimeType' && !empty($_REQUEST['preset'][$name]))
 					{
 						$_content[$name]=$content[$name]=$_REQUEST['preset'][$name];
 					}
 					//skip if already processed by "preset Routines"
 					if ($alreadyProcessed[$name]) continue;
 					//error_log(__METHOD__.__LINE__.':'.$name.'->'. $_REQUEST['preset'][$name]);
-					if ($_REQUEST['preset'][$name]) $content[$name] = $_REQUEST['preset'][$name];
+					if (!empty($_REQUEST['preset'][$name])) $content[$name] = $_REQUEST['preset'][$name];
 				}
 			}
 			// is the to address set already?
@@ -1194,17 +1194,17 @@ class mail_compose
 
 			if ($insertSigOnTop === 'below')
 			{
-				$content['body'] = $font_span.$content['body'].$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
+				$content['body'] = $content['body'].$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
 			}
 			else
 			{
-				$content['body'] = $font_span.$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
+				$content['body'] = $before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
 			}
 		}
 		// Skip this part if we're merging, it would add an extra line at the top
 		else if (!$content['body'])
 		{
-			$content['body'] = ($font_span?($isFirstLoad === "switchedplaintohtml"?$font_part:$font_span):'').($isFirstLoad === "switchedplaintohtml"?"</span>":"");
+			$content['body'] = ($isFirstLoad === "switchedplaintohtml"?"</span>":"");
 		}
 		//error_log(__METHOD__.__LINE__.$content['body']);
 
@@ -1389,11 +1389,11 @@ class mail_compose
 		{
 			foreach($content['attachments'] as &$attach)
 			{
-				$attach['is_dir'] = is_dir($attach['file']);
-				$attach['filemode_icon'] = !is_dir($attach['file']) &&
+				$attach['is_dir'] = !empty($attach['file']) && is_dir($attach['file']);
+				$attach['filemode_icon'] = !empty($attach['file']) && !is_dir($attach['file']) && !empty($content['filemode']) &&
 						($content['filemode'] == Vfs\Sharing::READONLY || $content['filemode'] == Vfs\Sharing::WRITABLE)
-						? Vfs\Sharing::LINK : $content['filemode'];
-				$attach['filemode_title'] = lang(Vfs\Sharing::$modes[$attach['filemode_icon']]['label']);
+						? Vfs\Sharing::LINK : $content['filemode'] ?? '';
+				$attach['filemode_title'] = lang(Vfs\Sharing::$modes[$attach['filemode_icon']]['label'] ?? '');
 			}
 		}
 
@@ -1776,7 +1776,7 @@ class mail_compose
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
-			if(!$foundAddresses[$keyemail]) {
+			if(empty($foundAddresses[$keyemail])) {
 				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['replyto'][] = $val;
 				$foundAddresses[$keyemail] = true;
@@ -1791,7 +1791,7 @@ class mail_compose
 				continue;
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
-			if(!$foundAddresses[$keyemail]) {
+			if(empty($foundAddresses[$keyemail])) {
 				$address = $this->mail_bo->decode_header($val,true);
 				$this->sessionData['bcc'][] = $val;
 				$foundAddresses[$keyemail] = true;
@@ -1808,32 +1808,32 @@ class mail_compose
 		if($bodyParts['0']['mimeType'] == 'text/html') {
 			$this->sessionData['mimeType'] 	= 'html';
 
-			for($i=0; $i<count($bodyParts); $i++) {
+			foreach($bodyParts as $i => &$bodyPart) {
 				if($i>0) {
 					$this->sessionData['body'] .= '<hr>';
 				}
-				if($bodyParts[$i]['mimeType'] == 'text/plain') {
+				if($bodyPart['mimeType'] == 'text/plain') {
 					#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body']);
-					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
+					$bodyPart['body'] = "<pre>".$bodyPart['body']."</pre>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
-				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
+				if ($bodyPart['charSet']===false) $bodyPart['charSet'] = Mail::detect_encoding($bodyPart['body']);
+				$bodyParts[$i]['body'] = Api\Translation::convert_jsonsafe($bodyPart['body'], $bodyPart['charSet']);
+				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyPart['body'] . 'a' , strtoupper($bodyPart['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
+				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyPart['body'] ;
 			}
 			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID);
 
 		} else {
 			$this->sessionData['mimeType']	= 'plain';
 
-			for($i=0; $i<count($bodyParts); $i++) {
+			foreach($bodyParts as $i => &$bodyPart) {
 				if($i>0) {
 					$this->sessionData['body'] .= "<hr>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				if ($bodyPart['charSet']===false) $bodyPart['charSet'] = Mail::detect_encoding($bodyPart['body']);
+				$bodyPart['body'] = Api\Translation::convert_jsonsafe($bodyPart['body'], $bodyPart['charSet']);
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
+				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyPart['body'] ;
 			}
 			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
@@ -3142,7 +3142,7 @@ class mail_compose
 							'mail',
 							'smime_passphrase',
 							$_formData['smime_passphrase'],
-						(int)($GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp']?:10) * 60
+						(int)($GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp']??10) * 60
 						);
 					}
 					$smime_success = $this->_encrypt(
@@ -3338,10 +3338,10 @@ class mail_compose
 			|| (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 			// mark message as answered
 			$mail_bo->openConnection();
-			$mail_bo->reopen(($this->sessionData['messageFolder']?$this->sessionData['messageFolder']:$this->sessionData['sourceFolder']));
+			$mail_bo->reopen($this->sessionData['messageFolder'] ?? $this->sessionData['sourceFolder']);
 			// if the draft folder is a starting part of the messages folder, the draft message will be deleted after the send
 			// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
-			if ($mail_bo->isDraftFolder($this->sessionData['messageFolder']) && !$mail_bo->isTemplateFolder($this->sessionData['messageFolder']))
+			if (!empty($this->sessionData['messageFolder']) && $mail_bo->isDraftFolder($this->sessionData['messageFolder']) && !$mail_bo->isTemplateFolder($this->sessionData['messageFolder']))
 			{
 				try // message may be deleted already, as it maybe done by autosave
 				{
@@ -3358,7 +3358,7 @@ class mail_compose
 					unset($e);
 				}
 			} else {
-				$mail_bo->flagMessages("answered", $this->sessionData['uid'],($this->sessionData['messageFolder']?$this->sessionData['messageFolder']:$this->sessionData['sourceFolder']));
+				$mail_bo->flagMessages("answered", $this->sessionData['uid'], $this->sessionData['messageFolder'] ?? $this->sessionData['sourceFolder']);
 				//error_log(__METHOD__.__LINE__.array2string(array_keys($this->sessionData)).':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
 				if (array_key_exists('forwardFlag',$this->sessionData) && $this->sessionData['forwardFlag']=='forwarded')
 				{
@@ -3860,8 +3860,8 @@ class mail_compose
 			if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 			{
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID, $params['passphrase']);
-				$params['senderPrivKey'] = $acc_smime['pkey'];
-				$params['extracerts'] = $acc_smime['extracerts'];
+				$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
+				$params['extracerts'] = $acc_smime['extracerts'] ?? null;
 			}
 
 			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))

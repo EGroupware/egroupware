@@ -274,7 +274,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->_wasteID = false;
 		$this->_sentID = false;
 
-		if (!$this->mail)
+		if (empty($this->mail))
 		{
 			$this->account = $account;
 			// todo: tell mail which account to use
@@ -1089,10 +1089,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				($headers['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['date'],'ts',true);
 			$output->to = $headers['to_address'];
-			if ($headers['to']) $output->displayto = $headers['to_address']; //$headers['FETCHED_HEADER']['to_name']
+			if (!empty($headers['to'])) $output->displayto = $headers['to_address']; //$headers['FETCHED_HEADER']['to_name']
 			$output->from = $headers['sender_address'];
-			if (isset($headers['cc_addresses']) && $headers['cc_addresses']) $output->cc = $headers['cc_addresses'];
-			if (isset($headers['reply_to_address']) && $headers['reply_to_address']) $output->reply_to = $headers['reply_to_address'];
+			if (!empty($headers['cc_addresses'])) $output->cc = $headers['cc_addresses'];
+			if (!empty($headers['reply_to_address'])) $output->reply_to = $headers['reply_to_address'];
 
 			$output->messageclass = "IPM.Note";
 			if (stripos($headers['mimetype'],'multipart')!== false &&
@@ -1669,7 +1669,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		array_pop($parent);
 		$parent = implode($delimiter,$parent);
 
-		$id = $parent && $this->folders[$parent] ? $this->createID($account, $parent) : '0';
+		$id = $parent && !empty($this->folders[$parent]) ? $this->createID($account, $parent) : '0';
 		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$folder') --> parent=$parent --> $id");
 		return $id;
 	}

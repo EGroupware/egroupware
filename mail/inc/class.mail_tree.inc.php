@@ -573,11 +573,11 @@ class mail_tree
 
 		if ($identLabel & self::IDENT_EMAIL || empty($name))
 		{
-			if ($_fullString && (strpos($_account['ident_email'], '@') !== false || trim($_account['ident_email']) !=''))
+			if ($_fullString && trim($_account['ident_email']))
 			{
 				$name[] = ' <'.$_account['ident_email'].'>';
 			}
-			elseif(strpos($_account['acc_imap_username'], '@') !== false || trim($_account['acc_imap_username']) !='')
+			elseif (!empty($_account['acc_imap_username']) && trim($_account['acc_imap_username']))
 			{
 				$name[] = ' <'.$_account['acc_imap_username'].'>';
 			}

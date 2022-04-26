@@ -526,8 +526,8 @@ class Account implements \ArrayAccess
 			Api\Preferences::setlocale(LC_MESSAGES);
 
 			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
-				'username' => $params['acc_smtp_username'],
-				'password' => $params['acc_smtp_password'],
+				'username' => $params['acc_smtp_username'] ?? null,
+				'password' => $params['acc_smtp_password'] ?? null,
 				'host' => $params['acc_smtp_host'],
 				'port' => $params['acc_smtp_port'],
 				'secure' => $secure,

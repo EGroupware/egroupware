@@ -283,7 +283,7 @@ class Credentials
 			'acc_imap_password' => $password,
 			'acc_imap_cred_id'  => $data['acc_imap_logintype'],	// to NOT store it
 			'acc_imap_account_id' => 'c',
-		) + ($data['acc_smtp_auth_session'] ? array(
+		) + (!empty($data['acc_smtp_auth_session']) ? array(
 			// only set smtp
 			'acc_smtp_username' => $username,
 			'acc_smtp_password' => $password,
