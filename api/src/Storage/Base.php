@@ -23,7 +23,7 @@ use EGroupware\Api;
  * 2) by setting the following documented class-vars in a class derived from this one
  * Of cause you can derive from the class and call the constructor with params.
  *
- * @todo modify search() to return an interator instead of an array
+ * @todo modify search() to return an iterator instead of an array
  */
 class Base
 {
@@ -495,7 +495,7 @@ class Base
 		$query = [];
 		foreach ($this->db_key_cols as $db_col => $col)
 		{
-			if ($this->data[$col] != '')
+			if ((string)($this->data[$col] ?? '') !== '')
 			{
 				$query[$db_col] = $this->data[$col];
 			}
@@ -504,7 +504,7 @@ class Base
 		{
 			foreach($this->db_uni_cols as $db_col => $col)
 			{
-				if (!is_array($col) && $this->data[$col] != '')
+				if (!is_array($col) && (string)($this->data[$col] ?? '') !== '')
 				{
 					$query[$db_col] = $this->data[$col];
 				}
@@ -939,18 +939,17 @@ class Base
 			if (($key = array_search('*', $colums)) !== false)
 			{
 				unset($colums[$key]);
-				// don't add colums already existing incl. aliased colums (AS $name)
+				// don't add columns already existing incl. aliased colums (AS $name)
 				$as_columns = array_map(function($col)
 				{
-					$as = null;
-					list(, $as) = preg_split('/ +AS +/i', $col);
+					list(, $as) = preg_split('/ +AS +/i', $col)+[null,null];
 					return empty($as) ? $col : $as;
 				}, $colums);
 				foreach(array_keys($this->db_cols) as $col)
 				{
 					if (!in_array($col, $colums) && !in_array($col, $as_columns))
 					{
-						// make sure column-name is not ambigous
+						// make sure column-name is not ambiguous
 						if ($join && strpos($join, $this->table_name.'.'.$col))
 						{
 							$col = $this->table_name.'.'.$col.' AS '.$col;
@@ -1029,7 +1028,7 @@ class Base
 				{
 					$this->total = $this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',$this->app,0,$join)->fetchColumn();
 				}
-				else	// cant do a count, have to run the query without limit
+				else	// can't do a count, have to run the query without limit
 				{
 					$this->total = $this->db->select($this->table_name,$colums,$query,__LINE__,__FILE__,false,$order_by,false,0,$join)->NumRows();
 				}
@@ -1048,7 +1047,8 @@ class Base
 		// ToDo: Implement that as an iterator, as $rs is also an interator and we could return one instead of an array
 		if ($this->search_return_iterator)
 		{
-			return new Db2DataIterator($this,$rs);
+			$ret = new Db2DataIterator($this,$rs);
+			return $ret;
 		}
 		$arr = array();
 		$n = 0;
@@ -1057,7 +1057,7 @@ class Base
 			$data = array();
 			foreach($cols as $db_col => $col)
 			{
-				$data[$col] = (isset($row[$db_col]) ? $row[$db_col] : $row[$col]);
+				$data[$col] = $row[$db_col] ?? $row[$col] ?? null;
 			}
 			$arr[] = $this->db2data($data);
 			$n++;

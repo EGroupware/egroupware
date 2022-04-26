@@ -901,11 +901,11 @@ abstract class Framework extends Framework\Extra
 		}
 
 		//Sort the applications accordingly to their user sort setting
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'])
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']))
 		{
 			//Sort the application array using the user_apporder array as sort index
 			self::$user_apporder =
-				unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']);
+				unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'], ['allowed_classes' => false]);
 			uasort($apps, __CLASS__.'::_sort_apparray');
 		}
 

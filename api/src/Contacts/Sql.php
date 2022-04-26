@@ -581,7 +581,7 @@ class Sql extends Api\Storage
 					" OR $shared_sql".
 					($this->grants ? " OR contact_private=0 AND $this->table_name.contact_owner IN (".
 						implode(',',array_keys($this->grants)).")" : '').
-					$groupmember_sql." OR $this->table_name.contact_owner IS NULL)";
+					($groupmember_sql??'')." OR $this->table_name.contact_owner IS NULL)";
 			}
 		}
 		if (isset($filter['list']))

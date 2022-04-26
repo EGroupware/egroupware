@@ -324,7 +324,7 @@ class Tree extends Etemplate\Widget
 			{
 				$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
 			}
-			elseif($label['label'])
+			elseif(!empty($label['label']))
 			{
 				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
 			}

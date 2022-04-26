@@ -109,7 +109,7 @@ class Sharing
 			$path_info = $matches[1];
 		}
 		$path_info = substr($path_info, strlen($_SERVER['SCRIPT_NAME']));
-		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3);
+		list(, $token/*, $path*/) = preg_split('|[/?]|', $path_info, 3)+[null,null,null];
 
 		list($token) = explode(':', $token);
 		return $token;

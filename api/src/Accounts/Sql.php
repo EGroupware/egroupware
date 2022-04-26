@@ -428,7 +428,7 @@ class Sql
 		if (!isset($GLOBALS['egw_setup']) || in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 		{
 			$email_cols = array('coalesce('.$this->contacts_table.'.contact_email,'.Api\Mail\Smtp\Sql::TABLE.'.mail_value) as email');
-			if ($this->db->Type == 'mysql' && !preg_match('/[\x80-\xFF]/', $param['query']))
+			if ($this->db->Type == 'mysql' && !preg_match('/[\x80-\xFF]/', $param['query'] ?? ''))
 			{
 				$search_cols[] = Api\Mail\Smtp\Sql::TABLE.'.mail_value';
 			}
@@ -489,8 +489,8 @@ class Sql
 			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),Api\Contacts\Sql::ACOUNT_ACTIVE_FILTER);
 		}
 		$criteria = array();
-		$wildcard = $param['query_type'] == 'start' || $param['query_type'] == 'exact' ? '' : '%';
-		if (($query = $param['query']))
+		$wildcard = in_array($param['query_type'] ?? '', ['start', 'exact']) ? '' : '%';
+		if (($query = $param['query'] ?? null))
 		{
 			switch($param['query_type'])
 			{
@@ -536,7 +536,7 @@ class Sql
 			$order, "account_lid,account_type,account_status,account_expires,account_primary_group,account_description".
 			",account_lastlogin,account_lastloginfrom,account_lastpwd_change",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
-			$param['offset'] ? array($param['start'], $param['offset']) : (is_null($param['start']) ? false : $param['start']),
+			!empty($param['offset']) ? array($param['start'], $param['offset']) : $param['start'] ?? false,
 			$filter,$join) as $contact)
 		{
 			if ($contact)
@@ -607,7 +607,7 @@ class Sql
 				$cols .= ',account_type';
 				$where[$which] = $name;
 				// check if we need to treat username case-insensitive
-				if ($which == 'account_lid' && !$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
+				if ($which === 'account_lid' && empty($GLOBALS['egw_info']['server']['case_sensitive_username']))	// = is case sensitiv eg. on postgres, but not on mysql!
 				{
 					$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']);
 					unset($where['account_lid']);

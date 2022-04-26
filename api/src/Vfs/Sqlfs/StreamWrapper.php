@@ -335,7 +335,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		// remember initial size and directory for adjustDirSize call in close
 		if (is_resource($this->opened_stream))
 		{
-			$this->opened_size = empty($stat) ? $stat['size'] : 0;
+			$this->opened_size = !empty($stat) ? $stat['size'] : 0;
 			if (empty($dir_stat))
 			{
 				$dir_stat = $this->url_stat($dir,STREAM_URL_STAT_QUIET);

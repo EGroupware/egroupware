@@ -370,7 +370,7 @@ class File extends Etemplate\Widget
 	 * Set default chunk_size attribute to (max_upload_size-1M)/2
 	 *
 	 * Last chunk can be 2*chunk_size, therefore we can only set max_upload_size/2
-	 * minus "some" for other transfered fields.
+	 * minus "some" for other transferred fields.
 	 *
 	 * @param string $cname
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
@@ -381,7 +381,8 @@ class File extends Etemplate\Widget
 
 		$upload_max_filesize = ini_get('upload_max_filesize');
 		$unit = strtolower(substr($upload_max_filesize, -1));
-		if (!is_numeric($unit)) $upload_max_filesize *= $unit == 'm' ? 1024*1024 : 1024;
+		$upload_max_filesize = (float)$upload_max_filesize;
+		if (!is_numeric($unit)) $upload_max_filesize *= $unit === 'm' ? 1024*1024 : 1024;
 		if ($upload_max_filesize > 1024*1024)
 		{
 			self::setElementAttribute($form_name, 'chunk_size', ($upload_max_filesize-1024*1024)/2);

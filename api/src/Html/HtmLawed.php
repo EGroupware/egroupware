@@ -148,7 +148,7 @@ class HtmLawed
 			// no need to do the extra routine
 			$html = str_ireplace($newStyle[0],'',$html);
 		}
-		if ($style2buffer)
+		if (!empty($style2buffer))
 		{
 			//error_log(__METHOD__.__LINE__.array2string($style2buffer));
 			$test = json_encode($style2buffer);
@@ -161,7 +161,7 @@ class HtmLawed
 				$style2buffer = utf8_encode($style2buffer);
 			}
 		}
-		$style = $style2buffer;
+		$style = $style2buffer ?? '';
 		// clean out comments and stuff
 		$search = array(
 			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
@@ -457,4 +457,3 @@ function hl_email_tag_transform($element, $attribute_array=0)
 	static $empty_elements = array('area'=>1, 'br'=>1, 'col'=>1, 'embed'=>1, 'hr'=>1, 'img'=>1, 'input'=>1, 'isindex'=>1, 'param'=>1);
 	return "<{$element}{$attributes}". (isset($empty_elements[$element]) ? ' /' : ''). '>';
 }
-
