@@ -2721,35 +2721,32 @@ div.ui-dialog div.ui-dialog-content > div {
 div.et2_toolbar.ui-widget-header {
     background: none;
 }
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short {
-    background-image: url(pixelegg/images/dots.svg);
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
+    background-image: url(../../../pixelegg/images/dots.svg);
     background-size: 16px;
     height: 24px;
     width: 20px;
     margin-top: 0px;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short {
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
     padding: 0px !important;
     width: 40px;
     height: 24px;
     margin-top: 0px;
 }
 
-.et2_toolbar_more summary.ui-toolbar-menulistHeader.header_list-short::marker {
+.et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short::marker {
     top: 0px;
     left: auto;
     content: '';
 }
 
-.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.header_list-short{
-    background-position: bottom !important;
-    margin-top: 2px;
-    left: 0;
-    top: 0;
+.et2_toolbar details.et2_toolbar_more.admin .ui-toolbar-menulistHeader.list_header-short {
+    background-position: left;
 }
-
 .et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
     background-image: url(../../../pixelegg/images/setup.svg);
     background-repeat: no-repeat;
@@ -2757,10 +2754,8 @@ div.et2_toolbar.ui-widget-header {
     width: 20px;
     height: 100%;
     display: inline-block;
-    position: absolute;
-    right: 0px;
-    top: 0px;
     background-position: center;
+    float: right;
 }
 
 .et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref:hover {
@@ -2768,19 +2763,29 @@ div.et2_toolbar.ui-widget-header {
 }
 
 .et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader {
-    background-image: url(../../../pixelegg/images/arrow_right.svg);
-    background-position: center;
-    background-size: 12px;
-    background-repeat: no-repeat;
+    border: 1px solid silver;
+    border-radius: 3px;
+    background-color: #fafafa;
+    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+    font-size: 9pt;
+    font-weight: normal;
+    height: 17px;
+    margin-top: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    align-items: end;
+    padding-top: 5px;
 }
 
-.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader {
+.et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
     background-image: url(../../../pixelegg/images/arrow_down.svg);
     background-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
 }
-
+.et2_toolbar details[open].et2_toolbar_more.admin .ui-toolbar-menulistHeader.list_header-short {
+    background-position: left;
+}
 .et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
     margin-left: 7px;
 }
@@ -3073,7 +3078,7 @@ div.ui-toolbar-menulist {
 .ui-toolbar-menulistHeader {
     font-size: xx-small;
     height: 100%;
-    margin-top: 2px;
+    margin-top: 1px;
     direction: ltr;
 }
 

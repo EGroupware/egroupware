@@ -248,14 +248,13 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionbox.empty();
 		this.actionlist.empty();
 		let admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="'+egw.lang('Admin settings')+' ..."></span>': '';
-		const header_list = this.options.header_list == 'more'?true:false;
-		this.actionbox.append('<summary class="ui-toolbar-menulistHeader'+(!header_list?' header_list-short':' ')+'">'+(header_list?egw.lang('more')+' ...':'')+admin_setting+'</summary>');
+		const list_header = this.options.list_header == 'more'?true:false;
+		this.actionbox.append('<summary class="ui-toolbar-menulistHeader'+(!list_header?' list_header-short':' ')+'">'+(list_header?egw.lang('more')+' ...':'')+admin_setting+'</summary>');
 		this.actionbox.append('<div id="' + this.id + '-menulist' +'" class="ui-toolbar-menulist" ></div>');
 		let that = this;
 		if (this.options.is_admin)
 		{
 			this.actionbox.find('.toolbar-admin-pref').click(function(e){
-				e.stopImmediatePropagation();
 				egw.json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_get_default_prefs', [that.options.preference_app, that.options.preference_id], function(_prefs){
 					let prefs = [];
 					for (let p in _prefs)
@@ -264,7 +263,9 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					}
 					that._admin_settings_dialog.call(that, actions, prefs);
 				}).sendRequest(true);
+				return false;
 			});
+			this.actionbox.addClass('admin');
 		}
 
 		let pref = (!egwIsMobile())? egw.preference(this.options.preference_id, this.options.preference_app): undefined;
