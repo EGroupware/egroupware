@@ -1735,16 +1735,16 @@
         },
         {
             "name": "egroupware/imap-client",
-            "version": "2.31.0",
+            "version": "2.31.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Imap_Client.git",
-                "reference": "ab24a339821ef6309b07294fc1c7d4ad2b7b25a0"
+                "reference": "02fec7b78e81af53a90a7190e1cad9f843f91526"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/ab24a339821ef6309b07294fc1c7d4ad2b7b25a0",
-                "reference": "ab24a339821ef6309b07294fc1c7d4ad2b7b25a0",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/02fec7b78e81af53a90a7190e1cad9f843f91526",
+                "reference": "02fec7b78e81af53a90a7190e1cad9f843f91526",
                 "shasum": ""
             },
             "require": {
@@ -1759,7 +1759,7 @@
                 "pear-pear.horde.org/horde_stream_filter": "^2",
                 "pear-pear.horde.org/horde_translation": "^2.2",
                 "pear-pear.horde.org/horde_util": "^2",
-                "php": "^7 || ^8"
+                "php": "^7.1 || ^8"
             },
             "replace": {
                 "pear-horde/horde_imap_client": "2.*",
@@ -1799,7 +1799,7 @@
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
             "support": {
-                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.0"
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.1"
             },
             "time": "2019-09-29T00:00:00+00:00"
         },
@@ -1894,16 +1894,16 @@
         },
         {
             "name": "egroupware/mail",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Mail.git",
-                "reference": "0ee5dabd3342e3a3e102f5fa6745eb130eb45f0d"
+                "reference": "c03ff6bbbe831dea5931b11974c587a9fff070db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Mail/zipball/0ee5dabd3342e3a3e102f5fa6745eb130eb45f0d",
-                "reference": "0ee5dabd3342e3a3e102f5fa6745eb130eb45f0d",
+                "url": "https://api.github.com/repos/EGroupware/Mail/zipball/c03ff6bbbe831dea5931b11974c587a9fff070db",
+                "reference": "c03ff6bbbe831dea5931b11974c587a9fff070db",
                 "shasum": ""
             },
             "require": {
@@ -1913,7 +1913,7 @@
                 "pear-pear.horde.org/horde_stream_filter": "^2",
                 "pear-pear.horde.org/horde_translation": "^2.2",
                 "pear-pear.horde.org/horde_util": "^2",
-                "php": "^7 || ^8"
+                "php": "^7.1 || ^8"
             },
             "replace": {
                 "pear-horde/horde_mail": "2.*",
@@ -1946,7 +1946,7 @@
             "description": "Mail library",
             "homepage": "https://www.horde.org/libraries/Horde_Mail",
             "support": {
-                "source": "https://github.com/EGroupware/Mail/tree/2.7.0"
+                "source": "https://github.com/EGroupware/Mail/tree/2.7.1"
             },
             "time": "2017-11-11T00:00:00+00:00"
         },
@@ -2050,16 +2050,16 @@
         },
         {
             "name": "egroupware/mime",
-            "version": "2.13.0",
+            "version": "2.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Mime.git",
-                "reference": "5d930ab3f53b43b02e1ac82b92022e9330ff404a"
+                "reference": "902fb9b1a9199c8a65d4bdf590a426f07dfd14fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Mime/zipball/5d930ab3f53b43b02e1ac82b92022e9330ff404a",
-                "reference": "5d930ab3f53b43b02e1ac82b92022e9330ff404a",
+                "url": "https://api.github.com/repos/EGroupware/Mime/zipball/902fb9b1a9199c8a65d4bdf590a426f07dfd14fe",
+                "reference": "902fb9b1a9199c8a65d4bdf590a426f07dfd14fe",
                 "shasum": ""
             },
             "require": {
@@ -2072,7 +2072,7 @@
                 "pear-pear.horde.org/horde_text_flowed": "^2",
                 "pear-pear.horde.org/horde_translation": "^2.2",
                 "pear-pear.horde.org/horde_util": "^2",
-                "php": "^7 || ^8"
+                "php": "^7.1 || ^8"
             },
             "replace": {
                 "pear-horde/horde_mime": "2.*",
@@ -2111,7 +2111,7 @@
             "description": "MIME library",
             "homepage": "https://www.horde.org/libraries/Horde_Mime",
             "support": {
-                "source": "https://github.com/EGroupware/Mime/tree/2.13.0"
+                "source": "https://github.com/EGroupware/Mime/tree/2.13.1"
             },
             "time": "2018-01-14T00:00:00+00:00"
         },
@@ -2734,23 +2734,23 @@
         },
         {
             "name": "egroupware/support",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Support.git",
-                "reference": "999acfdc5c05b39d20e2092eb41a651f23617109"
+                "reference": "f75d69f0ac049b145386bd7399f008d7089350c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Support/zipball/999acfdc5c05b39d20e2092eb41a651f23617109",
-                "reference": "999acfdc5c05b39d20e2092eb41a651f23617109",
+                "url": "https://api.github.com/repos/EGroupware/Support/zipball/f75d69f0ac049b145386bd7399f008d7089350c9",
+                "reference": "f75d69f0ac049b145386bd7399f008d7089350c9",
                 "shasum": ""
             },
             "require": {
                 "pear-pear.horde.org/horde_exception": "^2",
                 "pear-pear.horde.org/horde_stream_wrapper": "^2",
                 "pear-pear.horde.org/horde_util": "^2",
-                "php": "^7 || ^8"
+                "php": "^7.1 || ^8"
             },
             "replace": {
                 "pear-horde/horde_support": "2.*",
@@ -2789,7 +2789,7 @@
             "description": "Supporting library",
             "homepage": "https://www.horde.org/libraries/Horde_Support",
             "support": {
-                "source": "https://github.com/EGroupware/Support/tree/2.3.0"
+                "source": "https://github.com/EGroupware/Support/tree/2.3.1"
             },
             "time": "2017-11-11T00:00:00+00:00"
         },
