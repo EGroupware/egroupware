@@ -178,12 +178,6 @@
   /**
  * Basic rules
  */
-  input,
-  button,
-  select {
-    margin: 1px;
-    /*-webkit-appearance: none;*/
-  }
   /**
  * img gray filter
  */
@@ -504,8 +498,7 @@
   .et2_link_list tr:active {
     background-color: rgba(255, 194, 0, 0.01);
   }
-  .et2_link_list .icon img,
-  .et2_link_list .icon {
+  .et2_link_list .icon img {
     width: 14px !important;
     height: 14px !important;
   }
@@ -1062,7 +1055,7 @@
   .ui-toolbar-menulistHeader {
     font-size: xx-small;
     height: 100%;
-    margin-top: 2px;
+    margin-top: 1px;
     direction: ltr;
   }
   .et2_toolbar_more {
@@ -3073,14 +3066,14 @@ div.selectbox-wrapper ul li {
   cursor: pointer;
 }
 select {
-    position: relative;
-    padding-right: 20px !important;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    margin: 0;
-    background: url(../images/arrow_down.svg) no-repeat center right;
-    background-size: 8px auto;
-    background-position-x: calc(100% - 8px);
+  position: relative;
+  padding-right: 20px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  background: url(../images/arrow_down.svg) no-repeat center right;
+  background-size: 8px auto;
+  background-position-x: calc(100% - 8px);
 }
 select:active {
   background: #ffffff url(../images/arrow_up.svg) no-repeat center right;
@@ -3486,15 +3479,11 @@ div#etemplate\.tab_widget {
 /*##############################################*/
 .dialogFooterToolbar {
   background-color: transparent;
-  margin: 10px 0 0 0;
-  padding: 3px;
-  white-space: nowrap;
   border-top: 3px solid #696969;
-  padding-top: 8px !important;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 }
 .dialogFooterToolbar td {
-  padding: 0px 5px 0px 0px;
+  padding: 5px 5px 0px 0px;
 }
 .dialogFooterToolbar td:first-child {
   padding-left: 5px;
@@ -4164,7 +4153,7 @@ td.message span.message {
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
 /*z.b. Dateimanager overlay*/
-.egwGridView_grid span.iconOverlayContainer {
+span.iconOverlayContainer {
   margin: 2px 5px 2px 2px;
   position: relative;
   -moz-user-select: none;
@@ -4173,26 +4162,30 @@ td.message span.message {
   overflow: visible;
   display: inline-block;
 }
-.egwGridView_grid span.overlayContainer {
+span.overlayContainer {
   position: absolute;
   right: -2px;
   bottom: -2px;
   vertical-align: bottom;
   text-align: right;
 }
-.egwGridView_grid span.iconContainer {
+span.iconContainer {
   display: inline-block;
   padding: 0;
   margin: 0;
   text-align: center;
 }
-.egwGridView_grid span.overlayContainer img.overlay {
+span.overlayContainer img.overlay {
   position: relative;
   top: 1px;
   margin: 0;
   padding: 0;
   height: 9px;
   width: 11px;
+}
+.et2_link_list span.overlayContainer img.overlay {
+  height: 9px !important;
+  width: 9px !important;
 }
 /**
  * EGroupware: Stylite Pixelegg template

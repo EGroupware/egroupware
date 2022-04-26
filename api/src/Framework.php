@@ -998,11 +998,14 @@ abstract class Framework extends Framework\Extra
 				// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
 				self::includeCSS("/api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css");
 
+				// Et2Date uses flatpickr
+				self::includeCSS('/node_modules/flatpickr/dist/themes/light.css');
+
 				// eTemplate2 - load in top so sidebox has styles too
 				self::includeCSS('/api/templates/default/etemplate2.css');
 
 				// Category styles
-				if (basename($_SERVER['PHP_SELF']) !== 'login.php')
+				if(basename($_SERVER['PHP_SELF']) !== 'login.php')
 				{
 					Categories::css(Categories::GLOBAL_APPNAME);
 				}

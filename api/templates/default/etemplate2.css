@@ -4016,3 +4016,44 @@ span.et2_countdown_seconds {
 body .flatpickr-calendar {
     display: none;
 }
+
+/** Sizing for inline flatpickr, used in calendar sidebox **/
+div.flatpickr-calendar.inline {
+    --dayWidth: calc((width - 80) / 7);
+    --width: calc(var(--dayWidth) * 7);
+}
+
+div.flatpickr-calendar.inline .dayContainer {
+    width: var(--width);
+    min-width: var(--width);
+    max-width: var(--width);
+}
+
+div.flatpickr-calendar.inline .flatpickr-months .flatpickr-month {
+    flex: 1 1 auto;
+}
+
+div.flatpickr-calendar.inline .flatpickr-months {
+    background-color: #eceef1;
+}
+
+div.flatpickr-calendar.inline .flatpickr-months .flatpickr-prev-month,
+div.flatpickr-calendar.inline .flatpickr-months .flatpickr-next-month {
+    position: relative;
+}
+
+div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
+    width: 75%;
+}
+
+div.flatpickr-calendar.inline .flatpickr-days {
+    width: var(--width) !important;
+}
+
+div.flatpickr-calendar.inline .flatpickr-day {
+    max-width: var(--dayWidth);
+    height: var(--dayWidth);
+    line-height: var(--dayWidth);
+    border: none;
+    cursor: pointer;
+}

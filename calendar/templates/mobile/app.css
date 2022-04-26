@@ -21,7 +21,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package calendar
- * @version $Id$
  */
 /* $Id$ */
 /*Media print classes*/
@@ -104,12 +103,10 @@
   margin-bottom: 10px;
 }
 #calendar-sidebox_cat_id ~ * {
-    vertical-align: top;
-    display: inline-block;
-    background-color: transparent;
-    background-image: url(../../../api/js/jquery/jquery-ui/themes/themes/redmond/images/ui-icons_469bdd_256x240.png);
-    border: none;
-    box-shadow: none;
+  vertical-align: top;
+  display: inline-block;
+  border: none;
+  box-shadow: none;
 }
 #calendar-sidebox_buttons tbody {
   width: 100%;
@@ -119,7 +116,6 @@
 }
 #calendar-sidebox_header_go,
 #calendar-sidebox_header_today {
-  position: absolute !important;
   width: 12px;
   height: 12px;
   top: 28px;
@@ -162,14 +158,25 @@
   cursor: pointer;
 }
 #calendar-sidebox_date .calendar_calHoliday {
-  background: inherit;
-}
-#calendar-sidebox_date .calendar_calHoliday a {
   background-color: rgba(103, 159, 210, 0.5);
 }
 #calendar-sidebox_owner .ms-helper {
   padding: 2px;
   background-color: white;
+}
+#calendar-sidebox_date .flatpickr-months > * {
+  padding: 3px;
+  height: 20px;
+}
+#calendar-sidebox_date .flatpickr-current-month {
+  height: 20px;
+  font-size: 110%;
+}
+#calendar-sidebox_date div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
+  width: 70%;
+}
+#calendar-sidebox_date div.flatpickr-calendar.inline {
+  width: 100% !important;
 }
 /* Conflict display */
 div.calendar_conflicts {

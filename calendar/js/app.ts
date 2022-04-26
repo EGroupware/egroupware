@@ -50,6 +50,8 @@ import {et2_template} from "../../api/js/etemplate/et2_widget_template";
 import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
+import "./SidemenuDate";
+import {parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * UI for calendar
@@ -287,6 +289,10 @@ export class CalendarApp extends EgwApp
 				this._setup_sidebox_filters();
 
 				this.state = content.data;
+				if(typeof this.state.date == "string" && this.state.date.length == 8)
+				{
+					this.state.date = parseDate(this.state.date, "Ymd");
+				}
 				break;
 
 			case 'calendar.add':
@@ -4161,7 +4167,7 @@ export class CalendarApp extends EgwApp
 	 * are set up here.
 	 *
 	 */
-	async _setup_sidebox_filters()
+	_setup_sidebox_filters()
 	{
 		// Further date customizations
 		var date_widget = <et2_date>this.sidebox_et2.getWidgetById('date');
@@ -4169,39 +4175,14 @@ export class CalendarApp extends EgwApp
 		{
 			// Dynamic resize of sidebox calendar to fill sidebox
 			var preferred_width = jQuery('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var font_ratio = 12 / parseFloat(jQuery('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 			var go_button_widget = <et2_button><unknown>date_widget.getRoot().getWidgetById('header_go');
 			var auto_update = this.egw.preference('auto_update_on_sidebox_change', 'calendar') === '1';
-			var calendar_resize = function() {
-				try {
-					var percent = 1+((jQuery(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
-					percent *= font_ratio;
-					jQuery('#calendar-sidebox_date .ui-datepicker-inline')
-						.css('font-size',(percent*100)+'%');
+			if(auto_update)
+			{
+				go_button_widget.set_disabled(true);
+			}
 
-					// Position go and today
-					go_button_widget.set_disabled(false);
-					var buttons = jQuery('#calendar-sidebox_date .ui-datepicker-header a span');
-					if(today.length && go_button.length)
-					{
-						go_button.position({my: 'left+8px center', at: 'right center-1',of: jQuery('#calendar-sidebox_date .ui-datepicker-year')});
-						buttons.position({my: 'center', at: 'center', of: go_button})
-							.css('left', '');
-						today.position({my: 'top', at: 'top', of: buttons});
-						today.css({
-							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth()/2),
-						});
-					}
-					if(auto_update)
-					{
-						go_button_widget.set_disabled(true);
-					}
-				} catch (e){
-					// Resize didn't work
-				}
-			};
-
-			const holidays = await et2_calendar_view.get_holidays((new Date).getFullYear());
+			/*
 			const datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
 				onChangeMonthYear: function(year, month, inst)
@@ -4250,70 +4231,11 @@ export class CalendarApp extends EgwApp
 				}
 			});
 
-			// Clickable week numbers
-			date_widget.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
-					jQuery(this).siblings().find('a').addClass('ui-state-hover');
-				})
-				.on('mouseleave','.ui-datepicker-week-col', function() {
-					jQuery(this).siblings().find('a').removeClass('ui-state-hover');
-				})
-				.on('click', '.ui-datepicker-week-col', function() {
-					var view = app.calendar.state.view;
-					var days = app.calendar.state.days;
 
-					// Avoid a full state update, we just want the calendar to update
-					// Directly update to avoid change event from the sidebox calendar
-					var date = new Date(this.nextSibling.dataset.year,this.nextSibling.dataset.month,this.nextSibling.firstChild.textContent,0,0,0);
-					date.setUTCMinutes(date.getUTCMinutes() - date.getTimezoneOffset());
-					date = app.calendar.date.toString(date);
-
-					// Set to week view, if in one of the views where we change view
-					if(app.calendar.sidebox_changes_views.indexOf(view) >= 0)
-					{
-						app.calendar.update_state({view: 'week', date: date, days: days});
-					}
-					else if (view == 'planner')
-					{
-						// Clicked a week, show just a week
-						app.calendar.update_state({date: date, planner_view: 'week'});
-					}
-					else if (view == 'listview')
-					{
-						app.calendar.update_state({
-							date: date,
-							end_date: app.calendar.date.toString(CalendarApp.views.week.end_date({date:date})),
-							filter: 'week'
-						});
-					}
-					else
-					{
-						app.calendar.update_state({date: date});
-					}
-				});
+*/
 
 
-			// Set today button
-			var today = jQuery('#calendar-sidebox_header_today');
-			today.attr('title',egw.lang('today'));
-
-			// Set go button
-			var go_button_widget = <et2_button><unknown>date_widget.getRoot().getWidgetById('header_go');
-			if(go_button_widget && go_button_widget.btn)
-			{
-				var go_button = go_button_widget.btn;
-				var temp_date = new Date(date_widget.get_value());
-				temp_date.setUTCDate(1);
-				temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
-
-				go_button.attr('title', egw.lang(date('F',temp_date)));
-				// Store current _displayed_ date in date button for clicking
-				temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
-				go_button.attr('data-date', temp_date.toJSON());
-
-			}
 		}
-
-		jQuery(window).on('resize.calendar'+date_widget.dom_id,calendar_resize).trigger('resize');
 
 		// Avoid wrapping owner icons if user has group + search
 		var button = jQuery('#calendar-sidebox_owner ~ span.et2_clickable');
@@ -4333,7 +4255,6 @@ export class CalendarApp extends EgwApp
 				}
 			}
 		});
-		window.setTimeout(calendar_resize,50);
 	}
 
 	/**
@@ -4700,4 +4621,7 @@ export class CalendarApp extends EgwApp
 	}
 }
 
-app.classes.calendar = CalendarApp;
+if(typeof app.classes.calendar == "undefined")
+{
+	app.classes.calendar = CalendarApp;
+}

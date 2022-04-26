@@ -559,6 +559,21 @@ export class etemplate2
 		{
 			promisses.push(egw(currentapp, window).langRequire(window, _data.langRequire));
 		}
+		if(appname && typeof app[appname] !== "object")
+		{
+			/*
+			Don't have the app.ts code - load it here and delay load until its ready
+						promisses.push(import(egw.webserverUrl + "/" + appname + "/js/app.min.js?" + ((new Date).valueOf() / 86400 | 0).toString())
+							.then(() =>
+							{
+								if(typeof app.classes[appname] === "undefined")
+								{
+									throw new Error("app.classes." + appname + " not found!");
+								}
+							}));
+			*/
+
+		}
 		return Promise.all(promisses).catch((err) =>
 		{
 			console.log("et2.load(): error loading lang-files and app.js: " + err.message);
