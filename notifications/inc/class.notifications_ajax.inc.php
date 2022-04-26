@@ -254,7 +254,7 @@ class notifications_ajax {
 	private function get_egwpopup($browserNotify = false)
 	{
 		$entries = notifications_popup::read($this->recipient->account_id);
-		$this->response->apply('app.notifications.append', array($entries['rows'], $browserNotify, $entries['total']));
+		$this->response->apply('app.notifications.append', array($entries['rows']??[], $browserNotify, $entries['total']??0));
 		return true;
 	}
 

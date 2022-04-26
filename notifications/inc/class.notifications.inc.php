@@ -502,7 +502,7 @@ class notifications {
 			$backend_errors = array();
 			try {
 				// system or non-system user
-				if($receiver->account_id && is_numeric($receiver->account_id)) {
+				if(!empty($receiver->account_id) && is_numeric($receiver->account_id)) {
 					// system user, collect data and check for Status and expire state, skip notification if expired or not active
 					$userData = $GLOBALS['egw']->accounts->read($receiver->account_id);
 					//error_log(__METHOD__.__LINE__." fetched data for User:".array2string($userData['account_lid']).'#'.$userData['account_type'].'#'.$userData['account_status'].'#'.$GLOBALS['egw']->accounts->is_expired($userData).'#');
@@ -560,7 +560,7 @@ class notifications {
 						if(!file_exists(EGW_INCLUDE_ROOT.'/'. self::_appname.'/inc/class.'. $notification_backend. '.inc.php')) {
 							throw new Exception('file for '.$notification_backend. ' does not exist');
 						}
-						$obj = new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
+						$obj = new $notification_backend( $this->sender, $receiver, $this->config, $preferences??null );
 						if ( !($obj instanceof notifications_iface) ) {
 							unset ( $obj );
 					 		throw new Exception($notification_backend. ' is no implementation of notifications_iface');
@@ -575,7 +575,7 @@ class notifications {
 						} elseif ($backend == 'email') {
 							if (!empty($this->reply_to)) $popup_data = array( 'reply_to' => $this->reply_to );
 						}
-						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data);
+						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data??null);
 
 						// This is to make popup_or_email option sensfull since
 						// we save popup notifications in database anyway, email
@@ -730,7 +730,7 @@ class notifications {
 					break;
 				default:
 					$param = $backend.'_enable';
-					$enabled_backends[$backend] = $this->config->{$param} == true ? true : false;
+					$enabled_backends[$backend] = !empty($this->config->{$param});
 					break;
 			}
 		}

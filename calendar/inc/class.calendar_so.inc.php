@@ -50,9 +50,9 @@ define('TENTATIVE',2);
 define('ACCEPTED',3);
 define('DELEGATED',4);
 
-define('HOUR_s',60*60);
-define('DAY_s',24*HOUR_s);
-define('WEEK_s',7*DAY_s);
+if (!defined('HOUR_s')) define('HOUR_s',60*60);
+if (!defined('DAY_s'))  define('DAY_s',24*HOUR_s);
+if (!defined('WEEK_s')) define('WEEK_s',7*DAY_s);
 
 /**
  * Class to store all calendar data (storage object)
