@@ -965,7 +965,7 @@ class Widget
 
 		$readonly = $readonlys === true ||
 			// exception to __ALL__ or readonly="true" attribute by setting $readonlys[$from_name] === false
-			($this->attrs['readonly'] || isset(self::$request->readonlys['__ALL__'])) && $readonlys !== false;
+			(!empty($this->attrs['readonly']) || isset(self::$request->readonlys['__ALL__'])) && $readonlys !== false;
 
 		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name': attrs[readonly]=".array2string($this->attrs['readonly']).", readonlys['$form_name']=".array2string(self::$request->readonlys[$form_name]).", readonlys[$form_name]=".array2string(self::get_array(self::$request->readonlys,$form_name)).", readonlys['__ALL__']=".array2string(self::$request->readonlys['__ALL__'])." returning ".array2string($readonly));
 		return $readonly;

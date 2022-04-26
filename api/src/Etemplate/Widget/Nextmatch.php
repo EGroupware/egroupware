@@ -174,7 +174,7 @@ class Nextmatch extends Etemplate\Widget
 		unset($send_value['favorite']);
 
 		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
-		if(is_array($send_value['sort']))
+		if(!empty($send_value['sort']) && is_array($send_value['sort']))
 		{
 			$send_value['order'] = $send_value['sort']['id'];
 			$send_value['sort'] = $send_value['sort']['asc'] ? 'ASC' : 'DESC';
@@ -584,7 +584,7 @@ class Nextmatch extends Etemplate\Widget
 			{
 				list($app,$class,$method) = explode('.',$value['get_rows']);
 			}
-			if ($class)
+			if (!empty($class))
 			{
 				if (!$app && !is_object($GLOBALS[$class]))
 				{
@@ -979,7 +979,7 @@ class Nextmatch extends Etemplate\Widget
 			if (!empty($action['url']))
 			{
 				$action['url'] = Api\Framework::link('/index.php',str_replace('$action',$id,$action['url']));
-				if ($action['popup'])
+				if (!empty($action['popup']))
 				{
 					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);
 					unset($action['popup']);
@@ -988,7 +988,7 @@ class Nextmatch extends Etemplate\Widget
 				else
 				{
 					$action['data']['nm_action'] = 'location';
-					if(!$action['target'] && strpos($action['url'],'menuaction') > 0)
+					if(empty($action['target']) && strpos($action['url'],'menuaction') > 0)
 					{
 						// It would be better if app set target, but we'll auto-detect if not
 						list(,$menuaction) = explode('=',$action['url']);

@@ -140,7 +140,7 @@ class Customfields implements \IteratorAggregate
 	public static function get($app, $account=false, $only_type2=null, Api\Db $db=null)
 	{
 		$account_key = $account === true ? 'all' :
-				($account === false ? $GLOBALS['egw_info']['user']['account_id'] :
+				($account === false ? ($GLOBALS['egw_info']['user']['account_id']??null) :
 				(int)$account);
 
 		$cache_key = $app.':'.$account_key.':'.$only_type2;

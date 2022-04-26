@@ -272,14 +272,14 @@ class Accounts
 		}
 		// no backend understands $param['app'], only sql understands type owngroups or groupmemember[+memberships]
 		// --> do an full search first and then filter and limit that search
-		elseif($param['app'] || $this->config['account_repository'] != 'sql' &&
+		elseif(!empty($param['app']) || $this->config['account_repository'] != 'sql' &&
 			in_array($param['type'], array('owngroups','groupmembers','groupmembers+memberships')))
 		{
 			$app = $param['app'];
 			unset($param['app']);
 			$start = $param['start'];
 			unset($param['start']);
-			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$offset = $param['offset'] ?: $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			unset($param['offset']);
 			$stop = $start + $offset;
 

@@ -86,7 +86,7 @@ class Html
 					$additionalQuote = "&quot;";
 				}
 				//error_log(__METHOD__.__LINE__.array2string($match));
-				return "<a href=\"".($match[1]&&!$match[2]?$match[1]:'').($match[2]?$match[2]:'').$match[3].$match[4]."\" target=\"_blank\">".$match[3].$match[4]."</a>$additionalQuote";
+				return "<a href=\"".($match[1]&&!$match[2]?$match[1]:'').($match[2]?:'').$match[3].($match[4]??'')."\" target=\"_blank\">".$match[3].($match[4]??'')."</a>$additionalQuote";
 			}, $result2);
 
 			//  Now match things beginning with www.

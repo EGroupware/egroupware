@@ -702,7 +702,7 @@ abstract class Merge
 		if(!array_key_exists($app, $exportLimitStore))
 		{
 			//error_log(__METHOD__.__LINE__.' -> '.$app_limit.' '.function_backtrace());
-			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
+			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'] ?? null;
 			if($app != 'common')
 			{
 				$app_limit = Api\Hooks::single('export_limit', $app);
@@ -1272,7 +1272,7 @@ abstract class Merge
 				}
 			}
 		}
-		if($is_xml)    // zip'ed xml document (eg. OO)
+		if (!empty($is_xml))    // zip'ed xml document (eg. OO)
 		{
 			// Numeric fields
 			$names = array();
@@ -1598,7 +1598,7 @@ abstract class Merge
 		{
 			$key = '$$' . $field . '$$';
 			$field = preg_quote($field, '/');
-			if($values[$key])
+			if (!empty($values[$key]))
 			{
 				$date = Api\DateTime::createFromUserFormat($values[$key]);
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
@@ -1901,21 +1901,21 @@ abstract class Merge
 	 */
 	private function replace_callback($param)
 	{
-		if(array_key_exists('$$' . $param[4] . '$$', $this->replacements))
+		if(!empty($param[4]) && array_key_exists('$$' . $param[4] . '$$', $this->replacements))
 		{
 			$param[4] = $this->replacements['$$' . $param[4] . '$$'];
 		}
-		if(array_key_exists('$$' . $param[3] . '$$', $this->replacements))
+		if(!empty($param[3]) && array_key_exists('$$' . $param[3] . '$$', $this->replacements))
 		{
 			$param[3] = $this->replacements['$$' . $param[3] . '$$'];
 		}
 
-		$pattern = '/' . preg_quote($param[2], '/') . '/';
+		$pattern = '/' . preg_quote($param[2]??'', '/') . '/';
 		if(strpos($param[0], '$$IF') === 0 && (trim($param[2]) == "EMPTY" || $param[2] === ''))
 		{
 			$pattern = '/^$/';
 		}
-		$replace = preg_match($pattern, $this->replacements['$$' . $param[1] . '$$']) ? $param[3] : $param[4];
+		$replace = preg_match($pattern, $this->replacements['$$' . $param[1] . '$$'] ?? '') ? ($param[3]??null) : ($param[4]??null);
 		switch($this->mimetype)
 		{
 			case 'application/vnd.oasis.opendocument.text':        // open office
@@ -1977,7 +1977,7 @@ abstract class Merge
 		}
 		if(strpos($param[0], '$$NELF') === 0)
 		{    //sets a Pagebreak and value, only if the field has a value
-			if($this->replacements['$$' . $param[1] . '$$'] != '')
+			if(!empty($this->replacements['$$' . $param[1] . '$$']))
 			{
 				$replace = $LF . $this->replacements['$$' . $param[1] . '$$'];
 			}
@@ -1995,7 +1995,7 @@ abstract class Merge
 			$replaceprefix = explode(' ', substr($param[0], 21, -2));
 			foreach($replaceprefix as $nameprefix)
 			{
-				if($this->replacements['$$' . $nameprefix . '$$'] != '')
+				if(!empty($this->replacements['$$' . $nameprefix . '$$']))
 				{
 					$replaceprefixsort[] = $this->replacements['$$' . $nameprefix . '$$'];
 				}
