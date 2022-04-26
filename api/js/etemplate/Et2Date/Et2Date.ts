@@ -9,7 +9,7 @@
  */
 
 
-import {css} from "@lion/core";
+import {css, html} from "@lion/core";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
@@ -25,7 +25,7 @@ import "flatpickr/dist/plugins/scrollPlugin.js";
  * @param {string} dateString
  * @returns {Date | undefined}
  */
-export function parseDate(dateString)
+export function parseDate(dateString, formatString?)
 {
 	// First try the server format
 	if(dateString.substr(-1) === "Z")
@@ -44,7 +44,7 @@ export function parseDate(dateString)
 		}
 	}
 
-	let formatString = <string>(window.egw.preference("dateformat") || 'Y-m-d');
+	formatString = formatString || <string>(window.egw.preference("dateformat") || 'Y-m-d');
 	//@ts-ignore replaceAll() does not exist
 	formatString = formatString.replaceAll(new RegExp('[-/\.]', 'ig'), '-');
 	let parsedString = "";
@@ -64,6 +64,10 @@ export function parseDate(dateString)
 			break;
 		case 'd-M-Y':
 			parsedString = `${dateString.slice(6, 10)}/${dateString.slice(3, 5,)}/${dateString.slice(0, 2)}`;
+			break;
+		case 'Ymd':
+			// Not a preference option, but used by some dates
+			parsedString = `${dateString.slice(0, 4)}/${dateString.slice(4, 6,)}/${dateString.slice(6, 8)}`;
 			break;
 		default:
 			parsedString = '0000/00/00';
@@ -288,7 +292,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	static get properties()
 	{
 		return {
-			...super.properties
+			...super.properties,
+			/**
+			 * Display the calendar inline instead of revealed as needed
+			 */
+			inline: {type: Boolean}
 		}
 	}
 
@@ -361,6 +369,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.weekNumbers = true;
 
+		if(this.inline)
+		{
+			options.inline = this.inline;
+		}
+
 		// Turn on scroll wheel support
 		// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
 		options.plugins = [new scrollPlugin()];
@@ -417,6 +430,23 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	}
 
 	/**
+	 * Inline calendars need a slot
+	 *
+	 * @return {TemplateResult}
+	 * @protected
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	_inputGroupAfterTemplate()
+	{
+		return html`
+            <div class="input-group__after">
+                <slot name="after"></slot>
+                <slot/>
+            </div>
+		`;
+	}
+
+	/**
 	 * Change handler setting modelValue for validation
 	 *
 	 * @param _ev
@@ -440,10 +470,17 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		if(this._instance)
 		{
-			// Handle timezone offset, flatpickr uses local time
-			let date = new Date(min);
-			let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-			this._instance.set('minDate', formatDate)
+			if(min)
+			{
+				// Handle timezone offset, flatpickr uses local time
+				let date = new Date(min);
+				let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+				this._instance.set("minDate", formatDate)
+			}
+			else
+			{
+				this._instance.set("minDate", "")
+			}
 		}
 	}
 
@@ -460,10 +497,17 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		if(this._instance)
 		{
-			// Handle timezone offset, flatpickr uses local time
-			let date = new Date(max);
-			let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-			this._instance.set('maxDate', formatDate)
+			if(max)
+			{
+				// Handle timezone offset, flatpickr uses local time
+				let date = new Date(max);
+				let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+				this._instance.set("maxDate", formatDate)
+			}
+			else
+			{
+				this._instance.set("maxDate", "")
+			}
 		}
 	}
 
