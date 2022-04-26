@@ -171,7 +171,7 @@ class mail_acl
 						$content['grid'][$n]['acl_'. $right] = true;
 					}
 					$virtualD = array('e','t');
-					$content['grid'][$n]['acl_c'] = array_diff($virtuals['c'],array_intersect($rights, $virtuals['c'] ?? []))? false: true; //c=kx more information rfc4314, Obsolete Rights
+					$content['grid'][$n]['acl_c'] = array_diff($virtuals['c'] ?? [], array_intersect($rights, $virtuals['c'] ?? []))? false: true; //c=kx more information rfc4314, Obsolete Rights
 					$content['grid'][$n]['acl_d'] = array_diff($virtualD,array_intersect($rights,$virtuals['d'] ?? []))? false: true; //d=et more information rfc4314, Obsolete Rights
 
 					sort($rights);
