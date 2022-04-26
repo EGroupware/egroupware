@@ -120,7 +120,8 @@ class CallbackIterator implements \Iterator
 	 *
 	 * @return mixed
 	 */
-	public function current(): mixed
+	#[\ReturnTypeWillChange]
+	public function current()
 	{
 		if (is_a($this->rs,'iterator'))
 		{
@@ -136,7 +137,8 @@ class CallbackIterator implements \Iterator
 	 *
 	 * @return mixed
 	 */
-	public function key(): mixed
+	#[\ReturnTypeWillChange]
+	public function key()
 	{
 		if (is_a($this->rs,'iterator'))
 		{

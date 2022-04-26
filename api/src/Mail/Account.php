@@ -908,7 +908,8 @@ class Account implements \ArrayAccess
 	 * @param string $offset
 	 * @return mixed
 	 */
-	public function offsetGet($offset): mixed
+	#[\ReturnTypeWillChange]
+	public function offsetGet($offset)
 	{
 		return $this->__get($offset);
 	}
