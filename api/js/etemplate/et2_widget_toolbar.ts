@@ -493,6 +493,17 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			tolerance:"touch"
 		});
 
+		toolbox.on('toggle', (e)=>{
+			const details = <HTMLDetailsElement>e.target;
+			if (details.open)
+			{
+				jQuery('html').on('click.outsideOfMenu', function(e){
+					if (e.target != details &&  e.target != details.firstChild) details.open = false;
+					jQuery('html').unbind('click.outsideOfMenu');
+				});
+			}
+		});
+
 		this.actionlist.droppable({
 			tolerance:"pointer",
 			drop:function (event,ui) {
