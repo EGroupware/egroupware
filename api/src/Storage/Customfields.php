@@ -413,16 +413,16 @@ class Customfields implements \IteratorAggregate
 		}
 
 		self::$db->$op(self::TABLE, array(
-			'cf_label' => $cf['label'],
-			'cf_type' => $cf['type'],
-			'cf_type2' => $cf['type2'] ? implode(',', $cf['type2']) : null,
-			'cf_help' => $cf['help'],
-			'cf_values' => $cf['values'] ? json_encode($cf['values']) : null,
-			'cf_len' => (string)$cf['len'] !== '' ? $cf['len'] : null,
-			'cf_rows' => (string)$cf['rows'] !== '' ? $cf['rows'] : null,
-			'cf_order' => $cf['order'],
-			'cf_needed' => $cf['needed'],
-			'cf_private' => $cf['private'] ? implode(',', $cf['private']) : null,
+			'cf_label'    => $cf['label'],
+			'cf_type'     => $cf['type'],
+			'cf_type2'    => $cf['type2'] ? (is_array($cf['type2']) ? implode(',', $cf['type2']) : $cf['type2']) : null,
+			'cf_help'     => $cf['help'],
+			'cf_values'   => $cf['values'] ? json_encode($cf['values']) : null,
+			'cf_len'      => (string)$cf['len'] !== '' ? $cf['len'] : null,
+			'cf_rows'     => (string)$cf['rows'] !== '' ? $cf['rows'] : null,
+			'cf_order'    => $cf['order'],
+			'cf_needed'   => $cf['needed'],
+			'cf_private'  => $cf['private'] ? implode(',', $cf['private']) : null,
 			'cf_modifier' => $GLOBALS['egw_info']['user']['account_id'],
 			'cf_modified' => time(),
 		), array(
