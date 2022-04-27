@@ -1866,6 +1866,7 @@ body {
   font-size: 11px;
   line-height: 1.28;
   font-weight: normal;
+  overflow: hidden;
 }
 /**
  * EGroupware: Stylite Pixelegg template
