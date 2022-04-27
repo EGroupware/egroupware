@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -24,13 +23,13 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.user(_field) or egw.app(_app)
 	 */
-	var userData = {apps: {}};
+	let userData = {apps: {}};
 
 	/**
 	 * Client side cache of accounts user has access to
 	 * Used by account select widgets
 	 */
-	var accountStore = {
+	let accountStore = {
 		// Filled by AJAX when needed
 		//accounts: {},
 		//groups: {},
@@ -40,15 +39,8 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	/**
 	 * Clientside cache for accountData calls
 	 */
-	var accountData = {
-
-	};
-
-	/**
-	 * Store callbacks if we get multiple requests for the same data before the
-	 * answer comes back
-	 */
-	var callbacks = {};
+	let accountData = {};
+	let resolveGroup = {};
 
 	return {
 		/**
@@ -96,84 +88,89 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * Get a list of accounts the user has access to
 		 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 		 *
+		 * Currently the list is queried once synchronous from the server by the first et2_selectAccount.
+		 *
 		 * @param {string} type
-		 * @returns {array}
+		 * @param {bool} async true: return Promise
+		 * @returns {Array|Promise}
 		 */
-		accounts: function(type)
+		accounts: function(type, async)
 		{
-			if(typeof type == 'undefined') type = 'accounts';
+			if (typeof type === 'undefined') type = 'accounts';
 
-			var list = [];
 			if(jQuery.isEmptyObject(accountStore))
 			{
-				// Synchronous
-				egw.json("EGroupware\\Api\\Framework::ajax_user_list",[],
-					function(data) {
-						let types = ["accounts", "groups", "owngroups"];
-						for(let t of types)
+				const cache_it = data =>
+				{
+					let types = ["accounts", "groups", "owngroups"];
+					for(let t of types)
+					{
+						if(typeof data[t] === "object")
 						{
-							if(typeof data[t] === "object")
-							{
-								accountStore[t] = jQuery.extend(true, [], data[t]||[]);
-							}
+							accountStore[t] = jQuery.extend(true, [], data[t]||[]);
 						}
-					}, this, false
-				).sendRequest(false);
+					}
+				}
+				if (async)
+				{
+					return egw.request("EGroupware\\Api\\Framework::ajax_user_list",[]).then(_data =>
+					{
+						cache_it(_data);
+						return this.accounts(type);
+					});
+				}
+				// Synchronous
+				egw.json("EGroupware\\Api\\Framework::ajax_user_list",[], cache_it, this, false).sendRequest(false);
 			}
-			if(type == 'both')
+			if (type === 'both')
 			{
-				list = list.concat(accountStore['accounts'], accountStore['groups']);
+				return [].concat(accountStore.accounts, accountStore.groups);
 			}
-			else
-			{
-				list = list.concat(accountStore[type]);
-			}
-			return list;
+			return [].concat(accountStore[type]);
 		},
 
 		/**
 		 * Get account-infos for given numerical _account_ids
 		 *
-		 * @param {int|array} _account_ids
+		 * @param {int|int[]} _account_ids
 		 * @param {string} _field default 'account_email'
 		 * @param {boolean} _resolve_groups true: return attribute for all members, false: return attribute of group
-		 * @param {function} _callback
-		 * @param {object} _context
+		 * @param {function|undefined} _callback deprecated, use egw.accountDate(...).then(data => _callback.bind(_context)(data))
+		 * @param {object|undefined} _context deprecated, see _context
+		 * @return {Promise} resolving to object { account_id => value, ... }
 		 */
 		accountData: function(_account_ids, _field, _resolve_groups, _callback, _context)
 		{
 			if (!_field) _field = 'account_email';
-			if (!jQuery.isArray(_account_ids)) _account_ids = [_account_ids];
+			if (!Array.isArray(_account_ids)) _account_ids = [_account_ids];
 
 			// check our cache or current user first
-			var data = {};
-			for(var i=0; i < _account_ids.length; ++i)
+			const data = {};
+			let pending = false;
+			for(let i=0; i < _account_ids.length; ++i)
 			{
-				var account_id = _account_ids[i];
+				const account_id = _account_ids[i];
 
 				if (account_id == userData.account_id)
 				{
 					data[account_id] = userData[_field];
 				}
-				else if (typeof accountData[account_id] != 'undefined' && typeof accountData[account_id][_field] != 'undefined' &&
-					(!_resolve_groups || account_id > 0))
+				else if ((!_resolve_groups || account_id > 0) && typeof accountData[account_id] !== 'undefined' &&
+					typeof accountData[account_id][_field] !== 'undefined')
 				{
 					data[account_id] = accountData[account_id][_field];
+					pending = pending || data[account_id] instanceof Promise;
 				}
-				else if (typeof accountData[account_id] != 'undefined' && typeof accountData[account_id][_field] != 'undefined' &&
-					(_resolve_groups && account_id < 0))
+				else if (_resolve_groups && account_id < 0 && typeof resolveGroup[account_id] !== 'undefined' &&
+					typeof resolveGroup[account_id][_field] != 'undefined')
 				{
 					// Groups are resolved on the server, but then the response
-					// is cached so we ca re-resolve it locally
-					for(var id in accountData[account_id][_field])
+					// is cached, so we can re-resolve it locally
+					for(let id in resolveGroup[account_id][_field])
 					{
-						data[id] = accountData[account_id][_field][id];
+						data[id] = resolveGroup[account_id][_field][id];
+						pending = pending || data[id] instanceof Promise;
 					}
-				}
-				else if (typeof callbacks[account_id] === 'object')
-				{
-					// Add it to the list
-					callbacks[_account_ids[i]].push({callback: _callback, context: _context});
 				}
 				else
 				{
@@ -182,62 +179,97 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				_account_ids.splice(i--, 1);
 			}
 
+			let promise;
 			// something not found in cache --> ask server
 			if (_account_ids.length)
 			{
-				egw.json('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups],
-					function(_data) {
-						var callback_list = [];
-						for(var account_id in _data)
-						{
-							if(callbacks[account_id])
-							{
-								callback_list = callback_list.concat(callbacks[account_id]);
-								delete callbacks[account_id];
-							}
-							if (typeof accountData[account_id] === 'undefined')
-							{
-								accountData[account_id] = {};
-							}
-							data[account_id] = accountData[account_id][_field] = _data[account_id];
-						}
-						// If resolving for 1 group, cache the whole answer too
-						// (More than 1 group, we can't split to each group)
-						if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
-						{
-							var group_id = _account_ids[0];
-							if(callbacks[group_id])
-							{
-								callback_list = callback_list.concat(callbacks[group_id]);
-								delete callbacks[group_id];
-							}
-							if (typeof accountData[group_id] === 'undefined')
-							{
-								accountData[group_id] = {};
-							}
-							accountData[group_id][_field] = _data;
-						}
-						for(var i = 0; i < callback_list.length; i++)
-						{
-							if(typeof callback_list[i] !== 'object' || typeof callback_list[i].callback !== 'function') continue;
-							callback_list[i].callback.call(callback_list[i].context, data);
-						}
-					}
-				).sendRequest();
-				// Keep request so we know what we're waiting for
-				for(var i=0; i < _account_ids.length; ++i)
+				promise = egw.request('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups]).then(_data =>
 				{
-					if(typeof callbacks[_account_ids[i]] === 'undefined')
+					for(let account_id in _data)
 					{
-						callbacks[_account_ids[i]] = [];
+						if (typeof accountData[account_id] === 'undefined')
+						{
+							accountData[account_id] = {};
+						}
+						data[account_id] = accountData[account_id][_field] = _data[account_id];
 					}
-					callbacks[_account_ids[i]].push({callback: _callback, context: _context});
+					// If resolving for 1 group, cache the whole answer too
+					// (More than 1 group, we can't split to each group)
+					if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
+					{
+						const group_id = _account_ids[0];
+						if (typeof resolveGroup[group_id] === 'undefined')
+						{
+							resolveGroup[group_id] = {};
+						}
+						resolveGroup[group_id][_field] = _data;
+					}
+					return data;
+				});
+
+				// store promise, in case someone asks while the request is pending, to not query the server again
+				_account_ids.forEach(account_id =>
+				{
+					if (_resolve_groups && account_id < 0) return;	// we must NOT cache the promise for account_id!
+
+					if (typeof accountData[account_id] === 'undefined')
+					{
+						accountData[account_id] = {};
+					}
+					accountData[account_id][_field] = promise.then(function(_data)
+					{
+						const result = {};
+						result[this.account_id] = _data[this.account_id];
+						return result;
+					}.bind({ account_id: account_id }));
+				});
+				if (_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
+				{
+					resolveGroup[_account_ids[0]] = promise;
 				}
 			}
 			else
 			{
-				_callback.call(_context, data);
+				promise = Promise.resolve(data);
 			}
+
+			// if we have any pending promises, we need to resolve and merge them
+			if (pending)
+			{
+				promise = promise.then(_data =>
+				{
+					const promises = [];
+					for (let account_id in _data)
+					{
+						if (_data[account_id] instanceof Promise)
+						{
+							promises.push(_data[account_id]);
+						}
+					}
+					return Promise.all(promises).then(_results =>
+					{
+						_results.forEach(result =>
+						{
+							for (let account_id in result)
+							{
+								_data[account_id] = result[account_id];
+							}
+						});
+						return _data;
+					});
+				});
+			}
+
+			// if deprecated callback is given, call it with then
+			if (typeof _callback === 'function')
+			{
+				promise = promise.then(_data =>
+				{
+					_callback.bind(_context)(_data);
+					return _data;
+				});
+			}
+			return promise;
 		},
 
 		/**
@@ -248,7 +280,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 */
 		set_account_cache: function(_data, _field)
 		{
-			for(var account_id in _data)
+			for(let account_id in _data)
 			{
 				if (typeof accountData[account_id] === 'undefined')
 				{
@@ -269,15 +301,15 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 */
 		set_account_data: function(_src_widget, _target_name, _field)
 		{
-			var user = _src_widget.get_value();
-			var target = _src_widget.getRoot().getWidgetById(_target_name);
-			var field = _field;
+			const user = _src_widget.get_value();
+			const target = _src_widget.getRoot().getWidgetById(_target_name);
+			const field = _field;
 
 			if (user && target)
 			{
 				egw.accountData(user, _field, false, function(_data)
 				{
-					var data;
+					let data;
 					if (field.indexOf('{') == -1)
 					{
 						data = _data[user];
@@ -290,8 +322,8 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						/**
 						 * resolve given data whilst the condition met
 						 */
-						var resolveData = function(_d, condition, action) {
-							var whilst = function (_d) {
+						const resolveData = function(_d, condition, action) {
+							const whilst = function (_d) {
 								return condition(_d) ? action(condition(_d)).then(whilst) : Promise.resolve(_d);
 							}
 							return whilst(_d);
@@ -300,9 +332,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						/**
 						 * get data promise
 						 */
-						var getData = function(_match)
+						const getData = function(_match)
 						{
-							var match = _match;
+							const match = _match;
 							return new Promise(function(resolve)
 							{
 							  egw.accountData(user, match, false, function(_d)
@@ -313,9 +345,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 							});
 						};
 
-						// run rsolve data
-						resolveData(data, function(_d){
-							var r = _d.match(/{([^}]+)}/);
+						// run resolve data
+						resolveData(data, function(_d) {
+							const r = _d.match(/{([^}]+)}/);
 							return r && r.length > 0 ? r[1] : r;
 						},
 						getData).then(function(data){
@@ -323,7 +355,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						});
 					}
 				});
-			};
+			}
 		},
 
 		/**
@@ -339,10 +371,12 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			if (_id)
 			{
 				delete accountData[_id];
+				delete resolveGroup[_id];
 			}
 			else
 			{
 				accountData = {};
+				resolveGroup = {};
 			}
 			if (jQuery.isEmptyObject(accountStore)) return;
 
@@ -353,12 +387,12 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				case 'update':
 					if (_id)
 					{
-						var store = _id < 0 ? accountStore.groups : accountStore.accounts;
-						for(var i=0; i < store.length; ++i)
+						const store = _id < 0 ? accountStore.groups : accountStore.accounts;
+						for(let i=0; i < store.length; ++i)
 						{
 							if (store && typeof store[i] != 'undefined' && _id == store[i].value)
 							{
-								if (_type == 'delete')
+								if (_type === 'delete')
 								{
 									delete(store[i]);
 								}
@@ -369,7 +403,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 										store[i].label = _label;
 										if (_id < 0)
 										{
-											for(var j=0; j < accountStore.owngroups.length; ++j)
+											for(let j=0; j < accountStore.owngroups.length; ++j)
 											{
 												if (_id == accountStore.owngroups[j].value)
 												{
