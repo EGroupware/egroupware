@@ -99,7 +99,6 @@
   display: inline-block;
 }
 #calendar-sidebox_cat_id {
-  width: 90%;
   margin-bottom: 10px;
 }
 #calendar-sidebox_cat_id ~ * {
@@ -121,7 +120,6 @@
   top: 28px;
   z-index: 1;
   overflow: hidden;
-  margin: 0.5em;
   font-size: 10px;
   line-height: 50%;
   color: white;
@@ -130,23 +128,13 @@
   border: none;
   border-radius: 100%;
 }
-#calendar-sidebox_header_today {
-  right: 35px;
-}
 #calendar-sidebox_header_go {
-  right: 80px;
   text-indent: -1px;
 }
 #calendar-sidebox_header_go:hover,
 #calendar-sidebox_header_today:hover {
   background-color: #0c5da5;
   box-shadow: none;
-}
-#calendar-sidebox_date .ui-datepicker-header a {
-  top: 3px;
-}
-#calendar-sidebox_date .ui-datepicker-prev {
-  right: 3em;
 }
 #calendar-sidebox_weekend {
   /* Special css styling goes here */
@@ -165,12 +153,24 @@
   background-color: white;
 }
 #calendar-sidebox_date .flatpickr-months > * {
-  padding: 3px;
   height: 20px;
 }
 #calendar-sidebox_date .flatpickr-current-month {
-  height: 20px;
+  height: 25px;
   font-size: 110%;
+  width: 100%;
+  min-width: 16ch;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  padding: 0px;
+}
+#calendar-sidebox_date .flatpickr-current-month .numInputWrapper {
+  width: 7ch;
+  min-width: 7ch;
+}
+#calendar-sidebox_date .flatpickr-current-month input.cur-year {
+  padding-top: 3px;
 }
 #calendar-sidebox_date div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
   width: 70%;

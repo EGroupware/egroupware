@@ -4031,15 +4031,19 @@ div.flatpickr-calendar.inline .dayContainer {
 
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-month {
     flex: 1 1 auto;
+    padding-top: 4px;
+    padding-bottom: 5px;
 }
 
 div.flatpickr-calendar.inline .flatpickr-months {
     background-color: #eceef1;
+    gap: 4px;
 }
 
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-prev-month,
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-next-month {
     position: relative;
+    padding: 3px 5px;
 }
 
 div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
