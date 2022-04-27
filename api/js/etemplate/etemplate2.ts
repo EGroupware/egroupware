@@ -947,10 +947,7 @@ export class etemplate2
 			let submit = _widget.submit(values);
 			if(submit === false)
 			{
-				if(!invalid && !_widget.isValid([]))
-				{
-					invalid.push(_widget);
-				}
+				invalid.push(_widget);
 			}
 			else if(submit instanceof Promise)
 			{
@@ -1039,8 +1036,8 @@ export class etemplate2
 					if(invalid_widgets[0] && invalid_widgets[0] instanceof et2_widget)
 					{
 						let messages = [];
-						let valid = invalid.isValid(messages);
-						invalid.set_validation_error(messages);
+						let valid = invalid_widgets[0].isValid(messages);
+						invalid_widgets[0].set_validation_error(messages);
 					}
 				}
 				else
