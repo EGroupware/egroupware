@@ -85,7 +85,7 @@ td.infologTimestamp {
 }
 
 div#infolog-edit_infolog-edit-description {
-	height: 250px;
+    height: 100%;
 }
 #infolog-edit_info_responsible + .chzn-container .chzn-results {
 	max-height: 150px;
