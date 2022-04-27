@@ -1446,6 +1446,22 @@ class adLDAP extends \adLDAP
 	}
 
 	/**
+	 * Magic method called when object gets serialized
+	 *
+	 * We do NOT store ldapConnection, as we need to reconnect anyway.
+	 * PHP 8.1 gives an error when trying to serialize LDAP\Connection object!
+	 *
+	 * @return array
+	 */
+	function __sleep()
+	{
+		$vars = get_object_vars($this);
+		unset($vars['ldapConnection']);
+		unset($this->ldapConnection);
+		return array_keys($vars);
+	}
+
+	/**
     * Convert 8bit characters e.g. accented characters to UTF8 encoded characters
     *
     * Extended to use mbstring to convert from arbitrary charset to utf-8

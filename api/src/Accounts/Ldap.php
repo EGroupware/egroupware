@@ -1295,6 +1295,22 @@ class Ldap
 	}
 
 	/**
+	 * Magic method called when object gets serialized
+	 *
+	 * We do NOT store ldapConnection, as we need to reconnect anyway.
+	 * PHP 8.1 gives an error when trying to serialize LDAP\Connection object!
+	 *
+	 * @return array
+	 */
+	function __sleep()
+	{
+		$vars = get_object_vars($this);
+		unset($vars['ds']);
+		unset($this->ds);
+		return array_keys($vars);
+	}
+
+	/**
 	 * __wakeup function gets called by php while unserializing the object to reconnect with the ldap server
 	 */
 	function __wakeup()
