@@ -448,7 +448,7 @@ class infolog_bo
 
 			if ((string)$info['info_custom_from'] === '')	// old entry
 			{
-				$info['info_custom_from'] = (int) ($title != $info['info_from'] && @htmlentities($title) != $info['info_from']);
+				$info['info_custom_from'] = (int) ($title !== $info['info_from'] && is_string($title) && @htmlentities($title) !== $info['info_from']);
 			}
 			if (!$info['info_custom_from'])
 			{
