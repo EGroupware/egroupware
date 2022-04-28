@@ -17,6 +17,11 @@ import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
 
+import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + (egw.preference('lang') + ".js")).then(() =>
+{
+	// @ts-ignore
+	flatpickr.localize(flatpickr.l10ns[egw.preference('lang')]);
+});
 
 /**
  * Parse a date string into a Date object
@@ -369,6 +374,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.weekNumbers = true;
 
+		this._localize(options);
+
 		if(this.inline)
 		{
 			options.inline = this.inline;
@@ -382,6 +389,20 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.onChange = options.onReady = this._updateValueOnChange;
 
 		return options;
+	}
+
+	/**
+	 * Set localize options & translations
+	 * @param options
+	 * @protected
+	 */
+	protected _localize(options)
+	{
+		let first_dow = this.egw().preference('weekdaystarts', 'calendar') || 'Monday';
+		const DOW_MAP = {Monday: 1, Sunday: 0, Saturday: 6};
+		options.locale = {
+			firstDayOfWeek: DOW_MAP[first_dow]
+		};
 	}
 
 	set_value(value)
