@@ -220,6 +220,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			 * Automatically destroy the dialog when it closes.  Set to false to keep the dialog around.
 			 */
 			destroy_on_close: Boolean,
+			appendTo: String
 		}
 	}
 
@@ -435,7 +436,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	get value() : Object
 	{
 		let value = this.__value;
-		if(this._template_widget)
+		if(this._template_widget && this._template_widget.widgetContainer)
 		{
 			value = this._template_widget.getValues(this._template_widget.widgetContainer);
 		}
