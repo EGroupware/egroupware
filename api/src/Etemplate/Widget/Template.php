@@ -101,8 +101,11 @@ class Template extends Etemplate\Widget
 					return $template;
 				}
 			}
-
-			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
+			// do NOT log not found template because of missing $row_cont expansion on server-side
+			if (substr($name, 0, 10) !== '$row_cont[')
+			{
+				error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
+			}
 			return false;
 		}
 		$reader = new XMLReader();
