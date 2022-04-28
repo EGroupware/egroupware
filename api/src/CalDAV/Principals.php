@@ -7,7 +7,7 @@
  * @package api
  * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-22 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\CalDAV;
@@ -273,8 +273,9 @@ class Principals extends Handler
 			{
 				case 'calendar-proxy-read-for':
 				case 'calendar-proxy-write-for':
-					$prop_path = $path . substr($prop_name, 0, -4).'/';
-					$prop_name = 'group-member-set';
+					$path_ends_with_filter = '/'.substr($prop_name, 0, -4).'/';
+					$prop_path = $path;
+					$prop_name = 'group-membership';
 					$prop_ns = Api\CalDAV::DAV;
 					break;
 
@@ -283,6 +284,7 @@ class Principals extends Handler
 					// remove 'expanded-' prefix
 					$prop_name = substr($prop_name, 9);
 					$prop_ns = Api\CalDAV::DAV;
+					$path_ends_with_filter = null;
 					break;
 			}
 			// run regular propfind for requested property
@@ -322,6 +324,7 @@ class Principals extends Handler
 					{
 						$options2['props'] = array();
 					}
+					/** @noinspection UnsupportedStringOffsetOperationsInspection */
 					$options2['props'][] = array(
 						'name' => $prop['attrs']['name'],
 						'xmlns' => isset($prop['attrs']['namespace']) ? $prop['attrs']['namespace'] : $prop['xmlns'],
@@ -332,11 +335,21 @@ class Principals extends Handler
 			if ($prop && $prop['depth'] == 1) array_unshift($requested_props, $prop);
 			$this->caldav->options = $options2;	// also modify global variable
 
-			// run regular profind to get requested 2.-level properties for each href
+			// run regular propfind to get requested 2.-level properties for each href
 			foreach($expand_prop['val'] as $key => &$prop_val)
 			{
 				list(,$expand_path) = explode($this->caldav->base_uri, $prop_val['val']);
 				//error_log(__METHOD__."('$path', ..., $user) calling propfind('$expand_path', ".array2string($options2).', '.array2string($prop_val).", $user)");
+
+				// calendar-proxy-(read|write)-for only uses memberships of the */calendar-proxy-(read|write)/ group
+				if (isset($path_ends_with_filter))
+				{
+					if (substr($expand_path, -strlen($path_ends_with_filter)) !== $path_ends_with_filter)
+					{
+						continue;
+					}
+					$expand_path = substr($expand_path, 0, -strlen($path_ends_with_filter)+1);
+				}
 				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
 				{
 					// do NOT return that path, eg. perms give rights but account_selection="groupmembers" forbids access
@@ -1140,6 +1153,7 @@ class Principals extends Handler
 			'record-type' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'record-type','groups'),
 			'calendar-user-type' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-type','GROUP'),
 			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
+			'group-membership' => $this->principal_set('group-member-set', [], ['calendar', 'resources'], $account['account_id']),
 			'resource-id' => array(Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id']))),
 		));
 	}
@@ -1407,12 +1421,16 @@ class Principals extends Handler
 					$grants = $this->acl->get_all_location_rights($account, $app, $app != 'addressbook');
 					break;
 			}
-			//echo "<p>type=$type --> app=$app, what=$what --> right=$right, mask=$mask, account=$account, location=$location --> grants=".array2string($grants)."</p>\n";
+			//error_log(__METHOD__."() type=$type --> app=$app, what=$what --> right=$right, mask=$mask, account=$account, location=$location --> grants=".array2string($grants));
 		}
 		foreach($grants as $account_id => $rights)
 		{
-			if ($account_id !== 'run' && $account_id != $account && ($rights & $mask) == $right &&
-				($account_lid = $this->accounts->id2name($account_id)))
+			// ignore/don't list not other account specific rights and rights on own account
+			if (!is_numeric($account_id) || $account_id == $account)
+			{
+				continue;
+			}
+			if (($rights & $mask) == $right && ($account_lid = $this->accounts->id2name($account_id)))
 			{
 				// ignore "broken" grants (eg. negative account_id for a user), as they lead to further errors (no members)
 				if (($t = $this->accounts->exists($account_id) == 1 ? 'u' : 'g') !== $this->accounts->get_type($account_id))
@@ -1423,8 +1441,9 @@ class Principals extends Handler
 				$proxys[$account_id] = $account_lid;
 				// no need to add group-members, ACL grants to groups are understood by WebDAV ACL (tested with iCal)
 			}
-			//echo "<p>$account_id ($account_lid) type=$t: (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
+			//error_log(__METHOD__."() $account_id ($account_lid) type=$t: (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right));
 		}
+		//error_log(__METHOD__."() add_principal('$principal/$type', ['group-member-set' => principal_set(".json_encode($proxys)."), ...])");
 		return $this->add_principal($principal.'/'.$type, array(
 				'displayname' => lang('%1 proxy of %2', lang($app).' '.lang($what), basename($principal)),
 				'group-member-set' => $this->principal_set('group-member-set', $proxys),
@@ -1529,7 +1548,8 @@ class Principals extends Handler
 	protected function get_calendar_proxy_groups($account, $app='calendar')
 	{
 		$set = array();
-		foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
+		// use enum_group_acls=false, as iCal app understands group-memberships
+		foreach($this->acl->get_grants($app, false, $account) as $account_id => $rights)
 		{
 			if ($account_id != $account && ($rights & Api\Acl::READ) &&
 				($account_lid = $this->accounts->id2name($account_id)) &&
