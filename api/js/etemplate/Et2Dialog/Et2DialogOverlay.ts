@@ -209,15 +209,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
                         <slot name="heading"></slot>
                     </h1>
                     <slot name="header"></slot>
-                    <button
-                            @click="${this.__dispatchCloseEvent}"
-                            id="close-button"
-                            title="${this.egw().lang("Close")}"
-                            aria-label="${this.egw().lang("Close dialog")}"
-                            class="overlay__close-button"
-                    >
-                        <slot name="close-icon">&times;</slot>
-                    </button>
+                    ${this._closeButtonTemplate()}
                 </div>
                 <div id="overlay-content-node-wrapper">
                     <slot name="content"></slot>
@@ -226,6 +218,25 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
                     <slot name="buttons"></slot>
                 </div>
             </div>
+		`;
+	}
+
+	_closeButtonTemplate()
+	{
+		if (this._dialog.noCloseButton)
+		{
+			return;
+		}
+
+		return html`<button
+							@click="${this.__dispatchCloseEvent}"
+							id="close-button"
+							title="${this.egw().lang("Close")}"
+							aria-label="${this.egw().lang("Close dialog")}"
+							class="overlay__close-button"
+					>
+						<slot name="close-icon">&times;</slot>
+					</button>
 		`;
 	}
 
