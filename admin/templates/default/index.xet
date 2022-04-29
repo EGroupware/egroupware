@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.index.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" image="add" id="add" onclick='app.admin.account({id:"add"})'/>
+		<buttononly label="Add" image="add" id="add" onclick="app.admin.account({id:'add'})"/>
 	</template>
 	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
