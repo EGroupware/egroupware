@@ -1249,8 +1249,18 @@ export const Et2Widget = dedupeMixin(Et2WidgetMixin);
  * @param parent Parent widget
  */
 // @ts-ignore Et2Widget is I guess not the right type
-export function loadWebComponent(_nodeName : string, _template_node, parent : Et2Widget | et2_widget) : HTMLElement
+export function loadWebComponent(_nodeName : string, _template_node : Element|{[index: string]: any}, parent : Et2Widget | et2_widget) : HTMLElement
 {
+	// support attributes object instead of an Element
+	if (typeof _template_node.getAttribute === 'undefined')
+	{
+		const _names = Object.keys(_template_node);
+		_template_node.getAttributeNames = () => _names;
+		_template_node.getAttribute = attr => _template_node[attr];
+		_template_node.querySelectorAll = () => [];
+		(<any>_template_node).nodeName = _nodeName;
+		(<any>_template_node).childNodes = [];
+	}
 	// Try to find the class for the given node
 	let widget_class = window.customElements.get(_nodeName);
 	if(!widget_class)

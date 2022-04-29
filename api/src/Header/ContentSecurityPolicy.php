@@ -35,7 +35,7 @@ class ContentSecurityPolicy
 	 * @var array
 	 */
 	private static $sources = array(				// our dhtmlxcommon version (not the current) uses eval,
-		'script-src'  => array("'unsafe-eval'"),	// sidebox javascript links, et2_widget_date / jQueryUI datepicker, maybe more
+		'script-src'  => array("'unsafe-eval'"),	// sidebox javascript links, maybe more
 		'style-src'   => array("'unsafe-inline'"),	// eTemplate styles and custom framework colors
 		'connect-src' => null,	// NOT array(), to call the hook
 		'frame-src'   => null,	// NOT array(), to call the hook

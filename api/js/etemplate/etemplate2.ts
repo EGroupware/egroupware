@@ -65,7 +65,6 @@ import './et2_widget_grid';
 import './et2_widget_box';
 import './et2_widget_hbox';
 import './et2_widget_groupbox';
-import './et2_widget_split';
 import './et2_widget_button';
 import './et2_widget_color';
 import './et2_widget_description';
