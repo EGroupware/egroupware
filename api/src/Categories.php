@@ -232,7 +232,7 @@ class Categories
 			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
 
 			// return global categories just if $globals is set
-			if (!$globals && $cat['appname'] == self::GLOBAL_APPNAME)
+			if (!$globals && !empty($cat['appname']) && $cat['appname'] === self::GLOBAL_APPNAME)
 			{
 				continue;
 			}
@@ -525,9 +525,9 @@ class Categories
 		}
 
 		// Read access to global categories
-		if ($needed == Acl::READ && (($is_global=array_intersect(explode(',',$category['owner']),$this->global_owners)) ||
+		if ($needed == Acl::READ && (($is_global=isset($category['owner']) && array_intersect(explode(',',$category['owner']),$this->global_owners)) ||
 			$no_acl_check && $category['access'] == 'public') &&	// no_acl_check only means public cats
-			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name ||
+			(($category['appname'] ?? null) === self::GLOBAL_APPNAME || ($category['appname'] ?? null) == $this->app_name ||
 			$is_global && $allow_global_read))
 		{
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";
@@ -535,7 +535,7 @@ class Categories
 		}
 
 		// Full access to own categories
-		if ($category['appname'] == $this->app_name && $category['owner'] == $this->account_id)
+		if (($category['appname'] ?? null) == $this->app_name && $category['owner'] == $this->account_id)
 		{
 			return true;
 		}
@@ -547,15 +547,15 @@ class Categories
 		}
 
 		// Load the application grants
-		if ($category['appname'] == $this->app_name && is_null($this->grants))
+		if (($category['appname'] ?? null) == $this->app_name && isset($this->grants))
 		{
 			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name,true);
 		}
 
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
-		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name;
+		$acl_grant = $this->account_id != self::GLOBAL_ACCOUNT && ($category['appname'] ?? null) == $this->app_name;
 		$owner_grant = false;
-		foreach(explode(',',$category['owner']) as $owner)
+		foreach(!empty($category['owner']) ? explode(',',$category['owner']) : [] as $owner)
 		{
 			$owner_grant = $owner_grant || (is_array($this->grants) && !empty($this->grants[$owner]) && ($this->grants[$owner] & $needed) &&
 				($category['access'] === 'public' ||  ($this->grants[$owner] & Acl::PRIVAT)));
