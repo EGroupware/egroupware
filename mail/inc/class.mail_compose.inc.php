@@ -358,8 +358,8 @@ class mail_compose
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(
 				// Parameters needed for fetching appropriate data
-				$replyID, $_GET['part_id'], $_GET['from'],
-				// Additionally may be changed
+				$replyID, $_GET['part_id'] ?? null, $_GET['from'] ?? null,
+				// additionally these can be changed
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
 			if (Mail\Smime::get_acc_smime($this->mail_bo->profileID))
@@ -491,7 +491,7 @@ class mail_compose
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
-			$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
+			$_content['body'] = $_content['body'] ?? $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text'] ?? null;
 			/*
 			perform some simple checks, before trying to send on:
 			$_content['to'];$_content['cc'];$_content['bcc'];
@@ -525,7 +525,7 @@ class mail_compose
 							'content' => $_content,
 					));
 
-					if ($success==false)
+					if (!$success)
 					{
 						$sendOK=false;
 						$message = $this->errorInfo;
@@ -622,20 +622,12 @@ class mail_compose
 
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
-		$content = (is_array($_content)?$_content:array());
+		$content = $_content ?? [];
 		if ($_contentHasMimeType)
 		{
 			// mimeType is now a checkbox; convert it here to match expectations
 			// ToDo: match Code to meet checkbox value
-			if ($content['mimeType']==1)
-			{
-				$_content['mimeType'] = $content['mimeType']='html';
-			}
-			else
-			{
-				$_content['mimeType'] = $content['mimeType']='plain';
-			}
-
+			$_content['mimetype'] = $content['mimeType'] = !empty($content['mimeType']) ? 'html' : 'plain';
 		}
 		// user might have switched desired mimetype, so we should convert
 		if (!empty($content['is_html']) && $content['mimeType'] === 'plain')
@@ -676,10 +668,9 @@ class mail_compose
 			$content['is_plain'] = false;
 		}
 
-		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
-		unset($_content['body']);
-		unset($_content['mail_htmltext']);
-		unset($_content['mail_plaintext']);
+		$content['body'] = $content['body'] ?? $content['mail_'.($content['mimeType'] === 'html'?'html':'plain').'text'] ??
+			($content['mimeType'] === 'html' ? '<br>' : '');
+		unset($_content['body'], $_content['mail_htmltext'], $_content['mail_plaintext']);
 		$_currentMode = $_content['mimeType'];
 
 		// we have to keep comments to be able to changing signatures
@@ -1119,11 +1110,6 @@ class mail_compose
 			}
 		}
 
-		if ($content['mimeType'] == 'html' && Api\Html::htmlarea_availible()===false)
-		{
-			$_content['mimeType'] = $content['mimeType'] = 'plain';
-			$content['body'] = $this->convertHTMLToText($content['body']);
-		}
 		// is a certain signature requested?
 		// only the following values are supported (and make sense)
 		// no => means -2
@@ -1255,6 +1241,7 @@ class mail_compose
 					str_replace('"','',$identities[$this->mail_bo->getDefaultIdentity()]))
 				{
 					// preserve/restore the value to content.
+					/** @noinspection UnsupportedStringOffsetOperationsInspection */
 					$content[strtolower($destination)][]=$value;
 					continue;
 				}
@@ -1264,6 +1251,7 @@ class mail_compose
 					if ($addressObject->host === '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
 					//$address = Mail::htmlentities($address, $this->displayCharset);
+					/** @noinspection UnsupportedStringOffsetOperationsInspection */
 					$content[strtolower($destination)][]=$address;
 					$destinationRows++;
 				}
@@ -2309,7 +2297,7 @@ class mail_compose
 			$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 		}
 		if($bodyParts['0']['mimeType'] == 'text/html') {
-			$this->sessionData['body']	= /*"<br>".*//*"&nbsp;".*/"<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
+			$this->sessionData['body']	= "<br>"."<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
 				@htmlspecialchars(lang("from")).": ".$fromAddress."<br>".
 				$toAddress.$ccAddress.
 				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."<br>".
@@ -2318,22 +2306,23 @@ class mail_compose
 			if (!empty($styles)) $this->sessionData['body'] .= $styles;
 			$this->sessionData['body']	.= '<blockquote type="cite">';
 
-			for($i=0; $i<count($bodyParts); $i++) {
+			foreach($bodyParts as $i => &$bodyPart)
+			{
 				if($i>0) {
 					$this->sessionData['body'] .= '<hr>';
 				}
-				if($bodyParts[$i]['mimeType'] == 'text/plain') {
-					#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body'])."<br>";
-					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
+				if($bodyPart['mimeType'] == 'text/plain') {
+					#$bodyPart['body'] = nl2br($bodyPart['body'])."<br>";
+					$bodyPart['body'] = "<pre>".$bodyPart['body']."</pre>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
+				if ($bodyPart['charSet']===false) $bodyPart['charSet'] = Mail::detect_encoding($bodyPart['body']);
 
 				$_htmlConfig = Mail::$htmLawed_config;
 				Mail::$htmLawed_config['comment'] = 2;
 				Mail::$htmLawed_config['transform_anchor'] = false;
-				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(Api\Translation::convert_jsonsafe($bodyPart['body'], $bodyPart['charSet']));
 				Mail::$htmLawed_config = $_htmlConfig;
-				#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
+				#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyPart['body'] . 'a' , strtoupper($bodyPart['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 			}
 
 			$this->sessionData['body']	.= '</blockquote><br>';
@@ -2347,15 +2336,15 @@ class mail_compose
 				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true), ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
                 '-------------------------------------------------'."\r\n \r\n ";
 			$this->sessionData['mimeType']	= 'plain';
-			$countBodyParts = count((array)$bodyParts);
-			for($i=0; $i<$countBodyParts; $i++) {
+			foreach($bodyParts as $i => &$bodyPart)
+			{
 				if($i>0) {
 					$this->sessionData['body'] .= "<hr>";
 				}
 
 				// add line breaks to $bodyParts
-				$newBody2 = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
-				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
+				$newBody2 = Api\Translation::convert_jsonsafe($bodyPart['body'],$bodyPart['charSet']);
+				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyPart['body'] . 'a' , strtoupper($bodyPart['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
 				$hasSignature = false;
@@ -2564,7 +2553,7 @@ class mail_compose
 				$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
 				break;
 			case 'openpgp':
-				$_mailObject->setOpenPgpBody($_formData['body']);
+				$_mailObject->setOpenPgpBody($_formData['body'].$attachment_links);
 				break;
 			default:
 				$body = $this->convertHTMLToText($_formData['body'],false, false, true, true);
@@ -3023,6 +3012,7 @@ class mail_compose
 		// create the messages and store inline images
 		$inline_images = $this->createMessage($mail, $_formData, $identity);
 		// remember the identity
+		/** @noinspection MissingIssetImplementationInspection */
 		if (!empty($mail->From) && ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on')) $fromAddress = $mail->From;//$mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 		#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
