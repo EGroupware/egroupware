@@ -15,9 +15,8 @@
 import {et2_createWidget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
-import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {et2_calendar_event} from "./et2_widget_event";
-import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * Parent class for the various calendar views to reduce copied code
@@ -47,7 +46,6 @@ export class et2_calendar_view extends et2_valueWidget
 		}
 	};
 	protected dataStorePrefix: string = 'calendar';
-	protected _date_helper: et2_date;
 	protected loader: JQuery;
 	protected div: JQuery;
 	protected now_div: JQuery;
@@ -68,11 +66,6 @@ export class et2_calendar_view extends et2_valueWidget
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_view._attributes, _child || {}));
 
-
-		// Used for its date calculations
-		this._date_helper = <et2_date>et2_createWidget('date-time', {}, null);
-		this._date_helper.loadingFinished();
-
 		this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
 		this.now_div = jQuery('<div class="calendar_now"/>');
 		this.update_timer = null;
@@ -89,10 +82,6 @@ export class et2_calendar_view extends et2_valueWidget
 
 	destroy() {
 		super.destroy();
-
-		// date_helper has no parent, so we must explicitly remove it
-		this._date_helper.destroy();
-		this._date_helper = null;
 
 		// Stop the invalidate timer
 		if(this.update_timer)
@@ -175,22 +164,8 @@ export class et2_calendar_view extends et2_valueWidget
 			new_date = new Date();
 		}
 
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this._date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this._date_helper.set_year(new_date.substring(0, 4));
-			// Avoid overflow into next month, since we re-use date_helper
-			this._date_helper.set_date(1);
-			this._date_helper.set_month(new_date.substring(4, 6));
-			this._date_helper.set_date(new_date.substring(6, 8));
-		}
-
-		var old_date = this.options.start_date;
-		this.options.start_date = new Date(this._date_helper.getValue());
+		let old_date = this.options.start_date;
+		this.options.start_date = this.date_helper(new_date)
 
 		if(old_date !== this.options.start_date && this.isAttached())
 		{
@@ -216,22 +191,9 @@ export class et2_calendar_view extends et2_valueWidget
 		{
 			new_date = new Date();
 		}
-		// Use date widget's existing functions to deal
-		if(typeof new_date === "object" || typeof new_date === "string" && new_date.length > 8)
-		{
-			this._date_helper.set_value(new_date);
-		}
-		else if(typeof new_date === "string")
-		{
-			this._date_helper.set_year(new_date.substring(0, 4));
-			// Avoid overflow into next month, since we re-use date_helper
-			this._date_helper.set_date(1);
-			this._date_helper.set_month(new_date.substring(4, 6));
-			this._date_helper.set_date(new_date.substring(6, 8));
-		}
 
-		var old_date = this.options.end_date;
-		this.options.end_date = new Date(this._date_helper.getValue());
+		let old_date = this.options.end_date;
+		this.options.end_date = this.date_helper(new_date);
 
 		if(old_date !== this.options.end_date && this.isAttached())
 		{
@@ -344,15 +306,74 @@ export class et2_calendar_view extends et2_valueWidget
 		// None of the above changed anything, hide the loader
 		if(!this.update_timer)
 		{
-			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),200);
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();}, this), 200);
 		}
 	}
 
-	get date_helper(): et2_date
+
+	/**
+	 * Parse something that we think is a date into an actual date.
+	 *
+	 * The passed value could be a Date, or a string in an unknown format, or a timestamp
+	 *
+	 * @param {Date | string | number} _value
+	 */
+	date_helper(_value : Date | string | number)
 	{
-		return this._date_helper;
+		if(_value === null || _value === "" || _value === undefined || _value === 0)
+		{
+			return undefined;
+		}
+		if(_value instanceof Date)
+		{
+			// Return a copy, because often modifications are made after
+			return new Date(_value.getTime());
+		}
+		let date = new Date();
+		if(typeof _value === "string" && _value.length == 8)
+		{
+			// Ymd format: 20000101
+			date.setFullYear(parseInt(_value.substring(0, 4)));
+			// Avoid overflow into next month since it already has a value
+			date.setDate(1);
+			date.setMonth(parseInt(_value.substring(4, 6)) - 1);
+			date.setDate(parseInt(_value.substring(6, 8)));
+			date.setUTCHours(0);
+			date.setUTCMinutes(0);
+			date.setUTCSeconds(0);
+		}
+		// Check for full timestamp
+		else if(typeof _value == 'string' && _value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2})|)$/))
+		{
+			date = new Date(_value);
+		}
+		// timestamp in usertime
+		else if(typeof _value == 'number' || typeof _value == 'string' && !isNaN(<number><unknown>_value) && _value[0] != '+' && _value[0] != '-')
+		{
+			date = new Date((typeof _value == "number" ? _value : parseInt(_value)) * 1000);
+		}
+		// @ts-ignore
+		else if(typeof _value == 'object' && typeof _value.date !== "undefined")
+		{
+			// @ts-ignore
+			return this.date_helper(_value.date);
+		}
+		// @ts-ignore
+		else if(typeof _value == 'object' && typeof _value.valueOf !== "undefined")
+		{
+			date = _value;
+		}
+		else
+		{
+			// string starting with + or - --> add/substract number of seconds from current value
+			date.setTime(date.getTime() + 1000 * parseInt("" + _value));
+		}
+
+		return date;
 	}
-	_createNamespace() {
+
+	_createNamespace()
+	{
 		return true;
 	}
 
@@ -369,10 +390,7 @@ export class et2_calendar_view extends et2_valueWidget
 		var tempDate = new Date();
 		var now = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),tempDate.getMinutes()-tempDate.getTimezoneOffset(),0);
 
-		// Use date widget's existing functions to deal
-		this._date_helper.set_value(now.toJSON());
-
-		now = new Date(this._date_helper.getValue());
+		now = this.date_helper(now.toJSON());
 		if(this.get_start_date() <= now && this.get_end_date() >= now)
 		{
 			return now;
@@ -535,16 +553,13 @@ export class et2_calendar_view extends et2_valueWidget
 		}
 		if(!this.drag_create.event)
 		{
-			this._date_helper.set_value(this.drag_create.start.date);
 			var value = jQuery.extend({},
 				this.drag_create.start,
 				this.drag_create.end,
 				{
 					start: this.drag_create.start.date,
 					end: this.drag_create.end && this.drag_create.end.date || this.drag_create.start.date,
-					date:  ""+this._date_helper.get_year()+
-						sprintf("%02d",this._date_helper.get_month())+
-						sprintf("%02d",this._date_helper.get_date()),
+					date: "" + formatDate(this.date_helper(this.drag_create.start.date), {dateFormat: "Ymd"}),
 					title: '',
 					description: '',
 					owner: this.options.owner,
@@ -687,34 +702,4 @@ export class et2_calendar_view extends et2_valueWidget
 	 * Cache to map owner & resource IDs to names, helps cut down on server requests
 	 */
 	static owner_name_cache = {};
-
-	public static holiday_cache = {};
-	/**
-	 * Fetch and cache a list of the year's holidays
-	 *
-	 * @param {et2_calendar_timegrid} widget
-	 * @param {string|numeric} year
-	 * @returns Promise<{[key: string]: Array<object>}>|{[key: string]: Array<object>}
-	 */
-	static get_holidays(year) : Promise<{[key: string]: Array<object>}>|{[key: string]: Array<object>}
-	{
-		// Loaded in an iframe or something
-		var view = egw.window.et2_calendar_view ? egw.window.et2_calendar_view : this;
-
-		// No country selected causes error, so skip if it's missing
-		if(!view || !egw.preference('country','common')) return {};
-
-		if (typeof view.holiday_cache[year] === 'undefined')
-		{
-			// Fetch with json instead of jsonq because there may be more than
-			// one widget listening for the response by the time it gets back,
-			// and we can't do that when it's queued.
-			view.holiday_cache[year] = window.fetch(
-				egw.link('/calendar/holidays.php', {year: year})
-			).then((response) => {
-				return view.holiday_cache[year] = response.json();
-			});
-		}
-		return view.holiday_cache[year];
-	}
 }

@@ -515,29 +515,30 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		 */
 		_tooltip()
 		{
-				if (!this.div || !this.options.value || !this.options.value.app_id) return '';
+			if(!this.div || !this.options.value || !this.options.value.app_id)
+			{
+				return '';
+			}
 
-				const border = this.div.css('borderTopColor');
-				const bg_color = this.div.css('background-color');
-				const header_color = this.title.css('color');
-				const timespan = this._get_timespan(this.options.value);
-				const parent = this.getParent() instanceof et2_calendar_daycol ? (<et2_calendar_daycol>this.getParent()) : (<et2_calendar_planner_row>this.getParent());
+			const border = this.div.css('borderTopColor');
+			const bg_color = this.div.css('background-color');
+			const header_color = this.title.css('color');
+			const timespan = this._get_timespan(this.options.value);
+			const parent = this.getParent() instanceof et2_calendar_daycol ? (<et2_calendar_daycol>this.getParent()) : (<et2_calendar_planner_row>this.getParent());
 
-				parent.date_helper.set_value(this.options.value.start.valueOf ? new Date(this.options.value.start) : this.options.value.start);
-				const start = parent.date_helper.input_date.val();
-				parent.date_helper.set_value(this.options.value.end.valueOf ? new Date(this.options.value.end) : this.options.value.end);
-				const end = parent.date_helper.input_date.val();
+			const start = parent.date_helper(this.options.value.start);
+			const end = parent.date_helper(this.options.value.end);
 
-				const times = !this.options.value.multiday ?
-											'<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>:' + timespan :
-											'<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:' + start + ' ' +
-													'<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:' + end;
-				let cat_label: (string | string[]) = '';
-				if (this.options.value.category)
-				{
-						const cat = et2_createWidget('select-cat', {'readonly': true}, this);
-						cat.set_value(this.options.value.category);
-						cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
+			const times = !this.options.value.multiday ?
+						  '<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>:' + timespan :
+						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:' + start + ' ' +
+							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:' + end;
+			let cat_label : (string | string[]) = '';
+			if(this.options.value.category)
+			{
+				const cat = et2_createWidget('select-cat', {'readonly': true}, this);
+				cat.set_value(this.options.value.category);
+				cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
 						if (typeof cat_label != 'string')
 						{
 								cat.span.children().each(function ()
@@ -847,13 +848,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				// Use dates as objects
 				if (typeof event.start !== 'object')
 				{
-						parent.date_helper.set_value(event.start);
-						event.start = new Date(parent.date_helper.getValue());
+					event.start = parent.date_helper(event.start);
 				}
 				if (typeof event.end !== 'object')
 				{
-						parent.date_helper.set_value(event.end);
-						event.end = new Date(parent.date_helper.getValue());
+					event.end = parent.date_helper(event.end)
 				}
 
 				// We need minutes for durations

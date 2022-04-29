@@ -276,16 +276,6 @@ export class CalendarApp extends EgwApp
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
 				jQuery(_et2.DOMContainer).hide();
 
-				// Set client side holiday cache for this year
-				// @ts-ignore
-				if(et2_calendar_view)
-				{
-					// @ts-ignore
-					et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
-					delete content.data.holidays;
-					delete content.data.year;
-				}
-
 				this._setup_sidebox_filters();
 
 				this.state = content.data;

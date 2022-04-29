@@ -15,7 +15,7 @@
 	/calendar/js/et2_widget_event.js;
 */
 
-import {et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
@@ -31,6 +31,8 @@ import {CalendarApp} from "./app";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -1324,21 +1326,23 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 */
 	async day_class_holiday(date, holiday_list, days?)
 	{
-		if(!date) return '';
+		if(!date)
+		{
+			return '';
+		}
 
 		// Holidays and birthdays
-		const holidays = await et2_calendar_view.get_holidays(date.getUTCFullYear());
+		const fetched = await holidays(date.getUTCFullYear());
 		var day_class = '';
 
 		// Pass a string rather than the date object, to make sure it doesn't get changed
-		this.date_helper.set_value(date.toJSON());
-		var date_key = ''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date());
-		if (holidays && holidays[date_key])
+		let date_key = formatDate(this.date_helper(date.toJSON()), {dateFormat: "Ymd"});
+		if(fetched && fetched[date_key])
 		{
-			const dates = holidays[date_key];
+			const dates = fetched[date_key];
 			for(var i = 0; i < dates.length; i++)
 			{
-				if (typeof dates[i]['birthyear'] !== 'undefined')
+				if(typeof dates[i]['birthyear'] !== 'undefined')
 				{
 					day_class += ' calendar_calBirthday ';
 					if(typeof days == 'undefined' || days <= 21)
@@ -1805,8 +1809,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			var event_widget = planner.getWidgetById(event_data.widget_id);
 			if(event_widget)
 			{
-				event_widget._parent.date_helper.set_value(drop_date);
-				event_widget.options.value.start = new Date(event_widget._parent.date_helper.getValue());
+				event_widget.options.value.start = event_widget._parent.date_helper(drop_date);
 
 				// Leave the helper there until the update is done
 				var loading = ui.helper.clone().appendTo(ui.helper.parent());
@@ -2393,6 +2396,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		var rel_time = 0;
 
 		var day_header = jQuery('.calendar_plannerScaleDay', this.headers);
+		let date;
 
 		// Simple math, the x is offset from start date
 		if(this.options.group_by !== 'month' && (
@@ -2400,8 +2404,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			this.options.show_weekend || day_header.length === 0
 		))
 		{
-			rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date))*rel_x/1000;
-			this.date_helper.set_value(this.options.start_date.toJSON());
+			rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date)) * rel_x / 1000;
+			date = this.date_helper(this.options.start_date.toJSON());
 		}
 		// Not so simple math, need to account for missing days
 		else if(this.options.group_by !== 'month' && !this.options.show_weekend)
@@ -2416,10 +2420,10 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			// Use day, and find time in that day
 			if(day && day.dataset && day.dataset.date)
 			{
-				this.date_helper.set_value(day.dataset.date);
-				rel_time = ((x - jQuery(day).position().left) / jQuery(day).outerWidth(true)) * 24*60;
-				this.date_helper.set_minutes(Math.round(rel_time/interval) * interval);
-				return new Date(this.date_helper.getValue());
+				date = this.date_helper(day.dataset.date);
+				rel_time = ((x - jQuery(day).position().left) / jQuery(day).outerWidth(true)) * 24 * 60;
+				date.setUTCMinutes(Math.round(rel_time / interval) * interval);
+				return date;
 			}
 			return false;
 		}
@@ -2465,11 +2469,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			{
 				// Not sure where the extra -1 and +2 are coming from, but it makes it work out
 				// in FF & Chrome
-				rel_x = Math.min((x-row_widget.rows.offset().left-1)/(row_widget.rows.width()+2),1);
+				rel_x = Math.min((x - row_widget.rows.offset().left - 1) / (row_widget.rows.width() + 2), 1);
 
 				// 2678400 is the number of seconds in 31 days
-				rel_time = (2678400)*rel_x;
-				this.date_helper.set_value(row_widget.options.start_date.toJSON());
+				rel_time = (2678400) * rel_x;
+				date = this.date_helper(row_widget.options.start_date.toJSON());
 			}
 			else
 			{
@@ -2478,9 +2482,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		}
 		if(rel_time < 0) return false;
 
-		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
+		date.setUTCMinutes(Math.round(rel_time / (60 * interval)) * interval);
 
-		return new Date(this.date_helper.getValue());
+		return date;
 	}
 
 	/**

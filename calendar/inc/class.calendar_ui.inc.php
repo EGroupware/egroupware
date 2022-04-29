@@ -544,7 +544,6 @@ class calendar_ui
 		$cont['owner'] = $this->owner ? (is_array($this->owner) ? $this->owner : explode(',',$this->owner) ) : $cont['owner'];
 
 		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
-		$cont['holidays'] = $this->bo->read_holidays($cont['year']);
 
 		$readonlys = array();
 		$sel_options['status_filter'] = array(

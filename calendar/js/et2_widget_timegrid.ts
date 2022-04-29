@@ -26,8 +26,8 @@ import {et2_calendar_event} from "./et2_widget_event";
 import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
+import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
@@ -463,7 +463,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		if(typeof dropEnd != 'undefined' && dropEnd)
 		{
-			var drop_date = dropEnd.date||false;
+			var drop_date = dropEnd.date || false;
+			let target_date;
 
 			var event_data = timegrid._get_event_info(ui.draggable);
 			var event_widget = timegrid.getWidgetById(event_data.widget_id);
@@ -475,8 +476,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			if(event_widget)
 			{
 				// Send full string to avoid rollover between months using set_month()
-				event_widget._parent.date_helper.set_value(
-					drop_date.substring(0,4)+'-'+drop_date.substring(4,6)+'-'+drop_date.substring(6,8)+
+				target_date = event_widget._parent.date_helper(
+					drop_date.substring(0, 4) + '-' + drop_date.substring(4, 6) + '-' + drop_date.substring(6, 8) +
 					'T00:00:00Z'
 				);
 
@@ -484,20 +485,20 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				// Make sure whole day events stay as whole day events by ignoring drop time
 				if(event_data.app == 'calendar' && event_widget.options.value.whole_day)
 				{
-					event_widget._parent.date_helper.set_hours(0);
-					event_widget._parent.date_helper.set_minutes(0);
+					target_date.setUTCHours(0);
+					target_date.setUTCMinutes(0);
 				}
 				else if (timegrid.options.granularity === 0)
 				{
 					// List, not time grid - keep time
-					event_widget._parent.date_helper.set_hours(event_widget.options.value.start.getUTCHours());
-					event_widget._parent.date_helper.set_minutes(event_widget.options.value.start.getUTCMinutes());
+					target_date.setUTCHours(event_widget.options.value.start.getUTCHours());
+					target_date.setUTCMinutes(event_widget.options.value.start.getUTCMinutes());
 				}
 				else
 				{
 					// Non-whole day events, and integrated apps, can change
-					event_widget._parent.date_helper.set_hours(dropEnd.whole_day ? 0 : dropEnd.hour||0);
-					event_widget._parent.date_helper.set_minutes(dropEnd.whole_day ? 0 : dropEnd.minute||0);
+					target_date.setUTCHours(dropEnd.whole_day ? 0 : dropEnd.hour || 0);
+					target_date.setUTCMinutes(dropEnd.whole_day ? 0 : dropEnd.minute || 0);
 				}
 
 				// Leave the helper there until the update is done
@@ -531,7 +532,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 						// If it is an integrated infolog event we need to edit infolog entry
 						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-							[event_data.app_id, event_widget._parent.date_helper.getValue()||false,duration],
+							[event_data.app_id, target_date || false, duration],
 							function() {loading.remove();}
 						).sendRequest(true);
 					}
@@ -550,7 +551,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 						// Send the update
 						var _send = function(series_instance)
 						{
-							var start = new Date(event_widget._parent.date_helper.getValue());
+							var start = new Date(target_date);
 
 							egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
 									button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
@@ -1164,24 +1165,27 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	_calculate_day_list( start_date, end_date, show_weekend)
 	{
 
-		var day_list = [];
+		let day_list = [];
+		if(!start_date || !end_date)
+		{
+			return day_list;
+		}
 
-		this.date_helper.set_value(end_date);
-		var end = this.date_helper.date.getTime();
-		var i = 1;
-		this.date_helper.set_value(new Date(start_date));
+		let end = this.date_helper(end_date).getTime();
+		let i = 1;
+		let start = this.date_helper(start_date);
 
 		do
 		{
-			if(show_weekend || !show_weekend && [0,6].indexOf(this.date_helper.date.getUTCDay()) === -1 || end_date === start_date)
+			if(show_weekend || !show_weekend && [0, 6].indexOf(this.date_helper.date.getUTCDay()) === -1 || end_date === start_date)
 			{
-				day_list.push(''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date()));
+				day_list.push(formatDate(start, {dateFormat: "Ymd"}));
 			}
-			this.date_helper.set_date(this.date_helper.get_date()+1);
+			start.setDate(start.getDate() + 1);
 		}
-		// Limit it to 14 days to avoid infinite loops in case something is mis-set,
-		// though the limit is more based on how wide the screen is
-		while(end >= this.date_helper.date.getTime() && i++ <= 14);
+			// Limit it to 14 days to avoid infinite loops in case something is mis-set,
+			// though the limit is more based on how wide the screen is
+		while(end >= start && i++ <= 14);
 
 		return day_list;
 	}
@@ -2051,18 +2055,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 
 			// Format date
-			this.date_helper.set_year(start.date.substring(0,4));
-			this.date_helper.set_month(start.date.substring(4,6));
-			this.date_helper.set_date(start.date.substring(6,8));
+			let date = this.date_helper(start.date);
 			if(start.hour)
 			{
-				this.date_helper.set_hours(start.hour);
+				date.setUTCHours(start.hour);
 			}
 			if(start.minute)
 			{
-				this.date_helper.set_minutes(start.minute);
+				date.setUTCMinutes(start.minute);
 			}
-			start.date = this.date_helper.get_value();
+			start.date = date;
 
 			this.gridHover.css('cursor', 'ns-resize');
 
@@ -2075,18 +2077,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
 					if(end.date)
 					{
-						timegrid.date_helper.set_year(end.date.substring(0,4));
-						timegrid.date_helper.set_month(end.date.substring(4,6));
-						timegrid.date_helper.set_date(end.date.substring(6,8));
+						let date = timegrid.date_helper(end.date);
 						if(end.hour)
 						{
-							timegrid.date_helper.set_hours(end.hour);
+							date.setUTCHours(end.hour);
 						}
 						if(end.minute)
 						{
-							timegrid.date_helper.set_minutes(end.minute);
+							date.setUTCMinutes(end.minute);
 						}
-						timegrid.drag_create.end.date = timegrid.date_helper.get_value();
+						timegrid.drag_create.end.date = date;
 					}
 					try
 					{
@@ -2113,18 +2113,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		var end = jQuery.extend({}, this.gridHover[0].dataset);
 		if(end.date)
 		{
-			this.date_helper.set_year(end.date.substring(0,4));
-			this.date_helper.set_month(end.date.substring(4,6));
-			this.date_helper.set_date(end.date.substring(6,8));
+			let date = this.date_helper(end.date);
 			if(end.hour)
 			{
-				this.date_helper.set_hours(end.hour);
+				date.setUTCMinutes(end.hour);
 			}
 			if(end.minute)
 			{
-				this.date_helper.set_minutes(end.minute);
+				date.setUTCMinutes(end.minute);
 			}
-			end.date = this.date_helper.get_value();
+			end.date = date;
 		}
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');

@@ -17,16 +17,17 @@
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
-import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_event} from "./et2_widget_event";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
-import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {et2_IDetachedDOM, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {egwIsMobile} from "../../api/js/egw_action/egw_action_common.js";
+import {egwIsMobile, sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {CalendarApp} from "./app";
-import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
+import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
+import {et2_calendar_view} from "./et2_widget_view";
+import flatpickr from "flatpickr";
+import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a single days
@@ -69,8 +70,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 	private event_wrapper: JQuery;
 	private user_spacer: JQuery;
 	private all_day: JQuery;
-	
-	private _date_helper : et2_date;
+
 	private registeredUID: string = null;
 
 	// Init to defaults, just in case - they will be updated from parent
@@ -118,11 +118,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			.appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
-
-		// Used for its date calculations - note this is a datetime, parent
-		// uses just a date
-		this._date_helper = et2_createWidget('date-time', {}, null);
-		this._date_helper.loadingFinished();
 	}
 
 	doLoadingFinished( )
@@ -157,10 +152,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		this.header = null;
 		this.title = null;
 		this.user_spacer = null;
-
-		// date_helper has no parent, so we must explicitly remove it
-		this._date_helper.destroy();
-		this._date_helper = null;
 
 		egw.dataUnregisterUID(this.registeredUID,null,this);
 	}
@@ -225,9 +216,9 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		return this.date;
 	}
 
-	get date_helper(): et2_date
+	date_helper(value)
 	{
-		return this._date_helper;
+		return (<et2_calendar_view>this.getParent()).date_helper(value);
 	}
 
 	/**
@@ -249,28 +240,16 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			force_redraw = false;
 		}
-		if(!this.getParent() || !this.getParent().date_helper)
+		if(!this.getParent())
 		{
 			egw.debug('warn', 'Day col widget "' + this.id + '" is missing its parent.');
 			return false;
 		}
-		if(typeof _date === "object")
-		{
-			this.getParent().date_helper.set_value(_date);
-		}
-		else if(typeof _date === "string")
-		{
-			// Need a new date to avoid invalid month/date combinations when setting
-			// month then day.  Use a string to avoid browser timezone.
-			this.getParent().date_helper.set_value(_date.substring(0,4)+'-'+(_date.substring(4,6))+'-'+_date.substring(6,8)+'T00:00:00Z');
-		}
 
-		this.date = new Date(this.getParent().date_helper.getValue());
+		this.date = (<et2_calendar_view>this.getParent()).date_helper(_date);
 
 		// Keep internal option in Ymd format, it gets passed around in this format
-		const new_date = "" + this.getParent().date_helper.get_year() +
-			sprintf("%02d", this.getParent().date_helper.get_month()) +
-			sprintf("%02d", this.getParent().date_helper.get_date());
+		const new_date = formatDate(this.date, {dateFormat: "Ymd"});
 
 		// Set label
 		if(!this.options.label)
@@ -278,9 +257,9 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			// Add timezone offset back in, or formatDate will lose those hours
 			const formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 
-			this.title.html('<span class="long_date">'+jQuery.datepicker.formatDate('DD',formatDate)+
-				'</span><span class="short_date">'+jQuery.datepicker.formatDate('D',formatDate)+'</span>'+
-				jQuery.datepicker.formatDate('d',formatDate));
+			this.title.html('<span class="long_date">' + flatpickr.formatDate(formatDate, 'l') +
+				'</span><span class="short_date">' + flatpickr.formatDate(formatDate, 'D') + '</span>' +
+				flatpickr.formatDate(formatDate, 'd'));
 		}
 		this.title
 			.attr("data-date", new_date)
@@ -472,7 +451,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		);
 
 		// Holidays and birthdays
-		let holidays = await et2_calendar_view.get_holidays(this.options.date.substring(0, 4));
+		let fetched_holidays = await holidays(this.options.date.substring(0, 4));
 		const holiday_list = [];
 		let holiday_pref = (egw.preference('birthdays_as_events', 'calendar') || []);
 		if(typeof holiday_pref === 'string')
@@ -490,27 +469,24 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 
 		const birthdays_as_events = egwIsMobile() || holiday_pref.indexOf('birthday') >= 0;
 
-		if(holidays && holidays[this.options.date])
+		if(fetched_holidays && fetched_holidays[this.options.date])
 		{
-			holidays = holidays[this.options.date];
-			for(let i = 0; i < holidays.length; i++)
+			fetched_holidays = fetched_holidays[this.options.date];
+			for(let i = 0; i < fetched_holidays.length; i++)
 			{
-				if (typeof holidays[i]['birthyear'] !== 'undefined')
+				if(typeof fetched_holidays[i]['birthyear'] !== 'undefined')
 				{
 					// Show birthdays as events on mobile or by preference
 					if(birthdays_as_events)
 					{
 						// Create event
-						this.getParent().date_helper.set_value(this.options.date.substring(0,4)+'-'+
-							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
-							'T00:00:00Z');
-						var event = et2_createWidget('calendar-event',{
-							id:'event_'+holidays[i].name,
+						var event = et2_createWidget('calendar-event', {
+							id: 'event_' + fetched_holidays[i].name,
 							value: {
-								title: holidays[i].name,
+								title: fetched_holidays[i].name,
 								whole_day: true,
 								whole_day_on_top: true,
-								start: new Date(this.getParent().date_helper.get_value()),
+								start: (<et2_calendar_view>this.getParent()).date_helper(this.options.date),
 								end: this.options.date,
 								owner: this.options.owner,
 								participants: this.options.owner,
@@ -528,7 +504,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
 						this.title.addClass('calendar_calBirthday');
-						holiday_list.push(holidays[i]['name']);
+						holiday_list.push(fetched_holidays[i]['name']);
 					}
 				}
 				else
@@ -537,16 +513,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					if(holidays_as_events)
 					{
 						// Create event
-						this.getParent().date_helper.set_value(this.options.date.substring(0,4)+'-'+
-							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
-							'T00:00:00Z');
-						var event = et2_createWidget('calendar-event',{
-							id:'event_'+holidays[i].name,
+						var event = et2_createWidget('calendar-event', {
+							id: 'event_' + fetched_holidays[i].name,
 							value: {
-								title: holidays[i].name,
+								title: fetched_holidays[i].name,
 								whole_day: true,
 								whole_day_on_top: true,
-								start: new Date(this.getParent().date_helper.get_value()),
+								start: (<et2_calendar_view>this.getParent()).date_helper(this.options.date),
 								end: this.options.date,
 								owner: this.options.owner,
 								participants: this.options.owner,
@@ -562,13 +535,13 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					else
 					{
 						this.title.addClass('calendar_calHoliday');
-						this.title.attr('data-holiday', holidays[i]['name']);
+						this.title.attr('data-holiday', fetched_holidays[i]['name']);
 
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
 						if (!this.options.display_holiday_as_event)
 						{
-							holiday_list.push(holidays[i]['name']);
+							holiday_list.push(fetched_holidays[i]['name']);
 						}
 					}
 				}

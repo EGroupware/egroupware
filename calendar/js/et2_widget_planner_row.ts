@@ -18,13 +18,13 @@
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
-import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_calendar_planner} from "./et2_widget_planner";
 import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
 import {et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {egw} from "../../api/js/jsapi/egw_global";
+import {et2_calendar_view} from "./et2_widget_view";
 
 /**
  * Class for one row of a planner
@@ -50,7 +50,6 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 	private div: JQuery;
 	private title: JQuery;
 	private rows: JQuery;
-	private _date_helper: et2_date;
 	private _cached_rows: any[];
 	private _row_height = 20;
 	private _actionObject: egwActionObject;
@@ -76,10 +75,6 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 
 		this.setDOMNode(this.div[0]);
 
-		// Used for its date calculations
-		this._date_helper = <et2_date>et2_createWidget('date-time', {}, null);
-		this._date_helper.loadingFinished();
-
 		this.set_start_date(this.options.start_date);
 		this.set_end_date(this.options.end_date);
 
@@ -102,10 +97,6 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 	destroy( )
 	{
 		super.destroy();
-
-		// date_helper has no parent, so we must explicitly remove it
-		this._date_helper.destroy();
-		this._date_helper = null;
 	}
 
 	getDOMNode(_sender)
@@ -494,9 +485,9 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 		}
 	}
 
-	get date_helper(): et2_date
+	date_helper(value)
 	{
-		return this._date_helper;
+		return (<et2_calendar_view>this.getParent()).date_helper(value);
 	}
 
 	/**
@@ -625,13 +616,11 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 			const event = this._children[n].options.value || false;
 			if(typeof event.start !== 'object')
 			{
-				this._date_helper.set_value(event.start);
-				event.start = new Date(this._date_helper.getValue());
+				event.start = this.date_helper(event.start);
 			}
 			if(typeof event.end !== 'object')
 			{
-				this._date_helper.set_value(event.end);
-				event.end = new Date(this._date_helper.getValue());
+				event.end = this.date_helper(event.end);
 			}
 			if(typeof event['start_m'] === 'undefined')
 			{
