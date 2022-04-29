@@ -8,15 +8,15 @@ let _holiday_cache = {};
  * Get a list of holidays for the given year
  *
  * Returns either a list of holidays indexed by date, in Ymd format:
- * {20001225: {day: 14, month: 2, occurence: 2021, name: "Valentinstag"}}
+ * {20001225: [{day: 14, month: 2, occurence: 2021, name: "Valentinstag"}]}
  * or a promise that resolves with the list.
  *
  * No need to cache the results, we do it here.
  *
  * @param year
- * @returns Promise | Object
+ * @returns Promise<{[key: string]: Array<object>}>|{[key: string]: Array<object>}
  */
-export function holidays(year) : Promise<Object> | {}
+export function holidays(year) : Promise<{ [key : string] : Array<object> }> | { [key : string] : Array<object> }
 {
 	// No country selected causes error, so skip if it's missing
 	if(!egw.preference('country', 'common'))
