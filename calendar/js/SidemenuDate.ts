@@ -62,7 +62,15 @@ export class SidemenuDate extends Et2Date
 				holidays_or_promise.then(holidays =>
 				{
 					SidemenuDate._holidays = holidays;
-					this.requestUpdate();
+					if(this._instance)
+					{
+						// Already drawn without holidays so redraw
+						this._instance.redraw();
+					}
+					else
+					{
+						this.requestUpdate();
+					}
 				})
 			}
 			else
@@ -100,6 +108,12 @@ export class SidemenuDate extends Et2Date
 			this._instance.weekNumbers.addEventListener("mouseover", this._handleDayHover);
 		}
 
+		// Customise next / prev buttons
+		this.querySelector('.flatpickr-next-month').classList.add("et2_button", "et2_button_text");
+		this.egw().tooltipBind(this.querySelector('.flatpickr-next-month'), this.egw().lang("next"));
+		this.querySelector('.flatpickr-prev-month').classList.add("et2_button", "et2_button_text");
+		this.egw().tooltipBind(this.querySelector('.flatpickr-prev-month'), this.egw().lang("prev"));
+
 		// Move buttons into header
 		if(this._goButton && this._headerNode)
 		{
@@ -109,6 +123,7 @@ export class SidemenuDate extends Et2Date
 		{
 			this._headerNode.append(this._todayButton);
 		}
+		this._updateGoButton();
 	}
 
 	/**
@@ -123,9 +138,13 @@ export class SidemenuDate extends Et2Date
 
 		options.inline = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
+		options.shorthandCurrentMonth = true;
 
 		options.onDayCreate = this._onDayCreate;
 		options.onMonthChange = this._updateGoButton;
+
+		options.nextArrow = "";
+		options.prevArrow = "";
 
 		return options
 	}
@@ -325,12 +344,12 @@ export class SidemenuDate extends Et2Date
 
 	get _goButton()
 	{
-		return this.querySelector("button[id*='go']");
+		return this.querySelector("et2-button[id*='go']");
 	}
 
 	get _todayButton()
 	{
-		return this.querySelector("button[id*='today']");
+		return this.querySelector("et2-button[id*='today']");
 	}
 
 	/**
@@ -347,7 +366,7 @@ export class SidemenuDate extends Et2Date
 		let temp_date = new Date("" + this._instance.currentYear + "-" + (this._instance.currentMonth + 1) + "-01");
 		temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 
-		this._goButton.setAttribute('title', egw.lang(date('F', temp_date)));
+		this._goButton.setAttribute('title', egw.lang(this._instance.formatDate(temp_date, "F")));
 		// Store current _displayed_ date in date button for clicking
 		temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
 		this._goButton.setAttribute('data-date', temp_date.toJSON());
