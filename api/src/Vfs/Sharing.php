@@ -352,7 +352,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				{
 					throw new Api\Exception\AssertionFailed("Could NOT create temp. file '$tmp_file'!");
 				}
-				if ($fp) fclose($fp);
+				if (isset($fp)) fclose($fp);
 
 				if (is_dir($path) && !Vfs::copy_files(array($path), $tmp_file) ||
 					!is_dir($path) && !copy($path, Vfs::PREFIX.$tmp_file))

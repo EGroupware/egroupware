@@ -1648,7 +1648,7 @@ class Db
 						throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 					}
 				}
-				$column_type = is_array($column_definitions) ? @$column_definitions[$col]['type'] : False;
+				$column_type = is_array($column_definitions) ? ($column_definitions[$col]['type'] ?? false) : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
 
 				$maxlength = null;

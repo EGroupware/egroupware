@@ -710,6 +710,7 @@ class Widget
 			$row_cont = $cont[$row] ?? null;
 			$col_row_cont = $cont[$col.$row] ?? null;
 
+			$er = error_reporting(0);
 			try {
 				eval('$name = "' . str_replace('"', '\\"', $name) . '";');
 			}
@@ -717,6 +718,7 @@ class Widget
 				error_log(__METHOD__."() eval('\$name = \"".str_replace('"', '\\"', $name) . "\";)");
 				_egw_log_exception($e);
 			}
+			error_reporting($er);
 			unset($col_, $row_, $row_cont, $col_row_cont);	// quieten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)

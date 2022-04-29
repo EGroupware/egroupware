@@ -557,7 +557,7 @@ class Asyncservice
 		{
 			$row['async_times'] = json_php_unserialize($row['async_times']);
 			// check for broken value during migration
-			if ($row['async_data'][0] == '"' && substr($row['async_data'], 0, 7) == '"\\"\\\\\\"')
+			if (($row['async_data'][0]??null) === '"' && substr($row['async_data'], 0, 7) == '"\\"\\\\\\"')
 			{
 				$row['async_data'] = null;
 				$this->write(Db::strip_array_keys($row,'async_'), true);
