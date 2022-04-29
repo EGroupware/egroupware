@@ -4017,6 +4017,15 @@ body .flatpickr-calendar {
     display: none;
 }
 
+.flatpickr-calendar.open {
+    z-index: 1000;
+}
+
+/** Holidays & birthdays **/
+div.flatpickr-calendar .calHoliday, div.flatpickr-calendar .calBirthday {
+    background-color: rgba(103, 159, 210, 0.5);
+}
+
 /** Sizing for inline flatpickr, used in calendar sidebox **/
 div.flatpickr-calendar.inline {
     --dayWidth: calc((width - 80) / 7);

@@ -16,6 +16,10 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
+import {holidays} from "./Holidays";
+
+// Request this year's holidays now
+holidays(new Date().getFullYear());
 
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
@@ -333,6 +337,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	constructor()
 	{
 		super();
+
+		this._onDayCreate = this._onDayCreate.bind(this);
 	}
 
 
@@ -385,6 +391,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.allowInput = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.weekNumbers = true;
+
+		options.onDayCreate = this._onDayCreate;
 
 		this._localize(options);
 
@@ -488,6 +496,63 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	_updateValueOnChange(_ev : Event)
 	{
 		this.modelValue = this.getValue();
+	}
+
+	/**
+	 * Customise date rendering
+	 *
+	 * @see https://flatpickr.js.org/events/
+	 *
+	 * @param {Date} dates Currently selected date(s)
+	 * @param dStr a string representation of the latest selected Date object by the user. The string is formatted as per the dateFormat option.
+	 * @param inst flatpickr instance
+	 * @param dayElement
+	 * @protected
+	 */
+	protected _onDayCreate(dates : Date[], dStr : string, inst, dayElement : HTMLElement)
+	{
+		//@ts-ignore flatpickr adds dateObj to days
+		let date = new Date(dayElement.dateObj);
+		let f_date = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
+		if(!f_date)
+		{
+			return;
+		}
+
+		let set_holiday = function(holidays, element)
+		{
+			let day_holidays = holidays[formatDate(f_date, {dateFormat: "Ymd"})]
+			let tooltip = '';
+			if(typeof day_holidays !== 'undefined' && day_holidays.length)
+			{
+				for(var i = 0; i < day_holidays.length; i++)
+				{
+					if(typeof day_holidays[i]['birthyear'] !== 'undefined')
+					{
+						element.classList.add('calBirthday');
+					}
+					else
+					{
+						element.classList.add('calHoliday');
+					}
+					tooltip += day_holidays[i]['name'] + "\n";
+				}
+			}
+			if(tooltip)
+			{
+				this.egw().tooltipBind(element, tooltip);
+			}
+		}.bind(this);
+
+		let holiday_list = holidays(f_date.getFullYear());
+		if(holiday_list instanceof Promise)
+		{
+			holiday_list.then((h) => {set_holiday(h, dayElement);});
+		}
+		else
+		{
+			set_holiday(holiday_list, dayElement);
+		}
 	}
 
 	/**

@@ -1,6 +1,5 @@
-import {Et2Date, formatDate, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {Et2Date, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {css} from "@lion/core";
-import {et2_calendar_view} from "./et2_widget_view";
 import {CalendarApp} from "./app";
 
 export class SidemenuDate extends Et2Date
@@ -36,8 +35,6 @@ export class SidemenuDate extends Et2Date
 		];
 	}
 
-	static _holidays : Object = null;
-
 	constructor()
 	{
 		super();
@@ -54,30 +51,6 @@ export class SidemenuDate extends Et2Date
 
 		this.removeEventListener("change", this._oldChange);
 		this.addEventListener("change", this._handleChange);
-		if(null == SidemenuDate._holidays)
-		{
-			let holidays_or_promise = et2_calendar_view.get_holidays((new Date).getFullYear());
-			if(holidays_or_promise instanceof Promise)
-			{
-				holidays_or_promise.then(holidays =>
-				{
-					SidemenuDate._holidays = holidays;
-					if(this._instance)
-					{
-						// Already drawn without holidays so redraw
-						this._instance.redraw();
-					}
-					else
-					{
-						this.requestUpdate();
-					}
-				})
-			}
-			else
-			{
-				SidemenuDate._holidays = holidays_or_promise;
-			}
-		}
 	}
 
 	disconnectedCallback()
@@ -140,7 +113,6 @@ export class SidemenuDate extends Et2Date
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.shorthandCurrentMonth = true;
 
-		options.onDayCreate = this._onDayCreate;
 		options.onMonthChange = this._updateGoButton;
 
 		options.nextArrow = "";
@@ -161,49 +133,6 @@ export class SidemenuDate extends Et2Date
 		}
 	}
 
-	/**
-	 * Customise date rendering
-	 *
-	 * @see https://flatpickr.js.org/events/
-	 *
-	 * @param {Date} dates Currently selected date(s)
-	 * @param dStr a string representation of the latest selected Date object by the user. The string is formatted as per the dateFormat option.
-	 * @param inst flatpickr instance
-	 * @param dayElement
-	 * @protected
-	 */
-	protected _onDayCreate(dates : Date[], dStr : string, inst, dayElement : HTMLElement)
-	{
-		//@ts-ignore flatpickr adds dateObj to days
-		let date = new Date(dayElement.dateObj);
-		let f_date = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
-		if(!f_date || SidemenuDate._holidays === null)
-		{
-			return;
-		}
-
-		let day_holidays = SidemenuDate._holidays[formatDate(f_date, {dateFormat: "Ymd"})]
-		var tooltip = '';
-		if(typeof day_holidays !== 'undefined' && day_holidays.length)
-		{
-			for(var i = 0; i < day_holidays.length; i++)
-			{
-				if(typeof day_holidays[i]['birthyear'] !== 'undefined')
-				{
-					dayElement.classList.add('calendar_calBirthday');
-				}
-				else
-				{
-					dayElement.classList.add('calendar_calHoliday');
-				}
-				tooltip += day_holidays[i]['name'] + "\n";
-			}
-		}
-		if(tooltip)
-		{
-			this.egw().tooltipBind(dayElement, tooltip);
-		}
-	}
 
 	/**
 	 * Handler for change events.  Re-bound to be able to cancel month changes, since it's an input and emits them
