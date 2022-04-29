@@ -17,11 +17,14 @@ import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
 
-import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + (egw.preference('lang') + ".js")).then(() =>
+if(egw.preference('lang') && egw.preference('lang') !== "en")
 {
-	// @ts-ignore
-	flatpickr.localize(flatpickr.l10ns[egw.preference('lang')]);
-});
+	import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + (egw.preference('lang') + ".js")).then(() =>
+	{
+		// @ts-ignore
+		flatpickr.localize(flatpickr.l10ns[egw.preference('lang')]);
+	});
+}
 
 /**
  * Parse a date string into a Date object
