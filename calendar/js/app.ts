@@ -278,10 +278,10 @@ export class CalendarApp extends EgwApp
 
 				// Set client side holiday cache for this year
 				// @ts-ignore
-				if(egw.window.et2_calendar_view)
+				if(et2_calendar_view)
 				{
 					// @ts-ignore
-					egw.window.et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
+					et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
 					delete content.data.holidays;
 					delete content.data.year;
 				}

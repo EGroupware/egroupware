@@ -175,13 +175,14 @@ export class SidemenuDate extends Et2Date
 	protected _onDayCreate(dates : Date[], dStr : string, inst, dayElement : HTMLElement)
 	{
 		//@ts-ignore flatpickr adds dateObj to days
-		let date = dayElement.dateObj;
-		if(!date || SidemenuDate._holidays === null)
+		let date = new Date(dayElement.dateObj);
+		let f_date = new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000);
+		if(!f_date || SidemenuDate._holidays === null)
 		{
 			return;
 		}
 
-		let day_holidays = SidemenuDate._holidays[formatDate(date, {dateFormat: "Ymd"})]
+		let day_holidays = SidemenuDate._holidays[formatDate(f_date, {dateFormat: "Ymd"})]
 		var tooltip = '';
 		if(typeof day_holidays !== 'undefined' && day_holidays.length)
 		{
