@@ -218,7 +218,7 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 		// fix scalar (number or string) values
 		if (typeof new_value !== 'object')
 		{
-			new_value = [new_value];
+			new_value = ["" + new_value];
 		}
 		for(let id of new_value)
 		{
