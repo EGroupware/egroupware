@@ -17,12 +17,21 @@ import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
 
-if(egw.preference('lang') && egw.preference('lang') !== "en")
+// list of existing localizations from node_modules/flatpicker/dist/l10n directory:
+const l10n = [
+	'ar', 'at', 'az', 'be', 'bg', 'bn', 'bs', 'cat', 'cs', 'cy', 'da', 'de', 'eo', 'es', 'et', 'fa', 'fi', 'fo',
+	'fr', 'ga', 'gr', 'he', 'hi', 'hr', 'hu', 'id', 'index', 'is', 'it', 'ja', 'ka', 'km', 'ko', 'kz', 'lt', 'lv', 'mk',
+	'mn', 'ms', 'my', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'si', 'sk', 'sl', 'sq', 'sr-cyr', 'sr', 'sv', 'th', 'tr',
+	'uk', 'uz', 'uz_latn', 'vn', 'zh-tw', 'zh',
+];
+const lang = <string>egw.preference('lang');
+// only load localization, if we have one
+if (l10n.indexOf(lang) >= 0)
 {
-	import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + (egw.preference('lang') + ".js")).then(() =>
+	import(egw.webserverUrl + "/node_modules/flatpickr/dist/l10n/" + lang + ".js").then(() =>
 	{
 		// @ts-ignore
-		flatpickr.localize(flatpickr.l10ns[egw.preference('lang')]);
+		flatpickr.localize(flatpickr.l10ns[lang]);
 	});
 }
 
