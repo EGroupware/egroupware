@@ -19,6 +19,7 @@ import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_favorites} from "../etemplate/et2_widget_favorites";
+import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 
 /**
  * Common base class for application javascript
@@ -897,17 +898,17 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 		});
 
 		// Bind handler for enter keypress
-		this.favorite_popup.off('keydown').on('keydown', jQuery.proxy(function(e) {
+		this.favorite_popup.off('keydown').on('keydown', function(e) {
 			 var tagName = e.target.tagName.toLowerCase();
 			tagName = (tagName === 'input' && e.target.type === 'button') ? 'button' : tagName;
 
-			if(e.keyCode == jQuery.ui.keyCode.ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !=='button')
+			if(e.keyCode == EGW_KEY_ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !=='button')
 			{
 				e.preventDefault();
 				jQuery('button[default]',this.favorite_popup.parent()).trigger('click');
 				return false;
 			}
-		},this));
+		}.bind(this));
 
 		return false;
 	},

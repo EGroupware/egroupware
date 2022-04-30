@@ -23,6 +23,7 @@ import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_evalBool, et2_no_init} from "./et2_core_common";
 import {et2_url} from "./et2_widget_url";
 import {egw} from "../jsapi/egw_global";
+import {EGW_KEY_ARROW_DOWN, EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 /**
  * Tag list widget
  *
@@ -528,13 +529,13 @@ export class et2_taglist extends et2_selectbox implements et2_IResizeable
 	*/
 	private _keyup(e, taglist, event)
 	{
-		if(event.which === jQuery.ui.keyCode.ENTER
+		if(event.which === EGW_KEY_ENTER
 				&& taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0
 				&& this.getType() !== 'taglist-email')
 		{
 			// Change keycode to abort the validation process
 			// This means enter does not add a tag
-			event.keyCode = jQuery.ui.keyCode.DOWN;
+			event.keyCode = EGW_KEY_ARROW_DOWN;
 
 			this._query_server = true;
 			this.taglist.collapse();

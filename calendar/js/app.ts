@@ -52,6 +52,7 @@ import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
 import {parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {EGW_KEY_PAGE_UP,EGW_KEY_PAGE_DOWN} from "../../api/js/egw_action/egw_action_constants";
 
 /**
  * UI for calendar
@@ -223,8 +224,8 @@ export class CalendarApp extends EgwApp
 		}
 		this.sidebox_hooked_templates = [];
 
-		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
-		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
+		egw_unregisterGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false);
+		egw_unregisterGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false);
 
 		// Stop autorefresh
 		if(this._autorefresh_timer)
@@ -1354,7 +1355,7 @@ export class CalendarApp extends EgwApp
 				scroll_animate.call(this,"up", -1);
 				return true;
 			}, this);
-			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false, function() {
+			egw_registerGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false, function() {
 				if(app.calendar.state.view == 'listview')
 				{
 					return false;

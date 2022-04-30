@@ -20,6 +20,7 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
+import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 
 /**
  * Type for push-message
@@ -1132,18 +1133,18 @@ export abstract class EgwApp
 		});
 
 		// Bind handler for enter keypress
-		this.favorite_popup.off('keydown').on('keydown', jQuery.proxy(function(e)
+		this.favorite_popup.off('keydown').on('keydown', function(e)
 		{
 			var tagName = e.target.tagName.toLowerCase();
 			tagName = (tagName === 'input' && e.target.type === 'button') ? 'button' : tagName;
 
-			if(e.keyCode == jQuery.ui.keyCode.ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !== 'button')
+			if(e.keyCode == EGW_KEY_ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !== 'button')
 			{
 				e.preventDefault();
 				jQuery('button[default]', this.favorite_popup.parent()).trigger('click');
 				return false;
 			}
-		}, this));
+		}.bind(this));
 
 		return false;
 	}
