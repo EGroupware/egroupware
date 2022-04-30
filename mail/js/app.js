@@ -18,7 +18,7 @@ import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common.js";
 import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants.js";
-import {egw_keycode_translation_function, egw_keycode_makeValid} from "../../api/js/egw_action/egw_keymanager.js";
+import {egw_keycode_translation_function, egw_keycode_makeValid, egw_keyHandler} from "../../api/js/egw_action/egw_keymanager.js";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -5269,18 +5269,14 @@ app.classes.mail = AppJS.extend(
 
 		if (typeof _node != 'undefined')
 		{
-			et2_dialog.alert(this.egw.lang(
-						'Be aware that all attachments will be sent as %1!',
-						_widget.options.select_options[_widget.get_value()]['label']
-					),
-					this.egw.lang(
-						'Filemode has been switched to %1',
-						_widget.options.select_options[_widget.get_value()]['label']
-					),
+			const mode = _widget.get_value();
+			const mode_label = _widget.select_options.filter(option => option.value == mode)[0]?.label;
+			et2_dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
+					this.egw.lang('Filemode has been switched to %1', mode_label),
 					et2_dialog.WARNING_MESSAGE);
-			var content = this.et2.getArrayMgr('content');
-			var attachments = this.et2.getWidgetById('attachments');
-			for (var i in content.data.attachments)
+			const content = this.et2.getArrayMgr('content');
+			const attachments = this.et2.getWidgetById('attachments');
+			for (let i in content.data.attachments)
 			{
 				if (content.data.attachments[i] == null)
 				{
@@ -5288,7 +5284,7 @@ app.classes.mail = AppJS.extend(
 					continue;
 				}
 				content.data.attachments[i]['filemode_icon'] = !content.data.attachments[i]['is_dir'] &&
-						(_widget.get_value() == 'share_rw' || _widget.get_value() == 'share_ro') ? 'link' : _widget.get_value();
+						(mode == 'share_rw' || mode == 'share_ro') ? 'link' : mode;
 			}
 			this.et2.setArrayMgr('content', content);
 			attachments.set_value({content:content.data.attachments});
