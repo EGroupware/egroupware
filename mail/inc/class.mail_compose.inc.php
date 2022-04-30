@@ -1131,11 +1131,8 @@ class mail_compose
 			//PROBABLY NOT FOUND
 			$signature=array();
 		}
-		if ((isset($this->mailPreferences['disableRulerForSignatureSeparation']) &&
-			$this->mailPreferences['disableRulerForSignatureSeparation']) ||
-			empty($signature['ident_signature']) ||
-			trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='' ||
-			$this->mailPreferences['insertSignatureAtTopOfMessage'] == '1')
+		if (!empty($this->mailPreferences['disableRulerForSignatureSeparation']) ||
+			empty($signature['ident_signature']))
 		{
 			$disableRuler = true;
 		}
@@ -1159,7 +1156,7 @@ class mail_compose
 			$sigText = Mail::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if ($content['mimeType'] == 'html')
 			{
-				$sigTextStartsWithBlockElement = ($disableRuler?false:true);
+				$sigTextStartsWithBlockElement = !$disableRuler;
 				foreach($blockElements as $e)
 				{
 					if ($sigTextStartsWithBlockElement) break;
@@ -1167,7 +1164,7 @@ class mail_compose
 				}
 			}
 			if($content['mimeType'] == 'html') {
-				$before = $disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">';
+				$before = '<br>'.($disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">');
 				$inbetween = '';
 			} else {
 				$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
