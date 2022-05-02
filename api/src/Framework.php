@@ -499,7 +499,7 @@ abstract class Framework extends Framework\Extra
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$app_title = $GLOBALS['egw_info']['apps'][$app]['title'] ?? lang($app);
 		$app_header = $GLOBALS['egw_info']['flags']['app_header'] ?? $app_title;
-		$site_title = strip_tags(($GLOBALS['egw_info']['server']['site_title']??'').' ['.$app_header.']');
+		$site_title = strip_tags(($GLOBALS['egw_info']['server']['site_title']??'').' ['.($app_header ?: $app_title).']');
 
 		// send appheader to clientside
 		$extra['app-header'] = $app_header;
