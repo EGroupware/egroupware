@@ -17,6 +17,7 @@ import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
 import {holidays} from "./Holidays";
+import flatpickr from "flatpickr";
 
 // Request this year's holidays now
 holidays(new Date().getFullYear());
@@ -239,6 +240,11 @@ export function formatDate(date : Date, options = {dateFormat: ""}) : string
 		m: (date.getUTCMonth() < 9 ? "0" : "") + (date.getUTCMonth() + 1),
 		Y: "" + date.getUTCFullYear()
 	}
+	if(dateformat.indexOf("M") != -1)
+	{
+		replace_map["M"] = flatpickr.formatDate(date, "M");
+	}
+
 	let re = new RegExp(Object.keys(replace_map).join("|"), "g");
 	_value = dateformat.replace(re, function(matched)
 	{
