@@ -438,5 +438,3 @@ export class et2_dropdown_button extends et2_inputWidget
 	}
 }
 et2_register_widget(et2_dropdown_button, ["dropdown_button"]);
-
-

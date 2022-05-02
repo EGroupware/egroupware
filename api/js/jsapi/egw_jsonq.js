@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -32,56 +31,17 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access private, use jsonq method to queue requests
 	 */
-	var jsonq_queue = {};
+	const jsonq_queue = {};
 
 	/**
 	 * Next uid (index) in queue
 	 */
-	var jsonq_uid = 0;
+	let jsonq_uid = 0;
 
 	/**
 	 * Running timer for next send of queued items
 	 */
-	var jsonq_timer = null;
-
-	/**
-	 * Dispatch responses received
-	 *
-	 * @param {object} _data uid => response pairs
-	 */
-	function jsonq_callback(_data)
-	{
-		if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
-
-		// Abort if type is set (multi-response support)
-		if (typeof _data.type != 'undefined') return;
-
-		var json = egw.json('none');
-		for(var uid in _data)
-		{
-			if (typeof jsonq_queue[uid] == 'undefined')
-			{
-				console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
-				console.log(_data[uid]);
-				continue;
-			}
-			var job = jsonq_queue[uid];
-			var response = _data[uid];
-
-			// fake egw.json_request object, to call it with the current response
-			json.callback = job.callback;
-			json.sender = job.sender;
-			json.handleResponse({response: response});
-
-			delete jsonq_queue[uid];
-		}
-		// if nothing left in queue, stop interval-timer to give browser a rest
-		if (jsonq_timer && typeof jsonq_queue['u'+(jsonq_uid-1)] != 'object')
-		{
-			window.clearInterval(jsonq_timer);
-			jsonq_timer = null;
-		}
-	}
+	let jsonq_timer = null;
 
 	/**
 	 * Send the whole job-queue to the server in a single json request with menuaction=queue
@@ -90,16 +50,16 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 	{
 		if (jsonq_uid > 0 && typeof jsonq_queue['u'+(jsonq_uid-1)] == 'object')
 		{
-			var jobs_to_send = {};
-			var something_to_send = false;
-			for(var uid in jsonq_queue)
+			const jobs_to_send = {};
+			let something_to_send = false;
+			for(let uid in jsonq_queue)
 			{
-				var job = jsonq_queue[uid];
+				const job = jsonq_queue[uid];
 
-				if (job.menuaction == 'send') continue;	// already send to server
+				if (job.menuaction === 'send') continue;	// already send to server
 
-				// if job has a callbeforesend callback, call it to allow it to modify pararmeters
-				if (typeof job.callbeforesend == 'function')
+				// if job has a callbeforesend callback, call it to allow it to modify parameters
+				if (typeof job.callbeforesend === 'function')
 				{
 					job.callbeforesend.call(job.sender, job.parameters);
 				}
@@ -113,8 +73,54 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 			}
 			if (something_to_send)
 			{
-				var request = egw.json('api.queue', jobs_to_send, jsonq_callback, this);
-				request.sendRequest(true);
+				egw.request('api.queue', jobs_to_send).then(_data =>
+				{
+					if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
+
+					const json = egw.json('none');
+					for(let uid in _data)
+					{
+						if (typeof jsonq_queue[uid] == 'undefined')
+						{
+							console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
+							console.log(_data[uid]);
+							continue;
+						}
+						const job = jsonq_queue[uid];
+						const response = _data[uid];
+
+						// The ajax request has completed, get just the data & pass it on
+						if(response)
+						{
+							for(let value of response)
+							{
+								if(value.type && value.type === "data" && typeof value.data !== "undefined")
+								{
+									// Data was packed in response
+									job.resolve(value.data);
+								}
+								else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
+								{
+									// Just raw data
+									job.resolve(value);
+								}
+								else
+								{
+									// fake egw.json_request object, to call it with the current response
+									json.handleResponse({response: response});
+								}
+							}
+						}
+
+						delete jsonq_queue[uid];
+					}
+					// if nothing left in queue, stop interval-timer to give browser a rest
+					if (jsonq_timer && typeof jsonq_queue['u'+(jsonq_uid-1)] != 'object')
+					{
+						window.clearInterval(jsonq_timer);
+						jsonq_timer = null;
+					}
+				});
 			}
 		}
 	}
@@ -127,35 +133,40 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 		 *   which handles the actual request. If the menuaction is a full featured
 		 *   url, this one will be used instead.
 		 * @param {array} _parameters which should be passed to the menuaction function.
-		 * @param  {function} _callback callback function which should be called upon a "data" response is received
-		 * @param {object} _sender is the reference object the callback function should get
-		 * @param {function} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
-		 * @return string uid of the queued request
+		 * @param {function|undefined} _callback callback function which should be called upon a "data" response is received
+		 * @param {object|undefined} _sender is the reference object the callback function should get
+		 * @param {function|undefined} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+		 * @return Promise
 		 */
 		jsonq: function(_menuaction, _parameters, _callback, _sender, _callbeforesend)
 		{
-			var uid = 'u'+(jsonq_uid++);
+			const uid = 'u'+(jsonq_uid++);
 			jsonq_queue[uid] = {
 				menuaction: _menuaction,
 				// IE JSON-serializes arrays passed in from different window contextx (eg. popups)
 				// as objects (it looses object-type of array), causing them to be JSON serialized
 				// as objects and loosing parameters which are undefined
-				// JSON.strigify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
+				// JSON.stringify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
 				parameters: _parameters ? [].concat(_parameters) : [],
-				callback: _callback,
-				sender: _sender,
-				callbeforesend: _callbeforesend
+				callbeforesend: _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
 			};
+			let promise = new Promise(resolve => {
+				jsonq_queue[uid].resolve = resolve;
+			});
+			if (typeof _callback === 'function')
+			{
+				promise = promise.then(_data => {
+					_callback.bind(_sender)(_data);
+					return _data;
+				});
+			}
 
 			if (jsonq_timer == null)
 			{
 				// check / send queue every N ms
-				var self = this;
-				jsonq_timer = window.setInterval(function(){
-					jsonq_send.call(self);
-				}, 100);
+				jsonq_timer = window.setInterval(() => jsonq_send(), 100);
 			}
-			return uid;
+			return promise;
 		},
 
 		/**

@@ -459,7 +459,7 @@ export class et2_link_to extends et2_inputWidget
 					if (typeof link.title == 'undefined')
 					{
 						// Callback to server for title
-						egw.link_title(link.app, link.id, function (title)
+						egw.link_title(link.app, link.id, true).then(title =>
 						{
 							link.title = title;
 							list_widget._add_link(link);
@@ -1074,7 +1074,7 @@ export class et2_link_entry extends et2_inputWidget
 		}
 		if (!_value.title)
 		{
-			var title = this.egw().link_title(_value.app, _value.id);
+			var title = this.egw().link_title(_value.app, _value.id, false);
 			if (title != null)
 			{
 				_value.title = title;
@@ -1082,13 +1082,13 @@ export class et2_link_entry extends et2_inputWidget
 			else
 			{
 				// Title will be fetched from server and then set
-				var title = this.egw().link_title(_value.app, _value.id, function (title)
+				var title = this.egw().link_title(_value.app, _value.id, true).then(title =>
 				{
 					this.search.removeClass("loading").val(title + "");
 					// Remove specific display and revert to CSS file
 					// show() would use inline, should be inline-block
 					this.clear.css('display', '');
-				}, this);
+				});
 				this.search.addClass("loading");
 			}
 		}
@@ -1452,7 +1452,7 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 			this.link.click(function (e)
 			{
 				// try to fetch value.title if it wasn't fetched during initiation.
-				if (!_value.title) _value.title = self.egw().link_title(_value.app, _value.id);
+				if (!_value.title) _value.title = self.egw().link_title(_value.app, _value.id, false);
 				if (!self.options.target_app)
 				{
 					self.options.target_app = _value.app;
@@ -1468,28 +1468,17 @@ export class et2_link extends et2_valueWidget implements et2_IDetachedDOM
 		}
 		if (!_value.title)
 		{
-			var self = this;
-			var node = this.link[0];
+			const node = this.link[0];
 			if (_value.app && _value.id)
 			{
-				var title = this.egw().link_title(_value.app, _value.id, function (title)
+				this.egw().link_title(_value.app, _value.id, true).then(title =>
 				{
-					self.set_title(node, title);
-				}, this);
-				if (title != null)
-				{
-					_value.title = title;
-				}
-				else
-				{
-					// Title will be fetched from server and then set
-					return;
-				}
+					this.set_title(node, title);
+				});
+				// Title will be fetched from server and then set
+				return;
 			}
-			else
-			{
-				_value.title = "";
-			}
+			_value.title = "";
 		}
 		this.set_title(this.link, _value.title);
 	}
@@ -1760,13 +1749,13 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 		// Now that link is created, get title from server & update
 		else
 		{
-			this.egw().link_title(_link_data.app, _link_data.id, function (title)
+			this.egw().link_title(_link_data.app, _link_data.id, true).then(title =>
 			{
 				if (title)
-					this.removeClass("loading").text(title);
+					link.removeClass("loading").text(title);
 				else
-					this.remove();	// no rights or not found
-			}, link);
+					link.remove();	// no rights or not found
+			});
 		}
 	}
 
@@ -2208,10 +2197,10 @@ export class et2_link_list extends et2_link_string
 		{
 			// Title will be fetched from server and then set
 			jQuery('td.title', row).addClass("loading");
-			var title = this.egw().link_title(_link_data.app, _link_data.id, function (title)
+			this.egw().link_title(_link_data.app, _link_data.id, true).then(title =>
 			{
-				jQuery('td.title', this).removeClass("loading").text(title + "");
-			}, row);
+				jQuery('td.title', row).removeClass("loading").text(title + "");
+			});
 		}
 		// Date
 		/*

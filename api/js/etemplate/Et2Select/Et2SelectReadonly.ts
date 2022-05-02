@@ -225,18 +225,18 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 			let account_name = null;
 			let option = <SelectOption>{value: id, label: id + " ..."};
 			this.select_options = [].concat(this.select_options, option);
-			if(new_value && (account_name = this.egw().link_title('api-accounts', id)))
+			if(new_value && (account_name = this.egw().link_title('api-accounts', id, false)))
 			{
 				option.label = account_name;
 			}
 			else if(!account_name)
 			{
 				// Not already cached, need to fetch it
-				this.egw().link_title('api-accounts', id, function(title)
+				this.egw().link_title('api-accounts', id, true).then(title =>
 				{
-					this.option.label = title;
-					this.select.requestUpdate();
-				}, {select: this, option: option});
+					option.label = title;
+					this.requestUpdate();
+				});
 			}
 		}
 		super.value = new_value;

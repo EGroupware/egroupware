@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -27,14 +26,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.open() or egw.set_link_registry()
 	 */
-	var link_registry = undefined;
+	let link_registry = undefined;
 
 	/**
 	 * Local cache for link-titles
 	 *
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 */
-	var title_cache = {};
+	let title_cache = {};
 
 	/**
 	 * Queue for link_title requests
@@ -42,14 +41,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 * @var object _app._id.[{callback: _callback, context: _context}[, ...]]
 	 */
-	var title_queue = {};
+	let title_queue = {};
 
 	/**
-	 * Uid of active jsonq request, to not start an other one, as we get notified
+	 * Uid of active jsonq request, to not start another one, as we get notified
 	 * before it's actually send to the server via our link_title_before_send callback.
 	 * @access private
 	 */
-	var title_uid = null;
+	let title_uid = null;
 
 	return {
 		/**
@@ -62,19 +61,19 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link_get_registry: function(_app, _name)
 		{
-			if (typeof link_registry != 'object')
+			if (typeof link_registry !== 'object')
 			{
 				alert('egw.open() link registry is NOT defined!');
 				return false;
 			}
-			if (typeof link_registry[_app] == 'undefined')
+			if (typeof link_registry[_app] === 'undefined')
 			{
 				return false;
 			}
-			var reg = link_registry[_app];
+			const reg = link_registry[_app];
 
 			// some defaults (we set them directly in the registry, to do this only once)
-			if (typeof reg[_name] == 'undefined')
+			if (typeof reg[_name] === 'undefined')
 			{
 				switch(_name)
 				{
@@ -82,9 +81,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						reg.name = _app;
 						break;
 					case 'icon':
-						var app_data = this.app(_app);
-						if (typeof app_data != 'undefined' &&
-							typeof app_data.icon != 'undefined' && app_data.icon != null)
+						const app_data = this.app(_app);
+						if (typeof app_data !== 'undefined' &&
+							typeof app_data.icon !== 'undefined' && app_data.icon !== null)
 						{
 							reg.icon = (typeof app_data.icon_app != 'undefined' ? app_data.icon_app : _app)+'/'+app_data.icon;
 						}
@@ -95,12 +94,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 						break;
 				}
 			}
-			if (reg && typeof _name == 'undefined')
+			if (reg && typeof _name === 'undefined')
 			{
 				// No key requested, return the whole thing
 				return reg;
 			}
-			return typeof reg[_name] == 'undefined' ? false : reg[_name];
+			return typeof reg[_name] === 'undefined' ? false : reg[_name];
 		},
 
 		/**
@@ -113,16 +112,16 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		get_mime_info: function(_type)
 		{
-			var wildcard_mime;
+			let wildcard_mime;
 			for(var app in link_registry)
 			{
-				var reg = link_registry[app];
-				if (typeof reg.mime != 'undefined')
+				const reg = link_registry[app];
+				if (typeof reg.mime !== 'undefined')
 				{
-					for(var mime in reg.mime)
+					for(let mime in reg.mime)
 					{
-						if (mime == _type) return reg.mime[_type];
-						if (mime[0] == '/' && _type.match(new RegExp(mime.substring(1, mime.length-1), 'i')))
+						if (mime === _type) return reg.mime[_type];
+						if (mime[0] === '/' && _type.match(new RegExp(mime.substring(1, mime.length-1), 'i')))
 						{
 							wildcard_mime = reg.mime[mime];
 						}
@@ -142,10 +141,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		mime_open: function(_path, _type)
 		{
-			var path;
-			if (typeof _path == 'object')
+			let path;
+			if (typeof _path === 'object')
 			{
-				if (typeof _path.path == 'undefined')
+				if (typeof _path.path === 'undefined')
 				{
 					path = '/apps/'+_path.app2+'/'+_path.id2+'/'+_path.id;
 				}
@@ -153,12 +152,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				{
 					path = _path.path;
 				}
-				if (typeof _path.type == 'string')
+				if (typeof _path.type === 'string')
 				{
 					_type = _path.type;
 				}
 			}
-			else if(_path[0] != '/')
+			else if(_path[0] !== '/')
 			{
 
 			}
@@ -166,11 +165,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				path = _path;
 			}
-			var mime_info = this.get_mime_info(_type);
+			let mime_info = this.get_mime_info(_type);
+			let data = {};
 			if (mime_info)
 			{
-				var data = {};
-				for(var attr in mime_info)
+				for(let attr in mime_info)
 				{
 					switch(attr)
 					{
@@ -190,14 +189,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					}
 				}
 				// if mime_info did NOT define mime_url attribute, we use a WebDAV url drived from path
-				if (typeof mime_info.mime_url == 'undefined')
+				if (typeof mime_info.mime_url === 'undefined')
 				{
-					data.url = typeof _path == 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
+					data.url = typeof _path === 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
 				}
 			}
 			else
 			{
-				var data = typeof _path == 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
+				data = typeof _path === 'object' && _path.download_url ? _path.download_url : '/webdav.php' + path;
 			}
 			return data;
 		},
@@ -210,28 +209,29 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link_app_list: function(_must_support)
 		{
-			var apps = [];
-			for (var type in link_registry)
+			let apps = [];
+			for (let type in link_registry)
 			{
-				var reg = link_registry[type];
+				const reg = link_registry[type];
 
-				if (typeof _must_support != 'undefined' && _must_support && typeof reg[_must_support] == 'undefined') continue;
+				if (typeof _must_support !== 'undefined' && _must_support && typeof reg[_must_support] === 'undefined') continue;
 
-				var app_sub = type.split('-');
+				const app_sub = type.split('-');
 				if (this.app(app_sub[0]))
 				{
 					apps.push({"type": type, "label": this.lang(this.link_get_registry(type,'name'))});
 				}
 			}
-			// sort labels (caseinsensitive) alphabetic
-			apps = apps.sort(function(_a,_b) {
+			// sort labels (case-insensitive) alphabetic
+			apps = apps.sort((_a, _b) =>
+			{
 				var al = _a.label.toUpperCase();
 				var bl = _b.label.toUpperCase();
-				return al == bl ? 0 : (al > bl ? 1 : -1);
+				return al === bl ? 0 : (al > bl ? 1 : -1);
 			});
 			// create sorted associative array / object
-			var sorted = {};
-			for(var i = 0; i < apps.length; ++i)
+			const sorted = {};
+			for(let i = 0; i < apps.length; ++i)
 			{
 				sorted[apps[i].type] = apps[i].label;
 			}
@@ -248,7 +248,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		set_link_registry: function (_registry, _app, _need_clone)
 		{
-			if (typeof _app == 'undefined')
+			if (typeof _app === 'undefined')
 			{
 				link_registry = _need_clone ? jQuery.extend(true, {}, _registry) : _registry;
 			}
@@ -271,7 +271,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link: function(_url, _extravars)
 		{
-			if (_url.substr(0,4) == 'http' && _url.indexOf('://') <= 5)
+			if (_url.substr(0,4) === 'http' && _url.indexOf('://') <= 5)
 			{
 				// already a full url (eg. download_url of vfs), nothing to do
 			}
@@ -280,7 +280,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				if (_url[0] != '/')
 				{
 					alert("egw.link('"+_url+"') called with url starting NOT with a slash!");
-					var app = window.egw_appName;
+					const app = window.egw_appName;
 					if (app != 'login' && app != 'logout') _url = app+'/'+_url;
 				}
 				// append the url to the webserver url, if not already contained or empty
@@ -289,12 +289,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					_url = this.webserverUrl + _url;
 				}
 			}
-			var vars = {};
+			const vars = {};
 
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-			var url_othervars = _url.split('?',2);
+			const url_othervars = _url.split('?',2);
 			_url = url_othervars[0];
-			var othervars = url_othervars[1];
+			const othervars = url_othervars[1];
 			if (_extravars && typeof _extravars == 'object')
 			{
 				jQuery.extend(vars, _extravars);
@@ -310,16 +310,16 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			if (_extravars)
 			{
 				_extravars = _extravars.split('&');
-				for(var i=0; i < _extravars.length; ++i)
+				for(let i=0; i < _extravars.length; ++i)
 				{
-					var name_val = _extravars[i].split('=',2);
-					var name = name_val[0];
-					var val = name_val[1] || '';
-					if (val.indexOf('%26') != -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
+					const name_val = _extravars[i].split('=', 2);
+					let name = name_val[0];
+					let val = name_val[1] || '';
+					if (val.indexOf('%26') !== -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
 					if (name.lastIndexOf('[]') == name.length-2)
 					{
 						name = name.substr(0,name.length-2);
-						if (typeof vars[name] == 'undefined') vars[name] = [];
+						if (typeof vars[name] === 'undefined') vars[name] = [];
 						vars[name].push(val);
 					}
 					else
@@ -330,14 +330,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			}
 
 			// if there are vars, we add them urlencoded to the url
-			var query = [];
+			let query = [];
 
-			for(var name in vars)
+			for(let name in vars)
 			{
-				var val = vars[name] || '';	// fix error for eg. null, which is an object!
+				let val = vars[name] || '';	// fix error for eg. null, which is an object!
 				if (typeof val == 'object')
 				{
-					for(var i=0; i < val.length; ++i)
+					for(let i=0; i < val.length; ++i)
 					{
 						query.push(name+'[]='+encodeURIComponent(val[i]));
 					}
@@ -354,44 +354,66 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		/**
 		 * Query a title of _app/_id
 		 *
+		 * Deprecated default of returning string or null for no callback, will change in future to always return a Promise!
+		 *
 		 * @param {string} _app
 		 * @param {string|number} _id
-		 * @param {function} _callback optinal callback, required if for responses from the server
-		 * @param {object} _context context for the callback
+		 * @param {boolean|function|undefined} _callback true to always return a promise, false: just lookup title-cache or optional callback
+		 * 	NOT giving either a boolean value or a callback is deprecated!
+		 * @param {object|undefined} _context context for the callback
 		 * @param {boolean} _force_reload true load again from server, even if already cached
-		 * @return {string|boolean|null} string with title if it exist in local cache or null if not
+		 * @return {Promise|string|null} Promise for _callback given (function or true), string with title if it exists in local cache or null if not
 		 */
 		link_title: function(_app, _id, _callback, _context, _force_reload)
 		{
 			// check if we have a cached title --> return it direct
-			if (typeof title_cache[_app] != 'undefined' && typeof title_cache[_app][_id] != 'undefined' && _force_reload !== true)
+			if (typeof title_cache[_app] !== 'undefined' && typeof title_cache[_app][_id] !== 'undefined' && _force_reload !== true)
 			{
-				if (typeof _callback == 'function')
+				if (typeof _callback === 'function')
 				{
 					_callback.call(_context, title_cache[_app][_id]);
+				}
+				if (_callback)
+				{
+					return Promise.resolve(title_cache[_app][_id]);
 				}
 				return title_cache[_app][_id];
 			}
 			// no callback --> return null
-			if (typeof _callback != 'function')
+			if (!_callback)
 			{
-				return null;	// not found in local cache and cant do a synchronious request
+				if (_callback !== false)
+				{
+					console.trace('Deprecated use of egw.link() without 3rd parameter callback!');
+				}
+				return null;	// not found in local cache and can't do a synchronous request
 			}
 			// queue the request
-			if (typeof title_queue[_app] == 'undefined')
+			if (typeof title_queue[_app] === 'undefined')
 			{
 				title_queue[_app] = {};
 			}
-			if (typeof title_queue[_app][_id] == 'undefined')
+			if (typeof title_queue[_app][_id] === 'undefined')
 			{
 				title_queue[_app][_id] = [];
 			}
-			title_queue[_app][_id].push({callback: _callback, context: _context});
-			// if there's no active jsonq request, start a new one
-			if (title_uid == null)
+			let promise = new Promise(_resolve => {
+				title_queue[_app][_id].push({callback: _resolve, context: _context});
+			});
+			if (typeof _callback === 'function')
 			{
-				title_uid = this.jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_titles',[{}], this.link_title_callback, this, this.link_title_before_send);
+				promise = promise.then(_data => {
+					_callback.bind(_context)(_data);
+					return _data;
+				});
 			}
+			// if there's no active jsonq request, start a new one
+			if (title_uid === null)
+			{
+				title_uid = this.jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_titles',[{}], undefined, this, this.link_title_before_send)
+					.then(_response => this.link_title_callback(_response));
+			}
+			return promise;
 		},
 
 		/**
@@ -402,11 +424,11 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		link_title_before_send: function(_params)
 		{
 			// add all current title-requests
-			for(var app in title_queue)
+			for(let app in title_queue)
 			{
-				for(var id in title_queue[app])
+				for(let id in title_queue[app])
 				{
-					if (typeof _params[0][app] == 'undefined')
+					if (typeof _params[0][app] === 'undefined')
 					{
 						_params[0][app] = [];
 					}
@@ -423,29 +445,27 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link_title_callback: function(_response)
 		{
-			if (typeof _response != 'object')
+			if (typeof _response !== 'object')
 			{
 				throw "Wrong parameter for egw.link_title_callback!";
 			}
-			for(var app in _response)
+			for(let app in _response)
 			{
-				if (typeof title_cache[app] != 'object')
+				if (typeof title_cache[app] !== 'object')
 				{
 					title_cache[app] = {};
 				}
-				for (var id in _response[app])
+				for (let id in _response[app])
 				{
-					var title = _response[app][id];
+					const title = _response[app][id];
 					// cache locally
 					title_cache[app][id] = title;
 					// call callbacks waiting for title of app/id
-					if(typeof title_queue[app] !== 'undefined' &&
-						typeof title_queue[app][id] !== "undefined"
-					)
+					if (typeof title_queue[app] !== 'undefined' && typeof title_queue[app][id] !== "undefined")
 					{
-						for(var i=0; i < title_queue[app][id].length; ++i)
+						for(let i=0; i < title_queue[app][id].length; ++i)
 						{
-							var callback = title_queue[app][id][i];
+							const callback = title_queue[app][id][i];
 							callback.callback.call(callback.context, title);
 						}
 						delete title_queue[app][id];
@@ -464,10 +484,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// check if quick-add selectbox is alread there, only create it again if not
 			if (document.getElementById('quick_add_selectbox')) return;
 
-			var select = jQuery(document.createElement('select')).attr('id', 'quick_add_selectbox');
-			jQuery(typeof _parent == 'string' ? '#'+_parent : _parent).append(select);
+			const select = jQuery(document.createElement('select')).attr('id', 'quick_add_selectbox');
+			jQuery(typeof _parent === 'string' ? '#'+_parent : _parent).append(select);
 
-			var self = this;
+			const self = this;
 			// bind change handler
 			select.change(function(){
 				if (this.value) self.open('', this.value, 'add', {}, undefined, this.value, true);
@@ -476,14 +496,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// need to load common translations for app-names
 			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], function(){
 				select.append(jQuery(document.createElement('option')).attr('value', '').text(self.lang('Add')+' ...'));
-				var apps = self.link_app_list('add');
-				for(var app in apps)
+				const apps = self.link_app_list('add');
+				for(let app in apps)
 				{
 					if(egw.link_get_registry(app, 'no_quick_add'))
 					{
 						continue;
 					}
-					var option = jQuery(document.createElement('option')).attr('value', app)
+					const option = jQuery(document.createElement('option')).attr('value', app)
 						.text(self.lang(self.link_get_registry(app,'entry') || apps[app]));
 					select.append(option);
 				}
