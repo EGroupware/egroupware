@@ -190,7 +190,7 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 		{
 			let option = {value: key, label: content_options[key]}
 			// This could be an option group - not sure we have any
-			if(typeof option.label !== "string")
+			if(typeof option.label !== "string" && option.label)
 			{
 				// @ts-ignore Yes, option.label.label is not supposed to exist but that's what we're checking
 				if(typeof option.label.label !== "undefined")
