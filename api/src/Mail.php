@@ -5514,7 +5514,7 @@ class Mail
 				continue;
 			}
 
-			if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = Translation::detect_encoding($singleBodyPart['body']);
+			if (empty($singleBodyPart['charSet'])) $singleBodyPart['charSet'] = Translation::detect_encoding($singleBodyPart['body']);
 			$singleBodyPart['body'] = Translation::convert(
 				$singleBodyPart['body'],
 				strtolower($singleBodyPart['charSet'])

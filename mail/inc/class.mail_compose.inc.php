@@ -671,7 +671,7 @@ class mail_compose
 		$content['body'] = $content['body'] ?? $content['mail_'.($content['mimeType'] === 'html'?'html':'plain').'text'] ??
 			($content['mimeType'] === 'html' ? '<br>' : '');
 		unset($_content['body'], $_content['mail_htmltext'], $_content['mail_plaintext']);
-		$_currentMode = $_content['mimeType'];
+		$_currentMode = $_content['mimeType'] && $_content['mimeType'] !== 'plain' ? 'html' : 'plain';
 
 		// we have to keep comments to be able to changing signatures
 		// signature is wraped in "<!-- HTMLSIGBEGIN -->$signature<!-- HTMLSIGEND -->"
@@ -707,7 +707,7 @@ class mail_compose
 
 			if ($_oldSig != $_signatureid)
 			{
-				if($this->_debug) error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureid.'#'.$content['body']);
+				if(Mail::$debug) error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureid.'#'.$content['body']);
 				// prepare signatures, the selected sig may be used on top of the body
 				try
 				{
@@ -737,7 +737,7 @@ class mail_compose
 				{
 					$oldSigText = $this->convertHTMLToText($oldSigText,true,true);
 					$sigText = $this->convertHTMLToText($sigText,true,true);
-					if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
+					if(Mail::$debug) error_log(__METHOD__." Old signature:".$oldSigText);
 				}
 
 				//$oldSigText = Mail::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
@@ -798,8 +798,8 @@ class mail_compose
 
 				if ($found === false)
 				{
-					if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigTextCleaned);
-					if($this->_debug) error_log(__METHOD__." Compare content:".$content['body']);
+					if(Mail::$debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigTextCleaned);
+					if(Mail::$debug) error_log(__METHOD__." Compare content:".$content['body']);
 				}
 				else
 				{
