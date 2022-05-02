@@ -369,11 +369,41 @@ class Customfields extends Transformer
 				if (is_array($options))
 				{
 					Select::fix_encoded_options($options);
-					self::$request->sel_options[self::$prefix.$fname] = $options;
+					self::$request->sel_options[self::$prefix . $fname] = $options;
 				}
 				break;
 		}
 		return $widget;
+	}
+
+	/**
+	 * Perform any needed data manipulation on each row
+	 * before sending it to client.
+	 *
+	 * This is used by Nextmatch on each row to do any needed
+	 * adjustments.  Used here to make sure sub-widgets get their set_row_value method called
+	 *
+	 * @param string $cname
+	 * @param array $expand
+	 * @param array $data Row data
+	 */
+	public function set_row_value($cname, array $expand, array &$data)
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+		$value =& $this->get_array($data, $form_name, true);
+		$customfields = Api\Storage\Customfields::get($this->attrs['app']);
+
+		foreach($customfields as $field_name => $field)
+		{
+			if(array_key_exists(self::$prefix . $field_name, $value))
+			{
+				$widget = $this->_widget($field_name, $field);
+				if(method_exists($widget, 'set_row_value'))
+				{
+					$widget->set_row_value('', $expand, $data[$form_name]);
+				}
+			}
+		}
 	}
 
 	/**
