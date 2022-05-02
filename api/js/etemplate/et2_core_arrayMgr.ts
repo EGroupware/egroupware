@@ -482,7 +482,7 @@ export class et2_readonlysArrayMgr extends et2_arrayMgr
 		if(typeof _attr != "undefined" && _attr !== null)
 		{
 			// Accept 'editable', but otherwise boolean
-			return this.expandName(_attr) === 'editable' ? 'editable' : et2_evalBool(_attr);
+			return typeof _attr === 'string' && this.expandName(_attr) === 'editable' ? 'editable' : et2_evalBool(_attr);
 		}
 
 		// Otherwise take into accounf whether the parent is readonly
@@ -545,4 +545,3 @@ export function et2_arrayMgrs_expand(_owner : et2_widget, _mgrs : object, _data 
 	// Return the resulting managers object
 	return result;
 }
-

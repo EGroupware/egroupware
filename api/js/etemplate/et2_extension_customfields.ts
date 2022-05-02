@@ -23,8 +23,8 @@ import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
 import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
 import {et2_cloneObject, et2_no_init} from "./et2_core_common";
-import {egw} from "../jsapi/egw_global";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -241,7 +241,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 				const attrs: any = jQuery.extend({},this.options[field_name] ? this.options[field_name] : {}, {
 					'id': id,
-					'statustext': field.help,
+					'statustext': field.help || '',
 					'needed': field.needed,
 					'readonly':( <et2_readonlysArrayMgr> this.getArrayMgr("readonlys")).isReadOnly(id, ""+this.options.readonly),
 					'value': this.options.value[this.options.prefix + field_name]
@@ -261,7 +261,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				this.rows[id] = cf[0];
 
 				if(this.getType() == 'customfields-list') {
-					// No label, cust widget
+					// No label, custom widget
 					attrs.readonly = true;
 					// Widget tooltips don't work in nextmatch because of the creation / binding separation
 					// Set title to field label so browser will show something
@@ -280,20 +280,50 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					et2_createWidget("label",{id: id + "_label", value: field.label,for: id},this);
 				}
 
+				const type = attrs.type ? attrs.type : field.type;
 				// Set any additional attributes set in options, but not for widgets that pass actual options
 				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values))
 				{
-					const w = et2_registry[attrs.type ? attrs.type : field.type];
-					for(let attr_name in field.values)
+					const w = et2_registry[type];
+					if (typeof w !== 'undefined')
 					{
-						if (typeof w._attributes[attr_name] != "undefined")
+						for(let attr_name in field.values)
 						{
-							attrs[attr_name] = field.values[attr_name];
+							if (typeof w._attributes[attr_name] != "undefined")
+							{
+								attrs[attr_name] = field.values[attr_name];
+							}
+						}
+					}
+					else
+					{
+						const wc = window.customElements.get('et2-'+type);
+						if (wc)
+						{
+							for(let attr_name in field.values)
+							{
+								if (wc.getPropertyOptions(attr_name))
+								{
+									attrs[attr_name] = field.values[attr_name];
+								}
+							}
 						}
 					}
 				}
 				// Create widget
-				const widget = this.widgets[field_name] = et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+				if (typeof et2_registry[type] !== 'undefined')
+				{
+					this.widgets[field_name] = et2_createWidget(type, attrs, this);
+				}
+				else
+				{
+					if (typeof attrs.needed !== 'undefined')
+					{
+						attrs.required = attrs.needed;
+						delete attrs.needed;
+					}
+					this.widgets[field_name] = loadWebComponent('et2-'+type, attrs, this);
+				}
 			}
 
 			// Field is not to be shown
@@ -414,7 +444,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					// this is fixed server side
 					if(value && isNaN(value))
 					{
-						value = jQuery.datepicker.parseDate("yy-mm-dd",value);
+						// ToDo: value = jQuery.datepicker.parseDate("yy-mm-dd",value);
 					}
 					break;
 			}
@@ -813,4 +843,3 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	}
 }
 et2_register_widget(et2_customfields_list, ["customfields", "customfields-list"]);
-
