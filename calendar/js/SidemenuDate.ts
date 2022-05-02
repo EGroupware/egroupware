@@ -42,6 +42,7 @@ export class SidemenuDate extends Et2Date
 		this._onDayCreate = this._onDayCreate.bind(this);
 		this._handleChange = this._handleChange.bind(this);
 		this._handleDayHover = this._handleDayHover.bind(this);
+		this._clearHover = this._clearHover.bind(this);
 		this._updateGoButton = this._updateGoButton.bind(this);
 	}
 
@@ -61,6 +62,7 @@ export class SidemenuDate extends Et2Date
 		if(this._instance.daysContainer !== undefined)
 		{
 			this._instance.weekNumbers.removeEventListener("mouseover", this._handleDayHover);
+			this._instance.weekNumbers.removeEventListener("mouseout", this._clearHover);
 		}
 	}
 
@@ -79,6 +81,7 @@ export class SidemenuDate extends Et2Date
 		if(this._instance.daysContainer !== undefined)
 		{
 			this._instance.weekNumbers.addEventListener("mouseover", this._handleDayHover);
+			this._instance.weekNumbers.addEventListener("mouseout", this._clearHover);
 		}
 
 		// Customise next / prev buttons

@@ -4022,7 +4022,8 @@ body .flatpickr-calendar {
 }
 
 /** Holidays & birthdays **/
-div.flatpickr-calendar .calHoliday, div.flatpickr-calendar .calBirthday {
+div.flatpickr-calendar .calHoliday /*, div.flatpickr-calendar .calBirthday*/
+{
     background-color: rgba(103, 159, 210, 0.5);
 }
 
