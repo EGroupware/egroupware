@@ -31,7 +31,7 @@ import {CalendarApp} from "./app";
 import {sprintf} from "../../api/js/egw_action/egw_action_common.js";
 import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
-import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
 
 /**
@@ -1771,18 +1771,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 */
 	_drag_helper(element, position ,height)
 	{
-		var time = this._get_time_from_position(position.left, position.top);
+		let time = this._get_time_from_position(position.left, position.top);
 		element.dropEnd = time;
-		var formatted_time = jQuery.datepicker.formatTime(
-			egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-			{
-				hour: time.getUTCHours(),
-				minute: time.getUTCMinutes(),
-				seconds: 0,
-				timezone: 0
-			},
-			{"ampm": (egw.preference("timeformat") === "12")}
-		);
+		let formatted_time = formatTime(time);
 
 		element.innerHTML = '<div class="calendar_d-n-d_timeCounter"><span class="calendar_timeDemo" >'+formatted_time+'</span></div>';
 

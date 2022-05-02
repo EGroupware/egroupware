@@ -27,7 +27,7 @@ import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
-import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatTime, parseTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
@@ -426,16 +426,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			else
 			{
 				// @ts-ignore
-				time = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-					{
-						hour: element.dropEnd.attr('data-hour'),
-						minute: element.dropEnd.attr('data-minute'),
-						seconds: 0,
-						timezone: 0
-					},
-					{"ampm": (egw.preference("timeformat") == "12")}
-				);
+				time = formatTime(parseTime(element.dropEnd.attr('data-hour') + ":" + element.dropEnd.attr('data-minute')));
 			}
 			element.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+time+'</span></div>';
 		}
@@ -852,16 +843,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			html += '<div class="calendar_calTimeRow' + working_hours + '" style="height: '+(100/row_count)+'%;">';
 			// show time for full hours, always for 45min interval and at least on every 3 row
 			// @ts-ignore
-			var time = jQuery.datepicker.formatTime(
-					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-					{
-						hour: t / 60,
-						minute: t % 60,
-						seconds: 0,
-						timezone: 0
-					},
-					{"ampm": (egw.preference("timeformat") === "12")}
-				);
+			let time = formatTime(parseTime((t / 60) + ":" + (t % 60)));
 
 			var time_label = (typeof show[granularity] === 'undefined' ? t % 60 === 0 : show[granularity].indexOf(t % 60) !== -1) ? time : '';
 			if(time_label && egw.preference("timeformat") == "12" && time_label.split(':')[0] < 10)

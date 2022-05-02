@@ -26,6 +26,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view
@@ -391,26 +392,17 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				}
 				else
 				{
-						// @ts-ignore
-						const start_time = jQuery.datepicker.formatTime(
-								egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-								{
-										hour: event.start_m / 60,
-										minute: event.start_m % 60,
-										seconds: 0,
-										timezone: 0
-								},
-								{"ampm": (egw.preference("timeformat") === "12")}
-						).trim();
+					// @ts-ignore
+					const start_time = formatTime(event.start).trim();
 
+					this.body
+						.html('<span class="calendar_calEventTitle">' + title + '</span>')
+						.append('<span class="calendar_calTimespan">' + start_time + '</span>');
+					if(this.options.value.description.trim())
+					{
 						this.body
-								.html('<span class="calendar_calEventTitle">' + title + '</span>')
-								.append('<span class="calendar_calTimespan">' + start_time + '</span>');
-						if (this.options.value.description.trim())
-						{
-								this.body
-										.append('<p>' + egw.htmlspecialchars(this.options.value.description) + '</p>');
-						}
+							.append('<p>' + egw.htmlspecialchars(this.options.value.description) + '</p>');
+					}
 				}
 
 				// Clear tooltip for regeneration
@@ -768,26 +760,9 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						if (event['end_m'] > 24 * 60)
 						{
 								// @ts-ignore
-								timespan = jQuery.datepicker.formatTime(
-										egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-										{
-												hour: event.start_m / 60,
-												minute: event.start_m % 60,
-												seconds: 0,
-												timezone: 0
-										},
-										{"ampm": (egw.preference("timeformat") === "12")}
-										// @ts-ignore
-								).trim() + ' - ' + jQuery.datepicker.formatTime(
-										egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-										{
-												hour: event.end_m / 60,
-												minute: event.end_m % 60,
-												seconds: 0,
-												timezone: 0
-										},
-										{"ampm": (egw.preference("timeformat") === "12")}
-								).trim();
+							timespan = formatTime(event.start)
+								// @ts-ignore
+								.trim() + ' - ' + formatTime(event.end).trim();
 						}
 						else
 						{
@@ -802,28 +777,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						duration = Math.floor(duration / 60) + this.egw().lang('h') + (duration % 60 ? duration % 60 : '');
 
 						// @ts-ignore
-						timespan = jQuery.datepicker.formatTime(
-								egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-								{
-										hour: event.start_m / 60,
-										minute: event.start_m % 60,
-										seconds: 0,
-										timezone: 0
-								},
-								{"ampm": (egw.preference("timeformat") === "12")}
-						).trim();
+					timespan = formatTime(event.start).trim();
 
 						// @ts-ignore
-						timespan += ' - ' + jQuery.datepicker.formatTime(
-								egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
-								{
-										hour: event.end_m / 60,
-										minute: event.end_m % 60,
-										seconds: 0,
-										timezone: 0
-								},
-								{"ampm": (egw.preference("timeformat") === "12")}
-						).trim();
+					timespan += ' - ' + formatTime(event.end);
 
 						timespan += ': ' + duration;
 				}

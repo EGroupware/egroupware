@@ -239,7 +239,7 @@ export function formatDate(date : Date, options = {dateFormat: ""}) : string
 		m: (date.getUTCMonth() < 9 ? "0" : "") + (date.getUTCMonth() + 1),
 		Y: "" + date.getUTCFullYear()
 	}
-	let re = new RegExp(Object.keys(replace_map).join("|"), "gi");
+	let re = new RegExp(Object.keys(replace_map).join("|"), "g");
 	_value = dateformat.replace(re, function(matched)
 	{
 		return replace_map[matched];

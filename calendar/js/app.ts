@@ -51,8 +51,10 @@ import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
-import {parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
-import {EGW_KEY_PAGE_UP,EGW_KEY_PAGE_DOWN} from "../../api/js/egw_action/egw_action_constants";
+import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_action_constants";
+import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
+import flatpickr from "flatpickr";
 
 /**
  * UI for calendar
@@ -3337,10 +3339,12 @@ export class CalendarApp extends EgwApp
 			if (state.name)
 			{
 				// 'blank' is the special name for no filters, send that instead of the nice translated name
-				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state || state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 				// set date for "No Filter" (blank) favorite to todays date
-				if (state.state.favorite == 'blank')
-					state.state.date = jQuery.datepicker.formatDate('yymmdd', new Date);
+				if(state.state.favorite == 'blank')
+				{
+					state.state.date = formatDate(new Date, {dateFormat: 'yymmdd'});
+				}
 			}
 			menuaction = 'calendar.calendar_uilist.listview';
 			state.state.ajax = 'true';
@@ -4022,7 +4026,7 @@ export class CalendarApp extends EgwApp
 
 			if (display_day)
 			{
-				range = jQuery.datepicker.formatDate('DD',first_format)+(datefmt[0] != 'd' ? ' ' : ', ');
+				range = flatpickr.formatDate(first_format, 'l') + (datefmt[0] != 'd' ? ' ' : ', ');
 			}
 			for (var i = 0; i < 5; i += 2)
 			{
@@ -4034,7 +4038,7 @@ export class CalendarApp extends EgwApp
 						{
 							if (!month_before_day)
 							{
-								range += jQuery.datepicker.formatDate('MM',first_format);
+								range += flatpickr.formatDate(first_format, "F");
 							}
 							if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
 							{
@@ -4042,7 +4046,7 @@ export class CalendarApp extends EgwApp
 							}
 							if (display_time)
 							{
-								range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),first_format);
+								range += ' ' + formatTime(first_format);
 							}
 							if (!last)
 							{
@@ -4057,14 +4061,14 @@ export class CalendarApp extends EgwApp
 
 							if (month_before_day)
 							{
-								range += jQuery.datepicker.formatDate('MM',last_format);
+								range += flatpickr.formatDate(last_format, 'l');
 							}
 						}
 						else if (last)
 						{
 							if (display_time)
 							{
-								range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last_format);
+								range += ' ' + formatTime(last_format);
 							}
 							if(last)
 							{
@@ -4078,7 +4082,7 @@ export class CalendarApp extends EgwApp
 						break;
 					case 'm':
 					case 'M':
-						range += ' '+jQuery.datepicker.formatDate('MM',month_before_day || !last ? first_format : last_format) + ' ';
+						range += ' ' + flatpickr.formatDate(month_before_day || !last ? first_format : last_format, "l") + ' ';
 						break;
 					case 'Y':
 						if (datefmt[0] != 'm')
@@ -4090,7 +4094,7 @@ export class CalendarApp extends EgwApp
 			}
 			if (display_time && last)
 			{
-				 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last_format);
+				range += ' ' + formatTime(last_format);
 			}
 			if (datefmt[4] == 'Y' && datefmt[0] == 'm')
 			{
@@ -4123,7 +4127,7 @@ export class CalendarApp extends EgwApp
 				d.setUTCDate(d.getUTCDate() + 2);
 			}
 
-			return jQuery.datepicker.iso8601Week(new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000));
+			return flatpickr.formatDate(new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000), "W");
 		},
 		start_of_week: function(date)
 		{
