@@ -13,6 +13,7 @@ Egroupware
 
 <overlay>
     <template id="calendar.view">
+		<label id="header_dateIndicator"/>
 		<grid id="view" width="100%">
 			<columns>
 				<column/>
@@ -20,7 +21,7 @@ Egroupware
 			<rows>
 				<row class="view_row">
 					<calendar-timegrid id="${row}"
-						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);"
+						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);let s = widget.getInstanceManager().app_obj.calendar.state;let d = new Date(s.date);import(egw.link('/api/js/etemplate/lib/date.js')).then((m)=>{widget.getInstanceManager().widgetContainer.getWidgetById('header_dateIndicator').set_value((s.view == 'day'?date('d', d)+'-':'')+egw.lang(date('M',d))+'-'+date('Y',d));});"
 						onevent_change="app.calendar.event_change"
 						disabled="true"
 					>

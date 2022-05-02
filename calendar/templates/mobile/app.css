@@ -2981,4 +2981,12 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar #toolbar-actionlist {
     margin-left: 0px;
   }
+  span#calendar-view_header_dateIndicator {
+    display: block;
+    text-align: center;
+    padding: 4px;
+    font-size: 10pt;
+    color: #707070;
+  }
 }
+/*# sourceMappingURL=app.css.map */
