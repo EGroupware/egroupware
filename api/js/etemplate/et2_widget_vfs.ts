@@ -393,19 +393,18 @@ export class et2_vfsPath extends et2_vfsName
 				else if(i === 3 && !isNaN(<number><unknown>text))
 				{
 					// we first need to call link_title without callback, as callback would be called for cache-hits too!
-					let link_title = this.egw().link_title(path_parts[2], path_parts[3]);
+					let link_title = this.egw().link_title(path_parts[2], path_parts[3], false);
 					if(link_title && typeof link_title !== 'undefined')
 					{
 						text = link_title;
 					}
 					else
 					{
-						this.egw().link_title(path_parts[2], path_parts[3],
-							function(title) {
-								if(!title) return;
-								jQuery('li',this.span).first().text(title);
-							}, this
-						);
+						this.egw().link_title(path_parts[2], path_parts[3], true).then(title =>
+						{
+							if(!title) return;
+							jQuery('li',this.span).first().text(title);
+						});
 					}
 				}
 			}

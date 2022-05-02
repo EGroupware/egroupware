@@ -1090,7 +1090,7 @@ export class et2_taglist_account extends et2_taglist
 			else if (typeof v != 'object'  && !isNaN(v) && (typeof v != 'string' || v.match(this.int_reg_exp)))
 			{
 				v = parseInt(v);
-				let label = this.egw().link_title('api-accounts', v);
+				let label = this.egw().link_title('api-accounts', v, false);
 				if (label)	// already cached on client-side --> replace it
 				{
 					values[i] = {

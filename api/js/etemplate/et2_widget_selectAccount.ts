@@ -268,7 +268,7 @@ export class et2_selectAccount extends et2_selectbox
 				if(!found && !isNaN(search[j]))
 				{
 					// Add it in
-					var name = this.egw().link_title('api-accounts', search[j]);
+					var name = this.egw().link_title('api-accounts', search[j], false);
 					if (name)	// was already cached on client-side
 					{
 						update_options = true;
