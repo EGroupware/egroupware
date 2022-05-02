@@ -1673,7 +1673,10 @@ export class et2_link_string extends expose(class et2_link_string extends et2_va
 		{
 			_value.only_app = this.options.only_app;
 		}
-		this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
+		this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]).then(_value =>
+		{
+			this.set_value(_value);
+		});
 		return;
 	}
 

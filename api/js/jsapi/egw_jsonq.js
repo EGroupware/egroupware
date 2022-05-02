@@ -148,15 +148,16 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 				// as objects and loosing parameters which are undefined
 				// JSON.stringify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
 				parameters: _parameters ? [].concat(_parameters) : [],
-				callbeforesend: _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
+				callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
 			};
 			let promise = new Promise(resolve => {
 				jsonq_queue[uid].resolve = resolve;
 			});
 			if (typeof _callback === 'function')
 			{
+				const callback = _callback.bind(_sender);
 				promise = promise.then(_data => {
-					_callback.bind(_sender)(_data);
+					callback(_data);
 					return _data;
 				});
 			}
