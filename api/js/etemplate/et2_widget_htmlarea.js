@@ -137,9 +137,10 @@ var et2_htmlarea = /** @class */ (function (_super) {
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
             setup: function (ed) {
                 ed.on('init', function () {
-                    this.getDoc().body.style.fontSize = egw.preference('rte_font_size', 'common')
-                        + egw.preference('rte_font_unit', 'common');
-                    this.getDoc().body.style.fontFamily = egw.preference('rte_font', 'common');
+                    this.focus();
+                    this.execCommand('fontName', false, egw.preference('rte_font', 'common'));
+                    this.execCommand('fontSize', false, egw.preference('rte_font_size', 'common')
+                        + egw.preference('rte_font_unit', 'common'));
                 });
             }
         };
@@ -154,6 +155,9 @@ var et2_htmlarea = /** @class */ (function (_super) {
             if (self.editor && self.editor.editorContainer) {
                 self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
                 jQuery(self.editor.editorContainer).height(self.options.height);
+                self.editor.execCommand('fontName', false, egw.preference('rte_font', 'common'));
+                self.editor.execCommand('fontSize', false, egw.preference('rte_font_size', 'common')
+                    + egw.preference('rte_font_unit', 'common'));
                 jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function () {
                     if (jQuery('#dragover-tinymce').length < 1)
                         jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - " + jQuery(this).height() + "px) !important;}</style>").appendTo('head');
