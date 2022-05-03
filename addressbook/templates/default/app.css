@@ -121,9 +121,12 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px 
 select#addressbook-index_col_filter\[tid\] {
 	width: 100px;
 }
-#addressbook-index_addressbook-index-row select{
+#addressbook-index_addressbook-index-row select, #addressbook-index_addressbook-index-row et2-select {
 	float: right;
 	width: 134px;
+	display: inline-block;
+	height: 20px;
+	margin-top: 1px;
 }
 #addressbook-edit .chzn-container .chzn-results {max-height: 110px}
 
