@@ -44,7 +44,6 @@ module.exports = function (grunt) {
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -63,7 +62,6 @@ module.exports = function (grunt) {
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -82,7 +80,6 @@ module.exports = function (grunt) {
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -100,7 +97,6 @@ module.exports = function (grunt) {
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -119,7 +115,6 @@ module.exports = function (grunt) {
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -138,10 +133,10 @@ module.exports = function (grunt) {
 			jdots: {
 				files: {
 					"jdots/css/high-contrast.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -159,10 +154,10 @@ module.exports = function (grunt) {
 						"jdots/print.css"
 					],
 					"jdots/css/jdots.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -179,10 +174,10 @@ module.exports = function (grunt) {
 						"jdots/print.css"
 					],
 					"jdots/css/orange-green.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
 						"api/js/jquery/chosen/chosen.css",
 						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
 						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/jquery-ui-timepicker-addon.css",
 						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
@@ -214,11 +209,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	// Load the plugin that runs tasks only on modified files
-	grunt.loadNpmTasks("grunt-newer");
+	//grunt.loadNpmTasks("grunt-newer");
 
 	// uncomment to run Gruntfile.js in apps / sub-directories
 	//grunt.loadNpmTasks('grunt-hub');
 
 	// Default task(s).
-	grunt.registerTask("default", ["newer:cssmin"]);//, 'hub']);
+	grunt.registerTask("default", ["cssmin"]);//, 'hub']);
 };
