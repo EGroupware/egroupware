@@ -547,7 +547,7 @@ class Categories
 		}
 
 		// Load the application grants
-		if (($category['appname'] ?? null) == $this->app_name && isset($this->grants))
+		if (($category['appname'] ?? null) == $this->app_name && !isset($this->grants))
 		{
 			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name,true);
 		}
