@@ -722,6 +722,7 @@ abstract class Framework extends Framework\Extra
 	 * @param string $password =null password --------- " ----------
 	 * @param array $opts =array() further params for http(s) context, eg. array('timeout' => 123)
 	 * @return resource|null context to use with file_get_context/fopen or null if no proxy configured
+	 * @noinspection UnsupportedStringOffsetOperationsInspection
 	 */
 	public static function proxy_context($username=null, $password=null, array $opts = array())
 	{
@@ -1117,7 +1118,7 @@ abstract class Framework extends Framework\Extra
 			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
 			if(trim($GLOBALS['egw_info']['flags']['java_script']) != '')
 			{
-				$java_script .= '<script type="text/javascript">window.egw_LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
+				$java_script .= '<script type="text/javascript">top.egw_ready.then(() => { const egw=top.egw, jQuery=top.jQuery; '.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
 			}
 		}
 
@@ -1701,6 +1702,7 @@ abstract class Framework extends Framework\Extra
 		$list = array();
 		foreach((array)$_account_ids as $account_id)
 		{
+			/** @noinspection SuspiciousLoopInspection */
 			foreach($account_id < 0 && $_resolve_groups ?
 				$GLOBALS['egw']->accounts->members($account_id, true) : array($account_id) as $account_id)
 			{
