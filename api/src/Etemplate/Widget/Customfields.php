@@ -391,7 +391,7 @@ class Customfields extends Transformer
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& $this->get_array($data, $form_name, true);
-		$customfields = Api\Storage\Customfields::get($this->attrs['app']);
+		$customfields = Api\Storage\Customfields::get($this->attrs['app'] ?? $GLOBALS['egw_info']['flags']['currentapp']);
 
 		foreach($customfields as $field_name => $field)
 		{
