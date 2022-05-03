@@ -120,15 +120,17 @@ class Date extends Transformer
 		{
 			$date = Api\DateTime::server2user($value);
 		}
-		elseif (!empty($this->attrs['data_format']) && $this->attrs['data_format'] !== 'object')
+		// if data_format given, try that first, before leaving it to Api\DateTime to figure it out
+		elseif (!empty($this->attrs['data_format']) && $this->attrs['data_format'] !== 'object' &&
+			($date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone)))
 		{
-			$date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone);
+			// set AND checked above
 		}
 		else
 		{
 			$date = new Api\DateTime($value);
 		}
-		if($this->type == 'date-timeonly' && $date)
+		if($this->type === 'date-timeonly' && $date)
 		{
 			$date->setDate(1970, 1, 1);
 		}

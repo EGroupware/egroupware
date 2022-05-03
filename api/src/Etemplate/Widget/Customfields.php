@@ -24,11 +24,11 @@ class Customfields extends Transformer
 {
 
 	/**
-	 * Allowd types of customfields
+	 * Allowed types of customfields
 	 *
-	 * The additionally allowed app-names from the link-class, will be add by the edit-method only,
-	 * as the link-class has to be called, which can NOT be instanciated by the constructor, as
-	 * we get a loop in the instanciation.
+	 * The additionally allowed app-names from the link-class, will be added by the edit-method only,
+	 * as the link-class has to be called, which can NOT be instantiated by the constructor, as
+	 * we get a loop in the instantiation.
 	 *
 	 * @var array
 	 */
