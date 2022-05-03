@@ -367,11 +367,18 @@ class History
 				}
 			}
 
-			// TODO: This is just here to hide bad values before we clean them with an update.  If you're here, remove this IF block
-			// Clear invalid share_email values
-			if($row['share_email'] && stripos($row['share_email'], '@') === false)
+			// Properly format customfield date values
+			if($row['history_status'][0] == '#' && $cfs && array_key_exists(substr($row['history_status'], 1), $cfs) &&
+				in_array($cfs[substr($row['history_status'], 1)]['type'], ['date', 'date-time']))
 			{
-				$row['share_email'] = '';
+				if($row['history_new_value'])
+				{
+					$row['history_new_value'] = Api\DateTime::to($row['history_new_value'], Api\DateTime::ET2);
+				}
+				if($row['history_old_value'])
+				{
+					$row['history_old_value'] = Api\DateTime::to($row['history_old_value'], Api\DateTime::ET2);
+				}
 			}
 
 			$rows[] = Api\Db::strip_array_keys($row, 'history_');

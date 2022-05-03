@@ -1251,16 +1251,23 @@ export const Et2Widget = dedupeMixin(Et2WidgetMixin);
 // @ts-ignore Et2Widget is I guess not the right type
 export function loadWebComponent(_nodeName : string, _template_node : Element|{[index: string]: any}, parent : Et2Widget | et2_widget) : HTMLElement
 {
+	let attrs = {};
+	let load_children = true;
+
 	// support attributes object instead of an Element
-	if (typeof _template_node.getAttribute === 'undefined')
+	if(typeof _template_node.getAttribute === 'undefined')
 	{
-		const _names = Object.keys(_template_node);
-		_template_node.getAttributeNames = () => _names;
-		_template_node.getAttribute = attr => _template_node[attr];
-		_template_node.querySelectorAll = () => [];
-		(<any>_template_node).nodeName = _nodeName;
-		(<any>_template_node).childNodes = [];
+		attrs = _template_node;
+		load_children = false;
 	}
+	else
+	{
+		_template_node.getAttributeNames().forEach(attribute =>
+		{
+			attrs[attribute] = _template_node.getAttribute(attribute);
+		});
+	}
+
 	// Try to find the class for the given node
 	let widget_class = window.customElements.get(_nodeName);
 	if(!widget_class)
@@ -1279,7 +1286,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	}
 	const readonly = parent.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
-						 _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
+						 attrs["id"], attrs["readonly"],
 						 typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
 	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
 	{
@@ -1293,20 +1300,15 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	widget.setParent(parent);
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
-	widget.readOnly = parent.getArrayMgr("readonlys") ?
-					  (<any>parent.getArrayMgr("readonlys")).isReadOnly(
-						  _template_node.getAttribute("id"), _template_node.getAttribute("readonly"),
-						  typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
+	widget.readOnly = readonly;
 
-	let attrs = {};
-	_template_node.getAttributeNames().forEach(attribute =>
-	{
-		attrs[attribute] = _template_node.getAttribute(attribute);
-	});
 	widget.transformAttributes(attrs);
 
 	// Children need to be loaded
-	widget.loadFromXML(_template_node);
+	if(load_children)
+	{
+		widget.loadFromXML(_template_node);
+	}
 
 	return widget;
 }

@@ -230,7 +230,10 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 
 	setDetachedAttributes(_nodes, _values)
 	{
-		// Do nothing, setting attribute / property just sets it
+		for(let attr in _values)
+		{
+			this[attr] = _values[attr];
+		}
 	}
 }
 

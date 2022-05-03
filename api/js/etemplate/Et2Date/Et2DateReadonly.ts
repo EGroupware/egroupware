@@ -75,7 +75,10 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 
 	setDetachedAttributes(_nodes : HTMLElement[], _values : object, _data? : any) : void
 	{
-		// Do nothing, since we can't actually stop being a DOM node...
+		for(let attr in _values)
+		{
+			this[attr] = _values[attr];
+		}
 	}
 
 	loadFromXML()

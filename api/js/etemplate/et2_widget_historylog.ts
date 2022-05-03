@@ -31,6 +31,7 @@ import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import {SelectOption} from "./Et2Select/FindSelectOptions";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -72,9 +73,16 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 	public static readonly legacyOptions = ["status_id"];
 	protected static columns = [
-		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'date-time', widget: null, nodes: null},
-		{'id': 'owner', caption: 'User', 'width': '150px', widget_type: 'select-account', widget: null, nodes: null},
-		{'id': 'status', caption: 'Changed', 'width': '120px', widget_type: 'select', widget: null, nodes: null},
+		{'id': 'user_ts', caption: 'Date', 'width': '120px', widget_type: 'et2-date-time', widget: null, nodes: null},
+		{
+			'id': 'owner',
+			caption: 'User',
+			'width': '150px',
+			widget_type: 'et2-select-account_ro',
+			widget: null,
+			nodes: null
+		},
+		{'id': 'status', caption: 'Changed', 'width': '120px', widget_type: 'et2-select', widget: null, nodes: null},
 		{'id': 'new_value', caption: 'New Value', 'width': '50%', widget: null, nodes: null},
 		{'id': 'old_value', caption: 'Old Value', 'width': '50%', widget: null, nodes: null}
 	];
@@ -307,17 +315,8 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			if(column.widget_type)
 			{
 				// Status ID is allowed to be remapped to something else.  Only affects the widget ID though
-				var attrs = {'readonly': true, 'id': (i == et2_historylog.FIELD ? this.options.status_id : column.id)};
-				// Create widget, still preferring legacy widgets
-				if (typeof et2_registry[column.widget_type] !== 'undefined')
-				{
-					column.widget = et2_createWidget(column.widget_type, attrs, this);
-					column.widget.transformAttributes(attrs);
-				}
-				else
-				{
-					column.widget = loadWebComponent('et2-'+column.widget_type, attrs, this);
-				}
+				let attrs = {'readonly': true, 'id': (i == et2_historylog.FIELD ? this.options.status_id : column.id)};
+				column.widget = loadWebComponent(column.widget_type, attrs, this);
 				column.nodes = jQuery(column.widget.getDetachedNodes());
 			}
 		}
@@ -325,27 +324,36 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Add in handling for links
 		if(typeof this.options.value['status-widgets']['~link~'] == 'undefined')
 		{
-			et2_historylog.columns[et2_historylog.FIELD].widget.optionValues['~link~'] = this.egw().lang('link');
+			et2_historylog.columns[et2_historylog.FIELD].widget.select_options.push({
+				value: '~link~',
+				label: this.egw().lang('link')
+			});
 			this.options.value['status-widgets']['~link~'] = 'link';
 		}
 
 		// Add in handling for files
 		if(typeof this.options.value['status-widgets']['~file~'] == 'undefined')
 		{
-			et2_historylog.columns[et2_historylog.FIELD].widget.optionValues['~file~'] = this.egw().lang('File');
+			et2_historylog.columns[et2_historylog.FIELD].widget.select_options.push({
+				value: '~file~',
+				label: this.egw().lang('File')
+			});
 			this.options.value['status-widgets']['~file~'] = 'vfs';
 		}
 
 		// Add in handling for user-agent & action
 		if(typeof this.options.value['status-widgets']['user_agent_action'] == 'undefined')
 		{
-			et2_historylog.columns[et2_historylog.FIELD].widget.optionValues['user_agent_action'] = this.egw().lang('User-agent & action');
+			et2_historylog.columns[et2_historylog.FIELD].widget.select_options.push({
+				value: 'user_agent_action',
+				label: this.egw().lang('User-agent & action')
+			});
 		}
 
 		// Per-field widgets - new value & old value
 		this.fields = {};
 
-		let labels = et2_historylog.columns[et2_historylog.FIELD].widget.optionValues;
+		let labels = et2_historylog.columns[et2_historylog.FIELD].widget.select_options;
 
 		// Custom fields - Need to create one that's all read-only for proper display
 		let cf_widget = <et2_customfields_list>et2_createWidget('customfields', {'readonly':true}, this);
@@ -355,7 +363,18 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		for(let key in cf_widget.widgets)
 		{
 			// Add label
-			labels[cf_widget.prefix + key] = cf_widget.options.customfields[key].label;
+			let option = (<SelectOption[]>labels).find(option => option.value == et2_customfields_list.PREFIX + key);
+			if(option && !option.label)
+			{
+				option.label = cf_widget.options.customfields[key].label;
+			}
+			else
+			{
+				labels.push({
+					value: et2_customfields_list.PREFIX + key,
+					label: cf_widget.options.customfields[key].label
+				});
+			}
 
 			// If it doesn't support detached nodes, just treat it as text
 			if(cf_widget.widgets[key].getDetachedNodes)
@@ -363,11 +382,14 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				var nodes = cf_widget.widgets[key].getDetachedNodes();
 				for(var i = 0; i < nodes.length; i++)
 				{
-					if(nodes[i] == null) nodes.splice(i,1);
+					if(nodes[i] == null)
+					{
+						nodes.splice(i, 1);
+					}
 				}
 
 				// Save to use for each row
-				this.fields[cf_widget.prefix + key] = {
+				this.fields[et2_customfields_list.PREFIX + key] = {
 					attrs: cf_widget.widgets[key].options,
 					widget: cf_widget.widgets[key],
 					nodes: jQuery(nodes)
@@ -471,7 +493,23 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 		if(widget === null)
 		{
-			widget = et2_createWidget(typeof field === 'string' ? field : 'select', attrs, this);
+			if(typeof field === "string" && typeof window.customElements.get(field) !== "undefined")
+			{
+				widget = loadWebComponent(field, attrs, this);
+			}
+			else if(typeof field === "string" && typeof window.customElements.get("et2-" + field) !== "undefined")
+			{
+				widget = loadWebComponent("et2-" + field, attrs, this);
+				console.log("History specified legacy widget '" + field + "' for " + key + ", used web component instead.  Please change in PHP source.");
+			}
+			else
+			{
+				widget = et2_createWidget(typeof field === 'string' ? field : 'select', attrs, this);
+				if(typeof field === "string")
+				{
+					console.log("History specified legacy widget '" + field + "' for " + key + ".  Please change in PHP source.");
+				}
+			}
 		}
 
 		if(!widget.instanceOf(et2_IDetachedDOM))
@@ -608,7 +646,12 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			))
 			{
 				widget = self.fields[_data.status].widget;
-				if(!widget._children.length)
+				if(widget && typeof window.customElements.get(widget.localName) != "undefined")
+				{
+					nodes = widget.clone() // Note: Slower than cloneNode(), but simpler to deal with all the different widgets;
+					widget = nodes;
+				}
+				else if(!widget._children.length)
 				{
 					nodes = self.fields[_data.status].nodes.clone();
 				}
@@ -622,15 +665,21 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 					}
 				}
 			}
-			else if (widget)
+			// WebComponent IS the node
+			else if(widget && typeof window.customElements.get(widget.localName) != "undefined")
+			{
+				nodes = widget.clone() // Note: Slower than cloneNode(), but simpler to deal with all the different widgets;
+				widget = nodes;
+			}
+			else if(widget)
 			{
 				nodes = et2_historylog.columns[i].nodes.clone();
 			}
-			else if ((
-				// Already parsed & cached
-				typeof _data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] == "object" &&
-				typeof _data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] != "undefined" &&
-				_data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] !== null) ||	// typeof null === 'object'
+			else if((
+					// Already parsed & cached
+					typeof _data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] == "object" &&
+					typeof _data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] != "undefined" &&
+					_data[et2_historylog.columns[et2_historylog.NEW_VALUE].id] !== null) ||	// typeof null === 'object'
 				// Large old value
 				self._needsDiffWidget(_data['status'], _data[et2_historylog.columns[et2_historylog.OLD_VALUE].id]) ||
 				// Large new value
@@ -667,7 +716,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 					{
 						const id = widget._children[j].id;
 						const widget_value = value ? value[id] || "" : "";
-						widget._children[j].setDetachedAttributes(nodes[j], {value:widget_value});
+						widget._children[j].setDetachedAttributes(nodes[j], {value: widget_value});
 						box.append(nodes[j]);
 					}
 					nodes = box;

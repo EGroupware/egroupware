@@ -51,11 +51,15 @@ li {
 		}
 	}
 
+	private __select_options : SelectOption[];
+	private __value : string[];
+
 	constructor()
 	{
 		super();
 		this.type = "";
 		this.__select_options = <SelectOption[]>[];
+		this.__value = [];
 	}
 
 	protected find_select_options(_attrs)
@@ -108,12 +112,15 @@ li {
 			new_value = ["" + new_value];
 		}
 
-		super.value = new_value;
+		let oldValue = this.__value;
+		this.__value = new_value;
+
+		this.requestUpdate("value", oldValue);
 	}
 
 	get value()
 	{
-		return super.value;
+		return this.__value;
 	}
 
 	/**
@@ -194,7 +201,10 @@ li {
 
 	setDetachedAttributes(_nodes : HTMLElement[], _values : object, _data? : any) : void
 	{
-		// Do nothing, since we can't actually stop being a DOM node...
+		for(let attr in _values)
+		{
+			this[attr] = _values[attr];
+		}
 	}
 
 	loadFromXML()
