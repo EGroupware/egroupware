@@ -30,6 +30,7 @@ import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_selectbox} from "./et2_widget_selectbox";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -302,13 +303,22 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Constant widgets - first 3 columns
 		for(let i = 0; i < et2_historylog.columns.length; i++)
 		{
-			if(et2_historylog.columns[i].widget_type)
+			const column = et2_historylog.columns[i];
+			if(column.widget_type)
 			{
 				// Status ID is allowed to be remapped to something else.  Only affects the widget ID though
-				var attrs = {'readonly': true, 'id': (i == et2_historylog.FIELD ? this.options.status_id : et2_historylog.columns[i].id)};
-				et2_historylog.columns[i].widget = et2_createWidget(et2_historylog.columns[i].widget_type, attrs, this);
-				et2_historylog.columns[i].widget.transformAttributes(attrs);
-				et2_historylog.columns[i].nodes = jQuery(et2_historylog.columns[i].widget.getDetachedNodes());
+				var attrs = {'readonly': true, 'id': (i == et2_historylog.FIELD ? this.options.status_id : column.id)};
+				// Create widget, still preferring legacy widgets
+				if (typeof et2_registry[column.widget_type] !== 'undefined')
+				{
+					column.widget = et2_createWidget(column.widget_type, attrs, this);
+					column.widget.transformAttributes(attrs);
+				}
+				else
+				{
+					column.widget = loadWebComponent('et2-'+column.widget_type, attrs, this);
+				}
+				column.nodes = jQuery(column.widget.getDetachedNodes());
 			}
 		}
 
