@@ -322,7 +322,7 @@ class History
 			$query['num_rows']
 		) as $row)
 		{
-			$row['user_ts'] = $GLOBALS['egw']->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$row['user_ts'] = Api\DateTime::server2user($GLOBALS['egw']->db->from_timestamp($row['history_timestamp']), Api\DateTime::ET2);
 
 			// Explode multi-part values
 			foreach(array('history_new_value', 'history_old_value') as $field)
