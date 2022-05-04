@@ -70,6 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET')
 		die("Missing 'from' GET parameter\n");
 	}
 	$from = $_GET['from'];
+
+	// fix missing url-encoding of +49...
+	if (preg_match('/^ [\d]+/', $from))
+	{
+		$from[0] = '+';
+	}
 }
 else
 {
