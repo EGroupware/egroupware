@@ -137,7 +137,6 @@ var et2_htmlarea = /** @class */ (function (_super) {
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
             setup: function (ed) {
                 ed.on('init', function () {
-                    this.focus();
                     this.execCommand('fontName', false, egw.preference('rte_font', 'common'));
                     this.execCommand('fontSize', false, egw.preference('rte_font_size', 'common')
                         + egw.preference('rte_font_unit', 'common'));
