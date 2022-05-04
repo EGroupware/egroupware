@@ -180,6 +180,11 @@ export class et2_nextmatch_rowProvider
 			if(typeof window.customElements.get(widget.localName) != "undefined")
 			{
 				widget = this._cloneWebComponent(entry, row, data);
+				if(!widget)
+				{
+					console.warn("Error cloning ", entry);
+					continue;
+				}
 			}
 			else
 			{
@@ -273,6 +278,11 @@ export class et2_nextmatch_rowProvider
 
 		// Use the clone, not the original
 		let widget = entry.nodeFuncs[0](row);
+
+		if(!widget || widget.localName !== entry.widget.localName)
+		{
+			return null;
+		}
 
 		// Need to set the parent to the nm or egw() (and probably others) will not be as expected, using window instead
 		// of app.  arrayMgrs are fine without this though
