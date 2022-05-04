@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-18 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-22 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Db;
@@ -337,7 +337,7 @@ class Backup
 	 * @param boolean $protect_system_config =true should above system_config values be protected (NOT overwritten)
 	 * @param int $insert_n_rows =500 how many rows to insert in one sql statement
 	 *
-	 * @returns An empty string or an error message in case of failure.
+	 * @returns string An empty string or an error message in case of failure.
 	 */
 	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true, $insert_n_rows=500)
 	{
@@ -558,6 +558,7 @@ class Backup
 							$def['type'] = 'longtext';
 						}
 					}
+					unset($def);
 					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
 					$this->schema_proc->CreateTable($table_name, $schema);
 				}
@@ -705,7 +706,7 @@ class Backup
 	/**
 	 * Removes a dir, no matter whether it is empty or full
 	 *
-	 * @param strin $dir
+	 * @param string $dir
 	 */
 	private static function remove_dir_content($dir)
 	{
@@ -767,6 +768,7 @@ class Backup
 						break;
 				}
 			}
+			unset($field);
 			if ($keys)	// if string keys are to be used --> combine keys and values
 			{
 				$fields = array_combine($keys, $fields);
@@ -864,7 +866,7 @@ class Backup
 	/**
 	 * Number of rows to select per chunk, to not run into memory limit on huge tables
 	 */
-	const ROW_CHUNK = 5000;
+	const ROW_CHUNK = 2000;
 
 	/**
 	 * Backup all data in the form of a (compressed) csv file
@@ -925,9 +927,9 @@ class Backup
 			if (in_array($table,$this->exclude_tables)) continue;	// dont backup
 
 			// do we have a primary key?
-			// --> use it to order and limit rows, to kope with rows being added during backup
+			// --> use it to order and limit rows, to cope with rows being added during backup
 			// otherwise new rows can cause rows being backed up twice and
-			// backups don't restore because of doublicate keys
+			// backups don't restore because of deduplicate keys
 			$pk = $schema['pk'] && count($schema['pk']) == 1 ? $schema['pk'][0] : null;
 
 			if ($lock_table || empty($pk) && is_null($lock_table))
@@ -937,7 +939,7 @@ class Backup
 			$total = $max = 0;
 			do {
 				$num_rows = 0;
-				// querying only chunks for 10000 rows, to not run into memory limit on huge tables
+				// querying only chunks of 2000 rows, to not run into memory limit on huge tables
 				foreach($this->db->select($table, '*',
 					// limit by maximum primary key already received
 					empty($pk) || !$max ? false : $pk.' > '.$this->db->quote($max, $schema['fd'][$pk]['type']),
