@@ -3399,23 +3399,17 @@ span.et2_egw_action_ddHelper_itemsCnt {
     display: inline-block;
     width: auto;
     height: 100px;
+    min-width: 32px;
+    min-height: 32px;
     margin: 0;
-    background: transparent;
+    background-size: contain;
+    background-color: transparent;
     opacity: 1;
     cursor: pointer;
     border-radius: 0;
     border: 0;
 }
 
-.blueimp-gallery > .indicator > li > img {
-    display: inline-block;
-    width: auto;
-    height: 100px;
-    margin: 0;
-    cursor: pointer;
-    z-index: -1;
-    position: relative;
-}
 
 /*Make indicator visible all the time to be able accuratley estimate
   current active slide position in thubmnal bar*/
@@ -3430,7 +3424,7 @@ span.et2_egw_action_ddHelper_itemsCnt {
     -webkit-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
     -moz-box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
     box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
-    background: transparent;
+    background-color: transparent;
 }
 
 /*Active thumbnail border*/
@@ -3438,7 +3432,7 @@ span.et2_egw_action_ddHelper_itemsCnt {
     -webkit-box-shadow: inset 0px 0px 0px 4px #0c5da5;
     -moz-box-shadow: inset 0px 0px 0px 4px #0c5da5;
     box-shadow: inset 0px 0px 0px 4px #0c5da5;
-    background: transparent;
+    background-color: transparent;
 }
 
 /*Slideshow Play/Pause button*/
