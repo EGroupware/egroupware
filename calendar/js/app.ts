@@ -55,6 +55,7 @@ import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/
 import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_action_constants";
 import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import flatpickr from "flatpickr";
+import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
 /**
  * UI for calendar
@@ -948,147 +949,86 @@ export class CalendarApp extends EgwApp
 	_sortable( )
 	{
 		// Calender current state
-		var state = this.getState();
+		let state = this.getState();
 		// Day / month sortables
-		var daily = jQuery('#calendar-view_view .calendar_calGridHeader > div:first');
-		var weekly = jQuery('#calendar-view_view tbody');
-		if(state.view == 'day')
-		{
-			var sortable = daily;
-			if(weekly.sortable('instance')) weekly.sortable('disable');
-		}
-		else
-		{
-			var sortable = weekly;
-			if(daily.sortable('instance')) daily.sortable('disable');
-		}
-		if(!sortable.sortable('instance'))
-		{
-			sortable.sortable({
-				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
-				handle: '.calendar_calGridHeader',
-				//placeholder: "srotable_cal_wk_ph",
-				axis:"y",
-				revert: true,
-				helper:"clone",
-				create: function ()
-				{
-					var $sortItem = jQuery(this);
-				},
-				start: function (event, ui)
-				{
-					jQuery('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
-					// Put owners into row IDs
-					CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
-						if(widget.options.owner && !widget.disabled)
-						{
-							widget.div.parents('tr').attr('data-owner',widget.options.owner);
-						}
-						else
-						{
-							widget.div.parents('tr').removeAttr('data-owner');
-						}
-					},this,et2_calendar_timegrid);
-				},
-				stop: function ()
-				{
-				},
-				update: function ()
-				{
-					var state = app.calendar.getState();
-					if (state && typeof state.owner !== 'undefined')
-					{
-						var sortedArr = sortable.sortable('toArray', {attribute:"data-owner"});
-						// No duplicates, no empties
-						sortedArr = sortedArr.filter(function(value, index, self) {
-							return value !== '' && self.indexOf(value) === index;
-						});
+		let daily = document.querySelector('#calendar-view_view .calendar_calGridHeader > div');
+		let weekly = document.querySelector('#calendar-view_view tbody');
+		let sortable = state.view == 'day' ? daily : weekly;
 
-						var parent = null;
-						var children = [];
-						if(state.view == 'day')
-						{
-							// If in day view, the days need to be re-ordered, avoiding
-							// the current sort order
-							CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
-								var idx = sortedArr.indexOf(widget.options.owner.toString());
-								// Move the event holding div
-								widget.set_left((parseInt(widget.options.width) * idx) + 'px');
-								// Re-order the children, or it won't stay
-								parent = widget._parent;
-								children.splice(idx,0,widget);
-							},this,et2_calendar_daycol);
-							parent.day_widgets.sort(function(a,b) {
-								return children.indexOf(a) - children.indexOf(b);
-							});
-						}
-						else
-						{
+		let sortablejs = Sortable.create(sortable, {
+			ghostClass: 'srotable_cal_wk_ph',
+			draggable: state.view == 'day'? '.calendar_calDayColHeader' : '.view_row',
+			handle: state.view == 'day'? '.calendar_calToday' : '.calendar_calGridHeader',
+			animation: 100,
+			filter: state.view == 'day'? '.calendar_calTimeGridScroll' : '.calendar_calDayColHeader',
+			dataIdAttr: 'data-owner',
+			direction: state.view == 'day'? 'horizental' : 'vertical',
+			sort: state.owner.length > 1 && (
+				state.view == 'day' && state.owner.length < parseInt(''+egw.preference('day_consolidate','calendar')) ||
+				state.view == 'week' && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))), // enable/disable sort
+			onStart: function (event)
+			{
+				// Put owners into row IDs
+				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
+					if(widget.options.owner && !widget.disabled)
+					{
+						widget.div.parents('tr').attr('data-owner',widget.options.owner);
+					}
+					else
+					{
+						widget.div.parents('tr').removeAttr('data-owner');
+					}
+				},this,et2_calendar_timegrid);
+			},
+			onSort: function(event)
+			{
+				let state = app.calendar.getState();
+				if (state && typeof state.owner !== 'undefined')
+				{
+					let sortedArr = sortablejs.toArray();
+					// No duplicates, no empties
+					sortedArr = sortedArr.filter(function(value, index, self) {
+						return value !== '' && self.indexOf(value) === index && !isNaN(value);
+					});
+
+					let parent = null;
+					let children = [];
+					if(state.view == 'day')
+					{
+						// If in day view, the days need to be re-ordered, avoiding
+						// the current sort order
+						CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
+							let idx = sortedArr.indexOf(widget.options.owner.toString());
+							// Move the event holding div
+							widget.set_left((parseInt(widget.options.width) * idx) + 'px');
 							// Re-order the children, or it won't stay
-							CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
-								parent = widget._parent;
-								var idx = sortedArr.indexOf(widget.options.owner);
-								children.splice(idx,0,widget);
-								widget.resize();
-							},this,et2_calendar_timegrid);
-						}
-						parent._children.sort(function(a,b) {
+							parent = widget._parent;
+							children.splice(idx,0,widget);
+						},this,et2_calendar_daycol);
+						parent.day_widgets.sort(function(a,b) {
 							return children.indexOf(a) - children.indexOf(b);
 						});
-						// Directly update, since there is no other changes needed,
-						// and we don't want the current sort order applied
-						app.calendar.state.owner = sortedArr;
-						parent.options.owner = sortedArr;
 					}
+					else
+					{
+						// Re-order the children, or it won't stay
+						CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
+							parent = widget._parent;
+							let idx = sortedArr.indexOf(widget.options.owner);
+							children.splice(idx,0,widget);
+							widget.resize();
+						},this,et2_calendar_timegrid);
+					}
+					parent._children.sort(function(a,b) {
+						return children.indexOf(a) - children.indexOf(b);
+					});
+					// Directly update, since there is no other changes needed,
+					// and we don't want the current sort order applied
+					app.calendar.state.owner = sortedArr;
+					parent.options.owner = sortedArr;
 				}
-			});
-		}
-
-		// Enable or disable
-		if(state.owner.length > 1 && (
-			state.view == 'day' && state.owner.length < parseInt(''+egw.preference('day_consolidate','calendar')) ||
-			state.view == 'week' && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))
-		))
-		{
-			sortable.sortable('enable')
-				.sortable("refresh")
-				.disableSelection();
-			var options = {};
-			switch (state.view)
-			{
-				case "day":
-					options = {
-						placeholder:"srotable_cal_day_ph",
-						axis:"x",
-						handle: '> div:first',
-						helper( event, element)
-	{
-							var scroll = element.parentsUntil('.calendar_calTimeGrid').last().next();
-							var helper = jQuery(document.createElement('div'))
-								.append(element.clone())
-								.css('height',scroll.parent().css('height'))
-								.css('background-color','white')
-								.css('width', element.css('width'));
-							return helper;
-						}
-					};
-					sortable.sortable('option', options);
-					break;
-				case "week":
-					options = {
-						placeholder:"srotable_cal_wk_ph",
-						axis:"y",
-						handle: '.calendar_calGridHeader',
-						helper: 'clone'
-					};
-					sortable.sortable('option', options);
-					break;
 			}
-		}
-		else
-		{
-			sortable.sortable('disable');
-		}
+		});
 	}
 
 	/**
