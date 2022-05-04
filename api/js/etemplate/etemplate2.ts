@@ -681,22 +681,7 @@ export class etemplate2
 						// Automatically set focus to first visible input for popups
 						if(this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0)
 						{
-							const $input = jQuery('input:visible', this._DOMContainer)
-								// Date fields open the calendar popup on focus
-								.not('.et2_date')
-								.filter(function()
-								{
-									// Skip inputs that are out of tab ordering
-									const $this = jQuery(this);
-									return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-								}).first();
-
-							// mobile device, focus only if the field is empty (usually means new entry)
-							// should focus always for non-mobile one
-							if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
-							{
-								$input.focus();
-							}
+							this.focusOnFirstInput();
 						}
 
 						// Tell others about it
@@ -808,6 +793,26 @@ export class etemplate2
 				_load.apply(this, []);
 			}, this);
 		});
+	}
+
+	public focusOnFirstInput()
+	{
+		const $input = jQuery('input:visible', this.DOMContainer)
+			// Date fields open the calendar popup on focus
+			.not('.et2_date')
+			.filter(function()
+			{
+				// Skip inputs that are out of tab ordering
+				const $this = jQuery(this);
+				return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+			}).first();
+
+		// mobile device, focus only if the field is empty (usually means new entry)
+		// should focus always for non-mobile one
+		if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
+		{
+			$input.focus();
+		}
 	}
 
 	/**
