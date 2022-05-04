@@ -276,7 +276,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			{
 				ed.on('init', function()
 				{
-					this.focus();
 					this.execCommand('fontName', false, egw.preference('rte_font', 'common'));
 					this.execCommand('fontSize', false, <string><unknown>egw.preference('rte_font_size', 'common')
 							+ egw.preference('rte_font_unit', 'common'));
