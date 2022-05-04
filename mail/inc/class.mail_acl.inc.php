@@ -117,7 +117,7 @@ class mail_acl
 		$tmpl = new Etemplate('mail.acl');
 		if (!is_array($content))
 		{
-			$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+			$acc_id = $_GET['acc_id'] ?? $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 			if (isset($_GET['account_id']) && !isset($GLOBALS['egw_info']['user']['apps']['admin']))
 			{
 				Framework::window_close(lang('Permission denied'));
@@ -154,25 +154,27 @@ class mail_acl
 			if (!empty($mailbox))
 			{
 				$content['mailbox'] = $mailbox;
-				$acl = (array)$this->retrieve_acl($mailbox, $msg);
-				if ($acl[0] === FALSE)
+				if (($acls = $this->retrieve_acl($mailbox, $msg)) === false)
 				{
 					Api\Framework::window_close($msg);
 				}
 				$n = 1;
-				foreach ($acl as $key => $value)
+				foreach ($acls as $key => $acl)
 				{
-					$parts = array_values((array)$value);
-					$virtuals = array_pop($parts);
-					$rights = array_shift($parts);
-
-					foreach ($rights as $right)
+					$rights = [];
+					foreach ($acl->getIterator() as $right)
 					{
 						$content['grid'][$n]['acl_'. $right] = true;
+						$rights[] = $right;
 					}
-					$virtualD = array('e','t');
-					$content['grid'][$n]['acl_c'] = array_diff($virtuals['c'] ?? [], array_intersect($rights, $virtuals['c'] ?? []))? false: true; //c=kx more information rfc4314, Obsolete Rights
-					$content['grid'][$n]['acl_d'] = array_diff($virtualD,array_intersect($rights,$virtuals['d'] ?? []))? false: true; //d=et more information rfc4314, Obsolete Rights
+					$virtual = $acl->getString(Horde_Imap_Client_Data_Acl::RFC_2086);
+					foreach(['c', 'd'] as $right)
+					{
+						if (strpos($virtual, $right) !== false)
+						{
+							$content['grid'][$n]['acl_'. $right] = true;
+						}
+					}
 
 					sort($rights);
 					$acl_abbrvs = implode('',$rights);
@@ -351,11 +353,11 @@ class mail_acl
 			unset($value['acl']);
 
 			$options = array();
-			foreach (array_keys($value) as $key)
+			foreach ($value as $key => $set)
 			{
-				if ($value[$key] == true)
+				if ($set)
 				{
-					$right = explode("acl_" ,$key);
+					$right = explode("acl_", $key);
 					if ($right[1] === 'c') $right[1] = 'kx'; // c = kx , rfc 4314
 					if ($right[1] === 'd') $right[1] = 'et'; // d = et , rfc 4314
 					$options['rights'] .=  $right[1];
@@ -401,12 +403,12 @@ class mail_acl
      * @param string $mailbox
      * @param string &$msg
 	 *
-     * @return Array | Boolean returns array of acl or false on failure
+     * @return Horde_Imap_Client_Data_Acl[]|false returns array of acl or false on failure
      * @todo rights 'c' and 'd' should be fixed
 	 */
 	function retrieve_acl ($mailbox, &$msg)
 	{
-		if (($acl = $this->getACL($mailbox)))
+		if (($acl = $this->getACL($mailbox)) !== false)
 		 {
 			$msg = lang('ACL rights retrieved successfully');
 			return $acl;
@@ -563,7 +565,7 @@ class mail_acl
 	 * Get ACL rights of a folder from an account
 	 *
 	 * @param String $mailbox folder name that needs to be read
-	 * @return Array|Boolean FALSE in case of any exceptions and returns Array in case of success,
+	 * @return Horde_Imap_Client_Data_Acl[]|false FALSE in case of any exceptions and returns Array in case of success,
 	 */
 	function getACL ($mailbox)
 	{
