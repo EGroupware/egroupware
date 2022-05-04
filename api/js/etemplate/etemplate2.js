@@ -483,18 +483,7 @@ var etemplate2 = /** @class */ (function () {
                     this.resize();
                     // Automatically set focus to first visible input for popups
                     if (this._widgetContainer._egw.is_popup() && jQuery('[autofocus]', this._DOMContainer).focus().length == 0) {
-                        var $input = jQuery('input:visible', this._DOMContainer)
-                            // Date fields open the calendar popup on focus
-                            .not('.et2_date')
-                            .filter(function () {
-                            // Skip inputs that are out of tab ordering
-                            var $this = jQuery(this);
-                            return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
-                        }).first();
-                        // mobile device, focus only if the field is empty (usually means new entry)
-                        // should focus always for non-mobile one
-                        if (egwIsMobile() && $input.val() == "" || !egwIsMobile())
-                            $input.focus();
+                        this.focusOnFirstInput();
                     }
                     // Tell others about it
                     if (typeof _callback == "function") {
@@ -570,6 +559,21 @@ var etemplate2 = /** @class */ (function () {
             // widget container - do this here because file is loaded async
             this._widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
         }, this);
+    };
+    etemplate2.prototype.focusOnFirstInput = function () {
+        var $input = jQuery('input:visible', this.DOMContainer)
+            // Date fields open the calendar popup on focus
+            .not('.et2_date')
+            .filter(function () {
+            // Skip inputs that are out of tab ordering
+            var $this = jQuery(this);
+            return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+        }).first();
+        // mobile device, focus only if the field is empty (usually means new entry)
+        // should focus always for non-mobile one
+        if (egwIsMobile() && $input.val() == "" || !egwIsMobile()) {
+            $input.focus();
+        }
     };
     /**
      * Check if template contains any dirty (unsaved) content
