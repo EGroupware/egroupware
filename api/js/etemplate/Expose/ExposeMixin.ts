@@ -11,7 +11,7 @@
 
 // Don't import this more than once
 import "../../../../node_modules/blueimp-gallery/js/blueimp-gallery.min";
-import {LitElement} from "@lion/core";
+import {html, LitElement, render} from "@lion/core";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
@@ -90,6 +90,12 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		connectedCallback()
 		{
 			super.connectedCallback();
+
+			if(document.body.querySelector('#blueimp-gallery') == null)
+			{
+				// Create Gallery DOM structure
+				render(this._galleryTemplate(), document.body);
+			}
 		}
 
 		disconnectedCallback()
@@ -164,7 +170,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			if(!this.exposeValue || typeof this.exposeValue.mime != 'string' || (!this.exposeValue.mime.match(MIME_REGEX, 'ig')
 				&& (!fe || fe.mime && !fe.mime[this.exposeValue.mime])) || typeof this.exposeValue.download_url == 'undefined')
 			{
-				this.removeEventListener("click", this.expose_onclick);
 				this.classList.remove("et2_clickable");
 				if(this._gallery)
 				{
@@ -175,10 +180,22 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 			if(!this._gallery)
 			{
-				this.addEventListener("click", this.expose_onclick);
 				this.classList.add("et2_clickable");
-				this.addEventListener("click", this.expose_onclick);
+
+				// Normal click handler will handle it
 			}
+		}
+
+		/**
+		 * Just override the normal click handler
+		 *
+		 * @param {MouseEvent} _ev
+		 * @returns {boolean}
+		 */
+		_handleClick(_ev : MouseEvent) : boolean
+		{
+			this.expose_onclick(_ev)
+			return true;
 		}
 
 		get expose_options()
@@ -326,6 +343,22 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 		}
 
+		protected _galleryTemplate()
+		{
+			return html`
+                <div id="blueimp-gallery" class="blueimp-gallery">
+                    <div class="slides"></div>
+                    <h3 class="title"></h3>
+                    <a class="prev">‹</a>
+                    <a class="next">›</a>
+                    <a title="' + egw().lang('Close') + '" class="close">×</a><a
+                        title="' + egw().lang('Play/Pause') + '" class="play-pause"></a><a
+                        title="' + egw().lang('Fullscreen') + '" class="fullscreen"></a><a
+                        title="' + egw().lang('Save') + '" class="download"></a>
+                    <ol class="indicator"></ol>
+                </div>
+			`;
+		}
 
 		/**
 		 * See if the current widget is in a nextmatch, as this allows us to display
@@ -360,9 +393,13 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		private _init_blueimp_gallery(event, _value)
 		{
+			// Image list
 			let mediaContent = [];
+
+			// We'll customise default options
+			let options = this.expose_options;
+
 			let nm = this.find_nextmatch(this);
-			let current_index = 0;
 			if(nm && !this._is_target_indepth(nm, event.target))
 			{
 				// Get the row that was clicked, find its index in the list
@@ -375,7 +412,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				{
 					if('filemanager::' + mediaContent[i].path == current_entry.uid)
 					{
-						current_index = i;
+						options.index = i;
 						break;
 					}
 				}
@@ -393,11 +430,15 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// @ts-ignore
 				mediaContent = this.getMedia(_value);
 				// Do not show thumbnail indicator on single expose view
-				this.expose_options.thumbnailIndicators = false;
+				options.thumbnailIndicators = (mediaContent.length > 1);
+				if(!options.thumbnailIndicators)
+				{
+					options.indicatorContainer = 'nope';
+				}
 			}
 
 			// @ts-ignore
-			this._gallery = new blueimp.Gallery(mediaContent, Object.assign(this.expose_options, {index: current_index}));
+			this._gallery = new blueimp.Gallery(mediaContent, options);
 		}
 
 		/**

@@ -74,12 +74,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			 * widthxheight, if popup should be used, eg. 640x480
 			 */
 			extra_link_popup: {type: String},
-
-			/**
-			 * Expose view
-			 * Clicking on an image with href value would popup an expose view, and will show image referenced by href.
-			 */
-			expose_view: {type: Boolean},
 		}
 	}
 
@@ -103,12 +97,13 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		this.extra_link_target = "_self";
 		this.extra_link_popup = "";
 		this.expose_view = false;
+
+		this._handleClick = this._handleClick.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this._handleClick = this._handleClick.bind(this);
 	}
 
 	_imageTemplate()
