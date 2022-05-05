@@ -39,17 +39,19 @@
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[class]">
-					<image id="${row}[picture_thumb]" width="100%" expose_view="true" height="auto" href="$row_cont[picture_original]" src="${row}[picture_thumb]" />
-					<vbox>
-						<description id="${row}[name]" no_lang="1"/>
-						<description id="${row}[short_description]" no_lang="1"/>
-					</vbox>
-					<vbox align="left">
-						<description align="left" id="${row}[useable]" no_lang="1"/>
-						<description align="left" id="${row}[quantity]" no_lang="1"/>
-						<description align="left" id="${row}[bookable]" no_lang="1"/>
-					</vbox>
-					<vbox>
+                    <et2-image-expose id="${row}[picture_thumb]" label="$row_cont[name]"
+                                      href="$row_cont[picture_original]"
+                                      src="$row_cont[picture_thumb]"/>
+                    <vbox>
+                        <description id="${row}[name]" no_lang="1"/>
+                        <description id="${row}[short_description]" no_lang="1"/>
+                    </vbox>
+                    <vbox align="left">
+                        <description align="left" id="${row}[useable]" no_lang="1"/>
+                        <description align="left" id="${row}[quantity]" no_lang="1"/>
+                        <description align="left" id="${row}[bookable]" no_lang="1"/>
+                    </vbox>
+                    <vbox>
 						<menulist>
 							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
 						</menulist>
@@ -108,20 +110,20 @@
 			</vbox>
 		</box>
 		<styles>
-			.image16 img {
- max-width: 16px;
- max-height: 16px;
-}
-div.action_popup[id] {
-	position: fixed;
-	top: 200px;
-	left: 450px;
-	width: 76ex;
-	z-index: 20000;
-	display: none;
-	border-collapse:collapse;
-	border-spacing:0px
-}
-		</styles>
+            .image16 img {
+            max-width: 16px;
+            max-height: 16px;
+            }
+            .action_popup[id] {
+            position: fixed;
+            top: 200px;
+            left: 450px;
+            width: 76ex;
+            z-index: 20000;
+            display: none;
+            border-collapse:collapse;
+            border-spacing:0px
+            }
+        </styles>
 	</template>
 </overlay>

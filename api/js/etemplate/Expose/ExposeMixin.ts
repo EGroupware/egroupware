@@ -28,10 +28,10 @@ const IMAGE_DEFAULT = {
 // For filtering to only show things we can handle
 const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
 	// IE only supports video/mp4 mime type
-				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/) :
-				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/);
+				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'ig') :
+				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'ig');
 
-const MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/);
+const MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/, 'ig');
 // open office document mime type currently supported by webodf editor
 const MIME_ODF_REGEX = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
 
@@ -48,14 +48,24 @@ export interface ExposeValue
 }
 
 /**
- * Data to show the slide
+ * Data to show a single slide
  */
 export interface MediaValue
 {
-	title : string,
+	// Label for the image, shown in top left
+	title? : string,
+
+	// URL to the large version of the image, or full version of file
 	href : string,
+
+	// Mime type
 	type : string,
-	thumbnail? : string
+
+	// Smaller image (api/thumbnail.php) to show in indicator
+	thumbnail? : string,
+
+	// Url to download the file
+	download_href? : string
 }
 
 export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
@@ -167,7 +177,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			let fe = egw_get_file_editor_prefered_mimes();
 
 			// If the media type is not supported do not bind the click handler
-			if(!this.exposeValue || typeof this.exposeValue.mime != 'string' || (!this.exposeValue.mime.match(MIME_REGEX, 'ig')
+			if(!this.exposeValue || typeof this.exposeValue.mime != 'string' || (!this.exposeValue.mime.match(MIME_REGEX)
 				&& (!fe || fe.mime && !fe.mime[this.exposeValue.mime])) || typeof this.exposeValue.download_url == 'undefined')
 			{
 				this.classList.remove("et2_clickable");
@@ -579,7 +589,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				{"button_id": 1, "text": egw.lang('close'), id: '1', image: 'cancel', default: true}
 			];
 
-			// @ts-ignore
 			let mediaContent = this.getMedia(_value)[0];
 			let dialog = new Et2Dialog();
 			dialog.transformAttributes({
@@ -609,6 +618,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				template: egw.webserverUrl + '/api/templates/default/audio_player.xet',
 				dialogClass: "audio_player"
 			});
+			// @ts-ignore
 			document.body.appendChild(dialog);
 		}
 
@@ -652,11 +662,11 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			// @ts-ignore Wants an argument, but does not require it
 			let fe = egw_get_file_editor_prefered_mimes();
 
-			if(this.exposeValue.mime.match(MIME_REGEX, 'ig') && !this.exposeValue.mime.match(MIME_AUDIO_REGEX, 'ig'))
+			if(this.exposeValue.mime.match(MIME_REGEX) && !this.exposeValue.mime.match(MIME_AUDIO_REGEX))
 			{
 				this._init_blueimp_gallery(event, this.exposeValue);
 			}
-			else if(this.exposeValue.mime.match(MIME_AUDIO_REGEX, 'ig'))
+			else if(this.exposeValue.mime.match(MIME_AUDIO_REGEX))
 			{
 				this._audio_player(this.exposeValue);
 			}
@@ -827,7 +837,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// Remove applied mime filter
 				nm.applyFilters({col_filter: {mime: ''}});
 			}
-
 		}
 
 		protected expose_onclosed() {}

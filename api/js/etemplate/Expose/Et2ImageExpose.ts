@@ -8,6 +8,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  * Set src property for the thumbnail / small image
  * Set href property to the URL of the full / large image
  */
+//@ts-ignore Something not right with types & inheritance according to TypeScript
 export class Et2ImageExpose extends ExposeMixin(Et2Image) implements et2_IDetachedDOM
 {
 	constructor()
@@ -41,6 +42,7 @@ export class Et2ImageExpose extends ExposeMixin(Et2Image) implements et2_IDetach
 	getMedia(_value) : MediaValue[]
 	{
 		let media = super.getMedia(_value);
+		media[0].title = this.label;
 		media[0].thumbnail = this.src;
 
 		return media;
