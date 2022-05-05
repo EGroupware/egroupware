@@ -965,7 +965,7 @@ export class CalendarApp extends EgwApp
 			direction: state.view == 'day'? 'horizental' : 'vertical',
 			sort: state.owner.length > 1 && (
 				state.view == 'day' && state.owner.length < parseInt(''+egw.preference('day_consolidate','calendar')) ||
-				state.view == 'week' && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))), // enable/disable sort
+				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt(''+egw.preference('week_consolidate','calendar'))), // enable/disable sort
 			onStart: function (event)
 			{
 				// Put owners into row IDs
