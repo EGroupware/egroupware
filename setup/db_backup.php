@@ -42,8 +42,12 @@ if (!empty($_POST['download']))
 {
 	$file = key($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
-	while (@ob_end_clean()) {}      // end all active output buffering
-	ini_set('zlib.output_compression',0);   // switch off zlib.output_compression, as this would limit downloads in size to memory_limit
+
+	// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
+	ini_set('zlib.output_compression',0);
+	// SECOND: end all active output buffering
+	while(ob_end_clean()) {}
+
 	Api\Header\Content::type(basename($file));
 	readfile($file);
 	exit;
