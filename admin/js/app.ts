@@ -110,7 +110,7 @@ class AdminApp extends EgwApp
 					var self = this;
 					jQuery(iframe.getDOMNode()).off('load.admin')
 						.bind('load.admin', function(){
-							if (this.contentDocument.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
+							if (this.contentDocument?.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
 							{
 								this.contentDocument.location.href = 'about:blank';	// stops redirect from admin/index.php
 								self.load();	// load own top-level index aka user-list
@@ -155,7 +155,7 @@ class AdminApp extends EgwApp
 	 */
 	load(_url? : string)
 	{
-		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href
+		if (this.iframe && this.iframe.getDOMNode().contentDocument?.location.href
 			.match(/menuaction=admin.admin_statistics.submit.+required=true/) && ( !_url ||
 			!_url.match(/statistics=(postpone|canceled|submitted)/)))
 		{
@@ -715,7 +715,9 @@ class AdminApp extends EgwApp
 		if(content.acl_location)
 		{
 			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
-			this.egw.link_title('api-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
+			this.egw.link_title('api-accounts', content.acl_location, true).then(title => {
+				sel_options.acl_location[content.acl_location] = title;
+			});
 		}
 
 		var dialog_options = {
