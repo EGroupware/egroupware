@@ -28,6 +28,7 @@ import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
 import {et2_calendar_view} from "./et2_widget_view";
 import flatpickr from "flatpickr";
 import {formatDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {ColorTranslator} from "colortranslator";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a single days
@@ -856,7 +857,7 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 		{
 			// Avoid white, which is hard to see
 			// Use border-bottom-color, Firefox doesn't give a value with border-color
-			const color = jQuery.Color(event.div.css('background-color')).toString() !== jQuery.Color('white').toString() ?
+			const color = (new ColorTranslator(event.div.css('background-color'))).RGB !== 'rgb(255,255,255)' ?
 				event.div.css('background-color') : event.div.css('border-bottom-color');
 			if(color !== 'rgba(0, 0, 0, 0)')
 			{

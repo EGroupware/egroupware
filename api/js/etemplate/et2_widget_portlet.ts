@@ -28,7 +28,7 @@ import {
 	egwActionObjectInterface
 } from "../egw_action/egw_action.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
-
+import {ColorTranslator} from 'colortranslator';
 /**
  * Class which implements the UI of a Portlet
  *
@@ -399,7 +399,7 @@ export class et2_portlet extends et2_valueWidget
 	{
 		this.options.color = color;
 		this.header.css("backgroundColor", color);
-		this.header.css('color', jQuery.Color(this.header.css("backgroundColor")).lightness() > 0.5 ? 'black':'white');
+		this.header.css('color', (new ColorTranslator(this.header.css("backgroundColor"))).L > 50 ? 'black':'white');
 		this.content.css("backgroundColor", color);
 	}
 

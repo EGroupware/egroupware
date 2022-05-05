@@ -27,6 +27,7 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {ColorTranslator} from "colortranslator";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view
@@ -375,11 +376,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						.append('<span class="calendar_calEventTitle">' + title + '</span>');
 
 				// Colors - don't make them transparent if there is no color
-				// @ts-ignore
-				if (jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div, 'background-color').toRgbaString())
+				const bg_color = new ColorTranslator(this.div.css('background-color'));
+				if (bg_color.RGBA != 'rgb(0,0,0,0)')
 				{
 						// Most statuses use colored borders
-						this.div.css('border-color', this.div.css('background-color'));
+						this.div.css('border-color', bg_color.RGBA);
 				}
 
 				this.icons.appendTo(this.title)
