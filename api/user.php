@@ -31,6 +31,8 @@ $GLOBALS['egw']->session->commit_session();
 
 // use an etag over config and link-registry
 $preferences['common'] = $GLOBALS['egw_info']['user']['preferences']['common'];
+// send users timezone offset to client-side
+$preferences['common']['timezoneoffset'] = -Api\DateTime::$user_timezone->getOffset(new Api\DateTime('now')) / 60;
 foreach(['addressbook', 'notifications', 'status', 'filemanager'] as $app)
 {
 	if (!empty($GLOBALS['egw_info']['user']['apps'][$app]))

@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration)?|textbox|textarea|button|colorpicker|description|image|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|textbox|textarea|button|colorpicker|description|image|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
@@ -92,7 +92,11 @@ function send_template()
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
 		if (preg_match('/<overlay[^>]* legacy="true"/', $str))
 		{
-			$str = preg_replace('#<date(-time[^\s]*|-duration)?\s([^>]+)/>#', '<et2-date$1 $2></et2-date$1>', $str);
+			$str = preg_replace_callback('#<date(-time[^\s]*|-duration|-since)?\s([^>]+)/>#', static function($matches)
+			{
+				if ($matches[1] === 'date-time_today') $matches[1] = 'date-time-today';
+				return "<et2-date$matches[1] $matches[2]></et2-date$matches[1]>";
+			}, $str);
 		}
 		else
 		{
@@ -211,6 +215,7 @@ function send_template()
 			}, $str);
 
 			$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
+				if ($matches[3] === 'date-time_today') $matches[3] = 'date-time-today';
 				return '<' . $matches[2] . 'et2-' . $matches[3] .
 					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
 					(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .

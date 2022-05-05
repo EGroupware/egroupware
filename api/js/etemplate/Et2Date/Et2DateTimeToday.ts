@@ -12,7 +12,7 @@ import {Et2DateReadonly} from "./Et2DateReadonly";
 
 /**
  * Widget displays date/time with different formatting relative to today
- * If the date is today, we show just the time.  Otherwise, full date + time.
+ * If the date is today, we show just the time, otherwise just the date.
  */
 export class Et2DateTimeToday extends Et2DateReadonly
 {
@@ -39,14 +39,14 @@ export class Et2DateTimeToday extends Et2DateReadonly
 		{
 			display = formatTime(date);
 		}
-		// Before today - date and time
+		// Before today - just the date
 		else
 		{
-			display = formatDateTime(date);
+			display = formatDate(date);
 		}
 		return display;
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
-customElements.define("et2-date-time_today", Et2DateTimeToday);
+customElements.define("et2-date-time-today", Et2DateTimeToday);

@@ -37,7 +37,7 @@ const formatDate = function(date : Date, options = {units: "YmdHis"})
 		's': 1
 	};
 	var d = new Date();
-	var diff = Math.round(d.valueOf() / 1000) - Math.round(date.valueOf() / 1000);
+	var diff = Math.round(d.valueOf() / 1000) - Math.round(date.valueOf() / 1000 + egw.getTimezoneOffset() * 60);
 	let display = '';
 
 	// limit units used to display

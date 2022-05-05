@@ -36,7 +36,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			.replace("m","mm")
 			.replace("M", "M")
 			.replace('H', 'hh')
-			.replace('i', 'mm')	// datepicker uses mm for month and minutes, depending where in format it's written!
+			.replace('i', 'mm')	// datepicker uses mm for month and minutes, depending on where in format it's written!
 			.replace('s', 'ss');
 	}
 
@@ -77,11 +77,21 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			return dateTimeFormat(_php_format);
 		},
-
+		/**
+		 * Get timezone offset of user in seconds
+		 *
+		 * If browser / OS is configured correct, identical to: (new Date()).getTimezoneOffset()
+		 *
+		 * @return {number} offset to UTC in seconds
+		 */
+		getTimezoneOffset: function() {
+			return isNaN(egw.preference('timezoneoffset')) ? (new Date()).getTimezoneOffset() : parseInt(egw.preference('timezoneoffset'));
+		},
 		/**
 		 * Calculate the start of the week, according to user's preference
 		 *
 		 * @param {string} date
+		 * @return {Date}
 		 */
 		week_start: function(date) {
 			var d = new Date(date);

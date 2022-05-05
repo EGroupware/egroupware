@@ -674,6 +674,32 @@ declare interface IegwGlobal
 	 * @param {Window|String} closed Window that was closed, or its name
 	 */
 	windowClosed(appname : string, closed : Window|string) : void;
+
+	/**
+	 * implemented in egw_calendar.js
+	 */
+	/**
+	 * transform PHP date/time-format to jQuery date/time-format
+	 *
+	 * @param {string} _php_format
+	 * @returns {string}
+	 */
+	dateTimeFormat(_php_format : string) : string;
+	/**
+	 * Get timezone offset of user in seconds
+	 *
+	 * If browser / OS is configured correct, identical to: (new Date()).getTimezoneOffset()
+	 *
+	 * @return {number} offset to UTC in seconds
+	 */
+	getTimezoneOffset() : number;
+	/**
+	 * Calculate the start of the week, according to user's preference
+	 *
+	 * @param {string} date
+	 * @return {Date}
+	 */
+	week_start(date : string) : Date;
 }
 
 declare class JsonRequest
