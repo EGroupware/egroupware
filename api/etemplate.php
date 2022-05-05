@@ -87,6 +87,10 @@ function send_template()
 				) . '>' . $matches[2] . "</$tag>";
 		}, $str);
 
+		// modify <(image|description) expose_view="true" --> <et2-*-expose
+		$str = preg_replace('/<(image|description)\s([^><]*)expose_view="true"\s([^><]*)\\/>/',
+			'<et2-$1-expose $2 $3></et2-$1-expose>', $str);
+
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components

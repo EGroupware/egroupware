@@ -96,7 +96,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		this.label = "";
 		this.extra_link_target = "_self";
 		this.extra_link_popup = "";
-		this.expose_view = false;
 
 		this._handleClick = this._handleClick.bind(this);
 	}
