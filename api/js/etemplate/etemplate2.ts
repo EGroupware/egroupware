@@ -38,6 +38,7 @@ import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
 import './Expose/Et2ImageExpose';
+import './Expose/Et2DescriptionExpose';
 import './Et2Image/Et2Image';
 import './Et2Select/Et2Select';
 import './Et2Select/Et2SelectAccount';

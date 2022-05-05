@@ -72,8 +72,25 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 {
 	return class extends superclass
 	{
+		static get properties()
+		{
+			return {
+				...super.properties,
+
+				/**
+				 * Function to extract an image list
+				 *
+				 * "Normally" we'll try to pull a list of images from the nextmatch or show just the current widget,
+				 * but if you know better you can provide a method to get the list.
+				 */
+				mediaContentFunction: {type: Function},
+			}
+		}
+
 		// @ts-ignore
 		private _gallery : blueimp.Gallery;
+
+		private __mediaContentFunction : Function | null;
 
 		constructor(...args : any[])
 		{
@@ -111,7 +128,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
-			this.removeEventListener("click", this.expose_onclick);
 		}
 
 		/**
@@ -137,18 +153,38 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		 */
 		getMedia(_value) : MediaValue[]
 		{
-			let base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
 			let mediaContent = [];
 			if(_value)
 			{
 				mediaContent = [{
 					title: _value.label,
-					href: _value.download_url ? base_url + _value.download_url : base_url + _value.path,
+					href: _value.download_url ? this._processUrl(_value.download_url) : this._processUrl(_value.path),
 					type: _value.mime || (_value.type ? _value.type + "/*" : "")
 				}];
-				mediaContent[0].thumbnail = _value.thumbnail ? (base_url + _value.thumbnail) : mediaContent[0].href;
+				if(this.isExposable())
+				{
+					mediaContent[0].thumbnail = _value.thumbnail ? this._processUrl(_value.thumbnail) : mediaContent[0].href;
+				}
+				else
+				{
+					let fe = egw_get_file_editor_prefered_mimes(_value.mime);
+					if(fe && fe.mime[_value.mime] && fe.mime[_value.mime].favIconUrl)
+					{
+						mediaContent[0].thumbnail = fe.mime[_value.mime].favIconUrl;
+					}
+				}
 			}
 			return mediaContent;
+		}
+
+		protected _processUrl(url)
+		{
+			let base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
+			if(base_url && base_url != '/' && url.indexOf(base_url) != 0)
+			{
+				url = base_url + url;
+			}
+			return url;
 		}
 
 		/**
@@ -173,12 +209,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		 */
 		protected _bindGallery()
 		{
-			//@ts-ignore Expects a parameter, but not actually required
-			let fe = egw_get_file_editor_prefered_mimes();
-
 			// If the media type is not supported do not bind the click handler
-			if(!this.exposeValue || typeof this.exposeValue.mime != 'string' || (!this.exposeValue.mime.match(MIME_REGEX)
-				&& (!fe || fe.mime && !fe.mime[this.exposeValue.mime])) || typeof this.exposeValue.download_url == 'undefined')
+			if(!this.isExposable())
 			{
 				this.classList.remove("et2_clickable");
 				if(this._gallery)
@@ -196,6 +228,19 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 		}
 
+		public isExposable() : boolean
+		{
+			if(!this.exposeValue || typeof this.exposeValue.mime !== "string")
+			{
+				return false
+			}
+			if(this.exposeValue.mime.match(MIME_REGEX) || this.exposeValue.mime.match(MIME_AUDIO_REGEX))
+			{
+				return true;
+			}
+			return false;
+		}
+
 		/**
 		 * Just override the normal click handler
 		 *
@@ -204,8 +249,11 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		 */
 		_handleClick(_ev : MouseEvent) : boolean
 		{
-			this.expose_onclick(_ev)
-			return true;
+			if((!this.isExposable() || this.expose_onclick(_ev)) && typeof super._handleClick === "function")
+			{
+				return super._handleClick(_ev);
+			}
+			return false;
 		}
 
 		get expose_options()
@@ -410,7 +458,11 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			let options = this.expose_options;
 
 			let nm = this.find_nextmatch(this);
-			if(nm && !this._is_target_indepth(nm, event.target))
+			if(typeof this.__mediaContentFunction == "function")
+			{
+				this.__mediaContentFunction(this);
+			}
+			else if(nm && !this._is_target_indepth(nm, event.target))
 			{
 				// Get the row that was clicked, find its index in the list
 				let current_entry = nm.controller.getRowByNode(event.target);
@@ -437,8 +489,24 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 			else
 			{
-				// @ts-ignore
-				mediaContent = this.getMedia(_value);
+				// Try for all exposable of the same type in the parent widget
+				try
+				{
+					this.getParent().getDOMNode().querySelectorAll(this.localName).forEach((exposable, index) =>
+					{
+						if(exposable === this)
+						{
+							options.index = index;
+						}
+						mediaContent.push(...exposable.getMedia(Object.assign({}, IMAGE_DEFAULT, exposable.exposeValue)));
+					});
+				}
+				catch(e)
+				{
+					// Well, that didn't work.  Just the one then.
+					// @ts-ignore
+					mediaContent = this.getMedia(_value);
+				}
 				// Do not show thumbnail indicator on single expose view
 				options.thumbnailIndicators = (mediaContent.length > 1);
 				if(!options.thumbnailIndicators)
@@ -652,23 +720,25 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		protected expose_onclick(event : MouseEvent)
 		{
-			event.stopImmediatePropagation();
 			// Do not trigger expose view if one of the operator keys are held
 			if(event.altKey || event.ctrlKey || event.shiftKey || event.metaKey)
 			{
 				return;
 			}
 
+			event.stopImmediatePropagation();
 			// @ts-ignore Wants an argument, but does not require it
 			let fe = egw_get_file_editor_prefered_mimes();
 
 			if(this.exposeValue.mime.match(MIME_REGEX) && !this.exposeValue.mime.match(MIME_AUDIO_REGEX))
 			{
 				this._init_blueimp_gallery(event, this.exposeValue);
+				return false;
 			}
 			else if(this.exposeValue.mime.match(MIME_AUDIO_REGEX))
 			{
 				this._audio_player(this.exposeValue);
+				return false;
 			}
 			else if(fe && fe.mime && fe.edit && fe.mime[this.exposeValue.mime])
 			{
@@ -677,8 +747,9 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 					path: this.exposeValue.path,
 					cd: 'no'	// needed to not reload framework in sharing
 				}), '', fe.edit_popup);
+				return false;
 			}
-
+			return true;
 		}
 
 		protected expose_onopen() {}
@@ -840,6 +911,5 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		}
 
 		protected expose_onclosed() {}
-
 	}
 }

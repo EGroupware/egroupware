@@ -144,19 +144,19 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 
 		// If there's a link, wrap that
-		if(this.href && this._value)
+		if(this.href && this.value)
 		{
-			render = this.wrapLink(this.href, this._value);
+			render = this.wrapLink(this.href, this.value);
 		}
 		// If we want to activate links inside, do that
-		else if(this.activate_links && this._value)
+		else if(this.activate_links && this.value)
 		{
-			render = this.getActivatedValue(this._value, this.href ? this.extra_link_target : '_blank');
+			render = this.getActivatedValue(this.value, this.href ? this.extra_link_target : '_blank');
 		}
 		// Just do the value
 		else
 		{
-			render = html`${this._value}`;
+			render = html`${this.value}`;
 		}
 		return render;
 	}
@@ -185,11 +185,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		// call super to get the onclick handling running
 		super._handleClick(_ev);
 
-		if(this.expose_view && typeof this.mime != 'undefined' && this.mime_regexp && this.mime.match(this.mime_regexp, 'ig'))
-		{
-			this._init_blueimp_gallery(_ev, this.href);
-		}
-		else if(this.mime_data || this.href)
+		if(this.mime_data || this.href)
 		{
 			egw(window).open_link(this.mime_data || this.href, this.extra_link_target, this.extra_link_popup, null, null, this.mime);
 		}
