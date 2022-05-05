@@ -246,7 +246,6 @@ label.et2_label.et2_label_empty > * {
 #msg,
 .message {
     color: red;
-    font-style: italic;
 }
 
 input.et2_url {
@@ -2025,33 +2024,27 @@ table.et2_grid tbody.ui-sortable:not(.ui-sortable-disabled) > tr:not(.th) {
  * Message styles
  */
 /* Style used for a generic message (such as success messages or validation errors) */
-div.message {
+div.message, lion-validation-feedback[type] {
     display: block;
-    border: 1px solid gray;
-    padding: 3px 3px 3px 22px;
-    margin: 5px 0px 5px 0px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-repeat: no-repeat;
-    background-position: 3px center;
+    border: 1px solid;
+    border-color: var(--primary-color, gray);
+    background-color: white;
+    padding: 5px 1ex;
+    margin: 0px;
     clear: left;
     max-width: 500px;
 }
 
-div.message.floating {
-    display: inline-block;
-    margin: 0px 5px 0px 5px;
+div.message.floating, lion-validation-feedback[type] {
+    position: absolute;
+    margin: 0px;
+    z-index: 1;
 }
 
-.message.validation_error {
+.message.validation_error, lion-validation-feedback[type="error"] {
     color: #a93030;
-    font-style: italic;
-    background-color: #f3d4d0;
     border-color: #a93030;
-    background-image: url(images/error.png);
     background-repeat: no-repeat;
-    padding-left: 20px;
 }
 
 .message.success {
