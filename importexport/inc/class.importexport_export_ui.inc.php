@@ -446,6 +446,11 @@ class importexport_export_ui {
 		$appname = $_GET['_appname'];
 		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
 
+		// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
+		ini_set('zlib.output_compression',0);
+		// SECOND: end all active output buffering
+		while(ob_end_clean()) {}
+
 		// Get charset
 		$charset = Api\Cache::getSession('importexport', $tmpfname);
 
