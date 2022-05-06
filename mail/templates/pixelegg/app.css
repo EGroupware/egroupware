@@ -946,12 +946,6 @@ div#mail-index_nm.splitter-pane {
 #mail-index_mailSplitter .splitter-bar-horizontal {
   background: white;
 }
-#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke:first-child > .tox-tbtn__select-label {
-  width: 6px;
-}
-#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
-  width: 3em;
-}
 #calendar-meeting table.et2_grid.meetingRequest td {
   padding-left: 8px !important;
 }
