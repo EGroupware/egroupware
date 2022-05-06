@@ -59,6 +59,7 @@ import './Et2Url/Et2UrlPhoneReadonly';
 import './Et2Url/Et2UrlFax';
 import './Et2Url/Et2UrlFaxReadonly';
 import "./Layout/Et2Split/Et2Split";
+import "./Vfs/Et2VfsMime";
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle

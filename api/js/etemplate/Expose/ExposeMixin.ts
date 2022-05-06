@@ -45,6 +45,8 @@ export interface ExposeValue
 	path : any;
 	mime : string,
 	download_url? : string
+	// File modification time
+	mtime? : number
 }
 
 /**
@@ -727,8 +729,6 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 
 			event.stopImmediatePropagation();
-			// @ts-ignore Wants an argument, but does not require it
-			let fe = egw_get_file_editor_prefered_mimes();
 
 			if(this.exposeValue.mime.match(MIME_REGEX) && !this.exposeValue.mime.match(MIME_AUDIO_REGEX))
 			{
@@ -740,15 +740,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				this._audio_player(this.exposeValue);
 				return false;
 			}
-			else if(fe && fe.mime && fe.edit && fe.mime[this.exposeValue.mime])
-			{
-				egw.open_link(egw.link('/index.php', {
-					menuaction: fe.edit.menuaction,
-					path: this.exposeValue.path,
-					cd: 'no'	// needed to not reload framework in sharing
-				}), '', fe.edit_popup);
-				return false;
-			}
+
 			return true;
 		}
 
