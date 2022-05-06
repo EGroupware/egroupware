@@ -115,11 +115,11 @@ function usage($err=null)
 
 $bins = array(
 	'php'      => PHP_BINARY,
-	'git'      => '/usr/bin/git',
-	'composer' => ['/usr/bin/composer', '/usr/bin/composer.phar'],
+	'git'      => ['/usr/local/bin/git', '/usr/bin/git'],
+	'composer' => ['/usr/local/bin/composer', '/usr/bin/composer', '/usr/bin/composer.phar'],
 	// npm and grunt are no hard requirement and should be the last in the list!
-	'npm'      => '/usr/bin/npm',
-	'grunt'    => '/usr/bin/grunt',
+	'npm'      => ['/usr/local/bin/npm', '/usr/bin/npm'],
+	'grunt'    => [__DIR__.'/node_modules/.bin/grunt', '/usr/local/bin/grunt', '/usr/bin/grunt'],
 );
 
 // check if the necessary binaries are installed
