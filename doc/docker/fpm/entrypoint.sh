@@ -40,8 +40,10 @@ test -f /var/lib/egroupware/header.inc.php &&
 	chmod 600 /var/lib/egroupware/header.inc.php
 
 # add private CA so egroupware can validate your certificate to talk to Collabora or Rocket.Chat
-test -f /usr/local/share/ca-certificates/private-ca.crt &&
+test -f /usr/local/share/ca-certificates/private-ca.crt && {
 	update-ca-certificates
+	sed 's#;\?openssl.cafile.*#openssl.cafile = /etc/ssl/certs/ca-certificates.crt#g' -i /etc/php/$PHP_VERSION/fpm/php.ini
+}
 
 # write install-log in /var/lib/egroupware (only readable by root!)
 LOG=/var/lib/egroupware/egroupware-docker-install.log
