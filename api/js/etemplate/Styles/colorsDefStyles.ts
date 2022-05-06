@@ -23,8 +23,6 @@ export const colorsDefStyles = css`
 		
 		--btn-label-color: #000000;
 		
-		--input-border-color: #E6E6E6;
-		--input-text-color: #26537C;
 		
 		/****** Backgrounds *******/
 		--bg_color_0_gray : #FFFFFF;

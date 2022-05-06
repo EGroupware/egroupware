@@ -4058,7 +4058,7 @@ div#egwpopup_message {
 }
 #msg,
 .message {
-  color: red;
+  color: var(--error-color);
   font-style: italic;
   background: #FFFFFF;
 }

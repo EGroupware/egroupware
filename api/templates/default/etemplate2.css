@@ -3,20 +3,49 @@
  *
  * @version: $Id$
  */
+
 /**
- * Magic suggest / tag list widget
+ * Naming convention:
+ * --[block][--element][--modifier]-attribute
+ *
+ * Some system-wide variables
+ * These are logical (eg: error, active, highlight, header) not stylistic (red, grey)
+ * By defining them here they are available inside WebComponents as well, though any CSS defined here that
+ * applies to slotted elements takes precedence over what's in the WebComponent's style.
+ *
+ * For variables it is better to omit the block and element parts of the name.
+ * For example, --error-color is better than --message_wrapper--message--error-color because it can be used in
+ * more places (logically, no technical limitation on the variable).
+ * If a specific value is needed for some element, it is probably better to re-set
+ * the less specific variable rather than define a new variable:
+ * :root {
+ *   --error-color: pink;
+ *   --error-background-color: initial;
+ * }
+ * .nextmatch--header {
+ *   --error-color: fuchsia;
+ *   --error-background-color: black;
+ * }
+ * This will have any child elements under the block with nextmatch--header class use the more specific values, while
+ * letting us stick with one variable.
+ *
+ *
+ * @see http://getbem.com/naming/ for what inspired naming convention
  */
-/* These imports processed by framework */
-/*@import url("../../../vendor/egroupware/magicsuggest/magicsuggest.css");*/
-/*@import url("../../js/jquery/jquery-ui-timepicker-addon.css");*/
-/*@import url("../../js/jquery/blueimp/css/blueimp-gallery.min.css");*/
-/*@import url("../../js/dhtmlxtree/codebase/dhtmlxtree.css");*/
-/*@import url("../../js/egw_action/test/skins/dhtmlxmenu_egw.css");*/
-/*@import url("../../../vendor/bower-asset/diff2html/dist/diff2html.css");*/
-/*@import url("../../../vendor/bower-asset/cropper/dist/cropper.min.css");*/
-/*@import url("css/flags.css");*/
-/*@import url("css/htmlarea.css");*/
-/*@import url("def_tutorials.css");*/
+:root {
+    --primary-background-color: #4177a2;
+    --highlight-background-color: rgba(153, 204, 255, .4);
+
+    --label-color: #000000;
+
+    --input-border-color: #E6E6E6;
+    --input-text-color: #26537C;
+
+    --warning-color: rgba(255, 204, 0, .5);
+    --error-color: rgba(204, 0, 51, .5);
+
+}
+
 /**
  * Top level
  */
@@ -1937,7 +1966,7 @@ td.et2_required {
     -moz-border-radius: 0 4px 4px 0;
     -moz-box-shadow: 0 0 6px #DDDDDD;
     background-color: #FFFE36;
-    border: 1px solid #E1E16D;
+    border: 1px solid var(--error-color, #E1E16D);
     color: #000000;
     font-size: 11px;
     min-height: 15px;
@@ -2042,8 +2071,8 @@ div.message.floating, lion-validation-feedback[type] {
 }
 
 .message.validation_error, lion-validation-feedback[type="error"] {
-    color: #a93030;
-    border-color: #a93030;
+    color: var(--error-color);
+    border-color: var(--error-color);
     background-repeat: no-repeat;
 }
 
