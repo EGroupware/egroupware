@@ -10,8 +10,8 @@
 
 
 import {css, html, LitElement} from "@lion/core";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import {Et2Widget} from "../../Et2Widget/Et2Widget";
+import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 
 export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {

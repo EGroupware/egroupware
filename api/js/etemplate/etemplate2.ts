@@ -23,7 +23,7 @@ import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch
 import {et2_tabbox} from "./et2_widget_tabs";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
-import './Et2Box/Et2Box';
+import './Layout/Et2Box/Et2Box';
 import './Et2Button/Et2Button';
 import './Et2Date/Et2Date';
 import './Et2Date/Et2DateDuration';

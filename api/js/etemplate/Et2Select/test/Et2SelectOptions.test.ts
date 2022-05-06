@@ -1,5 +1,5 @@
 import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
-import {Et2Box} from "../../Et2Box/Et2Box";
+import {Et2Box} from "../../Layout/Et2Box/Et2Box";
 import {Et2Select, SelectOption} from "../Et2Select";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
