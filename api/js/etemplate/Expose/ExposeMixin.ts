@@ -15,6 +15,7 @@ import {html, LitElement, render} from "@lion/core";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
+import {egw,egw_get_file_editor_prefered_mimes} from "../../jsapi/egw_global";
 
 // Minimum data to qualify as an image and not cause errors
 const IMAGE_DEFAULT = {
@@ -883,7 +884,20 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		}
 
-		protected expose_onslidecomplete() {}
+		readonly URL_REGEXP = /url\("([^)]+)"\)/;
+		protected expose_onslidecomplete()
+		{
+			const indicators = this._gallery.container.find('ol.indicator')[0].querySelectorAll('li');
+			indicators.forEach(indicator => {
+				if (indicator.style.backgroundImage && indicator.style.backgroundImage !== 'none')
+				{
+					const img = indicator.ownerDocument.createElement('img');
+					img.src = indicator.style.backgroundImage.replace(this.URL_REGEXP, '$1');
+					indicator.appendChild(img);
+					indicator.style.backgroundImage = 'none';
+				}
+			});
+		}
 
 		protected expose_onclose()
 		{

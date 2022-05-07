@@ -12,9 +12,12 @@
 
 use EGroupware\Api;
 
-// add et2- prefix to following widgets/tags
+// add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
 const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|textbox|textarea|button|colorpicker|description|image|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
+
+// unconditional of legacy add et2- prefix to this widgets
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(vfs-mime)\s([^/>]+)/>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -90,6 +93,9 @@ function send_template()
 		// modify <(image|description) expose_view="true" --> <et2-*-expose
 		$str = preg_replace('/<(image|description)\s([^><]*)expose_view="true"\s([^><]*)\\/>/',
 			'<et2-$1-expose $2 $3></et2-$1-expose>', $str);
+
+		// modify <(vfs-mime|link-string|link-list) --> <et2-*
+		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>', $str);
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 

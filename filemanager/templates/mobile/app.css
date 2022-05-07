@@ -70,7 +70,8 @@ table.egwGridView_grid .tile .file_tile {
   display: block;
   max-width: 140px;
 }
-.tile .file_tile img.vfsMimeIcon {
+.tile .file_tile img.vfsMimeIcon,
+.tile .file_tile et2-vfs-mime > img {
   height: auto;
   width: auto;
   max-height: 48px;
@@ -97,7 +98,8 @@ table.egwGridView_grid .tile .file_tile {
 .tile .file_tile[data-mime^="image"]:hover .et2_label[id*=comment] {
   top: 30px;
 }
-#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon {
+#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon,
+#filemanager-index_nm .file_tile[data-mime^="image"] et2-vfs-mime > img {
   height: auto;
   max-height: 100px;
 }
