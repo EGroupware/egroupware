@@ -13,7 +13,7 @@
  * @author Andreas Stöckel
  */
 
-//import {EgwApp} from "./egw_app";
+import type {EgwApp} from "./egw_app";
 
 /**
  * Global egw object (for now created by the diverse JavaScript files) with a TypeScript interface
@@ -1348,7 +1348,7 @@ declare function egw_getWindowOuterHeight() : number;
  * @param {string} _mime current mime type
  * @returns {object|null} returns object of filemanager editor hook
  */
-declare function egw_get_file_editor_prefered_mimes(_mime : string) : {mime:string,edit:any,edit_popup?:any}|null;
+declare function egw_get_file_editor_prefered_mimes(_mime : string) : {mime:object, edit:any, edit_popup?:any}|null;
 
 // Youtube API golbal vars
 declare var YT : any;
