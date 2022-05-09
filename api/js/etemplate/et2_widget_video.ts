@@ -453,7 +453,16 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
             if (this.youtube.pauseVideo)
             {
                 this.youtube.pauseVideo();
-                this.currentTime(this.youtube.getCurrentTime());
+                if (this.youtube.getCurrentTime() != this._currentTime)
+                {
+                    // give it a chance to get actual current time ready otherwise we would still get the previous time
+                    // unfortunately we need to rely on a timeout as the youtube seekTo not returning any promise to wait for.
+                    setTimeout(_=>{this.currentTime(this.youtube.getCurrentTime());},500);
+                }
+                else
+                {
+                    this.currentTime(this.youtube.getCurrentTime());
+                }
             }
         }
         else

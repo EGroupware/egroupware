@@ -289,10 +289,18 @@ var et2_video = /** @class */ (function (_super) {
      * Pause video
      */
     et2_video.prototype.pause_video = function () {
+        var _this = this;
         if (this._isYoutube()) {
             if (this.youtube.pauseVideo) {
                 this.youtube.pauseVideo();
-                this.currentTime(this.youtube.getCurrentTime());
+                if (this.youtube.getCurrentTime() != this._currentTime) {
+                    // give it a chance to get actual current time ready otherwise we would still get the previous time
+                    // unfortunately we need to rely on a timeout as the youtube seekTo not returning any promise to wait for.
+                    setTimeout(function (_) { _this.currentTime(_this.youtube.getCurrentTime()); }, 500);
+                }
+                else {
+                    this.currentTime(this.youtube.getCurrentTime());
+                }
             }
         }
         else {
