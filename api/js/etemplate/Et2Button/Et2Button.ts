@@ -157,7 +157,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 	get image ()
 	{
-		return this._image;
+		return this.__image;
 	}
 
 	_handleClick(event : MouseEvent) : boolean
