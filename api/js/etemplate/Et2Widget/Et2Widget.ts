@@ -287,7 +287,6 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			let oldValue = this.__statustext;
 			this.__statustext = value;
-			this.egw().tooltipBind(this, this.__statustext);
 			this.requestUpdate("statustext", oldValue);
 		}
 
@@ -376,6 +375,14 @@ const Et2WidgetMixin = (superClass) =>
 			if(changedProperties.has('label'))
 			{
 				this._set_label(this.label);
+			}
+			if(changedProperties.has("statustext"))
+			{
+				this.egw().tooltipUnbind(this);
+				if(this.statustext)
+				{
+					this.egw().tooltipBind(this, this.statustext);
+				}
 			}
 		}
 
