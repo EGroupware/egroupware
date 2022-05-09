@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Hadi Nategh <hn@egroupware.org>
  * @copyright Hadi Nategh <hn@egroupware.org>
- * @version $Id$
  */
 
 /*egw:uses
@@ -229,6 +228,11 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				theme: 'silver'
 			},
 			formats: {
+				// setting p (and below also the preferred formatblock) to the users font and -size preference
+				p: { block: 'p', styles: {
+					"font-family": (egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif'),
+					"font-size": (egw.preference('rte_font_size', 'common') || '10')+'pt'
+				}},
 				customparagraph: { block: 'p', styles: {"margin-block-start": "0px", "margin-block-end": "0px"}}
 			},
 			min_height: 100,
@@ -265,6 +269,10 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
 				"Wingdings=wingdings,zapf dingbats",
 			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+			// this displays all p and li with the users default font and -size (only kosmetik, as TinyMCE does not return or set these styles!)
+			content_style: (egw.preference('rte_formatblock', 'common') || 'p')+',li'+
+				' { font-family: '+(egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif')+
+				'; font-size: '+(egw.preference('rte_font_size', 'common') || '10')+'pt }',
 			setup : function(ed)
 			{
 				ed.on('init', function()
@@ -275,7 +283,12 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				});
 			}
 		};
-
+		const rte_formatblock = <string>(egw.preference('rte_formatblock', 'common') || 'p');
+		if (rte_formatblock !== 'p')
+		{
+			settings.formats[rte_formatblock] = jQuery.extend(true, {}, settings.formats.p);
+			settings.formats[rte_formatblock].block = rte_formatblock;
+		}
 		// extend default settings with configured options and preferences
 		jQuery.extend(settings, this._extendedSettings());
 		this.tinymce = tinymce.init(settings);
