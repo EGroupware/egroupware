@@ -1235,7 +1235,7 @@ div.et2_link_entry input.ui-autocomplete-input {
     padding-right: 0;
 }
 
-.et2_link {
+.et2_link, et2-link-string > et2-link {
     cursor: pointer;
     color: #003075;
     text-decoration: none;

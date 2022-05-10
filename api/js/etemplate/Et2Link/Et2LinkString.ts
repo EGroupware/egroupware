@@ -83,6 +83,9 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				type: String
 			},
 
+			// Show links that are marked as deleted, being held for purge
+			show_deleted: {type: Boolean},
+
 			/**
 			 * Pass value as an object, will be parsed to set application & entry_id
 			 */
@@ -100,6 +103,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		super();
 		this._link_list = []
+		this.__show_deleted = false;
 	}
 
 
@@ -135,7 +139,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			this._link_list = _value;
 		}
-		this._add_links(this._link_list);
+		this._addLinks(this._link_list);
 		super.requestUpdate();
 	}
 
@@ -184,12 +188,18 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 
 	/**
 	 * Render a list of links inside the list
+	 * These get slotted, rather than put inside the shadow dom
+	 *
 	 * @param links
 	 * @protected
 	 */
-	protected _add_links(links : LinkInfo[])
+	protected _addLinks(links : LinkInfo[])
 	{
-		render(html`${repeat(this._link_list, (link) => link.app + ":" + link.id, (link) => this._linkTemplate(link))}`, this);
+		render(html`${repeat(links,
+				(link) => link.app + ":" + link.id,
+				(link) => this._linkTemplate(link))}`,
+			<HTMLElement><unknown>this
+		);
 	}
 
 	/**
@@ -201,14 +211,20 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		let _value = {
 			to_app: this.application,
 			to_id: this.entry_id,
-			only_app: this.only_app
+			only_app: this.only_app,
+			show_deleted: this.show_deleted
 		};
+		if(this._loadingPromise)
+		{
+			// Already waiting
+			return;
+		}
 
-		this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]).then(_value =>
+		this._loadingPromise = this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]).then(_value =>
 		{
 			this._addLinks(_value);
-		});
-		return;
+			this._loadingPromise = null;
+		})
 	}
 
 	getDetachedAttributes(_attrs : string[])

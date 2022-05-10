@@ -36,7 +36,10 @@ export class Et2VfsMime extends Et2ImageExpose
 			/**
 			 * Mark the file as a link
 			 */
-			symlink: {type: Boolean, reflect: true}
+			symlink: {type: Boolean, reflect: true},
+
+			/** Allow to pass all data */
+			value: {type: Object}
 		}
 	}
 
@@ -46,12 +49,14 @@ export class Et2VfsMime extends Et2ImageExpose
 	static readonly DIR_MIME_TYPE : string = 'httpd/unix-directory';
 	private __mime : string;
 	private __symlink : boolean;
+	private __download_url : string;
 
 	constructor()
 	{
 		super();
 		this.__mime = "";
 		this.__symlink = false;
+		this.__download_url = "";
 	}
 
 	/**
@@ -64,6 +69,7 @@ export class Et2VfsMime extends Et2ImageExpose
 	{
 		return Object.assign(super.exposeValue, {
 			mime: this.mime,
+			download_url: this.__download_url
 		});
 	}
 
@@ -147,6 +153,15 @@ export class Et2VfsMime extends Et2ImageExpose
 
 	set_value(_value : ExposeValue | any)
 	{
+		this.value = _value;
+	}
+
+	set value(_value : ExposeValue | any)
+	{
+		if(!_value)
+		{
+			return;
+		}
 		if(typeof _value !== 'object')
 		{
 			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
@@ -160,6 +175,10 @@ export class Et2VfsMime extends Et2ImageExpose
 		if(_value.path)
 		{
 			this.href = _value.path;
+		}
+		if(_value.download_url)
+		{
+			this.__download_url = _value.download_url;
 		}
 		let src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
 		if(src)

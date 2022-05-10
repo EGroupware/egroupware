@@ -34,13 +34,14 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			css`
 			:host {
 				display: block;
+				cursor: pointer;
 			}
 			/** Style based on parent **/
 			:host-context(et2-link-string) {
 				display: inline;
 			}
-			:host-context(et2-link-list) {
-				background-color: green;
+			:host-context(et2-link-string):hover {
+				text-decoration: underline;
 			}
 			`
 		];
@@ -122,8 +123,6 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	connectedCallback()
 	{
 		super.connectedCallback();
-
-		this.classList.add(...["et2_clickable", "et2_link"]);
 	}
 
 	render()
@@ -278,6 +277,7 @@ export interface LinkInfo
 	id : string,
 	title? : string,
 
+	link_id? : string;
 	comment? : string
 	icon? : string,
 
