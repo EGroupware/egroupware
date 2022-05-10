@@ -1944,43 +1944,51 @@ GROUP BY A.fs_id';
 			return false;	// permission denied
 		}
 		$ins_stmt = $del_stmt = null;
-		foreach($props as &$prop)
-		{
-			if(!array_key_exists('name', $prop))
-			{
-				return false; // Name is missing
-			}
-			if (!isset($prop['ns'])) $prop['ns'] = Vfs::DEFAULT_PROP_NAMESPACE;
 
-			if (!isset($prop['val']) || self::$pdo_type != 'mysql')	// for non mysql, we have to delete the prop anyway, as there's no REPLACE!
+		try {
+			foreach ($props as &$prop)
 			{
-				if (!isset($del_stmt))
+				if (!array_key_exists('name', $prop))
 				{
-					$del_stmt = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id AND prop_namespace=:prop_namespace AND prop_name=:prop_name');
+					return false; // Name is missing
 				}
-				$del_stmt->execute(array(
-					'fs_id'          => $id,
-					'prop_namespace' => $prop['ns'],
-					'prop_name'      => $prop['name'],
-				));
+				if (!isset($prop['ns'])) $prop['ns'] = Vfs::DEFAULT_PROP_NAMESPACE;
+
+				if (!isset($prop['val']) || self::$pdo_type != 'mysql')    // for non mysql, we have to delete the prop anyway, as there's no REPLACE!
+				{
+					if (!isset($del_stmt))
+					{
+						$del_stmt = self::$pdo->prepare('DELETE FROM ' . self::PROPS_TABLE . ' WHERE fs_id=:fs_id AND prop_namespace=:prop_namespace AND prop_name=:prop_name');
+					}
+					$del_stmt->execute(array(
+						'fs_id' => $id,
+						'prop_namespace' => $prop['ns'],
+						'prop_name' => $prop['name'],
+					));
+				}
+				if (isset($prop['val']))
+				{
+					if (!isset($ins_stmt))
+					{
+						$ins_stmt = self::$pdo->prepare((self::$pdo_type == 'mysql' ? 'REPLACE' : 'INSERT') .
+							' INTO ' . self::PROPS_TABLE . ' (fs_id,prop_namespace,prop_name,prop_value) VALUES (:fs_id,:prop_namespace,:prop_name,:prop_value)');
+					}
+					if (!$ins_stmt->execute(array(
+						'fs_id' => $id,
+						'prop_namespace' => $prop['ns'],
+						'prop_name' => $prop['name'],
+						'prop_value' => $prop['val'],
+					)))
+					{
+						return false;
+					}
+				}
 			}
-			if (isset($prop['val']))
-			{
-				if (!isset($ins_stmt))
-				{
-					$ins_stmt = self::$pdo->prepare((self::$pdo_type == 'mysql' ? 'REPLACE' : 'INSERT').
-						' INTO '.self::PROPS_TABLE.' (fs_id,prop_namespace,prop_name,prop_value) VALUES (:fs_id,:prop_namespace,:prop_name,:prop_value)');
-				}
-				if (!$ins_stmt->execute(array(
-					'fs_id'          => $id,
-					'prop_namespace' => $prop['ns'],
-					'prop_name'      => $prop['name'],
-					'prop_value'     => $prop['val'],
-				)))
-				{
-					return false;
-				}
-			}
+		}
+		// catch exception for inserting or deleting non-ascii prop_names
+		catch (\PDOException $e) {
+			_egw_log_exception($e);
+			return false;
 		}
 		return true;
 	}
@@ -2014,10 +2022,16 @@ GROUP BY A.fs_id';
 			(!is_null($ns) ? ' AND prop_namespace=?' : '');
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 
-		$stmt = self::$pdo->prepare($query);
-		$stmt->setFetchMode(\PDO::FETCH_ASSOC);
-		$stmt->execute(!is_null($ns) ? array($ns) : array());
-
+		try {
+			$stmt = self::$pdo->prepare($query);
+			$stmt->setFetchMode(\PDO::FETCH_ASSOC);
+			$stmt->execute(!is_null($ns) ? array($ns) : array());
+		}
+		// cat exception trying to search for non-ascii prop_name
+		catch (\PDOException $e) {
+			_egw_log_exception($e);
+			return [];
+		}
 		$props = array();
 		foreach($stmt as $row)
 		{

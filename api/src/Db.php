@@ -798,13 +798,20 @@ class Db
 				return 0;
 			}
 		}
-		if ($num_rows > 0)
+		try
 		{
-			$rs = $this->Link_ID->SelectLimit($Query_String,$num_rows,(int)$offset,$inputarr);
+			if ($num_rows > 0)
+			{
+				$rs = $this->Link_ID->SelectLimit($Query_String, $num_rows, (int)$offset, $inputarr);
+			}
+			else
+			{
+				$rs = $this->Link_ID->Execute($Query_String, $inputarr);
+			}
 		}
-		else
-		{
-			$rs = $this->Link_ID->Execute($Query_String,$inputarr);
+		// PHP 8.1 mysqli throws its own exception
+		catch(\mysqli_sql_exception $e) {
+			throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
 		}
 		$this->Row = 0;
 		$this->Errno  = $this->Link_ID->ErrorNo();
