@@ -483,8 +483,8 @@ class mail_compose
 			$this->changeProfile($_content['serverID']);
 			$composeProfile = $this->mail_bo->profileID;
 		}
-		// make sure $acc is set/initalized properly with the current composeProfile, as $acc is used down there
-		// at several locations and not neccesaryly initialized before
+		// make sure $acc is set/initialized properly with the current composeProfile, as $acc is used down there
+		// at several locations and not necessary initialized before
 		$acc = Mail\Account::read($composeProfile);
 		$buttonClicked = false;
 		if (!empty($_content['composeToolbar']) && $_content['composeToolbar'] === 'send')
@@ -668,8 +668,7 @@ class mail_compose
 			$content['is_plain'] = false;
 		}
 
-		$content['body'] = $content['body'] ?? $content['mail_'.($content['mimeType'] === 'html'?'html':'plain').'text'] ??
-			($content['mimeType'] === 'html' ? '<br>' : '');
+		$content['body'] = $content['body'] ?? $content['mail_'.($content['mimeType'] === 'html' ? 'html' : 'plain').'text'] ?? '';
 		unset($_content['body'], $_content['mail_htmltext'], $_content['mail_plaintext']);
 		$_currentMode = $_content['mimeType'] && $_content['mimeType'] !== 'plain' ? 'html' : 'plain';
 
@@ -1173,25 +1172,29 @@ class mail_compose
 					if (stripos(trim($sigText),'<'.$e)===0) $sigTextStartsWithBlockElement = true;
 				}
 			}
-			if($content['mimeType'] == 'html') {
-				$before = '<br>'.($disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">');
+			if ($content['mimeType'] === 'html')
+			{
+				$start = "<br/>\n";
+				$before = $disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">';
 				$inbetween = '';
-			} else {
-				$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
-				$inbetween = "\r\n";
 			}
-			if ($content['mimeType'] == 'html')
+			else
+			{
+				$before = $disableRuler ? "\r\n" : "\r\n-- \r\n";
+				$start = $inbetween = "\r\n";
+			}
+			if ($content['mimeType'] === 'html')
 			{
 				$sigText = ($sigTextStartsWithBlockElement?'':"<div>")."<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->".($sigTextStartsWithBlockElement?'':"</div>");
 			}
 
 			if ($insertSigOnTop === 'below')
 			{
-				$content['body'] = $content['body'].$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
+				$content['body'] = $start.$content['body'].$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
 			}
 			else
 			{
-				$content['body'] = $before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
+				$content['body'] = $start.$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
 			}
 		}
 		// Skip this part if we're merging, it would add an extra line at the top
