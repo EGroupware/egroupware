@@ -283,13 +283,13 @@ class Html
 		$_html = preg_replace($Rules, $Replace, $_html);
 
 		// replace fieldset with legend used for original message header
-		$_html = preg_replace_callback('#<fieldset[^>]*>\s*<legend>(.*)</legend>\s*(.*)\s*</fieldset>#sm',
+		$_html = preg_replace_callback('#<fieldset[^>]*>\s*<legend>(.*?)</legend>\s*(.*?)\s*</fieldset>#sm',
 			static function($matches)
 			{
 				$len_legend = strlen($legend = $matches[1]);
 				$content = preg_replace('/<([^@> ]+@[^> ]+)>/', '#lower#than#$1#greater#than#', $matches[2]);
 				return "<br>".str_repeat('-', (64-$len_legend-2)>>1).' '.$legend.' '.str_repeat('-', (64-$len_legend-2+1)>>1)."<br>".
-					$content.str_repeat('-', 64)."<br>";
+					$content."<br>".str_repeat('-', 64)."<br>";
 			}, $_html);
 
 		//   removing carriage return linefeeds, preserve those enclosed in <pre> </pre> tags
