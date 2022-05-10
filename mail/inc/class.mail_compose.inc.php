@@ -2261,7 +2261,7 @@ class mail_compose
 		//_debug_array($bodyParts);
 		$styles = Mail::getStyles($bodyParts);
 
-		$fromAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$headers['FROM']));
+		$fromAddress = implode(', ', $headers['FROM']);
 
 		$toAddressA = array();
 		$toAddress = '';
@@ -2270,8 +2270,8 @@ class mail_compose
 		}
 		if (count($toAddressA)>0)
 		{
-			$toAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$toAddressA));
-			$toAddress = @htmlspecialchars(lang("to")).": ".$toAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
+			$toAddress = implode(', ', $toAddressA);
+			$toAddress = htmlspecialchars(lang("to").": ".$toAddress).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 		}
 		$ccAddressA = array();
 		$ccAddress = '';
@@ -2280,15 +2280,18 @@ class mail_compose
 		}
 		if (count($ccAddressA)>0)
 		{
-			$ccAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$ccAddressA));
-			$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
+			$ccAddress = implode(', ', $ccAddressA);
+			$ccAddress = htmlspecialchars(lang("cc").": ".$ccAddress).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 		}
-		if($bodyParts['0']['mimeType'] == 'text/html') {
-			$this->sessionData['body']	= "<br>"."<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
-				@htmlspecialchars(lang("from")).": ".$fromAddress."<br>".
-				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."<br>".
-				'----------------------------------------------------------'."</div>";
+		// create original message header in users preferred font and -size
+		$this->sessionData['body']	= self::wrapBlockWithPreferredFont(
+			htmlspecialchars(lang("from").": ".$fromAddress)."<br>".
+			$toAddress.$ccAddress.
+			htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE, Mail::$displayCharset, false),
+			lang("original message"), 'originalMessage');
+
+		if($bodyParts['0']['mimeType'] == 'text/html')
+		{
 			$this->sessionData['mimeType'] 	= 'html';
 			if (!empty($styles)) $this->sessionData['body'] .= $styles;
 			$this->sessionData['body']	.= '<blockquote type="cite">';
@@ -2314,14 +2317,12 @@ class mail_compose
 
 			$this->sessionData['body']	.= '</blockquote><br>';
 			$this->sessionData['body'] =  mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID, 'html');
-		} else {
-			//$this->sessionData['body']	= @htmlspecialchars(lang("on")." ".$headers['DATE']." ".$mail_bo->decode_header($fromAddress), ENT_QUOTES) . " ".lang("wrote").":\r\n";
-			// take care the way the ReplyHeader is created here, is used later on in uicompose::compose, in case you force replys to be HTML (prefs)
-            $this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
-                @htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
-				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true), ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
-                '-------------------------------------------------'."\r\n \r\n ";
+		}
+		else
+		{
+			// convert original message header to plain-text
+            $this->sessionData['body'] = self::convertHTMLToText($this->sessionData['body'], true, false, true);
+
 			$this->sessionData['mimeType']	= 'plain';
 			foreach($bodyParts as $i => &$bodyPart)
 			{
@@ -2369,10 +2370,29 @@ class mail_compose
 	}
 
 	/**
+	 * Wrap html block in given tag with preferred font and -size set
+	 *
+	 * @param string $content
+	 * @param string $legend
+	 * @param ?string $class
+	 * @return string
+	 */
+	static function wrapBlockWithPreferredFont($content, $legend, $class=null)
+	{
+		$options = ' style="border: 2px solid silver; border-left: none; border-right: none;'.
+			'font-family: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font'] ?? 'arial, helvetica, sans-serif').
+			'; font-size: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_size'] ?? '10').'pt"';
+
+		if (!empty($class)) $options .= ' class="'.htmlspecialchars($class).'"';
+
+		return Api\Html::fieldset($content, $legend, $options);
+	}
+
+	/**
 	 * HTML cleanup
 	 *
 	 * @param type $_body message
-	 * @param type $_useTidy = false, if true tidy extention will be loaded and tidy will try to clean body message
+	 * @param type $_useTidy = false, if true tidy extension will be loaded and tidy will try to clean body message
 	 *			since the tidy causes segmentation fault ATM, we set the default to false.
 	 * @return type
 	 */
