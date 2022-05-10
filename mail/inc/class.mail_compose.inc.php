@@ -2392,11 +2392,11 @@ class mail_compose
 	 */
 	static function wrapBlockWithPreferredFont($content, $legend, $class=null)
 	{
-		$options = ' style="border: 2px solid silver; border-left: none; border-right: none;'.
+		$options = '';/*' style="border: 2px solid silver; border-left: none; border-right: none;'.
 			'font-family: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font'] ?? 'arial, helvetica, sans-serif').
-			'; font-size: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_size'] ?? '10').'pt"';
+			'; font-size: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_size'] ?? '10').'pt"';*/
 
-		if (!empty($class)) $options .= ' class="'.htmlspecialchars($class).'"';
+		if (!empty($class)) $options = ' class="'.htmlspecialchars($class).'"';
 
 		return Api\Html::fieldset($content, $legend, $options);
 	}
@@ -2540,7 +2540,8 @@ class mail_compose
 		switch ($_formData['mimeType'])
 		{
 			case 'html':
-				$body = $_formData['body'];
+				$body = "<style>\n".preg_replace('#/\*.*?\*/\s*#sm', '', Etemplate\Widget\HtmlArea::contentCss()).
+					"</style>\n".$_formData['body'];
 				if (!empty($attachment_links))
 				{
 					if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)

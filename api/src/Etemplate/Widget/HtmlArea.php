@@ -182,5 +182,108 @@ class HtmlArea extends Etemplate\Widget
 		}
 		return $size.($size?$unit:'');
 	}
+
+	/**
+	 * Content CSS für TinyMCE
+	 *
+	 * Can/should also be added to mails, to ensure identical display on the receiving MUA.
+	 *
+	 * @return string
+	 */
+	public static function contentCss()
+	{
+		$font_family = $GLOBALS['egw_info']['user']['preferences']['common']['rtf_font'] ?? 'arial, helvetica, sans-serif';
+		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font_size'] ?? '10').
+			($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font_unit'] ?? 'pt');
+
+		return <<<EOF
+/**
+ * Copyright (c) Tiny Technologies, Inc. All rights reserved.
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
+ * For commercial licenses see https://www.tiny.cloud/
+ */
+ body {
+  font-family: $font_family;
+  font-size: $font_size;
+  line-height: 1.4;
+  margin: 1rem;
+}
+table {
+  border-collapse: collapse;
+}
+/* Apply a default padding if legacy cellpadding attribute is missing */
+table:not([cellpadding]) th,
+table:not([cellpadding]) td {
+  padding: 0.4rem;
+}
+/* Set default table styles if a table has a positive border attribute
+   and no inline css */
+table[border]:not([border="0"]):not([style*="border-width"]) th,
+table[border]:not([border="0"]):not([style*="border-width"]) td {
+  border-width: 1px;
+}
+/* Set default table styles if a table has a positive border attribute
+   and no inline css */
+table[border]:not([border="0"]):not([style*="border-style"]) th,
+table[border]:not([border="0"]):not([style*="border-style"]) td {
+  border-style: solid;
+}
+/* Set default table styles if a table has a positive border attribute
+   and no inline css */
+table[border]:not([border="0"]):not([style*="border-color"]) th,
+table[border]:not([border="0"]):not([style*="border-color"]) td {
+  border-color: #ccc;
+}
+figure {
+  display: table;
+  margin: 1rem auto;
+}
+figure figcaption {
+  color: #999;
+  display: block;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+hr {
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+}
+code {
+  background-color: #e8e8e8;
+  border-radius: 3px;
+  padding: 0.1rem 0.2rem;
+}
+.mce-content-body:not([dir=rtl]) blockquote {
+  border-left: 2px solid #ccc;
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+}
+.mce-content-body[dir=rtl] blockquote {
+  border-right: 2px solid #ccc;
+  margin-right: 1.5rem;
+  padding-right: 1rem;
+}
+fieldset {
+	border: 2px solid silver; 
+	border-left: none; 
+	border-right: none;
+	font-family: $font_family;
+	font-size: $font_size;
+	margin: .5rem 0 .5rem 0;
+}
+/* EGroupware users preferred font and -size */
+h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),
+	div:not([style*="font-family"]),li:not([style*="font-family"]),p:not([style*="font-family"]),blockquote:not([style*="font-family"]),
+	td:not([style*="font-family"]),th:not([style*="font-family"]) {
+	font-family: $font_family;
+}
+div:not([style*="font-size"]),li:not([style*="font-size"]),p:not([style*="font-size"]),blockquote:not([style*="font-size"]),
+	td:not([style*="font-size"]),th:not([style*="font-size"]) {
+	font-size: $font_size;
+}
+EOF;
+	}
 }
 Etemplate\Widget::registerWidget(__NAMESPACE__.'\\HtmlArea', 'htmlarea');
