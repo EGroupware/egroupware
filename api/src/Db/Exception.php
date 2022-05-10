@@ -27,10 +27,10 @@ class Exception extends \egw_exception_db
 	 * @param string $msg =null message, default "Database error!"
 	 * @param int $code =100
 	 */
-	function __construct($msg=null,$code=100)
+	function __construct($msg=null, $code=100, \Exception $previous=null)
 	{
 		if (is_null($msg)) $msg = lang('Database error!');
 
-		parent::__construct($msg,$code);
+		parent::__construct($msg, $code, $previous);
 	}
 }
