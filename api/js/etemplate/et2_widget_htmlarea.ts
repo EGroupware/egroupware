@@ -281,15 +281,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				btoa(egw.preference('rte_font', 'common')+':'+
 					egw.preference('rte_font_size', 'common')+':'+
 					egw.preference('rte_font_unit', 'common')),
-			/*setup : function(ed)
-			{
-				ed.on('init', function()
-				{
-					this.execCommand('fontName', false, egw.preference('rte_font', 'common'));
-					this.execCommand('fontSize', false, <string><unknown>egw.preference('rte_font_size', 'common')
-							+ egw.preference('rte_font_unit', 'common'));
-				});
-			}*/
 		};
 		const rte_formatblock = <string>(egw.preference('rte_formatblock', 'common') || 'p');
 		if (rte_formatblock !== 'p')
@@ -309,9 +300,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			{
 				self.editor.formatter.toggle(<string><unknown>egw.preference('rte_formatblock', 'common'));
 				jQuery(self.editor.editorContainer).height(self.options.height);
-				/*self.editor.execCommand('fontName', false, egw.preference('rte_font', 'common'));
-				self.editor.execCommand('fontSize', false, <string><unknown>egw.preference('rte_font_size', 'common')
-					+ egw.preference('rte_font_unit', 'common'));*/
 				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
 					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
 				});
