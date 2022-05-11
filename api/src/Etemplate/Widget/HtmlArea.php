@@ -203,7 +203,7 @@ class HtmlArea extends Etemplate\Widget
  * For LGPL see License.txt in the project root for license information.
  * For commercial licenses see https://www.tiny.cloud/
  */
- body {
+ body, p, div {
   font-family: $font_family;
   font-size: $font_size;
   line-height: 1.4;
