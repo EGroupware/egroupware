@@ -3,9 +3,9 @@
 REPO=egroupware
 IMAGE=development
 BASE=ubuntu:20.04
-RECOMMENDED_PHP_VERSION=7.4
+RECOMMENDED_PHP_VERSION=8.1
 
-PHP_VERSION=${1:-7.4}
+PHP_VERSION=${1:-8.1}
 
 TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:$PHP_VERSION -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/focal[^ ]* \([78]\.[0-9]*\.[0-9]*\).*|\1|g")
 test -z "$TAG" && {
@@ -29,14 +29,18 @@ docker pull $BASE
 docker build --build-arg "VERSION=$VERSION" --build-arg="PHP_VERSION=$PHP_VERSION" -t $REPO/$IMAGE:$TAG . && {
 	docker push $REPO/$IMAGE:$TAG
 
-	# tag by major PHP version eg. 7.3
-	docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:$PHP_VERSION
-	docker push $REPO/$IMAGE:$PHP_VERSION
+	# tag master by major PHP version eg. 8.1
+	[ $BRANCH = "master" ] && {
+    docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:$PHP_VERSION
+    docker push $REPO/$IMAGE:$PHP_VERSION
+  }
 
 	# tag only recommended PHP version as latest and $BRANCH (eg. master)
-	[ $BRANCH = "master" -a $PHP_VERSION = $RECOMMENDED_PHP_VERSION ] && {
-		docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:latest
-		docker push $REPO/$IMAGE:latest
+	[ $PHP_VERSION = $RECOMMENDED_PHP_VERSION ] && {
+	  [ $BRANCH = "master" ] && {
+      docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:latest
+      docker push $REPO/$IMAGE:latest
+    }
 		docker tag $REPO/$IMAGE:$TAG $REPO/$IMAGE:$BRANCH
 		docker push $REPO/$IMAGE:$BRANCH
 	}
