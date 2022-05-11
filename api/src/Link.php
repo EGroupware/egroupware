@@ -61,7 +61,8 @@ namespace EGroupware\Api;
  *			'no_quick_add' => false,          // App does not want to be in quick add selectbox, defaults to false
  *			'notify' => 'app.class.method',			// method to be called if an other applications links or unlinks with app: notify(array $data)
  * 			'file_access' => 'app.class.method',	// method to be called to check file access rights of a given user, see links_stream_wrapper class
- *													// boolean file_access(string $id,int $check,string $rel_path=null,int $user=null)
+ *													// bool|int file_access(string $id,int $check,string $rel_path=null,int $user=null)
+ *                                                  // bool, if result does NOT depend on $rel_path and can be cached, int=0|1, if it depends on $rel_path
  * 			'file_access_user' => false,			// true if file_access method supports 4th parameter $user, if app is NOT supporting it
  *                                                  // Link::file_access() returns false for $user != current user!
  *			'file_dir'	=> 'app/sub',				// sub file dir for uploaded files/links
@@ -1755,7 +1756,7 @@ class Link extends Link\Storage
 	 * Check the file access perms for $app/id and given user $user
 	 *
 	 * If $user given and != current user AND app does not set file_access_user=true,
-	 * allways return false, as there's no way to check access for an other user!
+	 * always return false, as there's no way to check access for an other user!
 	 *
 	 * @ToDo $rel_path is not yet implemented, as no app use it currently
 	 * @param string $app
@@ -1785,22 +1786,31 @@ class Link extends Link\Storage
 			return $ret;
 		}
 
-		$cache =& self::get_cache($app,$id,'file_access');
+		$ret = $cache =& self::get_cache($app, $id,'file_access');
 
-		if (!isset($cache) || $required == Acl::EDIT && !($cache & $required))
+		if (!isset($ret) || $required == Acl::EDIT && !($ret & $required))
 		{
 			if(($method = self::get_registry($app,'file_access')))
 			{
-				$cache |= self::exec($method, array($id, $required, $rel_path)) ? $required|Acl::READ : 0;
+				$ret = self::exec($method, array($id, $required, $rel_path));
+				// bool return value means cacheable, non-bool, means not cacheable, because of $rel_path
+				if (is_bool($ret))
+				{
+					$cache |= $ret ? $required|Acl::READ : 0;
+				}
+				else
+				{
+					$ret = $ret ? $required|Acl::READ : 0;
+				}
 			}
 			else
 			{
-				$cache |= self::title($app,$id) ? Acl::READ|Acl::EDIT : 0;
+				$ret = $cache |= self::title($app,$id) ? Acl::READ|Acl::EDIT : 0;
 			}
-			//error_log(__METHOD__."($app,$id,$required,$rel_path) got $cache --> ".($cache & $required ? 'true' : 'false'));
+			//error_log(__METHOD__."($app,$id,$required,$rel_path) got $ret --> ".($ret & $required ? 'true' : 'false'));
 		}
 		//else error_log(__METHOD__."($app,$id,$required,$rel_path) using cached value $cache --> ".($cache & $required ? 'true' : 'false'));
-		return !!($cache & $required);
+		return !!($ret & $required);
 	}
 
 	/**
