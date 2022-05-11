@@ -2,7 +2,7 @@
 set -ex
 
 VERSION=${VERSION:-dev-master}
-PHP_VERSION=${PHP_VERSION:-7.4}
+PHP_VERSION=${PHP_VERSION:-8.1}
 
 # if EGW_SESSION_TIMEOUT is set in environment, propagate value to php.ini
 test -n "$EGW_SESSION_TIMEOUT" && test "$EGW_SESSION_TIMEOUT" -ge 1440 &&
@@ -19,9 +19,11 @@ git config --global user.email || git config --global user.email "you@example.co
 
 # install EGroupware sources, if not already there
 [ -f /var/www/egroupware/header.inc.php ] || {
+  # not all our requirements already support 8.x officially, but what we use from them works with 8.1
+  [[ $PHP_VERSION  =~ ^8\..* ]] && COMPOSER_EXTRA=--ignore-platform-reqs || true
 	cd /var/www \
 	&& ln -sf egroupware/api/templates/default/images/favicon.ico \
-	&& composer.phar create-project --prefer-source --keep-vcs --no-scripts egroupware/egroupware:$VERSION \
+	&& composer.phar create-project --prefer-source --keep-vcs --no-scripts $COMPOSER_EXTRA egroupware/egroupware:$VERSION \
 	&& cd egroupware \
 	&& ./install-cli.php \
 	&& ln -sf /var/lib/egroupware/header.inc.php \
