@@ -1165,7 +1165,7 @@ class mail_compose
 			if ($content['mimeType'] === 'html')
 			{
 				$start = "<br/>\n";
-				$before = $disableRuler ? '' : '<hr style="border:1px dotted silver; width:100%;">';
+				$before = $disableRuler ? '' : '<hr class="ruler" style="border:1px dotted silver; width:100%;">';
 				$inbetween = '';
 			}
 			else
@@ -2382,13 +2382,9 @@ class mail_compose
 	 */
 	static function wrapBlockWithPreferredFont($content, $legend, $class=null)
 	{
-		$options = '';/*' style="border: 2px solid silver; border-left: none; border-right: none;'.
-			'font-family: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font'] ?? 'arial, helvetica, sans-serif').
-			'; font-size: '.($GLOBALS['egw_info']['user']['preferences']['common']['rtf_size'] ?? '10').'pt"';*/
-
 		if (!empty($class)) $options = ' class="'.htmlspecialchars($class).'"';
 
-		return Api\Html::fieldset($content, $legend, $options);
+		return Api\Html::fieldset($content, $legend, $options ?? '');
 	}
 
 	/**
@@ -2532,9 +2528,17 @@ class mail_compose
 			case 'html':
 				$body = "<style>\n".preg_replace('#/\*.*?\*/\s*#sm', '', Etemplate\Widget\HtmlArea::contentCss()).
 					"</style>\n".$_formData['body'];
+
 				if (!empty($attachment_links))
 				{
-					if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
+					// if we have a ruler, replace it with the attachment block
+					static $ruler = '<hr class="ruler"';
+					if (strpos($body, $ruler) !== false)
+					{
+						$body = preg_replace('#'.$ruler.'[^>]*>#', $attachment_links, $body);
+					}
+					// else place it before the signature
+					elseif (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
 					{
 						$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
 					}
@@ -2543,6 +2547,8 @@ class mail_compose
 						$body .= $attachment_links;
 					}
 				}
+				$body = str_replace($ruler, '<hr', $body);  // remove id from ruler, to not replace in cited mails
+
 				if(!empty($signature))
 				{
 					$_mailObject->setBody($this->convertHTMLToText($body, true, true).
@@ -2714,7 +2720,7 @@ class mail_compose
 		}
 		elseif ($html)
 		{
-			return '<p>'.lang('Download attachments').":</p>\n<ul><li>".implode("</li>\n<li>", $links)."</li></ul>\n";
+			return self::wrapBlockWithPreferredFont("<ul><li>".implode("</li>\n<li>", $links)."</li></ul>\n", lang('Download attachments'), 'attachmentLinks');
 		}
 		return lang('Download attachments').":\n- ".implode("\n- ", $links)."\n";
 	}
