@@ -36,12 +36,15 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				display: block;
 				cursor: pointer;
 			}
+			:host:hover {
+				text-decoration: underline
+			}
 			/** Style based on parent **/
 			:host-context(et2-link-string) {
 				display: inline;
 			}
-			:host-context(et2-link-string):hover {
-				text-decoration: underline;
+			:host-context(et2-link-list):hover {
+				text-decoration: none;
 			}
 			`
 		];
@@ -125,6 +128,11 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.connectedCallback();
 	}
 
+	createRenderRoot()
+	{
+		return this;
+	}
+
 	render()
 	{
 		let title = this.title;
@@ -155,7 +163,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		if(!_value)
 		{
 			this.app = "";
-			this.id = "";
+			this.entry_id = "";
 			this.title = "";
 			return;
 		}
@@ -191,6 +199,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			}
 			Object.keys(_value).forEach(key =>
 			{
+				// Skip these, they're either handled explicitly, or ID which we don't want to mess with
 				if(["app", "entry_id", "title", "id"].indexOf(key) != -1)
 				{
 					return;

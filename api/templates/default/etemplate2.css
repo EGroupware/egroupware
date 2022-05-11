@@ -1235,13 +1235,13 @@ div.et2_link_entry input.ui-autocomplete-input {
     padding-right: 0;
 }
 
-.et2_link, et2-link-string > et2-link {
+.et2_link, et2-link {
     cursor: pointer;
     color: #003075;
     text-decoration: none;
 }
 
-.et2_link:hover {
+.et2_link:hover, et2-link:hover {
     text-decoration: underline;
 }
 
@@ -1286,6 +1286,14 @@ ul.et2_link_string {
     padding: 0px;
     width: 16px;
     height: 16px;
+}
+
+et2-link-list et2-link {
+    color: initial;
+}
+
+et2-link-list et2-link:hover {
+    text-decoration: initial;
 }
 
 .et2_link_list .icon img,
