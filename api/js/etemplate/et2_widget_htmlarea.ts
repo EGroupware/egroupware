@@ -517,13 +517,6 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	{
 		if (this.editor)
 		{
-			/* set users preferred font and -size explicit for all these elements without any style set
-			this.editor.getDoc().querySelectorAll('div:not([style]),li:not([style]),p:not([style]),blockquote:not([style]),fieldset:not([style]),td:not([style])')
-				.forEach(element => {
-					element.style.fontFamily = (egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif');
-					element.style.fontSize = (egw.preference('rte_font_size', 'common') || '10')+'pt';
-				});*/
-
 			return this.editor.getContent();
 		}
 		return this.options.readonly ? this.value : this.htmlNode.val();
