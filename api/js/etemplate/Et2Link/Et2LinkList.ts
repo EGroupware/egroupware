@@ -59,6 +59,13 @@ export class Et2LinkList extends Et2LinkString
 				background-color: var(--highlight-background-color);
 			}
 			
+			div.zip_highlight {
+				animation-name: new_entry_pulse, new_entry_clear;
+				animation-duration: 5s;
+				animation-delay: 0s, 30s;
+				animation-fill-mode: forwards;
+			}
+			
 			/* CSS for child elements */
             ::slotted(*):after {
             	/* Reset from Et2LinkString */
@@ -70,9 +77,14 @@ export class Et2LinkList extends Et2LinkString
             ::slotted(et2-link) {
             	flex: 1 1 auto;
             }
+            ::slotted(.remark) {
+            	flex: 1 1 auto;
+            	width: 20%;
+            }
             ::slotted(.delete_button) {
-            	display: none;
+            	visibility: hidden;
             	width: 16px;
+            	order: 5;
             }
 			`
 		];
@@ -99,8 +111,6 @@ export class Et2LinkList extends Et2LinkString
 
 		this._handleRowHover = this._handleRowHover.bind(this);
 		this._handleRowContext = this._handleRowContext.bind(this);
-		this.addEventListener("mouseover", this._handleRowHover);
-		this.addEventListener("mouseout", this._handleRowHover);
 	}
 
 	connectedCallback()
@@ -128,13 +138,13 @@ export class Et2LinkList extends Et2LinkString
 	protected _addLinks(links : LinkInfo[])
 	{
 		this._link_list = links;
-		super._addLinks(links);
 		this.requestUpdate();
-
+		this.updateComplete.then(() => super._addLinks(links));
 	}
 
 	/**
 	 * Render one link
+	 * These elements are slotted and are found in the light DOM (use this.querySelector(...) to find them)
 	 *
 	 * @param link
 	 * @returns {TemplateResult}
@@ -145,14 +155,18 @@ export class Et2LinkList extends Et2LinkString
 		return html`
             ${this._thumbnailTemplate(link)}
             <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entry_id="${link.id}"
-                      @contextmenu=${this._handleRowContext}
+                      ._parent=${this}
                       .value=${link}></et2-link>
+            <et2-description slot="${this._get_row_id(link)}" ._parent=${this} class="remark"
+                             value="${link.remark}"></et2-description>
             ${this._deleteButtonTemplate(link)}
 		`;
 	}
 
 	/**
-	 * Render one link
+	 * Render the row for one link.
+	 * This is just the structure and slot, actual row contents are done in _linkTemplate.
+	 * These rows are found in the shadowRoot.  Use this.shadowRoot.querySelector(...) to find them.
 	 *
 	 * @param link
 	 * @returns {TemplateResult}
@@ -160,13 +174,11 @@ export class Et2LinkList extends Et2LinkString
 	 */
 	protected _rowTemplate(link) : TemplateResult
 	{
-		let hover = () =>
-		{
-			console.log(link);
-			debugger;
-		}
 		return html`
-            <div id="${this._get_row_id(link)}">
+            <div id="${this._get_row_id(link)}"
+                 @mouseover=${this._handleRowHover}
+                 @mouseout=${this._handleRowHover}
+                 @contextmenu=${this._handleRowContext}>
                 <slot name="${this._get_row_id(link)}"></slot>
             </div>`;
 	}
@@ -178,19 +190,38 @@ export class Et2LinkList extends Et2LinkString
 	 */
 	protected _handleRowHover(_ev)
 	{
-		// Ignore delete button
-		if(_ev.relatedTarget.classList.contains("delete_button") || _ev.relatedTarget.parentElement.classList.contains("delete_button"))
+		let slot_name = "";
+		let target = _ev.target;
+
+		// Fist check if target is the row div
+		if(target.firstElementChild?.localName == "slot")
+		{
+			slot_name = target.firstElementChild.name;
+		}
+		do
+		{
+			// Look up tree for the slot
+			if(target.slot)
+			{
+				slot_name = target.slot;
+			}
+			target = target.parentNode;
+		}
+		while(!slot_name && target.parentNode)
+		if(!slot_name)
 		{
 			return;
 		}
+
 		if(_ev.type == "mouseout")
 		{
-			this.querySelectorAll(".delete_button").forEach(b => b.style.display = "");
+			this.querySelectorAll(".delete_button").forEach(b => b.style.visibility = "");
 		}
 
-		if(_ev.type == "mouseover" && _ev.target.parentNode == this)
+
+		if(_ev.type == "mouseover")
 		{
-			_ev.target.parentNode.querySelector(".delete_button[slot='" + _ev.target.slot + "']").style.display = "initial";
+			this.querySelector(".delete_button[slot='" + slot_name + "']").style.visibility = "initial";
 		}
 	}
 
@@ -251,7 +282,7 @@ export class Et2LinkList extends Et2LinkString
 	 */
 	protected _get_row_id(link : any) : string
 	{
-		return "link_" + (link.dom_id ? link.dom_id : (typeof link.link_id == "string" ? link.link_id.replace(/[:\.]/g, '_') : link.link_id || link.id));
+		return "link_" + (link.dom_id ? link.dom_id : (typeof link.link_id == "string" ? link.link_id.replace(/[:.]/g, '_') : link.link_id || link.id));
 	}
 
 
@@ -343,10 +374,8 @@ export class Et2LinkList extends Et2LinkString
 		this.context = new egwMenu();
 		this.context.addItem("comment", this.egw().lang("Comment"), "", () =>
 		{
-			let link_id = typeof this.context.data.link_id == 'number' ? this.context.data.link_id : this.context.data.link_id.replace(/[:\.]/g, '_');
-
 			Et2Dialog.show_prompt(
-				function(button, comment)
+				(button, comment) =>
 				{
 					if(button != Et2Dialog.OK_BUTTON)
 					{
@@ -358,9 +387,9 @@ export class Et2LinkList extends Et2LinkString
 			);
 
 		});
-		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), (menu_item) =>
+		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), () =>
 		{
-			var link_data = this.context.data;
+			let link_data = this.context.data;
 			if(link_data.app == 'file')
 			{
 				// File info is always the same
@@ -374,9 +403,9 @@ export class Et2LinkList extends Et2LinkString
 			}
 		});
 		this.context.addItem("-", "-");
-		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), (menu_item) =>
+		this.context.addItem("save", this.egw().lang("Save as"), this.egw().image('save'), () =>
 		{
-			var link_data = this.context.data;
+			let link_data = this.context.data;
 			// Download file
 			if(link_data.download_url)
 			{
@@ -394,12 +423,11 @@ export class Et2LinkList extends Et2LinkString
 				}
 
 				// Multiple file download for those that support it
-				a = jQuery(a)
-					.prop('href', url)
-					.prop('download', link_data.title || "")
-					.appendTo(this.getInstanceManager().DOMContainer);
+				a.setAttribute("href",url);
+				a.setAttribute("download",link_data.title || "");
+				this.getInstanceManager().DOMContainer.appendChild(a);
 
-				var evt = document.createEvent('MouseEvent');
+				let evt = document.createEvent('MouseEvent');
 				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
 				a[0].dispatchEvent(evt);
 				a.remove();
@@ -408,30 +436,30 @@ export class Et2LinkList extends Et2LinkString
 
 			this.egw().open(link_data, "", "view", 'download', link_data.target ? link_data.target : link_data.app, link_data.app);
 		});
-		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), (menu_item) =>
+		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), () =>
 		{
 			// Highlight files for nice UI indicating what will be in the zip.
 			// Files have negative IDs.
-			jQuery('[id^="link_-"]', this.list).effect('highlight', {}, 2000);
+			this.shadowRoot.querySelectorAll('div[id^="link_-"]').forEach((row) => row.classList.add("zip_highlight"));
 
 			// Download ZIP
-			window.location = this.egw().link('/index.php', {
+			window.location.href = this.egw().link('/index.php', {
 				menuaction: 'api.EGroupware\\Api\\Etemplate\\Widget\\Link.download_zip',
-				app: this.to_app,
-				id: this.to_id
+				app: this.application,
+				id: this.entry_id
 			});
 		});
 
 		// Only allow this option if the entry has been saved, and has a real ID
 		if(this.to_id && typeof this.to_id != 'object')
 		{
-			this.context.addItem("copy_to", this.egw().lang("Copy to"), this.egw().image('copy'), (menu_item) =>
+			this.context.addItem("copy_to", this.egw().lang("Copy to"), this.egw().image('copy'), () =>
 			{
 				// Highlight files for nice UI indicating what will be copied
-				jQuery('[id="link_' + this.context.data.link_id + ']', this.list).effect('highlight', {}, 2000);
+				this.shadowRoot.querySelectorAll('div[id^="link_-"]').forEach((row) => row.classList.add("zip_highlight"));
 
 				// Get target
-				var select_attrs : any = {
+				let select_attrs : any = {
 					mode: "select-dir",
 					button_caption: '',
 					button_icon: 'copy',
@@ -449,16 +477,14 @@ export class Et2LinkList extends Et2LinkString
 			});
 		}
 		this.context.addItem("-", "-");
-		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), (menu_item) =>
+		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), () =>
 		{
-			var link_id = isNaN(this.context.data.link_id) ? this.context.data : this.context.data.link_id;
-			var row = jQuery('#link_' + (this.context.data.dom_id ? this.context.data.dom_id : this.context.data.link_id), this);
 			Et2Dialog.show_dialog(
-				function(button)
+				(button) =>
 				{
 					if(button == Et2Dialog.YES_BUTTON)
 					{
-						this._delete_link(link_id, row);
+						this._delete_link(this.context.data);
 					}
 				},
 				egw.lang('Delete link?')
@@ -469,7 +495,15 @@ export class Et2LinkList extends Et2LinkString
 
 	protected _handleRowContext(_ev)
 	{
-		let _link_data = Object.assign({app: _ev.target.app, id: _ev.target.id}, _ev.target.dataset);
+		// Do not trigger expose view if one of the operator keys are held
+		if(_ev.altKey || _ev.ctrlKey || _ev.shiftKey || _ev.metaKey)
+		{
+			return;
+		}
+		// Find the link
+		let link = this.querySelector("et2-link[slot='" + _ev.currentTarget.id + "']");
+
+		let _link_data = Object.assign({app: link.app, id: link.entry_id}, link.dataset);
 		// Comment only available if link_id is there and not readonly
 		this.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined' && !this.readonly);
 		// File info only available for existing files
@@ -488,7 +522,12 @@ export class Et2LinkList extends Et2LinkString
 
 	protected _set_comment(link, comment)
 	{
-		let remark = this.querySelector(".comment[slot='" + this._get_row_id(link) + "']");
+		let remark = this.querySelector(".remark[slot='" + this._get_row_id(link) + "']");
+		if(!remark)
+		{
+			console.warn("Could not find link to comment on", link);
+			return;
+		}
 		/* // TODO
 		if(isNaN(link.link_id))	// new entry, not yet stored
 		{
@@ -518,7 +557,7 @@ export class Et2LinkList extends Et2LinkString
 		}
 
 		 */
-		remark.addClass("loading");
+		remark.classList.add("loading");
 		egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_comment",
 			[link.link_id, comment]).sendRequest()
 			.then(() =>
@@ -526,9 +565,10 @@ export class Et2LinkList extends Et2LinkString
 				if(remark)
 				{
 					// Append "" to make sure it's a string, not undefined
-					remark.removeClass("loading").text(comment + "");
+					remark.classList.remove("loading");
 					// Update internal data
-					remark.textContent = comment + "";
+					link.comment = comment + "";
+					remark.value = link.comment;
 				}
 			});
 	}

@@ -1274,7 +1274,7 @@ ul.et2_link_string {
     cursor: pointer;
 }
 
-.et2_link_list td.remark {
+.et2_link_list td.remark, et2-link-list .remark {
     font-style: italic;
 }
 

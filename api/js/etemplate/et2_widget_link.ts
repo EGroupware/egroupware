@@ -36,6 +36,8 @@ import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
 import {expose} from "./expose";
 import {egwMenu} from "../egw_action/egw_menu.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import {et2_DOMWidget} from "./et2_core_DOMWidget";
+import {Et2LinkList} from "./Et2Link/Et2LinkList";
 
 /**
  * UI widgets for Egroupware linking system
@@ -444,6 +446,8 @@ export class et2_link_to extends et2_inputWidget
 				},
 				this, et2_link_list
 			);
+			// Update any neighbouring link lists
+			(<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'))?.get_links();
 
 			// If there's an array of data (entry is not yet saved), updating the list will
 			// not work, so add them in explicitly.

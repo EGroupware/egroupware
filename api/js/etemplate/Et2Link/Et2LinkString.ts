@@ -10,7 +10,7 @@
  */
 
 
-import {css, html, LitElement, render, repeat, TemplateResult, until} from "@lion/core";
+import {css, html, LitElement, render, TemplateResult, until} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Link, LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
@@ -127,7 +127,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			this.application = _value.to_app;
 			this.entry_id = _value.to_id;
-			this._get_links();
+			this.get_links();
 			return;
 		}
 		if(typeof _value === "string")
@@ -195,18 +195,40 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 */
 	protected _addLinks(links : LinkInfo[])
 	{
+		// Remove anything there right now
+		while(this.lastChild)
+		{
+			this.removeChild(this.lastChild);
+		}
+
+		links.forEach((link) =>
+		{
+			let temp = document.createElement("div");
+			render(this._linkTemplate(link), temp);
+			temp.childNodes.forEach((node) => this.appendChild(node));
+		})
+
+		/*
+		This should work, and it does, but only once.
+		It fails if you try and update then run it again - none of the children get added
+		Something about how lit renders
 		render(html`${repeat(links,
 				(link) => link.app + ":" + link.id,
 				(link) => this._linkTemplate(link))}`,
 			<HTMLElement><unknown>this
 		);
+
+		 */
+
 	}
 
 	/**
 	 * Starts the request for link list to the server
+	 *
+	 * Called internally to fetch the list.  May be called externally to trigger a refresh if a link is added.
 	 * @protected
 	 */
-	protected _get_links()
+	public get_links()
 	{
 		let _value = {
 			to_app: this.application,
