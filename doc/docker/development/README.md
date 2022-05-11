@@ -32,6 +32,9 @@ mkdir sources data
 # ports to use for Nginx / the webserver, by default 8080 and 4443
 # xdebug port, default 9001 (NOT 9000!)
 # IDE host, default XDEBUG_REMOTE_HOST=docker.for.mac.localhost
+docker-compose up -d egroupware
+docker logs -f egroupware
+# wait until it says "fpm is running" then press ^C and start the other containers
 docker-compose up -d
 ```
 * It will install EGroupware master and phpMyAdmin in egroupware / phpmyadmin subdirectory of sources volume, if not already there
@@ -73,4 +76,3 @@ service:
   - localhost in each container is NOT the host system, but the container itself!
   - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
   - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which as a commented out extra_host
-
