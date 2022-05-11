@@ -377,7 +377,7 @@ class Mailer extends Horde_Mime_Mail
 		$part->setContents($resource);
 
 		// setting name, also sets content-disposition attachment (!), therefore we have to do it after "text/calendar; method=" handling
-		if ($name || !is_resource($data)) $part->setName($name ? $name : Vfs::basename($data));
+		if ($name || !is_resource($data)) $part->setName(Vfs::basename($name ?: $data));
 
 		// this should not be necessary, because binary data get detected by mime-type,
 		// but at least Cyrus complains about NUL characters
