@@ -101,7 +101,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
                 // setting p (and below also the preferred formatblock) to the users font and -size preference
                 p: { block: 'p', styles: {
                         "font-family": (egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif'),
-                        "font-size": (egw.preference('rte_font_size', 'common') || '10') + 'pt'
+                        "font-size": (egw.preference('rte_font_size', 'common') || '10') +
+                            (egw.preference('rte_font_unit', 'common') || 'pt')
                     } },
                 customparagraph: { block: 'p', styles: { "margin-block-start": "0px", "margin-block-end": "0px" } }
             },
@@ -139,17 +140,10 @@ var et2_htmlarea = /** @class */ (function (_super) {
                 "MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;" +
                 "Wingdings=wingdings,zapf dingbats",
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-            // this displays all p and li with the users default font and -size (only kosmetik, as TinyMCE does not return or set these styles!)
-            content_style: (egw.preference('rte_formatblock', 'common') || 'p') + ',li' +
-                ' { font-family: ' + (egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif') +
-                '; font-size: ' + (egw.preference('rte_font_size', 'common') || '10') + 'pt }',
-            setup: function (ed) {
-                ed.on('init', function () {
-                    this.execCommand('fontName', false, egw.preference('rte_font', 'common'));
-                    this.execCommand('fontSize', false, egw.preference('rte_font_size', 'common')
-                        + egw.preference('rte_font_unit', 'common'));
-                });
-            }
+            content_css: egw.webserverUrl + '/api/tinymce.php?' + // use the 3 prefs as cache-buster
+                btoa(egw.preference('rte_font', 'common') + ':' +
+                    egw.preference('rte_font_size', 'common') + ':' +
+                    egw.preference('rte_font_unit', 'common')),
         };
         var rte_formatblock = (egw.preference('rte_formatblock', 'common') || 'p');
         if (rte_formatblock !== 'p') {
@@ -167,9 +161,6 @@ var et2_htmlarea = /** @class */ (function (_super) {
             if (self.editor && self.editor.editorContainer) {
                 self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
                 jQuery(self.editor.editorContainer).height(self.options.height);
-                self.editor.execCommand('fontName', false, egw.preference('rte_font', 'common'));
-                self.editor.execCommand('fontSize', false, egw.preference('rte_font_size', 'common')
-                    + egw.preference('rte_font_unit', 'common'));
                 jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function () {
                     if (jQuery('#dragover-tinymce').length < 1)
                         jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - " + jQuery(this).height() + "px) !important;}</style>").appendTo('head');
@@ -355,7 +346,10 @@ var et2_htmlarea = /** @class */ (function (_super) {
         this.value = _value;
     };
     et2_htmlarea.prototype.getValue = function () {
-        return this.editor ? this.editor.getContent() : (this.options.readonly ? this.value : this.htmlNode.val());
+        if (this.editor) {
+            return this.editor.getContent();
+        }
+        return this.options.readonly ? this.value : this.htmlNode.val();
     };
     /**
      * Resize htmlNode tag according to window size
