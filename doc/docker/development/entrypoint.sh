@@ -14,9 +14,6 @@ test -n "$XDEBUG_REMOTE_HOST" && \
 	sed -e "s/^xdebug.client_host.*/xdebug.client_host=$XDEBUG_REMOTE_HOST/g" \
 		-i /etc/php/$PHP_VERSION/fpm/conf.d/*xdebug.ini
 
-# downgrade composer to 1.8.6, as 1.9.x does not work with "dev-master" version :(
-composer selfupdate 1.8.6
-
 # installation fails without git identity
 git config --global user.email || git config --global user.email "you@example.com"
 
