@@ -163,15 +163,15 @@ class Link extends Link\Storage
 			// handling of text or pdf files by browser in a popup window
 			'mime' => array(
 				'application/pdf' => array(
-					'mime_popup' => '640x480',
+					'mime_popup' => '1024x1024',
 					'mime_target' => '_blank',
 				),
 				'/^text\\/(plain|html|diff)/' => array(	// text/(mimetypes which can be opened as recognised popups)
-					'mime_popup' => '640x480',
+					'mime_popup' => '800x1024',
 					'mime_target' => '_blank',
 				),
 				'/^image\\//' => array(	// image
-					'mime_popup' => '640x480',
+					'mime_popup' => '800x640',
 					'mime_target' => '_blank',
 				),
 			),
