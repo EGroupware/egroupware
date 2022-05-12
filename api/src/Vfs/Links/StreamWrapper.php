@@ -113,7 +113,7 @@ class StreamWrapper extends LinksParent
 			// vfs & stream-wrapper use posix rights, Api\Link::file_access uses Api\Acl::{EDIT|READ}!
 			$required = $check & Vfs::WRITABLE ? Api\Acl::EDIT : Api\Acl::READ;
 			$access = Api\Link::file_access($app, $id, $required, $rel_path, $this->user);
-			$what = "from Api\Link::file_access('$app', $id, $required, '$rel_path,".$this->user.")";
+			$what = "from Api\Link::file_access('$app', $id, $required, '$rel_path', ".$this->user.")";
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".Vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;

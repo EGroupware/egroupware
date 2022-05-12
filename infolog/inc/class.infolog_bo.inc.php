@@ -1569,7 +1569,7 @@ class infolog_bo
 	{
 		Link::set_cache('infolog',$info['info_id'],
 			$this->link_title($info),
-			$this->file_access($info,Acl::EDIT) ? EGW_ACL_READ|EGW_ACL_EDIT :
+			$this->file_access($info,Acl::EDIT) ? Acl::READ|Acl::EDIT :
 			($this->file_access($info,Acl::READ) ? Acl::READ : 0));
 	}
 

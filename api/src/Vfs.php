@@ -2017,7 +2017,7 @@ class Vfs extends Vfs\Base
 			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !is_uploaded_file()");
 			return false;
 		}
-		if (!(self::is_writable($target) || ($dir = self::dirname($target)) && self::is_writable($dir)))
+		if (!self::is_writable($target) && !(($dir = self::dirname($target)) && self::is_writable($dir)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !writable");
 			return false;
