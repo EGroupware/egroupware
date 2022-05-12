@@ -1798,10 +1798,7 @@ class Link extends Link\Storage
 				{
 					$cache |= $ret ? $required|Acl::READ : 0;
 				}
-				else
-				{
-					$ret = $ret ? $required|Acl::READ : 0;
-				}
+				$ret = $ret ? $required|Acl::READ : 0;
 			}
 			else
 			{
