@@ -31,6 +31,8 @@ function api_upgrade14_3_907()
 		{
 			$GLOBALS['egw_setup']->oProc->CreateTable($table, $definition);
 		}
+		// only install tables existing in 16.1 (eg. not egw_addressbook_shared from 21.1)
+		if ($table === 'egw_ea_notifications') break;
 	}
 
 	// uninstall no longer existing EMailAdmin
