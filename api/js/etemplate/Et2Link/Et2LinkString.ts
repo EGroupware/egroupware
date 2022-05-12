@@ -226,10 +226,14 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * Starts the request for link list to the server
 	 *
 	 * Called internally to fetch the list.  May be called externally to trigger a refresh if a link is added.
-	 * @protected
+	 *
 	 */
-	public get_links()
+	public get_links(not_saved_links? : LinkInfo[])
 	{
+		if(typeof not_saved_links === "undefined")
+		{
+			not_saved_links = [];
+		}
 		let _value = {
 			to_app: this.application,
 			to_id: this.entry_id,
@@ -245,7 +249,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				this._addLinks(_value);
+				this._addLinks(not_saved_links.concat(_value));
 				this._loadingPromise = null;
 			})
 	}

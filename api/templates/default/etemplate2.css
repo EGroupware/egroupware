@@ -1290,6 +1290,7 @@ ul.et2_link_string {
 
 et2-link-list et2-link {
     color: initial;
+    width: 30%;
 }
 
 et2-link-list et2-link:hover {

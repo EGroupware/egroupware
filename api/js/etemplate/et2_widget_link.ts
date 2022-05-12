@@ -446,8 +446,6 @@ export class et2_link_to extends et2_inputWidget
 				},
 				this, et2_link_list
 			);
-			// Update any neighbouring link lists
-			(<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'))?.get_links();
 
 			// If there's an array of data (entry is not yet saved), updating the list will
 			// not work, so add them in explicitly.
@@ -476,6 +474,8 @@ export class et2_link_to extends et2_inputWidget
 					}
 				}
 			}
+			// Update any neighbouring link lists
+			(<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'))?.get_links(Object.values(success));
 		}
 		else
 		{

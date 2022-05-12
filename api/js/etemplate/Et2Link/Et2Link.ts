@@ -285,6 +285,11 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	_handleClick(_ev : MouseEvent) : boolean
 	{
+		// If we don't have app & entry_id, nothing we can do
+		if(!this.app || !this.entry_id || typeof this.entry_id !== "string")
+		{
+			return false;
+		}
 		// If super didn't handle it (returns false), just use egw.open()
 		if(super._handleClick(_ev))
 		{
