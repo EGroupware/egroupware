@@ -913,9 +913,9 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * @param {function} _callback callback function which should be called upon a "data" response is received
 	 * @param {object} _sender is the reference object the callback function should get
 	 * @param {function} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
-	 * @return string uid of the queued request
+	 * @return Promise
 	 */
-	jsonq(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : object, _callbeforesend? : Function) : string;
+	jsonq(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : object, _callbeforesend? : Function) : Promise<any>;
 
 	/**
 	 * implemented in egw_message.js
