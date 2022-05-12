@@ -13,6 +13,8 @@ export interface SelectOption
 	label : string;
 	// Hover help text
 	title? : string;
+	// Related image or icon
+	icon? : string;
 }
 
 /**

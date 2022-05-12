@@ -214,7 +214,8 @@ const Et2WidgetMixin = (superClass) =>
 			super(...args);
 
 			this.disabled = false;
-			this.addEventListener("click", this._handleClick.bind(this));
+			this._handleClick = this._handleClick.bind(this);
+			this.addEventListener("click", this._handleClick);
 		}
 
 		connectedCallback()
@@ -231,7 +232,7 @@ const Et2WidgetMixin = (superClass) =>
 		{
 			this.egw()?.tooltipUnbind(this);
 
-			this.removeEventListener("click", this._handleClick.bind(this));
+			this.removeEventListener("click", this._handleClick);
 		}
 
 		/**

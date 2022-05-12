@@ -126,9 +126,10 @@ class filemanager_ui
 		$sel_options = array ();
 		foreach ($actions as $action => $value)
 		{
-			$sel_options[$action] = array (
+			$sel_options[] = array(
+				'value' => $action,
 				'label' => $value['caption'],
-				'icon'	=> $value['icon']
+				'icon'  => $value['icon']
 			);
 		}
 		return $sel_options;
