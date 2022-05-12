@@ -173,7 +173,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	protected _linkTemplate(link) : TemplateResult
 	{
 		return html`
-            <et2-link app="${link.app}" entry_id="${link.id}" .value=${link}></et2-link>`;
+            <et2-link app="${link.app}" entry_id="${link.id}" .value=${link} ._parent=${this}></et2-link>`;
 	}
 
 	/**
@@ -242,11 +242,12 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			return;
 		}
 
-		this._loadingPromise = this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]).then(_value =>
-		{
-			this._addLinks(_value);
-			this._loadingPromise = null;
-		})
+		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
+			.then(_value =>
+			{
+				this._addLinks(_value);
+				this._loadingPromise = null;
+			})
 	}
 
 	getDetachedAttributes(_attrs : string[])

@@ -499,9 +499,12 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 					{
 						if(exposable === this)
 						{
-							options.index = index;
+							options.index = mediaContent.length;
 						}
-						mediaContent.push(...exposable.getMedia(Object.assign({}, IMAGE_DEFAULT, exposable.exposeValue)));
+						if(exposable.isExposable())
+						{
+							mediaContent.push(...exposable.getMedia(Object.assign({}, IMAGE_DEFAULT, exposable.exposeValue)));
+						}
 					});
 				}
 				catch(e)

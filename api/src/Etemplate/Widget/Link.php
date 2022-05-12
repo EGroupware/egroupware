@@ -194,7 +194,6 @@ class Link extends Etemplate\Widget
 			if ($link['app'] == Api\Link::VFS_APPNAME)
 			{
 				$link['target'] = '_blank';
-				$link['label'] = 'Delete';
 				$link['help'] = lang('Delete this file');
 				$link['title'] = Api\Vfs::decodePath($link['title']);
 				$link['icon'] = Api\Link::vfs_path($link['app2'],$link['id2'],$link['id'],true);
@@ -214,7 +213,6 @@ class Link extends Etemplate\Widget
 			else
 			{
 				$link['icon'] = Api\Link::get_registry($link['app'], 'icon');
-				$link['label'] = 'Unlink';
 				$link['help'] = lang('Remove this link (not the entry itself)');
 			}
 		}

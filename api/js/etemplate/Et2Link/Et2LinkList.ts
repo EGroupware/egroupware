@@ -270,7 +270,7 @@ export class Et2LinkList extends Et2LinkString
                        {
                            this._delete_link(link);
                        }}
-                       aria-label="${this.egw().lang("Delete")}"
+                       aria-label="${this.egw().lang(link.app === "file" ? "Delete" : "Unlink")}"
             >
             </et2-image>`;
 	}
@@ -513,7 +513,7 @@ export class Et2LinkList extends Et2LinkString
 		this.context.getItem("zip").set_enabled(this._link_list.length >= 2);
 		// Show delete item only if the widget is not readonly
 		this.context.getItem("delete").set_enabled(!this.readonly);
-
+		this.context.getItem("delete").caption = _link_data.app === "file" ? this.egw().lang("Delete file") : this.egw().lang("Delete link");
 		this.context.data = _link_data;
 		this.context.showAt(_ev.pageX, _ev.pageY, true);
 		_ev.preventDefault();

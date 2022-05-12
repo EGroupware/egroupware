@@ -10,7 +10,7 @@
  */
 
 
-import {ExposeMixin} from "../Expose/ExposeMixin";
+import {ExposeMixin, ExposeValue} from "../Expose/ExposeMixin";
 import {css, html, LitElement} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
@@ -158,6 +158,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		return this._title;
 	}
 
+	/**
+	 * Get a value representation of the link.
+	 *
+	 * @returns {LinkInfo | string}
+	 */
+	get value() : LinkInfo | string
+	{
+		return this.app && this.entry_id ? this.app + ":" + this.entry_id : "";
+	}
+
 	set value(_value : LinkInfo | string)
 	{
 		if(!_value)
@@ -215,6 +225,35 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		this.value = _value;
 	}
 
+	get exposeValue() : ExposeValue
+	{
+		let info = <ExposeValue><unknown>{
+			app: this.app,
+			id: this.entry_id,
+			path: this.dataset['icon']
+		};
+		info['label'] = this.title;
+		info = Object.assign(info, this.dataset);
+
+		if(info['remark'])
+		{
+			info['label'] += " - " + info['remark'];
+		}
+		if(!info.path && this.app == "file")
+		{
+			// Fallback to check the "normal" place if path wasn't available
+			info.path = "/webdav.php/apps/" + this.dataset.app2 + "/" + this.dataset.id2 + "/" + this.entry_id;
+		}
+
+		if(typeof info["type"] !== "undefined")
+		{
+			// Links use "type" for mimetype.
+			info.mime = info["type"];
+		}
+
+		return info;
+	}
+
 	/**
 	 * If app or entry_id has changed, we'll update the title
 	 *
@@ -246,13 +285,17 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	_handleClick(_ev : MouseEvent) : boolean
 	{
-		this.egw().open(Object.assign({
-			app: this.app,
-			id: this.entry_id
-		}, this.dataset), "", this.link_hook, this.dataset.extra_args, this.target_app || this.app, this.target_app);
+		// If super didn't handle it (returns false), just use egw.open()
+		if(super._handleClick(_ev))
+		{
+			this.egw().open(Object.assign({
+				app: this.app,
+				id: this.entry_id
+			}, this.dataset), "", this.link_hook, this.dataset.extra_args, this.target_app || this.app, this.target_app);
+		}
 
 		_ev.stopImmediatePropagation();
-		return true;
+		return false;
 	}
 
 	getDetachedAttributes(_attrs : string[])
@@ -289,6 +332,7 @@ export interface LinkInfo
 	link_id? : string;
 	comment? : string
 	icon? : string,
+	help? : string,
 
 	// Extra information for things like files
 	download_url? : string,
