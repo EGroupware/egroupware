@@ -21,14 +21,14 @@ use EGroupware\Api;
  * To not allow to view arbitrary files, allowed filenames are stored in the session.
  * Class fetches log-file periodically in chunks for 8k.
  * If fetch returns no new content next request will be in 2s, otherwise in 200ms.
- * As logfiles can be quiet huge, we display at max the last 32k of it!
+ * As logfiles can be quite huge, we display at max the last 32k of it!
  *
  * Example usage:
  *
  * $error_log = new Api\Json\Tail('/var/log/apache2/error_log');
  * echo $error_log->show();
  *
- * Strongly prefered for security reasons is to use a path relative to EGroupware's files_dir,
+ * Strongly preferred for security reasons is to use a path relative to EGroupware's files_dir,
  * eg. new Api\Json\Tail('groupdav/somelog')!
  */
 class Tail
@@ -36,7 +36,7 @@ class Tail
 	/**
 	 * Maximum size of single ajax request
 	 *
-	 * Currently also maximum size / 4 of displayed logfile content!
+	 * Currently, also maximum size / 4 of displayed logfile content!
 	 */
 	const MAX_CHUNK_SIZE = 8192;
 
@@ -194,12 +194,13 @@ class Tail
 		{
 			throw new Api\Exception\WrongParameter("Not allowed to download '$filename'!");
 		}
+		// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
+		ini_set('zlib.output_compression',0);
+		// SECOND: end all active output buffering
+		while(ob_end_clean()) {}
+
 		Api\Header\Content::type(basename($filename), 'text/plain');
 		if ($filename[0] != '/') $filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
-		for($n=ob_get_level(); $n > 0; --$n)
-		{
-			ob_end_clean();	// stop all output buffering, to NOT run into memory_limit
-		}
 		readfile($filename);
 		exit;
 	}
