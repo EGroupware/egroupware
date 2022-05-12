@@ -13,11 +13,11 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|textbox|textarea|button|colorpicker|description|image|link|link-string|link-list|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|textbox|textarea|button|colorpicker|description|image|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(vfs-mime)\s([^/>]+)/>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(vfs-mime|link|link-string|link-list)\s([^/>]+)/>#m';
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -70,7 +70,7 @@ function send_template()
 		// Change splitter dockside -> primary + vertical
 		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', static function ($matches) use ($name) {
 			$tag = 'et2-split';
-			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[1], $attrs, PREG_PATTERN_ORDER);
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[1], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
 			$attrs['vertical'] = $attrs['orientation'] === 'h' ? "true" : "false";
@@ -192,7 +192,7 @@ function send_template()
 			// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
 			$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function ($matches) use ($name) {
 				$tag = 'et2-button';
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[2], $attrs, PREG_PATTERN_ORDER);
+				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
 				$attrs = array_combine($attrs[2], $attrs[3]);
 				// replace buttononly tag with noSubmit="true" attribute
 				if (!empty($matches[1]))
@@ -234,7 +234,7 @@ function send_template()
 
 			// handling of date and partially implemented select widget (no search or tags attribute), incl. removing of type attribute
 			$str = preg_replace_callback('#<(select)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/', $matches[3], $attrs, PREG_PATTERN_ORDER);
+				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 				$attrs = array_combine($attrs[2], $attrs[3]);
 
 				// add et2-prefix for <date-* and <select-* without search or tags attribute

@@ -156,15 +156,15 @@
 				<row class="dialogFooterToolbar">
 					<hbox orient="0" span="all">
 						<hbox>
-							<button statustext="Edit this entry" label="Edit" id="button[edit]" image="edit" background_image="1"/>
-							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
-							<button statustext="Saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
-							<button statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+							<button hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit" background_image="1"/>
+							<button hideOnReadonly="true" statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
+							<button hideOnReadonly="true" statustext="Saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
+							<button hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 							<html id="js"/>
 						</hbox>
-						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
-						<button align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete" background_image="1"/>
+						<button hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
+						<button hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete" background_image="1"/>
 					</hbox>
 				</row>
 			</rows>
