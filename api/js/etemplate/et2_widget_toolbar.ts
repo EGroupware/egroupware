@@ -19,12 +19,13 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {egw_getObjectManager, egwActionObject, egwActionObjectManager} from '../egw_action/egw_action.js';
-import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {et2_checkbox} from "./et2_widget_checkbox";
 import {et2_IInput} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import {Et2DropdownButton} from "./Et2DropdownButton/Et2DropdownButton";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
 
 /**
  * This toolbar gets its contents from its actions
@@ -339,6 +340,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					{
 						let info = {
 							id: id || root.children[id].id,
+							value: id || root.children[id].id,
 							label: root.children[id].caption
 						};
 						let childaction = {};
@@ -378,7 +380,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 							{
 								childaction['group'] = root.group;
 							}
-							that._make_button (childaction);
+							that._make_button(childaction);
 						}
 					}
 				};
@@ -388,12 +390,26 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					continue;
 				}
 
-				let dropdown = <et2_dropdown_button>et2_createWidget("dropdown_button", {
-					id: action.id
-				},this);
+				let dropdown = <Et2DropdownButton><unknown>loadWebComponent("et2-dropdown-button", {
+					id: this.id + "-" + action.id,
+					label: action.caption,
+					class: this.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown',
+					onchange: function(selected, dropdown)
+					{
+						let action = that._actionManager.getActionById(selected.attr('data-id'));
+						dropdown.set_label(action.caption);
+						if(action)
+						{
+							this.value = action.id;
+							action.execute([]);
+						}
+						//console.debug(selected, this, action);
+					}.bind(action),
+					image: action.iconUrl || ''
+				}, this);
 
-				dropdown.set_select_options(children);
-				dropdown.set_label (action.caption);
+				dropdown.select_options = Object.values(children);
+
 				//Set default selected action
 				if (typeof action.children !='undefined')
 				{
@@ -401,23 +417,12 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					{
 						if(action.children[child].default)
 						{
-							dropdown.set_label(action.children[child].caption);
+							dropdown.label = action.children[child].caption;
 						}
 					}
 				}
-				dropdown.set_image (action.iconUrl||'');
-				dropdown.onchange = jQuery.proxy(function(selected, dropdown)
-				{
-					let action = that._actionManager.getActionById(selected.attr('data-id'));
-					dropdown.set_label(action.caption);
-					if(action)
-					{
-						this.value = action.id;
-						action.execute([]);
-					}
-					//console.debug(selected, this, action);
-				},action);
-				dropdown.onclick = jQuery.proxy(function(selected, dropdown)
+
+				dropdown.onclick = function(selected, dropdown)
 				{
 					let action = that._actionManager.getActionById(this.getValue());
 					if(action)
@@ -426,11 +431,8 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 						action.execute([]);
 					}
 					//console.debug(selected, this, action);
-				},dropdown);
-				jQuery(dropdown.getDOMNode())
-					.attr('id',this.id + '-' + dropdown.id)
-					.addClass(this.preference[action.id]?'et2_toolbar-dropdown et2_toolbar-dropdown-menulist':'et2_toolbar-dropdown')
-					.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
+				}.bind(dropdown);
+				jQuery(dropdown.getDOMNode()).appendTo(this.preference[action.id] ? this.actionbox.children()[1] : jQuery('[data-group=' + action.group + ']', this.actionlist));
 			}
 			else
 			{
