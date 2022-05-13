@@ -1,8 +1,19 @@
 import sl_css from '@shoelace-style/shoelace/dist/themes/light.styles.js';
 import {css} from "lit";
 
+import {registerIconLibrary} from '@shoelace-style/shoelace/dist/utilities/icon-library.js';
+import {egw} from "../../jsapi/egw_global";
+
+/**
+ * This makes sure the built-in icons can be found
+ */
+registerIconLibrary('default', {
+	resolver: name => `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg`,
+});
+
 /**
  * Customise shoelace styles to match our stuff
+ * External CSS will override this
  */
 export default [sl_css, css`
   :root,
@@ -17,8 +28,5 @@ export default [sl_css, css`
       --sl-input-border-radius-small: 2px;
       --sl-input-border-radius-medium: 3px;
   }
-  .menu-item {
-    width: --sl-input-height-medium;
-    max-height: var(--sl-input-height-medium)
-  }
+ 
   `];

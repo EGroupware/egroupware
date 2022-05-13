@@ -42,29 +42,65 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 			css`
             :host {
                 display: contents;
+                /**
+                Adapt shoelace color variables to what we want 
+                Maybe some logical variables from etemplate2.css here? 
+                */
+				--sl-color-primary-50: rgb(244, 246, 247);
+				--sl-color-primary-100: var(--gray-10);
+				--sl-color-primary-300: var(--input-border-color);
+				--sl-color-primary-400: var(--input-border-color);
+				--sl-color-primary-700: #505050;
             }
-            .menu-item  {
-				width: --sl-input-height-medium;
-				max-height: var(--sl-input-height-medium)
-			}
-			
-           
             `,
 		];
+	}
+
+	static get properties()
+	{
+		return {
+			...super.properties
+		};
 	}
 
 	// Make sure imports stay
 	private _group : SlButtonGroup;
 	private _dropdow : SlDropdown;
 
+	constructor()
+	{
+		super();
+
+		// Bind handlers - parent already got click
+		this._handleSelect = this._handleSelect.bind(this);
+	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
 
-		// Rebind click to just the button
+		// Rebind click to just the main button, not the whole thing
 		this.removeEventListener("click", this._handleClick);
-		this.buttonNode.addEventListener("click", this._handleClick);
+
+		// Need to wait until update is done and these exist
+		this.updateComplete.then(() =>
+		{
+			this.buttonNode.addEventListener("click", this._handleClick);
+			this.dropdownNode.addEventListener('sl-select', this._handleSelect);
+		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		if(this.buttonNode)
+		{
+			this.buttonNode.removeEventListener("click", this._handleClick);
+		}
+		if(this.dropdownNode)
+		{
+			this.dropdownNode.removeEventListener('sl-select', this._handleSelect);
+		}
 	}
 
 	render()
@@ -96,9 +132,42 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
             </sl-menu-item>`;
 	}
 
+	protected _handleSelect(ev)
+	{
+		let oldValue = this._value;
+		this._value = ev.detail.item.value;
+
+		// Trigger a change event
+		this.dispatchEvent(new Event("change"));
+
+		// Let it bubble, if anyone else is interested
+	}
+
+	get value() : string
+	{
+		return this._value;
+	}
+
+	set value(new_value)
+	{
+		let oldValue = this.value;
+		this._value = new_value;
+		this.requestUpdate("value", oldValue);
+	}
+
 	get buttonNode()
 	{
-		return this.shadowRoot.querySelector("et2-button");
+		return this.shadowRoot.querySelector("#main");
+	}
+
+	get triggerButtonNode()
+	{
+		return this.shadowRoot.querySelector("[slot='trigger']");
+	}
+
+	get dropdownNode()
+	{
+		return this.shadowRoot.querySelector("sl-dropdown");
 	}
 }
 
