@@ -1281,7 +1281,8 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	if(!widget_class)
 	{
 		// Given node has no registered class.  Try some of our special things (remove type, fallback to actual node)
-		let tries = [_nodeName.split('-')[0], _template_node.nodeName.toLowerCase()];
+		let tries = [_nodeName.split('-')[0]];
+		if (_template_node.nodeName) tries = tries.concat(_template_node.nodeName.toLowerCase());
 		for(let i = 0; i < tries.length && !window.customElements.get(_nodeName); i++)
 		{
 			_nodeName = tries[i];

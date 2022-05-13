@@ -247,6 +247,9 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		// nope
 	}
 }
-
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-description", Et2Description);
+
+export class Et2Label extends Et2Description {}
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-label", Et2Label);

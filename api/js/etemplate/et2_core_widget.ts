@@ -77,7 +77,7 @@ export function et2_register_widget(_constructor, _types)
  * 	is not passed, it will default to null. Then you have to attach the element
  * 	to a parent using the addChild or insertChild method.
  */
-export function et2_createWidget(_name: string, _attrs: object, _parent?: any): et2_widget
+export function et2_createWidget(_name: string, _attrs: object, _parent?: any): et2_widget|HTMLElement
 {
 	"use strict";
 
@@ -94,6 +94,12 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 	if (typeof _parent == "undefined")
 	{
 		_parent = null;
+	}
+
+	// check and return web-components in case widget is no longer available as legacy widget
+	if (typeof et2_registry[_name] === "undefined" && window.customElements.get('et2-'+_name))
+	{
+		return loadWebComponent('et2-'+_name, _attrs, _parent);
 	}
 
 	// Parse the "readonly" and "type" flag for this element here, as they

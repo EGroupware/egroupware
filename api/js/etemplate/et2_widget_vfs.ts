@@ -16,7 +16,6 @@
 	et2_core_valueWidget;
 	et2_widget_description;
 	et2_widget_file;
-	expose;
 */
 
 import {et2_valueWidget} from "./et2_core_valueWidget";
@@ -24,17 +23,17 @@ import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_wi
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_description} from "./et2_widget_description";
-import {et2_selectAccount_ro} from "./et2_widget_selectAccount";
 import {et2_file} from "./et2_widget_file";
 import {et2_inputWidget} from "./et2_core_inputWidget";
-import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
-import {expose} from "./expose";
 import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import type {Et2VfsMime} from "./Vfs/Et2VfsMime";
+import type {Et2VfsUid, Et2VfsGid} from "./Et2Vfs/Et2VfsUid";
 
 /**
  * Class which implements the "vfs" XET-Tag
@@ -483,230 +482,22 @@ export class et2_vfsName_ro extends et2_textbox_ro
 et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 
 /**
-* vfs-mime: icon for mimetype of file, or thumbnail
-* incl. optional link overlay icon, if file is a symlink
-*
-* Creates following structure
-* <span class="iconOverlayContainer">
-*   <img class="et2_vfs vfsMimeIcon" src="..."/>
-*   <span class="overlayContainer">
-*      <img class="overlay" src="etemplate/templates/default/images/link.png"/>
-*   </span>
-* </span>
-*
-* span.overlayContainer is optional and only generated for symlinks
-* @augments et2_valueWidget
+ * vfs-mime: icon for mimetype of file, or thumbnail
+ * incl. optional link overlay icon, if file is a symlink
+ *
+ * Creates following structure
+ * <span class="iconOverlayContainer">
+ *   <img class="et2_vfs vfsMimeIcon" src="..."/>
+ *   <span class="overlayContainer">
+ *      <img class="overlay" src="etemplate/templates/default/images/link.png"/>
+ *   </span>
+ * </span>
+ *
+ * span.overlayContainer is optional and only generated for symlinks
+ * @augments et2_valueWidget
+ * @deprecated use Et2VfsMime
 */
-export class et2_vfsMime extends expose(class et2_vfsMime extends et2_valueWidget implements et2_IDetachedDOM, et2_IExposable
-{
-	static readonly _attributes : any = {
-		"value": {
-			"type": "any", // Object
-			"description": "Array of (stat) information about the file"
-		},
-		"size": {
-			"name": "Icon size",
-			"type": "integer",
-			"description": "Size of icon / thumbnail, in pixels",
-			"default": et2_no_init
-		},
-		"expose_callback":{
-			"name": "expose_callback",
-			"type": "js",
-			"default": et2_no_init,
-			"description": "JS code which is executed when expose slides."
-		},
-		expose_view: {
-			name: "Expose view",
-			type: "boolean",
-			default: true,
-			description: "Clicking on an image would popup an expose view"
-		},
-		thumb_mime_size:{
-			name: "Image thumbnail size",
-			type: "string",
-			default:"",
-			description:" Size of thumbnail in pixel for specified mime type with syntax of: mime_type(s),size (eg. image,video,128)"
-		}
-
-	};
-
-	public static readonly legacyOptions : string[] = ["size"];
-	iconOverlayContainer : JQuery = null;
-	overlayContainer : JQuery;
-	image : JQuery = null;
-
-	/**
-	 * Constructor
-	 *
-	 * @memberOf et2_vfsMime
-	 */
-	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
-	{
-		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_vfsMime._attributes, _child || {}));
-		this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
-		this.image = jQuery(document.createElement("img"));
-		this.image.addClass("et2_vfs vfsMimeIcon");
-		this.iconOverlayContainer.append(this.image);
-		this.setDOMNode(this.iconOverlayContainer[0]);
-	}
-
-	/**
-	 * Handler for expose slide action, from expose
-	 * Returns data needed for the given index, or false to let expose handle it
-	 *
-	 * @param {Gallery} gallery
-	 * @param {integer} index
-	 * @param {DOMNode} slide
-	 * @return {Array} array of objects consist of media contnet
-	 */
-	expose_onslide(gallery, index, slide)
-	{
-		var content = false;
-		if (this.options.expose_callback && typeof this.options.expose_callback == 'function')
-		{
-			//Call the callback to load more items
-			content = this.options.expose_callback.call(this,[gallery, index]);
-			if (content) this.add(content);
-		}
-		return content;
-	}
-
-	/**
-	 * Function to get media content to feed the expose
-	 *
-	 * @param {type} _value
-	 * @returns {Array} return an array of object consists of media content
-	 */
-	getMedia(_value)
-	{
-		let base_url = egw.webserverUrl.match(/^\/ig/)?egw(window).window.location.origin + egw.webserverUrl:egw.webserverUrl;
-		let mediaContent = [{
-			title: _value.name,
-			type: _value.mime,
-			href: _value.download_url
-		}];
-		// check if download_url is not already an url (some stream-wrappers allow to specify that!)
-		if (_value.download_url && (_value.download_url[0] == '/' || _value.download_url.substr(0, 4) != 'http'))
-		{
-			mediaContent[0].href = base_url + _value.download_url;
-
-			if (mediaContent[0].href && mediaContent[0].href.match(/\/webdav.php/,'ig'))
-			{
-				mediaContent[0]["download_href"] = mediaContent[0].href + '?download';
-			}
-		}
-		if (_value && _value.mime && _value.mime.match(/video\//,'ig'))
-		{
-			mediaContent[0]["thumbnail"] = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
-		}
-		else
-		{
-			mediaContent[0]["thumbnail"] = _value.path && _value.mime ?
-				this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime) :
-				this.image.attr('src')+ '&thheight=128';
-		}
-		return mediaContent;
-	}
-
-	set_value(_value)
-	{
-		if (typeof _value !== 'object')
-		{
-			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
-			// Keep going, will be 'unknown type'
-		}
-		let src = this.egw().mime_icon(_value.mime, _value.path, undefined, _value.mtime);
-		if(src)
-		{
-			// Set size of thumbnail
-			if(src.indexOf("thumbnail.php") > -1)
-			{
-				if(this.options.size)
-				{
-					src += "&thsize="+this.options.size;
-				}
-				else if (this.options.thumb_mime_size)
-				{
-					let mime_size = this.options.thumb_mime_size.split(',');
-					let mime_regex = RegExp(_value.mime.split('/')[0]);
-					if (typeof mime_size != 'undefined' && jQuery.isArray(mime_size)
-						&& !isNaN(mime_size[mime_size.length-1]) && isNaN(mime_size[0]) && this.options.thumb_mime_size.match(mime_regex[0], 'ig'))
-					{
-						src += "&thsize=" + mime_size[mime_size.length-1];
-					}
-				}
-				this.image.css("max-width", "100%");
-			}
-			this.image.attr("src", src);
-			// tooltip for mimetypes with available detailed thumbnail
-			if (_value.mime && _value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/))
-			{
-				let tooltip_target = this.image.parent().parent().parent().length > 0 ?
-					// Nextmatch row
-					this.image.parent().parent().parent() :
-					// Not in nextmatch
-					this.image.parent();
-				tooltip_target.tooltip({
-					items:"img",
-					position: {my:"right top", at:"left top", collision:"flipfit"},
-					content: function(){
-						return '<img src="'+this.src+'&thsize=512"/>';
-					}
-				});
-			}
-		}
-		// add/remove link icon, if file is (not) a symlink
-		if ((_value.mode & et2_vfsMode.types.l) == et2_vfsMode.types.l)
-		{
-			if (typeof this.overlayContainer == 'undefined')
-			{
-
-				this.overlayContainer = jQuery(document.createElement('span')).addClass('overlayContainer');
-				this.overlayContainer.append(jQuery(document.createElement('img'))
-					.addClass('overlay').attr('src', this.egw().image('link', 'etemplate')));
-				this.iconOverlayContainer.append(this.overlayContainer);
-			}
-		}
-		else if (typeof this.overlayContainer != 'undefined')
-		{
-			this.overlayContainer.remove();
-			delete this.overlayContainer;
-		}
-	}
-
-	/**
-	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
-	 * Override to add needed attributes
-	 *
-	 * @param {array} _attrs array of attribute-names to push further names onto
-	 */
-	getDetachedAttributes(_attrs)
-	{
-		_attrs.push("value", "class");
-	}
-
-	getDetachedNodes()
-	{
-		return [this.node, this.iconOverlayContainer[0], this.image[0]];
-	}
-
-	setDetachedAttributes(_nodes, _values)
-	{
-		this.iconOverlayContainer = jQuery(_nodes[1]);
-		this.image = jQuery(_nodes[2]);
-		this.node = _nodes[0];
-		this.overlayContainer = _nodes[0].children[1];
-		if(typeof _values['class'] != "undefined") {
-			this.image.addClass(_values['class']);
-		}
-		if(typeof _values['value'] != "undefined") {
-			this.set_value(_values['value']);
-		}
-	}
-}){};
-et2_register_widget(et2_vfsMime, ["vfs-mime"]);
+export type et2_vfsMime = Et2VfsMime;
 
 /**
 * vfs-size
@@ -901,26 +692,13 @@ et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 * vfs-uid / vfs-gid: Displays the name for an ID.
 * Same as read-only selectAccount, except if there's no user it shows "root"
 *
-* @augments et2_selectAccount_ro
+* @deprecated use Et2VfsUid
 */
-export class et2_vfsUid extends et2_selectAccount_ro
-{
-	/**
-	 * @memberOf et2_vfsUid
-	 * @param _node
-	 * @param _value
-	 */
-	set_title(_node, _value)
-	{
-		if(_value == "")
-		{
-			arguments[1] = "root";
-		}
-		super.set_title(_node, _value);
-	}
-}
-et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
-
+export type et2_vfsUid = Et2VfsUid;
+/**
+ * @deprecated use Et2VfsGid
+ */
+export type et2_vfsGid = Et2VfsGid;
 
 /* vfs-upload aka VFS file:       displays either download and delete (x) links or a file upload
 *   + ID is either a vfs path or colon separated $app:$id:$relative_path, eg: infolog:123:special/offer

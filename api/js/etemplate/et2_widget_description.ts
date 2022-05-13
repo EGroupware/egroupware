@@ -11,22 +11,23 @@
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_baseWidget;
-	expose;
 */
 
 import {et2_activateLinks, et2_csvSplit, et2_insertLinkText, et2_no_init} from "./et2_core_common";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from './et2_core_baseWidget'
 import {et2_inputWidget} from "./et2_core_inputWidget";
-import {expose} from "./expose";
-import {et2_IDetachedDOM, et2_IExposable, et2_IInputNode} from "./et2_core_interfaces";
+import {et2_IDetachedDOM, et2_IInputNode} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 
 /**
  * Class which implements the "description" XET-Tag
+ *
+ * @deprecated use Et2Description
+ * @todo remove after extending widgets are ported to web-components
  */
-export class et2_description extends expose(class et2_description extends et2_baseWidget implements et2_IDetachedDOM, et2_IExposable
+export class et2_description extends et2_baseWidget implements et2_IDetachedDOM
 {
 	static readonly _attributes : any = {
 		"label": {
@@ -443,5 +444,4 @@ export class et2_description extends expose(class et2_description extends et2_ba
 			}
 		});
 	}
-}){};
-et2_register_widget(et2_description, ["description", "label"]);
+}

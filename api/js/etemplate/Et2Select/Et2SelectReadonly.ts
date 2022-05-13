@@ -52,7 +52,7 @@ li {
 	}
 
 	private __select_options : SelectOption[];
-	private __value : string[];
+	private __value : string|string[];
 
 	constructor()
 	{

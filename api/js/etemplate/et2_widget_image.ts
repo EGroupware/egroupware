@@ -29,7 +29,8 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 /**
  * Class which implements the "image" XET-Tag
  *
- * @augments et2_baseWidget
+ * @deprecated use Et2Image
+ * @ToDo remove when all extending classes are ported to web-components
  */
 export class et2_image extends et2_baseWidget implements et2_IDetachedDOM
 {
@@ -297,7 +298,6 @@ export class et2_image extends et2_baseWidget implements et2_IDetachedDOM
 		}
 	}
 }
-et2_register_widget(et2_image, ["image"]);
 
 /**
 * Widget displaying an application icon
