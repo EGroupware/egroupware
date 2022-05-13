@@ -629,7 +629,11 @@ const Et2WidgetMixin = (superClass) =>
 			{
 				// Get the constructor - if the widget is readonly, use the special "_ro"
 				// constructor if it is available
-				let constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
+				if (typeof et2_registry[_nodeName] === "undefined")
+				{
+					_nodeName = 'placeholder';
+				}
+				let constructor = et2_registry[_nodeName];
 				if(readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 				{
 					constructor = et2_registry[_nodeName + "_ro"];
@@ -1257,7 +1261,7 @@ export const Et2Widget = dedupeMixin(Et2WidgetMixin);
  * @param parent Parent widget
  */
 // @ts-ignore Et2Widget is I guess not the right type
-export function loadWebComponent(_nodeName : string, _template_node : Element|{[index: string]: any}, parent : Et2Widget | et2_widget) : HTMLElement
+export function loadWebComponent(_nodeName : string, _template_node : Element|{[index: string]: any}, parent : Et2Widget|et2_widget|undefined) : HTMLElement
 {
 	let attrs = {};
 	let load_children = true;
@@ -1293,10 +1297,10 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 			throw Error("Unknown or unregistered WebComponent '" + _nodeName + "', could not find class.  Also checked for " + tries.join(','));
 		}
 	}
-	const readonly = parent.getArrayMgr("readonlys") ?
+	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
 						 attrs["id"], attrs["readonly"],
-						 typeof parent.readonly !== "undefined" ? parent.readonly : false) : false;
+						 typeof parent?.readonly !== "undefined" ? parent.readonly : false) : false;
 	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
 	{
 		_nodeName += "_ro";
@@ -1306,7 +1310,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	let widget = <Et2Widget>document.createElement(_nodeName);
 	widget.textContent = _template_node.textContent;
 
-	widget.setParent(parent);
+	if (parent) widget.setParent(parent);
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
 	widget.readOnly = readonly;

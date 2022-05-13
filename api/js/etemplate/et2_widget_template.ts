@@ -135,9 +135,8 @@ export class et2_template extends et2_DOMWidget
 						{
 							var splitted = template_name.split('.');
 							var app = splitted.shift();
-							// use template base url from initial template, to continue using webdav, if that was loaded via webdav
-							url = this.getRoot()._inst.template_base_url + app + "/templates/default/" +
-								splitted.join('.') + ".xet" + (cache_buster ? '?download=' + cache_buster : '');
+							url = egw.link('/'+ app + "/templates/default/" +
+								splitted.join('.')+ ".xet", {download:cache_buster? cache_buster :(new Date).valueOf()});
 						}
 						// if server did not give a cache-buster, fall back to current time
 						if (url.indexOf('?') == -1) url += '?download='+(new Date).valueOf();

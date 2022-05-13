@@ -47,6 +47,17 @@ export function et2_loadXMLFromURL(_url : string, _callback? : Function, _contex
 	{
 		win = egw.top;
 	}
+
+	// if preprocessor is missing --> add it
+	if (_url.indexOf('/etemplate.php/') === -1)
+	{
+		const parts = _url.match(/^(.*)(\/[^/]+\/templates\/.*)$/);
+		if (parts)
+		{
+			_url = parts[1]+'/api/etemplate.php'+parts[2];
+		}
+	}
+
 	// we add the full url (protocol and domain) as sometimes just the path
 	// gives a CSP error interpreting it as file:///path
 	// (if there are a enough 404 errors in html content ...)
@@ -114,6 +125,3 @@ export function et2_readAttrWithDefault(_node : HTMLElement, _name : string, _de
 
 	return (val === null) ? _default : val;
 }
-
-
-

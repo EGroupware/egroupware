@@ -106,17 +106,21 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 	// determine which constructor is used
 	var nodeName = _attrs["type"] = _name;
 	var readonly = _attrs["readonly"] =
-		typeof _attrs["readonly"] == "undefined" ? false : _attrs["readonly"];
+		typeof _attrs["readonly"] === "undefined" ? false : _attrs["readonly"];
 
 	// Get the constructor - if the widget is readonly, use the special "_ro"
 	// constructor if it is available
-	let constructor = et2_registry[typeof et2_registry[nodeName] == "undefined" ? 'placeholder' : nodeName];
-	if (readonly && typeof et2_registry[nodeName + "_ro"] != "undefined")
+	if (typeof et2_registry[nodeName] === "undefined")
+	{
+		nodeName = 'placeholder';
+	}
+	let constructor = et2_registry[nodeName];
+	if (readonly && typeof et2_registry[nodeName + "_ro"] !== "undefined")
 	{
 		constructor = et2_registry[nodeName + "_ro"];
 	}
 
-	// Do an sanity check for the attributes
+	// Do a sanity check for the attributes
 	ClassWithAttributes.generateAttributeSet(et2_attribute_registry[constructor.name], _attrs);
 	// Create the new widget and return it
 	return new constructor(_parent, _attrs);
@@ -784,9 +788,19 @@ export class et2_widget extends ClassWithAttributes
 			_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
 		}
 
+		// check and return web-components in case widget is no longer available as legacy widget
+		if (typeof et2_registry[_nodeName] === "undefined" && window.customElements.get('et2-'+_nodeName))
+		{
+			return loadWebComponent('et2-'+_nodeName, _node, this);
+		}
+
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
-		var constructor = et2_registry[typeof et2_registry[_nodeName] == "undefined" ? 'placeholder' : _nodeName];
+		if (typeof et2_registry[_nodeName] === "undefined")
+		{
+			_nodeName = 'placeholder';
+		}
+		let constructor = et2_registry[_nodeName];
 		if(readonly === true && typeof et2_registry[_nodeName + "_ro"] != "undefined")
 		{
 			constructor = et2_registry[_nodeName + "_ro"];

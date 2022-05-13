@@ -528,7 +528,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				// Not set
 				if(options[i] === "") continue;
 
-				const attr = widget.attributes[legacy[i]];
+				const attr = widget.attributes[legacy[i]] || {};
 				let attrValue = options[i];
 
 				// If the attribute is marked as boolean, parse the

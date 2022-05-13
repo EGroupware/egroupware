@@ -830,7 +830,7 @@ export class etemplate2
 	public isDirty()
 	{
 		let dirty = false;
-		this._widgetContainer.iterateOver(function(_widget)
+		this._widgetContainer?.iterateOver(function(_widget)
 		{
 			if(_widget.isDirty && _widget.isDirty())
 			{
