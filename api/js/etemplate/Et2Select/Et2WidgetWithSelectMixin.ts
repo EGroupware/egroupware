@@ -144,13 +144,13 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		 *
 		 * @param new_options
 		 */
-		set select_options(new_options : SelectOption[] | { [key : string] : string })
+		set select_options(new_options : SelectOption[])
 		{
 			const old_options = this.__select_options;
 			if(!Array.isArray(new_options))
 			{
 				let fixed_options = [];
-				for(let key in new_options)
+				for(let key in <any>new_options)
 				{
 					fixed_options.push({value: key, label: new_options[key]});
 				}
@@ -169,12 +169,12 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		 * @deprecated assign to select_options
 		 * @param new_options
 		 */
-		set_select_options(new_options : SelectOption[] | { [key : string] : string })
+		set_select_options(new_options : SelectOption[] | { [key : string] : string }[])
 		{
-			this.select_options = new_options;
+			this.select_options = <SelectOption[]>new_options;
 		}
 
-		get select_options()
+		get select_options() : SelectOption[]
 		{
 			return this.__select_options;
 		}
