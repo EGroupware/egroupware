@@ -267,7 +267,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			return "";
 		}
 
-		if(typeof this.image == 'undefined')
+		if(!this.image)
 		{
 			for(const image in Et2Button.default_background_images)
 			{
