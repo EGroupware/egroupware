@@ -108,7 +108,7 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		return html`
             <sl-button-group>
                 <sl-button size="medium">${this.label}</sl-button>
-                <sl-dropdown placement="bottom-end">
+                <sl-dropdown placement="bottom-end" hoist>
                     <sl-button size="medium" slot="trigger" caret></sl-button>
                     <sl-menu>
                         ${repeat(this.select_options, (option : SelectOption) => option.value, option =>
