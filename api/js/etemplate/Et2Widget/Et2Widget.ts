@@ -215,12 +215,13 @@ const Et2WidgetMixin = (superClass) =>
 
 			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
-			this.addEventListener("click", this._handleClick);
 		}
 
 		connectedCallback()
 		{
 			super.connectedCallback();
+
+			this.addEventListener("click", this._handleClick);
 
 			if(this.statustext)
 			{
