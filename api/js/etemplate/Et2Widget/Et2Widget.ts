@@ -626,7 +626,7 @@ const Et2WidgetMixin = (superClass) =>
 			}
 
 			let widget;
-			if(undefined == window.customElements.get(_node.nodeName.toLowerCase()))
+			if(undefined == window.customElements.get(_nodeName))
 			{
 				// Get the constructor - if the widget is readonly, use the special "_ro"
 				// constructor if it is available
