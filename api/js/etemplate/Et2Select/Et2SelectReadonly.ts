@@ -52,7 +52,7 @@ li {
 	}
 
 	private __select_options : SelectOption[];
-	private __value : string|string[];
+	private __value : string[];
 
 	constructor()
 	{
@@ -99,7 +99,7 @@ li {
 		this.value = value;
 	}
 
-	set value(new_value)
+	set value(new_value : string | string[])
 	{
 		// Split anything that is still a CSV
 		if(typeof new_value == "string" && new_value.indexOf(",") > 0)
