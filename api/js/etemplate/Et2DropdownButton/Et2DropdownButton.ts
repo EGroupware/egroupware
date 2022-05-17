@@ -41,7 +41,10 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 			buttonStyles,
 			css`
             :host {
-                display: contents;
+            	/* Avoid unwanted style overlap from button */
+            	border: none;
+            	background-color: none;
+            	
                 /**
                 Adapt shoelace color variables to what we want 
                 Maybe some logical variables from etemplate2.css here? 
@@ -51,6 +54,9 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 				--sl-color-primary-300: var(--input-border-color);
 				--sl-color-primary-400: var(--input-border-color);
 				--sl-color-primary-700: #505050;
+            }
+            :host(:active), :host([active]) {
+            	background-color: initial;
             }
             `,
 		];
@@ -85,8 +91,14 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		// Need to wait until update is done and these exist
 		this.updateComplete.then(() =>
 		{
-			this.buttonNode.addEventListener("click", this._handleClick);
-			this.dropdownNode.addEventListener('sl-select', this._handleSelect);
+			if(this.buttonNode)
+			{
+				this.buttonNode.addEventListener("click", this._handleClick);
+			}
+			if(this.dropdownNode)
+			{
+				this.dropdownNode.addEventListener('sl-select', this._handleSelect);
+			}
 		});
 	}
 
