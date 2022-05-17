@@ -15,7 +15,7 @@
 	vendor.bower-asset.jquery.dist.jquery;
 */
 
-import {egwAction,egwActionImplementation} from "./egw_action.js";
+import {egwAction,egwActionImplementation, egw_getObjectManager} from "./egw_action.js";
 import {getPopupImplementation} from "./egw_action_popup.js";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS} from "./egw_action_constants.js";
 
@@ -155,7 +155,7 @@ export function egwDragActionImplementation()
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
-		var node = _aoi.getDOMNode();
+		var node = _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
 		if (node)
 		{
@@ -182,219 +182,104 @@ export function egwDragActionImplementation()
 					break;
 				}
 			}
-			if(action)
-			{
-				/**
-				 * We found an action with dragType 'file', so by holding Ctrl
-				 * key & dragging, user can drag from browser to system.
-				 * The global data store must provide a full, absolute URL in 'download_url'
-				 * and a mime in 'mime'.
-				 *
-				 * Unfortunately, Native DnD to drag the file conflicts with jQueryUI draggable,
-				 * which handles all the other DnD actions.  We get around this by:
-				 * 1.  Require the user indicate a file drag with Ctrl key
-				 * 2.  Disable jQueryUI draggable, then turn on native draggable attribute
-				 * This way we can at least toggle which one is operating, so they
-				 * both work alternately if not together.
-				 */
-				// Native DnD - Doesn't play nice with jQueryUI Sortable
-				// Tell jQuery to include this property
-				jQuery.event.props.push('dataTransfer');
 
-				jQuery(node).off("mousedown")
-					.on("mousedown", function(event) {
-							var dragOut = _context.isDragOut(event);
-							jQuery(this).attr("draggable", dragOut? "true" : "");
-							jQuery(node).draggable("option","disabled",dragOut);
-							if (dragOut)
-							{
-								// Disabling draggable adds some UI classes, but we don't care so remove them
-								jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
-
-							}
-							else
-							{
-								if (_context.isSelection(event))
-								{
-									jQuery(node).draggable("disable");
-									// Disabling draggable adds some UI classes, but we don't care so remove them
-									jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
-								}
-								else if(event.which != 3)
-								{
-									document.getSelection().removeAllRanges();
-								}
-								if(!(dragOut) || !this.addEventListener) return;
-							}
-					})
-					.on ("mouseup", function (event){
-						if (_context.isSelection(event))
-							jQuery(node).draggable("enable");
-					})
-					.on("dragstart", function(event) {
-						if(_context.isSelection(event)) return;
-						if(event.dataTransfer == null) {
-							return;
-						}
-						event.dataTransfer.effectAllowed="copy";
-
-						// Get all selected
-						// Multiples aren't supported by event.dataTransfer, yet, so
-						// select only the row they clicked on.
-						// var selected = _context.getSelectedLinks('drag');
-						var selected = [_context];
-						_context.parent.setAllSelected(false);
-						_context.setSelected(true);
-
-						// Set file data
-						for(var i = 0; i < selected.length; i++)
-						{
-							var data = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
-							if(data && data.mime && data.download_url)
-							{
-								var url = data.download_url;
-
-								// NEED an absolute URL
-								if (url[0] == '/') url = egw.link(url);
-								// egw.link adds the webserver, but that might not be an absolute URL - try again
-								if (url[0] == '/') url = window.location.origin+url;
-
-								// Unfortunately, dragging files is currently only supported by Chrome
-								if(navigator && navigator.userAgent.indexOf('Chrome'))
-								{
-									event.dataTransfer.setData("DownloadURL", data.mime+':'+data.name+':'+url);
-								}
-								else
-								{
-									// Include URL as a fallback
-									event.dataTransfer.setData("text/uri-list", url);
-								}
-							}
-						}
-						if(event.dataTransfer.types.length == 0)
-						{
-							// No file data? Abort: drag does nothing
-							event.preventDefault();
-							return;
-						}
-
-						// Create drag icon
-						_callback.call(_context, _context, ai);
-						// Drag icon must be visible for setDragImage() - we'll remove it on drag
-						jQuery("body").append(ai.helper);
-						event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
-					})
-					.on("drag", function(e) {
-						// Remove the helper, it has been copied into the dataTransfer object now
-						// Hopefully user didn't notice it...
-						if(e.dataTransfer != null)
-						{
-							ai.helper.remove();
-						}
-					});
-			}
-			else
+			if(!action)
 			{
 				// Use Ctrl key in order to select content
 				jQuery(node).off("mousedown")
 						.on({
 							mousedown: function(event){
 								if (_context.isSelection(event)){
-									jQuery(node).draggable("disable");
-									// Disabling draggable adds some UI classes, but we don't care so remove them
-									jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
+									node.setAttribute("draggable", false);
 								}
 								else if(event.which != 3)
 								{
 									document.getSelection().removeAllRanges();
 								}
 							},
-							mouseup: function (){
-								jQuery(node).draggable("enable");
+							mouseup: function (event){
+								if (_context.isSelection(event)){
+									// TODO: save and retrive selected range
+									node.setAttribute("draggable", true);
+								}
+								else
+								{
+									node.setAttribute("draggable", true);
+								}
+
 								// Set cursor back to auto. Seems FF can't handle cursor reversion
 								jQuery('body').css({cursor:'auto'});
 							}
 				});
 			}
-			jQuery(node).draggable(
-				{
-					"distance": 20,
-					"cursor": "move",
-					"cursorAt": { top: -12, left: -12 },
-					"helper": function(e) {
-						// The helper function is called before the start function
-						// is evoked. Call the given callback function. The callback
-						// function will gather the selected elements and action links
-						// and call the doExecuteImplementation function. This
-						// will call the onExecute function of the first action
-						// in order to obtain the helper object (stored in ai.helper)
-						// and the multiple dragDropTypes (ai.ddTypes)
-						 _callback.call(_context, false, ai);
 
-						jQuery(node).data("ddTypes", ai.ddTypes);
-						jQuery(node).data("selected", ai.selected);
+			node.setAttribute('draggable', true);
+			node.addEventListener('dragstart', function(event) {
+				if(action) {
+					if (_context.isSelection(event)) return;
 
-						if (ai.helper)
-						{
-							// Add a basic class to the helper in order to standardize the background layout
-							ai.helper.addClass('et2_egw_action_ddHelper');
+					// Get all selected
+					// Multiples aren't supported by event.dataTransfer, yet, so
+					// select only the row they clicked on.
+					var selected = [_context];
+					_context.parent.setAllSelected(false);
+					_context.setSelected(true);
 
-							// Append the helper object to the body element - this
-							// fixes a bug in IE: If the element isn't inserted into
-							// the DOM-tree jquery appends it to the parent node.
-							// In case this is a table it doesn't work correctly
-							jQuery("body").append(ai.helper);
-							return ai.helper;
-						}
+					// Set file data
+					for (let i = 0; i < selected.length; i++) {
+						let d = selected[i].data || egw.dataGetUIDdata(selected[i].id).data || {};
+						if (d && d.mime && d.download_url) {
+							var url = d.download_url;
 
-						// Return an empty div if the helper dom node is not set
-						return ai.defaultDDHelper(ai.selected);//jQuery(document.createElement("div")).addClass('et2_egw_action_ddHelper');
-					},
-					"start": function(e) {
-						return ai.helper != null;
-					},
-					revert: function(valid)
-					{
-						var dTarget = this;
-						if (!valid)
-						{
-							// Tolerance value of pixels arround the draggable target
-							// to distinguish whether the action was intended for dragging or selecting content.
-							var tipTelorance = 10;
-							var helperTop = ai.helper.position().top;
+							// NEED an absolute URL
+							if (url[0] == '/') url = egw.link(url);
+							// egw.link adds the webserver, but that might not be an absolute URL - try again
+							if (url[0] == '/') url = window.location.origin + url;
 
-							if (helperTop >= dTarget.offset().top
-									&& helperTop <= (dTarget.height() + dTarget.offset().top) + tipTelorance)
-							{
-								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ?
-									egw.lang("Ctrl") : egw.lang("Command ⌘");
-								// We can not use Ctrl key for FF because FF has specific function
-								// for element selection bound to ctrl key and it would confilicts
-								// with our selection functionallity. Therefore, we use Alt key when
-								// it comes to FF regardless of OS.
-								if (window.navigator.userAgent.match(/firefox/i)) key = egw.lang("Alt");
-								egw.message(egw.lang('Hold [%1] key to select text eg. to copy it', key), 'info');
+							// Unfortunately, dragging files is currently only supported by Chrome
+							if (navigator && navigator.userAgent.indexOf('Chrome')) {
+								event.dataTransfer.setData("DownloadURL", d.mime + ':' + d.name + ':' + url);
+							} else {
+								// Include URL as a fallback
+								event.dataTransfer.setData("text/uri-list", url);
 							}
-
-							// Invalid target
-							return true;
 						}
-						else
-						{
-							// Valid target
-							return false;
-						}
-					},
-					// Solves problem with scroll position changing in the grid
-					// component
-					"refreshPositions": true,
-					"scroll": false,
-					//"containment": "document",
-					"iframeFix": true,
-					"delay": 300
+					}
+					if (event.dataTransfer.types.length == 0) {
+						// No file data? Abort: drag does nothing
+						event.preventDefault();
+						return;
+					}
 				}
-			);
+				// The helper function is called before the start function
+				// is evoked. Call the given callback function. The callback
+				// function will gather the selected elements and action links
+				// and call the doExecuteImplementation function. This
+				// will call the onExecute function of the first action
+				// in order to obtain the helper object (stored in ai.helper)
+				// and the multiple dragDropTypes (ai.ddTypes)
+				_callback.call(_context, false, ai);
 
+				const data = {
+					ddTypes: ai.ddTypes,
+					selected: ai.selected.map((item) => {
+						return {id: item.id}
+					})
+				};
+
+				if (!ai.helper)
+				{
+					ai.helper = ai.defaultDDHelper(ai.selected);
+				}
+				// Add a basic class to the helper in order to standardize the background layout
+				ai.helper[0].classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
+				document.body.append(ai.helper[0]);
+				this.classList.add('drag--moving');
+				event.dataTransfer.setData('application/json', JSON.stringify(data))
+				event.dataTransfer.effectAllowed = 'move';
+
+				event.dataTransfer.setDragImage(ai.helper[0], 12, 12);
+			} , false);
 
 			return true;
 		}
@@ -405,8 +290,8 @@ export function egwDragActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node && jQuery(node).data("uiDraggable")){
-			jQuery(node).draggable("destroy");
+		if (node){
+			node.setAttribute('draggable', false);
 		}
 	};
 
@@ -544,131 +429,167 @@ export function egwDropActionImplementation()
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
-		var node = _aoi.getDOMNode();
+		var node = _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 		var self = this;
 
 		if (node)
 		{
-			jQuery(node).droppable(
-				{
-					"accept": function(_draggable) {
-						if (typeof _draggable.data("ddTypes") != "undefined")
-						{
-							var accepted = self._fetchAccepted(
-								_callback.call(_context, "links", self, EGW_AO_EXEC_THIS));
-
-							// Check whether all drag types of the selected objects
-							// are accepted
-							var ddTypes = _draggable.data("ddTypes");
-
-							for (var i = 0; i < ddTypes.length; i++)
-							{
-								if (accepted.indexOf(ddTypes[i]) != -1)
-								{
-									return true;
-								}
-							}
-
-							return false;
-						}
-					},
-					"drop": function(event, ui) {
-						var draggable = ui.draggable;
-						var ddTypes = draggable.data("ddTypes");
-						var selected = draggable.data("selected");
-
-						var links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
-
-						// Disable all links which only accept types which are not
-						// inside ddTypes
-						for (var k in links)
-						{
-							var accepted = links[k].actionObj.acceptedTypes;
-
-							var enabled = false;
-							for (var i = 0; i < ddTypes.length; i++)
-							{
-								if (accepted.indexOf(ddTypes[i]) != -1)
-								{
-									enabled = true;
-									break;
-								}
-							}
-							// Check for allowing multiple selected
-							if(!links[k].actionObj.allowOnMultiple && selected.length > 1)
-							{
-								enabled = false;
-							}
-							if(!enabled)
-							{
-								links[k].enabled = false;
-								links[k].visible = !links[k].actionObj.hideOnDisabled;
-							}
-						}
-
-						// Check whether there is only one link
-						var cnt = 0;
-						var lnk = null;
-						for (var k in links)
-						{
-							if (links[k].enabled && links[k].visible)
-							{
-								lnk = links[k];
-								cnt += 1 + links[k].actionObj.children.length;
-
-								// Add ui, so you know what happened where
-								lnk.actionObj.ui = ui;
-
-							}
-						}
-
-						if (cnt == 1)
-						{
-							window.setTimeout(function() {
-								lnk.actionObj.execute(selected, _context);
-							},0);
-						}
-
-						if (cnt > 1)
-						{
-							// More than one drop action link is associated
-							// to the drop event - show those as a popup menu
-							// and let the user decide which one to use.
-							// This is possible as the popup and the popup action
-							// object and the drop action object share same
-							// set of properties.
-							var popup = getPopupImplementation();
-							var pos = popup._getPageXY(event.originalEvent);
-
-							// Don't add paste actions, this is a drop
-							popup.auto_paste = false;
-
-							window.setTimeout(function() {
-								popup.doExecuteImplementation(pos, selected, links,
-									_context);
-								// Reset, popup is reused
-								popup.auto_paste = true;
-							}, 0); // Timeout is needed to have it working in IE
-						}
-						// Set cursor back to auto. Seems FF can't handle cursor reversion
-						jQuery('body').css({cursor:'auto'});
-
-						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
-					},
-					"over": function(event, ui) {
-						_aoi.triggerEvent(EGW_AI_DRAG_OVER,{event: event,ui:ui});
-					},
-					"out": function(event,ui) {
-						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
-					},
-					"tolerance": "pointer",
-					hoverClass: "drop-hover",
-					// Greedy is for nested droppables - children consume the action
-					greedy: true
+			node.classList.add('et2dropzone');
+			node.addEventListener('dragover', function (event) {
+				if (event.preventDefault) {
+					event.preventDefault();
 				}
-			);
+				event.dataTransfer.dropEffect = 'move';
+				_aoi.triggerEvent(EGW_AI_DRAG_OVER, {event: event});//TODO: check this event
+				return false;
+			}, false);
+
+			node.addEventListener('dragenter', function (event) {
+				// stop the event from being fired for its children
+				event.stopPropagation();
+
+				// don't trigger dragenter if we are entering the drag element
+				if (event.dataTransfer.getData('application/json') != '' || self.isTheDraggedDOM(this)) return;
+
+				this.classList.add('drop-hover');
+			}, false);
+
+			node.addEventListener('drop', function (event) {
+				event.preventDefault();
+
+				// remove the hover class
+				this.classList.remove('drop-hover');
+
+				// clean up the helper dom
+				const helper = document.querySelector('.et2_egw_action_ddHelper');
+				const ui = {
+					position: {top: event.clientY, left: event.clientX},
+					offset: {top: event.offsetY, left: event.offsetX}
+				}
+
+				if (helper) helper.remove();
+
+				let data = JSON.parse(event.dataTransfer.getData('application/json'));
+
+				if (!self.isAccepted(data, _context, _callback) || self.isTheDraggedDOM(this)) return;
+
+				let selected = data.selected.map((item) => {
+					return egw_getObjectManager(item.id, false)
+				});
+
+
+				var links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
+
+				// Disable all links which only accept types which are not
+				// inside ddTypes
+				for (var k in links) {
+					var accepted = links[k].actionObj.acceptedTypes;
+
+					var enabled = false;
+					for (var i = 0; i < data.ddTypes.length; i++) {
+						if (accepted.indexOf(data.ddTypes[i]) != -1) {
+							enabled = true;
+							break;
+						}
+					}
+					// Check for allowing multiple selected
+					if (!links[k].actionObj.allowOnMultiple && selected.length > 1) {
+						enabled = false;
+					}
+					if (!enabled) {
+						links[k].enabled = false;
+						links[k].visible = !links[k].actionObj.hideOnDisabled;
+					}
+				}
+
+				// Check whether there is only one link
+				var cnt = 0;
+				var lnk = null;
+				for (var k in links) {
+					if (links[k].enabled && links[k].visible) {
+						lnk = links[k];
+						cnt += 1 + links[k].actionObj.children.length;
+
+						// Add ui, so you know what happened where
+						lnk.actionObj.ui = ui;
+
+					}
+				}
+
+				if (cnt == 1) {
+					window.setTimeout(function () {
+						lnk.actionObj.execute(selected, _context);
+					}, 0);
+				}
+
+				if (cnt > 1) {
+					// More than one drop action link is associated
+					// to the drop event - show those as a popup menu
+					// and let the user decide which one to use.
+					// This is possible as the popup and the popup action
+					// object and the drop action object share same
+					// set of properties.
+					var popup = getPopupImplementation();
+					var pos = popup._getPageXY(event);
+
+					// Don't add paste actions, this is a drop
+					popup.auto_paste = false;
+
+					window.setTimeout(function () {
+						popup.doExecuteImplementation(pos, selected, links,
+							_context);
+						// Reset, popup is reused
+						popup.auto_paste = true;
+					}, 0); // Timeout is needed to have it working in IE
+				}
+				// Set cursor back to auto. Seems FF can't handle cursor reversion
+				jQuery('body').css({cursor: 'auto'});
+
+				_aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event});//TODO: check this event
+			}, false);
+
+			node.addEventListener('dragleave', function (event) {
+				// stop the event from being fired for its children
+				event.stopPropagation();
+
+				// don't trigger dragleave if we are leaving the drag element
+				if (event.dataTransfer.getData('application/json') != '') return;
+
+				_aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event});//TODO: check this event
+
+				this.classList.remove('drop-hover');
+			}, false);
 
 			return true;
+		}
+		return false;
+	};
+
+	ai.isTheDraggedDOM = function (_dom)
+	{
+		return _dom.classList.contains('drag--moving');
+	}
+
+	// check if given draggable is accepted for drop
+	ai.isAccepted = function(_data, _context, _callback, _node)
+	{
+		if (_node && !_node.classList.contains('et2dropzone')) return false;
+		if (typeof _data.ddTypes != "undefined")
+		{
+			const accepted = this._fetchAccepted(
+				_callback.call(_context, "links", this, EGW_AO_EXEC_THIS));
+
+			// Check whether all drag types of the selected objects
+			// are accepted
+			var ddTypes = _data.ddTypes;
+
+			for (let i = 0; i < ddTypes.length; i++)
+			{
+				if (accepted.indexOf(ddTypes[i]) != -1)
+				{
+					return true;
+				}
+			}
 		}
 		return false;
 	};
@@ -677,8 +598,8 @@ export function egwDropActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node && jQuery(node).data("uiDroppable")) {
-			jQuery(node).droppable("destroy");
+		if (node) {
+			node.classList.remove('et2dropzone');
 		}
 	};
 

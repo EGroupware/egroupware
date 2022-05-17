@@ -358,11 +358,8 @@ window.egw_fw_ui_tab = function(_parent, _contHeaderDiv, _contDiv, _icon, _callb
 
 	// If dragging something over the tab, activate that app
 	var tab = this.headerDiv;
-	jQuery(this.headerDiv).droppable({
-		tolerance:"pointer",
-		over: function() {
+	this.headerDiv.addEventListener('dragenter', (event) => {
 			tab._callbackObject.call(tab);
-		}
 	});
 
 
