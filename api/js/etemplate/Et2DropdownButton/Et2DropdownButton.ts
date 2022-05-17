@@ -11,7 +11,7 @@
 
 import {Et2Button} from "../Et2Button/Et2Button";
 import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
-import {css, html, repeat, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {buttonStyles} from "../Et2Button/ButtonStyles";
@@ -119,20 +119,17 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 	{
 		return html`
             <sl-button-group>
-                <sl-button size="medium">${this.label}</sl-button>
+                <sl-button size="medium" id="main">${this.label}</sl-button>
                 <sl-dropdown placement="bottom-end" hoist>
                     <sl-button size="medium" slot="trigger" caret></sl-button>
                     <sl-menu>
-                        ${repeat(this.select_options, (option : SelectOption) => option.value, option =>
-                                this._itemTemplate(option)
-                        )}
                     </sl-menu>
                 </sl-dropdown>
             </sl-button-group>
 		`;
 	}
 
-	protected _itemTemplate(option : SelectOption) : TemplateResult
+	protected _optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
@@ -165,6 +162,11 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		let oldValue = this.value;
 		this._value = new_value;
 		this.requestUpdate("value", oldValue);
+	}
+
+	get _optionTargetNode()
+	{
+		return this.shadowRoot.querySelector("sl-menu");
 	}
 
 	get buttonNode()
