@@ -3420,9 +3420,9 @@ span.et2_egw_action_ddHelper_itemsCnt {
 }
 
 /*Carousel thumbnails*/
-.blueimp-gallery > .indicator > li {
+div.blueimp-gallery > .indicator > li {
     display: inline-block;
-    width: auto;
+    width: initial;
     height: 100px;
     margin: 0;
     opacity: 1;
@@ -3431,11 +3431,11 @@ span.et2_egw_action_ddHelper_itemsCnt {
     border: 0;
 }
 
-.blueimp-gallery > .indicator > li > img {
+div.blueimp-gallery > .indicator > li > img {
     display: inline-block;
     width: auto;
     height: 100px;
-    margin:0;
+    margin: 0;
     cursor: pointer;
     z-index: -1;
     position: relative;
@@ -3456,8 +3456,14 @@ span.et2_egw_action_ddHelper_itemsCnt {
     box-shadow: inset 0px 0px 0px 4px rgba(255, 255, 255, 1);
     background-color: transparent;
 }
+
+div.blueimp-gallery > .indicator > li::after {
+    display: none;
+    content: initial;
+}
+
 /*Active thumbnail border*/
-.blueimp-gallery > .indicator > .active {
+div.blueimp-gallery > .indicator > .active {
     -webkit-box-shadow: inset 0px 0px 0px 4px #0c5da5;
     -moz-box-shadow: inset 0px 0px 0px 4px #0c5da5;
     box-shadow: inset 0px 0px 0px 4px #0c5da5;
@@ -3466,6 +3472,7 @@ span.et2_egw_action_ddHelper_itemsCnt {
 
 /*Slideshow Play/Pause button*/
 body:last-child .blueimp-gallery > .play-pause, .blueimp-gallery > .play-pause {
+    position: absolute;
     right: 50px;
     top: 20px;
     background-size: 44px 24px;
@@ -3473,17 +3480,24 @@ body:last-child .blueimp-gallery > .play-pause, .blueimp-gallery > .play-pause {
     height: 24px;
 }
 
+div.blueimp-gallery-playing > .play-pause {
+    background-position: -21px 0;
+}
+
 /*fullScreen button*/
 .blueimp-gallery > .fullscreen {
+    position: absolute;
     right: 85px;
     top: 20px;
     background-size: 24px;
     width: 24px;
     height: 24px;
+    display: none;
 }
 
 /* download button*/
 .blueimp-gallery > .download {
+    position: absolute;
     right: 120px;
     top: 20px;
     background: url(images/apply.svg) 0 0 no-repeat;
@@ -3491,6 +3505,15 @@ body:last-child .blueimp-gallery > .play-pause, .blueimp-gallery > .play-pause {
     height: 24px;
     width: 24px;
     filter: invert(1) brightness(1.5);
+    display: none;
+}
+
+.blueimp-gallery > .download:hover {
+    filter: invert(1) brightness(2);
+}
+
+.blueimp-gallery.blueimp-gallery-controls > .download, .blueimp-gallery.blueimp-gallery-controls > .fullscreen {
+    display: initial;
 }
 
 /*close button*/

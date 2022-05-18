@@ -11,7 +11,7 @@
 
 // Don't import this more than once
 import "../../../../node_modules/blueimp-gallery/js/blueimp-gallery.min";
-import {html, LitElement, render} from "@lion/core";
+import {css, html, LitElement, render} from "@lion/core";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
@@ -29,10 +29,10 @@ const IMAGE_DEFAULT = {
 // For filtering to only show things we can handle
 const MIME_REGEX = (navigator.userAgent.match(/(MSIE|Trident)/)) ?
 	// IE only supports video/mp4 mime type
-				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'ig') :
-				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'ig');
+				   new RegExp(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i') :
+				   new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))|(audio\/:*)/, 'i');
 
-const MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/, 'ig');
+const MIME_AUDIO_REGEX = new RegExp(/(audio\/:*)/, 'i');
 // open office document mime type currently supported by webodf editor
 const MIME_ODF_REGEX = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
 
@@ -75,6 +75,15 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 {
 	return class extends superclass
 	{
+		static get styles()
+		{
+			return [
+				...super.styles,
+				css`
+				`
+			];
+		}
+
 		static get properties()
 		{
 			return {
@@ -123,6 +132,9 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 			if(document.body.querySelector('#blueimp-gallery') == null)
 			{
+				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery.css");
+				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery-indicator.css");
+				this.egw().includeCSS(egw.webserverUrl + "/node_modules/blueimp-gallery/css/blueimp-gallery-video.css");
 				// Create Gallery DOM structure
 				render(this._galleryTemplate(), document.body);
 			}
@@ -283,7 +295,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// The class for all slides:
 				slideClass: 'slide',
 				// The slide class for loading elements:
-				slideLoadingClass: '',
+				slideLoadingClass: 'loading',
 				// The slide class for elements that failed to load:
 				slideErrorClass: 'slide-error',
 				// The class for the content element loaded into each slide:
@@ -412,10 +424,10 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
                     <h3 class="title"></h3>
                     <a class="prev">‹</a>
                     <a class="next">›</a>
-                    <a title="' + egw().lang('Close') + '" class="close">×</a><a
-                        title="' + egw().lang('Play/Pause') + '" class="play-pause"></a><a
-                        title="' + egw().lang('Fullscreen') + '" class="fullscreen"></a><a
-                        title="' + egw().lang('Save') + '" class="download"></a>
+                    <a title="${egw().lang('Close')}" class="close"></a>
+                    <a title="${egw().lang('Play/Pause')}" class="play-pause"></a>
+                    <a title="${egw().lang('Fullscreen')}" class="fullscreen"></a>
+                    <a title="${egw().lang('Save')}" class="download"></a>
                     <ol class="indicator"></ol>
                 </div>
 			`;
@@ -558,7 +570,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 					continue;
 				}
 				let data = egw.dataGetUIDdata(uid);
-				if(data && data.data && data.data.mime && MIME_REGEX.test(data.data.mime) && !MIME_AUDIO_REGEX.test(data.data.mime))
+				if(typeof data?.data?.mime === "string" && MIME_REGEX.test(data.data.mime) && !(MIME_AUDIO_REGEX.test(data.data.mime)))
 				{
 					let media = this.getMedia(data.data);
 					images[image_index++] = Object.assign({}, data.data, media[0]);
@@ -628,7 +640,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				this._gallery.slidesContainer[0].insertBefore(this._gallery.slides[(index + 1)], undefined);
 				if(active)
 				{
-					node.addClass(this._gallery.options.activeIndicatorClass);
+					node.classList.add(this._gallery.options.activeIndicatorClass);
 				}
 				this._gallery[var_name].splice(new_index, 1);
 			}
@@ -880,7 +892,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 					// Gallery always adds to the end, causing problems with pagination
 					for(let i in images)
 					{
-						this.set_slide(i, images[i]);
+						this.set_slide(parseInt(i), images[i]);
 					}
 				}
 			}
