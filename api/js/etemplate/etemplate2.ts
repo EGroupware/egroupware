@@ -40,6 +40,7 @@ import './Et2Dialog/Et2Dialog';
 import './Et2DropdownButton/Et2DropdownButton';
 import './Expose/Et2ImageExpose';
 import './Expose/Et2DescriptionExpose';
+import './Et2Favorites/Et2Favorites';
 import './Et2Image/Et2Image';
 import './Et2Link/Et2Link';
 import './Et2Link/Et2LinkList';

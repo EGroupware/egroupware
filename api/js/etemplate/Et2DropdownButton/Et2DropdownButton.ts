@@ -44,7 +44,8 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
             	/* Avoid unwanted style overlap from button */
             	border: none;
             	background-color: none;
-            	
+            }
+            :host, sl-menu {
                 /**
                 Adapt shoelace color variables to what we want 
                 Maybe some logical variables from etemplate2.css here? 
@@ -53,6 +54,7 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 				--sl-color-primary-100: var(--gray-10);
 				--sl-color-primary-300: var(--input-border-color);
 				--sl-color-primary-400: var(--input-border-color);
+				--sl-color-primary-600: var(--primary-background-color);
 				--sl-color-primary-700: #505050;
             }
             :host(:active), :host([active]) {
@@ -129,7 +131,7 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		`;
 	}
 
-	protected _optionTemplate(option : SelectOption) : TemplateResult
+	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
@@ -143,7 +145,6 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 
 	protected _handleSelect(ev)
 	{
-		let oldValue = this._value;
 		this._value = ev.detail.item.value;
 
 		// Trigger a change event
@@ -164,7 +165,7 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 		this.requestUpdate("value", oldValue);
 	}
 
-	get _optionTargetNode()
+	get _optionTargetNode() : HTMLElement
 	{
 		return this.shadowRoot.querySelector("sl-menu");
 	}
