@@ -14,7 +14,7 @@
 	et2_extension_nextmatch;
 */
 
-import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {WidgetConfig} from "./et2_core_widget";
 import {et2_INextmatchHeader} from "./et2_extension_nextmatch";
 import {et2_dropdown_button} from "./et2_widget_dropdown_button";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -430,5 +430,4 @@ export class et2_favorites extends et2_dropdown_button implements et2_INextmatch
 		this.init_filters(this);
 	}
 }
-et2_register_widget(et2_favorites, ["favorites"]);
 
