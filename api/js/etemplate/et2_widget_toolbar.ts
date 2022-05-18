@@ -394,9 +394,9 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					id: this.id + "-" + action.id,
 					label: action.caption,
 					class: this.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown',
-					onchange: function(selected, dropdown)
+					onchange: function(ev)
 					{
-						let action = that._actionManager.getActionById(selected.attr('data-id'));
+						let action = that._actionManager.getActionById(dropdown.value);
 						dropdown.set_label(action.caption);
 						if(action)
 						{
@@ -484,7 +484,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		toolbox.children().droppable({
 			accept:toolbar,
 			drop:function (event, ui) {
-				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),true);
+				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), true);
 				ui.draggable.appendTo(menulist);
 				if (that.actionlist.find(".ui-draggable").length == 0)
 				{
@@ -499,8 +499,18 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			const details = <HTMLDetailsElement>e.target;
 			if (details.open)
 			{
-				jQuery('html').on('click.outsideOfMenu', function(e){
-					if (e.target != details &&  e.target != details.firstChild) details.open = false;
+				jQuery('html').on('click.outsideOfMenu', function(e)
+				{
+					// Clicking on dropdown button should not close the details, we'd like to see the dropdown
+					if(e.target instanceof Et2DropdownButton)
+					{
+						return;
+					}
+					if(e.target != details && e.target != details.firstChild)
+					{
+						details.open = false;
+					}
+
 					jQuery('html').unbind('click.outsideOfMenu');
 				});
 			}
@@ -509,7 +519,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionlist.droppable({
 			tolerance:"pointer",
 			drop:function (event,ui) {
-				that.set_prefered(ui.draggable.attr('id').replace(that.id+'-',''),false);
+				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), false);
 				ui.draggable.appendTo(that.actionlist);
 				that._build_menu(actions);
 			}

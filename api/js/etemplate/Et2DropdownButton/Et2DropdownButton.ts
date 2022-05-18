@@ -60,6 +60,12 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
             :host(:active), :host([active]) {
             	background-color: initial;
             }
+            sl-button-group {
+            	display: initial;
+            }
+            #main {
+            	flex: 1 1 auto;
+            }
             `,
 		];
 	}
