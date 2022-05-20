@@ -114,7 +114,7 @@ export function et2_dataview_rowAOI(_node)
 	};
 
 	if (egwIsMobile()) {
-		/*jQuery(_node).swipe({
+		jQuery(_node).swipe({
 				allowPageScroll: "vertical",
 				longTapThreshold: 10,
 				swipe: function (event, direction, distance)
@@ -131,7 +131,7 @@ export function et2_dataview_rowAOI(_node)
 					return;
 				}
 
-		});*/
+		});
 	} else {
 		jQuery(_node).click(selectHandler);
 	}
