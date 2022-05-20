@@ -125,7 +125,7 @@ class Categories
 		if (!$app_name) $app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		if ($accountid === self::GLOBAL_ACCOUNT ||
-			$accountid < 0 && $GLOBALS['egw']->accounts->exists($accountid) == 2)
+			(int)$accountid < 0 && $GLOBALS['egw']->accounts->exists($accountid) == 2)
 		{
 			$this->account_id = (int) $accountid;
 		}

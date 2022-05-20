@@ -55,7 +55,7 @@ class setup
 	 */
 	var $html;
 
-	var $system_charset;
+	var $system_charset = 'utf-8';
 	var $lang;
 
 	var $ConfigDomain;
@@ -89,8 +89,6 @@ class setup
 		}
 		$this->detection = new setup_detection();
 		$this->process   = new setup_process();
-
-		if (preg_match('/^[a-z0-9-]+$/i', $_REQUEST['system_charset'])) $this->system_charset = $_REQUEST['system_charset'];
 
 		/* The setup application needs these */
 		if ($html) $this->html = new setup_html();
@@ -137,7 +135,7 @@ class setup
 					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
 
 					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
-					if (substr($this->db->Type,0,5) == 'mysql')	// we need to check the api version
+					if (substr($this->db->Type,0,5) === 'mysql')	// we need to check the api version
 					{
 						$api_version = $this->db->select($this->applications_table,'app_version',array(
 								'app_name'  => 'phpgwapi',

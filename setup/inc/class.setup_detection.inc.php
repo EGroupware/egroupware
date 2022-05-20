@@ -300,7 +300,8 @@ class setup_detection
 		if (!$setup_info) $setup_info = $GLOBALS['setup_info'];
 
 		try {	// catch DB errors
-			if (!$GLOBALS['egw_setup']->db->Link_ID)
+			if (empty($GLOBALS['egw_setup']->db->Link_ID) ||
+				empty($GLOBALS['egw_setup']->db->Link_ID->_connectionID))
 			{
 				$old = error_reporting();
 				error_reporting($old & ~E_WARNING);	// no warnings
@@ -310,11 +311,13 @@ class setup_detection
 				$GLOBALS['egw_setup']->set_table_names();
 			}
 		}
-		catch(Api\Db\Exception $e) {
+		catch(\Exception $e) {
 			// ignore error
 		}
 
-		if (!$GLOBALS['egw_setup']->db->Link_ID || !$GLOBALS['egw_setup']->db->Link_ID->_connectionID)
+		if (empty($GLOBALS['egw_setup']->db->Link_ID) ||
+			empty($GLOBALS['egw_setup']->db->Link_ID->_connectionID) ||
+			$GLOBALS['egw_setup']->db->Link_ID->_connectionID->connect_errno)
 		{
 			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 			return 1;

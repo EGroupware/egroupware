@@ -31,6 +31,6 @@ class Exception extends \Exception
 	// nothing fancy yet
 	function __construct($msg=null,$code=100,\Exception $previous=null)
 	{
-		return parent::__construct($msg, $code, $previous);
+		parent::__construct($msg, $code, $previous);
 	}
 }
