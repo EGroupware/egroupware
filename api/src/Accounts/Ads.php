@@ -2,10 +2,10 @@
 /**
  * API - accounts active directory backend
  *
- * @link http://www.egroupware.org
- * @author Ralf Becker <rb@stylite.de>
+ * @link https://www.egroupware.org
+ * @author Ralf Becker <rb@egroupware.org>
  *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
  */
@@ -38,6 +38,40 @@ use adLDAPException;
  */
 class Ads
 {
+	use LdapVlvSortRequestTrait;
+
+	/**
+	 * Timestamps ldap => egw used in several places
+	 *
+	 * @var string[]
+	 */
+	public $timestamps2egw = [
+		'whencreated' => 'account_created',
+		'whenchanged' => 'account_modified',
+		'accountexpires'  => 'account_expires',
+		'lastlogon' => 'account_lastlogin',
+	];
+
+	/**
+	 * Other attributes sorted by their default matching rule
+	 */
+	public $other2egw = [
+		'primarygroupid' => 'account_primary_group',
+	];
+
+	/**
+	 * String attributes which can be sorted by caseIgnoreMatch ldap => egw
+	 *
+	 * @var string[]
+	 */
+	public $attributes2egw = [
+		'samaccountname' => 'account_lid',
+		'sn'             => 'account_lastname',
+		'givenname'      => 'account_firstname',
+		'displayname'    => 'account_fullname',
+		'mail'           => 'account_email',
+	];
+
 	/**
 	 * Instance of adLDAP class
 	 *
@@ -116,42 +150,6 @@ class Ads
 	 * @var int[]
 	 */
 	public $ignore_membership = [ -513 ];
-	/**
-	 * Timestamps ldap => egw used in several places
-	 *
-	 * @var string[]
-	 */
-	public $timestamps2egw = [
-		'whencreated' => 'account_created',
-		'whenchanged' => 'account_modified',
-		'accountexpires'  => 'account_expires',
-		'lastlogon' => 'account_lastlogin',
-	];
-
-	/**
-	 * Other attributes sorted by their default matching rule
-	 */
-	public $other2egw = [
-		'primarygroupid' => 'account_primary_group',
-	];
-
-	/**
-	 * String attributes which can be sorted by caseIgnoreMatch ldap => egw
-	 *
-	 * @var string[]
-	 */
-	public $attributes2egw = [
-		'samaccountname' => 'account_lid',
-		'sn'             => 'account_lastname',
-		'givenname'      => 'account_firstname',
-		'displayname'    => 'account_fullname',
-		'mail'           => 'account_email',
-	];
-
-	/**
-	 * @var ServerInfo
-	 */
-	public $serverinfo;
 
 	/**
 	 * Enable extra debug messages via error_log (error always get logged)
@@ -174,7 +172,7 @@ class Ads
 	}
 
 	/**
-	 * Factory method and singelton to get adLDAP object for given configuration or default server config
+	 * Factory method and singleton to get adLDAP object for given configuration or default server config
 	 *
 	 * @param array $config=null values for keys 'ads_domain', 'ads_host' (required) and optional 'ads_admin_user', 'ads_admin_passwd', 'ads_connection'
 	 * @return adLDAP
@@ -1106,6 +1104,7 @@ class Ads
 				$user_filter = $type_filter;
 			// fall through
 			case 'g':
+				/** @noinspection SuspiciousAssignmentsInspection */
 				$type_filter = '(|(samaccounttype=' . adLDAP::ADLDAP_SECURITY_GLOBAL_GROUP .
 					')(samaccounttype=' . adLDAP::ADLDAP_SECURITY_LOCAL_GROUP . '))';
 				if (!empty($this->frontend->config['ads_group_filter']))
@@ -1121,52 +1120,13 @@ class Ads
 	}
 
 	/**
-	 * Get value(s) for LDAP_CONTROL_SORTREQUEST
-	 *
-	 * Sorting by multiple criteria is supported in LDAP RFC 2891, but - at least with Univention Samba - gives wired results,
-	 * Windows AD does NOT support it and gives an error if the oid is specified!
-	 *
-	 * @param ?string $order_by sql order string eg. "contact_email ASC"
-	 * @return array of arrays with values for keys 'attr', 'oid' (caseIgnoreMatch='2.5.13.3') and 'reverse'
-	 */
-	protected function sort_values($order_by)
-	{
-		$values = [];
-		while (!empty($order_by) && preg_match("/^(account_)?([^ ]+)( ASC| DESC)?,?/i", $order_by, $matches))
-		{
-			if (($attr = array_search('account_'.$matches[2], $this->timestamps2egw+$this->other2egw)))
-			{
-				$values[] = [
-					'attr' => $attr,
-					// use default match 'oid' => '',
-					'reverse' => strtoupper($matches[3]) === ' DESC',
-				];
-			}
-			elseif (($attr = array_search('account_'.$matches[2], $this->attributes2egw)))
-			{
-				$value = [
-					'attr' => $attr,
-					'oid' => '2.5.13.3',    // caseIgnoreMatch
-					'reverse' => strtoupper($matches[3]) === ' DESC',
-				];
-				// Windows AD does NOT support caseIgnoreMatch sorting, only it's default sorting
-				if ($this->serverinfo->activeDirectory(true)) unset($value['oid']);
-				$values[] = $value;
-			}
-			$order_by = substr($order_by, strlen($matches[0]));
-			if ($values) break;	// sorting by multiple criteria gives no result for Windows AD and wired result for Samba4
-		}
-		return $values;
-	}
-
-	/**
 	 * Query ADS by (optional) filter and (optional) account-type filter
 	 *
-	 * All reading ADS queries are done throught this methods.
+	 * All reading ADS queries are done through this method.
 	 *
 	 * @param string|array $attr_filter array with attribute => value pairs or filter string or empty
 	 * @param string|false $account_type u = user, g = group, default null = try both, false: no type_filter!
-	 * @param array $attrs =null default return account_lid, else return raw values from ldap-query
+	 * @param ?array $attrs =null default return account_lid, else return raw values from ldap-query
 	 * @param array $accounts =array() array to add filtered accounts too, default empty array
 	 * @param bool $filter_expired =false true: filter out expired users
 	 * @param string $order_by sql order string eg. "contact_email ASC"
@@ -1177,31 +1137,6 @@ class Ads
 	 */
 	protected function filter($attr_filter, $account_type=null, array $attrs=null, array $accounts=array(), $filter_expired=false, $order_by=null, &$start=null, $num_rows=null, &$total=null)
 	{
-		// check if we require sorting and server supports it
-		$control = [];
-		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_numeric($start) &&
-			$this->serverinfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
-			($sort_values = $this->sort_values($order_by)))
-		{
-			$control = [
-				[
-					'oid' => LDAP_CONTROL_SORTREQUEST,
-					//'iscritical' => TRUE,
-					'value' => $sort_values,
-				],
-				[
-					'oid' => LDAP_CONTROL_VLVREQUEST,
-					//'iscritical' => TRUE,
-					'value' => [
-						'before'	=> 0, // Return 0 entry before target
-						'after'		=> $num_rows-1, // total-1
-						'offset'	=> $start+1, // first = 1, NOT 0!
-						'count'		=> 0, // We have no idea how many entries there are
-					]
-				]
-			];
-		}
-
 		if (!$attr_filter)
 		{
 			$filter = $this->type_filter($account_type, $filter_expired);
@@ -1226,34 +1161,11 @@ class Ads
 			}
 			$filter .= ')';
 		}
-		if (!($sri = ldap_search($ds=$this->ldap_connection(), $context=$this->ads_context(), $filter,
-			$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control)))
+
+		if (($allValues = $this->vlvSortQuery($this->ads_context(), $filter, $attrs ?? self::$default_attributes, $order_by, $start, $num_rows, $total)))
 		{
-			if (($list_view_error = ldap_errno() === 76))	// 76: Virtual List View error --> retry without
+			foreach($allValues as $data)
 			{
-				$control = [];
-			}
-			error_log(__METHOD__.'('.json_encode($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returned ".array2string($sri).' '.ldap_error($ds).
-				($list_view_error ? ' retrying without virtual list view ...' : ' trying to reconnect ...'));
-
-			$sri = ldap_search($ds=$this->ldap_connection(!$list_view_error), $context=$this->ads_context(), $filter,
-				$attrs ? $attrs : self::$default_attributes, null, null, null, null, $control);
-		}
-
-		if ($sri && ($allValues = ldap_get_entries($ds, $sri)))
-		{
-			// check if given controls succeeded
-			if ($control && ldap_parse_result($ds, $sri, $errcode, $matcheddn, $errmsg, $referrals, $serverctrls) &&
-				(isset($serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'])))
-			{
-				$total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
-				$start = null;	// so caller does NOT run it's own limit
-			}
-
-			foreach($allValues as $key => $data)
-			{
-				if ($key === 'count') continue;
-
 				$sid = $data['objectsid'] = $this->adldap->utilities()->getTextSID($data['objectsid'][0]);
 				$rid = self::sid2account_id($sid);
 
@@ -1261,9 +1173,6 @@ class Ads
 					$attrs ? $data : Api\Translation::convert($data['samaccountname'][0], 'utf-8');
 			}
 		}
-		else if (self::$debug) error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter')=$sri allValues=".array2string($allValues));
-
-		//error_log(date('Y-m-d H:i:s ').__METHOD__.'('.array2string($attr_filter).", '$account_type', ".json_encode($attrs).", ..., expired=$filter_expired, order_by=$order_by, start=$start, num_rows=$num_rows) ldap_search($ds, '$context', '$filter')\n==> returning ".count($accounts)."/$total ".substr(array2string($accounts), 0, 1024)."\n--> ".function_backtrace()."\n\n", 3, '/var/lib/egroupware/ads.log');
 		return $accounts;
 	}
 
