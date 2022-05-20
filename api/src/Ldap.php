@@ -20,7 +20,7 @@ namespace EGroupware\Api;
  * Please note for SSL or TLS connections hostname has to be:
  * - SSL: "ldaps://host[:port]/"
  * - TLS: "tls://host[:port]/"
- * Both require certificats installed on the webserver, otherwise the connection will fail!
+ * Both require certificates installed on the webserver, otherwise the connection will fail!
  *
  * If multiple (space-separated) ldap hosts or urls are given, try them in order and
  * move first successful one to first place in session, to try not working ones
@@ -79,15 +79,16 @@ class Ldap
 	 * @param string $host ='' ldap host, default $GLOBALS['egw_info']['server']['ldap_host']
 	 * @param string $dn ='' ldap dn, default $GLOBALS['egw_info']['server']['ldap_root_dn']
 	 * @param string $passwd ='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
+	 * @param bool $reconnect default false, true: reconnect, even if we have an existing connection
 	 * @return object|resource|self|false resource/object from ldap_connect(), self or false on error
 	 * @throws Exception\AssertionFailed 'LDAP support unavailable!' (no ldap extension)
 	 * @throws Exception\NoPermission if bind fails
 	 */
-	public static function factory($ressource=true, $host='', $dn='', $passwd='')
+	public static function factory($ressource=true, $host='', $dn='', $passwd='', bool $reconnect=false)
 	{
 		$key = md5($host.':'.$dn.':'.$passwd);
 
-		if (!isset(self::$connections[$key]))
+		if (!isset(self::$connections[$key]) || $reconnect)
 		{
 			self::$connections[$key] = new Ldap(true);
 
@@ -301,5 +302,28 @@ class Ldap
 		{
 			Cache::setSession(__CLASS__, 'ldapServerInfo', $this->ldapserverinfo);
 		}
+	}
+
+	/**
+	 * Magic method called when object gets serialized
+	 *
+	 * We do NOT store ldapConnection, as we need to reconnect anyway.
+	 * PHP 8.1 gives an error when trying to serialize LDAP\Connection object!
+	 *
+	 * @return array
+	 */
+	function __sleep()
+	{
+		$vars = get_object_vars($this);
+		unset($vars['ds']);
+		return array_keys($vars);
+	}
+
+	/**
+	 * __wakeup function gets called by php while unserializing the object to reconnect with the ldap server
+	 */
+	function __wakeup()
+	{
+
 	}
 }

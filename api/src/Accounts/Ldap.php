@@ -32,14 +32,15 @@ use setup_cmd_ldap;
  *
  * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND
  * matches the LDAP search filter specified in setup >> configuration.
- * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
+ * A group is recognised by eGW, if it's in the group_context tree AND has the posixGroup object class AND
+ * - if specified - matches the LDAP group filter.
  * The group members are stored as memberuid's.
  *
  * The (positive) group-id's (gidnumber) of LDAP groups are mapped in this class to negative numeric
- * account_id's to not conflict with the user-id's, as both share in eGW internaly the same numberspace!
+ * account_id's to not conflict with the user-id's, as both share in eGW internally the same numberspace!
  *
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Ralf Becker <rb@egroupware.org>
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @access internal only use the interface provided by the accounts class
  */
 class Ldap
@@ -51,7 +52,7 @@ class Ldap
 	/**
 	 * resource with connection to the ldap server
 	 *
-	 * @var resource
+	 * @var resource|object
 	 */
 	var $ds;
 	/**
@@ -73,16 +74,20 @@ class Ldap
 	 */
 	var $group_context;
 	/**
+	 * Additional LDAP search filter for groups
+	 *
+	 * @var string
+	 */
+	var $group_filter;
+	/**
 	 * total number of found entries from get_list method
 	 *
 	 * @var int
 	 */
 	var $total;
 
-	var $ldapServerInfo;
-
 	/**
-	 * required classe for user and groups
+	 * required object-classes for user and groups
 	 *
 	 * @var array
 	 */
@@ -140,7 +145,7 @@ class Ldap
 	const CHANGE_ACCOUNT_LID = true;
 
 	/**
-	 * does backend requires password to be set, before allowing to enable an account
+	 * does backend require password to be set, before allowing to enable an account
 	 */
 	const REQUIRE_PASSWORD_FOR_ENABLE = false;
 
@@ -153,17 +158,34 @@ class Ldap
 	{
 		$this->frontend = $frontend;
 
-		// enable the caching in the session, done by the accounts class extending this class.
-		$this->use_session_cache = true;
-
-		$this->ldap = Api\Ldap::factory(false, $this->frontend->config['ldap_host'],
-			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
-		$this->ds = $this->ldap->ds;
+		$this->ds = $this->ldap_connection();
 
 		$this->user_context  = $this->frontend->config['ldap_context'];
 		$this->account_filter = $this->frontend->config['ldap_search_filter'];
-		$this->group_context = $this->frontend->config['ldap_group_context'] ?
-			$this->frontend->config['ldap_group_context'] : $this->frontend->config['ldap_context'];
+		$this->group_context = $this->frontend->config['ldap_group_context'] ?: $this->frontend->config['ldap_context'];
+		$this->group_filter = $this->frontend->config['ldap_group_filter'];
+		if (!empty($this->group_filter) && !($this->group_filter[0] === '(' && substr($this->group_filter, -1) === ')'))
+		{
+			$this->group_filter = '('.$this->group_filter.')';
+		}
+	}
+
+	/**
+	 * Get connection to ldap server and optionally reconnect
+	 *
+	 * @param boolean $reconnect =false true: reconnect even if already connected
+	 * @return resource|object
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NoPermission
+	 */
+	function ldap_connection(bool $reconnect = false)
+	{
+		$this->ldap = Api\Ldap::factory(false, $this->frontend->config['ldap_host'],
+			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw'], $reconnect);
+
+		$this->serverinfo = $this->ldap->getLDAPServerInfo();
+
+		return $this->ldap->ds;
 	}
 
 	/**
@@ -198,9 +220,9 @@ class Ldap
 		$data_utf8 = Api\Translation::convert($data,Api\Translation::charset(),'utf-8');
 		$members = $data['account_members'];
 
-		if (!is_object($this->ldapServerInfo))
+		if (!is_object($this->serverinfo))
 		{
-			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
+			$this->serverinfo = $this->ldap->getLDAPServerInfo();
 		}
 		// common code for users and groups
 		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
@@ -268,7 +290,7 @@ class Ldap
 						$add = $additional;
 						$additional = array_shift($add);
 					}
-					if ($this->ldapServerInfo->supportsObjectClass($additional))
+					if ($this->serverinfo->supportsObjectClass($additional))
 					{
 						$to_write['objectclass'][] = $additional;
 						if ($add) $to_write += $add;
@@ -303,7 +325,7 @@ class Ldap
 				$keep_objectclass = false;
 				if (is_array($forward)) list($forward,$extra_attr,$keep_objectclass) = $forward;
 
-				if ($this->ldapServerInfo->supportsObjectClass($objectclass) &&
+				if ($this->serverinfo->supportsObjectClass($objectclass) &&
 					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old[static::MAIL_ATTR]))
 				{
 					if ($data_utf8['account_email'])	// setting an email
@@ -435,13 +457,13 @@ class Ldap
 	protected function _read_group($account_id)
 	{
 		$group = array();
-		if (!is_object($this->ldapServerInfo))
+		if (!is_object($this->serverinfo))
 		{
-			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
+			$this->serverinfo = $this->ldap->getLDAPServerInfo($this->frontend->config['ldap_host']);
 		}
 		foreach(array_keys($this->group_mail_classes) as $objectclass)
 		{
-			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
+			if ($this->serverinfo->supportsObjectClass($objectclass))
 			{
 				$group['mailAllowed'] = $objectclass;
 				break;
@@ -707,17 +729,17 @@ class Ldap
 				$filter = "(&(objectclass=posixaccount)";
 				if (!empty($query) && $query != '*')
 				{
-					switch($param['query_type'])
+					switch ($param['query_type'])
 					{
 						case 'all':
 						default:
-							$query = '*'.$query;
-							// fall-through
+							$query = '*' . $query;
+						// fall-through
 						case 'start':
 							$query .= '*';
 							// use now exact, as otherwise groups have "**pattern**", which dont match anything
 							$param['query_type'] = 'exact';
-							// fall-through
+						// fall-through
 						case 'exact':
 							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
 							break;
@@ -727,11 +749,11 @@ class Ldap
 						case 'email':
 							$to_ldap = array(
 								'firstname' => 'givenname',
-								'lastname'  => 'sn',
-								'lid'       => 'uid',
-								'email'     => static::MAIL_ATTR,
+								'lastname' => 'sn',
+								'lid' => 'uid',
+								'email' => static::MAIL_ATTR,
 							);
-							$filter .= '('.$to_ldap[$param['query_type']].'=*'.$query.'*)';
+							$filter .= '(' . $to_ldap[$param['query_type']] . '=*' . $query . '*)';
 							break;
 					}
 				}
@@ -759,15 +781,15 @@ class Ldap
 					$order = isset($propertyMap[$orders[0]]) ? $propertyMap[$orders[0]] : 'uid';
 					$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
 					$fullSet = array();
-					foreach ((array)ldap_get_entries($this->ds, $sri) as $key => $entry)
+					foreach (ldap_get_entries($this->ds, $sri) ?: [] as $key => $entry)
 					{
 						if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 					}
 
 					if (is_numeric($param['type'])) // return only group-members
 					{
-						$relevantAccounts = array();
-						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
+						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" .
+							abs($param['type']) . "))",array('memberuid'));
 						$group = ldap_get_entries($this->ds, $sri);
 						$fullSet = $group[0]['memberuid'] ? array_intersect_key($fullSet, array_flip($group[0]['memberuid'])) : array();
 					}
@@ -779,12 +801,12 @@ class Ldap
 					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
 					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				}
+				/** @noinspection SuspiciousAssignmentsInspection */
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn',static::MAIL_ATTR,'shadowExpire','createtimestamp','modifytimestamp','objectclass','gidNumber'));
 
 				$utc_diff = date('Z');
-				foreach(ldap_get_entries($this->ds, $sri) as $allVals)
+				foreach(ldap_get_entries($this->ds, $sri) ?: [] as $allVals)
 				{
-					settype($allVals,'array');
 					$test = @$allVals['uid'][0];
 					if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 					{
@@ -821,9 +843,9 @@ class Ldap
 			}
 			if ($param['type'] == 'groups' || $param['type'] == 'both')
 			{
-				if(empty($query) || $query == '*')
+				if(empty($query) || $query === '*')
 				{
-					$filter = '(objectclass=posixgroup)';
+					$filter = "(&(objectclass=posixgroup)$this->group_filter)";
 				}
 				else
 				{
@@ -839,12 +861,11 @@ class Ldap
 						case 'exact':
 							break;
 					}
-					$filter = "(&(objectclass=posixgroup)(cn=$query))";
+					$filter = "(&(objectclass=posixgroup)(cn=$query)$this->group_filter)";
 				}
 				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
-				foreach((array)ldap_get_entries($this->ds, $sri) as $allVals)
+				foreach(ldap_get_entries($this->ds, $sri) ?: [] as $allVals)
 				{
-					settype($allVals,'array');
 					$test = $allVals['cn'][0];
 					if (!$this->frontend->config['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
@@ -965,10 +986,10 @@ class Ldap
 		if (in_array($which, array('account_lid','account_email')) && $account_type !== 'u') // groups only support account_(lid|email)
 		{
 			$attr = $which == 'account_lid' ? 'cn' : static::MAIL_ATTR;
-			$sri = ldap_search($this->ds, $this->group_context, '(&('.$attr.'=' . $name . ')(objectclass=posixgroup))', array('gidNumber'));
-			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if (@$allValues[0]['gidnumber'][0])
+			if (($sri = ldap_search($this->ds, $this->group_context, '(&('.$attr.'=' . $name . ")(objectclass=posixgroup)$this->group_filter)", array('gidNumber'))) &&
+				($allValues = ldap_get_entries($this->ds, $sri)) &&
+				!empty($allValues[0]['gidnumber'][0]))
 			{
 				return -$allValues[0]['gidnumber'][0];
 			}
@@ -983,11 +1004,9 @@ class Ldap
 		    return False;
 		}
 
-		$sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'));
-
-		$allValues = ldap_get_entries($this->ds, $sri);
-
-		if (@$allValues[0]['uidnumber'][0])
+		if (($sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'))) &&
+			($allValues = ldap_get_entries($this->ds, $sri)) &&
+			!empty($allValues[0]['uidnumber'][0]))
 		{
 			return (int)$allValues[0]['uidnumber'][0];
 		}
@@ -1047,7 +1066,7 @@ class Ldap
 	 *
 	 * @param int $_gid
 	 * @return array|boolean array with uidnumber => uid pairs,
-	 *	false if $_git is not nummeric and can't be resolved to a nummeric gid
+	 *	false if $_gid is not numeric and can't be resolved to a numeric gid
 	 */
 	function members($_gid)
 	{
@@ -1126,7 +1145,7 @@ class Ldap
 		if (!isset($objectclass))
 		{
 			$objectclass = $this->id2name($gid, 'objectclass');
-			// if we cant find objectclass, we might ge in the middle of a migration
+			// if we can't find objectclass, we might ge in the middle of a migration
 			if (!isset($objectclass))
 			{
 				Api\Accounts::cache_invalidate($gid);
@@ -1146,7 +1165,7 @@ class Ldap
 			$member_dn = $this->id2name($member, 'account_dn');
 			if (is_numeric($member)) $member = $this->id2name($member);
 
-			// only add a member, if we have the neccessary info / he already exists in migration
+			// only add a member, if we have the necessary info / he already exists in migration
 			if ($member && ($member_dn || !array_intersect(array('groupofnames','groupofuniquenames','univentiongroup'), $objectclass)))
 			{
 				$to_write['memberuid'][] = $member;
@@ -1286,7 +1305,7 @@ class Ldap
 			return -1;
 		}
 
-		$id = (int)$GLOBALS['egw_info']['server'][$key='last_id_'.$location];
+		$id = (int)$GLOBALS['egw_info']['server']['last_id_'.$location];
 
 		if (!$id || $id < $min)
 		{
@@ -1311,7 +1330,6 @@ class Ldap
 	{
 		$vars = get_object_vars($this);
 		unset($vars['ds']);
-		unset($this->ds);
 		return array_keys($vars);
 	}
 
@@ -1320,7 +1338,6 @@ class Ldap
 	 */
 	function __wakeup()
 	{
-		$this->ds = Api\Ldap::factory(true, $this->frontend->config['ldap_host'],
-			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
+		$this->ds = $this->ldap_connection();
 	}
 }
