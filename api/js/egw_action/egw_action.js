@@ -617,7 +617,7 @@ egwAction.prototype.execute = function(_senders, _target)
 
 	if(!this._check_confirm_mass_selections(_senders, _target))
 	{
-		this._check_confirm(_senders, _target);
+		return this._check_confirm(_senders, _target);
 	}
 };
 

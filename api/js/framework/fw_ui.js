@@ -19,7 +19,7 @@ import "../jquery/jquery.noconflict.js";
 import "../jquery/mousewheel/mousewheel.js";
 import '../jsapi/egw_inheritance.js';
 import {EGW_KEY_ENTER, EGW_KEY_SPACE} from '../egw_action/egw_action_constants.js';
-
+import interact from "@interactjs/interactjs";
 /**
  * ui siemenu entry class
  * Basic sidebar menu implementation
@@ -359,7 +359,8 @@ window.egw_fw_ui_tab = function(_parent, _contHeaderDiv, _contDiv, _icon, _callb
 	// If dragging something over the tab, activate that app
 	var tab = this.headerDiv;
 	this.headerDiv.addEventListener('dragenter', (event) => {
-			tab._callbackObject.call(tab);
+		event.stopPropagation();
+		tab._callbackObject.call(tab);
 	});
 
 

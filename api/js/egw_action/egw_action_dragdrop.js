@@ -214,8 +214,9 @@ export function egwDragActionImplementation()
 			}
 
 			node.setAttribute('draggable', true);
-			node.addEventListener('dragstart', function(event) {
-				if(action) {
+			const dragstart = function(event) {
+				event.stopImmediatePropagation();
+				if (action) {
 					if (_context.isSelection(event)) return;
 
 					// Get all selected
@@ -245,11 +246,15 @@ export function egwDragActionImplementation()
 							}
 						}
 					}
+					event.dataTransfer.effectAllowed = 'copy';
+
 					if (event.dataTransfer.types.length == 0) {
 						// No file data? Abort: drag does nothing
 						event.preventDefault();
 						return;
 					}
+				} else {
+					event.dataTransfer.effectAllowed = 'linkMove';
 				}
 				// The helper function is called before the start function
 				// is evoked. Call the given callback function. The callback
@@ -267,19 +272,30 @@ export function egwDragActionImplementation()
 					})
 				};
 
-				if (!ai.helper)
-				{
+				if (!ai.helper) {
 					ai.helper = ai.defaultDDHelper(ai.selected);
 				}
 				// Add a basic class to the helper in order to standardize the background layout
 				ai.helper[0].classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
 				document.body.append(ai.helper[0]);
 				this.classList.add('drag--moving');
+
 				event.dataTransfer.setData('application/json', JSON.stringify(data))
-				event.dataTransfer.effectAllowed = 'move';
 
 				event.dataTransfer.setDragImage(ai.helper[0], 12, 12);
-			} , false);
+
+				this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
+			};
+
+			const dragend = function(event){
+				const helper = document.querySelector('.et2_egw_action_ddHelper');
+				if (helper) helper.remove();
+			};
+
+			// Drag Event listeners
+			node.addEventListener('dragstart', dragstart , false);
+			node.addEventListener('dragend', dragend, false);
+
 
 			return true;
 		}
@@ -425,53 +441,73 @@ export function egwDropActionImplementation()
 {
 	var ai = new egwActionImplementation();
 
+	//keeps track of current drop element where dragged item's entered.
+	// it's necessary for dragenter/dragleave issue correction.
+	var currentDropEl = null;
+
 	ai.type = "drop";
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 		var self = this;
-
 		if (node)
 		{
 			node.classList.add('et2dropzone');
-			node.addEventListener('dragover', function (event) {
+			const dragover = function (event) {
 				if (event.preventDefault) {
 					event.preventDefault();
 				}
-				event.dataTransfer.dropEffect = 'move';
-				_aoi.triggerEvent(EGW_AI_DRAG_OVER, {event: event});//TODO: check this event
-				return false;
-			}, false);
+				if (!self.getTheDraggedDOM()) return ;
 
-			node.addEventListener('dragenter', function (event) {
-				// stop the event from being fired for its children
-				event.stopPropagation();
+					const data = {
+					event: event,
+					ui: self.getTheDraggedData()
+				};
+				_aoi.triggerEvent(EGW_AI_DRAG_OVER, data);
 
+				return true;
+
+			};
+
+			const dragenter = function (event) {
+				event.stopImmediatePropagation();
 				// don't trigger dragenter if we are entering the drag element
-				if (event.dataTransfer.getData('application/json') != '' || self.isTheDraggedDOM(this)) return;
+				// don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
+				if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == currentDropEl) return;
+
+				currentDropEl = event.currentTarget;
+				event.dataTransfer.dropEffect = 'link';
 
 				this.classList.add('drop-hover');
-			}, false);
 
-			node.addEventListener('drop', function (event) {
+				// stop the event from being fired for its children
 				event.preventDefault();
+				return false;
+			};
+
+			const drop = function (event) {
+				event.preventDefault();
+				// don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
+				if (!self.getTheDraggedDOM()) return ;
 
 				// remove the hover class
 				this.classList.remove('drop-hover');
 
-				// clean up the helper dom
-				const helper = document.querySelector('.et2_egw_action_ddHelper');
-				const ui = {
-					position: {top: event.clientY, left: event.clientX},
-					offset: {top: event.offsetY, left: event.offsetX}
-				}
+				const helper = self.getHelperDOM();
+				let ui = self.getTheDraggedData();
+				ui.position = {top: event.clientY, left: event.clientX};
+				ui.offset = {top: event.offsetY, left: event.offsetX};
 
-				if (helper) helper.remove();
 
 				let data = JSON.parse(event.dataTransfer.getData('application/json'));
 
-				if (!self.isAccepted(data, _context, _callback) || self.isTheDraggedDOM(this)) return;
+				if (!self.isAccepted(data, _context, _callback) || self.isTheDraggedDOM(this))
+				{
+					// clean up the helper dom
+					if (helper) helper.remove();
+					return;
+				}
 
 				let selected = data.selected.map((item) => {
 					return egw_getObjectManager(item.id, false)
@@ -545,20 +581,41 @@ export function egwDropActionImplementation()
 				// Set cursor back to auto. Seems FF can't handle cursor reversion
 				jQuery('body').css({cursor: 'auto'});
 
-				_aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event});//TODO: check this event
-			}, false);
+				_aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event, ui: self.getTheDraggedData()});
 
-			node.addEventListener('dragleave', function (event) {
-				// stop the event from being fired for its children
-				event.stopPropagation();
+				// clean up the helper dom
+				if (helper) helper.remove();
+
+			};
+
+			const dragleave = function (event) {
+				event.stopImmediatePropagation();
 
 				// don't trigger dragleave if we are leaving the drag element
-				if (event.dataTransfer.getData('application/json') != '') return;
+				// don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
+				if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == currentDropEl) return;
 
-				_aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event});//TODO: check this event
+				const data = {
+					event: event,
+					ui: self.getTheDraggedData()
+				};
+
+				_aoi.triggerEvent(EGW_AI_DRAG_OUT, data);
 
 				this.classList.remove('drop-hover');
-			}, false);
+
+				event.preventDefault();
+				return false;
+			};
+
+			// DND Event listeners
+			node.addEventListener('dragover', dragover, false);
+
+			node.addEventListener('dragenter', dragenter, false);
+
+			node.addEventListener('drop', drop, false);
+
+			node.addEventListener('dragleave', dragleave, false);
 
 			return true;
 		}
@@ -568,6 +625,33 @@ export function egwDropActionImplementation()
 	ai.isTheDraggedDOM = function (_dom)
 	{
 		return _dom.classList.contains('drag--moving');
+	}
+
+	ai.getTheDraggedDOM = function ()
+	{
+		return document.querySelector('.drag--moving');
+	}
+
+	ai.getHelperDOM = function ()
+	{
+		return document.querySelector('.et2_egw_action_ddHelper');
+	}
+
+	ai.getTheDraggedData = function()
+	{
+		let data = this.getTheDraggedDOM().dataset.egwactionobjid;
+		let selected = [];
+		if (data)
+		{
+			data = JSON.parse(data);
+			selected = data.map((item)=>{return egw_getObjectManager(item.id, false)});
+		}
+		return {
+			draggable: this.getTheDraggedDOM(),
+			helper: this.getHelperDOM(),
+			selected: selected
+
+		}
 	}
 
 	// check if given draggable is accepted for drop
