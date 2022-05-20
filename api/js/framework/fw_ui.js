@@ -19,7 +19,7 @@ import "../jquery/jquery.noconflict.js";
 import "../jquery/mousewheel/mousewheel.js";
 import '../jsapi/egw_inheritance.js';
 import {EGW_KEY_ENTER, EGW_KEY_SPACE} from '../egw_action/egw_action_constants.js';
-import interact from "@interactjs/interactjs";
+
 /**
  * ui siemenu entry class
  * Basic sidebar menu implementation
