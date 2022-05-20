@@ -354,7 +354,7 @@ class Translation
 					$loaded =& self::load_app_files($app, $l, null, $updated_load_via);
 				}
 				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, load_app(_files)() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-				if ($loaded || $instance_specific)
+				if ($loaded)
 				{
 					Cache::setCache($instance_specific ? Cache::INSTANCE : Cache::TREE,
 						__CLASS__, $app.':'.$l, $loaded);
@@ -401,12 +401,17 @@ class Translation
 			if (!isset(self::$db)) return;
 		}
 		$loaded = array();
-		foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
-			'lang'		=> $lang,
-			'app_name'	=> $app,
-		),__LINE__,__FILE__) as $row)
-		{
-			$loaded[strtolower($row['message_id'])] = $row['content'];
+		try {
+			foreach (self::$db->select(self::LANG_TABLE, 'message_id,content', array(
+				'lang' => $lang,
+				'app_name' => $app,
+			), __LINE__, __FILE__) as $row)
+			{
+				$loaded[strtolower($row['message_id'])] = $row['content'];
+			}
+		}
+		catch (Db\Exception $e) {
+			// ignore error
 		}
 		//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms to load ".count($loaded)." phrases");
 		return $loaded;

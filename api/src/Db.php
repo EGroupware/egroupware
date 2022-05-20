@@ -352,7 +352,7 @@ class Db
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
 				$new_connection = !$this->Link_ID || !$this->Link_ID->IsConnected();
 				$this->_connect($host);
-				// check if connected node is healty
+				// check if connected node is healthy
 				if ($new_connection && self::$health_check)
 				{
 					call_user_func(self::$health_check, $this);
