@@ -26,7 +26,6 @@ use EGroupware\Api\Ldap\ServerInfo;
  */
 class Ldap
 {
-
 	const ALL = 0;
 	const ACCOUNTS = 1;
 	const PERSONAL = 2;
@@ -372,7 +371,6 @@ class Ldap
 	{
 		$vars = get_object_vars($this);
 		unset($vars['ds']);
-		unset($this->ds);
 		return array_keys($vars);
 	}
 
@@ -472,7 +470,7 @@ class Ldap
 	 * reads contact data
 	 *
 	 * @param string|array $contact_id contact_id or array with values for id or account_id
-	 * @return array/boolean data if row could be retrived else False
+	 * @return array|false data if row could be retrived else False
 	*/
 	function read($contact_id)
 	{
@@ -512,6 +510,7 @@ class Ldap
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
 	 * @return int 0 on success and errno != 0 else
+	 * @noinspection UnsupportedStringOffsetOperationsInspection
 	 */
 	function save($keys=null)
 	{
@@ -785,7 +784,7 @@ class Ldap
 	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
-	 * @return array of matching rows (the row is an array of the cols) or False
+	 * @return array|false of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
@@ -1024,9 +1023,9 @@ class Ldap
 					elseif ($value)
 					{
 						if (is_array($value)) $filters .= '(|';
-						foreach((array)$value as $value)
+						foreach((array)$value as $val)
 						{
-							$filters .= '(uidNumber='.(int)$value.')';
+							$filters .= '(uidNumber='.(int)$val.')';
 						}
 						if (is_array($value)) $filters .= ')';
 					}
@@ -1192,7 +1191,7 @@ class Ldap
 	 * @param int $_addressbooktype
 	 * @param array $_skipPlugins =null schema-plugins to skip
 	 * @param string $order_by sql order string eg. "contact_email ASC"
-	 * @param null|int|array $start [$start,$offset], on return null, if result sorted and limited by server
+	 * @param null|int|array $start [$start, $num_rows], on return null, if result sorted and limited by server
 	 * @return array/boolean with eGW contacts or false on error
 	 */
 	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null)

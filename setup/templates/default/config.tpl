@@ -308,16 +308,21 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Additional_group_filter_(optional)}:</td>
+    <td><input name="newsettings[ldap_group_filter]" value="{value_ldap_group_filter}" size="40" /></td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_LDAP_rootdn} {lang_(searching_accounts_and_changing_passwords)}:</td>
     <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40" /></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_root_password}:</td>
     <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}" /></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
@@ -326,7 +331,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
      <td>{lang_Do_you_want_to_manage_homedirectory_and_loginshell_attributes?}:</td>
      <td>
       <select name="newsettings[ldap_extra_attributes]">
@@ -336,17 +341,17 @@
      </td>
     </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_LDAP_Default_homedirectory_prefix_(e.g._/home_for_/home/username)}:</td>
     <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}" /></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_Default_shell_(e.g._/bin/bash)}:</td>
     <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}" /></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
      <td>{lang_Allow_usernames_identical_to_system_users?}:</td>
      <td>
       <select name="newsettings[ldap_allow_systemusernames]">
@@ -356,7 +361,7 @@
      </td>
     </tr>
 
-   <tr class="row_off" valign="top">
+   <tr class="row_on" valign="top">
     <td colspan="2">
      <a href="account_migration.php"><b>{lang_Migration_between_eGroupWare_account_repositories}:</b></a>
     </td>
@@ -710,5 +715,3 @@
 </table>
 </form>
 <!-- END footer -->
-
-
