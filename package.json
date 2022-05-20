@@ -13,6 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-typescript": "^7.14.5",
+    "@interactjs/interactjs": "^1.10.11",
     "@open-wc/testing": "^3.0.3",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
@@ -64,9 +65,10 @@
     "@lion/textarea": "^0.14.0",
     "@shoelace-style/shoelace": "^2.0.0-beta.73",
     "blueimp-gallery": "^3.4.0",
+    "colortranslator": "^1.9.2",
+    "interactjs": "^1.10.11",
     "lit-flatpickr": "^0.3.0",
-    "sortablejs": "^1.14.0",
-    "colortranslator": "^1.9.2"
+    "sortablejs": "^1.14.0"
   },
   "engines": {
     "node": ">=14.0.0"

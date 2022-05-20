@@ -18,6 +18,9 @@ import {Et2DialogOverlay} from "./Et2DialogOverlay";
 import {Et2DialogContent} from "./Et2DialogContent";
 import {et2_template} from "../et2_widget_template";
 import {etemplate2} from "../etemplate2";
+import {IegwAppLocal} from "../../jsapi/egw_global";
+import interact from "@interactjs/interactjs/index";
+import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
 export interface DialogButton
 {
@@ -323,6 +326,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._onOpen = this._onOpen.bind(this);
 		this._onClose = this._onClose.bind(this);
 		this._onClick = this._onClick.bind(this);
+		this._onMoveResize = this._onMoveResize.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
 		// Create this here so we have something, otherwise the creator might continue with undefined while we
@@ -381,6 +385,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._button_id = null;
 		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
 
+		this._setupMoveResize(this._overlayContentNode);
 		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
 		this.dispatchEvent(new Event('open'));
 	}
@@ -442,6 +447,39 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			console.log(e);
 		}
 		this.close();
+	}
+
+	/**
+	 * Handle moving and resizing
+	 *
+	 * @param event
+	 */
+	_onMoveResize(event : InteractEvent)
+	{
+		let target = event.target
+		let x = (parseFloat(target.getAttribute('data-x')) || 0)
+		let y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+		// update the element's style
+		target.style.width = event.rect.width + 'px'
+		target.style.height = event.rect.height + 'px'
+
+		// translate when resizing from top or left edges
+		if(event.type == "resizemove")
+		{
+			x += event.deltaRect.left
+			y += event.deltaRect.top
+		}
+		else
+		{
+			x += event.delta.x;
+			y += event.delta.y;
+		}
+
+		target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+		target.setAttribute('data-x', x)
+		target.setAttribute('data-y', y)
 	}
 
 	/**
@@ -699,6 +737,42 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 	}
 
+	_setupMoveResize(element)
+	{
+		// Quick calculation of min size - dialog is made up of header, content & buttons
+		let minHeight = 0;
+		for(let e of element.shadowRoot.querySelector('.overlay').children)
+		{
+			minHeight += e.getBoundingClientRect().height + parseFloat(getComputedStyle(e).marginTop) + parseFloat(getComputedStyle(e).marginBottom)
+		}
+
+		interact(element)
+			.resizable({
+				edges: {bottom: true, right: true},
+				listeners: {
+					move: this._onMoveResize
+				},
+				modifiers: [
+					// keep the edges inside the parent
+					interact.modifiers.restrictEdges({
+						outer: 'parent'
+					}),
+
+					// minimum size
+					interact.modifiers.restrictSize({
+						min: {width: 100, height: minHeight}
+					})
+				]
+			})
+
+			.draggable({
+				allowFrom: ".overlay__heading",
+				listeners: {
+					move: this._onMoveResize
+				},
+			});
+	}
+
 	/**
 	 * Inject application specific egw object with loaded translations into the dialog
 	 *
@@ -842,9 +916,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	 * YES OR NO buttons and submit content back to server
 	 *
 	 * @param {widget} _senders widget that has been clicked
-	 * @param {String} _dialogMsg message shows in dialog box
-	 * @param {String} _titleMsg message shows as a title of the dialog box
-	 * @param {Bool} _postSubmit true: use postSubmit instead of submit
+	 * @param {string} _dialogMsg message shows in dialog box
+	 * @param {string} _titleMsg message shows as a title of the dialog box
+	 * @param {boolean} _postSubmit true: use postSubmit instead of submit
 	 *
 	 * @description submit the form contents including the button that has been pressed
 	 */
@@ -925,7 +999,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		];
 		let dialog = new Et2Dialog(_egw_or_appname);
 		dialog.transformAttributes({
-			template: egw.webserverUrl + '/api/etemplate.php/api/templates/default/long_task.xet',
+			template: dialog.egw().webserverUrl + '/api/etemplate.php/api/templates/default/long_task.xet',
 			value: {
 				content: {
 					message: _message
@@ -1002,9 +1076,9 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 						title: '',
 						buttons: [
 							// These ones will use the callback, just like normal
-							{label: egw.lang("Abort"), id: 'dialog[cancel]'},
-							{label: egw.lang("Retry"), id: 'dialog[retry]'},
-							{label: egw.lang("Skip"), id: 'dialog[skip]', default: true}
+							{label: dialog.egw().lang("Abort"), id: 'dialog[cancel]'},
+							{label: dialog.egw().lang("Retry"), id: 'dialog[retry]'},
+							{label: dialog.egw().lang("Skip"), id: 'dialog[skip]', default: true}
 						],
 						dialog_type: Et2Dialog.ERROR_MESSAGE
 					});
@@ -1033,7 +1107,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			log.scrollTop = height;
 
 			// Update totals
-			totals.widget.set_value(egw.lang(
+			totals.widget.set_value(dialog.egw().lang(
 				"Total: %1 Successful: %2 Failed: %3 Skipped: %4",
 				_list.length, <string><unknown>totals.success, <string><unknown>totals.failed, <string><unknown>totals.skipped
 			));
@@ -1049,7 +1123,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 				// Async request, we'll take the next step in the callback
 				// We can't pass index = 0, it looks like false and causes issues
-				egw.json(_menuaction, parameters, update, index + 1, true, index + 1).sendRequest();
+				dialog.egw().json(_menuaction, parameters, update, index + 1, true, index + 1).sendRequest();
 			}
 			else
 			{
@@ -1089,6 +1163,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	}
 }
 
+//@ts-ignore TS doesn't recognize Et2Dialog as HTMLEntry
 customElements.define("et2-dialog", Et2Dialog);
 // make et2_dialog publicly available as we need to call it from templates
 {

@@ -31,7 +31,9 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
           position: relative;
           border: 1px solid silver;
           box-shadow: -2px 1px 9px 3px #b4b4b4;
-          min-width: 200px
+          min-width: 250px;
+          touch-action: none;
+          box-sizing: border-box;
         }
 
         :host([hidden]) {
@@ -41,6 +43,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		.overlay {
 			display: flex;
 			flex-direction: column;
+			height: 100%;
 		}
         .overlay__header {
           display: flex;
