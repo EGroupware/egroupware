@@ -19,7 +19,7 @@ import {Et2DialogContent} from "./Et2DialogContent";
 import {et2_template} from "../et2_widget_template";
 import {etemplate2} from "../etemplate2";
 import {IegwAppLocal} from "../../jsapi/egw_global";
-import interact from "@interactjs/interactjs/index";
+import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
 export interface DialogButton
