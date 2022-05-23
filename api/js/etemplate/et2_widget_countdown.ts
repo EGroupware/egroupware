@@ -121,14 +121,22 @@ export class et2_countdown extends et2_valueWidget {
 
 		if (distance < 0) return 0;
 
-		let alarms = Array.isArray(this.options.alarm) ? this.options.alarm : [this.options.alarm];
-
-		for (let i=0;i<=alarms.length;i++)
+		let alarms = [];
+		if (Array.isArray(this.options.alarm))
 		{
-			if (alarms[i] > 0 && alarms[i] == Math.floor(distance/1000) && typeof this.onAlarm == 'function')
-			{
-				this.onAlarm();
-			}
+			alarms = this.options.alarm;
+		}
+		else
+		{
+			alarms[this.options.alarm] = this.options.alarm;
+		}
+
+		// alarm values should be set as array index to reduce its time complexity from O(n) to O(1)
+		// otherwise the execution time might be more than a second which would cause timer being delayed
+		if (alarms[Math.floor(distance/1000)] && typeof this.onAlarm == 'function')
+		{
+			console.log('alarm is called')
+			this.onAlarm();
 		}
 
 		let values = {
