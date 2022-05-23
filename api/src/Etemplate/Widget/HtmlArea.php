@@ -192,9 +192,9 @@ class HtmlArea extends Etemplate\Widget
 	 */
 	public static function contentCss()
 	{
-		$font_family = $GLOBALS['egw_info']['user']['preferences']['common']['rtf_font'] ?? 'arial, helvetica, sans-serif';
-		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font_size'] ?? '10').
-			($GLOBALS['egw_info']['user']['preferences']['common']['rtf_font_unit'] ?? 'pt');
+		$font_family = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'] ?? 'arial, helvetica, sans-serif';
+		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] ?? '10').
+			($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'] ?? 'pt');
 
 		return <<<EOF
 /**
