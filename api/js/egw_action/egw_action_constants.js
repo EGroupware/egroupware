@@ -24,7 +24,7 @@ export const EGW_AO_FLAG_DEFAULT_FOCUS = 0x02;
 export const EGW_AI_DRAG = 0x0100; // Use the first byte as mask for event types - 01 is for events used with drag stuff
 export const EGW_AI_DRAG_OUT = EGW_AI_DRAG | 0x01;
 export const EGW_AI_DRAG_OVER = EGW_AI_DRAG | 0x02;
-
+export const EGW_AI_DRAG_ENTER = EGW_AI_DRAG | 0x03;
 
 export const EGW_AO_EXEC_SELECTED = 0;
 export const EGW_AO_EXEC_THIS = 1;
