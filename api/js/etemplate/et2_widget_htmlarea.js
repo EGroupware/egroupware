@@ -352,6 +352,23 @@ var et2_htmlarea = /** @class */ (function (_super) {
         return this.options.readonly ? this.value : this.htmlNode.val();
     };
     /**
+     * Apply default font and -size
+     */
+    et2_htmlarea.prototype.applyDefaultFont = function () {
+        var edit_area = this.editor.editorContainer.querySelector('iframe').contentDocument;
+        var font_family = egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif';
+        edit_area.querySelectorAll('h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),' +
+            'div:not([style*="font-family"]),li:not([style*="font-family"]),p:not([style*="font-family"]),blockquote:not([style*="font-family"]),' +
+            'td:not([style*="font-family"]),th:not([style*="font-family"]').forEach(function (elem) {
+            elem.style.fontFamily = font_family;
+        });
+        var font_size = (egw.preference('rte_font_size', 'common') || '10') + (egw.preference('rte_font_unit', 'common') || 'pt');
+        edit_area.querySelectorAll('div:not([style*="font-size"]),li:not([style*="font-size"]),p:not([style*="font-size"]),blockquote:not([style*="font-size"]),' +
+            'td:not([style*="font-size"]),th:not([style*="font-size"])').forEach(function (elem) {
+            elem.style.fontSize = font_size;
+        });
+    };
+    /**
      * Resize htmlNode tag according to window size
      * @param {type} _height excess height which comes from window resize
      */
