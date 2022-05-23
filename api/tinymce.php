@@ -28,7 +28,7 @@ $GLOBALS['egw']->session->commit_session();
 
 // use an etag over user prefs and modification time of HtmlArea
 $etag = '"'.md5(json_encode(array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],
-	array_flip(['rtf_font', 'rtf_font_size', 'rtf_font_unit']))).filemtime(__DIR__.'/src/Etemplate/Widget/HtmlArea.php')).'"';
+	array_flip(['rte_font', 'rte_font_size', 'rte_font_unit']))).filemtime(__DIR__.'/src/Etemplate/Widget/HtmlArea.php')).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 Api\Session::cache_control(86400);	// cache for 1 day
