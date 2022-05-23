@@ -530,6 +530,27 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 	}
 
 	/**
+	 * Apply default font and -size
+	 */
+	applyDefaultFont()
+	{
+		const edit_area = this.editor.editorContainer.querySelector('iframe').contentDocument;
+		const font_family = egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif';
+		edit_area.querySelectorAll('h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),' +
+			'div:not([style*="font-family"]),li:not([style*="font-family"]),p:not([style*="font-family"]),blockquote:not([style*="font-family"]),' +
+			'td:not([style*="font-family"]),th:not([style*="font-family"]').forEach((elem) =>
+		{
+			elem.style.fontFamily = font_family;
+		});
+		const font_size = (<string>egw.preference('rte_font_size', 'common') || '10')+(egw.preference('rte_font_unit', 'common') || 'pt');
+		edit_area.querySelectorAll('div:not([style*="font-size"]),li:not([style*="font-size"]),p:not([style*="font-size"]),blockquote:not([style*="font-size"]),' +
+			'td:not([style*="font-size"]),th:not([style*="font-size"])').forEach((elem) =>
+		{
+			elem.style.fontSize = font_size;
+		});
+	}
+
+	/**
 	 * Resize htmlNode tag according to window size
 	 * @param {type} _height excess height which comes from window resize
 	 */

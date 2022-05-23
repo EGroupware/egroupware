@@ -5636,6 +5636,10 @@ app.classes.mail = AppJS.extend(
 		{
 			this.compose_submitAction(false);
 		}
+
+		// apply default font and -size before submitting to server for sending
+		this.et2?.getWidgetById('mail_htmltext')?.applyDefaultFont();
+
 		return false;
 	},
 

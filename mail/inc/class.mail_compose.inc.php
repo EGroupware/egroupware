@@ -2526,8 +2526,7 @@ class mail_compose
 		switch ($_formData['mimeType'])
 		{
 			case 'html':
-				$body = "<style>\n".preg_replace('#/\*.*?\*/\s*#sm', '', Etemplate\Widget\HtmlArea::contentCss()).
-					"</style>\n".$_formData['body'];
+				$body = $_formData['body'];
 
 				if (!empty($attachment_links))
 				{
