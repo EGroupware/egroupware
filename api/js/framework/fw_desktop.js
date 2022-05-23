@@ -19,7 +19,6 @@
 
 import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
 import "../jquery/jquery.noconflict.js";
-//import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import './fw_base.js';
 import './fw_browser.js';
 import './fw_ui.js';
