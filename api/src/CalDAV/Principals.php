@@ -82,7 +82,7 @@ class Principals extends Handler
 	/**
 	 * Generate supported-report-set property
 	 *
-	 * Currently we return all reports independed of path
+	 * Currently, we return all reports independent of path
 	 *
 	 * @param string $path eg. '/principals/'
 	 * @param array $reports =null
@@ -956,7 +956,7 @@ class Principals extends Handler
 	protected function add_account(array $account)
 	{
 		$addressbooks = $calendars = array();
-		// since we "show" shared addressbooks and calendars in the user home, no need for individualiced homes
+		// since we "show" shared addressbooks and calendars in the user home, no need for individualized homes
 		$addressbooks[] = Api\CalDAV::mkprop('href',
 			$this->base_uri.'/'.$account['account_lid'].'/');
 		$calendars[] = Api\CalDAV::mkprop('href',
@@ -964,7 +964,7 @@ class Principals extends Handler
 
 		$displayname = Api\Translation::convert($account['account_fullname'], Api\Translation::charset(),'utf-8');
 
-		return $this->add_principal('users/'.$account['account_lid'], array(
+		$props = [
 			'getetag' => $this->get_etag($account),
 			'displayname' => $displayname,
 			// CalDAV
@@ -1001,7 +1001,17 @@ class Principals extends Handler
 			'directory-gateway' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'directory-gateway',array(
 				Api\CalDAV::mkprop('href', $this->base_uri.'/addressbook/'))),
 			'resource-id' => array(Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id']))),
-		));
+		];
+		// only add calendar-proxy-*-for, if explicit requested, not for <allprop/>
+		foreach(['calendar-proxy-read-for', 'calendar-proxy-write-for'] as $prop)
+		{
+			if ($this->caldav->prop_requested($prop))
+			{
+				$props[$prop] = Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, $prop,
+					$this->principal_set($prop, [], ['calendar', 'resources'], $account['account_id']));
+			}
+		}
+		return $this->add_principal('users/'.$account['account_lid'], $props);
 	}
 
 	/**
@@ -1374,10 +1384,11 @@ class Principals extends Handler
 	 * @param string $principal relative to principal-collection-set, eg. "users/username"
 	 * @param string $type eg. 'calendar-proxy-read' or 'calendar-proxy-write'
 	 * @param array $proxys =array()
-	 * @param array $resource =null resource to use (to not query it multiple times from the database)
+	 * @param ?array $resource =null resource to use (to not query it multiple times from the database)
+	 *
 	 * @return array with values for 'path' and 'props'
 	 */
-	protected function add_proxys($principal, $type, array $proxys=array(), array $resource=null)
+	protected function add_proxys($principal, $type, array $proxys=array(), array $resource=null, bool $return_proxys=false)
 	{
 		list($app,,$what) = explode('-', $type);
 
@@ -1453,9 +1464,9 @@ class Principals extends Handler
 	}
 
 	/**
-	 * Create a named property with set or principal-urls
+	 * Return a set of principal-urls
 	 *
-	 * @param string $prop egw. 'group-member-set' or 'membership'
+	 * @param string $prop eg. 'group-member-set', 'membership' or 'calendar-proxy-(read|write)-for'
 	 * @param array $accounts =array() account_id => account_lid pairs
 	 * @param string|array $app_proxys =null applications for which proxys should be added
 	 * @param int $account who is the proxy
@@ -1463,8 +1474,6 @@ class Principals extends Handler
 	 */
 	protected function principal_set($prop, array $accounts=array(), $app_proxys=null, $account=null)
 	{
-		unset($prop);	// not used, but required by function signature
-
 		$set = array();
 		foreach($accounts as $account_id => $account_lid)
 		{
@@ -1482,10 +1491,10 @@ class Principals extends Handler
 				switch($app)
 				{
 					case 'resources':
-						$proxy_groups = $this->get_resource_proxy_groups($account);
+						$proxy_groups = $this->get_resource_proxy_groups($account, $app, $prop);
 						break;
 					default:
-						$proxy_groups = $this->get_calendar_proxy_groups($account, $app);
+						$proxy_groups = $this->get_calendar_proxy_groups($account, $app, $prop);
 						break;
 				}
 				$set = array_merge($set, $proxy_groups);
@@ -1498,10 +1507,11 @@ class Principals extends Handler
 	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
 	 *
 	 * @param int $account who is the proxy
-	 * @param string|array $app_proxys =null applications for which proxys should be added
+	 * @param string $app
+	 * @param ?string $prop eg. 'group-member-set', 'membership' or 'calendar-proxy-(read|write)-for'
 	 * @return array with href props
 	 */
-	protected function get_resource_proxy_groups($account)
+	protected function get_resource_proxy_groups($account, $app='resources', string $prop=null)
 	{
 		$set = array();
 		if (($resources = $this->get_resources()))
@@ -1529,8 +1539,25 @@ class Principals extends Handler
 				$rights = $location_grants['L'.$resource['cat_id']];
 				if (isset($rights))
 				{
-					$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
-						'/calendar-proxy-'.($rights & resources_acl_bo::DIRECT_BOOKING ? 'write' : 'read').'/');
+					if ($prop === 'calendar-proxy-read-for')
+					{
+						if (!($rights & resources_acl_bo::DIRECT_BOOKING))
+						{
+							$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource));
+						}
+					}
+					elseif ($prop === 'calendar-proxy-write-for')
+					{
+						if ($rights & resources_acl_bo::DIRECT_BOOKING)
+						{
+							$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource));
+						}
+					}
+					else
+					{
+						$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
+							'/calendar-proxy-'.($rights & resources_acl_bo::DIRECT_BOOKING ? 'write' : 'read').'/');
+					}
 				}
 			}
 		}
@@ -1543,21 +1570,41 @@ class Principals extends Handler
 	 *
 	 * @param int $account who is the proxy
 	 * @param string $app ='calendar' applications for which proxys should be added
+	 * @param ?string $prop eg. 'group-member-set', 'membership' or 'calendar-proxy-(read|write)-for'
 	 * @return array with href props
 	 */
-	protected function get_calendar_proxy_groups($account, $app='calendar')
+	protected function get_calendar_proxy_groups($account, $app='calendar', string $prop=null)
 	{
 		$set = array();
 		// use enum_group_acls=false, as iCal app understands group-memberships
-		foreach($this->acl->get_grants($app, false, $account) as $account_id => $rights)
+		foreach($this->acl->get_grants($app, $prop && substr($prop, 0, 15) === 'calendar-proxy-', $account) as $account_id => $rights)
 		{
 			if ($account_id != $account && ($rights & Api\Acl::READ) &&
 				($account_lid = $this->accounts->id2name($account_id)) &&
 				$this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
 			{
-				$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
-					($account_id < 0 ? 'groups/' : 'users/').
-					$account_lid.'/'.$app.'-proxy-'.($rights & Api\Acl::EDIT ? 'write' : 'read').'/');
+				if ($prop === 'calendar-proxy-read-for')
+				{
+					if (!($rights & Api\Acl::EDIT))
+					{
+						$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
+							($account_id < 0 ? 'groups/' : 'users/').$account_lid);
+					}
+				}
+				elseif ($prop === 'calendar-proxy-write-for')
+				{
+					if ($rights & Api\Acl::EDIT)
+					{
+						$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
+							($account_id < 0 ? 'groups/' : 'users/').$account_lid);
+					}
+				}
+				else
+				{
+					$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
+						($account_id < 0 ? 'groups/' : 'users/').
+						$account_lid.'/'.$app.'-proxy-'.($rights & Api\Acl::EDIT ? 'write' : 'read').'/');
+				}
 			}
 		}
 		return $set;
