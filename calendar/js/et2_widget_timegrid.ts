@@ -356,22 +356,26 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Customize and override some draggable settings
 		this.div
-			.on('dragcreate','.calendar_calEvent', function(event, ui) {
-				jQuery(this).draggable('option','cancel','.rowNoEdit');
+			.on('dragcreate', '.calendar_calEvent', function(event, ui)
+			{
+				jQuery(this).draggable('option', 'cancel', '.rowNoEdit');
 				// Act like you clicked the header, makes it easier to position
 				// but put it to the side (-5) so we can still do the hover
-				jQuery(this).draggable('option','cursorAt', {top: 5, left: -5});
+				jQuery(this).draggable('option', 'cursorAt', {top: 5, left: -5});
 			})
-			.on('dragstart', '.calendar_calEvent', function(event,ui) {
-				jQuery('.calendar_calEvent', ui.helper).width(jQuery(this).width())
-					.height(jQuery(this).outerHeight())
-					.css('top', '').css('left', '')
-					.appendTo(ui.helper);
-				ui.helper.width(jQuery(this).width());
-
+			.on('dragstart', '.calendar_calEvent', function(event, ui)
+			{
 				// Cancel drag to create, we're dragging an existing event
 				timegrid.drag_create.start = null;
 				timegrid._drag_create_end();
+				timegrid.div.on("drag.timegrid", (e) =>
+				{
+					timegrid._get_time_from_position(e.clientX, e.clientY);
+				})
+			})
+			.on("dragend", () =>
+			{
+				timegrid.div.off("drag.timegrid");
 			})
 			.on('mousemove', function(event)
 			{
@@ -508,23 +512,17 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				}
 
 				// Leave the helper there until the update is done
-				var loading = ui.helper.clone(true).appendTo(jQuery('body'));
+				var loading = event_data.event_node;
 				// and add a loading icon so user knows something is happening
-				if(jQuery('.calendar_timeDemo',loading).length == 0)
-				{
-					jQuery('.calendar_calEventHeader',loading).addClass('loading');
-				}
-				else
-				{
-					jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
-				}
+				jQuery('.calendar_calEventHeader', event_widget.div).addClass('loading');
 
-				event_widget.recur_prompt(function(button_id) {
+				event_widget.recur_prompt(function(button_id)
+				{
 					if(button_id === 'cancel' || !button_id)
 					{
 						// Need to refresh the event with original info to clean up
-						var app_id = event_widget.options.value.app_id ? event_widget.options.value.app_id : event_widget.options.value.id + (event_widget.options.value.recur_type ? ':'+event_widget.options.value.recur_date : '');
-						egw().dataStoreUID('calendar::'+app_id,egw.dataGetUIDdata('calendar::'+app_id).data);
+						var app_id = event_widget.options.value.app_id ? event_widget.options.value.app_id : event_widget.options.value.id + (event_widget.options.value.recur_type ? ':' + event_widget.options.value.recur_date : '');
+						egw().dataStoreUID('calendar::' + app_id, egw.dataGetUIDdata('calendar::' + app_id).data);
 						loading.remove();
 						return;
 					}
@@ -539,7 +537,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 						// If it is an integrated infolog event we need to edit infolog entry
 						egw().json('stylite_infolog_calendar_integration::ajax_moveInfologEvent',
 							[event_data.app_id, target_date || false, duration],
-							function() {loading.remove();}
+							function()
+							{
+								debugger;
+								loading.remove();
+							}
 						).sendRequest(true);
 					}
 					else
@@ -560,13 +562,16 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 							var start = new Date(target_date);
 
 							egw().json('calendar.calendar_uiforms.ajax_moveEvent', [
-									button_id==='series' ? event_data.id : event_data.app_id,event_data.owner,
+									button_id === 'series' ? event_data.id : event_data.app_id, event_data.owner,
 									start,
-									timegrid.options.owner||egw.user('account_id'),
+									timegrid.options.owner || egw.user('account_id'),
 									duration,
 									series_instance
 								],
-								function() { loading.remove();}
+								function()
+								{
+									loading.remove();
+								}
 							).sendRequest(true);
 						};
 
@@ -1269,11 +1274,18 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 		};
 
-		aoi.doTriggerEvent = function(_event, _data) {
+		aoi.doTriggerEvent = function(_event, _data)
+		{
 			// Determine target node
 			var event = _data.event || false;
-			if(!event) return;
-			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			if(!event)
+			{
+				return;
+			}
+			if(_data.ui.draggable.classList.contains('rowNoEdit'))
+			{
+				return;
+			}
 
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
@@ -1282,16 +1294,18 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			if(event.type === 'drop')
 			{
 				var dropEnd = false;
-				var helper = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0];
+				var helper = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0];
 				if(helper && helper.dropEnd && helper.dropEnd.length >= 1)
-				if (typeof this.dropEnd !== 'undefined' && this.dropEnd.length >= 1)
 				{
-					dropEnd = helper.dropEnd[0].dataset || false;
+					if(typeof this.dropEnd !== 'undefined' && this.dropEnd.length >= 1)
+					{
+						dropEnd = helper.dropEnd[0].dataset || false;
+					}
 				}
-				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui, dropEnd);
+				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], this.getWidget(), event, _data.ui, dropEnd);
 			}
 			var drag_listener = function(_event, ui) {
-				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
+				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper)[0], _data.ui.helper[0], 0);
 				if(aoi.getWidget().daily_owner)
 				{
 					_invite_enabled(
@@ -1301,24 +1315,25 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					);
 				}
 			};
-			var time = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper);
+			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
 				case EGW_AI_DRAG_OVER:
 					// Listen to the drag and update the helper with the time
 					// This part lets us drag between different timegrids
-					_data.ui.draggable.on('drag.et2_timegrid'+widget_object.id, drag_listener);
-					_data.ui.draggable.on('dragend.et2_timegrid'+widget_object.id, function() {
-						_data.ui.draggable.off('drag.et2_timegrid' + widget_object.id);
+					jQuery(_data.ui.draggable).on('drag.et2_timegrid' + widget_object.id, drag_listener);
+					jQuery(_data.ui.draggable).on('dragend.et2_timegrid' + widget_object.id, function()
+					{
+						jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
 					});
 
 					// Remove formatting for out-of-view events (full day non-blocking)
-					jQuery('.calendar_calEventHeader',_data.ui.helper).css('top','');
-					jQuery('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
+					jQuery('.calendar_calEventHeader', _data.ui.helper).css('top', '');
+					jQuery('.calendar_calEventBody', _data.ui.helper).css('padding-top', '');
 
 					// Disable invite / change actions for same calendar or already participant
-					var event = _data.ui.draggable.data('selected')[0];
+					var event = _data.ui.selected[0];
 					if(!event || event.id && event.id.indexOf('calendar') !== 0)
 					{
 						event = false;
@@ -1339,7 +1354,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					}
 					else
 					{
-						_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+						jQuery(_data.ui.helper).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
 
 					break;
@@ -1347,7 +1362,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
 					// Stop listening
-					_data.ui.draggable.off('drag.et2_timegrid'+widget_object.id);
+					jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
 					// Remove highlighted time square
 					var timegrid = aoi.getWidget();
 					timegrid.gridHover.hide();

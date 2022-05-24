@@ -111,23 +111,27 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 								window.setTimeout(function ()
 								{
 										jQuery('body .egw_tooltip')
-												.css('border', 'none')
-												.on('mouseenter', function ()
+											.css('border', 'none')
+											.on('mouseenter', function()
+											{
+												if(event.div)
 												{
-														event.div.off('mouseleave.tooltip');
-														jQuery('body.egw_tooltip').remove();
-														jQuery('body').append(this);
-														jQuery(this).stop(true).fadeTo(400, 1)
-																.on('mouseleave', function ()
-																{
-																		jQuery(this).fadeOut('400', function ()
-																		{
-																				jQuery(this).remove();
-																				// Set up to work again
-																				event.set_statustext(event._tooltip());
-																		});
-																});
-												});
+													event.div.off('mouseleave.tooltip');
+												}
+
+												jQuery('body.egw_tooltip').remove();
+												jQuery('body').append(this);
+												jQuery(this).stop(true).fadeTo(400, 1)
+													.on('mouseleave', function()
+													{
+														jQuery(this).fadeOut('400', function()
+														{
+															jQuery(this).remove();
+															// Set up to work again
+															event.set_statustext(event._tooltip());
+														});
+													});
+											});
 
 								}, 105);
 						});

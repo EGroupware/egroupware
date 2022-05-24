@@ -215,7 +215,7 @@ export function egwDragActionImplementation()
 
 			node.setAttribute('draggable', true);
 			const dragstart = function(event) {
-				event.stopImmediatePropagation();
+				//event.stopImmediatePropagation();
 				if (action) {
 					if (_context.isSelection(event)) return;
 
