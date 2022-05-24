@@ -1289,12 +1289,13 @@ export class CalendarApp extends EgwApp
 				});
 
 			// Page up & page down
-			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false, function() {
+			egw_registerGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false, function()
+			{
 				if(app.calendar.state.view == 'listview')
 				{
 					return false;
 				}
-				scroll_animate.call(this,"up", -1);
+				scroll_animate.call(this, "up", -1);
 				return true;
 			}, this);
 			egw_registerGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false, function() {

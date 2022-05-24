@@ -313,13 +313,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 								.append(this.title)
 								.append(this.body);
 				}
-				if (!this.getParent().options.readonly && !this.options.readonly && this.div.droppable('instance'))
-				{
-						this.div
-								// Let timegrid always get the drag
-								.droppable('option', 'greedy', false);
-				}
-				let tooltip = jQuery(this._tooltip()).text();
+
+			let tooltip = jQuery(this._tooltip()).text();
 				// DOM nodes
 				this.div
 						// Set full day flag

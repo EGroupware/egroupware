@@ -645,7 +645,14 @@ export class et2_calendar_view extends et2_valueWidget
 			// Remove empties
 			for(var key in options)
 			{
-				if(!options[key]) delete options[key];
+				if(!options[key])
+				{
+					delete options[key];
+				}
+				if(options[key] instanceof Date)
+				{
+					options[key] = options[key].toJSON();
+				}
 			}
 			app.calendar.add(options, this.drag_create.event);
 

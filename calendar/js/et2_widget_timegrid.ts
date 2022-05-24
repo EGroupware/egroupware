@@ -28,6 +28,8 @@ import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunct
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
 import {formatDate, formatTime, parseTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import interact from "@interactjs/interactjs/index";
+import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
 /**
  * Class which implements the "calendar-timegrid" XET-Tag for displaying a span of days
@@ -231,23 +233,36 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		 * than binding it for every calendar event, and we won't need exceptions
 		 * for planner view to resize horizontally.
 		 */
-		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
+		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function()
+		{
 			// Only resize in timegrid
-			if(timegrid.options.granularity === 0) return;
+			if(timegrid.options.granularity === 0)
+			{
+				return;
+			}
 
 			// Load the event
 			timegrid._get_event_info(this);
-			var that = this;
+			if(this.classList.contains("resizing"))
+			{
+				// Currently already resizing
+				return;
+			}
 
 			//Resizable event handler
-			jQuery(this).resizable
+			interact(this).resizable
 			({
 				distance: 10,
-				// Grid matching preference
-				grid: [10000,timegrid.rowHeight],
-				autoHide: false,
-				handles: 's,se',
-				containment:'parent',
+				invert: "reposition",
+				edges: {bottom: true},
+				startAxis: "y",
+				lockAxis: "y",
+				containment: 'parent',
+				modifiers: [
+					interact.modifiers.snapSize({
+						targets: [interact.createSnapGrid({width: 10, height: timegrid.rowHeight})]
+					})
+				],
 
 				/**
 				 *  Triggered when the resizable is created.
@@ -255,10 +270,10 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				 * @param {event} event
 				 * @param {Object} ui
 				 */
-				create:function(event, ui)
+				create: function(event, ui)
 				{
 					var resizeHelper = event.target.getAttribute('data-resize');
-					if (resizeHelper == 'WD' || resizeHelper == 'WDS')
+					if(resizeHelper == 'WD' || resizeHelper == 'WDS')
 					{
 						jQuery(this).resizable('destroy');
 					}
@@ -267,36 +282,39 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				/**
 				 * If dragging to resize an event, abort drag to create
 				 *
-				 * @param {jQuery.Event} event
-				 * @param {Object} ui
+				 * @param {InteractEvent} event
 				 */
-				start: function(event, ui)
+				onstart: function(event)
 				{
 					if(timegrid.drag_create.start)
 					{
 						// Abort drag to create, we're dragging to resize
 						timegrid._drag_create_end({});
 					}
+					event.target.classList.add("resizing");
 				},
 
 				/**
 				 * Triggered at the end of resizing the calEvent.
 				 *
-				 * @param {event} event
-				 * @param {Object} ui
+				 * @param {InteractEvent} event
 				 */
-				stop:function(event, ui)
+				onend: function(event)
 				{
+					// Remove for re-creation...
+					interact(this).unset();
+					event.target.classList.remove("resizing");
+
 					var e = new jQuery.Event('change');
 					e.originalEvent = event;
 					e.data = {duration: 0};
 					var event_data = timegrid._get_event_info(this);
 					var event_widget = <et2_calendar_event>timegrid.getWidgetById(event_data.widget_id);
 					var sT = event_widget.options.value.start_m;
-					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
+					if(typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
 					{
 						var eT = (parseInt(timegrid._drop_data.hour) * 60) + parseInt(timegrid._drop_data.minute);
-						e.data.duration = ((eT - sT)/60) * 3600;
+						e.data.duration = ((eT - sT) / 60) * 3600;
 
 						if(event_widget)
 						{
@@ -306,11 +324,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 						jQuery(this).trigger(e);
 						event_widget._update(event_widget.options.value);
 
-						// That cleared the resize handles, so remove for re-creation...
-						if(jQuery(this).resizable('instance'))
-						{
-							jQuery(this).resizable('destroy');
-						}
 					}
 					// Clear the helper, re-draw
 					if(event_widget && event_widget._parent)
@@ -318,26 +331,26 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 						event_widget._parent.position_event(event_widget);
 					}
 					timegrid.div.children('.drop-hover').removeClass('.drop-hover');
-				},
+				}.bind(this),
 
 				/**
 				 * Triggered during the resize, on the drag of the resize handler
 				 *
-				 * @param {event} event
-				 * @param {Object} ui
+				 * @param {InteractEvent} event
 				 */
-				resize:function(event, ui)
+				onmove: function(event)
 				{
+					event.target.style.height = event.rect.height + "px";
 					// Add a bit for better understanding - it will show _to_ the start,
 					// covering the 'actual' target
-					timegrid._get_time_from_position(ui.helper[0].getBoundingClientRect().left, ui.helper[0].getBoundingClientRect().bottom+5);
+					timegrid._get_time_from_position(event.target.getBoundingClientRect().left, event.target.getBoundingClientRect().bottom + 5);
 					timegrid.gridHover.hide();
-					var drop = timegrid._drag_helper(this,ui.element[0]);
+					var drop = timegrid._drag_helper(this, event.target);
 					if(drop && !drop.is(':visible'))
 					{
 						drop.get(0).scrollIntoView(false);
 					}
-				}
+				}.bind(this)
 			});
 		});
 
@@ -350,9 +363,9 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				jQuery(this).draggable('option','cursorAt', {top: 5, left: -5});
 			})
 			.on('dragstart', '.calendar_calEvent', function(event,ui) {
-				jQuery('.calendar_calEvent',ui.helper).width(jQuery(this).width())
+				jQuery('.calendar_calEvent', ui.helper).width(jQuery(this).width())
 					.height(jQuery(this).outerHeight())
-					.css('top', '').css('left','')
+					.css('top', '').css('left', '')
 					.appendTo(ui.helper);
 				ui.helper.width(jQuery(this).width());
 
@@ -360,17 +373,19 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				timegrid.drag_create.start = null;
 				timegrid._drag_create_end();
 			})
-			.on('mousemove', function(event) {
+			.on('mousemove', function(event)
+			{
 				timegrid._get_time_from_position(event.clientX, event.clientY);
 			})
-			.on('mouseout', function(event) {
+			.on('mouseout', function(event)
+			{
 				if(timegrid.div.has(event.relatedTarget).length === 0)
 				{
 					timegrid.gridHover.hide();
 				}
 			})
-			.on('mousedown', jQuery.proxy(this._mouse_down, this))
-			.on('mouseup', jQuery.proxy(this._mouse_up, this));
+			.on('mousedown', ':not(.calendar_calEvent)', this._mouse_down.bind(this))
+			.on('mouseup', this._mouse_up.bind(this));
 
 		return true;
 	}
@@ -2009,11 +2024,23 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	 */
 	_mouse_down(event)
 	{
-		if(event.which !== 1) return;
+		if(event.which !== 1)
+		{
+			return;
+		}
 
-		if (this.options.readonly) return;
+		if(this.options.readonly)
+		{
+			return;
+		}
 
-		var start = jQuery.extend({},this.gridHover[0].dataset);
+		// Skip for events
+		if(event.target.parentElement.classList.contains("calendar_calEvent"))
+		{
+			return;
+		}
+
+		let start = {...this.gridHover[0].dataset};
 		if(start.date)
 		{
 			// Set parent for event
@@ -2092,13 +2119,13 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	_mouse_up(event)
 	{
 		if (this.options.readonly) return;
-		var end = jQuery.extend({}, this.gridHover[0].dataset);
+		let end = {...this.gridHover[0].dataset};
 		if(end.date)
 		{
 			let date = this.date_helper(end.date);
 			if(end.hour)
 			{
-				date.setUTCMinutes(end.hour);
+				date.setUTCHours(end.hour);
 			}
 			if(end.minute)
 			{
@@ -2109,7 +2136,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		return this._drag_create_end( this.drag_create.event ? end : undefined);
+		return this._drag_create_end(this.drag_create.event ? {date: end.date} : undefined);
 	}
 
 	/**
