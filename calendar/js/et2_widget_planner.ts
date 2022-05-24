@@ -33,6 +33,8 @@ import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {holidays} from "../../api/js/etemplate/Et2Date/Holidays";
+import interact from "@interactjs/interactjs/index";
+import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
 /**
  * Class which implements the "calendar-planner" XET-Tag for displaying a longer
@@ -185,118 +187,105 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		 * they can adjust the length.  Should be a little better on resources
 		 * than binding it for every calendar event.
 		 */
-		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function() {
-				// Load the event
-				planner._get_event_info(this);
-				var that = this;
+		this.div.on('mouseover', '.calendar_calEvent:not(.ui-resizable):not(.rowNoEdit)', function()
+		{
+			// Load the event
+			planner._get_event_info(this);
+			var that = this;
 
-				//Resizable event handler
-				jQuery(this).resizable
-				({
-					distance: 10,
-					grid: [5, 10000],
-					autoHide: false,
-					handles: 'e',
-					containment:'parent',
+			//Resizable event handler
+			interact(this).resizable
+			({
+				invert: "reposition",
+				edges: {right: true},
+				startAxis: "x",
+				lockAxis: "x",
+				containment: 'parent',
 
-					/**
-					 *  Triggered when the resizable is created.
-					 *
-					 * @param {event} event
-					 * @param {Object} ui
-					 */
-					create:function(event, ui)
+
+				/**
+				 * If dragging to resize an event, abort drag to create
+				 *
+				 * @param {InteractEvent} event
+				 */
+				onstart: function(event : InteractEvent)
+				{
+					if(planner.drag_create.start)
 					{
-						var resizeHelper = event.target.getAttribute('data-resize');
-						if (resizeHelper == 'WD' || resizeHelper == 'WDS')
-						{
-							jQuery(this).resizable('destroy');
-						}
-					},
+						// Abort drag to create, we're dragging to resize
+						planner._drag_create_end({});
+					}
+					event.target.classList.add("resizing");
+				},
 
-					/**
-					 * If dragging to resize an event, abort drag to create
-					 *
-					 * @param {jQuery.Event} event
-					 * @param {Object} ui
-					 */
-					start: function(event, ui)
+				/**
+				 * Triggered at the end of resizing the calEvent.
+				 *
+				 * @param {InteractEvent} event
+				 */
+				onend: function(event : InteractEvent)
+				{
+					interact(this).unset();
+					var e = new jQuery.Event('change');
+					e.originalEvent = event;
+					e.data = {duration: 0};
+					var event_data = planner._get_event_info(this);
+					var event_widget = planner.getWidgetById(event_data.widget_id);
+					var sT = event_widget.options.value.start_m;
+					if(typeof this.dropEnd != 'undefined')
 					{
-						if(planner.drag_create.start)
-						{
-							// Abort drag to create, we're dragging to resize
-							planner._drag_create_end({});
-						}
-					},
+						var eT = parseInt(this.dropEnd.getUTCHours() * 60) + parseInt(this.dropEnd.getUTCMinutes());
+						e.data.duration = ((eT - sT) / 60) * 3600;
 
-					/**
-					 * Triggered at the end of resizing the calEvent.
-					 *
-					 * @param {event} event
-					 * @param {Object} ui
-					 */
-					stop:function(event, ui)
-					{
-						var e = new jQuery.Event('change');
-						e.originalEvent = event;
-						e.data = {duration: 0};
-						var event_data = planner._get_event_info(this);
-						var event_widget = planner.getWidgetById(event_data.widget_id);
-						var sT = event_widget.options.value.start_m;
-						if (typeof this.dropEnd != 'undefined')
-						{
-							var eT = parseInt(this.dropEnd.getUTCHours() * 60) + parseInt(this.dropEnd.getUTCMinutes());
-							e.data.duration = ((eT - sT)/60) * 3600;
-
-							if(event_widget)
-							{
-								event_widget.options.value.end_m = eT;
-								event_widget.options.value.duration = e.data.duration;
-							}
-
-							// Leave the helper there until the update is done
-							var loading = ui.helper.clone().appendTo(ui.helper.parent());
-
-							// and add a loading icon so user knows something is happening
-							jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
-
-							jQuery(this).trigger(e);
-
-							// That cleared the resize handles, so remove for re-creation...
-							jQuery(this).resizable('destroy');
-
-							// Remove loading, done or not
-							loading.remove();
-						}
-						// Clear the helper, re-draw
 						if(event_widget)
 						{
-							(<et2_calendar_planner_row>event_widget.getParent()).position_event(event_widget);
+							event_widget.options.value.end_m = eT;
+							event_widget.options.value.duration = e.data.duration;
 						}
-					},
 
-					/**
-					 * Triggered during the resize, on the drag of the resize handler
-					 *
-					 * @param {event} event
-					 * @param {Object} ui
-					 */
-					resize:function(event, ui)
-					{
-						let position;
-						if(planner.options.group_by == 'month')
-						{
-							position = {left: event.clientX, top: event.clientY};
-						}
-						else
-						{
-							position = {top: ui.position.top, left: ui.position.left + ui.helper.width()};
-						}
-						planner._drag_helper(this,position,ui.helper.outerHeight());
+						// Leave the helper there until the update is done
+						var loading = event_data.event_node;
+
+						// and add a loading icon so user knows something is happening
+						jQuery('.calendar_timeDemo', loading).after('<div class="loading"></div>');
+
+						jQuery(this).trigger(e);
+
+						// Remove loading, done or not
+						loading.remove();
 					}
-				});
-			})
-			.on('mousemove', function(event) {
+					// Clear the helper, re-draw
+					if(event_widget)
+					{
+						(<et2_calendar_planner_row>event_widget.getParent()).position_event(event_widget);
+					}
+				}.bind(this),
+
+				/**
+				 * Triggered during the resize, on the drag of the resize handler
+				 *
+				 * @param {InteractEvent} event
+				 */
+				onmove: function(event : InteractEvent)
+				{
+					event.target.style.width = event.rect.width + "px";
+					let position;
+					if(planner.options.group_by == 'month')
+					{
+						position = {left: event.clientX, top: event.clientY};
+					}
+					else
+					{
+						let offset = parseInt(getComputedStyle(event.target).left) - event.rect.left;
+						position = {top: event.rect.top, left: event.rect.right + offset};
+					}
+					planner._drag_helper(this, position, event.rect.height);
+				}.bind(this)
+			});
+		});
+		this.div
+			.on('mousemove', function(event)
+			{
 				// Ignore headers
 				if(planner.headers.has(event.target).length !== 0)
 				{
