@@ -21,7 +21,7 @@ import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_action_object_impl} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {et2_calendar_planner} from "./et2_widget_planner";
 import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
-import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from "../../api/js/egw_action/egw_action_constants.js";
+import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../api/js/egw_action/egw_action_constants.js";
 import {et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_calendar_view} from "./et2_widget_view";
@@ -176,12 +176,19 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 		};
 
-		aoi.doTriggerEvent = function(_event, _data) {
+		aoi.doTriggerEvent = function(_event, _data)
+		{
 
 			// Determine target node
 			var event = _data.event || false;
-			if(!event) return;
-			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			if(!event)
+			{
+				return;
+			}
+			if(_data.ui.draggable.classList.contains('rowNoEdit'))
+			{
+				return;
+			}
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
 			for the egwAction system so we can get the helper, and destination
@@ -189,27 +196,29 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 			if(event.type === 'drop' && widget_object.getActionLink('egw_link_drop').enabled)
 			{
 				this.getWidget().getParent()._event_drop.call(
-					jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],
+					jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0],
 					this.getWidget().getParent(), event, _data.ui,
 					this.getWidget()
 				);
 			}
-			const drag_listener = function (_event, ui)
+			const drag_listener = function(_event)
 			{
+				let position = {};
 				if(planner.options.group_by === 'month')
 				{
-					var position = {left: _event.clientX, top: _event.clientY};
+					position = {left: _event.clientX, top: _event.clientY};
 				}
 				else
 				{
-					var position = {top: ui.position.top, left: ui.position.left - jQuery(this).parent().offset().left};
+					let style = getComputedStyle(_data.ui.helper);
+					position = {
+						top: parseInt(style.top),
+						left: _event.clientX - jQuery(this).parent().offset().left
+					}
 				}
-				aoi.getWidget().getParent()._drag_helper(
-					jQuery('.calendar_d-n-d_timeCounter', ui.helper)[0],
-					position, 0
-				);
+				aoi.getWidget().getParent()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], position, 0);
 
-				let event = _data.ui.draggable.data('selected')[0];
+				var event = _data.ui.selected[0];
 				if(!event || event.id && event.id.indexOf('calendar') !== 0)
 				{
 					event = false;
@@ -223,21 +232,22 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 					);
 				}
 			};
-			const time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
+			const time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
-				case EGW_AI_DRAG_OVER:
+				case EGW_AI_DRAG_ENTER:
 					// Listen to the drag and update the helper with the time
 					// This part lets us drag between different timegrids
-					_data.ui.draggable.on('drag.et2_timegrid_row'+widget_object.id, drag_listener);
-					_data.ui.draggable.on('dragend.et2_timegrid_row'+widget_object.id, function() {
-						_data.ui.draggable.off('drag.et2_timegrid_row' + widget_object.id);
+					jQuery(_data.ui.draggable).on('drag.et2_timegrid_row' + widget_object.id, drag_listener);
+					jQuery(_data.ui.draggable).on('dragend.et2_timegrid_row' + widget_object.id, function()
+					{
+						jQuery(_data.ui.draggable).off('drag.et2_timegrid_row' + widget_object.id);
 					});
 					widget_object.iface.getWidget().div.addClass('drop-hover');
 
 					// Disable invite / change actions for same calendar or already participant
-					var event = _data.ui.draggable.data('selected')[0];
+					let event = _data.ui.selected[0];
 					if(!event || event.id && event.id.indexOf('calendar') !== 0)
 					{
 						event = false;
@@ -257,7 +267,7 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 					}
 					else
 					{
-						_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+						jQuery(_data.ui.draggable).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
 
 
@@ -266,7 +276,7 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
 					// Stop listening
-					_data.ui.draggable.off('drag.et2_timegrid_row'+widget_object.id);
+					jQuery(_data.ui.draggable).off('drag.et2_timegrid_row' + widget_object.id);
 					// Remove highlight
 					widget_object.iface.getWidget().div.removeClass('drop-hover');
 

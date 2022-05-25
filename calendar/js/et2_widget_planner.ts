@@ -23,7 +23,11 @@ import {et2_calendar_event} from "./et2_widget_event";
 import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {egw_getObjectManager, egwActionObject} from "../../api/js/egw_action/egw_action.js";
-import {EGW_AI_DRAG_OVER, EGW_AO_FLAG_IS_CONTAINER} from "../../api/js/egw_action/egw_action_constants.js";
+import {
+	EGW_AI_DRAG_ENTER,
+	EGW_AI_DRAG_OUT,
+	EGW_AO_FLAG_IS_CONTAINER
+} from "../../api/js/egw_action/egw_action_constants.js";
 import {et2_IDetachedDOM, et2_IPrint, et2_IResizeable} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_compileLegacyJS} from "../../api/js/etemplate/et2_core_legacyJSFunctions";
 import {et2_no_init} from "../../api/js/etemplate/et2_core_common";
@@ -343,18 +347,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		this._link_actions(this.options.actions || this.getParent().options.actions || []);
 
 		// Customize and override some draggable settings
-		this.div.on('dragcreate','.calendar_calEvent', function(event, ui) {
-				jQuery(this).draggable('option','cancel','.rowNoEdit');
-				// Act like you clicked the header, makes it easier to position
-				jQuery(this).draggable('option','cursorAt', {top: 5, left: 5});
-			})
-			.on('dragstart', '.calendar_calEvent', function(event,ui) {
-				jQuery('.calendar_calEvent',ui.helper).width(jQuery(this).width())
-					.height(jQuery(this).outerHeight())
-					.css('top', '').css('left','')
-					.appendTo(ui.helper);
-				ui.helper.width(jQuery(this).width());
-
+		this.div
+			.on('dragstart', '.calendar_calEvent', function(event)
+			{
 				// Cancel drag to create, we're dragging an existing event
 				planner._drag_create_end();
 			});
@@ -1447,12 +1442,19 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 		};
 
-		aoi.doTriggerEvent = function(_event, _data) {
+		aoi.doTriggerEvent = function(_event, _data)
+		{
 
 			// Determine target node
 			var event = _data.event || false;
-			if(!event) return;
-			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			if(!event)
+			{
+				return;
+			}
+			if(_data.ui.draggable.classList.contains('rowNoEdit'))
+			{
+				return;
+			}
 
 			/*
 			We have to handle the drop in the normal event stream instead of waiting
@@ -1460,33 +1462,36 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			*/
 			if(event.type === 'drop')
 			{
-				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui);
+				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], this.getWidget(), event, _data.ui);
 			}
-			var drag_listener = function(event, ui) {
-				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter',ui.helper)[0],{
-						top:ui.position.top,
-						left: ui.position.left - jQuery(this).parent().offset().left
-					},0);
+			var drag_listener = function(event)
+			{
+				let style = getComputedStyle(_data.ui.helper);
+				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], {
+					top: parseInt(style.top),
+					left: event.clientX - jQuery(this).parent().offset().left
+				}, 0);
 			};
-			var time = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper);
+			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
-				case EGW_AI_DRAG_OVER:
+				case EGW_AI_DRAG_ENTER:
 					// Listen to the drag and update the helper with the time
 					// This part lets us drag between different timegrids
-					_data.ui.draggable.on('drag.et2_timegrid'+widget_object.id, drag_listener);
-					_data.ui.draggable.on('dragend.et2_timegrid'+widget_object.id, function() {
-						_data.ui.draggable.off('drag.et2_timegrid' + widget_object.id);
+					jQuery(_data.ui.draggable).on('drag.et2_timegrid' + widget_object.id, drag_listener);
+					jQuery(_data.ui.draggable).on('dragend.et2_timegrid' + widget_object.id, function()
+					{
+						jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
 					});
 					if(time.length)
 					{
 						// The out will trigger after the over, so we count
-						time.data('count',time.data('count')+1);
+						time.data('count', time.data('count') + 1);
 					}
 					else
 					{
-						_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+						jQuery(_data.ui.draggable).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
 
 					break;
@@ -1494,7 +1499,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
 					// Stop listening
-					_data.ui.draggable.off('drag.et2_timegrid'+widget_object.id);
+					jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
 					// Remove any highlighted time squares
 					jQuery('[data-date]',this.doGetDOMNode()).removeClass("ui-state-active");
 
@@ -1781,9 +1786,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		var e = new jQuery.Event('change');
 		e.originalEvent = event;
 		e.data = {start: 0};
-		if (typeof this.dropEnd != 'undefined')
+		if(typeof this.dropEnd != 'undefined' && this.dropEnd)
 		{
-			var drop_date = this.dropEnd.toJSON() ||false;
+			var drop_date = this.dropEnd.toJSON() || false;
 
 			var event_data = planner._get_event_info(ui.draggable);
 			var event_widget = planner.getWidgetById(event_data.widget_id);
@@ -1792,9 +1797,9 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				event_widget.options.value.start = event_widget._parent.date_helper(drop_date);
 
 				// Leave the helper there until the update is done
-				var loading = ui.helper.clone().appendTo(ui.helper.parent());
+				var loading = event_data.event_node;
 				// and add a loading icon so user knows something is happening
-				jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+				jQuery('.calendar_calEventHeader', event_widget.div).addClass('loading');
 
 				event_widget.recur_prompt(function(button_id) {
 					if(button_id === 'cancel' || !button_id) return;

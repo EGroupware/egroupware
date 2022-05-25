@@ -26,7 +26,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {ColorTranslator} from "colortranslator";
 
 /**
@@ -1085,26 +1085,26 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		 */
 		_copy_parent_actions()
 		{
-				// Copy actions set in parent
-				if (!this.options.readonly && !this.getParent().options.readonly)
+			// Copy actions set in parent
+			if(!this.options.readonly && this.getParent() && !this.getParent().options.readonly)
+			{
+				let action_parent : et2_widget = this;
+				while(action_parent != null && !action_parent.options.actions &&
+					!(action_parent instanceof et2_container)
+					)
 				{
-						let action_parent: et2_widget = this;
-						while (action_parent != null && !action_parent.options.actions &&
-								!(action_parent instanceof et2_container)
-								)
-						{
-								action_parent = action_parent.getParent();
-						}
-						try
-						{
-								this._link_actions(action_parent.options.actions || {});
-								this._need_actions_linked = false;
-						}
-						catch (e)
-						{
-								// something went wrong, but keep quiet about it
-						}
+					action_parent = action_parent.getParent();
 				}
+				try
+				{
+					this._link_actions(action_parent.options.actions || {});
+					this._need_actions_linked = false;
+				}
+				catch(e)
+				{
+					// something went wrong, but keep quiet about it
+				}
+			}
 		}
 
 		/**
@@ -1404,37 +1404,37 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				// we try to catch the exception and in this case retrieve the egw object from current window.
 				try
 				{
-						egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar') : window.egw('calendar');
+					egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar') : window.egw('calendar');
 				}
-				catch (e)
+				catch(e)
 				{
-						egw = window.egw('calendar');
+					egw = window.egw('calendar');
 				}
 
-				const that = this;
+			const that = this;
 
-				if (typeof instance_date == 'string')
-				{
-						instance_date = new Date(instance_date);
-				}
+			if(typeof instance_date == 'string')
+			{
+				instance_date = new Date(instance_date);
+			}
 
-				// Check for modifying a series that started before today
-				const tempDate = new Date();
-				const today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), -tempDate.getTimezoneOffset(), tempDate.getSeconds());
-				const termination_date = instance_date < today ? egw.lang('today') : date(egw.preference('dateformat'), instance_date);
+			// Check for modifying a series that started before today
+			const tempDate = new Date();
+			const today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), -tempDate.getTimezoneOffset(), tempDate.getSeconds());
+			const termination_date = instance_date < today ? egw.lang('today') : formatDate(instance_date);
 
-				if (parseInt(event_data.recur_type))
-				{
-					Et2Dialog.show_dialog(
-						function(button_id)
-						{
-							callback.call(that, button_id, event_data);
-						},
-						(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
-						egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
-						"This event is part of a series", {}, Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.WARNING_MESSAGE
-					);
-				}
+			if(parseInt(event_data.recur_type))
+			{
+				Et2Dialog.show_dialog(
+					function(button_id)
+					{
+						callback.call(that, button_id, event_data);
+					},
+					(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
+					egw.lang("Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.", termination_date),
+					"This event is part of a series", {}, Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.WARNING_MESSAGE
+				);
+			}
 		}
 
 		public static drag_helper(event, ui)

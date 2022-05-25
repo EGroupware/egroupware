@@ -815,6 +815,8 @@ Hide subsequent headers in week view with non-consolidated owners
 
 	opacity: 0.85;
 	-moz-opacity: 0.85;
+    box-sizing: border-box;
+    touch-action:none;
 
 /* set via inline style on runtime:
  *  top: depending on startime
@@ -1212,6 +1214,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	height: 100%;
 	border-left: 1px solid silver;
 	margin-left: -1px;
+    z-index: 1;
 }
 .calendar_plannerGrid > .calendar_plannerScale,
 .calendar_plannerGrid > .calendar_plannerScaleDay {
@@ -1242,6 +1245,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	left: 0px;
 	width: 100%;
 	min-height: 20px;
+    z-index: 2;
 }
 .calendar_plannerRowWidget:not(:first-child) {
 	border-top: 1px solid silver;
