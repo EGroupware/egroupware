@@ -9,7 +9,6 @@
  */
 
 import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
-//import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import "../jquery/jquery.noconflict.js";
 import {egw} from "../jsapi/egw_global.js";
 

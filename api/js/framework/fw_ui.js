@@ -15,7 +15,6 @@
 
 import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
 import "../jquery/jquery.noconflict.js";
-//import "../../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import "../jquery/mousewheel/mousewheel.js";
 import '../jsapi/egw_inheritance.js';
 import {EGW_KEY_ENTER, EGW_KEY_SPACE} from '../egw_action/egw_action_constants.js';
@@ -1285,7 +1284,7 @@ window.egw_fw_ui_splitter = function(_contDiv, _orientation, _resizeCallback, _c
 			jQuery(this.splitterDiv).addClass("egw_fw_ui_splitter_vertical");
 			break;
 	}
-	jQuery(this.splitterDiv).draggable(dragoptions);
+//	jQuery(this.splitterDiv).draggable(dragoptions);
 
 	//Handle mouse hovering of the splitter div
 	jQuery(this.splitterDiv).mouseenter(function() {
@@ -1384,7 +1383,7 @@ window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
  */
 window.egw_fw_ui_splitter.prototype.set_disable = function (_state)
 {
-	jQuery(this.splitterDiv).draggable(_state?'disable':'enable');
+//	jQuery(this.splitterDiv).draggable(_state?'disable':'enable');
 };
 
 /**

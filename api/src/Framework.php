@@ -996,9 +996,6 @@ abstract class Framework extends Framework\Extra
 				// Enhanced selectboxes (et1)
 				self::includeCSS('/api/js/jquery/chosen/chosen.css');
 
-				// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-				self::includeCSS("/api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css");
-
 				// Et2Date uses flatpickr
 				self::includeCSS('/node_modules/flatpickr/dist/themes/light.css');
 
@@ -1071,8 +1068,6 @@ abstract class Framework extends Framework\Extra
 			));
 		}
 		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
-		self::includeJS('/api/js/jquery/jquery-ui/jquery-ui.min.js');
-		self::includeJS('/node_modules/jquery-ui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.js');
 		self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');

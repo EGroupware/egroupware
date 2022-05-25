@@ -9,7 +9,6 @@
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 	/vendor/bower-asset/fastclick/lib/fastclick.js;
 	framework.fw_base;
 	framework.fw_browser;
@@ -23,7 +22,6 @@ import '../../api/js/framework/fw_browser.js';
 import '../../api/js/framework/fw_ui.js';
 import '../../api/js/framework/fw_classes.js';
 import '../../api/js/jsapi/egw_inheritance.js';
-import '@andxor/jquery-ui-touch-punch-fix/jquery.ui.touch-punch.js';
 /**
  *
  * @param {DOMWindow} window
