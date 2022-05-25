@@ -290,6 +290,8 @@ export function egwDragActionImplementation()
 			const dragend = function(event){
 				const helper = document.querySelector('.et2_egw_action_ddHelper');
 				if (helper) helper.remove();
+				const draggable = document.querySelector('.drag--moving');
+				if (draggable) draggable.classList.remove('drag--moving');
 			};
 
 			// Drag Event listeners
@@ -592,7 +594,7 @@ export function egwDropActionImplementation()
 
 				// clean up the helper dom
 				if (helper) helper.remove();
-
+				self.getTheDraggedDOM().classList.remove('drag--moving');
 			};
 
 			const dragleave = function (event) {
