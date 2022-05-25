@@ -76,7 +76,7 @@ $checks = array(
 	),
 	'display_errors' => array(
 		'func' => 'php_ini_check',
-		'value' => 0,
+		'value' => '',
 		'verbose_value' => 'Off',
 		'warning' => lang('%1 is set to %2. This is NOT recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!','display_errors',ini_get('display_errors')),
 	),
@@ -337,9 +337,10 @@ function composer_check($package)
 	if (!isset($installed))
 	{
 		$installed = array();
-		if (file_exists(EGW_SERVER_ROOT.'/vendor') && file_exists($json=EGW_SERVER_ROOT.'/vendor/composer/installed.json'))
+		if (file_exists(EGW_SERVER_ROOT.'/vendor') && file_exists($path=EGW_SERVER_ROOT.'/vendor/composer/installed.json'))
 		{
-			foreach(json_decode(file_get_contents($json), true) as $package_data)
+			$json = json_decode(file_get_contents($path) ?: '{"packages": []}', true);
+			foreach($json['packages'] as $package_data)
 			{
 				$installed[strtolower($package_data['name'])] = $package_data['version'];
 			}
