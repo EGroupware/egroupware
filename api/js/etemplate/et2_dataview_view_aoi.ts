@@ -23,6 +23,7 @@ import {EGW_AO_SHIFT_STATE_MULTI,
 	EGW_AO_STATE_SELECTED} from '../egw_action/egw_action_constants.js';
 import {egwBitIsSet, egwGetShiftState, egwPreventSelect, egwSetBit, egwUnfocus, egwIsMobile} from "../egw_action/egw_action_common.js";
 import {_egw_active_menu} from "../egw_action/egw_menu.js";
+import {tapAndSwipe} from "../tapandswipe";
 
 /**
  * Contains the action object interface implementation for the nextmatch widget
@@ -114,23 +115,21 @@ export function et2_dataview_rowAOI(_node)
 	};
 
 	if (egwIsMobile()) {
-		jQuery(_node).swipe({
-				allowPageScroll: "vertical",
-				longTapThreshold: 10,
-				swipe: function (event, direction, distance)
-				{
-					if (distance > 100) selectHandler(event, {swip:direction});
-				},
-				tap: function (event, duration)
-				{
-					selectHandler(event);
-				},
-				// stop scrolling touch being confused from tap
-				longTap: function (event)
-				{
-					return;
-				}
-
+		let swipe = new tapAndSwipe(_node,{
+			// set the same threshold as action_popup event to get the tapAndHold working
+			tapHoldThreshold: 600,
+			swipe: function (event, direction, distance)
+			{
+				if (distance > 100) selectHandler(event, {swip:direction});
+			},
+			tap: function (event)
+			{
+				selectHandler(event);
+			},
+			tapAndHold: function(event)
+			{
+				return;
+			}
 		});
 	} else {
 		jQuery(_node).click(selectHandler);

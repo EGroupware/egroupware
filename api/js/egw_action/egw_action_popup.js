@@ -18,6 +18,7 @@ import {egwAction, egwActionImplementation, egwActionObject} from './egw_action.
 import {egwFnct} from './egw_action_common.js';
 import {egwMenu, _egw_active_menu} from "./egw_menu.js";
 import {EGW_KEY_ENTER, EGW_KEY_MENU} from "./egw_action_constants.js";
+import {tapAndSwipe} from "../tapandswipe";
 
 if (typeof window._egwActionClasses == "undefined")
 	window._egwActionClasses = {};
@@ -280,35 +281,23 @@ export function egwPopupActionImplementation()
 	};
 	ai._handleTapHold = function (_node, _callback)
 	{
-		let holdTimer = 600;
-		let maxDistanceAllowed = 40;
-		let tapTimeout = null;
-		let startx = 0;
-		let starty = 0;
-
 		//TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
 		// should be no longer neccessary after removing jQuery nodes.
 		if (_node instanceof jQuery)
 		{
 			_node = _node[0];
 		}
-		_node.addEventListener('touchstart', function(e){
 
-			tapTimeout = setTimeout(function(event){
-				_callback(e);
-			}, holdTimer);
-			startx = (e.changedTouches) ? e.changedTouches[0].pageX: e.pageX;
-			starty = (e.changedTouches) ? e.changedTouches[0].pageY: e.pageY;
-		});
-		_node.addEventListener('touchend', function(){
-			clearTimeout(tapTimeout);
-		});
-		_node.addEventListener('touchmove', function(_event){
-			if (tapTimeout == null) return;
-			let e = _event.originalEvent;
-			let x = (e.changedTouches) ? e.changedTouches[0].pageX: e.pageX;
-			let y = (e.changedTouches) ? e.changedTouches[0].pageY: e.pageY;
-			if (Math.sqrt((x-startx)*(x-startx) + (y-starty)+(y-starty)) > maxDistanceAllowed) clearTimeout(tapTimeout);
+		let tap = new tapAndSwipe(_node, {
+			// this threshold must be the same as the one set in et2_dataview_view_aoi
+			tapHoldThreshold: 600,
+			tapAndHold: function(event)
+			{
+				// don't trigger contextmenu if sorting is happening
+				if (document.querySelector('.sortable-drag')) return;
+
+				_callback(event);
+			}
 		});
 	}
 	/**
@@ -350,7 +339,7 @@ export function egwPopupActionImplementation()
 		// Safari still needs the taphold to trigger contextmenu
 		// Chrome has default event on touch and hold which acts like right click
 		this._handleTapHold(_node, contextHandler);
-		jQuery(_node).on('contextmenu', contextHandler);
+		if (!egwIsMobile()) jQuery(_node).on('contextmenu', contextHandler);
 	};
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
