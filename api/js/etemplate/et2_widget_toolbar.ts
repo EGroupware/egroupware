@@ -452,6 +452,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			toolbox = this.actionbox,
 			menulist = jQuery(this.actionbox.children()[1]);
 
+		/* disabling DND in toolbar for now
 		toolbar.draggable({
 			cancel:'',
 			zIndex: 1000,
@@ -495,6 +496,15 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			tolerance:"touch"
 		});
 
+		this.actionlist.droppable({
+			tolerance:"pointer",
+			drop:function (event,ui) {
+				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), false);
+				ui.draggable.appendTo(that.actionlist);
+				that._build_menu(actions);
+			}
+		});*/
+
 		toolbox.on('toggle', (e)=>{
 			const details = <HTMLDetailsElement>e.target;
 			if (details.open)
@@ -513,15 +523,6 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 
 					jQuery('html').unbind('click.outsideOfMenu');
 				});
-			}
-		});
-
-		this.actionlist.droppable({
-			tolerance:"pointer",
-			drop:function (event,ui) {
-				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), false);
-				ui.draggable.appendTo(that.actionlist);
-				that._build_menu(actions);
 			}
 		});
 	}
@@ -848,4 +849,3 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	}
 }
 et2_register_widget(et2_toolbar, ["toolbar"]);
-
