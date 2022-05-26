@@ -9,10 +9,10 @@
  */
 
 
-import {css, html, PropertyValues, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {LionCombobox} from "@lion/combobox";
-import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {EgwOption} from "./EgwOption";
 import {TaglistSelection} from "./TaglistSelection";
 import {taglistStyles} from "./TaglistStyles";
@@ -81,6 +81,7 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 	{
 		super();
 
+		this.value = [];
 	}
 
 	connectedCallback()
@@ -170,7 +171,6 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		}
 	}
 
-
 	getValue(): String[]
 	{
 		return this.modelValue;
@@ -199,7 +199,23 @@ export class Et2Taglist extends Et2widgetWithSelectMixin(LionCombobox)
 		{
 			this.multiple = this.multiple ? values.length > 1 : false;
 		}
+		if(this.allowFreeEntries)
+		{
+			values.forEach(val =>
+			{
+				if(!this.select_options.find(opt => opt.value == val))
+				{
+					this.__appendSelOption(val);
+				}
+			});
+		}
+
 		this.value = values;
+
+		if(!this.multiple)
+		{
+			values = values.shift();
+		}
 		this.modelValue = values;
 	}
 
