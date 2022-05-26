@@ -19,6 +19,8 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
+  	  --sl-font-size-medium: 11px;
+  		
       --sl-input-height-small: 18px;
       --sl-input-height-medium: 24px;
       
@@ -27,6 +29,7 @@ export default [sl_css, css`
       
       --sl-input-border-radius-small: 2px;
       --sl-input-border-radius-medium: 3px;
+      --sl-input-border-color-focus: #E6E6E6;
   }
  
   `];

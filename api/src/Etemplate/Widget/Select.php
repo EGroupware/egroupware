@@ -162,6 +162,7 @@ class Select extends Etemplate\Widget
 			{
 				if ($child->type == 'option') $allowed[] = (string)$child->attrs['value'];
 			}
+			$allowed = array_map('strval', $allowed);
 
 			if (!$multiple || $this->attrs['multiple'] === "dynamic") $allowed[] = '';
 

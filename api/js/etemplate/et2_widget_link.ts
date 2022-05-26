@@ -31,7 +31,7 @@ import {et2_vfsSelect} from "./et2_widget_vfs";
 import {egw} from "../jsapi/egw_global";
 import {et2_tabbox} from "./et2_widget_tabs";
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
-import {et2_IDetachedDOM, et2_IExposable} from "./et2_core_interfaces";
+import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {Et2LinkList} from "./Et2Link/Et2LinkList";
 import type {Et2LinkString} from "./Et2Link/Et2LinkString";
@@ -700,44 +700,8 @@ export class et2_link_entry extends et2_inputWidget
 		var self = this;
 		this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
 
-		// Application selection
-		jQuery.widget("custom.iconselectmenu", jQuery.ui.selectmenu, {
-			_renderButtonItem: function (value)
-			{
-				var _value = value.value;
-				var url = self.egw().image('navbar', _value);
-				var buttonItem = jQuery("<span>", {
-					"class": "ui-selectmenu-text",
-					title: value.label
-				});
-
-				buttonItem.css('background-image', 'url(' + url + ')');
-				return buttonItem;
-			},
-			_renderItem: function (ul, item)
-			{
-				var li = jQuery("<li>", {class: "et2_link_entry_app_option"}),
-					wrapper = jQuery("<div>", {text: item.label});
-
-				if (item.disabled)
-				{
-					li.addClass("ui-state-disabled");
-				}
-				ul.addClass(self.div.attr("class"));
-				var url = self.egw().image('navbar', item.value);
-				jQuery("<span>", {
-					style: 'background-image: url("' + url + '");',
-					"class": "ui-icon " + item.element.attr("data-class"),
-					title: item.label
-				})
-					.appendTo(wrapper);
-
-				return li.append(wrapper).appendTo(ul);
-			}
-		});
-
-		this.app_select = jQuery(document.createElement("select")).appendTo(this.div)
-			.change(function (e)
+		this.app_select = jQuery(document.createElement("et2-link-apps")).appendTo(this.div)
+			.on("change", function(e)
 			{
 				// Clear cache when app changes
 				self.cache = {};
@@ -745,37 +709,23 @@ export class et2_link_entry extends et2_inputWidget
 				// Update preference with new value
 				egw.set_preference(self.options.value.to_app || self.egw().getAppName(), 'link_app', self.app_select.val());
 
-				if (typeof self.options.value != 'object') self.options.value = {};
+				if(typeof self.options.value != 'object')
+				{
+					self.options.value = {};
+				}
 				self.options.value.app = self.app_select.val();
 			})
 			.attr("aria-label", egw.lang("linkapps"));
-		var opt_count = 0;
-		for (var key in this.options.select_options)
-		{
-			opt_count++;
-			var option = jQuery(document.createElement("option"))
-				.attr("value", key)
-				.text(this.options.select_options[key]);
-			option.appendTo(this.app_select);
-		}
 		if (this.options.only_app)
 		{
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
-			if (this.options.app_icons && this.app_select.iconselectmenu('instance'))
-			{
-				this.app_select.iconselectmenu('widget').hide();
-			}
 			this.div.addClass("no_app");
 		}
 		else
 		{
 			// Now that options are in, set to last used app
 			this.app_select.val(this.options.value.app || '');
-			if (this.app_select.iconselectmenu('instance'))
-			{
-				this.app_select.iconselectmenu('update');
-			}
 		}
 
 		// Search input
@@ -787,14 +737,7 @@ export class et2_link_entry extends et2_inputWidget
 				{
 					// Adjust width, leave room for app select & link button
 					self.div.removeClass("no_app");
-					if (self.options.app_icons)
-					{
-						self.app_select.iconselectmenu('widget').show();
-					}
-					else
-					{
-						self.app_select.show();
-					}
+					self.app_select.show();
 				}
 			})
 			.blur(function (e)
@@ -804,7 +747,6 @@ export class et2_link_entry extends et2_inputWidget
 				{
 					// Adjust width, leave room for app select & link button
 					self.div.addClass("no_app");
-					self.app_select.iconselectmenu('widget').hide();
 				}
 				else if (self.search.val())
 				{
@@ -822,6 +764,7 @@ export class et2_link_entry extends et2_inputWidget
 		this.set_blur(this.options.blur ? this.options.blur : this.egw().lang("search"), this.search);
 
 		// Autocomplete
+		/*
 		this.search.autocomplete({
 			source: function (request, response)
 			{
@@ -849,8 +792,9 @@ export class et2_link_entry extends et2_inputWidget
 			disabled: self.options.disabled,
 			appendTo: self.div
 		});
-
+*/
 		// Custom display (colors)
+		/*
 		this.search.data("uiAutocomplete")._renderItem = function (ul, item)
 		{
 			var li = jQuery(document.createElement('li'))
@@ -890,11 +834,13 @@ export class et2_link_entry extends et2_inputWidget
 			return li;
 		};
 
+		 */
+
 		// Bind to enter key to start search early
-		this.search.keydown(function (e)
+		this.search.keydown(function(e)
 		{
 			var keycode = (e.keyCode ? e.keyCode : e.which);
-			if (keycode == 13 && !self.processing)
+			if(keycode == 13 && !self.processing)
 			{
 				self.search.autocomplete("option", "minLength", 0);
 				self.search.autocomplete("search");
@@ -990,23 +936,6 @@ export class et2_link_entry extends et2_inputWidget
 			this.app_select.val(this.options.value.app);
 		}
 
-		if (this.options.app_icons)
-		{
-			var self = this;
-			this.div.addClass('app_icons');
-			this.app_select.iconselectmenu({
-				width: 50,
-				change: function ()
-				{
-					window.setTimeout(function ()
-					{
-						self.app_select.trigger("change");
-					}, 0);
-				}
-			})
-				.iconselectmenu("menuWidget");
-			this.app_select.iconselectmenu('widget').hide();
-		}
 		return super.doLoadingFinished.apply(this, arguments);
 	}
 
@@ -1102,10 +1031,7 @@ export class et2_link_entry extends et2_inputWidget
 
 		jQuery("option[value='" + _value.app + "']", this.app_select).prop("selected", true);
 		this.app_select.hide();
-		if (this.options.app_icons && this.app_select.iconselectmenu('instance'))
-		{
-			this.app_select.iconselectmenu('widget').hide();
-		}
+
 		this.div.addClass("no_app");
 	}
 
