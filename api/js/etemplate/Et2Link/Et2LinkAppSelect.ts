@@ -1,21 +1,24 @@
 import {SelectOption} from "../Et2Select/FindSelectOptions";
-import {css, html, TemplateResult} from "@lion/core";
-import {LionOption} from "@lion/select-rich";
+import {css, html, SlotMixin, TemplateResult} from "@lion/core";
 import {Et2Select} from "../Et2Select/Et2Select";
-import shoelace from "../Styles/shoelace";
 
-let i : LionOption;
 
-export class Et2LinkAppSelect extends Et2Select
+export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
-			shoelace,
 			css`
 			:host {
 				--icon-width: 20px;
+				display: inline-block;
+			}
+			:host([app_icons]) {
+				max-width: 75px;
+			}
+			.select__menu {
+				overflow-x: hidden;
 			}
 			::part(control) {
 				border: none;
@@ -23,6 +26,9 @@ export class Et2LinkAppSelect extends Et2Select
 			}
 			et2-image {
 				width: var(--icon-width);
+			}
+			::slotted(img), img {
+				vertical-align: middle;
 			}
 			`
 		]
@@ -44,7 +50,7 @@ export class Et2LinkAppSelect extends Et2Select
 			/**
 			 * Show application icons instead of application names
 			 */
-			"app_icons": {type: Boolean}
+			"app_icons": {type: Boolean, reflect: true}
 		}
 	};
 
@@ -52,15 +58,14 @@ export class Et2LinkAppSelect extends Et2Select
 	{
 		return {
 			...super.slots,
-			input: () =>
+			"": () =>
 			{
-				const select = document.createElement("sl-select");
+
 				const icon = document.createElement("et2-image");
 				icon.setAttribute("slot", "prefix");
 				icon.setAttribute("src", "api/navbar");
 				icon.style.width = "var(--icon-width)";
-				select.appendChild(icon);
-				return select;
+				return icon;
 			}
 		}
 	}
@@ -75,8 +80,8 @@ export class Et2LinkAppSelect extends Et2Select
 	constructor()
 	{
 		super();
-		this.__app_icons = true;
-		this.__application_list = [];
+		this.app_icons = true;
+		this.application_list = [];
 
 		// Select options are based off abilities registered with link system
 		this._reset_select_options();
@@ -95,13 +100,13 @@ export class Et2LinkAppSelect extends Et2Select
 			}
 		}
 		// Set icon
-		this._inputNode.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
 
 		// Register to
-		this._inputNode.addEventListener("sl-change", () =>
+		this.addEventListener("sl-change", () =>
 		{
 			// Set icon
-			this._inputNode.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+			this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
 
 			// update preference
 			let appname = "";
@@ -127,29 +132,6 @@ export class Et2LinkAppSelect extends Et2Select
 		{
 			this._reset_select_options();
 		}
-	}
-
-	/**
-	 * Get the node where we're putting the selection options
-	 *
-	 * @returns {HTMLElement}
-	 */
-	get _optionTargetNode() : HTMLElement
-	{
-		return this._inputNode;
-	}
-
-	/**
-	 * Overwritten as sometimes called before this._inputNode is available,
-	 * and our options are text anyway
-	 *
-	 * @param {*} v - modelValue: can be an Object, Number, String depending on the
-	 * input type(date, number, email etc)
-	 * @returns {string} formattedValue
-	 */
-	formatter(v)
-	{
-		return v;
 	}
 
 	/**
@@ -196,20 +178,6 @@ export class Et2LinkAppSelect extends Et2Select
 		let url = this.egw().image('navbar', appname);
 		return html`
             <et2-image style="width: var(--icon-width)" slot="prefix" src="${url}"></et2-image>`;
-	}
-
-	set value(new_value)
-	{
-		super.value = new_value;
-		if(this._inputNode)
-		{
-			this._inputNode.value = new_value;
-		}
-	}
-
-	get value()
-	{
-		return this._inputNode?.value || "";
 	}
 }
 

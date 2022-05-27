@@ -12,6 +12,22 @@ registerIconLibrary('default', {
 });
 
 /**
+ * Override some shoelace icons with EGroupware
+ */
+const egw_icons = {'chevron-down': 'arrow_down'}
+registerIconLibrary("system", {
+	resolver: (name) =>
+	{
+		if(egw_icons[name])
+		{
+			return `${egw.webserverUrl}/pixelegg/images/${egw_icons[name]}.svg`;
+		}
+		return "";
+	}
+});
+
+
+/**
  * Customise shoelace styles to match our stuff
  * External CSS will override this
  */

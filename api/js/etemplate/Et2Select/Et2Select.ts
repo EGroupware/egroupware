@@ -8,16 +8,20 @@
  */
 
 
-import {LionSelect} from "@lion/select";
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {cssImage} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
+import {SlSelect} from "@shoelace-style/shoelace";
+import {egw} from "../../jsapi/egw_global";
+import shoelace from "../Styles/shoelace";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(LionSelect){};
+export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
+{
+};
 
 export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 {
@@ -25,6 +29,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	{
 		return [
 			...super.styles,
+			shoelace,
 			css`
 			:host {
 				display: block;
@@ -98,7 +103,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	 */
 	get _optionTargetNode() : HTMLElement
 	{
-		return this._inputNode;
+		return <HTMLElement><unknown>this;
 	}
 
 	static get properties()
@@ -266,22 +271,21 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
-			const modelValueArr = Array.isArray(this.modelValue) ? this.modelValue : this.modelValue.split(',');
+			const valueArray = Array.isArray(this.value) ? this.value : this.value.split(',');
 			// value not in options AND NOT (having an empty label and value)
-			if(this.select_options.length > 0 && this.select_options.filter((option) => modelValueArr.find(val => val == option.value)).length === 0 &&
-				!(typeof this.empty_label !== 'undefined' && (this.modelValue || "") === ""))
+			if(this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
+				!(typeof this.empty_label !== 'undefined' && (this.value || "") === ""))
 			{
 				// --> use first option
-				this.modelValue = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
+				this.value = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 			}
 			// Re-set value, the option for it may have just shown up
-			this.value = this.modelValue || "";
+			this.value = this.value || "";
 		}
 
 		// propagate multiple to selectbox
 		if (changedProperties.has('multiple'))
 		{
-			this._inputNode.multiple = this.multiple;
 			// switch the expand button off
 			if (this.multiple)
 			{
@@ -297,15 +301,19 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 			return html``;
 		}
 		return html`
-            <option value="" ?selected=${!this.modelValue}>${this.empty_label}</option>`;
+            <sl-menu-item value="">${this.empty_label}</sl-menu-item>`;
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
+		let icon = option.icon ? html`
+            <et2-image slot="prefix" src="${option.icon}"></et2-image>` : "";
+
 		return html`
-            <option value="${option.value}" title="${option.title}" ?selected=${option.value == this.modelValue}>
+            <sl-menu-item value="${option.value}" title="${option.title}">
+                ${icon}
                 ${option.label}
-            </option>`;
+            </sl-menu-item>`;
 	}
 }
 
@@ -346,7 +354,7 @@ export class Et2SelectBitwise extends Et2Select
 				expanded_value.push(right);
 			}
 		}
-		this.modelValue = expanded_value;
+		super.value = expanded_value;
 
 		this.requestUpdate("value", oldValue);
 	}
