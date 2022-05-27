@@ -97,9 +97,6 @@ function send_template()
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>', $str);
 
-		// remove (unnecessary) empty widgets (were required with first eTemplate)
-		$str = preg_replace('#^\s*<(description|label)/>\n#m', '', $str);
-
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
@@ -235,12 +232,12 @@ function send_template()
 						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
 			}, $str);
 
-			// handling of date and partially implemented select widget (no search or tags attribute), incl. removing of type attribute
+			// handling of partially implemented select widget (no search or tags attribute), incl. removing of type attribute
 			$str = preg_replace_callback('#<(select)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
+				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 				$attrs = array_combine($attrs[2], $attrs[3]);
 
-				// add et2-prefix for <date-* and <select-* without search or tags attribute
+				// add et2-prefix for <select-* without search or tags attribute
 				if (!isset($attrs['search']) && !isset($attrs['tags']))
 				{
 					// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
@@ -253,6 +250,19 @@ function send_template()
 				}
 				return $matches[0];
 			}, $str);
+
+			/* handling of partially implemented taglist widget (no subtypes and autocomplete_url attribute yet)
+			$str = preg_replace_callback('#<(taglist)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
+				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
+				$attrs = array_combine($attrs[2], $attrs[3]);
+
+				// add et2-prefix for vanilla <taglist without or empty autocomplete_url
+				if (empty($matches[2]) && isset($attrs['autocomplete_url']) && $attrs['autocomplete_url'] === '')
+				{
+					return '<et2-' . $matches[1] . $matches[2] . ' ' . $matches[3] . '></et2-' . $matches[1] . $matches[2] . '>';
+				}
+				return $matches[0];
+			}, $str);*/
 		}
 		$processing = microtime(true);
 
