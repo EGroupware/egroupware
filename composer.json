@@ -137,7 +137,7 @@
 		"tinymce/tinymce": "5.10.*"
 	},
 	"require-dev": {
-		"guzzlehttp/guzzle": "^6.5",
+		"guzzlehttp/guzzle": "^6.5.6",
 		"phpunit/phpunit": "^9"
 	},
 	"suggest": {
