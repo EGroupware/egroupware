@@ -521,11 +521,7 @@ abstract class Handler
 	{
 		unset($path);	// not used, but required by function signature
 
-		static $grants=null;
-		if (is_null($grants))
-		{
-			$grants = $this->get_grants();
-		}
+		$grants = $this->get_grants();
 		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
 
 		if (is_null($user) || $grants[$user] & Api\Acl::READ)
