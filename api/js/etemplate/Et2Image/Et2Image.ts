@@ -26,6 +26,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
             ::slotted(img) {
             	max-height: 100%;
             	max-width: 100%;
+            	vertical-align: middle;
             }
             :host([icon]) {
             	height: 1.3rem;
@@ -120,6 +121,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${src}"
                  alt="${this.label}"
+                 part="image"
                  title="${this.statustext || this.label}"
             >`;
 	}
@@ -129,7 +131,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		return html`
             <slot></slot>`;
 	}
-
 
 	protected parse_href(img_href : string) : string
 	{
@@ -160,7 +161,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 
 	get _img()
 	{
-		return this.__getDirectSlotChild('img');
+		return this.querySelector('img');
 	}
 
 	/**
@@ -171,6 +172,10 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		super.updated(changedProperties);
 
+		if(changedProperties.has("src"))
+		{
+			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.default_src));
+		}
 		// if there's an href or onclick, make it look clickable
 		if(changedProperties.has("href") || changedProperties.has("onclick"))
 		{
