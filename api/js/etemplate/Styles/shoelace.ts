@@ -12,7 +12,8 @@ registerIconLibrary('default', {
 });
 
 /**
- * Override some shoelace icons with EGroupware
+ * Override some shoelace icons with EGroupware icons
+ * In particular, the data: ones give errors with our CSP
  */
 const egw_icons = {'chevron-down': 'arrow_down'}
 registerIconLibrary("system", {

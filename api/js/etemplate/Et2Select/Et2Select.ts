@@ -67,45 +67,6 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		];
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () =>
-			{
-				return document.createElement("select");
-			}
-		}
-	}
-
-	connectedCallback()
-	{
-		super.connectedCallback();
-		//MOVE options that were set as children inside SELECT:
-		//this.querySelector('select').append(...this.querySelectorAll('option'));
-	}
-
-	firstUpdated(changedProperties)
-	{
-		super.firstUpdated(changedProperties);
-
-		// if _inputNode was not available by the time set_value() got called
-		if(this.getValue() !== this.value)
-		{
-			this.set_value(this.modelValue);
-		}
-	}
-
-	/**
-	 * Get the node where we're putting the selection options
-	 *
-	 * @returns {HTMLElement}
-	 */
-	get _optionTargetNode() : HTMLElement
-	{
-		return <HTMLElement><unknown>this;
-	}
-
 	static get properties()
 	{
 		return {
@@ -126,6 +87,70 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			input: () =>
+			{
+				return document.createElement("select");
+			}
+		}
+	}
+
+	constructor()
+	{
+		super();
+		this._triggerChange = this._triggerChange.bind(this);
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		//MOVE options that were set as children inside SELECT:
+		//this.querySelector('select').append(...this.querySelectorAll('option'));
+
+		this.getUpdateComplete().then(() =>
+		{
+			this.addEventListener("sl-clear", this._triggerChange)
+			this.addEventListener("sl-select", this._triggerChange);
+		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		this.removeEventListener("sl-clear", this._triggerChange)
+		this.removeEventListener("sl-select", this._triggerChange);
+	}
+
+	firstUpdated(changedProperties)
+	{
+		super.firstUpdated(changedProperties);
+
+		// if _inputNode was not available by the time set_value() got called
+		if(this.getValue() !== this.value)
+		{
+			this.set_value(this.modelValue);
+		}
+	}
+
+	_triggerChange(e)
+	{
+		this.dispatchEvent(new Event("change"));
+	}
+
+	/**
+	 * Get the node where we're putting the selection options
+	 *
+	 * @returns {HTMLElement}
+	 */
+	get _optionTargetNode() : HTMLElement
+	{
+		return <HTMLElement><unknown>this;
+	}
+
 	/**
 	 * @deprecated use this.multiple = multi
 	 *
@@ -136,64 +161,9 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 		this.multiple = multi;
 	}
 
-	/**
-	 * Reimplemented to return string[] for multiple
-	 */
-	get value() : string|string[]
+	set_value(val)
 	{
-		if (!this._inputNode || !this.select_options.length)
-		{
-			return this.__value || '';
-		}
-		if (!this.multiple)
-		{
-			return this._inputNode.value || this.__value || '';
-		}
-		// multi-selection value
-		const selected = this._inputNode.querySelectorAll('option:checked');
-		return Array.from(selected).map(el => (<HTMLOptionElement>el).value);
-	}
-
-	/**
-	 * Reimplemented to select options for multiple
-	 *
-	 * @param value
-	 */
-	set value(value: string|string[])
-	{
-		// if not yet connected to dom can't change the value
-		if (this._inputNode && this.select_options.length)
-		{
-			// split multiple comma-separated values for multiple or expand_multiple_rows
-			if (typeof value === 'string' && (this.multiple || this.expand_multiple_rows) && value.indexOf(',') !== -1)
-			{
-				value = value.split(',');
-			}
-			// if we get more than one value AND expand_multiple_rows is set --> switch to multiple
-			if (!this.multiple && this.expand_multiple_rows && Array.isArray(value) && value.length > 1)
-			{
-				this.multiple = true;
-				this.size = this.expand_multiple_rows;
-			}
-			if (!this.multiple)
-			{
-				this._inputNode.value = value;
-			}
-			else
-			{
-				this._inputNode.multiple = true;	// in case property is not yet set, selectbox will unselect all other options
-				this._inputNode.querySelectorAll('option').forEach((el : HTMLOptionElement) =>
-				{
-					el.selected = [].concat(value).find(val => val == el.value);
-				});
-			}
-			/** @type {string | undefined} */
-			this.__value = undefined;
-		}
-		else
-		{
-			this.__value = value;
-		}
+		this.value = val;
 	}
 
 	/**
@@ -203,7 +173,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 	 */
 	_callParser(value = this.formattedValue)
 	{
-		if (this.multiple && Array.isArray(value))
+		if(this.multiple && Array.isArray(value))
 		{
 			return value;
 		}

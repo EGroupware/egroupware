@@ -86,6 +86,8 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 		// Select options are based off abilities registered with link system
 		this._reset_select_options();
+
+		this._handleChange = this._handleChange.bind(this);
 	}
 
 	connectedCallback()
@@ -104,20 +106,13 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
 
 		// Register to
-		this.addEventListener("sl-change", () =>
-		{
-			// Set icon
-			this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.addEventListener("change", this._handleChange);
+	}
 
-			// update preference
-			let appname = "";
-			if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.to_app)
-			{
-				appname = this.parentNode.to_app;
-			}
-			this.egw().set_preference(appname || this.egw().app_name(), 'link_app', this.value);
-			this.dispatchEvent(new Event("change"));
-		});
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.removeEventListener("change", this._handleChange);
 	}
 
 	/**
@@ -133,6 +128,20 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		{
 			this._reset_select_options();
 		}
+	}
+
+	private _handleChange(e)
+	{
+		// Set icon
+		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+
+		// update preference
+		let appname = "";
+		if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.to_app)
+		{
+			appname = this.parentNode.to_app;
+		}
+		this.egw().set_preference(appname || this.egw().app_name(), 'link_app', this.value);
 	}
 
 	/**
