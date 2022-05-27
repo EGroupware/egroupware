@@ -172,7 +172,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		super.updated(changedProperties);
 
-		if(changedProperties.has("src"))
+		if(changedProperties.has("src") && this._img)
 		{
 			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.default_src));
 		}
