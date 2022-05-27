@@ -82,6 +82,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		super();
 		this.app_icons = true;
 		this.application_list = [];
+		this.hoist = true;
 
 		// Select options are based off abilities registered with link system
 		this._reset_select_options();
