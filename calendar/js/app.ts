@@ -18,7 +18,6 @@
 	/calendar/js/et2_widget_planner.js;
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
-import "../../vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.min.js";
 
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
@@ -1253,6 +1252,7 @@ export class CalendarApp extends EgwApp
 		*/
 		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
 		{
+			/* disable until jQueryUI-touch-swipe is replaced
 			jQuery(framework.applications.calendar.tab.contentDiv)
 				.swipe('destroy');
 
@@ -1286,7 +1286,7 @@ export class CalendarApp extends EgwApp
 					threshold: 100,
 					fallbackToMouseEvents: false,
 					triggerOnTouchEnd: false
-				});
+				});*/
 
 			// Page up & page down
 			egw_registerGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false, function()
