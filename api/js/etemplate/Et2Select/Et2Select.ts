@@ -17,13 +17,14 @@ import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {SlSelect} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
 import shoelace from "../Styles/shoelace";
+import {Et2WithSearchMixin} from "./SearchMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
 {
 };
 
-export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
+export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithSelect))
 {
 	static get styles()
 	{
@@ -266,7 +267,7 @@ export class Et2Select extends Et2InvokerMixin(Et2WidgetWithSelect)
 
 	_emptyLabelTemplate() : TemplateResult
 	{
-		if(!this.empty_label)
+		if(!this.empty_label || this.multiple)
 		{
 			return html``;
 		}
