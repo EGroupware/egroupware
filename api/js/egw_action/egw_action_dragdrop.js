@@ -155,7 +155,7 @@ export function egwDragActionImplementation()
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
-		var node = _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+		var node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
 		if (node)
 		{
@@ -450,7 +450,7 @@ export function egwDropActionImplementation()
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
-		var node = _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+		var node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 		var self = this;
 		if (node)
 		{
