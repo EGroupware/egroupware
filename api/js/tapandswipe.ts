@@ -64,6 +64,13 @@ export class tapAndSwipe {
 	 * keeps the timeout id for taphold
 	 */
 	private _tapHoldTimeout : number = null;
+
+	/**
+	 * keeps the contact point on touch start
+	 * @private
+	 */
+	private _fingercount : number = null;
+
 	/**
 	 * Options
 	 * @protected
@@ -97,10 +104,11 @@ export class tapAndSwipe {
 		this._startX = event.changedTouches[0].screenX;
 		this._startY = event.changedTouches[0].screenY;
 		this._isTapAndHold = false;
+		this._fingercount = event.touches.length;
 
 		this._tapHoldTimeout = window.setTimeout(_=>{
 			this._isTapAndHold = true;
-			this.options.tapAndHold(event);
+			this.options.tapAndHold(event, this._fingercount);
 		}, this.options.tapHoldThreshold);
 	}
 
@@ -133,7 +141,7 @@ export class tapAndSwipe {
 		{
 			if (!this._isTapAndHold)
 			{
-				this.options.tap(event);
+				this.options.tap(event, this._fingercount);
 			}
 
 			return;
@@ -142,28 +150,28 @@ export class tapAndSwipe {
 		// left swipe handler
 		if (this._endX + this.options.threshold < this._startX) {
 			this._distance = this._startX - this._endX;
-			this.options.swipe(event, 'left', this._distance);
+			this.options.swipe(event, 'left', this._distance, this._fingercount);
 			return;
 		}
 
 		// right swipe handler
 		if (this._endX - this.options.threshold > this._startX) {
 			this._distance = this._endX - this._startX;
-			this.options.swipe(event, 'right', this._distance);
+			this.options.swipe(event, 'right', this._distance, this._fingercount);
 			return;
 		}
 
 		// up swipe handler
 		if (this._endY + this.options.threshold < this._startY) {
 			this._distance = this._startY - this._endY;
-			this.options.swipe(event, 'up', this._distance);
+			this.options.swipe(event, 'up', this._distance, this._fingercount);
 			return;
 		}
 
 		// down swipe handler
 		if (this._endY - this.options.threshold > this._startY) {
 			this._distance = this._endY - this._startY;
-			this.options.swipe(event, 'down', this._distance);
+			this.options.swipe(event, 'down', this._distance, this._fingercount);
 			return;
 		}
 	}
