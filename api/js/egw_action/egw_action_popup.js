@@ -291,8 +291,10 @@ export function egwPopupActionImplementation()
 		let tap = new tapAndSwipe(_node, {
 			// this threshold must be the same as the one set in et2_dataview_view_aoi
 			tapHoldThreshold: 600,
-			tapAndHold: function(event)
+			allowScrolling: "both",
+			tapAndHold: function(event, fingercount)
 			{
+				if (fingercount >= 2) return;
 				// don't trigger contextmenu if sorting is happening
 				if (document.querySelector('.sortable-drag')) return;
 
