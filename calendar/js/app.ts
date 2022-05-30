@@ -55,6 +55,7 @@ import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_ac
 import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import flatpickr from "flatpickr";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
+import {tapAndSwipe} from "../../api/js/tapandswipe";
 
 /**
  * UI for calendar
@@ -1252,21 +1253,16 @@ export class CalendarApp extends EgwApp
 		*/
 		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
 		{
-			/* disable until jQueryUI-touch-swipe is replaced
-			jQuery(framework.applications.calendar.tab.contentDiv)
-				.swipe('destroy');
-
-			jQuery(framework.applications.calendar.tab.contentDiv)
-				.swipe({
+			let swipe = new tapAndSwipe(framework.applications.calendar.tab.contentDiv, {
 					//Generic swipe handler for all directions
-					swipe:function(event, direction, distance, duration, fingerCount) {
+					swipe:function(event, direction, distance, fingerCount) {
 						if(direction == "up" || direction == "down")
 						{
 							if(fingerCount <= 1) return;
-							var at_bottom = direction !== -1;
-							var at_top = direction !== 1;
+							let at_bottom = direction !== -1;
+							let at_top = direction !== 1;
 
-							jQuery(this).children(":not(.calendar_calGridHeader)").each(function() {
+							jQuery(this.element).children(":not(.calendar_calGridHeader)").each(function() {
 								// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
 								// 2px left to go
 								at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
@@ -1275,18 +1271,16 @@ export class CalendarApp extends EgwApp
 							});
 						}
 
-						var delta = direction == "down" || direction == "right" ? -1 : 1;
+						let delta = direction == "down" || direction == "right" ? -1 : 1;
 						// But we animate in the opposite direction to the swipe
-						var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
+						let opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
 						direction = opposite[direction];
 						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta);
 						return false;
 					},
-					allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
 					threshold: 100,
-					fallbackToMouseEvents: false,
-					triggerOnTouchEnd: false
-				});*/
+					allowScrolling: 'vertical'
+				});
 
 			// Page up & page down
 			egw_registerGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false, function()
