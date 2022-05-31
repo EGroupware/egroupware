@@ -31,6 +31,12 @@ export declare class SearchMixinInterface
 	 */
 	allowFreeEntries : boolean;
 
+	/**
+	 * Additional search options passed to the search functions
+	 *
+	 * @type {object}
+	 */
+	searchOptions : object;
 
 	/**
 	 * Start the search process
@@ -40,18 +46,18 @@ export declare class SearchMixinInterface
 	/**
 	 * Search local options
 	 */
-	localSearch(search : string) : Promise<void>
+	localSearch(search : string, options : object) : Promise<void>
 
 	/**
 	 * Search remote options.
 	 * If searchUrl is not set, it will return very quickly with no results
 	 */
-	remoteSearch(search : string) : Promise<void>
+	remoteSearch(search : string, options : object) : Promise<void>
 
 	/**
 	 * Check a [local] item to see if it matches
 	 */
-	searchMatch(search : string, item : LitElement) : boolean
+	searchMatch(search : string, options : object, item : LitElement) : boolean
 }
 
 /**
@@ -72,7 +78,9 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 
 				searchUrl: {type: String},
 
-				allowFreeEntries: {type: Boolean}
+				allowFreeEntries: {type: Boolean},
+
+				searchOptions: {type: Object}
 			}
 		}
 
@@ -110,7 +118,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 					width: 100%;
 				}
 				::slotted(.search_input.active) {
-					display: block;
+					display: flex;
 				}
 				::slotted(.no-match) {
 					display: none;
@@ -120,12 +128,16 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		}
 
 		private _searchTimeout : number;
-		protected static SEARCH_DELAY = 200;
+		protected static SEARCH_TIMEOUT = 500;
 		protected static MIN_CHARS = 2;
 
 		constructor(...args : any[])
 		{
 			super(...args);
+
+			this.search = false;
+			this.searchUrl = "";
+			this.searchOptions = {};
 
 			this._handleSearchButtonClick = this._handleSearchButtonClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
@@ -175,6 +187,16 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			`;
 		}
 
+
+		/**
+		 * Do we have the needed properties set, so we can actually do searching
+		 *
+		 * @returns {boolean}
+		 */
+		public get searchEnabled() : boolean
+		{
+			return this.search || this.searchUrl.length > 0;
+		}
 
 		protected get _searchButtonNode()
 		{
@@ -232,15 +254,21 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		{
 			super.handleMenuShow();
 
-			this._activeControls.classList.add("active");
-			this._searchInputNode.focus();
-			this._searchInputNode.select();
+			if(this.searchEnabled)
+			{
+				this._activeControls?.classList.add("active");
+				this._searchInputNode.focus();
+				this._searchInputNode.select();
+			}
 		}
 
 		handleMenuHide()
 		{
 			super.handleMenuHide();
-			this._activeControls.classList.remove("active");
+			if(this.searchEnabled)
+			{
+				this._activeControls?.classList.remove("active");
+			}
 		}
 
 		/**
@@ -250,7 +278,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		 */
 		protected _handleSearchKeyDown(event : KeyboardEvent)
 		{
-			this._activeControls.classList.add("active");
+			this._activeControls?.classList.add("active");
 			this.dropdown.show();
 
 			// Pass off some keys to select
@@ -278,7 +306,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			clearTimeout(this._searchTimeout);
 			if(this._searchInputNode.value.length >= Et2WidgetWithSearch.MIN_CHARS)
 			{
-				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_DELAY);
+				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
 			}
 		}
 
@@ -298,8 +326,8 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 
 			// Start the searches
 			Promise.all([
-				this.localSearch(this._searchInputNode.value),
-				this.remoteSearch(this._searchInputNode.value)
+				this.localSearch(this._searchInputNode.value, this.searchOptions),
+				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(() =>
 			{
 				spinner.remove();
@@ -312,7 +340,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		 * @param {string} search
 		 * @protected
 		 */
-		protected localSearch(search : string) : Promise<void>
+		protected localSearch(search : string, options : object) : Promise<void>
 		{
 			return new Promise((resolve) =>
 			{
@@ -333,7 +361,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		 * @param {string} search
 		 * @protected
 		 */
-		protected remoteSearch(search : string)
+		protected remoteSearch(search : string, options : object)
 		{
 			// Remove existing remote items
 			this.remoteItems.forEach(i => i.remove());
@@ -344,16 +372,15 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			}
 
 			// Fire off the query
-			let promise = this.remoteQuery(search);
+			let promise = this.remoteQuery(search, options);
 
 			return promise;
 		}
 
-		protected remoteQuery(search : string)
+		protected remoteQuery(search : string, options : object)
 		{
 			return this.egw().json(this.searchUrl, [search]).sendRequest().then((result) =>
 			{
-				debugger;
 				this.processRemoteResults(result);
 			});
 		}

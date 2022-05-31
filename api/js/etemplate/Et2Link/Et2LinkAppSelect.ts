@@ -13,6 +13,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			:host {
 				--icon-width: 20px;
 				display: inline-block;
+				min-width: 64px;
 			}
 			:host([app_icons]) {
 				max-width: 75px;
@@ -128,6 +129,22 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		{
 			this._reset_select_options();
 		}
+	}
+
+	set application_list(app_list : string[])
+	{
+		let oldValue = this.__application_list;
+		if(typeof app_list == "string")
+		{
+			app_list = (<string>app_list).split(",");
+		}
+		this.__application_list = app_list;
+		this.requestUpdate("application_list", oldValue);
+	}
+
+	get application_list() : string[]
+	{
+		return this.__application_list;
 	}
 
 	private _handleChange(e)
