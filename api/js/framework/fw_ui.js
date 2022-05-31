@@ -18,6 +18,7 @@ import "../jquery/jquery.noconflict.js";
 import "../jquery/mousewheel/mousewheel.js";
 import '../jsapi/egw_inheritance.js';
 import {EGW_KEY_ENTER, EGW_KEY_SPACE} from '../egw_action/egw_action_constants.js';
+import interact from "@interactjs/interactjs";
 
 /**
  * ui siemenu entry class
@@ -1255,36 +1256,37 @@ window.egw_fw_ui_splitter = function(_contDiv, _orientation, _resizeCallback, _c
 
 	//Setup the options for the dragable object
 	var dragoptions = {
-		opacity: 0.7,
-		helper: 'clone',
-		start: function(event, ui) {
-			return this._parent.dragStartHandler.call(this._parent, event, ui);
-		},
-		drag: function(event, ui) {
-			return this._parent.dragHandler.call(this._parent, event, ui);
-		},
-		stop: function(event, ui) {
-			return this._parent.dragStopHandler.call(this._parent, event, ui);
-		},
-		containment: 'document',
-		appendTo: 'body',
-		axis: 'y',
-		iframeFix: true,
-		zIndex: 10000
+		listeners : {
+			start(event)
+			{
+				return event.currentTarget._parent.dragStartHandler.call(event.currentTarget._parent, event);
+			},
+			move (event)
+			{
+				return event.currentTarget._parent.dragHandler.call(event.currentTarget._parent, event);
+			},
+			end (event)
+			{
+				return event.currentTarget._parent.dragStopHandler.call(event.currentTarget._parent, event);
+			}
+		}
 	};
 
 	switch (this.orientation)
 	{
 		case EGW_SPLITTER_HORIZONTAL:
-			dragoptions.axis = 'y';
+			dragoptions.startAxis = 'y';
 			jQuery(this.splitterDiv).addClass("egw_fw_ui_splitter_horizontal");
 			break;
 		case EGW_SPLITTER_VERTICAL:
-			dragoptions.axis = 'x';
+			dragoptions.startAxis = 'x';
 			jQuery(this.splitterDiv).addClass("egw_fw_ui_splitter_vertical");
 			break;
 	}
-//	jQuery(this.splitterDiv).draggable(dragoptions);
+	interact(this.splitterDiv)
+		.styleCursor(false)
+		.draggable(dragoptions);
+
 
 	//Handle mouse hovering of the splitter div
 	jQuery(this.splitterDiv).mouseenter(function() {
@@ -1323,58 +1325,43 @@ window.egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
 	return result;
 };
 
-window.egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
+window.egw_fw_ui_splitter.prototype.dragStartHandler = function(event)
 {
 	switch (this.orientation)
 	{
 		case EGW_SPLITTER_HORIZONTAL:
-			this.startPos = ui.offset.top;
+			this.startPos = event.clientY0;
 			break;
 		case EGW_SPLITTER_VERTICAL:
-			this.startPos = ui.offset.left;
+			this.startPos = event.clientX0;
 			break;
 	}
 };
 
-window.egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
-{
-/*	var delta = 0;
-	switch (this.orientation)
-	{
-		case EGW_SPLITTER_HORIZONTAL:
-			var old = ui.offset.top - this.startPos;
-			clipped = this.clipDelta(old);
-			jQuery(this.splitterDiv).data('draggable').offset.click.top += (old - clipped);
-			break;
-		case EGW_SPLITTER_VERTICAL:
-			var old = ui.offset.left - this.startPos;
-			clipped = this.clipDelta(old);
-			jQuery(this.splitterDiv).data('draggable').offset.click.left += (old - clipped);
-			break;
-	}*/
-};
-
-
-window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
+window.egw_fw_ui_splitter.prototype.dragHandler = function(event)
 {
 	var delta = 0;
 	switch (this.orientation)
 	{
 		case EGW_SPLITTER_HORIZONTAL:
-			delta = ui.offset.top - this.startPos;
+			delta = event.delta.y;
 			break;
 		case EGW_SPLITTER_VERTICAL:
-			delta = ui.offset.left - this.startPos;
+			delta = event.delta.x;
 			break;
 	}
 
 	//Clip the delta value
-	delta = this.clipDelta(delta);
-
 	this.constraints[0].size += delta;
 	this.constraints[1].size -= delta;
 
 	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
+};
+
+
+window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event)
+{
+	return; // let draghandler taking care of resize callback
 };
 
 /**
@@ -1383,7 +1370,7 @@ window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
  */
 window.egw_fw_ui_splitter.prototype.set_disable = function (_state)
 {
-//	jQuery(this.splitterDiv).draggable(_state?'disable':'enable');
+	interact(this.splitterDiv).options.drag.enabled = !_state;
 };
 
 /**
