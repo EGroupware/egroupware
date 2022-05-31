@@ -237,9 +237,10 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		 */
 		loadFromXML(_node : Element)
 		{
-			// Read the option-tags
-			let options = _node.querySelectorAll("option");
 			let new_options = [];
+
+			// Read the option-tags, but if not rendered there won't be any yet so check existing options
+			let options = _node.querySelectorAll("option");
 			for(let i = 0; i < options.length; i++)
 			{
 				new_options.push({
@@ -252,12 +253,19 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 					title: et2_readAttrWithDefault(options[i], "title", "")
 				});
 			}
+			if(options.length == 0 && this.__select_options.length)
+			{
+				// Start with any existing options, (static options from type)
+				// Use a copy since we'll probably be modifying it, and we don't want to change for any other
+				// widget of the same static type
+				new_options = [...this.__select_options];
+			}
 
 			if(this.id)
 			{
 				new_options = find_select_options(this, {}, new_options);
 			}
-			if (new_options.length)
+			if(new_options.length)
 			{
 				this.select_options = new_options;
 			}

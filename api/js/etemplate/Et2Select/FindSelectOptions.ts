@@ -178,7 +178,10 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 			}
 			if(!added)
 			{
-				options.splice(parseInt(i), 0, content_options[i]);
+				options.splice(parseInt(i), 0, typeof value == "object" ? value : {
+					value: value,
+					label: <string><unknown>content_options[i]
+				});
 			}
 		}
 		content_options = options;
