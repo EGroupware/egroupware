@@ -82,7 +82,6 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 				if (this.__value && typeof this.__value === 'object')
 				{
 					select.app = this.__value.app;
-					select.select_options = [{value: this.__value.id, label: this.__value.title}];
 					select.value = this.__value.id;
 				}
 				else

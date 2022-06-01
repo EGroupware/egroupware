@@ -110,7 +110,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		}
 	}
 
-	private static MISSING_TITLE = "??";
+	static MISSING_TITLE = "??";
 
 	// Title is read-only inside
 	private _title : string;

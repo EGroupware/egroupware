@@ -10,6 +10,7 @@
 import {css} from "@lion/core";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
+import {Et2Link} from "./Et2Link";
 
 export class Et2LinkSearch extends Et2Select
 {
@@ -65,6 +66,45 @@ export class Et2LinkSearch extends Et2Select
 		request.then((result) =>
 		{
 			this.processRemoteResults(result);
+		});
+	}
+
+	updated(changedProperties)
+	{
+		super.updated(changedProperties);
+
+		// Set a value we don't have as an option?  That's OK, we'll just add it
+		if(changedProperties.has("value") && this.value && (
+			this.menuItems && this.menuItems.length == 0 ||
+			this.menuItems?.filter && this.menuItems.filter(item => this.value.includes(item.value)).length == 0
+		))
+		{
+			this._missingOption(this.value)
+		}
+	}
+
+	/**
+	 * The set value requires an option we don't have.
+	 * Add it in, asking server for title if needed
+	 *
+	 * @param value
+	 * @protected
+	 */
+	protected _missingOption(value : string)
+	{
+		let option = {
+			value: value,
+			label: Et2Link.MISSING_TITLE,
+			class: "loading"
+		}
+		// Weird call instead of just unshift() to make sure to trigger setter
+		this.select_options = Object.assign([option], this.__select_options);
+		this.egw()?.link_title(this.app, option.value, true).then(title =>
+		{
+			option.label = title;
+			option.class = "";
+			// It's probably already been rendered
+			this.requestUpdate();
 		});
 	}
 }
