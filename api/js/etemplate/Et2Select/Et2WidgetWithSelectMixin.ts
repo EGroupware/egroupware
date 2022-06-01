@@ -11,7 +11,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
-import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
 
 /**
  * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
@@ -147,25 +147,9 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		set select_options(new_options : SelectOption[])
 		{
 			const old_options = this.__select_options;
-			if(!Array.isArray(new_options))
-			{
-				let fixed_options = [];
-				for(let key in <any>new_options)
-				{
-					let option : any = new_options[key];
-					if (typeof option === 'string')
-					{
-						option = { label: option };
-					}
-					option.value = key.trim();	// link_search prefixes keys with one space
-					fixed_options.push(option);
-				}
-				this.__select_options = fixed_options;
-			}
-			else
-			{
-				this.__select_options = new_options;
-			}
+
+			this.__select_options = cleanSelectOptions(new_options);
+
 			this.requestUpdate("select_options", old_options);
 		}
 

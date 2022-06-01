@@ -281,7 +281,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
             <et2-image slot="prefix" src="${option.icon}"></et2-image>` : "";
 
 		return html`
-            <sl-menu-item value="${option.value}" title="${option.title}">
+            <sl-menu-item value="${option.value}" title="${option.title}" class="${option.class}">
                 ${icon}
                 ${option.label}
             </sl-menu-item>`;

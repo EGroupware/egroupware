@@ -15,6 +15,8 @@ export interface SelectOption
 	title? : string;
 	// Related image or icon
 	icon? : string;
+	// Class applied to node
+	class? : string;
 }
 
 /**
@@ -209,4 +211,37 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 		content_options = fixed_options;
 	}
 	return content_options;
+}
+
+
+/**
+ * Clean up things that might be select options and get them to what we need to make
+ * them consistent for widget use.
+ *
+ * Options might be just a list of labels, or an object of value => label pairs, etc.
+ *
+ * @param {SelectOption[] | string[] | object} options
+ */
+export function cleanSelectOptions(options : SelectOption[] | string[] | object) : SelectOption[]
+{
+	let fixed_options = [];
+	if(!Array.isArray(options))
+	{
+		for(let key in <any>options)
+		{
+			let option : any = options[key];
+			if(typeof option === 'string')
+			{
+				option = {label: option};
+			}
+			option.value = key.trim();	// link_search prefixes keys with one space
+			fixed_options.push(option);
+		}
+	}
+	else
+	{
+		fixed_options = options;
+	}
+
+	return fixed_options;
 }

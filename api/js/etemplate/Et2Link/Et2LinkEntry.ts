@@ -69,7 +69,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			app: () =>
 			{
 				const app = <Et2LinkAppSelect>document.createElement("et2-link-apps")
-				app.only_app = this.__only_app;
+				if(this.__only_app)
+				{
+					app.only_app = this.__only_app;
+				}
 				return app;
 			},
 			select: () =>
@@ -105,6 +108,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	protected __only_app : string;
 	protected __app : string;
+	protected __value : LinkEntry | string | number;
 
 	set only_app(app)
 	{
@@ -121,8 +125,14 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	set app(app)
 	{
 		this.__app = app;
-		if (this._appNode) this._appNode.value = app;
-		if (this._searchNode) this._searchNode.app = app;
+		if(this._appNode)
+		{
+			this._appNode.value = app;
+		}
+		if(this._searchNode)
+		{
+			this._searchNode.app = app;
+		}
 	}
 
 	get app()
@@ -155,8 +165,6 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	{
 		this._searchNode.app = this._appNode.value;
 	}
-
-	protected __value : LinkEntry|string|number;
 
 	get value() : LinkEntry|string|number
 	{
@@ -203,7 +211,6 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	 * @return {TemplateResult}
 	 * @protected
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	_inputGroupInputTemplate()
 	{
 		return html`

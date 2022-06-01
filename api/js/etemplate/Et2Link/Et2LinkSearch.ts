@@ -44,6 +44,7 @@ export class Et2LinkSearch extends Et2Select
 		super();
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search";
+		this.clearable = true;
 	}
 
 	get _appNode() : Et2LinkAppSelect
@@ -53,7 +54,7 @@ export class Et2LinkSearch extends Et2Select
 
 	protected remoteQuery(search : string, options : object)
 	{
-		let request = this.egw().json(this.searchUrl, [this._appNode.value, '', search, options]);
+		let request = this.egw().request(this.searchUrl, [this._appNode.value, '', search, options]);
 		if(this.query && typeof this.query == "function")
 		{
 			if(!this.query(request, this))
@@ -61,16 +62,9 @@ export class Et2LinkSearch extends Et2Select
 				return;
 			}
 		}
-		// ToDo use egw.request(), not old egw.json()
-		request.sendRequest().then((result) =>
+		request.then((result) =>
 		{
-			result.response.forEach((response) =>
-			{
-				if (typeof response.data !== 'undefined')
-				{
-					this.processRemoteResults(response.data);
-				}
-			});
+			this.processRemoteResults(result);
 		});
 	}
 }

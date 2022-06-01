@@ -8,7 +8,8 @@
  */
 
 
-import {css, dedupeMixin, html, LitElement, render, SlotMixin} from "@lion/core";
+import {css, dedupeMixin, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
+import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 
 
 // Export the Interface for TypeScript
@@ -295,7 +296,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				if(this.getItems().length === 1)
 				{
 					this.getItems()[0].click();
-// not jQuery		this.hide();
+					this.dropdown.hide();
 					return;
 				}
 				event.preventDefault();
@@ -392,7 +393,18 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		 */
 		protected processRemoteResults(results)
 		{
-			this.select_options = results;
+			let entries = cleanSelectOptions(results);
+
+			// Add a "remote" class so we can tell these apart from any local results
+			entries.forEach((entry) => entry.class = entry.class += "remote");
+
+			let target = this._optionTargetNode || this;
+			if(target)
+			{
+				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+					target
+				);
+			}
 		}
 
 		/**
