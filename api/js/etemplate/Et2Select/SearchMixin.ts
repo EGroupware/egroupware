@@ -295,7 +295,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				if(this.getItems().length === 1)
 				{
 					this.getItems()[0].click();
-					this.hide();
+// not jQuery		this.hide();
 					return;
 				}
 				event.preventDefault();
@@ -379,7 +379,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().json(this.searchUrl, [search]).sendRequest().then((result) =>
+			return this.egw().request(this.searchUrl, [search]).sendRequest().then((result) =>
 			{
 				this.processRemoteResults(result);
 			});
@@ -392,7 +392,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		 */
 		protected processRemoteResults(results)
 		{
-			// TODO: Add the results in
+			this.select_options = results;
 		}
 
 		/**

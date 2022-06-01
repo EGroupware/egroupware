@@ -152,7 +152,13 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 				let fixed_options = [];
 				for(let key in <any>new_options)
 				{
-					fixed_options.push({value: key, label: new_options[key]});
+					let option : any = new_options[key];
+					if (typeof option === 'string')
+					{
+						option = { label: option };
+					}
+					option.value = key.trim();	// link_search prefixes keys with one space
+					fixed_options.push(option);
 				}
 				this.__select_options = fixed_options;
 			}

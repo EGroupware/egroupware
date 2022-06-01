@@ -71,8 +71,8 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		}
 	}
 
-	protected __app_icons : boolean;
 	protected __application_list : string[];
+	protected __only_app : string;
 
 	/**
 	 * Constructor
@@ -89,6 +89,17 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		this._reset_select_options();
 
 		this._handleChange = this._handleChange.bind(this);
+	}
+
+	set only_app(app : string)
+	{
+		this.__only_app = app;
+		this.style.display = app ? 'inline' : 'none';
+	}
+
+	get only_app() : string
+	{
+		return this.__only_app;
 	}
 
 	connectedCallback()
@@ -108,6 +119,8 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 		// Register to
 		this.addEventListener("change", this._handleChange);
+
+		if (this.__only_app) this.style.display = 'none';
 	}
 
 	disconnectedCallback()

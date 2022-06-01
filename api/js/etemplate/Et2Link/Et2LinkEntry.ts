@@ -4,6 +4,12 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
 
+export interface LinkEntry {
+	app: string;
+	id: string|number;
+	title?: string;
+}
+
 /**
  * EGroupware eTemplate2 - Search & select link entry WebComponent
  *
@@ -62,12 +68,24 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			...super.slots,
 			app: () =>
 			{
-				const app = document.createElement("et2-link-apps")
+				const app = <Et2LinkAppSelect>document.createElement("et2-link-apps")
+				app.only_app = this.__only_app;
 				return app;
 			},
 			select: () =>
 			{
 				const select = <Et2LinkSearch><unknown>document.createElement("et2-link-search");
+				select.app = this.__only_app || this.__app;
+				if (this.__value && typeof this.__value === 'object')
+				{
+					select.app = this.__value.app;
+					select.select_options = [{value: this.__value.id, label: this.__value.title}];
+					select.value = this.__value.id;
+				}
+				else
+				{
+					select.value = this.__value;
+				}
 				return select;
 			}
 		}
@@ -85,15 +103,31 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		this._handleAppChange = this._handleAppChange.bind(this);
 	}
 
+	protected __only_app : string;
+	protected __app : string;
+
 	set only_app(app)
 	{
-		this._appNode.only_app = app;
-		this._searchNode.app = app;
+		this.__only_app = app;
+		if (this._appNode) this._appNode.only_app = app;
+		if (this._searchNode) this._searchNode.app = app;
 	}
 
 	get only_app()
 	{
-		return this._appNode.only_app;
+		return this.__only_app;
+	}
+
+	set app(app)
+	{
+		this.__app = app;
+		if (this._appNode) this._appNode.value = app;
+		if (this._searchNode) this._searchNode.app = app;
+	}
+
+	get app()
+	{
+		return this._appNode?.value || this.__app;
 	}
 
 	get _appNode() : Et2LinkAppSelect
@@ -120,6 +154,49 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	protected _handleAppChange(event)
 	{
 		this._searchNode.app = this._appNode.value;
+	}
+
+	protected __value : LinkEntry|string|number;
+
+	get value() : LinkEntry|string|number
+	{
+		if (this.only_app)
+		{
+			return this._searchNode?.value || this.__value;
+		}
+		return this._searchNode ?  {
+			id: this._searchNode?.value || this.__value,
+			app: this._appNode?.value || this.__onlyApp || this.__app,
+			//search: this._searchNode...	// content of search field
+		} : this.__value;
+	}
+
+	set value(val: LinkEntry|string|number)
+	{
+		if (!val)
+		{
+			if (this._searchNode) this._searchNode.value = '';
+		}
+		else if (typeof val === 'string')
+		{
+			if (val.indexOf(',') > 0)  val = val.replace(",", ":");
+			const vals = val.split(':');
+			this.app = vals[0];
+			if (this._searchNode)
+			{
+				this._searchNode.value = vals[1];
+			}
+		}
+		else	// object with attributes: app, id, title
+		{
+			this.app = val.app;
+			if (this._searchNode)
+			{
+				this._searchNode.value = val.id;
+				this._searchNode.select_options = [{value: val.id, label: val.title}];
+			}
+		}
+		this.__value = val;
 	}
 
 	/**

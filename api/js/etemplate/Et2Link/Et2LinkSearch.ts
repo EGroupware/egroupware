@@ -61,9 +61,16 @@ export class Et2LinkSearch extends Et2Select
 				return;
 			}
 		}
+		// ToDo use egw.request(), not old egw.json()
 		request.sendRequest().then((result) =>
 		{
-			this.processRemoteResults(result);
+			result.response.forEach((response) =>
+			{
+				if (typeof response.data !== 'undefined')
+				{
+					this.processRemoteResults(response.data);
+				}
+			});
 		});
 	}
 }
