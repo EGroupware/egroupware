@@ -3302,7 +3302,7 @@ ul.et2_nowrap, div.et2_nowrap {
  */
 .et2_fullWidth, .et2_fullWidth input, .et2_fullWidth select, et2_fullWidth.et2_file
 .et2_fullWidth textarea, .et2_fullWidth input.et2_link_entry {
-    width: 99%;
+    width: 100%;
 }
 
 /* position icons behind input */
@@ -3311,7 +3311,7 @@ ul.et2_nowrap, div.et2_nowrap {
 }
 
 span.et2_url_span input.et2_fullWidth {
-    width: calc(99% - 18px);
+    width: calc(100% - 18px);
 }
 
 .et2_fullWidth a.et2_url {
