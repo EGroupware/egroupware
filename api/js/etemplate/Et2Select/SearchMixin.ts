@@ -396,7 +396,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			let entries = cleanSelectOptions(results);
 
 			// Add a "remote" class so we can tell these apart from any local results
-			entries.forEach((entry) => entry.class = entry.class += "remote");
+			entries.forEach((entry) => entry.class = (entry.class || "") + " remote");
 
 			let target = this._optionTargetNode || this;
 			if(target)
