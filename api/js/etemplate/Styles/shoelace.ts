@@ -18,7 +18,7 @@ registerIconLibrary('default', {
  *
  * @see https://my.egroupware.org/egw/index.php?menuaction=tracker.tracker_ui.edit&tr_id=68774
  */
-const egw_icons = {'chevron-down': 'arrow_down', 'x': 'close'}
+const egw_icons = {'chevron-down': 'arrow_down', 'x': 'close', 'x-circle-fill': 'close'}
 registerIconLibrary("system", {
 	resolver: (name) =>
 	{
