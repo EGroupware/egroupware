@@ -11,7 +11,6 @@
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 	et2_DOMWidget;
 */
 
@@ -26,6 +25,8 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2DropdownButton} from "./Et2DropdownButton/Et2DropdownButton";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import interact from "@interactjs/interactjs";
+import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 
 /**
  * This toolbar gets its contents from its actions
@@ -393,7 +394,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				let dropdown = <Et2DropdownButton><unknown>loadWebComponent("et2-dropdown-button", {
 					id: this.id + "-" + action.id,
 					label: action.caption,
-					class: this.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown',
+					class: this.preference[action.id] ? 'et2_toolbar-dropdown et2_toolbar_draggable et2_toolbar-dropdown-menulist' : 'et2_toolbar-dropdown et2_toolbar_draggable',
 					onchange: function(ev)
 					{
 						let action = that._actionManager.getActionById(dropdown.value);
@@ -448,62 +449,65 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionlist.appendTo(this.div);
 		this.actionbox.appendTo(this.div);
 
-		let toolbar = this.actionlist.find('span[data-group]').children(),
+		let toolbar = this.actionlist.find('span[data-group]'),
 			toolbox = this.actionbox,
 			menulist = jQuery(this.actionbox.children()[1]);
-
-		/* disabling DND in toolbar for now
-		toolbar.draggable({
-			cancel:'',
-			zIndex: 1000,
-			delay: 500,
-			//revert:"invalid",
-			containment: "document",
-			cursor: "move",
-			helper: "clone",
-			appendTo:'body',
-			stop: function(event, ui){
-				that._build_menu(actions);
-			}
-		});
-		menulist.children().draggable({
-			cancel:'',
-			containment:"document",
-			helper:"clone",
-			appendTo:'body',
-			zIndex: 1000,
-			cursor:"move",
-			start: function()
-			{
-				jQuery(that.actionlist).addClass('et2_toolbarDropArea');
+		this.actions = actions;
+		let sToolbar = new Sortable(this.actionlist[0], {
+			group: {
+				name: 'toolbar',
 			},
-			stop: function()
+			animation: 150,
+			sort: false,
+			swapThreshold: 0.1,
+			draggable: '.et2_toolbar_draggable',
+			//fallbackOnBody: true,
+			dataIdAttr: 'id',
+			onAdd: function(e)
 			{
-				jQuery(that.actionlist).removeClass('et2_toolbarDropArea');
+				that.set_prefered(e.item.id.replace(that.id + '-', ''), false);
+				that._build_menu(that.actions);
 			}
 		});
-		toolbox.children().droppable({
-			accept:toolbar,
-			drop:function (event, ui) {
-				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), true);
-				ui.draggable.appendTo(menulist);
-				if (that.actionlist.find(".ui-draggable").length == 0)
+		toolbar.each((_index, _item) =>{
+			new Sortable(_item, {
+				group: {
+					name: 'toolbar',
+				},
+				swapThreshold: 0.1,
+				animation: 150,
+				draggable: '.et2_toolbar_draggable',
+				sort: false
+			});
+		});
+		[this.actionbox[0], menulist[0]].forEach(_item => {
+			return new Sortable(_item, {
+				group: {
+					name: 'toolbar',
+					pull: 'clone'
+				},
+				animation: 150,
+				sort: false,
+				swapThreshold: 0.1,
+				draggable: '.et2_toolbar_draggable',
+				onAdd: function (e) {
+					that.set_prefered(e.item.id.replace(that.id + '-', ''), true);
+					if (that.actionlist.find(".et2_toolbar_draggable").length == 0)
+					{
+						that.preference = {};
+						egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
+					}
+					that._build_menu(that.actions);
+				},
+				onStart: function(e) {
+					jQuery(that.actionlist).addClass('et2_toolbarDropArea');
+				},
+				onEnd: function()
 				{
-					that.preference = {};
-					egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
+					jQuery(that.actionlist).removeClass('et2_toolbarDropArea');
 				}
-			},
-			tolerance:"touch"
+			});
 		});
-
-		this.actionlist.droppable({
-			tolerance:"pointer",
-			drop:function (event,ui) {
-				that.set_prefered(ui.draggable[0].id.replace(that.id + '-', ''), false);
-				ui.draggable.appendTo(that.actionlist);
-				that._build_menu(actions);
-			}
-		});*/
 
 		toolbox.on('toggle', (e)=>{
 			const details = <HTMLDetailsElement>e.target;
@@ -551,7 +555,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		let button_options = {
 		};
 		let button = jQuery(document.createElement('button'))
-			.addClass("et2_button et2_button_text et2_button_with_image")
+			.addClass("et2_toolbar_draggable et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
 			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
