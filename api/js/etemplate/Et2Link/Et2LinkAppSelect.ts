@@ -160,6 +160,16 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		return this.__application_list;
 	}
 
+	get value()
+	{
+		return this.__only_app ? this.__only_app : super.value;
+	}
+
+	set value(new_value)
+	{
+		super.value = new_value;
+	}
+
 	private _handleChange(e)
 	{
 		// Set icon
