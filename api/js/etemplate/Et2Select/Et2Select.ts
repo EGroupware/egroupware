@@ -167,11 +167,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.value = ""+val;
 	}
 
-	getValue()
-	{
-		return this.value;
-	}
-
 	/**
 	 * Reimplemented to allow/keep string[] as value
 	 *
