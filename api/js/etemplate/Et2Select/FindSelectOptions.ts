@@ -1,12 +1,3 @@
-/**
- * EGroupware eTemplate2 - Find select options
- *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
- * @link https://www.egroupware.org
- * @author Nathan Gray
- */
-
 export interface SelectOption
 {
 	value : string;
@@ -163,6 +154,7 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 	// Include passed options, preferring any content options
 	if(options.length || Object.keys(options).length > 0)
 	{
+		content_options = cleanSelectOptions(content_options);
 		for(let i in content_options)
 		{
 			let value = typeof content_options[i] == 'object' && typeof content_options[i].value !== 'undefined' ? content_options[i].value : i;

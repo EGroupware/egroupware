@@ -113,6 +113,10 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				::slotted([name="search_input"]:focus ){
 					width: 100%;
 				}
+				:host([search]) .select--open .select__prefix {
+					flex: 2 1 auto;
+					width: 100%;
+				}
 				.select__prefix ::slotted(.search_input) {
 					display: none;
 					margin-left: 0px;
@@ -149,8 +153,10 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		{
 			super.connectedCallback();
 
+			this.classList.toggle("search", this.searchEnabled);
+
 			// Missing any of the required attributes?  Don't change anything.
-			if(!this.search && !this.searchUrl && !this.allowFreeEntries)
+			if(!this.searchEnabled)
 			{
 				return;
 			}
@@ -183,8 +189,9 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 
 		protected _searchInputTemplate()
 		{
+			// I can't figure out how to get this full width via CSS
 			return html`
-                <input type="text" @keydown=${this._handleSearchKeyDown}/>
+                <input type="text" part="input" style="width:100%" @keydown=${this._handleSearchKeyDown}/>
 			`;
 		}
 
@@ -242,12 +249,21 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		protected _bindListeners()
 		{
 			this.addEventListener("sl-blur", this._handleSearchAbort);
+			if(this._oldChange)
+			{
+				// Search messes up event order somehow, selecting an option fires the change event before
+				// the widget is finished adjusting, losing the value
+				// This is not optimal, but we need to get that change event
+				this.removeEventListener("change", this._oldChange);
+			}
+
 			this._searchButtonNode.addEventListener("click", this._handleSearchButtonClick);
 		}
 
 		protected _unbindListeners()
 		{
 			this.removeEventListener("sl-blur", this._handleSearchAbort);
+			this.removeEventListener("change", this._handleChange);
 			this._searchButtonNode.removeEventListener("click", this._handleSearchButtonClick);
 		}
 
@@ -461,6 +477,7 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				item.classList.remove("match");
 				item.classList.remove("no-match");
 			})
+			this.syncItemsFromValue();
 		}
 	}
 
