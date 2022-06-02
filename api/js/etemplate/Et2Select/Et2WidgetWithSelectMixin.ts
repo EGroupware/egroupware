@@ -142,7 +142,8 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			this.requestUpdate("select_options", old_options);
 
 			// if single selection and value does not match an option, use the first option
-			if (!this.multiple && !this.empty_label && !this.__select_options.filter(option => option.value === this.value).length)
+			if (!this.multiple && !this.empty_label && this.__select_options.length &&
+				!this.__select_options.filter(option => option.value === this.value).length)
 			{
 				this.value = this.__select_options[0].value;
 			}
