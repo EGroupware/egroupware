@@ -116,7 +116,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {string} _html
 	 * @param {boolean} _isHtml if set to true content gets appended as html
 	 */
-	function prepare(_html, _isHtml)
+	function prepare(_html, _isHtml, _options)
 	{
 		// Free and null the old tooltip_div
 		hide();
@@ -137,7 +137,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		//The tooltip should automatically hide when the mouse comes over it
 		tooltip_div.mouseenter(function() {
-				if (options.hideonhover) hide();
+				if (_options.hideonhover) hide();
 		});
 	}
 
@@ -183,7 +183,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					if (_elem != current_elem)
 					{
 						//Prepare the tooltip
-						prepare(_html, _isHtml);
+						prepare(_html, _isHtml, options);
 
 						// Set the current element the mouse is over and
 						// initialize the position variables
