@@ -35,6 +35,12 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	var x = 0;
 	var y = 0;
 
+	var optionsDefault = {
+		hideonhover: true,
+		open: function(){},
+		close: function(){}
+	};
+
 	/**
 	 * Removes the tooltip_div from the DOM if it does exist.
 	 */
@@ -50,10 +56,11 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	/**
 	 * Shows the tooltip at the current cursor position.
 	 */
-	function show()
+	function show(node, event, options)
 	{
 		if (tooltip_div && typeof x !== 'undefined' && typeof y !== 'undefined')
 		{
+			options.open.call(node, event, tooltip_div);
 			//Calculate the cursor_rectangle - this is a space the tooltip might
 			//not overlap with
 			var cursor_rect = {
@@ -98,8 +105,8 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			} else {
 				tooltip_div.css('top', cursor_rect.bottom);
 			}
-
 			tooltip_div.fadeIn(100);
+
 		}
 	}
 
@@ -130,14 +137,14 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		//The tooltip should automatically hide when the mouse comes over it
 		tooltip_div.mouseenter(function() {
-				hide();
+				if (options.hideonhover) hide();
 		});
 	}
 
 	/**
 	 * showTooltipTimeout is used to prepare showing the tooltip.
 	 */
-	function showTooltipTimeout()
+	function showTooltipTimeout(node, event, options)
 	{
 		if (current_elem != null)
 		{
@@ -145,12 +152,12 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			if (show_delta < show_delay)
 			{
 				//Repeat the call of timeout
-				_wnd.setTimeout(showTooltipTimeout, time_delta);
+				_wnd.setTimeout(function(){showTooltipTimeout(this, event, options)}.bind(node), time_delta);
 			}
 			else
 			{
 				show_delta = 0;
-				show();
+				show(node, event, options);
 			}
 		}
 	}
@@ -163,8 +170,12 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @param _elem is the element to which the tooltip should get bound.
 		 * @param _html is the html code which should be shown as tooltip.
+		 * @param _options
 		 */
-		tooltipBind: function(_elem, _html, _isHtml) {
+		tooltipBind: function(_elem, _html, _isHtml, _options) {
+
+			var options = {...optionsDefault, ...(_options||{})};
+
 			_elem = jQuery(_elem);
 			if (_html != '')
 			{
@@ -180,17 +191,18 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 						show_delta = 0;
 						x = e.clientX;
 						y = e.clientY;
-
+						let self = this;
 						// Create the timeout for showing the timeout
-						_wnd.setTimeout(showTooltipTimeout, time_delta);
+						_wnd.setTimeout(function(){showTooltipTimeout(self, e, options)}, time_delta);
 					}
 
 					return false;
 				});
 
-				_elem.bind('mouseleave.tooltip', function() {
+				_elem.bind('mouseleave.tooltip', function(e) {
 					current_elem = null;
 					show_delta = 0;
+					if (options.close.call(this, e, tooltip_div)) return;
 					if (tooltip_div)
 					{
 						tooltip_div.fadeOut(100);
@@ -223,14 +235,21 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		tooltipUnbind: function(_elem) {
 			_elem = jQuery(_elem);
-			if (current_elem == _elem)
-			{
+			if (current_elem == _elem) {
 				hide();
 				current_elem = null;
 			}
 
 			// Unbind all "tooltip" events from the given element
 			_elem.unbind('.tooltip');
+		},
+
+		tooltipDestroy: function () {
+			if (tooltip_div)
+			{
+				tooltip_div.fadeOut(100);
+				tooltip_div.remove();
+			}
 		}
 	};
 
