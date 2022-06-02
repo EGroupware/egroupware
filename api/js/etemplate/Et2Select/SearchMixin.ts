@@ -260,6 +260,10 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				this._activeControls?.classList.add("active");
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
+
+				// Hide the label for the currently selected value - it shows as checked in list
+				// and we want the space
+				this.shadowRoot.querySelector("[part='display-label']").style.display = "none";
 			}
 		}
 
@@ -269,7 +273,19 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			if(this.searchEnabled)
 			{
 				this._activeControls?.classList.remove("active");
+
+				// Restore selected value visibility
+				this.shadowRoot.querySelector("[part='display-label']").style.display = "";
 			}
+		}
+
+		/**
+		 * Value was cleared
+		 */
+		_handleClear()
+		{
+			// Restore label styling
+			this.shadowRoot.querySelector("[part='display-label']").style.display = "";
 		}
 
 		/**
@@ -292,13 +308,6 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			event.stopImmediatePropagation();
 			if(event.key === "Enter")
 			{
-				// If there's only one option, select it
-				if(this.getItems().length === 1)
-				{
-					this.getItems()[0].click();
-					this.dropdown.hide();
-					return;
-				}
 				event.preventDefault();
 				this.startSearch();
 			}
@@ -401,6 +410,9 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			let target = this._optionTargetNode || this;
 			if(target)
 			{
+				// Keep local options first, add in remote options
+				entries = this.select_options.concat(entries);
+
 				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
 					target
 				);

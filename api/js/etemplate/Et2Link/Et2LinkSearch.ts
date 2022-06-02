@@ -46,6 +46,7 @@ export class Et2LinkSearch extends Et2Select
 		this.search = true;
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search";
 		this.clearable = true;
+		this.hoist = true;
 	}
 
 	get _appNode() : Et2LinkAppSelect

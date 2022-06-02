@@ -1,16 +1,3 @@
-import {css, html, LitElement, SlotMixin} from "@lion/core";
-import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {Et2LinkSearch} from "./Et2LinkSearch";
-import {LinkInfo} from "./Et2Link";
-
-export interface LinkEntry {
-	app: string;
-	id: string|number;
-	title?: string;
-}
-
 /**
  * EGroupware eTemplate2 - Search & select link entry WebComponent
  *
@@ -18,6 +5,26 @@ export interface LinkEntry {
  * @package api
  * @link https://www.egroupware.org
  * @author Nathan Gray
+ */
+
+import {css, html, LitElement, SlotMixin} from "@lion/core";
+import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {FormControlMixin, ValidateMixin} from "@lion/form-core";
+import {Et2LinkSearch} from "./Et2LinkSearch";
+import {LinkInfo} from "./Et2Link";
+
+export interface LinkEntry
+{
+	app : string;
+	id : string | number;
+	title? : string;
+}
+
+/**
+ * Find and select a single entry using the link system.
+ *
+ *
  */
 export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(SlotMixin(LitElement))))
 {
@@ -29,6 +36,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			:host {
 				display: block;
 			}
+			:host(.hideApp) ::slotted([slot="app"]) {
+				display: none;
+			}
+			
 			`
 		];
 	}
@@ -108,6 +119,8 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	 */
 	private _value : LinkInfo;
 
+	protected __only_app : string;
+
 	constructor()
 	{
 		super();
@@ -118,12 +131,22 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		super.connectedCallback();
 
 		this._handleAppChange = this._handleAppChange.bind(this);
+		this._handleEntrySelect = this._handleEntrySelect.bind(this);
+		this._handleEntryClear = this._handleEntryClear.bind(this);
+		this._handleShow = this._handleShow.bind(this);
+		this._handleHide = this._handleHide.bind(this);
 
 		// Clear initial value
 		this._value = undefined;
+
+		this._bindListeners();
 	}
 
-	protected __only_app : string;
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this._unbindListeners();
+	}
 
 	set only_app(app)
 	{
@@ -164,19 +187,83 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	protected _bindListeners()
 	{
 		this._appNode.addEventListener("change", this._handleAppChange);
+		this.addEventListener("sl-select", this._handleEntrySelect);
+		this.addEventListener("sl-clear", this._handleEntryClear);
+		this.addEventListener("sl-show", this._handleShow);
+		this.addEventListener("sl-hide", this._handleHide);
 	}
 
 	protected _unbindListeners()
 	{
 		this._appNode.removeEventListener("change", this._handleAppChange);
+		this.removeEventListener("sl-select", this._handleEntrySelect);
+		this.removeEventListener("sl-clear", this._handleEntryClear);
+		this.removeEventListener("sl-show", this._handleShow);
+		this.removeEventListener("sl-hide", this._handleHide);
 	}
 
+	/**
+	 * Update the search node's app & clear selected value when
+	 * selected app changes.
+	 * @param event
+	 * @protected
+	 */
 	protected _handleAppChange(event)
 	{
 		this._searchNode.app = this._appNode.value;
+		this._searchNode.value = "";
 	}
 
-	get value() : LinkEntry|string|number
+	/**
+	 * Hide app selection when there's an entry
+	 * @param event
+	 * @protected
+	 */
+	protected _handleEntrySelect(event)
+	{
+		this.classList.add("hideApp");
+	}
+
+
+	/**
+	 * Show app selection when there's no entry
+	 * @param event
+	 * @protected
+	 */
+	protected _handleEntryClear(event)
+	{
+		this.classList.remove("hideApp")
+	}
+
+
+	/**
+	 * Option select dropdown opened
+	 * Show app selection (Et2LinkAppSelect controls own visibility according to only_app)
+	 * @param event
+	 * @protected
+	 */
+	protected _handleShow(event)
+	{
+		this.classList.remove("hideApp");
+	}
+
+	/**
+	 * Option select dropdown closed
+	 * Hide app selection (Et2LinkAppSelect controls own visibility according to only_app)
+	 * only if there's a value selected
+	 *
+	 * @param event
+	 * @protected
+	 */
+	protected _handleHide(event)
+	{
+		if(this._searchNode.value)
+		{
+			this.classList.add("hideApp");
+		}
+	}
+
+	get value() : LinkEntry | string | number
 	{
 		if(this.only_app)
 		{
@@ -222,6 +309,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		{
 			this.app = value.app;
 			this._searchNode.value = value.id;
+		}
+		if(value.id)
+		{
+			this.classList.add("hideApp");
 		}
 	}
 
