@@ -106,14 +106,6 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	{
 		super.connectedCallback();
 
-		if(this.select_options != null)
-		{
-			// Preset to last application
-			if(!this.value)
-			{
-				this.value = <string>this.egw().preference('link_app', this.egw().app_name());
-			}
-		}
 		// Set icon
 		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
 
@@ -209,6 +201,10 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			{
 				delete select_options['addressbook-email'];
 			}
+		}
+		if (!this.value)
+		{
+			this.value = <string>this.egw().preference('link_app', this.egw().app_name());
 		}
 		this.select_options = select_options;
 	}
