@@ -85,6 +85,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 				const select = <Et2LinkSearch><unknown>document.createElement("et2-link-search");
 				if(typeof this._value !== "undefined")
 				{
+					if(this._value.title)
+					{
+						select.select_options = [{value: this._value.id, label: this._value.title}]
+					}
 					select.app = this._value.app;
 					select.value = this._value.id;
 				}

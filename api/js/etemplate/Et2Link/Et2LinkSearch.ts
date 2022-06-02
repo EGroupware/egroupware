@@ -103,8 +103,13 @@ export class Et2LinkSearch extends Et2Select
 		{
 			option.label = title;
 			option.class = "";
-			// It's probably already been rendered
-			this.requestUpdate();
+			// It's probably already been rendered, find the item
+			let item = this.getItems().find(i => i.value === option.value);
+			if(item)
+			{
+				item.textContent = title;
+				item.classList.remove("loading");
+			}
 		});
 	}
 }
