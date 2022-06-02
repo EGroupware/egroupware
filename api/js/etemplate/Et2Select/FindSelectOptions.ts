@@ -240,6 +240,14 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 	}
 	else
 	{
+		// make sure value is a string
+		options.forEach(option =>
+		{
+			if (typeof option.value !== 'string')
+			{
+				option.value = option.value.toString();
+			}
+		})
 		fixed_options = options;
 	}
 
