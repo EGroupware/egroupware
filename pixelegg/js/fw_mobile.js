@@ -22,6 +22,7 @@ import '../../api/js/framework/fw_ui.js';
 import '../../api/js/framework/fw_classes.js';
 import '../../api/js/jsapi/egw_inheritance.js';
 import '../../vendor/bower-asset/fastclick/lib/fastclick.js';
+import {tapAndSwipe} from "../../api/js/tapandswipe";
 /**
  *
  * @param {DOMWindow} window
@@ -69,10 +70,9 @@ import '../../vendor/bower-asset/fastclick/lib/fastclick.js';
 		{
 			this._super.apply(this,arguments);
 			var $baseDiv = jQuery(this.baseDiv);
-			/*$baseDiv.swipe({
-				swipe: function (e, direction,distance)
+			let swipe = new tapAndSwipe(this.baseDiv, {
+				swipe: function(e, direction, distance)
 				{
-
 					switch (direction)
 					{
 						case "up":
@@ -87,21 +87,12 @@ import '../../vendor/bower-asset/fastclick/lib/fastclick.js';
 							}
 
 							break;
-						 case "right":
-							 framework.toggleMenu();
+						case "right":
+							framework.toggleMenu();
 					}
 				},
-				swipeStatus:function(event, phase, direction, distance, duration, fingers)
-				{
-					switch (phase)
-					{
-						case "move":
-							//TODO: implement smooth swip
-
-					}
-				},
-				allowPageScroll: "vertical"
-			});*/
+				allScrolling: 'vertical'
+			});
 		},
 		/**
 		 * Adds an entry to the sidemenu.
