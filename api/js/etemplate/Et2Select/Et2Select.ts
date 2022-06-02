@@ -130,10 +130,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	{
 		super.firstUpdated(changedProperties);
 
-		// if _inputNode was not available by the time set_value() got called
-		if(this.getValue() !== this.value)
+		// If no value is set, choose the first option
+		// Only do this on firstUpdated() otherwise it is impossible to clear the field
+		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
+		// value not in options AND NOT (having an empty label and value)
+		if(this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
+			!(typeof this.empty_label !== 'undefined' && (this.value || "") === ""))
 		{
-			this.set_value(this.modelValue);
+			// --> use first option
+			this.value = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 		}
 	}
 
@@ -242,14 +247,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
-			const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
-			// value not in options AND NOT (having an empty label and value)
-			if(this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
-				!(typeof this.empty_label !== 'undefined' && (this.value || "") === ""))
-			{
-				// --> use first option
-				this.value = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
-			}
 			// Re-set value, the option for it may have just shown up
 			this.value = this.value || "";
 		}
