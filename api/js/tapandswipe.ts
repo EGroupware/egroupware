@@ -100,6 +100,9 @@ export class tapAndSwipe {
 	{
 		this.options = {...tapAndSwipe._default, ..._options};
 		const element = _element||_options.element;
+		// Dont construct if the element is not there
+		if (!element || !(typeof element != 'string' && element instanceof EventTarget)) return;
+
 		this.element = (element instanceof EventTarget) ? element : document.querySelector(element);
 		this.element.addEventListener('touchstart', this._onTouchStart.bind(this), false);
 		this.element.addEventListener('touchend', this._ontouchEnd.bind(this), false);
