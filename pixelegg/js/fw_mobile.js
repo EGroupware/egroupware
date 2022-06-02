@@ -9,7 +9,6 @@
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/fastclick/lib/fastclick.js;
 	framework.fw_base;
 	framework.fw_browser;
 	framework.fw_ui;
@@ -22,6 +21,7 @@ import '../../api/js/framework/fw_browser.js';
 import '../../api/js/framework/fw_ui.js';
 import '../../api/js/framework/fw_classes.js';
 import '../../api/js/jsapi/egw_inheritance.js';
+import '../../vendor/bower-asset/fastclick/lib/fastclick.js';
 /**
  *
  * @param {DOMWindow} window
@@ -69,7 +69,7 @@ import '../../api/js/jsapi/egw_inheritance.js';
 		{
 			this._super.apply(this,arguments);
 			var $baseDiv = jQuery(this.baseDiv);
-			$baseDiv.swipe({
+			/*$baseDiv.swipe({
 				swipe: function (e, direction,distance)
 				{
 
@@ -101,7 +101,7 @@ import '../../api/js/jsapi/egw_inheritance.js';
 					}
 				},
 				allowPageScroll: "vertical"
-			});
+			});*/
 		},
 		/**
 		 * Adds an entry to the sidemenu.
