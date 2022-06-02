@@ -3,6 +3,7 @@ import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
+import {LinkInfo} from "./Et2Link";
 
 export interface LinkEntry {
 	app: string;
@@ -73,25 +74,35 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 				{
 					app.only_app = this.__only_app;
 				}
+				else if(typeof this._value !== "undefined")
+				{
+					app.value = this._value.app;
+				}
 				return app;
 			},
 			select: () =>
 			{
 				const select = <Et2LinkSearch><unknown>document.createElement("et2-link-search");
-				select.app = this.__only_app || this.__app;
-				if (this.__value && typeof this.__value === 'object')
+				if(typeof this._value !== "undefined")
 				{
-					select.app = this.__value.app;
-					select.value = this.__value.id;
-				}
-				else
-				{
-					select.value = this.__value;
+					select.app = this._value.app;
+					select.value = this._value.id;
 				}
 				return select;
 			}
 		}
 	}
+
+	/**
+	 * We only care about this value until render.  After the sub-nodes are created,
+	 * we take their "live" values for our value.
+	 *
+	 * N.B.: Single underscore!  Otherwise we conflict with parent __value
+	 *
+	 * @type {LinkInfo}
+	 * @private
+	 */
+	private _value : LinkInfo;
 
 	constructor()
 	{
@@ -103,17 +114,17 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		super.connectedCallback();
 
 		this._handleAppChange = this._handleAppChange.bind(this);
+
+		// Clear initial value
+		this._value = undefined;
 	}
 
 	protected __only_app : string;
-	protected __app : string;
-	protected __value : LinkEntry | string | number;
 
 	set only_app(app)
 	{
 		this.__only_app = app;
-		if (this._appNode) this._appNode.only_app = app;
-		if (this._searchNode) this._searchNode.app = app;
+		this.app = app;
 	}
 
 	get only_app()
@@ -123,15 +134,11 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set app(app)
 	{
-		this.__app = app;
-		if(this._appNode)
+		this.updateComplete.then(() =>
 		{
 			this._appNode.value = app;
-		}
-		if(this._searchNode)
-		{
 			this._searchNode.app = app;
-		}
+		});
 	}
 
 	get app()
@@ -167,43 +174,51 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	get value() : LinkEntry|string|number
 	{
-		if (this.only_app)
+		if(this.only_app)
 		{
-			return this._searchNode?.value || this.__value;
+			return this._searchNode?.value;
 		}
-		return this._searchNode ?  {
-			id: this._searchNode?.value || this.__value,
-			app: this._appNode?.value || this.__onlyApp || this.__app,
+		return this._searchNode ? {
+			id: this._searchNode.value,
+			app: this.app,
 			//search: this._searchNode...	// content of search field
-		} : this.__value;
+		} : this._value;
 	}
 
 	set value(val: LinkEntry|string|number)
 	{
-		if (!val)
+		let value : LinkInfo = {app: "", id: ""};
+
+		if(typeof val === 'string')
 		{
-			if (this._searchNode) this._searchNode.value = '';
-		}
-		else if (typeof val === 'string')
-		{
-			if (val.indexOf(',') > 0)  val = val.replace(",", ":");
-			const vals = val.split(':');
-			this.app = vals[0];
-			if (this._searchNode)
+			if(val.indexOf(',') > 0)
 			{
-				this._searchNode.value = vals[1];
+				val = val.replace(",", ":");
 			}
+			const vals = val.split(':');
+			value.app = vals[0];
+			value.id = vals[1];
+		}
+		else if(typeof val === "number")
+		{
+			value.id = String(val);
 		}
 		else	// object with attributes: app, id, title
 		{
-			this.app = val.app;
-			if (this._searchNode)
-			{
-				this._searchNode.value = val.id;
-				this._searchNode.select_options = [{value: val.id, label: val.title}];
-			}
+			value = (<LinkInfo>val);
 		}
-		this.__value = val;
+
+		// If the searchNode is not there yet, hold value.  We'll use these values when we create the
+		// slotted searchNode.
+		if(this._searchNode == null)
+		{
+			this._value = value;
+		}
+		else
+		{
+			this.app = value.app;
+			this._searchNode.value = value.id;
+		}
 	}
 
 	/**

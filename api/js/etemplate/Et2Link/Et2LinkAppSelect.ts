@@ -187,7 +187,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		// Limit to one app
 		if(this.only_app)
 		{
-			select_options[this.only_app] = this.egw().lang(this.only_app);
+			select_options.push({value: this.only_app, label: this.egw().lang(this.only_app)});
 		}
 		else if(this.application_list.length > 0)
 		{
