@@ -128,17 +128,6 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			return super.formatter(v);
 		}
 
-		set_value(val)
-		{
-			let oldValue = this.modelValue;
-
-			// Make sure it's a string
-			val = "" + val;
-
-			this.modelValue = val
-			this.requestUpdate("value", oldValue);
-		}
-
 		/**
 		 * Set the select options
 		 *
@@ -153,16 +142,9 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			this.requestUpdate("select_options", old_options);
 
 			// if single selection and value does not match an option, use the first option
-			let first_option;
-			if (!this.multiple && !this.empty_label && !this.__select_options.filter(option => {
-				if (typeof first_option === 'undefined')
-				{
-					first_option = option;
-				}
-				return option.value === this.value;
-			}).length && typeof first_option !== 'undefined')
+			if (!this.multiple && !this.empty_label && !this.__select_options.filter(option => option.value === this.value).length)
 			{
-				this.set_value(first_option.value);
+				this.value = this.__select_options[0].value;
 			}
 		}
 
