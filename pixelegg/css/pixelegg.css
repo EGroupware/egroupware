@@ -4927,7 +4927,7 @@ span.overlayContainer img.overlay {
 #egw_fw_sidebar #egw_fw_splitter {
   position: absolute;
   width: 8px;
-  top: 40px;
+  top: 0px;
   bottom: 3px;
   right: 0px;
 }
@@ -5065,9 +5065,9 @@ span.overlayContainer img.overlay {
   background-image: url(../images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #ffffff;
+  background-color: transparent;
   position: absolute;
-  width: 5px;
+  width: 4px;
   height: 100%;
   cursor: col-resize;
 }
@@ -5077,7 +5077,7 @@ span.overlayContainer img.overlay {
   opacity: 1 !important;
 }
 .egw_fw_ui_splitter_hover {
-  background-color: white;
+  background-color: #CDCDCD;
 }
 .egw_fw_ui_category_content {
   background-color: #ffffff;
