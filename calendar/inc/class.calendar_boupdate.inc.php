@@ -94,7 +94,7 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
-	 * updates or creates an event, it (optionaly) checks for conflicts and sends the necessary notifications
+	 * updates or creates an event, it (optionally) checks for conflicts and sends the necessary notifications
 	 *
 	 * @param array &$event event-array, on return some values might be changed due to set defaults
 	 * @param boolean $ignore_conflicts =false just ignore conflicts or do a conflict check and return the conflicting events
@@ -102,9 +102,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_acl =false should we ignore the acl
 	 * @param boolean $updateTS =true update the content history of the event (ignored, as updating timestamps is required for sync!)
 	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
-	 * @param boolean $skip_notification =false true: send NO notifications, default false = send them
+	 * @param boolean|"NOPUSH" $skip_notification =false true: send NO notifications, default false = send them,
+	 *  "NOPUSH": also do NOT send push notifications / call Link::notifiy(), which still happens for true
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
-	 * 		Please note: the events are not garantied to be readable by the user (no read grant or private)!
+	 * 		Please note: the events are not guarantied to be readable by the user (no read grant or private)!
 	 *
 	 * @ToDo current conflict checking code does NOT cope quantity-wise correct with multiple non-overlapping
 	 * 	events overlapping the event to store: the quantity sum is used, even as the events dont overlap!
@@ -314,7 +315,10 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// notify the link-class about the update, as other apps may be subscribed to it
-		Link::notify_update('calendar',$cal_id,$event,$update_type);
+		if ($skip_notification !== "NOPUSH")
+		{
+			Link::notify_update('calendar', $cal_id, $event, $update_type);
+		}
 
 		return $cal_id;
 	}
@@ -1785,8 +1789,9 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $recur_date =0 date to change, or 0 = all since now
 	 * @param boolean $ignore_acl =false do not check the permisions for the $uid, if true
 	 * @param boolean $updateTS =true update the content history of the event
-	 * DEPRECATED: we allways (have to) update timestamp, as they are required for sync!
-	 * @param boolean $skip_notification =false true: do not send notification messages
+	 * DEPRECATED: we always (have to) update timestamp, as they are required for sync!
+	 * @param boolean|"NOPUSH" $skip_notification =false true: send NO notifications, default false = send them,
+	 *  "NOPUSH": also do NOT send push notifications / call Link::notifiy(), which still happens for true
 	 * @return int number of changed recurrences
 	 */
 	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false)
@@ -1847,7 +1852,10 @@ class calendar_boupdate extends calendar_bo
 				$tracking->track($event, $old_event ?: null);
 			}
 			// notify the link-class about the update, as other apps may be subscribed to it
-			Link::notify_update('calendar', $cal_id, $event, "update");
+			if ($skip_notification !== "NOPUSH")
+			{
+				Link::notify_update('calendar', $cal_id, $event, "update");
+			}
 		}
 		return $Ok;
 	}
@@ -1858,7 +1866,8 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $new_event event-array with the new stati
 	 * @param array $old_event event-array with the old stati
 	 * @param int $recur_date =0 date to change, or 0 = all since now
-	 * @param boolean $skip_notification Do not send notifications.  Parameter passed on to set_status().
+	 * @param boolean|"NOPUSH" $skip_notification =false true: send NO notifications, default false = send them,
+	 *  "NOPUSH": also do NOT send push notifications / call Link::notifiy(), which still happens for true
 	 */
 	function update_status($new_event, $old_event , $recur_date=0, $skip_notification=false)
 	{
@@ -1884,7 +1893,10 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// notify the link-class about the update, as other apps may be subscribed to it
-		Link::notify_update('calendar',$new_event['id'],$new_event,"update");
+		if ($skip_notification !== "NOPUSH")
+		{
+			Link::notify_update('calendar',$new_event['id'],$new_event,"update");
+		}
   }
 
 	/**
@@ -1893,7 +1905,8 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $cal_id id of the event to delete
 	 * @param int $recur_date =0 if a single event from a series should be deleted, its date
 	 * @param boolean $ignore_acl =false true for no ACL check, default do ACL check
-	 * @param boolean|array $skip_notification =false or array with uid to skip eg. [5,'eemail@example.org']
+	 * @param boolean|array|"NOPUSH" $skip_notification =false or array with uid to skip eg. [5,'eemail@example.org']
+	 *  "NOPUSH": also do NOT send push notifications / call Link::notifiy(), which still happens for true
 	 * @param boolean $delete_exceptions =true true: delete, false: keep exceptions (with new UID)
 	 * @param int &$exceptions_kept=null on return number of kept exceptions
 	 * @return boolean true on success, false on error (usually permission denied)
@@ -2002,8 +2015,8 @@ class calendar_boupdate extends calendar_bo
 			$event['recur_exception'][] = $recur_date;
 			$this->save($event);// updates the content-history
 
-			// for "real" push, need to push delete of recurence
-			if (!Api\Json\Push::onlyFallback())
+			// for "real" push, need to push delete of recurrence
+			if (!Api\Json\Push::onlyFallback() && $skip_notification !== "NOPUSH")
 			{
 				Api\Link::notify_update('calendar', $cal_id.':'.$recur_date, $event, 'delete');
 			}
