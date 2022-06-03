@@ -661,7 +661,6 @@ export class CalendarApp extends EgwApp
 			this._update_events(this.state, ['calendar::' + pushData.id]);
 			return;
 		}
-		;
 
 		// Ask for the real data, we don't have it
 		let process_data = (data) =>
@@ -672,7 +671,7 @@ export class CalendarApp extends EgwApp
 			// Any existing events were updated.  Run this to catch new events or events moved into view
 			this._update_events(this.state, [data.uid]);
 		}
-		egw.request("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
+		egw.jsonq("calendar.calendar_ui.ajax_get", [[pushData.id]]).then((data) =>
 		{
 			if(typeof data.uid !== "undefined")
 			{
