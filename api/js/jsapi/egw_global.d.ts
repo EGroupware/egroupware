@@ -1214,8 +1214,9 @@ declare interface IegwWndLocal extends IegwGlobal
 	 * 	has to be a jQuery node.
 	 * @param _str is the html or text code which should be shown as tooltip.
 	 * @param _isHtml true: add a html (no automatic quoting!), false (default): add as text
+	 * @param _options tooltip options
 	 */
-	tooltipBind(_elem : HTMLElement, _str : string, _isHtml? : boolean);
+	tooltipBind(_elem : HTMLElement, _str : string, _isHtml? : boolean, _options);
 	/**
 	 * Unbinds the tooltip from the given DOM-Node.
 	 *
