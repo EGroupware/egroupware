@@ -84,9 +84,10 @@ class InfologApp extends EgwApp
 				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
 
 				// Enable decrypt on hover
-				if(this.egw.user('apps').stylite)
-				{
-					this._get_stylite(function() {this.mailvelopeAvailable(function() {app.stylite?.decrypt_hover(nm);});});
+				if (this.egw.user('apps').stylite) {
+					this.mailvelopeAvailable(function () {
+						egw.applyFunc('app.stylite.decrypt_hover', [nm]);
+					});
 				}
 				// blur count, if limit modified optimization used
 				if (nm.getController()?.getTotalCount() === 9999)
@@ -109,16 +110,16 @@ class InfologApp extends EgwApp
 				if (this.et2.getArrayMgr('content').data.info_des &&
 					this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
 				{
-					this._get_stylite(jQuery.proxy(function() {this.mailvelopeAvailable(jQuery.proxy(function() {
+					this.mailvelopeAvailable(jQuery.proxy(function () {
 						this.toggleEncrypt();
 
 						// Decrypt history on hover
 						var history = this.et2.getWidgetById('history');
-						app.stylite.decrypt_hover(history,'span');
+						egw.applyFunc('app.stylite.decrypt_hover', [history, 'span']);
 						jQuery(history.getDOMNode(history))
 							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
 
-					},this));},this));
+					}, this));
 					// This disables the diff in history
 					var history = this.et2.getArrayMgr('content').getEntry('history');
 					history['status-widgets'].De = 'description';
@@ -762,39 +763,9 @@ class InfologApp extends EgwApp
 			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
 			return;
 		}
-		this._get_stylite(function() {app.stylite.toggleEncrypt.call(app.stylite,_event,_widget,_node);});
+		egw.applyFunc('app.stylite.toggleEncrypt', [_event, _widget, _node]);
 	}
 
-	/**
-	 * Make sure stylite javascript is loaded, and call the given callback when it is
-	 *
-	 * @param {function} callback
-	 * @param {object} attrs
-	 *
-	 */
-	_get_stylite(callback : Function, attrs? : any[])
-	{
-		// use app object from etemplate2, which might be private and not just window.app
-		var app = this.et2.getInstanceManager().app_obj;
-
-		if (!app.stylite)
-		{
-			import(egw.webserverUrl+'/stylite/js/app.min.js?'+((new Date).valueOf()/86400|0).toString()).then(() =>
-			{
-				app.stylite = new app.classes.stylite;
-				app.stylite.et2 = this.et2;
-				if(callback)
-				{
-					callback.apply(app.stylite,attrs);
-				}
-			});
-		}
-		else
-		{
-			app.stylite.et2 = this.et2;
-			callback.apply(app.stylite,attrs);
-		}
-	}
 
 	/**
 	 * OnChange callback for responsible
