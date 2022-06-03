@@ -327,25 +327,21 @@ class AddressbookApp extends EgwApp
 			{
 				return this.egw.open_link(url);
 			}
-			let open = function(_title)
+			const title = _params.title ? Promise.resolve(_params.title) : this.egw.link_title('addressbook', contact_id, true);
+			title.then(_title =>
 			{
-				let title = _title || this.egw.link_title('addressbook', contact_id, open);
-				if (title)
-				{
-					this.egw.window.framework.tabLinkHandler(url, {
-						displayName: title,
-						icon: _params.icon || this.egw.link('/api/avatar.php', {
-							contact_id: contact_id,
-							etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
-						}),
-						refreshCallback: function() {
-							etemplate2.getById("addressbook-view-"+this.appName)?.app_obj.addressbook.view_set_list();
-						},
-						id: contact_id + '-'+crm_list
-					});
-				}
-			}.bind(this);
-			open(_params.title);
+				this.egw.window.framework.tabLinkHandler(url, {
+					displayName: _title,
+					icon: _params.icon || this.egw.link('/api/avatar.php', {
+						contact_id: contact_id,
+						etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
+					}),
+					refreshCallback: function() {
+						etemplate2.getById("addressbook-view-"+this.appName)?.app_obj.addressbook.view_set_list();
+					},
+					id: contact_id + '-'+crm_list
+				});
+			});
 		}
 	}
 

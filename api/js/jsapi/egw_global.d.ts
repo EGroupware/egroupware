@@ -355,14 +355,19 @@ declare interface IegwGlobal
 	/**
 	 * Query a title of _app/_id
 	 *
+	 * Deprecated default of returning string or null for no callback, will change in future to always return a Promise!
+	 *
 	 * @param {string} _app
 	 * @param {string|number} _id
-	 * @param {function} _callback optinal callback, required if for responses from the server
-	 * @param {object} _context context for the callback
+	 * @param {boolean|function|undefined} _callback true to always return a promise, false: just lookup title-cache or optional callback
+	 * 	NOT giving either a boolean value or a callback is deprecated!
+	 * @param {object|undefined} _context context for the callback
 	 * @param {boolean} _force_reload true load again from server, even if already cached
-	 * @return {string|null} string with title if it exist in local cache or null if not
+	 * @return {Promise<string>|string|null} Promise for _callback given (function or true), string with title if it exists in local cache or null if not
 	 */
-	link_title(_app : string, _id : string|number, _callback? : Function, _context? : object, _force_reload? : boolean) : string|null;
+	link_title(_app : string, _id : string|number, _callback? : Function|boolean, _context? : object, _force_reload? : boolean) : Promise<string>|string|null;
+	link_title(_app : string, _id : string|number, _callback : true) : Promise<string>;
+	link_title(_app : string, _id : string|number, _callback? : false) : string|null;
 	/**
 	 * Callback to add all current title requests
 	 *
