@@ -357,19 +357,6 @@ export class Et2SelectCategory extends Et2Select
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-cat", Et2SelectCategory);
 
-export class Et2SelectPercent extends Et2Select
-{
-	constructor()
-	{
-		super();
-
-		this.select_options = so.percent(this, {});
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-percent", Et2SelectPercent);
-
 export class Et2SelectCountry extends Et2Select
 {
 	constructor()
@@ -437,16 +424,67 @@ customElements.define("et2-select-month", Et2SelectMonth);
 
 export class Et2SelectNumber extends Et2Select
 {
+	static get properties()
+	{
+		return {
+			...super.properties,
+			/**
+			 * Step between numbers
+			 */
+			interval: {type: Number},
+			min: {type: Number},
+			max: {type: Number},
+
+			/**
+			 * Add one or more leading zeros
+			 * Set to how many zeros you want (000)
+			 */
+			leading_zero: {type: String},
+			/**
+			 * Appended after every number
+			 */
+			suffix: {type: String}
+		}
+	}
+
 	constructor()
 	{
 		super();
+		this.min = 1;
+		this.max = 10;
+		this.interval = 1;
+		this.leading_zero = "";
+		this.suffix = "";
+	}
 
-		this.select_options = so.number(this, {other: this.other || []});
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
+		{
+			this.select_options = so.number(this);
+		}
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-number", Et2SelectNumber);
+
+export class Et2SelectPercent extends Et2SelectNumber
+{
+	constructor()
+	{
+		super();
+		this.min = 0;
+		this.max = 100;
+		this.interval = 10;
+		this.suffix = "%%";
+	}
+}
+
+// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
+customElements.define("et2-select-percent", Et2SelectPercent);
 
 export class Et2SelectPriority extends Et2Select
 {
@@ -487,13 +525,23 @@ export class Et2SelectTimezone extends Et2Select
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-timezone", Et2SelectTimezone);
 
-export class Et2SelectYear extends Et2Select
+export class Et2SelectYear extends Et2SelectNumber
 {
 	constructor()
 	{
 		super();
+		this.min = -3;
+		this.max = 2;
+	}
 
-		this.select_options = so.year(this, {other: this.other || []});
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
+		{
+			this.select_options = so.year(this);
+		}
 	}
 }
 

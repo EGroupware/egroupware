@@ -10,7 +10,7 @@
 import {sprintf} from "../../egw_action/egw_action_common";
 import {Et2SelectReadonly} from "./Et2SelectReadonly";
 import {find_select_options, SelectOption} from "./FindSelectOptions";
-import {Et2Select, Et2WidgetWithSelect} from "./Et2Select";
+import {Et2Select, Et2SelectNumber, Et2WidgetWithSelect} from "./Et2Select";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
@@ -146,27 +146,29 @@ export class StaticOptions
 		];
 	}
 
-	number(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	number(widget : Et2SelectWidgets, attrs = {
+		min: undefined,
+		max: undefined,
+		interval: undefined,
+		format: undefined
+	}) : SelectOption[]
 	{
-		if(typeof attrs.other != 'object')
-		{
-			attrs.other = [];
-		}
+
 		var options = [];
-		var min = typeof (attrs.other[0]) == 'undefined' ? 1 : parseInt(attrs.other[0]);
-		var max = typeof (attrs.other[1]) == 'undefined' ? 10 : parseInt(attrs.other[1]);
-		var interval = typeof (attrs.other[2]) == 'undefined' ? 1 : parseInt(attrs.other[2]);
-		var format = '%d';
+		var min = attrs.min ?? parseFloat(widget.min);
+		var max = attrs.max ?? parseFloat(widget.max);
+		var interval = attrs.interval ?? parseFloat(widget.interval);
+		var format = attrs.format ?? '%d';
 
 		// leading zero specified in interval
-		if(attrs.other[2] && attrs.other[2][0] == '0')
+		if(widget.leading_zero && widget.leading_zero[0] == '0')
 		{
 			format = '%0' + ('' + interval).length + 'd';
 		}
 		// Suffix
-		if(attrs.other[3])
+		if(widget.suffix)
 		{
-			format += widget.egw().lang(attrs.other[3]);
+			format += widget.egw().lang(widget.suffix);
 		}
 
 		// Avoid infinite loop if interval is the wrong direction
@@ -182,29 +184,20 @@ export class StaticOptions
 		return options;
 	}
 
-	percent(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	percent(widget : Et2SelectNumber) : SelectOption[]
 	{
-		if(typeof attrs.other != 'object')
-		{
-			attrs.other = [];
-		}
-		attrs.other[0] = 0;
-		attrs.other[1] = 100;
-		attrs.other[2] = typeof (attrs.other[2]) == 'undefined' ? 10 : parseInt(attrs.other[2]);
-		attrs.other[3] = '%%';
-		return this.number(widget, attrs);
+		return this.number(widget);
 	}
 
 	year(widget : Et2SelectWidgets, attrs) : SelectOption[]
 	{
-		if(typeof attrs.other != 'object')
+		if(typeof attrs != 'object')
 		{
-			attrs.other = [];
+			attrs = {}
 		}
 		var t = new Date();
-		attrs.other[0] = t.getFullYear() - (typeof (attrs.other[0]) == 'undefined' ? 3 : parseInt(attrs.other[0]));
-		attrs.other[1] = t.getFullYear() + (typeof (attrs.other[1]) == 'undefined' ? 2 : parseInt(attrs.other[1]));
-		attrs.other[2] = typeof (attrs.other[2]) == 'undefined' ? 1 : parseInt(attrs.other[2]);
+		attrs.min = t.getFullYear() + parseInt(widget.min);
+		attrs.max = t.getFullYear() + parseInt(widget.max);
 		return this.number(widget, attrs);
 	}
 
