@@ -2163,16 +2163,8 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		var day = null;
 		var time = null;
 
-		var node = document.elementFromPoint(x,y);
-		var $node = jQuery(node);
+		let nodes = document.elementsFromPoint(x, y);
 
-		// Ignore high level & non-time (grid itself, header parent & week label)
-		if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1 ||
-			// Day labels
-			this.gridHeader.has(node).length && !$node.hasClass("calendar_calDayColAllDay") && !$node.hasClass('calendar_calDayColHeader'))
-		{
-			return [];
-		}
 		for(var id in this.gridHover[0].dataset) {
 			delete this.gridHover[0].dataset[id];
 		}
@@ -2180,48 +2172,50 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			this.gridHover.css('height','');
 		}
-		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
+		for(let i = 0; i < nodes.length && nodes[i].tagName != 'FORM'; i++)
 		{
-			path.push(node);
-			node.style.display = 'none';
-			$node = jQuery(node);
-			if($node.hasClass('calendar_calDayColHeader')) {
-				for(var id in node.dataset) {
+			let node = nodes[i];
+			let $node = jQuery(node);
+			// Ignore high level & non-time (grid itself, header parent & week label)
+			if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1 ||
+				// Day labels
+				this.gridHeader.has(node).length && !$node.hasClass("calendar_calDayColAllDay") && !$node.hasClass('calendar_calDayColHeader'))
+			{
+				continue;
+			}
+			if(node.classList.contains('calendar_calDayColHeader'))
+			{
+				for(var id in node.dataset)
+				{
 					this.gridHover[0].dataset[id] = node.dataset[id];
 				}
 				this.gridHover.css({
-					position: 'absolute',
 					top: '',
 					bottom: '0px',
 					// Use 100% height if we're hiding the day labels to avoid
 					// any remaining space from the hidden labels
 					height: $node.height() > parseInt($node.css('line-height')) ?
-						$node.css('padding-bottom') : '100%'
+							$node.css('padding-bottom') : '100%'
 				});
 				day = node;
 				this.gridHover
-					.attr('data-non_blocking','true');
+					.attr('data-non_blocking', 'true');
 				break;
 			}
-			if($node.hasClass('calendar_calDayCol'))
+			if(node.classList.contains('calendar_calDayCol'))
 			{
 				day = node;
 				this.gridHover
-					.attr('data-date',day.dataset.date);
+					.attr('data-date', day.dataset.date);
 			}
-			if($node.hasClass('calendar_calTimeRowTime'))
+			if(node.classList.contains('calendar_calTimeRowTime'))
 			{
 				time = node;
 				this.gridHover
-					.attr('data-hour',time.dataset.hour)
-					.attr('data-minute',time.dataset.minute);
+					.attr('data-hour', time.dataset.hour)
+					.attr('data-minute', time.dataset.minute);
 				break;
 			}
-			node = document.elementFromPoint(x,y);
-		}
-		for(var i = 0; i < path.length; i++)
-		{
-			path[i].style.display = '';
 		}
 
 		if(!day)
@@ -2230,12 +2224,13 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		}
 		this.gridHover
 			.show()
+			.css("position", "absolute")
 			.appendTo(day);
 		if(time)
 		{
 			this.gridHover
 				.height(this.rowHeight)
-				.position({my:'left top', at: 'left top', of: time});
+				.css("top", time.offsetTop + "px");
 		}
 		this.gridHover.css('left','');
 		return this.gridHover;
