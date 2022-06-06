@@ -999,6 +999,7 @@ span.et2_file_span {
     background-size: 16px;
     cursor: pointer;
     height: 15px;
+    width: 100%;
     text-align: left;
     text-indent: 22px;
     white-space: nowrap;

@@ -81,6 +81,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	constructor()
 	{
 		super();
+		this.only_app = "";
 		this.app_icons = true;
 		this.application_list = [];
 		this.hoist = true;
@@ -93,13 +94,17 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 	set only_app(app : string)
 	{
-		this.__only_app = app;
-		this.style.display = app ? 'inline' : 'none';
+		this.__only_app = app || "";
+		this.updateComplete.then(() =>
+		{
+			this.style.display = this.only_app ? 'none' : '';
+		});
 	}
 
 	get only_app() : string
 	{
-		return this.__only_app;
+		// __only_app may be undefined during creation
+		return this.__only_app || "";
 	}
 
 	connectedCallback()
@@ -154,7 +159,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 	get value()
 	{
-		return this.__only_app ? this.__only_app : super.value;
+		return this.only_app ? this.only_app : super.value;
 	}
 
 	set value(new_value)
@@ -221,7 +226,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 	_iconTemplate(appname)
 	{
-		let url = this.egw().image('navbar', appname);
+		let url = appname ? this.egw().image('navbar', appname) : "";
 		return html`
             <et2-image style="width: var(--icon-width)" slot="prefix" src="${url}"></et2-image>`;
 	}

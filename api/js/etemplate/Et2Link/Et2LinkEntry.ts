@@ -14,13 +14,6 @@ import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
 import {LinkInfo} from "./Et2Link";
 
-export interface LinkEntry
-{
-	app : string;
-	id : string | number;
-	title? : string;
-}
-
 /**
  * Find and select a single entry using the link system.
  *
@@ -85,7 +78,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 				{
 					app.only_app = this.__only_app;
 				}
-				else if(typeof this._value !== "undefined")
+				else if(typeof this._value !== "undefined" && this._value.app)
 				{
 					app.value = this._value.app;
 				}
@@ -94,7 +87,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			select: () =>
 			{
 				const select = <Et2LinkSearch><unknown>document.createElement("et2-link-search");
-				if(typeof this._value !== "undefined")
+				if(typeof this._value !== "undefined" && this._value.id)
 				{
 					if(this._value.title)
 					{
@@ -150,8 +143,11 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set only_app(app)
 	{
-		this.__only_app = app;
-		this.app = app;
+		this.__only_app = app || "";
+		if(app)
+		{
+			this.app = app;
+		}
 	}
 
 	get only_app()
@@ -170,7 +166,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	get app()
 	{
-		return this._appNode?.value || this.__app;
+		return this._appNode?.value || "";
 	}
 
 	get _appNode() : Et2LinkAppSelect
@@ -187,8 +183,8 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	protected _bindListeners()
 	{
 		this._appNode.addEventListener("change", this._handleAppChange);
-		this.addEventListener("sl-select", this._handleEntrySelect);
-		this.addEventListener("sl-clear", this._handleEntryClear);
+		this._searchNode.addEventListener("sl-select", this._handleEntrySelect);
+		this._searchNode.addEventListener("sl-clear", this._handleEntryClear);
 		this.addEventListener("sl-show", this._handleShow);
 		this.addEventListener("sl-hide", this._handleHide);
 	}
@@ -263,7 +259,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		}
 	}
 
-	get value() : LinkEntry | string | number
+	get value() : LinkInfo | string | number
 	{
 		if(this.only_app)
 		{
@@ -276,11 +272,11 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		} : this._value;
 	}
 
-	set value(val: LinkEntry|string|number)
+	set value(val : LinkInfo | string | number)
 	{
 		let value : LinkInfo = {app: "", id: ""};
 
-		if(typeof val === 'string')
+		if(typeof val === 'string' && val.length > 0)
 		{
 			if(val.indexOf(',') > 0)
 			{
@@ -290,11 +286,11 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			value.app = vals[0];
 			value.id = vals[1];
 		}
-		else if(typeof val === "number")
+		else if(typeof val === "number" && val)
 		{
 			value.id = String(val);
 		}
-		else	// object with attributes: app, id, title
+		else if(typeof val === "object")	// object with attributes: app, id, title
 		{
 			value = (<LinkInfo>val);
 		}

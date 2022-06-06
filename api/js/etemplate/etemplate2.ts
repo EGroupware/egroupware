@@ -48,6 +48,7 @@ import './Et2Link/Et2LinkEntry';
 import './Et2Link/Et2LinkList';
 import './Et2Link/Et2LinkSearch';
 import './Et2Link/Et2LinkString';
+import './Et2Link/Et2LinkTo';
 import './Et2Select/Et2Select';
 import './Et2Select/Et2SelectAccount';
 import './Et2Select/Et2SelectReadonly';
