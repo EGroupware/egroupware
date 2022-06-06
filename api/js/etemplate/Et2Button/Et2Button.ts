@@ -242,7 +242,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			return '';
 		}
 
-		this._iconNode.src = this.__image;
+		this._iconNode.src = this.__image || "";
 		if(!this.label)
 		{
 			this._iconNode.classList.add('imageOnly');
