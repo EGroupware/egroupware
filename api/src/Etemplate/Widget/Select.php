@@ -648,12 +648,16 @@ class Select extends Etemplate\Widget
 						'main'  => (int)$cat['main'],
 						'children'	=> $cat['children'] ?? null,
 						//add different class per level to allow different styling for each category level:
-						'class' => "cat_level". $cat['level']
+						'class' => "cat_level" . $cat['level'] . " cat_{$cat['id']}"
 					);
 					// Send data too
 					if(is_array($cat['data']))
 					{
 						$options[$cat['id']] += $cat['data'];
+						if($cat['data']['icon'])
+						{
+							$options[$cat['id']]['icon'] = \admin_categories::icon_url($cat['data']['icon']);
+						}
 					}
 				}
 				// preserve unavailable cats (eg. private user-cats)

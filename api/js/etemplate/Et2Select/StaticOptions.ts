@@ -229,22 +229,18 @@ export class StaticOptions
 		return this.cached_server_side(widget, 'select-app', options);
 	}
 
-	cat(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	cat(widget : Et2SelectWidgets) : SelectOption[]
 	{
-		// Add in application, if not there
-		if(typeof attrs.other == 'undefined')
+		var options = [widget.global_categories, /*?*/, widget.application, widget.parent_cat];
+
+		if(typeof options[3] == 'undefined')
 		{
-			attrs.other = new Array(4);
-		}
-		if(typeof attrs.other[3] == 'undefined')
-		{
-			attrs.other[3] = attrs.application ||
+			options[3] = widget.application ||
 				// When the widget is first created, it doesn't have a parent and can't find it's instanceManager
 				(widget.getInstanceManager() && widget.getInstanceManager().app) ||
 				widget.egw().app_name();
 		}
-		var options = (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-cat', options).map(cat => { cat.class += ' cat_'+cat.value; return cat });
+		return this.cached_server_side(widget, 'select-cat', options.join(','))
 	}
 
 	country(widget : Et2SelectWidgets, attrs) : SelectOption[]

@@ -56,6 +56,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 				text-indent: 5px;
 			}
 			
+			/* This is the drop-down arrow on the right */
 			::slotted([slot="suffix"]) {
 				font-size: 120% !important;
 				font-weight: bold;
@@ -346,11 +347,42 @@ customElements.define("et2-select-bool", Et2SelectBool);
 
 export class Et2SelectCategory extends Et2Select
 {
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				::slotted(*) {
+					border-left: 3px solid transparent;
+					}
+			`
+		]
+	}
+
+	static get properties()
+	{
+		return {
+			...super.properties,
+			/**
+			 * Include global categories
+			 */
+			global_categories: {type: Boolean},
+			/**
+			 * Show categories from this application.  If not set, will be the current application
+			 */
+			application: {type: String},
+			/**
+			 * Show categories below this parent category
+			 */
+			parent_cat: {type: Number}
+		}
+	}
+
 	constructor()
 	{
 		super();
 
-		this.select_options = so.cat(this, {other: this.other || []});
+		this.select_options = so.cat(this);
 	}
 }
 
