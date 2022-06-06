@@ -244,7 +244,7 @@ export class StaticOptions
 				widget.egw().app_name();
 		}
 		var options = (attrs.other || []).join(',');
-		return this.cached_server_side(widget, 'select-cat', options);
+		return this.cached_server_side(widget, 'select-cat', options).map(cat => { cat.class += ' cat_'+cat.value; return cat });
 	}
 
 	country(widget : Et2SelectWidgets, attrs) : SelectOption[]

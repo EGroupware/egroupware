@@ -235,37 +235,46 @@ function send_template()
 						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
 			}, $str);
 
-			// handling of partially implemented select widget (no search or tags attribute), incl. removing of type attribute
-			$str = preg_replace_callback('#<(select)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
+			// handling of partially implemented select and taglist widget, incl. removing of type attribute
+			$str = preg_replace_callback('#<(select|taglist)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
 				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 				$attrs = array_combine($attrs[2], $attrs[3]);
 
-				// add et2-prefix for <select-* without search or tags attribute
-				if (!isset($attrs['search']) && !isset($attrs['tags']))
+				if ($matches[1] === 'taglist')
 				{
-					// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
-					if (empty($matches[2]) && isset($attrs['type']))
+					if (empty($matches[2]) || in_array(substr($matches[2], 1), ['cat']))
 					{
-						$matches[1] = $attrs['type'];
-						$matches[3] = str_replace('type="' . $attrs['type'] . '"', '', $matches[3]);
+						$matches[1] = 'select';
 					}
-					return '<et2-' . $matches[1] . $matches[2] . ' ' . $matches[3] . '></et2-' . $matches[1] . $matches[2] . '>';
+					else
+					{
+						return $matches[0]; // still use taglist-* for now
+					}
 				}
-				return $matches[0];
-			}, $str);
 
-			/* handling of partially implemented taglist widget (no subtypes and autocomplete_url attribute yet)
-			$str = preg_replace_callback('#<(taglist)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
-				$attrs = array_combine($attrs[2], $attrs[3]);
-
-				// add et2-prefix for vanilla <taglist without or empty autocomplete_url
-				if (empty($matches[2]) && isset($attrs['autocomplete_url']) && $attrs['autocomplete_url'] === '')
+				if (isset($attrs['tags']))
 				{
-					return '<et2-' . $matches[1] . $matches[2] . ' ' . $matches[3] . '></et2-' . $matches[1] . $matches[2] . '>';
+					$attrs['multiple'] = 'true';
+					unset($attrs['tags']);
 				}
-				return $matches[0];
-			}, $str);*/
+				// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close
+				// until we find something better, just switch to multiple="true"
+				if (isset($attrs['multiple']) && $attrs['multiple'] === 'toggle' || !empty($attrs['expand_multiple_rows']))
+				{
+					$attrs['multiple'] = 'true';
+					unset($attrs['expand_multiple_rows']);
+				}
+				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
+				if (empty($matches[2]) && isset($attrs['type']))
+				{
+					$matches[1] = $attrs['type'];
+					unset($attrs['type']);
+				}
+				return '<et2-' . $matches[1] . $matches[2] . ' ' . implode(' ', array_map(static function($attr, $val)
+					{
+						return $attr.'="'.$val.'"';
+					}, array_keys($attrs), $attrs)) . '></et2-' . $matches[1] . $matches[2] . '>';
+			}, $str);
 		}
 		$processing = microtime(true);
 
