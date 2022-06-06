@@ -229,6 +229,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	protected _handleEntryClear(event)
 	{
 		this.classList.remove("hideApp")
+		this._searchNode.focus();
 	}
 
 

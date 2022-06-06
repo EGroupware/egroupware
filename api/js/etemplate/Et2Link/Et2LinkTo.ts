@@ -23,7 +23,6 @@ import {et2_vfsSelect} from "../et2_widget_vfs";
 import {LinkInfo} from "./Et2Link";
 import {Et2LinkList} from "./Et2LinkList";
 import {et2_DOMWidget} from "../et2_core_DOMWidget";
-import {et2_link_list} from "../et2_widget_link";
 import {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
 
@@ -103,13 +102,12 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 
 		this.handleFilesUploaded = this.handleFilesUploaded.bind(this);
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
+		this.handleEntryCleared = this.handleEntryCleared.bind(this);
 		this.handleLinkButtonClick = this.handleLinkButtonClick.bind(this);
 	}
 
-	connectedCallback()
+	firstUpdated()
 	{
-		super.connectedCallback();
-
 		// Add file buttons in
 		// TODO: Replace when they're webcomponents
 		this._fileButtons();
@@ -124,7 +122,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		return html`
             <et2-link-entry .only_app="${this.only_app}"
                             .application_list="${this.application_list}"
-                            @sl-select=${this.handleEntrySelected}>
+                            @sl-select=${this.handleEntrySelected}
+                            @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
             <et2-button id="link_button" label="Link" class="link" .noSubmit=${true}
                         @click=${this.handleLinkButtonClick}>
@@ -281,7 +280,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 					this.value = {};
 				}
 				this.value.to_id = success;
-				debugger;
+
 				for(let link in success)
 				{
 					// Icon should be in registry
@@ -304,53 +303,15 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 				}
 			}
 
-			// Look for a link-list with the same ID, refresh it
-			var self = this;
-			var list_widget = null;
-			this.getRoot().iterateOver(
-				function(widget)
-				{
-					if(widget.id == self.id)
-					{
-						list_widget = widget;
-						if(success === true)
-						{
-							widget._get_links();
-						}
-					}
-				},
-				this, et2_link_list
-			);
-
-			// If there's an array of data (entry is not yet saved), updating the list will
+			// Look for a link-list so we can refresh it
+			let list_widget = (<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'));
+			// If there's an array of data (entry is not yet saved), updating the list with only server info will
 			// not work, so add them in explicitly.
 			if(list_widget && success)
 			{
-				// Clear list
-				list_widget.set_value(null);
-
-				// Add temp links in
-				for(var link_id in success)
-				{
-					let link = success[link_id];
-					if(typeof link.title == 'undefined')
-					{
-						// Callback to server for title
-						egw.link_title(link.app, link.id, true).then(title =>
-						{
-							link.title = title;
-							list_widget._add_link(link);
-						});
-					}
-					else
-					{
-						// Add direct
-						list_widget._add_link(link);
-					}
-				}
+				// Update link list, passing data if server provided it
+				list_widget.get_links(typeof success == "object" ? Object.values(success) : []);
 			}
-			// Update any neighbouring link lists
-			(<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'))?.get_links(Object.values(success));
 		}
 		else
 		{
@@ -425,10 +386,18 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	handleEntrySelected(event)
 	{
 		// Could be the app, could be they selected an entry
-		if(event.currentTarget == this.select)
+		if(event.target == this.select._searchNode)
 		{
 			this.classList.add("can_link");
 		}
+	}
+
+	/**
+	 * An entry was selected, but instead of clicking "Link", the user cleared the selection
+	 */
+	handleEntryCleared(event)
+	{
+		this.classList.remove("can_link");
 	}
 
 	handleLinkButtonClick(event : MouseEvent)
