@@ -116,6 +116,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		{
 			this.addEventListener("sl-clear", this._triggerChange)
 			this.addEventListener("sl-select", this._triggerChange);
+			this.addEventListener("sl-change", this._triggerChange);
 		});
 	}
 
@@ -135,7 +136,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		// Only do this on firstUpdated() otherwise it is impossible to clear the field
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 		// value not in options AND NOT (having an empty label and value)
-		if(this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
+		if(!this.multiple && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
 			!(typeof this.empty_label !== 'undefined' && (this.value || "") === ""))
 		{
 			// --> use first option
@@ -168,9 +169,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.multiple = multi;
 	}
 
-	set_value(val)
+	set_value(val : string | string[])
 	{
-		this.value = ""+val;
+		this.value = val;
 	}
 
 	/**
