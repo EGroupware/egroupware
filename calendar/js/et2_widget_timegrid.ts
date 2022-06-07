@@ -1175,7 +1175,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			{
 				day_list.push(formatDate(start, {dateFormat: "Ymd"}));
 			}
-			start.setDate(start.getDate() + 1);
+			start.setUTCDate(start.getUTCDate() + 1);
 		}
 			// Limit it to 14 days to avoid infinite loops in case something is mis-set,
 			// though the limit is more based on how wide the screen is
