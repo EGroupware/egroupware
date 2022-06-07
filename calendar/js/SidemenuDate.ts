@@ -117,6 +117,7 @@ export class SidemenuDate extends Et2Date
 		options.shorthandCurrentMonth = true;
 
 		options.onMonthChange = this._updateGoButton;
+		options.onYearChange = this._updateGoButton;
 
 		options.nextArrow = "";
 		options.prevArrow = "";
