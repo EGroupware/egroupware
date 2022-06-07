@@ -75,6 +75,7 @@ function send_template()
 				str_replace('<' . $matches[1] . $matches[2], '<' . $type[1], $matches[0]);
 				str_replace($type[0], '', $matches[0]);
 				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
+				if (!empty($matches[2])) $matches[2] = '-'.$matches[2];
 			}
 			static $legacy_options = array( // use "ignore" to ignore further comma-sep. values, otherwise they are all in last attribute
 				'select'         => 'empty_label,ignore',
@@ -95,7 +96,7 @@ function send_template()
 				'link-entry'     => 'only_app,application_list',
 			);
 			// prefer more specific type-subtype over just type
-			$names = $legacy_options[$matches[1] . '-' . $matches[2]] ?? $legacy_options[$matches[1]] ?? null;
+			$names = $legacy_options[$matches[1] . $matches[2]] ?? $legacy_options[$matches[1]] ?? null;
 			if (isset($names))
 			{
 				$names = explode(',', $names);
