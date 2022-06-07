@@ -269,7 +269,7 @@ const Et2WidgetMixin = (superClass) =>
 					label.classList.add("et2_label");
 					label.textContent = this.__label;
 					// We should have a slot in the template for the label
-					//label.slot="label";
+					label.slot = "label";
 					this.appendChild(label);
 					this.requestUpdate('label', oldValue);
 				}
