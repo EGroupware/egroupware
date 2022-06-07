@@ -8,7 +8,10 @@ import {egw} from "../../jsapi/egw_global";
  * This makes sure the built-in icons can be found
  */
 registerIconLibrary('default', {
-	resolver: name => `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg`,
+	resolver: name =>
+	{
+		return typeof egw !== "undefined" ? `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg` : ''
+	},
 });
 
 /**
@@ -22,7 +25,7 @@ const egw_icons = {'chevron-down': 'arrow_down', 'x': 'close', 'x-circle-fill': 
 registerIconLibrary("system", {
 	resolver: (name) =>
 	{
-		if(egw_icons[name])
+		if(egw_icons[name] && egw)
 		{
 			return `${egw.webserverUrl}/pixelegg/images/${egw_icons[name]}.svg`;
 		}

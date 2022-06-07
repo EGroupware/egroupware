@@ -18,6 +18,7 @@ import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
 import {holidays} from "./Holidays";
 import flatpickr from "flatpickr";
+import {egw} from "../../jsapi/egw_global";
 
 // Request this year's holidays now
 holidays(new Date().getFullYear());
@@ -29,7 +30,7 @@ const l10n = [
 	'mn', 'ms', 'my', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'si', 'sk', 'sl', 'sq', 'sr-cyr', 'sr', 'sv', 'th', 'tr',
 	'uk', 'uz', 'uz_latn', 'vn', 'zh-tw', 'zh',
 ];
-const lang = <string>egw.preference('lang');
+const lang = egw ? <string>egw.preference('lang') || "" : "";
 // only load localization, if we have one
 if (l10n.indexOf(lang) >= 0)
 {
@@ -424,7 +425,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 */
 	protected _localize(options)
 	{
-		let first_dow = this.egw().preference('weekdaystarts', 'calendar') || 'Monday';
+		let first_dow = <string>this.egw()?.preference('weekdaystarts', 'calendar') || 'Monday';
 		const DOW_MAP = {Monday: 1, Sunday: 0, Saturday: 6};
 		options.locale = {
 			firstDayOfWeek: DOW_MAP[first_dow]

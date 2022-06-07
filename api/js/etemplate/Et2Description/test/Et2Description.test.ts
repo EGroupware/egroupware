@@ -56,7 +56,7 @@ describe("Textbox widget", () =>
 		await elementUpdated(element);
 
 		// Firefox puts the style tag in, so it's not an exact match
-		assert.match(element.shadowRoot.textContent, new RegExp(value));
+		assert.match(element.textContent, new RegExp(value));
 	});
 
 	it("translates its value", async() =>
@@ -78,7 +78,7 @@ describe("Textbox widget", () =>
 		await elementUpdated(element);
 
 		// Firefox puts the style tag in, so it's not an exact match
-		assert.match(element.shadowRoot.textContent, new RegExp("Translated!"));
+		assert.match(element.textContent, new RegExp("Translated!"));
 	});
 
 	it("links when given href", async() =>
@@ -92,7 +92,7 @@ describe("Textbox widget", () =>
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
-		let a = element.shadowRoot.querySelector("a");
+		let a = element.querySelector("a");
 		assert.isNotNull(a, "Did not find A tag");
 		assert.match(a.href, new RegExp(href), "A tag had wrong href");
 	});
@@ -107,7 +107,7 @@ describe("Textbox widget", () =>
 		await elementUpdated(element);
 
 		// Not turned on, make sure there is no links
-		assert.isNull(element.shadowRoot.querySelector("a"), "Links got activated when activate_links property is false");
+		assert.isNull(element.querySelector("a"), "Links got activated when activate_links property is false");
 
 		// Turn it on
 		element.activate_links = true;
@@ -116,8 +116,8 @@ describe("Textbox widget", () =>
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
-		assert.isNotNull(element.shadowRoot.querySelector("a"), "Links did not get activated when activate_links property is true");
-		assert.equal(element.shadowRoot.querySelector("a").href, "http://www.egroupware.org/", "Incorrect href in activated link");
+		assert.isNotNull(element.querySelector("a"), "Links did not get activated when activate_links property is true");
+		assert.equal(element.querySelector("a").href, "http://www.egroupware.org/", "Incorrect href in activated link");
 	});
 });
 

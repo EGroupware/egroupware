@@ -137,7 +137,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super.requestUpdate(...arguments);
 		// Due to how we do the rendering into the light DOM (not sure it's right) we need this after
 		// value change or it won't actually show up
-		if(attribute == "value" && this.parentNode)
+		if(["value", "href", "activate_links"].indexOf(attribute) != -1 && this.parentNode)
 		{
 			this.updateComplete.then(() => render(this._renderContent(), <HTMLElement><unknown>this));
 		}

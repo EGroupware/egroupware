@@ -6,6 +6,7 @@ import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
 import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 // @ts-ignore
 import type {IegwAppLocal} from "../../jsapi/egw_global";
+import {egw} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
 import {css, dedupeMixin, PropertyValues, unsafeCSS} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
@@ -87,7 +88,7 @@ const Et2WidgetMixin = (superClass) =>
 		static get styles()
 		{
 			return [
-				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
+				...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
 				css`
 				:host([disabled]) {
 					display: none;
@@ -789,7 +790,7 @@ const Et2WidgetMixin = (superClass) =>
 			transformAttributes(this, this.getArrayMgr("content"), attrs);
 
 			// Add in additional modifications
-			if(this.id && this.getArrayMgr("modifications").getEntry(this.id))
+			if(this.id && this.getArrayMgr("modifications")?.getEntry(this.id))
 			{
 				transformAttributes(this, this.getArrayMgr("content"), this.getArrayMgr("modifications").getEntry(this.id));
 			}

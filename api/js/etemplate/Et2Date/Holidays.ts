@@ -2,6 +2,8 @@
  * Static holiday cache
  * access through holidays(year)
  */
+import {egw} from "../../jsapi/egw_global";
+
 let _holiday_cache = {};
 
 /**
@@ -19,7 +21,7 @@ let _holiday_cache = {};
 export function holidays(year) : Promise<{ [key : string] : Array<object> }> | { [key : string] : Array<object> }
 {
 	// No country selected causes error, so skip if it's missing
-	if(!egw.preference('country', 'common'))
+	if(!egw || !egw.preference('country', 'common'))
 	{
 		return {};
 	}
