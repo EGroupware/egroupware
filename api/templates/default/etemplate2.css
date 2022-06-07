@@ -3131,7 +3131,11 @@ div.et2_toolbar_more h.ui-accordion-header {
 }
 
 .et2_toolbarDropArea {
-    border: 1px dashed lightgray;
+    border: 2px dashed #d3d3d3;
+    padding: 0px;
+    background: #effaff;
+    border-radius: 3px;
+    padding-bottom: 2px;
 }
 
 .et2_label > input.et2_checkbox {
