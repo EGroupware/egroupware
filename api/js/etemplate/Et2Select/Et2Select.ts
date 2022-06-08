@@ -115,7 +115,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.getUpdateComplete().then(() =>
 		{
 			this.addEventListener("sl-clear", this._triggerChange)
-			this.addEventListener("sl-select", this._triggerChange);
 			this.addEventListener("sl-change", this._triggerChange);
 		});
 	}
@@ -125,7 +124,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		super.disconnectedCallback();
 
 		this.removeEventListener("sl-clear", this._triggerChange)
-		this.removeEventListener("sl-select", this._triggerChange);
+		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
 	firstUpdated(changedProperties)
