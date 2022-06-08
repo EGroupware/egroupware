@@ -3128,6 +3128,7 @@ div.et2_toolbar_more h.ui-accordion-header {
     float: left;
     height: 24px;
     white-space: nowrap;
+    min-width: 50px;
 }
 
 .et2_toolbarDropArea {
