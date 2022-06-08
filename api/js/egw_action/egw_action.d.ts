@@ -107,8 +107,8 @@ declare class egwAction {
     allowOnMultiple: boolean;
     enabled: any;
     hideOnDisabled: boolean;
-    data: {};
-    type: string;
+	data : { [key : string] : any };
+	type: string;
     canHaveChildren: boolean;
     parent: egwAction;
     children: any[];
