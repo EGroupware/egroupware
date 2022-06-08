@@ -793,7 +793,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['kanban'])
 		{
-			$actions['kanban'] = EGroupware\Kanban\Hooks::get_actions('addressbook', $group);
+			$actions['kanban'] = EGroupware\Kanban\Hooks::get_actions(['addressbook'], $group);
 		}
 
 		$actions['geolocation'] = array(
