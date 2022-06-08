@@ -151,7 +151,8 @@ function send_template()
 			'<et2-$1-expose $2 $3></et2-$1-expose>', $str);
 
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
-		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>', $str);
+		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>',
+			str_replace('<description/>', '<et2-description></et2-description>', $str));
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 

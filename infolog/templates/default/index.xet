@@ -99,13 +99,10 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
 					</vbox>
 					<vbox>
-						<hbox readonly="true">
-							<hbox readonly="true">
-                                <date-duration id="${row}[info_used_time]" readonly="true" select_unit="true" display_format="@@duration_format" disabled="!$row_cont[info_used_time]"/>
-                                <date-duration id="${row}[info_sum_timesheets]" readonly="true" select_unit="true" display_format="@@duration_format" class="timesheet"/>
-                            </hbox>
-							<description/>
-						</hbox>
+						<hbox>
+							<date-duration id="${row}[info_used_time]" readonly="true" select_unit="true" display_format="@@duration_format" disabled="!$row_cont[info_used_time]"/>
+                            <date-duration id="${row}[info_sum_timesheets]" readonly="true" select_unit="true" display_format="@@duration_format" class="timesheet"/>
+ 						</hbox>
                         <date-duration id="${row}[info_planned_time]" readonly="true" display_format="@@duration_format" select_unit="true" span="all" class="infolog_planned"/>
 					</vbox>
 					<vbox>
@@ -212,7 +209,6 @@
 							</vbox>
 						</box>
 					</hbox>
-					<description/>
 				</row>
 			</rows>
 		</grid>
