@@ -8,7 +8,6 @@
  */
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
@@ -79,11 +78,18 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			}
 		}
 
+		/**
+		 * Options found in the XML when reading the template
+		 * @type {SelectOption[]}
+		 * @private
+		 */
+		private _xmlOptions : SelectOption[] = [];
+
 		constructor()
 		{
 			super();
 
-			this.__select_options = <StaticOptions[]>[];
+			this.__select_options = <SelectOption[]>[];
 		}
 
 		/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -94,7 +100,7 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			// If the ID changed (or was just set) find the select options
 			if(changedProperties.has("id"))
 			{
-				const options = find_select_options(this);
+				const options = find_select_options(this, {}, this._xmlOptions);
 				if (options.length) this.select_options = options;
 			}
 
@@ -239,6 +245,7 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 					title: et2_readAttrWithDefault(options[i], "title", "")
 				});
 			}
+			this._xmlOptions = new_options;
 			if(options.length == 0 && this.__select_options.length)
 			{
 				// Start with any existing options, (static options from type)
