@@ -2865,7 +2865,7 @@ et2-button.transparent-button::part(container) {
     background-image: none;
 }
 
-.et2_toolbar button, .nextmatch_header_row button,
+.nextmatch_header_row button,
 .et2_toolbar div.et2_progress,
 .nextmatch_header_row div.et2_progress {
     margin: 1px 4px 1px 0;
@@ -3057,7 +3057,9 @@ et2-button.transparent-button::part(container) {
 
 .et2_toolbar div.ui-toolbar-menulist button.et2_button_with_image {
     background-size: 16px 16px;
-    background-color: #fafafa;
+    background-color: #ffffff;
+    vertical-align: middle;
+    height: 28px;
 }
 
 .et2_toolbar div.ui-toolbar-menulist span.slideSwitch_container {
@@ -3074,13 +3076,17 @@ div.ui-toolbar-menulist {
     margin-top: 3px !important;
     min-width: 150px;
     padding-top: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    box-shadow: 2px 3px 13px #666;
+    -moz-box-shadow: 2px 3px 13px #666;
+    -webkit-box-shadow: 2px 3px 13px #666;
+    -khtml-box-shadow: 2px 3px 13px #666;
+    -moz-user-select: none;
 }
-
-.ui-toolbar-menulist > h {
-    padding-bottom: 7px;
-    margin: 0;
+div.ui-toolbar-menulist > * {
+    border: none !important;
 }
-
 .ui-toolbar-menulist > button {
     margin: 0 !important;
     text-align: left;
@@ -3088,16 +3094,6 @@ div.ui-toolbar-menulist {
     width: 100% !important;
     white-space: nowrap;
     display: block;
-}
-
-.ui-toolbar-menulist > div {
-    margin: 0 !important;
-    text-align: left;
-    border-radius: 0 !important;
-    width: 100% !important;
-    white-space: nowrap;
-    background-color: #E0E0E0 !important;
-    border: 1px solid silver;
 }
 
 .ui-toolbar-menulistHeader {
@@ -3122,6 +3118,10 @@ div.et2_toolbar_more .ui-accordion-header-active {
 div.et2_toolbar_more h.ui-accordion-header {
     padding: 4px 30px 3px 25px !important;
     margin: 1px;
+}
+.et2_toolbar_actionlist .et2_button, .et2_toolbar_actionlist .et2_dropdown {
+    border-radius: 3px;
+    margin: 1px 4px 1px 0;
 }
 
 .et2_toolbar_actionlist {
