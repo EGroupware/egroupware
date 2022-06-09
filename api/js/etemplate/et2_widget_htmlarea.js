@@ -141,8 +141,8 @@ var et2_htmlarea = /** @class */ (function (_super) {
                 "Wingdings=wingdings,zapf dingbats",
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
             content_css: egw.webserverUrl + '/api/tinymce.php?' + // use the 3 prefs as cache-buster
-                btoa(egw.preference('rte_font', 'common') + ':' +
-                    egw.preference('rte_font_size', 'common') + ':' +
+                btoa(egw.preference('rte_font', 'common') + '::' +
+                    egw.preference('rte_font_size', 'common') + '::' +
                     egw.preference('rte_font_unit', 'common')),
         };
         var rte_formatblock = (egw.preference('rte_formatblock', 'common') || 'p');
