@@ -124,7 +124,8 @@ function send_template()
 		}, $str);
 
 		// Change splitter dockside -> primary + vertical
-		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', static function ($matches) use ($name) {
+		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', static function ($matches)
+		{
 			$tag = 'et2-split';
 			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[1], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
@@ -153,6 +154,25 @@ function send_template()
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>',
 			str_replace('<description/>', '<et2-description></et2-description>', $str));
+
+		// change link attribute only_app to et2-link attribute app and map r/o link-entry to link
+		$str = preg_replace_callback('#<et2-link(-[a-z]+)?([^>]*?)></et2-link(-[a-z]+)?>#su', static function ($matches)
+		{
+			$tag = 'et2-link'.$matches[1];
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+
+			if ($tag === 'et2-link-entry' && !empty($attrs['readonly']) || $tag === 'et2-link')
+			{
+				$tag = 'et2-link';
+				$attrs['app'] = $attrs['only_app'];
+				unset($attrs['only_app'], $attrs['readonly']);
+			}
+			return "<$tag " . implode(' ', array_map(function ($name, $value) {
+						return $name . '="' . $value . '"';
+					}, array_keys($attrs), $attrs)
+				) . "></$tag>";
+		}, $str);
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
