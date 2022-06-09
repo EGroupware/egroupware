@@ -257,13 +257,13 @@ code {
 }
 .mce-content-body:not([dir=rtl]) blockquote {
   border-left: 2px solid #ccc;
-  margin-left: 1.5rem;
-  padding-left: 1rem;
+  margin-left: 0;
+  padding-left: 10px;
 }
 .mce-content-body[dir=rtl] blockquote {
   border-right: 2px solid #ccc;
-  margin-right: 1.5rem;
-  padding-right: 1rem;
+  margin-right: 0;
+  padding-right: 10px;
 }
 fieldset {
 	border: 2px solid silver; 

@@ -3356,11 +3356,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$GLOBALS['egw_info']['flags']['nonavbar']=true;
 		// do NOT include any default CSS
 		Framework::includeCSS('mail', 'preview', true, true);
-		// include TinyMCE CSS prefs after preview CSS
-		Framework::includeCSS('/api/tinymce.php?'.	// use the 3 prefs as cache-buster
-			base64_encode($GLOBALS['egw_info']['user']['preferences']['common']['rte_font'].':'.
-				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'].':'.
-				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']));
 
 		// load preview.js to activate mailto links
 		Framework::includeJS('/mail/js/preview.js');
