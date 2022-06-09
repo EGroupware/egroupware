@@ -266,7 +266,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.requestUpdate();
 		if(changedProperties.has("app") || changedProperties.has("entry_id"))
 		{
-			if(!this.app || !this.entry_id || (this.app && this.entry_id && !this._title))
+			if(this.app && this.entry_id && !this._title)
 			{
 				this._title = Et2Link.MISSING_TITLE;
 			}
