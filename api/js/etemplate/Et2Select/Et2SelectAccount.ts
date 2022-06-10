@@ -31,6 +31,8 @@ export class Et2SelectAccount extends Et2Select
 	constructor()
 	{
 		super();
+		
+		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search";
 
 		this.__account_type = 'accounts';
 	}
