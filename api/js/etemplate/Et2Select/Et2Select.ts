@@ -134,12 +134,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		// If no value is set, choose the first option
 		// Only do this on firstUpdated() otherwise it is impossible to clear the field
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
-		// value not in options AND NOT (having an empty label and value)
-		if(!this.multiple && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0 &&
-			!(typeof this.empty_label !== 'undefined' && (this.value || "") === ""))
+		// value not in options --> use empty_label, if exists, or first option otherwise
+		if(!this.multiple && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
 		{
-			// --> use first option
-			this.value = "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
+			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 		}
 	}
 
@@ -168,9 +166,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.multiple = multi;
 	}
 
-	set_value(val : string | string[])
+	set_value(val : string | string[] | number)
 	{
-		this.value = val;
+		if (typeof val === 'number')
+		{
+			val = val.toString();
+		}
+		this.value = val || '';
 	}
 
 	/**
