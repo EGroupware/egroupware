@@ -153,6 +153,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					display: none;
 				}
 				
+				/* Different cursor for editable tags */
+				:host([allowfreeentries]) .search_tag::part(base)  {
+					cursor: text;
+				}
+				/* styling for icon inside tag (not option) */
+				.tag_image {
+					margin-right: var(--sl-spacing-x-small);
+				}
 				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
 				 .select__tags sl-tag {
 					margin-left: auto;
@@ -220,6 +228,17 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._unbindListeners();
 		}
 
+		willUpdate(changedProperties)
+		{
+			super.willUpdate(changedProperties);
+
+			// If searchURL is set, turn on search
+			if(changedProperties.has("searchUrl") && this.searchUrl)
+			{
+				this.search = true;
+			}
+		}
+
 		/**
 		 * Add the nodes we need to search
 		 *
@@ -270,9 +289,19 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return this.querySelector(".search_input");
 		}
 
+		/**
+		 * Tag used for rendering options
+		 * Used for finding & filtering options, they're created by the mixed-in class
+		 * @returns {string}
+		 */
+		public get optionTag()
+		{
+			return "sl-menu-item";
+		}
+
 		protected get menuItems()
 		{
-			return this.querySelectorAll("sl-menu-item");
+			return this.querySelectorAll(this.optionTag);
 		}
 
 		/**
@@ -282,12 +311,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected get localItems()
 		{
-			return this.querySelectorAll("sl-menu-item:not(.remote)");
+			return this.querySelectorAll(this.optionTag + ":not(.remote)");
 		}
 
 		protected get remoteItems()
 		{
-			return this.querySelectorAll("sl-menu-item.remote");
+			return this.querySelectorAll(this.optionTag + ".remote");
 		}
 
 		get value()
@@ -317,11 +346,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					});
 				}
 			}
-		}
-
-		getItems()
-		{
-			return [...this.querySelectorAll("sl-menu-item:not(.no-match)")];
 		}
 
 		protected _bindListeners()
@@ -687,6 +711,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 		}
 
+
 		/**
 		 * Customise how tags are rendered.  This overrides what SlSelect
 		 * does in syncItemsFromValue().
@@ -697,30 +722,29 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _tagTemplate(item)
 		{
+			let image = item.querySelector("et2-image");
+			if(image)
+			{
+				image = image.clone();
+				image.slot = "prefix";
+				image.class = "tag_image";
+			}
 			return html`
-                <et2-tag
-                        part="tag"
-                        exportparts="
-              base:tag__base,
-              content:tag__content,
-              remove-button:tag__remove-button
-            "
-                        variant="neutral"
-                        size=${this.size}
-                        ?pill=${this.pill}
-                        removable
-                        @click=${this.handleTagInteraction}
-                        @keydown=${this.handleTagInteraction}
-                        @sl-remove=${(event) =>
-                        {
-                            event.stopPropagation();
-                            if(!this.disabled)
-                            {
-                                item.checked = false;
-                                this.syncValueFromItems();
-                            }
-                        }}
+                <et2-tag class="search_tag"
+                         removable
+                         @click=${this.handleTagInteraction}
+                         @keydown=${this.handleTagInteraction}
+                         @sl-remove=${(event) =>
+                         {
+                             event.stopPropagation();
+                             if(!this.disabled)
+                             {
+                                 item.checked = false;
+                                 this.syncValueFromItems();
+                             }
+                         }}
                 >
+                    ${image}
                     ${this.getItemLabel(item)}
                 </et2-tag>
 			`;

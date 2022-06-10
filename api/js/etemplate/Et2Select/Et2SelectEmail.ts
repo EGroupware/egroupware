@@ -8,7 +8,7 @@
  */
 
 import {Et2Select} from "./Et2Select";
-import {css, html} from "@lion/core";
+import {css} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
 
 export class Et2SelectEmail extends Et2Select
@@ -87,44 +87,6 @@ export class Et2SelectEmail extends Et2Select
 	{
 		results.forEach(r => r.value = r.id);
 		super.processRemoteResults(results);
-	}
-
-
-	/**
-	 * Customise how tags are rendered.  This overrides what SlSelect
-	 * does in syncItemsFromValue().
-	 * This is a copy+paste from SlSelect.syncItemsFromValue().
-	 *
-	 * @param item
-	 * @protected
-	 */
-	protected _tagTemplate(item)
-	{
-		let image = item.querySelector("et2-image");
-		if(image)
-		{
-			image = image.clone();
-			image.slot = "prefix";
-		}
-		return html`
-            <et2-tag
-                    removable
-                    @click=${this.handleTagInteraction}
-                    @keydown=${this.handleTagInteraction}
-                    @sl-remove=${(event) =>
-                    {
-                        event.stopPropagation();
-                        if(!this.disabled)
-                        {
-                            item.checked = false;
-                            this.syncValueFromItems();
-                        }
-                    }}
-            >
-                ${image}
-                ${this.getItemLabel(item)}
-            </et2-tag>
-		`;
 	}
 }
 

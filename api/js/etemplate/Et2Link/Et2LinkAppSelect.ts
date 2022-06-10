@@ -25,12 +25,6 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 				border: none;
 				box-shadow: initial;
 			}
-			et2-image {
-				width: var(--icon-width);
-			}
-			::slotted(img), img {
-				vertical-align: middle;
-			}
 			`
 		]
 	}

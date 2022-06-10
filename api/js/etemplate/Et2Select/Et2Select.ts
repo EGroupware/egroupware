@@ -9,7 +9,6 @@
 
 
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
-import {cssImage} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
@@ -36,26 +35,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 			css`
 			:host {
 				display: block;
-			}
-			select {
-				width: 100%
-				color: var(--input-text-color, #26537c);
-				border-radius: 3px;
-				flex: 1 0 auto;
-				padding-top: 4px;
-				padding-bottom: 4px;
-				padding-right: 20px;
-				border-width: 1px;
-				border-style: solid;
-				border-color: #e6e6e6;
-				-webkit-appearance: none;
-				-moz-appearance: none;
-				margin: 0;
-				background: #fff no-repeat center right;
-				background-image: ${cssImage('arrow_down')};
-				background-size: 8px auto;
-				background-position-x: calc(100% - 8px);
-				text-indent: 5px;
+				--icon-width: 20px;
 			}
 			
 			/* This is the drop-down arrow on the right */
@@ -63,6 +43,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 				font-size: 120% !important;
 				font-weight: bold;
 				color: gray !important;
+			}
+			
+			::slotted(img), img {
+				vertical-align: middle;
+			}
+			
+			/* Avoid double scrollbar if there are a lot of options */
+			.select__menu
+			{
+				max-height: initial;
 			}
 
 			select:hover {
@@ -278,7 +268,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
-            <et2-image slot="prefix" src="${option.icon}"></et2-image>` : "";
+            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
+                       src="${option.icon}"></et2-image>` : "";
 
 		return html`
             <sl-menu-item value="${option.value}" title="${option.title}" class="${option.class}">
