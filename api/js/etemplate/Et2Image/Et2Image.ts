@@ -177,9 +177,9 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.default_src));
 		}
 		// if there's an href or onclick, make it look clickable
-		if(changedProperties.has("href") || changedProperties.has("onclick"))
+		if(changedProperties.has("href") || typeof this.onclick !== "undefined")
 		{
-			this.classList.toggle("et2_clickable", this.href || this.onclick)
+			this.classList.toggle("et2_clickable", this.href || typeof this.onclick !== "undefined")
 		}
 		for(const changedPropertiesKey in changedProperties)
 		{
