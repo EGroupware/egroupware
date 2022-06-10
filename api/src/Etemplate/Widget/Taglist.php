@@ -111,8 +111,9 @@ class Taglist extends Etemplate\Widget
 	 *
 	 * Uses the mail application if available, or addressbook
 	 */
-	public static function ajax_email()
+	public static function ajax_email($search)
 	{
+		$_REQUEST['query'] = $_REQUEST['query'] ?: $search;
 		// If no mail app access, use link system -> addressbook
 		if(!$GLOBALS['egw_info']['apps']['mail'])
 		{
@@ -171,21 +172,24 @@ class Taglist extends Etemplate\Widget
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					unset($value[$key]);
 				}
-				if($this->type == 'taglist-email' && $this->attrs['include_lists'] && is_numeric($val))
+				if(str_contains($this->type, 'email') && $this->attrs['include_lists'] && is_numeric($val))
 				{
 					$lists = $GLOBALS['egw']->contacts->get_lists(Api\Acl::READ);
 					if(!array_key_exists($val, $lists))
 					{
-						self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($lists))),'');
+						self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val, implode("','", array_keys($lists))), '');
 					}
 				}
-				else if($this->type == 'taglist-email' && !preg_match(Url::EMAIL_PREG, $val) &&
-						!($this->attrs['domainOptional'] && preg_match (Taglist::EMAIL_PREG_NO_DOMAIN, $val)) &&
-					// Allow merge placeholders.  Might be a better way to do this though.
-					!preg_match('/{{.+}}|\$\$.+\$\$/',$val)
-				)
+				else
 				{
-					self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
+					if(str_contains($this->type, 'email') && !preg_match(Url::EMAIL_PREG, $val) &&
+						!($this->attrs['domainOptional'] && preg_match(Taglist::EMAIL_PREG_NO_DOMAIN, $val)) &&
+						// Allow merge placeholders.  Might be a better way to do this though.
+						!preg_match('/{{.+}}|\$\$.+\$\$/', $val)
+					)
+					{
+						self::set_validation_error($form_name, lang("'%1' has an invalid format", $val), '');
+					}
 				}
 			}
 			if ($ok && $value === '' && $this->attrs['needed'])
@@ -204,3 +208,5 @@ class Taglist extends Etemplate\Widget
 		}
 	}
 }
+
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Taglist', array('taglist', 'et2-select-email'));

@@ -8,9 +8,13 @@
  */
 
 
-import {css, dedupeMixin, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
+import {Validator} from "@lion/form-core";
+import {Et2Tag} from "./Tag/Et2Tag";
 
+// Otherwise import gets stripped
+let keep_import : Et2Tag;
 
 // Export the Interface for TypeScript
 type Constructor<T = {}> = new (...args : any[]) => T;
@@ -67,7 +71,7 @@ export declare class SearchMixinInterface
  *
  * Currently I assume we're extending an Et2Select, so changes may need to be made for better abstraction
  */
-export const Et2WithSearchMixin = dedupeMixin((superclass) =>
+export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2WidgetWithSearch extends SlotMixin(superclass)
 	{
@@ -79,9 +83,18 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 
 				searchUrl: {type: String},
 
-				allowFreeEntries: {type: Boolean},
+				/**
+				 * Allow custom entries that are not in the options
+				 */
+				allowFreeEntries: {type: Boolean, reflect: true},
 
-				searchOptions: {type: Object}
+				searchOptions: {type: Object},
+
+				/**
+				 * Allow editing tags by clicking on them.
+				 * allowFreeEntries must be true
+				 */
+				editModeEnabled: {type: Boolean}
 			}
 		}
 
@@ -104,12 +117,18 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
+				/* Show / hide SlSelect icons - dropdown arrow, etc */
 				::slotted([slot="suffix"]) {
 					display: none;
 				}
 				:host([search]) ::slotted([slot="suffix"]) {
 					display: initial;
 				}
+				:host([allowFreeEntries]) ::slotted([slot="suffix"]) {
+					display: none;
+				}
+				
+				/* Make textbox take full width */
 				::slotted([name="search_input"]:focus ){
 					width: 100%;
 				}
@@ -117,20 +136,34 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 					flex: 2 1 auto;
 					width: 100%;
 				}
+				
+				/* Search textbox general styling, starts hidden */
 				.select__prefix ::slotted(.search_input) {
 					display: none;
 					margin-left: 0px;
 					width: 100%;
 				}
+				/* Search UI active - show textbox & stuff */
 				::slotted(.search_input.active) {
 					display: flex;
 				}
+				
+				/* Hide options that do not match current search text */
 				::slotted(.no-match) {
 					display: none;
+				}
+				
+				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
+				 .select__tags sl-tag {
+					margin-left: auto;
 				}
 				`
 			]
 		}
+
+		// Borrowed from Lion ValidatorMixin, but we don't want the whole thing
+		protected defaultValidators : Validator[];
+		protected validators : Validator[];
 
 		private _searchTimeout : number;
 		protected static SEARCH_TIMEOUT = 500;
@@ -144,9 +177,25 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			this.searchUrl = "";
 			this.searchOptions = {};
 
+			this.allowFreeEntries = false;
+			this.editModeEnabled = false;
+
+			this.validators = [];
+			/**
+			 * Used by Subclassers to add default Validators.
+			 * A email input for instance, always needs the isEmail validator.
+			 * @example
+			 * ```js
+			 * this.defaultValidators.push(new IsDate());
+			 * ```
+			 * @type {Validator[]}
+			 */
+			this.defaultValidators = [];
+
 			this._handleSearchButtonClick = this._handleSearchButtonClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
 			this._handleSearchKeyDown = this._handleSearchKeyDown.bind(this);
+			this.handleTagInteraction = this.handleTagInteraction.bind(this);
 		}
 
 		connectedCallback()
@@ -241,6 +290,35 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			return this.querySelectorAll("sl-menu-item.remote");
 		}
 
+		get value()
+		{
+			return super.value;
+		}
+
+		set value(new_value : string | string[])
+		{
+			super.value = new_value;
+
+			// Overridden to add options if allowFreeEntries=true
+			if(this.allowFreeEntries)
+			{
+				if(typeof this.value == "string" && !this.select_options.find(o => o.value == value))
+				{
+					this.createFreeEntry(value);
+				}
+				else
+				{
+					this.value.forEach((e) =>
+					{
+						if(!this.select_options.find(o => o.value == e))
+						{
+							this.createFreeEntry(e);
+						}
+					});
+				}
+			}
+		}
+
 		getItems()
 		{
 			return [...this.querySelectorAll("sl-menu-item:not(.no-match)")];
@@ -295,6 +373,33 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			}
 		}
 
+		handleTagInteraction(event : KeyboardEvent | MouseEvent)
+		{
+			let result = super.handleTagInteraction(event);
+
+			// Check if remove button was clicked
+			const path = event.composedPath();
+			const clearButton = path.find((el) =>
+			{
+				if(el instanceof HTMLElement)
+				{
+					const element = el as HTMLElement;
+					return element.classList.contains('tag__remove');
+				}
+				return false;
+			});
+
+			// No edit, or removed tag
+			if(!this.editModeEnabled || clearButton)
+			{
+				return;
+			}
+
+			// Find the tag
+			const tag = <Et2Tag>path.find((el) => el instanceof Et2Tag);
+			this.startEdit(tag);
+		}
+
 		/**
 		 * Value was cleared
 		 */
@@ -325,7 +430,18 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			if(event.key === "Enter")
 			{
 				event.preventDefault();
-				this.startSearch();
+				if(this.allowFreeEntries && this.createFreeEntry(this._searchInputNode.value))
+				{
+					this._searchInputNode.value = "";
+					if(!this.multiple)
+					{
+						this.dropdown.hide();
+					}
+				}
+				else
+				{
+					this.startSearch();
+				}
 			}
 
 			// Start the search automatically if they have enough letters
@@ -403,9 +519,19 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			return promise;
 		}
 
+		/**
+		 * Actually query the server.
+		 *
+		 * This can be overridden to change request parameters
+		 *
+		 * @param {string} search
+		 * @param {object} options
+		 * @returns {any}
+		 * @protected
+		 */
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().request(this.searchUrl, [search]).sendRequest().then((result) =>
+			return this.egw().request(this.searchUrl, [search]).then((result) =>
 			{
 				this.processRemoteResults(result);
 			});
@@ -460,9 +586,144 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 			return item.value == search;
 		}
 
+		/**
+		 * Create an entry that is not in the options and add it to the value
+		 *
+		 * @param {string} text Used as both value and label
+		 */
+		public createFreeEntry(text : string) : boolean
+		{
+			if(!this.validateFreeEntry(text))
+			{
+				return false;
+			}
+			// Make sure not to double-add
+			if(!this.select_options.find(o => o.value == text))
+			{
+				this.select_options.push(<SelectOption>{
+					value: text,
+					label: text
+				});
+			}
+			// Make sure not to double-add
+			if(this.multiple && this.value.indexOf(text) == -1)
+			{
+				this.value.push(text);
+			}
+			else if(!this.multiple)
+			{
+				this.value = text;
+			}
+			this.requestUpdate('select_options');
+			return true;
+		}
+
+		/**
+		 * Check if a free entry value is acceptable.
+		 * We use validators directly using the proposed value
+		 *
+		 * @param text
+		 * @returns {boolean}
+		 */
+		public validateFreeEntry(text) : boolean
+		{
+			let validators = [...this.validators, ...this.defaultValidators];
+			let result = validators.filter(v =>
+				v.execute(text, v.param, {node: this}),
+			);
+			return result.length == 0;
+		}
+
+		public startEdit(tag : Et2Tag)
+		{
+			// Turn on edit UI
+			this.handleMenuShow();
+
+			// but hide the menu
+			this.updateComplete.then(() => this.dropdown.hide());
+
+			// Pre-set value to tag value
+			this._searchInputNode.value = tag.textContent.trim();
+
+			// Remove from value & DOM.  If they finish the edit, the new one will be added.
+			this.value = this.value.filter(v => v !== this._searchInputNode.value);
+			tag.remove();
+		}
+
 		protected _handleSearchButtonClick(e)
 		{
 			this.handleMenuShow();
+		}
+
+		/**
+		 * Override this method from SlSelect to stick our own tags in there
+		 */
+		syncItemsFromValue()
+		{
+			if(typeof super.syncItemsFromValue === "function")
+			{
+				super.syncItemsFromValue();
+			}
+
+			// Only applies to multiple
+			if(typeof this.displayTags !== "object" || !this.multiple)
+			{
+				return;
+			}
+
+			let overflow = null;
+			if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
+			{
+				overflow = this.displayTags.pop();
+			}
+			const checkedItems = Object.values(this.menuItems).filter(item => this.value.includes(item.value));
+			this.displayTags = checkedItems.map(item => this._tagTemplate(item));
+
+			// Re-slice & add overflow tag
+			if(overflow)
+			{
+				this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
+				this.displayTags.push(overflow);
+			}
+		}
+
+		/**
+		 * Customise how tags are rendered.  This overrides what SlSelect
+		 * does in syncItemsFromValue().
+		 * This is a copy+paste from SlSelect.syncItemsFromValue().
+		 *
+		 * @param item
+		 * @protected
+		 */
+		protected _tagTemplate(item)
+		{
+			return html`
+                <et2-tag
+                        part="tag"
+                        exportparts="
+              base:tag__base,
+              content:tag__content,
+              remove-button:tag__remove-button
+            "
+                        variant="neutral"
+                        size=${this.size}
+                        ?pill=${this.pill}
+                        removable
+                        @click=${this.handleTagInteraction}
+                        @keydown=${this.handleTagInteraction}
+                        @sl-remove=${(event) =>
+                        {
+                            event.stopPropagation();
+                            if(!this.disabled)
+                            {
+                                item.checked = false;
+                                this.syncValueFromItems();
+                            }
+                        }}
+                >
+                    ${this.getItemLabel(item)}
+                </et2-tag>
+			`;
 		}
 
 		protected _handleSearchAbort(e)
@@ -481,5 +742,5 @@ export const Et2WithSearchMixin = dedupeMixin((superclass) =>
 		}
 	}
 
-	return Et2WidgetWithSearch as Constructor<SearchMixinInterface> & T & LitElement;
-});
+	return Et2WidgetWithSearch as unknown as Constructor<SearchMixinInterface> & T;
+}
