@@ -7,10 +7,11 @@
  * @author Nathan Gray
  */
 
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {dedupeMixin, html, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
+import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
+import {html, LitElement, PropertyValues, render, repeat, TemplateResult} from "@lion/core";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
+import {SearchMixinInterface} from "./SearchMixin";
 
 /**
  * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
@@ -55,7 +56,10 @@ import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelec
  * (LionField) can't find it when it looks for it before then.
  *
  */
-export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
+// Export the Interface for TypeScript
+type Constructor<T = {}> = new (...args : any[]) => T;
+
+export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
@@ -85,9 +89,9 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 		 */
 		private _xmlOptions : SelectOption[] = [];
 
-		constructor()
+		constructor(...args : any[])
 		{
-			super();
+			super(...args);
 
 			this.__select_options = <SelectOption[]>[];
 		}
@@ -264,5 +268,6 @@ export const Et2widgetWithSelectMixin = dedupeMixin((superclass) =>
 			}
 		}
 	}
-	return Et2WidgetWithSelect;
-});
+
+	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & T;
+}

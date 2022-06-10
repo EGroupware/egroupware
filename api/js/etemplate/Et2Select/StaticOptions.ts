@@ -189,7 +189,7 @@ export class StaticOptions
 		return this.number(widget);
 	}
 
-	year(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	year(widget : Et2SelectWidgets, attrs?) : SelectOption[]
 	{
 		if(typeof attrs != 'object')
 		{

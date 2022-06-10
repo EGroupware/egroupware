@@ -24,12 +24,14 @@ export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
 {
 };
 
+// @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithSelect))
 {
 	static get styles()
 	{
 		return [
-			...super.styles,
+			// Parent (SlSelect) returns a single cssResult, not an array
+			super.styles,
 			shoelace,
 			css`
 			:host {
@@ -100,7 +102,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		}
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
 		super();
 		this._triggerChange = this._triggerChange.bind(this);
@@ -109,8 +111,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	connectedCallback()
 	{
 		super.connectedCallback();
-		//MOVE options that were set as children inside SELECT:
-		//this.querySelector('select').append(...this.querySelectorAll('option'));
 
 		this.getUpdateComplete().then(() =>
 		{
@@ -127,7 +127,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
-	firstUpdated(changedProperties)
+	firstUpdated(changedProperties?)
 	{
 		super.firstUpdated(changedProperties);
 
@@ -288,14 +288,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	}
 }
 
+customElements.define("et2-select", Et2Select);
 /**
  * Use a single StaticOptions, since it should have no state
  * @type {StaticOptions}
  */
 const so = new StaticOptions();
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select", Et2Select);
 
 export class Et2SelectApp extends Et2Select
 {

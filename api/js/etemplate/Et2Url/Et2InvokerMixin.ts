@@ -8,8 +8,8 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {css, dedupeMixin, html, render} from '@lion/core';
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {css, dedupeMixin, html, LitElement, render} from '@lion/core';
+import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 
 /**
@@ -20,7 +20,9 @@ import {colorsDefStyles} from "../Styles/colorsDefStyles";
  *
  * Inspired by Lion date-picker.
  */
-export const Et2InvokerMixin = dedupeMixin((superclass) =>
+
+type Constructor<T = Et2InputWidgetInterface> = new (...args : any[]) => T;
+export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2Invoker extends Et2InputWidget(superclass)
 	{
@@ -96,9 +98,9 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 			return /** @type {HTMLElement} */ (this.querySelector(`#${this.__invokerId}`));
 		}
 
-		constructor()
+		constructor(...args : any[])
 		{
-			super();
+			super(...args);
 			/** @private */
 			this.__invokerId = this.__createUniqueIdForA11y();
 			// default for properties
@@ -192,5 +194,6 @@ export const Et2InvokerMixin = dedupeMixin((superclass) =>
 			`;
 		}
 	}
-	return Et2Invoker;
+
+	return Et2Invoker as unknown as Constructor<Et2Invoker> & T;
 })

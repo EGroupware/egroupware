@@ -8,7 +8,7 @@ import {et2_cloneObject, et2_csvSplit} from "../et2_core_common";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {egw} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
-import {css, dedupeMixin, PropertyValues, unsafeCSS} from "@lion/core";
+import {css, dedupeMixin, LitElement, PropertyValues, unsafeCSS} from "@lion/core";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -37,7 +37,8 @@ function applyMixins(derivedCtor : any, baseCtors : any[])
 	});
 }
 
-const Et2WidgetMixin = (superClass) =>
+type Constructor<T = {}> = new (...args : any[]) => T;
+const Et2WidgetMixin = <T extends Constructor<LitElement>>(superClass : T) =>
 {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode
 	{
@@ -1252,7 +1253,7 @@ const Et2WidgetMixin = (superClass) =>
 	// Add some more stuff in
 	applyMixins(Et2WidgetClass, [ClassWithInterfaces]);
 
-	return Et2WidgetClass;
+	return Et2WidgetClass as unknown as Constructor<Et2WidgetClass> & T;
 }
 export const Et2Widget = dedupeMixin(Et2WidgetMixin);
 
