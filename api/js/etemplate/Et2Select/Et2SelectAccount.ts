@@ -53,7 +53,7 @@ export class Et2SelectAccount extends Et2Select
 	get select_options() : Array<SelectOption>
 	{
 		const type = this.egw().preference('account_selection', 'common');
-		if (type === 'none' && typeof egw.user('apps').admin === 'undefined')
+		if(type === 'none' && typeof this.egw().user('apps').admin === 'undefined')
 		{
 			return [];
 		}
@@ -73,7 +73,11 @@ export class Et2SelectAccount extends Et2Select
 		}
 		return select_options;
 	}
+
+	set select_options(new_options : SelectOption[])
+	{
+		super.select_options = new_options;
+	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-account", Et2SelectAccount);
