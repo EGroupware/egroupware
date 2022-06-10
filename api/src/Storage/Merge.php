@@ -2008,20 +2008,38 @@ abstract class Merge
 	/**
 	 * Download document merged with contact(s)
 	 *
+	 * Uses the Collabora conversion API to convert the file to a different format
+	 * @see https://sdk.collaboraonline.com/docs/conversion_api.html
+
 	 * @param string $document vfs-path of document
 	 * @param array $ids array with contact id(s)
 	 * @param string $name ='' name to use for downloaded document
 	 * @param string $dirs comma or whitespace separated directories, used if $document is a relative path
+	 * @param string $convert_to = '' extension to convert to eg. 'pdf' or null to NOT convert
 	 * @return string with error-message on error, otherwise it does NOT return
 	 */
-	public function download($document, $ids, $name = '', $dirs = '')
+	public function download($document, $ids, $name = '', $dirs = '', $convert_to = null)
 	{
 		$result = $this->merge_file($document, $ids, $name, $dirs, $header);
 
-		if(is_file($result) && is_readable($result))
+		if (is_file($result) && is_readable($result))
 		{
+			if ($convert_to && class_exists('EGroupware\\Collabora\\Conversion'))
+			{
+				$convert = new Conversion();
+				if (!$convert->convert($result, $converted, $convert_to, $error_msg, false))
+				{
+					return $error_msg;
+				}
+				$header = [
+					'name' => pathinfo($name, PATHINFO_FILENAME).'.'.$convert_to,
+					'mime' => Api\MimeMagic::ext2mime($convert_to),
+					'filesize' => filesize($converted),
+				];
+				$result = $converted;
+			}
 			Api\Header\Content::type($header['name'], $header['mime'], $header['filesize']);
-			readfile($result, 'r');
+			readfile($result);
 			exit;
 		}
 
