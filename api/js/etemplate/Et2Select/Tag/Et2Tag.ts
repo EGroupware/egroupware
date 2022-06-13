@@ -21,7 +21,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		return [
 			super.styles,
 			shoelace, css`
-		:host {
+		.tag--pill {
 			overflow: hidden;
 		}
 		::slotted(et2-image)
@@ -31,7 +31,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		}
 		/* Avoid button getting truncated by right side of button */
 		.tag__remove {
-			margin-right: calc(-1 * var(--sl-spacing-2x-small));
+			margin-right: 0;
 		}
 		`];
 	}
@@ -39,6 +39,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	constructor(...args : [])
 	{
 		super(...args);
+		this.pill = true;
 	}
 
 	render()
