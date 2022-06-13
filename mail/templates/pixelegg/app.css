@@ -226,6 +226,7 @@ pre {
 .containerTableStyle {
   width: 100%;
   overflow: hidden;
+  overflow-y: auto;
 }
 .dtree {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -709,7 +710,7 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 #mail-folder_management table.et2_grid tr td {
   padding: 0px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-subscribe table.et2_grid tr td et2-box,
 #mail-folder_management table.et2_grid tr td .mail_subscription_header {
   height: 500px;
   overflow: auto;
@@ -1350,8 +1351,8 @@ div#displayToolbar-menulist img {
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box,
-#mail-folder_management table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td et2-box,
+#mail-folder_management table.et2_grid tr td et2-box {
   margin-top: 16px;
   height: 484px;
   overflow: auto;
@@ -1620,6 +1621,7 @@ pre {
 .containerTableStyle {
   width: 100%;
   overflow: hidden;
+  overflow-y: auto;
 }
 .dtree {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
