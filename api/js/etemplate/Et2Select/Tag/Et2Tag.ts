@@ -21,10 +21,17 @@ export class Et2Tag extends Et2Widget(SlTag)
 		return [
 			super.styles,
 			shoelace, css`
+		:host {
+			overflow: hidden;
+		}
 		::slotted(et2-image)
 		{
 			height: 20px;
 			width: 20px;
+		}
+		/* Avoid button getting truncated by right side of button */
+		.tag__remove {
+			margin-right: calc(-1 * var(--sl-spacing-2x-small));
 		}
 		`];
 	}
