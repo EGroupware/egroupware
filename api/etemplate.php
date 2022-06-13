@@ -289,6 +289,12 @@ function send_template()
 					$attrs['multiple'] = 'true';
 					unset($attrs['expand_multiple_rows']);
 				}
+				// automatic convert empty_label for multiple=true to a placeholder
+				if (!empty($attrs['empty_label']) && !empty($attrs['multiple']))
+				{
+					$attrs['placeholder'] = $attrs['empty_label'];
+					unset($attrs['empty_label']);
+				}
 				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
 				if (empty($matches[2]) && isset($attrs['type']))
 				{
