@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-sinc
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|label|image|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|link-apps|favorites)\s([^>]+)/>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|label|image|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -264,7 +264,7 @@ function send_template()
 
 				if ($matches[1] === 'taglist')
 				{
-					if (empty($matches[2]) || in_array(substr($matches[2], 1), ['cat']))
+					if (empty($matches[2]) || !in_array(substr($matches[2], 1), ['thumbnail']))
 					{
 						$matches[1] = 'select';
 					}
