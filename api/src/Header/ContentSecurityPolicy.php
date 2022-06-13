@@ -80,6 +80,9 @@ class ContentSecurityPolicy
 			}
 			self::$sources[$source] = [];
 		}
+		// Shoelace needs connect-src: data:
+		if ($source === 'connect-src') /** @noinspection UnsupportedStringOffsetOperationsInspection */ $attrs[] = 'data:';
+
 		foreach((array)$attrs as $attr)
 		{
 			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline')))

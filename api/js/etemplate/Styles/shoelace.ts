@@ -15,26 +15,6 @@ registerIconLibrary('default', {
 });
 
 /**
- * Override some shoelace icons with EGroupware icons
- * In particular, the data: ones give errors with our CSP
- * hacky hack to temporarily work around until CSP issue is fixed
- *
- * @see https://my.egroupware.org/egw/index.php?menuaction=tracker.tracker_ui.edit&tr_id=68774
- */
-const egw_icons = {'chevron-down': 'arrow_down', 'x': 'close', 'x-circle-fill': 'close'}
-registerIconLibrary("system", {
-	resolver: (name) =>
-	{
-		if(egw_icons[name] && egw)
-		{
-			return `${egw.webserverUrl}/pixelegg/images/${egw_icons[name]}.svg`;
-		}
-		return "";
-	}
-});
-
-
-/**
  * Customise shoelace styles to match our stuff
  * External CSS will override this
  */
