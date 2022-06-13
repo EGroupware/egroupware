@@ -128,7 +128,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					display: none;
 				}
 				
-				/* Make textbox take full width */
+				/* Make search textbox take full width */
 				::slotted([name="search_input"]:focus ){
 					width: 100%;
 				}
@@ -152,7 +152,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				::slotted(.no-match) {
 					display: none;
 				}
-				
+				/* Hide selected options from the dropdown */
+				::slotted([checked])
+				{
+					display: none;
+				}
 				/* Different cursor for editable tags */
 				:host([allowfreeentries]) .search_tag::part(base)  {
 					cursor: text;
@@ -451,21 +455,20 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			// Don't allow event to bubble or it will interact with select
 			event.stopImmediatePropagation();
-			if(event.key === "Enter")
+			if(["Tab", "Enter", ","].indexOf(event.key) && this.allowFreeEntries && this.createFreeEntry(this._searchInputNode.value))
 			{
 				event.preventDefault();
-				if(this.allowFreeEntries && this.createFreeEntry(this._searchInputNode.value))
+				this._searchInputNode.value = "";
+				if(!this.multiple)
 				{
-					this._searchInputNode.value = "";
-					if(!this.multiple)
-					{
-						this.dropdown.hide();
-					}
+					this.dropdown.hide();
 				}
-				else
-				{
-					this.startSearch();
-				}
+
+			}
+			else if(event.key == "Enter")
+			{
+				event.preventDefault();
+				this.startSearch();
 			}
 
 			// Start the search automatically if they have enough letters
