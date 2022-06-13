@@ -331,9 +331,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Overridden to add options if allowFreeEntries=true
 			if(this.allowFreeEntries)
 			{
-				if(typeof this.value == "string" && !this.select_options.find(o => o.value == value))
+				if(typeof this.value == "string" && !this.select_options.find(o => o.value == this.value))
 				{
-					this.createFreeEntry(value);
+					this.createFreeEntry(this.value);
 				}
 				else
 				{
