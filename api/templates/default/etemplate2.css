@@ -2856,6 +2856,7 @@ et2-button.transparent-button::part(container) {
     padding-left: 26px;
     padding-right: 5px;
     color: #5B5B5B;
+    z-index: 1000;
 }
 
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image.et2_toolbar_onlyCaption {
@@ -3132,11 +3133,11 @@ div.et2_toolbar_more h.ui-accordion-header {
 }
 
 .et2_toolbarDropArea {
-    border: 2px dashed #d3d3d3;
-    padding: 0px;
-    background: #effaff;
-    border-radius: 3px;
-    padding-bottom: 2px;
+    border: 2px dashed #d3d3d3 !important;
+    padding: 0px !important;
+    background: #effaff !important;
+    border-radius: 3px !important;
+    padding-bottom: 2px !important;
 }
 
 .et2_label > input.et2_checkbox {

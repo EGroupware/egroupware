@@ -454,8 +454,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionbox.appendTo(this.div);
 
 		let toolbar = this.actionlist.find('span[data-group]'),
-			toolbox = this.actionbox,
-			menulist = jQuery(this.actionbox.children()[1]);
+			toolbox = this.actionbox;
 		this.actionlist[0].classList.add(`et2_toolbar_dropzone_list${this.id}`);
 		this.actionbox[0].classList.add(`et2_toolbar_dropzone_more${this.id}`);
 
@@ -517,41 +516,43 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				e.target.classList.remove('et2_toolbarDropArea');
 			}
 		});
+		const menulist = [`.et2_toolbar_dropzone_more${this.id}`, `#${this.id}-menulist`];
+		menulist.forEach(_item => {
+			interact(_item).unset();
+			interact(_item).dropzone({
+				checker: function (
+					dragEvent,         // related dragmove or dragend
+					event,             // Touch, Pointer or Mouse Event
+					dropped,           // bool default checker result
+					dropzone,          // dropzone Interactable
+					dropzoneElement,   // dropzone element
+					draggable,         // draggable Interactable
+					draggableElement   // draggable element
+				) {
+					console.log(dragEvent);
 
-		interact(`.et2_toolbar_dropzone_more${this.id}`).unset();
-		interact(`.et2_toolbar_dropzone_more${this.id}`).dropzone({
-			checker: function (
-				dragEvent,         // related dragmove or dragend
-				event,             // Touch, Pointer or Mouse Event
-				dropped,           // bool default checker result
-				dropzone,          // dropzone Interactable
-				dropzoneElement,   // dropzone element
-				draggable,         // draggable Interactable
-				draggableElement   // draggable element
-			) {
-				console.log(dragEvent);
-
-				return dropped && !dropzoneElement.contains(draggableElement);
-			},
-			accept: `.et2_toolbar_draggable${this.id}`,
-			ondrop: function(e)
-			{
-				that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), true);
-				if (that.actionlist.find(`.et2_toolbar_draggable${that.id}`).length == 0)
+					return dropped && !dropzoneElement.contains(draggableElement);
+				},
+				accept: `.et2_toolbar_draggable${this.id}`,
+				ondrop: function(e)
 				{
-					that.preference = {};
-					egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
+					that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), true);
+					if (that.actionlist.find(`.et2_toolbar_draggable${that.id}`).length == 0)
+					{
+						that.preference = {};
+						egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
+					}
+					that._build_menu(that.actions);
+				},
+				ondragenter: function(e)
+				{
+					e.target.classList.add('et2_toolbarDropArea');
+				},
+				ondragleave: function(e)
+				{
+					e.target.classList.remove('et2_toolbarDropArea');
 				}
-				that._build_menu(that.actions);
-			},
-			ondragenter: function(e)
-			{
-				e.target.classList.add('et2_toolbarDropArea');
-			},
-			ondragleave: function(e)
-			{
-				e.target.classList.remove('et2_toolbarDropArea');
-			}
+			});
 		});
 
 		toolbox.on('toggle', (e)=>{
