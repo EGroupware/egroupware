@@ -9,6 +9,7 @@
 
 import {Et2Select} from "./Et2Select";
 import {SelectOption} from "./FindSelectOptions";
+import {html} from "@lion/core";
 
 export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
 
@@ -79,6 +80,21 @@ export class Et2SelectAccount extends Et2Select
 	set select_options(new_options : SelectOption[])
 	{
 		super.select_options = new_options;
+	}
+
+	/**
+	 * Override the prefix image for tags (multiple=true)
+	 * The default is probably fine, but we're being explicit here.
+	 * @param item
+	 * @returns {TemplateResult<1>}
+	 * @protected
+	 *
+	 */
+	protected _tagImageTemplate(item)
+	{
+		return html`
+            <et2-image slot="prefix" part="icon"
+                       src="/egroupware/api/avatar.php?account_id=${item.value}&etag=1"></et2-image>`;
 	}
 }
 
