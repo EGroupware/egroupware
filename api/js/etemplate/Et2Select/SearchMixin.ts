@@ -151,6 +151,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					flex: 1 1 auto;
 					width: 100%;
 				}
+				/* Don't show the current value while searching for single, we want the space
+					This lets the current value shrink to nothing so the input can expand
+				 */
+				.select__label {
+					flex: 1 15 auto;
+				}
 				/* Show edit textbox only when editing */
 				.search_input #edit {
 					display: none;
@@ -327,7 +333,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 			// I can't figure out how to get this full width via CSS
 			return html`
-                <input id="search" type="text" part="input" @keydown=${this._handleSearchKeyDown}/>
+                <input id="search" type="text" part="input" style="width:100%" @keydown=${this._handleSearchKeyDown}/>
                 ${edit}
 			`;
 		}
