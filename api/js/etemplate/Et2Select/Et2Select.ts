@@ -96,6 +96,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	{
 		super();
 		this._triggerChange = this._triggerChange.bind(this);
+		this._doResize = this._doResize.bind(this);
 	}
 
 	connectedCallback()
@@ -106,6 +107,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		{
 			this.addEventListener("sl-clear", this._triggerChange)
 			this.addEventListener("sl-change", this._triggerChange);
+			this.addEventListener("sl-after-show", this._doResize)
 		});
 	}
 
@@ -115,6 +117,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 
 		this.removeEventListener("sl-clear", this._triggerChange)
 		this.removeEventListener("sl-change", this._triggerChange);
+		this.removeEventListener("sl-after-show", this._doResize);
 	}
 
 	firstUpdated(changedProperties?)
@@ -134,6 +137,18 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	_triggerChange(e)
 	{
 		this.dispatchEvent(new Event("change"));
+	}
+
+	/**
+	 * Change the menu sizing to allow the menu to be wider than the field width, but no smaller
+	 *
+	 * @param e
+	 * @private
+	 */
+	private _doResize(e)
+	{
+		this.menu.style.minWidth = this.menu.style.width;
+		this.menu.style.width = "";
 	}
 
 	/**
