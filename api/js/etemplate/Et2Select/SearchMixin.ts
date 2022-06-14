@@ -259,6 +259,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.defaultValidators = [];
 
 			this._handleSelect = this._handleSelect.bind(this);
+			this._handleClear = this._handleClear.bind(this);
 			this._handleSearchButtonClick = this._handleSearchButtonClick.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
@@ -439,6 +440,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			this.addEventListener("sl-blur", this._handleSearchAbort);
 			this.addEventListener("sl-select", this._handleSelect);
+			this.addEventListener("sl-clear", this._handleClear)
 			if(this._oldChange)
 			{
 				// Search messes up event order somehow, selecting an option fires the change event before
@@ -453,6 +455,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _unbindListeners()
 		{
 			this.removeEventListener("sl-blur", this._handleSearchAbort);
+			this.removeEventListener("sl-select", this._handleSelect);
+			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
 			this._searchButtonNode.removeEventListener("click", this._handleSearchButtonClick);
 		}
@@ -518,8 +522,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleClear()
 		{
-			// Restore label styling
-			this.shadowRoot.querySelector("[part='display-label']").style.display = "";
+			if(!this.multiple && this.searchEnabled)
+			{
+				// Restore label styling
+				this.shadowRoot.querySelector("[part='display-label']").style.display = "";
+
+				// Start searching again
+				this.updateComplete.then(() => this.handleMenuShow())
+			}
 		}
 
 		/**
