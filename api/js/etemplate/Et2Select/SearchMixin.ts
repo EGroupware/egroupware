@@ -142,7 +142,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([allowFreeEntries]) ::slotted([slot="suffix"]) {
 					display: none;
 				}
-				
+				/* Get rid of padding before/after options */
+				sl-menu::part(base) {
+					padding: 0px;
+				}
 				/* Make search textbox take full width */
 				::slotted(.search_input), ::slotted(.search_input) input, .search_input, .search_input input {
 					width: 100%;
@@ -205,10 +208,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.tag_image {
 					margin-right: var(--sl-spacing-x-small);
 				}
-				/* Maximum height + scrollbar on tags */
+				/* Maximum height + scrollbar on tags (+ other styling) */
 				.select__tags {
 					max-height: 5em;
 					overflow-y: auto;
+					
+    				gap: 0.1rem 0.5rem;
 				}
 				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
 				 .select__tags sl-tag {
@@ -307,6 +312,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _addNodes()
 		{
+
 			const div = document.createElement("div");
 			div.classList.add("search_input");
 			render(this._searchInputTemplate(), div);
@@ -319,6 +325,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			super.updateComplete.then(() =>
 			{
+				this.menu.querySelector("slot").textContent = this.egw().lang("No suggestions");
+
 				let control = this.shadowRoot.querySelector(".form-control-input");
 				control.append(div);
 
@@ -416,10 +424,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			super.value = new_value;
 
+			if(!new_value)
+			{
+				return;
+			}
+
 			// Overridden to add options if allowFreeEntries=true
 			if(this.allowFreeEntries)
 			{
-				if(typeof this.value == "string" && !this.select_options.find(o => o.value == this.value))
+				if(typeof this.value == "string" && !Object.values(this.menuItems).find(o => o.value == this.value))
 				{
 					this.createFreeEntry(this.value);
 				}
@@ -427,7 +440,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.value.forEach((e) =>
 					{
-						if(!this.select_options.find(o => o.value == e))
+						if(!Object.values(this.menuItems).find(o => o.value == e))
 						{
 							this.createFreeEntry(e);
 						}
@@ -695,7 +708,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(target)
 			{
 				// Keep local options first, add in remote options
-				entries = this.select_options.concat(entries);
+				this.select_options.filter(function(item)
+				{
+					let i = entries.findIndex(x => (x.value == item.value));
+					if(i <= -1)
+					{
+						entries.push(item);
+					}
+					return null;
+				});
 
 				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
 					target
@@ -878,15 +899,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _tagTemplate(item)
 		{
-			let image = item.querySelector("et2-image");
-			if(image)
-			{
-				image = image.clone();
-				image.slot = "prefix";
-				image.class = "tag_image";
-			}
 			return html`
-                <et2-tag class="search_tag"
+                <et2-tag class="${item.classList.value} search_tag"
                          removable
                          value="${item.value}"
                          @dblclick=${this._handleDoubleClick}
@@ -902,10 +916,23 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                              }
                          }}
                 >
-                    ${image}
+                    ${this._tagImageTemplate(item)}
                     ${this.getItemLabel(item)}
                 </et2-tag>
 			`;
+		}
+
+		protected _tagImageTemplate(item)
+		{
+			let image = item.querySelector("et2-image");
+			if(image)
+			{
+				image = image.clone();
+				image.slot = "prefix";
+				image.class = "tag_image";
+				return image;
+			}
+			return "";
 		}
 
 		protected _handleSearchAbort(e)
