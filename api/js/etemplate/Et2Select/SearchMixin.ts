@@ -205,6 +205,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.tag_image {
 					margin-right: var(--sl-spacing-x-small);
 				}
+				/* Maximum height + scrollbar on tags */
+				.select__tags {
+					max-height: 5em;
+					overflow-y: auto;
+				}
 				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
 				 .select__tags sl-tag {
 					margin-left: auto;
@@ -496,6 +501,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this.multiple && this.searchEnabled)
 			{
 				this._searchInputNode.focus();
+
+				// Scroll the new tag into view
+				if(event.detail && event.detail.item)
+				{
+					this.updateComplete.then(() =>
+					{
+						this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']").scrollIntoView();
+					});
+				}
 			}
 		}
 
@@ -864,6 +878,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return html`
                 <et2-tag class="search_tag"
                          removable
+                         value="${item.value}"
                          @dblclick=${this._handleDoubleClick}
                          @click=${this.handleTagInteraction}
                          @keydown=${this.handleTagInteraction}
