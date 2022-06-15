@@ -9,7 +9,7 @@
 
 import {Et2Select} from "./Et2Select";
 import {SelectOption} from "./FindSelectOptions";
-import {html} from "@lion/core";
+import {Et2Image} from "../Et2Image/Et2Image";
 
 export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
 
@@ -90,11 +90,11 @@ export class Et2SelectAccount extends Et2Select
 	 * @protected
 	 *
 	 */
-	protected _tagImageTemplate(item)
+	protected _createImage(item) : Et2Image
 	{
-		return html`
-            <et2-image slot="prefix" part="icon"
-                       src="/egroupware/api/avatar.php?account_id=${item.value}&etag=1"></et2-image>`;
+		const image = super._createImage(item);
+		image.src = "/egroupware/api/avatar.php?account_id=" + item.value + "&etag=1";
+		return image;
 	}
 }
 

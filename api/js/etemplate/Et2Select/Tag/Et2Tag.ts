@@ -8,7 +8,7 @@
  */
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTag} from "@shoelace-style/shoelace";
-import {classMap, css, html} from "@lion/core";
+import {classMap, css, html, TemplateResult} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
 
 /**
@@ -36,15 +36,31 @@ export class Et2Tag extends Et2Widget(SlTag)
 		`];
 	}
 
+	static get properties()
+	{
+		return {
+			...super.properties,
+			value: {type: String, reflect: true}
+		}
+	}
+
 	constructor(...args : [])
 	{
 		super(...args);
+		this.value = "";
 		this.pill = true;
+		this.removable = true;
+	}
+
+	protected _styleTemplate() : TemplateResult
+	{
+		return null;
 	}
 
 	render()
 	{
 		return html`
+            ${this._styleTemplate()}
             <span
                     part="base"
                     class=${classMap({

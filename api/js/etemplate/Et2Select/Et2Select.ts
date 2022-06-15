@@ -13,10 +13,11 @@ import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
-import {SlSelect} from "@shoelace-style/shoelace";
+import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
 import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
+import {Et2Tag} from "./Tag/Et2Tag";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
@@ -49,12 +50,33 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 				vertical-align: middle;
 			}
 			
+			/* Get rid of padding before/after options */
+			sl-menu::part(base) {
+				padding: 0px;
+			}
+			
 			/* Avoid double scrollbar if there are a lot of options */
 			.select__menu
 			{
 				max-height: initial;
 			}
 
+			/** multiple=true uses tags for each value **/
+			/* styling for icon inside tag (not option) */
+			.tag_image {
+				margin-right: var(--sl-spacing-x-small);
+			}
+			/* Maximum height + scrollbar on tags (+ other styling) */
+			.select__tags {
+				max-height: 5em;
+				overflow-y: auto;
+				
+				gap: 0.1rem 0.5rem;
+			}
+			/* Keep overflow tag right-aligned.  It's the only sl-tag. */
+			 .select__tags sl-tag {
+				margin-left: auto;
+			}	
 			select:hover {
 				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
 			}`
@@ -260,13 +282,45 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		}
 
 		// propagate multiple to selectbox
-		if (changedProperties.has('multiple'))
+		if(changedProperties.has('multiple'))
 		{
 			// switch the expand button off
-			if (this.multiple)
+			if(this.multiple)
 			{
 				this.expand_multiple_rows = 0;
 			}
+		}
+	}
+
+	/**
+	 * Override this method from SlSelect to stick our own tags in there
+	 */
+	syncItemsFromValue()
+	{
+		if(typeof super.syncItemsFromValue === "function")
+		{
+			super.syncItemsFromValue();
+		}
+
+		// Only applies to multiple
+		if(typeof this.displayTags !== "object" || !this.multiple)
+		{
+			return;
+		}
+
+		let overflow = null;
+		if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
+		{
+			overflow = this.displayTags.pop();
+		}
+		const checkedItems = Object.values(this.menuItems).filter(item => this.value.includes(item.value));
+		this.displayTags = checkedItems.map(item => this._createTagNode(item));
+
+		// Re-slice & add overflow tag
+		if(overflow)
+		{
+			this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
+			this.displayTags.push(overflow);
 		}
 	}
 
@@ -280,17 +334,92 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
             <sl-menu-item value="">${this.empty_label}</sl-menu-item>`;
 	}
 
+	/**
+	 * Tag used for rendering options
+	 * Used for finding & filtering options, they're created by the mixed-in class
+	 * @returns {string}
+	 */
+	public get optionTag()
+	{
+		return "sl-menu-item";
+	}
+
+
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
             <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
                        src="${option.icon}"></et2-image>` : "";
 
+		// Tag used must match this.optionTag, but you can't use the variable directly
 		return html`
             <sl-menu-item value="${option.value}" title="${option.title}" class="${option.class}">
                 ${icon}
                 ${option.label}
             </sl-menu-item>`;
+	}
+
+	/**
+	 * Tag used for rendering tags when multiple=true
+	 * Used for creating, finding & filtering options.
+	 * @see createTagNode()
+	 * @returns {string}
+	 */
+	public get tagTag()
+	{
+		return "et2-tag";
+	}
+
+	/**
+	 * Customise how tags are rendered.  This overrides what SlSelect
+	 * does in syncItemsFromValue().
+	 * This is a copy+paste from SlSelect.syncItemsFromValue().
+	 *
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		const tag = <Et2Tag>document.createElement(this.tagTag);
+		tag.value = item.value;
+		tag.textContent = this.getItemLabel(item);
+		tag.class = item.classList.value + " search_tag";
+		tag.addEventListener("dblclick", this._handleDoubleClick);
+		tag.addEventListener("click", this.handleTagInteraction);
+		tag.addEventListener("keydown", this.handleTagInteraction);
+		tag.addEventListener("sl-remove", (event) =>
+		{
+			event.stopPropagation();
+			if(!this.disabled)
+			{
+				item.checked = false;
+				this.syncValueFromItems();
+			}
+		});
+		let image = this._createImage(item);
+		if(image)
+		{
+			tag.prepend(image);
+		}
+		return tag;
+	}
+
+	protected _createImage(item)
+	{
+		let image = item.querySelector("et2-image");
+		if(image)
+		{
+			image = image.clone();
+			image.slot = "prefix";
+			image.class = "tag_image";
+			return image;
+		}
+		return "";
+	}
+
+	public get menuItems() : HTMLElement[]
+	{
+		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
 	}
 }
 
@@ -359,9 +488,13 @@ export class Et2SelectCategory extends Et2Select
 		return [
 			...super.styles,
 			css`
-				::slotted(*) {
-					border-left: 3px solid transparent;
-					}
+			/* Category color on options */
+			::slotted(*) {
+				border-left: 3px solid var(--category-color, transparent);
+			}
+			.select--standard .select__control {
+				border-left: 4px solid transparent;
+			}			
 			`
 		]
 	}
@@ -390,6 +523,71 @@ export class Et2SelectCategory extends Et2Select
 		super();
 
 		this.select_options = so.cat(this);
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		if(typeof this.application == 'undefined')
+		{
+			this.application =
+				// When the widget is first created, it doesn't have a parent and can't find it's instanceManager
+				(this.getInstanceManager() && this.getInstanceManager().app) ||
+				this.egw().app_name();
+		}
+	}
+
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has("value"))
+		{
+			this.doLabelChange()
+		}
+	}
+
+	doLabelChange()
+	{
+		// Update the display label when checked menu item's label changes
+		if(this.multiple)
+		{
+			return;
+		}
+
+		const checkedItem = this.menuItems.find(item => item.value === this.value);
+		this.displayLabel = checkedItem ? checkedItem.textContent : '';
+		this.querySelector("[slot=prefix].tag_image")?.remove();
+		if(checkedItem)
+		{
+			let image = this._createImage(checkedItem)
+			if(image)
+			{
+				this.append(image);
+			}
+			this.dropdown.querySelector(".select__control").style.borderColor =
+				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "transparent";
+		}
+	}
+
+	get tagTag() : string
+	{
+		return "et2-category-tag";
+	}
+
+	/**
+	 * Customise how tags are rendered.  This overrides parent to set application
+	 *
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		let tag = super._createTagNode(item);
+		tag.application = this.application;
+		return tag;
 	}
 }
 

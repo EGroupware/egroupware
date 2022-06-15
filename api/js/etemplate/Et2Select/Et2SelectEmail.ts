@@ -29,6 +29,12 @@ export class Et2SelectEmail extends Et2Select
 			::slotted(sl-icon[slot="suffix"]) {
 				display: none;
 			}
+			
+			/* Hide selected options from the dropdown */
+			::slotted([checked])
+			{
+				display: none;
+			}
 			`
 		];
 	}

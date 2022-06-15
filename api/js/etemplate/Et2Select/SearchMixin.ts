@@ -142,10 +142,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([allowFreeEntries]) ::slotted([slot="suffix"]) {
 					display: none;
 				}
-				/* Get rid of padding before/after options */
-				sl-menu::part(base) {
-					padding: 0px;
-				}
 				/* Make search textbox take full width */
 				::slotted(.search_input), ::slotted(.search_input) input, .search_input, .search_input input {
 					width: 100%;
@@ -195,29 +191,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				::slotted(.no-match) {
 					display: none;
 				}
-				/* Hide selected options from the dropdown */
-				::slotted([checked])
-				{
-					display: none;
-				}
 				/* Different cursor for editable tags */
 				:host([allowfreeentries]) .search_tag::part(base)  {
 					cursor: text;
-				}
-				/* styling for icon inside tag (not option) */
-				.tag_image {
-					margin-right: var(--sl-spacing-x-small);
-				}
-				/* Maximum height + scrollbar on tags (+ other styling) */
-				.select__tags {
-					max-height: 5em;
-					overflow-y: auto;
-					
-    				gap: 0.1rem 0.5rem;
-				}
-				/* Keep overflow tag right-aligned.  It's the only sl-tag. */
-				 .select__tags sl-tag {
-					margin-left: auto;
 				}
 				`
 			]
@@ -337,7 +313,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _searchInputTemplate()
 		{
-			let edit = '';
+			let edit = null;
 			if(this.editModeEnabled)
 			{
 				edit = html`<input id="edit" type="text" part="input"
@@ -385,20 +361,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				   this.querySelector(".search_input");
 		}
 
-		/**
-		 * Tag used for rendering options
-		 * Used for finding & filtering options, they're created by the mixed-in class
-		 * @returns {string}
-		 */
-		public get optionTag()
-		{
-			return "sl-menu-item";
-		}
-
-		protected get menuItems()
-		{
-			return this.querySelectorAll(this.optionTag);
-		}
 
 		/**
 		 * Only local options, excludes server options
@@ -432,7 +394,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Overridden to add options if allowFreeEntries=true
 			if(this.allowFreeEntries)
 			{
-				if(typeof this.value == "string" && !Object.values(this.menuItems).find(o => o.value == this.value))
+				if(typeof this.value == "string" && !this.menuItems.find(o => o.value == this.value))
 				{
 					this.createFreeEntry(this.value);
 				}
@@ -440,7 +402,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.value.forEach((e) =>
 					{
-						if(!Object.values(this.menuItems).find(o => o.value == e))
+						if(!this.menuItems.find(o => o.value == e))
 						{
 							this.createFreeEntry(e);
 						}
@@ -854,85 +816,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _handleSearchButtonClick(e)
 		{
 			this.handleMenuShow();
-		}
-
-		/**
-		 * Override this method from SlSelect to stick our own tags in there
-		 */
-		syncItemsFromValue()
-		{
-			if(typeof super.syncItemsFromValue === "function")
-			{
-				super.syncItemsFromValue();
-			}
-
-			// Only applies to multiple
-			if(typeof this.displayTags !== "object" || !this.multiple)
-			{
-				return;
-			}
-
-			let overflow = null;
-			if(this.maxTagsVisible > 0 && this.displayTags.length > this.maxTagsVisible)
-			{
-				overflow = this.displayTags.pop();
-			}
-			const checkedItems = Object.values(this.menuItems).filter(item => this.value.includes(item.value));
-			this.displayTags = checkedItems.map(item => this._tagTemplate(item));
-
-			// Re-slice & add overflow tag
-			if(overflow)
-			{
-				this.displayTags = this.displayTags.slice(0, this.maxTagsVisible);
-				this.displayTags.push(overflow);
-			}
-		}
-
-
-		/**
-		 * Customise how tags are rendered.  This overrides what SlSelect
-		 * does in syncItemsFromValue().
-		 * This is a copy+paste from SlSelect.syncItemsFromValue().
-		 *
-		 * @param item
-		 * @protected
-		 */
-		protected _tagTemplate(item)
-		{
-			return html`
-                <et2-tag class="${item.classList.value} search_tag"
-                         removable
-                         value="${item.value}"
-                         @dblclick=${this._handleDoubleClick}
-                         @click=${this.handleTagInteraction}
-                         @keydown=${this.handleTagInteraction}
-                         @sl-remove=${(event) =>
-                         {
-                             event.stopPropagation();
-                             if(!this.disabled)
-                             {
-                                 item.checked = false;
-                                 this.syncValueFromItems();
-                             }
-                         }}
-                >
-                    ${this._tagImageTemplate(item)}
-                    ${this.getItemLabel(item)}
-                </et2-tag>
-			`;
-		}
-
-		protected _tagImageTemplate(item)
-		{
-			let image = item.querySelector("et2-image");
-			if(image)
-			{
-				image = image.clone();
-				image.slot = "prefix";
-				image.class = "tag_image";
-				return image;
-			}
-			return "";
 		}
 
 		protected _handleSearchAbort(e)
