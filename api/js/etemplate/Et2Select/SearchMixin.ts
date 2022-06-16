@@ -486,7 +486,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.updateComplete.then(() =>
 					{
-						this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']").scrollIntoView();
+						this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']")?.scrollIntoView();
 					});
 				}
 			}
