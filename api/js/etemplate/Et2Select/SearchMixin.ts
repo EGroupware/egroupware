@@ -8,7 +8,7 @@
  */
 
 
-import {css, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -117,10 +117,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				/* Show / hide SlSelect icons - dropdown arrow, etc */
-				::slotted([slot="suffix"]) {
-					display: none;
-				}
 				:host([search]) ::slotted([slot="suffix"]) {
 					display: initial;
 				}
@@ -139,7 +135,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.select--standard.select--focused:not(.select--disabled) .select__control {
 					box-shadow: initial;
 				}
-				:host([allowFreeEntries]) ::slotted([slot="suffix"]) {
+				/* Show / hide SlSelect icons - dropdown arrow, etc but not loading spinner */
+				:host([allowFreeEntries]) ::slotted(sl-icon[slot="suffix"]) {
 					display: none;
 				}
 				/* Make search textbox take full width */
@@ -206,6 +203,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		private _searchTimeout : number;
 		protected static SEARCH_TIMEOUT = 500;
 		protected static MIN_CHARS = 2;
+		// Hold the original option data from earlier search results, since we discard on subsequent search
+		private _selected_remote = <SelectOption[]>[];
+
 		/**
 		 * These characters will end a free tag
 		 * @type {string[]}
@@ -367,12 +367,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 *
 		 * @protected
 		 */
-		protected get localItems()
+		protected get localItems() : NodeList
 		{
 			return this.querySelectorAll(this.optionTag + ":not(.remote)");
 		}
 
-		protected get remoteItems()
+		protected get remoteItems() : NodeList
 		{
 			return this.querySelectorAll(this.optionTag + ".remote");
 		}
@@ -476,6 +476,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleSelect(event)
 		{
+			// Need to keep the remote option - only if selected
+			if(event.detail.item.classList.contains("remote") && !this._selected_remote.find(o => o.value == event.detail.item.value))
+			{
+				this._selected_remote.push({...event.detail.item.option});
+			}
+
 			// If they just chose one from the list, re-focus the search
 			if(this.multiple && this.searchEnabled)
 			{
@@ -497,6 +503,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleClear()
 		{
+			this._selected_remote = [];
+
 			if(!this.multiple && this.searchEnabled)
 			{
 				// Restore label styling
@@ -514,6 +522,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _handleSearchKeyDown(event : KeyboardEvent)
 		{
+			clearTimeout(this._searchTimeout);
 			this._activeControls?.classList.add("active");
 			this.dropdown.show();
 
@@ -533,20 +542,20 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.dropdown.hide();
 				}
-
 			}
 			else if(event.key == "Enter")
 			{
 				event.preventDefault();
 				this.startSearch();
+				return;
 			}
 			else if(event.key == "Escape")
 			{
 				this._handleSearchAbort(event);
+				return;
 			}
 
 			// Start the search automatically if they have enough letters
-			clearTimeout(this._searchTimeout);
 			if(this._searchInputNode.value.length >= Et2WidgetWithSearch.MIN_CHARS)
 			{
 				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
@@ -577,6 +586,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		public startSearch()
 		{
+			// Stop timeout timer
+			clearTimeout(this._searchTimeout);
+
 			// Show a spinner instead of search button
 			this._searchButtonNode.style.display = "hidden";
 			let spinner = document.createElement("sl-spinner");
@@ -622,9 +634,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteSearch(search : string, options : object)
 		{
-			// Remove existing remote items
-			this.remoteItems.forEach(i => i.remove());
-
 			if(!this.searchUrl)
 			{
 				return Promise.resolve();
@@ -670,7 +679,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(target)
 			{
 				// Keep local options first, add in remote options
-				this.select_options.filter(function(item)
+				// Include already selected remote entries, or they will be removed and we lose icon/class
+				this.select_options.concat(this._selected_remote).filter(function(item)
 				{
 					let i = entries.findIndex(x => (x.value == item.value));
 					if(i <= -1)
@@ -680,7 +690,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					return null;
 				});
 
-				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+				//render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+				render(entries.map((option) => this._optionTemplate(option)),
 					target
 				);
 			}
