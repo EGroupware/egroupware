@@ -46,7 +46,7 @@ foreach($categories as $cat)
 		// if the category has no color
 		$content .= "/** {$cat['name']} **/\n/*webComponent*/\n";
 		$content .= ":root,:host {--cat-{$cat['id']}-color: {$cat['data']['color']};}, :host.cat_{$cat['id']}, .cat_{$cat['id']} {--category-color: {$cat['data']['color']};} et2-select-cat > .cat_{$cat['id']} {--category-color: {$cat['data']['color']};} \n";
-		$content .= "/*legacy*/\n.egwGridView_scrollarea tr.row_category.cat_{$cat['id']} > td:first-child, .select-cat li.cat_{$cat['id']}, .et2_selectbox ul.chzn-results li.cat_{$cat['id']}, .et2_selectbox ul.chzn-choices li.cat_{$cat['id']}, .nextmatch_header_row .et2_selectbox.select-cat.cat_{$cat['id']} a.chzn-single , .cat_{$cat['id']}.fullline_cat_bg, div.cat_{$cat['id']}, span.cat_{$cat['id']} { background-color: {$cat['data']['color']};}  \n";
+		$content .= "/*legacy*/\n.egwGridView_scrollarea tr.row_category.cat_{$cat['id']} > td:first-child, .select-cat li.cat_{$cat['id']}, .et2_selectbox ul.chzn-results li.cat_{$cat['id']}, .et2_selectbox ul.chzn-choices li.cat_{$cat['id']}, .nextmatch_header_row .et2_selectbox.select-cat.cat_{$cat['id']} a.chzn-single {border-left-color: {$cat['data']['color']};} .cat_{$cat['id']}.fullline_cat_bg, div.cat_{$cat['id']}, span.cat_{$cat['id']} { background-color: {$cat['data']['color']};}  \n";
 	}
 	if (!empty($cat['data']['icon']))
 	{
