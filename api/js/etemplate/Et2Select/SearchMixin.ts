@@ -8,7 +8,7 @@
  */
 
 
-import {css, html, LitElement, render, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -690,8 +690,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					return null;
 				});
 
-				//render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
-				render(entries.map((option) => this._optionTemplate(option)),
+				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
 					target
 				);
 			}
