@@ -2835,9 +2835,10 @@ class Contacts extends Contacts\Storage
 		}
 		if ($only_keys === true) $only_keys = false;
 		$start = false;	// no pagination
-		list($country, $area, $rest) = explode(' ',
+		// returns "+49 123 4567890" or "+1 123-456-7890"
+		list($country, $area, $rest) = preg_split('/[ -]/',
 			$phoneNumberUtil->format($number, \libphonenumber\PhoneNumberFormat::INTERNATIONAL), 3);
-		$rest_without_space = str_replace(' ', '', $rest);
+		$rest_without_space = preg_replace('/[^0-9]/', '', $rest);
 		/** @var Contacts\Sql */
 		$backend = $this->get_backend(null, $filter['owner']);
 		// SQL Backend supporting regexp_replace (MySQL 8.0+ or MariaDB 10.0+ or PostgreSQL)
