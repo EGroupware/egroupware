@@ -1,6 +1,6 @@
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, dedupeMixin, PropertyValues} from "@lion/core";
+import {css, dedupeMixin, LitElement, PropertyValues} from "@lion/core";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Required} from "../Validators/Required";
 
@@ -18,7 +18,7 @@ import {Required} from "../Validators/Required";
  */
 export declare class Et2InputWidgetInterface
 {
-	readOnly : boolean;
+	readonly : boolean;
 	protected value : string | number | Object;
 
 	public set_value(any) : void;
@@ -36,10 +36,12 @@ export declare class Et2InputWidgetInterface
 	public isValid(messages : string[]) : boolean;
 }
 
-const Et2InputWidgetMixin = (superclass) =>
+type Constructor<T = {}> = new (...args : any[]) => T;
+const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
 	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode, et2_ISubmitListener
 	{
+		private __readonly : boolean;
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
 
@@ -69,12 +71,12 @@ const Et2InputWidgetMixin = (superclass) =>
 				readOnly: {
 					type: Boolean,
 					attribute: 'readonly',
-					reflect: true,
 				},
 				// readonly is what is in the templates
 				// I put this in here so loadWebComponent finds it when it tries to set it from the template
 				readonly: {
-					type: Boolean
+					type: Boolean,
+					reflect: true
 				},
 
 				required: {
@@ -205,8 +207,22 @@ const Et2InputWidgetMixin = (superclass) =>
 
 		set_readonly(new_value)
 		{
-			this.readonly = this.readOnly = new_value;
+			this.readonly = new_value;
 		}
+
+		// Deal with Lion readOnly vs etemplate readonly
+		public set readonly(new_value)
+		{
+			debugger;
+			this.__readonly = super.__readOnly = new_value;
+			this.requestUpdate("readonly");
+		}
+
+		public get readonly() { return this.__readonly};
+
+		set readOnly(new_value) {this.readonly = new_value;}
+
+		get readOnly() { return this.readonly};
 
 		getValue()
 		{

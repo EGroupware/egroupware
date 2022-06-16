@@ -62,6 +62,9 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
                	max-width: 125px;
                	min-width: fit-content;
             }
+            :host([hideonreadonly][disabled]) {
+            	display:none;
+            }
             /* Set size for icon */
             ::slotted(img.imageOnly) {
     			padding-right: 0px !important;
@@ -93,8 +96,10 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			/**
 			 * If button is set to readonly, do we want to hide it completely (old behaviour) or show it as disabled
 			 * (default)
+			 * Something's not quite right here, as the attribute shows up as "hideonreadonly" instead of "hide" but
+			 * it does not show up without the "attribute", and attribute:"hideonreadonly" does not show as an attribute
 			 */
-			hideOnReadonly: {type: Boolean},
+			hideOnReadonly: {type: Boolean, reflect: true, attribute: "hide"},
 
 			/**
 			 * Button should submit the etemplate
@@ -237,11 +242,7 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 	render()
 	{
-		if(this.readonly && this.hideOnReadonly)
-		{
-			return '';
-		}
-
+		console.log(this, this.hideOnReadonly);
 		this._iconNode.src = this.__image || "";
 		if(!this.label)
 		{

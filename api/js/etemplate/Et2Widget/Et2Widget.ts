@@ -37,8 +37,8 @@ function applyMixins(derivedCtor : any, baseCtors : any[])
 	});
 }
 
-type Constructor<T = {}> = new (...args : any[]) => T;
-const Et2WidgetMixin = <T extends Constructor<LitElement>>(superClass : T) =>
+type Constructor<T = LitElement> = new (...args : any[]) => T;
+const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 {
 	class Et2WidgetClass extends superClass implements et2_IDOMNode
 	{
@@ -1316,7 +1316,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	if (parent) widget.setParent(parent);
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
-	widget.readOnly = readonly;
+	widget.readonly = readonly;
 
 	widget.transformAttributes(attrs);
 
