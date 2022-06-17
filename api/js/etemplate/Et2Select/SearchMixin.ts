@@ -117,9 +117,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
+				/* This is the search icon on the right - hidden unless search=true */
+				::slotted([slot="suffix"]) {
+					font-size: 120% !important;
+					display:none;
+				}
 				:host([search]) ::slotted([slot="suffix"]) {
 					display: initial;
 				}
+				
 				/* Move the widget border */
 				.form-control-input {
 					border: solid var(--sl-input-border-width) var(--sl-input-border-color);

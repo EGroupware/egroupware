@@ -39,12 +39,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 				--icon-width: 20px;
 			}
 			
-			/* This is the drop-down arrow on the right */
-			::slotted([slot="suffix"]) {
-				font-size: 120% !important;
-				font-weight: bold;
-				color: gray !important;
-			}
 			
 			::slotted(img), img {
 				vertical-align: middle;
