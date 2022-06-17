@@ -29,9 +29,13 @@ export class Et2Tag extends Et2Widget(SlTag)
 			height: 20px;
 			width: 20px;
 		}
+		.tag__content {
+			padding: 0px 0.2rem;
+		}
 		/* Avoid button getting truncated by right side of button */
 		.tag__remove {
 			margin-right: 0;
+			margin-left: 0;
 		}
 		`];
 	}

@@ -122,7 +122,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					font-size: 120% !important;
 					display:none;
 				}
-				:host([search]) ::slotted([slot="suffix"]) {
+				:host([search]):not([readonly]) ::slotted([slot="suffix"]) {
 					display: initial;
 				}
 				
@@ -195,8 +195,26 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					display: none;
 				}
 				/* Different cursor for editable tags */
-				:host([allowfreeentries]) .search_tag::part(base)  {
+				:host([allowfreeentries]):not([readonly]) .search_tag::part(base)  {
 					cursor: text;
+				}
+				
+				/** Readonly **/
+				/* No border */
+				:host([readonly]) .form-control-input {
+					border: none;
+				}
+				/* disable focus border */
+				:host([readonly]) .form-control-input:focus-within {
+					box-shadow: none;
+				}
+				/* no menu */
+				:host([readonly]) sl-menu {
+					display: none;
+				}
+				/* normal cursor */
+				:host([readonly]) .select__control {
+					cursor: initial;
 				}
 				`
 			]
@@ -261,7 +279,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.classList.toggle("search", this.searchEnabled);
 
 			// Missing any of the required attributes?  Don't change anything.
-			if(!this.searchEnabled && !this.editModeEnabled)
+			// If readonly, skip it
+			if(!this.searchEnabled && !this.editModeEnabled || this.readonly)
 			{
 				return;
 			}
@@ -342,7 +361,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		public get searchEnabled() : boolean
 		{
-			return this.search || this.searchUrl.length > 0;
+			return !this.readonly && (this.search || this.searchUrl.length > 0);
 		}
 
 		protected get _searchButtonNode()

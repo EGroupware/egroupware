@@ -7,12 +7,12 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, SlotMixin} from "@lion/core";
+import {css, html, LitElement, PropertyValues, SlotMixin} from "@lion/core";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
-import {LinkInfo} from "./Et2Link";
+import {Et2Link, LinkInfo} from "./Et2Link";
 
 /**
  * Find and select a single entry using the link system.
@@ -132,13 +132,26 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		// Clear initial value
 		this._value = undefined;
 
-		this._bindListeners();
+		if(!this.readonly)
+		{
+			this._bindListeners();
+		}
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
 		this._unbindListeners();
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+		if(changedProperties.has("readonly"))
+		{
+			this._appNode.readonly = this.readonly;
+			this._searchNode.readonly = this.readonly;
+		}
 	}
 
 	set only_app(app)
@@ -266,7 +279,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		{
 			return this._searchNode?.value;
 		}
-		return this._searchNode ? {
+		return this._searchNode ? <LinkInfo>{
 			id: this._searchNode.value,
 			app: this.app,
 			//search: this._searchNode...	// content of search field
@@ -328,5 +341,11 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-link-entry", Et2LinkEntry);
+
+export class Et2LinkEntryReadonly extends Et2Link
+{
+
+}
+
+customElements.define("et2-link-entry_ro", Et2LinkEntryReadonly);

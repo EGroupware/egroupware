@@ -82,6 +82,10 @@ export class Et2LinkSearch extends Et2Select
 		{
 			this._missingOption(this.value)
 		}
+		if(changedProperties.has("readonly"))
+		{
+			this.clearable = !this.readonly;
+		}
 	}
 
 	/**

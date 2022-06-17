@@ -385,18 +385,26 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		tag.value = item.value;
 		tag.textContent = this.getItemLabel(item);
 		tag.class = item.classList.value + " search_tag";
-		tag.addEventListener("dblclick", this._handleDoubleClick);
-		tag.addEventListener("click", this.handleTagInteraction);
-		tag.addEventListener("keydown", this.handleTagInteraction);
-		tag.addEventListener("sl-remove", (event) =>
+		if(this.readonly)
 		{
-			event.stopPropagation();
-			if(!this.disabled)
+			tag.removable = false;
+			tag.readonly = true;
+		}
+		else
+		{
+			tag.addEventListener("dblclick", this._handleDoubleClick);
+			tag.addEventListener("click", this.handleTagInteraction);
+			tag.addEventListener("keydown", this.handleTagInteraction);
+			tag.addEventListener("sl-remove", (event) =>
 			{
-				item.checked = false;
-				this.syncValueFromItems();
-			}
-		});
+				event.stopPropagation();
+				if(!this.disabled)
+				{
+					item.checked = false;
+					this.syncValueFromItems();
+				}
+			});
+		}
 		let image = this._createImage(item);
 		if(image)
 		{
