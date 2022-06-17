@@ -261,7 +261,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.classList.toggle("search", this.searchEnabled);
 
 			// Missing any of the required attributes?  Don't change anything.
-			if(!this.searchEnabled)
+			if(!this.searchEnabled && !this.editModeEnabled)
 			{
 				return;
 			}
@@ -797,7 +797,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		public startEdit(tag : Et2Tag)
 		{
-			const tag_value = tag.textContent.trim();
+			const tag_value = tag.value;
 
 			// hide the menu
 			//this.dropdown.hide()

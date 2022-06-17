@@ -209,4 +209,5 @@ class Taglist extends Etemplate\Widget
 	}
 }
 
-Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Taglist', array('taglist', 'et2-select-email'));
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Taglist', array(
+	'taglist', 'et2-select-email', 'et2-select-thumbnail'));
