@@ -235,7 +235,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				new_options.push({
 					value: et2_readAttrWithDefault(options[i], "value", options[i].textContent),
 					// allow options to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
-					label: options[i].textContent.replace(/{([^}]+)}/g, function(str, p1)
+					label: options[i].textContent.replace(/{([^}]+)}/g, (str, p1) =>
 					{
 						return this.egw().lang(p1);
 					}),
