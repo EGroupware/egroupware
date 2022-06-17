@@ -228,6 +228,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 			this._set_invoker(attrs.expand_multiple_rows);
 		}
 		super.transformAttributes(attrs);
+
+		// Deal with initial value of multiple set as CSV
+		if(this.multiple && typeof this.value == "string")
+		{
+			this.value = this.value.length ? this.value.split(",") : [];
+		}
 	}
 
 	set expand_multiple_rows(rows)
