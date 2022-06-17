@@ -177,6 +177,43 @@ function send_template()
 				) . "></$tag>";
 		}, $str);
 
+
+		// handling of select and taglist widget, incl. removing of type attribute
+		$str = preg_replace_callback('#<(select|taglist)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
+			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+
+			if (isset($attrs['tags']))
+			{
+				$attrs['multiple'] = 'true';
+				unset($attrs['tags']);
+			}
+			// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close
+			// until we find something better, just switch to multiple="true"
+			if (isset($attrs['multiple']) && $attrs['multiple'] === 'toggle' || !empty($attrs['expand_multiple_rows']))
+			{
+				$attrs['multiple'] = 'true';
+				unset($attrs['expand_multiple_rows']);
+			}
+			// automatic convert empty_label for multiple=true to a placeholder
+			if (!empty($attrs['empty_label']) && !empty($attrs['multiple']))
+			{
+				$attrs['placeholder'] = $attrs['empty_label'];
+				unset($attrs['empty_label']);
+			}
+			// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
+			if (empty($matches[2]) && isset($attrs['type']))
+			{
+				list(,$matches[2])= explode('-', $attrs['type']);
+				unset($attrs['type']);
+			}
+			$replace = '<et2-select' . $matches[2] . ' ' . implode(' ', array_map(static function($attr, $val)
+				{
+					return $attr.'="'.$val.'"';
+				}, array_keys($attrs), $attrs)) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
+			return $replace;
+		}, $str);
+
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
@@ -258,53 +295,6 @@ function send_template()
 					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
 					(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
 						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
-			}, $str);
-
-			// handling of partially implemented select and taglist widget, incl. removing of type attribute
-			$str = preg_replace_callback('#<(select|taglist)(-[^ ]+)? ([^>]+)/>#', static function (array $matches) {
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
-				$attrs = array_combine($attrs[2], $attrs[3]);
-
-				if ($matches[1] === 'taglist')
-				{
-					if (empty($matches[2]) || !in_array(substr($matches[2], 1), ['thumbnail']))
-					{
-						$matches[1] = 'select';
-					}
-					else
-					{
-						return $matches[0]; // still use taglist-* for now
-					}
-				}
-
-				if (isset($attrs['tags']))
-				{
-					$attrs['multiple'] = 'true';
-					unset($attrs['tags']);
-				}
-				// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close
-				// until we find something better, just switch to multiple="true"
-				if (isset($attrs['multiple']) && $attrs['multiple'] === 'toggle' || !empty($attrs['expand_multiple_rows']))
-				{
-					$attrs['multiple'] = 'true';
-					unset($attrs['expand_multiple_rows']);
-				}
-				// automatic convert empty_label for multiple=true to a placeholder
-				if (!empty($attrs['empty_label']) && !empty($attrs['multiple']))
-				{
-					$attrs['placeholder'] = $attrs['empty_label'];
-					unset($attrs['empty_label']);
-				}
-				// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
-				if (empty($matches[2]) && isset($attrs['type']))
-				{
-					$matches[1] = $attrs['type'];
-					unset($attrs['type']);
-				}
-				return '<et2-' . $matches[1] . $matches[2] . ' ' . implode(' ', array_map(static function($attr, $val)
-					{
-						return $attr.'="'.$val.'"';
-					}, array_keys($attrs), $attrs)) . '></et2-' . $matches[1] . $matches[2] . '>';
 			}, $str);
 		}
 		$processing = microtime(true);
