@@ -739,8 +739,7 @@ class AddressbookApp extends EgwApp
 	show_custom_country(selectbox)
 	{
 		if(!selectbox) return;
-		var custom_field_name = selectbox.id.replace("countrycode", "countryname");
-		var custom_field = <HTMLInputElement>document.getElementById(custom_field_name);
+		const custom_field = this.et2.getWidgetById(selectbox.id.replace("countrycode", "countryname"));
 		let display = "inline";
 		if(custom_field && selectbox.value == "-custom-") {
 			display = "inline";
@@ -750,8 +749,6 @@ class AddressbookApp extends EgwApp
 			if((selectbox.value == "" || selectbox.value == null) && custom_field.value != "")
 			{
 				selectbox.value = "-custom-";
-				// Chosen needs this to update
-				jQuery(selectbox).trigger("liszt:updated");
 
 				display = "inline";
 			}
@@ -765,7 +762,7 @@ class AddressbookApp extends EgwApp
 			custom_field.attributeStyleMap.set("display", display);
 		}
 
-		var region = this.et2.getWidgetById(selectbox.name.replace('countrycode', 'region'));
+		var region = this.et2.getWidgetById(selectbox.id.replace('countrycode', 'region'));
 		if(region)
 		{
 			region.set_country_code(selectbox.value);

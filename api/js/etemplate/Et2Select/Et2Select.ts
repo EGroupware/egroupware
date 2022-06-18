@@ -187,11 +187,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.multiple = multi;
 	}
 
-	set_value(val : string | string[] | number)
+	set_value(val : string | string[] | number | number[])
 	{
 		if (typeof val === 'number')
 		{
 			val = val.toString();
+		}
+		if (Array.isArray(val))
+		{
+			val = val.map(v => typeof v === 'number' ? v.toString() : v || '');
 		}
 		this.value = val || '';
 	}
@@ -609,7 +613,16 @@ export class Et2SelectCountry extends Et2Select
 	{
 		super();
 
-		this.select_options = so.country(this, {});
+		this.search = true;
+
+		this.select_options = so.country(this, {}).map((country) => {
+			if (country.value[0] !== '-')
+			{
+				country.icon = egw.image('flags');
+				country.class = 'flag-'+country.value.toLowerCase();
+			}
+			return country;
+		});
 	}
 }
 
@@ -747,11 +760,40 @@ customElements.define("et2-select-priority", Et2SelectPriority);
 
 export class Et2SelectState extends Et2Select
 {
+	/**
+	 * Two-letter ISO country code
+	 */
+	protected __country_code;
+
+	static get properties()
+	{
+		return {
+			...super.properties,
+			country_code: String,
+		}
+	}
+
 	constructor()
 	{
 		super();
 
-		this.select_options = so.state(this, {other: this.other || []});
+		this.country_code = 'DE';
+	}
+
+	get country_code()
+	{
+		return this.__country_code;
+	}
+
+	set country_code(code : string)
+	{
+		this.__country_code = code;
+		this.select_options = so.state(this, {country_code: this.__country_code});
+	}
+
+	set_country_code(code)
+	{
+		this.country_code = code;
 	}
 }
 

@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package addressbook
- * @version $Id$
  */
 /**
  * CRM view with contact data in sidebox
@@ -157,7 +156,6 @@ select#addressbook-index_col_filter\[tid\] {
 }
 #addressbook-edit_adr_one_region,
 #addressbook-edit_adr_two_region {
-  width: 130px;
   vertical-align: middle;
   margin-left: 1px;
 }
