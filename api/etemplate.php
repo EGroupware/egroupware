@@ -204,7 +204,7 @@ function send_template()
 			// type attribute need to go in widget type <select type="select-account" --> <et2-select-account
 			if (empty($matches[2]) && isset($attrs['type']))
 			{
-				list(,$matches[2])= explode('-', $attrs['type']);
+				$matches[2] = preg_replace('/^(select|taglist)/', '', $attrs['type']);
 				unset($attrs['type']);
 			}
 			$replace = '<et2-select' . $matches[2] . ' ' . implode(' ', array_map(static function($attr, $val)
