@@ -615,13 +615,15 @@ export class Et2SelectCountry extends Et2Select
 
 		this.search = true;
 
-		this.select_options = so.country(this, {}).map((country) => {
+		so.country(this, {}, true).then(options => options.map((country) => {
 			if (country.value[0] !== '-')
 			{
 				country.icon = egw.image('flags');
 				country.class = 'flag-'+country.value.toLowerCase();
 			}
 			return country;
+		})).then(options => {
+			this.select_options = options
 		});
 	}
 }

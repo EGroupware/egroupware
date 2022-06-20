@@ -23,11 +23,12 @@ export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadon
  * @param {et2_selectbox} widget Selectbox we're looking at
  * @param {string} options_string
  * @param {Object} attrs Widget attributes (not yet fully set)
- * @returns {Object} Array of options, or empty and they'll get filled in later
+ * @param {boolean} return_promise true: always return a promise
+ * @returns {Object[]|Promise<Object[]>} Array of options, or empty and they'll get filled in later, or Promise
  */
 export class StaticOptions
 {
-	cached_server_side(widget : Et2SelectWidgets, type : string, options_string) : SelectOption[]
+	cached_server_side(widget : Et2SelectWidgets, type : string, options_string, return_promise? : boolean) : SelectOption[]|Promise<SelectOption[]>
 	{
 		// normalize options by removing trailing commas
 		options_string = options_string.replace(/,+$/, '');
@@ -54,9 +55,12 @@ export class StaticOptions
 		if(typeof cache.then === 'function')
 		{
 			// pending, wait for it
-			cache.then((response) =>
+			const promise = cache.then((response) =>
 			{
 				cache = cache_owner[cache_id] = response.response[0].data || undefined;
+
+				if (return_promise) return cache;
+
 				// Set select_options in attributes in case we get a response before
 				// the widget is finished loading (otherwise it will re-set to {})
 				//widget.select_options = cache;
@@ -67,7 +71,7 @@ export class StaticOptions
 					widget.set_select_options(find_select_options(widget, {}, cache));
 				}
 			});
-			return [];
+			return return_promise ? promise : [];
 		}
 		else
 		{
@@ -106,7 +110,7 @@ export class StaticOptions
 					}
 				}
 			}
-			return cache;
+			return return_promise ? Promise.resolve(cache) : cache;
 		}
 	}
 
@@ -243,10 +247,10 @@ export class StaticOptions
 		return this.cached_server_side(widget, 'select-cat', options.join(','))
 	}
 
-	country(widget : Et2SelectWidgets, attrs) : SelectOption[]
+	country(widget : Et2SelectWidgets, attrs, return_promise) : SelectOption[]|Promise<SelectOption[]>
 	{
 		var options = ',';
-		return this.cached_server_side(widget, 'select-country', options);
+		return this.cached_server_side(widget, 'select-country', options, return_promise);
 	}
 
 	state(widget : Et2SelectWidgets, attrs) : SelectOption[]
