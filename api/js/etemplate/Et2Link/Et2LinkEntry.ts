@@ -152,6 +152,19 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			this._appNode.readonly = this.readonly;
 			this._searchNode.readonly = this.readonly;
 		}
+		// Pass some properties on to app selection
+		if(changedProperties.has("only_app"))
+		{
+			this._appNode.only_app = this.only_app;
+		}
+		if(changedProperties.has("application_list"))
+		{
+			this._appNode.application_list = this.application_list;
+		}
+		if(changedProperties.has("app_icons"))
+		{
+			this._appNode.app_icons = this.app_icons;
+		}
 	}
 
 	set only_app(app)
