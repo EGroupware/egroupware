@@ -180,7 +180,7 @@ function send_template()
 
 		// handling of select and taglist widget, incl. removing of type attribute
 		$str = preg_replace_callback('#<(select|taglist)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
-			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
+			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
 			if (isset($attrs['tags']))
