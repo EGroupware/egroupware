@@ -242,7 +242,6 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 
 	render()
 	{
-		console.log(this, this.hideOnReadonly);
 		this._iconNode.src = this.__image || "";
 		if(!this.label)
 		{
