@@ -51,6 +51,7 @@ import './Et2Link/Et2LinkString';
 import './Et2Link/Et2LinkTo';
 import './Et2Select/Et2Select';
 import './Et2Select/Et2SelectAccount';
+import './Et2Select/Et2SelectCategory';
 import './Et2Select/Et2SelectEmail';
 import './Et2Select/Et2SelectReadonly';
 import './Et2Select/Et2SelectThumbnail'
