@@ -686,6 +686,11 @@ export class etemplate2
 				{
 					Promise.all(deferred).then(() =>
 					{
+						// Clear dirty now that it's all loaded
+						this.widgetContainer.iterateOver((_widget) =>
+						{
+							_widget.resetDirty();
+						}, this, et2_IInput);
 						egw.debug("log", "Finished loading %s, triggering load event", _name);
 
 						if(typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
