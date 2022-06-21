@@ -25,10 +25,11 @@ export class Et2SelectCategory extends Et2Select
 			css`
 			/* Category color on options */
 			::slotted(*) {
-				border-left: 3px solid var(--category-color, transparent);
+				border-left: 6px solid var(--category-color, transparent);
 			}
+			/* Border on the (single) selected value */
 			.select--standard .select__control {
-				border-left: 4px solid transparent;
+				border-left: 8px solid transparent;
 			}			
 			`
 		]

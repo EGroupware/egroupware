@@ -25,7 +25,7 @@ export class Et2CategoryTag extends Et2Tag
 			.tag {
 				gap: var(--sl-spacing-2x-small);
 				/* --category-color is passed through in _styleTemplate() */
-				border-left: 5px solid var(--category-color, transparent);
+				border-left: 10px solid var(--category-color, transparent);
 			}
 		`];
 	}
