@@ -248,10 +248,10 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		// Clear existing
 		this.div.empty();
 		this.actionbox
-			.removeClass('et2_toolbarDropArea')
+			.removeClass('et2_dropZone')
 			.empty();
 		this.actionlist
-			.removeClass('et2_toolbarDropArea')
+			.removeClass('et2_dropZone')
 			.empty();
 		let admin_setting = this.options.is_admin ? '<span class="toolbar-admin-pref" title="'+egw.lang('Admin settings')+' ..."></span>': '';
 		const list_header = this.options.list_header == 'more'?true:false;
@@ -509,11 +509,11 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			},
 			ondragenter: function(e)
 			{
-				e.target.classList.add('et2_toolbarDropArea');
+				e.target.classList.add('et2_dropZone');
 			},
 			ondragleave: function(e)
 			{
-				e.target.classList.remove('et2_toolbarDropArea');
+				e.target.classList.remove('et2_dropZone');
 			}
 		});
 		const menulist = [`.et2_toolbar_dropzone_more${this.id}`, `#${this.id}-menulist`];
@@ -546,11 +546,11 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				},
 				ondragenter: function(e)
 				{
-					e.target.classList.add('et2_toolbarDropArea');
+					e.target.classList.add('et2_dropZone');
 				},
 				ondragleave: function(e)
 				{
-					e.target.classList.remove('et2_toolbarDropArea');
+					e.target.classList.remove('et2_dropZone');
 				}
 			});
 		});

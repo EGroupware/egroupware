@@ -3132,7 +3132,7 @@ div.et2_toolbar_more h.ui-accordion-header {
     min-width: 50px;
 }
 
-.et2_toolbarDropArea {
+.et2_dropZone {
     border: 2px dashed #d3d3d3 !important;
     padding: 0px !important;
     background: #effaff !important;

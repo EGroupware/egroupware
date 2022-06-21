@@ -10,6 +10,7 @@
 import {Et2Select} from "./Et2Select";
 import {css} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
+import interact from "@interactjs/interact";
 
 export class Et2SelectEmail extends Et2Select
 {
@@ -39,6 +40,18 @@ export class Et2SelectEmail extends Et2Select
 		];
 	}
 
+	static get properties()
+	{
+		return {
+			...super.properties,
+
+			/**
+			 * Allow drag and drop tags
+			 */
+			allowDragAndDrop: {type: Boolean}
+		}
+	}
+
 	constructor(...args : any[])
 	{
 		super(...args);
@@ -46,6 +59,7 @@ export class Et2SelectEmail extends Et2Select
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email";
 		this.allowFreeEntries = true;
 		this.editModeEnabled = true;
+		this.allowDragAndDrop = false;
 		this.multiple = true;
 		this.defaultValidators.push(new IsEmail());
 	}
@@ -93,6 +107,44 @@ export class Et2SelectEmail extends Et2Select
 	{
 		results.forEach(r => r.value = r.id);
 		super.processRemoteResults(results);
+	}
+
+	/**
+	 * override tag creation in order to add DND functionality
+	 * @param item
+	 * @protected
+	 */
+	protected _createTagNode(item)
+	{
+		let tag = super._createTagNode(item);
+		if (!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
+		{
+			let dragTranslate = {x:0,y:0};
+			tag.class = item.classList.value + " et2-select-draggable";
+			let draggable = interact(tag).draggable({
+				startAxis: 'xy',
+				listeners: {
+					start: function(e)
+					{
+						let dragPosition = {x:e.page.x, y:e.page.y};
+						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
+						e.target.style.position = 'fixed';
+						e.target.style.transform =
+							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
+					},
+					move : function(e)
+					{
+						dragTranslate.x += e.delta.x;
+						dragTranslate.y += e.delta.y;
+						e.target.style.transform =
+							`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
+					}
+				}
+			});
+			// set parent_node with widget context in order to make it accessible after drop
+			draggable.parent_node = this;
+		}
+		return tag;
 	}
 }
 
