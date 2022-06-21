@@ -213,7 +213,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		// Deal with Lion readOnly vs etemplate readonly
 		public set readonly(new_value)
 		{
-			debugger;
 			this.__readonly = super.__readOnly = new_value;
 			this.requestUpdate("readonly");
 		}
