@@ -18,7 +18,13 @@ import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action.js';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common.js";
 import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants.js";
-import {egw_keycode_translation_function, egw_keycode_makeValid, egw_keyHandler} from "../../api/js/egw_action/egw_keymanager.js";
+import {
+	egw_keycode_translation_function,
+	egw_keycode_makeValid,
+	egw_keyHandler
+} from "../../api/js/egw_action/egw_keymanager.js";
+import {Et2UrlEmailReadonly} from "../../api/js/etemplate/Et2Url/Et2UrlEmailReadonly";
+import {Et2SelectEmail} from "../../api/js/etemplate/Et2Select/Et2SelectEmail";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -28,7 +34,7 @@ import {egw_keycode_translation_function, egw_keycode_makeValid, egw_keyHandler}
  * @augments AppJS
  */
 app.classes.mail = AppJS.extend(
-{
+	{
 	appname: 'mail',
 	/**
 	 * modified attribute in mail app to test new entries get added on top of list
@@ -1059,17 +1065,21 @@ app.classes.mail = AppJS.extend(
 					{
 						var value = remembervalue+(remembervalue?',':'')+content[i];
 						var url_email_options = {
-							id:widget.id+'_'+i,
-							value:value,
-							readonly:true,
-							contact_plus:true,
-							full_email:typeof field['full_email'] !='undefined'?field['full_email']:true
+							id: widget.id + '_' + i,
+							value: value,
+							readonly: true,
+							contact_plus: true,
+							full_email: typeof field['full_email'] != 'undefined' ? field['full_email'] : true
 						};
-						var email = et2_createWidget('url-email',url_email_options,widget);
+						var email = et2_createWidget('url-email', url_email_options, widget);
 						email.loadingFinished();
 						remembervalue = '';
 					}
 				}
+			}
+			else if (widget instanceof Et2SelectEmail)
+			{
+				widget.value = content;
 			}
 			else
 			{
@@ -1270,10 +1280,10 @@ app.classes.mail = AppJS.extend(
 			// TO addresses have the first one split out, not all together
 			// list of keys:
 			var expand_content = [
-				{build_children: true, data_one: 'fromaddress', data: 'additionalfromaddress', widget: 'additionalFromAddress', line: 'mailPreviewHeadersFrom'},
-				{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
-				{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
-				{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
+				{build_children: false, data_one: 'fromaddress', data: 'additionalfromaddress', widget: 'fromAddress', line: 'mailPreviewHeadersFrom'},
+				{build_children: false, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'toAddress', line: 'mailPreviewHeadersTo'},
+				{build_children: false, data: 'ccaddress', widget: 'CCAddress', line: 'mailPreviewHeadersCC'},
+				{build_children: false, data: 'attachmentsBlock', widget: 'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
 			];
 
 			// Undock the preview before running expandOnClick, because we

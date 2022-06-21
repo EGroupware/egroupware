@@ -144,7 +144,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		// Only do this on firstUpdated() otherwise it is impossible to clear the field
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 		// value not in options --> use empty_label, if exists, or first option otherwise
-		if(!this.multiple && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
+		if(!this.multiple && this.select_options.length > 0 && !this.onchange && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
 		{
 			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
 		}

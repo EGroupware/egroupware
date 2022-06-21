@@ -21,7 +21,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package mail
- * @version $Id$
  */
 textarea {
   font-family: monospace, sans-serif;
@@ -97,32 +96,32 @@ tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
-span.status_img {
+.status_img {
   display: inline-block;
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
   background-image: url(../default/images/kmmsgread.png);
 }
-tr.deleted span.status_img {
+tr.deleted .status_img {
   background-image: url(../default/images/kmmsgdel.png);
 }
-tr.unseen span.status_img {
+tr.unseen .status_img {
   background-image: url(../default/images/kmmsgunseen.png);
 }
-tr.flagged_seen span.status_img {
+tr.flagged_seen .status_img {
   background-image: url(../default/images/read_flagged_small.png) !important;
 }
-tr.flagged_unseen span.status_img {
+tr.flagged_unseen .status_img {
   background-image: url(../default/images/unread_flagged_small.png) !important;
 }
-tr.recent span.status_img {
+tr.recent .status_img {
   background-image: url(../default/images/kmmsgnew.png) !important;
 }
-tr.replied span.status_img {
+tr.replied .status_img {
   background-image: url(../default/images/kmmsgreplied.png) !important;
 }
-tr.forwarded span.status_img {
+tr.forwarded .status_img {
   background-image: url(../default/images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
@@ -239,6 +238,7 @@ pre {
 .containerTableStyle {
   width: 100%;
   overflow: hidden;
+  overflow-y: auto;
 }
 .dtree {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -460,7 +460,8 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
 }
-div#mail-index_mailPreview > div {
+div#mail-index_mailPreview > div,
+div#mail-index_mailPreview > et2-hbox {
   padding-left: 8px !important;
 }
 #mail-index_mailPreview .et2_email > span {
@@ -622,6 +623,10 @@ div.mailPreviewHeaders > span:first-child {
   width: 7em;
   display: inline-block;
 }
+div.mailDisplayHeaders et2-select-email,
+div.mailPreviewHeaders et2-select-email {
+  display: inline-block;
+}
 #mail-display_toolbar {
   display: inline-flex;
 }
@@ -648,7 +653,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
   box-shadow: 5px 5px 5px #aaa;
   border: 1px solid gray;
 }
-div.mailComposeBody {
+.mailComposeBody {
   white-space: normal !important;
 }
 #mail-compose_mail_plaintext {
@@ -722,7 +727,7 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 #mail-folder_management table.et2_grid tr td {
   padding: 0px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box,
+#mail-subscribe table.et2_grid tr td et2-box,
 #mail-folder_management table.et2_grid tr td .mail_subscription_header {
   height: 500px;
   overflow: auto;
@@ -862,15 +867,15 @@ span#mail-compose_replyto_expander {
   padding: 0;
 }
 /*Make file uploads in compose dialog invisible*/
-div.mail-compose_toolbar_assist div.mail-compose_fileselector,
+.mail-compose_toolbar_assist div.mail-compose_fileselector,
 #mail-compose_selectFromVFSForCompose,
-div.mail-compose_toolbar_assist {
+.mail-compose_toolbar_assist {
   display: none;
 }
 /*Make file uploads in compose dialog invisible*/
-div.mail-compose_toolbar_assist div.mail-compose_fileselector,
+.mail-compose_toolbar_assist div.mail-compose_fileselector,
 #mail-compose_selectFromVFSForCompose,
-div.mail-compose_toolbar_assist {
+.mail-compose_toolbar_assist {
   display: none;
 }
 div.mailComposeHeaderSection > table {
@@ -958,12 +963,6 @@ div#mail-index_nm.splitter-pane {
 }
 #mail-index_mailSplitter .splitter-bar-horizontal {
   background: white;
-}
-#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke:first-child > .tox-tbtn__select-label {
-  width: 6px;
-}
-#mail-compose .tox.tox-tinymce .tox-tbtn--bespoke .tox-tbtn__select-label {
-  width: 3em;
 }
 #calendar-meeting table.et2_grid.meetingRequest td {
   padding-left: 8px !important;
@@ -1201,24 +1200,14 @@ body {
 #mail-compose .mailComposeHeadersSection #mail-compose_to input {
   width: auto;
 }
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_cc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_bcc_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_folder_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeaders span#mail-compose_replyto_expander,
-#mail-compose .mailComposeHeadersSection span#mail-compose_replyto_expander {
+#mail-compose .mailComposeHeaders #mail-compose_cc_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_cc_expander,
+#mail-compose .mailComposeHeaders #mail-compose_bcc_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_bcc_expander,
+#mail-compose .mailComposeHeaders #mail-compose_folder_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_folder_expander,
+#mail-compose .mailComposeHeaders #mail-compose_replyto_expander,
+#mail-compose .mailComposeHeadersSection #mail-compose_replyto_expander {
   background: transparent;
   border: none;
   color: #26537c;
@@ -1227,6 +1216,7 @@ body {
   width: auto;
   white-space: nowrap;
   text-align: left;
+  cursor: pointer;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_subject,
 #mail-compose .mailComposeHeadersSection input#mail-compose_subject {
@@ -1276,141 +1266,6 @@ body {
 #mail-display {
   min-height: 768px;
   padding: 5px;
-  /*Toolbar*/
-}
-#mail-display .et2_toolbar,
-#mail-display #mail-display_toolbar,
-#mail-display mail-display_displayToolbar {
-  /*.gradient_thead;*/
-  background-color: transparent;
-  color: #000000;
-  clear: both;
-  height: 36px;
-  /*OPEN SINGLE WINDOW AFTER CLICK ON MAIL*/
-}
-#mail-display .et2_toolbar div.et2_toolbar_actionlist,
-#mail-display #mail-display_toolbar div.et2_toolbar_actionlist,
-#mail-display mail-display_displayToolbar div.et2_toolbar_actionlist {
-  margin-top: 0px;
-  margin-left: 0px;
-}
-#mail-display .et2_toolbar button,
-#mail-display #mail-display_toolbar button,
-#mail-display mail-display_displayToolbar button {
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  height: 24px;
-}
-#mail-display .et2_toolbar span.ui-state-default,
-#mail-display #mail-display_toolbar span.ui-state-default,
-#mail-display mail-display_displayToolbar span.ui-state-default {
-  float: left;
-  background-image: none;
-}
-#mail-display .et2_toolbar #mail-display_forward_wrapper li a img,
-#mail-display #mail-display_toolbar #mail-display_forward_wrapper li a img,
-#mail-display mail-display_displayToolbar #mail-display_forward_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .et2_toolbar #mail-display_save_wrapper button#mail-display_save,
-#mail-display #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save,
-#mail-display mail-display_displayToolbar #mail-display_save_wrapper button#mail-display_save {
-  background-image: url('../pixelegg/images/speichern.png');
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_save_wrapper button#mail-display_save:hover img,
-#mail-display #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save:hover img,
-#mail-display mail-display_displayToolbar #mail-display_save_wrapper button#mail-display_save:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .et2_toolbar #mail-display_save_wrapper button#mail-display_save:focus,
-#mail-display #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save:focus,
-#mail-display mail-display_displayToolbar #mail-display_save_wrapper button#mail-display_save:focus {
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_save_wrapper li a img,
-#mail-display #mail-display_toolbar #mail-display_save_wrapper li a img,
-#mail-display mail-display_displayToolbar #mail-display_save_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .et2_toolbar #mail-display_view_wrapper button#mail-display_view,
-#mail-display #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view,
-#mail-display mail-display_displayToolbar #mail-display_view_wrapper button#mail-display_view {
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_view_wrapper button#mail-display_view:hover img,
-#mail-display #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view:hover img,
-#mail-display mail-display_displayToolbar #mail-display_view_wrapper button#mail-display_view:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .et2_toolbar #mail-display_view_wrapper button#mail-display_view:focus,
-#mail-display #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view:focus,
-#mail-display mail-display_displayToolbar #mail-display_view_wrapper button#mail-display_view:focus {
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_view_wrapper li a img,
-#mail-display #mail-display_toolbar #mail-display_view_wrapper li a img,
-#mail-display mail-display_displayToolbar #mail-display_view_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .et2_toolbar #mail-display_mark_wrapper button#mail-display_mark,
-#mail-display #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark,
-#mail-display mail-display_displayToolbar #mail-display_mark_wrapper button#mail-display_mark {
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_mark_wrapper button#mail-display_mark:hover img,
-#mail-display #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark:hover img,
-#mail-display mail-display_displayToolbar #mail-display_mark_wrapper button#mail-display_mark:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .et2_toolbar #mail-display_mark_wrapper button#mail-display_mark:focus,
-#mail-display #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark:focus,
-#mail-display mail-display_displayToolbar #mail-display_mark_wrapper button#mail-display_mark:focus {
-  box-shadow: none;
-}
-#mail-display .et2_toolbar #mail-display_mark_wrapper li a img,
-#mail-display #mail-display_toolbar #mail-display_mark_wrapper li a img,
-#mail-display mail-display_displayToolbar #mail-display_mark_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .et2_toolbar #toolbar-actionlist,
-#mail-display #mail-display_toolbar #toolbar-actionlist,
-#mail-display mail-display_displayToolbar #toolbar-actionlist {
-  padding: 0px 3px;
-}
-#mail-display .et2_toolbar #toolbar-actionlist span[data-group],
-#mail-display #mail-display_toolbar #toolbar-actionlist span[data-group],
-#mail-display mail-display_displayToolbar #toolbar-actionlist span[data-group] {
-  margin: 0px 40px 0 0;
-}
-#mail-display .et2_toolbar #toolbar-actionlist button,
-#mail-display #mail-display_toolbar #toolbar-actionlist button,
-#mail-display mail-display_displayToolbar #toolbar-actionlist button {
-  /*.background_color_10_gray;*/
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  height: 27px;
 }
 #mail-display .mailDisplayAttachments {
   max-height: 12%;
@@ -1455,11 +1310,6 @@ div.ui-toolbar-menulist {
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 3px !important;
-  background: #fafafa !important;
   background-color: #fafafa !important;
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown {
@@ -1470,13 +1320,9 @@ div.ui-toolbar-menulist {
   height: 24px !important;
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button {
-  margin: 0px;
-  padding-top: -3px !important;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  background: #fafafa !important;
-  background-color: #fafafa !important;
   min-height: auto;
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button img {
@@ -1522,8 +1368,8 @@ div#displayToolbar-menulist img {
   font-size: 150%;
   padding-bottom: 20px;
 }
-#mail-subscribe table.et2_grid tr td div.et2_box,
-#mail-folder_management table.et2_grid tr td div.et2_box {
+#mail-subscribe table.et2_grid tr td et2-box,
+#mail-folder_management table.et2_grid tr td et2-box {
   margin-top: 16px;
   height: 484px;
   overflow: auto;
@@ -1672,7 +1518,7 @@ tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
-span.status_img {
+.status_img {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -1680,25 +1526,25 @@ span.status_img {
   background-image: url(../pixelegg/images/kmmsgread.svg);
   background-size: 16px 16px;
 }
-tr.deleted span.status_img {
+tr.deleted .status_img {
   background-image: url(../pixelegg/images/kmmsgdel.svg);
 }
-tr.unseen span.status_img {
+tr.unseen .status_img {
   background-image: url(../pixelegg/images/kmmsgunseen.svg);
 }
-tr.flagged_seen span.status_img {
+tr.flagged_seen .status_img {
   background-image: url(../pixelegg/images/read_flagged_small.svg) !important;
 }
-tr.flagged_unseen span.status_img {
+tr.flagged_unseen .status_img {
   background-image: url(../pixelegg/images/unread_flagged_small.svg) !important;
 }
-tr.recent span.status_img {
+tr.recent .status_img {
   background-image: url(../pixelegg/images/kmmsgnew.svg) !important;
 }
-tr.replied span.status_img {
+tr.replied .status_img {
   background-image: url(../pixelegg/images/mail_reply.svg) !important;
 }
-tr.forwarded span.status_img {
+tr.forwarded .status_img {
   background-image: url(../pixelegg/images/mail_forward.svg) !important;
 }
 .subjectBold {
@@ -1792,6 +1638,7 @@ pre {
 .containerTableStyle {
   width: 100%;
   overflow: hidden;
+  overflow-y: auto;
 }
 .dtree {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1925,18 +1772,6 @@ input[type=button] {
 #mail-index_toolbar {
   background: none;
   height: 35px;
-  /* Elemente */
-}
-#mail-index_toolbar button {
-  height: 24px !important;
-}
-#mail-index_toolbar button span {
-  padding: 0;
-}
-#mail-index_toolbar button span img {
-  width: 16px;
-  height: 16px;
-  padding: 0px;
 }
 /*AN / To*/
 div.mailPreviewHeaders div.mail_extraEmails {

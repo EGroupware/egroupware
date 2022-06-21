@@ -447,15 +447,17 @@ div.mail-compose_fileselector {
 	width: 100%;
 }
 #mail-index_mailPreview {
-	overflow: hidden;
-	position: relative;
-	background-color: white;
+    overflow: hidden;
+    position: relative;
+    background-color: white;
 }
-div#mail-index_mailPreview > div {
-	padding-left: 8px !important;
+
+div#mail-index_mailPreview > div, div#mail-index_mailPreview > et2-hbox {
+    padding-left: 8px !important;
 }
-#mail-index_mailPreview .et2_email>span{
-	display: inline;
+
+#mail-index_mailPreview .et2_email > span {
+    display: inline;
 }
 .maildisplayAllAdresses {
 	max-height: 245px !important;
@@ -598,37 +600,46 @@ div.mail-display > div:first-parent > div.first-parent
 	overflow: hidden;
 	right: 8px;
 }
+
 .mailDisplayHeaderSection {
-	position: absolute;
-	top: 12px;
+    position: absolute;
+    top: 12px;
 
 }
+
 div.mailDisplayHeaders > div:first-parent {
-	overflow: hidden;
+    overflow: hidden;
 }
-div.mailDisplayHeaders > span:first-child,  div.mailPreviewHeaders > span:first-child {
-	width: 7em;
-	display: inline-block;
+
+div.mailDisplayHeaders > span:first-child, div.mailPreviewHeaders > span:first-child {
+    width: 7em;
+    display: inline-block;
 }
+
+div.mailDisplayHeaders et2-select-email, div.mailPreviewHeaders et2-select-email {
+    display: inline-block;
+}
+
 #mail-display_toolbar {
-	display: inline-flex;
+    display: inline-flex;
 }
+
 div.mailComposeHeaders > span:first-child {
-	width: 8em;
+    width: 8em;
 }
-div.mailDisplayHeaders div.mail_extraEmails
-{
-	display: inline-block;
-	max-height: 1.3em;
-	max-width: 50%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	vertical-align: top;
+
+div.mailDisplayHeaders div.mail_extraEmails {
+    display: inline-block;
+    max-height: 1.3em;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
 }
-div.mailDisplayHeaders div.mail_extraEmails.visible
-{
-	position: fixed;
-	left: 7em;
+
+div.mailDisplayHeaders div.mail_extraEmails.visible {
+    position: fixed;
+    left: 7em;
 	display: block;
 	max-height: 8em;
 	min-width: 30em;

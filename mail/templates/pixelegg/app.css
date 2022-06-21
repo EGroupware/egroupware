@@ -448,7 +448,8 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
 }
-div#mail-index_mailPreview > div {
+div#mail-index_mailPreview > div,
+div#mail-index_mailPreview > et2-hbox {
   padding-left: 8px !important;
 }
 #mail-index_mailPreview .et2_email > span {
@@ -608,6 +609,10 @@ div.mailDisplayHeaders > div:first-parent {
 div.mailDisplayHeaders > span:first-child,
 div.mailPreviewHeaders > span:first-child {
   width: 7em;
+  display: inline-block;
+}
+div.mailDisplayHeaders et2-select-email,
+div.mailPreviewHeaders et2-select-email {
   display: inline-block;
 }
 #mail-display_toolbar {
