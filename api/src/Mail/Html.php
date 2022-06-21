@@ -284,11 +284,12 @@ class Html
 
 		// replace fieldset with legend used for original message header
 		$_html = preg_replace_callback('#<fieldset[^>]*>\s*<legend>(.*?)</legend>\s*(.*?)\s*</fieldset>#sm',
-			static function($matches)
+			static function($matches) use ($displayCharset)
 			{
-				$len_legend = strlen($legend = $matches[1]);
+				$len_legend = strlen($legend = html_entity_decode($matches[1], ENT_QUOTES|ENT_SUBSTITUTE, $displayCharset));
 				$content = preg_replace('/<([^@> ]+@[^> ]+)>/', '#lower#than#$1#greater#than#', $matches[2]);
-				return "<br>".str_repeat('-', (64-$len_legend-2)>>1).' '.$legend.' '.str_repeat('-', (64-$len_legend-2+1)>>1)."<br>".
+				return "<br>".str_repeat('-', min(0, (64-$len_legend-2)>>1)).' '.$legend.' '.
+					str_repeat('-', min(0, (64-$len_legend-2+1)>>1))."<br>".
 					$content."<br>".str_repeat('-', 64)."<br>";
 			}, $_html);
 
