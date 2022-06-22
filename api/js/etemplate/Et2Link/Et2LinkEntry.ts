@@ -301,7 +301,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set value(val : LinkInfo | string | number)
 	{
-		let value : LinkInfo = {app: "", id: ""};
+		let value : LinkInfo = {app: this.only_app, id: ""};
 
 		if(typeof val === 'string' && val.length > 0)
 		{
@@ -309,9 +309,16 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			{
 				val = val.replace(",", ":");
 			}
-			const vals = val.split(':');
-			value.app = vals[0];
-			value.id = vals[1];
+			if (val.indexOf(':') > 0)
+			{
+				const vals = val.split(':');
+				value.app = vals[0];
+				value.id = vals[1];
+			}
+			else
+			{
+				value.id = val;
+			}
 		}
 		else if(typeof val === "number" && val)
 		{
