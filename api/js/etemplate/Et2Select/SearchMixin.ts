@@ -12,7 +12,6 @@ import {css, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
-import interact from "@interactjs/interact";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -449,32 +448,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.addEventListener("sl-select", this._handleSelect);
 			this.addEventListener("sl-clear", this._handleClear)
 			this._searchButtonNode.addEventListener("click", this._handleSearchButtonClick);
-			if (this.nodeName === 'ET2-SELECT-EMAIL')
-			{
-				interact(this).dropzone({
-					accept: `.et2-select-draggable`,
-					ondrop: function(e)
-					{
-						e.target.createFreeEntry(e.draggable.target.value);
-						e.target.classList.remove('et2_toolbarDropArea');
-
-						// remove the dragged value from its origin source
-						e.draggable.parent_node.value = e.draggable.parent_node.value.filter(_item=>{return e.draggable.target.value !== _item;})
-
-						// set value for newly dropped target
-						e.target.value.push(e.draggable.target.value);
-					},
-					ondragenter: function(e)
-					{
-						e.target.classList.add('et2_dropZone');
-					},
-					ondragleave: function(e)
-					{
-						e.target.classList.remove('et2_dropZone');
-					}
-				});
-			}
-
 		}
 
 		protected _unbindListeners()

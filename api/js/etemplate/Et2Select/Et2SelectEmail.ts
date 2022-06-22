@@ -69,6 +69,38 @@ export class Et2SelectEmail extends Et2Select
 		super.connectedCallback();
 	}
 
+
+	protected _bindListeners()
+	{
+		super._bindListeners();
+		if(!this.multiple)
+		{
+			return;
+		}
+		interact(this).dropzone({
+			accept: `.et2-select-draggable`,
+			ondrop: function(e)
+			{
+				e.target.createFreeEntry(e.draggable.target.value);
+				e.target.classList.remove('et2_toolbarDropArea');
+
+				// remove the dragged value from its origin source
+				e.draggable.parent_node.value = e.draggable.parent_node.value.filter(_item => {return e.draggable.target.value !== _item;})
+
+				// set value for newly dropped target
+				e.target.value.push(e.draggable.target.value);
+			},
+			ondragenter: function(e)
+			{
+				e.target.classList.add('et2_dropZone');
+			},
+			ondragleave: function(e)
+			{
+				e.target.classList.remove('et2_dropZone');
+			}
+		});
+	}
+
 	/**
 	 * Actually query the server.
 	 *
