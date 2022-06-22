@@ -190,13 +190,13 @@ function send_template()
 				unset($attrs['tags']);
 			}
 			// taglist had allowFreeEntries and enableEditMode with a default of true, while et2-select has it with a default of false
-			if ($matches['1'] === 'taglist')
+			if($matches['1'] === 'taglist' && !$matches[2])
 			{
-				if (!isset($attrs['allowFreeEntries']))
+				if(!isset($attrs['allowFreeEntries']))
 				{
 					$attrs['allowFreeEntries'] = 'true';
 				}
-				if (!isset($attrs['editModeEnabled']))
+				if(!isset($attrs['editModeEnabled']))
 				{
 					$attrs['editModeEnabled'] = 'true';
 				}
