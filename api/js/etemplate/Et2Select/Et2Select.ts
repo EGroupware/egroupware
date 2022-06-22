@@ -495,30 +495,6 @@ export class Et2SelectBool extends Et2Select
 customElements.define("et2-select-bool", Et2SelectBool);
 
 
-export class Et2SelectCountry extends Et2Select
-{
-	constructor()
-	{
-		super();
-
-		this.search = true;
-
-		so.country(this, {}, true).then(options => options.map((country) => {
-			if (country.value[0] !== '-')
-			{
-				country.icon = egw.image('flags');
-				country.class = 'flag-'+country.value.toLowerCase();
-			}
-			return country;
-		})).then(options => {
-			this.select_options = options
-		});
-	}
-}
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-select-country", Et2SelectCountry);
-
 export class Et2SelectDay extends Et2Select
 {
 	constructor()

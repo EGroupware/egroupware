@@ -1139,7 +1139,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				// perspective for this node
 				if(typeof this._mgrs[key] != "undefined" && mgr.perspectiveData.owner == this)
 				{
-					mgr = mgr.parentMgr;
+					mgr = mgr.getParentMgr();
 				}
 
 				// Check whether the manager has a namespace for the id of this object
