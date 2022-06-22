@@ -1416,17 +1416,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
 			// Set as attribute (reflected in DOM)
-			widget.setAttribute(attribute, attrValue);
+			widget.setAttribute(attribute, attrValue === true ? "" : attrValue);
 		}
-		else if (attribute === 'options')
+		else if(attribute === 'options')
 		{
-			console.trace('Ignored setting depricated "options" attribute for widget #'+widget.id, widget);
+			console.trace('Ignored setting depricated "options" attribute for widget #' + widget.id, widget);
+			continue;
 		}
-		else
-		{
-			// Set as property, not attribute
-			widget[attribute] = attrValue;
-		}
+		// Set as property
+		widget[attribute] = attrValue;
 	}
 
 	if(widget_class.getPropertyOptions("value") && widget.set_value)
