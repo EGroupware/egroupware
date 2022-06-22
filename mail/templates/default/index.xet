@@ -136,9 +136,7 @@
                         <date-time_today align="center" id="${row}[date]" readonly="true"/>
                     </hbox>
                     <date-time_today align="center" id="${row}[modified]" readonly="true"/>
-                    <url-email id="${row}[address]" contact_plus="true">
-                        <button slot="prefix" image="add"/>
-                    </url-email>
+                    <url-email id="${row}[address]" contact_plus="true" readonly="true"/>
                     <url-email id="${row}[toaddress]" contact_plus="true" readonly="true"/>
                     <url-email id="${row}[fromaddress]" contact_plus="true" readonly="true"/>
                     <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
