@@ -256,12 +256,12 @@
 				</row>
 				<row>
 					<description for="mailAlternateAddress" value="Alternate email address"/>
-					<taglist id="mailAlternateAddress" autocomplete_url=""/>
+					<taglist-email id="mailAlternateAddress" autocomplete_url=""/>
 					<description/>
 				</row>
 				<row disabled="@no_forward_available">
 					<description for="mailForwardingAddress" value="Forward email's to"/>
-					<taglist id="mailForwardingAddress" autocomplete_url=""/>
+					<taglist-email id="mailForwardingAddress" autocomplete_url=""/>
 					<vbox>
 						<checkbox label="Forward only" id="deliveryMode" selected_value="forwardOnly" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');"/>
 						<checkbox label="Allow users to change forwards" id="acc_user_forward"/>
@@ -373,8 +373,8 @@
 			<button label="Apply" id="button[apply]" />
 			<button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand" background_image="1"/>
 			<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
-			<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
-			<button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
+			<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"/>
+			<button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete" background_image="1"/>
 		</hbox>
 	</template>
 </overlay>

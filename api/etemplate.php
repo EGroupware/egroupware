@@ -183,10 +183,23 @@ function send_template()
 			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
-			if (isset($attrs['tags']))
+			// set multiple for old tags attribute or taglist without maxSelection="1"
+			if (isset($attrs['tags']) || $matches['1'] === 'taglist' && (empty($attrs['maxSelection']) || $attrs['maxSelection'] > 1))
 			{
 				$attrs['multiple'] = 'true';
 				unset($attrs['tags']);
+			}
+			// taglist had allowFreeEntries and enableEditMode with a default of true, while et2-select has it with a default of false
+			if ($matches['1'] === 'taglist')
+			{
+				if (!isset($attrs['allowFreeEntries']))
+				{
+					$attrs['allowFreeEntries'] = 'true';
+				}
+				if (!isset($attrs['enableEditMode']))
+				{
+					$attrs['enableEditMode'] = 'true';
+				}
 			}
 			// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close
 			// until we find something better, just switch to multiple="true"
