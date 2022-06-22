@@ -196,9 +196,9 @@ function send_template()
 				{
 					$attrs['allowFreeEntries'] = 'true';
 				}
-				if (!isset($attrs['enableEditMode']))
+				if (!isset($attrs['editModeEnabled']))
 				{
-					$attrs['enableEditMode'] = 'true';
+					$attrs['editModeEnabled'] = 'true';
 				}
 			}
 			// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close
