@@ -89,6 +89,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				 */
 				allowFreeEntries: {type: Boolean, reflect: true},
 
+				/**
+				 * Additional search parameters that are passed to the server
+				 * when we query searchUrl
+				 */
 				searchOptions: {type: Object},
 
 				/**
@@ -119,11 +123,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
 				/* This is the search icon on the right - hidden unless search=true */
-				::slotted([slot="suffix"]) {
+				::slotted(sl-icon[slot="suffix"]) {
 					font-size: 120% !important;
 					display:none;
 				}
-				:host([search]):not([readonly]) ::slotted([slot="suffix"]) {
+				:host([search]:not([readonly])) ::slotted(sl-icon[slot="suffix"]) {
 					display: initial;
 				}
 				
@@ -173,6 +177,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				:host([search]:not([multiple])) .select--open .select__prefix {
 					flex: 2 1 auto;
 					width: 100%;
+				}
+				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__prefix {
+					flex: 1 1 auto;
+				}
+				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__label {
+					display: none;
 				}
 				
 				/* Search textbox general styling, starts hidden */
@@ -342,7 +352,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			let edit = null;
 			if(this.editModeEnabled)
 			{
-				edit = html`<input id="edit" type="text" part="input"
+				edit = html`<input id="edit" type="text" part="input" style="width:100%"
                                    @keydown=${this._handleEditKeyDown}
                                    @blur=${this.stopEdit.bind(this)}
                 />`;
@@ -382,9 +392,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected get _activeControls()
 		{
-			return this.multiple ?
-				   this.shadowRoot.querySelector(".search_input") :
-				   this.querySelector(".search_input");
+			return this.shadowRoot.querySelector(".search_input") ||
+				this.querySelector(".search_input");
 		}
 
 
@@ -412,28 +421,25 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			super.value = new_value;
 
-			if(!new_value)
+			if(!new_value || !this.allowFreeEntries)
 			{
 				return;
 			}
 
 			// Overridden to add options if allowFreeEntries=true
-			if(this.allowFreeEntries)
+			if(typeof this.value == "string" && !this.menuItems.find(o => o.value == this.value))
 			{
-				if(typeof this.value == "string" && !this.menuItems.find(o => o.value == this.value))
+				this.createFreeEntry(this.value);
+			}
+			else if(this.multiple)
+			{
+				this.value.forEach((e) =>
 				{
-					this.createFreeEntry(this.value);
-				}
-				else
-				{
-					this.value.forEach((e) =>
+					if(!this.menuItems.find(o => o.value == e))
 					{
-						if(!this.menuItems.find(o => o.value == e))
-						{
-							this.createFreeEntry(e);
-						}
-					});
-				}
+						this.createFreeEntry(e);
+					}
+				});
 			}
 		}
 
@@ -484,20 +490,28 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			super.handleMenuShow();
 
-			if(this.searchEnabled)
+			if(this.searchEnabled || this.allowFreeEntries)
 			{
 				this._activeControls?.classList.add("active");
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
+			}
+			if(this.allowFreeEntries && !this.multiple)
+			{
+				this.startEdit();
+				this._editInputNode.select();
+				// Hide search explicitly since its so hard via CSS
+				this._searchInputNode.style.display = "none";
 			}
 		}
 
 		handleMenuHide()
 		{
 			super.handleMenuHide();
-			if(this.searchEnabled)
+			if(this.searchEnabled || this.allowFreeEntries)
 			{
 				this._activeControls?.classList.remove("active");
+				this.shadowRoot.querySelector('.select__label').style.display = "";
 			}
 		}
 
@@ -608,11 +622,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _handleEditKeyDown(event : KeyboardEvent)
 		{
+			// Stop propagation, or parent key handler will add again
+			event.stopImmediatePropagation();
+
 			if(event.key == "Enter" && this.allowFreeEntries)
 			{
+				// Prevent default, since that would try to submit
 				event.preventDefault();
-				// Stop propagation, or parent key handler will add again
-				event.stopImmediatePropagation();
 				this.stopEdit();
 			}
 			// Abort edit, put original value back
@@ -791,7 +807,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.value.push(text);
 			}
-			else if(!this.multiple)
+			else if(!this.multiple && this.value !== text)
 			{
 				this.value = text;
 				return;
@@ -829,13 +845,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		}
 
 		/**
-		 * Start editing an existing (free) tag
+		 * Start editing an existing (free) tag, or the current value if multiple=false
 		 *
 		 * @param {Et2Tag} tag
 		 */
-		public startEdit(tag : Et2Tag)
+		public startEdit(tag? : Et2Tag)
 		{
-			const tag_value = tag.value;
+			const tag_value = tag ? tag.value : this.value;
 
 			// hide the menu
 			//this.dropdown.hide()
@@ -848,10 +864,17 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._editInputNode.focus();
 
 			// Remove from value & DOM.  If they finish the edit, the new one will be added.
-			this.value = this.value.filter(v => v !== tag_value);
+			if(this.multiple)
+			{
+				this.value = this.value.filter(v => v !== tag_value);
+				this.querySelector("[value='" + tag_value + "']").remove();
+			}
 			this.select_options = this.select_options.filter(v => v.value !== tag_value);
-			this.querySelector("[value='" + tag_value + "']").remove();
-			tag.remove();
+			this.querySelector("[value='" + tag_value + "']")?.remove();
+			if(tag)
+			{
+				tag.remove();
+			}
 
 			// If they abort the edit, they'll want the original back.
 			this._editInputNode.dataset.initial = tag_value;
@@ -859,12 +882,22 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected stopEdit(abort = false)
 		{
+			// type to select will focus matching entries, but we don't want to stop the edit yet
+			if(typeof abort == "object" && abort.type == "blur" && abort.relatedTarget?.localName == "sl-menu-item")
+			{
+				return;
+			}
+
 			let value = abort ? this._editInputNode.dataset.initial : this._editInputNode.value;
 
 			this.createFreeEntry(value);
 			delete this._editInputNode.dataset.initial;
 
 			this._activeControls.classList.remove("editing", "active");
+			if(!this.multiple)
+			{
+				this.dropdown.hide();
+			}
 		}
 
 		protected _handleSearchButtonClick(e)
