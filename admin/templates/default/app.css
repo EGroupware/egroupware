@@ -118,9 +118,6 @@ td.admin_userAgent span {
   display: none;
   padding-top: 5px;
 }
-.emailadmin_ssl {
-  margin-right: 10px;
-}
 .emailadmin_port {
   width: 5em;
 }
@@ -156,14 +153,6 @@ span#admin-mailaccount_acc_id {
     height: 16px;
     padding-left: 5px;
     align-self: center;
-}
-
-#admin-mailaccount_mailLocalAddress {
-    width: 98%;
-}
-
-select#admin-mailaccount_ident_id {
-    width: 95%;
 }
 
 /**
