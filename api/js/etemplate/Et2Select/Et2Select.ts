@@ -119,7 +119,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	{
 		super.connectedCallback();
 
-		this.getUpdateComplete().then(() =>
+		this.fix_bad_value();
+
+		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-clear", this._triggerChange)
 			this.addEventListener("sl-change", this._triggerChange);
@@ -139,15 +141,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	firstUpdated(changedProperties?)
 	{
 		super.firstUpdated(changedProperties);
-
-		// If no value is set, choose the first option
-		// Only do this on firstUpdated() otherwise it is impossible to clear the field
-		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
-		// value not in options --> use empty_label, if exists, or first option otherwise
-		if(!this.multiple && this.select_options.length > 0 && !this.onchange && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
-		{
-			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;	// ""+ to cast value of 0 to "0", to not replace with ""
-		}
 	}
 
 	_triggerChange(e)
@@ -175,6 +168,28 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	get _optionTargetNode() : HTMLElement
 	{
 		return <HTMLElement><unknown>this;
+	}
+
+	/**
+	 * Handle the case where there is no value set, or the value provided is not an option.
+	 * If this happens, we choose the first option or empty label.
+	 *
+	 * Careful when this is called.  We change the value here, so an infinite loop is possible if the widget has
+	 * onchange.
+	 *
+	 * @private
+	 */
+	private fix_bad_value()
+	{
+		// If no value is set, choose the first option
+		// Only do this on firstUpdated() otherwise it is impossible to clear the field
+		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
+		// value not in options --> use empty_label, if exists, or first option otherwise
+		if(this.value !== "" && !this.multiple && Array.isArray(this.select_options) && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
+		{
+			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;
+			// ""+ to cast value of 0 to "0", to not replace with ""
+		}
 	}
 
 	/**
@@ -275,12 +290,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
-	updated(changedProperties : PropertyValues)
+	willUpdate(changedProperties : PropertyValues)
 	{
-		super.updated(changedProperties);
+		super.willUpdate(changedProperties);
 
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
 		{
+			this.fix_bad_value();
+
 			// Re-set value, the option for it may have just shown up
 			this.value = this.value || "";
 		}
