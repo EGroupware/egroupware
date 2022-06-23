@@ -1405,13 +1405,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 		}
 
-		// TODO: Figure out how to bind handlers directly, since we can do that now
-		/* (handlers can only be bound _after_ the widget is added to the DOM
+		// Bind handlers directly, since we can do that now.  Event handlers still need to be defined
+		// in properties() as {type: Function}, but this will take care of the binding.  This is
+		// separate from internal events.
+		// (handlers can only be bound _after_ the widget is added to the DOM
 		if(attribute.startsWith("on") && typeof attrValue == "function")
 		{
-			widget.addEventListener(attribute, attrValue);
+			//widget.updateComplete.then(() => addEventListener(attribute, attrValue));
 		}
-		 */
+
 		// Set as attribute or property, as appropriate.  Don't set missing attributes.
 		if(widget.getAttributeNames().indexOf(attribute) >= 0 || property.reflect && attrValue)
 		{
