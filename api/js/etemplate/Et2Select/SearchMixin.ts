@@ -274,6 +274,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.defaultValidators = [];
 
 			this._handleSelect = this._handleSelect.bind(this);
+			this._handleChange = this._handleChange.bind(this);
 			this._handleClear = this._handleClear.bind(this);
 			this._handleSearchButtonClick = this._handleSearchButtonClick.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
@@ -379,7 +380,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return this.querySelector("sl-icon[slot='suffix']");
 		}
 
-		protected get _searchInputNode()
+		protected get _searchInputNode() : HTMLInputElement
 		{
 			return this._activeControls.querySelector("input#search");
 		}
@@ -447,6 +448,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.addEventListener("sl-blur", this._handleSearchAbort);
 			this.addEventListener("sl-select", this._handleSelect);
 			this.addEventListener("sl-clear", this._handleClear)
+			if(this._oldChange && this.onchange)
+			{
+				// Search messes up event order.  Since it throws its own bubbling change event,
+				// selecting an option fires 2 change events - 1 before the widget is finished adjusting, losing the value
+				// We catch all change events, then call this._oldChange only when value changes
+				this.removeEventListener("change", this._oldChange);
+				this.addEventListener("change", this._handleChange);
+			}
+
 			this._searchButtonNode.addEventListener("click", this._handleSearchButtonClick);
 		}
 
@@ -455,7 +465,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.removeEventListener("sl-blur", this._handleSearchAbort);
 			this.removeEventListener("sl-select", this._handleSelect);
 			this.removeEventListener("sl-clear", this._handleClear)
-
+			this.removeEventListener("change", this._handleChange);
 			this._searchButtonNode.removeEventListener("click", this._handleSearchButtonClick);
 		}
 
@@ -486,6 +496,18 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._activeControls?.classList.remove("active");
 				this.shadowRoot.querySelector('.select__label').style.display = "";
 			}
+		}
+
+		_handleChange(event)
+		{
+			if(event.target == this._searchInputNode)
+			{
+				event.stopImmediatePropagation();
+				event.preventDefault();
+				return false;
+			}
+
+			return this._oldChange(event);
 		}
 
 		_handleDoubleClick(event : MouseEvent)
