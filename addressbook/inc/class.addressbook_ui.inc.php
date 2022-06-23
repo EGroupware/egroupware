@@ -2661,7 +2661,7 @@ class addressbook_ui extends addressbook_bo
 			if (!empty($content[$c_prefix.'_region']) && !empty($content[$c_prefix.'_countrycode']))
 			{
 				$states = Api\Country::get_states($content[$c_prefix.'_countrycode']);
-				if (($key = array_search($content[$c_prefix.'_region'], $states)))
+				if ($states && ($key = array_search($content[$c_prefix.'_region'], $states)))
 				{
 					$content[$c_prefix.'_region'] = $key;
 				}
