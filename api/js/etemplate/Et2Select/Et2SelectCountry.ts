@@ -38,10 +38,6 @@ export class Et2SelectCountry extends Et2Select
 
 		(<Promise<SelectOption[]>>so.country(this, {}, true)).then(options =>
 		{
-			if (this.allowFreeEntries && this.value && !options.filter(option => option.value == this.value).length)
-			{
-				options = options.concat(<SelectOption>{value: this.value, label: this.value});
-			}
 			this.select_options = options
 		});
 	}
