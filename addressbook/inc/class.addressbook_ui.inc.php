@@ -301,7 +301,6 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		$sel_options['adr_one_countrycode']['-custom-'] = lang('No country selected');
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
@@ -2303,9 +2302,20 @@ class addressbook_ui extends addressbook_bo
 					// Country codes
 					foreach(array('adr_one', 'adr_two') as $c_prefix)
 					{
-						if ($content[$c_prefix.'_countrycode'] == '-custom-')
+						// we store region-name not code
+						if (!empty($content[$c_prefix.'_region']))
 						{
-							$content[$c_prefix.'_countrycode'] = null;
+							$states = Api\Country::get_states($content[$c_prefix.'_countrycode']);
+							if ($states && isset($states[$content[$c_prefix.'_region']]))
+							{
+								$content[$c_prefix.'_region'] = $states[$content[$c_prefix.'_region']];
+							}
+						}
+						// handling custom country-name
+						if (!Api\Country::get_full_name($content[$c_prefix.'_countrycode']))
+						{
+							$content[$c_prefix.'_countryname'] = $content[$c_prefix.'_countrycode'];
+							unset($content[$c_prefix.'_countrycode']);
 						}
 					}
 					$content['msg'] = '';
@@ -2639,6 +2649,25 @@ class addressbook_ui extends addressbook_bo
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
 
+		// Country codes
+		foreach(array('adr_one', 'adr_two') as $c_prefix)
+		{
+			// handling custom country-name
+			if (empty($content[$c_prefix.'_countrycode']) && !empty($content[$c_prefix.'_countryname']))
+			{
+				$content[$c_prefix.'_countrycode'] = $content[$c_prefix.'_countryname'];
+			}
+			// translate from our stored state-/region-name to the code
+			if (!empty($content[$c_prefix.'_region']) && !empty($content[$c_prefix.'_countrycode']))
+			{
+				$states = Api\Country::get_states($content[$c_prefix.'_countrycode']);
+				if (($key = array_search($content[$c_prefix.'_region'], $states)))
+				{
+					$content[$c_prefix.'_region'] = $key;
+				}
+			}
+		}
+
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(Acl::DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
@@ -2650,7 +2679,6 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
-		$sel_options['adr_one_countrycode']['-custom-'] = lang('Custom');
 		$sel_options['owner'] = $this->get_addressbooks(Acl::ADD);
 		if ($content['owner']) unset($sel_options['owner'][0]);	// do not offer to switch to accounts, as we do not support moving contacts to accounts
 		if ((string) $content['owner'] !== '')

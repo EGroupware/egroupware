@@ -1,6 +1,7 @@
 et2-select-country sl-menu-item::part(prefix), et2-select-country::part(prefix) {
     position: relative;
-    background-image: none;
+    background-image: url(../images/flags.png);
+    background-position: 0 100px;   /* to NOT display a flag for every value not explict defined below */
     background-repeat: no-repeat;
     text-indent: 15px;
     height: 10px;
@@ -8,18 +9,9 @@ et2-select-country sl-menu-item::part(prefix), et2-select-country::part(prefix) 
     margin-right: 10px;
 }
 
-et2-select-country [value]:not([value=""])::part(prefix), et2-select-country[value]:not([value=""])::part(prefix) {
-    background-image: url(../images/flags.png);
-}
-
 et2-select-country::part(prefix) {
     margin-right: 0px;
     margin-left: 10px;
-}
-
-
-et2-select-country [value="-CUSTOM-"]::part(prefix) {
-    background-image: none;
 }
 
 et2-select-country[value="BE"]::part(prefix), et2-select-country [value="BE"]::part(prefix) {

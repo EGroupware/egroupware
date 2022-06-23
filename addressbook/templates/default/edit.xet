@@ -90,13 +90,8 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_fax,&amp;hearts;"/>
                     <description for="adr_one_countryname" value="country"/>
-                    <vbox class="city_state_postcode" width="100%">
-                        <select-country width="100%" class="countrySelect" id="adr_one_countrycode" tabindex="15"
-                                onchange="app.addressbook.show_custom_country(this);" empty_label="Select one"
-                                autocomplete="country"/>
-                        <textbox id="adr_one_countryname" class="custom_country"
-                                 autocomplete="country-name"/>
-                    </vbox>
+                    <select-country id="adr_one_countrycode" tabindex="15" empty_label="Select one" allowFreeEntries="true" autocomplete="country"
+                        onchange="app.addressbook.regionSetCountry"/>
                 </row>
                 <row disabled="@addr_format=city_state_postcode">
                     <description for="tel_other" value="Other phone"/>
@@ -104,7 +99,7 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_other,&amp;hearts;"/>
                     <description value="Region"/>
-                    <select-state class="city_state_postcode" statustext="State" country_code="$cont[adr_one_countrycode]"
+                    <select-state class="city_state_postcode" statustext="State" country_code="$cont[adr_one_countrycode]" allowFreeEntries="true"
                                   empty_label="Select one" id="adr_one_region" tabindex="16" maxlength="64"/>
                 </row>
                 <row disabled="!@addr_format=city_state_postcode">
@@ -116,7 +111,7 @@
                     <hbox>
                         <textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13"
                                  autocomplete="address-level2"/>
-                        <select-state statustext="State" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14"
+                        <select-state statustext="State" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14" allowFreeEntries="true"
                                       empty_label="Select one" width="130"/>
                         <textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15"
                                  autocomplete="postal-code"/>
@@ -128,12 +123,8 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_fax,&amp;hearts;"/>
                     <description for="adr_one_countryname" value="country"/>
-                    <vbox width="100%" tabindex="16">
-                        <select-country tabindex="16" width="100%" class="countrySelect" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);"
-                                 empty_label="Select one" autocomplete="country"/>
-                        <textbox id="adr_one_countryname" class="custom_country" tabindex="16"
-                                 autocomplete="country-name"/>
-                    </vbox>
+                    <select-country tabindex="16" id="adr_one_countrycode" allowFreeEntries="true" empty_label="Select one" autocomplete="country"
+                        onchange="app.addressbook.regionSetCountry"/>
                 </row>
                 <row disabled="!@addr_format=city_state_postcode">
                     <description for="tel_other" value="Other Phone"/>
@@ -271,21 +262,15 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_pager,&amp;hearts;"/>
                     <description for="adr_two_countryname" value="country"/>
-                    <vbox width="100%" class="city_state_postcode">
-                        <select-country tabindex="37" width="100%" class="countrySelect" id="adr_two_countrycode"
-                                 onchange="app.addressbook.show_custom_country(this);"
-                                 empty_label="Select one" autocomplete="section-two country"/>
-                        <textbox id="adr_two_countryname" class="custom_country"
-                                 autocomplete="section-two country-name"/>
-                    </vbox>
-                    <description/>
+                    <select-country tabindex="37" id="adr_two_countrycode" empty_label="Select one" allowFreeEntries="true" autocomplete="section-two country"
+                        onchange="app.addressbook.regionSetCountry"/>
                 </row>
                 <row disabled="@addr_format=city_state_postcode">
                     <description for="bday" value="Birthday"/>
                     <date id="bday" tabindex="31" options="Y-m-d" year_range="c-90:c+2"/>
                     <description/>
                     <description value="Region"/>
-                    <select-state statustext="State" country_code="$cont[adr_two_countrycode]" id="adr_two_region" tabindex="38"
+                    <select-state statustext="State" country_code="$cont[adr_two_countrycode]" id="adr_two_region" tabindex="38" allowFreeEntries="true"
                                   empty_label="Select one" maxlength="64" class="city_state_postcode"/>
                     <description/>
                 </row>
@@ -298,7 +283,7 @@
                     <hbox>
                         <textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"
                                  autocomplete="section-two address-level2"/>
-                        <select-state country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region"
+                        <select-state country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region" allowFreeEntries="true"
                                       empty_label="Select one" width="130" autocomplete="section-two address-level1"/>
                         <textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"
                                  autocomplete="section-two postal-code"/>
@@ -311,14 +296,8 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_pager,&amp;hearts;"/>
                     <description for="adr_two_countryname" value="country"/>
-                    <vbox width="100%">
-                        <select-country class="countrySelect" width="100%" id="adr_two_countrycode"
-                                 onchange="app.addressbook.show_custom_country(this);"
-                                 empty_label="Select one" autocomplete="section-two country"/>
-                        <textbox id="adr_two_countryname" class="custom_country"
-                                 autocomplete="section-two country-name"/>
-                    </vbox>
-                    <description/>
+                    <select-country id="adr_two_countrycode" allowFreeEntries="true" empty_label="Select one" autocomplete="section-two country"
+                        onchange="app.addressbook.regionSetCountry"/>
                 </row>
                 <row disabled="!@addr_format=city_state_postcode">
                     <description for="bday" value="Birthday"/>

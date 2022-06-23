@@ -171,6 +171,12 @@ class Select extends Etemplate\Widget
 				// handle empty-label for all widget types
 				if ((string)$val === '' && in_array('', $allowed)) continue;
 
+				// no validation, for allowFreeEntries="true"
+				if (!empty($this->attrs['allowFreeEntries']) && $this->attrs['allowFreeEntries'] !== 'false')
+				{
+					continue;
+				}
+
 				switch ($widget_type)
 				{
 					case 'select-account':

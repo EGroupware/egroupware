@@ -21,6 +21,8 @@ import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {LitElement} from "@lion/core";
+import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Et2Select";
+import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Et2SelectCountry";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -88,10 +90,7 @@ class AddressbookApp extends EgwApp
 				var content = this.et2.getArrayMgr('content').data;
 				if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
 				{
-					this.show_custom_country(jQuery('select[id*="adr_one_countrycode"]').get(0));
-					this.show_custom_country(jQuery('select[id*="adr_two_countrycode"]').get(0));
-
-					// Instanciate infolog JS too - wrong app, so it won't be done automatically
+					// Instantiate infolog JS too - wrong app, so it won't be done automatically
 					if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
 					{
 						window.app.infolog = new window.app.classes.infolog();
@@ -107,13 +106,6 @@ class AddressbookApp extends EgwApp
 				}
 				break;
 		}
-
-		jQuery('select[id*="adr_one_countrycode"]').each(function() {
-			if (app.addressbook) app.addressbook.show_custom_country(this);
-		});
-		jQuery('select[id*="adr_two_countrycode"]').each(function() {
-			if (app.addressbook) app.addressbook.show_custom_country(this);
-		});
 	}
 
 	/**
@@ -736,37 +728,15 @@ class AddressbookApp extends EgwApp
 		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
 	}
 
-	show_custom_country(selectbox)
+	/**
+	 * Set country-code of select-state
+	 *
+	 * @param event
+	 * @param country
+	 */
+	regionSetCountry(event, country : Et2SelectCountry)
 	{
-		if(!selectbox) return;
-		const custom_field = this.et2.getWidgetById(selectbox.id.replace("countrycode", "countryname"));
-		let display = "inline";
-		if(custom_field && selectbox.value == "-custom-") {
-			display = "inline";
-		}
-		else if (custom_field)
-		{
-			if((selectbox.value == "" || selectbox.value == null) && custom_field.value != "")
-			{
-				selectbox.value = "-custom-";
-
-				display = "inline";
-			}
-			else
-			{
-				display = "none";
-			}
-		}
-		if(custom_field?.attributeStyleMap)
-		{
-			custom_field.attributeStyleMap.set("display", display);
-		}
-
-		var region = this.et2.getWidgetById(selectbox.id.replace('countrycode', 'region'));
-		if(region)
-		{
-			region.set_country_code(selectbox.value);
-		}
+		(<Et2SelectState><any>this.et2.getWidgetById(country.id.replace('countrycode', 'region')))?.set_country_code(country.value);
 	}
 
 	/**
