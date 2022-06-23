@@ -17,7 +17,7 @@ import {egw} from "../../jsapi/egw_global";
  * Customised Select widget for countries
  * This widget uses CSS from api/templates/default/css/flags.css to set flags
  */
-egw(window).includeCSS("/egroupware/api/templates/default/css/flags.css")
+egw(window).includeCSS("api/templates/default/css/flags.css")
 
 export class Et2SelectCountry extends Et2Select
 {
