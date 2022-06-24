@@ -640,29 +640,42 @@ div.mailDisplayHeaders div.mail_extraEmails {
 div.mailDisplayHeaders div.mail_extraEmails.visible {
     position: fixed;
     left: 7em;
-	display: block;
-	max-height: 8em;
-	min-width: 30em;
-	z-index: 999;
-	overflow-y: auto;
-	background-color: white;
-	box-shadow: 5px 5px 5px #aaa;
-	border: 1px solid gray;
+    display: block;
+    max-height: 8em;
+    min-width: 30em;
+    z-index: 999;
+    overflow-y: auto;
+    background-color: white;
+    box-shadow: 5px 5px 5px #aaa;
+    border: 1px solid gray;
 }
+
 .mailComposeBody {
-	white-space: normal !important;
+    white-space: normal !important;
 }
+
 #mail-compose_mail_plaintext {
-	white-space: pre-wrap !important;
+    white-space: pre-wrap !important;
 }
+
+.mailPreviewHeaders {
+    font-size: 0.875rem;
+}
+
+.mailPreviewHeaders :first-child, .mailDisplayHeaders :first-child {
+    width: 5em;
+    flex: 0 1 auto;
+}
+
 div.mailPreviewHeaders div.mail_extraEmails {
-	display: inline-block;
-	max-height: 1.3em;
-	max-width: 50%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	vertical-align: top;
+    display: inline-block;
+    max-height: 1.3em;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
 }
+
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
   width: 90%;
   text-overflow: ellipsis;

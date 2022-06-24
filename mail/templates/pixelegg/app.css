@@ -647,6 +647,14 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 #mail-compose_mail_plaintext {
   white-space: pre-wrap !important;
 }
+.mailPreviewHeaders {
+  font-size: 0.875rem;
+}
+.mailPreviewHeaders :first-child,
+.mailDisplayHeaders :first-child {
+  width: 5em;
+  flex: 0 1 auto;
+}
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
   max-height: 1.3em;

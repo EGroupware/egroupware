@@ -1113,11 +1113,11 @@ app.classes.mail = AppJS.extend(
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
 		var expand_content = [
-			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom', full_email:false},
-			{build_children: true,  data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
-			{build_children: true, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
-			{build_children: true, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
-			{build_children: true, data: 'BCC', widget:'BCC', line: 'mailDisplayHeadersBcc'}
+			{build_children: false, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom', full_email: false},
+			{build_children: false, data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
+			{build_children: false, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
+			{build_children: false, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
+			{build_children: false, data: 'BCC', widget: 'BCC', line: 'mailDisplayHeadersBcc'}
 		];
 
 		if (typeof  content != 'undefiend')

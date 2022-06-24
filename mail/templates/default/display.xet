@@ -3,56 +3,45 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
-		<appicon class="onlyPrint"/>
-		<html id="msg"/>
-		<old-vbox class="mailDisplay">
-			<old-hbox>
-				<toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
-			</old-hbox>
-			<old-hbox>
-				<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM" width="70%">
-					<description value="From"/>
-					<old-hbox id="FROM" class="mail_extraEmails">
-					</old-hbox>
-					<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-				</old-hbox>
-				<old-hbox class="mailDisplayHeaders" align="right" width="30%">
-					<description value="Date"/>
-					<date-time id="mail_displaydate" readonly="true"/>
-				</old-hbox>
-			</old-hbox>
+        <appicon class="onlyPrint"/>
+        <html id="msg"/>
+        <vbox class="mailDisplay">
+            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
+            <hbox>
+                <hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM">
+                    <description value="From"/>
+                    <et2-select-email id="FROM" readonly="true" size="small"/>
+                </hbox>
+                <date-time id="mail_displaydate" label="Date" readonly="true" align="right"/>
+            </hbox>
 
-			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
-				<description value="on behalf of"/>
-				<url-email id="SENDER" readonly="true"/>
-			</old-hbox>
-			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
-				<description value="To"/>
-				<old-hbox id="TO" class="mail_extraEmails">
-				</old-hbox>
-				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</old-hbox>
-			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC"  width="100%">
-				<description value="Cc"/>
-				<old-hbox id="CC" class="mail_extraEmails">
-				</old-hbox>
-				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</old-hbox>
-			<old-hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
-				<description value="Bcc"/>
-				<old-hbox id="BCC" class="mail_extraEmails">
-				</old-hbox>
-				<buttononly class="transparent-button" statustext="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
-			</old-hbox>
-			<old-hbox  class="mailDisplayHeaders" width="100%">
-				<description value="Subject"/>
-				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
-			</old-hbox>
-			<old-hbox>
-				<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true" align="right" width="24"/>
-				<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
-			</old-hbox>
-		</old-vbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER">
+                <description value="on behalf of"/>
+                <et2-select-email id="SENDER" readonly="true" size="small"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO">
+                <description value="To"/>
+                <et2-select-email id="TO" class="mail_extraEmails" readonly="true" size="small"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
+                <description value="Cc"/>
+                <et2-select-email id="CC" class="mail_extraEmails" readonly="true" size="small"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
+                <description value="Bcc"/>
+                <et2-select-email id="BCC" class="mail_extraEmails" readonly="true" size="small"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" width="100%">
+                <description value="Subject"/>
+                <description id="mail_displaysubject" no_lang="1" readonly="true"/>
+            </hbox>
+            <old-hbox>
+                <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
+                       align="right" width="24"/>
+                <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true"
+                       align="right" width="24"/>
+            </old-hbox>
+        </vbox>
 		<old-vbox class="mailDisplay">
 			<old-box class="$cont[mailDisplayContainerClass]">
 				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>

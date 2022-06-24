@@ -6,33 +6,30 @@
 		<split dock_side="bottomDock" id="mailSplitter">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
 			<old-vbox id="mailPreview" width="100%">
-				<toolbar id="toolbar"/>
-				<old-box id="blank" disabled="false">
-					<image src="mail"/>
-					<description value="Select an item to read"/>
-				</old-box>
-                <old-hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
+                <toolbar id="toolbar"/>
+                <old-box id="blank" disabled="false">
+                    <image src="mail"/>
+                    <description value="Select an item to read"/>
+                </old-box>
+                <hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
                     <description value="From"/>
                     <et2-select-email id="fromAddress" readonly="true"></et2-select-email>
-                </old-hbox>
-                <old-hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
+                    <date-time label="Date" align="right" id="previewDate" readonly="true"/>
+                </hbox>
+                <hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
                     <description value="Subject"/>
-                    <description align="left" id="previewSubject" readonly="true"
+                    <description id="previewSubject" readonly="true"
                                  hover_action="app.mail.modifyMessageSubjectDialog"
                                  hover_action_title="Modify subject of this message"/>
-                </old-hbox>
-                <old-hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
-                </old-hbox>
-                <et2-hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
+                </hbox>
+                <hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
                     <description value="To"/>
                     <et2-select-email id="toAddress" readonly="true"></et2-select-email>
-                    <description align="right" value="Date"/>
-                    <date-time align="right" id="previewDate" readonly="true"/>
-                </et2-hbox>
-                <old-hbox id="mailPreviewHeadersCC" class="mailPreviewHeaders">
+                </hbox>
+                <hbox id="mailPreviewHeadersCC" class="mailPreviewHeaders">
                     <description value="CC"/>
                     <et2-select-email id="CCAddress" readonly="true"></et2-select-email>
-                </old-hbox>
+                </hbox>
                 <old-hbox class="mailPreviewHeaders smimeIcons">
                     <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
                            align="right" width="24"/>
