@@ -93,6 +93,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 			}
 			/* Maximum height + scrollbar on tags (+ other styling) */
 			.select__tags {
+				margin-left: 0px;
 				max-height: 5em;
 				overflow-y: auto;
 				
@@ -437,6 +438,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		tag.value = item.value;
 		tag.textContent = this.getItemLabel(item);
 		tag.class = item.classList.value + " search_tag";
+		if(this.size)
+		{
+			tag.size = this.size;
+		}
 		if(this.readonly)
 		{
 			tag.removable = false;

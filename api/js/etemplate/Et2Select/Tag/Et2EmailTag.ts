@@ -31,7 +31,7 @@ export class Et2EmailTag extends Et2Tag
 			.tag__prefix {
 				display: none;
 				
-				height: 16px;
+				height: 80%;
 				
 				background-color: white;
 				background-repeat: no-repeat;
