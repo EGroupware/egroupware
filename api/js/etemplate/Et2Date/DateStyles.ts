@@ -12,7 +12,7 @@ export const dateStyles = [
 	:host {
 		display: inline-block;
 		white-space: nowrap;
-		min-width: 20ex;
+		min-width: fit-content;
 	}
 	.overdue {
 		color: red; // var(--whatever the theme color)

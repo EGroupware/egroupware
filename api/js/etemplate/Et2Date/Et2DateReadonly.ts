@@ -56,6 +56,7 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 		let parsed : Date | Boolean = this.value ? this.parser(this.value) : false
 
 		return html`
+            <span slot="label">${this.label}</span>
             <time ${this.id ? html`id="${this._dom_id}"` : ''}
                   datetime="${parsed ? this.formatter(<Date>parsed, {dateFormat: "Y-m-d", timeFormat: "H:i:s"}) : ""}">
                 ${this.value ? this.formatter(<Date>parsed) : ''}
