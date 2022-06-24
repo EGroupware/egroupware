@@ -471,6 +471,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		handleMenuShow()
 		{
+			if(this.readonly)
+			{
+				return;
+			}
 			super.handleMenuShow();
 
 			if(this.searchEnabled || this.allowFreeEntries)
@@ -490,6 +494,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		handleMenuHide()
 		{
+			if(this.readonly)
+			{
+				return;
+			}
 			super.handleMenuHide();
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
