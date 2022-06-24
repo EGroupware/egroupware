@@ -58,6 +58,7 @@ import './Et2Select/Et2SelectReadonly';
 import './Et2Select/Et2SelectThumbnail'
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
+import './Et2Select/Tag/Et2EmailTag';
 import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textbox/Et2Textbox';

@@ -142,6 +142,16 @@ export class Et2SelectEmail extends Et2Select
 	}
 
 	/**
+	 * Use a custom tag for when multiple=true
+	 *
+	 * @returns {string}
+	 */
+	get tagTag() : string
+	{
+		return "et2-email-tag";
+	}
+
+	/**
 	 * override tag creation in order to add DND functionality
 	 * @param item
 	 * @protected
@@ -149,7 +159,7 @@ export class Et2SelectEmail extends Et2Select
 	protected _createTagNode(item)
 	{
 		let tag = super._createTagNode(item);
-		if (!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
+		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
 			let dragTranslate = {x:0,y:0};
 			tag.class = item.classList.value + " et2-select-draggable";

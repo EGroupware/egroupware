@@ -24,6 +24,37 @@ export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
 {
 };
 
+/**
+ * Select widget
+ *
+ * At its most basic, you can select one option from a list provided.  The list can be passed from the server in
+ * the sel_options array or options can be added as children in the template.  Some extending classes provide specific
+ * options, such as Et2SelectPercent or Et2SelectCountry.  All provided options will be mixed together and used.
+ *
+ * To allow selecting more than one option, use the attribute multiple="true".   This will take & return an array
+ * as value instead of just a string.
+ *
+ * SearchMixin adds additional abilities to ALL select boxes
+ * @see Et2WithSearchMixin
+ *
+ * Override for extending widgets:
+ * # Custom display of selected value
+ * 	When selecting a single value (!multiple) you can override doLabelChange() to customise the displayed label
+ * 	@see Et2SelectCategory, which adds in the category icon
+ *
+ * # Custom option rows
+ *  Options can have 'class' and 'icon' properties that will be used for the option
+ * 	The easiest way for further customisation to use CSS in an external file (like etemplate2.css) and ::part().
+ * 	@see Et2SelectCountry which displays flags via CSS instead of using SelectOption.icon
+ *
+ * # Custom tags
+ * 	When multiple is set, instead of a single value each selected value is shown in a tag.  While it's possible to
+ * 	use CSS to some degree, we can also use a custom tag class that extends Et2Tag.
+ * 	1.  Create the extending class
+ * 	2.  Make sure it's loaded (add to etemplate2.ts)
+ * 	3.  In your extending Et2Select, override get tagTag() to return the custom tag name
+ *
+ */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithSelect))
 {
