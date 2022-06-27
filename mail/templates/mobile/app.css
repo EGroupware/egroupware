@@ -561,6 +561,9 @@ div#mail-index_mailPreview > et2-hbox {
   margin: 0;
   padding: 5px;
 }
+#mail-display_mail_displaysubject {
+  font-size: 14px;
+}
 .mailDisplayContainer,
 .mailDisplayAttachments {
   display: block;
@@ -610,6 +613,7 @@ div.mail-display > div:first-parent > div.first-parent {
 .mailDisplayHeaders {
   overflow: hidden;
   right: 8px;
+  font-size: 11px;
 }
 .mailDisplayHeaderSection {
   position: absolute;

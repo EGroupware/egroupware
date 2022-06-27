@@ -550,6 +550,11 @@ div#mail-index_mailPreview > div, div#mail-index_mailPreview > et2-hbox {
 	margin: 0;
     padding: 5px;
 }
+
+#mail-display_mail_displaysubject {
+    font-size: 14px;
+}
+
 .mailDisplayContainer, .mailDisplayAttachments {
 	display: block;
 	display: -moz-inline-stack;

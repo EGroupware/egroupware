@@ -10,30 +10,30 @@
             <hbox>
                 <hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM">
                     <description value="From"/>
-                    <et2-select-email id="FROM" readonly="true" size="small"/>
+                    <et2-select-email id="FROM" readonly="true"/>
                 </hbox>
                 <date-time id="mail_displaydate" label="Date" readonly="true" align="right"/>
             </hbox>
 
             <hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER">
                 <description value="on behalf of"/>
-                <et2-select-email id="SENDER" readonly="true" size="small"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO">
-                <description value="To"/>
-                <et2-select-email id="TO" class="mail_extraEmails" readonly="true" size="small"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
-                <description value="Cc"/>
-                <et2-select-email id="CC" class="mail_extraEmails" readonly="true" size="small"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
-                <description value="Bcc"/>
-                <et2-select-email id="BCC" class="mail_extraEmails" readonly="true" size="small"/>
+                <et2-select-email id="SENDER" readonly="true"/>
             </hbox>
             <hbox class="mailDisplayHeaders" width="100%">
                 <description value="Subject"/>
                 <description id="mail_displaysubject" no_lang="1" readonly="true"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO">
+                <description value="To"/>
+                <et2-select-email id="TO" class="mail_extraEmails" readonly="true"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
+                <description value="Cc"/>
+                <et2-select-email id="CC" class="mail_extraEmails" readonly="true"/>
+            </hbox>
+            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
+                <description value="Bcc"/>
+                <et2-select-email id="BCC" class="mail_extraEmails" readonly="true"/>
             </hbox>
             <old-hbox>
                 <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
