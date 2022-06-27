@@ -188,9 +188,10 @@ class Sql
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
-	 * @return int/boolean the account_id or false on error
+	 * @param bool $force_create true: do NOT check with frontend, if account exists
+	 * @return int|false the account_id or false on error
 	 */
-	function save(&$data)
+	function save(&$data, $force_create=false)
 	{
 		$to_write = $data;
 		unset($to_write['account_passwd']);
@@ -207,7 +208,7 @@ class Sql
 			$to_write['account_lastpwd_change'] = time();
 		}
 		if ($data['mustchangepassword'] == 1) $to_write['account_lastpwd_change']=0;
-		if (!(int)$data['account_id'] || !$this->id2name($data['account_id']))
+		if ($force_create || !(int)$data['account_id'] || !$this->id2name($data['account_id']))
 		{
 			if ($to_write['account_id'] < 0) $to_write['account_id'] *= -1;
 
