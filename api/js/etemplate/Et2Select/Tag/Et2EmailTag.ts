@@ -18,7 +18,8 @@ import {cssImage} from "../../Et2Widget/Et2Widget";
  */
 export class Et2EmailTag extends Et2Tag
 {
-	private static email_cache : string[] = [];
+
+	private static email_cache : { [address : string] : ContactInfo | false } = {};
 
 	static get styles()
 	{
@@ -47,10 +48,13 @@ export class Et2EmailTag extends Et2Tag
 				background-image: ${cssImage("loading")};
 			}
 		
-			.tag__prefix.contact_plus_add {
+			.tag__prefix.contact_plus_add, .tag__prefix.contact_plus_contact {
 				width: 16px;
 				background-image: ${cssImage("add")};
 				cursor: pointer;
+			}
+			.tag__prefix.contact_plus_contact {
+				background-image: ${cssImage("contact")}
 			}
 		`];
 	}
@@ -77,6 +81,7 @@ export class Et2EmailTag extends Et2Tag
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleClick = this.handleClick.bind(this);
+		this.handleContactClick = this.handleContactClick.bind(this);
 	}
 
 	connectedCallback()
@@ -97,7 +102,7 @@ export class Et2EmailTag extends Et2Tag
 		this.removeEventListener("mouseleave", this.handleMouseLeave);
 	}
 
-	public checkContact(email : string) : Promise<boolean | number>
+	public checkContact(email : string) : Promise<boolean | ContactInfo>
 	{
 		if(typeof Et2EmailTag.email_cache[email] !== "undefined")
 		{
@@ -131,16 +136,26 @@ export class Et2EmailTag extends Et2Tag
 
 	/**
 	 * We either have a contact ID, or false.  If false, show the add button.
-	 * @param {boolean | number} data
+	 * @param {false | ContactInfo} data
 	 */
-	handleContactResponse(data : boolean | number)
+	handleContactResponse(data : false | ContactInfo)
 	{
 		if(data)
 		{
-			return;
+			this._contactPlusNode.classList.add("contact_plus_contact");
+			if(data.photo)
+			{
+				this._contactPlusNode.style.backgroundImage = "url(" + data.photo + ")";
+			}
+			this._contactPlusNode.addEventListener("click", this.handleContactClick);
+			this.egw().tooltipBind(this._contactPlusNode, this.egw().lang("Open existing contact") + ":\n" + data.n_fn, false, {});
 		}
-		this._contactPlusNode.classList.add("contact_plus_add");
-		this._contactPlusNode.addEventListener("click", this.handleClick);
+		else
+		{
+			this._contactPlusNode.classList.add("contact_plus_add");
+			this._contactPlusNode.addEventListener("click", this.handleClick);
+			this.egw().tooltipBind(this._contactPlusNode, this.egw().lang("Add a new contact"), false, {});
+		}
 	}
 
 	handleClick(e : MouseEvent)
@@ -154,6 +169,18 @@ export class Et2EmailTag extends Et2Tag
 		this.egw().open('', 'addressbook', 'add', extra);
 	}
 
+	handleContactClick(e : MouseEvent)
+	{
+		e.stopPropagation();
+		this.checkContact(this.value).then((result) =>
+		{
+			this.egw().open((<ContactInfo>result).id, 'addressbook', 'view', {
+				title: (<ContactInfo>result).n_fn,
+				icon: (<ContactInfo>result).photo
+			});
+		});
+	}
+
 	/**
 	 * Get the node that is shown & clicked on to add email as contact
 	 *
@@ -165,4 +192,10 @@ export class Et2EmailTag extends Et2Tag
 	}
 }
 
+interface ContactInfo
+{
+	id : number,
+	n_fn : string,
+	photo? : string
+}
 customElements.define("et2-email-tag", Et2EmailTag);

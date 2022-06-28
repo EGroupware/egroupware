@@ -152,14 +152,17 @@ class Url extends Etemplate\Widget
 	/**
 	 * Handle ajax searches for existing contact based on email
 	 *
-	 * @return boolean $_email exists or not
+	 * @return Array|boolean Contact data of first match, or false if contact does not exist
 	 */
 	public static function ajax_contact($_email)
 	{
 		$email = \EGroupware\Api\Mail::stripRFC822Addresses(array($_email));
 		$response = \EGroupware\Api\Json\Response::get();
-		$result = $GLOBALS['egw']->contacts->search(array('contact_email'=>$email[0], 'contact_email_home' => $email[0]), array('email','email_home'),
-			'', '', '', false, 'OR', false);
-		$response->data($result ? true : false);
+		$result = $GLOBALS['egw']->contacts->search(
+			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
+			array('contact_id', 'email', 'email_home', 'n_fn'),
+			'', '', '', false, 'OR', false
+		);
+		$response->data($result ? $result[0] : false);
 	}
 }
