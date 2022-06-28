@@ -467,7 +467,7 @@
     <td>
      <select name="newsettings[account_import_type]">
       <option value="users" {selected_account_import_source_user}>{lang_just_users}</option>
-      <option value="users_groups" disabled {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
+      <option value="users_groups" {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
      </select>
     </td>
    </tr>

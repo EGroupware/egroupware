@@ -12,6 +12,11 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
+/**
+ * Account import from LDAP (incl. ADS) to SQL
+ *
+ * @todo check that ADS and LDAP update modification time of account, if memberships change
+ */
 class Import
 {
 	public function __construct()
@@ -71,6 +76,14 @@ class Import
 			$accounts_sql = new Api\Accounts\Sql(new Api\Accounts(['account_repository' => 'sql']+$GLOBALS['egw_info']['server']));
 			Api\Accounts::cache_invalidate();   // to not get any cached data eg. from the wrong backend
 
+			$created = $updated = $uptodate = $errors = $deleted = 0;
+			if (in_array('groups', explode('_', $type)))
+			{
+				[$created, $updated, $uptodate, $errors, $deleted] = $this->groups(
+					$initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
+					$accounts, $accounts_sql, $logger, $delete, $groups);
+			}
+
 			$filter = [
 				'owner' => '0',
 			];
@@ -80,7 +93,6 @@ class Import
 			}
 			$last_modified = null;
 			$start_import = time();
-			$created = $updated = $uptodate = $errors = 0;
 			$cookie = '';
 			$start = ['', 5, &$cookie]; // cookie must be a reference!
 			do
@@ -98,13 +110,19 @@ class Import
 					if (!($account_id = $accounts_sql->name2id($account['account_lid'])))
 					{
 						$sql_account = $account;
-						if ($accounts_sql->save($sql_account, true) > 0)
+						// check if account_id is not yet taken by another user or group --> unset it to let DB assign a new one
+						if ($accounts_sql->read($account['account_id']))
 						{
-							$logger("Successful created user '$account[account_lid]' (#$account_id)", 'detail');
+							unset($sql_account['account_id']);
+						}
+						if (($account_id = $accounts_sql->save($sql_account, true)) > 0)
+						{
+							$logger("Successful created user '$account[account_lid]' (#$account[account_id]".
+								($account['account_id'] != $account_id ? " as #$account_id" : '').')', 'detail');
 						}
 						else
 						{
-							$logger("Error creaing user '$account[account_lid]' (#$account_id)", 'error');
+							$logger("Error creaing user '$account[account_lid]' (#$account[account_id])", 'error');
 							$errors++;
 							continue;
 						}
@@ -193,6 +211,15 @@ class Import
 							$logger("Contact data of '$account[account_lid]' (#$account_id) already up to date", 'debug');
 						}
 					}
+					// if requested, also set memberships
+					if ($type === 'users_groups')
+					{
+						// we need to convert the account_id's of memberships, in case we use different ones in SQL
+						$accounts_sql->set_memberships(array_filter(array_map(static function($account_lid) use ($groups)
+						{
+							return array_search($account_lid, $groups);
+						}, $account['memberships'])), $account_id);
+					}
 					if ($new)
 					{
 						++$created;
@@ -216,19 +243,19 @@ class Import
 			{
 				$logger("Setting new incremental import time to: $str ($last_run)", 'detail');
 			}
-			if ($created || $updated || $errors)
+			if ($created || $updated || $errors || $deleted)
 			{
-				$result = "Created $created and updated $updated users, with $errors errors.";
+				$result = "Created $created, updated $updated and deleted $deleted accounts, with $errors errors.";
 			}
 			else
 			{
-				$result = "All users are up-to-date.";
+				$result = "All accounts are up-to-date.";
 			}
 			$logger($result, 'info');
 
 			if ($initial_import && self::installAsyncJob())
 			{
-				$logger('Aync job for periodic import installed', 'info');
+				$logger('Async job for periodic import installed', 'info');
 			}
 		}
 		catch(\Exception $e) {
@@ -240,8 +267,145 @@ class Import
 			'updated'  => $updated,
 			'uptodate' => $uptodate,
 			'errors'   => $errors,
+			'deleted'  => $deleted,
 			'result'   => $result,
 		];
+	}
+
+	/**
+	 * Import all groups
+	 *
+	 * We assume we can list all groups without running into memory or timeout issues.
+	 * Groups with identical names as users are skipped, but logged as error.
+	 *
+	 * We can only delete no longer existing groups, if we query all groups!
+	 * So $delete !== 'no', requires $modified === null.
+	 *
+	 * @param Ldap|Ads $accounts
+	 * @param Sql $accounts_sql
+	 * @param callable $logger function($str, $level) level: "debug", "detail", "info", "error" or "fatal"
+	 * @param string $delete what to do with no longer existing groups: "yes": delete incl. data, "deactivate": delete group, "no": do nothing
+	 * @param int|null $modified null: initial import, int: timestamp of last import
+	 * @param array|null &$groups on return all current groups as account_id => account_lid pairs
+	 * @return array with int values [$created, $updated, $uptodate, $errors, $deleted]
+	 */
+	protected function groups($modified, object $accounts, Sql $accounts_sql, callable $logger, string $delete, array &$groups=null)
+	{
+		// to delete no longer existing groups, we have to query all groups!
+		if ($delete !== 'no')
+		{
+			$modified = null;
+		}
+
+		// query all groups in SQL
+		$sql_groups = $groups = [];
+		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
+		{
+			$sql_groups[-$row['account_id']] = $row['account_lid'];
+		}
+		// fill groups with existing ones, for incremental sync, as we need to return all groups
+		if (!empty($modified))
+		{
+			$groups = $sql_groups;
+		}
+
+		$created = $updated = $uptodate = $errors = $deleted = 0;
+		foreach($accounts->search(['type' => 'groups', 'modified' => $modified]) as $account_id => $group)
+		{
+			$logger(json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
+
+			if (!($sql_id = array_search($group['account_lid'], $sql_groups)))
+			{
+				if ($accounts_sql->name2id($group['account_lid']) > 0)
+				{
+					$logger("Group '$group[account_lid]' already exists as user --> skipped!", 'error');
+					$errors++;
+					continue;
+				}
+				// check if the numeric account_id is not yet taken --> unset account_id and let DB create a new one
+				if ($accounts_sql->read($account_id))
+				{
+					unset($group['account_id']);
+				}
+				if (($sql_id = $accounts_sql->save($group, true)) < 0)
+				{
+					$logger("Successful created group '$group[account_lid]' (#$account_id".($sql_id != $account_id ? " as #$sql_id" : '').')', 'detail');
+					$created++;
+				}
+				else
+				{
+					$logger("Error creating group '$group[account_lid]' (#$account_id)", 'error');
+					$errors++;
+				}
+			}
+			elseif (!($sql_group = $accounts_sql->read($sql_id)))
+			{
+				throw new \Exception("Group '$group[account_lid]' (#$sql_id) should exist, but not found!");
+			}
+			else
+			{
+				$group['account_id'] = $sql_id;
+				unset($sql_group['account_fullname'], $sql_group['account_firstname'], $sql_group['account_lastname']); // not stored anywhere
+				// ignore LDAP specific fields, and empty fields
+				$relevant = array_filter(array_intersect_key($group, $sql_group), static function ($attr) {
+					return $attr !== null && $attr !== '';
+				});
+				$to_update = $relevant + $sql_group;
+				if (($diff = array_diff_assoc($to_update, $sql_group)))
+				{
+					if ($accounts_sql->save($group, true) > 0)
+					{
+						$logger("Successful updated group '$group[account_lid]' (#$sql_id): " .
+							json_encode($diff, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), 'detail');
+						$updated++;
+					}
+					else
+					{
+						$logger("Error updating group '$group[account_lid]' (#$sql_id)", 'error');
+						$errors++;
+					}
+				}
+				else
+				{
+					$logger("Group '$group[account_lid]' (#$sql_id) already up to date", 'debug');
+					$uptodate++;
+				}
+				// unset the updated groups, so we can delete the ones not returned from LDAP
+				unset($sql_groups[$sql_id]);
+			}
+			$groups[$sql_id] = $group['account_lid'];
+		}
+
+		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
+		foreach($delete !== 'no' ? $sql_groups : [] as $account_id => $account_lid)
+		{
+			static $acl=null;
+			if ($delete === 'yes')
+			{
+				try {
+					$cmd = new \admin_cmd_delete_account($account_id);
+					$cmd->run();
+				}
+				catch (\Exception $e) {
+					$logger("Error deleting no longer existing group '$account_lid' (#$account_id).", 'error');
+					$errors++;
+				}
+			}
+			// still run the SQL commands, as an LDAP/ADS system will not run them
+			if ($accounts_sql->delete($account_id))
+			{
+				if (!isset($acl)) $acl = new Api\Acl();
+				$acl->delete_account($account_id);
+				$logger("Successful deleted no longer existing group '$account_lid' (#$account_id).", 'detail');
+				$deleted++;
+			}
+			elseif (!isset($e))
+			{
+				$logger("Error deleting no longer existing group '$account_lid' (#$account_id).", 'error');
+				$errors++;
+			}
+		}
+		return [$created, $updated, $uptodate, $errors, $deleted];
 	}
 
 	/**

@@ -269,7 +269,10 @@ class Sql
 	}
 
 	/**
-	 * Delete one account, deletes also all acl-entries for that account
+	 * Delete one account
+	 *
+	 * Does NOT delete acl-entries and memberships, use Acl::delete_account($account_id) for that!
+	 * Users need to be deleted via admin_cmd_delete_account, to ensure proper data removal.
 	 *
 	 * @param int $account_id numeric account_id
 	 * @return boolean true on success, false otherwise
@@ -278,13 +281,11 @@ class Sql
 	{
 		if (!(int)$account_id) return false;
 
-		$contact_id = $this->id2name($account_id,'person_id');
-
 		if (!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__))
 		{
 			return false;
 		}
-		if ($contact_id)
+		if ($account_id > 0 && ($contact_id = $this->id2name($account_id,'person_id')))
 		{
 			if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
 			$this->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
