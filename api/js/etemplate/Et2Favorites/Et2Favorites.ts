@@ -16,6 +16,7 @@ import {et2_INextmatchHeader, et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SlMenuItem} from "@shoelace-style/shoelace";
+import {cssImage} from "../Et2Widget/Et2Widget";
 
 /**
  * Favorites widget, designed for use in the nextmatch header
@@ -50,24 +51,34 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		return [
 			...super.styles,
 			css`
-				et2-image {
-					height: 2ex;
-					padding: 0px;
-					margin-top: -5px;
-					vertical-align: middle;
-				}
-				et2-image[src="trash"] {
-					display:none;
-				}
-				sl-menu {
-					min-width: 15em;
-				}
-				sl-menu-item:hover et2-image[src="trash"] {
-					display:initial;
-				}
-    .menu-item__chevron {
-    	display:none;
-    }
+			et2-image {
+				height: 2ex;
+				padding: 0px;
+				margin-top: -5px;
+				vertical-align: middle;
+			}
+			et2-image[src="trash"] {
+				display:none;
+			}
+			sl-menu {
+				min-width: 15em;
+			}
+			sl-menu-item:hover et2-image[src="trash"] {
+				display:initial;
+			}
+			/* Add star icons - radio button is already in prefix */
+			sl-menu-item::part(base) {
+				background-image: ${cssImage("fav_filter")};
+				background-repeat: no-repeat;
+				background-size: 16px 16px;
+				background-position: 5px center;
+			}
+			sl-menu-item[checked]::part(base) {
+				background-image: ${cssImage("favorites")};
+			}
+			sl-menu-item:last-child::part(base) {
+				background-image: none;
+			}
             `,
 		];
 	}
@@ -145,14 +156,14 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
                                 title="${this.egw().lang('Set as default')}"/>`;
 
 		//@ts-ignore TS doesn't know about window.app
-		let is_admin = (typeof window.app['admin'] != "undefined");
+		let is_admin = (typeof this.egw().app('admin') != "undefined");
 		//@ts-ignore option.group does not exist
 		let icon = (option.group !== false && !is_admin || option.value == 'blank') ? "" : html`
             <et2-image slot="suffix" src=${"trash"} icon @click=${this._handleDelete}
                        statustext="${this.egw().lang("Delete")}"></et2-image>`;
 
 		return html`
-            <sl-menu-item value="${option.value}">
+            <sl-menu-item value="${option.value}" ?checked="${option.value == this._preferred}">
                 ${option.value !== Et2Favorites.ADD_VALUE ? radio : ""}
                 ${icon}
                 ${option.label}

@@ -2262,7 +2262,7 @@ div.message.floating, lion-validation-feedback[type] {
     display: inline-block;
 }
 
-.favorites .sideboxstar {
+.favorites .sideboxstar, .favorites div.ui-icon-heart {
     height: 9px;
     display: inline-block;
     padding: 0px 4px;
@@ -2292,11 +2292,17 @@ div.message.floating, lion-validation-feedback[type] {
     vertical-align: middle;
     display: inline-block;
     margin: -1px 1px 0px 1px;
+    height: 12px;
+    width: 6px;
 }
 
 .sidebox-favorites .favorites div.ui-icon-trash {
     margin-top: -5px;
     margin-right: 4px;
+
+    width: 14px;
+    height: 14px;
+    background-repeat: no-repeat;
 }
 
 ul[id$='favorites_popup_state'] span.filter_value {

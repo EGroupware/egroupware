@@ -26,7 +26,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
             ::slotted(img) {
             	max-height: 100%;
             	max-width: 100%;
-            	vertical-align: middle;
             }
             :host([icon]) {
             	height: 1.3rem;
