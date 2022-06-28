@@ -613,7 +613,7 @@ div.mail-display > div:first-parent > div.first-parent {
 .mailDisplayHeaders {
   overflow: hidden;
   right: 8px;
-  font-size: 11px;
+  font-size: 14px;
 }
 .mailDisplayHeaderSection {
   position: absolute;
@@ -1947,7 +1947,6 @@ table#mail-index_previewAttachmentArea::-webkit-scrollbar-thumb:hover {
     min-height: initial;
     padding: 0;
   }
-  .mailDisplayHeaders,
   .mailDisplayAttachments > * {
     font-size: large !important;
   }

@@ -14,7 +14,7 @@
                 <hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
                     <description value="From"/>
                     <et2-select-email id="fromAddress" readonly="true"></et2-select-email>
-                    <date-time label="Date" align="right" id="previewDate" readonly="true"/>
+                    <date-time-today label="Date" align="right" id="previewDate" readonly="true"/>
                 </hbox>
                 <hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
                     <description value="Subject"/>

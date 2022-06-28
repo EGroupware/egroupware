@@ -12,7 +12,8 @@
                     <description value="From"/>
                     <et2-select-email id="FROM" readonly="true"/>
                 </hbox>
-                <date-time id="mail_displaydate" label="Date" readonly="true" align="right"/>
+                <date-time-today id="mail_displaydate" label="Date" readonly="true" align="right"
+                                 class="mailDisplayHeaders"/>
             </hbox>
 
             <hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER">

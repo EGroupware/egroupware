@@ -602,8 +602,9 @@ div.mail-display > div:first-parent > div.first-parent
 	height: 99%;
 }
 .mailDisplayHeaders {
-	overflow: hidden;
-	right: 8px;
+    overflow: hidden;
+    right: 8px;
+    font-size: 14px;
 }
 
 .mailDisplayHeaderSection {
