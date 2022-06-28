@@ -237,6 +237,7 @@ db root password	setup	en	DB root password
 db root username	setup	en	DB root username
 db type	setup	en	DB type
 db user	setup	en	DB user
+deactivate user	setup	en	Deactivate user
 default	setup	en	Recommended default
 default file system space per user/group ?	setup	en	Default file system space per user/group ?
 delete	setup	en	Delete
@@ -244,6 +245,7 @@ delete all existing accounts from sql database	setup	en	Delete all existing acco
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	en	Delete all existing SQL accounts, groups, ACLs and preferences. Normally not necessary.
 delete all my tables and data	setup	en	Delete all my tables and data
 delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
+delete user and his data	setup	en	Delete user AND his data
 deleting tables	setup	en	Deleting tables.
 demo server setup	setup	en	Demo server setup
 deny access	setup	en	Deny access
@@ -253,6 +255,7 @@ deregistered	setup	en	De-registered
 details for admin account	setup	en	Details for Admin account
 developers' table schema toy	setup	en	Developers' Table Schema Toy
 did not find any valid db support!	setup	en	Did not find any valid DB support!
+do not check for deleted user	setup	en	Do NOT check for deleted user
 do you want persistent connections (higher performance, but consumes more resources)	setup	en	Do you want persistent connections (higher performance, but consumes more resources)
 do you want to manage homedirectory and loginshell attributes?	setup	en	Do you want to manage home directory and login shell attributes?
 documentation	setup	en	Documentation
@@ -315,6 +318,7 @@ error in group-creation !!!	setup	en	Error in group creation!
 error listing "dn=%1"!	setup	en	Error listing "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	en	Error modifying dn=%1: %2='%3'!
 error searching "dn=%1" for "%2"!	setup	en	Error searching "dn=%1" for "%2"!
+every	setup	en	Every
 export has been completed!	setup	en	Export has been completed!
 failed to mount backup directory!	setup	en	Failed to mount Backup directory!
 failed updating user "%1" dn="%2"!	setup	en	Failed updating user "%1" dn="%2"!
@@ -356,6 +360,8 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	en	Host/IP domain controller
 hostname/ip of database server	setup	en	Hostname/IP of database server
 hour (0-24)	setup	en	Hour (0-24)
+hours at	setup	en	hours at
+how frequent should the import run?	setup	en	How frequent should the import run?
 however the tables are still in the database	setup	en	The tables are still in the database.
 however, the application is otherwise installed	setup	en	The application is otherwise installed.
 however, the application may still work	setup	en	The application may still work
@@ -380,6 +386,8 @@ image type selection order	setup	en	Image type selection order
 imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	en	IMAP: Admin user,Password,emailadmin_imap(|_cyrus|_dovecot)
 import has been completed!	setup	en	Import has been completed!
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
+incremental import	setup	en	Incremental import
+initial import	setup	en	Initial import
 install	setup	en	Install
 install all	setup	en	Install all
 install applications	setup	en	Install applications
@@ -401,6 +409,7 @@ is in the webservers docroot	setup	en	is in the web servers docroot
 is not writeable by the webserver	setup	en	is not writeable by the web server
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	en	It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).
 just now	setup	en	just now
+just users	setup	en	just users
 label to display as option on login page	setup	en	Label to display as option on login page
 languages updated.	setup	en	Languages updated.
 ldap accounts configuration	setup	en	LDAP accounts configuration
@@ -426,6 +435,7 @@ login as user postgres, eg. by using su as root	setup	en	Login as user postgres,
 login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration
 logout	setup	en	Logout
+logs to	setup	en	logs to
 mail account of %1 migraged	setup	en	Mail account of %1 migraged
 mail account of %1 migrated	setup	en	Mail account of %1 migrated
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
@@ -514,6 +524,7 @@ path of egroupware install directory (default auto-detected)	setup	en	Path of EG
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document-root!
 path to various directories: have to exist and be writeable by the webserver	setup	en	Path to various directories: have to exist and be writable by the web server
 pem certificate	setup	en	PEM certificate
+periodic import from ads or ldap into egroupware database	setup	en	Periodic import from ADS or LDAP into EGroupware database
 persistent connections	setup	en	Persistent connections
 php client	setup	en	PHP client
 php proxy	setup	en	PHP proxy
@@ -620,6 +631,7 @@ smtp server port	setup	en	SMTP server port
 smtp-authentication required	setup	en	SMTP-authentication required
 some information for the own service provider metadata	setup	en	Some information for the own Service Provider metadata
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
+source (must be configured above)	setup	en	Source (must be configured above)
 sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords
 ssl validation:	setup	en	SSL validation:
@@ -734,6 +746,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	en	User 
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	en	User names, comma-separated, which can get VFS root access (beside setup user)
 usernames are casesensitive	setup	en	User names are case sensitive
 users choice	setup	en	Users choice
+users, groups and memberships	setup	en	users, groups and memberships
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
 validation errors	setup	en	Validation errors
@@ -745,10 +758,13 @@ virtual mail manager (login-name includes domain)	setup	en	Virtual mail manager 
 warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
 we could not determine the version of %1, please make sure it is at least %2	setup	en	We could not determine the version of %1, please make sure it is at least %2
+we strongly recomment to run a db backup before running the import!	setup	en	We strongly recomment to run a DB backup BEFORE running the import!
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes. Click the link below to proceed.
 weekly	setup	en	weekly
 welcome to the egroupware installation	setup	en	Welcome to the EGroupware installation
+what to do in egroupware if an user get deleted?	setup	en	What to do in EGroupware if an user get deleted?
+what to import?	setup	en	What to import?
 where should egroupware store file content	setup	en	Where should EGroupware store file content
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with EGroupware?
 will be downloaded once, unless changed.	setup	en	Will be downloaded once, unless changed.
@@ -784,6 +800,7 @@ you dont have tnef or ytnef installed! it is needed to decode winmail.dat attach
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!<br /> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out.
 you must enter a username for the admin	setup	en	You must enter a username for the admin.
+you must save and run an inital import, before the periodic import will start	setup	en	You must save AND run an inital import, before the periodic import will start
 you need to add at least one egroupware domain / database instance.	setup	en	You need to add at least one EGroupware domain / database instance.
 you need to configure egroupware:	setup	en	You need to configure EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	en	You need to fix the above errors, before the configuration file header.inc.php can be written!

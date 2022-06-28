@@ -467,7 +467,7 @@
     <td>
      <select name="newsettings[account_import_type]">
       <option value="users" {selected_account_import_source_user}>{lang_just_users}</option>
-      <option value="users_groups" {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
+      <option value="users_groups" disabled {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
      </select>
     </td>
    </tr>
@@ -475,8 +475,8 @@
     <td>{lang_What_to_do_in_EGroupware_if_an_user_get_deleted?}:</td>
     <td>
      <select name="newsettings[account_import_delete]">
-      <option value="yes" {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
-      <option value="deactivate" {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
+      <option value="yes" disabled {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
+      <option value="deactivate" disabled {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
       <option value="no" {selected_account_import_delete_no}>{lang_Do_NOT_check_for_deleted_user}</option>
      </select>
     </td>
@@ -488,6 +488,7 @@
      <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}"/>
      {lang_hours_at}
      <input type="time" name="newsettings[account_import_time]" value="{value_account_import_time}"/>
+     {lang_logs_to}: {value_files_dir}/setup/account-import.log
     </td>
    </tr>
    <tr class="row_on">
