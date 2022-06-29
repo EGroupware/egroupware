@@ -18,6 +18,7 @@ import {egw} from "../../jsapi/egw_global";
 import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
+import {LionValidationFeedback} from "@lion/form-core";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
@@ -487,9 +488,75 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 	{
 		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
 	}
+
+	/**
+	 * Massively simplified validate, as compared to what ValidatorMixin gives us, since ValidatorMixin extends
+	 * FormControlMixin which breaks SlSelect's render()
+	 */
+	async validate()
+	{
+		let validators = [...(this.validators || []), ...(this.defaultValidators || [])];
+		let fieldName = this.id;
+		let feedbackData = [];
+		this.querySelector("lion-validation-feedback")?.remove();
+		const doValidate = async function(validator)
+		{
+			if(validator.config.fieldName)
+			{
+				fieldName = await validator.config.fieldName;
+			}
+			// @ts-ignore [allow-protected]
+			const message = await validator._getMessage({
+				modelValue: this.value,
+				formControl: this,
+				fieldName,
+			});
+			feedbackData.push({message, type: validator.type, validator});
+		}.bind(this);
+		const resultPromises = validators.map(async validator =>
+		{
+			const result = validator.execute(this.value, validator.param, {node: this});
+			if(result === true)
+			{
+				await doValidate(validator);
+			}
+			else
+			{
+				result.then(doValidate(validator));
+				return result;
+			}
+		});
+		await Promise.all(resultPromises);
+
+		if(feedbackData.length > 0)
+		{
+			let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
+			feedback.feedbackData = feedbackData;
+			feedback.slot = "help-text";
+			this.append(feedback);
+		}
+	}
+
+	/**
+	 * Override parent to always call validate(), as our simple implementation needs to validate on clear as well.
+	 *
+	 * @param {string | false} err
+	 */
+	set_validation_error(err : string | false)
+	{
+		super.set_validation_error(err);
+		if(err == false)
+		{
+			this.validate();
+		}
+	}
 }
 
 customElements.define("et2-select", Et2Select);
+if(typeof customElements.get("lion-validation-feedback") === "undefined")
+{
+	customElements.define("lion-validation-feedback", LionValidationFeedback);
+}
 /**
  * Use a single StaticOptions, since it should have no state
  * @type {StaticOptions}

@@ -2072,6 +2072,7 @@ div.message, lion-validation-feedback[type] {
     margin: 0px;
     clear: left;
     max-width: 500px;
+    font-size: 11px;
 }
 
 div.message.floating, lion-validation-feedback[type] {

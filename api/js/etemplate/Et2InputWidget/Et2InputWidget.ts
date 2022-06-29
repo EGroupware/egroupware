@@ -319,7 +319,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			if(err === false)
 			{
 				// Remove all Manual validators
-				this.validators = (this.validators || []).filter((validator) => validator instanceof ManualMessage)
+				this.validators = (this.validators || []).filter((validator) => !(validator instanceof ManualMessage))
 				return;
 			}
 			// Need to change interaction state so messages show up
