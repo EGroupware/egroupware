@@ -13,7 +13,10 @@ import {cssImage} from "../../Et2Widget/Et2Widget";
 
 /**
  * Display a single email address
- * On hover, queries the server to see if
+ * On hover, queries the server to see if the email is associated with a contact already.  If it is, we
+ * show the contact's avatar, clicking it opens CRM view for that contact.  If the email is unknown, we
+ * show and Add icon.  Clicking it opens the add contact dialog with the email pre-filled.
+ *
  * Tag is usually used in a Et2EmailSelect with multiple=true, but there's no reason it can't go anywhere
  */
 export class Et2EmailTag extends Et2Tag
