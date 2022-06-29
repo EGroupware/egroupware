@@ -58,6 +58,10 @@ class ContentSecurityPolicy
 	 */
 	public static function add($source, $attrs, $reset=false)
 	{
+		if (!is_array($attrs))
+		{
+			$attrs = (array)$attrs;
+		}
 		if ($reset)
 		{
 			self::$sources[$source] = [];
@@ -74,7 +78,7 @@ class ContentSecurityPolicy
 				{
 					foreach($app_additional as $app => $additional)
 					{
-						if ($additional) $attrs = array_unique(array_merge((array)$attrs, $additional));
+						if ($additional) $attrs = array_unique(array_merge($attrs, $additional));
 					}
 				}
 			}
@@ -83,7 +87,7 @@ class ContentSecurityPolicy
 		// Shoelace needs connect-src: data:
 		if ($source === 'connect-src') /** @noinspection UnsupportedStringOffsetOperationsInspection */ $attrs[] = 'data:';
 
-		foreach((array)$attrs as $attr)
+		foreach($attrs as $attr)
 		{
 			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline')))
 			{
