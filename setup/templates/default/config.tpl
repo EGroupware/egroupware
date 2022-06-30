@@ -410,37 +410,42 @@
    </tr>
    <tr class="row_on">
      <td>
-     	{lang_Context_to_create_users}:<br/>
+     	{lang_Context_to_create_users}: ({lang_leave_empty_to_use_default})<br/>
      	{lang_eg._"CN=Users,DC=domain,DC=com"_for_ADS_domain_"domain.com"}<br/>
-     	({lang_leave_empty_to_use_default})
      </td>
      <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
    </tr>
    <tr class="row_off">
+     <td>
+     	{lang_Group_context}: ({lang_leave_empty_to_use_default})
+     </td>
+     <td><input name="newsettings[ads_group_context]" value="{value_ads_group_context}" size="80" /></td>
+   </tr>
+   <tr class="row_on">
      <td>{lang_Additional_user_filter_(optional)}:</td>
      <td><input name="newsettings[ads_user_filter]" value="{value_ads_user_filter}" size="80" /></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
      <td>{lang_Additional_group_filter_(optional)}:</td>
      <td><input name="newsettings[ads_group_filter]" value="{value_ads_group_filter}" size="80" /></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
      <td><b>{lang_Attributes_for_new_users}</b><br/></td>
      <td>{lang_use_%u_for_username,_leave_empty_to_no_set}</td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
      <td>profilePath</td>
      <td><input name="newsettings[ads_new_profilePath]" value="{value_ads_new_profilePath}" size="40" /></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
      <td>homeDirectory</td>
      <td><input name="newsettings[ads_new_homeDirectory]" value="{value_ads_new_homeDirectory}" size="40" /></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
      <td>homeDrive</td>
      <td><input name="newsettings[ads_new_homeDrive]" value="{value_ads_new_homeDrive}" size="40" /></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
      <td>scriptPath</td>
      <td><input name="newsettings[ads_new_scriptPath]" value="{value_ads_new_scriptPath}" size="40" /></td>
    </tr>
