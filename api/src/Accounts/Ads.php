@@ -255,22 +255,32 @@ class Ads
 
 	const DOMAIN_USERS_GROUP = 513;
 	const ADS_CONTEXT = 'ads_context';
+	const ADS_GROUP_CONTEXT = 'ads_group_context';
 
 	/**
 	 * Get context for user and group objects
 	 *
-	 * Can be set via server-config "ads_context", otherwise baseDN is used
+	 * Can be set via server-config "ads_context" and "ads_group_context", otherwise baseDN is used
 	 *
 	 * @param boolean $set_if_empty =false true set from DN of "Domain Users" group #
+	 * @param bool|null $user true: user, false: group, null: both
 	 * @return string
 	 */
-	public function ads_context($set_if_empty=false)
+	public function ads_context($set_if_empty=false, bool $user=null)
 	{
 		if (empty($this->frontend->config[self::ADS_CONTEXT]))
 		{
 			if ($set_if_empty && ($dn = $this->id2name(-self::DOMAIN_USERS_GROUP, 'account_dn')))
 			{
 				$dn = preg_replace('/^CN=.*?,(CN|OU)=/i', '$1=', $dn);
+
+				// Univention AD uses container OU=Groups for the stock groups, not like standard AD using OU=Users for both
+				// save that as group context and generate OU=Users as user context from it
+				if (preg_match('/^(CN|OU)=Groups,/i', $dn))
+				{
+					Api\Config::save_value(self::ADS_GROUP_CONTEXT, $this->frontend->config[self::ADS_GROUP_CONTEXT]=$dn, 'phpgwapi');
+					$dn = preg_replace('/^(CN|OU)=(.*?),/i', '$1=Users,', $dn);
+				}
 				Api\Config::save_value(self::ADS_CONTEXT, $this->frontend->config[self::ADS_CONTEXT]=$dn, 'phpgwapi');
 			}
 			else
@@ -278,19 +288,31 @@ class Ads
 				return $this->adldap->getBaseDn();
 			}
 		}
-		return $this->frontend->config[self::ADS_CONTEXT];
+		// if we want and have a group context, use it
+		if ($user === false && !empty($this->frontend->config[self::ADS_GROUP_CONTEXT]))
+		{
+			return $this->frontend->config[self::ADS_GROUP_CONTEXT];
+		}
+		// if we have a user-context and no group-context, use it
+		if (empty($this->frontend->config[self::ADS_GROUP_CONTEXT]) && !empty($this->frontend->config[self::ADS_CONTEXT]))
+		{
+			return $this->frontend->config[self::ADS_CONTEXT];
+		}
+		// otherwise use base DN
+		return $this->adldap->getBaseDn();
 	}
 
 	/**
 	 * Get container for new user and group objects
 	 *
-	 * Can be set via server-config "ads_context", otherwise parent of DN from "Domain Users" is used
+	 * Can be set via server-config "ads_context" and "ads_group", otherwise parent of DN from "Domain Users" is used
 	 *
+	 * @param bool $user true: user, false: group, null: both
 	 * @return string
 	 */
-	protected function _get_container()
+	protected function _get_container(bool $user)
 	{
-		$context = $this->ads_context(true);
+		$context = $this->ads_context(true, $user);
 		$base = $this->adldap->getBaseDn();
 		$matches = null;
 		if (!preg_match('/^(.*),'.preg_quote($base, '/').'$/i', $context, $matches))
@@ -654,7 +676,7 @@ class Ads
 			{
 				$attributes[$adldap] = (string)$data[$egw];
 			}
-			$attributes['container'] = $this->_get_container();
+			$attributes['container'] = $this->_get_container(false);
 
 			$ret = $this->adldap->group()->create($attributes);
 			if ($ret !== true)
@@ -750,7 +772,7 @@ class Ads
 				if (isset($data[$egw])) $attributes[$adldap] = $data[$egw];
 			}
 			$attributes['enabled'] = !isset($data['account_status']) || $data['account_status'] === 'A';
-			$attributes['container'] = $this->_get_container();
+			$attributes['container'] = $this->_get_container(true);
 
 			$ret = $this->adldap->user()->create($attributes);
 			if ($ret !== true)
