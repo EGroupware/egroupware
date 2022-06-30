@@ -236,6 +236,7 @@ db root password	setup	de	Datenbank Root-Passwort
 db root username	setup	de	Datenbank Root-Benutzername
 db type	setup	de	Datenbank-Typ
 db user	setup	de	Datenbank-Benutzer
+deactivate user	setup	de	Benutzer deaktivieren
 default	setup	de	empfohlene Vorgabe
 default file system space per user/group ?	setup	de	Vorgabewert Festplattenplatz pro Benutzer / Gruppe ?
 delete	setup	de	Löschen
@@ -243,6 +244,7 @@ delete all existing accounts from sql database	setup	de	Lösche alle bestehenden
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	de	Alle existierende SQL-Benutzer, Gruppen, ACLs und Einstellungen löschen (normalerweise nicht nötig)?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
+delete user and his data	setup	de	Benutzer UND seine Daten löschen
 deleting tables	setup	de	Lösche Tabellen
 demo server setup	setup	de	Demo Server Setup
 deny access	setup	de	Zugriff verweigern
@@ -252,6 +254,7 @@ deregistered	setup	de	nicht registriert
 details for admin account	setup	de	Details des Admin-Kontos
 developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
+do not check for deleted user	setup	de	Nicht auf gelöschte Benutzer prüfen
 do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung (höhere Performance, braucht aber mehr Ressourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
 documentation	setup	de	Dokumentation
@@ -313,6 +316,7 @@ error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
 error listing "dn=%1"!	setup	de	Fehler beim Auflisten von "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	de	Fehler beim Ändern von dn=%1: %2='%3'!
 error searching "dn=%1" for "%2"!	setup	de	Fehler beim Suchen von "dn=%1" nach "%2"!
+every	setup	de	Alle
 export has been completed!	setup	de	Export ist abgeschlossen!
 failed to mount backup directory!	setup	de	Konnte Datensicherungsverzeichnis nicht mounten!
 failed updating user "%1" dn="%2"!	setup	de	Konnte Benutzer "%1" dn="%2" nicht aktualisieren!
@@ -353,6 +357,8 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	de	Hostname/IP des Domänencontrollers
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
+hours at	setup	de	Stunden um
+how frequent should the import run?	setup	de	Wie häufig soll der Import ausgeführt werden?
 however the tables are still in the database	setup	de	Wie auch immer, die Tabellen sind noch immer in der Datenbank
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag dennoch funktionieren
@@ -376,6 +382,8 @@ if you use only languages of the same charset (eg. western european ones) you do
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
 import has been completed!	setup	de	Import ist beendet!
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
+incremental import	setup	de	Inkrementeller Import
+initial import	setup	de	Initialer Import
 install	setup	de	Installieren
 install all	setup	de	Alle Installieren
 install applications	setup	de	Anwendungen installieren
@@ -397,6 +405,7 @@ is in the webservers docroot	setup	de	ist im Dokumentenverzeichnis (Documentroot
 is not writeable by the webserver	setup	de	ist nicht vom Webserver schreibbar
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	de	Benötigt eine Aktualisierung auf Version %1! Benutzen Sie --update-header Passwort[,Benutzer] dafür (--usage gibt weitere Optionen)
 just now	setup	de	nur jetzt
+just users	setup	de	nur Benutzer
 label to display as option on login page	setup	de	Beschriftung zur Anzeige als Option auf der Login Seite
 languages updated.	setup	de	Sprachen aktualisiert.
 ldap accounts configuration	setup	de	LDAP-Benutzerkonten Konfiguration
@@ -422,6 +431,7 @@ login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres e
 login to mysql -	setup	de	mysql aufrufen -
 loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
 logout	setup	de	Abmelden
+logs to	setup	de	loggt nach
 mail account of %1 migraged	setup	de	Mail Konto von %1 Migriert
 mail account of %1 migrated	setup	de	Mail Konto von %1 migriert
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
@@ -510,6 +520,7 @@ path of egroupware install directory (default auto-detected)	setup	de	Pfad des E
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 path to various directories: have to exist and be writeable by the webserver	setup	de	Pfade zu verschiedenen Verzeichnissen: Diese müssen vorhanden sein und vom Webserver beschreibbar
 pem certificate	setup	de	PEM Zertifikat
+periodic import from ads or ldap into egroupware database	setup	de	Periodischer Import von ADS oder LDAP in die EGroupware Datenbank
 persistent connections	setup	de	Permanente Verbindungen
 php client	setup	de	PHP Klient
 php proxy	setup	de	PHP Proxy
@@ -616,6 +627,7 @@ smtp server port	setup	de	SMTP Server Port
 smtp-authentication required	setup	de	SMTP Authentifizierung benötigt
 some information for the own service provider metadata	setup	de	Einige Information für die Metadaten des eigenen Service Provider / Dienst
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
+source (must be configured above)	setup	de	Quelle (muss oberhalb konfiguriert werden)
 sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort
 ssl validation:	setup	de	SSL Validierung:
@@ -728,6 +740,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	de	Benut
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	de	Benutzernamen (mit Komma getrennt) die VFS root Zugriff bekommen können (neben dem Setup Benutzer)
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
+users, groups and memberships	setup	de	Benutzer, Gruppen und Mitgliedschaften
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich<br />
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
 validation errors	setup	de	Fehler bei der Prüfung der Eingaben
@@ -739,10 +752,13 @@ virtual mail manager (login-name includes domain)	setup	de	Virtual Mail Manager 
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we could not determine the version of %1, please make sure it is at least %2	setup	de	Wir konnten die Version von %1 nicht ermitteln, bitte stellen Sie sicher das sie mindestens %2 ist.
+we strongly recomment to run a db backup before running the import!	setup	de	Wir empfehlen dringend eine Datensicherung zu machen BEVOR der Import ausgeführt wird!
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 weekly	setup	de	wöchentlich
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur EGroupware Installation
+what to do in egroupware if an user get deleted?	setup	de	Was soll gemacht werden in EGroupware, wenn ein Benutzer gelöscht wurde?
+what to import?	setup	de	Was soll importiert werden?
 where should egroupware store file content	setup	de	Wo soll EGroupware den Inhalt von Dateien speichern
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit EGroupware verwenden?
 will be downloaded once, unless changed.	setup	de	Wird einmalig heruntergeladen, außer bei Änderung.
@@ -778,6 +794,7 @@ you dont have tnef or ytnef installed! it is needed to decode winmail.dat attach
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br />Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
+you must save and run an inital import, before the periodic import will start	setup	de	Sie müssen erst speichern UND den Initialen Import ausführen, bevor der periodische Import startet
 you need to add at least one egroupware domain / database instance.	setup	de	Sie müssen mindestens eine EGroupware Domain / Datenbank Instanz hinzufügen.
 you need to configure egroupware:	setup	de	Sie müssen EGroupware konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!

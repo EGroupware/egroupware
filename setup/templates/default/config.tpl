@@ -450,6 +450,61 @@
    </tr>
 
    <tr class="th">
+    <td colspan="2"><b>{lang_Periodic_import_from_ADS_or_LDAP_into_EGroupware_database}:</b></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Source_(must_be_configured_above)}:</td>
+    <td>
+     <select name="newsettings[account_import_source]">
+      <option value="ads" {selected_account_import_source_ads}>ADS</option>
+      <option value="ldap" {selected_account_import_source_ldap}>LDAP</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_What_to_import?}:</td>
+    <td>
+     <select name="newsettings[account_import_type]">
+      <option value="users" {selected_account_import_source_user}>{lang_just_users}</option>
+      <option value="users_groups" {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_What_to_do_in_EGroupware_if_an_user_get_deleted?}:</td>
+    <td>
+     <select name="newsettings[account_import_delete]">
+      <option value="yes" disabled {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
+      <option value="deactivate" disabled {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
+      <option value="no" {selected_account_import_delete_no}>{lang_Do_NOT_check_for_deleted_user}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_How_frequent_should_the_import_run?}:</td>
+    <td>
+     {lang_Every}
+     <input type="number" name="newsettings[account_import_frequency]" style="width: 3em" value="{value_account_import_frequency}"/>
+     {lang_hours_at}
+     <input type="time" name="newsettings[account_import_time]" value="{value_account_import_time}"/>
+     {lang_logs_to}: {value_files_dir}/setup/account-import.log
+    </td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_You_must_save_AND_run_an_inital_import,_before_the_periodic_import_will_start}:</td>
+    <td>
+      <button onclick="window.open('account_import.php?initial=true', '_blank')">{lang_Initial_import}</button>
+      <button onclick="window.open('account_import.php', '_blank')">{lang_Incremental_import}</button>
+      {lang_We_strongly_recomment_to_run_a_DB_backup_BEFORE_running_the_import!}
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
     <td colspan="2"><b>{lang_If_using_Mail_authentication}:</b></td>
    </tr>
    <tr class="row_on">

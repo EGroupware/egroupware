@@ -895,6 +895,7 @@ class Ads
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @param $param['active'] boolean true: only return active / not expired accounts
+	 * @param $param['modified'] int if given minimum modification time
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -944,6 +945,10 @@ class Ads
 				$membership_filter = '(|(memberOf='.$this->id2name((int)$param['type'], 'account_dn').')(PrimaryGroupId='.abs($param['type']).'))';
 				$filter = $filter ? "(&$membership_filter$filter)" : $membership_filter;
 			}
+			if (!empty($param['modified']))
+			{
+				$filter = "(&(whenChanged>=".gmdate('YmdHis', $param['modified']).".0Z)$filter)";
+			}
 			foreach($this->filter($filter, 'u', self::$user_attributes, [], $param['active'], $param['order'].' '.$param['sort'], $start, $offset, $this->total) as $account_id => $data)
 			{
 				$account = $this->_ldap2user($data);
@@ -971,6 +976,10 @@ class Ads
 						break;
 				}
 				$filter = "(|(cn=$query)(description=$query))";
+			}
+			if (!empty($param['modified']))
+			{
+				$filter = "(&(whenChanged>=".gmdate('YmdHis', $param['modified']).".0Z)$filter)";
 			}
 			foreach($this->filter($filter, 'g', self::$group_attributes) as $account_id => $data)
 			{

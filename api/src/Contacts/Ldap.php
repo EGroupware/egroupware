@@ -1196,8 +1196,6 @@ class Ldap
 	 */
 	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null)
 	{
-		$this->total = 0;
-
 		$_attributes[] = 'entryUUID';
 		$_attributes[] = 'objectClass';
 		$_attributes[] = 'createTimestamp';
@@ -1214,23 +1212,42 @@ class Ldap
 		{
 			[$offset, $num_rows] = $start;
 
-			$control = [
-				[
-					'oid' => LDAP_CONTROL_SORTREQUEST,
-					//'iscritical' => TRUE,
-					'value' => $sort_values,
-				],
-				[
-					'oid' => LDAP_CONTROL_VLVREQUEST,
-					//'iscritical' => TRUE,
-					'value' => [
-						'before'	=> 0, // Return 0 entry before target
-						'after'		=> $num_rows-1, // total-1
-						'offset'	=> $offset+1, // first = 1, NOT 0!
-						'count'		=> 0, // We have no idea how many entries there are
-					]
+			$control[] = [
+				'oid' => LDAP_CONTROL_SORTREQUEST,
+				//'iscritical' => TRUE,
+				'value' => $sort_values,
+			];
+			$control[] = [
+				'oid' => LDAP_CONTROL_VLVREQUEST,
+				//'iscritical' => TRUE,
+				'value' => [
+					'before'	=> 0, // Return 0 entry before target
+					'after'		=> $num_rows-1, // total-1
+					'offset'	=> $offset+1, // first = 1, NOT 0!
+					'count'		=> 0, // We have no idea how many entries there are
 				]
 			];
+		}
+		elseif (PHP_VERSION >= 7.3 && empty($order_by) &&
+			($start === false || is_array($start) && count($start) === 3) &&
+			$this->ldapServerInfo->supportedControl(LDAP_CONTROL_PAGEDRESULTS))
+		{
+			if ($start === false)
+			{
+				$start = [false, 500, ''];
+			}
+			$control[] = [
+				'oid' => LDAP_CONTROL_PAGEDRESULTS,
+				//'iscritical' => TRUE,
+				'value' => [
+					'size' => $start[1],
+					'cookie' => $start[2],
+				],
+			];
+		}
+		if (!is_array($start) || count($start) < 3 || $start[2] === '')
+		{
+			$this->total = 0;
 		}
 
 		if($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
@@ -1242,15 +1259,21 @@ class Ldap
 			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit, null, null, $control);
 		}
 		if(!$result || !$entries = ldap_get_entries($this->ds, $result)) return array();
-		$this->total = $entries['count'];
+		$this->total += $entries['count'];
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");
 
 		// check if given controls succeeded
-		if ($control && ldap_parse_result($this->ds, $result, $errcode, $matcheddn, $errmsg, $referrals, $serverctrls) &&
-			(isset($serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'])))
+		if ($control && ldap_parse_result($this->ds, $result, $errcode, $matcheddn, $errmsg, $referrals, $serverctrls))
 		{
-			$this->total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
-			$start = null;	// so caller does NOT run it's own limit
+			if (isset($serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count']))
+			{
+				$this->total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
+				$start = null;	// so caller does NOT run it's own limit
+			}
+			elseif (isset($serverctrls[LDAP_CONTROL_PAGEDRESULTS]['value']['cookie']))
+			{
+				$start[2] = $serverctrls[LDAP_CONTROL_PAGEDRESULTS]['value']['cookie'];
+			}
 		}
 
 		foreach($entries as $i => $entry)
@@ -1314,6 +1337,19 @@ class Ldap
 				}
 			}
 			$contacts[] = $contact;
+		}
+
+		// if we have a non-empty cookie from paged results, continue reading from the server
+		while (is_array($start) && count($start) === 3 && $start[0] === false && $start[2] !== '')
+		{
+			foreach($this->_searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, $_skipPlugins, $order_by, $start) as $contact)
+			{
+				$contacts[] = $contact;
+			}
+		}
+		if (is_array($start) && $start[0] === false)
+		{
+			$start = false;
 		}
 		return $contacts;
 	}
