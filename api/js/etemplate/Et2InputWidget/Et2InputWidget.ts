@@ -29,6 +29,8 @@ export declare class Et2InputWidgetInterface
 
 	public set_readonly(boolean) : void;
 
+	public set_validation_error(message : string | false) : void;
+
 	public isDirty() : boolean;
 
 	public resetDirty() : void;

@@ -1565,7 +1565,10 @@ export class etemplate2
 				{
 					(<et2_tabbox><unknown>tmpWidget).activateTab(widget);
 				}
-
+			}
+			else if(typeof widget.set_validation_error == "function")
+			{
+				widget.set_validation_error(_response.data[id]);
 			}
 		}
 		egw().debug("warn", "Validation errors", _response.data);
