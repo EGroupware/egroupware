@@ -775,7 +775,7 @@ class setup_cmd_ldap extends setup_cmd
 			{
 				$account_id = $account['account_id'];
 			}
-			$account += $accounts_obj->read($account_id);
+			$account += $accounts_obj->read($account_id) ?: [];
 
 			if ($account['account_type'] == 'g')
 			{
