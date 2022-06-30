@@ -1,4 +1,4 @@
-import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {cleanSelectOptions, SelectOption} from "../Et2Select/FindSelectOptions";
 import {css, html, SlotMixin, TemplateResult} from "@lion/core";
 import {Et2Select} from "../Et2Select/Et2Select";
 
@@ -205,7 +205,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		{
 			this.value = <string>this.egw().preference('link_app', this.egw().app_name());
 		}
-		this.select_options = select_options;
+		this.select_options = cleanSelectOptions(select_options);
 	}
 
 
