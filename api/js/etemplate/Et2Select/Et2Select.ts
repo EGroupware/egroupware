@@ -12,9 +12,7 @@ import {css, html, PropertyValues, TemplateResult} from "@lion/core";
 import {StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
-import {Et2InvokerMixin} from "../Et2Url/Et2InvokerMixin";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
-import {egw} from "../../jsapi/egw_global";
 import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -57,7 +55,7 @@ export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
  *
  */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
-export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithSelect))
+export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
 	static get styles()
 	{
@@ -120,12 +118,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 			multiple: {
 				type: Boolean,
 				reflect: true,
-			},
-			/**
-			 * Add a button to switch to multiple with given number of rows
-			 */
-			expand_multiple_rows: {
-				type: Number,
 			}
 		}
 	}
@@ -248,77 +240,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 		this.value = val || '';
 	}
 
-	/**
-	 * Reimplemented to allow/keep string[] as value
-	 *
-	 * @param value string|string[]
-	 */
-	_callParser(value = this.formattedValue)
-	{
-		if(this.multiple && Array.isArray(value))
-		{
-			return value;
-		}
-		return super._callParser(value);
-	}
-
-	private _set_invoker(rows)
-	{
-		this._invokerAction = () => {
-			this.multiple = true;
-			this._inputNode.size = parseInt(rows) || 4;
-			this._invokerNode.style.display = 'none';
-		}
-		this._invokerTitle = egw.lang('Switch to multiple');
-		this._invokerLabel = '+';
-	}
-
 	transformAttributes(attrs)
 	{
-		if (attrs.expand_multiple_rows)
-		{
-			this._set_invoker(attrs.expand_multiple_rows);
-		}
 		super.transformAttributes(attrs);
 
 		// Deal with initial value of multiple set as CSV
 		if(this.multiple && typeof this.value == "string")
 		{
 			this.value = this.value.length ? this.value.split(",") : [];
-		}
-	}
-
-	set expand_multiple_rows(rows)
-	{
-		if (rows && !this.multiple)
-		{
-			this._set_invoker(rows);
-		}
-		else
-		{
-			this._invokerLabel = undefined;
-		}
-		this.__expand_multiple_rows = rows;
-	}
-
-	get expand_multiple_rows()
-	{
-		return this.__expand_multiple_rows;
-	}
-
-	/**
-	 * Method to check if invoker can be activated: not disabled, empty or invalid
-	 *
-	 * Overwritten to NOT disable if empty.
-	 *
-	 * @protected
-	 * */
-	_toggleInvokerDisabled()
-	{
-		if (this._invokerNode)
-		{
-			const invokerNode = /** @type {HTMLElement & {disabled: boolean}} */ (this._invokerNode);
-			invokerNode.disabled = this.disabled || this.hasFeedbackFor.length > 0;
 		}
 	}
 
@@ -333,16 +262,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2InvokerMixin(Et2WidgetWithS
 
 			// Re-set value, the option for it may have just shown up
 			this.value = this.value || "";
-		}
-
-		// propagate multiple to selectbox
-		if(changedProperties.has('multiple'))
-		{
-			// switch the expand button off
-			if(this.multiple)
-			{
-				this.expand_multiple_rows = 0;
-			}
 		}
 	}
 
