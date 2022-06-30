@@ -466,8 +466,8 @@
     <td>{lang_What_to_import?}:</td>
     <td>
      <select name="newsettings[account_import_type]">
-      <option value="users" {selected_account_import_source_user}>{lang_just_users}</option>
-      <option value="users_groups" {selected_account_import_source_users_groups}>{lang_users,_groups_and_memberships}</option>
+      <option value="users" {selected_account_import_type_users}>{lang_just_users}</option>
+      <option value="users+groups" {selected_account_import_type_users+groups}>{lang_users,_groups_and_memberships}</option>
      </select>
     </td>
    </tr>

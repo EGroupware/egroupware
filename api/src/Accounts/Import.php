@@ -52,7 +52,7 @@ class Import
 			{
 				throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 			}
-			if (!in_array($type = $GLOBALS['egw_info']['server']['account_import_type'], ['users', 'users_groups']))
+			if (!in_array($type = $GLOBALS['egw_info']['server']['account_import_type'], ['users', 'users+groups']))
 			{
 				throw new \InvalidArgumentException("Invalid account_import_type='{$GLOBALS['egw_info']['server']['account_import_type']}'!");
 			}
@@ -77,7 +77,7 @@ class Import
 			Api\Accounts::cache_invalidate();   // to not get any cached data eg. from the wrong backend
 
 			$created = $updated = $uptodate = $errors = $deleted = 0;
-			if (in_array('groups', explode('_', $type)))
+			if (in_array('groups', explode('+', $type)))
 			{
 				[$created, $updated, $uptodate, $errors, $deleted] = $this->groups(
 					$initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
@@ -115,8 +115,13 @@ class Import
 						{
 							unset($sql_account['account_id']);
 						}
-						if (($account_id = $accounts_sql->save($sql_account, true)) > 0)
+						if (($account_id = $sql_account['account_id'] = $accounts_sql->save($sql_account, true)) > 0)
 						{
+							// run addaccount hook to create eg. home-directory or mail account
+							Api\Hooks::process($sql_account+array(
+									'location' => 'addaccount'
+								),False,True);	// called for every app now, not only enabled ones)
+
 							$logger("Successful created user '$account[account_lid]' (#$account[account_id]".
 								($account['account_id'] != $account_id ? " as #$account_id" : '').')', 'detail');
 						}
@@ -152,6 +157,11 @@ class Import
 						{
 							if ($accounts_sql->save($to_update) > 0)
 							{
+								// run editaccount hook to create eg. home-directory or mail account
+								Api\Hooks::process($to_update+array(
+										'location' => 'editaccount'
+									),False,True);	// called for every app now, not only enabled ones)
+
 								$logger("Successful updated user '$account[account_lid]' (#$account_id): " .
 									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
 								if (!$new) $new = false;
@@ -212,7 +222,7 @@ class Import
 						}
 					}
 					// if requested, also set memberships
-					if ($type === 'users_groups')
+					if ($type === 'users+groups')
 					{
 						// we need to convert the account_id's of memberships, in case we use different ones in SQL
 						$accounts_sql->set_memberships(array_filter(array_map(static function($account_lid) use ($groups)
@@ -327,8 +337,13 @@ class Import
 				{
 					unset($group['account_id']);
 				}
-				if (($sql_id = $accounts_sql->save($group, true)) < 0)
+				if (($sql_id = $group['account_id'] = $accounts_sql->save($group, true)) < 0)
 				{
+					// run addgroup hook to create eg. home-directory or mail account
+					Api\Hooks::process($group+array(
+							'location' => 'addgroup'
+						),False,True);	// called for every app now, not only enabled ones)
+
 					$logger("Successful created group '$group[account_lid]' (#$account_id".($sql_id != $account_id ? " as #$sql_id" : '').')', 'detail');
 					$created++;
 				}
@@ -355,6 +370,10 @@ class Import
 				{
 					if ($accounts_sql->save($group, true) > 0)
 					{
+						Api\Hooks::process($group+array(
+								'location' => 'editgroup'
+							),False,True);	// called for every app now, not only enabled ones)
+
 						$logger("Successful updated group '$group[account_lid]' (#$sql_id): " .
 							json_encode($diff, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), 'detail');
 						$updated++;
