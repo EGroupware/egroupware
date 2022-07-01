@@ -65,7 +65,9 @@ function send_template()
 	elseif(($str = file_get_contents($path)) !== false)
 	{
 		// replace single quote enclosing attribute values with double quotes
-		$str = preg_replace("#([a-z_-]+)='([^']*)'([ />])#i", '$1="$2"$3', $str);
+		$str = preg_replace_callback("#([a-z_-]+)='([^']*)'([ />])#i", static function($matches){
+			return $matches[1].'="'.str_replace('"', '&quot;', $matches[2]).'"'.$matches[3];
+		}, $str);
 
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
