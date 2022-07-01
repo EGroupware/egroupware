@@ -1128,7 +1128,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 				if (matches.length > 1 && matches[2] !== undefined)
 				{
 					try {
-						args = JSON.parse('['+matches[2]+']');
+						args = JSON.parse('['+decodeURI(matches[2])+']');
 					}
 					catch(e) {	// deal with '-encloded strings (JSON allows only ")
 						args = JSON.parse('['+matches[2].replace(/','/g, '","').replace(/((^|,)'|'(,|$))/g, '$2"$3')+']');
