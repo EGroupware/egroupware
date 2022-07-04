@@ -258,7 +258,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
                             label=${button.label}
                             .image=${ifDefined(button.image)}
                             .noSubmit=${true}
-                            disabled=${ifDefined(button.disabled)}
+                            ?disabled=${button.disabled}
                             align=${ifDefined(button.align)}>
                 </et2-button>
 			`
