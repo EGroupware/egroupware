@@ -144,8 +144,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.connectedCallback();
 
-		this.fix_bad_value();
-
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-clear", this._triggerChange)
@@ -206,11 +204,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private fix_bad_value()
 	{
+		if(this.multiple || !Array.isArray(this.select_options) || this.select_options.length == 0)
+		{
+			// Nothing to do here
+			return;
+		}
 		// If no value is set, choose the first option
-		// Only do this on firstUpdated() otherwise it is impossible to clear the field
+		// Only do this on once during initial setup, or it can be impossible to clear the value
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
+
 		// value not in options --> use empty_label, if exists, or first option otherwise
-		if(this.value !== "" && !this.multiple && Array.isArray(this.select_options) && this.select_options.length > 0 && this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
+		if(this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
 		{
 			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;
 			// ""+ to cast value of 0 to "0", to not replace with ""
@@ -249,6 +253,19 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			this.value = this.value.length ? this.value.split(",") : [];
 		}
+	}
+
+	/**
+	 * Load extra stuff from the template node.
+	 * Overridden from parent to force value to be "good", since this is the earliest place we have both value and
+	 * select options when loading from a template.
+	 *
+	 * @param {Element} _node
+	 */
+	loadFromXML(_node : Element)
+	{
+		super.loadFromXML(_node);
+		this.fix_bad_value();
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */

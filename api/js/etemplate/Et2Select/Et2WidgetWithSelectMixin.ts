@@ -78,7 +78,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				 * Will be found automatically based on ID and type, or can be set explicitly in the template using
 				 * <option/> children, or using widget.select_options = SelectOption[]
 				 */
-				select_options: {type: Object},
+				select_options: {type: Object, noAccessor: true},
 			}
 		}
 
