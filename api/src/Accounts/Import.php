@@ -81,7 +81,7 @@ class Import
 			{
 				[$created, $updated, $uptodate, $errors, $deleted] = $this->groups(
 					$initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
-					$accounts, $accounts_sql, $logger, $delete, $groups);
+					$accounts, $accounts_sql, $logger, $delete, $groups, $set_members);
 			}
 
 			$filter = [
@@ -246,6 +246,11 @@ class Import
 			}
 			while ($start[2] !== '');
 
+			if ($set_members)
+			{
+				$this->setMembers($set_members, $accounts, $accounts_sql, $logger);
+			}
+
 			$last_run = max($start_import-1, $last_modified);
 			Api\Config::save_value('account_import_lastrun', $last_run, 'phpgwapi');
 			$str = gmdate('Y-m-d H:i:s', $last_run). ' UTC';
@@ -291,15 +296,17 @@ class Import
 	 * We can only delete no longer existing groups, if we query all groups!
 	 * So $delete !== 'no', requires $modified === null.
 	 *
+	 * @param int|null $modified to only query groups modified after given timestamp
 	 * @param Ldap|Ads $accounts
 	 * @param Sql $accounts_sql
 	 * @param callable $logger function($str, $level) level: "debug", "detail", "info", "error" or "fatal"
 	 * @param string $delete what to do with no longer existing groups: "yes": delete incl. data, "deactivate": delete group, "no": do nothing
 	 * @param int|null $modified null: initial import, int: timestamp of last import
 	 * @param array|null &$groups on return all current groups as account_id => account_lid pairs
+	 * @param array|null &$set_members on return, if modified: (sql)account_id => [(ldap)account_id => account_lid] pairs
 	 * @return array with int values [$created, $updated, $uptodate, $errors, $deleted]
 	 */
-	protected function groups($modified, object $accounts, Sql $accounts_sql, callable $logger, string $delete, array &$groups=null)
+	protected function groups(?int $modified, $accounts, Sql $accounts_sql, callable $logger, string $delete, array &$groups=null, array &$set_members=null)
 	{
 		// to delete no longer existing groups, we have to query all groups!
 		if ($delete !== 'no')
@@ -308,7 +315,7 @@ class Import
 		}
 
 		// query all groups in SQL
-		$sql_groups = $groups = [];
+		$sql_groups = $groups = $set_members = [];
 		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
 		{
 			$sql_groups[-$row['account_id']] = $row['account_lid'];
@@ -351,6 +358,7 @@ class Import
 				{
 					$logger("Error creating group '$group[account_lid]' (#$account_id)", 'error');
 					$errors++;
+					continue;
 				}
 			}
 			elseif (!($sql_group = $accounts_sql->read($sql_id)))
@@ -382,6 +390,7 @@ class Import
 					{
 						$logger("Error updating group '$group[account_lid]' (#$sql_id)", 'error');
 						$errors++;
+						continue;
 					}
 				}
 				else
@@ -393,6 +402,12 @@ class Import
 				unset($sql_groups[$sql_id]);
 			}
 			$groups[$sql_id] = $group['account_lid'];
+
+			// if we only get modified groups, we need to record and return the id's to update members, AFTER users are created/updated
+			if ($modified)
+			{
+				$set_members[$sql_id] = $accounts->read($group['account_id'])['members'];
+			}
 		}
 
 		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
@@ -471,7 +486,7 @@ class Import
 
 		if (empty($frequency) && !empty($time) && preg_match('/^\d{2}:\d{2}$/', $time))
 		{
-			$frequency = 24;
+			$frequency = 24.0;
 		}
 		if ($frequency > 0.0)
 		{
@@ -562,5 +577,82 @@ class Import
 		echo (new Api\Framework\Minimal())->header(['pngfix' => '']);
 		$tailer = new Api\Json\Tail(self::LOG_FILE);
 		echo $tailer->show();
+	}
+
+	/**
+	 * Set members of a group specified by its (sql)account_id after an incremental update of the groups
+	 *
+	 * We need to take into account:
+	 * - members/users might not yet be added, if visible members are by membership to that group (eg. custom account-filter by membership in Default group)
+	 * - members might not be readable from LDAP, because the are not in account-filter
+	 *
+	 * @param array $set_members (sql)account_id => [(ldap)account_id => account_lid] pairs
+	 * @param Ldap|ADS $accounts
+	 * @param Sql $accounts_sql
+	 * @param callable $logger
+	 * @return void
+	 */
+	protected function setMembers(array $set_members, $accounts, Sql $accounts_sql, callable $logger)
+	{
+		// setting (new) members
+		foreach($set_members as $sql_group_id => $members)
+		{
+			$group = $accounts_sql->id2name($sql_group_id) ?: '#'.$sql_group_id;
+			foreach($members as $ldap_id => $account_lid)
+			{
+				if (!($account_id = $accounts_sql->name2id($account_lid)))
+				{
+					if (!($account = $accounts->read($ldap_id)))
+					{
+						$logger("Failed reading user '$account_lid' (#$ldap_id) from LDAP, maybe he is not contained in filter --> ignored", 'detail');
+						continue;
+					}
+					$sql_account = $account;
+					// check if ldap-id is already taken --> create with own id
+					if ($accounts_sql->id2name($ldap_id))
+					{
+						unset($sql_account['account_id']);
+					}
+					if (!($sql_account['account_id'] = $accounts_sql->save($sql_account, true)))
+					{
+						$logger("Error creating user '$account_lid' (#$ldap_id)", 'error');
+						continue;
+					}
+					// set memberships using id's in sql (!)
+					$accounts_sql->set_memberships(array_filter(array_map(static function($account_lid) use ($accounts_sql)
+					{
+						return $accounts_sql->name2id($account_lid);
+					}, $account['memberships'])), $sql_account['account_id']);
+				}
+				else
+				{
+					if (!($memberships = $accounts_sql->memberships($account_id)))
+					{
+						$logger("Error reading memberships of (existing) user '$account_lid' (#$account_id)!", 'error');
+						continue;
+					}
+					if (!isset($memberships[$sql_group_id]))
+					{
+						$accounts_sql->set_memberships(array_merge(array_keys($memberships), [$sql_group_id]), $account_id);
+						$logger("Adding membership of user '$account_lid' (#$account_id) to group '$group' (#$sql_group_id)", 'detail');
+					}
+				}
+			}
+
+			// removing no longer set members
+			if (($sql_members = $accounts_sql->members($sql_group_id)) &&
+				($removed = array_diff($sql_members, $members)))
+			{
+				foreach($removed as $sql_account_id => $sql_account_lid)
+				{
+					if (($memberships = $accounts_sql->memberships($sql_account_id)) && isset($memberships[$sql_group_id]))
+					{
+						unset($memberships[$sql_group_id]);
+						$accounts_sql->set_memberships(array_keys($memberships), $sql_account_id);
+						$logger("Removing membership of user '$sql_account_lid' (#$sql_account_id) from group '$group' (#$sql_group_id)", 'detail');
+					}
+				}
+			}
+		}
 	}
 }
