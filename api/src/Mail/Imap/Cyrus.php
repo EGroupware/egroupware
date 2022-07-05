@@ -61,7 +61,7 @@ class Cyrus extends Mail\Imap
 	 */
 	function deleteAccount($_hookValues)
 	{
-		// some precausion to really delete just _one_ account
+		// some precaution to really delete just _one_ account
 		if (strpos($_hookValues['account_lid'],'%') !== false ||
 			strpos($_hookValues['account_lid'],'*') !== false)
 		{
