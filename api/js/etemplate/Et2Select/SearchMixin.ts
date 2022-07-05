@@ -720,7 +720,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().request(this.searchUrl, [search]).then((result) =>
+			return this.egw().request(this.searchUrl, [search, options]).then((result) =>
 			{
 				this.processRemoteResults(result);
 			});
