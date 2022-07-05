@@ -89,6 +89,7 @@ use Horde_Mail_Transport_Smtphorde;
  * @property-read int $acc_imap_default_quota quota in MB, if no user specific one set
  * @property-read int $acc_imap_timeout timeout for imap connection, default 20s
  * @property-read array $notif_folders folders user wants to be notified about new mails
+ * @property-read bool $acc_admin_use_without_pw use admin credentials for users personal mail account, if user password is not in session eg. SSO
  *
  * You can overwrite values in all mail accounts by creating a file /var/www/mail-overwrites.inc.php, see method getParamOverwrites.
  */
@@ -257,6 +258,12 @@ class Account implements \ArrayAccess
 			// read credentials from database
 			$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
 
+			if (isset($params['acc_imap_admin_username']) && $params['acc_imap_admin_username'][0] === '*')
+			{
+				$params['acc_admin_use_without_pw'] = true;
+				$params['acc_imap_admin_username'] = substr($params['acc_imap_admin_username'], 1);
+			}
+
 			if (!isset($params['notify_folders']))
 			{
 				$params += Notifications::read($params['acc_id'], $called_for ? array(0, $called_for) : $called_for);
@@ -269,6 +276,13 @@ class Account implements \ArrayAccess
 				$params = Credentials::from_session(
 						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
 					) + $params;
+
+				// check if we should use admin-credentials, if no session password exists, eg. SSO without password
+				if (!empty($params['acc_admin_use_without_pw']) && empty($params['acc_imap_password']))
+				{
+					$params['acc_imap_username'] .= '*'.$params['acc_imap_admin_username'];
+					$params['acc_imap_password'] = $params['acc_imap_admin_password'];
+				}
 			}
 		}
 		$this->params = $params;
@@ -374,6 +388,18 @@ class Account implements \ArrayAccess
 	 *  // other imap-server to overwrite ...
 	 * ];
 	 *
+	 * // or you can provide a function, which gets passed all acc_* parameters and can modify them:
+	 * function _mail_overwrites(array $params)
+	 * {
+	 *      switch($params['acc_imap_host'])
+	 *      {
+	 *          case 'mail':
+	 *              $params['acc_imap_host'] = 'other host or IP';
+	 *              break;
+	 *      }
+	 *      return $params;
+	 * }
+	 *
 	 * @return array
 	 */
 	function getParamOverwrites()
@@ -385,7 +411,7 @@ class Account implements \ArrayAccess
 			{
 				include($f);
 			}
-			else
+			if (!isset($overwrites))
 			{
 				$overwrites = [];
 			}
@@ -393,6 +419,10 @@ class Account implements \ArrayAccess
 		if (isset($overwrites[$this->acc_imap_host]))
 		{
 			return array_merge($this->params, $overwrites[$this->acc_imap_host]);
+		}
+		elseif (function_exists('_mail_overwrites'))
+		{
+			return _mail_overwrites($this->params);
 		}
 		return $this->params;
 	}
@@ -1303,7 +1333,7 @@ class Account implements \ArrayAccess
 		// store or delete admin credentials
 		if ($data['acc_imap_admin_username'] && $data['acc_imap_admin_password'])
 		{
-			Credentials::write($data['acc_id'], $data['acc_imap_admin_username'],
+			Credentials::write($data['acc_id'], (!empty($data['acc_admin_use_without_pw'])?'*':'').$data['acc_imap_admin_username'],
 				$data['acc_imap_admin_password'], Credentials::ADMIN, 0,
 				$data['acc_imap_admin_cred_id']);
 		}
