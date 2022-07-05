@@ -450,11 +450,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.addEventListener("sl-clear", this._handleClear)
 			if(this._oldChange && this.onchange)
 			{
-				// Search messes up event order.  Since it throws its own bubbling change event,
-				// selecting an option fires 2 change events - 1 before the widget is finished adjusting, losing the value
-				// We catch all change events, then call this._oldChange only when value changes
-				this.removeEventListener("change", this._oldChange);
-				this.addEventListener("change", this._handleChange);
+				this.updateComplete.then(() =>
+				{
+					// Search messes up event order.  Since it throws its own bubbling change event,
+					// selecting an option fires 2 change events - 1 before the widget is finished adjusting, losing the value
+					// We catch all change events, then call this._oldChange only when value changes
+					this.removeEventListener("change", this._oldChange);
+					this.addEventListener("change", this._handleChange);
+				});
 			}
 
 			this._searchButtonNode.addEventListener("click", this._handleSearchButtonClick);
