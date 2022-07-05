@@ -23,7 +23,6 @@ import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {et2_date} from "../../api/js/etemplate/et2_widget_date";
-import {et2_calendar_owner} from "./et2_widget_owner";
 import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -56,6 +55,7 @@ import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions"
 import flatpickr from "flatpickr";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
+import {CalendarOwner} from "./CalendarOwner";
 
 /**
  * UI for calendar
@@ -263,7 +263,7 @@ export class CalendarApp extends EgwApp
 		if(sidebox.length == 0 && egw_getFramework() != null)
 		{
 			// Force rollup to load owner widget, it leaves it out otherwise
-			new et2_calendar_owner(_et2.widgetContainer, {});
+			new CalendarOwner();
 			// Force rollup to load planner widget, it leaves it out otherwise
 			new et2_calendar_planner(_et2.widgetContainer, {});
 
@@ -1482,17 +1482,25 @@ export class CalendarApp extends EgwApp
 	 */
 	edit_update_participant(input, widget?)
 	{
-		if(typeof widget === 'undefined') widget = input;
+		if(typeof widget === 'undefined')
+		{
+			widget = input;
+		}
 		var content = widget.getInstanceManager().getValues(widget.getRoot());
-		var participant = widget.getRoot().getWidgetById('participant');
-		if(!participant) return;
+		var participant = <CalendarOwner>widget.getRoot().getWidgetById('participant');
+		if(!participant)
+		{
+			return;
+		}
 
-		participant.set_autocomplete_params({exec:{
-			start: content.start,
-			end: content.end,
-			duration: content.duration,
-			whole_day: content.whole_day,
-		}});
+		participant.searchOptions = {
+			exec: {
+				start: content.start,
+				end: content.end,
+				duration: content.duration,
+				whole_day: content.whole_day,
+			}
+		};
 	}
 
 	/**
@@ -1618,12 +1626,12 @@ export class CalendarApp extends EgwApp
 	 */
 	participantOnChange()
 	{
-		var add = <et2_button> this.et2.getWidgetById('add');
-		var quantity = <et2_number> this.et2.getWidgetById('quantity');
-		var participant = <et2_calendar_owner> this.et2.getWidgetById('participant');
+		var add = <et2_button>this.et2.getWidgetById('add');
+		var quantity = <et2_number>this.et2.getWidgetById('quantity');
+		var participant = <Et2CalendarOwner>this.et2.getWidgetById('participant');
 
 		// array of participants
-		var value = participant.get_value();
+		let value = participant.value;
 
 		add.set_readonly(value.length <= 0);
 
@@ -3700,27 +3708,27 @@ export class CalendarApp extends EgwApp
 							{
 								var found = false;
 								var option = data.rows.sel_options[field][i];
-								for(var j in widget.options.select_options)
+								for(var j in widget.select_options)
 								{
-									if(option.value == widget.options.select_options[j].value)
+									if(option.value == widget.select_options[j].value)
 									{
-										widget.options.select_options[j].label = option.label;
+										widget.select_options[j].label = option.label;
 										found = true;
 										break;
 									}
 								}
 								if(!found)
 								{
-									if(!widget.options.select_options.push)
+									if(!widget.select_options.push)
 									{
-										widget.options.select_options = [];
+										widget.select_options = [];
 									}
-									widget.options.select_options.push(option);
+									widget.select_options.push(option);
 								}
 							}
 							var in_progress = app.calendar.state_update_in_progress;
 							app.calendar.state_update_in_progress = true;
-							widget.set_select_options(widget.options.select_options);
+							widget.set_select_options(widget.select_options);
 							widget.set_value(widget.getValue());
 
 							app.calendar.state_update_in_progress = in_progress;
@@ -4173,17 +4181,6 @@ export class CalendarApp extends EgwApp
 			button.parent().css('margin-right',button.outerWidth(true)+2);
 			button.parent().parent().css('white-space','nowrap');
 		}
-		jQuery(window).on('resize.calendar-owner', function() {
-			var preferred_width = jQuery('#calendar-et2_target').children().first().outerWidth()||0;
-			if(app.calendar && app.calendar.sidebox_et2)
-			{
-				var owner = app.calendar.sidebox_et2.getWidgetById('owner');
-				if(preferred_width && owner.input.hasClass("chzn-done"))
-				{
-					owner.input.next().css('width',preferred_width);
-				}
-			}
-		});
 	}
 
 	/**

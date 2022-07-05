@@ -91,13 +91,6 @@
 #calendar-et2_target > div {
   position: relative;
 }
-#calendar-sidebox_owner {
-  width: 90%;
-}
-#calendar-sidebox_owner ~ * {
-  vertical-align: top;
-  display: inline-block;
-}
 #calendar-sidebox_cat_id {
   margin-bottom: 10px;
 }
@@ -139,10 +132,6 @@
 }
 #calendar-sidebox_date .calendar_calHoliday {
   background-color: rgba(103, 159, 210, 0.5);
-}
-#calendar-sidebox_owner .ms-helper {
-  padding: 2px;
-  background-color: white;
 }
 #calendar-sidebox_date .flatpickr-months {
   gap: 0;

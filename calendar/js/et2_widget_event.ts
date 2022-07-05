@@ -961,13 +961,13 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						let options: any = null;
 						if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 						{
-								options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+								options = app.calendar.sidebox_et2.getWidgetById('owner').select_options
 						}
 						if ((isNaN(parseInt(owner)) || parseInt(owner) < 0) && options && typeof options.find == "function")
 						{
 								let resource = options.find(function (element)
 								{
-										return element.id == owner;
+									return element.value == owner;
 								}) || {};
 								let matching_participant = typeof resource.resources == "undefined" ?
 																					 resource :
@@ -1201,7 +1201,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				let options: any = null;
 				if (app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
-						options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+					options = app.calendar.sidebox_et2.getWidgetById('owner').select_options;
 				}
 				else
 				{
@@ -1227,7 +1227,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						{
 							var resource = options.find(function(element)
 							{
-								return element.id == parent_owner[i];
+								return element.value == parent_owner[i];
 							}) || {};
 							if(resource && resource.resources)
 							{
@@ -1249,7 +1249,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 										var resource;
 										if (options && options.find && (resource = options.find(function (element)
 										{
-												return element.id === id;
+											return element.value === id;
 										})) && resource.resources)
 										{
 												participants = participants.concat(resource.resources);

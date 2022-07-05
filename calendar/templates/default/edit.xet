@@ -57,13 +57,18 @@
 					<select label="Notify externals" id="notify_externals" span="all" align="right"/>
 				</row>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
-					<calendar-owner id="participant" allowFreeEntries="true" span="4" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
-					<hbox width="100%">
-						<textbox type="integer" id="quantity" min="1" size="3" statustext="Number of resources to be booked"/>
-						<select class="selectRole" id="role"/>
-						<button id="add" align="right" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
-					</hbox>
-				</row>
+                    <calendar-owner id="participant" allowFreeEntries="true" span="4"
+                                    empty_label="Add new participants or resource"
+                                    onchange="app.calendar.participantOnChange"/>
+                    <hbox width="100%">
+                        <textbox type="integer" id="quantity" min="1" size="3"
+                                 statustext="Number of resources to be booked"/>
+                        <select class="selectRole" id="role"/>
+                        <button id="add" align="right" image="add" novalidate="1"
+                                statustext="Please first select participants on the left and then use plus button to add them"
+                                background_image="1" readonly="true" ro_image="add"/>
+                    </hbox>
+                </row>
 				<row class="th thb">
 					<description value="Type"/>
 					<description value="Participants"/>

@@ -148,25 +148,31 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			Api\Json\Response::get()->data($label);
 			return $label;
 		}
-		else if($id && is_array($id))
+		else
 		{
-			$labels = Array();
-			foreach($id as $index => $_id)
+			if($id && is_array($id))
 			{
-				$labels[$_id] = self::format_owner($_id, self::get_owner_label($_id));
+				$labels = array();
+				foreach($id as $index => $_id)
+				{
+					$labels[$_id] = self::format_owner($_id, self::get_owner_label($_id));
+				}
+				Api\Json\Response::get()->data($labels);
+				return $labels;
 			}
-			Api\Json\Response::get()->data($labels);
-			return $labels;
 		}
+	}
+
+	public static function ajax_search($search_text, $search_options = [])
+	{
 
 		$bo = new calendar_bo();
-		$query = $_REQUEST['query'];
 
 		// Arbitrarily limited to 50 / resource
-		$options = array('start' => 0, 'num_rows' => 50,
-			// Filter accounts out of addressbook
-			'filter' => array('account_id' => null)) +
-			array_diff_key($_REQUEST, array_flip(array('menuaction','query')));
+		$options = array('start'  => 0, 'num_rows' => 50,
+						 // Filter accounts out of addressbook
+						 'filter' => array('account_id' => null)) +
+			$search_options;
 		$results = array();
 
 		// Contacts matching accounts the user does not have permission for cause
@@ -174,7 +180,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		// we remove those contacts
 		$remove_contacts = array();
 
-		$resources = array_merge(array('' => $bo->resources['']),$bo->resources);
+		$resources = array_merge(array('' => $bo->resources['']), $bo->resources);
 		$contacts_obj = new Api\Contacts();
 		foreach($resources as $type => $data)
 		{
@@ -187,7 +193,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				$owngroup_options = $options+array('account_type'=>'owngroups');
 				$own_groups = Api\Accounts::link_query('',$owngroup_options);
 				$account_options = $options + array('account_type' => 'both');
-				$_results += $remove_contacts = Api\Accounts::link_query($query, $account_options);
+				$_results += $remove_contacts = Api\Accounts::link_query($search_text, $account_options);
 				if (!empty($_REQUEST['checkgrants']))
 				{
 					$grants = (array)$GLOBALS['egw']->acl->get_grants('calendar') + $own_groups;
@@ -197,12 +203,12 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// App provides a custom search function
 			else if ($data['app'] && $data['search'])
 			{
-				$_results = call_user_func_array($data['search'], array($query, $options));
+				$_results = call_user_func_array($data['search'], array($search_text, $options));
 			}
 			// Use standard link registry
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
-				$_results = Link::query($data['app'], $query,$options);
+				$_results = Link::query($data['app'], $search_text, $options);
 			}
 
 			// There are always special cases
@@ -212,10 +218,11 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					// Include mailing lists, but not account groups
 					$lists = array_filter(
 						$contacts_obj->get_lists(Api\Acl::READ),
-						function($element, $index) use($query) {
-							return $index > 0 && (stripos($element, $query) !== false);
+						function ($element, $index) use ($search_text)
+						{
+							return $index > 0 && (stripos($element, $search_text) !== false);
 						},
-				ARRAY_FILTER_USE_BOTH
+						ARRAY_FILTER_USE_BOTH
 					);
 					foreach($lists as $list_id => $list)
 					{
@@ -244,12 +251,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			}
 		}
 
-		// switch regular JSON response handling off
-		Api\Json\Request::isJSONRequest(false);
-
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($results);
-		exit();
+		Api\Json\Response::get()->data($results);
 	}
 
 	/**
@@ -280,12 +282,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		$type = $data['type'];
 
-		// Magicsuggest uses id, not value.
 		$value = array(
-			'id' => $type.$id,
-			'value'=> $type.$id,
+			'value' => $id,
 			'label' => $title,
-			'app'	=> lang($data['app'])
+			'app'   => lang($data['app'])
 		);
 		if(is_array($value['label']))
 		{
@@ -338,8 +338,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 		else
 		{
-			$label = Link::title('api-accounts',$id) ?: Api\Accounts::username($id);
+			$label = Link::title('api-accounts', $id) ?: Api\Accounts::username($id);
 		}
 		return $label;
 	}
 }
+
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\calendar_owner_etemplate_widget', array('calendar-owner'));

@@ -440,7 +440,7 @@ export class et2_calendar_view extends et2_valueWidget
 			let options = false;
 			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 			{
-				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+				options = app.calendar.sidebox_et2.getWidgetById('owner').select_options;
 			}
 			else
 			{
@@ -448,7 +448,7 @@ export class et2_calendar_view extends et2_valueWidget
 			}
 			if(options && options.find)
 			{
-				var found = options.find(function(element) {return element.id == user;}) || {};
+				var found = options.find(function(element) {return element.value == user;}) || {};
 				if(found && found.label && found.label !== user)
 				{
 					label = found.label;

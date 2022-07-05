@@ -408,11 +408,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			row_labels: function() {
 				var labels = [];
 				var already_added = [];
-				var options = false;
+				var options = [];
 				var resource = null;
 				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
-					options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+					options = app.calendar.sidebox_et2.getWidgetById('owner').select_options;
 				}
 				else
 				{
@@ -424,14 +424,14 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					// Handle grouped resources like mailing lists - pull it from sidebox owner
 					// and expand to their contents
 					if(options && options.find &&
-							((resource = options.find(function(element) {return element.id == user;}) || {}) || isNaN(user)))
+						((resource = options.find(function(element) {return element.value == user;}) || {}) || isNaN(user)))
 					{
 						if(resource && resource.resources)
 						{
 							for(var j = 0; j < resource.resources.length; j++)
 							{
 								var id = resource.resources[j];
-								if(already_added.indexOf(''+id) < 0)
+								if(already_added.indexOf('' + id) < 0)
 								{
 									labels.push({
 										id: id,
@@ -2128,7 +2128,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 			{
-				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+				options = app.calendar.sidebox_et2.getWidgetById('owner').select_options;
 			}
 			else
 			{
@@ -2143,7 +2143,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				if(options.find &&
 					((resource = options.find(function (element)
                       {
-                          return element.id == user;
+						  return element.value == user;
                       }))))
 				{
 					// Members found
