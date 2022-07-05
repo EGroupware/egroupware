@@ -63,14 +63,14 @@ class Taglist extends Etemplate\Widget
 	 * Find entries that match query parameter (from link system) and format them
 	 * as the widget expects, a list of {id: ..., label: ...} objects
 	 */
-	public static function ajax_search()
+	public static function ajax_search($search_text, $search_options = [])
 	{
 		$app = $_REQUEST['app'];
 		$type = $_REQUEST['type'];
 		$query = $_REQUEST['query'];
 		$options = array();
 		$links = array();
-		if ($type == "account")
+		if($type == "account")
 		{
 			// Only search if a query was provided - don't search for all accounts
 			if($query)
