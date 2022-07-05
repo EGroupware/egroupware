@@ -217,7 +217,7 @@ class Request
 				if (strpos($_GET['menuaction'], '.ajax_destroy_session.etemplate') === false)
 				{
 					$response = Api\Json\Response::get();
-					$response->redirect($index_url, $global, $app);
+					$response->redirect(Api\Framework::link($index_url), $global, $app);
 					exit;
 				}
 			}
