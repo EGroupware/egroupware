@@ -4005,35 +4005,13 @@ tr.disableIfNoEPL {
     border: 2px dashed silver;
 }
 
-.colselection.ui-widget-content {
-    width: 45%;
+.colselection [id*="columns"]::part(tags) {
+    max-height: 10em;
 }
 
-.colselection .et2_selectbox .ui-widget-header.ui-helper-clearfix {
-    padding: 10px;
-    font-size: 10pt;
-}
-
-.colselection .et2_selectbox .ui-multiselect-checkboxes li {
-    border-bottom: 1px solid #e6e6e6;
-    padding-bottom: 3px;
-    padding-top: 3px;
-}
-
-.colselection .et2_selectbox .ui-multiselect-checkboxes li label {
-    cursor: grab;
-}
-
-.colselection .et2_selectbox .ui-multiselect-checkboxes li label.ui-state-hover {
-    background: none;
-}
-
-.colselection.ui-widget-content .et2_selectbox {
-    height: calc(100% - 68px);
-}
-
-.colselection.ui-widget-content .et2_selectbox .ui-multiselect-checkboxes {
-    height: calc(100% - 68px) !important;
+.colselection .dialogFooterToolbar {
+    display: flex;
+    flex-direction: row;
 }
 
 .et2_countdown {

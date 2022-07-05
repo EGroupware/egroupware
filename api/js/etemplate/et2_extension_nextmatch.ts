@@ -74,6 +74,9 @@ import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import {Et2Select} from "./Et2Select/Et2Select";
+import {Et2Button} from "./Et2Button/Et2Button";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 
@@ -1927,7 +1930,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// ID for faking letter selection in column selection
 		const LETTERS = '~search_letter~';
 
-		const columns = {};
+		const columns = [];
 		const columns_selected = [];
 
 		for(var i = 0; i < columnMgr.columns.length; i++)
@@ -1942,7 +1945,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 			if(col.caption)
 			{
-				columns[col.id] = col.caption;
+				columns.push({value: col.id, label: col.caption});
 				if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
 			}
 			// Custom fields get listed separately
@@ -1951,14 +1954,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				if(jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields))
 				{
 					// No customfields defined, don't show column
-					delete (columns[col.id]);
+					columns.pop();
 					continue;
 				}
 				for(var field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
 				{
-					columns[et2_nextmatch_customfields.PREFIX + field_name] = " - " +
-						(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label;
-					if(widget.options.fields[field_name]) columns_selected.push(et2_customfields_list.PREFIX + field_name);
+					columns.push({
+						value: et2_nextmatch_customfields.PREFIX + field_name, label: " - " +
+							(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label
+					});
+					if(widget.options.fields[field_name])
+					{
+						columns_selected.push(et2_customfields_list.PREFIX + field_name);
+					}
 				}
 			}
 		}
@@ -1966,57 +1974,60 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Letter search
 		if(this.options.settings.lettersearch)
 		{
-			columns[LETTERS] = egw.lang('Search letter');
+			columns.push({value: LETTERS, label: egw.lang('Search letter')});
 			if(this.header.lettersearch.is(':visible')) columns_selected.push(LETTERS);
 		}
 
 		// Build the popup
 		if(!this.selectPopup)
 		{
-			const select = <et2_selectbox>et2_createWidget("select", {
+			const select = <Et2Select>loadWebComponent("et2-select", {
+				id: "columns",
 				multiple: true,
 				rows: 8,
 				empty_label: this.egw().lang("select columns"),
-				selected_first: false,
-				value_class: "selcolumn_sortable_"
+				selected_first: false
 			}, this);
-			select.set_select_options(columns);
-			select.set_value(columns_selected);
+			// Don't let options run through the loading stuff
+			select.select_options = columns;
+			select.value = columns_selected;
 
 			let autoRefresh;
+			let sort;
 			if(!this.options.disable_autorefresh)
 			{
-				autoRefresh = <et2_selectbox>et2_createWidget("select", {
-					"empty_label": "Refresh"
+				autoRefresh = <Et2Select>loadWebComponent("et2-select", {
+					empty_label: "Refresh",
+					id: "nm_autorefresh",
+					select_options: {
+						// Cause [unknown] problems with mail
+						30: "30 seconds",
+						//60: "1 Minute",
+						180: "3 Minutes",
+						300: "5 Minutes",
+						900: "15 Minutes",
+						1800: "30 Minutes"
+					},
+					statustext: egw.lang("Automatically refresh list"),
+					value: this._get_autorefresh()
 				}, this);
-				autoRefresh.set_id("nm_autorefresh");
-				autoRefresh.set_select_options({
-					// Cause [unknown] problems with mail
-					30: "30 seconds",
-					//60: "1 Minute",
-					180: "3 Minutes",
-					300: "5 Minutes",
-					900: "15 Minutes",
-					1800: "30 Minutes"
-				});
-				autoRefresh.set_value(this._get_autorefresh());
-				autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
 			}
 
-			const defaultCheck = <et2_selectbox>et2_createWidget("select", {"empty_label": "Preference"}, this);
-			defaultCheck.set_id('nm_col_preference');
-			defaultCheck.set_select_options({
-				'default': {label: 'Default', title: 'Set these columns as the default'},
-				'reset': {label: 'Reset', title: "Reset all user's column preferences"},
-				'force': {label: 'Force', title: 'Force column preference so users cannot change it'}
-			});
-			defaultCheck.set_value(this.options.settings.columns_forced ? 'force' : '');
-
-			const okButton = <et2_button>et2_createWidget("buttononly", {
-				"background_image": true,
-				image: "check"
+			const defaultCheck = <Et2Select>loadWebComponent("et2-select", {
+				id: "nm_col_preference",
+				empty_label: "Preference",
+				value: this.options.settings.columns_forced ? 'force' : ''
 			}, this);
-			okButton.set_label(this.egw().lang("ok"));
+			defaultCheck.select_options = [
+				{value: 'default', label: 'Default', title: 'Set these columns as the default'},
+				{value: 'reset', label: 'Reset', title: "Reset all user's column preferences"},
+				{value: 'force', label: 'Force', title: 'Force column preference so users cannot change it'}
+			];
+
+			const okButton = <Et2Button>loadWebComponent("et2-button", {
+				image: "check",
+				label: this.egw().lang("ok")
+			}, this);
 			okButton.onclick = function()
 			{
 				// Update visibility
@@ -2030,7 +2041,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						visibility[col.id] = {visible: false};
 					}
 				}
-				const value = select.getValue();
+				const value = select.value;
 
 				// Update & remove letter filter
 				if(self.header.lettersearch)
@@ -2073,7 +2084,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						// Turn on selected custom fields - start from 0 in case they're not in order
 						for(let j = 0; j < value.length; j++)
 						{
-							if(value[j].indexOf(et2_customfields_list.PREFIX) != 0) continue;
+							if(value[j].indexOf(et2_customfields_list.PREFIX) != 0)
+							{
+								continue;
+							}
 							visible[value[j].substring(1)] = true;
 							i++;
 						}
@@ -2083,31 +2097,33 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				columnMgr.setColumnVisibilitySet(visibility);
 
 				this.sortedColumnsList = [];
-				jQuery(select.getDOMNode()).find('li[class^="selcolumn_sortable_"]').each(function(i, v)
+				if(sort)
 				{
-					const data_id = v.getAttribute('data-value');
-					const value = select.getValue();
-					if(data_id.match(/^col_/) && value.indexOf(data_id) != -1)
+					sort.toArray().forEach((data_id) =>
 					{
-						const col_id = data_id.replace('col_', '');
-						const col_widget = self.columns[col_id].widget;
-						if(col_widget.customfields)
+						const value = select.getValue();
+						if(data_id.match(/^col_/) && value.indexOf(data_id) != -1)
 						{
-							self.sortedColumnsList.push(col_widget.id);
-							for(let field_name in col_widget.customfields)
+							const col_id = data_id.replace('col_', '');
+							const col_widget = self.columns[col_id].widget;
+							if(col_widget.customfields)
+							{
+								self.sortedColumnsList.push(col_widget.id);
+								for(let field_name in col_widget.customfields)
 							{
 								if(jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name] == true)
 								{
 									self.sortedColumnsList.push(et2_customfields_list.PREFIX + field_name);
 								}
 							}
+							}
+							else
+							{
+								self.sortedColumnsList.push(self._getColumnName(col_widget));
+							}
 						}
-						else
-						{
-							self.sortedColumnsList.push(self._getColumnName(col_widget));
-						}
-					}
-				});
+					});
+				}
 
 				// Hide popup
 				self.selectPopup.toggle();
@@ -2127,39 +2143,38 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				self.selectPopup = null;
 			};
 
-			const cancelButton = <et2_button>et2_createWidget("buttononly", {
-				"background_image": true,
+			const cancelButton = <Et2Button>loadWebComponent("et2-button", {
+				label: this.egw().lang("cancel"),
 				image: "cancel"
 			}, this);
-			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function()
 			{
 				self.selectPopup.toggle();
 				self.selectPopup = null;
 			};
-			const $select = jQuery(select.getDOMNode());
 
-			let sortablejs = Sortable.create(select.getDOMNode().getElementsByClassName('ui-multiselect-checkboxes')[0], {
-				ghostClass: 'ui-fav-sortable-placeholder',
-				draggable: 'li[class^="selcolumn_sortable_col"]',
-				filter: 'li[class^="selcolumn_sortable_#"]',
-				direction: 'vertical',
-				delay: 25,
-			});
-
-			$select.disableSelection();
-			$select.find('li[class^="selcolumn_sortable_"]').each(function(i, v)
+			select.updateComplete.then(() =>
 			{
-				// @ts-ignore
-				jQuery(v).attr('data-value', (jQuery(v).find('input')[0].value))
+				window.setTimeout(() =>
+				{
+					sort = Sortable.create(select.shadowRoot.querySelector('.select__tags'), {
+						ghostClass: 'ui-fav-sortable-placeholder',
+						draggable: 'et2-tag',
+						dataIdAttr: 'value',
+						direction: 'vertical',
+						delay: 25,
+
+					});
+				}, 100);
 			});
+
 			const $footerWrap = jQuery(document.createElement("div"))
 				.addClass('dialogFooterToolbar')
-				.append(okButton.getDOMNode())
-				.append(cancelButton.getDOMNode());
+				.append(okButton)
+				.append(cancelButton);
 			this.selectPopup = jQuery(document.createElement("div"))
 				.addClass("colselection ui-dialog ui-widget-content")
-				.append(select.getDOMNode())
+				.append(select)
 				.append($footerWrap)
 				.appendTo(this.innerDiv);
 
@@ -2173,7 +2188,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			const apps = this.egw().user('apps');
 			if(apps['admin'])
 			{
-				$footerWrap.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()));
+				$footerWrap.append(defaultCheck);
 			}
 		}
 		else
@@ -2186,7 +2201,8 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			(2 * this.selectPopup.find('.dialogFooterToolbar').height());
 		this.selectPopup.find('.ui-multiselect-checkboxes').css('max-height', max_height);
 		this.selectPopup.css("top", t_position.top)
-			.css("left", s_position.left + this.div.width() - this.selectPopup.width());
+			.css("left", s_position.left + this.div.width() - this.selectPopup.width())
+			.css("position", "absolute");
 	}
 
 	/**
