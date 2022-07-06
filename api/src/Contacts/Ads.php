@@ -98,6 +98,10 @@ class Ads extends Ldap
 		}
 
 		$this->accounts_ads = $GLOBALS['egw']->accounts->backend;
+		if (!is_a($this->accounts_ads, Api\Accounts\Ads::class))
+		{
+			throw new Api\Exception\AssertionFailed('$GLOBALS[egw]->accounts->backend is no Api\Accounts\Ads object!');
+		}
 		//$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 		//$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 		$this->allContactsDN = $this->accountContactsDN = $this->accounts_ads->ads_context();

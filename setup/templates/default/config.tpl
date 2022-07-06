@@ -480,10 +480,11 @@
     <td>{lang_What_to_do_in_EGroupware_if_an_user_get_deleted?}:</td>
     <td>
      <select name="newsettings[account_import_delete]">
-      <option value="yes" disabled {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
-      <option value="deactivate" disabled {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
+      <option value="yes" {selected_account_import_delete_yes}>{lang_Delete_user_AND_his_data}</option>
+      <option value="deactivate" {selected_account_import_delete_deactivate}>{lang_Deactivate_user}</option>
       <option value="no" {selected_account_import_delete_no}>{lang_Do_NOT_check_for_deleted_user}</option>
      </select>
+    <br/><i>Deleting or disabling no longer existing accounts works currently only by using manual inital import!</i>
     </td>
    </tr>
    <tr class="row_off">
@@ -500,7 +501,7 @@
     <td>{lang_You_must_save_AND_run_an_inital_import,_before_the_periodic_import_will_start}:</td>
     <td>
       <button onclick="window.open('account_import.php?initial=true', '_blank')">{lang_Initial_import}</button>
-      <button onclick="window.open('account_import.php', '_blank')">{lang_Incremental_import}</button>
+      <button onclick="window.open('account_import.php', '_blank')">{lang_Incremental_import}</button><br/>
       {lang_We_strongly_recomment_to_run_a_DB_backup_BEFORE_running_the_import!}
     </td>
    </tr>

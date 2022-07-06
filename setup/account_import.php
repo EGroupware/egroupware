@@ -27,13 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
 }
 
 try {
-	$import = new Api\Accounts\Import();
-	if (!empty($_GET['log']))
-	{
-		$import->showLog();
-		return;
-	}
-	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false', static function($str, $level)
+	$import = new Api\Accounts\Import(static function($str, $level)
 	{
 		switch($level)
 		{
@@ -51,6 +45,12 @@ try {
 				break;
 		}
 	});
+	if (!empty($_GET['log']))
+	{
+		$import->showLog();
+		return;
+	}
+	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false');
 }
 catch (\Exception $e) {
 	http_response_code(500);
