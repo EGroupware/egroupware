@@ -57,24 +57,63 @@ class Import
 			throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 		}
 
-		$class = 'EGroupware\\Api\\Contacts\\'.ucfirst($source);
-		/** @var Api\Contacts\Ldap $contacts */
-		$this->contacts = new $class($GLOBALS['egw_info']['server']);
-		$this->contacts_sql = new Api\Contacts\Sql();
-		// instantiate contacts object with SQL backend
-		$this->contacts_sql_frontend = new Api\Contacts();
-		$this->contacts_sql_frontend->somain = $this->contacts_sql_frontend->so_accounts = $this->contacts_sql;
+		$this->contacts = ($frontend = self::contactsFactory($source))->so_accounts ?: $frontend->somain;
+		$this->contacts_sql_frontend = self::contactsFactory('sql');
+		$this->contacts_sql = $this->contacts_sql_frontend->so_accounts ?: $this->contacts_sql_frontend->somain;
 
-		$class = 'EGroupware\\Api\\Accounts\\'.ucfirst($source);
-		/** @var Api\Accounts\Ldap $accounts */
-		$this->accounts = new $class($frontend = new Api\Accounts(['account_repository' => $source]+$GLOBALS['egw_info']['server']));
-		// instantiate accounts backend and frontend for SQL
-		$this->accounts_sql = new Api\Accounts\Sql();
-		$this->frontend_sql = new Api\Accounts(['account_repository' => 'sql']+$GLOBALS['egw_info']['server'], $this->accounts_sql);
-		$this->accounts_sql->setFrontend($this->frontend_sql);
-		$this->accounts_sql->setContacts($this->contacts_sql_frontend);
+		$this->accounts = self::accountsFactory($source)->backend;
+		$this->frontend_sql = self::accountsFactory('sql');
+		$this->accounts_sql = $this->frontend_sql->backend;
 
 		$this->_logger = $logger;
+	}
+
+	/**
+	 * Instantiate accounts object with given accounts-backend
+	 *
+	 * @param string $account_repository backend to use
+	 * @return Api\Accounts
+	 */
+	protected static function accountsFactory(string $account_repository)
+	{
+		static $cache = [];
+		if (!isset($cache[$account_repository]))
+		{
+			$backup_repo = $GLOBALS['egw_info']['server']['account_repository'];
+			$GLOBALS['egw_info']['server']['account_repository'] = $account_repository;
+
+			$cache[$account_repository] = new Api\Accounts();
+
+			$GLOBALS['egw_info']['server']['account_repository'] = $backup_repo;
+		}
+		return $cache[$account_repository];
+	}
+
+	/**
+	 * Instantiate contacts object for given accounts backend
+	 *
+	 * @param string $account_repository
+	 * @return Api\Contacts
+	 */
+	protected static function contactsFactory(string $account_repository)
+	{
+		static $cache = [];
+		if (!isset($cache[$account_repository]))
+		{
+			$backup_repo = $GLOBALS['egw_info']['server']['account_repository'];
+			$backup_accounts = $GLOBALS['egw']->accounts;
+			$GLOBALS['egw_info']['server']['account_repository'] = $account_repository;
+
+			if ($backup_repo !== $account_repository)
+			{
+				$GLOBALS['egw']->accounts = self::accountsFactory($account_repository);
+			}
+			$cache[$account_repository] = new Api\Contacts();
+
+			$GLOBALS['egw_info']['server']['account_repository'] = $backup_repo;
+			$GLOBALS['egw']->accounts = $backup_accounts;
+		}
+		return $cache[$account_repository];
 	}
 
 	/**
