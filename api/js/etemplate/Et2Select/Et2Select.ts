@@ -435,7 +435,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		let fieldName = this.id;
 		let feedbackData = [];
 		this.querySelector("lion-validation-feedback")?.remove();
-		const doValidate = async function(validator)
+		const doValidate = async function(validator, value)
 		{
 			if(validator.config.fieldName)
 			{
@@ -443,7 +443,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			}
 			// @ts-ignore [allow-protected]
 			const message = await validator._getMessage({
-				modelValue: this.value,
+				modelValue: value,
 				formControl: this,
 				fieldName,
 			});
@@ -451,16 +451,21 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}.bind(this);
 		const resultPromises = validators.map(async validator =>
 		{
-			const result = validator.execute(this.value, validator.param, {node: this});
-			if(result === true)
-			{
-				await doValidate(validator);
-			}
-			else
-			{
-				result.then(doValidate(validator));
-				return result;
-			}
+			let values = this.value;
+			if (!Array.isArray(values)) values = [values];
+			if (!values.length) values = [''];	// so required validation works
+			values.forEach(async value => {
+				const result = validator.execute(value, validator.param, {node: this});
+				if(result === true)
+				{
+					await doValidate(validator, value);
+				}
+				else if (result !== false && typeof result.then === 'function')
+				{
+					result.then(doValidate(validator, value));
+					return result;
+				}
+			});
 		});
 		await Promise.all(resultPromises);
 
