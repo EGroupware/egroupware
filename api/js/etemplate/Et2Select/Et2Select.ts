@@ -146,7 +146,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		this.updateComplete.then(() =>
 		{
-			this.addEventListener("sl-clear", this._triggerChange)
 			this.addEventListener("sl-change", this._triggerChange);
 			this.addEventListener("sl-after-show", this._doResize)
 		});
