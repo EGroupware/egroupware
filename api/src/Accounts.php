@@ -16,6 +16,9 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Accounts\Sql;
+use EGroupware\Api\Exception\AssertionFailed;
+
 /**
  * API - accounts
  *
@@ -132,8 +135,9 @@ class Accounts
 	 * Constructor
 	 *
 	 * @param string|array $backend =null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
+	 * @param Sql|Ldap|Ads|Univention|null $backend_object
 	 */
-	public function __construct($backend=null)
+	public function __construct($backend=null, $backend_object=null)
 	{
 		if (is_array($backend))
 		{
@@ -165,7 +169,11 @@ class Accounts
 		}
 		$backend_class = 'EGroupware\\Api\\Accounts\\'.ucfirst($backend);
 
-		$this->backend = new $backend_class($this);
+		if ($backend_object && !is_a($backend_object, $backend_class))
+		{
+			throw new AssertionFailed("Invalid backend object, not a $backend_class object!");
+		}
+		$this->backend = $backend_object ?: new $backend_class($this);
 	}
 
 	/**

@@ -97,7 +97,7 @@ class Sql
 	 *
 	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 */
-	function __construct(Api\Accounts $frontend)
+	function __construct(Api\Accounts $frontend=null)
 	{
 		$this->frontend = $frontend;
 
@@ -109,6 +109,26 @@ class Sql
 		{
 			$this->db = $GLOBALS['egw']->db;
 		}
+	}
+
+	/**
+	 * Set used frontend object
+	 *
+	 * @param Api\Accounts $frontend
+	 */
+	public function setFrontend(Api\Accounts $frontend)
+	{
+		$this->frontend = $frontend;
+	}
+
+	/**
+	 * Set used contacts object
+	 *
+	 * @param Api\Contacts $contacts
+	 */
+	public function setContacts(Api\Contacts $contacts)
+	{
+		$this->contacts = $contacts;
 	}
 
 	/**
@@ -281,14 +301,16 @@ class Sql
 	{
 		if (!(int)$account_id) return false;
 
+		$contact_id = $this->id2name($account_id,'person_id');
+
 		if (!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__))
 		{
 			return false;
 		}
-		if ($account_id > 0 && ($contact_id = $this->id2name($account_id,'person_id')))
+		if ($account_id > 0 && $contact_id)
 		{
 			if (!isset($this->contacts)) $this->contacts = new Api\Contacts();
-			$this->contacts->delete($contact_id,false);	// false = allow to delete accounts (!)
+			$this->contacts->delete($contact_id,false, false, true);	// false = allow to delete accounts (!)
 		}
 		return true;
 	}

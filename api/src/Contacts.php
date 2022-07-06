@@ -836,9 +836,10 @@ class Contacts extends Contacts\Storage
 	* @param mixed &$contact contact array with key id or (array of) id(s)
 	* @param boolean $deny_account_delete =true if true never allow to delete accounts
 	* @param int $check_etag =null
-	* @return boolean|int true on success or false on failiure, 0 if etag does not match
+	* @param bool $no_permission_check =false true: do not call check_perms and error out on missing rights
+	* @return boolean|int true on success or false on failure, 0 if etag does not match
 	*/
-	function delete($contact,$deny_account_delete=true,$check_etag=null)
+	function delete($contact,$deny_account_delete=true,$check_etag=null,$no_permission_check=false)
 	{
 		if (is_array($contact) && isset($contact['id']))
 		{
@@ -853,11 +854,11 @@ class Contacts extends Contacts\Storage
 			$id = is_array($c) ? $c['id'] : $c;
 
 			$ok = false;
-			if ($this->check_perms(Acl::DELETE,$c,$deny_account_delete))
+			if ($no_permission_check || $this->check_perms(Acl::DELETE,$c,$deny_account_delete))
 			{
 				if (!($old = $this->read($id))) return false;
 				// already marked as deleted item and accounts are always really deleted
-				// we cant mark accounts as deleted, as no such thing exists for accounts!
+				// we can't mark accounts as deleted, as no such thing exists for accounts!
 				if ($old['owner'] && $old['tid'] !== self::DELETED_TYPE)
 				{
 					$delete = $old;
