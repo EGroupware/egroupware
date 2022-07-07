@@ -34,7 +34,7 @@ class Customfilter extends Widget\Transformer
 		switch($this->attrs['type'])
 		{
 			case "link-entry":
-				self::$transformation['type'] = $this->attrs['type'] = 'nextmatch-entryheader';
+				self::$transformation['type'] = $this->attrs['type'] = 'et2-nextmatch-header-entry';
 				break;
 			default:
 				list($type) = explode('-',$this->attrs['type']);
@@ -44,7 +44,7 @@ class Customfilter extends Widget\Transformer
 					{
 						$widget_type = $this->attrs['type'];
 					}
-					$this->attrs['type'] = 'nextmatch-filterheader';
+					$this->attrs['type'] = 'et2-nextmatch-header-custom';
 				}
 				self::$transformation['type'] = $this->attrs['type'];
 		}

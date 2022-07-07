@@ -108,10 +108,10 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px 
  * adjust width of select-boxes in nextmatch
  */
 #addressbook-index .filtersContainer {
-	position: absolute;
-	top: 0;	/* Required for Chrome 76+ on Windows */
-	left: 342px;
-	right: 215px;
+    position: absolute;
+    top: 0; /* Required for Chrome 76+ on Windows */
+    left: 350px;
+    right: 233px;
 }
 #addressbook-index .filtersContainer select {
 	width: 31.5%;

@@ -59,11 +59,9 @@ import {et2_nextmatch_controller} from "./et2_extension_nextmatch_controller";
 import {et2_dataview} from "./et2_dataview";
 import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_customfields_list} from "./et2_extension_customfields";
-import {et2_link_entry, et2_link_to} from "./et2_widget_link";
+import {et2_link_to} from "./et2_widget_link";
 import {et2_grid} from "./et2_widget_grid";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
-import {et2_taglist} from "./et2_widget_taglist";
-import {et2_selectAccount} from "./et2_widget_selectAccount";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_button} from "./et2_widget_button";
@@ -77,8 +75,11 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {Et2Button} from "./Et2Button/Et2Button";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import {Et2AccountFilterHeader} from "./Nextmatch/Headers/AccountFilterHeader";
+import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
+let keep_import : Et2AccountFilterHeader
 
 /**
  * Interface all special nextmatch header elements have to implement.
@@ -1260,7 +1261,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		_widget.iterateOver(function(_widget)
 		{
-			const label = self.egw().lang(_widget.options.label || _widget.options.empty_label || '');
+			const label = self.egw().lang(_widget.label || _widget.empty_label || _widget.options.label || _widget.options.empty_label || '');
 			if(!label) return;	// skip empty, undefined or null labels
 			if(!result)
 			{
@@ -1999,18 +2000,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				autoRefresh = <Et2Select>loadWebComponent("et2-select", {
 					empty_label: "Refresh",
 					id: "nm_autorefresh",
-					select_options: {
-						// Cause [unknown] problems with mail
-						30: "30 seconds",
-						//60: "1 Minute",
-						180: "3 Minutes",
-						300: "5 Minutes",
-						900: "15 Minutes",
-						1800: "30 Minutes"
-					},
 					statustext: egw.lang("Automatically refresh list"),
 					value: this._get_autorefresh()
 				}, this);
+				autoRefresh.select_options = {
+					// Cause [unknown] problems with mail
+					30: "30 seconds",
+					//60: "1 Minute",
+					180: "3 Minutes",
+					300: "5 Minutes",
+					900: "15 Minutes",
+					1800: "30 Minutes"
+				};
 			}
 
 			const defaultCheck = <Et2Select>loadWebComponent("et2-select", {
@@ -2181,7 +2182,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Add autorefresh
 			if(autoRefresh)
 			{
-				$footerWrap.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+				$footerWrap.append(autoRefresh);
 			}
 
 			// Add default checkbox for admins
@@ -2606,7 +2607,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		else if(bool)
 		{
-			filter = this.header._build_select(filter_name, 'select',
+			filter = this.header._build_select(filter_name, 'et2-select',
 				this.settings[filter_name], this.settings[filter_name + '_no_lang']);
 		}
 	}
@@ -3354,9 +3355,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 	private action_header : JQuery;
 
 	private search_box : JQuery;
-	private category : any;
-	private filter : et2_selectbox;
-	private filter2 : et2_selectbox;
+	private category : Et2Select | Et2SelectCategory;
+	private filter : Et2Select;
+	private filter2 : Et2Select;
 	private right_div : JQuery;
 	private count : JQuery;
 	private count_total : JQuery;
@@ -3520,7 +3521,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		{
 			if(typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
 			this.category = this._build_select('cat_id', settings.cat_is_select ?
-														 'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true, {
+														 'et2-select' : 'et2-select-cat', settings.cat_id, settings.cat_is_select !== true, {
 				multiple: false,
 				tags: true,
 				class: "select-cat",
@@ -3531,13 +3532,13 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Filter 1
 		if(!settings.no_filter)
 		{
-			this.filter = this._build_select('filter', 'select', settings.filter, settings.filter_no_lang);
+			this.filter = this._build_select('filter', 'et2-select', settings.filter, settings.filter_no_lang);
 		}
 
 		// Filter 2
 		if(!settings.no_filter2)
 		{
-			this.filter2 = this._build_select('filter2', 'select', settings.filter2,
+			this.filter2 = this._build_select('filter2', 'et2-select', settings.filter2,
 				settings.filter2_no_lang, {
 					multiple: false,
 					tags: settings.filter2_tags,
@@ -3704,7 +3705,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 	 * @param {string} lang
 	 * @param {object} extra
 	 */
-	_build_select(name : string, type : string, value : string, lang : string | boolean, extra? : object) : et2_selectbox
+	_build_select(name : string, type : string, value : string, lang : string | boolean, extra? : object) : Et2Select
 	{
 		const widget_options = jQuery.extend({
 			"id": name,
@@ -3716,13 +3717,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Set select options
 		// Check in content for options-<name>
 		const mgr = this.nextmatch.getArrayMgr("content");
-		let options = mgr.getEntry("options-" + name);
-		// Look in sel_options
-		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getEntry(name);
-		// Check parent sel_options, because those are usually global and don't get passed down
-		if(!options) options = this.nextmatch.getArrayMgr("sel_options").getParentMgr()?.getEntry(name);
+		let options = false
 		// Sometimes legacy stuff puts it in here
-		if(!options) options = mgr.getEntry('rows[sel_options][' + name + ']');
+		options = mgr.getEntry('rows[sel_options][' + name + ']');
 
 		// Maybe in a row, and options got stuck in ${row} instead of top level
 		const row_stuck = ['${row}', '{$row}'];
@@ -3753,21 +3750,21 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		}
 
 		// Create widget
-		const select = et2_createWidget(type, widget_options, this);
+		const select = <Et2Select>loadWebComponent(type, widget_options, this);
 
-		if(options) select.set_select_options(options);
+		if(options)
+		{
+			select.select_options = options;
+		}
 
 		// Set value
 		select.set_value(value);
 
 		// Set activeFilters to current value
-		this.nextmatch.activeFilters[select.id] = select.get_value();
-
-		// Set onChange
-		const input = select.input;
+		this.nextmatch.activeFilters[select.id] = select.value;
 
 		// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
-		select.attributes.select_options.ignore = true;
+		//select.attributes.select_options.ignore = true;
 
 		if(this.nextmatch.options.settings[name + "_onchange"])
 		{
@@ -3782,18 +3779,23 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			}
 
 			// Connect it to the onchange event of the input element - may submit
-			select.change = et2_compileLegacyJS(onchange, this.nextmatch, select.getInputNode());
+			select.onchange = et2_compileLegacyJS(onchange, this.nextmatch, select.getInputNode());
 			this._bindHeaderInput(select);
 		}
 		else	// default request changed rows with new filters, previous this.form.submit()
 		{
-			input.change(this.nextmatch, function(event)
+			select.addEventListener("change", () =>
 			{
 				const set = {};
-				set[name] = select.getValue();
-				event.data.applyFilters(set);
+				set[select.id] = select.getValue();
+				this.nextmatch.applyFilters(set);
 			});
 		}
+		select.updateComplete.then(async() =>
+		{
+			await select.updateComplete;
+			//select.syncValueFromItems();
+		})
 		return select;
 	}
 
@@ -4236,8 +4238,8 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 				{
 					delete (field.values['']);
 				}
-				widget = et2_createWidget(
-					field.type == 'select-account' ? 'nextmatch-accountfilter' : "nextmatch-filterheader",
+				widget = loadWebComponent(
+					field.type == 'select-account' ? 'et2-nextmatch-header-accountfilter' : "et2-nextmatch-header-filter",
 					{
 						id: cf_id,
 						empty_label: field.label,
@@ -4248,10 +4250,10 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 			}
 			else if(apps[field.type])
 			{
-				widget = et2_createWidget("nextmatch-entryheader", {
+				widget = loadWebComponent("et2-nextmatch-header-entry", {
 					id: cf_id,
 					only_app: field.type,
-					blur: field.label
+					placeholder: field.label
 				}, this);
 			}
 			else
@@ -4263,7 +4265,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 			}
 
 			// If this is already attached, widget needs to be finished explicitly
-			if(this.isAttached() && !widget.isAttached())
+			if(this.isAttached() && typeof widget.isAttached == "function" && !widget.isAttached())
 			{
 				widget.loadingFinished();
 			}
@@ -4436,394 +4438,3 @@ export class et2_nextmatch_sortheader extends et2_nextmatch_header implements et
 }
 
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
-
-/**
- * Filter from a provided list of options
- */
-export class et2_nextmatch_filterheader extends et2_selectbox implements et2_INextmatchHeader, et2_IResizeable
-{
-	private nextmatch : et2_nextmatch;
-
-	/**
-	 * Override to add change handler
-	 */
-	createInputWidget()
-	{
-		// Make sure there's an option for all
-		if(!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""]))
-		{
-			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
-		}
-		super.createInputWidget();
-
-		jQuery(this.getInputNode()).change(this, function(event)
-		{
-			if(typeof event.data.nextmatch == 'undefined')
-			{
-				// Not fully set up yet
-				return;
-			}
-			const col_filter = {};
-			col_filter[event.data.id] = event.data.input.val();
-			// Set value so it's there for response (otherwise it gets cleared if options are updated)
-			event.data.set_value(event.data.input.val());
-
-			event.data.nextmatch.applyFilters({col_filter: col_filter});
-		});
-
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch(_nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.activeFilters.col_filter && typeof this.nextmatch.activeFilters.col_filter[this.id] != "undefined")
-		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
-
-			// Make sure it's set in the nextmatch
-			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
-		}
-	}
-
-	// Make sure selectbox is not longer than the column
-	resize()
-	{
-		this.input.css("max-width", jQuery(this.parentNode).innerWidth() + "px");
-	}
-
-}
-
-et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
-
-/**
- * Filter by account
- */
-export class et2_nextmatch_accountfilterheader extends et2_selectAccount implements et2_INextmatchHeader, et2_IResizeable
-{
-	/**
-	 * Override to add change handler
-	 *
-	 */
-	createInputWidget()
-	{
-		// Make sure there's an option for all
-		if(!this.options.empty_label && !this.options.select_options[""])
-		{
-			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
-		}
-		super.createInputWidget();
-
-		this.input.change(this, function(event)
-		{
-			if(typeof event.data.nextmatch == 'undefined')
-			{
-				// Not fully set up yet
-				return;
-			}
-			var col_filter = {};
-			col_filter[event.data.id] = event.data.getValue();
-			event.data.nextmatch.applyFilters({col_filter: col_filter});
-		});
-
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch(_nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.activeFilters.col_filter && this.nextmatch.activeFilters.col_filter[this.id])
-		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
-		}
-	}
-
-	// Make sure selectbox is not longer than the column
-	resize()
-	{
-		var max = jQuery(this.parentNode).innerWidth() - 4;
-		var surroundings = this.getSurroundings()._widgetSurroundings;
-		for(var i = 0; i < surroundings.length; i++)
-		{
-			max -= jQuery(surroundings[i]).outerWidth();
-		}
-		this.input.css("max-width", max + "px");
-	}
-
-}
-
-et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
-
-/**
- * Filter allowing multiple values to be selected, base on a taglist instead
- * of a regular selectbox
- *
- * @augments et2_taglist
- */
-export class et2_nextmatch_taglistheader extends et2_taglist implements et2_INextmatchHeader, et2_IResizeable
-{
-	static readonly _attributes : any = {
-		autocomplete_url: {default: ''},
-		multiple: {default: 'toggle'},
-		onchange: {
-			// @ts-ignore
-			default: function(event)
-			{
-				if(typeof this.nextmatch === 'undefined')
-				{
-					// Not fully set up yet
-					return;
-				}
-				var col_filter = {};
-				col_filter[this.id] = this.getValue();
-				// Set value so it's there for response (otherwise it gets cleared if options are updated)
-				//event.data.set_value(event.data.input.val());
-
-				this.nextmatch.applyFilters({col_filter: col_filter});
-			}
-		},
-		rows: {default: 2},
-		class: {default: 'nm_filterheader_taglist'}
-	};
-	private nextmatch : et2_nextmatch;
-
-	/**
-	 * Override to add change handler
-	 *
-	 * @memberOf et2_nextmatch_filterheader
-	 */
-	createInputWidget()
-	{
-		// Make sure there's an option for all
-		if(!this.options.empty_label && (!this.options.select_options || !this.options.select_options[""]))
-		{
-			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
-		}
-		super.createInputWidget();
-	}
-
-	/**
-	 * Disable toggle if there are 2 or less options
-	 * @param {Object[]} options
-	 */
-	set_select_options(options)
-	{
-		if(options && options.length <= 2 && this.options.multiple == 'toggle')
-		{
-			this.set_multiple(false);
-		}
-		super.set_select_options(options)
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch(_nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.activeFilters.col_filter && typeof this.nextmatch.activeFilters.col_filter[this.id] != "undefined")
-		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
-
-			// Make sure it's set in the nextmatch
-			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
-		}
-	}
-
-	// Make sure selectbox is not longer than the column
-	resize()
-	{
-		this.div.css("height", '');
-		this.div.css("max-width", jQuery(this.parentNode).innerWidth() + "px");
-		super.resize();
-	}
-
-}
-
-et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
-
-/**
- * Nextmatch filter that can filter for a selected entry
- */
-export class et2_nextmatch_entryheader extends et2_link_entry implements et2_INextmatchHeader
-{
-	/**
-	 * Override to add change handler
-	 *
-	 * @memberOf et2_nextmatch_entryheader
-	 * @param {object} event
-	 * @param {object} selected
-	 */
-	onchange(event, selected)
-	{
-		const col_filter = {};
-		col_filter[this.id] = this.get_value();
-		this.nextmatch.applyFilters.call(this.nextmatch, {col_filter: col_filter});
-	}
-
-	/**
-	 * Override to always return a string appname:id (or just id) for simple (one real selection)
-	 * cases, parent returns an object.  If multiple are selected, or anything other than app and
-	 * id, the original parent value is returned.
-	 */
-	getValue()
-	{
-		let value = super.getValue();
-		if(typeof value == "object" && value != null)
-		{
-			if(!value.app || !value.id) return null;
-
-			// If array with just one value, use a string instead for legacy server handling
-			if(typeof value.id == 'object' && value.id.shift && value.id.length == 1)
-			{
-				value.id = value.id.shift();
-			}
-			// If simple value, format it legacy string style, otherwise
-			// we return full value
-			if(typeof value.id == 'string')
-			{
-				value = value.app + ":" + value.id;
-			}
-		}
-		return value;
-	}
-
-	/**
-	 * Set nextmatch is the function which has to be implemented for the
-	 * et2_INextmatchHeader interface.
-	 *
-	 * @param {et2_nextmatch} _nextmatch
-	 */
-	setNextmatch(_nextmatch)
-	{
-		this.nextmatch = _nextmatch;
-
-		// Set current filter value from nextmatch settings
-		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
-		{
-			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
-
-			if(this.getValue() != this.nextmatch.activeFilters.col_filter[this.id])
-			{
-				this.nextmatch.activeFilters.col_filter[this.id] = this.getValue();
-			}
-
-			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
-			this.attributes.value.ignore = true;
-			//this.attributes.select_options.ignore = true;
-		}
-		// Fire on lost focus, clear filter if user emptied box
-	}
-}
-
-et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
-
-/**
- * @augments et2_nextmatch_filterheader
- */
-export class et2_nextmatch_customfilter extends et2_nextmatch_filterheader
-{
-	static readonly _attributes : any = {
-		"widget_type": {
-			"name": "Actual type",
-			"type": "string",
-			"description": "The actual type of widget you should use",
-			"no_lang": 1
-		},
-		"widget_options": {
-			"name": "Actual options",
-			"type": "any",
-			"description": "The options for the actual widget",
-			"no_lang": 1,
-			"default": {}
-		}
-	};
-	public static readonly legacyOptions : ["widget_type", "widget_options"];
-
-	real_node : et2_selectbox;
-
-	/**
-	 * Constructor
-	 *
-	 * @param _parent
-	 * @param _attrs
-	 * @param _child
-	 * @memberOf et2_nextmatch_customfilter
-	 */
-	constructor(_parent? : et2_widget, _attrs? : WidgetConfig, _child? : object)
-	{
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {}));
-
-		switch(_attrs.widget_type)
-		{
-			case "link-entry":
-				_attrs.type = 'nextmatch-entryheader';
-				break;
-			default:
-				if(_attrs.widget_type.indexOf('select') === 0)
-				{
-					_attrs.type = 'nextmatch-filterheader';
-				}
-				else
-				{
-					_attrs.type = _attrs.widget_type;
-				}
-		}
-		jQuery.extend(_attrs.widget_options, {id: this.id});
-
-		_attrs.id = '';
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_customfilter._attributes, _child || {}));
-
-		this.real_node = et2_createWidget(_attrs.type, _attrs.widget_options, this.getParent());
-		const select_options = [];
-		const correct_type = _attrs.type;
-		this.real_node['type'] = _attrs.widget_type;
-		et2_selectbox.find_select_options(this.real_node, select_options, _attrs);
-		this.real_node["_type"] = correct_type;
-		if(typeof this.real_node.set_select_options === 'function')
-		{
-			this.real_node.set_select_options(select_options);
-		}
-	}
-
-	// Just pass the real DOM node through, in case anybody asks
-	getDOMNode(_sender)
-	{
-		return this.real_node ? this.real_node.getDOMNode(_sender) : null;
-	}
-
-	// Also need to pass through real children
-	getChildren()
-	{
-		return this.real_node.getChildren() || [];
-	}
-
-	setNextmatch(_nextmatch : et2_nextmatch)
-	{
-		if(this.real_node && this.real_node.instanceOf(et2_INextmatchHeader))
-		{
-			return (<et2_INextmatchHeader><unknown>this.real_node).setNextmatch(_nextmatch);
-		}
-	}
-}
-
-et2_register_widget(et2_nextmatch_customfilter, ['nextmatch-customfilter']);

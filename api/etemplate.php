@@ -82,23 +82,27 @@ function send_template()
 				list($matches[1], $matches[2]) = explode('-', $type[1], 2);
 				if (!empty($matches[2])) $matches[2] = '-'.$matches[2];
 			}
-			static $legacy_options = array( // use "ignore" to ignore further comma-sep. values, otherwise they are all in last attribute
-				'select'         => 'empty_label,ignore',
-				'select-account' => 'empty_label,account_type,ignore',
-				'select-number'  => 'empty_label,min,max,interval,suffix',
-				'box'            => ',cellpadding,cellspacing,keep',
-				'hbox'           => 'cellpadding,cellspacing,keep',
-				'vbox'           => 'cellpadding,cellspacing,keep',
-				'groupbox'       => 'cellpadding,cellspacing,keep',
-				'checkbox'       => 'selected_value,unselected_value,ro_true,ro_false',
-				'radio'          => 'set_value,ro_true,ro_false',
-				'customfields'   => 'sub-type,use-private,field-names',
-				'date'           => 'data_format,ignore',
+			static $legacy_options = array(
+				// use "ignore" to ignore further comma-sep. values, otherwise they are all in last attribute
+				'select'                  => 'empty_label,ignore',
+				'select-account'          => 'empty_label,account_type,ignore',
+				'select-number'           => 'empty_label,min,max,interval,suffix',
+				'box'                     => ',cellpadding,cellspacing,keep',
+				'hbox'                    => 'cellpadding,cellspacing,keep',
+				'vbox'                    => 'cellpadding,cellspacing,keep',
+				'groupbox'                => 'cellpadding,cellspacing,keep',
+				'checkbox'                => 'selected_value,unselected_value,ro_true,ro_false',
+				'radio'                   => 'set_value,ro_true,ro_false',
+				'customfields'            => 'sub-type,use-private,field-names',
+				'date'                    => 'data_format,ignore',
 				// Legacy option "mode" was never implemented in et2
-				'description'    => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
-				'button'         => 'image,ro_image',
-				'buttononly'     => 'image,ro_image',
-				'link-entry'     => 'only_app,application_list',
+				'description'             => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
+				'button'                  => 'image,ro_image',
+				'buttononly'              => 'image,ro_image',
+				'link-entry'              => 'only_app,application_list',
+				'nextmatch-filterheader'  => 'empty_label',
+				'nextmatch-customfilter'  => 'widget_type,widget_options',
+				'nextmatch-accountfilter' => 'empty_label,account_type,ignore',
 			);
 			// prefer more specific type-subtype over just type
 			$names = $legacy_options[$matches[1] . $matches[2]] ?? $legacy_options[$matches[1]] ?? null;
@@ -226,6 +230,33 @@ function send_template()
 				{
 					return $attr.'="'.$val.'"';
 				}, array_keys($attrs), $attrs)) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
+			return $replace;
+		}, $str);
+
+		// nextmatch headers
+		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)
+		{
+			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[4], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+
+			if(!$matches[2] || in_array($matches[2], ['sort']))
+			{
+				return $matches[0];
+			}
+			// No longer needed & type causes problems
+			unset($attrs['type'], $attrs['tags']);
+
+			if($matches[2] == 'taglist')
+			{
+				$matches[2] = "filter";
+			}
+
+			$replace = '<et2-nextmatch-header-' . $matches[2] . ' ' .
+				implode(' ', array_map(static function ($attr, $val)
+						   {
+							   return $attr . '="' . $val . '"';
+						   }, array_keys($attrs), $attrs)
+				) . '/>';
 			return $replace;
 		}, $str);
 

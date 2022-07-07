@@ -2188,7 +2188,9 @@ div.message.floating, lion-validation-feedback[type] {
 }
 
 .et2_nextmatch .nextmatch_header_row > div {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1ex;
 }
 
 /* Firefox only search clear button */

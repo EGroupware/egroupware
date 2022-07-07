@@ -126,8 +126,8 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {
   position: absolute;
   top: 0;
   /* Required for Chrome 76+ on Windows */
-  left: 342px;
-  right: 215px;
+  left: 350px;
+  right: 233px;
 }
 #addressbook-index .filtersContainer select {
   width: 31.5%;
