@@ -233,7 +233,7 @@ export class StaticOptions
 		return this.cached_server_side(widget, 'select-app', options);
 	}
 
-	cat(widget : Et2SelectWidgets) : SelectOption[]
+	cat(widget : Et2SelectWidgets) : Promise<SelectOption[]>
 	{
 		var options = [widget.global_categories, /*?*/, widget.application, widget.parent_cat];
 
@@ -244,7 +244,7 @@ export class StaticOptions
 				(widget.getInstanceManager() && widget.getInstanceManager().app) ||
 				widget.egw().app_name();
 		}
-		return this.cached_server_side(widget, 'select-cat', options.join(','))
+		return <Promise<SelectOption[]>>this.cached_server_side(widget, 'select-cat', options.join(','), true);
 	}
 
 	country(widget : Et2SelectWidgets, attrs, return_promise) : SelectOption[]|Promise<SelectOption[]>
