@@ -57,11 +57,9 @@ export class Et2SelectCategory extends Et2Select
 	constructor()
 	{
 		super();
-
-		this.select_options = so.cat(this);
 	}
 
-	connectedCallback()
+	async connectedCallback()
 	{
 		super.connectedCallback();
 
@@ -71,6 +69,16 @@ export class Et2SelectCategory extends Et2Select
 				// When the widget is first created, it doesn't have a parent and can't find it's instanceManager
 				(this.getInstanceManager() && this.getInstanceManager().app) ||
 				this.egw().app_name();
+		}
+		// If app passes options (addressbook index) we'll use those instead.
+		// They will be found automatically by update() after ID is set.
+		await this.updateComplete;
+		if(this.select_options.length == 0)
+		{
+			so.cat(this).then(options =>
+			{
+				this.select_options = options
+			});
 		}
 	}
 
