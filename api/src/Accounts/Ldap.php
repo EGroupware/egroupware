@@ -45,6 +45,42 @@ use setup_cmd_ldap;
  */
 class Ldap
 {
+	use LdapVlvSortRequestTrait;
+
+	/**
+	 * Timestamps ldap => egw used in several places
+	 *
+	 * @var string[]
+	 */
+	public $timestamps2egw = [
+		'createtimestamp' => 'account_created',
+		'modifytimestamp' => 'account_modified',
+		'shadowexpire' => 'account_expires',
+		'shadowlastchange' => 'account_lastpwd_change',
+		//'lastlogon' => 'account_lastlogin',
+	];
+
+	/**
+	 * Other attributes sorted by their default matching rule
+	 */
+	public $other2egw = [
+		'uidnumber' => 'account_id',
+		'gidnumber' => 'account_primary_group',
+	];
+
+	/**
+	 * String attributes which can be sorted by caseIgnoreMatch ldap => egw
+	 *
+	 * @var string[]
+	 */
+	public $attributes2egw = [
+		'uid' => 'account_lid',
+		'sn'  => 'account_lastname',
+		'givenname' => 'account_firstname',
+		'cn'  => 'account_fullname',
+		'email' => 'account_email',
+	];
+
 	/**
 	 * Name of mail attribute
 	 */
@@ -692,6 +728,7 @@ class Ldap
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
+	 * @param $param['modified'] int if given minimum modification time
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -722,9 +759,10 @@ class Ldap
 		else	// we need to run the unlimited query
 		{
 			$query = Api\Ldap::quote(strtolower($param['query']));
+			$order_by = ($param['order'] ?? null ? explode(',', $param['order'])[0] : 'account_lid').' '.($param['sort'] ?? null ?: 'ASC');
 
 			$accounts = array();
-			if($param['type'] != 'groups')
+			if($param['type'] !== 'groups')
 			{
 				$filter = "(&(objectclass=posixaccount)";
 				if (!empty($query) && $query != '*')
@@ -758,10 +796,27 @@ class Ldap
 					}
 				}
 				// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
-				$filter .= str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$this->account_filter);
+				$filter .= str_replace(array('%user', '%domain'), array('*', $GLOBALS['egw_info']['user']['domain']), $this->account_filter);
+
+				// return only group-members
+				if (is_numeric($param['type']))
+				{
+					if (($members = Api\Accounts::getInstance()->members($param['type'], true)))
+					{
+						$filter .= '(|(uidNumber=' . implode(')(uidNumber=', $members) . '))';
+					}
+					else
+					{
+						$filter .= '(uidNumber=0)'; // to NOT find any user
+					}
+				}
+				if (!empty($param['modified']))
+				{
+					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
+				}
 				$filter .= ')';
 
-				if ($param['type'] != 'both')
+				/*if ($param['type'] != 'both')
 				{
 					// follow:
 					// - first query only few attributes for sorting and throwing away not needed results
@@ -800,52 +855,57 @@ class Ldap
 					$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
 					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
 					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
-				}
-				/** @noinspection SuspiciousAssignmentsInspection */
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn',static::MAIL_ATTR,'shadowExpire','createtimestamp','modifytimestamp','objectclass','gidNumber'));
+				}*/
 
-				$utc_diff = date('Z');
-				foreach(ldap_get_entries($this->ds, $sri) ?: [] as $allVals)
+				if ($param['type'] !== 'groups')
 				{
-					$test = @$allVals['uid'][0];
-					if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
+					$allValues = $this->vlvSortQuery($this->user_context, $filter,
+						['uid', 'uidNumber', 'givenname', 'sn', static::MAIL_ATTR, 'shadowExpire', 'createtimestamp', 'modifytimestamp', 'objectclass', 'gidNumber'],
+						$order_by, $start, $offset, $totalcount);
+
+					$utc_diff = date('Z');
+					foreach ($allValues ?: [] as $allVals)
 					{
-						$account = Array(
-							'account_id'        => $allVals['uidnumber'][0],
-							'account_lid'       => Api\Translation::convert($allVals['uid'][0],'utf-8'),
-							'account_type'      => 'u',
-							'account_firstname' => Api\Translation::convert($allVals['givenname'][0],'utf-8'),
-							'account_lastname'  => Api\Translation::convert($allVals['sn'][0],'utf-8'),
-							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
-							'account_expires'   => isset($allVals['shadowexpire']) && $allVals['shadowexpire'][0] ? $allVals['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
-							'account_email'     => $allVals[static::MAIL_ATTR][0],
-							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
-							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
-							'account_primary_group' => (string)-$allVals['gidnumber'][0],
-						);
-						//error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
-						if ($param['active'] && !$this->frontend->is_active($account))
+						$test = $allVals['uid'][0];
+						if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 						{
-							if (isset($totalcount)) --$totalcount;
-							continue;
+							$account = array(
+								'account_id' => $allVals['uidnumber'][0],
+								'account_lid' => Api\Translation::convert($allVals['uid'][0], 'utf-8'),
+								'account_type' => 'u',
+								'account_firstname' => Api\Translation::convert($allVals['givenname'][0], 'utf-8'),
+								'account_lastname' => Api\Translation::convert($allVals['sn'][0], 'utf-8'),
+								'account_status' => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0] * 24 * 3600 - $utc_diff < time() ? false : 'A',
+								'account_expires' => isset($allVals['shadowexpire']) && $allVals['shadowexpire'][0] ? $allVals['shadowexpire'][0] * 24 * 3600 + $utc_diff : -1, // LDAP date is in UTC
+								'account_email' => $allVals[static::MAIL_ATTR][0],
+								'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
+								'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
+								'account_primary_group' => (string)-$allVals['gidnumber'][0],
+							);
+							//error_log(__METHOD__."() ldap=".array2string($allVals)." --> account=".array2string($account));
+							if ($param['active'] && !$this->frontend->is_active($account))
+							{
+								if (isset($totalcount)) --$totalcount;
+								continue;
+							}
+							$account['account_fullname'] = Api\Accounts::format_username($account['account_lid'],
+								$account['account_firstname'], $account['account_lastname'], $allVals['uidnumber'][0]);
+							// return objectclass(es)
+							if ($param['objectclass'])
+							{
+								$account['objectclass'] = array_map('strtolower', $allVals['objectclass']);
+								unset($account['objectclass']['count']);
+							}
+							$accounts[$account['account_id']] = $account;
 						}
-						$account['account_fullname'] = Api\Accounts::format_username($account['account_lid'],
-							$account['account_firstname'], $account['account_lastname'], $allVals['uidnumber'][0]);
-						// return objectclass(es)
-						if ($param['objectclass'])
-						{
-							$account['objectclass'] = array_map('strtolower', $allVals['objectclass']);
-							unset($account['objectclass']['count']);
-						}
-						$accounts[$account['account_id']] = $account;
 					}
 				}
 			}
-			if ($param['type'] == 'groups' || $param['type'] == 'both')
+			if ($param['type'] === 'groups' || $param['type'] === 'both')
 			{
 				if(empty($query) || $query === '*')
 				{
-					$filter = "(&(objectclass=posixgroup)$this->group_filter)";
+					$filter = "(&(objectclass=posixgroup)$this->group_filter";
 				}
 				else
 				{
@@ -861,10 +921,16 @@ class Ldap
 						case 'exact':
 							break;
 					}
-					$filter = "(&(objectclass=posixgroup)(cn=$query)$this->group_filter)";
+					$filter = "(&(objectclass=posixgroup)(cn=$query)$this->group_filter";
 				}
-				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
-				foreach(ldap_get_entries($this->ds, $sri) ?: [] as $allVals)
+				if (!empty($param['modified']))
+				{
+					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
+				}
+				$filter .= ')';
+				$allValues = $this->vlvSortQuery($this->group_context, $filter, ['cn', 'gidNumber'], $order_by, $start, $offset, $group_total);
+				$totalcount += $group_total;
+				foreach($allValues ?: [] as $allVals)
 				{
 					$test = $allVals['cn'][0];
 					if (!$this->frontend->config['global_denied_groups'][$test] && $allVals['cn'][0])
@@ -878,7 +944,7 @@ class Ldap
 							'account_status'    => 'A',
 							'account_fullname'  => Api\Translation::convert($allVals['cn'][0],'utf-8'),
 						);
-						if (isset($totalcount)) ++$totalcount;
+						//if (isset($totalcount)) ++$totalcount;
 					}
 				}
 			}
@@ -905,7 +971,7 @@ class Ldap
 		if(is_numeric($start) && is_numeric($offset))
 		{
 			$account_search[$serial]['total'] = $this->total;
-			return $account_search[$serial]['data'] = isset($totalcount) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset, true);
+			return $account_search[$serial]['data'] = isset($totalcount) || !isset($start) ? $sortedAccounts : array_slice($sortedAccounts, $start, $offset, true);
 		}
 		return $sortedAccounts;
 	}
