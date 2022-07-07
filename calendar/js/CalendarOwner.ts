@@ -10,6 +10,7 @@
 
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {css} from "@lion/core";
+import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
 
 /**
  * Select widget customised for calendar owner, which can be a user
@@ -37,6 +38,9 @@ export class CalendarOwner extends Et2Select
 		super(...args);
 		this.searchUrl = "calendar_owner_etemplate_widget::ajax_search";
 		this.multiple = true;
+
+		// Any free entries must be email addresses
+		this.defaultValidators.push(new IsEmail());
 	}
 
 	/**
