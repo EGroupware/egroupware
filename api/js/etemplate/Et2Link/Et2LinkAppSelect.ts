@@ -108,10 +108,23 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		// Set icon
 		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
 
+		if(!this.value)
+		{
+			// use preference
+			let appname = "";
+			if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.to_app)
+			{
+				appname = this.parentNode.to_app;
+			}
+			this.value = this.egw().preference('link_app', appname || this.egw().app_name());
+		}
 		// Register to
 		this.addEventListener("change", this._handleChange);
 
-		if (this.__only_app) this.style.display = 'none';
+		if(this.__only_app)
+		{
+			this.style.display = 'none';
+		}
 	}
 
 	disconnectedCallback()
@@ -151,9 +164,9 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		return this.__application_list;
 	}
 
-	get value()
+	get value() : string
 	{
-		return this.only_app ? this.only_app : super.value;
+		return this.only_app ? this.only_app : <string>super.value;
 	}
 
 	set value(new_value)

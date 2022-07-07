@@ -63,7 +63,12 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			/**
 			 * Callback when user selects an option.  Must return true, or false to abort normal action.
 			 */
-			select: {type: Function}
+			select: {type: Function},
+
+			/**
+			 * Displayed in the search / select when no value is selected
+			 */
+			placeholder: {type: String}
 		}
 	}
 
@@ -174,6 +179,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		{
 			this.app = app;
 		}
+		if(this._appNode)
+		{
+			this._appNode.only_app = app;
+		}
 	}
 
 	get only_app()
@@ -205,6 +214,15 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		return this.querySelector("[slot='select']");
 	}
 
+	get placeholder() : string
+	{
+		return this._searchNode?.placeholder;
+	}
+
+	set placeholder(new_value)
+	{
+		this._searchNode.placeholder = new_value;
+	}
 
 	protected _bindListeners()
 	{
@@ -244,6 +262,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	protected _handleEntrySelect(event)
 	{
 		this.classList.add("hideApp");
+		this.dispatchEvent(new Event("change"));
 	}
 
 
@@ -256,6 +275,8 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	{
 		this.classList.remove("hideApp")
 		this._searchNode.focus();
+
+		this.dispatchEvent(new Event("change"));
 	}
 
 
@@ -290,7 +311,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	{
 		if(this.only_app)
 		{
-			return this._searchNode?.value;
+			return <string>this._searchNode?.value;
 		}
 		return this._searchNode ? <LinkInfo>{
 			id: this._searchNode.value,
@@ -301,7 +322,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set value(val : LinkInfo | string | number)
 	{
-		let value : LinkInfo = {app: this.only_app, id: ""};
+		let value : LinkInfo = {app: this.only_app || this.app, id: ""};
 
 		if(typeof val === 'string' && val.length > 0)
 		{
