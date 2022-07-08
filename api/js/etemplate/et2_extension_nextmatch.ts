@@ -4239,7 +4239,7 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 					delete (field.values['']);
 				}
 				widget = loadWebComponent(
-					field.type == 'select-account' ? 'et2-nextmatch-header-accountfilter' : "et2-nextmatch-header-filter",
+					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
 					{
 						id: cf_id,
 						empty_label: field.label,
