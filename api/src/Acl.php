@@ -180,7 +180,7 @@ class Acl
 	 * Delete ACL record in the repository of the class
 	 *
 	 * @param string $appname appname or '' for $GLOBALS['egw_info']['flags']['currentapp']
-	 * @param string/boolean $location location or false for all locations
+	 * @param string|boolean $location location or false for all locations
 	 * @return array all ACL records from $this->data.
 	 */
 	function delete($appname,$location)
@@ -496,7 +496,7 @@ class Acl
 	 * @param string $location location
 	 * @param int $required required rights
 	 * @param int $accountid account id defaults to $GLOBALS['egw_info']['user']['account_id'];
-	 * @return array/boolean false if there are no matching row in the db, else array with app-names
+	 * @return array with app-names ([] if there are none)
 	 */
 	function get_app_list_for_id($location, $required, $accountid = '')
 	{
@@ -512,7 +512,7 @@ class Acl
 			$cache_accountid[$accountid] = $account_id;
 		}
 		$rights = 0;
-		$apps = false;
+		$apps = [];
 		foreach($this->db->select(self::TABLE,array('acl_appname','acl_rights'),array(
 			'acl_location' => $location,
 			'acl_account'  => $account_id,
@@ -537,7 +537,7 @@ class Acl
 	 * @param string $app app
 	 * @param int $required required rights
 	 * @param int $accountid optional defaults to $GLOBALS['egw_info']['user']['account_id'];
-	 * @return array/boolean false if there are no matching rows in the db or array with location-strings
+	 * @return array with location-strings ([] if there are none)
 	 */
 	function get_location_list_for_id($app, $required, $accountid = '')
 	{
@@ -551,7 +551,7 @@ class Acl
 		{
 			$accountid = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 		}
-		$locations = false;
+		$locations = [];
 		foreach($this->db->select(self::TABLE,'acl_location,acl_rights',array(
 			'acl_appname' => $app,
 			'acl_account' => $accountid,
@@ -571,13 +571,13 @@ class Acl
 	 * @param string $location location
 	 * @param int $required required rights
 	 * @param string $app app optional defaults to $GLOBALS['egw_info']['flags']['currentapp'];
-	 * @return boolean/array false if there are no matching rows in the db or array of account-ids
+	 * @return array of account-ids ([] if there are none in the db)
 	 */
 	function get_ids_for_location($location, $required, $app = '')
 	{
 		if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		$accounts = false;
+		$accounts = [];
 		foreach($this->db->select(self::TABLE,array('acl_account','acl_rights'),array(
 			'acl_appname'  => $app,
 			'acl_location' => $location,
@@ -595,13 +595,13 @@ class Acl
 	 * get the locations for an app (excluding the run location !!!)
 	 *
 	 * @param string $app app optional defaults to $GLOBALS['egw_info']['flags']['currentapp'];
-	 * @return boolean/array false if there are no matching location in the db or array of locations
+	 * @return array of locations ([] if there are none)
 	 */
 	function get_locations_for_app($app='')
 	{
 		if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		$locations = false;
+		$locations = [];
 		foreach($this->db->select(self::TABLE,'DISTINCT '.'acl_location',array(
 			'acl_appname'  => $app,
 		),__LINE__,__FILE__) as $row)
@@ -662,7 +662,7 @@ class Acl
 	 * Read the grants other users gave $this->account_id for $app, group ACL is taken into account
 	 *
 	 * @param string $app optional defaults to $GLOBALS['egw_info']['flags']['currentapp']
-	 * @param boolean/array $enum_group_acls = true should group acls be returned for all members of that group, default yes
+	 * @param boolean|array $enum_group_acls = true should group acls be returned for all members of that group, default yes
 	 * 	if an array of group-id's is given, that id's will NOT be enumerated!
 	 * @param int $user = null user whos grants to return, default current user
 	 * @return array with account-ids (of owners) and granted rights as values
