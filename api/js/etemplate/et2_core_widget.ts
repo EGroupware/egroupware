@@ -796,7 +796,7 @@ export class et2_widget extends ClassWithAttributes
 
 		// Get the constructor - if the widget is readonly, use the special "_ro"
 		// constructor if it is available
-		if (typeof et2_registry[_nodeName] === "undefined")
+		if(typeof et2_registry[_nodeName] === "undefined" && typeof window.customElements.get(_nodeName) == "undefined")
 		{
 			_nodeName = 'placeholder';
 		}
@@ -806,9 +806,9 @@ export class et2_widget extends ClassWithAttributes
 			constructor = et2_registry[_nodeName + "_ro"];
 		}
 
-		if(typeof window.customElements.get(_node.nodeName.toLowerCase()) !== "undefined")
+		if(typeof window.customElements.get(_nodeName) !== "undefined")
 		{
-			widget = loadWebComponent(_node.nodeName.toLowerCase(), _node, this);
+			widget = loadWebComponent(_nodeName, _node, this);
 		}
 		else
 		{
