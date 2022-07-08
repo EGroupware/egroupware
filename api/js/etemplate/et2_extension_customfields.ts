@@ -25,6 +25,7 @@ import {et2_IDetachedDOM, et2_IInput} from "./et2_core_interfaces";
 import {et2_cloneObject, et2_no_init} from "./et2_core_common";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import {LitElement} from "@lion/core";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -285,44 +286,49 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values))
 				{
 					const w = et2_registry[type];
-					if (typeof w !== 'undefined')
+					const wc = window.customElements.get('et2-' + type);
+					if(wc)
 					{
 						for(let attr_name in field.values)
 						{
-							if (typeof w._attributes[attr_name] != "undefined")
+							if(wc.getPropertyOptions(attr_name))
 							{
 								attrs[attr_name] = field.values[attr_name];
 							}
 						}
 					}
-					else
+					else if(typeof w !== 'undefined')
 					{
-						const wc = window.customElements.get('et2-'+type);
-						if (wc)
+						for(let attr_name in field.values)
 						{
-							for(let attr_name in field.values)
+							if(typeof w._attributes[attr_name] != "undefined")
 							{
-								if (wc.getPropertyOptions(attr_name))
-								{
-									attrs[attr_name] = field.values[attr_name];
-								}
+								attrs[attr_name] = field.values[attr_name];
 							}
 						}
 					}
 				}
 				// Create widget
-				if (typeof et2_registry[type] !== 'undefined')
-				{
-					this.widgets[field_name] = et2_createWidget(type, attrs, this);
-				}
-				else
+
+				if(window.customElements.get('et2-' + type))
 				{
 					if (typeof attrs.needed !== 'undefined')
 					{
 						attrs.required = attrs.needed;
 						delete attrs.needed;
 					}
-					this.widgets[field_name] = loadWebComponent('et2-'+type, attrs, this);
+					//this.widgets[field_name] = loadWebComponent('et2-' + type, attrs, null);
+					// et2_extension_customfields.getDOMNode() needs webcomponent to have ID before it can put it in
+					let wc = <LitElement>loadWebComponent('et2-' + type, attrs, this);
+					wc.setParent(this);
+					wc.updateComplete.then(() =>
+					{
+						this.widgets[field_name] = wc;
+					})
+				}
+				else if(typeof et2_registry[type] !== 'undefined')
+				{
+					this.widgets[field_name] = et2_createWidget(type, attrs, this);
 				}
 			}
 
