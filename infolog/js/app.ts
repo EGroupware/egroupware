@@ -231,6 +231,7 @@ class InfologApp extends EgwApp
 	 */
 	filter_change()
 	{
+		if (!this.et2) return;	// ignore calls before et2_ready
 		var filter = this.et2.getWidgetById('filter');
 		var nm = this.et2.getWidgetById('nm');
 		var dates = this.et2.getWidgetById('infolog.index.dates');
