@@ -221,7 +221,10 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set placeholder(new_value)
 	{
-		this._searchNode.placeholder = new_value;
+		if(this._searchNode)
+		{
+			this._searchNode.placeholder = new_value;
+		}
 	}
 
 	protected _bindListeners()
