@@ -52,16 +52,14 @@ class ContentSecurityPolicy
 	 * Calling this method with an empty array for frame-src or connect-src causes the hook to NOT run and just set 'self'!
 	 *
 	 * @param string $source valid CSP source types like 'script-src', 'style-src', 'connect-src', 'frame-src', ...
-	 * @param string|array $attrs 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
+	 * @param string|array $_attrs 'unsafe-eval', 'unsafe-inline' (without quotes!), full URLs or protocols (incl. colon!)
 	 * 	'none' removes all other attributes, even ones set later!
 	 * @param bool $reset =false true: remove existing default or hook attributes
 	 */
-	public static function add($source, $attrs, $reset=false)
+	public static function add($source, $_attrs, $reset=false)
 	{
-		if (!is_array($attrs))
-		{
-			$attrs = (array)$attrs;
-		}
+		$attrs = (array)$_attrs;
+
 		if ($reset)
 		{
 			self::$sources[$source] = [];
@@ -69,7 +67,7 @@ class ContentSecurityPolicy
 		elseif (!isset(self::$sources[$source]))
 		{
 			// set frame-src attrs of API and apps via hook
-			if (in_array($source, ['frame-src', 'connect-src']) && $attrs !== [])
+			if (in_array($source, ['frame-src', 'connect-src']) && $_attrs !== [])
 			{
 				// for regular (non login) pages, call hook allowing apps to add additional frame- and connect-src
 				if (basename($_SERVER['PHP_SELF']) !== 'login.php' &&
