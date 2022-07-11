@@ -650,46 +650,52 @@ class Saml implements BackendSSO
 			}
 		}
 
+		// create a key-pair, if not existing
+		$cert_dir = $config_dir.'/cert';
+		$private_key_path = $cert_dir.'/saml.pem';
+		$public_key_path = $cert_dir.'/saml.crt';
+
+		if (!file_exists($private_key_path) || !file_exists($public_key_path) ||
+			!preg_match('/^-----BEGIN CERTIFICATE-----$/m', file_get_contents($public_key_path)))
+		{
+			$config = [
+				"digest_alg" => "sha512",
+				"private_key_bits" => 2048,
+				"private_key_type" => OPENSSL_KEYTYPE_RSA,
+			];
+			// Read or generate the private key
+			if ((!file_exists($private_key_path) ||
+				($pkey = openssl_pkey_get_private(file_get_contents($private_key_path))) === false) &&
+				($pkey = openssl_pkey_new($config)) === false)
+			{
+				throw new Exception('Error generating key-pair!');
+			}
+
+			// generate CSR and self-sign it
+			if (($csr = openssl_csr_new([
+					'commonName' => Api\Header\Http::host(),
+				], $pkey, $config)) === false ||
+				($cert = openssl_csr_sign($csr, null, $pkey, 3650, $config)) === false)
+			{
+				throw new Exception('Error self-signing cert!');
+			}
+
+			// Extract the public key from $res to $pubKey
+			if (openssl_x509_export_to_file($cert, $public_key_path) === false ||
+				// Extract the private key
+				openssl_pkey_export_to_file($pkey, $private_key_path) === false)	// ToDo: db-password as passphrase
+			{
+				throw new Exception('Error storing key-pair!');
+			}
+
+			// fix permisions to only allow webserver access
+			chmod($public_key_path, 0600);
+			chmod($private_key_path, 0600);
+		}
+
 		// create a default configuration
 		if (!file_exists($config_dir.'/config.php') || filesize($config_dir.'/config.php') < 1000)
 		{
-			// create a key-pair
-			$cert_dir = $config_dir.'/cert';
-			$private_key_path = $cert_dir.'/saml.pem';
-			$public_key_path = $cert_dir.'/saml.crt';
-
-			if (!file_exists($private_key_path) || !file_exists($public_key_path))
-			{
-				// Create the private and public key
-				$res = openssl_pkey_new([
-					"digest_alg" => "sha512",
-					"private_key_bits" => 2048,
-					"private_key_type" => OPENSSL_KEYTYPE_RSA,
-				]);
-
-				if ($res === false)
-				{
-					throw new Exception('Error generating key-pair!');
-				}
-
-				// Extract the public key from $res to $pubKey
-				$details = openssl_pkey_get_details($res);
-
-				// Extract the private key from $res
-				$public_key = null;
-				openssl_pkey_export($res, $public_key);	// ToDo: db-password as passphrase
-
-				if (!file_put_contents($public_key_path, $details["key"]) ||
-					!file_put_contents($private_key_path, $public_key.$details["key"]))
-				{
-					throw new Exception('Error storing key-pair!');
-				}
-
-				// fix permisions to only allow webserver access
-				chmod($public_key_path, 0600);
-				chmod($private_key_path, 0600);
-			}
-
 			$simplesaml_dir = EGW_SERVER_ROOT.'/vendor/simplesamlphp/simplesamlphp';
 
 			foreach(glob($simplesaml_dir.'/config-templates/*.php') as $path)
