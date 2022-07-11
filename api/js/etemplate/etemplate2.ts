@@ -80,6 +80,7 @@ import './Et2Url/Et2UrlPhoneReadonly';
 import './Et2Url/Et2UrlFax';
 import './Et2Url/Et2UrlFaxReadonly';
 import "./Layout/Et2Split/Et2Split";
+import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
 import "./Et2Vfs/Et2VfsUid";
 

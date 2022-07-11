@@ -59,6 +59,9 @@ export class Et2EmailTag extends Et2Tag
 			.tag__prefix.contact_plus_contact {
 				background-image: ${cssImage("contact")}
 			}
+			.tag__remove {
+				order: 3;
+			}
 		`];
 	}
 

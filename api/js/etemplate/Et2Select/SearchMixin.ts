@@ -127,7 +127,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					display:none;
 				}
 				:host([search]:not([readonly])) ::slotted(sl-icon[slot="suffix"]) {
-					display: initial;
+					display: hidden;
 				}
 				
 				/* Move the widget border */

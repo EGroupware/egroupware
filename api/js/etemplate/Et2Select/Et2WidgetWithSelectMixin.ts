@@ -79,6 +79,11 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				 * <option/> children, or using widget.select_options = SelectOption[]
 				 */
 				select_options: {type: Object, noAccessor: true},
+
+				/**
+				 * Limit size
+				 */
+				rows: {type: Number, noAccessor: true, reflect: true}
 			}
 		}
 

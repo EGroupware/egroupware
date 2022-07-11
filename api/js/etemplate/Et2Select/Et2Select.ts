@@ -17,9 +17,10 @@ import shoelace from "../Styles/shoelace";
 import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {LionValidationFeedback} from "@lion/form-core";
+import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 
 // export Et2WidgetWithSelect which is used as type in other modules
-export class Et2WidgetWithSelect extends Et2widgetWithSelectMixin(SlSelect)
+export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
 {
 };
 
@@ -94,10 +95,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			/* Maximum height + scrollbar on tags (+ other styling) */
 			.select__tags {
 				margin-left: 0px;
-				max-height: 5em;
+				max-height: initial;
 				overflow-y: auto;
 				
+				flex: 1 1 auto;
 				gap: 0.1rem 0.5rem;
+			}
+			:host([rows]) .select__tags {
+				max-height: calc(var(--rows, 5) * 1.3rem);
 			}
 			/* Keep overflow tag right-aligned.  It's the only sl-tag. */
 			 .select__tags sl-tag {
