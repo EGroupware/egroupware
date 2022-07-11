@@ -36,6 +36,13 @@ class Import
 	protected $_logger;
 
 	/**
+	 * Filename => [attr, mask, regexp] for jpegphoto and pubkey attributes
+	 *
+	 * @var array[]
+	 */
+	protected $files2attrs;
+
+	/**
 	 * Constructor
 	 * 
 	 * @param callable|null $logger function($str, $level) level: "debug", "detail", "info", "error" or "fatal"
@@ -66,6 +73,12 @@ class Import
 		$this->accounts_sql = $this->frontend_sql->backend;
 
 		$this->_logger = $logger;
+
+		$this->files2attrs = [
+			Api\Contacts::FILES_PHOTO => ['jpegphoto', Api\Contacts::FILES_BIT_PHOTO, null],
+			Api\Contacts::FILES_PGP_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_PGP_PUBKEY, \addressbook_bo::$pgp_key_regexp],
+			Api\Contacts::FILES_SMIME_PUBKEY => ['pubkey', Api\Contacts::FILES_BIT_SMIME_PUBKEY, Api\Mail\Smime::$certificate_regexp],
+		];
 	}
 
 	/**
@@ -303,24 +316,62 @@ class Import
 					}
 					else
 					{
+						// photo and public keys are not stored in SQL but in filesystem, fetch it to compare
+						$contact['files'] = 0;
+						foreach($this->files2attrs as $file => [$attr, $mask, $regexp])
+						{
+							if (isset($contact[$attr]))
+							{
+								if ($sql_contact['files'] & $mask)
+								{
+									$sql_contact[$attr] = ($last_attr === $attr && !empty($sql_contact[$attr]) ? $sql_contact[$attr]."\n" : '').
+										file_get_contents(Api\Link::vfs_path('addressbook', $sql_contact['id'], $file));
+								}
+								if (!isset($regexp) || preg_match($regexp, $contact[$attr]))
+								{
+									$contact['files'] |= $mask;
+								}
+							}
+							$last_attr = $attr;
+						}
 						$to_update = array_merge($sql_contact, array_filter($contact, static function ($attr) {
 							return $attr !== null && $attr !== '';
 						}));
 						$to_update['id'] = $sql_contact['id'];
 						if (($diff = array_diff_assoc($to_update, $sql_contact)))
 						{
-							if ($this->contacts_sql->save($to_update) === 0)
+							$need_update = $diff;
+/*
+							Api\Vfs::$is_root = true;
+							foreach($this->files2attrs as $file => [$attr, $mask, $regexp])
 							{
-								$this->logger("Successful updated contact data of '$account[account_lid]' (#$account_id): ".
-									json_encode($diff, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'detail');
-								if (!$new) $new = false;
+								if (array_key_exists($attr, $diff) && (!isset($regexp) || preg_match($regexp, $diff[$attr], $matches)))
+								{
+									if (($written=file_put_contents($path=Api\Link::vfs_path('addressbook', $sql_contact['id'], $file),
+										isset($regexp) ? $matches[0] : $diff[$attr])) !== ($size=strlen($diff[$attr])))
+									{
+										$this->logger("Error updating contact data $attr ($path) of '$account[account_lid]' (#$account_id)", 'error');
+										++$errors;
+									}
+									unset($need_update[$attr]);
+									if (isset($regexp))
+									{
+										$to_update[$attr] = trim(preg_replace($regexp, '', $to_update[$attr])) ?: null;
+									}
+									$diff[$attr] = $attr === 'jpegphoto' ? 'binary data skipped' : substr($diff[$attr], 0, 100).'...';
+								}
 							}
-							else
+							Api\Vfs::$is_root = false;
+*/
+							if ($need_update && $this->contacts_sql->save($to_update))
 							{
 								$this->logger("Error updating contact data of '$account[account_lid]' (#$account_id)", 'error');
 								++$errors;
 								continue;
 							}
+							$this->logger("Successful updated contact data of '$account[account_lid]' (#$account_id): ".
+								json_encode($diff, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'detail');
+							if (!$new) $new = false;
 						}
 						else
 						{
@@ -330,6 +381,11 @@ class Import
 					// if requested, also set memberships
 					if ($type === 'users+groups')
 					{
+						// LDAP backend does not query it automatic
+						if (!isset($account['memberships']))
+						{
+							$account['memberships'] = $this->accounts->memberships($account['account_id']);
+						}
 						// we need to convert the account_id's of memberships, in case we use different ones in SQL
 						$this->accounts_sql->set_memberships(array_filter(array_map(static function($account_lid) use ($groups)
 						{
