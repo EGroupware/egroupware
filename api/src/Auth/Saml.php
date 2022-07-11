@@ -102,6 +102,7 @@ class Saml implements BackendSSO
 	const eduPersonPricipalName = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.6';
 	const eduPersonUniqueId = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.13';
 	const emailAddress = 'urn:oid:0.9.2342.19200300.100.1.3';
+	const uid = 'urn:oid:0.9.2342.19200300.100.1.1';
 	const firstName = 'urn:oid:2.5.4.42';
 	const lastName = 'urn:oid:2.5.4.4';
 
@@ -467,6 +468,7 @@ class Saml implements BackendSSO
 			'eduPersonPricipalName' => self::eduPersonPricipalName,
 			'eduPersonUniqueId' => self::eduPersonUniqueId,
 			'emailAddress' => self::emailAddress,
+			'uid' => self::uid,
 			'firstName' => self::firstName,
 			'lastName' => self::lastName,
 		];
@@ -560,8 +562,10 @@ class Saml implements BackendSSO
 				return self::eduPersonUniqueId;
 			case 'emailAddress':
 				return self::emailAddress;
+			case 'uid':
+				return self::uid;
 			case 'customOid':
-				return 'urn:oid:'.$config['saml_username_oid'] ?: self::emailAddress;
+				return !empty($config['saml_username_oid']) ? 'urn:oid:'.$config['saml_username_oid'] : self::emailAddress;
 		}
 		return self::emailAddress;
 	}
