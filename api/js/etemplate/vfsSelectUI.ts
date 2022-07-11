@@ -16,9 +16,9 @@ import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
 import {egw} from "../jsapi/egw_global";
 import {et2_file} from "./et2_widget_file";
-import {et2_textbox} from "./et2_widget_textbox";
-import {et2_button} from "./et2_widget_button";
-import {et2_selectbox} from "./et2_widget_selectbox";
+import {Et2Textbox} from "./Et2Textbox/Et2Textbox";
+import {Et2Button} from "./Et2Button/Et2Button";
+import {Et2Select} from "./Et2Select/Et2Select";
 import {et2_checkbox} from "./et2_widget_checkbox";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
@@ -255,7 +255,7 @@ export class vfsSelectUI extends EgwApp
 			// widget.getRoot().getWidgetById("path");
 			widget.getRoot().iterateOver(function(widget) {
 				if(widget.id == "path") path = widget;
-			},null, et2_textbox);
+			},null, Et2Textbox);
 			if(path)
 			{
 				path.set_value(widget.value.path);
@@ -289,7 +289,7 @@ export class vfsSelectUI extends EgwApp
 	 * @param {string} action action name
 	 * @param {object} widget widget which action was called from
 	 */
-	do_action(action : string, widget : et2_button | et2_selectbox | et2_vfsPath)
+	do_action(action : string, widget : Et2Button | Et2Select | et2_vfsPath)
 	{
 		if (!action) return;
 		let field = '', value : string|string[] = '' ;
@@ -297,8 +297,8 @@ export class vfsSelectUI extends EgwApp
 		{
 			case 'path': field = 'path'; value = (<et2_vfsPath>widget).getValue(); break;
 			case 'home': field = 'action'; value = 'home'; break;
-			case 'app': field = 'app'; value = (<et2_selectbox>widget).getValue(); break;
-			case 'mime': field = 'mime'; value = (<et2_selectbox>widget).getValue(); break;
+			case 'app': field = 'app'; value = (<Et2Select>widget).getValue(); break;
+			case 'mime': field = 'mime'; value = (<Et2Select>widget).getValue(); break;
 		}
 		this.submit(field, value);
 	}
