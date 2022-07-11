@@ -3868,10 +3868,6 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover {
     filter: contrast(9);
 }
 
-.vfs-select-container .et2_toolbar * {
-    float: left;
-}
-
 .vfs-select-toggle {
     display: none;
 }
