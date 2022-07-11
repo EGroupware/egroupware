@@ -70,13 +70,13 @@ import {et2_template} from "./et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
-import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {Et2Button} from "./Et2Button/Et2Button";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
+import {Et2ColumnSelection} from "./Et2Nextmatch/ColumnSelection";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -1938,111 +1938,47 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			var col = columnMgr.columns[i];
 			const widget = this.columns[i].widget;
-
-			if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_DISABLED ||
-				col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
-			{
-				continue;
-			}
-			if(col.caption)
-			{
-				columns.push({value: col.id, label: col.caption});
-				if(col.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(col.id);
-			}
-			// Custom fields get listed separately
-			if(widget.instanceOf(et2_nextmatch_customfields))
-			{
-				if(jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields))
-				{
-					// No customfields defined, don't show column
-					columns.pop();
-					continue;
-				}
-				for(var field_name in (<et2_nextmatch_customfields><unknown>widget).customfields)
-				{
-					columns.push({
-						value: et2_nextmatch_customfields.PREFIX + field_name, label: " - " +
-							(<et2_nextmatch_customfields><unknown>widget).customfields[field_name].label
-					});
-					if(widget.options.fields[field_name])
-					{
-						columns_selected.push(et2_customfields_list.PREFIX + field_name);
-					}
-				}
-			}
+			columns.push({...col, widget: widget});
 		}
 
 		// Letter search
 		if(this.options.settings.lettersearch)
 		{
-			columns.push({value: LETTERS, label: egw.lang('Search letter')});
-			if(this.header.lettersearch.is(':visible')) columns_selected.push(LETTERS);
+			columns.push({
+				id: LETTERS,
+				caption: this.egw().lang('Search letter'),
+				visibility: (this.header.lettersearch.is(':visible') ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT)
+			});
 		}
 
 		// Build the popup
-		if(!this.selectPopup)
+		let selectPopup = new Et2ColumnSelection();
+		selectPopup.setParent(this);
+		selectPopup.columns = columns;
+		if(!this.options.disable_autorefresh)
 		{
-			const select = <Et2Select>loadWebComponent("et2-select", {
-				id: "columns",
-				multiple: true,
-				rows: 8,
-				empty_label: this.egw().lang("select columns"),
-				selected_first: false
-			}, this);
-			// Don't let options run through the loading stuff
-			select.select_options = columns;
-			select.value = columns_selected;
+			selectPopup.autoRefresh = parseInt(this._get_autorefresh());
+		}
 
-			let autoRefresh;
-			let sort;
-			if(!this.options.disable_autorefresh)
+		const okButton = <Et2Button>loadWebComponent("et2-button", {
+			image: "check",
+			label: this.egw().lang("ok"),
+			slot: "buttons"
+		}, this);
+		okButton.onclick = function()
+		{
+			// Update visibility
+			const visibility = {};
+			for(var i = 0; i < columnMgr.columns.length; i++)
 			{
-				autoRefresh = <Et2Select>loadWebComponent("et2-select", {
-					empty_label: "Refresh",
-					id: "nm_autorefresh",
-					statustext: egw.lang("Automatically refresh list"),
-					value: this._get_autorefresh()
-				}, this);
-				autoRefresh.select_options = {
-					// Cause [unknown] problems with mail
-					30: "30 seconds",
-					//60: "1 Minute",
-					180: "3 Minutes",
-					300: "5 Minutes",
-					900: "15 Minutes",
-					1800: "30 Minutes"
-				};
-			}
-
-			const defaultCheck = <Et2Select>loadWebComponent("et2-select", {
-				id: "nm_col_preference",
-				empty_label: "Preference",
-				value: this.options.settings.columns_forced ? 'force' : ''
-			}, this);
-			defaultCheck.select_options = [
-				{value: 'default', label: 'Default', title: 'Set these columns as the default'},
-				{value: 'reset', label: 'Reset', title: "Reset all user's column preferences"},
-				{value: 'force', label: 'Force', title: 'Force column preference so users cannot change it'}
-			];
-
-			const okButton = <Et2Button>loadWebComponent("et2-button", {
-				image: "check",
-				label: this.egw().lang("ok")
-			}, this);
-			okButton.onclick = function()
-			{
-				// Update visibility
-				const visibility = {};
-				for(var i = 0; i < columnMgr.columns.length; i++)
+				const col = columnMgr.columns[i];
+				if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
+					col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
 				{
-					const col = columnMgr.columns[i];
-					if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
-						col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
-					{
 						visibility[col.id] = {visible: false};
 					}
 				}
-				const value = select.value;
+			const value = selectPopup.value;
 
 				// Update & remove letter filter
 				if(self.header.lettersearch)
@@ -2058,7 +1994,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					}
 					self._set_lettersearch(show_letters);
 				}
-
 				let column = 0;
 				for(var i = 0; i < value.length; i++)
 				{
@@ -2097,105 +2032,42 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
 
-				this.sortedColumnsList = [];
-				if(sort)
-				{
-					sort.toArray().forEach((data_id) =>
-					{
-						const value = select.getValue();
-						if(data_id.match(/^col_/) && value.indexOf(data_id) != -1)
-						{
-							const col_id = data_id.replace('col_', '');
-							const col_widget = self.columns[col_id].widget;
-							if(col_widget.customfields)
-							{
-								self.sortedColumnsList.push(col_widget.id);
-								for(let field_name in col_widget.customfields)
-							{
-								if(jQuery.isEmptyObject(col_widget.options.fields) || col_widget.options.fields[field_name] == true)
-								{
-									self.sortedColumnsList.push(et2_customfields_list.PREFIX + field_name);
-								}
-							}
-							}
-							else
-							{
-								self.sortedColumnsList.push(self._getColumnName(col_widget));
-							}
-						}
-					});
-				}
-
 				// Hide popup
 				self.selectPopup.toggle();
 
 				self.dataview.updateColumns();
 
 				// Auto refresh
-				self._set_autorefresh(autoRefresh ? autoRefresh.get_value() : 0);
+			self._set_autorefresh(selectPopup.autoRefresh);
 
-				// Set default or clear forced
-				if(show_letters)
-				{
-					self.activeFilters.selectcols.push('lettersearch');
-				}
-				self.getInstanceManager().submit();
-
-				self.selectPopup = null;
-			};
-
-			const cancelButton = <Et2Button>loadWebComponent("et2-button", {
-				label: this.egw().lang("cancel"),
-				image: "cancel"
-			}, this);
-			cancelButton.onclick = function()
+			// Set default or clear forced
+			if(show_letters)
 			{
-				self.selectPopup.toggle();
-				self.selectPopup = null;
-			};
-
-			select.updateComplete.then(() =>
-			{
-				window.setTimeout(() =>
-				{
-					sort = Sortable.create(select.shadowRoot.querySelector('.select__tags'), {
-						ghostClass: 'ui-fav-sortable-placeholder',
-						draggable: 'et2-tag',
-						dataIdAttr: 'value',
-						direction: 'vertical',
-						delay: 25,
-
-					});
-				}, 100);
-			});
-
-			const $footerWrap = jQuery(document.createElement("div"))
-				.addClass('dialogFooterToolbar')
-				.append(okButton)
-				.append(cancelButton);
-			this.selectPopup = jQuery(document.createElement("div"))
-				.addClass("colselection ui-dialog ui-widget-content")
-				.append(select)
-				.append($footerWrap)
-				.appendTo(this.innerDiv);
-
-			// Add autorefresh
-			if(autoRefresh)
-			{
-				$footerWrap.append(autoRefresh);
+				self.activeFilters.selectcols.push('lettersearch');
 			}
+			self.getInstanceManager().submit();
 
-			// Add default checkbox for admins
-			const apps = this.egw().user('apps');
-			if(apps['admin'])
-			{
-				$footerWrap.append(defaultCheck);
-			}
-		}
-		else
+			self.selectPopup = null;
+		};
+
+		const cancelButton = <Et2Button>loadWebComponent("et2-button", {
+			label: this.egw().lang("cancel"),
+			image: "cancel",
+			slot: "buttons"
+		}, this);
+		cancelButton.onclick = function()
 		{
-			this.selectPopup.toggle();
-		}
+			self.selectPopup.toggle();
+		};
+
+		selectPopup.append(okButton);
+		selectPopup.append(cancelButton);
+
+		this.selectPopup = jQuery(document.createElement("div"))
+			.addClass("colselection ui-dialog ui-widget-content")
+			.append(selectPopup)
+			.appendTo(this.innerDiv);
+
 		const t_position = jQuery(e.target).position();
 		const s_position = this.div.position();
 		const max_height = this.getDOMNode().getElementsByClassName('egwGridView_outer')[0]['tBodies'][0].clientHeight -
@@ -3791,10 +3663,12 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				this.nextmatch.applyFilters(set);
 			});
 		}
+		// Sometimes the filter does not display the current value
+		// Call sync to try to get it to display
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
-			//select.syncValueFromItems();
+			select.syncItemsFromValue();
 		})
 		return select;
 	}

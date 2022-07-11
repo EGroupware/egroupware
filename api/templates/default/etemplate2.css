@@ -4003,10 +4003,6 @@ tr.disableIfNoEPL {
     border: 2px dashed silver;
 }
 
-.colselection [id*="columns"]::part(tags) {
-    max-height: 10em;
-}
-
 .colselection .dialogFooterToolbar {
     display: flex;
     flex-direction: row;
