@@ -216,8 +216,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// value not in options --> use empty_label, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
 		{
+			let oldValue = this.value;
 			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;
 			// ""+ to cast value of 0 to "0", to not replace with ""
+			this.requestUpdate("value", oldValue);
 		}
 	}
 

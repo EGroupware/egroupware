@@ -109,7 +109,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			}
 
 			// Add in actual option tags to the DOM based on the new select_options
-			if(changedProperties.has('select_options'))
+			if(changedProperties.has('select_options') || changedProperties.has("empty_label"))
 			{
 				// Add in options as children to the target node
 				if(this._optionTargetNode)
