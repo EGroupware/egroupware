@@ -1249,7 +1249,6 @@ export class et2_vfsSelect extends et2_inputWidget
 				buttons: buttons,
 				minWidth: 500,
 				minHeight: 400,
-				width: 400,
 				value: data,
 				template: egw.webserverUrl + '/api/templates/default/vfsSelectUI.xet?1',
 				resizable: false,
