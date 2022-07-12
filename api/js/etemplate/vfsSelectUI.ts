@@ -250,12 +250,8 @@ export class vfsSelectUI extends EgwApp
 		}
 		else if (widget.value.is_dir)	// true for "httpd/unix-directory" and "egw/*"
 		{
-			let path = null;
-			// Cannot do this, there are multiple widgets named path
-			// widget.getRoot().getWidgetById("path");
-			widget.getRoot().iterateOver(function(widget) {
-				if(widget.id == "path") path = widget;
-			},null, Et2Textbox);
+			let path = widget.getRoot().getWidgetById("path");
+
 			if(path)
 			{
 				path.set_value(widget.value.path);
