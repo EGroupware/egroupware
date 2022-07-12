@@ -6,7 +6,7 @@
         <appicon class="onlyPrint"/>
         <html id="msg"/>
         <vbox class="mailDisplay">
-            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true"/>
+            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true" list_header="short"/>
             <hbox>
                 <hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM">
                     <description value="From"/>

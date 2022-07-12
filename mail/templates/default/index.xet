@@ -6,7 +6,7 @@
 		<split dock_side="bottomDock" id="mailSplitter">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
 			<old-vbox id="mailPreview" width="100%">
-                <toolbar id="toolbar"/>
+                <toolbar id="toolbar" list_header="short"/>
                 <old-box id="blank" disabled="false">
                     <image src="mail"/>
                     <description value="Select an item to read"/>
