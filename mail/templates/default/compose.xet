@@ -31,7 +31,7 @@
 				<rows>
 					<row class="mailComposeHeaders" >
 						<description value="From"/>
-						<menupopup id="mailaccount" onchange="app.mail.submitOnChange" class="et2_fullWidth"/>
+						<select id="mailaccount" onchange="app.mail.submitOnChange" class="et2_fullWidth"/>
 						<vbox>
 							<description id="replyto_expander" value="Reply to" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 							<description id="folder_expander" value="Folder" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
