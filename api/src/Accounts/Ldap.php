@@ -692,6 +692,7 @@ class Ldap
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
 	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
+	 * @param $param['modified'] int if given minimum modification time
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -759,6 +760,11 @@ class Ldap
 				}
 				// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
 				$filter .= str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$this->account_filter);
+
+				if (!empty($param['modified']))
+				{
+					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
+				}
 				$filter .= ')';
 
 				if ($param['type'] != 'both')
@@ -845,7 +851,7 @@ class Ldap
 			{
 				if(empty($query) || $query === '*')
 				{
-					$filter = "(&(objectclass=posixgroup)$this->group_filter)";
+					$filter = "(&(objectclass=posixgroup)";
 				}
 				else
 				{
@@ -861,8 +867,13 @@ class Ldap
 						case 'exact':
 							break;
 					}
-					$filter = "(&(objectclass=posixgroup)(cn=$query)$this->group_filter)";
+					$filter = "(&(objectclass=posixgroup)(cn=$query)";
 				}
+				if (!empty($param['modified']))
+				{
+					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
+				}
+				$filter .= $this->group_filter.')';
 				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
 				foreach(ldap_get_entries($this->ds, $sri) ?: [] as $allVals)
 				{
