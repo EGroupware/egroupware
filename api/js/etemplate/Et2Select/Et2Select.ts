@@ -449,28 +449,38 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				fieldName = await validator.config.fieldName;
 			}
 			// @ts-ignore [allow-protected]
-			const message = await validator._getMessage({
+			return validator._getMessage({
 				modelValue: value,
 				formControl: this,
 				fieldName,
+			}).then((message) =>
+			{
+				feedbackData.push({message, type: validator.type, validator});
 			});
-			feedbackData.push({message, type: validator.type, validator});
 		}.bind(this);
-		const resultPromises = validators.map(async validator =>
+		let resultPromises = [];
+		validators.map(async validator =>
 		{
 			let values = this.value;
-			if (!Array.isArray(values)) values = [values];
-			if (!values.length) values = [''];	// so required validation works
-			values.forEach(async value => {
+			if(!Array.isArray(values))
+			{
+				values = [values];
+			}
+			if(!values.length)
+			{
+				values = [''];
+			}	// so required validation works
+			values.forEach(async value =>
+			{
 				const result = validator.execute(value, validator.param, {node: this});
 				if(result === true)
 				{
-					await doValidate(validator, value);
+					resultPromises.push(doValidate(validator, value));
 				}
-				else if (result !== false && typeof result.then === 'function')
+				else if(result !== false && typeof result.then === 'function')
 				{
 					result.then(doValidate(validator, value));
-					return result;
+					resultPromises.push(result);
 				}
 			});
 		});
@@ -482,6 +492,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			feedback.feedbackData = feedbackData;
 			feedback.slot = "help-text";
 			this.append(feedback);
+			// Not always visible?
+			(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
 		}
 	}
 
