@@ -617,6 +617,8 @@ export class et2_avatar extends et2_image
 		// invisible the mask
 		eml.css('opacity','0');
 
+		eml.parent().css('position', "relative");
+
 		// bind handler for activating actions on editable mask
 		eml.on({
 			mouseover:function(){eml.css('opacity','0.9');},
