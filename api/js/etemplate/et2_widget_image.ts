@@ -555,7 +555,7 @@ export class et2_avatar extends et2_image
 					dialog.transformAttributes({
 						callback: function(_buttons, _value)
 						{
-							if(_buttons == 'save')
+							if(_buttons == 1)
 							{
 								let canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 								self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
@@ -616,8 +616,6 @@ export class et2_avatar extends et2_image
 		if (_noDelete) del.hide();
 		// invisible the mask
 		eml.css('opacity','0');
-
-		eml.parent().css('position', "relative");
 
 		// bind handler for activating actions on editable mask
 		eml.on({
