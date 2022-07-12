@@ -32,32 +32,34 @@ export class Et2EmailTag extends Et2Tag
 			.tag {
 				position: relative;
 			}
-			.tag__prefix {
-				display: none;
+			.tag__prefix {				
+				width: 20px;
+				height: 20px;
 				
-				height: 80%;
-				
-				background-color: white;
+				background-color: initial;
 				background-repeat: no-repeat;
 				background-size: contain;
+				
+				opacity: 30%;
+				cursor: pointer;
 			}
 			
 			.contact_plus .tag__prefix {
-				display: block;
-				order: 2;
+				opacity: 100%;
 			}
 			.tag__prefix.loading {
-				width: 16px;
+				opacity: 100%;
 				background-image: ${cssImage("loading")};
 			}
 		
-			.tag__prefix.contact_plus_add, .tag__prefix.contact_plus_contact {
-				width: 16px;
+			.tag__prefix.contact_plus_add {
+				height: 80%;
 				background-image: ${cssImage("add")};
-				cursor: pointer;
 			}
+			/* Address is for a contact - always show */
 			.tag__prefix.contact_plus_contact {
-				background-image: ${cssImage("contact")}
+				opacity: 100%;
+				background-image: ${cssImage("contact")};
 			}
 			.tag__remove {
 				order: 3;
@@ -98,6 +100,15 @@ export class Et2EmailTag extends Et2Tag
 		{
 			this.addEventListener("mouseenter", this.handleMouseEnter);
 			this.addEventListener("mouseleave", this.handleMouseLeave);
+
+			// If the data is already cached, add it in (after nodes are there)
+			if(typeof Et2EmailTag.email_cache[this.value] !== "undefined")
+			{
+				this.updateComplete.then(() =>
+				{
+					return this.handleContactResponse(Et2EmailTag.email_cache[this.value]);
+				});
+			}
 		}
 	}
 
@@ -130,7 +141,6 @@ export class Et2EmailTag extends Et2Tag
 
 		this.checkContact(this.value).then((result) =>
 		{
-			this._contactPlusNode.classList.remove("loading");
 			this.handleContactResponse(result);
 		})
 	}
@@ -146,6 +156,7 @@ export class Et2EmailTag extends Et2Tag
 	 */
 	handleContactResponse(data : false | ContactInfo)
 	{
+		this._contactPlusNode.classList.remove("loading");
 		if(data)
 		{
 			this._contactPlusNode.classList.add("contact_plus_contact");

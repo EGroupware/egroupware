@@ -102,7 +102,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				gap: 0.1rem 0.5rem;
 			}
 			:host([rows]) .select__tags {
-				max-height: calc(var(--rows, 5) * 1.3rem);
+				max-height: calc(var(--rows, 5) * 1.35rem);
 			}
 			/* Keep overflow tag right-aligned.  It's the only sl-tag. */
 			 .select__tags sl-tag {
