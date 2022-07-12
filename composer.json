@@ -92,7 +92,6 @@
 		"egroupware/idna": "^1.2.0",
 		"egroupware/imap-client": "^2.31.0",
 		"egroupware/listheaders": "^1.3.0",
-		"egroupware/magicsuggest": "^2.1",
 		"egroupware/mail": "^2.7.0",
 		"egroupware/managesieve": "^1.1.0",
 		"egroupware/mapi": "^1.1.0",
