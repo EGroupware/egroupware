@@ -11,8 +11,14 @@
  */
 
 import {Et2Select} from "./Et2Select/Et2Select";
+import {Et2SelectReadonly} from "./Et2Select/Et2SelectReadonly";
 
 /**
  * @deprecated use Et2Select
  */
 export class et2_selectbox extends Et2Select{}
+
+/**
+ * @deprecated use Et2SelectReadonly
+ */
+export type et2_selectbox_ro = Et2SelectReadonly;
