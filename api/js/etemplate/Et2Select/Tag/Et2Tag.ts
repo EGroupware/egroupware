@@ -23,6 +23,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 			shoelace, css`
 		:host {
 			flex: 1 1 auto;
+			overflow: hidden;
 		}
 		.tag--pill {
 			overflow: hidden;
@@ -34,7 +35,9 @@ export class Et2Tag extends Et2Widget(SlTag)
 		}
 		.tag__content {
 			padding: 0px 0.2rem;
-			flex: 1 1 auto;
+			flex: 1 2 auto;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		/* Avoid button getting truncated by right side of button */
 		.tag__remove {

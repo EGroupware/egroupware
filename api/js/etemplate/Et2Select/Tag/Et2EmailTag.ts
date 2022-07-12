@@ -35,10 +35,12 @@ export class Et2EmailTag extends Et2Tag
 			.tag__prefix {				
 				width: 20px;
 				height: 20px;
+				flex: 0 1 auto;
 				
 				background-color: initial;
 				background-repeat: no-repeat;
 				background-size: contain;
+				background-position-y: center;
 				
 				opacity: 30%;
 				cursor: pointer;
