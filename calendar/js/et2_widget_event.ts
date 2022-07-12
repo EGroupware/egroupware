@@ -13,7 +13,7 @@
 	/etemplate/js/et2_core_valueWidget;
 */
 
-import {et2_createWidget, et2_register_widget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
+import {et2_register_widget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
@@ -23,11 +23,13 @@ import {et2_IDetachedDOM} from "../../api/js/etemplate/et2_core_interfaces";
 import {et2_activateLinks, et2_insertLinkText, et2_no_init} from "../../api/js/etemplate/et2_core_common";
 import {egw_getAppObjectManager, egwActionObject} from '../../api/js/egw_action/egw_action.js';
 import {egw} from "../../api/js/jsapi/egw_global";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {formatDate, formatTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {ColorTranslator} from "colortranslator";
+import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
+import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view
@@ -280,52 +282,46 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 		_update()
 		{
 
-				// Update to reflect new information
-				const event = this.options.value;
+			// Update to reflect new information
+			const event = this.options.value;
 
-				const id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':' + event.recur_date : '');
-				const formatted_start = event.start.toJSON();
+			const id = event.row_id ? event.row_id : event.id + (event.recur_type ? ':' + event.recur_date : '');
+			const formatted_start = event.start.toJSON();
 
-				this.set_id('event_' + id);
-				if (this._actionObject)
-				{
-						this._actionObject.id = 'calendar::' + id;
-				}
+			this.set_id('event_' + id);
+			if(this._actionObject)
+			{
+				this._actionObject.id = 'calendar::' + id;
+			}
 
-				this._need_actions_linked = !this.options.readonly;
+			this._need_actions_linked = !this.options.readonly;
 
-				// Make sure category stuff is there
-				// Fake it to use the cache / call - if already there, these will return
-				// immediately.
-				const im = this.getInstanceManager();
-				et2_selectbox.cat_options({
-								_type: 'select-cat',
-								getInstanceManager: function ()
-								{
-										return im;
-								}
-						},
-						{application: event.app || 'calendar'}
-				);
+			// Make sure category stuff is there by faking a call to cache
+			let so = new StaticOptions();
+			so.cached_server_side(<Et2Select><unknown>{
+				nodeName: "ET2-SELECT-CAT_RO",
+				egw: () => this.egw()
+			}, "select-cat", ",,,calendar", true);
 
-				// Need cleaning? (DnD helper removes content)
-				// @ts-ignore
-				if (!this.div.has(this.title).length)
-				{
-						this.div
-								.empty()
-								.append(this.title)
-								.append(this.body);
-				}
+
+			// Need cleaning? (DnD helper removes content)
+			// @ts-ignore
+			if(!this.div.has(this.title).length)
+			{
+				this.div
+					.empty()
+					.append(this.title)
+					.append(this.body);
+			}
 
 			let tooltip = jQuery(this._tooltip()).text();
-				// DOM nodes
-				this.div
-						// Set full day flag
-						.attr('data-full_day', event.whole_day)
+			// DOM nodes
+			this.div
+				// Set full day flag
+				.attr('data-full_day', event.whole_day)
 
-						// Put everything we need for basic interaction here, so it's available immediately
-						.attr('data-id', event.id)
+				// Put everything we need for basic interaction here, so it's available immediately
+				.attr('data-id', event.id)
 						.attr('data-app', event.app || 'calendar')
 						.attr('data-app_id', event.app_id)
 						.attr('data-start', formatted_start)
@@ -528,19 +524,13 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			let cat_label : (string | string[]) = '';
 			if(this.options.value.category)
 			{
-				const cat = et2_createWidget('select-cat', {'readonly': true}, this);
-				cat.set_value(this.options.value.category);
-				cat_label = this.options.value.category.indexOf(',') <= 0 ? cat.span.text() : [];
-						if (typeof cat_label != 'string')
-						{
-								cat.span.children().each(function ()
-								{
-										(<string[]>cat_label).push(jQuery(this).text());
-								});
-								cat_label = cat_label.join(', ');
-						}
-						cat.destroy();
-				}
+				let so = new StaticOptions();
+				let options = <SelectOption[]>so.cached_server_side(<Et2Select><unknown>{
+					nodeName: "ET2-SELECT-CAT_RO",
+					egw: () => this.egw()
+				}, "select-cat", ",,,calendar", false) || [];
+				cat_label = options.find((o) => o.value = this.options.value.category)?.label || "";
+			}
 
 				// Activate links in description
 				let description_node = document.createElement("p");
