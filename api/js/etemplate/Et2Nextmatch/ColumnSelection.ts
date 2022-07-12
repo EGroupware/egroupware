@@ -22,23 +22,24 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			shoelace,
 			css`
 			:host {
-				height: 100%;
+				max-height: inherit;
 				display: flex;
 				flex-direction: column;
-				flex: 1 0 auto;
+				flex: 1 1 auto;
 				--icon-width: 20px;
 			}
 			.title {
 				font-size: var(--sl-font-size-large);
 				color: var(--sl-color-neutral-0);
 				background-color: var(--sl-color-primary-600);
+				flex: 1 1 auto;
 			}
 			.title sl-icon {
 				vertical-align: middle;
 				cursor: pointer;
 			}
 			sl-menu {
-				flex: 1 1 auto;
+				flex: 1 10 auto;
 				overflow-y: auto;
 			}
 			/* Drag handle on columns (not individual custom fields or search letter) */
