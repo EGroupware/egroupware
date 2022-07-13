@@ -36,9 +36,14 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 	{
 		// Get the content array manager for the widget
 		var mgr = _widget.getArrayMgr("content");
-		if (mgr)
+		if(mgr)
 		{
 			_code = mgr.expandName(_code);
+		}
+		// If replacement cleared the code, skip the rest
+		if(!_code)
+		{
+			return false;
 		}
 	}
 

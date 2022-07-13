@@ -16,7 +16,8 @@
 						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
 					</vbox>
 					<box class="prefValueColumn">
-						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1" class="prefValue" attributes="@${row}[attributes]"/>
+						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1"
+                                class="prefValue"/>
 					</box>
 					<box class="prefHelpColumn">
 						<html id="${row}[help]" class="prefHelp"/>

@@ -431,14 +431,13 @@ class preferences_settings
 					$setting['run_lang'] = false;	// already done now
 					// handle as textarea
 				case 'textarea':
-					$setting['type'] = is_a($tpl, 'etemplate') ? 'textarea' : 'textbox';
-					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiline', 'true');
-					$tpl->setElementAttribute($tab. '[' . $setting['name'] . ']','width', '99%' );
+					$setting['type'] = is_a($tpl, 'etemplate') ? 'textarea' : 'et2-textbox';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiline', 'true');
 					// anyway setting via css: width: 99%, height: 5em
 					// for old eT use size attribute
-					if (is_a($tpl, 'etemplate') && (!empty($setting['cols']) || !empty($setting['rows'])))
+					if(is_a($tpl, 'etemplate') && (!empty($setting['cols']) || !empty($setting['rows'])))
 					{
-						$setting['size'] = $setting['rows'].','.$setting['cols'];
+						$setting['size'] = $setting['rows'] . ',' . $setting['cols'];
 					}
 					break;
 				case 'password':
@@ -446,33 +445,41 @@ class preferences_settings
 				case 'vfs_dir':
 				case 'vfs_dirs':
 				case 'input':
-					$setting['type'] = 'textbox';
+					$setting['type'] = 'et2-textbox';
 					break;
 				case 'check':
-					$setting['type'] = 'select';
+					$setting['type'] = 'et2-select';
 					$setting['values'] = array('1' => lang('yes'), '0' => lang('no'));
 					break;
+				case 'select':
+					$setting['type'] = 'et2-select';
+					break;
 				case 'multiselect':
-					$setting['type'] = 'select';
-					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'rows', 5);
-					if (!isset($setting['size'])) $setting['size'] = '5';	// old eT
+					$setting['type'] = 'et2-select';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', true);
 					break;
 				case 'color':
-					$setting['type'] = 'colorpicker';
+					$setting['type'] = 'et2-colorpicker';
 					break;
 				case 'date-duration':
-					if (!isset($setting['size'])) $setting['size'] = 'm,dhm,24,1';
+					if(!isset($setting['size']))
+					{
+						$setting['size'] = 'm,dhm,24,1';
+					}
 					$attrs = explode(',', $setting['size']);
 					foreach(array("data_format","display_format", "hours_per_day", "empty_not_0", "short_labels") as $n => $name)
 					{
 						if ((string)$attrs[$n] !== '') $tpl->setElementAttribute($tab.'['.$setting['name'].']', $name, $attrs[$n]);
 					}
+					$setting['type'] = 'et2-date-duration';
 					break;
 				case 'taglist':
-					if ($setting['no_sel_options'])
+					if($setting['no_sel_options'])
 					{
-						$tpl->setElementAttribute ($tab.'['.$setting['name'].']', 'autocomplete_url', '');
+						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'autocomplete_url', '');
 					}
+					$setting['type'] = 'et2-select';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', true);
 					break;
 			}
 			// move values/options to sel_options array
@@ -517,14 +524,15 @@ class preferences_settings
 				$setting['help'] = lang($setting['help']);
 			}
 			$content[$tab][] = array(
-				'name' => $setting['name'],
-				'type' => $setting['type'],
-				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
-				'help' => lang($setting['help']),	// is html
-				'default' => (string)$default !== '' ? lang('Default').': '.$default : null,
-				'onchange' => $setting['onchange'],
-				'attributes' => $setting['attributes']
+				'name'     => $setting['name'],
+				'type'     => $setting['type'],
+				'label'    => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
+				'help'     => lang($setting['help']),    // is html
+				'default'  => (string)$default !== '' ? lang('Default') . ': ' . $default : null,
+				'onchange' => $setting['onchange']
 			);
+
+			//		'attributes' => $setting['attributes']
 			//error_log("appname=$appname, attribute=$attribute, setting=".array2string($setting));
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);

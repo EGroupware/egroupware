@@ -299,15 +299,15 @@ class preferences_hooks
 				'default'=> $lang,
 			),
 			'country' => array(
-				'type'   => 'select-country',
-				'label'  => 'Country',
-				'name'   => 'country',
-				'help'   => 'In which country are you. This is used to set certain defaults for you.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'values' => array(''),
-				'default'=> strtoupper($country),
-				'attributes' => array (
+				'type'       => 'et2-select-country',
+				'label'      => 'Country',
+				'name'       => 'country',
+				'help'       => 'In which country are you. This is used to set certain defaults for you.',
+				'xmlrpc'     => True,
+				'admin'      => False,
+				'values'     => array(),
+				'default'    => strtoupper($country),
+				'attributes' => array(
 					'tags' => true
 				)
 			),
