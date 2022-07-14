@@ -1385,6 +1385,9 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 					attrValue = et2_compileLegacyJS(attrValue, widget, widget);
 				}
 				break;
+			case Object:
+				// Leave it alone...
+				break;
 			default:
 				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
 				if(attrValue && typeof attrValue == "string" && !attributes.no_lang && widget_class.translate[attribute])
