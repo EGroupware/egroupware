@@ -102,34 +102,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 		}
 
-		get slots()
-		{
-			return {
-				...super.slots,
-				suffix: () =>
-				{
-					const input = document.createElement("sl-icon");
-					input.name = "search";
-					return input;
-				}
-			}
-		}
-
 		static get styles()
 		{
 			return [
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				/* This is the search icon on the right - hidden unless search=true */
-				::slotted(sl-icon[slot="suffix"]) {
-					font-size: 120% !important;
-					display:none;
-				}
-				:host([search]:not([readonly])) ::slotted(sl-icon[slot="suffix"]) {
-					display: hidden;
-				}
-				
 				/* Move the widget border */
 				.form-control-input {
 					border: solid var(--sl-input-border-width) var(--sl-input-border-color);
@@ -276,7 +254,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._handleSelect = this._handleSelect.bind(this);
 			this._handleChange = this._handleChange.bind(this);
 			this._handleClear = this._handleClear.bind(this);
-			this._handleSearchButtonClick = this._handleSearchButtonClick.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
 			this._handleSearchKeyDown = this._handleSearchKeyDown.bind(this);
@@ -375,11 +352,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return !this.readonly && (this.search || this.searchUrl.length > 0);
 		}
 
-		protected get _searchButtonNode()
-		{
-			return this.querySelector("sl-icon[slot='suffix']");
-		}
-
 		protected get _searchInputNode() : HTMLInputElement
 		{
 			return this._activeControls.querySelector("input#search");
@@ -459,8 +431,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// We catch all change events, then call this._oldChange only when value changes
 				this.removeEventListener("change", this._oldChange);
 			});
-
-			this._searchButtonNode.addEventListener("click", this._handleSearchButtonClick);
 		}
 
 		protected _unbindListeners()
@@ -469,7 +439,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.removeEventListener("sl-select", this._handleSelect);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
-			this._searchButtonNode.removeEventListener("click", this._handleSearchButtonClick);
 		}
 
 		handleMenuShow()
@@ -655,10 +624,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
-			// Show a spinner instead of search button
-			this._searchButtonNode.style.display = "hidden";
+			// Show a spinner
 			let spinner = document.createElement("sl-spinner");
-			spinner.slot = this._searchButtonNode.slot;
+			spinner.slot = "suffix";
 			this.appendChild(spinner);
 
 			// Start the searches
@@ -904,11 +872,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.dropdown.hide();
 			}
-		}
-
-		protected _handleSearchButtonClick(e)
-		{
-			this.handleMenuShow();
 		}
 
 		protected _handleSearchAbort(e)
