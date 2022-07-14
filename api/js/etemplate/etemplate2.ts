@@ -1561,21 +1561,21 @@ export class etemplate2
 			{
 				(<et2_baseWidget>widget).showMessage(_response.data[id], 'validation_error');
 
-				// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
-				let tmpWidget = widget;
-				while(tmpWidget.getParent() && tmpWidget.getType() != 'tabbox')
-				{
-					tmpWidget = tmpWidget.getParent();
-				}
-				//Acvtivate the tab where the widget with validation error is located
-				if(tmpWidget.getType() == 'tabbox')
-				{
-					(<et2_tabbox><unknown>tmpWidget).activateTab(widget);
-				}
 			}
 			else if(typeof widget.set_validation_error == "function")
 			{
 				widget.set_validation_error(_response.data[id]);
+			}
+			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
+			let tmpWidget = widget;
+			while(tmpWidget.getParent() && tmpWidget.getType() != 'tabbox')
+			{
+				tmpWidget = tmpWidget.getParent();
+			}
+			//Acvtivate the tab where the widget with validation error is located
+			if(tmpWidget.getType() == 'tabbox')
+			{
+				(<et2_tabbox><unknown>tmpWidget).activateTab(widget);
 			}
 		}
 		egw().debug("warn", "Validation errors", _response.data);
