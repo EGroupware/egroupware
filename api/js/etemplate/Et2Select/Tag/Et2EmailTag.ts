@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css} from "@lion/core";
+import {css, PropertyValues} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
 import {Et2Tag} from "./Et2Tag";
 import {cssImage} from "../../Et2Widget/Et2Widget";
@@ -102,12 +102,6 @@ export class Et2EmailTag extends Et2Tag
 		{
 			this.addEventListener("mouseenter", this.handleMouseEnter);
 			this.addEventListener("mouseleave", this.handleMouseLeave);
-
-			// Send the request
-			this.checkContact(this.value).then((result) =>
-			{
-				this.handleContactResponse(result);
-			});
 		}
 	}
 
@@ -135,13 +129,6 @@ export class Et2EmailTag extends Et2Tag
 	handleMouseEnter(e : MouseEvent)
 	{
 		this.shadowRoot.querySelector(".tag").classList.add("contact_plus");
-		this._contactPlusNode.classList.add("loading");
-		this._contactPlusNode.style.right = getComputedStyle(this).left;
-
-		this.checkContact(this.value).then((result) =>
-		{
-			this.handleContactResponse(result);
-		})
 	}
 
 	handleMouseLeave(e : MouseEvent)
@@ -159,6 +146,12 @@ export class Et2EmailTag extends Et2Tag
 		if(data)
 		{
 			this._contactPlusNode.classList.add("contact_plus_contact");
+			// Add name in if missing
+			if(data.n_fn && !this.splitEmail(this.value).name)
+			{
+				// Append current value as email, data may have work & home email in it
+				this.textContent = data.n_fn + " <" + this.value + ">"
+			}
 			if(data.photo)
 			{
 				this._contactPlusNode.style.backgroundImage = "url(" + data.photo + ")";
@@ -205,6 +198,72 @@ export class Et2EmailTag extends Et2Tag
 	get _contactPlusNode() : HTMLElement
 	{
 		return this.shadowRoot.querySelector(".tag__prefix");
+	}
+
+	protected update(changedProperties : PropertyValues)
+	{
+		super.update(changedProperties);
+
+		if(changedProperties.has("value") && this.value)
+		{
+			// Send the request
+			this.checkContact(this.value).then((result) =>
+			{
+				this.handleContactResponse(result);
+			});
+		}
+	}
+
+
+	/**
+	 * Check the content for name <email>.
+	 * If there's a name, just show the name, otherwise show the email
+	 *
+	 * @param {string} new_content
+	 */
+	set textContent(new_content)
+	{
+		const split = this.splitEmail(new_content);
+		super.textContent = split.name || split.email;
+
+		// Show full email in tooltip.
+		// We could do better here for known contacts
+		this.egw().tooltipBind(this, new_content.trim(), false, {});
+	}
+
+	get textContent()
+	{
+		return super.textContent;
+	}
+
+	/**
+	 * if we have a "name <email>" value split it into name & email
+	 * @param email_string
+	 *
+	 * @return {name:string, email:string}
+	 */
+	public splitEmail(email_string) : { name : string, email : string }
+	{
+		let split = {name: "", email: email_string};
+		if(email_string && email_string.indexOf('<') !== -1)
+		{
+			const parts = email_string.split('<');
+			if(parts[0])
+			{
+				split.email = parts[1].substring(0, parts[1].length - 1).trim();
+				split.name = parts[0].trim();
+				// remove quotes
+				if((split.name[0] === '"' || split.name[0] === "'") && split.name[0] === split.name.substr(-1))
+				{
+					split.name = split.name.substring(1, split.name.length - 1);
+				}
+			}
+			else	// <email> --> email
+			{
+				split.email = parts[1].substring(0, email_string.length - 1);
+			}
+		}
+		return split;
 	}
 }
 
