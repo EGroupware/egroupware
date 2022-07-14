@@ -103,14 +103,11 @@ export class Et2EmailTag extends Et2Tag
 			this.addEventListener("mouseenter", this.handleMouseEnter);
 			this.addEventListener("mouseleave", this.handleMouseLeave);
 
-			// If the data is already cached, add it in (after nodes are there)
-			if(typeof Et2EmailTag.email_cache[this.value] !== "undefined")
+			// Send the request
+			this.checkContact(this.value).then((result) =>
 			{
-				this.updateComplete.then(() =>
-				{
-					return this.handleContactResponse(Et2EmailTag.email_cache[this.value]);
-				});
-			}
+				this.handleContactResponse(result);
+			});
 		}
 	}
 
