@@ -194,8 +194,7 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 				// @ts-ignore Yes, option.label.label is not supposed to exist but that's what we're checking
 				if(typeof option.label.label !== "undefined")
 				{
-					// @ts-ignore Yes, option.label.label is not supposed to exist but that's what we're checking
-					option.label = option.label.label;
+					option = Object.assign(option, option.label);
 				}
 			}
 			fixed_options.push(option);

@@ -144,7 +144,7 @@ class Select extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$widget_type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
-		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'rows') > 1;
+		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -998,4 +998,6 @@ class Select extends Etemplate\Widget
 		$response->data($options);
 	}
 }
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Select', array('selectbox', 'listbox', 'select', 'menupopup'));
+
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Select', array('et2-select', 'selectbox', 'listbox', 'select',
+																   'menupopup'));
