@@ -55,19 +55,32 @@ export class Et2LAvatar extends Et2Avatar
 		super();
 		this.lname = "";
 		this.fname = "";
-		this.initials = Et2LAvatar.lavatar(this.fname, this.lname, this.contact_id).initials;
 	}
 
-	set src(_url)
+	/**
+	 * Handle changes that have to happen based on changes to properties
+	 *
+	 */
+	updated(changedProperties)
 	{
-		if (_url && decodeURIComponent(_url).match("lavatar=1") && (this.options.fname || this.options.lname) && this.options.contact_id)
-		{
-			this.initials = Et2LAvatar.lavatar(this.options.fname, this.options.lname, this.options.contact_id).initials;
-			return;
+		super.updated(changedProperties);
+
+		if (changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contact_id")) {
+			if (!this.src || !decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contact_id)
+			{
+				this.initials = Et2LAvatar.lavatar(this.fname, this.lname, this.contact_id).initials;
+			}
 		}
-		super.src= _url;
 	}
 
+	/**
+	 *
+	 */
+	getDetachedAttributes(_attrs : string[])
+	{
+		super.getDetachedAttributes(_attrs);
+		_attrs.push("lname", "fname");
+	}
 
 	/**
 	 * Generate letter avatar with given data

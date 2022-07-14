@@ -4,13 +4,13 @@
 <overlay>
 	<template id="etemplate.avatar_edit" template="" lang="" group="0" version="16.2">
 		<vbox>
-			<avatar crop="true" id="cropper_image" contact_id="$cont[contact_id]" src="$cont[src]" width ="200" height="auto"/>
+			<avatar crop="true" id="cropper_image" contact_id="$cont[contact_id]" src="$cont[src]" size="6em" shape="square"/>
 			<hbox>
-				<buttononly id="rotate_reset" label="Reset"  image="recur" background_image="1" onclick="jQuery('#_cropper_image').cropper('reset');"/>
-				<buttononly id="rotate_l" label="Rotate Left"  image="rotate_l" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',-90);"/>
-				<buttononly id="rotate_r" label= "Rotate Right" image="reload" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',90);"/>
+				<buttononly id="rotate_reset" label="Reset"  image="recur" background_image="1"/>
+				<buttononly id="rotate_l" label="Rotate Left"  image="rotate_l" background_image="1"/>
+				<buttononly id="rotate_r" label= "Rotate Right" image="reload" background_image="1"/>
 				<hbox>
-					<file id='upload_photo' label="upload new photo" onFinishOne="et2_avatar.uploadAvatar_onFinish"/>
+					<file id='upload_photo' label="upload new photo" onFinishOne="Et2Avatar.uploadAvatar_onFinish"/>
 				</hbox>
 			</hbox>
 		</vbox>
