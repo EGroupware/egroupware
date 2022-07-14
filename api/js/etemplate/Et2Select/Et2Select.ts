@@ -18,6 +18,7 @@ import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {LionValidationFeedback} from "@lion/form-core";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
+import {ManualMessage} from "../Validators/ManualMessage";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
@@ -441,6 +442,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		let validators = [...(this.validators || []), ...(this.defaultValidators || [])];
 		let fieldName = this.id;
 		let feedbackData = [];
+		let resultPromises = [];
 		this.querySelector("lion-validation-feedback")?.remove();
 		const doValidate = async function(validator, value)
 		{
@@ -458,7 +460,20 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				feedbackData.push({message, type: validator.type, validator});
 			});
 		}.bind(this);
-		let resultPromises = [];
+		const doCheck = async(value, validator) =>
+		{
+			const result = validator.execute(value, validator.param, {node: this});
+			if(result === true)
+			{
+				resultPromises.push(doValidate(validator, value));
+			}
+			else if(result !== false && typeof result.then === 'function')
+			{
+				result.then(doValidate(validator, value));
+				resultPromises.push(result);
+			}
+		};
+
 		validators.map(async validator =>
 		{
 			let values = this.value;
@@ -470,19 +485,17 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			{
 				values = [''];
 			}	// so required validation works
-			values.forEach(async value =>
+
+			// Run manual validation messages just once, doesn't usually matter what the value is
+			if(validator instanceof ManualMessage)
 			{
-				const result = validator.execute(value, validator.param, {node: this});
-				if(result === true)
-				{
-					resultPromises.push(doValidate(validator, value));
-				}
-				else if(result !== false && typeof result.then === 'function')
-				{
-					result.then(doValidate(validator, value));
-					resultPromises.push(result);
-				}
-			});
+				doCheck(values, validator);
+			}
+			else
+			{
+				// Validate each individual item
+				values.forEach((value) => doCheck(value, validator));
+			}
 		});
 		await Promise.all(resultPromises);
 
