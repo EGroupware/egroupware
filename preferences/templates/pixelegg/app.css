@@ -33,7 +33,7 @@ tr.prefRow:hover {
   background-color: #f0f0ff;
 }
 .prefName .et2_label:first-child {
-  padding-top: 5px;
+  padding-top: 2px;
 }
 tr.prefRow > td {
   vertical-align: top;
@@ -51,7 +51,7 @@ tr.prefRow > td.prefValueColumn {
   display: none;
   width: 255px;
   max-height: 99%;
-  height: calc(-51%);
+  height: calc(99% - 150px);
   background-color: #f0f0ff;
   padding: 5px;
   top: 80px;
@@ -93,7 +93,7 @@ textarea.prefValue {
   width: 49%;
 }
 .prefApp {
-  width: 49.50%;
+  width: 49.5%;
 }
 #preferences-password .dialogHeader td {
   text-align: center;
@@ -103,9 +103,6 @@ textarea.prefValue {
 }
 .prefValueColumn select.prefValue {
   white-space: pre-line;
-}
-#preferences_settings_country_chzn {
-  width: 49% !important;
 }
 /**
  * 2FA setup
@@ -188,6 +185,7 @@ textarea.prefValue {
   font-size: 150%;
   display: inline-block;
   padding-bottom: 5px;
+  position: relative;
 }
 .prefType,
 .prefApp {
@@ -196,19 +194,18 @@ textarea.prefValue {
   /*padding:10px;*/
 }
 /*Preferences APP / left */
-.prefApp {
-  background-image: url(../pixelegg/images/setup.png);
-  background-repeat: no-repeat;
-  background-position: 90% 50%;
-  background-size: 16px 16px;
-  margin-right: 1em;
-}
 /*Preferences APP Settings / right*/
-.prefType {
+.prefApp::after,
+.prefType::after {
   background-image: url(../pixelegg/images/setup.png);
   background-repeat: no-repeat;
-  background-position: 90% 50%;
-  background-size: 16px 16px;
+  background-size: contain;
+  position: absolute;
+  right: 32px;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  top: calc(50% - 16px);
 }
 /*###############################*/
 /*ADMIN DIALOG*/

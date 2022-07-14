@@ -72,9 +72,10 @@ tr.prefRow:hover .prefHelp {
 	height: 5em;
 }
 .prefType, .prefApp {
-	font-size: 150%;
-	display: inline-block;
-	padding-bottom: 5px;
+  font-size: 150%;
+  display: inline-block;
+  padding-bottom: 5px;
+  position: relative;
 }
 
 .prefType, .prefApp {
@@ -83,20 +84,17 @@ tr.prefRow:hover .prefHelp {
 	/*padding:10px;*/
 }
 
-/*Preferences APP / left */
-.prefApp {
-	background-image: url(../pixelegg/images/setup.png);
-	background-repeat: no-repeat;
-	background-position: 90% 50%;
-	background-size: 16px 16px;
-	margin-right: 1em;
-}
-/*Preferences APP Settings / right*/
-.prefType {
-	background-image: url(../pixelegg/images/setup.png);
-	background-repeat: no-repeat;
-	background-position: 90% 50%;
-	background-size: 16px 16px;
+/*Preferences APP / left */ /*Preferences APP Settings / right*/
+.prefApp::after, .prefType::after {
+  background-image: url(../pixelegg/images/setup.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  right: 32px;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  top: calc(50% - 16px);
 }
 
 /*###############################*/
