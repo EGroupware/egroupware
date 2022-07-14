@@ -456,19 +456,12 @@ class preferences_hooks
 				'default' => '1',
 			),
 			'rte_toolbar' => array(
-				'type'	=> 'taglist',
-				'label'	=> 'Enabled features in toolbar',
-				'name'	=> 'rte_toolbar',
-				'values'=> '',
-				'help'	=> 'You may select features to be enabled in toolbar. Selecting any of the tools from here means seleted "Feature of the editor" preference would be ignored.',
-				'admin'	=> true,
-				'attributes' => array(
-					'allowFreeEntries' => false,
-					//'multiple' => 'toggle',
-					'editModeEnabled' => false,
-					'autocomplete_url' => ' ',
-					'select_options' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions()
-				)
+				'type'   => 'taglist',
+				'label'  => 'Enabled features in toolbar',
+				'name'   => 'rte_toolbar',
+				'values' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions(),
+				'help'   => 'You may select features to be enabled in toolbar. Selecting any of the tools from here means seleted "Feature of the editor" preference would be ignored.',
+				'admin'  => true
 			)
 		);
 		// disable thumbnails, if no size configured by admin

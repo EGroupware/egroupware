@@ -479,6 +479,7 @@ class preferences_settings
 						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'autocomplete_url', '');
 					}
 					$setting['type'] = 'et2-select';
+					$setting['multiple'] = true;
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', true);
 					break;
 			}
@@ -532,7 +533,10 @@ class preferences_settings
 				'onchange' => $setting['onchange']
 			);
 
-			//		'attributes' => $setting['attributes']
+			foreach($setting['attributes'] as $attr => $attr_value)
+			{
+				$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', $attr, $attr_value);
+			}
 			//error_log("appname=$appname, attribute=$attribute, setting=".array2string($setting));
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);

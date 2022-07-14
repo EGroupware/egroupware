@@ -105,26 +105,29 @@ class HtmlArea extends Etemplate\Widget
 	 * Create an array of toolbar as sel options
 	 *
 	 * @return array
-	 * 		[
-	 * 			id => {string}
-	 * 			label => {string}
-	 * 			title => {string}
-	 * 			icon => {string}
-	 * 			app => {string}
-	 * 		]
+	 *        [
+	 *            id => {string}
+	 *            value => {string}
+	 *            label => {string}
+	 *            title => {string}
+	 *            icon => {string}
+	 *            app => {string}
+	 *        ]
 	 */
 	public static function get_toolbar_as_selOptions ()
 	{
 		$toolbar_selOptions = array();
 		foreach (self::$toolbar_list as $toolbar)
 		{
-			$file = '/api/templates/default/images/htmlarea/'.$toolbar.'.svg';
-			$toolbar_selOptions[$toolbar] = array (
-				'id' => $toolbar,
+			$file = '/api/templates/default/images/htmlarea/' . $toolbar . '.svg';
+			$toolbar_selOptions[$toolbar] = array(
+				'id'    => $toolbar,
+				// Selectbox validation can't understand all these options without value
+				'value' => $toolbar,
 				'label' => lang($toolbar),
 				'title' => lang($toolbar),
-				'icon' => file_exists(EGW_SERVER_ROOT.$file)?Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url'].$file):'',
-				'app' => 'api'
+				'icon'  => file_exists(EGW_SERVER_ROOT . $file) ? Api\Framework::getUrl($GLOBALS['egw_info']['server']['webserver_url'] . $file) : '',
+				'app'   => 'api'
 			);
 		}
 		return $toolbar_selOptions;
