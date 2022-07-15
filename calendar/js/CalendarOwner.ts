@@ -38,9 +38,6 @@ export class CalendarOwner extends Et2Select
 		super(...args);
 		this.searchUrl = "calendar_owner_etemplate_widget::ajax_search";
 		this.multiple = true;
-
-		// Any free entries must be email addresses
-		this.defaultValidators.push(new IsEmail());
 	}
 
 	/**
@@ -90,6 +87,22 @@ export class CalendarOwner extends Et2Select
 				this.updateComplete.then(() => {this.syncItemsFromValue();});
 			}, this, true, this).sendRequest();
 		}
+	}
+
+	/**
+	 * Check if a free entry value is acceptable.
+	 * We only check the free entry, since value can be mixed.
+	 *
+	 * @param text
+	 * @returns {boolean}
+	 */
+	public validateFreeEntry(text) : boolean
+	{
+		let validators = [...this.validators, new IsEmail()];
+		let result = validators.filter(v =>
+			v.execute(text, v.param, {node: this}),
+		);
+		return result.length == 0;
 	}
 }
 
