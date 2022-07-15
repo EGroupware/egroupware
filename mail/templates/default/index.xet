@@ -5,12 +5,12 @@
 	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
-			<old-vbox id="mailPreview" width="100%">
+			<vbox id="mailPreview" width="100%">
                 <toolbar id="toolbar" list_header="short"/>
-                <old-box id="blank" disabled="false">
+                <box id="blank" disabled="false">
                     <image src="mail"/>
                     <description value="Select an item to read"/>
-                </old-box>
+                </box>
                 <hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
                     <description value="From"/>
                     <et2-select-email id="fromAddress" readonly="true"></et2-select-email>
@@ -30,13 +30,13 @@
                     <description value="CC"/>
                     <et2-select-email id="CCAddress" readonly="true"></et2-select-email>
                 </hbox>
-                <old-hbox class="mailPreviewHeaders smimeIcons">
+                <hbox class="mailPreviewHeaders smimeIcons">
                     <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
                            align="right" width="24"/>
                     <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
                            disabled="true" align="right" width="24"/>
-                </old-hbox>
-                <old-hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
+                </hbox>
+                <hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
                     <description value="Attachments"/>
 					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea egwGridView_grid">
 						<columns>
@@ -84,11 +84,11 @@
                     <buttononly class="transparent-button" statustext="Show all attachments"
                                 image="foldertree_nolines_plus" width="16px" height="16px"
                                 onclick="app.mail.showAllHeader"/>
-                </old-hbox>
-                <old-box id="mailPreviewContainer">
+                </hbox>
+                <box id="mailPreviewContainer">
                     <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
-                </old-box>
-            </old-vbox>
+                </box>
+            </vbox>
         </split>
     </template>
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">

@@ -452,7 +452,7 @@ div.mail-compose_fileselector {
     background-color: white;
 }
 
-div#mail-index_mailPreview > div, div#mail-index_mailPreview > et2-hbox {
+#mail-index_mailPreview > div, #mail-index_mailPreview > et2-hbox {
     padding-left: 8px !important;
 }
 
@@ -670,7 +670,9 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 
 .mailPreviewHeaders :first-child, .mailDisplayHeaders :first-child {
     width: 5em;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
+	color: #7a7a7a;
+	text-align: end;
 }
 
 div.mailPreviewHeaders div.mail_extraEmails {
@@ -682,13 +684,13 @@ div.mailPreviewHeaders div.mail_extraEmails {
     vertical-align: top;
 }
 
-#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
+#mail-index #mail-index_mailPreview #mail-index_mailPreviewHeadersSubject {
   width: 90%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-#mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span:not(:first-child) {
+#mail-index #mail-index_mailPreview #mail-index_mailPreviewHeadersSubject > span:not(:first-child) {
   white-space: nowrap;
   display: inline;
 }
@@ -1006,3 +1008,4 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 #calendar-meeting table.et2_grid.meetingRequest td {
 	padding-left: 8px !important;
 }
+#mail-index_mailPreview_mailPreviewContainer {height:100%;}
