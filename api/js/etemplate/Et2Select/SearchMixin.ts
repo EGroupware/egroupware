@@ -455,7 +455,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
 			}
-			if(this.allowFreeEntries && !this.multiple)
+			if(this.editModeEnabled && this.allowFreeEntries && !this.multiple)
 			{
 				this.startEdit();
 				this._editInputNode.select();
