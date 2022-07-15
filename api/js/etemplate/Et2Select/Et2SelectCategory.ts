@@ -10,13 +10,13 @@
 
 import {css, PropertyValues} from "@lion/core";
 import {Et2Select} from "./Et2Select";
-import {StaticOptions} from "./StaticOptions";
+import {Et2StaticSelectMixin, StaticOptions} from "./StaticOptions";
 
 /**
  * Customised Select widget for categories
  * This widget gives us category colors and icons in the options and selected value.
  */
-export class Et2SelectCategory extends Et2Select
+export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 {
 	static get styles()
 	{
@@ -77,7 +77,8 @@ export class Et2SelectCategory extends Et2Select
 		{
 			so.cat(this).then(options =>
 			{
-				this.select_options = options
+				this.static_options = options
+				this.requestUpdate("select_options");
 			});
 		}
 	}

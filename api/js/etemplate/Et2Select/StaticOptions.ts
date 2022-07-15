@@ -14,6 +14,46 @@ import {Et2Select, Et2SelectNumber, Et2WidgetWithSelect} from "./Et2Select";
 
 export type Et2SelectWidgets = Et2Select | Et2WidgetWithSelect | Et2SelectReadonly;
 
+// Export the Interface for TypeScript
+type Constructor<T = {}> = new (...args : any[]) => T;
+
+/**
+ * Base class for things that have static options
+ *
+ * We keep static options separate and concatenate them in to allow for extra options without
+ * overwriting them when we get static options from the server
+ */
+
+export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>(superclass : T) =>
+{
+	class Et2StaticSelectOptions extends (superclass)
+	{
+
+		protected static_options : SelectOption[];
+
+		constructor(...args)
+		{
+			super(...args);
+
+			this.static_options = [];
+		}
+
+		get select_options() : SelectOption[]
+		{
+			// @ts-ignore
+			return [...super.select_options, ...this.static_options];
+		}
+
+		set select_options(new_options)
+		{
+			// @ts-ignore IDE doesn't recognise property
+			super.select_options = new_options;
+		}
+	}
+
+	return Et2StaticSelectOptions;
+}
+
 /**
  * Some options change, or are too complicated to have twice, so we get the
  * options from the server once, then keep them to use if they're needed again.
@@ -68,7 +108,14 @@ export class StaticOptions
 				// Avoid errors if widget is destroyed before the timeout
 				if(widget && typeof widget.id !== 'undefined')
 				{
-					widget.set_select_options(find_select_options(widget, {}, cache));
+					if(typeof widget.set_static_options == "function")
+					{
+						widget.set_static_options(cache);
+					}
+					else if(typeof widget.set_select_options == "function")
+					{
+						widget.set_select_options(find_select_options(widget, {}, cache));
+					}
 				}
 			});
 			return return_promise ? promise : [];

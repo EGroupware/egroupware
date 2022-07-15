@@ -9,7 +9,7 @@
 
 
 import {css, html, PropertyValues, TemplateResult} from "@lion/core";
-import {StaticOptions} from "./StaticOptions";
+import {Et2StaticSelectMixin, StaticOptions} from "./StaticOptions";
 import {Et2widgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {SelectOption} from "./FindSelectOptions";
 import {SlMenuItem, SlSelect} from "@shoelace-style/shoelace";
@@ -537,20 +537,20 @@ if(typeof customElements.get("lion-validation-feedback") === "undefined")
 const so = new StaticOptions();
 
 
-export class Et2SelectApp extends Et2Select
+export class Et2SelectApp extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.app(this, {other: this.other || []});
+		this.static_options = so.app(this, {other: this.other || []});
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-app", Et2SelectApp);
 
-export class Et2SelectBitwise extends Et2Select
+export class Et2SelectBitwise extends Et2StaticSelectMixin(Et2Select)
 {
 	set value(new_value)
 	{
@@ -574,13 +574,13 @@ export class Et2SelectBitwise extends Et2Select
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-bitwise", Et2SelectBitwise);
 
-export class Et2SelectBool extends Et2Select
+export class Et2SelectBool extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.bool(this);
+		this.static_options = so.bool(this);
 	}
 }
 
@@ -588,59 +588,59 @@ export class Et2SelectBool extends Et2Select
 customElements.define("et2-select-bool", Et2SelectBool);
 
 
-export class Et2SelectDay extends Et2Select
+export class Et2SelectDay extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.day(this, {other: this.other || []});
+		this.static_options = so.day(this, {other: this.other || []});
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-day", Et2SelectDay);
 
-export class Et2SelectDayOfWeek extends Et2Select
+export class Et2SelectDayOfWeek extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.dow(this, {other: this.other || []});
+		this.static_options = so.dow(this, {other: this.other || []});
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-dow", Et2SelectDayOfWeek);
 
-export class Et2SelectHour extends Et2Select
+export class Et2SelectHour extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.hour(this, {other: this.other || []});
+		this.static_options = so.hour(this, {other: this.other || []});
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-hour", Et2SelectHour);
 
-export class Et2SelectMonth extends Et2Select
+export class Et2SelectMonth extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.month(this);
+		this.static_options = so.month(this);
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-month", Et2SelectMonth);
 
-export class Et2SelectNumber extends Et2Select
+export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
 {
 	static get properties()
 	{
@@ -681,7 +681,8 @@ export class Et2SelectNumber extends Et2Select
 
 		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
 		{
-			this.select_options = so.number(this);
+			this.static_options = so.number(this);
+			this.requestUpdate("select_options");
 		}
 	}
 }
@@ -704,20 +705,20 @@ export class Et2SelectPercent extends Et2SelectNumber
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-percent", Et2SelectPercent);
 
-export class Et2SelectPriority extends Et2Select
+export class Et2SelectPriority extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
 		super();
 
-		this.select_options = so.priority(this);
+		this.static_options = so.priority(this);
 	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-priority", Et2SelectPriority);
 
-export class Et2SelectState extends Et2Select
+export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 {
 	/**
 	 * Two-letter ISO country code
@@ -747,7 +748,8 @@ export class Et2SelectState extends Et2Select
 	set country_code(code : string)
 	{
 		this.__country_code = code;
-		this.select_options = so.state(this, {country_code: this.__country_code});
+		this.static_options = so.state(this, {country_code: this.__country_code});
+		this.requestUpdate("select_options");
 	}
 
 	set_country_code(code)
@@ -759,7 +761,7 @@ export class Et2SelectState extends Et2Select
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select-state", Et2SelectState);
 
-export class Et2SelectTimezone extends Et2Select
+export class Et2SelectTimezone extends Et2StaticSelectMixin(Et2Select)
 {
 	constructor()
 	{
