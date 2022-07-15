@@ -560,6 +560,10 @@ class Select extends Etemplate\Widget
 		{
 			$widget = $widget_type;
 			$widget_type = $widget->attrs['type'] ? $widget->attrs['type'] : $widget->type;
+			if(str_starts_with($widget_type, 'et2-'))
+			{
+				$widget_type = str_replace('et2-', '', $widget_type);
+			}
 		}
 		// Legacy / static support
 		// Have to do this explicitly, since legacy options is not defined on class level

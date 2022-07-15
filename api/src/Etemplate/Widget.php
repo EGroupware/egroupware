@@ -420,13 +420,14 @@ class Widget
 
 		if (!isset($class_name))
 		{
-			list($basetype) = explode('-',$type);
-			if (//dont think this is used: !class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
-				!class_exists($class_name = __CLASS__.'\\'.ucfirst($basetype)) &&
+			$exploded = explode('-', $type);
+			$basetype = $exploded[0] == "et2" ? $exploded[1] : $exploded[0];
+			if(//dont think this is used: !class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
+				!class_exists($class_name = __CLASS__ . '\\' . ucfirst($basetype)) &&
 				// widgets supplied by application in class ${app}_widget_etemplate or ${app}_${subtype}_widget_etemplate
 				!(isset($GLOBALS['egw_info']['apps'][$basetype]) &&
-					(class_exists($class_name = str_replace('-','_',$type).'_etemplate_widget') ||
-					 class_exists($class_name = $basetype.'_etemplate_widget'))))
+					(class_exists($class_name = str_replace('-', '_', $type) . '_etemplate_widget') ||
+						class_exists($class_name = $basetype . '_etemplate_widget'))))
 			{
 				// Try for base type, it's probably better than the root
 				if(isset(self::$widget_registry[$basetype]) && self::$widget_registry[$basetype] !== $class_name)
