@@ -95,9 +95,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		  <span part="prefix" class="tag__prefix">
 			  <slot name="prefix"></slot>
 		  </span>
-        <span part="content" class="tag__content">
-          <slot></slot>
-        </span>
+        ${this._contentTemplate()}
         ${this.removable
           ? html`
                     <sl-icon-button
@@ -113,6 +111,14 @@ export class Et2Tag extends Et2Widget(SlTag)
           : ''}
       </span>
 		`;
+	}
+
+	_contentTemplate() : TemplateResult
+	{
+		return html`
+            <span part="content" class="tag__content">
+          <slot></slot>
+        </span>`;
 	}
 }
 
