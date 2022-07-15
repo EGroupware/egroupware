@@ -236,6 +236,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		isDirty()
 		{
+			// Readonly can't be dirty, it can't change
+			if(this.readOnly)
+			{
+				return false;
+			}
+
 			let value = this.getValue();
 			if(typeof value !== typeof this._oldValue)
 			{
