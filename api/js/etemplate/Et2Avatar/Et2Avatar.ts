@@ -87,7 +87,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		this.contact_id = "";
 		this.editable = false;
 		this.crop = false;
-		this.size = "3em";
+		this.size = "2.7em";
 	}
 
 	/**
@@ -318,7 +318,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	 */
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("contact_id", "label", "href");
+		_attrs.push("contact_id", "label", "href", "src");
 	}
 
 	getDetachedNodes()

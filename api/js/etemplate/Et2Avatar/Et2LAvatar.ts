@@ -65,12 +65,19 @@ export class Et2LAvatar extends Et2Avatar
 	{
 		super.updated(changedProperties);
 
-		if (changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contact_id")) {
-			if (!this.src || !decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contact_id)
+		if (changedProperties.has("lname") || changedProperties.has("fname") || changedProperties.has("contact_id") || changedProperties.has("src")) {
+			if (!this.src || decodeURIComponent(this.src).match("lavatar=1") && (this.fname || this.lname) && this.contact_id)
 			{
-				this.initials = Et2LAvatar.lavatar(this.fname, this.lname, this.contact_id).initials;
+				let lavatar = Et2LAvatar.lavatar(this.fname, this.lname, this.contact_id);
+				this.initials = lavatar.initials;
+				this._baseNode.style.backgroundColor = lavatar.background;
+			}
+			else if (this.src)
+			{
+				this.image = this.src;
 			}
 		}
+
 	}
 
 	/**
