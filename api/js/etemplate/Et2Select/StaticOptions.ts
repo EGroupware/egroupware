@@ -36,6 +36,9 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 			super(...args);
 
 			this.static_options = [];
+
+			// Trigger the options to get rendered into the DOM
+			this.requestUpdate("select_options");
 		}
 
 		get select_options() : SelectOption[]
