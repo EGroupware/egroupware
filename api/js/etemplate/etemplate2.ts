@@ -45,6 +45,7 @@ import './Et2Favorites/Et2Favorites';
 import './Et2Image/Et2Image';
 import './Et2Avatar/Et2LAvatar';
 import './Et2Link/Et2Link';
+import './Et2Link/Et2LinkAdd';
 import './Et2Link/Et2LinkAppSelect';
 import './Et2Link/Et2LinkEntry';
 import './Et2Link/Et2LinkList';
