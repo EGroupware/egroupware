@@ -725,7 +725,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		delete(attrs.label);
 
 		attrs.type = "link-entry";
-		attrs.only_app = typeof field.only_app == "undefined" ? field.type : field.only_app;
+		attrs[attrs.readonly ? "app" : "only_app"] = typeof field.only_app == "undefined" ? field.type : field.only_app;
 		return true;
 	}
 
