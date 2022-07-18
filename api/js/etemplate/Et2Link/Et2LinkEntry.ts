@@ -175,6 +175,12 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	set only_app(app)
 	{
 		this.__only_app = app || "";
+
+		// If initial value got set before only_app, it still needs app in pre-render value
+		if(this._value && app)
+		{
+			this._value.app = this.__only_app;
+		}
 		if(app)
 		{
 			this.app = app;
