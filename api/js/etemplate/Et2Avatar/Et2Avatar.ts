@@ -273,7 +273,11 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 				return dialog;
 			};
 
-			dialog(egw.lang('Edit avatar'),self.options, buttons, null);
+			let value = {
+				contact_id: self.contact_id,
+				src: self.image
+			}
+			dialog(egw.lang('Edit avatar'), value, buttons, null);
 		});
 
 
