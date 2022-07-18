@@ -114,9 +114,15 @@ export class Et2LinkSearch extends Et2Select
 			{
 				item.textContent = title;
 				item.classList.remove("loading");
+				this.syncItemsFromValue();
 			}
-			// update the displayed text
-			this.syncItemsFromValue();
+			else
+			{
+				// Not already rendered, update the select option
+				this.requestUpdate("select_options");
+				// update the displayed text
+				this.updateComplete.then(this.syncItemsFromValue);
+			}
 		});
 	}
 }
