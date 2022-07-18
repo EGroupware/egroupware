@@ -880,8 +880,8 @@ class admin_mail
 			elseif ($content['acc_id'] > 0)
 			{
 				try {
-					$account = Mail\Account::read($content['acc_id'], $this->is_admin && !empty($content['called_for']) ?:
-						$GLOBALS['egw_info']['user']['account_id']);
+					$account = Mail\Account::read($content['acc_id'], $this->is_admin && !empty($content['called_for']) ?
+						$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 					$account->getUserData();	// quota, aliases, forwards etc.
 					$content += $account->params;
 					$content['acc_sieve_enabled'] = (string)($content['acc_sieve_enabled']);
