@@ -427,8 +427,7 @@ class Script
 				$defaultaddr = $sieve->user . '@' . $sieve->maildomain;
 				array_push($vacation['addresses'],$defaultaddr);
 			}
-			if (($vacation['status'] == 'on' && strlen(trim($vacation['text']))>0)|| $vacation['status'] == 'by_date' &&
-				$vacation['start_date'] <= time() && time() < $vacation['end_date']+24*3600)	// +24*3600 to include the end_date day
+			if (($vacation['status'] == 'on' && strlen(trim($vacation['text']))>0)|| $vacation['status'] == 'by_date')	// +24*3600 to include the end_date day
 			{
 				$vacation_active = true;
 				if ($vacation['text'])
