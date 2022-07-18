@@ -28,7 +28,15 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			shoelace,
 			cropperStyles,
 			css`
-			
+				:host::part(edit) {
+					visibility: hidden;
+					border-radius: 50%;
+					margin: -4px;
+				}
+				
+				:host(:hover)::part(edit) {
+					visibility: visible;
+				}
 			`
 		];
 	}
@@ -203,8 +211,10 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		let self = this;
 		let editBtn = document.createElement('sl-icon-button');
 		editBtn.setAttribute('name', 'pencil');
+		editBtn.setAttribute('part', 'edit');
 		let delBtn = document.createElement('sl-icon-button');
 		delBtn.setAttribute('name', 'trash');
+		delBtn.setAttribute('part', 'edit');
 		this._baseNode.append(editBtn);
 		this._baseNode.append(delBtn);
 
