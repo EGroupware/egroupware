@@ -66,7 +66,7 @@ $GLOBALS['settings'] = array(
 		'forced' => false,
 	),
 	'open_tabs' => array(
-		'type'   => 'multiselect',
+		'type'   => 'select-tabs',
 		'label'  => 'Open application tabs',
 		'name'   => 'open_tabs',
 		'values' => $apps,
@@ -76,7 +76,7 @@ $GLOBALS['settings'] = array(
 		'default' => 'addressbook,calendar,mail,filemanager,infolog,rocketchat',
 	),
 	'active_tab' => array(
-		'type'   => 'select',
+		'type'   => 'select-tab',
 		'label'  => 'Active application tab',
 		'name'   => 'active_tab',
 		'values' => $apps,
