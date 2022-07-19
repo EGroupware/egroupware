@@ -40,6 +40,7 @@ class Select extends Etemplate\Widget
 		'select-account',
 		'select-app',
 		'select-bool',
+		'select-cat',
 		'select-country',
 		// DOW needs some server-side pre-processing to unpack the options,
 		// so can't be skipped.
@@ -347,7 +348,8 @@ class Select extends Etemplate\Widget
 				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;
 			}
-			if(!in_array($type, self::$cached_types))
+			// Check for type not cached, or type less et2- prefix not a cached type
+			if(!in_array($type, self::$cached_types) && !in_array(substr($type, 4), self::$cached_types))
 			{
 				// adding type specific options here, while keep further options set by app code
 				// we need to make sure to run only once for auto-repeated rows, because
@@ -355,11 +357,12 @@ class Select extends Etemplate\Widget
 				// type-specific ones multiple time (and of cause better performance)
 				$no_lang = null;
 				static $form_names_done = array();
-				if (!isset($form_names_done[$form_name]) &&
+				if(!isset($form_names_done[$form_name]) &&
 					($type_options = self::typeOptions($this,
-					// typeOptions thinks # of rows is the first thing in options
-					(!empty($this->attrs['rows']) && !empty($this->attrs['options']) && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : ($this->attrs['options']??null)),
-					$no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name)))
+						// typeOptions thinks # of rows is the first thing in options
+						(!empty($this->attrs['rows']) && !empty($this->attrs['options']) && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'] . ',' . $this->attrs['options'] : ($this->attrs['options'] ?? null)),
+													   $no_lang, $this->attrs['readonly'] ?? false, self::get_array(self::$request->content, $form_name), $form_name
+					)))
 				{
 					self::fix_encoded_options($type_options);
 
