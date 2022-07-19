@@ -80,7 +80,13 @@ export class Et2EmailTag extends Et2Tag
 			contact_plus: {
 				type: Boolean,
 				reflect: true,
-			}
+			},
+
+			/**
+			 * If the email is a contact, we normally show the contact name instead of the email.
+			 * Set to true to turn this off and always show the email
+			 */
+			full_email: {type: Boolean}
 		}
 	}
 
@@ -88,6 +94,7 @@ export class Et2EmailTag extends Et2Tag
 	{
 		super(...args);
 		this.contact_plus = true;
+		this.full_email = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -147,7 +154,7 @@ export class Et2EmailTag extends Et2Tag
 		{
 			this._contactPlusNode.classList.add("contact_plus_contact");
 			// Add name in if missing
-			if(data.n_fn && !this.splitEmail(this.value).name)
+			if(!this.full_email && data.n_fn && !this.splitEmail(this.value).name)
 			{
 				// Append current value as email, data may have work & home email in it
 				this.textContent = data.n_fn + " <" + this.value + ">"
@@ -223,6 +230,12 @@ export class Et2EmailTag extends Et2Tag
 	 */
 	set textContent(new_content)
 	{
+		if(this.full_email)
+		{
+			super.textContent = new_content;
+			return;
+		}
+
 		const split = this.splitEmail(new_content);
 		super.textContent = split.name || split.email;
 
