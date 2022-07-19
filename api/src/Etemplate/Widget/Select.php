@@ -829,9 +829,10 @@ class Select extends Etemplate\Widget
 				$no_lang = True;
 				break;
 
-			case 'select-app':	// type2: 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
+			case 'select-tab':
+			case 'select-app':    // type2: 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
 				$apps = self::app_options($type2);
-				$options = is_array($options) ? $options+$apps : $apps;
+				$options = is_array($options) ? $options + $apps : $apps;
 				break;
 
 			case 'select-lang':
