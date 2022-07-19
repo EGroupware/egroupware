@@ -116,8 +116,9 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 		}
 		if(attr_options && Object.keys(attr_options).length > 0 && content_options)
 		{
-			//content_options = jQuery.extend(true, {}, attr_options, content_options);
-			content_options = [...attr_options, ...content_options];
+			// Clean, merge and filter out duplicates
+			content_options = [...new Map([...cleanSelectOptions(options), ...cleanSelectOptions(content_options || [])].map(item =>
+				[item.value, item])).values()];
 		}
 	}
 
