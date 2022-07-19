@@ -284,6 +284,7 @@ class infolog_hooks
 				'type'   => 'select-cat',
 				'label'  => 'Default category for new Infolog entries',
 				'name'   => 'cat_add_default',
+				'values' => array(),
 				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
 				'xmlrpc' => True,
 				'admin'  => False,
