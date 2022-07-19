@@ -464,6 +464,11 @@ class preferences_settings
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'allowFreeEntries', true);
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', $old_type === 'select-tabs');
 					break;
+				case 'select-cat':  // using application=$appname and global=true
+					$setting['type'] = 'et2-select-cat';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'application', $appname);
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'global_categories', true);
+					break;
 				case 'color':
 					$setting['type'] = 'et2-colorpicker';
 					break;

@@ -207,7 +207,7 @@ class infolog_hooks
 	 */
 	static function settings()
 	{
-		/* Setup some values to fill the array of this app's settings below */
+		/* Setup some values to fill the array with this app's settings below */
 		$info = new infolog_bo();	// need some labels from
 		$filters = $show_home = array();
 		$show_home[] = lang("DON'T show InfoLog");
@@ -217,7 +217,7 @@ class infolog_hooks
 			$show_home[$key] = $filters[$key] = lang($label);
 		}
 
-		// migrage old filter-pref 1,2 to the filter one 'own-open-today'
+		// migrate old filter-pref 1,2 to the filter one 'own-open-today'
 		if (isset($GLOBALS['type']) && in_array($GLOBALS['egw']->preferences->{$GLOBALS['type']}['homeShowEvents'],array('1','2')))
 		{
 			$GLOBALS['egw']->preferences->add('infolog','homeShowEvents','own-open-today',$GLOBALS['type']);
@@ -281,10 +281,9 @@ class infolog_hooks
 				'default'=> 'date',
 			),
 			'cat_add_default' => array(
-				'type'   => 'select',
+				'type'   => 'select-cat',
 				'label'  => 'Default category for new Infolog entries',
 				'name'   => 'cat_add_default',
-				'values' => self::all_cats(),
 				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -377,7 +376,7 @@ class infolog_hooks
 			'default'=> '1',	// Yes
 		);
 
-		// to add options for more then 3 days back or in advance, you need to update soinfolog::users_with_open_entries()!
+		// to add options for more than 3 days back or in advance, you need to update infolog_so::users_with_open_entries()!
 		$options = array(
 			'0'   => lang('No'),
 			'-1d' => lang('one day after'),
@@ -492,37 +491,6 @@ class infolog_hooks
 			);
 		}
 		return $settings;
-	}
-
-	/**
-	 * Return InoLog Categories (used for setting )
-	 *
-	 * @return array
-	 */
-	private static function all_cats()
-	{
-		$categories = new Api\Categories('','infolog');
-		$accountId = $GLOBALS['egw_info']['user']['account_id'];
-
-		foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat)
-		{
-			$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
-
-			if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
-			{
-				$s .= ' &#9830;';
-			}
-			elseif ($cat['owner'] != $accountId)
-			{
-				$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
-			}
-			elseif ($cat['access'] == 'private')
-			{
-				$s .= ' &#9829;';
-			}
-			$sel_options[$cat['id']] = $s;	// 0.9.14 only
-		}
-		return $sel_options;
 	}
 
 	/**
