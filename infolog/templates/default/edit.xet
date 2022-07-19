@@ -71,74 +71,75 @@
 	</template>
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
-			<columns>
-					<column width="46%"/>
-					<column width="60"/>
-					<column width="49%"/>
-			</columns>
-			<rows>
-				<row height="20" class="th">
-					<description value="Delegation" class="et2_fullWidth"/>
-					<description/>
-					<description value="Details" class="et2_fullWidth"/>
-				</row>
-				<row valign="top">
-					<grid>
-						<columns>
-							<column width="120"/>
-							<column width="250"/>
-						</columns>
-						<rows>
-							<row>
-								<description value="CC"/>
-								<taglist-email id="info_cc" class="et2_fullWidth"/>
-							</row>
-							<row class="row" valign="top">
-								<description value="Responsible" for="info_responsible"/>
-								<taglist-account statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="true" no_lang="1" class="et2_fullWidth" account_type="both" empty_label="Select users or groups" onchange="app.infolog.onchangeResponsible"/>
-							</row>
-						</rows>
-					</grid>
-					<description/>
-					<grid>
-						<columns>
-							<column width="120"/>
-							<column width="230"/>
-						</columns>
-						<rows>
-							<row>
-								<description value="Category" for="info_cat"/>
-								<menulist class="et2_fullWidth">
-									<menupopup type="select-cat" statustext="select a category for this entry" id="info_cat" options="None"/>
-								</menulist>
-							</row>
-							<row >
-								<description value="Parent" font_style="1"/>
-								<link-entry id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" options="infolog" class="et2_fullWidth" query="app.infolog.parent_query" />
-							</row>
-							<row class="row">
-								<description value="Priority" for="info_priority"/>
-								<menulist class="et2_fullWidth">
-									<menupopup statustext="select a priority for this task" id="info_priority"/>
-								</menulist>
-							</row>
-							<row>
-								<description value="Date completed" for="info_datecompleted"/>
-								<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged" class="et2_fullWidth"/>
-							</row>
-							<row class="row">
-								<description value="Location" for="info_location"/>
-								<textbox id="info_location" size="60" maxlength="255" class="et2_fullWidth"/>
-							</row>
-							<row>
-								<description value="Private" for="info_access"/>
-								<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
-							</row>
-						</rows>
-					</grid>
-				</row>
-			</rows>
-		</grid>
+            <columns>
+                <column width="46%"/>
+                <column width="60"/>
+                <column width="49%"/>
+            </columns>
+            <rows>
+                <row height="20" class="th">
+                    <description value="Delegation" class="et2_fullWidth"/>
+                    <description/>
+                    <description value="Details" class="et2_fullWidth"/>
+                </row>
+                <row valign="top">
+                    <vbox>
+                        <taglist-email id="info_cc" class="label-on-left" label="CC"/>
+
+                        <taglist-account label="responsible"
+                                         statustext="select a responsible user: a person you want to delegate this task"
+                                         id="info_responsible" rows="6" multiple="true" no_lang="1"
+                                         class="label-on-left" account_type="both" empty_label="Select users or groups"
+                                         onchange="app.infolog.onchangeResponsible"/>
+                    </vbox>
+                    <description/>
+                    <grid>
+                        <columns>
+                            <column width="120"/>
+                            <column width="230"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <description value="Category" for="info_cat"/>
+                                <menulist class="et2_fullWidth">
+                                    <menupopup type="select-cat" statustext="select a category for this entry"
+                                               id="info_cat" options="None"/>
+                                </menulist>
+                            </row>
+                            <row>
+                                <description value="Parent" font_style="1"/>
+                                <link-entry id="info_id_parent"
+                                            onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}"
+                                            options="infolog" class="et2_fullWidth" query="app.infolog.parent_query"/>
+                            </row>
+                            <row class="row">
+                                <description value="Priority" for="info_priority"/>
+                                <menulist class="et2_fullWidth">
+                                    <menupopup statustext="select a priority for this task" id="info_priority"/>
+                                </menulist>
+                            </row>
+                            <row>
+                                <description value="Date completed" for="info_datecompleted"/>
+                                <date-time
+                                        statustext="Date completed (leave it empty to have it automatic set if status is done or billed)"
+                                        id="info_datecompleted" onchange="app.infolog.statusChanged"
+                                        class="et2_fullWidth"/>
+                            </row>
+                            <row class="row">
+                                <description value="Location" for="info_location"/>
+                                <textbox id="info_location" size="60" maxlength="255" class="et2_fullWidth"/>
+                            </row>
+                            <row>
+                                <description value="Private" for="info_access"/>
+                                <checkbox
+                                        statustext="should this entry only be visible to you and people you grant privat access via the ACL"
+                                        id="info_access" options="private,public"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </row>
+            </rows>
+        </grid>
 	</template>
 	<template id="infolog.edit" template="" lang="" group="0" version="1.9.101">
 		<grid width="100%">
