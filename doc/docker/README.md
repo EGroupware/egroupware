@@ -1,5 +1,8 @@
 # Running EGroupware in Docker
 
+> This is NOT the recommended way of installing EGroupware on a Linux server! 
+> Please consult the [installation instructions in our wiki](https://github.com/EGroupware/egroupware/wiki/Installation-using-egroupware-docker-RPM-DEB-package).
+
 ## Quick instructions
 ```
 curl https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/docker-compose.yml > docker-compose.yml
@@ -16,6 +19,7 @@ The provided docker-compose.yml will run the following container:
 * **egroupware-db** latest MariaDB 10.4
 * **egroupware-watchtower** updating all above container automatically daily at 4am
 * **collabora-key** Collabora Online Office
+* **collabora-init** Collabora init container to generate the configuration once
 * **rocketchat** Rocket.Chat server
 * **rocketchat-mongodb** MongoDB for Rocket.Chat
 * **portainer** Portainer Docker GUI
@@ -209,6 +213,15 @@ services:
     # can access EGroupware without the need to go over your firewall
     #extra_hosts:
     #- "my.host.name:ip-address"
+    depends_on:
+      - collabora-init
+
+  # initialise the collabora-config volume
+  collabora-init:
+    image: "quay.io/egroupware/collabora-key:latest"
+    command:  bash -c "test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd && cd /tmp/coolwsd && ln -s coolwsd.conf loolwsd.conf)"
+    volumes:
+      - collabora-config:/tmp/coolwsd
 
   # Rocket.Chat server
   rocketchat:

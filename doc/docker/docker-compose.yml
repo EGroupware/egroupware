@@ -187,6 +187,15 @@ services:
     # can access EGroupware without the need to go over your firewall
     #extra_hosts:
     #- "my.host.name:ip-address"
+    depends_on:
+      - collabora-init
+
+  # initialise the collabora-config volume
+  collabora-init:
+    image: "quay.io/egroupware/collabora-key:latest"
+    command:  bash -c "test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd && cd /tmp/coolwsd && ln -s coolwsd.conf loolwsd.conf)"
+    volumes:
+      - collabora-config:/tmp/coolwsd
 
   # Rocket.Chat server
   rocketchat:
