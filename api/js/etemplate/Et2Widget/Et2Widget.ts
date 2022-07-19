@@ -1313,7 +1313,7 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 	let widget = <Et2Widget>document.createElement(_nodeName);
 	widget.textContent = _template_node.textContent;
 
-	if (parent) widget.setParent(parent);
+	if (parent && typeof widget.setParent === 'function') widget.setParent(parent);
 
 	// Set read-only.  Doesn't really matter if it's a ro widget, but otherwise it needs set
 	widget.readonly = readonly;

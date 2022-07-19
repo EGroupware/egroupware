@@ -143,7 +143,11 @@ class Select extends Etemplate\Widget
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
-		$widget_type = $this->attrs['type'] ? $this->attrs['type'] : $this->type;
+		$widget_type = $this->attrs['type'] ?? $this->type;
+		if (substr($widget_type, 0, 4) === 'et2-')
+		{
+			$widget_type = substr($widget_type, 4);
+		}
 		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
 
 		$ok = true;
@@ -205,6 +209,17 @@ class Select extends Etemplate\Widget
 						if (!calendar_timezones::tz2id($val))
 						{
 							self::set_validation_error($form_name, lang("'%1' is NOT a valid timezone!", $val));
+						}
+						break;
+
+					case 'select-app':
+					case 'select-tab':
+						if (!in_array($val, $allowed) &&
+							!($widget_type === 'select-tab' && preg_match('/^[a-z0-9]+\-[a-z0-9]+$/i', $val, $matches) && in_array($matches[1], $allowed)))
+						{
+							self::set_validation_error($form_name, lang("'%1' is NOT a valid app-name ('%2')!", $val, implode("', '",$allowed)),'');
+							$value = '';
+							break 2;
 						}
 						break;
 

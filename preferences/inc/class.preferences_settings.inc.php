@@ -458,6 +458,12 @@ class preferences_settings
 					$setting['type'] = 'et2-select';
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', true);
 					break;
+				case 'select-tab':
+				case 'select-tabs':
+					$setting['type'] = 'et2-select-tab';
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'allowFreeEntries', true);
+					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', $old_type === 'select-tabs');
+					break;
 				case 'color':
 					$setting['type'] = 'et2-colorpicker';
 					break;
