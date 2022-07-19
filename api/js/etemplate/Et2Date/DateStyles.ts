@@ -10,7 +10,7 @@ export const dateStyles = [
 	colorsDefStyles,
 	css`
 	:host {
-		display: inline-block;
+		display: block;
 		white-space: nowrap;
 		min-width: fit-content;
 	}
