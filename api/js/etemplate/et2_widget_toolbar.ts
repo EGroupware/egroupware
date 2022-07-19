@@ -51,7 +51,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		"list_header": {
 			"name": "list header style",
 			"type": "string",
-			"default": "more",
+			"default": "short",
 			"description": "Define a style for list header (more ...), which can get short 3dots with no caption or bigger button with caption more ..."
 		},
 		"preference_id": {
