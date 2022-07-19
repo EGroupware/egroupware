@@ -46,18 +46,10 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 			// @ts-ignore
 			const options = super.select_options || [];
 			// make sure result is unique
-			if (options.length && this.static_options.length)
-			{
-				const union = [].concat(options);
-				this.static_options.forEach(option => {
-					if (!union.filter(opt => opt.value == option.value).length)
-					{
-						union.concat(option);
-					}
-				});
-				return union;
-			}
-			return [...options, ...(this.static_options || [])];
+
+			return [...new Map([...options, ...(this.static_options || [])].map(item =>
+				[item.value, item])).values()];
+
 		}
 
 		set select_options(new_options)
