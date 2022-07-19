@@ -85,7 +85,7 @@
 
 .label-on-left::part(form-control-label) {
     flex: 0 0 auto;
-    width: var(--width, 8em);
+    width: var(--label-width, 8em);
     white-space: normal;
 }
 
