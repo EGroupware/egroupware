@@ -570,7 +570,7 @@ export class Et2SelectTab extends Et2SelectApp
 				let option : SelectOption = {value: value, label: value};
 				if (matches)
 				{
-					option = options.filter(option => option.value == matches[1])[0];
+					option = options.filter(option => option.value == matches[1])[0] || {value: value, label: egw.lang(matches[1])};
 					option.value = value;
 					option.label += ' '+egw.lang('Tab');
 				}
