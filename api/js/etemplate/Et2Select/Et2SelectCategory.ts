@@ -57,6 +57,11 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	constructor()
 	{
 		super();
+		so.cat(this).then(options =>
+		{
+			this.static_options = options
+			this.requestUpdate("select_options");
+		});
 	}
 
 	async connectedCallback()
@@ -75,11 +80,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		await this.updateComplete;
 		if(this.select_options.length == 0)
 		{
-			so.cat(this).then(options =>
-			{
-				this.static_options = options
-				this.requestUpdate("select_options");
-			});
+
 		}
 	}
 

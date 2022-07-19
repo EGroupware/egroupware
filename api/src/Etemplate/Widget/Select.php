@@ -39,6 +39,7 @@ class Select extends Etemplate\Widget
 	public static $cached_types = array(
 		'select-account',
 		'select-app',
+		'select-tab',
 		'select-bool',
 		'select-cat',
 		'select-country',

@@ -57,6 +57,12 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 			// @ts-ignore IDE doesn't recognise property
 			super.select_options = new_options;
 		}
+
+		set_static_options(new_static_options)
+		{
+			this.static_options = new_static_options;
+			this.requestUpdate("select_options");
+		}
 	}
 
 	return Et2StaticSelectOptions;

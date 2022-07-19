@@ -241,11 +241,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	set_value(val : string | string[] | number | number[])
 	{
-		if (typeof val === 'number')
+		if(typeof val === 'string' && val.indexOf(',') !== -1)
+		{
+			val = val.split(',');
+		}
+		if(typeof val === 'number')
 		{
 			val = val.toString();
 		}
-		if (Array.isArray(val))
+		if(Array.isArray(val))
 		{
 			val = val.map(v => typeof v === 'number' ? v.toString() : v || '');
 		}
@@ -561,18 +565,27 @@ export class Et2SelectTab extends Et2SelectApp
 
 	set value(new_value)
 	{
+		if(!new_value)
+		{
+			super.value = new_value;
+			return;
+		}
 		const values = Array.isArray(new_value) ? new_value : [new_value];
 		const options = this.select_options;
-		values.forEach(value => {
-			if (!options.filter(option => option.value == value).length)
+		values.forEach(value =>
+		{
+			if(!options.filter(option => option.value == value).length)
 			{
 				const matches = value.match(/^([a-z0-9]+)\-/i);
 				let option : SelectOption = {value: value, label: value};
-				if (matches)
+				if(matches)
 				{
-					option = options.filter(option => option.value == matches[1])[0] || {value: value, label: egw.lang(matches[1])};
+					option = options.filter(option => option.value == matches[1])[0] || {
+						value: value,
+						label: this.egw().lang(matches[1])
+					};
 					option.value = value;
-					option.label += ' '+egw.lang('Tab');
+					option.label += ' ' + this.egw().lang('Tab');
 				}
 				try {
 					const app = opener?.framework.getApplicationByName(value);
