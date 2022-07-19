@@ -76,6 +76,28 @@
     display: none;
 }
 
+/* Put widget label to the left of the widget, with fixed width */
+.label-on-left::part(form-control) {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.label-on-left::part(form-control-label) {
+    flex: 0 0 auto;
+    width: var(--width, 8em);
+    white-space: normal;
+}
+
+.label-on-left::part(form-control-input) {
+    flex: 1 1 auto;
+}
+
+/* Use .label-inline with .label-on-left to remove fixed label space */
+.label-inline::part(form-control-label) {
+    width: initial;
+}
+
 /**
  * VBox widget
  */
