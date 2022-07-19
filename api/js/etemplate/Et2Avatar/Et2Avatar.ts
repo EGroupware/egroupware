@@ -21,6 +21,9 @@ import {cropperStyles} from "./cropperStyles";
 export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDetachedDOM
 {
 	private _contact_id;
+	private _delBtn: HTMLElement;
+	private _editBtn : HTMLElement;
+
 	static get styles()
 	{
 		return [
@@ -62,6 +65,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			/**
 			 * Image
 			 * Displayed image
+			 * @deprecated
 			 */
 			src: {type: String},
 
@@ -186,6 +190,11 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		this.contact_id = _value;
 	}
 
+	/**
+	 * set the image source
+	 * @deprecated please use image instead
+	 * @param _value
+	 */
 	set src(_value)
 	{
 		this.image = _value;
@@ -209,99 +218,145 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	private _buildEditableLayer(_noDelete : boolean)
 	{
 		let self = this;
-		let editBtn = document.createElement('sl-icon-button');
-		editBtn.setAttribute('name', 'pencil');
-		editBtn.setAttribute('part', 'edit');
-		let delBtn = document.createElement('sl-icon-button');
-		delBtn.setAttribute('name', 'trash');
-		delBtn.setAttribute('part', 'edit');
-		this._baseNode.append(editBtn);
-		this._baseNode.append(delBtn);
+		this._editBtn = document.createElement('sl-icon-button');
+		this._editBtn.setAttribute('name', 'pencil');
+		this._editBtn.setAttribute('part', 'edit');
+		this._delBtn = document.createElement('sl-icon-button');
+		this._delBtn.setAttribute('name', 'trash');
+		this._delBtn.setAttribute('part', 'edit');
+		this._baseNode.append(this._editBtn);
+		this._baseNode.append(this._delBtn);
 
-		delBtn.disabled = _noDelete;
+		// disable the delete button if no delete is set
+		this._delBtn.disabled = _noDelete;
 
-		editBtn.addEventListener('click', function(){
-			let buttons = [
-				{"button_id": 1, label: self.egw().lang('save'), id: 'save', image: 'check', "default": true},
-				{"button_id": 0, label: self.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
-			];
-			let dialog = function(_title, _value, _buttons, _egw_or_appname)
-			{
-				let dialog = new Et2Dialog(self.egw());
-				dialog.transformAttributes({
-					callback: function(_buttons, _value)
-					{
-						let widget = document.getElementById('_cropper_image');
-						switch(_buttons)
-						{
-							case 1:
-								let canvas = jQuery(widget._imageNode).cropper('getCroppedCanvas');
-								self.image =  canvas.toDataURL("image/jpeg", 1.0)
-								self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-									[self.getInstanceManager().etemplate_exec_id,  canvas.toDataURL("image/jpeg", 1.0)],
-									function(res)
-									{
-										if(res)
-										{
-											delBtn.style.visibility = 'visible';
-										}
-									}).sendRequest();
-								break;
-							case '_rotate_reset':
-								jQuery(widget._imageNode).cropper('reset');
-								return false;
-							case '_rotate_l':
-								jQuery(widget._imageNode).cropper('rotate', -90);
-								return false;
-							case '_rotate_r':
-								jQuery(widget._imageNode).cropper('rotate', 90);
-								return false;
-						}
-					},
-					title: _title || egw.lang('Input required'),
-					buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
-					value: {
-						content: _value
-					},
-					width: "90%",
-					height: "450",
-					resizable: false,
-					position: "top+10",
-					template: egw.webserverUrl + '/api/templates/default/avatar_edit.xet'
-				});
-				document.body.appendChild(dialog);
-				return dialog;
-			};
+		// bind click handler to edit button
+		this._editBtn.addEventListener('click', this.editButtonClickHandler.bind(this));
 
-			let value = {
-				contact_id: self.contact_id,
-				src: self.image
-			}
-			dialog(egw.lang('Edit avatar'), value, buttons, null);
+		// bind click handler to del button
+		this._delBtn.addEventListener('click', this.delButtonClickHandler.bind(this));
+	}
+
+	/**
+	 * click handler to handle click on edit button
+	 */
+	editButtonClickHandler()
+	{
+		const buttons = [
+			{"button_id": 1, label: this.egw().lang('save'), id: 'save', image: 'check', "default": true},
+			{"button_id": 0, label: this.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
+		];
+		const value = {
+			contact_id: this.contact_id,
+			src: this.image
+		}
+		this._editDialog(egw.lang('Edit avatar'), value, buttons, null);
+	}
+
+	/**
+	 * Build edit dialog
+	 * @param _title
+	 * @param _value
+	 * @param _buttons
+	 * @param _egw_or_appname
+	 */
+	private _editDialog(_title, _value, _buttons, _egw_or_appname)
+	{
+		let dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
+			callback: this.__editDialogCallback.bind(this),
+			title: _title || egw.lang('Input required'),
+			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: _value
+			},
+			width: "90%",
+			height: "450",
+			resizable: false,
+			position: "top+10",
+			template: egw.webserverUrl + '/api/templates/default/avatar_edit.xet'
 		});
+		document.body.appendChild(dialog);
+		return dialog;
+	}
 
-
-
-		delBtn.addEventListener('click', function()
+	/**
+	 * Edit dialog callback function
+	 * @param _buttons
+	 * @param _value
+	 */
+	private __editDialogCallback(_buttons, _value)
+	{
+		let widget = document.getElementById('_cropper_image');
+		switch(_buttons)
 		{
-			Et2Dialog.show_dialog(function(_btn)
-			{
-				if(_btn == Et2Dialog.YES_BUTTON)
-				{
-					self.egw().json('addressbook.addressbook_ui.ajax_update_photo',
-						[self.getInstanceManager().etemplate_exec_id, null],
-						function(res)
-						{
-							if(res)
-							{
-								self.image =  '';
-								delBtn.style.visibility = 'none';
-								egw.refresh('Avatar Deleted.', egw.app_name());
-							}
-						}).sendRequest();
-				}
-			}, egw.lang('Delete this photo?'), egw.lang('Delete'), null, Et2Dialog.BUTTONS_YES_NO);
-		});
+			case 1:
+				let canvas = jQuery(widget._imageNode).cropper('getCroppedCanvas');
+				this.image =  canvas.toDataURL("image/jpeg", 1.0)
+				this.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+					[this.getInstanceManager().etemplate_exec_id,  canvas.toDataURL("image/jpeg", 1.0)],
+					this.__editAjaxUpdatePhotoCallback.bind(this)).sendRequest();
+				break;
+			case '_rotate_reset':
+				jQuery(widget._imageNode).cropper('reset');
+				return false;
+			case '_rotate_l':
+				jQuery(widget._imageNode).cropper('rotate', -90);
+				return false;
+			case '_rotate_r':
+				jQuery(widget._imageNode).cropper('rotate', 90);
+				return false;
+		}
+	}
+
+	/**
+	 * Edit ajax update photo response callback
+	 * @param response
+	 */
+	private __editAjaxUpdatePhotoCallback(response)
+	{
+		if(response)
+		{
+			this._delBtn.style.visibility = 'visible';
+		}
+	}
+
+	/**
+	 * click handler to handel click on delete button
+	 */
+	delButtonClickHandler()
+	{
+		//build delete dialog
+		Et2Dialog.show_dialog(this._delBtnDialogCallback.bind(this), egw.lang('Delete this photo?'), egw.lang('Delete'),
+			null, Et2Dialog.BUTTONS_YES_NO);
+	}
+
+	/**
+	 * del dialog callback function
+	 * @param _btn
+	 */
+	private _delBtnDialogCallback(_btn)
+	{
+		if(_btn == Et2Dialog.YES_BUTTON)
+		{
+			this.egw().json('addressbook.addressbook_ui.ajax_update_photo',
+				[this.getInstanceManager().etemplate_exec_id, null],
+				this.__delAjaxUpdatePhotoCallback.bind(this)).sendRequest();
+		}
+	}
+
+	/**
+	 * Del ajax update photo response callback
+	 * @param response
+	 */
+	private __delAjaxUpdatePhotoCallback(response)
+	{
+		if(response)
+		{
+			this.image =  '';
+			this._delBtn.style.visibility = 'none';
+			egw.refresh('Avatar Deleted.', egw.app_name());
+		}
 	}
 
 	/**
