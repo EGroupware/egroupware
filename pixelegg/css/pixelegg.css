@@ -5580,8 +5580,13 @@ span.overlayContainer img.overlay {
 #egw_fw_topmenu_info_items #topmenu_info_quick_add .chzn-container .chzn-results {
   max-height: none;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add select#quick_add_selectbox {
-  visibility: hidden;
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox {
+  height: 0px;
+  float: left;
+  display: inline-block;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input) {
+  border: none !important;
 }
 #egw_fw_topmenu_info_items img#topmenu_info_error {
   width: 16px;

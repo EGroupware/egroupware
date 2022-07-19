@@ -17,33 +17,19 @@ egw_ready.then(function()
 	jQuery('#quick_add').on({
 		mouseover: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			var $select = jQuery('#quick_add_selectbox');
-			if (!$select.children()[0]['value']) $select.children()[0].text = '';
-			var $chosen_div = $select.next();
-			if ($chosen_div.hasClass('chzn-container'))
-			{
-				$chosen_div.show();
-			}
-			else
-			{
-				$select.chosen({
-					disable_search: true,
-					display_selected_options: false
-				});
-				 $chosen_div = $select.next();
-			}
-			$select.trigger('liszt:open');
-			$select.on('liszt:hiding_dropdown', function(e){
-				$chosen_div.hide();
-			});
+			var select = document.getElementById('quick_add_selectbox');
+			select.dropdown.open = true;
 			ev.stopPropagation();
+
 		},
 		mouseout: function(ev){
+			var select = document.getElementById('quick_add_selectbox');
+
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.target && ev.relatedTarget && ev.target.id != 'quick_add_selectbox'
-					&& !jQuery(ev.relatedTarget).hasClass('chzn-container'))
+			if (ev.target && ev.relatedTarget && ev.currentTarget.id != "quick_add" && ev.currentTarget.nodeName != 'ET2-SELECT')
 			{
-				 jQuery('#quick_add_selectbox').next().hide();
+
+
 			}
 			ev.stopPropagation();
 		}

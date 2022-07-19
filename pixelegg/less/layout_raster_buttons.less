@@ -292,8 +292,13 @@
 				max-height: none;
 			}
 		}
-		select#quick_add_selectbox {
-			visibility: hidden;
+		#quick_add_selectbox {
+			height: 0px;
+			float: left;
+			display: inline-block;
+		}
+		#quick_add_selectbox::part(form-control-input) {
+			border: none !important;
 		}
     }
 

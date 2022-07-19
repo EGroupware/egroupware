@@ -484,18 +484,17 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// check if quick-add selectbox is alread there, only create it again if not
 			if (document.getElementById('quick_add_selectbox')) return;
 
-			const select = jQuery(document.createElement('select')).attr('id', 'quick_add_selectbox');
-			jQuery(typeof _parent === 'string' ? '#'+_parent : _parent).append(select);
-
+			const select = document.createElement('et2-select');
+			select.setAttribute('id', 'quick_add_selectbox');
+			document.getElementById(_parent).append(select);
 			const self = this;
 			// bind change handler
-			select.change(function(){
+			select.addEventListener('change', function(){
 				if (this.value) self.open('', this.value, 'add', {}, undefined, this.value, true);
-				this.value = '';
 			});
 			// need to load common translations for app-names
 			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], function(){
-				select.append(jQuery(document.createElement('option')).attr('value', '').text(self.lang('Add')+' ...'));
+				let options = [];
 				const apps = self.link_app_list('add');
 				for(let app in apps)
 				{
@@ -503,10 +502,18 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					{
 						continue;
 					}
-					const option = jQuery(document.createElement('option')).attr('value', app)
-						.text(self.lang(self.link_get_registry(app,'entry') || apps[app]));
-					select.append(option);
+					options.push({
+						value:app,
+						label:self.lang(self.link_get_registry(app,'entry') || apps[app]),
+						icon: `${egw.webserverUrl}/${app}/templates/pixelegg/images/navbar.svg`
+					});
 				}
+				select.select_options = options;
+				select.updateComplete.then(function(){
+					select.dropdown.trigger.style.visibility = 'hidden';
+					select.dropdown.trigger.style.height = '0px';
+				});
+
 			});
 		}
 	};
