@@ -54,6 +54,14 @@ export class Et2LinkSearch extends Et2Select
 		return this.parentNode.querySelector("et2-link-apps");
 	}
 
+	/**
+	 * Override parent to do nothing - option is often not in select options
+	 *
+	 * @private
+	 */
+	private fix_bad_value()
+	{}
+
 	protected remoteQuery(search : string, options : object)
 	{
 		let request = this.egw().request(this.searchUrl, [this._appNode.value, '', search, options]);
