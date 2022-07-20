@@ -155,6 +155,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					flex: 2 1 auto;
 					width: 100%;
 				}
+				:host([search]:not([multiple])) .select--open .select__label {
+					margin: 0px;
+				}
 				:host([allowfreeentries]:not([multiple])) .select--standard.select--open:not(.select--disabled) .select__control .select__prefix {
 					flex: 1 1 auto;
 				}
