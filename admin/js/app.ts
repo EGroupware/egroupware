@@ -131,9 +131,6 @@ class AdminApp extends EgwApp
 				this.cf_type_change(null,widget);
 				break;
 
-			case 'admin.mailaccount':
-				this.account_hide_not_applying();
-				break;
 			case 'admin.cmds':
 				var selected = this.et2.getWidgetById('nm').getSelection();
 				if (selected && selected.ids.length == 1)
@@ -1291,57 +1288,6 @@ class AdminApp extends EgwApp
 	wizard_sieve_onchange(_event, _widget)
 	{
 		this.et2.getWidgetById('acc_sieve_enabled').set_value(1);
-	}
-
-	/**
-	 * Hide not applying fields, used as:
-	 * - onchange handler on account_id
-	 * - called from et2_ready for emailadmin.account template
-	 *
-	 * @param {object} _event event-object or information about event
-	 * @param {et2_baseWidget} _widget widget causing the event
-	 */
-	account_hide_not_applying(_event?, _widget?)
-	{
-		var account_id = this.et2.getWidgetById('account_id');
-		var ids = account_id && account_id.get_value ? account_id.get_value() : [];
-		if (typeof ids == 'string') ids = ids.split(',');
-
-		var multiple = ids.length >= 2 || ids[0] === '' || ids[0] < 0;
-		//alert('multiple='+(multiple?'true':'false')+': '+ids.join(','));
-
-		// initial call
-		if (typeof _widget == 'undefined')
-		{
-			if (!multiple)
-			{
-				jQuery('.emailadmin_no_single').hide();
-			}
-			if (!this.egw.user('apps').admin)
-			{
-				jQuery('.emailadmin_no_user,#button\\[multiple\\]').hide();
-			}
-			if (ids.length == 1)
-			{
-				// switch back to single selectbox
-				account_id.set_multiple(false);
-			}
-		}
-		// switched to single user
-		else if (!multiple)
-		{
-			jQuery('.emailadmin_no_single').fadeOut();
-			// switch back to single selectbox
-			account_id.set_multiple(false);
-			this.et2.getWidgetById('button[multiple]').set_disabled(false);
-		}
-		// switched to multiple user
-		else
-		{
-			jQuery('.emailadmin_no_single').fadeIn();
-		}
-		if (_event && _event.stopPropagation) _event.stopPropagation();
-		return false;
 	}
 
 	/**

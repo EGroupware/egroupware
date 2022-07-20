@@ -1199,7 +1199,7 @@ class admin_mail
 		// admin access to account with no credentials available
 		if ($this->is_admin && (empty($content['acc_imap_username']) || empty($content['acc_imap_host']) || $content['called_for']))
 		{
-			// cant connection to imap --> allow free entries in taglists
+			// can't connection to imap --> allow free entries in taglists
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
 			{
 				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
@@ -1335,11 +1335,6 @@ class admin_mail
 		}
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
-		if (is_array($content['account_id']) && count($content['account_id']) > 1)
-		{
-			$tpl->setElementAttribute('account_id', 'multiple', true);
-			$readonlys['button[multiple]'] = true;
-		}
 		// when called by admin for existing accounts, display further administrative actions
 		if ($content['called_for'] && (int)$content['acc_id'] > 0)
 		{
@@ -1411,11 +1406,15 @@ class admin_mail
 
 		if (!is_array($account_id))
 		{
-			$account_id = explode(',', $account_id);
+			$account_id = $account_id ? explode(',', $account_id) : [];
 		}
-		if (($k = array_search($back?'':'0', $account_id)) !== false)
+		if ($back && !$account_id)
 		{
-			$account_id[$k] = $back ? '0' : '';
+			$account_id = 0;
+		}
+		if (!$back && count($account_id) === 1 && !current($account_id))
+		{
+			$account_id = [];
 		}
 	}
 

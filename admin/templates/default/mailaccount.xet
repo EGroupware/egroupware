@@ -260,12 +260,12 @@
 				</row>
 				<row>
 					<description for="mailAlternateAddress" value="Alternate email address"/>
-					<select-email id="mailAlternateAddress" autocomplete_url="" full_email="true"/>
+					<select-email id="mailAlternateAddress" autocomplete_url="" full_email="true" allowFreeEntries="true"/>
 					<description/>
 				</row>
 				<row disabled="@no_forward_available">
 					<description for="mailForwardingAddress" value="Forward email's to"/>
-					<select-email id="mailForwardingAddress" autocomplete_url="" full_email="true"/>
+					<select-email id="mailForwardingAddress" autocomplete_url="" full_email="true" allowFreeEntries="true"/>
 					<vbox>
 						<checkbox label="Forward only" id="deliveryMode" selected_value="forwardOnly" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');"/>
 						<checkbox label="Allow users to change forwards" id="acc_user_forward"/>
@@ -342,9 +342,7 @@
                 <row class="emailadmin_no_user dialogHeader2">
                     <description for="account_id" value="Valid for"/>
                     <hbox span="all">
-                        <select-account account_type="both" id="account_id"
-                                        onchange="app.admin.account_hide_not_applying" empty_label="Everyone"
-                                        expand_multiple_rows="4"/>
+                        <select-account account_type="both" id="account_id" placeholder="Everyone" multiple="true"/>
                         <checkbox label="account editable by user" id="acc_user_editable"/>
                     </hbox>
                 </row>
