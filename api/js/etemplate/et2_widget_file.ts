@@ -179,16 +179,19 @@ export class et2_file extends et2_inputWidget
 	createInputWidget()
 	{
 		this.node = <HTMLElement><unknown>jQuery(document.createElement("div")).addClass("et2_file");
-		this.span = jQuery(document.createElement("span"))
-			.addClass('et2_file_span et2_button')
-			.appendTo (this.node);
-		if (this.options.label != '') this.span.addClass('et2_button_text');
+		this.span = jQuery(document.createElement("et2-button"))
+			.addClass('et2_file_span')
+			.attr("image", "attach")
+			.attr("noSubmit", true)
+			.appendTo(this.node);
+		
 		let span = this.span;
 		this.input = jQuery(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)
-			.addClass ("et2_file_upload")
+			.addClass("et2_file_upload")
 			.appendTo(this.node)
-			.hover(function() {
+			.hover(function()
+			{
 				jQuery(span)
 					.toggleClass('et2_file_spanHover');
 			})
@@ -373,7 +376,7 @@ export class et2_file extends et2_inputWidget
 	{
 		if (this.span != null && value != null)
 		{
-			this.span.text(value);
+			this.span.label = value;
 		}
 	}
 

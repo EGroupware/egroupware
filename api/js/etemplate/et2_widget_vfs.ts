@@ -33,7 +33,7 @@ import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import type {Et2VfsMime} from "./Vfs/Et2VfsMime";
-import type {Et2VfsUid, Et2VfsGid} from "./Et2Vfs/Et2VfsUid";
+import type {Et2VfsGid, Et2VfsUid} from "./Et2Vfs/Et2VfsUid";
 
 /**
  * Class which implements the "vfs" XET-Tag
@@ -1060,10 +1060,11 @@ export class et2_vfsSelect extends et2_inputWidget
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 
-		this.button = jQuery(document.createElement("button"))
+		this.button = jQuery(document.createElement("et2-button"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
-			.addClass("et2_button et2_vfs_btn")
-			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
+			.attr("noSubmit", true)
+			.addClass("et2_vfs_btn")
+			.attr("image", "filemanager/navbar");
 
 		if(this.options.readonly)
 		{
