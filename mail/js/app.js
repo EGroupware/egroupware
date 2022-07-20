@@ -911,16 +911,17 @@ app.classes.mail = AppJS.extend(
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
 						var filemode_label = filemode.options.select_options[content[field]['files']['filemode']]['label'];
-						et2_dialog.show_dialog(function(_button){
-							if (_button == 2)
+						Et2Dialog.show_dialog(function (_button)
 							{
-								compose_et2[0].widgetContainer._inst.submit();
-							}
-						},
-						this.egw.lang(
-							'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
-							filemode_label, filemode_label),
-						this.egw.lang('Add files as %1', filemode_label), '', et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE);
+								if (_button == Et2Dialog.YES_BUTTON)
+								{
+									compose_et2[0].widgetContainer._inst.submit();
+								}
+							},
+							this.egw.lang(
+								'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
+								filemode_label, filemode_label),
+							this.egw.lang('Add files as %1', filemode_label), '', Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 						return;
 					}
 					else
@@ -1328,20 +1329,21 @@ app.classes.mail = AppJS.extend(
 				typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
-					{text: this.egw.lang("No"), id:"mdnnotsent", image: "cancelled"}
+					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
+					{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
 				];
-				et2_dialog.show_dialog(function(_button_id, _value) {
-					switch (_button_id)
+				Et2Dialog.show_dialog(function (_button_id, _value)
 					{
-						case "mdnsent":
-							egw.jsonq('mail.mail_ui.ajax_sendMDN',[messages]);
-							egw.jsonq('mail.mail_ui.ajax_flagMessages',['mdnsent', messages, true]);
-							return;
-						case "mdnnotsent":
-							egw.jsonq('mail.mail_ui.ajax_flagMessages',['mdnnotsent', messages, true]);
-					}
-				},
+						switch (_button_id)
+						{
+							case "mdnsent":
+								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
+								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnsent', messages, true]);
+								return;
+							case "mdnnotsent":
+								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnnotsent', messages, true]);
+						}
+					},
 				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
 				this.egw.lang("Confirm"),
 				messages, buttons);
@@ -1577,21 +1579,22 @@ app.classes.mail = AppJS.extend(
 			{
 				var self = this;
 				var buttons = [
-					{text: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image:"delete"},
-					{text: this.egw.lang("Cancel"), id:"cancel"}
+					{label: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image: "delete"},
+					{label: this.egw.lang("Cancel"), id: "cancel"}
 				];
 				var server = [{iface:{id: _data.data.profileid+'::'}}];
-				et2_dialog.show_dialog(function(_button_id) {
-					if (_button_id == "cleanup")
+				Et2Dialog.show_dialog(function (_button_id)
 					{
-						self.mail_emptySpam (null, server);
-						self.mail_emptyTrash (null, server);
-					}
-					return;
-				},
-				this.egw.lang("Your remaining quota %1 is too low, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask your administrator for more quota.", _data.data.quotafreespace),
-				this.egw.lang("Mail cleanup"),
-				'', buttons, et2_dialog.WARNING_MESSAGE);
+						if (_button_id == "cleanup")
+						{
+							self.mail_emptySpam(null, server);
+							self.mail_emptyTrash(null, server);
+						}
+						return;
+					},
+					this.egw.lang("Your remaining quota %1 is too low, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask your administrator for more quota.", _data.data.quotafreespace),
+					this.egw.lang("Mail cleanup"),
+					'', buttons, Et2Dialog.WARNING_MESSAGE);
 			}
 		}
 	},
@@ -2484,8 +2487,8 @@ app.classes.mail = AppJS.extend(
 			if (_confirm)
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
-					{text: this.egw.lang("Cancel"), id:"cancel"}
+					{label: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
+					{label: this.egw.lang("Cancel"), id: "cancel"}
 				];
 				var messageToDisplay = '';
 				var actionlabel =_action.id;
@@ -2525,18 +2528,22 @@ app.classes.mail = AppJS.extend(
 						}
 						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
-				return et2_dialog.show_dialog(function(_button_id) {
-					var rv = false;
-					switch (_button_id)
+				return Et2Dialog.show_dialog(function (_button_id)
 					{
-						case "all":
-							rv = true;
-							break;
-						case "cancel":
-							rv = 'cancel';
-					}
-					if (rv !="cancel") that.lock_tree();
-					switch (_action.id)
+						var rv = false;
+						switch (_button_id)
+						{
+							case "all":
+								rv = true;
+								break;
+							case "cancel":
+								rv = 'cancel';
+						}
+						if (rv != "cancel")
+						{
+							that.lock_tree();
+						}
+						switch (_action.id)
 					{
 						case "delete":
 							that.mail_callDelete(_action, _elems,rv);
@@ -3394,29 +3401,33 @@ app.classes.mail = AppJS.extend(
 		   if (!_entryId)
 		   {
 			   var buttons = [
-				   {text: app.mail.egw.lang('Append'), id: 'append', image: 'check', default:true},
-				   {text: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
-				   {text: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
+				   {label: app.mail.egw.lang('Append'), id: 'append', image: 'check', default: true},
+				   {label: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
+				   {label: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
 			   ];
 			   et2_createWidget("dialog",
 			   {
-				   callback: function(_buttons, _value)
+				   callback: function (_buttons, _value)
 				   {
-					   if (_buttons == 'cancel') return;
+					   if (_buttons == 'cancel')
+					   {
+						   return;
+					   }
 					   if (_buttons == 'append' && _value)
 					   {
 						   _entryId = _value.id;
 					   }
-					   execCallback.call(this,{entryid:_entryId,url:_url});
+					   execCallback.call(this, {entryid: _entryId, url: _url});
 				   },
 				   title: egw.lang(_title),
-				   buttons: buttons||et2_dialog.BUTTONS_OK_CANCEL,
-				   value:{
-					   content:{
-						   appName:_appName // appName to search on its list later
-				   }},
-				   template: egw.webserverUrl+'/mail/templates/default/integration_to_entry_dialog.xet'
-			   },et2_dialog._create_parent('mail'));
+				   buttons: buttons || Et2Dialog.BUTTONS_OK_CANCEL,
+				   value: {
+					   content: {
+						   appName: _appName // appName to search on its list later
+					   }
+				   },
+				   template: egw.webserverUrl + '/mail/templates/default/integration_to_entry_dialog.xet'
+			   }, Et2Dialog._create_parent('mail'));
 		   }
 		   else // there is an entry saved related to this mail's subject
 		   {
@@ -3699,21 +3710,25 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{text: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"}
+			{label: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+			{label: this.egw.lang("Cancel"), id: "cancel"}
 		];
-		et2_dialog.show_prompt(function(_button_id, _value) {
-			var NewFolderName = null;
-			if (_value.length>0) NewFolderName = _value;
-			//alert(NewFolderName);
-			if (NewFolderName && NewFolderName.length>0)
+		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
-				switch (_button_id)
+				var NewFolderName = null;
+				if (_value.length > 0)
 				{
-					case "add":
-						egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].id, NewFolderName])
-							.sendRequest(true);
-						return;
+					NewFolderName = _value;
+				}
+				//alert(NewFolderName);
+				if (NewFolderName && NewFolderName.length > 0)
+				{
+					switch (_button_id)
+					{
+						case "add":
+							egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName])
+								.sendRequest(true);
+							return;
 					case "cancel":
 				}
 			}
@@ -3735,21 +3750,25 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{text: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"}
+			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
+			{label: this.egw.lang("Cancel"), id: "cancel"}
 		];
-		et2_dialog.show_prompt(function(_button_id, _value) {
-			var NewFolderName = null;
-			if (_value.length>0) NewFolderName = _value;
-			//alert(NewFolderName);
-			if (NewFolderName && NewFolderName.length>0)
+		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
-				switch (_button_id)
+				var NewFolderName = null;
+				if (_value.length > 0)
 				{
-					case "rename":
-						egw.json('mail.mail_ui.ajax_renameFolder',[_senders[0].id, NewFolderName])
-							.sendRequest(true);
-						return;
+					NewFolderName = _value;
+				}
+				//alert(NewFolderName);
+				if (NewFolderName && NewFolderName.length > 0)
+				{
+					switch (_button_id)
+					{
+						case "rename":
+							egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName])
+								.sendRequest(true);
+							return;
 					case "cancel":
 				}
 			}
@@ -3785,27 +3804,28 @@ app.classes.mail = AppJS.extend(
 
 		var callback = function (_button)
 		{
-			if (_button == et2_dialog.YES_BUTTON)
+			if (_button == Et2Dialog.YES_BUTTON)
 			{
-				egw.appName='mail';
-				egw.message (egw.lang('Folder %1 is moving to folder %2',src_label,dest_label ));
-				egw.loading_prompt('mail_moveFolder', true,'','#egw_fw_basecontainer');
-				for(var i = 0; i < _senders.length; i++)
+				egw.appName = 'mail';
+				egw.message(egw.lang('Folder %1 is moving to folder %2', src_label, dest_label));
+				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
+				for (var i = 0; i < _senders.length; i++)
 				{
-					egw.jsonq('mail.mail_ui.ajax_MoveFolder',[_senders[i].id, destination.id],
+					egw.jsonq('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id],
 						// Move is done (successfully or not), remove loading
-						function() {
+						function ()
+						{
 							var id = destination.id.split('::');
 							//refersh the top parent
-							ftree.refreshItem(id[0],null);
+							ftree.refreshItem(id[0], null);
 							egw.loading_prompt('mail_moveFolder', false);
 						}
 					);
 				}
 			}
 		};
-		et2_dialog.show_dialog(callback, this.egw.lang('Are you sure you want to move folder %1 to folder %2?',
-			src_label, dest_label), this.egw.lang('Move folder'), {},et2_dialog.BUTTONS_YES_NO,  et2_dialog.WARNING_MESSAGE);
+		Et2Dialog.show_dialog(callback, this.egw.lang('Are you sure you want to move folder %1 to folder %2?',
+			src_label, dest_label), this.egw.lang('Move folder'), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 	},
 
 	/**
@@ -3814,28 +3834,30 @@ app.classes.mail = AppJS.extend(
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_DeleteFolder: function(_action,_senders) {
+	mail_DeleteFolder: function(_action,_senders)
+	{
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		var ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp, '');
 		var buttons = [
-			{text: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"}
+			{label: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true, image: "check"},
+			{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 		];
-		et2_dialog.show_dialog(function(_button_id, _value) {
-			switch (_button_id)
+		Et2Dialog.show_dialog(function (_button_id, _value)
 			{
-				case "delete":
-					egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].id])
-						.sendRequest(true);
-					return;
-				case "cancel":
-			}
-		},
-		this.egw.lang("Do you really want to DELETE Folder %1 ?",OldFolderName)+" "+(ftree.hasChildren(_senders[0].id)?this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost"):this.egw.lang("All messages in the folder will be lost")),
-		this.egw.lang("DELETE Folder %1 ?",OldFolderName),
-		OldFolderName, buttons);
+				switch (_button_id)
+				{
+					case "delete":
+						egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id])
+							.sendRequest(true);
+						return;
+					case "cancel":
+				}
+			},
+			this.egw.lang("Do you really want to DELETE Folder %1 ?", OldFolderName) + " " + (ftree.hasChildren(_senders[0].id) ? this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost") : this.egw.lang("All messages in the folder will be lost")),
+			this.egw.lang("DELETE Folder %1 ?", OldFolderName),
+			OldFolderName, buttons);
 	},
 
 	/**
@@ -4185,13 +4207,13 @@ app.classes.mail = AppJS.extend(
 
 					var callbackDeleteDialog = function (button_id)
 					{
-						if (button_id == et2_dialog.YES_BUTTON )
+						if (button_id == Et2Dialog.YES_BUTTON)
 						{
 							actionData = _type.parent.data.widget.getArrayMgr('content');
-							that._do_action(typeId, actionData['data'],ruleID);
+							that._do_action(typeId, actionData['data'], ruleID);
 						}
 					};
-					et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_CANCEL, et2_dialog.WARNING_MESSAGE);
+					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_CANCEL, Et2Dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:
@@ -5102,9 +5124,9 @@ app.classes.mail = AppJS.extend(
 		{
 			const mode = _widget.get_value();
 			const mode_label = _widget.select_options.filter(option => option.value == mode)[0]?.label;
-			et2_dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
-					this.egw.lang('Filemode has been switched to %1', mode_label),
-					et2_dialog.WARNING_MESSAGE);
+			Et2Dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
+				this.egw.lang('Filemode has been switched to %1', mode_label),
+				Et2Dialog.WARNING_MESSAGE);
 			const content = this.et2.getArrayMgr('content');
 			const attachments = this.et2.getWidgetById('attachments');
 			for (let i in content.data.attachments)
@@ -5349,22 +5371,22 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			// switch Mailvelop off again, but warn user he will loose his content
-			et2_dialog.show_dialog(function (_button_id)
-			{
-				if (_button_id == et2_dialog.YES_BUTTON )
+			Et2Dialog.show_dialog(function (_button_id)
 				{
-					self.et2.getWidgetById('mimeType').set_readonly(false);
-					self.et2.getWidgetById('mail_plaintext').set_disabled(false);
-					jQuery(self.mailvelope_iframe_selector).remove();
-				}
-				else
-				{
-					self.et2.getWidgetById('composeToolbar').checkbox('pgp',true);
-				}
-			},
-			this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),
-			this.egw.lang('Switch off encryption?'),
-			{}, et2_dialog.BUTTONS_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, this.egw);
+					if (_button_id == Et2Dialog.YES_BUTTON)
+					{
+						self.et2.getWidgetById('mimeType').set_readonly(false);
+						self.et2.getWidgetById('mail_plaintext').set_disabled(false);
+						jQuery(self.mailvelope_iframe_selector).remove();
+					}
+					else
+					{
+						self.et2.getWidgetById('composeToolbar').checkbox('pgp', true);
+					}
+				},
+				this.egw.lang('You will loose current message body, unless you save it to your clipboard!'),
+				this.egw.lang('Switch off encryption?'),
+				{}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
 		}
 	},
 
@@ -5544,7 +5566,7 @@ app.classes.mail = AppJS.extend(
 			this.saveAsDraft(null, 'autosaving').then(function(){
 				self.compose_saveDraft2fm(_action);
 			}, function(){
-				et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+				Et2Dialog.alert('You need to save the message as draft first before to be able to save it into VFS', 'Save to filemanager', 'info');
 			});
 		}
 	},
@@ -5687,7 +5709,7 @@ app.classes.mail = AppJS.extend(
 		var callbackDialog = function(_btn)
 		{
 			egw.appName='mail';
-			if (_btn === et2_dialog.YES_BUTTON)
+			if (_btn === Et2Dialog.YES_BUTTON)
 			{
 				if (tree)
 				{
@@ -5696,13 +5718,14 @@ app.classes.mail = AppJS.extend(
 					{
 						var selFldArr = selFolders.split(tree.input.dlmtr);
 						var msg = egw.lang('Deleting %1 folders in progress ...', selFldArr.length);
-						et2_dialog.long_task(function(_val, _resp){
+						Et2Dialog.long_task(function (_val, _resp)
+						{
 							console.log(_val, _resp);
 							if (_val && _resp.type !== 'error')
 							{
 								var stat = [];
 								var folderName = '';
-								for(var i=0;i<selFldArr.length;i++)
+								for (var i = 0; i < selFldArr.length; i++)
 								{
 									folderName = selFldArr[i].split('::');
 									stat[selFldArr[i]] = folderName[1];
@@ -5721,8 +5744,8 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		};
-		et2_dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
-			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+		Et2Dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
+			Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw);
 	},
 
 	/**
@@ -5968,8 +5991,8 @@ app.classes.mail = AppJS.extend(
 			},
 			title: egw.lang('Request for passphrase'),
 			buttons: [
-				{text: this.egw.lang("Send"), id: "send", "class": "ui-priority-primary", "default": true},
-				{text: this.egw.lang("Cancel"), id:"cancel"}
+				{label: this.egw.lang("Send"), id: "send", "class": "ui-priority-primary", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel"}
 			],
 			value:{
 				content:{
@@ -6139,14 +6162,14 @@ app.classes.mail = AppJS.extend(
 		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
 		var buttons = [
 
-			{text: this.egw.lang("Close"), id:"close"}
+			{label: this.egw.lang("Close"), id: "close"}
 		];
 		if (!_display)
 		{
 			buttons[1] = {
-				text: this.egw.lang("Add this certificate into contact"),
+				label: this.egw.lang("Add this certificate into contact"),
 				id: "contact",
-				image:"add",
+				image: "add",
 				"class": "ui-priority-primary",
 				"default": true
 			};
@@ -6229,11 +6252,6 @@ app.classes.mail = AppJS.extend(
 		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
 		var subject = data && data.data? data.data.subject : "";
 
-		var buttons = [
-			{text: this.egw.lang("Save"), id: "save", "class": "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"}
-		];
-
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value) {
@@ -6244,9 +6262,10 @@ app.classes.mail = AppJS.extend(
 				{
 					switch (_button_id)
 					{
-						case "save":
+						case Et2Dialog.OK_BUTTON:
 							egw.loading_prompt('modifyMessageSubjectDialog', true);
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject',[id, newSubject], function(_data){
+							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject', [id, newSubject], function (_data)
+							{
 								egw.loading_prompt('modifyMessageSubjectDialog', false);
 								if (_data && !_data.success)
 								{
@@ -6254,7 +6273,10 @@ app.classes.mail = AppJS.extend(
 									return;
 								}
 								var nm = app.mail.et2.getWidgetById('nm');
-								if (nm)	{nm.applyFilters();}
+								if (nm)
+								{
+									nm.applyFilters();
+								}
 
 							}).sendRequest(true);
 							return;
@@ -6263,9 +6285,9 @@ app.classes.mail = AppJS.extend(
 				}
 			},
 			title: this.egw.lang("Modify subject"),
-			buttons: buttons,
-			value:{content:{value:subject}},
-			template: egw.webserverUrl+'/mail/templates/default/modifyMessageSubjectDialog.xet?1',
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {content: {value: subject}},
+			template: egw.webserverUrl + '/mail/templates/default/modifyMessageSubjectDialog.xet?1',
 			resizable: false,
 			width: 500
 		}, et2_dialog._create_parent('mail'));
@@ -6314,29 +6336,26 @@ app.classes.mail = AppJS.extend(
 	 */
 	set_predefined_addresses: function(action,_senders)
 	{
-		var buttons = [
-			{text: this.egw.lang("Save"), id: "save", "class": "ui-priority-primary", "default": true},
-			{text: this.egw.lang("Cancel"), id:"cancel"}
-		];
 		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
 		var prefs = egw.preference(pref_id, 'mail');
 
 		et2_createWidget("dialog",
 		{
-			callback: function(_button_id, _value) {
+			callback: function (_button_id, _value)
+			{
 				switch (_button_id)
 				{
-					case "save":
+					case Et2Dialog.OK_BUTTON:
 						egw.set_preference('mail', pref_id, _value);
 						return;
 					case "cancel":
 				}
 			},
 			title: this.egw.lang("Predefined addresses for compose"),
-			buttons: buttons,
-			value:{content:prefs || {}},
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			value: {content: prefs || {}},
 			minWidth: 410,
-			template: egw.webserverUrl+'/mail/templates/default/predefinedAddressesDialog.xet?',
+			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 			resizable: false,
 		}, et2_dialog._create_parent('mail'));
 	}
