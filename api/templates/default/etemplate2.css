@@ -37,6 +37,8 @@
     --highlight-background-color: rgba(153, 204, 255, .4);
 
     --label-color: #000000;
+    /* For fixed width labels - use class 'et2-label-fixed'*/
+    --label-width: 8em;
 
     --input-border-color: #E6E6E6;
     --input-text-color: #26537C;
@@ -75,27 +77,26 @@
 .hide {
     display: none;
 }
-
 /* Put widget label to the left of the widget, with fixed width */
-.label-on-left::part(form-control) {
+::part(form-control) {
     display: flex;
     align-items: center;
     gap: 1em;
 }
 
-.label-on-left::part(form-control-label) {
+::part(form-control-label) {
     flex: 0 0 auto;
-    width: var(--label-width, 8em);
     white-space: normal;
 }
 
-.label-on-left::part(form-control-input) {
+::part(form-control-input) {
     flex: 1 1 auto;
 }
 
-/* Use .label-inline with .label-on-left to remove fixed label space */
-.label-inline::part(form-control-label) {
+/* Use .et2-label-fixed class to give fixed label size */
+.et2-label-fixed::part(form-control-label) {
     width: initial;
+    width: var(--label-width, 8em);
 }
 
 /**

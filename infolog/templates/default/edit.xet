@@ -84,12 +84,13 @@
                 </row>
                 <row valign="top">
                     <vbox>
-                        <taglist-email id="info_cc" class="label-on-left" label="CC"/>
+                        <taglist-email id="info_cc" class="et2-label-fixed" label="CC"/>
 
-                        <taglist-account label="responsible"
+                        <taglist-account label="Responsible"
                                          statustext="select a responsible user: a person you want to delegate this task"
                                          id="info_responsible" rows="6" multiple="true" no_lang="1"
-                                         class="label-on-left" account_type="both" empty_label="Select users or groups"
+                                         class="et2-label-fixed" account_type="both"
+                                         empty_label="Select users or groups"
                                          onchange="app.infolog.onchangeResponsible"/>
                     </vbox>
                     <description/>
