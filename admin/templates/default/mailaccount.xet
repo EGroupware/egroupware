@@ -186,7 +186,7 @@
 					<description for="acc_sieve_ssl" value="Secure connection"/>
 					<hbox>
 						<select class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"/>
-						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="emailadmin_port"/>
+						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="label-on-left"/>
 					</hbox>
 				</row>
 				<row height="150">
@@ -231,7 +231,7 @@
 					<description for="acc_smtp_ssl" value="Secure connection"/>
 					<hbox>
 						<select class="emailadmin_ssl" id="acc_smtp_ssl" needed="1" onchange="app.admin.wizard_smtp_ssl_onchange"/>
-						<textbox type="integer" label="Port" id="acc_smtp_port" needed="1" class="emailadmin_port"/>
+						<textbox type="integer" label="Port" id="acc_smtp_port" needed="1" class="label-on-left"/>
 					</hbox>
 				</row>
 				<row>
@@ -255,17 +255,17 @@
 			<rows>
 				<row>
 					<description for="mailLocalAddress" value="EMail address"/>
-					<url-email id="mailLocalAddress" options="32,128"/>
+					<url-email id="mailLocalAddress" size="32" maxlength="128"/>
 					<checkbox label="Email account active" id="accountStatus" selected_value="active"/>
 				</row>
 				<row>
 					<description for="mailAlternateAddress" value="Alternate email address"/>
-					<taglist-email id="mailAlternateAddress" autocomplete_url=""/>
+					<select-email id="mailAlternateAddress" autocomplete_url="" full_email="true"/>
 					<description/>
 				</row>
 				<row disabled="@no_forward_available">
 					<description for="mailForwardingAddress" value="Forward email's to"/>
-					<taglist-email id="mailForwardingAddress" autocomplete_url=""/>
+					<select-email id="mailForwardingAddress" autocomplete_url="" full_email="true"/>
 					<vbox>
 						<checkbox label="Forward only" id="deliveryMode" selected_value="forwardOnly" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');"/>
 						<checkbox label="Allow users to change forwards" id="acc_user_forward"/>
