@@ -1351,7 +1351,6 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		widget.style.setProperty("width", attributes.width);
 		widget.style.setProperty("flex", "0 0 auto");
 		delete attributes.width;
-		console.log("Widget sets width via attribute.  We want to avoid this - use CSS instead.", widget);
 	}
 
 	// Apply any set attributes - widget will do its own coercion
