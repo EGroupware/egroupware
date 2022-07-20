@@ -978,7 +978,9 @@ img.smime_cert_notvalid {
 img.smime_cert_unknownemail {
 	background: #a28cff;
 }
-.smimeIcons {position: absolute;right: 10px;}
+.mailPreviewHeaders.smimeIcons et2-image {
+	width: 24px;
+}
 
 #mail-compose tr.mailComposeHeaders {
   border-top: 1px solid silver;
