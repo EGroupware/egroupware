@@ -387,7 +387,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	 */
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("contact_id", "label", "href", "src");
+		_attrs.push("contact_id", "label", "href", "src", "image");
 	}
 
 	getDetachedNodes()
