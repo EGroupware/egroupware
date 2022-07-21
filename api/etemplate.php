@@ -183,6 +183,12 @@ function send_template()
 				) . "></$tag>";
 		}, $str);
 
+		// Change size=# attribute to width, size is small|medium|large with shoelace
+		$str = preg_replace_callback('#<([^/>]+) size="([[:digit:]]+)"([^/>]+?)/>#su', static function ($matches)
+		{
+			return "<{$matches[1]} width=\"{$matches[2]}ex\" {$matches[3]}/>";
+		},                           $str);
+
 
 		// handling of select and taglist widget, incl. removing of type attribute
 		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
