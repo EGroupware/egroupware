@@ -162,7 +162,7 @@ li {
 
 	render()
 	{
-		if(!this.value)
+		if(!this.value || Array.isArray(this.value) && !this.value.length)
 		{
 			return this._readonlyRender({label: this.empty_label, value: ""});
 		}
@@ -328,7 +328,16 @@ export class Et2SelectCategoryReadonly extends Et2SelectReadonly
 	{
 		super();
 
-		this.select_options = so.cat(this, {other: this.other || []});
+		so.cat(this).then(_options =>
+		{
+			this.select_options = _options;
+
+			// on first load we have the value before the options arrive --> need to request an update
+			if (this.value && (!Array.isArray(this.value) || this.value.length))
+			{
+				this.requestUpdate('value');
+			}
+		});
 	}
 
 	protected find_select_options(_attrs) {}
