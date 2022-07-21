@@ -158,7 +158,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	set contactId(_contactId : string)
 	{
 		let params = {};
-		let id = 'contactId';
+		let id = 'contact_id';
 
 		if (!_contactId)
 		{
@@ -171,7 +171,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		}
 		else
 		{
-			id = 'contactId';
+			id = 'contact_id';
 			_contactId = _contactId.replace('contact:', '');
 		}
 		let oldContactId = this._contactId;
