@@ -44,7 +44,7 @@
         </grid>
     </template>
     <template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-        <grid width="100%">
+        <grid width="94%">
             <columns>
                 <column width="92"/>
                 <column width="230"/>
@@ -55,9 +55,9 @@
             <rows>
                 <row>
                     <description for="role" value="Role"/>
-                    <hbox width="100%">
+                    <hbox>
                         <textbox id="role" tabindex="20" width="60%" maxlength="64" autocomplete="section-one"/>
-                        <textbox id="room" tabindex="21" width="34%" blur="Room"/>
+                        <textbox id="room" tabindex="21" blur="Room"/>
                     </hbox>
                     <description/>
                     <description for="adr_one_street" value="street"/>
@@ -80,7 +80,7 @@
                     <hbox class="city_state_postcode">
                         <textbox statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="24%" maxlength="64"
                                  autocomplete="postal-code"/>
-                        <textbox statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" width="70%"
+                        <textbox statustext="City" id="adr_one_locality" tabindex="14" maxlength="64"
                                  autocomplete="address-level2"/>
                     </hbox>
                 </row>
@@ -140,17 +140,15 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_car,&amp;hearts;"/>
                     <description disabled="@no_tid" for="tid" value="Type"/>
-                    <hbox width="102%">
-                        <select id="tid" no_lang="1" onchange="1" disabled="@no_tid"/>
-                    </hbox>
+                    <select id="tid" no_lang="1" onchange="1" disabled="@no_tid"/>
                 </row>
-                <row disabled="@shared_disabled">
-                    <description for="shared" value="Shared with"/>
-                    <hbox span="all">
-                        <taglist-account account_type="both" id="shared_values" multiple="true"
-                                         onchange="app.addressbook.shared_changed" select_options="@shared_options"/>
+                <row disabled="@shared_disabled" valign="top">
+                    <vbox>
+                        <description for="shared" value="Shared with"/>
                         <checkbox id="shared_writable" label="writable" statustext="Create new shares writable"/>
-                    </hbox>
+                    </vbox>
+                    <taglist-account account_type="both" id="shared_values" multiple="true" span="all"
+                                     onchange="app.addressbook.shared_changed" select_options="@shared_options"/>
                 </row>
             </rows>
 		</grid>
@@ -251,7 +249,7 @@
                     <hbox class="city_state_postcode">
                         <textbox statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="24%" maxlength="64"
                                  autocomplete="section-two postal-code"/>
-                        <textbox statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" width="70%"
+                        <textbox statustext="City" id="adr_two_locality" maxlength="64" tabindex="36"
                                  autocomplete="section-two address-level2"/>
                     </hbox>
                     <description/>
@@ -264,6 +262,7 @@
                     <description for="adr_two_countryname" value="country"/>
                     <select-country tabindex="37" id="adr_two_countrycode" empty_label="Select one" allowFreeEntries="true" autocomplete="section-two country"
                         onchange="app.addressbook.regionSetCountry"/>
+                    <description/>
                 </row>
                 <row disabled="@addr_format=city_state_postcode">
                     <description for="bday" value="Birthday"/>
@@ -399,7 +398,7 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            options="tel_cell,&amp;hearts;"/>
                     <description for="title" value="Title"/>
-                    <textbox id="title" size="36" maxlength="64" tabindex="9" autocomplete="organization-title"/>
+                    <textbox id="title" maxlength="64" tabindex="9" autocomplete="organization-title"/>
                     <description/>
                 </row>
                 <row class="dialogHeader4">
