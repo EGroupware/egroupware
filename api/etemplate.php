@@ -185,7 +185,7 @@ function send_template()
 
 
 		// handling of select and taglist widget, incl. removing of type attribute
-		$str = preg_replace_callback('#<(select|taglist)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
+		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
 			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
@@ -239,14 +239,18 @@ function send_template()
 			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[4], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
-			if(!$matches[2] || in_array($matches[2], ['sort']) || ($matches[2] == "custom" && !$attrs['widget_type']))
+			if ($matches[2] === 'custom')
+			{
+				$attrs['widget_type'] = $attrs['type'];
+			}
+			if(!$matches[2] || in_array($matches[2], ['sort']) || ($matches[2] == "custom" && empty($attrs['widget_type'])))
 			{
 				return $matches[0];
 			}
 			// No longer needed & type causes problems
 			unset($attrs['type'], $attrs['tags']);
 
-			if($matches[2] == 'taglist')
+			if($matches[2] === 'taglist')
 			{
 				$matches[2] = "filter";
 			}
