@@ -13,7 +13,6 @@ import {css, html, LitElement} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
-import {cssImage} from "../Et2Widget/Et2Widget";
 import {FormControlMixin} from "@lion/form-core";
 
 export interface formatOptions
@@ -121,31 +120,25 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			css`
 			.form-field__group-two {
 				width: 100%;
-			}
-			select {
-				color: var(--input-text-color);
 				border: 1px solid var(--input-border-color);
-				flex: 2 1 auto;
-				
-				-webkit-appearance: none;
-				-moz-appearance: none;
-				margin: 0;
-				background: #fff no-repeat center right;
-				background-image: ${cssImage('arrow_down')};
-				background-size: 8px auto;
-				background-position-x: calc(100% - 8px);
-				text-indent: 5px;
+				border-radius: var(--sl-input-border-radius-medium, 3px);
 			}
-			input {
+			et2-select {
 				color: var(--input-text-color);
-				padding-top: 4px;
-				padding-bottom: 4px;
-			    border: 1px solid var(--input-border-color);
-				border-right: none;
+				border-left: 1px solid var(--input-border-color);
+				flex: 2 1 auto;
+			}
+			et2-select::part(form-control-input) {
+				border: none;
+			}
+			et2-textbox {
 				flex: 1 1 auto;
 				max-width: 4.5em;
 			}
-			input:last-child {
+			et2-textbox::part(base) {
+				border: none;
+			}
+			et2-textbox:not(:last-of-type) {
 				border-right: 1px solid var(--input-border-color);
 			}
 				
@@ -533,8 +526,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			inputs.push(input);
 		}
 		return html`${inputs.map((input : any) =>
-                html`<input type="number" name=${input.name} min=${input.min} max=${input.max} title=${input.title}
-                            value=${input.value}/>`
+                html`
+                    <et2-textbox part="duration__${input.name}" type="number" class="duration__input" name=${input.name}
+                                 min=${input.min} max=${input.max} title=${input.title}
+                                 value=${input.value}></et2-textbox>`
         )}
 		`;
 	}
@@ -562,14 +557,14 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		return html`
-            <select>
+            <et2-select value="${this._display.unit}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
-                            <option value=${format} ?selected=${this._display.unit === format}>
+                            <sl-menu-item value=${format} ?checked=${this._display.unit === format}>
                                 ${this.time_formats[format]}
-                            </option>`
+                            </sl-menu-item>`
                 )}
-            </select>
+            </et2-select>
 		`;
 	}
 
