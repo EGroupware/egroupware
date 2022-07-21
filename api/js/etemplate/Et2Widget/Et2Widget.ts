@@ -144,7 +144,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				 * Widget ID of another node to insert this node into instead of the normal location
 				 * This isn't a normal property...
 				 */
-				parent_node: {type: String},
+				parentId: {type: String},
 
 				/**
 				 * Tooltip which is shown for this element on hover
@@ -901,7 +901,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @param {string} parent
 		 */
-		set parent_node(parent : string | Element)
+		set parentId(parent : string | Element)
 		{
 			if(typeof parent === "string")
 			{

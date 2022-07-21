@@ -346,27 +346,28 @@ function send_template()
 					(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
 						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
 			}, $str);
-
-			// change all attribute-names of new et2-* widgets to camelCase
-			$str = preg_replace_callback('/<et2-([a-z-]+)\s([^>]+)>/', static function(array $matches)
-			{
-				preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
-				$attrs = array_combine($attrs[2], $attrs[3]);
-
-				foreach($attrs as $name => $value)
-				{
-					if (count($parts = preg_split('/[_-]/', $name)) > 1)
-					{
-						$attrs[array_shift($parts).implode('', array_map('ucfirst', $parts))] = $value;
-						unset($attrs[$name]);
-					}
-				}
-				$ret = str_replace($matches[2], implode(' ', array_map(static function ($name, $value) {
-						return $name . '="' . $value . '"';
-					}, array_keys($attrs), $attrs)).(substr($matches[2], -1) === '/' ? '/' : ''), $matches[0]);
-				return $ret;
-			}, $str);
 		}
+		// change all attribute-names of new et2-* widgets to camelCase
+		$str = preg_replace_callback('/<et2-([a-z-]+)\s([^>]+)>/', static function(array $matches)
+		{
+			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
+			$attrs = array_combine($attrs[2], $attrs[3]);
+
+			foreach($attrs as $name => $value)
+			{
+				if (count($parts = preg_split('/[_-]/', $name)) > 1)
+				{
+					if ($name === 'parent_node') $parts[1] = 'Id';  // we can not use DOM property parentNode --> parentId
+					$attrs[array_shift($parts).implode('', array_map('ucfirst', $parts))] = $value;
+					unset($attrs[$name]);
+				}
+			}
+			$ret = str_replace($matches[2], implode(' ', array_map(static function ($name, $value) {
+					return $name . '="' . $value . '"';
+				}, array_keys($attrs), $attrs)).(substr($matches[2], -1) === '/' ? '/' : ''), $matches[0]);
+			return $ret;
+		}, $str);
+
 		$processing = microtime(true);
 
 		if (isset($cache) && (file_exists($cache_dir = dirname($cache)) || mkdir($cache_dir, 0755, true) || is_dir($cache_dir)))
