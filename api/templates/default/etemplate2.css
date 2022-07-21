@@ -2102,6 +2102,8 @@ div.message.floating, lion-validation-feedback[type] {
     position: absolute;
     margin: 0px;
     z-index: 1;
+    top: 100%;
+    left: 0px;
 }
 
 .message.validation_error, lion-validation-feedback[type="error"] {

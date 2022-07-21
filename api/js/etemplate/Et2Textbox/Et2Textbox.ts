@@ -10,22 +10,30 @@
 
 
 import {css, PropertyValues} from "@lion/core";
-import {LionInput} from "@lion/input";
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Regex} from "../Validators/Regex";
+import {SlInput} from "@shoelace-style/shoelace";
+import shoelace from "../Styles/shoelace";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
-export class Et2Textbox extends Et2InputWidget(LionInput)
+export class Et2Textbox extends Et2InputWidget(SlInput)
 {
 
 	static get styles()
 	{
 		return [
+			...shoelace,
 			...super.styles,
 			css`
-			:host([type="hidden"]) {
-				display: none;
-			}
-			`,
+				:host([type="hidden"]) {
+					display: none;
+				}
+				.input__control {
+					border: none;
+				}
+				.input:hover:not(.input--disabled) .input__control {
+					color: var(--input-text-color, inherit);
+				}
+				`,
 		];
 	}
 

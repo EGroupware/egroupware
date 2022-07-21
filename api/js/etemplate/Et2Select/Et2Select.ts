@@ -18,7 +18,6 @@ import {Et2WithSearchMixin} from "./SearchMixin";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {LionValidationFeedback} from "@lion/form-core";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
-import {ManualMessage} from "../Validators/ManualMessage";
 
 // export Et2WidgetWithSelect which is used as type in other modules
 export class Et2WidgetWithSelect extends RowLimitedMixin(Et2widgetWithSelectMixin(SlSelect))
@@ -435,83 +434,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	public get menuItems() : HTMLElement[]
 	{
 		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
-	}
-
-	/**
-	 * Massively simplified validate, as compared to what ValidatorMixin gives us, since ValidatorMixin extends
-	 * FormControlMixin which breaks SlSelect's render()
-	 */
-	async validate()
-	{
-		let validators = [...(this.validators || []), ...(this.defaultValidators || [])];
-		let fieldName = this.id;
-		let feedbackData = [];
-		let resultPromises = [];
-		this.querySelector("lion-validation-feedback")?.remove();
-		const doValidate = async function(validator, value)
-		{
-			if(validator.config.fieldName)
-			{
-				fieldName = await validator.config.fieldName;
-			}
-			// @ts-ignore [allow-protected]
-			return validator._getMessage({
-				modelValue: value,
-				formControl: this,
-				fieldName,
-			}).then((message) =>
-			{
-				feedbackData.push({message, type: validator.type, validator});
-			});
-		}.bind(this);
-		const doCheck = async(value, validator) =>
-		{
-			const result = validator.execute(value, validator.param, {node: this});
-			if(result === true)
-			{
-				resultPromises.push(doValidate(validator, value));
-			}
-			else if(result !== false && typeof result.then === 'function')
-			{
-				result.then(doValidate(validator, value));
-				resultPromises.push(result);
-			}
-		};
-
-		validators.map(async validator =>
-		{
-			let values = this.value;
-			if(!Array.isArray(values))
-			{
-				values = [values];
-			}
-			if(!values.length)
-			{
-				values = [''];
-			}	// so required validation works
-
-			// Run manual validation messages just once, doesn't usually matter what the value is
-			if(validator instanceof ManualMessage)
-			{
-				doCheck(values, validator);
-			}
-			else
-			{
-				// Validate each individual item
-				values.forEach((value) => doCheck(value, validator));
-			}
-		});
-		await Promise.all(resultPromises);
-
-		if(feedbackData.length > 0)
-		{
-			let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
-			feedback.feedbackData = feedbackData;
-			feedback.slot = "help-text";
-			this.append(feedback);
-			// Not always visible?
-			(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
-		}
 	}
 
 	/**

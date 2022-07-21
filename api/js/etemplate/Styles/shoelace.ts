@@ -16,7 +16,7 @@ registerIconLibrary('default', {
 
 /**
  * Customise shoelace styles to match our stuff
- * External CSS will override this
+ * External CSS & widget styles will override this
  */
 export default [sl_css, css`
   :root,
