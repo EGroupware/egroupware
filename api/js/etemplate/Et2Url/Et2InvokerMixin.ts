@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {css, dedupeMixin, html, LitElement, render} from '@lion/core';
+import {css, dedupeMixin, html, LitElement, SlotMixin} from '@lion/core';
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 
@@ -24,7 +24,7 @@ import {colorsDefStyles} from "../Styles/colorsDefStyles";
 type Constructor<T = Et2InputWidgetInterface> = new (...args : any[]) => T;
 export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(superclass : T) =>
 {
-	class Et2Invoker extends Et2InputWidget(superclass)
+	class Et2Invoker extends SlotMixin(Et2InputWidget(superclass))
 	{
 		/** @type {any} */
 		static get properties()
@@ -80,12 +80,7 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 				...super.slots,
 				suffix: () =>
 				{
-					const renderParent = document.createElement('div');
-					render(
-						this._invokerTemplate(),
-						renderParent
-					);
-					return /** @type {HTMLElement} */ (renderParent.firstElementChild);
+					return this._invokerTemplate();
 				},
 			};
 		}
@@ -162,7 +157,7 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 			if (this._invokerNode)
 			{
 				const invokerNode = /** @type {HTMLElement & {disabled: boolean}} */ (this._invokerNode);
-				invokerNode.disabled = this.disabled || this._isEmpty() || this.hasFeedbackFor.length > 0;
+				invokerNode.disabled = this.disabled || !this.value || (this.input && !this.input.reportValidity())
 			}
 		}
 

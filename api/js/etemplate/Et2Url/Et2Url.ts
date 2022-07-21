@@ -96,7 +96,7 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 		if (!value) return;
 		// implicit add http:// if no protocol given
 		if(value.indexOf("://") === -1) value = "http://"+value;
-		egw.open_link(value, '_blank');
+		this.egw().open_link(value, '_blank');
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
