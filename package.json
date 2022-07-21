@@ -12,7 +12,7 @@
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-newer": "^0.5.4",
     "grunt-terser": "^1.0.0",
-    "terser": "^4.8.0",
+    "terser": "^4.8.1",
     "typescript": "^3.9.7"
   }
 }
