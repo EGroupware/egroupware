@@ -3,7 +3,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css, dedupeMixin, LitElement, PropertyValues} from "@lion/core";
 import {Required} from "../Validators/Required";
 import {ManualMessage} from "../Validators/ManualMessage";
-import {LionValidationFeedback} from "@lion/form-core";
+import {LionValidationFeedback, Validator} from "@lion/form-core";
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -47,6 +47,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		private __readonly : boolean;
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
+
+		// Validators assigned to one specific instance of a widget
+		protected validators : Validator[];
+		// Validators for every instance of a type of widget
+		protected defaultValidators : Validator[];
 
 		/** WebComponent **/
 		static get styles()
@@ -129,6 +134,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		constructor(...args : any[])
 		{
 			super(...args);
+
+			this.validators = [];
+			this.defaultValidators = [];
 		}
 
 		connectedCallback()
