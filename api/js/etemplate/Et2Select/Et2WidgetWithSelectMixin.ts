@@ -70,7 +70,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				/**
 				 * Textual label for first row, eg: 'All' or 'None'.  It's value will be ''
 				 */
-				empty_label: String,
+				emptyLabel: String,
 
 				/**
 				 * Select box options
@@ -114,7 +114,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			}
 
 			// Add in actual option tags to the DOM based on the new select_options
-			if(changedProperties.has('select_options') || changedProperties.has("empty_label"))
+			if(changedProperties.has('select_options') || changedProperties.has("emptyLabel"))
 			{
 				// Add in options as children to the target node
 				if(this._optionTargetNode)
@@ -195,7 +195,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		_emptyLabelTemplate() : TemplateResult
 		{
-			return html`${this.empty_label}`;
+			return html`${this.emptyLabel}`;
 		}
 
 		/**

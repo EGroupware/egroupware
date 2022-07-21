@@ -30,7 +30,7 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 			...super.properties(),
 
 			message: String,
-			dialog_type: Number,
+			dialogType: Number,
 			icon: String,
 			value: Object
 		}
@@ -39,7 +39,7 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 	/**
 	 * Details for dialog type options
 	 */
-	private readonly _dialog_types : any = [
+	private readonly _dialogTypes : any = [
 		//PLAIN_MESSAGE: 0
 		"",
 		//INFORMATION_MESSAGE: 1,
@@ -57,7 +57,7 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 		super();
 
 		this.icon = "";
-		this.dialog_type = 0;
+		this.dialogType = 0;
 	}
 
 	/**
@@ -74,9 +74,9 @@ export class Et2DialogContent extends Et2Widget(LitElement)
 
 	render()
 	{
-		let icon = this.icon || this.parentNode.egw().image(this._dialog_types[this.dialog_type]) || "";
+		let icon = this.icon || this.parentNode.egw().image(this._dialogTypes[this.dialogType]) || "";
 		return html`
-            <div class="dialog ${this._dialog_types[this.dialog_type]}">
+            <div class="dialog ${this._dialogTypes[this.dialogType]}">
                 <img class="dialog_icon" src=${icon}/>
                 <slot>Empty dialog - add some content</slot>
             </div>

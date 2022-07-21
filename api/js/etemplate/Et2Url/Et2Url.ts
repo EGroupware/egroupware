@@ -16,7 +16,7 @@ import {css} from "@lion/core";
 /**
  * @customElement et2-url
  *
- * @ToDo: implement allow_path attributes
+ * @ToDo: implement allowPath attributes
  */
 export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 {
@@ -28,13 +28,13 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 			/**
 			 * Allow a path instead of a URL, path must start with /, default false = not allowed
 			 */
-			allow_path: {
+			allowPath: {
 				type: Boolean,
 			},
 			/**
 			 * Require (or forbid) that the path ends with a /, default not checked
 			 */
-			trailing_slash: {
+			trailingSlash: {
 				type: Boolean,
 			},
 		};
@@ -62,14 +62,14 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 		this._invokerAction = () => {
 			Et2Url.action(this.value);
 		}
-		this.allow_path = false;
-		this.trailing_slash = undefined;
+		this.allowPath = false;
+		this.trailingSlash = undefined;
 	}
 
 	/**
 	 * Change handler calling custom handler set via onchange attribute
 	 *
-	 * Reimplemented to add/remove trailing slash depending on trailing_slash attribute
+	 * Reimplemented to add/remove trailing slash depending on trailingSlash attribute
 	 *
 	 * @param _ev
 	 * @returns
@@ -77,9 +77,9 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 	_oldChange(_ev: Event): boolean
 	{
 		const value = this.modelValue;
-		if (typeof this.trailing_slash !== 'undefined' && value && this.trailing_slash !== (value.substr(-1)==='/'))
+		if (typeof this.trailingSlash !== 'undefined' && value && this.trailingSlash !== (value.substr(-1)==='/'))
 		{
-			if (!this.trailing_slash)
+			if (!this.trailingSlash)
 			{
 				this.modelValue = value.replace(/\/+$/, '');
 			}

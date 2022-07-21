@@ -41,7 +41,7 @@ export class Et2DescriptionExpose extends ExposeMixin(Et2Description) implements
 			/**
 			 * hash for data stored on service-side with egw_link::(get|set)_data()
 			 */
-			mime_data: {type: String},
+			mimeData: {type: String},
 		}
 	}
 

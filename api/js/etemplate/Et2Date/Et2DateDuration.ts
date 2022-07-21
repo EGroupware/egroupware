@@ -18,11 +18,11 @@ import {FormControlMixin} from "@lion/form-core";
 
 export interface formatOptions
 {
-	select_unit : string;
-	display_format : string;
-	data_format : string;
-	hours_per_day : number;
-	empty_not_0 : boolean;
+	selectUnit : string;
+	displayFormat : string;
+	dataFormat : string;
+	hoursPerDay : number;
+	emptyNot0 : boolean;
 	number_format? : string;
 };
 
@@ -39,19 +39,19 @@ export function formatDuration(value : number | string, options : formatOptions)
 	// Handle empty / 0 / no value
 	if(value === "" || value == "0" || !value)
 	{
-		return {value: options.empty_not_0 ? "0" : "", unit: ""};
+		return {value: options.emptyNot0 ? "0" : "", unit: ""};
 	}
 	// Make sure it's a number now
 	value = typeof value == "string" ? parseInt(value) : value;
 
-	if(!options.select_unit)
+	if(!options.selectUnit)
 	{
 		let vals = [];
-		for(let i = 0; i < options.display_format.length; ++i)
+		for(let i = 0; i < options.displayFormat.length; ++i)
 		{
-			let unit = options.display_format[i];
+			let unit = options.displayFormat[i];
 			let val = this._unit_from_value(value, unit, i === 0);
-			if(unit === 's' || unit === 'm' || unit === 'h' && options.display_format[0] === 'd')
+			if(unit === 's' || unit === 'm' || unit === 'h' && options.displayFormat[0] === 'd')
 			{
 				vals.push(sprintf('%02d', val));
 			}
@@ -64,10 +64,10 @@ export function formatDuration(value : number | string, options : formatOptions)
 	}
 
 	// Put value into minutes for further processing
-	switch(options.data_format)
+	switch(options.dataFormat)
 	{
 		case 'd':
-			value *= options.hours_per_day;
+			value *= options.hoursPerDay;
 		// fall-through
 		case 'h':
 			value *= 60;
@@ -78,16 +78,16 @@ export function formatDuration(value : number | string, options : formatOptions)
 	}
 
 	// Figure out the best unit for display
-	let _unit = options.display_format == "d" ? "d" : "h";
-	if(options.display_format.indexOf('m') > -1 && value < 60)
+	let _unit = options.displayFormat == "d" ? "d" : "h";
+	if(options.displayFormat.indexOf('m') > -1 && value < 60)
 	{
 		_unit = 'm';
 	}
-	else if(options.display_format.indexOf('d') > -1 && value >= (60 * options.hours_per_day))
+	else if(options.displayFormat.indexOf('d') > -1 && value >= (60 * options.hoursPerDay))
 	{
 		_unit = 'd';
 	}
-	let out_value = "" + (_unit == 'm' ? value : (Math.round((value / 60.0 / (_unit == 'd' ? options.hours_per_day : 1)) * 100) / 100));
+	let out_value = "" + (_unit == 'm' ? value : (Math.round((value / 60.0 / (_unit == 'd' ? options.hoursPerDay : 1)) * 100) / 100));
 
 	if(out_value === '')
 	{
@@ -163,7 +163,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 *
 			 * Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int).
 			 */
-			data_format: {
+			dataFormat: {
 				reflect: true,
 				type: String
 			},
@@ -174,7 +174,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * 'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.
 			 * Default is 'dh' = days or hours with selectbox.
 			 */
-			display_format: {
+			displayFormat: {
 				reflect: true,
 				type: String
 			},
@@ -185,7 +185,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Display a unit-selection for multiple units, or an input field per unit.
 			 * Default is true
 			 */
-			select_unit: {
+			selectUnit: {
 				reflect: true,
 				type: Boolean
 			},
@@ -195,7 +195,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 *
 			 * Allows to enter a percentage instead of numbers
 			 */
-			percent_allowed: {
+			percentAllowed: {
 				type: Boolean
 			},
 
@@ -205,7 +205,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Number of hours in a day, used for converting between hours and (working) days.
 			 * Default 8
 			 */
-			hours_per_day: {
+			hoursPerDay: {
 				reflect: true,
 				type: Number
 			},
@@ -216,7 +216,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 * Should the widget differ between 0 and empty, which get then returned as NULL
 			 * Default false, empty is considered as 0
 			 */
-			empty_not_0: {
+			emptyNot0: {
 				reflect: true,
 				type: Boolean
 			},
@@ -226,7 +226,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			 *
 			 * use d/h/m instead of day/hour/minute
 			 */
-			short_labels: {
+			shortLabels: {
 				reflect: true,
 				type: Boolean
 			},
@@ -250,22 +250,22 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		super();
 
 		// Property defaults
-		this.data_format = "m";
-		this.display_format = "dhm";
-		this.select_unit = true;
-		this.percent_allowed = false;
-		this.hours_per_day = 8;
-		this.empty_not_0 = false;
-		this.short_labels = false;
+		this.dataFormat = "m";
+		this.displayFormat = "dhm";
+		this.selectUnit = true;
+		this.percentAllowed = false;
+		this.hoursPerDay = 8;
+		this.emptyNot0 = false;
+		this.shortLabels = false;
 
 		this.formatter = formatDuration;
 	}
 
 	transformAttributes(attrs)
 	{
-		// Clean formats, but avoid things that need to be expanded like $cont[display_format]
+		// Clean formats, but avoid things that need to be expanded like $cont[displayFormat]
 		const check = new RegExp('[\$\@' + Object.keys(Et2DateDuration.time_formats).join('') + ']');
-		for(let attr in ["display_format", "data_format"])
+		for(let attr in ["displayFormat", "dataFormat"])
 		{
 			if(typeof attrs[attrs] === 'string' && !check.test(attrs[attr]))
 			{
@@ -281,45 +281,45 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	{
 		let value = 0;
 
-		if(!this.select_unit)
+		if(!this.selectUnit)
 		{
 			for(let i = this._durationNode.length; --i >= 0;)
 			{
 				value += parseInt(<string>this._durationNode[i].value) * this._unit2seconds(this._durationNode[i].name);
 			}
-			if(this.data_format !== 's')
+			if(this.dataFormat !== 's')
 			{
-				value /= this._unit2seconds(this.data_format);
+				value /= this._unit2seconds(this.dataFormat);
 			}
-			return "" + (this.data_format === 'm' ? Math.round(value) : value);
+			return "" + (this.dataFormat === 'm' ? Math.round(value) : value);
 		}
 
 		let val = this._durationNode.length ? this._durationNode[0].value.replace(',', '.') : "";
 		if(val === '')
 		{
-			return this.empty_not_0 ? '' : "0";
+			return this.emptyNot0 ? '' : "0";
 		}
 		value = parseFloat(val);
 
 		// Put value into minutes for further processing
-		switch(this._formatNode && this._formatNode.value ? this._formatNode.value : this.display_format)
+		switch(this._formatNode && this._formatNode.value ? this._formatNode.value : this.displayFormat)
 		{
 			case 'd':
-				value *= this.hours_per_day;
+				value *= this.hoursPerDay;
 			// fall-through
 			case 'h':
 				value *= 60;
 				break;
 		}
 		// Minutes should be an integer.  Floating point math.
-		if(this.data_format !== 's')
+		if(this.dataFormat !== 's')
 		{
 			value = Math.round(value);
 		}
-		switch(this.data_format)
+		switch(this.dataFormat)
 		{
 			case 'd':
-				value /= this.hours_per_day;
+				value /= this.hoursPerDay;
 			// fall-through
 			case 'h':
 				value /= 60.0;
@@ -343,23 +343,23 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 *
 	 * @param {string} value
 	 */
-	set display_format(value : string)
+	set displayFormat(value : string)
 	{
-		this.__display_format = "";
+		this.__displayFormat = "";
 		// Display format must be in decreasing size order (dhms) or the calculations
 		// don't work out nicely
 		for(let f of Object.keys(Et2DateDuration.time_formats))
 		{
 			if(value.indexOf(f) !== -1)
 			{
-				this.__display_format += f;
+				this.__displayFormat += f;
 			}
 		}
 	}
 
-	get display_format()
+	get displayFormat()
 	{
-		return this.__display_format;
+		return this.__displayFormat;
 	}
 
 	/**
@@ -388,14 +388,14 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	protected _convert_to_display(_value)
 	{
-		if(!this.select_unit)
+		if(!this.selectUnit)
 		{
 			let vals = [];
-			for(let i = 0; i < this.display_format.length; ++i)
+			for(let i = 0; i < this.displayFormat.length; ++i)
 			{
-				let unit = this.display_format[i];
+				let unit = this.displayFormat[i];
 				let val = this._unit_from_value(_value, unit, i === 0);
-				if(unit === 's' || unit === 'm' || unit === 'h' && this.display_format[0] === 'd')
+				if(unit === 's' || unit === 'm' || unit === 'h' && this.displayFormat[0] === 'd')
 				{
 					vals.push(sprintf('%02d', val));
 				}
@@ -409,10 +409,10 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		if(_value)
 		{
 			// Put value into minutes for further processing
-			switch(this.data_format)
+			switch(this.dataFormat)
 			{
 				case 'd':
-					_value *= this.hours_per_day;
+					_value *= this.hoursPerDay;
 				// fall-through
 				case 'h':
 					_value *= 60;
@@ -424,17 +424,17 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		}
 
 		// Figure out best unit for display
-		var _unit = this.display_format == "d" ? "d" : "h";
-		if(this.display_format.indexOf('m') > -1 && _value && _value < 60)
+		var _unit = this.displayFormat == "d" ? "d" : "h";
+		if(this.displayFormat.indexOf('m') > -1 && _value && _value < 60)
 		{
 			_unit = 'm';
 		}
-		else if(this.display_format.indexOf('d') > -1 && _value >= 60 * this.hours_per_day)
+		else if(this.displayFormat.indexOf('d') > -1 && _value >= 60 * this.hoursPerDay)
 		{
 			_unit = 'd';
 		}
-		_value = this.empty_not_0 && _value === '' || !this.empty_not_0 && !_value ? '' :
-				 (_unit == 'm' ? parseInt(_value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.hours_per_day : 1)) * 100) / 100));
+		_value = this.emptyNot0 && _value === '' || !this.emptyNot0 && !_value ? '' :
+				 (_unit == 'm' ? parseInt(_value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.hoursPerDay : 1)) * 100) / 100));
 
 		if(_value === '')
 		{
@@ -463,13 +463,13 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			case 'h':
 				return 3600;
 			case 'd':
-				return 3600 * this.hours_per_day;
+				return 3600 * this.hoursPerDay;
 		}
 	}
 
 	private _unit_from_value(_value, _unit, _highest)
 	{
-		_value *= this._unit2seconds(this.data_format);
+		_value *= this._unit2seconds(this.dataFormat);
 		// get value for given _unit
 		switch(_unit)
 		{
@@ -480,14 +480,14 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				return _highest ? _value : _value % 60;
 			case 'h':
 				_value = Math.floor(_value / 3600);
-				return _highest ? _value : _value % this.hours_per_day;
+				return _highest ? _value : _value % this.hoursPerDay;
 			case 'd':
-				return Math.floor(_value / 3600 / this.hours_per_day);
+				return Math.floor(_value / 3600 / this.hoursPerDay);
 		}
 	}
 
 	/**
-	 * Render the needed number inputs according to select_unit & display_format properties
+	 * Render the needed number inputs according to selectUnit & displayFormat properties
 	 *
 	 * @returns {any}
 	 * @protected
@@ -496,7 +496,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	{
 		let inputs = [];
 		let value = typeof this._display.value === "number" ? this._display.value : (this._display.value.split(":") || []);
-		for(let i = this.select_unit ? 1 : this.display_format.length; i > 0; --i)
+		for(let i = this.selectUnit ? 1 : this.displayFormat.length; i > 0; --i)
 		{
 			let input = {
 				name: "",
@@ -505,13 +505,13 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				min: undefined,
 				max: undefined
 			};
-			if(!this.select_unit)
+			if(!this.selectUnit)
 			{
 				input.min = 0;
-				input.name = this.display_format[this.display_format.length - i];
+				input.name = this.displayFormat[this.displayFormat.length - i];
 				// @ts-ignore - it doesn't like that it may have been an array
-				input.value = <string>(value[this.display_format.length - i]);
-				switch(this.display_format[this.display_format.length - i])
+				input.value = <string>(value[this.displayFormat.length - i]);
+				switch(this.displayFormat[this.displayFormat.length - i])
 				{
 					case 's':
 						input.max = 60;
@@ -540,7 +540,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	}
 
 	/**
-	 * Generate the format selector according to the select_unit and display_format properties
+	 * Generate the format selector according to the selectUnit and displayFormat properties
 	 *
 	 * @returns {any}
 	 * @protected
@@ -548,22 +548,22 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	protected _formatTemplate()
 	{
 		// If no formats or only 1 format, no need for a selector
-		if(!this.display_format || this.display_format.length < 1 ||
-			(!this.select_unit && this.display_format.length > 1))
+		if(!this.displayFormat || this.displayFormat.length < 1 ||
+			(!this.selectUnit && this.displayFormat.length > 1))
 		{
 			return html``;
 		}
 		// Get translations
 		this.time_formats = this.time_formats || {
-			d: this.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
-			h: this.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
-			m: this.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes"),
-			s: this.short_labels ? this.egw().lang("s") : this.egw().lang("Seconds")
+			d: this.shortLabels ? this.egw().lang("d") : this.egw().lang("Days"),
+			h: this.shortLabels ? this.egw().lang("h") : this.egw().lang("Hours"),
+			m: this.shortLabels ? this.egw().lang("m") : this.egw().lang("Minutes"),
+			s: this.shortLabels ? this.egw().lang("s") : this.egw().lang("Seconds")
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		return html`
             <select>
-                ${[...this.display_format].map((format : string) =>
+                ${[...this.displayFormat].map((format : string) =>
                         html`
                             <option value=${format} ?selected=${this._display.unit === format}>
                                 ${this.time_formats[format]}

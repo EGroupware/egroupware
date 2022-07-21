@@ -15,7 +15,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 				display: inline-block;
 				min-width: 64px;
 			}
-			:host([app_icons]) {
+			:host([appIcons]) {
 				max-width: 75px;
 			}
 			.select__menu {
@@ -37,15 +37,15 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 			/**
 			 * Limit to just this one application, and hide the selection
 			 */
-			"only_app": {type: String},
+			onlyApp: {type: String},
 			/**
 			 * Limit to these applications (comma seperated).
 			 */
-			"application_list": {type: String},
+			applicationList: {type: String},
 			/**
 			 * Show application icons instead of application names
 			 */
-			"app_icons": {type: Boolean, reflect: true}
+			appIcons: {type: Boolean, reflect: true}
 		}
 	};
 
@@ -65,8 +65,8 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		}
 	}
 
-	protected __application_list : string[];
-	protected __only_app : string;
+	protected __applicationList : string[];
+	protected __onlyApp : string;
 
 	/**
 	 * Constructor
@@ -75,9 +75,9 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	constructor()
 	{
 		super();
-		this.only_app = "";
-		this.app_icons = true;
-		this.application_list = [];
+		this.onlyApp = "";
+		this.appIcons = true;
+		this.applicationList = [];
 		this.hoist = true;
 
 		// Select options are based off abilities registered with link system
@@ -86,19 +86,19 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		this._handleChange = this._handleChange.bind(this);
 	}
 
-	set only_app(app : string)
+	set onlyApp(app : string)
 	{
-		this.__only_app = app || "";
+		this.__onlyApp = app || "";
 		this.updateComplete.then(() =>
 		{
-			this.style.display = this.only_app ? 'none' : '';
+			this.style.display = this.onlyApp ? 'none' : '';
 		});
 	}
 
-	get only_app() : string
+	get onlyApp() : string
 	{
-		// __only_app may be undefined during creation
-		return this.__only_app || "";
+		// __onlyApp may be undefined during creation
+		return this.__onlyApp || "";
 	}
 
 	connectedCallback()
@@ -121,7 +121,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		// Register to
 		this.addEventListener("change", this._handleChange);
 
-		if(this.__only_app)
+		if(this.__onlyApp)
 		{
 			this.style.display = 'none';
 		}
@@ -142,31 +142,31 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	{
 		super.willUpdate(changedProperties);
 
-		if(changedProperties.has("only_app") || changedProperties.has("application_list"))
+		if(changedProperties.has("onlyApp") || changedProperties.has("applicationList"))
 		{
 			this._reset_select_options();
 		}
 	}
 
-	set application_list(app_list : string[])
+	set applicationList(app_list : string[])
 	{
-		let oldValue = this.__application_list;
+		let oldValue = this.__applicationList;
 		if(typeof app_list == "string")
 		{
 			app_list = (<string>app_list).split(",");
 		}
-		this.__application_list = app_list;
-		this.requestUpdate("application_list", oldValue);
+		this.__applicationList = app_list;
+		this.requestUpdate("applicationList", oldValue);
 	}
 
-	get application_list() : string[]
+	get applicationList() : string[]
 	{
-		return this.__application_list;
+		return this.__applicationList;
 	}
 
 	get value() : string
 	{
-		return this.only_app ? this.only_app : <string>super.value;
+		return this.onlyApp ? this.onlyApp : <string>super.value;
 	}
 
 	set value(new_value)
@@ -197,13 +197,13 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		let select_options = [];
 
 		// Limit to one app
-		if(this.only_app)
+		if(this.onlyApp)
 		{
-			select_options.push({value: this.only_app, label: this.egw().lang(this.only_app)});
+			select_options.push({value: this.onlyApp, label: this.egw().lang(this.onlyApp)});
 		}
-		else if(this.application_list.length > 0)
+		else if(this.applicationList.length > 0)
 		{
-			select_options = this.application_list;
+			select_options = this.applicationList;
 		}
 		else
 		{
@@ -226,7 +226,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	{
 		return html`
             <sl-menu-item value="${option.value}" title="${option.title}">
-                ${this.app_icons ? "" : option.label}
+                ${this.appIcons ? "" : option.label}
                 ${this._iconTemplate(option.value)}
             </sl-menu-item>`;
 	}

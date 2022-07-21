@@ -58,7 +58,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			 * Default image
 			 * Image to use if src is not found
 			 */
-			default_src: {type: String},
+			defaultSrc: {type: String},
 
 			/**
 			 * Link Target
@@ -70,13 +70,13 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			 * Link target
 			 * Link target descriptor
 			 */
-			extra_link_target: {type: String},
+			extraLinkTarget: {type: String},
 
 			/**
 			 * Popup
 			 * widthxheight, if popup should be used, eg. 640x480
 			 */
-			extra_link_popup: {type: String},
+			extraLinkPopup: {type: String},
 		}
 	}
 
@@ -94,11 +94,11 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		super();
 		this.src = "";
-		this.default_src = "";
+		this.defaultSrc = "";
 		this.href = "";
 		this.label = "";
-		this.extra_link_target = "_self";
-		this.extra_link_popup = "";
+		this.extraLinkTarget = "_self";
+		this.extraLinkPopup = "";
 
 		this._handleClick = this._handleClick.bind(this);
 	}
@@ -110,7 +110,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 
 	_imageTemplate()
 	{
-		let src = this.parse_href(this.src) || this.parse_href(this.default_src);
+		let src = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
 		if(!src)
 		{
 			// Hide if no valid image
@@ -150,7 +150,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		if(this.href)
 		{
-			this.egw().open_link(this.href, this.extra_link_target, this.extra_link_popup);
+			this.egw().open_link(this.href, this.extraLinkTarget, this.extraLinkPopup);
 		}
 		else
 		{
@@ -173,7 +173,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 
 		if(changedProperties.has("src") && this._img)
 		{
-			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.default_src));
+			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.defaultSrc));
 		}
 		// if there's an href or onclick, make it look clickable
 		if(changedProperties.has("href") || typeof this.onclick !== "undefined")

@@ -63,7 +63,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			/**
 			 * Application entry ID
 			 */
-			entry_id: {
+			entryId: {
 				type: String,
 				reflect: true
 			},
@@ -72,22 +72,22 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			 * Set to an appname or comma separated list of applications to show only linked entries from those
 			 * applications
 			 */
-			only_app: {
+			onlyApp: {
 				type: String
 			},
 			/**
 			 * Type filter
 			 * Sub-type key to list only entries of that type
 			 */
-			link_type: {
+			linkType: {
 				type: String
 			},
 
 			// Show links that are marked as deleted, being held for purge
-			show_deleted: {type: Boolean},
+			showDeleted: {type: Boolean},
 
 			/**
-			 * Pass value as an object, will be parsed to set application & entry_id
+			 * Pass value as an object, will be parsed to set application & entryId
 			 */
 			value: {
 				type: Object,
@@ -103,7 +103,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		super();
 		this._link_list = []
-		this.__show_deleted = false;
+		this.__showDeleted = false;
 	}
 
 
@@ -126,7 +126,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		if(typeof _value == 'object' && !Array.isArray(_value) && _value.to_app && _value.to_id)
 		{
 			this.application = _value.to_app;
-			this.entry_id = _value.to_id;
+			this.entryId = _value.to_id;
 			this.get_links();
 			return;
 		}
@@ -173,7 +173,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	protected _linkTemplate(link) : TemplateResult
 	{
 		return html`
-            <et2-link app="${link.app}" entry_id="${link.id}" .value=${link} ._parent=${this}></et2-link>`;
+            <et2-link app="${link.app}" entryId="${link.id}" .value=${link} ._parent=${this}></et2-link>`;
 	}
 
 	/**
@@ -236,9 +236,9 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		}
 		let _value = {
 			to_app: this.application,
-			to_id: this.entry_id,
-			only_app: this.only_app,
-			show_deleted: this.show_deleted
+			to_id: this.entryId,
+			onlyApp: this.onlyApp,
+			showDeleted: this.showDeleted
 		};
 		if(this._loadingPromise)
 		{
@@ -256,7 +256,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("application", "entry_id");
+		_attrs.push("application", "entryId");
 	}
 
 	getDetachedNodes() : HTMLElement[]

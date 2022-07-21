@@ -219,11 +219,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Only do this on once during initial setup, or it can be impossible to clear the value
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 
-		// value not in options --> use empty_label, if exists, or first option otherwise
+		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
 		{
 			let oldValue = this.value;
-			this.value = this.empty_label ? "" : "" + this.select_options[0]?.value;
+			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
 			// ""+ to cast value of 0 to "0", to not replace with ""
 			this.requestUpdate("value", oldValue);
 		}
@@ -285,7 +285,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.willUpdate(changedProperties);
 
-		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('empty_label'))
+		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
 		{
 			this.fix_bad_value();
 
@@ -328,12 +328,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_emptyLabelTemplate() : TemplateResult
 	{
-		if(!this.empty_label || this.multiple)
+		if(!this.emptyLabel || this.multiple)
 		{
 			return html``;
 		}
 		return html`
-            <sl-menu-item value="">${this.empty_label}</sl-menu-item>`;
+            <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
 	}
 
 	/**

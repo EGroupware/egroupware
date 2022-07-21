@@ -37,7 +37,7 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		super();
 
 		// Property defaults
-		this.select_unit = false;	// otherwise just best matching unit will be used for eg. display_format "h:m:s"
+		this.selectUnit = false;	// otherwise just best matching unit will be used for eg. display_format "h:m:s"
 	}
 
 	get value()
@@ -55,12 +55,12 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		let parsed = this.__value;
 
 		const format_options = <formatOptions>{
-			select_unit: this.select_unit,
-			display_format: this.display_format,
-			data_format: this.data_format,
-			number_format: this.egw().preference("number_format"),
-			hours_per_day: this.hours_per_day,
-			empty_not_0: this.empty_not_0
+			selectUnit: this.selectUnit,
+			displayFormat: this.displayFormat,
+			dataFormat: this.dataFormat,
+			numberFormat: this.egw().preference("number_format"),
+			hoursPerDay: this.hoursPerDay,
+			emptyNot0: this.emptyNot0
 		};
 
 		const display = this.formatter(parsed, format_options);

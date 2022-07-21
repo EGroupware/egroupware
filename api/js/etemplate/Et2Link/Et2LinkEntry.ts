@@ -46,15 +46,15 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			/**
 			 * Limit to just this application - hides app selection
 			 */
-			only_app: {type: String},
+			onlyApp: {type: String},
 			/**
 			 * Limit to the listed applications (comma seperated)
 			 */
-			application_list: {type: String},
+			applicationList: {type: String},
 			/**
 			 * Show just application icons instead of names
 			 */
-			app_icons: {type: Boolean},
+			appIcons: {type: Boolean},
 			/**
 			 * Callback before query to server.
 			 * It will be passed the request & et2_link_entry objects.  Must return true, or false to abort query.
@@ -79,9 +79,9 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			app: () =>
 			{
 				const app = <Et2LinkAppSelect>document.createElement("et2-link-apps")
-				if(this.__only_app)
+				if(this.__onlyApp)
 				{
-					app.only_app = this.__only_app;
+					app.onlyApp = this.__onlyApp;
 				}
 				else if(typeof this._value !== "undefined" && this._value.app)
 				{
@@ -117,7 +117,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	 */
 	private _value : LinkInfo;
 
-	protected __only_app : string;
+	protected __onlyApp : string;
 
 	constructor()
 	{
@@ -158,28 +158,28 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			this._searchNode.readonly = this.readonly;
 		}
 		// Pass some properties on to app selection
-		if(changedProperties.has("only_app"))
+		if(changedProperties.has("onlyApp"))
 		{
-			this._appNode.only_app = this.only_app;
+			this._appNode.onlyApp = this.onlyApp;
 		}
-		if(changedProperties.has("application_list"))
+		if(changedProperties.has("applicationList"))
 		{
-			this._appNode.application_list = this.application_list;
+			this._appNode.applicationList = this.applicationList;
 		}
-		if(changedProperties.has("app_icons"))
+		if(changedProperties.has("appIcons"))
 		{
-			this._appNode.app_icons = this.app_icons;
+			this._appNode.appIcons = this.appIcons;
 		}
 	}
 
-	set only_app(app)
+	set onlyApp(app)
 	{
-		this.__only_app = app || "";
+		this.__onlyApp = app || "";
 
-		// If initial value got set before only_app, it still needs app in pre-render value
+		// If initial value got set before onlyApp, it still needs app in pre-render value
 		if(this._value && app)
 		{
-			this._value.app = this.__only_app;
+			this._value.app = this.__onlyApp;
 		}
 		if(app)
 		{
@@ -187,13 +187,13 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		}
 		if(this._appNode)
 		{
-			this._appNode.only_app = app;
+			this._appNode.onlyApp = app;
 		}
 	}
 
-	get only_app()
+	get onlyApp()
 	{
-		return this.__only_app;
+		return this.__onlyApp;
 	}
 
 	set app(app)
@@ -291,7 +291,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	/**
 	 * Option select dropdown opened
-	 * Show app selection (Et2LinkAppSelect controls own visibility according to only_app)
+	 * Show app selection (Et2LinkAppSelect controls own visibility according to onlyApp)
 	 * @param event
 	 * @protected
 	 */
@@ -302,7 +302,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	/**
 	 * Option select dropdown closed
-	 * Hide app selection (Et2LinkAppSelect controls own visibility according to only_app)
+	 * Hide app selection (Et2LinkAppSelect controls own visibility according to onlyApp)
 	 * only if there's a value selected
 	 *
 	 * @param event
@@ -318,7 +318,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	get value() : LinkInfo | string | number
 	{
-		if(this.only_app)
+		if(this.onlyApp)
 		{
 			return <string>this._searchNode?.value;
 		}
@@ -331,7 +331,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 
 	set value(val : LinkInfo | string | number)
 	{
-		let value : LinkInfo = {app: this.only_app || this.app, id: ""};
+		let value : LinkInfo = {app: this.onlyApp || this.app, id: ""};
 
 		if(typeof val === 'string' && val.length > 0)
 		{

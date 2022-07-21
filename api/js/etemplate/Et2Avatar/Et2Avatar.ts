@@ -20,7 +20,7 @@ import {cropperStyles} from "./cropperStyles";
 
 export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDetachedDOM
 {
-	private _contact_id;
+	private _contactId;
 	private _delBtn: HTMLElement;
 	private _editBtn : HTMLElement;
 
@@ -60,7 +60,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			/**
 			 * Contact id should be either user account_id {account:number} or contact_id {contact:number or number}
 			 */
-			contact_id:{type: String},
+			contactId:{type: String},
 
 			/**
 			 * Image
@@ -96,7 +96,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		super();
 		this.src = "";
 		this.label = "";
-		this.contact_id = "";
+		this.contactId = "";
 		this.editable = false;
 		this.crop = false;
 		this.size = "2.7em";
@@ -125,11 +125,11 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	firstUpdated()
 	{
 		let self = this;
-		if (this.contact_id && this.editable)
+		if (this.contactId && this.editable)
 		{
 			egw(window).json(
 				'addressbook.addressbook_ui.ajax_noPhotoExists',
-				[this.contact_id],
+				[this.contactId],
 				function(noPhotoExists)
 				{
 					if (noPhotoExists) self.image="";
@@ -140,54 +140,54 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	}
 
 
-	get contact_id()
+	get contactId()
 	{
-		return this._contact_id;
+		return this._contactId;
 	}
 
 	/**
-	 * Function to set contact id
-	 * contact id could be in one of these formats:
+	 * Function to set contactId
+	 * contactId could be in one of these formats:
 	 *		'number', will be consider as contact_id
 	 *		'contact:number', similar to above
 	 *		'account:number', will be consider as account id
-	 * @example: contact_id = "account:4"
+	 * @example: contactId = "account:4"
 	 *
-	 * @param {string} _contact_id contact id could be as above mentioned formats
+	 * @param {string} _contactId contact id could be as above mentioned formats
 	 */
-	set contact_id(_contact_id : string)
+	set contactId(_contactId : string)
 	{
 		let params = {};
-		let id = 'contact_id';
+		let id = 'contactId';
 
-		if (!_contact_id)
+		if (!_contactId)
 		{
-			_contact_id = this.egw().user('account_id');
+			_contactId = this.egw().user('account_id');
 		}
-		else if(_contact_id.match(/account:/))
+		else if(_contactId.match(/account:/))
 		{
 			id = 'account_id';
-			_contact_id = _contact_id.replace('account:','');
+			_contactId = _contactId.replace('account:','');
 		}
 		else
 		{
-			id = 'contact_id';
-			_contact_id = _contact_id.replace('contact:', '');
+			id = 'contactId';
+			_contactId = _contactId.replace('contact:', '');
 		}
-		let oldContactId = this._contact_id;
-		this._contact_id = _contact_id;
+		let oldContactId = this._contactId;
+		this._contactId = _contactId;
 		// if our src (incl. cache-buster) already includes the correct id, use that one
-		if (!this.src || !this.src.match("(&|\\?)contact_id="+_contact_id+"(&|\\$)"))
+		if (!this.src || !this.src.match("(&|\\?)contact_id="+_contactId+"(&|\\$)"))
 		{
-			params[id] = _contact_id;
+			params[id] = _contactId;
 			this.src  = egw.link('/api/avatar.php',params);
 		}
-		this.requestUpdate("contact_id", oldContactId);
+		this.requestUpdate("contactId", oldContactId);
 	}
 
 	set value(_value)
 	{
-		this.contact_id = _value;
+		this.contactId = _value;
 	}
 
 	/**
@@ -247,7 +247,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 			{"button_id": 0, label: this.egw().lang('cancel'), id: 'cancel', image: 'cancelled'}
 		];
 		const value = {
-			contact_id: this.contact_id,
+			contactId: this.contactId,
 			src: this.image
 		}
 		this._editDialog(egw.lang('Edit avatar'), value, buttons, null);
@@ -387,7 +387,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	 */
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("contact_id", "label", "href", "src", "image");
+		_attrs.push("contactId", "label", "href", "src", "image");
 	}
 
 	getDetachedNodes()

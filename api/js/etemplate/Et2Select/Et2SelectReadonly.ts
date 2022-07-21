@@ -164,7 +164,7 @@ li {
 	{
 		if(!this.value || Array.isArray(this.value) && !this.value.length)
 		{
-			return this._readonlyRender({label: this.empty_label, value: ""});
+			return this._readonlyRender({label: this.emptyLabel, value: ""});
 		}
 
 		return html`

@@ -25,7 +25,7 @@ export class Et2SelectAccount extends Et2Select
 			/**
 			 * One of: 'accounts','groups','both','owngroups'
 			 */
-			account_type: String,
+			accountType: String,
 		}
 	}
 
@@ -35,19 +35,19 @@ export class Et2SelectAccount extends Et2Select
 		
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search";
 
-		this.__account_type = 'accounts';
+		this.__accountType = 'accounts';
 	}
 
-	set account_type(type : AccountType)
+	set accountType(type : AccountType)
 	{
-		this.__account_type = type;
+		this.__accountType = type;
 
 		super.select_options = this.select_options;
 	}
 
-	get account_type() : AccountType
+	get accountType() : AccountType
 	{
-		return this.__account_type;
+		return this.__accountType;
 	}
 
 	/**
@@ -62,9 +62,9 @@ export class Et2SelectAccount extends Et2Select
 		}
 		let select_options : Array<SelectOption>;
 		// for primary_group we only display owngroups == own memberships, not other groups
-		if (type === 'primary_group' && this.account_type !== 'accounts')
+		if (type === 'primary_group' && this.accountType !== 'accounts')
 		{
-			if (this.account_type === 'both')
+			if (this.accountType === 'both')
 			{
 				select_options = this.egw().accounts('accounts');
 			}
@@ -72,7 +72,7 @@ export class Et2SelectAccount extends Et2Select
 		}
 		else
 		{
-			select_options = this.egw().accounts(this.account_type);
+			select_options = this.egw().accounts(this.accountType);
 		}
 		return select_options;
 	}

@@ -152,7 +152,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	protected footerTemplate()
 	{
 		let autoRefresh = html`
-            <et2-select id="nm_autorefresh" empty_label="Refresh" statustext="Automatically refresh list"
+            <et2-select id="nm_autorefresh" emptyLabel="Refresh" statustext="Automatically refresh list"
                         value="${this.__autoRefresh}">
             </et2-select>
 		`;
@@ -162,7 +162,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return html`
             ${this.__autoRefresh !== false ? autoRefresh : ''}
             ${!apps['admin'] ? '' : html`
-                <et2-select id="default_preference" empty_label="${this.egw().lang("Preference")}">
+                <et2-select id="default_preference" emptyLabel="${this.egw().lang("Preference")}">
                 </et2-select>`
             }
 		`;

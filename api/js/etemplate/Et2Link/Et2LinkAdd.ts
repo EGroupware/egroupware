@@ -42,7 +42,7 @@ export class Et2LinkAdd extends Et2InputWidget(FormControlMixin(ValidateMixin(Sl
 			/**
 			 * Limit to the listed applications (comma seperated)
 			 */
-			application_list: {type: String}
+			applicationList: {type: String}
 		}
 	}
 
@@ -53,18 +53,18 @@ export class Et2LinkAdd extends Et2InputWidget(FormControlMixin(ValidateMixin(Sl
 			app: () =>
 			{
 				const app = <Et2LinkAppSelect>document.createElement("et2-link-apps");
-				app.app_icons = false;
+				app.appIcons = false;
 				if(this.application)
 				{
-					app.only_app = this.application;
+					app.onlyApp = this.application;
 				}
 				else if(typeof this._value !== "undefined" && this._value.app)
 				{
 					app.value = this._value.app;
 				}
-				if(this.application_list)
+				if(this.applicationList)
 				{
-					app.application_list = this.application_list;
+					app.applicationList = this.applicationList;
 				}
 				return app;
 			},
@@ -119,9 +119,9 @@ export class Et2LinkAdd extends Et2InputWidget(FormControlMixin(ValidateMixin(Sl
 		{
 			this._appNode.only_app = this.only_app;
 		}
-		if(changedProperties.has("application_list"))
+		if(changedProperties.has("applicationList"))
 		{
-			this._appNode.application_list = this.application_list;
+			this._appNode.applicationList = this.applicationList;
 		}
 		if(changedProperties.has("app_icons"))
 		{

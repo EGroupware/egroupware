@@ -11,8 +11,8 @@ import {html, LitElement} from "@lion/core";
  */
 export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement))
 {
-	private widget_type : string;
-	private widget_options : {};
+	private widgetType : string;
+	private widgetOptions : {};
 	private filter_node : Et2InputWidgetInterface & LitElement;
 
 	static get properties()
@@ -23,41 +23,41 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 			/**
 			 * tag of widget we want to use to filter
 			 */
-			widget_type: {type: String},
+			widgetType: {type: String},
 
 			/**
 			 * Attributes / properties used for the filter widget
 			 */
-			widget_options: {type: Object}
+			widgetOptions: {type: Object}
 		};
 	}
 
 	constructor(...args : any[])
 	{
 		super();
-		this.widget_type = "et2-description";
-		this.widget_options = {};
+		this.widgetType = "et2-description";
+		this.widgetOptions = {};
 	}
 
 	transformAttributes(attrs)
 	{
 		super.transformAttributes(attrs);
 
-		switch(attrs.widget_type)
+		switch(attrs.widgetType)
 		{
 			case "link-entry":
-				this.widget_type = 'et2-nextmatch-header-entry';
+				this.widgetType = 'et2-nextmatch-header-entry';
 				break;
 			default:
-				this.widget_type = attrs.widget_type;
+				this.widgetType = attrs.widgetType;
 				// Prefer webcomponent, if legacy type was sent
-				if(window.customElements.get("et2-" + this.widget_type))
+				if(window.customElements.get("et2-" + this.widgetType))
 				{
-					this.widget_type = "et2-" + this.widget_type;
+					this.widgetType = "et2-" + this.widgetType;
 				}
 		}
 		// @ts-ignore TS doesn't know about this.getParent()
-		this.filter_node = <LitElement>loadWebComponent(this.widget_type, {...attrs, ...this.widget_options}, this);
+		this.filter_node = <LitElement>loadWebComponent(this.widgetType, {...attrs, ...this.widgetOptions}, this);
 		if(this.filter_node instanceof Et2Select)
 		{
 			this.filter_node.hoist = true;
@@ -83,10 +83,15 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
             <slot></slot>`;
 	}
 
-	get value() { return this.filter_node?.value || undefined;}
+	get value()
+	{
+		return this.filter_node?.value || undefined;
+	}
 
-	set value(new_value) { this.filter_node.value = new_value;}
-
+	set value(new_value)
+	{
+		this.filter_node.value = new_value;
+	}
 }
 
 customElements.define("et2-nextmatch-header-custom", Et2CustomFilterHeader);

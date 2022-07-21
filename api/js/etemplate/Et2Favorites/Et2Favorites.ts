@@ -88,7 +88,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		return {
 			...super.properties,
 			// Where we keep the "default" preference
-			default_pref: {type: String},
+			defaultPref: {type: String},
 			// Application to show favorites for
 			app: {type: String},
 			// Extra filters to include in the saved favorite
@@ -121,7 +121,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			this.id = "favorite";
 		}
 
-		this._preferred = <string>this.egw().preference(this.default_pref, this.app);
+		this._preferred = <string>this.egw().preference(this.defaultPref, this.app);
 
 		// Need to wait until update is done and these exist
 		this.updateComplete.then(() =>
@@ -177,7 +177,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		super.updated(changedProperties);
 		if(changedProperties.has("app"))
 		{
-			this._preferred = <string>this.egw().preference(this.default_pref, this.app);
+			this._preferred = <string>this.egw().preference(this.defaultPref, this.app);
 			this.__select_options = this._load_favorites(this.app);
 			this.requestUpdate("select_options");
 		}
@@ -341,7 +341,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 
 		// Save as default favorite - used when you click the button
 		let pref = _ev.target.value;
-		this.egw().set_preference(this.app, this.default_pref, pref);
+		this.egw().set_preference(this.app, this.defaultPref, pref);
 		this._preferred = pref;
 		this.dropdownNode.hide();
 		this.requestUpdate();

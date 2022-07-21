@@ -50,7 +50,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			/**
 			 * Show categories below this parent category
 			 */
-			parent_cat: {type: Number}
+			parentCat: {type: Number}
 		}
 	}
 

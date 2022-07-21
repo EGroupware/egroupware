@@ -25,14 +25,14 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 			/**
 			 * Show full email address if true otherwise show only name and put full address as statustext/tooltip
 			 */
-			full_email: {
+			fullEmail: {
 				type: Boolean,
 			},
 			/**
 			 * Show icon to add email as contact to addressbook
 			 * @ToDo
 			 */
-			contact_plus: {
+			contactPlus: {
 				type: Boolean,
 			},
 		};
@@ -42,7 +42,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	{
 		this._value = val;
 		// check if we have a "name <email>" value and only show name
-		if (!this.full_email && val && val.indexOf('<') !== -1)
+		if (!this.fullEmail && val && val.indexOf('<') !== -1)
 		{
 			const parts = val.split('<');
 			if (parts[0])

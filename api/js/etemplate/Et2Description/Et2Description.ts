@@ -41,7 +41,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			 * Scan the value, and if there are any links (URL, mailto:) then wrap them in a clickable
 			 * <a/> tag
 			 */
-			activate_links: {
+			activeLinks: {
 				type: Boolean,
 				reflect: true
 			},
@@ -49,14 +49,14 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			 * Extra link target
 			 * Goes with href.  If provided, that's the target for opening the link.
 			 */
-			extra_link_target: {
+			extraLinkTarget: {
 				type: String,
 				reflect: true
 			},
 			/**
 			 * widthxheight, if popup should be used, eg. 640x480
 			 */
-			extra_link_popup: {
+			extraLinkPopup: {
 				type: String,
 				reflect: true
 			},
@@ -77,9 +77,9 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super();
 
 		// Initialize properties
-		this.activate_links = false;
-		this.extra_link_popup = "";
-		this.extra_link_target = "_browser";
+		this.activeLinks = false;
+		this.extraLinkPopup = "";
+		this.extraLinkTarget = "_browser";
 		// Don't initialize this to avoid href(unknown) when rendered
 		//this.href = "";
 		this.value = "";
@@ -118,7 +118,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		}
 
 		// Do we do this here, or in transformAttributes()?
-		if(_value && !this.no_lang)
+		if(_value && !this.noLang)
 		{
 			_value = this.egw().lang(_value);
 		}
@@ -137,7 +137,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super.requestUpdate(...arguments);
 		// Due to how we do the rendering into the light DOM (not sure it's right) we need this after
 		// value change or it won't actually show up
-		if(["value", "href", "activate_links"].indexOf(attribute) != -1 && this.parentNode)
+		if(["value", "href", "activeLinks"].indexOf(attribute) != -1 && this.parentNode)
 		{
 			this.updateComplete.then(() => render(this._renderContent(), <HTMLElement><unknown>this));
 		}
@@ -160,9 +160,9 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			render = this.wrapLink(this.href, this.value);
 		}
 		// If we want to activate links inside, do that
-		else if(this.activate_links && this.value)
+		else if(this.activeLinks && this.value)
 		{
-			render = this.getActivatedValue(this.value, this.href ? this.extra_link_target : '_blank');
+			render = this.getActivatedValue(this.value, this.href ? this.extraLinkTarget : '_blank');
 		}
 		// Just do the value
 		else
@@ -184,7 +184,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	async firstUpdated()
 	{
 		this.removeEventListener('click.extra_link', this._handleClick);
-		if(this.extra_link_popup || this.mime)
+		if(this.extraLinkPopup || this.mime)
 		{
 			// Add click listener
 			this.addEventListener('click.extra_link', this._handleClick);
@@ -196,9 +196,9 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		// call super to get the onclick handling running
 		super._handleClick(_ev);
 
-		if(this.mime_data || this.href)
+		if(this.mimeData || this.href)
 		{
-			egw(window).open_link(this.mime_data || this.href, this.extra_link_target, this.extra_link_popup, null, null, this.mime);
+			egw(window).open_link(this.mimeData || this.href, this.extraLinkTarget, this.extraLinkPopup, null, null, this.mime);
 		}
 		_ev.preventDefault();
 		return false;

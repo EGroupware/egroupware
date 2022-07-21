@@ -24,9 +24,9 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 		super.connectedCallback();
 
 		// Make sure there's an option for all
-		if(!this.empty_label && Array.isArray(this.select_options) && !this.select_options.find(o => o.value == ""))
+		if(!this.emptyLabel && Array.isArray(this.select_options) && !this.select_options.find(o => o.value == ""))
 		{
-			this.empty_label = this.label ? this.label : egw.lang("All");
+			this.emptyLabel = this.label ? this.label : egw.lang("All");
 		}
 
 		this.handleChange = this.handleChange.bind(this);

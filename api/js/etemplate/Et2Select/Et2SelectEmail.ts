@@ -53,7 +53,7 @@ export class Et2SelectEmail extends Et2Select
 			/**
 			 * Show the full, original value email address under all circumstances, rather than the contact name for known contacts
 			 */
-			full_email: {type: Boolean}
+			fullEmail: {type: Boolean}
 		}
 	}
 
@@ -66,7 +66,7 @@ export class Et2SelectEmail extends Et2Select
 		this.editModeEnabled = true;
 		this.allowDragAndDrop = false;
 		this.multiple = true;
-		this.full_email = false;
+		this.fullEmail = false;
 		this.defaultValidators.push(new IsEmail());
 	}
 
@@ -165,7 +165,7 @@ export class Et2SelectEmail extends Et2Select
 	protected _createTagNode(item)
 	{
 		let tag = super._createTagNode(item);
-		tag.full_email = this.full_email;
+		tag.fullEmail = this.fullEmail;
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
 			let dragTranslate = {x:0,y:0};

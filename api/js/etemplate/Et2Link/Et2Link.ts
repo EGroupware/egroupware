@@ -19,7 +19,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  * Display a specific, single entry from an application
  *
  * The entry is specified with the application name, and the app's ID for that entry.
- * You can set it directly in the properties (application, entry_id) or use set_value() to
+ * You can set it directly in the properties (application, entryId) or use set_value() to
  * pass an object {app: string, id: string, [title: string]} or string in the form <application>::<ID>.
  * If title is not specified, it will be fetched using framework's egw.link_title()
  */
@@ -65,12 +65,12 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			/**
 			 * Application entry ID
 			 */
-			entry_id: {
+			entryId: {
 				type: String,
 				reflect: true
 			},
 			/**
-			 * Pass value as an object, will be parsed to set application & entry_id
+			 * Pass value as an object, will be parsed to set application & entryId
 			 */
 			value: {
 				type: Object,
@@ -82,7 +82,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			 * [view|edit|add]
 			 * default "view"
 			 */
-			link_hook: {
+			linkHook: {
 				type: String
 			},
 			/**
@@ -90,20 +90,20 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			 *
 			 * Passed to egw.open() to open entry in specified application
 			 */
-			target_app: {
+			targetApp: {
 				type: String
 			},
 			/**
 			 * Optional parameter to be passed to egw().open in order to open links in specified target eg. _blank
 			 */
-			extra_link_target: {
+			extraLinkTarget: {
 				type: String
 			},
 
 			/**
 			 * Breaks title into multiple lines based on this delimiter by replacing it with '\r\n'"
 			 */
-			break_title: {
+			breakTitle: {
 				type: String
 			}
 
@@ -120,7 +120,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		super();
 		this._title = "";
-		this.__link_hook = "view";
+		this.__linkHook = "view";
 	}
 
 	connectedCallback()
@@ -137,12 +137,12 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		let title = this.title;
 
-		if(this.break_title)
+		if(this.breakTitle)
 		{
 			// Set up title to optionally break on the provided character - replace all space with nbsp, add a
 			// zero-width space after the break string
 			title = title
-				.replace(this.break_title, this.break_title.trimEnd() + "\u200B")
+				.replace(this.breakTitle, this.breakTitle.trimEnd() + "\u200B")
 				.replace(/ /g, '\u00a0');
 		}
 		return html`${title}`;
@@ -165,7 +165,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	 */
 	get value() : LinkInfo | string
 	{
-		return this.app && this.entry_id ? this.app + ":" + this.entry_id : "";
+		return this.app && this.entryId ? this.app + ":" + this.entryId : "";
 	}
 
 	set value(_value : LinkInfo | string)
@@ -173,7 +173,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		if(!_value)
 		{
 			this.app = "";
-			this.entry_id = "";
+			this.entryId = "";
 			this.title = "";
 			return;
 		}
@@ -200,7 +200,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		if(typeof _value !== "string")
 		{
 			this.app = _value.app;
-			this.entry_id = _value.id;
+			this.entryId = _value.id;
 			this._title = Et2Link.MISSING_TITLE;
 
 			if(_value.title)
@@ -210,7 +210,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			Object.keys(_value).forEach(key =>
 			{
 				// Skip these, they're either handled explicitly, or ID which we don't want to mess with
-				if(["app", "entry_id", "title", "id"].indexOf(key) != -1)
+				if(["app", "entryId", "title", "id"].indexOf(key) != -1)
 				{
 					return;
 				}
@@ -229,7 +229,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		let info = <ExposeValue><unknown>{
 			app: this.app,
-			id: this.entry_id,
+			id: this.entryId,
 			path: this.dataset['icon']
 		};
 		info['label'] = this.title;
@@ -242,7 +242,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		if(!info.path && this.app == "file")
 		{
 			// Fallback to check the "normal" place if path wasn't available
-			info.path = "/webdav.php/apps/" + this.dataset.app2 + "/" + this.dataset.id2 + "/" + this.entry_id;
+			info.path = "/webdav.php/apps/" + this.dataset.app2 + "/" + this.dataset.id2 + "/" + this.entryId;
 		}
 
 		if(typeof info["type"] !== "undefined")
@@ -255,7 +255,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	}
 
 	/**
-	 * If app or entry_id has changed, we'll update the title
+	 * If app or entryId has changed, we'll update the title
 	 *
 	 * @param changedProperties
 	 */
@@ -264,16 +264,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.willUpdate(changedProperties);
 
 		super.requestUpdate();
-		if(changedProperties.has("app") || changedProperties.has("entry_id"))
+		if(changedProperties.has("app") || changedProperties.has("entryId"))
 		{
-			if(this.app && this.entry_id && !this._title)
+			if(this.app && this.entryId && !this._title)
 			{
 				this._title = Et2Link.MISSING_TITLE;
 			}
-			if(this.app && this.entry_id && this._title == Et2Link.MISSING_TITLE)
+			if(this.app && this.entryId && this._title == Et2Link.MISSING_TITLE)
 			{
 				// Title will be fetched from server and then set
-				this._titlePromise = this.egw()?.link_title(this.app, this.entry_id, true).then(title =>
+				this._titlePromise = this.egw()?.link_title(this.app, this.entryId, true).then(title =>
 				{
 					this._title = title;
 					// It's probably already been rendered
@@ -285,8 +285,8 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	_handleClick(_ev : MouseEvent) : boolean
 	{
-		// If we don't have app & entry_id, nothing we can do
-		if(!this.app || !this.entry_id || typeof this.entry_id !== "string")
+		// If we don't have app & entryId, nothing we can do
+		if(!this.app || !this.entryId || typeof this.entryId !== "string")
 		{
 			return false;
 		}
@@ -295,8 +295,8 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		{
 			this.egw().open(Object.assign({
 				app: this.app,
-				id: this.entry_id
-			}, this.dataset), "", this.link_hook, this.dataset.extra_args, this.target_app || this.app, this.target_app);
+				id: this.entryId
+			}, this.dataset), "", this.linkHook, this.dataset.extra_args, this.targetApp || this.app, this.targetApp);
 		}
 
 		_ev.stopImmediatePropagation();
@@ -305,7 +305,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	getDetachedAttributes(_attrs : string[])
 	{
-		_attrs.push("app", "entry_id");
+		_attrs.push("app", "entryId");
 	}
 
 	getDetachedNodes() : HTMLElement[]

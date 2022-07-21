@@ -47,7 +47,7 @@ describe("Textbox widget", () =>
 		let value = "This is my value";
 
 		// Turn off translation
-		element.no_lang = true;
+		element.noLang = true;
 
 		element.set_value(value);
 

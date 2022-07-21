@@ -41,15 +41,15 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			/**
 			 * Hide buttons to attach files
 			 */
-			no_files: {type: Boolean},
+			noFiles: {type: Boolean},
 			/**
 			 * Limit to just this application - hides app selection
 			 */
-			only_app: {type: String},
+			onlyApp: {type: String},
 			/**
 			 * Limit to the listed applications (comma seperated)
 			 */
-			application_list: {type: String},
+			applicationList: {type: String},
 
 			value: {type: Object}
 		}
@@ -98,7 +98,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	constructor()
 	{
 		super();
-		this.no_files = false;
+		this.noFiles = false;
 
 		this.handleFilesUploaded = this.handleFilesUploaded.bind(this);
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
@@ -120,8 +120,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	_inputGroupInputTemplate()
 	{
 		return html`
-            <et2-link-entry .only_app="${this.only_app}"
-                            .application_list="${this.application_list}"
+            <et2-link-entry .onlyApp="${this.onlyApp}"
+                            .applicationList="${this.applicationList}"
                             @sl-select=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
@@ -134,7 +134,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	// TODO: Replace when they're webcomponents
 	_fileButtons()
 	{
-		if(this.no_files)
+		if(this.noFiles)
 		{
 			return "";
 		}
@@ -408,9 +408,9 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		{
 			let selected = this.select.value;
 			// Extra complicated because LinkEntry doesn't always return a LinkInfo
-			if(this.only_app)
+			if(this.onlyApp)
 			{
-				selected = <LinkInfo>{app: this.only_app, id: selected};
+				selected = <LinkInfo>{app: this.onlyApp, id: selected};
 			}
 			link_info.push(<LinkInfo>selected);
 		}
