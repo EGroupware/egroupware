@@ -940,6 +940,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			return null;
 		}
 
+		getParentDOMNode() : HTMLElement
+		{
+			return this._parent_node;
+		}
+
 		addChild(child : et2_widget | Et2WidgetClass)
 		{
 			if(this._children.indexOf(child) >= 0)

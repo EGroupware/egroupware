@@ -15,13 +15,11 @@
 			<rows>
 				<row>
 					<hbox>
-					<description id="appname"/>
-					<description value=" - "/>
-					<description value="type"/>
+						<description id="appname"/>
+						<description value=" - "/>
+						<description value="type"/>
 					</hbox>
-					<menulist>
-						<menupopup id="types" no_lang="1" onchange="1"/>
-					</menulist>
+					<select id="types" no_lang="1" onchange="1"/>
 					<button label="Delete" id="delete" onclick="app.admin.cf_type_delete"/>
 					<textbox blur="new name" id="name"/>
 					<button label="Create" id="create"/>
@@ -60,17 +58,15 @@
 					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
-					<menulist>
-						<menupopup id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All"/>
-					</menulist>
+					<select id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All" readonly="true"/>
 					<description id="${row}[cf_name]" no_lang="1" />
 					<vbox>
 						<description id="${row}[cf_label]" no_lang="1"/>
 						<description id="${row}[cf_label]"/>
 					</vbox>
-					<customfields-types statustext="Type of customfield" id="{$row}[cf_type]"/>
-					<checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0"/>
-					<select-account id="${row}[cf_private]" account_type="both"/>
+					<customfields-types statustext="Type of customfield" id="{$row}[cf_type]" readonly="true"/>
+					<checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0" readonly="true"/>
+					<select-account id="${row}[cf_private]" account_type="both" readonly="true"/>
 					<description id="${row}[cf_values]" no_lang="1" class="values"/>
 					<vbox>
 						<description id="${row}[cf_len]" no_lang="1"/>
@@ -78,8 +74,8 @@
 					</vbox>
 					<description id="${row}[cf_order]" no_lang="1"/>
 					<vbox>
-						<date-time id="${row}[cf_modified]"/>
-						<select-account id="${row}[cf_modifier]"/>
+						<date-time id="${row}[cf_modified]" readonly="true"/>
+						<select-account id="${row}[cf_modifier]" readonly="true"/>
 					</vbox>
 				</row>
 			</rows>

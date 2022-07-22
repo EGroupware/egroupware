@@ -35,25 +35,6 @@ export class Et2Number extends Et2Textbox
 		}
 	}
 
-	/** @param {import('@lion/core').PropertyValues } changedProperties */
-	updated(changedProperties)
-	{
-		super.updated(changedProperties);
-
-		if (changedProperties.has('min'))
-		{
-			this._inputNode.min = this.min;
-		}
-		if (changedProperties.has('max'))
-		{
-			this._inputNode.max = this.max;
-		}
-		if (changedProperties.has('step'))
-		{
-			this._inputNode.step = this.step;
-		}
-	}
-
 	transformAttributes(attrs)
 	{
 		if (attrs.precision === 0 && typeof attrs.step === 'undefined')
@@ -69,7 +50,7 @@ export class Et2Number extends Et2Textbox
 	}
 
 	/**
-	 * Somehow the setter is not inherited fro the parent, not defining it here leaves the validator a string!
+	 * Somehow the setter is not inherited from the parent, not defining it here leaves the validator a string!
 	 *
 	 * @param regexp
 	 */
