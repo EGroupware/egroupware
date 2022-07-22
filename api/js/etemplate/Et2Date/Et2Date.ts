@@ -394,7 +394,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		let options = super.getOptions();
 
-		options.altFormat = this.egw()?.preference("dateformat") || "Y-m-d";
+		options.altFormat = <string>this.egw()?.preference("dateformat") || "Y-m-d";
 		options.altInput = true;
 		options.allowInput = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
@@ -627,12 +627,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	}
 
 	/**
-	 * The interactive (form) element.  Override from Lion
+	 * The interactive (form) element.
 	 * @protected
 	 */
-	get _inputNode()
+	get _inputNode() : HTMLElement
 	{
-		return /** @type {HTMLElementWithValue} */ (this.querySelector('et2-textbox[type="text"]'));
+		return this.querySelector('et2-textbox');
 	}
 }
 
