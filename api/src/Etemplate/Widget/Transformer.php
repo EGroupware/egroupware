@@ -115,7 +115,7 @@ abstract class Transformer extends Etemplate\Widget
 					if($val == 'template')
 					{
 						// If the widget has been transformed into a template, we
-						// also need to try and instanciate & parse the template too
+						// also need to try and instantiate & parse the template too
 						$transformed_template = Template::instance($attrs['template']);
 						if($transformed_template)
 						{
@@ -125,6 +125,15 @@ abstract class Transformer extends Etemplate\Widget
 						$type_changed = false;
 					}
 				default:
+					// transform attributes for web-components to camelCase
+					if (substr($attrs['type'], 0, 4) === 'et2-')
+					{
+						if (count($parts = preg_split('/[_-]/', $attr)) > 1)
+						{
+							if ($attr === 'parent_node') $parts[1] = 'Id';  // we can not use DOM property parentNode --> parentId
+							$attr = array_shift($parts).implode('', array_map('ucfirst', $parts));
+						}
+					}
 					self::setElementAttribute($form_name, $attr, $val);
 					break;
 			}

@@ -354,9 +354,9 @@ function send_template()
 			}, $str);
 		}
 		// change all attribute-names of new et2-* widgets to camelCase
-		$str = preg_replace_callback('/<et2-([a-z-]+)\s([^>]+)>/', static function(array $matches)
+		$str = preg_replace_callback('/<(et2|records)-([a-z-]+)\s([^>]+)>/', static function(array $matches)
 		{
-			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
+			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
 			foreach($attrs as $name => $value)
@@ -368,9 +368,9 @@ function send_template()
 					unset($attrs[$name]);
 				}
 			}
-			$ret = str_replace($matches[2], implode(' ', array_map(static function ($name, $value) {
+			$ret = str_replace($matches[3], implode(' ', array_map(static function ($name, $value) {
 					return $name . '="' . $value . '"';
-				}, array_keys($attrs), $attrs)).(substr($matches[2], -1) === '/' ? '/' : ''), $matches[0]);
+				}, array_keys($attrs), $attrs)).(substr($matches[3], -1) === '/' ? '/' : ''), $matches[0]);
 			return $ret;
 		}, $str);
 

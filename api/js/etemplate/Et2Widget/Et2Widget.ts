@@ -1369,6 +1369,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			continue;
 		}
 
+		// preprocessor and transformer can't know if application widget is a web-component or a legacy one
+		// translate attribute names to camelCase (only do it for used underscore, to not require a regexp)
+		if (attribute !== 'select_options' && attribute.indexOf('_') !== -1)
+		{
+			let parts = attribute.split('_');
+			if (attribute === 'parent_node') parts[1] = 'Id';
+			attribute = parts.shift()+parts.map(part => part[0].toUpperCase()+part.substring(1));
+		}
+
 		const property = widget_class.getPropertyOptions(attribute);
 
 		switch(typeof property === "object" ? property.type : property)
