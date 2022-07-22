@@ -85,6 +85,7 @@ import "./Layout/Et2Split/Et2Split";
 import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
 import "./Et2Vfs/Et2VfsUid";
+import "./Et2Textbox/Et2Password";
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
@@ -98,7 +99,6 @@ import './et2_widget_color';
 import './et2_widget_entry';
 import './et2_widget_textbox';
 import './et2_widget_number';
-import './et2_widget_password';
 import './et2_widget_url';
 import './et2_widget_selectbox';
 import './et2_widget_checkbox';

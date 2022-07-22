@@ -27,6 +27,8 @@ export class Et2UrlFax extends Et2UrlPhone
 				::slotted([slot="suffix"]) {
 					font-size: 90% !important;
 					position: relative;
+					height: auto;
+					width: auto;
 				}
 			`,
 		];

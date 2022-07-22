@@ -30,6 +30,9 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 		static get properties()
 		{
 			return {
+				/**
+				 * Textual label or image specifier for egw.image()
+				 */
 				_invokerLabel: {
 					type: String,
 				},
@@ -65,6 +68,11 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 					width: 14px;
 					border: none !important;
 					background-color: transparent !important;
+					width: 1em;
+					height: 1em;
+					background-position: center right;
+					background-size: contain;
+					background-repeat: no-repeat;
 				}
 				::slotted(:disabled) {cursor: default !important;}
 				:host(:hover) ::slotted([slot="suffix"]) {
@@ -142,7 +150,17 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 			if (this._invokerNode)
 			{
 				this._invokerNode.style.display = !this._invokerLabel ? 'none' : 'inline-block';
-				this._invokerNode.innerHTML = this._invokerLabel || '';
+				const img = this._invokerLabel ? this.egw().image(this._invokerLabel) : null;
+				if (img)
+				{
+					this._invokerNode.style.backgroundImage = 'url('+img+')';
+					this._invokerNode.innerHTML = '';
+				}
+				else
+				{
+					this._invokerNode.style.backgroundImage = 'none';
+					this._invokerNode.innerHTML = this._invokerLabel || '';
+				}
 				this._invokerNode.title = this._invokerTitle || '';
 			}
 		}

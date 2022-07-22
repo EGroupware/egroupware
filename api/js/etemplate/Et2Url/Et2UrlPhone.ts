@@ -26,6 +26,7 @@ export class Et2UrlPhone extends Et2InvokerMixin(Et2Textbox)
 			css`
 				::slotted([slot="suffix"]) {
 					font-size: 133% !important;
+					height: auto;
 				}
 			`,
 		];

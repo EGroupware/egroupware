@@ -270,6 +270,8 @@ function send_template()
 			return $replace;
 		}, $str);
 
+		$str = preg_replace('#<passwd ([^/>]+)/>#', '<et2-password $1></et2-password>', $str);
+
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
@@ -368,6 +370,13 @@ function send_template()
 					unset($attrs[$name]);
 				}
 			}
+
+			// remove no longer necessary et2_fullWidth class, it's the default now anyway
+			if (isset($attrs['class']) && empty($attrs['class'] = trim(preg_replace('/(^| )et2_fullWidth( |$)/', ' ', $attrs['class']))))
+			{
+				unset($attrs['class']);
+			}
+
 			$ret = str_replace($matches[3], implode(' ', array_map(static function ($name, $value) {
 					return $name . '="' . $value . '"';
 				}, array_keys($attrs), $attrs)).(substr($matches[3], -1) === '/' ? '/' : ''), $matches[0]);
