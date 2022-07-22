@@ -183,13 +183,6 @@ function send_template()
 				) . "></$tag>";
 		}, $str);
 
-		// Change size=# attribute to width, size is small|medium|large with shoelace
-		$str = preg_replace_callback('#<([^/>]+) size="([[:digit:]]+)"([^/>]+?)/>#su', static function ($matches)
-		{
-			return "<{$matches[1]} width=\"{$matches[2]}ex\" {$matches[3]}/>";
-		},                           $str);
-
-
 		// handling of select and taglist widget, incl. removing of type attribute
 		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
 			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
@@ -355,7 +348,7 @@ function send_template()
 						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
 			}, $str);
 		}
-		// change all attribute-names of new et2-* widgets to camelCase
+		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
 		$str = preg_replace_callback('/<(et2|records)-([a-z-]+)\s([^>]+)>/', static function(array $matches)
 		{
 			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
@@ -375,6 +368,13 @@ function send_template()
 			if (isset($attrs['class']) && empty($attrs['class'] = trim(preg_replace('/(^| )et2_fullWidth( |$)/', ' ', $attrs['class']))))
 			{
 				unset($attrs['class']);
+			}
+
+			// Change size=# attribute to width, size is small|medium|large with Shoelace
+			if (isset($attrs['size']))
+			{
+				$attrs['width'] = (int)$attrs['size'].'em';
+				unset($attrs['size']);
 			}
 
 			$ret = str_replace($matches[3], implode(' ', array_map(static function ($name, $value) {
