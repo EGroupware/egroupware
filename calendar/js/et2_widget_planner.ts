@@ -412,7 +412,8 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				var resource = null;
 				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 				{
-					options = app.calendar.sidebox_et2.getWidgetById('owner').select_options;
+					const owner = app.calendar.sidebox_et2.getWidgetById('owner')
+					options = [...owner.select_options, ...owner._selected_remote];
 				}
 				else
 				{

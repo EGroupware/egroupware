@@ -54,39 +54,42 @@ export class CalendarOwner extends Et2Select
 		// If parent didn't find a label, label will be the same as ID so we
 		// can find them that way
 		let missing_labels = [];
-		for(var i = 0; i < this.value.length; i++)
+		this.updateComplete.then(() =>
 		{
-			if(!this.menuItems.find(o => o.value == this.value[i]))
+			for(var i = 0; i < this.value.length; i++)
 			{
-				missing_labels.push(this.value[i]);
-			}
-		}
-		if(Object.keys(missing_labels).length > 0)
-		{
-			// Proper label was not found by parent - ask directly
-			this.egw().json('calendar_owner_etemplate_widget::ajax_owner', [missing_labels], function(data)
-			{
-				for(let owner in data)
+				if(!this.menuItems.find(o => o.value == this.value[i]))
 				{
-					if(!owner || typeof owner == "undefined")
-					{
-						continue;
-					}
-					// Put it in the list of options
-					let index = this.select_options.findIndex(o => o.value == owner);
-					if(index !== -1)
-					{
-						this.select_options[index] = data[owner];
-					}
-					else
-					{
-						this.select_options.push(data[owner]);
-					}
+					missing_labels.push(this.value[i]);
 				}
-				this.requestUpdate("select_options");
-				this.updateComplete.then(() => {this.syncItemsFromValue();});
-			}, this, true, this).sendRequest();
-		}
+			}
+			if(Object.keys(missing_labels).length > 0)
+			{
+				// Proper label was not found by parent - ask directly
+				this.egw().json('calendar_owner_etemplate_widget::ajax_owner', [missing_labels], function(data)
+				{
+					for(let owner in data)
+					{
+						if(!owner || typeof owner == "undefined")
+						{
+							continue;
+						}
+						// Put it in the list of options
+						let index = this.select_options.findIndex(o => o.value == owner);
+						if(index !== -1)
+						{
+							this.select_options[index] = data[owner];
+						}
+						else
+						{
+							this.select_options.push(data[owner]);
+						}
+					}
+					this.requestUpdate("select_options");
+					this.updateComplete.then(() => {this.syncItemsFromValue();});
+				}, this, true, this).sendRequest();
+			}
+		});
 	}
 
 	/**

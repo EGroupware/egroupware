@@ -77,8 +77,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				// Add in group memberships as strings
 				$info['resources'] = array_map(function($a) { return ''.$a;},$GLOBALS['egw']->accounts->members($owner, true));
 			}
-
-			$option = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app'])) + $info;
+			$option = static::format_owner($owner, $label, $info);
 			$sel_option_index = $this->get_index($sel_options, 'value', $owner);
 			if($sel_option_index === false)
 			{
@@ -283,7 +282,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$type = $data['type'];
 
 		$value = array(
-			'value' => $id,
+			'value' => substr($id, 0, -1) == $type ? $id : $type . $id,
 			'label' => $title,
 			'app'   => lang($data['app'])
 		);

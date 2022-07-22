@@ -2788,17 +2788,17 @@ export class CalendarApp extends EgwApp
 						state.state.owner = jQuery.map(state.state.owner, function(owner) {return owner;});
 					}
 			}
-			// Remove duplicates
-			state.state.owner = state.state.owner.filter(function(value, index, self) {
-				return self.indexOf(value) === index;
-			});
-			// Make sure they're all strings
-			state.state.owner = state.state.owner.map(function(owner) { return ''+owner;});
-
-			if (state.state.owner.indexOf('0') >= 0)
+			if(state.state.owner.indexOf('0') >= 0)
 			{
 				state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
 			}
+			// Remove duplicates
+			state.state.owner = state.state.owner.filter(function(value, index, self)
+			{
+				return self.indexOf(value) === index;
+			});
+			// Make sure they're all strings
+			state.state.owner = state.state.owner.map(function(owner) { return '' + owner;});
 
 			// Show the correct number of grids
 			var grid_count = 0;
