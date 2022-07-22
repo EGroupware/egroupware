@@ -443,14 +443,40 @@ div.mail-compose_fileselector {
   background-color: white;
   width: 100%;
 }
-#mail-index_mailPreview {
+#mail-index_mail-index-preview {
   overflow: hidden;
   position: relative;
   background-color: white;
+  width: calc(100% - 1em);
+  margin-left: 1em;
+}
+.previewWrapper {
+  height: 100%;
+}
+#mail-index_mailPreview .th {
+  display: none;
 }
 #mail-index_mailPreview > div,
-#mail-index_mailPreview > et2-hbox {
+#mail-index_mailPreview > * {
   padding-left: 8px !important;
+}
+#mail-index_mailPreview_subject {
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}
+.previewWrapper .et2_details.attachments {
+  margin-top: 0.4em;
+}
+.previewWrapper .et2_details {
+  flex-direction: row;
+  text-align: start !important;
+}
+.previewWrapper .et2_details .et2_details_title {
+  margin: 0;
+  margin-left: 0.5em;
+}
+.previewWrapper .et2_details .et2_details_toggle {
+  margin: 0;
 }
 #mail-index_mailPreview .et2_email > span {
   display: inline;
@@ -656,7 +682,6 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 .mailPreviewHeaders :first-child,
 .mailDisplayHeaders :first-child {
-  width: 5em;
   flex: 0 0 auto;
   color: #7a7a7a;
   text-align: end;
@@ -970,6 +995,24 @@ div#mail-index_nm.splitter-pane {
 }
 #mail-index_mailPreview_mailPreviewContainer {
   height: 100%;
+  padding-top: 1em;
+  border-top: 1px solid silver;
+  margin-top: 1em;
+}
+#mail-index_nm thead tr th.optcol {
+  display: none;
+}
+#mail-index_nm .et2_label.et2_vfs {
+  text-align: center;
+}
+.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
+  margin-left: 0px;
+  margin-right: 2px;
+  padding: 0px;
+}
+#mail-index_nm tbody tr et2-lavatar {
+  max-width: 3.7em;
+  min-width: 3.7em !important;
 }
 #popupMainDiv {
   padding: 5px;
@@ -1056,6 +1099,45 @@ body {
 }
 #mail-index #mail-index_mailPreview #mail-index_mailPreviewHeadersSubject > span {
   white-space: nowrap;
+}
+#mail-index #mail-index_mailPreview .mail-d-h1 {
+  position: relative;
+  padding-bottom: 15px;
+  border-bottom: 1px solid silver;
+  font-size: 12pt;
+  padding-top: 10px;
+  font-weight: bold;
+}
+#mail-index #mail-index_mailPreview .mail-d-h1 span {
+  font-size: 12pt;
+}
+#mail-index #mail-index_mailPreview .mail-d-h2 {
+  padding-top: 5px;
+  font-size: 10pt;
+  color: grey;
+}
+#mail-index #mail-index_mailPreview .mail-d-h2 a,
+#mail-index #mail-index_mailPreview .mail-d-h2 span,
+#mail-index #mail-index_mailPreview .mail-d-h2 .et2_label {
+  color: grey;
+  font-size: 10pt;
+}
+#mail-index #mail-index_mailPreview .mail-d-h2 a#mail-display_FROM > * {
+  color: black;
+  padding-top: 15px;
+  font-size: 12pt;
+}
+#mail-index #mail-index_mailPreview .et2_details {
+  width: 100%;
+  display: block;
+}
+#mail-index #mail-index_mailPreview .et2_details.et2_details_expanded {
+  width: 100%;
+  display: block;
+}
+#mail-index #mail-index_mailPreview span.et2_details_title {
+  color: #26537c;
+  font-size: 10pt;
 }
 /*##############################################
 #            #                               #

@@ -998,113 +998,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Create an expand on click box
-	 *
-	 * @param {object} _expContent an object with at least these elements
-	 *					{build_children, data_one, data, widget, line}
-	 *
-	 * @param {object} _dataElem includes data of the widget which need to be expand
-	 * @param {object} _et2 widget container of relevant template, default is this.et2
-	 *
-	 * @return _dataElem content of widgets
-	 */
-	url_email_expandOnClick: function (_expContent, _dataElem, _et2)
-	{
-
-		var et2 = _et2 || this.et2;
-		for(var j = 0; j < _expContent.length; j++)
-		{
-			var field = _expContent[j] || [];
-			var content = _dataElem.data[field.data] || [];
-
-			// Add in single address, if there
-			if(typeof field.data_one != 'undefined' && field.data != field.data_one)
-			{
-				if (jQuery.isArray(_dataElem.data[field.data_one]))
-					content = content.concat(_dataElem.data[field.data_one]);
-				else
-					content.unshift(_dataElem.data[field.data_one]);
-				// Unique
-				content = content.filter(function(value, index, self) {
-					return self.indexOf(value) === index;
-				});
-			}
-
-			// Disable whole box if there are none
-			var line = et2.getWidgetById(field.line);
-			if(line != null) line.set_disabled(content.length == 0);
-
-			var widget = et2.getWidgetById(field.widget);
-			if(widget == null) continue;
-			jQuery(widget.getDOMNode()).removeClass('visible');
-
-			// Programatically build the child elements
-			if(field.build_children)
-			{
-				// Remove any existing
-				var children = widget.getChildren();
-				for(var i = children.length-1; i >= 0; i--)
-				{
-					children[i].destroy();
-					widget.removeChild(children[i]);
-				}
-				if (content.length == 1 && typeof content[0] != 'undefined' && content[0])
-				{
-					content = content[0].split(',');
-				}
-				// Add for current record
-				var remembervalue = '';
-				for(var i = 0; i < content.length; i++)
-				{
-					if (typeof content[i] != 'string' || !content[i]) continue;
-					// if there is no @ in string, its most likely that we have a comma in the personal name part of the emailaddress
-					if (content[i].indexOf('@')< 0)
-					{
-						remembervalue = content[i];
-					}
-					else
-					{
-						var value = remembervalue+(remembervalue?',':'')+content[i];
-						var url_email_options = {
-							id: widget.id + '_' + i,
-							value: value,
-							readonly: true,
-							contact_plus: true,
-							full_email: typeof field['full_email'] != 'undefined' ? field['full_email'] : true
-						};
-						var email = et2_createWidget('url-email', url_email_options, widget);
-						email.loadingFinished();
-						remembervalue = '';
-					}
-				}
-			}
-			else if (widget instanceof Et2SelectEmail)
-			{
-				widget.value = content;
-			}
-			else
-			{
-				widget.set_value({content: content});
-			}
-
-			// Show or hide button, as needed
-			line.iterateOver(function(button) {
-				// Avoid binding to any child buttons
-				if(button.getParent() != line) return;
-				button.set_disabled(
-					// Disable if only 1 address
-					content.length <=1 || (
-					// Disable if all content is visible
-					jQuery(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
-					jQuery(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
-				);
-			},this,et2_button);
-		}
-
-		return _dataElem;
-	},
-
-	/**
 	 * Set values for mail dispaly From,Sender,To,Cc, and Bcc
 	 * Additionally, apply expand on click feature on thier widgets
 	 *
@@ -1113,19 +1006,11 @@ app.classes.mail = AppJS.extend(
 	{
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
-		var expand_content = [
-			{build_children: false, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom', full_email: false},
-			{build_children: false, data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
-			{build_children: false, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
-			{build_children: false, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
-			{build_children: false, data: 'BCC', widget: 'BCC', line: 'mailDisplayHeadersBcc'}
-		];
 
 		if (typeof  content != 'undefiend')
 		{
 			dataElem.data = jQuery.extend(dataElem.data, content);
 
-			this.url_email_expandOnClick(expand_content, dataElem);
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions) this.et2.getWidgetById('displayToolbar').set_actions(toolbaractions);
 		}
@@ -1138,136 +1023,66 @@ app.classes.mail = AppJS.extend(
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview: function(selected, nextmatch) {
-		// Empty values, just in case selected is empty (user cleared selection)
-		//dataElem.data is populated, when available with fromaddress(string),toaddress(string),additionaltoaddress(array),ccaddress (array)
-		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",ccaddress:"",date:"",attachmentsBlock:""}};
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		let data = {};
+		let rowId = '';
+		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		let mailPreview = this.et2.getWidgetById('mailPreview');
 		if(typeof selected != 'undefined' && selected.length == 1)
 		{
-			var _id = this.mail_fetchCurrentlyFocussed(selected);
-			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
+			rowId = this.mail_fetchCurrentlyFocussed(selected);
+			data = egw.dataGetUIDdata(rowId).data;
 
 			// Try to resolve winmail.data attachment
-			if (dataElem.data && dataElem.data.attachmentsBlock[0]
-					&& dataElem.data.attachmentsBlock[0].winmailFlag
-					&& (dataElem.data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
-					dataElem.data.attachmentsBlock[0].filename == "winmail.dat"))
+			if (data && data.attachmentsBlock[0]
+					&& data.attachmentsBlock[0].winmailFlag
+					&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
+					data.attachmentsBlock[0].filename == "winmail.dat"))
 			{
-				attachmentArea.getDOMNode().classList.add('loading');
-				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[_id], jQuery.proxy(function(_data){
-					attachmentArea.getDOMNode().classList.remove('loading');
+				attachmentsBlock.getDOMNode().classList.add('loading');
+				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[rowId], jQuery.proxy(function(_data){
+					attachmentsBlock.getDOMNode().classList.remove('loading');
 					if (typeof _data == 'object')
 					{
-						attachmentArea.set_value({content:_data});
-
-						this.data.attachmentsBlock = _data;
+						data.attachmentsBlock = _data;
+						data.attachmentsBlockTitle = `${_data.lenght} attachments`;
 						// Update client cache to avoid resolving winmail.dat attachment again
 						egw.dataStoreUID(this.data.uid, this.data);
-
-						set_prev_iframe_top();
+						mailPreview.set_value({content:data});
 					}
 					else
 					{
 						console.log('Can not resolve the winmail.data!');
 					}
-				},dataElem));
+				},data));
 			}
 		}
 
-		var $preview_iframe = jQuery('#mail-index_mailPreviewContainer');
-
-		// Re calculate the position of preview iframe according to its visible sibilings
-		var set_prev_iframe_top = function ()
+		if (data.toaddress||data.fromaddress)
 		{
-			// Need to make sure that the iframe is fullyLoad before calculation
-			window.setTimeout(function(){
-				var lastEl = $preview_iframe.prev();
-				// Top offset of preview iframe calculated from top level
-				var iframeTop = $preview_iframe.offset().top;
-				while (lastEl.css('display') === "none")
-				{
-					lastEl = lastEl.prev();
-				}
-				var offset = iframeTop - (lastEl.offset().top + lastEl.height()) || 130; // fallback to 130 px if can not calculate new top
-
-				// preview iframe parent has position absolute, therefore need to calculate the top via position
-				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
-			}, 50);
-		};
-
-		// Show / hide 'Select something' in preview
-		var blank = this.et2.getWidgetById('blank');
-		if(blank)
-		{
-			blank.set_disabled(true);
+			data.additionaltoaddress = (data.additionaltoaddress??[]).concat(data.toaddress);
+			data.additionalfromaddress = (data.additionalfromaddress??[]).concat(data.fromaddress);
 		}
-		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
-		{
-			// If there is content to show recalculate the size
-			set_prev_iframe_top();
-		}
-		else if (this.getPreviewPaneState())
-		{
-			if(blank)
-			{
-				blank.set_disabled(false);
-			}
-			this.mail_disablePreviewArea(false);
-			if (!egwIsMobile())return;
-		}
-		else
+
+		if (data.attachmentsBlock) data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
+		mailPreview.set_value({content:data});
+
+		if (selected.length>1)
 		{
 			// Leave if we're here and there is nothing selected, too many, or no data
-			var prevAttchArea = this.et2.getWidgetById('previewAttachmentArea');
-			if (prevAttchArea)
+			if (attachmentsBlock)
 			{
-				prevAttchArea.set_value({content:[]});
-				this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
+				attachmentsBlock.set_value({content:[]});
+				attachmentsBlock.set_class('previewAttachmentArea noContent mail_DisplayNone');
 				var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 				IframeHandle.set_src('about:blank');
 				this.mail_disablePreviewArea(true);
 			}
 			if (!egwIsMobile())return;
 		}
+
 		// Not applied to mobile preview
 		if (!egwIsMobile())
 		{
-			var smimeSigBtn = this.et2.getWidgetById('previewSmimeSigBtn');
-			if (smimeSigBtn) smimeSigBtn.set_disabled(dataElem.data['smimeSigUrl']?false:true);
-
-			// Widget ID:data key map of widgets we can directly set from cached data
-			var data_widgets = {
-				'previewDate':			'date',
-				'previewSubject':		'subject'
-			};
-
-			// Set widget values from cached data
-			for(var id in data_widgets)
-			{
-				var widget = this.et2.getWidgetById(id);
-				if(widget == null) continue;
-				widget.set_value(dataElem.data[data_widgets[id]] || "");
-			}
-			var smime_widgets = ['smime_signature', 'smime_encryption'];
-
-			for (var i in smime_widgets)
-			{
-				var widget = this.et2.getWidgetById(smime_widgets[i]);
-				switch (smime_widgets[i])
-				{
-					case 'smime_signature':
-						widget.set_disabled(!(dataElem.data.smime == 'smime_sign'));
-						break;
-					case 'smime_encryption':
-						widget.set_disabled(!(dataElem.data.smime == 'smime_encrypt'));
-						break;
-					default:
-						widget.set_disabled(true);
-				}
-
-				this.smime_clear_flags([jQuery(widget.getDOMNode())]);
-			}
-			this.smime_clear_flags([jQuery('#mail-index_mailPreviewContainer')]);
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
@@ -1276,27 +1091,13 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).show()
 				.next(this.mailvelope_iframe_selector).remove();
 
-			// Set up additional content that can be expanded.
-			// We add a new URL widget for each address, so they get all the UI
-			// TO addresses have the first one split out, not all together
-			// list of keys:
-			var expand_content = [
-				{build_children: false, data_one: 'fromaddress', data: 'additionalfromaddress', widget: 'fromAddress', line: 'mailPreviewHeadersFrom'},
-				{build_children: false, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'toAddress', line: 'mailPreviewHeadersTo'},
-				{build_children: false, data: 'ccaddress', widget: 'CCAddress', line: 'mailPreviewHeadersCC'},
-				{build_children: false, data: 'attachmentsBlock', widget: 'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
-			];
-
-			// Undock the preview before running expandOnClick, because we
 			// need to have the DOM ready for calculation.
 			this.mail_disablePreviewArea(false);
 
-			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
-
 			// Update the internal list of selected mails, if needed
-			if(this.mail_selectedMails.indexOf(_id) < 0)
+			if(this.mail_selectedMails.indexOf(rowId) < 0)
 			{
-				this.mail_selectedMails.push(_id);
+				this.mail_selectedMails.push(rowId);
 			}
 			var self = this;
 
@@ -1305,28 +1106,28 @@ app.classes.mail = AppJS.extend(
 			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
 			this.W_TIMEOUTS.push(window.setTimeout(function(){
 
-				console.log(_id);
+				console.log(rowId);
 				// Request email body from server
-				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
+				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:rowId}));
 				jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 					self.resolveExternalImages (this.contentWindow.document);
 				});
 			}, 300));
 		}
-		if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
+		if (data['smime']) this.smimeAttachmentsCheckerInterval();
 		var messages = {};
-		messages['msg'] = [_id];
+		messages['msg'] = [rowId];
 
 		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class']  != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
+		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data.flags != 'undefined' && typeof data.flags.read != 'undefined') data.flags.read = 'read';
+		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data['class']  != 'undefined' && (data['class'].indexOf('unseen') >= 0 || data['class'].indexOf('recent') >= 0))
 		{
 			this.mail_removeRowClass(messages,'recent');
 			this.mail_removeRowClass(messages,'unseen');
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
-			if (typeof dataElem.data.dispositionnotificationto != 'undefined' && dataElem.data.dispositionnotificationto &&
-				typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
+			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
+				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
 			{
 				var buttons = [
 					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
@@ -1575,7 +1376,7 @@ app.classes.mail = AppJS.extend(
 			quotabox.set_class(_data.data.quotaclass);
 			quotabox.set_value(_data.data.quotainpercent);
 			quotabox.set_label(_data.data.quota);
-			if (_data.data.quotawarning)
+			if (_data.quotawarning)
 			{
 				var self = this;
 				var buttons = [

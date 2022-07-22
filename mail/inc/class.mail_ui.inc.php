@@ -1160,7 +1160,7 @@ class mail_ui
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.mail_open',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.mobileView',
 				'allowOnMultiple' => false,
 				'default' => true,
 				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/mail/templates/mobile/view.xet'))
@@ -2113,6 +2113,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
+			$email = Mail::stripRFC822Addresses(array($data['address']));
+
+			$contact = $GLOBALS['egw']->contacts->search(
+				array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
+				array('contact_id', 'email', 'email_home', 'n_fn'),
+				'', '', '', false, 'OR', false
+			);
+			if (!empty($contact))
+			{
+				$data['avatar'] = $contact[0]['photo'];
+			}
+
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];

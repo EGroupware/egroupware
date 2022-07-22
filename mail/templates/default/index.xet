@@ -5,92 +5,128 @@
 	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
-			<vbox id="mailPreview" width="100%">
-                <toolbar id="toolbar" list_header="short"/>
-                <box id="blank" disabled="false">
-                    <image src="mail"/>
-                    <description value="Select an item to read"/>
-                </box>
-                <hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
-                    <description value="From"/>
-                    <et2-select-email id="fromAddress" readonly="true"></et2-select-email>
-                    <date-time-today label="Date" align="right" id="previewDate" readonly="true"/>
-                </hbox>
-                <hbox id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
-                    <description value="Subject"/>
-                    <description id="previewSubject" readonly="true"
-                                 hover_action="app.mail.modifyMessageSubjectDialog"
-                                 hover_action_title="Modify subject of this message"/>
-                </hbox>
-                <hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
-                    <description value="To"/>
-                    <et2-select-email id="toAddress" readonly="true"></et2-select-email>
-                </hbox>
-                <hbox id="mailPreviewHeadersCC" class="mailPreviewHeaders">
-                    <description value="CC"/>
-                    <et2-select-email id="CCAddress" readonly="true"></et2-select-email>
-                </hbox>
-                <hbox class="mailPreviewHeaders smimeIcons">
-                    <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
-                           align="right" width="24"/>
-                    <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
-                           disabled="true" align="right" width="24"/>
-                </hbox>
-                <hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
-                    <description value="Attachments"/>
-					<grid disabled="@no_griddata" id="previewAttachmentArea" class="previewAttachmentArea egwGridView_grid">
-						<columns>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column width="70%" />
-							<column width="11%" />
-							<column width="3%"/>
-                            <column width="3%"/>
-                            <column width="3%"/>
-                            <column/>
-                        </columns>
-                        <rows>
-                            <row class="row attachmentRow">
-                                <description id="${row}[attachment_number]"/>
-                                <description id="${row}[partID]"/>
-                                <description id="${row}[type]"/>
-                                <description id="${row}[winmailFlag]"/>
-                                <description class="et2_link useEllipsis" id="${row}[filename]"
-                                             extra_link_target="$row_cont[windowName]"
-                                             extra_link_popup="$row_cont[popup]" no_lang="1" expose_view="true"
-                                             mime="$row_cont[type]" mime_data="$row_cont[mime_data]"
-                                             href="$row_cont[mime_url]"/>
-                                <description align="right" id="${row}[size]"/>
-                                <buttononly id="${row}[save]" image="fileexport"
-                                            onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"
-                                            statustext="Save to disk"/>
-                                <buttononly id="${row}[saveAsVFS]" disabled="$row_cont[no_vfs]"
-                                            image="filemanager/navbar"
-                                            onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"
-                                            statustext="Save to filemanager"/>
-                                <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" disabled="$row_cont[no_vfs]"
-                                            id="${row}[save_all]" image="mail/save_all"
-                                            onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"
-                                            statustext="Save all attachments to filemanager"/>
-                                <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]"
-                                            image="mail/save_zip"
-                                            onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})"
-                                            statustext="Save as Zip"/>
-                            </row>
-                        </rows>
-                    </grid>
-                    <buttononly class="transparent-button" statustext="Show all attachments"
-                                image="foldertree_nolines_plus" width="16px" height="16px"
-                                onclick="app.mail.showAllHeader"/>
-                </hbox>
-                <box id="mailPreviewContainer">
-                    <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
-                </box>
-            </vbox>
+            <template id="mail.index.preview"/>
         </split>
     </template>
+    <template id="mail.index.preview">
+        <toolbar id="toolbar" list_header="short"/>
+
+        <grid id="mailPreview" width="100%" height="100%" >
+            <columns>
+                <column/>
+            </columns>
+            <rows>
+                <row class="th">
+
+                </row>
+                <row>
+                    <vbox class="previewWrapper">
+                        <box id="blank" disabled="@fromaddress">
+                            <image src="mail"/>
+                            <description value="Select an item to read"/>
+                        </box>
+
+                        <hbox class="mailPreviewHeaders">
+                            <description id="subject" readonly="true"
+                                         hover_action="app.mail.modifyMessageSubjectDialog"
+                                         hover_action_title="Modify subject of this message"/>
+                            <hbox class="mailPreviewHeaders smimeIcons">
+                                <image id="smimeSignature" src="smime_sign" statustext="Smime signed message" disabled="true"
+                                       align="right" width="24"/>
+                                <image id="smimeEncryption" src="smime_encrypt" statustext="Smime encrypted message"
+                                       disabled="true" align="right" width="24"/>
+                            </hbox>
+                        </hbox>
+                        <hbox width="100%" class="mailPreviewHeaders">
+                                <lavatar src="@avatar" lname="@address" shape="rounded"/>
+                                <vbox>
+                                    <details class="details" title="details" toggle_align="left">
+                                        <hbox>
+                                            <description value="From"/>
+                                            <grid id="additionalfromaddress">
+                                                <columns>
+                                                    <column/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                        <hbox disabled="!@toaddress" width="100%">
+                                            <description value="To"/>
+                                            <grid id="additionaltoaddress">
+                                                <columns>
+                                                    <column/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                        <hbox disabled="!@ccaddress"  width="100%">
+                                            <description value="Cc"/>
+                                            <grid id="ccaddress">
+                                                <columns>
+                                                    <column/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                    </details>
+                                    <details  title="@attachmentsBlockTitle" toggle_align="left" class="attachments" disabled="!@attachmentsBlock">
+                                        <grid id="attachmentsBlock" class="previewAttachmentArea egwGridView_grid">
+                                            <columns>
+                                                <column disabled="!@showtempname"/>
+                                                <column disabled="!@showtempname"/>
+                                                <column disabled="!@showtempname"/>
+                                                <column disabled="!@showtempname"/>
+                                                <column width="70%" />
+                                                <column width="11%" />
+                                                <column width="3%"/>
+                                                <column width="3%"/>
+                                                <column width="3%"/>
+                                                <column />
+                                            </columns>
+                                            <rows>
+                                                <row class="row attachmentRow">
+                                                    <description id="${row}[attachment_number]" />
+                                                    <description id="${row}[partID]" />
+                                                    <description id="${row}[type]" />
+                                                    <description id="${row}[winmailFlag]" />
+                                                    <description class="et2_link useEllipsis" id="${row}[filename]" no_lang="1" expose_view="true" mime="$row_cont[type]" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
+                                                    <description align="right" id="${row}[size]"/>
+                                                    <buttononly id="${row}[save]" image="fileexport" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"/>
+                                                    <buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"/>
+                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"/>
+                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </details>
+                                </vbox>
+
+                                <date-time-today label="Date" align="right" id="date" readonly="true"/>
+                            </hbox>
+                        <hbox>
+
+                        </hbox>
+                        <box id="mailPreviewContainer">
+                            <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+                        </box>
+                    </vbox>
+                </row>
+            </rows>
+        </grid>
+    </template>
+
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
         <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add"
                    header_right="mail.index.header_right"/>
@@ -98,21 +134,11 @@
     <template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
-                <column width="20"/>
-                <column width="20"/>
-                <column width="40%"/>
-                <column minWidth="42" width="95"/>
-                <column width="95"/>
-                <column width="95"/>
-                <column width="30%"/>
-                <column width="30%"/>
-                <column width="80"/>
-                <column width="80"/>
+               <column width="90%"/>
+               <column width="80"/>
             </columns>
             <rows>
                 <row class="th">
-                    <nextmatch-header statustext="Status" label="St." id="status"/>
-                    <nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
                     <nextmatch-sortheader label="subject" id="subject"/>
                     <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
                     <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
@@ -123,21 +149,27 @@
                     <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <description span="1" class="status_img"/>
-                    <html id="${row}[attachments]"/>
-                    <vbox>
-                        <description id="${row}[subject]" no_lang="1"/>
-                        <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
-                    </vbox>
-                    <hbox>
-                        <date-time_today align="center" id="${row}[date]" readonly="true"/>
+                    <hbox class="$row_cont[class] mobile_cat_col">
+                        <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="3.7em" shape="square"/>
+                        <vbox>
+                            <url-email id="${row}[address]" class="$row_cont[class]" readonly="true"/>
+                            <hbox>
+
+                                <description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
+                            </hbox>
+                            <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
+                        </vbox>
                     </hbox>
-                    <date-time_today align="center" id="${row}[modified]" readonly="true"/>
-                    <url-email id="${row}[address]" contact_plus="true" readonly="true"/>
-                    <url-email id="${row}[toaddress]" contact_plus="true" readonly="true"/>
-                    <url-email id="${row}[fromaddress]" contact_plus="true" readonly="true"/>
-                    <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-                    <image src="$row_cont[smime]"/>
+                    <vbox>
+                        <hbox>
+                            <date-time_today align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
+                        </hbox>
+                        <hbox>
+                            <image src="$row_cont[smime]" height="16px"/>
+                            <html id="${row}[attachments]"/>
+                            <description  class="status_img $row_cont[class]"/>
+                        </hbox>
+                    </vbox>
                 </row>
             </rows>
         </grid>
