@@ -19,6 +19,7 @@ import "flatpickr/dist/plugins/scrollPlugin.js";
 import {holidays} from "./Holidays";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
+import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 
 // Request this year's holidays now
 holidays(new Date().getFullYear());
@@ -334,7 +335,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			...super.slots,
 			input: () =>
 			{
-				const text = document.createElement('input');
+				const text = <Et2Textbox>document.createElement('et2-textbox');
 				text.type = "text";
 				return text;
 			}
@@ -631,7 +632,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 */
 	get _inputNode()
 	{
-		return /** @type {HTMLElementWithValue} */ (this.querySelector('input[type="text"]'));
+		return /** @type {HTMLElementWithValue} */ (this.querySelector('et2-textbox[type="text"]'));
 	}
 }
 
