@@ -29,7 +29,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			}
 			/* Border on the (single) selected value */
 			.select--standard .select__control {
-				border-left: 8px solid transparent;
+				border-left: 8px solid var(--sl-input-border-color);
 			}			
 			`
 		]
@@ -118,7 +118,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 				this.append(image);
 			}
 			this.dropdown.querySelector(".select__control").style.borderColor =
-				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "transparent";
+				getComputedStyle(checkedItem).getPropertyValue("--category-color") || "";
 		}
 	}
 

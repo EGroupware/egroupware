@@ -120,26 +120,25 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			css`
 			.form-field__group-two {
 				width: 100%;
-				border: 1px solid var(--input-border-color);
-				border-radius: var(--sl-input-border-radius-medium, 3px);
 			}
 			et2-select {
 				color: var(--input-text-color);
 				border-left: 1px solid var(--input-border-color);
 				flex: 2 1 auto;
 			}
-			et2-select::part(form-control-input) {
-				border: none;
+			et2-select::part(control) {
+				border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
 			}
 			et2-textbox {
 				flex: 1 1 auto;
 				max-width: 4.5em;
+				margin-right: -2px;
 			}
-			et2-textbox::part(base) {
-				border: none;
-			}
-			et2-textbox:not(:last-of-type) {
-				border-right: 1px solid var(--input-border-color);
+			et2-textbox:not(:last-child)::part(base) {
+				border-right: none;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
 			}
 				
             `,

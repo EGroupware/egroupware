@@ -108,11 +108,16 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// @ts-ignore
 				...(super.styles ? (Symbol.iterator in Object(super.styles) ? super.styles : [super.styles]) : []),
 				css`
-				/* Move the widget border */
+				/* Move the widget border 
 				.form-control-input {
 					border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 					border-radius: var(--sl-input-border-radius-medium);
 				}
+				.form-control-input:hover {
+					background-color: var(--sl-input-background-color-hover);
+					border-color: var(--sl-input-border-color-hover);
+					color: var(--sl-input-color-hover);
+			  	}
 				.select--standard .select__control {
 					border-style: none;
 				}
