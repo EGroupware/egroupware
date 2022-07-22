@@ -32,9 +32,10 @@ export class Et2UrlPhone extends Et2InvokerMixin(Et2Textbox)
 		];
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
+
 		//this.defaultValidators.push(...);
 		this._invokerLabel = '✆';
 		this._invokerTitle = 'Call';

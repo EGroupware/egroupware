@@ -77,6 +77,7 @@ import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
 import {Et2ColumnSelection} from "./Et2Nextmatch/ColumnSelection";
+import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -3208,7 +3209,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		}
 	};
 	headers : { id : string }[] | et2_widget[];
-	et2_searchbox : et2_inputWidget;
+	et2_searchbox : Et2Searchbox;
 	private favorites : et2_DOMWidget;  // Actually favorite
 
 	private nextmatch : et2_nextmatch;
@@ -3324,14 +3325,14 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			{
 				self.nextmatch.applyFilters({search: this.get_value()});
 			},
-			value: settings.search,
+			value: settings.search || '',
 			fix: !egwIsMobile()
 		};
 		// searchbox widget
-		this.et2_searchbox = <et2_searchbox>et2_createWidget('searchbox', searchbox_options, this);
+		this.et2_searchbox = <Et2Searchbox>loadWebComponent('et2-searchbox', searchbox_options, this);
 
 		// Set activeFilters to current value
-		this.nextmatch.activeFilters.search = settings.search;
+		this.nextmatch.activeFilters.search = settings.search || '';
 
 		this.et2_searchbox.set_value(settings.search);
 		jQuery(this.et2_searchbox.getInputNode()).attr("aria-label", egw.lang("search"));

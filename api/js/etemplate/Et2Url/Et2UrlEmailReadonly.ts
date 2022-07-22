@@ -73,11 +73,6 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 		return super.value;
 	}
 
-	constructor()
-	{
-		super();
-	}
-
 	transformAttributes(attrs)
 	{
 		if (typeof attrs.onclick === 'undefined')

@@ -34,9 +34,10 @@ export class Et2UrlFax extends Et2UrlPhone
 		];
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
+
 		//this.defaultValidators.push(...);
 		this._invokerLabel = '📠';
 		this._invokerTitle = 'Send';

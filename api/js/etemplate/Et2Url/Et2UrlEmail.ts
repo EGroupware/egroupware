@@ -34,9 +34,10 @@ export class Et2UrlEmail extends Et2InvokerMixin(Et2Textbox)
 		];
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
+
 		this.defaultValidators.push(new IsEmail());
 		this._invokerLabel = '@';
 		this._invokerTitle = 'Compose mail to';

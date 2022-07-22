@@ -86,6 +86,7 @@ import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Textbox/Et2Password";
+import './Et2Textbox/Et2Searchbox';
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle

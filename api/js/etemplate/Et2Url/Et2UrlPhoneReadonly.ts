@@ -16,11 +16,6 @@ import {Et2UrlReadonly} from "./Et2UrlReadonly";
  */
 export class Et2UrlPhoneReadonly extends Et2UrlReadonly
 {
-	constructor()
-	{
-		super();
-	}
-
 	transformAttributes(attrs)
 	{
 		if (typeof attrs.onclick === 'undefined')

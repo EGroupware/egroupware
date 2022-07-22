@@ -38,9 +38,9 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		};
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
 
 		this.plaintext = true;
 		this.suggest = 0;

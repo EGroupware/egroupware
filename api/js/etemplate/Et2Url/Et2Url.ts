@@ -56,9 +56,10 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 		];
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
+
 		this._invokerLabel = '⎆';
 		this._invokerTitle = 'Open';
 		this._invokerAction = () => {

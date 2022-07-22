@@ -13,11 +13,12 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|textbox|textarea|button|colorpicker|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|button|colorpicker|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|label|avatar|lavatar|image|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|searchbox|label|avatar|lavatar|image|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
+const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 2;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -160,8 +161,26 @@ function send_template()
 		$str = preg_replace('/<(image|description)\s([^><]*)expose_view="true"\s([^><]*)\\/>/',
 			'<et2-$1-expose $2 $3></et2-$1-expose>', $str);
 
+		// fix <textbox multiline="true" .../> --> <et2-textarea .../>
+		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#', '<et2-textarea$1$2></et2-textarea>', $str);
+
+		// fix <(textbox|int(eger)?|float) precision="int(eger)?|float" .../> --> <et2-number precision=.../> or <et2-textbox .../>
+		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number).*?\s(type="(int(eger)?|float)")?.*?(/|></textbox)>#',
+			static function ($matches)
+			{
+				if ($matches[1] === 'textbox' && !in_array($matches[4], ['float', 'int', 'integer'], true))
+				{
+					return '<et2-'.substr($matches[0], 1, -strlen($matches[6])-1).'></et2-textbox>'; // regular textbox --> nothing to do
+				}
+				$type = $matches[1] === 'float' || $matches[4] === 'float' ? 'float' : 'int';
+				$tag = str_replace('<' . $matches[1], '<et2-number', substr($matches[0], 0, -2));
+				if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
+				if ($type !== 'float') $tag .= ' precision="0"';
+				return $tag . '></et2-number>';
+			}, $str);
+
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
-		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $2></et2-$1>',
+		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $'.ADD_ET2_PREFIX_LEGACY_LAST_GROUP.'></et2-$1>',
 			str_replace('<description/>', '<et2-description></et2-description>', $str));
 
 		// change link attribute only_app to et2-link attribute app and map r/o link-entry to link
@@ -278,33 +297,6 @@ function send_template()
 		}
 		else
 		{
-			// fix deprecated attributes: needed, blur, ...
-			static $deprecated = [
-				'needed' => 'required',
-				'blur' => 'placeholder',
-			];
-			$str = preg_replace_callback('#<[^ ]+[^>]* (' . implode('|', array_keys($deprecated)) . ')="([^"]+)"[ />]#',
-				static function ($matches) use ($deprecated) {
-					return str_replace($matches[1] . '="', $deprecated[$matches[1]] . '="', $matches[0]);
-				}, $str);
-
-			// fix <textbox multiline="true" .../> --> <textarea .../> (et2-prefix and self-closing is handled below)
-			$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#u', '<textarea$1$2/>', $str);
-
-			// fix <(textbox|int(eger)?|float) precision="int(eger)?|float" .../> --> <et2-number precision=...></et2-number>
-			$str = preg_replace_callback('#<(textbox|int(eger)?|float|number).*?\s(type="(int(eger)?|float)")?.*?/>#u',
-				static function ($matches) {
-					if ($matches[1] === 'textbox' && !in_array($matches[4], ['float', 'int', 'integer'], true))
-					{
-						return $matches[0]; // regular textbox --> nothing to do
-					}
-					$type = $matches[1] === 'float' || $matches[4] === 'float' ? 'float' : 'int';
-					$tag = str_replace('<' . $matches[1], '<et2-number', substr($matches[0], 0, -2));
-					if (!empty($matches[3])) $tag = str_replace($matches[3], '', $tag);
-					if ($type !== 'float') $tag .= ' precision="0"';
-					return $tag . '></et2-number>';
-				}, $str);
-
 			// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
 			$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function ($matches) use ($name) {
 				$tag = 'et2-button';
@@ -354,8 +346,18 @@ function send_template()
 			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
 			$attrs = array_combine($attrs[2], $attrs[3]);
 
+			// fix deprecated attributes: needed, blur, ...
+			static $deprecated = [
+				'needed' => 'required',
+				'blur' => 'placeholder',
+			];
 			foreach($attrs as $name => $value)
 			{
+				if (isset($deprecated[$name]))
+				{
+					unset($attrs[$name]);
+					$attrs[$name = $deprecated[$name]] = $value;
+				}
 				if (count($parts = preg_split('/[_-]/', $name)) > 1)
 				{
 					if ($name === 'parent_node') $parts[1] = 'Id';  // we can not use DOM property parentNode --> parentId

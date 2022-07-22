@@ -19,11 +19,6 @@ import {Et2Url} from "./Et2Url";
  */
 export class Et2UrlReadonly extends Et2Description
 {
-	constructor()
-	{
-		super();
-	}
-
 	static get styles()
 	{
 		return [
