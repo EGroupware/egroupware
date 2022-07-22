@@ -14,7 +14,8 @@
 			<rows>
 				<row class="dialogHeader" height="28">
 					<appicon/>
-					<textbox id="title" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="4" blur="Title" needed="true"/>
+					<textbox id="title" maxlength="255" tabindex="1" class="et2_fullWidth" span="4" blur="Title"
+                             needed="true"/>
 				</row>
 				<row class="dialogHeader2" height="28">
                     <description for="start" value="Start" width="88"/>

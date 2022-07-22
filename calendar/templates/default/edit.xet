@@ -206,16 +206,17 @@
 			<rows>
 				<row class="dialogHeader" height="28">
 					<description value="Title"/>
-					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="5"/>
+					<textbox id="title" needed="1" maxlength="255" tabindex="1" class="et2_fullWidth" span="5"/>
 					<description font_style="n" id="id"/>
 					<appicon/>
 				</row>
 				<row class="dialogHeader2" height="28">
-					<description for="start" value="Start" width="88"/>
+                    <description for="start" value="Start"/>
 					<date-time id="start" needed="1" class="required" onchange="app.calendar.edit_start_change"/>
 					<description for="duration" value="Duration" id="calendar_edit_duration" />
 					<menulist>
-						<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+                        <menupopup statustext="Duration of the meeting" id="duration" no_lang="1"
+                                   onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 					</menulist>
 					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
 				</row>
