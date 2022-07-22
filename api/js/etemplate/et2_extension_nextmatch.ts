@@ -65,7 +65,6 @@ import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {et2_button} from "./et2_widget_button";
-import {et2_searchbox} from "./et2_widget_textbox";
 import {et2_template} from "./et2_widget_template";
 import {egw} from "../jsapi/egw_global";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
@@ -3334,7 +3333,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Set activeFilters to current value
 		this.nextmatch.activeFilters.search = settings.search || '';
 
-		this.et2_searchbox.set_value(settings.search);
+		this.et2_searchbox.set_value(settings.search || '');
 		jQuery(this.et2_searchbox.getInputNode()).attr("aria-label", egw.lang("search"));
 		/**
 		 *  Mobile theme specific part for nm header
