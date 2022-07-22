@@ -474,6 +474,11 @@ window.app = {classes: {}};
 						parseInt(egw_script.getAttribute('data-websocket-account_id'))
 					);
 				}
+
+				// register our mail as mailto protocol handler
+				let url = egw_webserverUrl;
+				if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
+				navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
 			}
 			catch(e) {
 				// ignore SecurityError exception if top is different security context / cross-origin
