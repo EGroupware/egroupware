@@ -3325,7 +3325,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				self.nextmatch.applyFilters({search: this.get_value()});
 			},
 			value: settings.search || '',
-			fix: !egwIsMobile()
+			fix: !egwIsMobile(),
+			placeholder: egw.lang("Search"),
 		};
 		// searchbox widget
 		this.et2_searchbox = <Et2Searchbox>loadWebComponent('et2-searchbox', searchbox_options, this);
