@@ -1160,7 +1160,7 @@ class mail_ui
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.mobileView',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.mail_open',
 				'allowOnMultiple' => false,
 				'default' => true,
 				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/mail/templates/mobile/view.xet'))
