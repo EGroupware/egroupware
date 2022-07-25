@@ -1375,7 +1375,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		{
 			let parts = attribute.split('_');
 			if (attribute === 'parent_node') parts[1] = 'Id';
-			attribute = parts.shift()+parts.map(part => part[0].toUpperCase()+part.substring(1));
+			attribute = parts.shift() + parts.map(part => part[0].toUpperCase() + part.substring(1)).join("");
 		}
 
 		const property = widget_class.getPropertyOptions(attribute);

@@ -222,7 +222,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			/**
 			 * Automatically destroy the dialog when it closes.  Set to false to keep the dialog around.
 			 */
-			destroy_on_close: Boolean,
+			destroyOnClose: Boolean,
 
 			/**
 			 * Legacy-option for appending dialog into a specific dom node
@@ -319,7 +319,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		}
 		this.modal = true;
 		this.dialog_type = Et2Dialog.PLAIN_MESSAGE;
-		this.destroy_on_close = true;
+		this.destroyOnClose = true;
 		this.hideOnEscape = this.hideOnEscape === false ? false : true;
 		this.__value = {};
 
@@ -398,7 +398,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 		this.dispatchEvent(new Event('close'));
 
-		if(this.destroy_on_close)
+		if(this.destroyOnClose)
 		{
 			if(this._template_widget)
 			{
