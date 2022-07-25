@@ -604,6 +604,7 @@ subscribe folder ...	mail	de	Ordner abonnieren ...
 subscribe to folder %1	mail	de	Ordner %1 abonieren
 subscription folders	mail	de	Ordner abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
+succeeded on %1 folders, failed on %2	mail	de	Erfolgreich bei %1 Ordnern, fehlgeschlagen bei %2
 successfully connected	mail	de	erfolgreich verbunden
 switch off encryption?	mail	de	Verschlüsselung ausschalten?
 template folder	mail	de	Vorlagen Ordner

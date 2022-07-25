@@ -380,7 +380,7 @@ class mail_acl
 				}
 				else
 				{
-					$msg = lang('Error while setting ACL for folder %1!', $content['mailbox']).' '.$msg;
+					$msg = lang('Error while setting ACL for folder %1!', $content['mailbox'])."\n".$msg;
 				}
 			}
 			else
@@ -442,7 +442,7 @@ class mail_acl
 			$identifier = $u;
 		}
 		//error_log(__METHOD__.__LINE__."(".$content['mailbox'].", ".$identifier.", ".$recursive.")");
-		if(($res = $this->deleteACL($content['mailbox'], $identifier,$recursive)))
+		if(($res = $this->deleteACL($content['mailbox'], $identifier,$recursive,$msg)))
 		{
 			unset($content['grid'][$row_num]);
 			unset($content['grid']['delete']);
@@ -459,7 +459,7 @@ class mail_acl
 		}
 		else
 		{
-			$msg = lang("An error happend while trying to remove ACL rights from the account %1!",$identifier);
+			$msg = lang("An error happend while trying to remove ACL rights from the account %1!",$identifier)."\n".$msg;
 			return false;
 		}
 	}
@@ -471,10 +471,10 @@ class mail_acl
 	 * @param String $identifier The identifier to delete.
 	 * @param Boolean $recursive boolean flag FALSE|TRUE. If it is FALSE, only the folder take in to account, but in case of TRUE
 	 *		the mailbox including all its subfolders will be considered.
-	 *
+	 * @param String& $msg=null on return error-message
 	 * @return Boolean FALSE in case of any exceptions and TRUE in case of success
 	 */
-	function deleteACL ($mailbox, $identifier, $recursive)
+	function deleteACL ($mailbox, $identifier, $recursive, &$msg=null)
 	{
 		if ($recursive)
 		{
@@ -484,17 +484,26 @@ class mail_acl
 		{
 			$folders = (array)$mailbox;
 		}
+		$errors = [];
+		$success = 0;
 		foreach($folders as $sbFolders)
 		{
 			try
 			{
 				$this->imap->deleteACL($sbFolders, $identifier);
+				$success++;
 			}
 			catch (Exception $e)
 			{
-				error_log(__METHOD__. "Could not delete ACL rights of folder " . $mailbox . " for account ". $identifier ."." .$e->getMessage());
-				return false;
+				$errors[] = $sbFolders.': '.$e->getMessage();
+				error_log(__METHOD__. "Could not delete ACL rights of folder " . $sbFolders . " for account ". $identifier ."." .$e->getMessage());
 			}
+		}
+		if ($errors)
+		{
+			$msg = lang("Succeeded on %1 folders, failed on %2", $success, count($errors)).":\n- ".
+				implode("\n- ", $errors);
+			return false;
 		}
 		return true;
 	}
@@ -545,18 +554,26 @@ class mail_acl
 		{
 			$folders = (array)$mailbox;
 		}
+		$errors = [];
+		$success = 0;
 		foreach($folders as $sbFolders)
 		{
 			try
 			{
 				$this->imap->setACL($sbFolders,$identifier,$options);
+				$success++;
 			}
 			catch (Exception $e)
 			{
-				$msg = $e->getMessage();
-				error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . "." .$e->getMessage());
-				return false;
+				$errors[] = $sbFolders.': '.$e->getMessage();
+				error_log(__METHOD__. "Could not set ACL rights on folder " . $sbFolders . " for account ". $identifier . "." .$e->getMessage());
 			}
+		}
+		if ($errors)
+		{
+			$msg = lang("Succeeded on %1 folders, failed on %2", $success, count($errors)).":\n- ".
+				implode("\n- ", $errors);
+			return false;
 		}
 		return true;
 	}
