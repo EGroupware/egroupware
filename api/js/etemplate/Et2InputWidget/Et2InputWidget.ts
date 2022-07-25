@@ -239,7 +239,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		getValue()
 		{
-			return this.readOnly ? null : this.value;
+			return this.readOnly || this.disabled ? null : this.value;
 		}
 
 
