@@ -36,7 +36,6 @@ import {et2_button} from "../../api/js/etemplate/et2_widget_button";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {et2_inputWidget} from "../../api/js/etemplate/et2_core_inputWidget";
 import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
 // @ts-ignore
 import {date} from "../../api/js/etemplate/lib/date.js";
@@ -56,6 +55,7 @@ import flatpickr from "flatpickr";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
 import {CalendarOwner} from "./CalendarOwner";
+import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
 
 /**
  * UI for calendar
@@ -3226,12 +3226,12 @@ export class CalendarApp extends EgwApp
 								widget.set_value('');
 							}
 						}
-						else if (widget.instanceOf(et2_inputWidget) && typeof state.state[widget.id] == 'undefined')
+						else if(typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
 						{
 							// No value, clear it
 							widget.set_value('');
 						}
-					},this,et2_valueWidget);
+					}, this, et2_IInput);
 				}
 			}
 

@@ -31,7 +31,7 @@ return false;"/>
             <textbox type="hidden" id="first"/>
             <textbox type="hidden" id="last"/>
             <hrule/>
-            <select-cat id="cat_id" placeholder="All categories"
+            <select-cat id="cat_id" placeholder="All categories" empty_label="All categories"
                         onchange="app.calendar.update_state({cat_id: widget.getValue()});"/>
             <select id="status_filter" no_lang="true" class="et2_fullWidth"
                     onchange="app.calendar.update_state({status_filter: widget.getValue()});"/>
