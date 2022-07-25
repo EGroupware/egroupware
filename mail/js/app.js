@@ -1066,7 +1066,7 @@ app.classes.mail = AppJS.extend(
 		if (data.attachmentsBlock) data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
 		mailPreview.set_value({content:data});
 
-		if (selected.length>1)
+		if (selected && selected.length>1)
 		{
 			// Leave if we're here and there is nothing selected, too many, or no data
 			if (attachmentsBlock)
