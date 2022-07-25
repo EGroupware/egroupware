@@ -442,6 +442,7 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
   width: 100%;
+  height: 100%;
 }
 #mail-index_mail-index-preview {
   overflow: hidden;
@@ -460,7 +461,8 @@ div.mail-compose_fileselector {
 #mail-index_mailPreview > * {
   padding-left: 8px !important;
 }
-#mail-index_mailPreview_subject {
+#mail-index_mailPreview_subject,
+#mail-display_mail_displaysubject {
   margin-bottom: 1em;
   font-size: 1.2em;
 }
@@ -571,35 +573,13 @@ div.mail-compose_fileselector {
   display: none !important;
 }
 #mail-display {
-  min-height: 768px;
-  margin: 0;
   padding: 5px;
 }
-#mail-display_mail_displaysubject {
-  font-size: 14px;
-}
-.mailDisplayContainer,
-.mailDisplayAttachments {
-  display: block;
-  display: -moz-inline-stack;
-  display: -moz-box;
-  /*width: 99%;*/
-  overflow: hidden;
-  left: 8px;
-  right: 8px;
-}
 .mailDisplayContainer {
-  position: fixed;
-  overflow: hidden;
-  border: 1px solid silver;
-  top: 120px;
-}
-.mailDisplayContainerFixedHeight {
-  bottom: 123px;
-  overflow: hidden;
-}
-.mailDisplayContainerFullHeight {
-  bottom: 108px;
+  height: 100%;
+  padding-top: 1em;
+  border-top: 1px solid silver;
+  margin-top: 1em;
 }
 .mailDisplayBody {
   height: 100%;
@@ -621,9 +601,6 @@ div.mail-compose_fileselector {
 #mail-display_mailDisplayBodySrc {
   height: 100%;
 }
-div.mail-display > div:first-parent > div.first-parent {
-  height: 99%;
-}
 .mailDisplayHeaders {
   overflow: hidden;
   right: 8px;
@@ -632,9 +609,6 @@ div.mail-display > div:first-parent > div.first-parent {
 .mailDisplayHeaderSection {
   position: absolute;
   top: 12px;
-}
-div.mailDisplayHeaders > div:first-parent {
-  overflow: hidden;
 }
 div.mailDisplayHeaders > span:first-child,
 div.mailPreviewHeaders > span:first-child {
@@ -684,7 +658,6 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 .mailDisplayHeaders :first-child {
   flex: 0 0 auto;
   color: #7a7a7a;
-  text-align: end;
 }
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
@@ -835,7 +808,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   pre {
     width: 99% !important;
   }
-  div.mailDisplayContainer {
+  .mailDisplayContainer {
     border-top: none;
     overflow: visible !important;
     position: static !important;
@@ -858,18 +831,15 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   div.mailDisplayHeaders {
     padding-top: 10px;
   }
-  div.mailDisplayContainer.mailvelopeTopContainer {
+  .mailDisplayContainer.mailvelopeTopContainer {
     top: 190px;
   }
-  div.mailDisplayContainer.mailvelopeTopContainer > iframe {
+  .mailDisplayContainer.mailvelopeTopContainer > iframe {
     position: static;
     min-width: 860px;
   }
   .mail_extraEmails > a {
     display: inline-block;
-  }
-  div.mail_extraEmails + img.et2_button.et2_button_icon.ui-button.et2_clickable {
-    display: none !important;
   }
   .et2_email:after {
     content: " | ";
@@ -1015,6 +985,7 @@ div#mail-index_nm.splitter-pane {
   min-width: 3.7em !important;
 }
 #popupMainDiv {
+  height: 99%;
   padding: 5px;
 }
 #popupMainDiv .et2_grid tr td {
@@ -1041,10 +1012,6 @@ div#mail-index_nm.splitter-pane {
 iframe#mail-display_mailDisplayBodySrc {
   height: 99%;
   /*border: 4px solid yellow;*/
-}
-/*Border around iframe*/
-.mailDisplayContainer {
-  border: 0px;
 }
 body {
   background-color: white;
@@ -1350,7 +1317,6 @@ body {
  * ##################################################################################
  */
 #mail-display {
-  min-height: 768px;
   padding: 5px;
 }
 #mail-display .mailDisplayAttachments {
@@ -1904,30 +1870,6 @@ div.mailPreviewHeaders img.et2_button_icon {
 }
 /*######################################################*/
 /*Diplay : View                                         */
-.mailDisplayContainer,
-.mailDisplayAttachments {
-  display: block;
-  display: -moz-inline-stack;
-  display: -moz-box;
-  width: 99%;
-  overflow: hidden;
-  overflow-y: auto;
-  left: 3px;
-  right: 3px;
-  z-index: 100;
-}
-.mailDisplayContainer {
-  position: fixed;
-  overflow: hidden;
-  overflow-y: auto;
-  border-top: 2px solid silver;
-  top: 120px;
-  bottom: 108px;
-  border-bottom: 1px solid silver;
-  width: 98%;
-  background-color: white;
-  margin-left: 10px;
-}
 .mailDisplayHeaders {
   overflow: hidden;
 }

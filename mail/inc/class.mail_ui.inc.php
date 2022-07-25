@@ -2277,7 +2277,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			foreach($envelope[$field] as $field_data)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($field_data));
-				$content[$field][] = $field_data;
+				$content[strtolower($field)][] = $field_data;
 				$sel_options[$field][] = array(
 					// taglist requires these - not optional
 					'id' => $field_data,
@@ -2301,10 +2301,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!empty($partID)) $linkData['_partID']=$partID;
 		if ($htmlOptions != $this->mail_bo->htmlOptions) $linkData['_htmloptions']=$htmlOptions;
 		$content['mailDisplayBodySrc'] = Egw::link('/index.php',$linkData);
-		$content['mail_displayattachments'] = $attachmentHTMLBlock;
+		if (!empty($attachmentHTMLBlock))
+		{
+			$content['mail_displayattachments'] = $attachmentHTMLBlock;
+			$content['attachmentsBlockTitle'] = count($attachmentHTMLBlock).' '.Lang('attachments');
+		}
+
 		$content['mail_id']=$rowID;
-		$content['mailDisplayContainerClass']=!empty($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight";
-		$content['mailDisplayAttachmentsClass']=!empty($attachments)?"mailDisplayAttachments":"mail_DisplayNone";
 
 		// DRAG attachments actions
 		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(

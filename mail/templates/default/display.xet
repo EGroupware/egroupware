@@ -7,77 +7,124 @@
         <html id="msg"/>
         <vbox class="mailDisplay">
             <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true" list_header="short"/>
-            <hbox>
-                <hbox class="mailDisplayHeaders" id="mailDisplayHeadersFrom" disabled="!@FROM">
-                    <description value="From"/>
-                    <et2-select-email id="FROM" readonly="true"/>
-                </hbox>
-                <date-time-today id="mail_displaydate" label="Date" readonly="true" align="right"
-                                 class="mailDisplayHeaders"/>
-            </hbox>
+			<hbox class="mailPreviewHeaders">
+				<description id="mail_displaysubject" readonly="true"
+							 hover_action="app.mail.modifyMessageSubjectDialog"
+							 hover_action_title="Modify subject of this message"/>
+				<hbox class="mailPreviewHeaders smimeIcons">
+					<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
+						   align="right" width="24"/>
+					<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
+						   disabled="true" align="right" width="24"/>
+				</hbox>
+			</hbox>
 
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersSender" disabled="!@SENDER">
-                <description value="on behalf of"/>
-                <et2-select-email id="SENDER" readonly="true"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" width="100%">
-                <description value="Subject"/>
-                <description id="mail_displaysubject" no_lang="1" readonly="true"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersTo" disabled="!@TO">
-                <description value="To"/>
-                <et2-select-email id="TO" class="mail_extraEmails" readonly="true"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
-                <description value="Cc"/>
-                <et2-select-email id="CC" class="mail_extraEmails" readonly="true"/>
-            </hbox>
-            <hbox class="mailDisplayHeaders" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
-                <description value="Bcc"/>
-                <et2-select-email id="BCC" class="mail_extraEmails" readonly="true"/>
-            </hbox>
-            <old-hbox>
-                <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true"
-                       align="right" width="24"/>
-                <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true"
-                       align="right" width="24"/>
-            </old-hbox>
-        </vbox>
-		<old-vbox class="mailDisplay">
-			<old-box class="$cont[mailDisplayContainerClass]">
+			<hbox width="100%" class="mailPreviewHeaders">
+				<lavatar src="@avatar" lname="@address" shape="rounded"/>
+				<vbox class="previewWrapper">
+					<details class="details" title="details" toggle_align="left">
+							<hbox  disabled="!@from">
+                                <description value="From"/>
+                                <grid id="from">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                         	<et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@sender">
+                                <description value="Sender"/>
+                                <grid id="sender">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@to">
+                                <description value="To"/>
+                                <grid id="to">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@cc">
+                                <description value="Cc"/>
+                                <grid id="cc">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@bcc">
+                                <description value="Bcc"/>
+                                <grid id="bcc">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox> -->
+					</details>
+					<details  title="@attachmentsBlockTitle" toggle_align="left" class="attachments" disabled="!@mail_displayattachments">
+						<grid id="mail_displayattachments" class="previewAttachmentArea egwGridView_grid">
+							<columns>
+								<column disabled="!@showtempname"/>
+								<column disabled="!@showtempname"/>
+								<column disabled="!@showtempname"/>
+								<column disabled="!@showtempname"/>
+								<column width="70%" />
+								<column width="11%" />
+								<column width="3%"/>
+								<column width="3%"/>
+								<column width="3%"/>
+								<column />
+							</columns>
+							<rows>
+								<row class="row attachmentRow">
+									<description id="${row}[attachment_number]" />
+									<description id="${row}[partID]" />
+									<description id="${row}[type]" />
+									<description id="${row}[winmailFlag]" />
+									<description class="et2_link useEllipsis" id="${row}[filename]" no_lang="1" expose_view="true" mime="$row_cont[type]" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
+									<description align="right" id="${row}[size]"/>
+									<buttononly id="${row}[save]" image="fileexport" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"/>
+									<buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"/>
+									<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"/>
+									<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
+								</row>
+							</rows>
+						</grid>
+					</details>
+				</vbox>
+				<date-time-today align="right" id="mail_displaydate" readonly="true"/>
+			</hbox>
+			<box class="mailDisplayContainer">
 				<iframe frameborder="1" class="mail_displaybody" id="mailDisplayBodySrc" name="mailDisplayBodySrc" scrolling="auto" width="100%"/>
-			</old-box>
-
-			<old-box class="$cont[mailDisplayAttachmentsClass]">
-				<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
-						<columns>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column disabled="!@showtempname"/>
-							<column width="70%" />
-							<column width="11%" />
-							<column width="3%"/>
-							<column width="3%"/>
-							<column width="3%"/>
-							<column />
-						</columns>
-						<rows>
-							<row class="row attachmentRow" >
-								<description id="${row}[attachment_number]" />
-								<description id="${row}[partID]" />
-								<description id="${row}[type]" />
-								<description id="${row}[winmailFlag]" />
-								<description class="useEllipsis et2_link" id="${row}[filename]" extra_link_target="$row_cont[windowName]" extra_link_popup="$row_cont[popup]" expose_view="true" mime="$row_cont[type]" no_lang="1" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
-								<description align="right" id="${row}[size]" />
-								<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" statustext="Save to disk"/>
-								<buttononly id="${row}[saveAsVFS]" disabled="$row_cont[no_vfs]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" statustext="Save to filemanager"/>
-								<buttononly  class="$row_cont[classSaveAllPossiblyDisabled]" disabled="$row_cont[no_vfs]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" statustext="Save all attachments to filemanager"/>
-								<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_zip]" value="save_zip" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" statustext="Save as Zip"/>
-							</row>
-						</rows>
-					</grid>
-			</old-box>
-		</old-vbox>
+			</box>
+        </vbox>
 	</template>
 </overlay>

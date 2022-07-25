@@ -18,6 +18,7 @@
 
 
 #popupMainDiv{
+	height: 99%;
 	padding: 5px;
 	.et2_grid{
 		tr{
@@ -50,10 +51,6 @@ iframe#mail-display_mailDisplayBodySrc{
 	height: 99%;
 	/*border: 4px solid yellow;*/
 
-}
-/*Border around iframe*/
-.mailDisplayContainer{
-	border: 0px;
 }
 
 body {
@@ -377,11 +374,7 @@ body {
  */
 
 #mail-display {
-	//	gesamtbreite
-
-	min-height: 768px;
 	padding: 5px;
-
 	.mailDisplayAttachments {
 		//	background-color:#efefdf;
 		max-height: 12%;
@@ -1002,29 +995,6 @@ div.mailPreviewHeaders img.et2_button_icon {
 
 /*######################################################*/
 /*Diplay : View                                         */
-.mailDisplayContainer, .mailDisplayAttachments {
-	display: block;
-	display: -moz-inline-stack;
-	display: -moz-box;
-	width: 99%;
-	overflow: hidden;
-	overflow-y: auto;
-	left: 3px;
-	right: 3px;
-	z-index: 100;
-}
-.mailDisplayContainer {
-	position: fixed;
-	overflow: hidden;
-	overflow-y: auto;
-	border-top: 2px solid silver;
-	top: 120px;
-	bottom: 108px;
-	border-bottom: 1px solid silver;
-	width: 98%;
-	background-color: white;
-	margin-left: 10px;
-}
 
 .mailDisplayHeaders {
 	overflow: hidden;

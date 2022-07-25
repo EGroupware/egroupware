@@ -113,7 +113,7 @@
                                     </details>
                                 </vbox>
 
-                                <date-time-today label="Date" align="right" id="date" readonly="true"/>
+                                <date-time-today align="right" id="date" readonly="true"/>
                             </hbox>
                         <hbox>
 
