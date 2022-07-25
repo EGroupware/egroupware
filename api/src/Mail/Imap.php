@@ -247,7 +247,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	}
 
 	/**
-	 * Check admin credientials and connection (if supported)
+	 * Check admin credentials and connection (if supported)
 	 *
 	 * @param string $_username =null create an admin connection for given user or $this->acc_imap_username
 	 * @throws \Horde_IMAP_Client_Exception

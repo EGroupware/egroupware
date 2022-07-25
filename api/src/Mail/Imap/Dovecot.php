@@ -18,8 +18,8 @@ use EGroupware\Api\Mail;
 /**
  * Manages connection to Dovecot IMAP server
  *
- * Basic differences to cyrusimap:
- * - no real admin user, but master user, whos password can be used to connect instead of real user
+ * Basic differences to Cyrus IMAP:
+ * - no real admin user, but master user, whose password can be used to connect instead of real user
  * - mailboxes have to be deleted in filesystem (no IMAP command for that)
  *   --> require by webserver writable user_home to be configured, otherwise deleting get ignored like with defaultimap
  * - quota can be read, but not set
