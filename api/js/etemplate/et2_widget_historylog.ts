@@ -449,7 +449,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			{
 				// Require widget to be a widget, to avoid invalid widgets
 				// (and template, which is a widget and an infolog todo status)
-				if(et2_registry[field[j]] && ['template'].indexOf(field[j]) < 0)// && (et2_registry[field[j]].prototype.instanceOf(et2_valueWidget))
+				if(et2_registry[field[j]] && ['template'].indexOf(field[j]) < 0 || customElements.get(field[j]) || typeof field[j] == "object")
 				{
 					need_box = true;
 					break;
