@@ -74,6 +74,8 @@ class Sql extends Api\Storage
 		parent::__construct('api', 'egw_addressbook', self::EXTRA_TABLE,
 			'contact_', '_name', '_value', '_id', $db);
 
+		$this->non_db_cols[] = 'jpegphoto'; // to get merge to merge it too and save can store it in filesystem
+
 		// Get custom fields from addressbook instead of api
 		$this->customfields = Api\Storage\Customfields::get('addressbook');
 
