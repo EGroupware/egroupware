@@ -604,6 +604,7 @@ subscribe folder ...	mail	en	Subscribe folder ...
 subscribe to folder %1	mail	en	Subscribe to Folder %1
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
+succeeded on %1 folders, failed on %2	mail	en	Succeeded on %1 folders, failed on %2
 successfully connected	mail	en	Successfully connected
 switch off encryption?	mail	en	Switch off encryption?
 template folder	mail	en	template folder
