@@ -227,7 +227,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			if(this.statustext)
 			{
-				this.egw().tooltipBind(this, this.statustext);
+				this.egw().tooltipBind(this, this.egw().lang(this.statustext));
 			}
 		}
 
