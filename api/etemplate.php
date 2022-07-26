@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|button|colorpicker|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|date(-time[^\s]*|-duration|-since)?|colorpicker|url(-email|-phone|-fax)?))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 6;
 
 // unconditional of legacy add et2- prefix to this widgets
@@ -298,9 +298,9 @@ function send_template()
 		else
 		{
 			// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
-			$str = preg_replace_callback('#<button(only)?\s(.*?)/>#u', function ($matches) use ($name) {
+			$str = preg_replace_callback('#<button(only)?\s(.*?)/>#s', function ($matches) use ($name) {
 				$tag = 'et2-button';
-				preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
+				preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
 				$attrs = array_combine($attrs[2], $attrs[3]);
 				// replace buttononly tag with noSubmit="true" attribute
 				if (!empty($matches[1]))
