@@ -286,7 +286,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			return "" + (this.dataFormat === 'm' ? Math.round(value) : value);
 		}
 
-		let val = this._durationNode.length ? this._durationNode[0].value.replace(',', '.') : "";
+		let val = this._durationNode.length ? this._durationNode[0].value : '';
 		if(val === '')
 		{
 			return this.emptyNot0 ? '' : "0";
@@ -572,7 +572,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	get _durationNode() : HTMLInputElement[]
 	{
-		return this.shadowRoot ? this.shadowRoot.querySelectorAll("input") || [] : [];
+		return this.shadowRoot ? this.shadowRoot.querySelectorAll("et2-textbox") || [] : [];
 	}
 
 
@@ -581,7 +581,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	 */
 	get _formatNode() : HTMLSelectElement
 	{
-		return this.shadowRoot ? this.shadowRoot.querySelector("select") : null;
+		return this.shadowRoot ? this.shadowRoot.querySelector("et2-select") : null;
 	}
 }
 
