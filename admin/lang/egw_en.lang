@@ -676,6 +676,7 @@ number of sessions / egroupware logins in the last 30 days	admin	en	Number of se
 number of users	admin	en	Number of users
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	en	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
 nummeric account id	admin	en	Numeric account ID
+offer to installing egroupware as mail-handler	admin	en	Offer to installing EGroupware as mail-handler
 official egroupware usage statistic	admin	en	Official EGroupware usage statistic
 one day	admin	en	One day
 one hour	admin	en	One hour

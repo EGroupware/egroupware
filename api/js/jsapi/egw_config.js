@@ -26,6 +26,20 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 	 */
 	var configs = {};
 
+
+	/**
+	 * register our mail as mailto protocol handler (only for main-page, FF seems to pop it up constantly, if we do so in an iframe)
+ 	 */
+	function install_mailto_handler()
+	{
+		if (document.location.href.match(/(\?|&)cd=yes(&|$)/))
+		{
+			let url = egw_webserverUrl;
+			if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
+			navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+		}
+	}
+
 	return {
 		/**
 		 * Query clientside config
@@ -53,7 +67,11 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 		set_configs: function(_configs, _need_clone)
 		{
 			configs = _need_clone ? jQuery.extend(true, {}, _configs) : _configs;
+
+			if (this.config('install_mailto_handler') !== 'disabled')
+			{
+				install_mailto_handler();
+			}
 		}
 	};
 });
-
