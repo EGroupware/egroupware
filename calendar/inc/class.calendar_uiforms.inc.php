@@ -2066,7 +2066,6 @@ class calendar_uiforms extends calendar_ui
 		}
 	}
 
-
 	/**
 	 * Remove (shared) lock via ajax, when edit popup get's closed
 	 *
@@ -2082,6 +2081,34 @@ class calendar_uiforms extends calendar_ui
 		{
 			Vfs::unlock($lock_path,$token,false);
 		}
+	}
+
+	/**
+	 * Get email of participant
+	 *
+	 * @param string $uid
+	 * @return string|null
+	 * @throws Exception
+	 */
+	public static function participantEmail($uid)
+	{
+		if (is_numeric($uid))
+		{
+			$email = Api\Accounts::id2name($uid, 'account_email') ?: null;
+		}
+		elseif ($uid[0] === 'e')
+		{
+			$email = substr($uid, 1);
+		}
+		elseif ($uid[0] === 'c' && ($contact = (new Api\Contacts)->read(substr($uid, 1))))
+		{
+			$email = $contact['email'] ?? $contact['email_home'];
+		}
+		if (!empty($email) && preg_match('/<([^>]+?)>$/', $email, $matches))
+		{
+			$email = $matches[1];
+		}
+		return $email;
 	}
 
 	/**
@@ -2114,6 +2141,7 @@ class calendar_uiforms extends calendar_ui
 				$ical_string = $session_data['attachment'];
 				$ical_charset = $session_data['charset'];
 				$ical_method = $session_data['method'];
+				$ical_sender = $session_data['sender'];
 				unset($session_data);
 			}
 			$ical = new calendar_ical();
@@ -2140,6 +2168,18 @@ class calendar_uiforms extends calendar_ui
 			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true)) && // true = read the exception
 				!$existing_event['deleted'])
 			{
+				// check if mail is from extern organizer
+				$from_extern_organizer = false;
+				if (strtolower($ical_method) !== 'reply' &&
+					($extern_organizer = !empty($ical_sender) ? array_filter($existing_event['participants'], static function($status, $user)
+				{
+					calendar_so::split_status($status, $quantity, $role);
+					return $role === 'CHAIR' && is_string($user) && in_array($user[0], ['e', 'c']);
+				}, ARRAY_FILTER_USE_BOTH) : []) &&
+					!($from_extern_organizer = $ical_sender === strtolower($organizer=self::participantEmail(key($extern_organizer)))))
+				{
+					$event['sender_warning'] = lang('The sender "%1" is NOT the extern organizer "%2", proceed with caution!', $ical_sender, $organizer);
+				}
 				switch(strtolower($ical_method))
 				{
 					case 'reply':
@@ -2150,7 +2190,11 @@ class calendar_uiforms extends calendar_ui
 						$event['ical_sender_status'] = current($parts);
 						$quantity = $role = null;
 						calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
-
+						// let user know, that sender is not the participant
+						if ($ical_sender !== strtolower($participant=self::participantEmail($event['ical_sender_uid'])))
+						{
+							$event['sender_warning'] = lang('The sender "%1" is NOT the participant replying "%2", proceed with caution!', $ical_sender, $participant);
+						}
 						if ($event['ical_sender_uid'] && $this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
 						{
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
@@ -2169,7 +2213,12 @@ class calendar_uiforms extends calendar_ui
 					case 'request':
 						$status = $existing_event['participants'][$user];
 						calendar_so::split_status($status, $quantity, $role);
-						if (strtolower($ical_method) == 'response' && isset($existing_event['participants'][$user]) &&
+						if (!empty($extern_organizer) && self::event_changed($event, $existing_event))
+						{
+							$event['error'] = lang('The extern organizer changed the event!',);
+							$readonlys['button[apply]'] = false;
+						}
+						elseif (isset($existing_event['participants'][$user]) &&
 							$status != 'U' && isset($this->bo->verbose_status[$status]))
 						{
 							$event['error'] = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
@@ -2185,7 +2234,7 @@ class calendar_uiforms extends calendar_ui
 							$event['error'] .= ($event['error'] ? "\n" : '').lang('You are not invited to that event!');
 							if ($event['id'])
 							{
-								$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
+								$readonlys['button[accept]'] = $readonlys['button[tentativ]'] = $readonlys['button[apply]'] =
 									$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 							}
 						}
@@ -2257,6 +2306,54 @@ class calendar_uiforms extends calendar_ui
 			// clear notification errors
 			notifications::errors(true);
 
+			$msg = [];
+			// do we need to update the event itself (user-status is reset to old in event_changed!)
+			if ($button !== 'delete' && !empty($event['old']) && self::event_changed($event, $event['old']))
+			{
+				// check if we are allowed to update the event
+				if($this->bo->check_perms(Acl::EDIT, $event['old']) || $event['extern_organizer'])
+				{
+					if ($event['recurrence'] && !$event['old']['reference'] && ($recur_event = $this->bo->read($event['id'])))
+					{
+						// first we need to add the exception to the recurrence master
+						$recur_event['recur_exception'][] = $event['recurrence'];
+						// check if we need to move the alarms, because they are next on that exception
+						$this->bo->check_move_alarms($recur_event, null, $event['recurrence'], !empty($event['extern_organizer']));
+						unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+						unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
+						$this->bo->update($recur_event, $ignore_conflicts=true, true, !empty($event['extern_organizer']), true, $msg, true);
+
+						// then we need to create the exception as new event
+						unset($event['id']);
+						$event['reference'] = $event['old']['id'];
+						$event['caldav_name'] = $event['old']['caldav_name'];
+					}
+					else
+					{
+						// keep all EGroupware only values of existing events plus alarms
+						unset($event['alarm'], $event['organizer']);
+						$event = array_merge($event['old'], $event);
+					}
+					unset($event['old']);
+
+					if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, !empty($event['extern_organizer']), true, $msg, true)))
+					{
+						$msg[] = lang('Changed event-data applied');
+					}
+					else
+					{
+						$msg[] = lang('Error saving the event!');
+						$button = false;
+					}
+				}
+				else
+				{
+					$event['id'] = $event['old']['id'];
+					// disable "warning" that we have no rights to store any modifications
+					// as that confuses our users, who only want to accept or reject
+					//$msg[] = lang('Not enough rights to update the event!');
+				}
+			}
 			switch($button)
 			{
 				case 'reject':
@@ -2291,53 +2388,6 @@ class calendar_uiforms extends calendar_ui
 							break;
 						}
 					}
-					// do we need to update the event itself (user-status is reset to old in event_changed!)
-					elseif (self::event_changed($event, $event['old']))
-					{
-						// check if we are allowed to update the event
-						if($this->bo->check_perms(Acl::EDIT, $event['old']))
-						{
-							if ($event['recurrence'] && !$event['old']['reference'] && ($recur_event = $this->bo->read($event['id'])))
-							{
-								// first we need to add the exception to the recurrence master
-								$recur_event['recur_exception'][] = $event['recurrence'];
-								// check if we need to move the alarms, because they are next on that exception
-								$this->bo->check_move_alarms($recur_event, null, $event['recurrence']);
-								unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
-								unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
-								$this->bo->update($recur_event, $ignore_conflicts=true, true, false, true, $msg, true);
-
-								// then we need to create the exception as new event
-								unset($event['id']);
-								$event['reference'] = $event['old']['id'];
-								$event['caldav_name'] = $event['old']['caldav_name'];
-							}
-							else
-							{
-								// keep all EGroupware only values of existing events plus alarms
-								unset($event['alarm']);
-								$event = array_merge($event['old'], $event);
-							}
-							unset($event['old']);
-
-							if (($event['id'] = $this->bo->update($event, $ignore_conflicts=true, true, false, true, $msg, true)))
-							{
-								$msg[] = lang('Event saved');
-							}
-							else
-							{
-								$msg[] = lang('Error saving the event!');
-								break;
-							}
-						}
-						else
-						{
-							$event['id'] = $event['old']['id'];
-							// disable "warning" that we have no rights to store any modifications
-							// as that confuses our users, who only want to accept or reject
-							//$msg[] = lang('Not enough rights to update the event!');
-						}
-					}
 					else
 					{
 						$event['id'] = $event['old']['id'];
@@ -2351,9 +2401,9 @@ class calendar_uiforms extends calendar_ui
 
 				case 'apply':
 					// set status and send notification / meeting response
-					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status'], $event['recurrence']))
+					if (strtolower($event['ics_method']) === 'reply' && $this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status'], $event['recurrence']))
 					{
-						$msg = lang('Status changed');
+						$msg[] = lang('Status changed');
 					}
 					break;
 
@@ -2361,7 +2411,7 @@ class calendar_uiforms extends calendar_ui
 					if ($event['id'] && $this->bo->set_status($event['id'], $user, 'R', $event['recurrence'],
 						false, true, true))	// no reply to organizer
 					{
-						$msg = lang('Status changed');
+						$msg[] = lang('Status changed');
 					}
 					break;
 
@@ -2369,7 +2419,7 @@ class calendar_uiforms extends calendar_ui
 					if ($event['id'] &&	$this->bo->delete($event['id'], $event['recurrence'],
 						false, [$event['ical_sender_uid']]))	// no reply to organizer
 					{
-						$msg = lang('Event deleted.');
+						$msg[] = lang('Event deleted.');
 					}
 					break;
 			}
@@ -2378,7 +2428,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		Framework::message(implode("\n", (array)$msg));
 		$readonlys['button[edit]'] = !$event['id'];
-		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
+		$event['ics_method'] = strtolower($ical_method);
 		switch(strtolower($ical_method))
 		{
 			case 'reply':
@@ -2395,6 +2445,8 @@ class calendar_uiforms extends calendar_ui
 		$tpl = new Etemplate('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event+array(
 			'old' => $existing_event,
+			'extern_organizer' => $extern_organizer ?? [],
+			'from_extern_organizer' => $from_extern_organizer ?? false,
 		), 2);
 	}
 
@@ -2413,8 +2465,8 @@ class calendar_uiforms extends calendar_ui
 			'recur_type', 'recur_data', 'recur_interval', 'recur_exception');
 
 		// only compare certain fields, taking account unset, null or '' values
-		$event = array_intersect_key($_event+array('recur_exception'=>array()), array_flip($keys_to_check));
-		$old = array_intersect_key(array_diff($_old, array(null, '')), array_flip($keys_to_check));
+		$event = array_intersect_key(array_diff($_event, [null, ''])+array('recur_exception'=>array()), array_flip($keys_to_check));
+		$old = array_intersect_key(array_diff($_old, [null, '']), array_flip($keys_to_check));
 
 		// keep the status of existing participants (users)
 		foreach($old['participants'] as $uid => $status)
@@ -2425,7 +2477,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$ret = $event != $old;
+		$ret = (bool)array_diff_assoc($event, $old);
 		//error_log(__METHOD__."() returning ".array2string($ret)." diff=".array2string(array_udiff_assoc($event, $old, function($a, $b) { return (int)($a != $b); })));
 		return $ret;
 	}

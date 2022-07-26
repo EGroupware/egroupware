@@ -63,6 +63,7 @@ apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
 at start of the event	calendar	en	at start of the event
+attention	calendar	en	Attention
 automatically purge old events after	admin	en	Automatically purge old events after
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	en	Available for the first entry inside each day of week or daily table inside the selected range:
 back half a month	calendar	en	Back half a month
@@ -579,9 +580,12 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
+the extern organizer changed the event!	calendar	en	The extern organizer changed the event!
 the following document-types are supported:	calendar	en	The following document-types are supported:
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already over-booked:
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	en	The sender "%1" is NOT the extern organizer "%2", proceed with caution!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	en	The sender "%1" is NOT the participant replying "%2", proceed with caution!
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your day view. Events after this time, are shown below the day view.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your day view. Events before this time, are shown above the day view.<br>This time is also used as a default start time for new events.

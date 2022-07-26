@@ -2223,10 +2223,10 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $event
 	 * @param array $old_event
-	 * @param Api\DateTime|int|null $instance_date For recurring events, this is the date we
-	 *	are dealing with
+	 * @param Api\DateTime|int|null $instance_date For recurring events, this is the date we are dealing with
+	 * @param boolean $ignore_acl=false true: no acl check
 	 */
-	function check_move_alarms(Array &$event, Array $old_event = null, $instance_date = null)
+	function check_move_alarms(Array &$event, Array $old_event = null, $instance_date = null, $ignore_acl=false)
 	{
 		if ($old_event !== null && $event['start'] == $old_event['start']) return;
 
@@ -2254,7 +2254,7 @@ class calendar_boupdate extends calendar_bo
 			else if ($alarm['time'] !== $time->format('ts') - $alarm['offset'])
 			{
 				$alarm['time'] = $time->format('ts') - $alarm['offset'];
-				$this->save_alarm($event['id'], $alarm);
+				$this->save_alarm($event['id'], $alarm, true, $ignore_acl);
 			}
 		}
 	}
@@ -2265,11 +2265,12 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $cal_id Id of the calendar-entry
 	 * @param array $alarm array with fields: text, owner, enabled, ..
 	 * @param boolean $update_modified =true call update modified, default true
+	 * @param boolean $ignore_acl=false true: no acl check
 	 * @return string id of the alarm, or false on error (eg. no perms)
 	 */
-	function save_alarm($cal_id, $alarm, $update_modified=true)
+	function save_alarm($cal_id, $alarm, $update_modified=true, $ignore_acl=false)
 	{
-		if (!$cal_id || !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
+		if (!$cal_id || !$ignore_acl && !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
 		{
 			//echo "<p>no rights to save the alarm=".print_r($alarm,true)." to event($cal_id)</p>";
 			return false;	// no rights to add the alarm
@@ -2283,13 +2284,14 @@ class calendar_boupdate extends calendar_bo
 	 * delete one alarms identified by its id
 	 *
 	 * @param string $id alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
+	 * @param boolean $ignore_acl=false true: no acl check
 	 * @return int number of alarms deleted, false on error (eg. no perms)
 	 */
-	function delete_alarm($id)
+	function delete_alarm($id, $ignore_acl=false)
 	{
 		list(,$cal_id) = explode(':',$id);
 
-		if (!($alarm = $this->so->read_alarm($id)) || !$cal_id || !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
+		if (!($alarm = $this->so->read_alarm($id)) || !$cal_id || !$ignore_acl && !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
 		{
 			return false;	// no rights to delete the alarm
 		}

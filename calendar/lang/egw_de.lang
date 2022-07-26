@@ -29,6 +29,7 @@ add alarm	calendar	de	Alarm zufügen
 add appointments via shortened dialog or complete edit window	calendar	de	Termine hinzufügen über verkürzten Dialog oder komplettes Bearbeiten-Fenster
 add current view as favorite	calendar	de	Ansicht als Favorit zufügen
 add new alarm	calendar	de	Neuen Alarm erstellen
+add new event	calendar	de	Einen neuen Termin hinzufügen
 add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
@@ -62,6 +63,7 @@ apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
 at start of the event	calendar	de	am Beginn des Termins
+attention	calendar	de	Achtung
 automatically purge old events after	admin	de	Bereinigt bzw. löscht alte Termine automatisch nach
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	de	Verfügbar für den ersten Eintrag innerhalb eines jeden Tages oder für die Liste innerhalb des ausgewählten Bereichs:
 back half a month	calendar	de	einen halben Monat zurück
@@ -578,9 +580,12 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die durch die Daten ersetzt werden sollen.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2)
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht
+the extern organizer changed the event!	calendar	de	Der externe Organisator hat den Termin geändert!
 the following document-types are supported:	calendar	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 the original series will be terminated today and a new series be created.	calendar	de	Der bestehende Serientermin wird heute beendet und eine neue Terminserie erstellt.
 the resource you selected is already overbooked:	calendar	de	Die Ressource, die Sie buchen möchten, ist bereits überbucht
+the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der externe Organisator "%2", seien Sie vorsichtig!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der antwortende Teilnehmer "%2", seien Sie vorsichtig!
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt
