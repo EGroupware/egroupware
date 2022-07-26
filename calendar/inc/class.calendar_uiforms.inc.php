@@ -2331,7 +2331,7 @@ class calendar_uiforms extends calendar_ui
 					else
 					{
 						// keep all EGroupware only values of existing events plus alarms
-						unset($event['alarm'], $event['organizer']);
+						unset($event['alarm'], $event['owner']);
 						$event = array_merge($event['old'], $event);
 					}
 					unset($event['old']);
