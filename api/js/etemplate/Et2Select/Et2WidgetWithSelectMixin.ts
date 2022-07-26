@@ -195,7 +195,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		_emptyLabelTemplate() : TemplateResult
 		{
-			return html`${this.emptyLabel ? this.egw().lang(this.emptyLabel) : ''}`;
+			return html`${this.emptyLabel}`;
 		}
 
 		/**

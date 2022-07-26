@@ -1413,15 +1413,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 			default:
 				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
-				if(attrValue && typeof attrValue == "string" && !attributes.noLang && widget_class.translate[attribute])
+				if(attrValue && typeof attrValue == "string" && widget_class.translate[attribute])
 				{
 					// allow attribute to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
 					if(attrValue.indexOf('{') !== -1)
 					{
-						attrValue = attrValue.replace(/{([^}]+)}/g, function(str, p1)
+						attrValue = attrValue.replace(/{([^}]+)}/g, (str, p1) =>
 						{
-							return this.egw().lang(p1);
-						}.bind(widget));
+							return widget.egw().lang(p1);
+						});
 					}
 					else
 					{

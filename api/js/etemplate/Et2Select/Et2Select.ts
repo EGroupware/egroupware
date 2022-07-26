@@ -128,6 +128,19 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	/**
+	 * List of properties that get translated
+	 *
+	 * @returns object
+	 */
+	static get translate()
+	{
+		return {
+			...super.translate,
+			emptyLabel: true
+		}
+	}
+
 	get slots()
 	{
 		return {
@@ -332,7 +345,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return html``;
 		}
 		return html`
-            <sl-menu-item value="">${this.egw().lang(this.emptyLabel)}</sl-menu-item>`;
+            <sl-menu-item value="">${this.emptyLabel}</sl-menu-item>`;
 	}
 
 	/**
