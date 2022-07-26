@@ -86,6 +86,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			{
 				max-height: initial;
 			}
+			/* No horizontal scrollbar, even if options are long */
+			.dropdown__panel {
+				overflow-x: clip;
+			}
 
 			/** multiple=true uses tags for each value **/
 			/* styling for icon inside tag (not option) */
