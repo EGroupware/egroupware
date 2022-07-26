@@ -63,7 +63,7 @@ describe("DateTime widget", () =>
 
 	it('No value shows no value', () =>
 	{
-		assert.equal(element.querySelector("input").textContent, "");
+		assert.equal(element.querySelector("et2-textbox").textContent, "");
 		assert.equal(element.get_value(), "");
 	});
 
@@ -72,7 +72,7 @@ describe("DateTime widget", () =>
 		element.set_value("0");
 		// wait for asychronous changes to the DOM
 		await elementUpdated(element);
-		assert.equal(element.querySelector("input").value, "");
+		assert.equal(element.querySelector("et2-textbox").value, "");
 		assert.equal(element.get_value(), "");
 	});
 

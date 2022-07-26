@@ -41,7 +41,7 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 
 		it("does not return a value (via attribute)", async() =>
 		{
-			element.readOnly = true;
+			element.readonly = true;
 
 			element.set_value(test_value);
 

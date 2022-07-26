@@ -57,7 +57,7 @@ describe("Date widget", () =>
 		element.set_value("0");
 		// wait for asychronous changes to the DOM
 		await elementUpdated(element);
-		assert.equal(element.querySelector("input").value, "");
+		assert.equal(element.querySelector("et2-textbox").value, "");
 		assert.equal(element.get_value(), '');
 	});
 
@@ -108,4 +108,4 @@ describe("Date widget", () =>
 		});
 	}
 });
-inputBasicTests(before, "2008-09-22T00:00:00Z", "input");
+inputBasicTests(before, "2008-09-22T00:00:00Z", "et2-textbox");

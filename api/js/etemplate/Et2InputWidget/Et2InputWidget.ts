@@ -137,6 +137,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 			this.validators = [];
 			this.defaultValidators = [];
+
+			this.__readonly = false;
 		}
 
 		connectedCallback()
@@ -235,18 +237,23 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		set readOnly(new_value) {this.readonly = new_value;}
 
-		get readOnly() { return this.readonly};
+		/**
+		 *  Lion mapping
+		 * @deprecated
+		 */
+		get readOnly()
+		{ return this.readonly};
 
 		getValue()
 		{
-			return this.readOnly || this.disabled ? null : this.value;
+			return this.readonly || this.disabled ? null : this.value;
 		}
 
 
 		isDirty()
 		{
 			// Readonly can't be dirty, it can't change
-			if(this.readOnly)
+			if(this.readonly)
 			{
 				return false;
 			}

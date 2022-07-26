@@ -457,7 +457,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 
 	getValue()
 	{
-		if(this.readOnly || this.disabled)
+		if(this.readonly || this.disabled)
 		{
 			return null;
 		}
