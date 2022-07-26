@@ -276,7 +276,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			// Missing any of the required attributes?  Don't change anything.
 			// If readonly, skip it
-			if(!this.searchEnabled && !this.editModeEnabled || this.readonly)
+			if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 			{
 				return;
 			}
@@ -777,7 +777,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Make sure not to double-add
 			if(!this.select_options.find(o => o.value == text))
 			{
-				this.select_options.push(<SelectOption>{
+				this.__select_options.push(<SelectOption>{
 					value: text,
 					label: text
 				});
