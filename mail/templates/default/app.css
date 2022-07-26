@@ -455,6 +455,19 @@ div.mail-compose_fileselector {
 	margin-left: 1em;
 }
 .previewWrapper {height: 100%}
+
+.previewWrapper .et2_details.et2_details_expanded .et2_details_wrapper {
+	display: block;
+	position: absolute;
+	top: 4em;
+	box-shadow: 1px 1px 2px 1px silver;
+	width: calc(100% - 6em);
+	padding: 1em;
+	background: white;
+	max-height: 12em;
+	overflow-y: auto;
+}
+
 #mail-index_mailPreview .th {display: none}
 
 #mail-index_mailPreview > div, #mail-index_mailPreview > * {
@@ -659,6 +672,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 
 .mailPreviewHeaders {
     font-size: 0.875rem;
+	position: relative;
 }
 
 .mailPreviewHeaders :first-child, .mailDisplayHeaders :first-child {
@@ -1017,3 +1031,8 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	padding: 0px;
 }
 #mail-index_nm tbody tr et2-lavatar {max-width: 3.7em; min-width:3.7em !important;}
+
+.previewWrapper .firstColumnTitle {
+	width: 3em;
+	text-align: end;
+}

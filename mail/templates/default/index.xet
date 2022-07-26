@@ -42,7 +42,7 @@
                                 <vbox>
                                     <details class="details" title="details" toggle_align="left">
                                         <hbox>
-                                            <description value="From"/>
+                                            <description value="From" class="firstColumnTitle"/>
                                             <grid id="additionalfromaddress">
                                                 <columns>
                                                     <column/>
@@ -55,7 +55,7 @@
                                             </grid>
                                         </hbox>
                                         <hbox disabled="!@toaddress" width="100%">
-                                            <description value="To"/>
+                                            <description value="To" class="firstColumnTitle"/>
                                             <grid id="additionaltoaddress">
                                                 <columns>
                                                     <column/>
@@ -68,7 +68,7 @@
                                             </grid>
                                         </hbox>
                                         <hbox disabled="!@ccaddress"  width="100%">
-                                            <description value="Cc"/>
+                                            <description value="Cc" class="firstColumnTitle"/>
                                             <grid id="ccaddress">
                                                 <columns>
                                                     <column/>
@@ -103,10 +103,10 @@
                                                     <description id="${row}[winmailFlag]" />
                                                     <description class="et2_link useEllipsis" id="${row}[filename]" no_lang="1" expose_view="true" mime="$row_cont[type]" mime_data="$row_cont[mime_data]" href="$row_cont[mime_url]"/>
                                                     <description align="right" id="${row}[size]"/>
-                                                    <buttononly id="${row}[save]" image="fileexport" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})"/>
-                                                    <buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})"/>
-                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})"/>
-                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" label="Save as Zip"/>
+                                                    <buttononly id="${row}[save]" image="fileexport" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" statustext="Download as file"/>
+                                                    <buttononly id="${row}[saveAsVFS]" image="filemanager/navbar" readonly="false" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" statustext="Save to Filemanager"/>
+                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_all]" image="mail/save_all" onclick="app.mail.saveAttachmentHandler(widget,'saveAllToVfs', ${row})" statustext="Save all"/>
+                                                    <buttononly class="$row_cont[classSaveAllPossiblyDisabled]" readonly="false" id="${row}[save_zip]" image="mail/save_zip" onclick="app.mail.saveAttachmentHandler(widget,'downloadAllToZip', ${row})" statustext="Save as Zip"/>
                                                 </row>
                                             </rows>
                                         </grid>

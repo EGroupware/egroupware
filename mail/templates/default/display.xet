@@ -24,7 +24,7 @@
 				<vbox class="previewWrapper">
 					<details class="details" title="details" toggle_align="left">
 							<hbox  disabled="!@from">
-                                <description value="From"/>
+                                <description value="From" class="firstColumnTitle"/>
                                 <grid id="from">
                                     <columns>
                                         <column/>
@@ -37,7 +37,7 @@
                                 </grid>
                             </hbox>
                             <hbox disabled="!@sender">
-                                <description value="Sender"/>
+                                <description value="Sender" class="firstColumnTitle"/>
                                 <grid id="sender">
                                     <columns>
                                         <column/>
@@ -50,7 +50,7 @@
                                 </grid>
                             </hbox>
                             <hbox disabled="!@to">
-                                <description value="To"/>
+                                <description value="To" class="firstColumnTitle"/>
                                 <grid id="to">
                                     <columns>
                                         <column/>
@@ -63,7 +63,7 @@
                                 </grid>
                             </hbox>
                             <hbox disabled="!@cc">
-                                <description value="Cc"/>
+                                <description value="Cc" class="firstColumnTitle"/>
                                 <grid id="cc">
                                     <columns>
                                         <column/>
@@ -76,7 +76,7 @@
                                 </grid>
                             </hbox>
                             <hbox disabled="!@bcc">
-                                <description value="Bcc"/>
+                                <description value="Bcc" class="firstColumnTitle"/>
                                 <grid id="bcc">
                                     <columns>
                                         <column/>
