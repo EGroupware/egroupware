@@ -972,6 +972,9 @@ div#mail-index_nm.splitter-pane {
 #mail-index_nm thead tr th.optcol {
   display: none;
 }
+#mail-index_nm .mail.row et2-url-email_ro {
+  width: fit-content;
+}
 #mail-index_nm .et2_label.et2_vfs {
   text-align: center;
 }
