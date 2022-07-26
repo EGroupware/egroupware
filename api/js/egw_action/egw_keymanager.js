@@ -57,7 +57,8 @@ function _egw_nodeIsInInput(_node)
 	if ((_node != null) && (_node != document))
 	{
 		var tagName = _node.tagName.toLowerCase();
-		if (tagName == "input" || tagName == "select" || tagName == 'textarea' || tagName == 'button')
+		if (tagName == "input" || tagName == "select" || tagName == 'textarea' || tagName == 'button' ||
+			['et2-textbox', 'et2-number', 'et2-searchbox', 'et2-select', 'et2-textarea', 'et2-button'].indexOf(tagName) != -1)
 		{
 			return true;
 		}
