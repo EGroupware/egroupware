@@ -232,15 +232,22 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 	}
 	else
 	{
-		// make sure value is a string
+		// make sure value is a string, and label not an object with sub-options
 		options.forEach(option =>
 		{
 			if (typeof option.value !== 'string')
 			{
 				option.value = option.value.toString();
 			}
+			if (typeof option.label !== 'string')
+			{
+				fixed_options.push(...cleanSelectOptions(option.label));
+			}
+			else
+			{
+				fixed_options.push(option);
+			}
 		})
-		fixed_options = options;
 	}
 
 	return fixed_options;
