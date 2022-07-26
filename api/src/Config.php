@@ -253,7 +253,7 @@ class Config
 		static $white_list = array(
 			'all' => array('customfields', 'types'),
 			'phpgwapi' => array('webserver_url','server_timezone','enforce_ssl','system_charset',
-				'checkfornewversion','checkappversions','email_address_format',	// admin >> site config
+				'checkfornewversion','checkappversions','email_address_format', 'install_mailto_handler',	// admin >> site config
 				'site_title','login_logo_file','login_logo_url','login_logo_title','favicon_file',
 				'markuntranslated','link_list_thumbnail','enabled_spellcheck','debug_minify',
 				'call_link','call_popup','fax_email','fax_email_regexp','geolocation_url',	// addressbook
