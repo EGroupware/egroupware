@@ -137,8 +137,7 @@ function send_template()
 		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', static function ($matches)
 		{
 			$tag = 'et2-split';
-			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[1], $attrs, PREG_PATTERN_ORDER);
-			$attrs = array_combine($attrs[2], $attrs[3]);
+			$attrs = parseAttrs($matches[1]);
 
 			$attrs['vertical'] = $attrs['orientation'] === 'h' ? "true" : "false";
 			if (str_contains($attrs['dock_side'], 'top') || str_contains($attrs['dock_side'], 'left'))
@@ -151,10 +150,7 @@ function send_template()
 			}
 			unset($attrs['dock_side']);
 
-			return "<$tag " . implode(' ', array_map(function ($name, $value) {
-						return $name . '="' . $value . '"';
-					}, array_keys($attrs), $attrs)
-				) . '>' . $matches[2] . "</$tag>";
+			return "<$tag " . stringAttrs($attrs) . '>' . $matches[2] . "</$tag>";
 		}, $str);
 
 		// modify <(image|description) expose_view="true" --> <et2-*-expose
@@ -187,8 +183,7 @@ function send_template()
 		$str = preg_replace_callback('#<et2-link(-[a-z]+)?([^>]*?)></et2-link(-[a-z]+)?>#su', static function ($matches)
 		{
 			$tag = 'et2-link'.$matches[1];
-			preg_match_all('/(^| )([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
-			$attrs = array_combine($attrs[2], $attrs[3]);
+			$attrs = parseAttrs($matches[2]);
 
 			if ($tag === 'et2-link-entry' && !empty($attrs['readonly']) || $tag === 'et2-link')
 			{
@@ -196,16 +191,13 @@ function send_template()
 				$attrs['app'] = $attrs['only_app'];
 				unset($attrs['only_app'], $attrs['readonly']);
 			}
-			return "<$tag " . implode(' ', array_map(function ($name, $value) {
-						return $name . '="' . $value . '"';
-					}, array_keys($attrs), $attrs)
-				) . "></$tag>";
+			return "<$tag " . stringAttrs($attrs) . "></$tag>";
 		}, $str);
 
 		// handling of select and taglist widget, incl. removing of type attribute
-		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches) {
-			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
-			$attrs = array_combine($attrs[2], $attrs[3]);
+		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[3]);
 
 			// set multiple for old tags attribute or taglist without maxSelection="1"
 			if (isset($attrs['tags']) || $matches['1'] === 'taglist' && (empty($attrs['maxSelection']) || $attrs['maxSelection'] > 1))
@@ -244,18 +236,13 @@ function send_template()
 				$matches[2] = preg_replace('/^(select|taglist)/', '', $attrs['type']);
 				unset($attrs['type']);
 			}
-			$replace = '<et2-select' . $matches[2] . ' ' . implode(' ', array_map(static function($attr, $val)
-				{
-					return $attr.'="'.$val.'"';
-				}, array_keys($attrs), $attrs)) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
-			return $replace;
+			return '<et2-select' . $matches[2] . ' ' . stringAttrs($attrs) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
 		}, $str);
 
 		// nextmatch headers
 		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)
 		{
-			preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]*)"/i', $matches[4], $attrs, PREG_PATTERN_ORDER);
-			$attrs = array_combine($attrs[2], $attrs[3]);
+			$attrs = parseAttrs($matches[4]);
 
 			if ($matches[2] === 'custom')
 			{
@@ -273,13 +260,7 @@ function send_template()
 				$matches[2] = "filter";
 			}
 
-			$replace = '<et2-nextmatch-header-' . $matches[2] . ' ' .
-				implode(' ', array_map(static function ($attr, $val)
-						   {
-							   return $attr . '="' . $val . '"';
-						   }, array_keys($attrs), $attrs)
-				) . '/>';
-			return $replace;
+			return '<et2-nextmatch-header-' . $matches[2] . ' ' . stringAttrs($attrs) . '/>';
 		}, $str);
 
 		$str = preg_replace('#<passwd ([^/>]+)/>#', '<et2-password $1></et2-password>', $str);
@@ -300,8 +281,7 @@ function send_template()
 			// fix <button(only)?.../> --> <et2-button(-image)? noSubmit="true".../>
 			$str = preg_replace_callback('#<button(only)?\s(.*?)/>#s', function ($matches) use ($name) {
 				$tag = 'et2-button';
-				preg_match_all('/(^|\s)([a-z0-9_-]+)="([^"]+)"/i', $matches[2], $attrs, PREG_PATTERN_ORDER);
-				$attrs = array_combine($attrs[2], $attrs[3]);
+				$attrs = parseAttrs($matches[2]);
 				// replace buttononly tag with noSubmit="true" attribute
 				if (!empty($matches[1]))
 				{
@@ -327,9 +307,7 @@ function send_template()
 					}
 				}
 				unset($attrs['background_image']);
-				return "<$tag " . implode(' ', array_map(function ($name, $value) {
-						return $name . '="' . $value . '"';
-					}, array_keys($attrs), $attrs)) . '></' . $tag . '>';
+				return "<$tag " . stringAttrs($attrs) . '></' . $tag . '>';
 			}, $str);
 
 			$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
@@ -343,8 +321,7 @@ function send_template()
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
 		$str = preg_replace_callback('/<(et2|records)-([a-z-]+)\s([^>]+)>/', static function(array $matches)
 		{
-			preg_match_all('/(^| )([a-z\d_-]+)="([^"]+)"/i', $matches[3], $attrs, PREG_PATTERN_ORDER);
-			$attrs = array_combine($attrs[2], $attrs[3]);
+			$attrs = parseAttrs($matches[3]);
 
 			// fix deprecated attributes: needed, blur, ...
 			static $deprecated = [
@@ -379,10 +356,7 @@ function send_template()
 				unset($attrs['size']);
 			}
 
-			$ret = str_replace($matches[3], implode(' ', array_map(static function ($name, $value) {
-					return $name . '="' . $value . '"';
-				}, array_keys($attrs), $attrs)).(substr($matches[3], -1) === '/' ? '/' : ''), $matches[0]);
-			return $ret;
+			return str_replace($matches[3], stringAttrs($attrs).(substr($matches[3], -1) === '/' ? '/' : ''), $matches[0]);
 		}, $str);
 
 		$processing = microtime(true);
@@ -431,4 +405,32 @@ function send_template()
 	echo $str;
 
 	exit;    // stop further processing eg. redirect to login
+}
+
+/**
+ * Parse attributes in an array
+ *
+ * @param string $str
+ * @return array
+ */
+function parseAttrs($str)
+{
+	if (!preg_match_all('/(^|\s)([a-z\d_-]+)="([^"]+)"/i', $str, $attrs, PREG_PATTERN_ORDER))
+	{
+		throw new Exception("Can NOT parse attributes from '$str'");
+	}
+	return array_combine($attrs[2], $attrs[3]);
+}
+
+/**
+ * Combine attribute array into a string
+ *
+ * @param array $attrs
+ * @return string
+ */
+function stringAttrs(array $attrs)
+{
+	return implode(' ', array_map(static function ($name, $value) {
+		return $name . '="' . $value . '"';
+	}, array_keys($attrs), $attrs));
 }
