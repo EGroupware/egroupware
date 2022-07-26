@@ -1060,7 +1060,13 @@ app.classes.mail = AppJS.extend(
 		if (data.toaddress||data.fromaddress)
 		{
 			data.additionaltoaddress = (data.additionaltoaddress??[]).concat(data.toaddress);
+			data.additionaltoaddress = 	data.additionaltoaddress.filter((i, item) => {
+				return data.additionaltoaddress.indexOf(i) == item
+			});
 			data.additionalfromaddress = (data.additionalfromaddress??[]).concat(data.fromaddress);
+			data.additionalfromaddress = data.additionalfromaddress.filter((i, item) => {
+				return data.additionalfromaddress.indexOf(i) == item
+			});
 		}
 
 		if (data.attachmentsBlock) data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
