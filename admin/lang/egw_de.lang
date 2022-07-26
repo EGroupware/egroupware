@@ -673,6 +673,7 @@ number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzu
 number of users	admin	de	Anzahl Benutzer
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	de	Numeriere Anwendungen aufeinander folgend. Wenn sie nicht aufeinander folgend numeriert sind, funktioniert das Sortieren der Anwendungen nicht. Ändert nicht die Reihenfolge der Anwendungen
 nummeric account id	admin	de	numerische Benutzer ID
+offer to installing egroupware as mail-handler	admin	de	Anbieten EGroupware als Mail-Handler zu installieren
 official egroupware usage statistic	admin	de	Offizielle EGroupware Nutzungsstatistik
 one day	admin	de	ein Tag
 one hour	admin	de	eine Stunde
