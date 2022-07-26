@@ -9,14 +9,13 @@
  */
 
 
-import {css, html, SlotMixin} from "@lion/core";
-import {buttonStyles} from "./ButtonStyles";
-import {LionButton} from "@lion/button";
+import {css} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {SlButton} from "@shoelace-style/shoelace";
+import shoelace from "../Styles/shoelace";
 
-export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
+export class Et2Button extends Et2InputWidget(SlButton)
 {
-	protected _created_icon_node : HTMLImageElement;
 	protected clicked : boolean = false;
 
 	/**
@@ -53,8 +52,8 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	static get styles()
 	{
 		return [
+			...shoelace,
 			...super.styles,
-			buttonStyles,
 			css`
             :host {
                 padding: 0;
@@ -70,9 +69,9 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
     			padding-right: 0px !important;
     			width: 16px !important;
 			}
-            ::slotted([slot="icon"][src]) {
+            ::slotted(et2-image) {
                 width: 20px;
-                padding-right: 4px;
+                display: flex;
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;
@@ -80,6 +79,20 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 			.imageOnly {
 				width:18px;
 				height: 18px;
+			}
+			/* Make hover border match other widgets (select) */
+			.button--standard.button--default:hover:not(.button--disabled) {
+				background-color: var(--sl-input-background-color-hover);
+				border-color: var(--sl-input-border-color-hover);
+				color: var(--sl-input-color-hover);
+			}
+			.button {
+				justify-content: left;
+			}
+			.button--has-label.button--medium .button__label {
+				padding: 0 var(--sl-spacing-medium);
+			}
+			.button__label {
 			}
             `,
 		];
@@ -114,17 +127,6 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			icon: () =>
-			{
-				return document.createElement("img");
-			}
-		}
-	}
-
 	constructor()
 	{
 		super();
@@ -146,6 +148,23 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		//this.classList.add("et2_button")
 	}
 
+	set label(new_label : string)
+	{
+		if(!this._labelNode)
+		{
+			this.textContent = new_label;
+		}
+		else
+		{
+			this._labelNode.textContent = new_label;
+		}
+	}
+
+	get label()
+	{
+		return this._labelNode.textContent.trim();
+	}
+
 	set image(new_image : string)
 	{
 		let oldValue = this._image;
@@ -157,6 +176,13 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		{
 			this.__image = this.egw().image(new_image);
 		}
+		if(!this._iconNode)
+		{
+			const image = document.createElement("et2-image");
+			image.slot = "prefix";
+			this.prepend(image);
+		}
+		this._iconNode.src = this.__image;
 		this.requestUpdate("image", oldValue);
 	}
 
@@ -240,21 +266,6 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 		}
 	}
 
-	render()
-	{
-		this._iconNode.src = this.__image || "";
-		if(!this.label)
-		{
-			this._iconNode.classList.add('imageOnly');
-		}
-		return html`
-            <div class="button-content et2_button ${this.label ? '' : 'imageOnly'}" id="${this._buttonId}"
-                 part="container">
-                <slot name="icon" class="${this.label ? '' : 'imageOnly'}"></slot>
-                <slot name="label">${this.label}</slot>
-            </div> `;
-	}
-
 	/**
 	 * Get a default image for the button based on ID
 	 *
@@ -305,7 +316,14 @@ export class Et2Button extends Et2InputWidget(SlotMixin(LionButton))
 	get _iconNode() : HTMLImageElement
 	{
 		return <HTMLImageElement>(Array.from(this.children)).find(
-			el => (<HTMLElement>el).slot === "icon",
+			el => (<HTMLElement>el).slot === "prefix",
+		);
+	}
+
+	get _labelNode() : HTMLElement
+	{
+		return <HTMLImageElement>(Array.from(this.childNodes)).find(
+			el => (<HTMLElement>el).nodeType === 3,
 		);
 	}
 

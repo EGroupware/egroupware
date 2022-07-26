@@ -14,8 +14,6 @@ import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
 import {css, html, TemplateResult} from "@lion/core";
 import {Et2widgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
-import {buttonStyles} from "../Et2Button/ButtonStyles";
-import shoelace from "../Styles/shoelace";
 
 /**
  * A split button - a button with a dropdown list
@@ -37,8 +35,6 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 	{
 		return [
 			...super.styles,
-			shoelace,
-			buttonStyles,
 			css`
             :host {
             	/* Avoid unwanted style overlap from button */
