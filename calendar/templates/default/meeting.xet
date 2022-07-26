@@ -7,36 +7,49 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
 			</columns>
 			<rows>
+				<row disabled="!@sender_warning">
+					<grid width="100%" class="meetingRequest" span="all">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Attention"/>
+							</row>
+							<row class="row">
+								<description id="sender_warning" class="meetingRequestError"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
 				<row disabled="!@ics_method=request">
 					<description value="This mail contains a meeting request" class="meetingRequestMessage"/>
-					<button label="Accept" id="button[accept]" class="leftPad5"/>
-					<button label="Tentative" id="button[tentativ]" class="leftPad5"/>
-					<button label="Reject" id="button[reject]" class="leftPad5"/>
-					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+					<hbox>
+						<button label="Apply" id="button[apply]" class="leftPad5" hideOnReadonly="true"/>
+						<button label="Accept" id="button[accept]" class="leftPad5" background_image="true" image="calendar/accepted"/>
+						<button label="Tentative" id="button[tentativ]" class="leftPad5" background_image="true" image="calendar/tentative"/>
+						<button label="Reject" id="button[reject]" class="leftPad5" background_image="true" image="calendar/rejected"/>
+						<button statustext="Edit event in calendar" label="Edit" id="button[edit]"  background_image="true" image="edit" hideOnReadonly="true"
+							onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+					</hbox>
 					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 				<row disabled="!@ics_method=reply">
 					<description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"/>
 					<button label="Apply" id="button[apply]" class="leftPad5"/>
-					<description/>
-					<description/>
-					<description/>
 					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 				<row disabled="!@ics_method=cancel">
 					<description value="This mail cancels a meeting" class="meetingRequestMessage"/>
-					<button label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"/>
-					<button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5"
-						onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"/>
-					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]"
-						onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
-					<description/>
-					<description/>
+					<hbox>
+						<button label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"/>
+						<button label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5"
+								onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"/>
+						<button statustext="Edit event in calendar" label="Edit" id="button[edit]" background_image="true" image="edit"
+									onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
+					</hbox>
 					<description id="error" class="meetingRequestError" align="right"/>
 				</row>
 			</rows>

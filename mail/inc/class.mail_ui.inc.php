@@ -3308,15 +3308,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
 
 		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
-		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
+		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']) && empty($smime))
 		{
 			$charset = $calendar_part->getContentTypeParameter('charset');
 			// Do not try to fetch raw part content if it's smime signed message
-			if (!$smime) $this->mail_bo->fetchPartContents($uid, $calendar_part);
+			$this->mail_bo->fetchPartContents($uid, $calendar_part);
+			$headers = $this->mail_bo->getHeaders($mailbox, 0, 1, '', false, null, $uid);
 			Api\Cache::setSession('calendar', 'ical', array(
-				'charset' => $charset ? $charset : 'utf-8',
+				'charset' => $charset ?: 'utf-8',
 				'attachment' => $calendar_part->getContents(),
 				'method' => $calendar_part->getContentTypeParameter('method'),
+				'sender' => empty($headers['header'][0]['sender_address']) ? null :
+					(preg_match('/<([^>]+?)>$/', $sender = strtolower($headers['header'][0]['sender_address']), $matches) ?
+						$matches[1] : $sender),
 			));
 			$this->mail_bo->htmlOptions = $bufferHtmlOptions;
 			Api\Translation::add_app('calendar');
