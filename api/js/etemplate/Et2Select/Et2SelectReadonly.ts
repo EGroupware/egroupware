@@ -47,7 +47,7 @@ li {
 		return {
 			...super.properties,
 			value: String,
-			select_options: Array
+			select_options: {type: Array}
 		}
 	}
 

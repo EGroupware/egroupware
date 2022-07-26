@@ -1409,6 +1409,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 				break;
 			case Object:
+			case Array:
 				// Leave it alone...
 				break;
 			default:

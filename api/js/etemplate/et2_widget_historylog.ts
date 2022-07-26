@@ -31,7 +31,7 @@ import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
-import {SelectOption} from "./Et2Select/FindSelectOptions";
+import {cleanSelectOptions, SelectOption} from "./Et2Select/FindSelectOptions";
 
 /**
  * eTemplate history log widget displays a list of changes to the current record.
@@ -459,15 +459,15 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			if(need_box)
 			{
 				// Multi-part value needs multiple widgets
-				widget = et2_createWidget('vbox', attrs, this);
-				for(var i in field)
+				widget = loadWebComponent('et2-vbox', attrs, this);
+				for(let i in field)
 				{
 					let type = field[i];
 					const child_attrs = jQuery.extend({}, attrs);
 					if(typeof type === 'object')
 					{
-						child_attrs['select_options'] = field[i];
-						type = 'select';
+						child_attrs['select_options'] = cleanSelectOptions(field[i]);
+						type = 'et2-select';
 					}
 					else
 					{
@@ -481,7 +481,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			}
 			else
 			{
-				attrs['select_options'] = field;
+				attrs['select_options'] = cleanSelectOptions(field);
 			}
 		}
 		// Check for options after the type, ex: link-entry:infolog
@@ -655,15 +655,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				{
 					nodes = self.fields[_data.status].nodes.clone();
 				}
-				for(var j = 0; j < widget._children.length; j++)
-				{
-					// @ts-ignore
-					nodes.push(self.fields[_data.status].nodes[j].clone());
-					if(widget._children[j].instanceOf(et2_diff))
-					{
-						self._spanValueColumns(jQuery(this));
-					}
-				}
 			}
 			// WebComponent IS the node
 			else if(widget && typeof window.customElements.get(widget.localName) != "undefined")
@@ -711,15 +702,12 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 				if(widget._children.length)
 				{
 					// Multi-part values
-					const box = jQuery(widget.getDOMNode()).clone();
 					for(var j = 0; j < widget._children.length; j++)
 					{
 						const id = widget._children[j].id;
 						const widget_value = value ? value[id] || "" : "";
 						widget._children[j].setDetachedAttributes(nodes[j], {value: widget_value});
-						box.append(nodes[j]);
 					}
-					nodes = box;
 				}
 				else
 				{
