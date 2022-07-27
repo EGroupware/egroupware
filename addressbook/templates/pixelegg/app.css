@@ -127,7 +127,7 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {
   top: 0;
   /* Required for Chrome 76+ on Windows */
   left: 350px;
-  right: 233px;
+  right: 235px;
 }
 #addressbook-index .filtersContainer select {
   width: 31.5%;
@@ -143,10 +143,12 @@ select#addressbook-index_col_filter\[tid\] {
 #addressbook-index_addressbook-index-row select,
 #addressbook-index_addressbook-index-row et2-select {
   float: right;
-  width: 134px;
+  width: 132px;
   display: inline-block;
   height: 20px;
-  margin-top: 1px;
+}
+et2-button#addressbook-index_nm_advanced-search {
+  margin-right: 0 !important;
 }
 #addressbook-edit .chzn-container .chzn-results {
   max-height: 110px;

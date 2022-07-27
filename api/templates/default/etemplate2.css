@@ -2164,15 +2164,15 @@ div.message.floating, lion-validation-feedback[type] {
 
 .nextmatch_header_row {
     width: 100%;
+    padding-top: 1px;
     padding-bottom: 5px;
     position: relative;
 }
 
 .nextmatch_header .header_count {
     padding: 0px 10px;
-    margin: 1px 6px 1px;
     height: 22px;
-    border: 1px solid silver;
+    border: 1px solid rgb(212, 212, 216);   /* --sl-input-border-color */
     text-align: center;
     border-radius: 3px;
     float: right;
@@ -2866,10 +2866,8 @@ div.et2_toolbar.ui-widget-header {
     padding-left: 0;
     background-color: #fafafa;
 }
-.nextmatch_header_row et2-button, .et2_toolbar et2-button {
-    background-color: #fafafa;
-    margin: 1px 4px 0 0;
-    border-color: silver;
+.nextmatch_header_row et2-button, .nextmatch_header_row et2-searchbox, .et2_toolbar et2-button {
+    margin-right: 1ex;
 }
 .nextmatch_header_row et2-button::part(container){
     height: 18px;
