@@ -988,9 +988,6 @@ div#mail-index_nm.splitter-pane {
   border-top: 1px solid silver;
   margin-top: 1em;
 }
-#mail-index_nm thead tr th.optcol {
-  display: none;
-}
 #mail-index_nm .mail.row et2-url-email_ro {
   width: fit-content;
 }
