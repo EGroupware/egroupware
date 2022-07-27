@@ -60,7 +60,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	render()
 	{
 		return html`
-            <div ${this.id ? html`id="${this.id}"` : ''}>
+            <div part="base" ${this.id ? html`id="${this.id}"` : ''}>
                 <slot></slot>
             </div> `;
 	}
