@@ -22,6 +22,8 @@ export declare class Et2InputWidgetInterface
 	readonly : boolean;
 	protected value : string | number | Object;
 
+	public required : boolean;
+
 	public set_value(any) : void;
 
 	public get_value() : any;
@@ -67,6 +69,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				.input-group__container > .input-group__input ::slotted(.form-control) {
 					width: 100%;
 				}
+				
 				`
 			];
 		}
@@ -171,14 +174,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			// required changed, add / remove validator
 			if(changedProperties.has('required'))
 			{
-				// Remove class
-				this.classList.remove("et2_required")
 				// Remove all existing Required validators (avoids duplicates)
 				this.validators = (this.validators || []).filter((validator) => validator instanceof Required)
 				if(this.required)
 				{
 					this.validators.push(new Required());
-					this.classList.add("et2_required");
 				}
 			}
 		}

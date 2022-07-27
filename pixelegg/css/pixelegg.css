@@ -593,7 +593,7 @@
 * Validation
 */
   .et2_required,
-  [required] {
+  [required]::part(base) {
     background-color: #FFDD73;
     -webkit-border-top-right-radius: 3px;
     -webkit-border-bottom-right-radius: 3px;

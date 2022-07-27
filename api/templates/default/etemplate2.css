@@ -82,6 +82,7 @@
     display: flex;
     align-items: center;
     gap: 1em;
+    flex-wrap: wrap;
 }
 
 ::part(form-control-label) {
@@ -91,6 +92,11 @@
 
 ::part(form-control-input) {
     flex: 1 1 auto;
+}
+
+::part(form-control-help-text) {
+    flex-basis: 100%;
+    position: relative;
 }
 
 /* Use .et2-label-fixed class to give fixed label size */
@@ -1982,7 +1988,7 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required, [required] {
+.et2_required, .et2_required::part(base), [required]::part(base) {
     background-color: #ffffd0;
 }
 
@@ -2104,6 +2110,11 @@ div.message.floating, lion-validation-feedback[type] {
     z-index: 1;
     top: 100%;
     left: 0px;
+}
+
+lion-validation-feedback[type] {
+    top: initial;
+    margin-top: calc(-0.5 * var(--sl-input-height-medium));
 }
 
 .message.validation_error, lion-validation-feedback[type="error"] {
