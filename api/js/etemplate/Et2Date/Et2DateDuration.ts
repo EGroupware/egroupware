@@ -135,6 +135,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				max-width: 4.5em;
 				margin-right: -2px;
 			}
+			et2-textbox::part(input) {
+				padding-right: 0px;
+			}
 			et2-textbox:not(:last-child)::part(base) {
 				border-right: none;
 				border-top-right-radius: 0px;
@@ -556,7 +559,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		};
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		return html`
-            <et2-select value="${this._display.unit}">
+            <et2-select value="${this._display.unit || this.displayFormat[0]}">
                 ${[...this.displayFormat].map((format : string) =>
                         html`
                             <sl-menu-item value=${format} ?checked=${this._display.unit === format}>
