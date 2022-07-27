@@ -62,9 +62,11 @@
 		<buttononly statustext="Rename, change permissions or ownership" id="button[edit]" onclick="app.filemanager.editprefs();" image="edit" background_image="true"/>
 		<buttononly statustext="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" image="button_createdir" background_image="true"/>
 		<buttononly statustext="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" image="link" background_image="true"/>
-		<!--buttononly statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" background_image="true"/>
+		<!--
+		<buttononly statustext="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" image="editpaste" background_image="true"/>
 		<buttononly statustext="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" image="linkpaste" background_image="true"/>
-		<buttononly statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" background_image="true"/-->
+		<buttononly statustext="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" image="mailpaste" background_image="true"/>
+		-->
 		<buttononly statustext="File a file" onclick="app.filemanager.fileafile" image="upload" background_image="true"/>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
