@@ -162,7 +162,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
 
 	get label()
 	{
-		return this._labelNode.textContent.trim();
+		return this._labelNode?.textContent?.trim();
 	}
 
 	set image(new_image : string)
