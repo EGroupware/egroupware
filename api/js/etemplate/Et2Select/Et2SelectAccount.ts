@@ -74,6 +74,10 @@ export class Et2SelectAccount extends Et2Select
 		{
 			select_options = this.egw().accounts(this.accountType);
 		}
+		// egw.accounts returns value as number, causing the et2-select to not match the option
+		select_options.forEach(option => {
+			option.value = option.value.toString();
+		});
 		return select_options;
 	}
 
