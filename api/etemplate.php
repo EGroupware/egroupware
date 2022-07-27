@@ -71,7 +71,7 @@ function send_template()
 		}, $str);
 
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
-		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*<menupopup([^>]+>)[\r\n\s]*</menulist>#', '<select$1$2', $str);
+		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*(<!--[^>]+-->[\r\n\s]*)?<menupopup([^>]+>)[\r\n\s]*</menulist>#', '$2<select$1$3', $str);
 
 		// fix legacy options, so new client-side has not to deal with them
 		$str = preg_replace_callback('#<([^- />]+)(-[^ ]+)?[^>]* (options="([^"]+)")[ />]#', static function ($matches) {

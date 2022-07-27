@@ -524,6 +524,17 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		let old_template = this.__template;
 		this.__template = new_template_name;
+		// inject preprocessor, if not already in template-url
+		const webserverUrl = this.egw().webserverUrl;
+		if (!new_template_name.match(new RegExp(webserverUrl+'/api/etemplate.php')))
+		{
+			this.__template = new_template_name.replace(new RegExp(webserverUrl), webserverUrl+'/api/etemplate.php');
+		}
+		// if we have no cache-buster, reload daily
+		if (this.__template.indexOf('?') === -1)
+		{
+			this.__template += '?'+((new Date).valueOf()/86400|0).toString();
+		}
 		this.requestUpdate("template", old_template);
 	}
 
