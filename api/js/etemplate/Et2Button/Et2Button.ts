@@ -11,6 +11,7 @@
 
 import {css} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import '../Et2Image/Et2Image';
 import {SlButton} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 
@@ -70,7 +71,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
     			width: 16px !important;
 			}
             ::slotted(et2-image) {
-                width: 20px;
+                max-width: 20px;
                 display: flex;
             }
             ::slotted([slot="icon"][src='']) {

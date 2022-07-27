@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, LitElement, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render, SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
@@ -171,6 +171,10 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		super.updated(changedProperties);
 
+		if(changedProperties.has("src") && !this._img)
+		{
+			render(this._imageTemplate(), this);
+		}
 		if(changedProperties.has("src") && this._img)
 		{
 			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.defaultSrc));
