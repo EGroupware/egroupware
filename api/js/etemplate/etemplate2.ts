@@ -830,7 +830,7 @@ export class etemplate2
 
 	public focusOnFirstInput()
 	{
-		const $input = jQuery('input:visible', this.DOMContainer)
+		const $input = jQuery('input:visible,et2-textbox:visible', this.DOMContainer)
 			// Date fields open the calendar popup on focus
 			.not('.et2_date')
 			.filter(function()
