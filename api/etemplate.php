@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|searchbox|textbox|label|avatar|lavatar|image|colorpicker|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|searchbox|textbox|label|avatar|lavatar|image|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 3;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression

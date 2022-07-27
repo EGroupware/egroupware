@@ -26,6 +26,7 @@ import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Layout/Et2Box/Et2Box';
 import './Et2Avatar/Et2Avatar';
 import './Et2Button/Et2Button';
+import './Et2Checkbox/Et2Checkbox';
 import './Et2Date/Et2Date';
 import './Et2Date/Et2DateDuration';
 import './Et2Date/Et2DateDurationReadonly';
