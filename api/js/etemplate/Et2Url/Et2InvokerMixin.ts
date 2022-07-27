@@ -179,6 +179,19 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 			}
 		}
 
+		/**
+		 * Reimplemented to enable/disable invoker on content change
+		 *
+		 * @param _ev
+		 * @returns
+		 */
+		_oldChange(_ev: Event): boolean
+		{
+			this._toggleInvokerDisabled();
+
+			return super._oldChange(_ev);
+		}
+
 		/** @param {import('@lion/core').PropertyValues } changedProperties */
 		firstUpdated(changedProperties)
 		{

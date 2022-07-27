@@ -148,14 +148,14 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.node = this.getInputNode();
 			this.updateComplete.then(() =>
 			{
-				this.addEventListener("change", this._oldChange);
+				this.addEventListener(typeof (<any>this).handleChange === 'function' ? 'sl-change' : 'change', this._oldChange);
 			});
 		}
 
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
-			this.removeEventListener("change", this._oldChange);
+			this.removeEventListener(typeof (<any>this).handleChange === 'function' ? 'sl-change' : 'change', this._oldChange);
 		}
 
 		/**
