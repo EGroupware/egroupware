@@ -2305,6 +2305,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$content['mail_displayattachments'] = $attachmentHTMLBlock;
 			$content['attachmentsBlockTitle'] = count($attachmentHTMLBlock).' '.Lang('attachments');
+			$sel_options['mail_displayattachments']['actions'] = mail_hooks::attachmentsBlockActions();
 		}
 
 		$content['mail_id']=$rowID;
@@ -2468,8 +2469,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['partID']=$value['partID'];
 				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
-				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
 				$attachmentHTML[$key]['smime_type'] = $value['smime_type'];
+				$attachmentHTML[$key]['actions'] = 'downloadOneAsFile';
+				$attachmentHTML[$key]['actionsDefaultLabel'] = 'Download';
+
 				// reset mode array as it should be considered differently for
 				// each attachment
 				$mode = array();
@@ -2579,12 +2582,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
-				// add save-all and download zip icon for first attachment only
-				// if more than one attachments.
-				if ($key == 0 && count($attachments) > 1)
-				{
-					$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
-				}
+
 				if (!$GLOBALS['egw_info']['user']['apps']['filemanager']) $attachmentHTML[$key]['no_vfs'] = true;
 			}
 			$attachmentHTMLBlock="<table width='100%'>";

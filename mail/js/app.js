@@ -1017,6 +1017,19 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Handle actions from attachments block
+	 * @param _e
+	 * @param _widget
+	 */
+	attachmentsBlockActions: function(_e, _widget)
+	{
+		const id = _widget.id.replace('[actions]','');
+		const action = _widget.value;
+		_widget.label = _widget.select_options.filter(_item=>{return _item.value == _widget.value})[0].label;
+		this.saveAttachmentHandler(_widget,action, id);
+	},
+
+	/**
 	 * mail_preview - implementation of the preview action
 	 *
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
@@ -1025,6 +1038,7 @@ app.classes.mail = AppJS.extend(
 	mail_preview: function(selected, nextmatch) {
 		let data = {};
 		let rowId = '';
+		let sel_options = {}
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		let mailPreview = this.et2.getWidgetById('mailPreview');
 		if(typeof selected != 'undefined' && selected.length == 1)
@@ -1069,8 +1083,46 @@ app.classes.mail = AppJS.extend(
 			});
 		}
 
-		if (data.attachmentsBlock) data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
-		mailPreview.set_value({content:data});
+		if (data.attachmentsBlock)
+		{
+			const actions = [
+				{
+					id: 'downloadOneAsFile',
+					label:'Download',
+					icon:'fileexport',
+					value:'downloadOneAsFile'
+				},
+				{
+					id: 'saveOneToVfs',
+					label: 'Save in Filemanager',
+					icon: 'filemanager/navbar.svg',
+					value: 'saveOneToVfs'
+				},
+				{
+					id: 'saveAllToVfs',
+					label: 'Save all to Filemanager',
+					icon: 'mail/save_all',
+					value: 'saveAllToVfs'
+				},
+				{
+					id: 'downloadAllToZip',
+					label: 'Save as ZIP',
+					icon: 'mail/save_zip',
+					value: 'downloadAllToZip'
+				}
+			];
+			data.attachmentsBlockTitle = `${data.attachmentsBlock.length} attachments`;
+			data.attachmentsBlock.forEach(_item => {
+				_item.actions='downloadOneAsFile';
+				// for some reason label needs to be set explicitly for the dropdown button. It needs more investigation.
+				_item.actionsDefaultLabel='Download';
+			});
+
+			sel_options.attachmentsBlock = {actions:actions};
+		}
+
+
+		mailPreview.set_value({content:data, sel_options:sel_options});
 
 		if (selected && selected.length>1)
 		{

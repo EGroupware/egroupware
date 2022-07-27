@@ -785,4 +785,38 @@ class mail_hooks
 			]
 		];
 	}
+
+	/**
+	 * options for attachments block actions
+	 * @return string[][]
+	 */
+	public static function attachmentsBlockActions()
+	{
+		return [
+			'downloadOneAsFile' => [
+				'id' => 'downloadOneAsFile',
+				'label' => 'Download',
+				'icon' => 'fileexport',
+				'value' => 'downloadOneAsFile'
+			],
+			'saveOneToVfs' => [
+				'id' => 'saveOneToVfs',
+				'label' => 'Save in Filemanager',
+				'icon' => 'filemanager/navbar.svg',
+				'value' => 'saveOneToVfs'
+			],
+			'saveAllToVfs' => [
+				'id' => 'saveAllToVfs',
+				'label' => 'Save all to Filemanager',
+				'icon' => 'mail/save_all',
+				'value' => 'saveAllToVfs'
+			],
+			'downloadAllToZip' => [
+				'id' => 'downloadAllToZip',
+				'label' => 'Save as ZIP',
+				'icon' => 'mail/save_zip',
+				'value' => 'downloadAllToZip'
+			]
+		];
+	}
 }
