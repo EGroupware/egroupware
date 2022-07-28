@@ -9,17 +9,18 @@
  */
 
 
-import {css, html} from "@lion/core";
-import {LionTextarea} from "@lion/textarea";
+import {css} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {SlTextarea} from "@shoelace-style/shoelace";
+import shoelace from "../Styles/shoelace";
 
 
-export class Et2Textarea extends Et2InputWidget(LionTextarea)
+export class Et2Textarea extends Et2InputWidget(SlTextarea)
 {
 	static get styles()
 	{
 		return [
+			...shoelace,
 			...super.styles,
 			css`
 			:host {
@@ -27,19 +28,6 @@ export class Et2Textarea extends Et2InputWidget(LionTextarea)
 				flex-direction: column;
 				width: 100%;
 				height: 100%;
-            }
-            /* Get text area to fill its space */
-            .form-field__group-two {
-            	height: 100%;
-            	display: flex;
-            	flex-direction: column;
-            }
-            .input-group {
-            	height: 100%;
-            	display: flex;
-            }
-            .input-group__container {
-            	width: 100%;
             }
 			`,
 		];
@@ -72,13 +60,13 @@ export class Et2Textarea extends Et2InputWidget(LionTextarea)
 	connectedCallback()
 	{
 		super.connectedCallback();
-		if(this._width && this._inputNode)
+		if(this.__width && this._inputNode)
 		{
-			this._inputNode.style.width = this._width;
+			this._inputNode.style.width = this.__width;
 		}
-		if(this._height && this._inputNode)
+		if(this.__height && this._inputNode)
 		{
-			this._inputNode.style.height = this._height;
+			this._inputNode.style.height = this.__height;
 		}
 	}
 
@@ -91,18 +79,18 @@ export class Et2Textarea extends Et2InputWidget(LionTextarea)
 	set width(value)
 	{
 
-		let oldValue = this._width;
+		let oldValue = this.__width;
 
-		this._width = value;
+		this.__width = value;
 
 		this.requestUpdate("width", oldValue);
 	}
 
 	set height(value)
 	{
-		let oldValue = this._height;
+		let oldValue = this.__height;
 
-		this._height = value;
+		this.__height = value;
 
 		this.requestUpdate("height", oldValue);
 	}
@@ -113,16 +101,10 @@ export class Et2Textarea extends Et2InputWidget(LionTextarea)
 		this._inputNode.style.maxHeight = 'inherit';
 	}
 
-	__initializeAutoresize()
+	get _inputNode()
 	{
-		return;
-	}
-
-	__startAutoresize()
-	{
-		return;
+		return this.shadowRoot?.querySelector("textarea");
 	}
 }
 
-// @ts-ignore TypeScript is not recognizing that Et2Textarea is a LitElement
 customElements.define("et2-textarea", Et2Textarea);
