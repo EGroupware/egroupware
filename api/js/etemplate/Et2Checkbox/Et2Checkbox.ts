@@ -31,6 +31,10 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
             :host([disabled]) {
             	display:initial;
             }
+            /* Extend hover highlight to label */
+            .checkbox:not(.checkbox--disabled):hover {
+				color: var(--sl-input-border-color-hover);
+			}
             `,
 		];
 	}
