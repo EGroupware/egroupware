@@ -32,7 +32,8 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
  	 */
 	function install_mailto_handler()
 	{
-		if (document.location.href.match(/(\?|&)cd=yes(&|$)/))
+		if (document.location.href.match(/(\?|&)cd=yes(&|$)/) &&
+			typeof navigator.registerProtocolHandler === 'function')	// eg. Safari 15.5 does NOT implement it
 		{
 			let url = egw_webserverUrl;
 			if (url[0] === '/') url = document.location.protocol+'://'+document.location.hostname+(url !== '/' ? url : '');
