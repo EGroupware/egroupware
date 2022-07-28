@@ -149,17 +149,6 @@ select#addressbook-index_col_filter\[tid\] {
 et2-button#addressbook-index_nm_advanced-search {
   margin-right: 0 !important;
 }
-#addressbook-edit .chzn-container .chzn-results {
-  max-height: 110px;
-}
-#addressbook-index_nm .chzn-drop {
-  width: auto;
-}
-#addressbook-edit_adr_one_region,
-#addressbook-edit_adr_two_region {
-  vertical-align: middle;
-  margin-left: 1px;
-}
 .smime_section_border {
   border-top: 1px solid #e5e5e5;
 }
