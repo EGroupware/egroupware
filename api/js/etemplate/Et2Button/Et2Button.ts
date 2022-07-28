@@ -9,7 +9,7 @@
  */
 
 
-import {css} from "@lion/core";
+import {css, PropertyValues} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlButton} from "@shoelace-style/shoelace";
@@ -154,14 +154,18 @@ export class Et2Button extends Et2InputWidget(SlButton)
 
 	set label(new_label : string)
 	{
-		if(!this._labelNode)
+		this.updateComplete.then(() =>
 		{
-			this.textContent = new_label;
-		}
-		else
-		{
-			this._labelNode.textContent = new_label;
-		}
+			if(!this._labelNode)
+			{
+				const textNode = document.createTextNode(new_label);
+				this.appendChild(textNode);
+			}
+			else
+			{
+				this._labelNode.textContent = new_label;
+			}
+		});
 	}
 
 	get label()
@@ -171,7 +175,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
 
 	set image(new_image : string)
 	{
-		let oldValue = this._image;
+		let oldValue = this.__image;
 		if(new_image.indexOf("http") >= 0)
 		{
 			this.__image = new_image
@@ -180,13 +184,6 @@ export class Et2Button extends Et2InputWidget(SlButton)
 		{
 			this.__image = this.egw().image(new_image);
 		}
-		if(!this._iconNode)
-		{
-			const image = document.createElement("et2-image");
-			image.slot = "prefix";
-			this.prepend(image);
-		}
-		this._iconNode.src = this.__image;
 		this.requestUpdate("image", oldValue);
 	}
 
@@ -267,6 +264,22 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			{
 				this.classList.add(default_class);
 			}
+		}
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		if(changedProperties.has("image"))
+		{
+			if(this.image && !this._iconNode)
+			{
+				const image = document.createElement("et2-image");
+				image.slot = "prefix";
+				this.prepend(image);
+			}
+			this._iconNode.src = this.__image;
 		}
 	}
 
