@@ -300,7 +300,7 @@ function send_template()
 
 		$str = preg_replace_callback('#<date(-time[^\s]*|-duration|-since)?\s([^>]+)/>#', static function($matches)
 		{
-			if ($matches[1] === 'date-time_today') $matches[1] = 'date-time-today';
+			if ($matches[1] === '-time_today') $matches[1] = '-time-today';
 			return "<et2-date$matches[1] $matches[2]></et2-date$matches[1]>";
 		}, $str);
 
