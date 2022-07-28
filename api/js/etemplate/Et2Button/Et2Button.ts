@@ -95,6 +95,9 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			}
 			.button__label {
 			}
+			.button__prefix {
+				padding-left: 1px;
+			}
             `,
 		];
 	}

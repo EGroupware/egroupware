@@ -2879,6 +2879,7 @@ div.et2_toolbar.ui-widget-header {
 }
 .nextmatch_header_row et2-button, .nextmatch_header_row et2-searchbox, .et2_toolbar et2-button {
     margin-right: 1ex;
+    min-width: 24px;
 }
 .nextmatch_header_row et2-button::part(container){
     height: 18px;
