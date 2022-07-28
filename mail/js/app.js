@@ -1058,9 +1058,9 @@ app.classes.mail = AppJS.extend(
 					if (typeof _data == 'object')
 					{
 						data.attachmentsBlock = _data;
-						data.attachmentsBlockTitle = `${_data.lenght} attachments`;
+						data.attachmentsBlockTitle = `${_data.length} attachments`;
 						// Update client cache to avoid resolving winmail.dat attachment again
-						egw.dataStoreUID(this.data.uid, this.data);
+						egw.dataStoreUID(data.uid, data);
 						mailPreview.set_value({content:data});
 					}
 					else
