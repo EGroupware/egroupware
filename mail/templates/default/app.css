@@ -175,7 +175,7 @@ A.sieveRowInActive
 	bottom:80px;
 }
 table tr.attachmentRow > td{
-	padding:0 !important;
+	vertical-align: middle;
 }
 table tr.attachmentRow > td > img {
 	background:transparent;
