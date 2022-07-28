@@ -266,18 +266,18 @@ export class et2_nextmatch_rowProvider
 	 */
 	_cloneWebComponent(entry, row, data)
 	{
-		/*
-		// N.B. cloneNode widget is missing its unreflected properties and we need to use widget.clone()
-		// instead to get them.  This slows things down and is to be avoided if we can.
-		let c = widget.clone();
-		let partial = entry.nodeFuncs[0](row);
-		partial.parentNode.insertBefore(c, partial);
-		partial.parentNode.removeChild(partial);
-		widget = c;
-		 */
-
-		// Use the clone, not the original
+		// Widget was already cloned from original row, just get it
 		let widget = entry.nodeFuncs[0](row);
+		// Original widget
+		let original = entry.nodeFuncs[0](this._dataRow);
+
+		// N.B. cloneNode widget is missing its unreflected properties and we need to get them from original
+		let widget_class = window.customElements.get(widget.localName);
+		let properties = widget_class ? widget_class.properties : [];
+		for(let key in properties)
+		{
+			widget[key] = original[key];
+		}
 
 		if(!widget || widget.localName !== entry.widget.localName)
 		{
