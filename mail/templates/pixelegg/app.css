@@ -1011,6 +1011,9 @@ div#mail-index_nm.splitter-pane {
   width: 3em;
   text-align: end;
 }
+.mailPreviewHeaders et2-select-email::part(control) {
+  border: none;
+}
 #popupMainDiv {
   height: 99%;
   padding: 5px;

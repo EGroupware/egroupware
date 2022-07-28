@@ -1042,3 +1042,6 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	width: 3em;
 	text-align: end;
 }
+.mailPreviewHeaders et2-select-email::part(control) {
+	border: none;
+}
