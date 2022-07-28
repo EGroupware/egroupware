@@ -31,10 +31,10 @@
                                          hover_action="app.mail.modifyMessageSubjectDialog"
                                          hover_action_title="Modify subject of this message"/>
                             <hbox class="mailPreviewHeaders smimeIcons">
-                                <image id="smimeSignature" src="smime_sign" statustext="Smime signed message" disabled="true"
+                                <image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="!@smime=smime_sign"
                                        align="right" width="24"/>
-                                <image id="smimeEncryption" src="smime_encrypt" statustext="Smime encrypted message"
-                                       disabled="true" align="right" width="24"/>
+                                <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
+                                       disabled="!@smime=smime_encrypt" align="right" width="24"/>
                             </hbox>
                         </hbox>
                         <hbox width="100%" class="mailPreviewHeaders">

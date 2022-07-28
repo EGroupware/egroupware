@@ -961,35 +961,38 @@ div.mailComposeHeaderSection>table {
 .header_row_right.vertical_splitter {float:left;}
 .header_row_right.vertical_splitter div#mail-index_mail-index-vacationnotice .et2_vbox {margin-right: 0;}
 
-div.smime_cert_notverified {
+et2-box.smime_cert_notverified {
 	border-top: 4px solid #8dff95 !important;
 }
-img.smime_cert_notverified {
+et2-image.smime_cert_notverified {
 	background: #8dff95;
 }
-div.smime_cert_verified {
+et2-box.smime_cert_verified {
 	border-top: 4px solid #1ab82c !important;
 }
-div.smime_cert_unknownemail {
+et2-box.smime_cert_unknownemail {
 	border-top: 4px solid #a28cff !important;
 }
 
-img.smime_cert_verified {
+et2-image.smime_cert_verified {
 	background: #1ab82c;
 }
-div.smime_cert_notvalid {
+et2-box.smime_cert_notvalid {
 	border-top: 4px solid #e90052 !important;
 }
-img.smime_cert_notvalid {
+et2-image.smime_cert_notvalid {
 	background: #e90052;
 }
-img.smime_cert_unknownemail {
+et2-image.smime_cert_unknownemail {
 	background: #a28cff;
 }
 .mailPreviewHeaders.smimeIcons et2-image {
 	width: 24px;
 }
-
+.mailPreviewHeaders.smimeIcons {
+	display: flex;
+	justify-content: end;
+}
 #mail-compose tr.mailComposeHeaders {
   border-top: 1px solid silver;
 }

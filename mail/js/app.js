@@ -1121,7 +1121,6 @@ app.classes.mail = AppJS.extend(
 			sel_options.attachmentsBlock = {actions:actions};
 		}
 
-
 		mailPreview.set_value({content:data, sel_options:sel_options});
 
 		if (selected && selected.length>1)
@@ -1144,6 +1143,8 @@ app.classes.mail = AppJS.extend(
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
+
+			this.smime_clear_flags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
 
 			// show iframe, in case we hide it from mailvelopes one and remove that
 			jQuery(IframeHandle.getDOMNode()).show()
@@ -5891,7 +5892,7 @@ app.classes.mail = AppJS.extend(
 			this.set_smimeAttachmentsMobile(_attachments);
 			return;
 		}
-		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
+		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'attachmentsBlock');
 		var content = this.et2.getArrayMgr('content');
 		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
 		if (attachmentArea && _attachments && _attachments.length > 0)
@@ -5901,7 +5902,7 @@ app.classes.mail = AppJS.extend(
 			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.getDOMNode().classList.remove('loading');
 			attachmentArea.set_value({content:_attachments});
-			if (attachmentArea.id == 'previewAttachmentArea')
+			if (attachmentArea.id == 'attachmentsBlock')
 			{
 				var a_node = attachmentArea.getDOMNode();
 				var m_node = mailPreview.getDOMNode();
@@ -5951,43 +5952,43 @@ app.classes.mail = AppJS.extend(
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
 		var smime_signature = et2_object.getWidgetById('smime_signature');
 		var smime_encryption = et2_object.getWidgetById('smime_encryption');
-		var $mail_container = egwIsMobile()? jQuery('.mail-d-h1').next() :
-				egw(window).is_popup() ? jQuery('.mailDisplayContainer'):
-				jQuery(et2_object.getWidgetById('mailPreviewContainer').getDOMNode());
+		var mail_container = egwIsMobile()? document.getElementsByClassName('mail-d-h1').next() :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer'):
+				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
 		smime_encryption.set_disabled(!data.encrypted);
 		if (!data.signed)
 		{
-			this.smime_clear_flags([$mail_container]);
+			this.smime_clear_flags([mail_container]);
 			return;
 		}
 		else if (data.verify)
 		{
-			$mail_container.addClass((data.class='smime_cert_verified'));
+			mail_container.classList.add((data.class='smime_cert_verified'));
 			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
 		}
 		else if (!data.verify && data.cert)
 		{
-			$mail_container.addClass((data.class='smime_cert_notverified'));
+			mail_container.classList.add((data.class='smime_cert_notverified'));
 			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
 		}
 		else if (!data.verify && !data.cert)
 		{
-			$mail_container.addClass((data.class='smime_cert_notvalid'));
+			mail_container.classList.add((data.class='smime_cert_notvalid'));
 			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
 		}
 		if (data.unknownemail)
 		{
-			$mail_container.addClass((data.class='smime_cert_unknownemail'));
+			mail_container.classList.add((data.class='smime_cert_unknownemail'));
 			smime_signature.set_class(data.class);
 		}
-		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
+		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).off().on('click',function(){
 			self.smime_certAddToContact(data,true);
 		}).addClass('et2_clickable');
-		jQuery(smime_encryption.getDOMNode()).on('click',function(){
+		jQuery(smime_encryption.getDOMNode()).off().on('click',function(){
 			self.smime_certAddToContact(data, true);
 		}).addClass('et2_clickable');
 	},
@@ -6001,9 +6002,9 @@ app.classes.mail = AppJS.extend(
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
-			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid smime_cert_unknownemail';
-			_nodes[i].removeClass(smime_classes);
-			_nodes[i].off('click');
+			_nodes[i].classList.remove(...['smime_cert_verified',
+				'smime_cert_notverified',
+				'smime_cert_notvalid', 'smime_cert_unknownemail']);
 		}
 	},
 
