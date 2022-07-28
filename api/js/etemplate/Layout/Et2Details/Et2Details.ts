@@ -58,6 +58,8 @@ export class Et2Details extends Et2Widget(SlDetails)
 				width: 100%;
 				border-radius: var(--sl-border-radius-small);
 				border: 1px solid var(--sl-color-neutral-200);
+				max-height: 15em;
+    			overflow-y: auto;
             }
             `,
 		];
