@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<?xml-stylesheet type="text/css" href="../../../../pixelegg/less/svg.css" ?>
+<svg version="1.1" id="calendar_mutliweek" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+<g>
+	<g>
+		<path fill="#696969" d="M19,8H1.125v5H19V8z M26,1.001h-4v3h3.001c1.657,0,3,1.343,3,3V25
+			c0,1.657-1.343,3-3,3H7c-1.657,0-3-1.343-3-3v-3H1v4c0,2.762,2.239,5,5,5h20c2.762,0,5.001-2.238,5.001-5V6.001
+			C31.001,3.239,28.762,1.001,26,1.001z M19,1H1.125v5H19V1z M19,15H1.125v5H19V15z"/>
+	</g>
+</g>
+</svg>

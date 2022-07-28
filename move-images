@@ -1,0 +1,36 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+(
+  cd pixelegg/images
+  mv * api/templates/default/images/
+  git rm -r images
+  ln -sf ../api/templates/default/images .
+  git add images
+)
+
+for app in *
+do
+	test -d "$app" -a -d "$app/templates" && {(
+	  echo "Processing images of $app"
+	  cd $app/templates
+	  test -d pixelegg && {
+	    cd pixelegg/images
+		  mv * ../../default/images/
+		  cd ..
+		  git rm -r images
+		  ln -s ../default/images .
+		  git add images
+		  cd ..
+		}
+		test -d jerryr && git rm -r jerryr
+		cd default/images
+		git add *
+		for img in *.svg
+		do
+		  test -f $(basename $img .svg).png && git rm -f $(basename $img .svg).png
+		  test -f $(basename $img .svg).gif && git rm -f $(basename $img .svg).gif
+		done
+	)}
+done
