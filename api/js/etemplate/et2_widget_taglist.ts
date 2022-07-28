@@ -1198,7 +1198,8 @@ class et2_taglist_email extends et2_taglist
 		// We check free entries for valid email, and render as invalid if it's not.
 		let valid = item.id != item.label || et2_taglist_email.EMAIL_PREG.test(item.id || '');
 
-		if (!valid && item.id)
+		// don't let none string id being checked as it makes no sense, and it would throw errors
+		if (!valid && item.id && typeof item.id == 'string')
 		{
 			// automatic quote 'Becker, Ralf <rb@stylite.de>' as '"Becker, Ralf" <rb@stylite.de>'
 			let matches = item.id.match(/^(.*) ?<(.*)>$/);
