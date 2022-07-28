@@ -28,6 +28,7 @@ import './Layout/Et2Details/Et2Details';
 import './Et2Avatar/Et2Avatar';
 import './Et2Button/Et2Button';
 import './Et2Checkbox/Et2Checkbox';
+import './Et2Checkbox/Et2CheckboxReadonly';
 import './Et2Date/Et2Date';
 import './Et2Date/Et2DateDuration';
 import './Et2Date/Et2DateDurationReadonly';
