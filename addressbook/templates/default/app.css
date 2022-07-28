@@ -109,9 +109,9 @@ div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px 
  */
 #addressbook-index .filtersContainer {
     position: absolute;
-    top: 0; /* Required for Chrome 76+ on Windows */
-    left: 350px;
-    right: 235px;
+    /* it messes with vertical alignment top: 0; Required for Chrome 76+ on Windows */
+    left: 348px;
+    right: 225px;
 }
 #addressbook-index .filtersContainer select {
 	width: 31.5%;
