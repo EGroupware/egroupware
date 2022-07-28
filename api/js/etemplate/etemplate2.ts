@@ -24,6 +24,7 @@ import {et2_tabbox} from "./et2_widget_tabs";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Layout/Et2Box/Et2Box';
+import './Layout/Et2Details/Et2Details';
 import './Et2Avatar/Et2Avatar';
 import './Et2Button/Et2Button';
 import './Et2Checkbox/Et2Checkbox';
