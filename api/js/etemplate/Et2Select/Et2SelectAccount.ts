@@ -60,7 +60,7 @@ export class Et2SelectAccount extends Et2Select
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption>;
+		let select_options : Array<SelectOption> = [];
 		// for primary_group we only display owngroups == own memberships, not other groups
 		if (type === 'primary_group' && this.accountType !== 'accounts')
 		{
