@@ -150,7 +150,12 @@ export class et2_portlet extends et2_valueWidget
 						self
 					);
 					// Tell children
-					self.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
+					self.iterateOver(function(widget) {
+						if (typeof widget.resize === 'function')
+						{
+							widget.resize();
+						}
+					},null,et2_IResizeable);
 				}
 			});
 		this.header = jQuery(document.createElement("div"))
@@ -330,7 +335,12 @@ export class et2_portlet extends et2_valueWidget
 				{
 					// Tell children
 					try {
-						this.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
+						this.iterateOver(function(widget) {
+							if (typeof widget.resize === 'function')
+							{
+								widget.resize();
+							}
+						},null,et2_IResizeable);
 					} catch (e) {
 						// Something went wrong, but do not stop
 						egw.debug('warn',e,this);
@@ -430,4 +440,3 @@ export class et2_portlet extends et2_valueWidget
 	}
 }
 et2_register_widget(et2_portlet, ["portlet"]);
-

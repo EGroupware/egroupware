@@ -276,7 +276,10 @@ export class etemplate2
 					{
 						self._widgetContainer.iterateOver(function(_widget)
 						{
-							_widget.resize(excess_height);
+							if (typeof _widget.resize === 'function')
+							{
+								_widget.resize(excess_height);
+							}
 						}, self, et2_IResizeable);
 					}
 				}

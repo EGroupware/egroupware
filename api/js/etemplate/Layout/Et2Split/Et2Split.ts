@@ -321,7 +321,10 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			// Tell widgets that manually resize about it
 			this.iterateOver(function(_widget)
 			{
-				_widget.resize();
+				if (typeof _widget.resize === 'function')
+				{
+					_widget.resize();
+				}
 			}, self, et2_IResizeable);
 		}.bind(this), 100);
 	}

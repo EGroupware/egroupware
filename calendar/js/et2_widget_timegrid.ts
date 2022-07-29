@@ -943,8 +943,10 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		if(this.rowHeight != old_height)
 		{
 			this.iterateOver(function(child) {
-				if(child === this) return;
-				child.resize();
+				if (child !== this && typeof child.resize === 'function')
+				{
+					child.resize();
+				}
 			},this, et2_IResizeable);
 		}
 

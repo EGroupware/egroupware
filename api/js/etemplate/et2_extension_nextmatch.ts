@@ -1731,7 +1731,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Allow column widgets a chance to resize
 			self.iterateOver(function(widget)
 			{
-				widget.resize();
+				if (typeof widget.resize === 'function')
+				{
+					widget.resize();
+				}
 			}, self, et2_IResizeable);
 		};
 
@@ -2191,7 +2194,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		// Allow column widgets a chance to resize
 		this.iterateOver(function(widget)
 		{
-			widget.resize();
+			if (typeof widget.resize === 'function')
+			{
+				widget.resize();
+			}
 		}, this, et2_IResizeable);
 	}
 
