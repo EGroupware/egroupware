@@ -4,13 +4,12 @@
 <overlay>
 	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter">
-			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
+			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
             <template id="mail.index.preview"/>
         </split>
     </template>
     <template id="mail.index.preview">
         <toolbar id="toolbar" list_header="short"/>
-
         <grid id="mailPreview" width="100%" height="100%" >
             <columns>
                 <column/>
@@ -25,7 +24,6 @@
                             <image src="mail"/>
                             <description value="Select an item to read"/>
                         </box>
-
                         <hbox class="mailPreviewHeaders">
                             <description id="subject" readonly="true"
                                          hover_action="app.mail.modifyMessageSubjectDialog"
@@ -143,53 +141,9 @@
             </rows>
         </grid>
     </template>
-
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
-        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add"
+        <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizental" header_left="mail.index.add"
                    header_right="mail.index.header_right"/>
-    </template>
-    <template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
-        <grid width="100%">
-            <columns>
-               <column width="90%"/>
-               <column width="80"/>
-            </columns>
-            <rows>
-                <row class="th">
-                    <nextmatch-sortheader label="subject" id="subject"/>
-                    <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
-                    <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
-                    <nextmatch-sortheader label="mail-address" id="address"/>
-                    <nextmatch-sortheader label="to" id="toaddress"/>
-                    <nextmatch-sortheader label="from" id="fromaddress"/>
-                    <nextmatch-sortheader align="center" label="size" id="size"/>
-                    <nextmatch-header statustext="security" label="Security" id="security"/>
-                </row>
-                <row class="$row_cont[class]">
-                    <hbox class="$row_cont[class] mobile_cat_col">
-                        <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="3.7em" shape="square"/>
-                        <vbox>
-                            <url-email id="${row}[address]" class="$row_cont[class]" readonly="true"/>
-                            <hbox>
-
-                                <description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
-                            </hbox>
-                            <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
-                        </vbox>
-                    </hbox>
-                    <vbox>
-                        <hbox>
-                            <date-time_today align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
-                        </hbox>
-                        <hbox>
-                            <image src="$row_cont[smime]" height="16px"/>
-                            <html id="${row}[attachments]"/>
-                            <description  class="status_img $row_cont[class]"/>
-                        </hbox>
-                    </vbox>
-                </row>
-            </rows>
-        </grid>
     </template>
     <template id="mail.index.add" template="" lang="" group="0" version="1.9.001">
         <buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add"/>

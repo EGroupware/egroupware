@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="mail.index.rows.horizental" template="" lang="" group="0" version="1.9.001">
+        <grid width="100%">
+            <columns>
+                <column minWidth="50" maxWidth="50" width="50"/>
+                <column width="20"/>
+                <column width="20"/>
+                <column width="40%"/>
+                <column minWidth="42" width="95"/>
+                <column width="95"/>
+                <column width="95"/>
+                <column width="30%"/>
+                <column width="30%"/>
+                <column width="80"/>
+                <column width="80"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <nextmatch-header label="avatar" id="avatar"/>
+                    <nextmatch-header statustext="Status" label="St." id="status"/>
+                    <nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
+                    <nextmatch-sortheader label="subject" id="subject"/>
+                    <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
+                    <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
+                    <nextmatch-sortheader label="mail-address" id="address"/>
+                    <nextmatch-sortheader label="to" id="toaddress"/>
+                    <nextmatch-sortheader label="from" id="fromaddress"/>
+                    <nextmatch-sortheader align="center" label="size" id="size"/>
+                    <nextmatch-header statustext="security" label="Security" id="security"/>
+                </row>
+                <row class="$row_cont[class]">
+                    <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="3.7em" shape="square"/>
+                    <description span="1" class="status_img"/>
+                    <html id="${row}[attachments]"/>
+                    <vbox>
+                        <description id="${row}[subject]" no_lang="1"/>
+                        <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
+                    </vbox>
+                    <hbox>
+                        <date-time_today align="center" id="${row}[date]" readonly="true"/>
+                    </hbox>
+                    <date-time_today align="center" id="${row}[modified]" readonly="true"/>
+                    <url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
+                    <url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
+                    <url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
+                    <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+                    <image src="$row_cont[smime]" />
+                </row>
+            </rows>
+        </grid>
+    </template>
+</overlay>

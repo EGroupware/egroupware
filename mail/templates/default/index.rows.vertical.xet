@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="mail.index.rows.vertical" template="" lang="" group="0" version="1.9.001">
+        <grid width="100%">
+            <columns>
+                <column width="90%"/>
+                <column width="80"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <nextmatch-sortheader label="subject" id="subject"/>
+                    <nextmatch-sortheader align="center" label="date" id="date" sortmode="DESC"/>
+                    <nextmatch-sortheader align="center" label="arrival" id="arrival"/>
+                    <nextmatch-sortheader label="mail-address" id="address"/>
+                    <nextmatch-sortheader label="to" id="toaddress"/>
+                    <nextmatch-sortheader label="from" id="fromaddress"/>
+                    <nextmatch-sortheader align="center" label="size" id="size"/>
+                    <nextmatch-header statustext="security" label="Security" id="security"/>
+                </row>
+                <row class="$row_cont[class]">
+                    <hbox class="$row_cont[class] mobile_cat_col">
+                        <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="3.7em" shape="square"/>
+                        <vbox>
+                            <url-email id="${row}[address]" class="$row_cont[class]" readonly="true"/>
+                            <hbox>
+
+                                <description id="${row}[subject]" no_lang="1" class="$row_cont[class]" />
+                            </hbox>
+                            <description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
+                        </vbox>
+                    </hbox>
+                    <vbox>
+                        <hbox>
+                            <date-time_today align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
+                        </hbox>
+                        <hbox>
+                            <image src="$row_cont[smime]" height="16px"/>
+                            <html id="${row}[attachments]"/>
+                            <description  class="status_img $row_cont[class]"/>
+                        </hbox>
+                    </vbox>
+                </row>
+            </rows>
+        </grid>
+    </template>
+</overlay>

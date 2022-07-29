@@ -486,7 +486,7 @@ class mail_ui
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
 				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
-				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+				$content[self::$nm_index]['default_cols'] = 'avatar,status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				$content[self::$nm_index]['csv_fields'] = false;
 				if ($msg)
 				{
@@ -610,6 +610,7 @@ class mail_ui
 			case "expand":
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
+				$etpl->setElementAttribute('nm', 'template', 'mail.index.rows.horizental');
 				break;
 			default:
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
