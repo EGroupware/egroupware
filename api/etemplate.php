@@ -263,7 +263,7 @@ function send_template()
 			return '<et2-nextmatch-header-' . $matches[2] . ' ' . stringAttrs($attrs) . '/>';
 		}, $str);
 
-		$str = preg_replace('#<passwd ([^/>]+)(/|></passwd)>#', '<et2-password $1></et2-password>', $str);
+		$str = preg_replace('#<passwd ([^>]+)(/|></passwd)>#', '<et2-password $1></et2-password>', $str);
 
 		// fix <button(only)?.../> --> <et2-(button|image) (noSubmit="true")?.../>
 		$str = preg_replace_callback('#<button(only)?\s(.*?)(/|></button)>#s', function ($matches) use ($name)
