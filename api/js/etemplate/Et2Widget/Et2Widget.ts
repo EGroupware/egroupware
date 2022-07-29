@@ -842,7 +842,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 				// An empty text node causes problems with legacy widget children
 				// It throws off their insertion indexing, making them get added in the wrong place
-				if(this.childNodes[0]?.nodeType == this.TEXT_NODE)
+				if(this.childNodes[0]?.nodeType == this.TEXT_NODE && this.childNodes[0].textContent == "")
 				{
 					this.removeChild(this.childNodes[0]);
 				}
