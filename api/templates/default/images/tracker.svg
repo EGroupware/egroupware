@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<?xml-stylesheet type="text/css" href="../../../../pixelegg/less/svg.css" ?>
+<svg version="1.1" id="tracker_navbar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="28.347px" height="28.347px" viewBox="0 0 28.347 28.347" enable-background="new 0 0 28.347 28.347" xml:space="preserve">
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#696969" d="M26.438,13.903L14.903,1.783v7.273h-0.879L7.099,1.783v7.273H2.194
+	v9.695h4.905v7.272l6.925-7.272h0.879v7.272L26.438,13.903z M8.39,21.175v-4.363H3.743v-5.816H8.39V6.631l7.062,7.272L8.39,21.175z"
+	/>
+</svg>
