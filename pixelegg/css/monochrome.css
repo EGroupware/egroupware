@@ -240,13 +240,13 @@
     margin-left: -10px;
   }
   a.et2_url.email {
-    background-image: url(../images/email.svg);
+    background-image: url(../../api/templates/default/images/email.svg);
   }
   a.et2_url.phone {
-    background-image: url(../images/phone.svg);
+    background-image: url(../../api/templates/default/images/phone.svg);
   }
   a.et2_url.url {
-    background-image: url(../images/url.svg);
+    background-image: url(../../api/templates/default/images/url.svg);
   }
   /**
  * Button widget - text only, and icon
@@ -318,7 +318,7 @@
   }
   .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
     /*visibility: hidden;*/
-    background-image: url(../images/close.svg);
+    background-image: url(../../api/templates/default/images/close.svg);
     margin: -2px -3px;
     padding: 0px;
   }
@@ -338,7 +338,7 @@
     border-left: 1px solid #F2F2F2;
   }
   .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
-    background-image: url(../images/bullet.svg);
+    background-image: url(../../api/templates/default/images/bullet.svg);
     background-color: transparent;
     background-size: contain;
     border: none;
@@ -350,12 +350,12 @@
     background-color: transparent;
   }
   .ui-datepicker .ui-datepicker-prev span {
-    background-image: url(../images/previous.svg) !important;
+    background-image: url(../../api/templates/default/images/previous.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }
   .ui-datepicker .ui-datepicker-next span {
-    background-image: url(../images/next.svg) !important;
+    background-image: url(../../api/templates/default/images/next.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }
@@ -366,13 +366,13 @@
   .et2_file .progress li:hover div.remove {
     width: 16px;
     height: 16px;
-    background-image: url("../images/delete.svg");
+    background-image: url("../../api/templates/default/images/delete.svg");
   }
   .et2_file .progress p {
     background-color: #FFDD73;
   }
   span.et2_file_span {
-    background-image: url(../images/attach.svg);
+    background-image: url(../../api/templates/default/images/attach.svg);
   }
   span.et2_file_span img[url*="svg"] {
     background-color: #b4b4b4 !important;
@@ -472,7 +472,7 @@
     left: 0px;
   }
   .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../images/arrow_down.svg) no-repeat center right;
+    background: #ffffff url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
   }
   .et2_link_to .et2_file span {
     background-position: center;
@@ -483,7 +483,7 @@
     border-radius: 3px;
   }
   .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../images/arrow_down.svg) no-repeat center right;
+    background: #ffffff url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
     background-size: contain;
   }
   .et2_link {
@@ -504,7 +504,7 @@
   }
   .et2_link_list td div.delete {
     visibility: hidden;
-    background-image: url("../images/delete.svg");
+    background-image: url("../../api/templates/default/images/delete.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px 12px;
@@ -512,7 +512,7 @@
   }
   .et2_vfs td div.delete {
     visibility: hidden;
-    background-image: url("../images/delete.svg");
+    background-image: url("../../api/templates/default/images/delete.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px 12px;
@@ -894,7 +894,7 @@
     color: #000000;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a .ui-icon-trash {
-    background-image: url(../images/delete.svg);
+    background-image: url(../../api/templates/default/images/delete.svg);
     background-size: 12px 12px;
     background-position: center 2px;
     margin-top: 0px;
@@ -910,7 +910,7 @@
     padding: 2px 1px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
-    background-image: url(../images/favorites.svg);
+    background-image: url(../../api/templates/default/images/favorites.svg);
     background-size: 12px 12px;
     background-position: 1px 0;
     margin-right: 9px;
@@ -921,7 +921,7 @@
     height: 12px;
     margin-left: 5px;
     margin-right: 10px;
-    background-image: url(../images/fav_filter.svg);
+    background-image: url(../../api/templates/default/images/fav_filter.svg);
     background-size: 12px 12px;
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -953,12 +953,12 @@
   }
   .nextmatch_sortheader.asc {
     font-weight: bold;
-    background-image: url(../images/arrow_up.svg);
+    background-image: url(../../api/templates/default/images/arrow_up.svg);
     background-size: 8px 8px;
   }
   .nextmatch_sortheader.desc {
     font-weight: bold;
-    background-image: url(../images/arrow_down.svg);
+    background-image: url(../../api/templates/default/images/arrow_down.svg);
     background-size: 8px 8px;
   }
   /**
@@ -1008,11 +1008,11 @@
 * et2_taglist
 */
   .et2_taglist_toggle > div.toggle {
-    background-image: url("../images/minus.svg");
+    background-image: url("../../api/templates/default/images/minus.svg");
     background-size: 50%;
   }
   .et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
-    background-image: url("../images/plus.svg");
+    background-image: url("../../api/templates/default/images/plus.svg");
     background-size: 50%;
   }
   .et2_taglist.et2_taglist_category {
@@ -1066,12 +1066,12 @@
     float: left;
   }
   .splitter-bar .ui-icon.ui-icon-grip-solid-vertical {
-    background-image: url(../images/splitter_vert.png);
+    background-image: url(../../api/templates/default/images/splitter_vert.png);
     background-position: center;
     background-repeat: no-repeat;
   }
   .splitter-bar .ui-icon.ui-icon-grip-solid-horizontal {
-    background-image: url(../images/splitter_horz.png);
+    background-image: url(../../api/templates/default/images/splitter_horz.png);
     background-position: center;
     background-repeat: no-repeat;
   }
@@ -1100,11 +1100,11 @@
     padding-left: 5px;
   }
   .et2_vfsPath input.et2_textbox.et2_vfs {
-    background-image: url(../images/edit.svg);
+    background-image: url(../../api/templates/default/images/edit.svg);
   }
   /*#################################### ET2 SEARCHBOX #####################################################*/
   .et2_searchbox button.et2_button {
-    background-image: url(../images/search.svg);
+    background-image: url(../../api/templates/default/images/search.svg);
     background-size: 20px 20px;
     background-position: center;
   }
@@ -1264,13 +1264,13 @@ option:checked {
   text-decoration: none;
 }
 .ui-state-default .ui-icon.ui-icon-triangle-1-s {
-  background: url("../images/arrow_down.svg");
+  background: url("../../api/templates/default/images/arrow_down.svg");
   background-size: 8px auto;
   background-position: center;
   background-repeat: no-repeat;
 }
 .ui-widget-header .ui-icon.ui-icon-check {
-  background-image: url("../images/check.svg");
+  background-image: url("../../api/templates/default/images/check.svg");
   background-size: 12px auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -1366,8 +1366,8 @@ option:checked {
 }
 .ui-icon-close {
   /*visibility: hidden;*/
-  /*background-image: url(../images/search.png);*/
-  background-image: url("../images/cancel.svg");
+  /*background-image: url(../../api/templates/default/images/search.png);*/
+  background-image: url("../../api/templates/default/images/cancel.svg");
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: 12px 12px;
@@ -1397,7 +1397,7 @@ span.ui-icon-close {
 }
 /*Schliessen x*/
 .ui-icon-closethick {
-  background-image: url(../images/close.svg) !important;
+  background-image: url(../../api/templates/default/images/close.svg) !important;
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: contain;
@@ -1446,7 +1446,7 @@ span.ui-multiselect-header {
   color: #FFFFFF;
 }
 span.ui-icon-search {
-  background-image: url(../images/search.svg) !important;
+  background-image: url(../../api/templates/default/images/search.svg) !important;
   background-position: 0px;
   background-size: 10px 10px;
 }
@@ -2191,7 +2191,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
-  background-image: url(../images/task.png);
+  background-image: url(../../api/templates/default/images/task.png);
   background-repeat: no-repeat;
   background-position-x: 0;
 }
@@ -2232,10 +2232,10 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   opacity: 0.5;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
-  background-image: url(../images/personal.png);
+  background-image: url(../../api/templates/default/images/personal.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
-  background-image: url(../images/password.png);
+  background-image: url(../../api/templates/default/images/password.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
   background-image: none;
@@ -2244,10 +2244,10 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   padding-left: 31px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
-  background-image: url(../images/internet.png);
+  background-image: url(../../api/templates/default/images/internet.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.language {
-  background-image: url(../images/language.png);
+  background-image: url(../../api/templates/default/images/language.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="checkbox"] {
   height: 25px;
@@ -2390,13 +2390,13 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background-image: url(../images/ajax-loader.gif);
+  background-image: url(../../api/templates/default/images/ajax-loader.gif);
   background-repeat: no-repeat;
   background-position: center;
   float: right;
 }
 .egw_fw_ui_tab_content > .loading {
-  background-image: url('../images/loading.gif');
+  background-image: url('../../api/templates/default/images/loading.gif');
   background-repeat: no-repeat;
   text-align: center;
   line-height: 400px;
@@ -2539,7 +2539,7 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
-  background-image: url('../images/delete.png');
+  background-image: url('../../api/templates/default/images/delete.png');
   margin-left: 3em;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -2642,7 +2642,7 @@ button.et2_button_delete:active {
  *
  ######################################################################################## */
 #passwordchange {
-  background-image: url('../images/cancel.png') !important;
+  background-image: url('../../api/templates/default/images/cancel.png') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2689,7 +2689,7 @@ button.et2_button_delete:active {
 /*div.et2_box_widget .et2_button_text:last_child,*/
 button[id="cancel"],
 button#cancel {
-  background-image: url('../images/cancel.png') !important;
+  background-image: url('../../api/templates/default/images/cancel.png') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2731,7 +2731,7 @@ button#cancel:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #passwordcancel {
-  background-image: url('../images/cancel.png') !important;
+  background-image: url('../../api/templates/default/images/cancel.png') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2794,7 +2794,7 @@ button.add:before {
   line-height: 1.1em;
 }
 button[id="add"] {
-  background-image: url('../images/add.png') !important;
+  background-image: url('../../api/templates/default/images/add.png') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2841,13 +2841,13 @@ button[id="add"] {
 /* @end */
 /* @group Single Chosen */
 .chzn-container-single .chzn-single div b {
-  background-image: url("../images/arrow_down.svg") !important;
+  background-image: url("../../api/templates/default/images/arrow_down.svg") !important;
   background-size: 8px auto !important;
   background-position: center;
   background-repeat: no-repeat;
 }
 .chzn-container-single.chzn-with-drop .chzn-single div b {
-  background-image: url("../images/arrow_up.svg") !important;
+  background-image: url("../../api/templates/default/images/arrow_up.svg") !important;
   background-size: 8px auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -3072,12 +3072,12 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0;
-  background: url(../images/arrow_down.svg) no-repeat center right;
+  background: url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
   background-size: 8px auto;
   background-position-x: calc(100% - 8px);
 }
 select:active {
-  background: #ffffff url(../images/arrow_up.svg) no-repeat center right;
+  background: #ffffff url(../../api/templates/default/images/arrow_up.svg) no-repeat center right;
   background-size: 8px auto;
   background-position-x: calc(100% - 8px);
 }
@@ -3226,7 +3226,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.su
  */
 /*body {
     background-color: @gray_0;
-    background-image: url(../images/bgDialog.png);
+    background-image: url(../../api/templates/default/images/bgDialog.png);
     background-repeat: repeat-x;
 }*/
 div#popupMainDiv {
@@ -3257,7 +3257,7 @@ form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   /*.background-clip(padding-box);*/
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker {
-  background-image: url("../images/datepopup.png");
+  background-image: url("../../api/templates/default/images/datepopup.png");
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
   cursor: pointer;
@@ -3562,21 +3562,21 @@ div.admin-config form > table td b {
 }
 .warning_message {
   border-left: 24px solid rgba(255, 204, 0, 0.5) !important;
-  background-image: url(../images/dialog_warning.png);
+  background-image: url(../../api/templates/default/images/dialog_warning.png);
 }
 .error_message {
   border-left: 24px solid rgba(204, 0, 51, 0.5) !important;
-  background-image: url(../images/dialog_error.png);
+  background-image: url(../../api/templates/default/images/dialog_error.png);
 }
 .info_message {
-  background-image: url(../images/dialog_info.png);
+  background-image: url(../../api/templates/default/images/dialog_info.png);
 }
 .info_message .discard {
   float: right;
   margin-top: 4px;
 }
 .success_message {
-  background-image: url(../images/check.png);
+  background-image: url(../../api/templates/default/images/check.png);
 }
 /**
  * Message in popup
@@ -3617,7 +3617,7 @@ body .egw_message_wrapper div#egw_message span.close {
   background: #d0cdcdb5;
   right: 10px;
   top: 10px;
-  background-image: url(../images/close.svg);
+  background-image: url(../../api/templates/default/images/close.svg);
   background-size: 12px;
   background-repeat: no-repeat;
   background-position: center;
@@ -3873,7 +3873,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/delete.svg);
+  background-image: url(../../api/templates/default/images/delete.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3917,7 +3917,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/search.svg);
+  background-image: url(../../api/templates/default/images/search.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3968,7 +3968,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/close.svg);
+  background-image: url(../../api/templates/default/images/close.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3983,7 +3983,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/back.png);
+  background-image: url(../../api/templates/default/images/back.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px;
@@ -3998,7 +3998,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../images/forward.png);
+  background-image: url(../../api/templates/default/images/forward.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px;
@@ -4034,7 +4034,7 @@ td.lettersearch {
   background: rgba(103, 159, 210, 0.2);
 }
 #egwpopup div#egwpopup_header .egwpopup_deleteall {
-  background-image: url(../images/delete.svg);
+  background-image: url(../../api/templates/default/images/delete.svg);
   width: 12px;
   height: 12px;
   background-position: center;
@@ -4393,7 +4393,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home {
   margin-left: 0px;
-  background-image: url(../images/topmenu_items/home.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/home.svg);
   background-repeat: no-repeat;
   background-size: 16px;
 }
@@ -4401,42 +4401,42 @@ span.overlayContainer img.overlay {
   margin-left: 0px;
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/setup.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/setup.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/access.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/category.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/category.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/password.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/password.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/help.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/help.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_current_user {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/users.png);
+  background-image: url(../../api/templates/default/images/users.png);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/topmenu_items/logout.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/logout.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_print {
   background-repeat: no-repeat;
   background-size: 16px;
-  background-image: url(../images/print.svg);
+  background-image: url(../../api/templates/default/images/print.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone span {
   width: 100%;
@@ -4462,7 +4462,7 @@ span.overlayContainer img.overlay {
 }
 /*ICON List*/
 #egw_fw_topmenu_slide.slidedown {
-  background-image: url("../images/list.png");
+  background-image: url("../../api/templates/default/images/list.png");
   background-position: center center;
   height: 15px;
   width: 15px;
@@ -4477,7 +4477,7 @@ span.overlayContainer img.overlay {
 }
 /*Icon ARROW UP*/
 #egw_fw_topmenu_slide.slideup {
-  background-image: url("../images/slideup.png");
+  background-image: url("../../api/templates/default/images/slideup.png");
   background-position: center center;
   height: 15px;
   width: 15px;
@@ -4601,7 +4601,7 @@ span.overlayContainer img.overlay {
   transition: none;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
-  background-image: url(../images/close.svg);
+  background-image: url(../../api/templates/default/images/close.svg);
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
   top: 8px;
@@ -4747,7 +4747,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active {
   cursor: pointer;
-  background-image: url("../images/clear.png");
+  background-image: url("../../api/templates/default/images/clear.png");
   background-position: 95% -3000px;
   background-repeat: no-repeat;
   background-color: #ffffff;
@@ -4776,7 +4776,7 @@ span.overlayContainer img.overlay {
   padding-left: 35px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
-  background-image: url(../images/reload.png);
+  background-image: url(../../api/templates/default/images/reload.png);
   background-size: 18px;
   background-position: 9px 6px;
   background-repeat: no-repeat;
@@ -4785,7 +4785,7 @@ span.overlayContainer img.overlay {
   display: none !important;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:focus {
-  background-image: url("../images/ajax-loader.gif");
+  background-image: url("../../api/templates/default/images/ajax-loader.gif");
   background-repeat: no-repeat;
   background-position: 90% 50%;
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -4859,7 +4859,7 @@ span.overlayContainer img.overlay {
   line-height: 1em;
   font-size: 12px;
   font-weight: normal;
-  background-image: url(../images/arrow_right.svg);
+  background-image: url(../../api/templates/default/images/arrow_right.svg);
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 12px;
@@ -4881,7 +4881,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1,
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h2 {
-  background-image: url(../images/arrow_down.svg);
+  background-image: url(../../api/templates/default/images/arrow_down.svg);
   line-height: 1em;
   font-size: 12px;
   background-size: 12px;
@@ -5052,7 +5052,7 @@ span.overlayContainer img.overlay {
 }
 /** DON"T MOVE THIS **/
 .egw_fw_ui_splitter_vertical {
-  background-image: url(../images/splitter_vert.png);
+  background-image: url(../../api/templates/default/images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -5250,7 +5250,7 @@ span.overlayContainer img.overlay {
   height: 35px;
   top: 0px;
   border-bottom: 1px solid silver;
-  background-image: url(../images/up.svg);
+  background-image: url(../../api/templates/default/images/up.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-position-y: 5px;
@@ -5260,7 +5260,7 @@ span.overlayContainer img.overlay {
   bottom: 0px;
   height: 35px;
   border-top: 1px solid silver;
-  background-image: url(../images/down.svg);
+  background-image: url(../../api/templates/default/images/down.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-position-y: 6px;
@@ -5283,7 +5283,7 @@ span.overlayContainer img.overlay {
   left: 0px;
   width: 16px;
   height: 16px;
-  background-image: url(../images/ajax-loader.gif);
+  background-image: url(../../api/templates/default/images/ajax-loader.gif);
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -5389,7 +5389,7 @@ span.overlayContainer img.overlay {
   content: "!";
 }
 #egw_fw_topmenu_info_items #topmenu_info_logout {
-  background-image: url(../images/logout.svg);
+  background-image: url(../../api/templates/default/images/logout.svg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_logout a {
   width: 45px;
@@ -5397,7 +5397,7 @@ span.overlayContainer img.overlay {
   display: inline-block;
 }
 #egw_fw_topmenu_info_items #topmenu_info_print_title {
-  background-image: url(../images/print.svg);
+  background-image: url(../../api/templates/default/images/print.svg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_print_title span {
   width: 45px;
@@ -5405,7 +5405,7 @@ span.overlayContainer img.overlay {
   display: inline-block;
 }
 #egw_fw_topmenu_info_items #topmenu_info_darkmode span {
-  background-image: url(../images/darkmode_off.svg);
+  background-image: url(../../api/templates/default/images/darkmode_off.svg);
   width: 45px;
   height: 45px;
   display: inline-block;
@@ -5413,7 +5413,7 @@ span.overlayContainer img.overlay {
   background-repeat: no-repeat;
 }
 #egw_fw_topmenu_info_items #topmenu_info_darkmode span.darkmode_on {
-  background-image: url(../images/darkmode_on.svg);
+  background-image: url(../../api/templates/default/images/darkmode_on.svg);
   filter: invert(1) hue-rotate(180deg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications {
@@ -5424,7 +5424,7 @@ span.overlayContainer img.overlay {
   color: #fbfbfb;
   font-weight: bold;
   opacity: 0.4;
-  background-image: url(../images/notification_message.svg);
+  background-image: url(../../api/templates/default/images/notification_message.svg);
   border-left: 1px solid #636262;
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications .egw_fw_topmenu_info_notify {
@@ -5483,13 +5483,13 @@ span.overlayContainer img.overlay {
   margin-bottom: 11px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_notifications.egwpopup_notify {
-  background-image: url(../images/notification_message_active.svg);
+  background-image: url(../../api/templates/default/images/notification_message_active.svg);
   opacity: 1;
   border-left: 1px solid #bfc0bf;
 }
 #egw_fw_topmenu_info_items #topmenu_info_search {
   background-repeat: no-repeat;
-  background-image: url(../images/topmenu_items/search.svg);
+  background-image: url(../../api/templates/default/images/topmenu_items/search.svg);
 }
 #egw_fw_topmenu_info_items #topmenu_info_search a {
   width: 45px;
@@ -5507,7 +5507,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
   float: right;
-  background-image: url(../images/add.svg);
+  background-image: url(../../api/templates/default/images/add.svg);
   background-repeat: no-repeat;
   background-size: 24px;
   background-position: center;
@@ -5789,13 +5789,13 @@ button.image_button {
   width: 30px;
 }
 .sbToggle:hover {
-  background: url(../images/select-icons.png) 0 -167px no-repeat;
+  background: url(../../api/templates/default/images/select-icons.png) 0 -167px no-repeat;
 }
 .sbToggleOpen {
-  background: url(../images/select-icons.png) 0 -16px no-repeat;
+  background: url(../../api/templates/default/images/select-icons.png) 0 -16px no-repeat;
 }
 .sbToggleOpen:hover {
-  background: url(../images/select-icons.png) 0 -66px no-repeat;
+  background: url(../../api/templates/default/images/select-icons.png) 0 -66px no-repeat;
 }
 .sbHolderDisabled {
   background-color: #3C3C3C;
@@ -5946,7 +5946,7 @@ table.egwGridView_outer thead tr th:hover {
   background-color: #bfbfbf;
   color: #ffffff;
   /*border-right: 5px solid white;*/
-  background-image: url(../images/hint-arrow-right.png);
+  background-image: url(../../api/templates/default/images/hint-arrow-right.png);
   background-position: right bottom;
   background-repeat: no-repeat;
   background-size: 15px 15px;
@@ -5983,7 +5983,7 @@ table.egwGridView_outer thead tr th.optcol span.selectcols {
   height: 9px;
   padding: 4px 14px 0px 2px;
   margin-top: 4px;
-  background-image: url(../images/selectcols.svg);
+  background-image: url(../../api/templates/default/images/selectcols.svg);
   background-repeat: no-repeat;
   background-size: 10px 10px;
   display: inline-block;
@@ -6125,12 +6125,12 @@ table.egwGridView_grid span.arrow {
   width: 8px;
 }
 table.egwGridView_grid span.arrow.opened {
-  background-image: url("../images/arrow_down.svg");
+  background-image: url("../../api/templates/default/images/arrow_down.svg");
   cursor: pointer;
   background-position: bottom;
 }
 table.egwGridView_grid span.arrow.closed {
-  background-image: url("../images/arrow_right.svg");
+  background-image: url("../../api/templates/default/images/arrow_right.svg");
   cursor: pointer;
   background-position: right;
 }
@@ -6263,7 +6263,7 @@ input[type=image] {
   position: relative;
 }
 #sideresize {
-  background-image: url(../images/resize.png);
+  background-image: url(../../api/templates/default/images/resize.png);
   width: 13px;
   height: 13px;
   right: 1px;
@@ -6322,7 +6322,7 @@ a.textSidebox {
 }
 #topmenu {
   background-color: #0081c1;
-  background-image: url(../images/bgtopmenu2.png);
+  background-image: url(../../api/templates/default/images/bgtopmenu2.png);
   color: #006699;
   /*border-top: solid 1px #7e7e7e;*/
   border-bottom: solid #5793ff 1px;
@@ -6380,7 +6380,7 @@ a.textSidebox {
   width: 100%;
 }
 #divAppboxHeader {
-  background-image: url(../images/appbox-header-background.png);
+  background-image: url(../../api/templates/default/images/appbox-header-background.png);
   background-repeat: repeat-x;
   height: 25px;
   border-bottom: solid 1px #c0c0c0;
