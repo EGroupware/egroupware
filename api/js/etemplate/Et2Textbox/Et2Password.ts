@@ -96,6 +96,15 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 	}
 
 	/**
+	 * @param _len
+	 * @deprecated use this.suggest instead
+	 */
+	set_suggest(_len)
+	{
+		this.suggest = _len;
+	}
+
+	/**
 	 * Ask the server for a password suggestion
 	 */
 	suggestPassword()
