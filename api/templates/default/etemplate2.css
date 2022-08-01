@@ -1757,7 +1757,7 @@ table.egwGridView_grid img.et2_avatar {
     background-color: white;
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url("../../../api/templates/default/images/foldertree_nolines_minus.gif");
+    background-image: url("images/foldertree_nolines_minus.gif");
 }
 
 .et2_taglist_toggle div.ms-ctn {
@@ -1770,7 +1770,7 @@ table.egwGridView_grid img.et2_avatar {
 }
 
 .et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
-    background-image: url("../../../api/templates/default/images/foldertree_nolines_plus.gif");
+    background-image: url("images/foldertree_nolines_plus.gif");
     display: block;
 }
 
@@ -2801,7 +2801,7 @@ div.et2_toolbar.ui-widget-header {
     background: none;
 }
 .et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(../../../pixelegg/images/dots.svg);
+    background-image: url(images/dots.svg);
     background-size: 16px;
     height: 24px;
     width: 20px;
@@ -2827,7 +2827,7 @@ div.et2_toolbar.ui-widget-header {
     background-position: left;
 }
 .et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
-    background-image: url(../../../pixelegg/images/setup.svg);
+    background-image: url(images/setup.svg);
     background-repeat: no-repeat;
     background-size: 12px;
     width: 20px;
@@ -2857,7 +2857,7 @@ div.et2_toolbar.ui-widget-header {
 }
 
 .et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(../../../pixelegg/images/arrow_down.svg);
+    background-image: url(images/arrow_down.svg);
     background-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
@@ -3877,7 +3877,7 @@ div.eml {
 }
 
 div.eml div.emlEdit {
-    background-image: url(../../../pixelegg/images/edit.png);
+    background-image: url(images/edit.png);
     background-position: center;
     width: 100%;
     height: 50%;
@@ -3888,7 +3888,7 @@ div.eml div.emlEdit {
 }
 
 div.eml div.emlDelete {
-    background-image: url(../../../pixelegg/images/delete.png);
+    background-image: url(images/delete.png);
     background-position: center;
     width: 100%;
     height: 50%;
@@ -3923,7 +3923,7 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover {
     height: 22px !important;
     padding: 0;
     background-position-x: 3px !important;
-    background-image: url(../../../pixelegg/images/add.png);
+    background-image: url(images/add.png);
     overflow: hidden !important;
     text-indent: 100px !important;
 }
