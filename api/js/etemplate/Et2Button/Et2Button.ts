@@ -176,7 +176,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
-		if(new_image.indexOf("http") >= 0)
+		if(new_image.indexOf("http") >= 0 || new_image.indexOf(egw.webserverUrl) >=0)
 		{
 			this.__image = new_image
 		}
