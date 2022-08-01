@@ -5945,7 +5945,6 @@ button.image_button {
   /*padding: 0;*/
 }
 .egwGridView_grid > tbody > tr.th > td {
-  border-bottom: 1px solid darkgray;
   font-weight: normal;
   padding: 0 2px 2px 0;
   background-image: none;
@@ -9504,3 +9503,4 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
   }
 }
+/*# sourceMappingURL=fw_mobile.css.map */

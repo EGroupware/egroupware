@@ -27,6 +27,7 @@ import {Et2DropdownButton} from "./Et2DropdownButton/Et2DropdownButton";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import interact from "@interactjs/interactjs";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import {Et2Button} from "./Et2Button/Et2Button";
 
 /**
  * This toolbar gets its contents from its actions
@@ -600,12 +601,15 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	{
 		let button_options = {
 		};
-		let button = jQuery(document.createElement('button'))
-			.addClass(`et2_toolbar_draggable${this.id} et2_button et2_button_text et2_button_with_image`)
-			.attr('id', this.id+'-'+action.id)
-			.attr('type', 'button')
-			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 
+		let button = <Et2Button>loadWebComponent("et2-button", {
+			label: action.caption,
+			id: `${this.id}-${action.id}`,
+			image: action.iconUrl || '',
+			slot: "buttons",
+			class: `et2_toolbar_draggable${this.id}`,
+		}, this);
+		jQuery(button.getDOMNode()).appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 		if (action && action.checkbox)
 		{
 			if (action.data.toggle_on || action.data.toggle_off)
@@ -627,52 +631,38 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			}
 			else
 			{
-				if (this.checkbox(action.id)) button.addClass('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
+				if (this.checkbox(action.id)) button.classList.add('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
 			}
 		}
 		this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : '');
 
-		if ( action.iconUrl)
-		{
-			button.attr('style','background-image:url(' + action.iconUrl + ')');
-		}
 		if (action.caption)
 		{
-			if ((this.countActions <= parseInt(this.options.view_range) ||
+			if ((this.countActions <= parseInt(this.view_range) ||
 				this.preference[action.id] || !action.iconUrl)	&&
-				typeof button[0] !== 'undefined' &&
+				button &&
 				!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes
 			{
-				button.addClass(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
-				button[0].textContent = action.caption;
+				button.classList.add(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
 			}
-		}
-		if(action.icon)
-		{
-			button_options['icon'] = action.icon;
-		}
-		if (!jQuery.isEmptyObject(button_options))
-		{
-			button.button(button_options);
 		}
 		let self = this;
 		// Set up the click action
-		let click = function(e)
+		button.onclick = function(action, e)
 		{
-			let action = this._actionManager.getActionById(e.data);
-			if(action)
+			let actionObj = this._actionManager.getActionById(action.id);
+			if(actionObj)
 			{
-				if (action.checkbox)
+				if (actionObj.checkbox)
 				{
-					self.checkbox(action.id, !action.checked);
+					self.checkbox(actionObj.id, !actionObj.checked);
 				}
-				this.value = action.id;
-				action.data.event = e;
-				action.execute([]);
+				this.value = actionObj.id;
+				actionObj.data.event = e;
+				actionObj.execute([]);
 			}
-		};
+		}.bind(this, action);
 
-		button.click(action.id, jQuery.proxy(click, this));
 	}
 
 	/**
@@ -732,7 +722,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		if (action_event && typeof _value !='undefined')
 		{
 			action_event.set_checked(_value);
-			var btn = jQuery('#'+this.id+'-'+_action);
+			var btn = jQuery('#'+this.dom_id+'-'+_action);
 			if(action_event.data && action_event.data.widget)
 			{
 				action_event.data.widget.set_value(_value);

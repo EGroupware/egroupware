@@ -5934,7 +5934,6 @@ button.image_button {
   /*padding: 0;*/
 }
 .egwGridView_grid > tbody > tr.th > td {
-  border-bottom: 1px solid darkgray;
   font-weight: normal;
   padding: 0 2px 2px 0;
   background-image: none;
@@ -7879,3 +7878,4 @@ img.et2_button_icon[src*="svg"]:hover {
     top: 140px;
   }
 }
+/*# sourceMappingURL=mobile.css.map */

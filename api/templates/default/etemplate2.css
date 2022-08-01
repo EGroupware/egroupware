@@ -3021,7 +3021,7 @@ et2-button.transparent-button::part(container) {
     padding-left: 5px;
 }
 
-.et2_toolbar button.toolbar_toggled, .et2_searchbox button.et2_button.toolbar_toggled {
+.et2_toolbar et2-button.toolbar_toggled::part(base), .et2_searchbox button.et2_button.toolbar_toggled {
     background-color: lightgray;
     box-shadow: inset 1px 1px 1px 1px gray !important;
 }
@@ -3033,13 +3033,10 @@ et2-button.transparent-button::part(container) {
 
 .et2_toolbar-dropdown {
     display: inline-block;
-    direction: ltr;
     height: 24px;
-    top: -2px;
     text-align: left;
     font-weight: normal !important;
     font-size: 9pt !important;
-    vertical-align: bottom !important;
 }
 
 
@@ -3113,7 +3110,7 @@ et2-button.transparent-button::part(container) {
     width: 100%;
 }
 
-div.ui-toolbar-menulist {
+.ui-toolbar-menulist {
     position: absolute;
     height: inherit;
     z-index: 999 !important;
@@ -3130,9 +3127,26 @@ div.ui-toolbar-menulist {
     -webkit-box-shadow: 2px 3px 13px #666;
     -khtml-box-shadow: 2px 3px 13px #666;
     -moz-user-select: none;
+    background: white;
+    right: 0;
 }
-div.ui-toolbar-menulist > * {
+.ui-toolbar-menulist > * {
     border: none !important;
+    display: block;
+}
+.et2_toolbar_actionlist et2-button {
+    width: 1em;
+    overflow: hidden;
+}
+.et2_toolbar_actionlist et2-button::part(prefix) {
+    width: 1.1em;
+}
+.et2_toolbar_actionlist et2-button.et2_toolbar_hasCaption {
+    width:auto;
+}
+.ui-toolbar-menulist et2-button::part(base) {
+    border: none;
+    margin: 0.3em;
 }
 .ui-toolbar-menulist > button {
     margin: 0 !important;
@@ -3147,12 +3161,9 @@ div.ui-toolbar-menulist > * {
     font-size: xx-small;
     height: 100%;
     margin-top: 1px;
-    direction: ltr;
 }
 
 .et2_toolbar_more {
-    float: right;
-    direction: rtl;
     padding-bottom: 3px;
 }
 
@@ -3176,6 +3187,7 @@ div.et2_toolbar_more h.ui-accordion-header {
     height: 24px;
     white-space: nowrap;
     min-width: 50px;
+    display: flex;
 }
 
 .et2_dropZone {

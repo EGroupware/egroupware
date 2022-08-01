@@ -1070,7 +1070,6 @@
   }
   .et2_toolbar_more {
     float: right;
-    direction: rtl;
   }
   .et2_toolbar_actionlist {
     float: left;
@@ -5924,7 +5923,6 @@ button.image_button {
   /*padding: 0;*/
 }
 .egwGridView_grid > tbody > tr.th > td {
-  border-bottom: 1px solid darkgray;
   font-weight: normal;
   padding: 0 2px 2px 0;
   background-image: none;
