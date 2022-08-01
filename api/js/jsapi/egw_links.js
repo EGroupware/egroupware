@@ -481,40 +481,43 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 */
 		link_quick_add: function(_parent)
 		{
-			// check if quick-add selectbox is alread there, only create it again if not
+			// check if quick-add selectbox is already there, only create it again if not
 			if (document.getElementById('quick_add_selectbox')) return;
 
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
 			document.getElementById(_parent).append(select);
-			const self = this;
 			// bind change handler
-			select.addEventListener('change', function(){
-				if (this.value) self.open('', this.value, 'add', {}, undefined, this.value, true);
+			select.addEventListener('change', () =>
+			{
+				if (select.value) this.open('', select.value, 'add', {}, undefined, select.value, true);
+				select.value = '';
 			});
 			// need to load common translations for app-names
-			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], function(){
-				let options = [];
-				const apps = self.link_app_list('add');
+			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], () =>
+			{
+				let options = [{value:'', label: this.lang('Select one...')}];
+				const apps = this.link_app_list('add');
 				for(let app in apps)
 				{
-					if(egw.link_get_registry(app, 'no_quick_add'))
+					if(this.link_get_registry(app, 'no_quick_add'))
 					{
 						continue;
 					}
 					options.push({
 						value:app,
-						label:self.lang(self.link_get_registry(app,'entry') || apps[app]),
-						icon: `${egw.webserverUrl}/${app}/templates/pixelegg/images/navbar.svg`
+						label:this.lang(this.link_get_registry(app,'entry') || apps[app]),
+						icon: this.image('navbar', app)
 					});
 				}
 				select.select_options = options;
-				select.updateComplete.then(function(){
+				select.updateComplete.then(() =>
+				{
 					select.dropdown.trigger.style.visibility = 'hidden';
 					select.dropdown.trigger.style.height = '0px';
+					select.querySelector('sl-menu-item[value=""]').style.display = 'none';
 				});
-
 			});
 		}
-	};
+	}
 });
