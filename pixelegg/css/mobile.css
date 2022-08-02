@@ -1080,7 +1080,6 @@
   }
   .et2_toolbar_more {
     float: right;
-    direction: rtl;
   }
   .et2_toolbar_actionlist {
     float: left;
@@ -3596,7 +3595,7 @@ div.admin-config form > table td b {
   margin-top: 4px;
 }
 .success_message {
-  background-image: url(../../api/templates/default/images/check.png);
+  background-image: url(../../api/templates/default/images/check.svg);
 }
 /**
  * Message in popup
@@ -7878,4 +7877,3 @@ img.et2_button_icon[src*="svg"]:hover {
     top: 140px;
   }
 }
-/*# sourceMappingURL=mobile.css.map */
