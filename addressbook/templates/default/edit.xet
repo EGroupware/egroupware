@@ -109,11 +109,11 @@
                            options="tel_assistent,&amp;hearts;"/>
                     <description value="City"/>
                     <hbox>
-                        <textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13"
+                        <textbox statustext="City" id="adr_one_locality" maxlength="64" tabindex="13"
                                  autocomplete="address-level2"/>
                         <select-state statustext="State" country_code="$cont[adr_one_countrycode]" id="adr_one_region" tabindex="14" allowFreeEntries="true"
                                       empty_label="Select one" width="130"/>
-                        <textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15"
+                        <textbox statustext="ZIP Code" id="adr_one_postalcode" size="6" maxlength="64" tabindex="15"
                                  autocomplete="postal-code"/>
                     </hbox>
                 </row>
@@ -280,11 +280,11 @@
                            options="tel_fax_home,&amp;hearts;"/>
                     <description value="City"/>
                     <hbox>
-                        <textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"
+                        <textbox statustext="City" id="adr_two_locality" maxlength="64"
                                  autocomplete="section-two address-level2"/>
                         <select-state country_code="$cont[adr_one_countrycode]" statustext="State" id="adr_two_region" allowFreeEntries="true"
                                       empty_label="Select one" width="130" autocomplete="section-two address-level1"/>
-                        <textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"
+                        <textbox statustext="ZIP Code" id="adr_two_postalcode" size="6" maxlength="64"
                                  autocomplete="section-two postal-code"/>
                     </hbox>
                     <description/>
@@ -297,6 +297,7 @@
                     <description for="adr_two_countryname" value="country"/>
                     <select-country id="adr_two_countrycode" allowFreeEntries="true" empty_label="Select one" autocomplete="section-two country"
                         onchange="app.addressbook.regionSetCountry"/>
+                    <description/>
                 </row>
                 <row disabled="!@addr_format=city_state_postcode">
                     <description for="bday" value="Birthday"/>
