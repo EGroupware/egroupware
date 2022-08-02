@@ -12,6 +12,7 @@ import {Et2Widget, loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
 import {css, PropertyValues} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
+import {et2_createWidget} from "../../et2_core_widget";
 
 
 export class Et2Tabs extends Et2Widget(SlTabGroup)
@@ -306,11 +307,19 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 		}, this);
 
 		// Tab content
-		let tabContent = tab.contentDiv.createElementFromNode(tab.XMLNode);
-		tab.contentDiv.appendChild(
-			typeof window.customElements.get(tab.XMLNode.nodeName) == "undefined" ?
-			tabContent.getDOMNode() : tabContent
-		);
+		if(tab.XMLNode)
+		{
+			// Just read the XMLNode
+			let tabContent = tab.contentDiv.createElementFromNode(tab.XMLNode);
+			tab.contentDiv.appendChild(
+				typeof window.customElements.get(tab.XMLNode.nodeName) == "undefined" ?
+				tabContent.getDOMNode() : tabContent
+			);
+		}
+		else
+		{
+			et2_createWidget('template', tab.widget_options, tab.contentDiv);
+		}
 
 		return tab.contentDiv;
 	}

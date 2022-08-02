@@ -13,7 +13,7 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|tabbox))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
