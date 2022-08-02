@@ -1091,7 +1091,6 @@
   }
   .et2_toolbar_more {
     float: right;
-    direction: rtl;
   }
   .et2_toolbar_actionlist {
     float: left;
@@ -2266,7 +2265,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: url(../../api/templates/default/images/personal.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
-  background-image: url(../../api/templates/default/images/password.png);
+  background-image: url(../../api/templates/default/images/password.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
   background-image: none;
@@ -9503,4 +9502,3 @@ table.egwGridView_grid img.et2_appicon {
     border-radius: 0;
   }
 }
-/*# sourceMappingURL=fw_mobile.css.map */

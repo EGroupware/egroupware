@@ -2234,7 +2234,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: url(../../api/templates/default/images/personal.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
-  background-image: url(../../api/templates/default/images/password.png);
+  background-image: url(../../api/templates/default/images/password.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
   background-image: none;
@@ -3575,7 +3575,7 @@ div.admin-config form > table td b {
   margin-top: 4px;
 }
 .success_message {
-  background-image: url(../../api/templates/default/images/check.svg);
+  background-image: url(../../api/templates/default/images/check.png);
 }
 /**
  * Message in popup
