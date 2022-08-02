@@ -81,6 +81,12 @@ export class Et2VfsMime extends Et2ImageExpose
 	 */
 	isExposable() : boolean
 	{
+		// do not try to expose directories, they are handled by the action system
+		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE)
+		{
+			return false;
+		}
+
 		let gallery = super.isExposable();
 
 		// @ts-ignore Wants an argument, but does not require it
@@ -91,6 +97,21 @@ export class Et2VfsMime extends Et2ImageExpose
 		}
 
 		return gallery;
+	}
+
+	/**
+	 * Override et2-image click-handler, to not call egw.open_link with href=<vfs-path>
+	 *
+	 * @param {MouseEvent} _ev
+	 * @returns {boolean}
+	 */
+	_handleClick(_ev : MouseEvent) : boolean
+	{
+		if(this.isExposable())
+		{
+			this.expose_onclick(_ev);
+		}
+		return false;
 	}
 
 	/**
