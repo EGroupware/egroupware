@@ -32,12 +32,14 @@ table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
 tr.prefRow:hover {
   background-color: #f0f0ff;
 }
-td.prefName {
-  width: 50%;
+.prefName .et2_label:first-child {
+  padding-top: 2px;
 }
 tr.prefRow > td {
-  vertical-align: bottom;
-  /* otherwise help will cover bigger prefValue */
+  vertical-align: top;
+}
+tr.prefRow > td.prefValueColumn {
+  vertical-align: middle;
 }
 /*.prefValueColumn {border-right:none !important;}*/
 .prefHelpColumn {

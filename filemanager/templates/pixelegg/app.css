@@ -382,7 +382,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #filemanager-index_new_wrapper .ui-icon-triangle-1-s {
-  background-image: url(../../../default/images/add.svg);
+  background-image: url(../../../api/templates/default/images/add.svg);
   background-size: 12px;
   background-repeat: no-repeat;
   background-position: center;

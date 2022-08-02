@@ -150,7 +150,7 @@ table.prefTable {
   width: 100%;
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
-  background-image: url(../../../default/images/dialog_info.png);
+  background-image: url(../../../api/templates/default/images/dialog_info.png);
 }
 .prefHelp {
   position: absolute;
@@ -197,7 +197,7 @@ textarea.prefValue {
 /*Preferences APP Settings / right*/
 .prefApp::after,
 .prefType::after {
-  background-image: url(../default/images/setup.png);
+  background-image: url(../api/templates/default/images/setup.png);
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
