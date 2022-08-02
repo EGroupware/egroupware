@@ -47,9 +47,14 @@ class Tabbox extends Etemplate\Widget
 		$form_name = self::form_name($params[0], $this->id, $params[1]);
 
 		// Make sure additional tabs are processed for any method
-		if (!($tabs =& self::getElementAttribute($form_name, 'tabs')))
+		if($tabs = self::getElementAttribute($form_name, 'tabs'))
 		{
-			$tabs = $this->attrs['tabs'];
+			// tabs is not usable in webComponent, need to use extraTabs
+			self::setElementAttribute($form_name, 'extraTabs', $tabs);
+		}
+		if(!($tabs =& self::getElementAttribute($form_name, 'extraTabs')))
+		{
+			$tabs = $this->attrs['extraTabs'];
 		}
 		if($tabs && !$this->tabs_attr_evaluated)
 		{
@@ -73,7 +78,7 @@ class Tabbox extends Etemplate\Widget
 			}
 			unset($tab);
 			//error_log(__METHOD__."('$method_name', ...) this->id='$this->id' calling setElementAttribute('$form_name', 'tabs', ".array2string($tabs).")");
-			self::setElementAttribute($form_name, 'tabs', $tabs);
+			self::setElementAttribute($form_name, 'extraTabs', $tabs);
 		}
 
 		// Check for disabled tabs set via readonly, and set them as disabled
