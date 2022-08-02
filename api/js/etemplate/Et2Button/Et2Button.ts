@@ -98,6 +98,11 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			.button__prefix {
 				padding-left: 1px;
 			}
+			
+			/* Only image, no label */
+			.button--has-prefix:not(.button--has-label) {
+				width: calc(var(--sl-input-height-medium) + var(--sl-input-spacing-small) * 2);
+			}
             `,
 		];
 	}
