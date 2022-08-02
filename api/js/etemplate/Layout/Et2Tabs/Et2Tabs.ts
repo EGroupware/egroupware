@@ -301,6 +301,7 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 	{
 		// Tab panel
 		tab.contentDiv = loadWebComponent('et2-tab-panel', {
+			id: tab.id,
 			name: tab.id,
 			active: active,
 			hidden: tab.hidden
