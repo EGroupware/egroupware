@@ -618,7 +618,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		let keep_selection = false;
 
 		// Avoid loops cause by change events
-		if(this.update_in_progress) return;
+		if(this.update_in_progress || !this.controller) return;
 		this.update_in_progress = true;
 
 		// Cleared explicitly
