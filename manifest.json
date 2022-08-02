@@ -9,11 +9,6 @@
 		"src": "api/templates/default/images/logo164x164.svg",
 		"type": "image/svg",
 		"sizes": "164x164"
-	  },
-	  {
-		"src": "api/templates/default/images/logo164x164.png",
-		"type": "image/png",
-		"sizes": "164x164"
 	  }
 	],
 	"start_url": "index.php",
