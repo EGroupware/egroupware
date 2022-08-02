@@ -25,6 +25,9 @@ import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import './Layout/Et2Box/Et2Box';
 import './Layout/Et2Details/Et2Details';
+import './Layout/Et2Tabs/Et2Tab';
+import './Layout/Et2Tabs/Et2Tabs';
+import './Layout/Et2Tabs/Et2TabPanel';
 import './Et2Avatar/Et2Avatar';
 import './Et2Button/Et2Button';
 import './Et2Checkbox/Et2Checkbox';
@@ -666,6 +669,8 @@ export class etemplate2
 				if(egw.debug_level() >= 4 && console.timeStamp)
 				{
 					console.timeStamp("Begin rendering template");
+					console.time("Template load");
+					console.time("loadFromXML");
 				}
 
 				// Add into indexed list - do this before, so anything looking can find it,
@@ -678,6 +683,8 @@ export class etemplate2
 
 				// Read the XML structure of the requested template
 				this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
+				console.timeEnd("loadFromXML");
+				console.time("deferred");
 
 				// List of Promises from widgets that are not quite fully loaded
 				const deferred = [];
@@ -693,6 +700,10 @@ export class etemplate2
 
 				if(egw.debug_level() >= 3 && console.groupEnd)
 				{
+					if(console.timeStamp)
+					{
+						console.timeStamp("loading finished, waiting for deferred");
+					}
 					egw.window.console.groupEnd();
 				}
 
@@ -702,6 +713,9 @@ export class etemplate2
 				{
 					Promise.all(deferred).then(() =>
 					{
+
+						console.timeEnd("deferred");
+						console.timeStamp("Deferred done");
 						// Clear dirty now that it's all loaded
 						this.widgetContainer.iterateOver((_widget) =>
 						{

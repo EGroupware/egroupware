@@ -27,7 +27,6 @@ import {et2_dataview_column} from "./et2_dataview_model_columns";
 import {et2_dataview_controller} from "./et2_dataview_controller";
 import {et2_diff} from "./et2_widget_diff";
 import {et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
-import {et2_dynheight} from "./et2_widget_dynheight";
 import {et2_customfields_list} from "./et2_extension_customfields";
 import {et2_selectbox} from "./et2_widget_selectbox";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
@@ -96,7 +95,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 	private div: JQuery;
 	private innerDiv: JQuery;
 	private _filters: { appname: string; record_id: string; get_rows: string; };
-	private dynheight: et2_dynheight;
 	private dataview: et2_dataview;
 	private controller: et2_dataview_controller;
 	private fields: any;
@@ -114,6 +112,8 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
+
+		this._resize = this._resize.bind(this);
 	}
 
 	set_status_id( _new_id)
@@ -130,36 +130,16 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		if(tab)
 		{
 			// Bind the action to when the tab is selected
-			const handler = function(e)
+			const handler = (e) =>
 			{
-				e.data.div.unbind("click.history");
-				// Bind on click tap, because we need to update history size
-				// after a rezise happend and history log was not the active tab
-				e.data.div.bind("click.history", {"history": e.data.history, div: tab.flagDiv}, function (e) {
-					if (e.data.history && e.data.history.dynheight) {
-						e.data.history.dynheight.update(function (_w, _h) {
-							e.data.history.dataview.resize(_w, _h);
-						});
-					}
-				});
-
-				if (typeof e.data.history.dataview == "undefined") {
-					e.data.history.finishInit();
-					if (e.data.history.dynheight) {
-						e.data.history.dynheight.update(function (_w, _h) {
-							e.data.history.dataview.resize(_w, _h);
-						});
-					}
+				if(typeof this.dataview == "undefined")
+				{
+					this.finishInit();
 				}
-
+				// TODO: Find a better way to get this to wait
+				window.setTimeout(this._resize, 10);
 			};
-			tab.flagDiv.bind("click.history",{"history": this, div: tab.flagDiv}, handler);
-
-			// Display if history tab is selected
-			if(tab.contentDiv.is(':visible') && typeof this.dataview == 'undefined')
-			{
-				tab.flagDiv.trigger("click.history");
-			}
+			tab.flagDiv.addEventListener("click", handler);
 		}
 		else
 		{
@@ -194,13 +174,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			this.egw().debug("warn", "status_id attribute should not be the same as historylog ID");
 		}
 
-		// Create the dynheight component which dynamically scales the inner
-		// container.
-		this.div.parentsUntil('.et2_tabs').height('100%');
 		const parent = this.get_tab_info();
-		this.dynheight = new et2_dynheight(parent ? parent.contentDiv : this.div.parent(),
-				this.innerDiv, 250
-		);
 
 		// Create the outer grid container
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
@@ -267,9 +241,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Register a resize callback
 		jQuery(window).on('resize.' +this.options.value.app + this.options.value.id, function()
 		{
-			if (this && typeof this.dynheight != 'undefined') this.dynheight.update(function(_w, _h) {
-				this.dataview.resize(_w, _h);
-			}.bind(this));
+			this.dataview.resize();
 		}.bind(this));
 	}
 
@@ -297,7 +269,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		// Free the grid components
 		if(this.dataview) this.dataview.destroy();
 		if(this.controller) this.controller.destroy();
-		if(this.dynheight) this.dynheight.destroy();
 
 		super.destroy();
 	}
@@ -750,37 +721,33 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		row.parents("td").attr("colspan", 2)
 			.css("border-right", "none");
 		row.css("width", (
-				this.dataview.getColumnMgr().getColumnWidth(et2_historylog.NEW_VALUE) +
-				this.dataview.getColumnMgr().getColumnWidth(et2_historylog.OLD_VALUE)-10)+'px');
+			this.dataview.getColumnMgr().getColumnWidth(et2_historylog.NEW_VALUE) +
+			this.dataview.getColumnMgr().getColumnWidth(et2_historylog.OLD_VALUE) - 10) + 'px');
 
 		// Skip column 5
 		row.parents("td").next().remove();
 	}
 
+	_resize()
+	{
+		let tab = this.get_tab_info();
+		if(this.dataview)
+		{
+			// -# to avoid scrollbars
+			this.dataview.resize(
+				Math.min(
+					window.innerWidth - 15,
+					parseInt(getComputedStyle(tab.contentDiv).width)
+				) - 5,
+				parseInt(getComputedStyle(tab.contentDiv).height) - 5
+			);
+		}
+	}
+
 	resize(_height)
 	{
-		if (typeof this.options != 'undefined' && _height
-				&& typeof this.options.resize_ratio != 'undefined')
-		{
-			// apply the ratio
-			_height = (this.options.resize_ratio != '')? _height * this.options.resize_ratio: _height;
-			if (_height != 0)
-			{
-				// 250px is the default value for history widget
-				// if it's not loaded yet and window is resized
-				// then add the default height with excess_height
-				if (this.div.height() == 0) _height += 250;
-				this.div.height(this.div.height() + _height);
-
-				// trigger the history registered resize
-				// in order to update the height with new value
-				this.div.trigger('resize.' +this.options.value.app + this.options.value.id);
-			}
-		}
-		if(this.dynheight)
-		{
-			this.dynheight.update();
-		}
+		
+		this._resize();
 		// Resize diff widgets to match new space
 		if(this.dataview)
 		{

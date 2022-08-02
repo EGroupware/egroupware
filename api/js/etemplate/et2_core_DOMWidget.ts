@@ -18,11 +18,18 @@ import {ClassWithAttributes} from './et2_core_inheritance';
 import {et2_IDOMNode} from "./et2_core_interfaces";
 import {et2_hasChild, et2_no_init} from "./et2_core_common";
 import {et2_widget, WidgetConfig} from "./et2_core_widget";
-import {egw_getActionManager, egwActionObject, egwActionObjectInterface, egw_getAppObjectManager,egw_getObjectManager} from '../egw_action/egw_action.js';
-import {EGW_AI_DRAG_OVER, EGW_AI_DRAG_OUT} from '../egw_action/egw_action_constants.js';
+import {
+	egw_getActionManager,
+	egw_getAppObjectManager,
+	egw_getObjectManager,
+	egwActionObject,
+	egwActionObjectInterface
+} from '../egw_action/egw_action.js';
+import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER} from '../egw_action/egw_action_constants.js';
 import {egw} from "../jsapi/egw_global";
-// fixing circular dependencies by only importing type
-import type {et2_tabbox} from "./et2_widget_tabs";
+import {Et2Tab} from "./Layout/Et2Tabs/Et2Tab";
+import {Et2TabPanel} from "./Layout/Et2Tabs/Et2TabPanel";
+import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 
 /**
  * Abstract widget class which can be inserted into the DOM. All widget classes
@@ -320,12 +327,14 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 	 *
 	 * @returns {Object|null} Data for tab the widget is on
 	 */
-	get_tab_info() : {id: string, label: string, widget: et2_widget, contentDiv: JQuery, flagDiv: JQuery} | null
+	get_tab_info() : { id : string, label : string, widget : et2_widget, contentDiv : Et2TabPanel, flagDiv : Et2Tab } | null
 	{
 		var parent : et2_widget = this;
-		do {
+		do
+		{
 			parent = parent.getParent();
-		} while (parent !== this.getRoot() && parent.getType() !== 'tabbox');
+		}
+		while(parent !== this.getRoot() && ['tabbox', 'ET2-TABBOX'].indexOf(parent.getType()) == -1);
 
 		// No tab
 		if(parent === this.getRoot())
@@ -333,14 +342,14 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 			return null;
 		}
 
-		let tabbox : et2_tabbox = <et2_tabbox><unknown>parent;
+		let tabbox : Et2Tabs = <Et2Tabs><unknown>parent;
 
 		// Find the tab index
 		for(var i = 0; i < tabbox.tabData.length; i++)
 		{
 			// Find the tab by DOM heritage
 			// @ts-ignore
-			if(tabbox.tabData[i].contentDiv.has(this.div).length)
+			if(tabbox.tabData[i].contentDiv.contains(this.div[0] || this))
 			{
 				return tabbox.tabData[i];
 			}
