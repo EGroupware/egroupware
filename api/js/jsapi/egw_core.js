@@ -512,17 +512,11 @@
 			 * Returns the current application name. The current application
 			 * name equals the name, which was given when calling the egw
 			 * function. If the getAppName function is called on the global
-			 * instance, 'etemplate' is returned.
+			 * instance, 'api' is returned.
 			 */
 			getAppName: function() {
-				// Return the default application name if this function is
-				// called on the global egw instance.
-				if (!this.appName) {
-					return 'etemplate';
-				}
-
 				// Otherwise return the correct application name.
-				return this.appName;
+				return this.app_name() || this.appName || 'api';
 			},
 
 			/**
@@ -717,4 +711,3 @@
 		this['egw'] = egw;
 	}
 }).call(window);
-
