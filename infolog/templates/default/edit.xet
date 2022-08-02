@@ -185,17 +185,17 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
-						<tabs>
-							<tab id="description" label="Description" statustext="longer textual description"/>
-							<tab id="details" label="Details" statustext="Location, priority , ..."/>
-							<tab id="links" label="Links" statustext="Links of this entry"/>
-							<tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
-							<tab id="customfields" label="Customfields" statustext="Custom fields"/>
-							<tab id="history" label="History" statustext="Change history"/>
-						</tabs>
-						<tabpanels>
-							<template id="infolog.edit.description"/>
+					<tabbox id="tabs" span="all" width="100%" tab_height="250px">
+                        <tabs>
+                            <tab id="description" label="Description" statustext="longer textual description"/>
+                            <tab id="details" label="Details" statustext="Location, priority , ..."/>
+                            <tab id="links" label="Links" statustext="Links of this entry"/>
+                            <tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
+                            <tab id="customfields" label="Customfields" statustext="Custom fields"/>
+                            <tab id="history" label="History" statustext="Change history"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="infolog.edit.description"/>
 							<template id="infolog.edit.details"/>
 							<template id="infolog.edit.links"/>
 							<template id="infolog.edit.project"/>
