@@ -2031,6 +2031,7 @@ hr {
  */
 table.et2_grid {
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .et2_grid td {
