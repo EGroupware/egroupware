@@ -296,7 +296,7 @@ export class et2_widget extends ClassWithAttributes
 		}
 
 		// Remove this element from the parent, if it exists
-		if (typeof this._parent != "undefined" && this._parent !== null)
+		if(typeof this._parent != "undefined" && this._parent !== null && this._parent instanceof et2_widget)
 		{
 			this._parent.removeChild(this);
 		}
