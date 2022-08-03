@@ -283,8 +283,12 @@ export class Et2Button extends Et2InputWidget(SlButton)
 				const image = document.createElement("et2-image");
 				image.slot = "prefix";
 				this.prepend(image);
+				image.src = this.__image;
 			}
-			this._iconNode.src = this.__image;
+			else if (this._iconNode)
+			{
+				this._iconNode.src = this.__image;
+			}
 		}
 	}
 
