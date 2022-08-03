@@ -55,6 +55,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		// Validators for every instance of a type of widget
 		protected defaultValidators : Validator[];
 
+		protected isSlComponent = false;
+
 		/** WebComponent **/
 		static get styles()
 		{
@@ -142,6 +144,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.defaultValidators = [];
 
 			this.__readonly = false;
+
+			this.isSlComponent = typeof (<any>this).handleChange === 'function';
 		}
 
 		connectedCallback()
@@ -151,14 +155,14 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.node = this.getInputNode();
 			this.updateComplete.then(() =>
 			{
-				this.addEventListener(typeof (<any>this).handleChange === 'function' ? 'sl-change' : 'change', this._oldChange);
+				this.addEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
 			});
 		}
 
 		disconnectedCallback()
 		{
 			super.disconnectedCallback();
-			this.removeEventListener(typeof (<any>this).handleChange === 'function' ? 'sl-change' : 'change', this._oldChange);
+			this.removeEventListener(this.isSlComponent ? 'sl-change' : 'change', this._oldChange);
 		}
 
 		/**
