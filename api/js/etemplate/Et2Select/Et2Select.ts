@@ -159,6 +159,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	constructor(...args : any[])
 	{
 		super();
+		// We want this on more often than off
+		this.hoist = true;
+		
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
 	}
