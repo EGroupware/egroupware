@@ -269,15 +269,21 @@ function send_template()
 
 		$str = preg_replace('#<passwd ([^>]+)(/|></passwd)>#', '<et2-password $1></et2-password>', $str);
 
-		// fix <button(only)?.../> --> <et2-(button|image) (noSubmit="true")?.../>
-		$str = preg_replace_callback('#<button(only)?\s(.*?)(/|></button)>#s', function ($matches) use ($name)
+		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>
+		$str = preg_replace_callback('#<(button|buttononly|timestamper|button-timestamp)\s(.*?)(/|></(button|buttononly|timestamper|button-timestamp))>#s', function ($matches) use ($name)
 		{
 			$tag = 'et2-button';
 			$attrs = parseAttrs($matches[2]);
-			// replace buttononly tag with noSubmit="true" attribute
-			if (!empty($matches[1]))
+			switch ($matches[1])
 			{
+				case 'buttononly':	// replace buttononly tag with noSubmit="true" attribute
 				$attrs['noSubmit'] = 'true';
+					break;
+				case 'timestamper':
+				case 'button-timestamp':
+					$tag .= '-timestamp';
+					$attrs['background_image'] = 'true';
+					break;
 			}
 			// novalidation --> noValidation
 			if (!empty($attrs['novalidation']) && in_array($attrs['novalidation'], ['true', '1'], true))

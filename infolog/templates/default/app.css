@@ -69,7 +69,9 @@ button.infologExtraButton:hover {
 
 .tab_toolbar {
     position: absolute;
-    top: 8px;
+    top: 6px;
+	right: 0;
+	z-index: 10000;	/* otherwise et2-tabs gets our clicks! */
 }
 
 .tab_toolbar > button, .tab_toolbar > et2-button {

@@ -393,6 +393,51 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 	{
 		this.setActiveTab(this._selectedIndex);
 	}
+
+	/**
+	 * Activate the tab containing the given widget
+	 *
+	 * @param {et2_widget} widget
+	 * @return {bool} widget was found in a tab
+	 */
+	activateTab(widget)
+	{
+		let tab = widget;
+		while(tab._parent && tab._parent.nodeName !== 'ET2-TABBOX')
+		{
+			tab = tab._parent;
+		}
+		if (tab.nodeName === 'ET2-TAB-PANEL')
+		{
+			this.show(tab.name);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Reimplement to allow our existing function signatures too
+	 *
+	 * @deprecated use this.show(name : string)
+	 * @param tab number or name of tab (Sl uses that internally with a SlTab!)
+	 * @param options
+	 */
+	setActiveTab(tab: SlTab|String|Number, options?: {
+		emitEvents?: boolean;
+		scrollBehavior?: 'auto' | 'smooth';
+	})
+	{
+		if (typeof tab === 'number')
+		{
+			tab = this.getAllTabs()[tab];
+			return this.show(tab.panel);
+		}
+		if (typeof tab === 'string')
+		{
+			return this.show(tab);
+		}
+		return super.setActiveTab(<SlTab>tab, options);
+	}
 }
 
 customElements.define("et2-tabbox", Et2Tabs);

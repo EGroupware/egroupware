@@ -136,9 +136,9 @@ export class Et2Button extends Et2InputWidget(SlButton)
 		}
 	}
 
-	constructor()
+	constructor(...args : any[])
 	{
-		super();
+		super(...args);
 
 		// Property default values
 		this.__image = '';
@@ -259,7 +259,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			if(!this.image)
 			{
 				let image = this._get_default_image(this._widget_id);
-				if(image && image != this._image)
+				if(image && image != this.__image)
 				{
 					this.image = image;
 				}
