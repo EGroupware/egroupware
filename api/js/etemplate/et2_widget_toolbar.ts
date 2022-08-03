@@ -627,7 +627,8 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			widget = <Et2Checkbox>loadWebComponent('et2-switch', {
 				id: `${this.id}-${action.id}`,
 				toggleOn: action.data.toggle_on,
-				toggleOff: action.data.toggle_off
+				toggleOff: action.data.toggle_off,
+				class: `et2_toolbar_draggable${this.id}`,
 			}, this);
 			widget.value = action.checked;
 			action.data.widget = widget;
