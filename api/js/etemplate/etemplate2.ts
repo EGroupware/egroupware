@@ -73,6 +73,7 @@ import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
 import './Et2Select/Tag/Et2EmailTag';
 import './Et2Select/Tag/Et2ThumbnailTag';
+import './Et2Switch/Et2Switch';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textbox/Et2Textbox';
 import './Et2Textbox/Et2TextboxReadonly';
