@@ -36,7 +36,7 @@
 			<rows>
 				<row class="row">
 					<description value="Project"/>
-					<link-entry span="2" id="pm_id" only_app="projectmanager" onchange="app.infolog.submit_if_not_empty" blur="None" class="infolog_projectName" width="99%"/>
+					<link-entry span="2" id="pm_id" only_app="projectmanager" onchange="app.infolog.submit_if_not_empty" blur="None" class="infolog_projectName"/>
 					<description/>
 				</row>
 				<row class="row">
@@ -72,9 +72,9 @@
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
             <columns>
-                <column width="46%"/>
-                <column width="60"/>
-                <column width="49%"/>
+                <column width="370"/>
+                <column width="40"/>
+                <column width="390"/>
             </columns>
             <rows>
                 <row height="20" class="th">
@@ -146,39 +146,40 @@
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
-				<column width="215"/>
-				<column width="30"/>
+				<column width="270"/>
+				<column width="40"/>
 				<column width="100"/>
-				<column width="135"/>
-				<column width="30"/>
-				<column width="50"/>
+				<column width="250"/>
+				<column width="40"/>
 			</columns>
 			<rows>
 				<row class="dialogHeader">
 					<description value="Title" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" span="4" tabindex="1"></textbox>
-					<textbox type="integer" id="info_number" readonly="true"/>
-                    <appicon src="infolog" for="info_number"/>
+					<hbox span="4">
+						<textbox statustext="a short subject for the entry" id="info_subject" class="et2_fullWidth et2_required" maxlength="255" tabindex="1"></textbox>
+						<description id="info_id" readonly="true" width="5em"/>
+					</hbox>
+                    <appicon src="infolog" for="info_id"/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Type" for="info_type"/>
-					<menulist class="et2_fullWidth">
-						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
-					</menulist>
+					<select statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
 					<description/>
 					<description value="Startdate" for="info_startdate"/>
 					<date-time id="info_startdate" class="et2_fullWidth"
 						statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+					<description/>
 				</row>
 				<row class="dialogHeader3">
 					<description value="Contact"/>
 					<link-entry id="info_contact" app_icons="true"/>
 					<description/>
 					<description value="Enddate" for="info_enddate"/>
-					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
+					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth"/>
+					<description/>
 				</row>
 				<row class="et2_toolbar">
-					<description id="spacer" span="6"/>
+					<description id="spacer" span="5"/>
 					<hbox class="tab_toolbar">
 						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"/>
 						<buttononly statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
@@ -204,15 +205,13 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row class="th" disabled="1">
-					<description value="Dates, Status, Access" span="all"/>
-				</row>
 				<row class="dialogOperators">
 					<description value="Status" for="info_status"/>
 					<select class="et2_fullWidth" statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"/>
 					<description/>
 					<description value="Completed" for="info_percent"/>
 					<select-percent class="et2_fullWidth" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"/>
+					<description/>
 				</row>
 				<row disabled="!@info_owner" class="dialogOperators">
 					<description value="Owner"/>
@@ -226,6 +225,7 @@
 						<select-account id="info_modifier" readonly="true"/>
 						<date-time id="info_datemodified" readonly="true" align="right"/>
 					</hbox>
+					<description/>
 				</row>
 				<row class="dialogFooterToolbar">
                     <hbox span="all">
@@ -241,7 +241,7 @@
                                   statustext="Do not notify of these changes"/>
                         <button align="right" statustext="delete this entry" label="Delete" id="button[delete]"
                                 onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');"
-                                image="delete" background_image="1" span="all"/>
+                                image="delete" background_image="1"/>
                     </hbox>
                 </row>
 			</rows>

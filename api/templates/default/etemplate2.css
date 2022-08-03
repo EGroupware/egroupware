@@ -804,7 +804,7 @@ action buttons, left aligned for "extra" controls
 }
 
 .et2_customfield_list tr td:first-child {
-    width: 30%;
+    width: 12%; /* this is somehow equivalent to 100px we usually have in the first column */
 }
 
 .et2_customfield_list tr td:nth-child(2) > *:not(.et2_checkbox):not(.et2_file):not(.et2_vfs_btn):not(.et2_button):not(.et2_radiobox),
@@ -1454,6 +1454,13 @@ div.et2_vfsPath li img {
 }
 
 /**
+ * New et2-tabbox widget
+ */
+et2-tab-panel {
+    padding-top: 1em;
+}
+
+/**
  * Tabs widget
  */
 .et2_tabflag {
@@ -2031,7 +2038,7 @@ hr {
  */
 table.et2_grid {
     border-collapse: collapse;
-    table-layout: fixed;
+    /* table-layout: fixed; check with infolog.edit before switching that on again! */
 }
 
 .et2_grid td {

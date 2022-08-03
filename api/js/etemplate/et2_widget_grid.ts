@@ -797,7 +797,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 						}
 					}
 
-					if(cell.width != "auto")
+					// do NOT set cell width, if we have a colspan
+					if(cell.width !== "auto" && cell.colSpan <= 1)
 					{
 						td.width(cell.width);
 					}

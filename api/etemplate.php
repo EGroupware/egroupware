@@ -13,12 +13,12 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|tabbox))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<(description|details|searchbox|textbox|label|avatar|lavatar|image|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites)\s([^>]+)/>#m';
-const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 3;
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(tabbox|description|details|searchbox|textbox|label|avatar|lavatar|image|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
@@ -176,8 +176,12 @@ function send_template()
 			}, $str);
 
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
-		$str = preg_replace(ADD_ET2_PREFIX_LEGACY_REGEXP, '<et2-$1 $'.ADD_ET2_PREFIX_LEGACY_LAST_GROUP.'></et2-$1>',
-			str_replace('<description/>', '<et2-description></et2-description>', $str));
+		$str = preg_replace_callback(ADD_ET2_PREFIX_LEGACY_REGEXP, static function (array $matches) {
+			return '<' . $matches[2] . 'et2-' . $matches[3] .
+				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
+				(substr($matches[ADD_ET2_PREFIX_LEGACY_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LEGACY_LAST_GROUP], 0, -1) .
+					'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LEGACY_LAST_GROUP]) . '>';
+		}, $str);
 
 		// change link attribute only_app to et2-link attribute app and map r/o link-entry to link
 		$str = preg_replace_callback('#<et2-link(-[a-z]+)?([^>]*?)></et2-link(-[a-z]+)?>#su', static function ($matches)

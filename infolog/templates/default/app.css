@@ -26,9 +26,6 @@ table.infolog_fullWidth { width: 100%; }
 .inputFullWidth input { width: 100%; }
 .infolog_image16 img { height: 16px; }
 .infolog_responsible select {width: 120px;}
-#info_contact select { width: 117px; }
-#info_contact input {width: 134px;}
-#info_subject {width: 100%;}
 
 
 .infolog_date_duration select.et2_date_duration {

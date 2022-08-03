@@ -993,9 +993,6 @@ abstract class Framework extends Framework\Extra
 				// Load these first
 				// Cascade should go:
 				//  Libs < etemplate2 < framework/theme < app < print
-				// Enhanced selectboxes (et1)
-				self::includeCSS('/api/js/jquery/chosen/chosen.css');
-
 				// Et2Date uses flatpickr
 				self::includeCSS('/node_modules/flatpickr/dist/themes/light.css');
 

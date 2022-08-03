@@ -41,10 +41,6 @@ module.exports = function (grunt) {
 				files: {
 					"pixelegg/css/pixelegg.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -59,10 +55,6 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/mobile.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -77,10 +69,6 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"api/js/etemplate/lib/jsdifflib/diffview.css",
@@ -94,10 +82,6 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/monochrome.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -112,10 +96,6 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/modern.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -134,10 +114,6 @@ module.exports = function (grunt) {
 				files: {
 					"jdots/css/high-contrast.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -155,10 +131,6 @@ module.exports = function (grunt) {
 					],
 					"jdots/css/jdots.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
@@ -175,10 +147,6 @@ module.exports = function (grunt) {
 					],
 					"jdots/css/orange-green.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/jquery/chosen/chosen.css",
-						"api/js/jquery/jquery-ui/themes/themes/redmond/jquery-ui.css",
-						"vendor/egroupware/magicsuggest/magicsuggest.css",
-						"api/js/jquery/blueimp/css/blueimp-gallery.min.css",
 						"api/js/dhtmlxtree/codebase/dhtmlxtree.css",
 						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",
