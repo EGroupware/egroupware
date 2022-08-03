@@ -28,6 +28,7 @@ import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import interact from "@interactjs/interactjs";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 import {Et2Button} from "./Et2Button/Et2Button";
+import {Et2Checkbox} from "./Et2Checkbox/Et2Checkbox";
 
 /**
  * This toolbar gets its contents from its actions
@@ -599,56 +600,12 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 	 */
 	_make_button(action)
 	{
-		let button_options = {
-		};
-
-		let button = <Et2Button>loadWebComponent("et2-button", {
-			label: action.caption,
-			id: `${this.id}-${action.id}`,
-			image: action.iconUrl || '',
-			slot: "buttons",
-			class: `et2_toolbar_draggable${this.id}`,
-		}, this);
-		jQuery(button.getDOMNode()).appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
-		if (action && action.checkbox)
-		{
-			if (action.data.toggle_on || action.data.toggle_off)
-			{
-				let toggle = <et2_checkbox>et2_createWidget('checkbox', {
-					id: this.id+'-'+action.id,
-					toggle_on: action.data.toggle_on,
-					toggle_off: action.data.toggle_off
-				}, this);
-				toggle.doLoadingFinished();
-				toggle.set_value(action.checked);
-				action.data.widget = toggle;
-				let toggle_div = toggle.toggle;
-				toggle_div.appendTo(button.parent())
-					.attr('id', this.id+'-'+action.id);
-				button.remove();
-				button = toggle_div;
-
-			}
-			else
-			{
-				if (this.checkbox(action.id)) button.classList.add('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
-			}
-		}
-		this.egw().tooltipBind(button, action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : '');
-
-		if (action.caption)
-		{
-			if ((this.countActions <= parseInt(this.view_range) ||
-				this.preference[action.id] || !action.iconUrl)	&&
-				button &&
-				!(action.checkbox && action.data && (action.data.toggle_on || action.data.toggle_off))) // no caption for slideswitch checkboxes
-			{
-				button.classList.add(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
-			}
-		}
 		let self = this;
-		// Set up the click action
-		button.onclick = function(action, e)
+
+		const isCheckbox = action && action.checkbox;
+		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off;
+
+		const actionHandler = function(action, e)
 		{
 			let actionObj = this._actionManager.getActionById(action.id);
 			if(actionObj)
@@ -663,6 +620,45 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			}
 		}.bind(this, action);
 
+		let widget = null;
+
+		if (isToggleSwitch)
+		{
+			widget = <Et2Checkbox>loadWebComponent('et2-switch', {
+				id: `${this.id}-${action.id}`,
+				toggleOn: action.data.toggle_on,
+				toggleOff: action.data.toggle_off
+			}, this);
+			widget.value = action.checked;
+			action.data.widget = widget;
+			widget.onchange = actionHandler;
+		}
+		else
+		{
+			widget = <Et2Button>loadWebComponent("et2-button", {
+				label: action.caption,
+				id: `${this.id}-${action.id}`,
+				image: action.iconUrl || '',
+				slot: "buttons",
+				class: `et2_toolbar_draggable${this.id}`,
+			}, this);
+			if (isCheckbox)
+			{
+				if (this.checkbox(action.id)) widget.classList.add('toolbar_toggled'+ (typeof action.toggledClass != 'undefined'?" "+action.toggledClass:''));
+			}
+			widget.onclick = actionHandler;
+		}
+		jQuery(widget.getDOMNode()).appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
+
+		if (action.caption)
+		{
+			if ((this.countActions <= parseInt(this.view_range) ||
+				this.preference[action.id] || !action.iconUrl)	&&
+				!(isCheckbox && isToggleSwitch)) // no caption for slideswitch checkboxes
+			{
+				widget.classList.add(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
+			}
+		}
 	}
 
 	/**
