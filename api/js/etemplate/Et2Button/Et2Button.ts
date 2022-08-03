@@ -151,11 +151,22 @@ export class Et2Button extends Et2InputWidget(SlButton)
 
 	}
 
-	connectedCallback()
+	protected firstUpdated(_changedProperties : PropertyValues)
 	{
-		super.connectedCallback();
+		super.firstUpdated(_changedProperties);
 
-		//this.classList.add("et2_button")
+		if(!this.label && this.__image)
+		{
+			/*
+			 Label / no label should get special classes set, but they're missing without this extra requestUpdate()
+			 This is a work-around for button--has-prefix & button--has-label not being set, something to do
+			 with how we're setting them.
+			 */
+			this.updateComplete.then(() =>
+			{
+				this.requestUpdate();
+			});
+		}
 	}
 
 	set label(new_label : string)
