@@ -2731,7 +2731,7 @@ class addressbook_ui extends addressbook_bo
 			$this->account_repository != 'sql' && $content['account_id'];
 		if (!$content['id']) $readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
-		$readonlys['change_org'] = empty($content['org_name']) || $view;
+		$content['hide_change_org'] = $readonlys['change_org'] = empty($content['org_name']) || $view;
 
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->check_perms(Acl::EDIT, $content))
@@ -3197,7 +3197,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['owner'] .= 'p';
 		}
-		$this->tmpl->set_cell_attribute('change_org','disabled',true);
+		$content['hide_change_org'] = true;
 
 		// Prevent double countries - invalid code blanks it, disabling doesn't work
 		$content['adr_one_countrycode'] = '-';
@@ -3441,12 +3441,12 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['history'] = true;
 		// setting hidebuttons for content will hide the 'normal' addressbook edit dialog buttons
 		$content['hidebuttons'] = true;
+		$content['hide_change_org'] = true;
 		$content['no_tid'] = true;
 		$content['showsearchbuttons'] = true; // enable search operation and search buttons| they're disabled by default
 
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
-		$this->tmpl->set_cell_attribute('change_org','disabled',true);
 		return $this->tmpl->exec('addressbook.addressbook_ui.extSearch',$content,$sel_options,$readonlys,array(),2);
 	}
 
