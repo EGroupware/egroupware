@@ -1189,7 +1189,7 @@ export class etemplate2
 			let path = _widget.getPath();
 
 			// check if id contains a hierachical name, eg. "button[save]"
-			let id = _widget.id;
+			let id = _widget.id || "";
 			let indexes = id?.split('[');
 			if(indexes?.length > 1)
 			{
