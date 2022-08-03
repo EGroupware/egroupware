@@ -2216,6 +2216,7 @@ lion-validation-feedback[type] {
 
 .nextmatch_header_row > div > et2-select, .nextmatch_header_row > div > et2-select-cat {
     max-width: 14%;
+    min-width: fit-content;
 }
 
 .nextmatch_header_row > .header_row_right {
