@@ -196,7 +196,6 @@ class Nextmatch extends Etemplate\Widget
 		// Send categories
 		if(empty($value['no_cat']) && empty($value['cat_is_select']))
 		{
-			$cat_app = $value['cat_app'] ?? $GLOBALS['egw_info']['flags']['current_app'] ?? '';
 			$value['options-cat_id'] = self::$request->sel_options['cat_id'] ?? [];
 
 			// Add 'All', if not already there
@@ -204,9 +203,6 @@ class Nextmatch extends Etemplate\Widget
 			{
 				$value['options-cat_id'][''] = lang('All categories');
 			}
-			$no_lang = true;
-			$value['options-cat_id'] += Select::typeOptions('select-cat', ',,'.$cat_app,$no_lang,false,$value['cat_id']);
-			Select::fix_encoded_options($value['options-cat_id']);
 		}
 
 		// Favorite group for admins
