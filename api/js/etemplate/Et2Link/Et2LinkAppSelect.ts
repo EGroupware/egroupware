@@ -203,7 +203,10 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		}
 		else if(this.applicationList.length > 0)
 		{
-			select_options = this.applicationList;
+			select_options = this.applicationList.map((app) =>
+			{
+				return {value: app, label: this.egw().lang(app)};
+			});
 		}
 		else
 		{
