@@ -304,9 +304,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
 		{
 			this.fix_bad_value();
-
+		}
+		if(changedProperties.has("select_options") && changedProperties.has("value"))
+		{
 			// Re-set value, the option for it may have just shown up
-			this.value = this.value || "";
+			this.updateComplete.then(() => this.syncItemsFromValue())
 		}
 	}
 
