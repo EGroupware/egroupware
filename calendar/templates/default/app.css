@@ -1562,26 +1562,48 @@ img.calendar_print_button, img.calendar_print_appicon {
 	left:44%;
 }
 /* Integration slide switches in toolbar */
-#calendar-toolbar_toolbar span[data-group="integration"] > span,
-#toolbar-menulist span[id^="toolbar-integration"] ,
-#toolbar-menulist span[id^="toolbar-video_toggle"] {
+#calendar-toolbar_toolbar et2-switch {
+	height: var(--height);
+	display: inline-flex;
+	width: var(--width);
+}
+
+#calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"] ,
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] {
 	background-size: 16px;
 	background-repeat: no-repeat;
 	background-position: center;
 	filter: grayscale(1) contrast(0.9999) opacity(0.7);
+	width: 24px;
 }
-#calendar-toolbar_toolbar span[data-group="integration"] > span.switchOn,
-#toolbar-menulist span[id^="toolbar-integration"].switchOn,
-#toolbar-menulist span[id^="toolbar-video_toggle"].switchOn{
+#calendar-toolbar_toolbar span[data-group="integration"] > et2-switch[checked],
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"][checked] ,
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"][checked]{
 	filter: none;
 	box-shadow: inset 1px 1px 1px 1px gray !important;
+	width: var(--width);
 }
-#calendar-toolbar_toolbar span[data-group="integration"] > span span.slideSwitch_container,
-#toolbar-menulist span[id^="toolbar-video_toggle"] span.slideSwitch_container,
-#toolbar-menulist span[id^="toolbar-integration"] span.slideSwitch_container{
+#calendar-toolbar_toolbar span[data-group="integration"] > et2-switch span.label,
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] span.label,
+#toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"] span.label{
 	background: none;
 	min-width: 24px;
 }
+#calendar-toolbar_toolbar et2-switch::part(control) {
+	visibility: hidden;
+}
+#calendar-toolbar_toolbar et2-switch {
+	height: 24px;
+	display: inline-block;
+	vertical-align: top;
+	border: 1px solid silver;
+	border-radius: 3px;
+}
+.ui-toolbar-menulist et2-switch,
+.ui-toolbar-menulist et2-switch::part(base),
+.ui-toolbar-menulist et2-switch::part(label),
+.ui-toolbar-menulist et2-switch .label {width: 100%!important;}
 
 #calendar-toolbar_toolbar .et2_toolbar_more {
 	margin-top: 0;
