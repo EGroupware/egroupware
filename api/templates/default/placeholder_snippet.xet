@@ -32,37 +32,6 @@
             select#_app {
             flex-grow: 0;
             }
-            .ui-dialog-content, div.et2_box_widget, div.et2_box_widget > div.et2_box_widget {
-            display: flex;
-            flex: 1 1 auto;
-            }
-            div.et2_hbox {
-            flex-direction: row;
-            flex-grow: 1;
-            }
-            div.et2_vbox {
-            flex-direction: column;
-            gap: 5px;
-            }
-            div.et2_box_widget > * {
-            flex: 1 1 auto;
-            width: 100%;
-            }
-            div.et2_link_entry {
-            flex-grow: 0;
-            }
-            div.et2_link_entry input.ui-autocomplete-input {
-            width: 70%
-            }
-            div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button, button#cancel, .et2_button {
-            border: none;
-            border-radius: 0px;
-            background-color: transparent;
-            }
-            div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:hover, button#cancel:hover {
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            }
             .preview .et2_button {
             flex: 0 1 24px;
             height: 24px;

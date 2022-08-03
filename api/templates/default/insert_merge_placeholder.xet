@@ -10,17 +10,20 @@
                     <select id="group"/>
 
                 </vbox>
-                <select id="placeholder_list"/>
+                <select id="placeholder_list" rows="10"/>
             </hbox>
             <hbox class="preview">
                 <description id="preview_placeholder"/>
-                <button id="insert_placeholder" label="Insert" statustext="Insert placeholder" image="export"></button>
+                <button background_image="true" id="insert_placeholder" label="Insert" statustext="Insert placeholder"
+                        image="export"></button>
             </hbox>
             <hrule/>
             <link-entry id="entry" label="Preview with entry"/>
             <hbox class="preview">
                 <description id="preview_content"/>
-                <button id="insert_content" label="Insert" statustext="Insert merged content" image="export"></button>
+                <buttononly background_image="true" id="insert_content" label="Insert"
+                            statustext="Insert merged content"
+                            image="export"></buttononly>
             </hbox>
         </vbox>
         <styles>
