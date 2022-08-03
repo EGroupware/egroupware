@@ -46,9 +46,11 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 			.switch__thumb {
 				z-index: var(--sl-z-index-tooltip);
 			}
-			.label {
+			::slotted(span.label)
+			 {
 				width: var(--width);
 				display: inline-flex;
+				height: var(--height);
 			}
             `,
 		];
