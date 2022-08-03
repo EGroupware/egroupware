@@ -30,12 +30,6 @@ input#filemanager-index_path {
   font-size: 150%;
   padding: 1px 5px 3px 2px;
 }
-#filemanager-index_filemanager-index-header_right .et2_hbox > *,
-#filemanager-index_filemanager-index-header_row > *,
-#filemanager-index_filemanager-index-header_left .et2_hbox > * {
-  float: left;
-}
-#filemanager-index_filemanager-index-header_left .et2_file,
 #filemanager-index_filemanager-index-header_left .et2_file input {
   width: 24px;
 }
@@ -212,7 +206,6 @@ div.editInfoMarker {
   position: absolute;
 }
 #filemanager-index_new_wrapper {
-  float: left;
   margin-right: 6px;
 }
 #filemanager-index_new_wrapper .ui-icon-triangle-1-s {

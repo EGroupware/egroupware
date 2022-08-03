@@ -1421,7 +1421,6 @@ li.vfsPath.et2_clickable:not(:first-child):after {
     background-size: 16px;
     background-position: center;
     background-position-x: 98%;
-    padding-right: 30px;
 }
 
 div.et2_vfsPath li:hover {
@@ -2186,6 +2185,8 @@ lion-validation-feedback[type] {
     padding-top: 1px;
     padding-bottom: 5px;
     position: relative;
+    display: flex;
+    gap: 1ex;
 }
 
 .nextmatch_header .header_count {
@@ -2206,23 +2207,22 @@ lion-validation-feedback[type] {
     color: gray;
 }
 
-.nextmatch_header .et2_dropdown button {
-    border: 1px solid silver;
+.nextmatch_header_row .filtersContainer {
+    flex: 5 1 auto;
 }
 
-.nextmatch_header_row > select, .nextmatch_header_row > label > select {
+.nextmatch_header_row .search {
+}
+
+.nextmatch_header_row > div > et2-select, .nextmatch_header_row > div > et2-select-cat {
     max-width: 14%;
-    margin-right: 2ex;
 }
 
 .nextmatch_header_row > .header_row_right {
-    float: right;
-    padding-right: 1ex;
+    order: 10;
 }
 
 .nextmatch_header_row > .header_row_right > * {
-    display: inline-block;
-    float: left;
 }
 
 .et2_nextmatch .nextmatch_header {
@@ -2237,20 +2237,10 @@ lion-validation-feedback[type] {
     gap: 1ex;
 }
 
-/* Firefox only search clear button */
-.et2_nextmatch .nextmatch_header_row input[type="search"] + span {
-    position: relative;
-    display: inline-block;
-    top: 4px;
-    margin-left: -16px;
-    /* Clear icon (x) ui-icon-clear */
-    background-position: -80px -128px;
-}
-
 /* Favorites */
 .nextmatch_header div[id$=favorite_wrapper] {
     position: relative;
-    float: left;
+    order: 99;
 }
 
 #nm_favorites_popup_filters .filter_id,
@@ -2885,20 +2875,25 @@ div.et2_toolbar.ui-widget-header {
     padding-left: 0;
     background-color: #fafafa;
 }
-.nextmatch_header_row et2-button, .nextmatch_header_row et2-searchbox, .et2_toolbar et2-button {
+
+.et2_toolbar et2-button {
     margin-right: 1ex;
     min-width: 24px;
 }
-.nextmatch_header_row et2-button::part(container){
+
+.nextmatch_header_row et2-button::part(container) {
     height: 18px;
 }
+
 .nextmatch_header_row et2-button img {
     width: 16px;
 }
+
 et2-button.transparent-button {
     border: none;
     background: transparent;
 }
+
 et2-button.transparent-button::part(container) {
     width: auto;
     height: auto;
@@ -2941,27 +2936,10 @@ et2-button.transparent-button::part(container) {
     height: 18px;
 }
 
-.et2_toolbar div.chzn-container-multi, .nextmatch_header_row div.chzn-container-multi {
-    margin-right: 4px;
-}
-
-.et2_toolbar .chzn-container-multi ul.chzn-choices, .nextmatch_header_row .chzn-container-multi ul.chzn-choices {
-    border-radius: 3px;
-    border: 1px solid silver;
-}
-
-.et2_toolbar .chzn-container-multi li.search-choice, .nextmatch_header_row .chzn-container-multi li.search-choice {
-    margin: 1px;
-}
-
-.et2_toolbar .chzn-container-multi li.search-field input, .nextmatch_header_row .chzn-container-multi li.search-field input {
-    padding: 3px;
-}
-
 /**
  * Fileupload in toolbar or NM header
  */
-.et2_toolbar div.et2_file, .nextmatch_header_row div.et2_file {
+.et2_toolbar div.et2_file {
     width: 145px;
     margin-top: 1px;
     padding-right: 4px;
@@ -2984,7 +2962,6 @@ et2-button.transparent-button::part(container) {
  */
 .et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox {
     height: 18px;
-    margin: 1px 4px 1px 0;
     border-radius: 3px;
     background-color: #fafafa;
     border: 1px solid silver;
@@ -3011,16 +2988,9 @@ et2-button.transparent-button::part(container) {
 }
 
 .nextmatch_header_row > div {
-    float: left;
 }
 
-.nextmatch_header_row:after {
-    clear: both;
-    display: block;
-    content: "";
-}
-
-.et2_toolbar select, .nextmatch_header_row select {
+.et2_toolbar select {
     height: 24px;
     margin: 1px 4px 1px 0;
     background-color: #fafafa;
@@ -3760,113 +3730,6 @@ tr.dialogHeader2 td {
     background-color: initial !important;
     box-shadow: none !important;
     cursor: default !important;
-}
-
-/*et2_selectbox select-cat chosen (cats selectbox with colors) */
-.nextmatch_header_row .chzn-container.et2_selectbox.select-cat .chzn-single {
-    border: none;
-    padding-left: 3px;
-    background: transparent;
-    box-shadow: none;
-    margin-top: 1px;
-    border-radius: 3px;
-    height: 24px;
-    border-left: 6px solid transparent;
-    line-height: 16px;
-}
-
-.nextmatch_header_row .chzn-container.et2_selectbox.select-cat {
-    padding-right: 3px !important;
-    -webkit-appearance: none;
-    height: 22px !important;
-    margin: 1px 4px 1px 0;
-    background-color: #fafafa;
-    border: 1px solid silver;
-    border-radius: 3px;
-    padding-left: 0px;
-    display: inline-block;
-    float: left;
-    min-height: 20px;
-    min-width: 160px;
-}
-
-.nextmatch_header_row .et2_selectbox.select-cat.chzn-container .chzn-results {
-    max-height: 340px;
-}
-
-.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single {
-    width: auto !important;
-    background: white;
-    position: inherit;
-    margin-bottom: 3px;
-}
-
-.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single a.chzn-single {
-    border: none;
-    border-radius: 0;
-    background: white;
-}
-
-.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single.chzn-container-active.chzn-with-drop .chzn-drop {
-    top: auto;
-    z-index: 10000;
-    left: auto;
-
-}
-
-.et2_nextmatch .egwGridView_outer .et2_selectbox.chzn-container-single.chzn-container-active.chzn-with-drop {
-    position: static;
-}
-
-/* Implementation for et2_selectbox mulit tags with single row*/
-.et2_selectbox_multi_row ul.chzn-choices {
-    height: auto;
-}
-
-.nextmatch_header_row .et2_selectbox.chzn-container-multi {
-    margin-top: 1px;
-}
-
-.et2_selectbox_single_row ul.chzn-choices {
-    height: 24px !important;
-}
-
-.et2_selectbox_single_row ul.chzn-choices:after {
-    content: attr(data-after);
-    width: 30px;
-    background: #fafafa;
-    z-index: 10000;
-    position: absolute;
-    right: 0;
-    height: 100%;
-    background-position: center;
-    background-size: 6px;
-    background-repeat: no-repeat;
-    border-left: dotted 1px silver;
-    font-size: 10pt;
-    font-weight: bold;
-    color: #888888;
-    text-align: center;
-    padding-top: 2px;
-    box-shadow: 0px 0px 10px 2px #888888;
-}
-
-/*Posion the selected flag better*/
-a.chzn-single.et2_country-select span.img {
-    color: transparent;
-    top: -4px;
-}
-
-.et2_nextmatch .chzn-container-single a.chzn-single.et2_country-select span.img {
-    padding-top: 0;
-}
-
-.et2_nextmatch .chzn-container-single a.chzn-single.et2_country-select span {
-    padding-top: 4px;
-}
-
-.chzn-container-single .chzn-single.et2_country-select span {
-    padding-top: 0;
 }
 
 .et2_avatar {

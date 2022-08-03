@@ -51,6 +51,9 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		return [
 			...super.styles,
 			css`
+			:host {
+				min-width: 8ex;
+			}
 			et2-image {
 				height: 2ex;
 				padding: 0px;
