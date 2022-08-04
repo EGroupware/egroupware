@@ -103,7 +103,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	public static readonly PREFIX = "favorite_";
 	protected static readonly ADD_VALUE = "~add~";
 
-	private favSortedList : any = null;
+	private favSortedList : any = [];
 	private _preferred : string;
 	private _nextmatch : et2_nextmatch;
 
@@ -203,6 +203,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		};
 
 		// Load saved favorites
+		this.favSortedList = [];
 		let preferences : any = this.egw().preference("*", app);
 		for(let pref_name in preferences)
 		{
