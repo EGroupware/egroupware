@@ -105,9 +105,9 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 
 		// Check for a parent height, we'll apply it to tab panels
 		var height = et2_readAttrWithDefault(_node.parentNode, "height", null);
-		if(height)
+		if(height && !this.tabHeight)
 		{
-			this.tabContainer.css("height", height);
+			this.tabHeight = height;
 		}
 
 		// if no tabs set or they should be added to tabs from xml
