@@ -253,7 +253,7 @@ abstract class Framework extends Framework\Extra
 
 		// run egw destructor now explicit, in case a (notification) email is send via Egw::on_shutdown(),
 		// as stream-wrappers used by Horde Smtp fail when PHP is already in destruction
-		$GLOBALS['egw']->__destruct();
+		if (isset($GLOBALS['egw'])) $GLOBALS['egw']->__destruct();
 		exit;
 	}
 
