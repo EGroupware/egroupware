@@ -114,7 +114,7 @@ export class Et2LinkSearch extends Et2Select
 		this.select_options = Object.assign([option], this.__select_options);
 		this.egw()?.link_title(this.app, option.value, true).then(title =>
 		{
-			option.label = title;
+			option.label = title || Et2Link.MISSING_TITLE;
 			option.class = "";
 			// It's probably already been rendered, find the item
 			let item = this.getItems().find(i => i.value === option.value);
