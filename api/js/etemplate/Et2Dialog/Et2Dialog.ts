@@ -524,17 +524,6 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		let old_template = this.__template;
 		this.__template = new_template_name;
-		// inject preprocessor, if not already in template-url
-		const webserverUrl = this.egw().webserverUrl;
-		if (!new_template_name.match(new RegExp(webserverUrl+'/api/etemplate.php')))
-		{
-			this.__template = new_template_name.replace(new RegExp(webserverUrl), webserverUrl+'/api/etemplate.php');
-		}
-		// if we have no cache-buster, reload daily
-		if (this.__template.indexOf('?') === -1)
-		{
-			this.__template += '?'+((new Date).valueOf()/86400|0).toString();
-		}
 		this.requestUpdate("template", old_template);
 	}
 
@@ -580,8 +569,20 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 
 		if(this.__template.indexOf('.xet') > 0)
 		{
+			let template = this.__template;
+			// inject preprocessor, if not already in template-url
+			const webserverUrl = this.egw().webserverUrl;
+			if(!template.match(new RegExp(webserverUrl + '/api/etemplate.php')))
+			{
+				template = template.replace(new RegExp(webserverUrl), webserverUrl + '/api/etemplate.php');
+			}
+			// if we have no cache-buster, reload daily
+			if(template.indexOf('?') === -1)
+			{
+				template += '?' + ((new Date).valueOf() / 86400 | 0).toString();
+			}
 			// File name provided, fetch from server
-			this._template_promise = this._template_widget.load("", this.__template, this.__value || {content: {}},);
+			this._template_promise = this._template_widget.load("", template, this.__value || {content: {}},);
 		}
 		else
 		{
