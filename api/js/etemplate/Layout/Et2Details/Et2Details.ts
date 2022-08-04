@@ -82,6 +82,13 @@ export class Et2Details extends Et2Widget(SlDetails)
 			 */
 			hoist: {
 				type: Boolean
+			},
+
+			/**
+			 * set toggle alignment either to left or right. Default is right alignment.
+			 */
+			toggleAlign: {
+				type: String
 			}
 		}
 	}
@@ -90,6 +97,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 	{
 		super();
 		this.toggleOnHover = false;
+		this.toggleAlign = 'right';
 		this.hoist = false;
 	}
 
@@ -105,6 +113,10 @@ export class Et2Details extends Et2Widget(SlDetails)
 			if (this.hoist)
 			{
 				this.shadowRoot.querySelector('.details').classList.add('hoist');
+			}
+			if (this.toggleAlign === 'left')
+			{
+				this.shadowRoot.querySelector('.details__summary-icon').style.order = -1;
 			}
 		});
 	}
