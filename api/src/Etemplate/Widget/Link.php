@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+use InvalidArgumentException;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
@@ -308,8 +309,19 @@ class Link extends Etemplate\Widget
 		$response->message(lang('%1 files copied',count($copied)));
 	}
 
-	public static function ajax_delete($value)
+	/**
+	 * Delete a link specified by its link_id
+	 *
+	 * @param int $value link_id to delete
+	 * @return void
+	 * @throws Api\Json\Exception|InvalidArgumentException
+	 */
+	public static function ajax_delete(int $value)
 	{
+		if ($value <= 0)
+		{
+			throw new InvalidArgumentException();
+		}
 		$response = Api\Json\Response::get();
 		$response->data(Api\Link::unlink($value));
 	}
