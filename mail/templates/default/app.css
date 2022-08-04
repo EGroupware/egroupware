@@ -483,20 +483,21 @@ div.mail-compose_fileselector {
 	margin-bottom: 1em;
 	font-size: 1.2em;
 }
-.previewWrapper .et2_details.attachments {
-	margin-top: 0.4em;
+et2-details.details::part(summary) {
+	padding-left: 1em;
 }
-.previewWrapper .et2_details {
-	flex-direction: row;
-	text-align: start !important;
+
+et2-details.attachments::part(header) {
+	padding-left: 0px;
 }
-.previewWrapper .et2_details .et2_details_title {
-	margin: 0;
-	margin-left: 0.5em;
+.mailDisplay et2-details::part(base),
+.previewWrapper et2-details::part(base){
+	border: none;
 }
-.previewWrapper .et2_details .et2_details_toggle {
-	margin: 0;
+et2-details.attachments::part(content) {
+	padding-left: 0px;
 }
+
 #mail-index_mailPreview .et2_email > span {
     display: inline;
 }

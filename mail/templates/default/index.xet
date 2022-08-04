@@ -38,46 +38,19 @@
                         <hbox width="100%" class="mailPreviewHeaders">
                                 <lavatar src="@avatar" lname="@address" shape="rounded" size="2.45em"/>
                                 <vbox>
-                                    <et2-details class="details" toggleOnHover="true" hoist="true">
+                                    <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
                                         <et2-select-email slot="summary" id="fromaddress" readonly="true"/>
                                         <hbox>
                                             <description value="From" class="firstColumnTitle"/>
-                                            <grid id="additionalfromaddress">
-                                                <columns>
-                                                    <column/>
-                                                </columns>
-                                                <rows>
-                                                    <row>
-                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
-                                                    </row>
-                                                </rows>
-                                            </grid>
+                                            <et2-select-email id="additionalfromaddress" readonly="true"></et2-select-email>
                                         </hbox>
                                         <hbox disabled="!@toaddress" width="100%">
                                             <description value="To" class="firstColumnTitle"/>
-                                            <grid id="additionaltoaddress">
-                                                <columns>
-                                                    <column/>
-                                                </columns>
-                                                <rows>
-                                                    <row>
-                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
-                                                    </row>
-                                                </rows>
-                                            </grid>
+                                            <et2-select-email id="additionaltoaddress" readonly="true"></et2-select-email>
                                         </hbox>
                                         <hbox disabled="!@ccaddress"  width="100%">
                                             <description value="Cc" class="firstColumnTitle"/>
-                                            <grid id="ccaddress">
-                                                <columns>
-                                                    <column/>
-                                                </columns>
-                                                <rows>
-                                                    <row>
-                                                        <et2-select-email id="${row}" readonly="true"></et2-select-email>
-                                                    </row>
-                                                </rows>
-                                            </grid>
+                                            <et2-select-email id="ccaddress" readonly="true"></et2-select-email>
                                         </hbox>
                                     </et2-details>
                                 </vbox>
