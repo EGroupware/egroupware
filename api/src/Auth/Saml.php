@@ -38,10 +38,22 @@ use EGroupware\Api\Exception;
  * There are basically three possible scenarios currently supported:
  * a) a single IdP and SAML configured as authentication method
  * --> gives full SSO (login page is never displayed, it directly redirects to the IdP)
- * b) one or multiple IdP, a discovery label and an other authentication type eg. SQL configured
+ * b) one or multiple IdP, a discovery label and another authentication type eg. SQL configured
  * --> uses the login page for local accounts plus a button or selectbox (depending on number of IdPs) to start SAML login
  * c) multiple IdP and SAML configured as authentication method
  * --> SimpleSAML discovery/selection page with a checkbox to remember the selection (SSO after first selection)
+ *
+ * EGroupware understands assertions / attributes send after authentication in the following ways:
+ * - as "urn:uuid:<oid>" uri as used eg. in the DFN federation
+ * - as LDAP attribute name send eg. by Univention IdP (either lower cased or in matching camelCase)
+ *
+ * SAML support in EGroupware automatically downgrades session cookies to SameSite=Lax, as our default SameSite=Strict
+ * does NOT work with SAML redirects from an IdP in a different domain (browser simply ignores the session cookies)!
+ *
+ * Please note: the following SimpleSAMLphp WARNING can be safely ignored (as EGroupware shares the session with it):
+ * There is already a PHP session with the same name as SimpleSAMLphp's session, or the
+ * 'session.phpsession.cookiename' configuration option is not set. Make sure to set SimpleSAMLphp's cookie name
+ * with a value not used by any other applications.
  */
 class Saml implements BackendSSO
 {
@@ -124,7 +136,10 @@ class Saml implements BackendSSO
 
 		// get attributes for (automatic) account creation
 		$attrs = $as->getAttributes();
-		$username = $attrs[self::usernameOid()][0];
+		if (!$attrs || empty($username = self::samlAttr(null, $attrs)))
+		{
+			throw new \Exception('Got NO '.(!$attrs ? 'attributes' : 'username attribute').' from SAML: '.json_encode($attrs));
+		}
 
 		// check if user already exists
 		if (!$GLOBALS['egw']->accounts->name2id($username, 'account_lid', 'u'))
@@ -142,9 +157,9 @@ class Saml implements BackendSSO
 					return null;
 				}
 				$GLOBALS['auto_create_acct'] = [
-					'firstname' => $attrs[self::firstName][0],
-					'lastname' => $attrs[self::lastName][0],
-					'email' => $attrs[self::emailAddress][0],
+					'firstname' => self::samlAttr(self::firstName, $attrs),
+					'lastname' => self::samlAttr(self::lastName, $attrs),
+					'email' => self::samlAttr(self::emailAddress, $attrs),
 				];
 			}
 		}
@@ -152,6 +167,12 @@ class Saml implements BackendSSO
 		// check affiliation / group to add or remove
 		self::checkAffiliation($username, $attrs, $GLOBALS['auto_create_acct']);
 
+		// Set SameSite attribute for cookies, as SAML redirect does NOT work with samesite=Strict,
+		// it requires as least Lax, otherwise the browser will ignore the session cookies set in Session::create()!
+		if ($GLOBALS['egw_info']['server']['cookie_samesite_attribute'] === 'Strict')
+		{
+			$GLOBALS['egw_info']['server']['cookie_samesite_attribute'] = 'Lax';
+		}
 		// return user session
 		return $GLOBALS['egw']->session->create($username, null, null, false, false);
 	}
@@ -207,17 +228,17 @@ class Saml implements BackendSSO
 		switch($GLOBALS['egw_info']['server']['saml_join'])
 		{
 			case 'usernameemail':
-				if (!empty($attrs[self::emailAddress]))
+				if (!empty(self::samlAttr(self::emailAddress, $attrs)))
 				{
 					unset($update['account_email']);	// force email update
 				}
 			// fall through
 			case 'username':
-				$update['account_lid'] = $attrs[self::usernameOid()][0];
+				$update['account_lid'] = self::samlAttr(null, $attrs);
 				break;
 
 			case 'description':
-				$update['account_description'] = $attrs[self::usernameOid()][0];
+				$update['account_description'] = self::samlAttr(null, $attrs);
 				break;
 		}
 		// update other attributes
@@ -227,9 +248,9 @@ class Saml implements BackendSSO
 			'account_lastname' => self::lastName,
 		] as $name => $oid)
 		{
-			if (!empty($attrs[$oid]) && ($name !== 'account_email' || empty($update['account_email'])))
+			if (!empty($value = self::samlAttr($oid, $attrs)) && ($name !== 'account_email' || empty($update['account_email'])))
 			{
-				$update[$name] = $attrs[$oid][0];
+				$update[$name] = $value;
 			}
 		}
 		// update account if necessary
@@ -571,6 +592,60 @@ class Saml implements BackendSSO
 	}
 
 	/**
+	 * Get SAML attribute by name, taking into account that some IdP, like eg. Univention, use not the oid but the LDAP name
+	 *
+	 * @param string $name attribute name or null for the configured username
+	 * @param array $attrs as returned by SimpleSAML\Auth\Simple::getAttributes()
+	 * @param ?array $config default use config from $GLOBALS['egw_info']['server']
+	 * @return string[]|string|null
+	 */
+	private static function samlAttr($name, array $attrs, array $config=null)
+	{
+		if (!isset($config)) $config = $GLOBALS['egw_info']['server'];
+
+		switch($name ?: $config['saml_username'] ?? 'emailAddress')
+		{
+			case 'emailAddress':
+			case 'mailPrimaryAddress':
+			case self::emailAddress:
+				$keys = [self::emailAddress, 'emailAddress', 'mailPrimaryAddress'];
+				break;
+			case 'eduPersonPrincipalName':
+			case self::eduPersonPricipalName:
+				$keys = [self::eduPersonPricipalName, 'eduPersonPrincipalName'];
+				break;
+			case 'eduPersonUniqueId':
+			case self::eduPersonUniqueId:
+				$keys = [self::eduPersonUniqueId, 'eduPersonUniqueId'];
+				break;
+			case 'uid':
+			case self::uid:
+				$keys = [self::uid, 'uid'];
+				break;
+			case 'sn':
+			case 'surname':
+			case self::lastName:
+				$keys = [self::lastName, 'sn', 'surname'];
+				break;
+			case 'givenName':
+			case self::firstName:
+				$keys = [self::firstName, 'givenName'];
+				break;
+			case 'customOid':
+				$keys = ['urn:oid:'.$config['saml_username_oid'], $config['saml_username_oid']];
+				break;
+		}
+		foreach($keys as $key)
+		{
+			if (isset($attrs[$key]) || isset($attrs[$key = strtolower($key)]))
+			{
+				return count($attrs[$key]) === 1 ? current($attrs[$key]) : $attrs[$key];
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * eduPersonAffiliation attribute
 	 */
 	const eduPersonAffiliation = 'urn:oid:1.3.6.1.4.1.5923.1.1.1.1';
@@ -589,7 +664,7 @@ class Saml implements BackendSSO
 
 		// check if affiliation is configured and attribute returned by IdP
 		$attr = $config['saml_affiliation'] === 'eduPersonAffiliation' ? self::eduPersonAffiliation : $config['saml_affiliation_oid'];
-		if (!empty($attr) && !empty($attrs[$attr]) && !empty($config['saml_affiliation_group']) && !empty($config['saml_affiliation_values']) &&
+		if (!empty($attr) && !empty($affiliation = self::samlAttr($attr, $attrs)) && !empty($config['saml_affiliation_group']) && !empty($config['saml_affiliation_values']) &&
 			($gid = $GLOBALS['egw']->accounts->name2id($config['saml_affiliation_group'], 'account_lid', 'g')))
 		{
 			if (!isset($auto_create_acct) && ($accout_id = $GLOBALS['egw']->accounts->name2id($username, 'account_lid', 'u')))
@@ -597,7 +672,7 @@ class Saml implements BackendSSO
 				$memberships = $GLOBALS['egw']->accounts->memberships($accout_id, true);
 			}
 			// check if attribute matches given values to add the extra membership
-			if (array_intersect($attrs[$attr], preg_split('/, */', $config['saml_affiliation_values'])))
+			if (array_intersect($affiliation, preg_split('/, */', $config['saml_affiliation_values'])))
 			{
 				if (isset($auto_create_acct))
 				{
