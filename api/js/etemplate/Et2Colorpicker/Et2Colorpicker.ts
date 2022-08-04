@@ -9,19 +9,17 @@
  */
 
 
-
-import {css, html, SlotMixin, render, RenderOptions} from "@lion/core";
-import {LionInput} from "@lion/input";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {css, html, PropertyValues} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {SlColorPicker} from "@shoelace-style/shoelace";
+import shoelace from "../Styles/shoelace";
 
-export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput)))
+export class Et2Colorpicker extends Et2InputWidget(SlColorPicker)
 {
-	private readonly cleared_value = '#FEFEFE';	// as input type=color interprets everything not a "#rrggbb" string as black, we use this for no value selected for now
-
 	static get styles()
 	{
 		return [
+			shoelace,
 			...super.styles,
 			css`
 			:host {
@@ -34,118 +32,77 @@ export class Et2Colorpicker extends Et2InputWidget(Et2Widget(SlotMixin(LionInput
 			.input-group__container {
 				align-items: center
 			}
-			:host(:hover) ::slotted([slot="suffix"]) {
-				width: 12px;
-				height: 12px;
+
+			.input__clear {
 				display: inline-flex;
-				background-image: url(pixelegg/images/close.svg);
-				background-size: 10px;
-				background-position: center;
-				background-repeat: no-repeat;
+				align-items: center;
+				justify-content: center;
+				font-size: inherit;
+				color: var(--sl-input-icon-color);
+				border: none;
+				background: none;
+				padding: 0px;
+				transition: var(--sl-transition-fast) color;
 				cursor: pointer;
+				
+				/* Positioning of clear button */
+				position: absolute;
+				left: var(--sl-input-height-medium);
+				top: 0px;
+				margin: auto 0px;
+				bottom: 0px;
+
 			}
 			`,
 		];
-	}
-
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () => this.__getInputNode(),
-			suffix: () => this.__getClearButtonNode()
-		}
 	}
 
 	constructor()
 	{
 		super();
 
-		// Override the default type of "text"
-		this.type = 'color';
+		this.hoist = true;
+		this.noFormatToggle = true;
+		this.uppercase = true;
 
-		// Bind the handlers, since slots bind without this as context
-		this._handleChange = this._handleChange.bind(this);
+		// Bind the handlers
 		this._handleClickClear = this._handleClickClear.bind(this);
 	}
 
-	connectedCallback()
+	protected firstUpdated(_changedProperties : PropertyValues)
 	{
-		super.connectedCallback();
+		super.firstUpdated(_changedProperties);
+
+		// After nodes are created, override placement
+		this.dropdown.placement = "right";
+
+		// Add in clear button - parent has no accessible slots
+		//render(this._clearButtonTemplate(), this._buttonNode);
 	}
 
-	__getInputNode()
+	private get _buttonNode() : HTMLElement
 	{
-		const renderParent = document.createElement('div');
-		render(
-			this._inputTemplate(),
-			renderParent,
-			<RenderOptions>({
-				scopeName: this.localName,
-				eventContext: this,
-			}),
-		);
-		return renderParent.firstElementChild;
-	}
-
-	_inputTemplate()
-	{
-		return html`
-            <input type="color" .value="${this.value || this.cleared_value}" onchange="${this._handleChange}"/>
-		`;
-	}
-
-	/**
-	 * Get the clear button node
-	 * @returns {Element|null}
-	 */
-	__getClearButtonNode()
-	{
-		const renderParent = document.createElement('div');
-		render(
-			this._clearButtonTemplate(),
-			renderParent,
-			<RenderOptions>({
-				scopeName: this.localName,
-				eventContext: this,
-			}),
-		);
-		return renderParent.firstElementChild;
+		return this.shadowRoot.querySelector("button[slot='trigger']");
 	}
 
 	_clearButtonTemplate()
 	{
 		return html`
-            <span class="clear-icon" @click="${this._handleClickClear}"></span>
+            <button part="clear-button" class="input__clear" type="button" tabindex="-1"
+                    aria-label="${this.egw().lang("Clear entry")}"
+                    @click=${this._handleClickClear}>
+                <slot name="clear-icon">
+                    <sl-icon name="x-circle-fill" library="system"></sl-icon>
+                </slot>
+            </button>
 		`;
 	}
 
-	_handleChange(e)
+	_handleClickClear(e)
 	{
-		this.set_value(e.target.value);
-	}
+		e.stopImmediatePropagation();
+		this.value = "";
 
-	_handleClickClear()
-	{
-		this.set_value('');
-	}
-
-	getValue()
-	{
-		if (this.value.toUpperCase() === this.cleared_value)
-		{
-			return '';
-		}
-		return this.value;
-	}
-
-	set_value(color)
-	{
-		if (!color)
-		{
-			color = this.cleared_value;
-		}
-		this.value = color;
 	}
 }
 customElements.define('et2-colorpicker', Et2Colorpicker);
