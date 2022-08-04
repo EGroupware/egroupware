@@ -62,7 +62,7 @@
     "@lion/listbox": "^0.12.0",
     "@lion/select": "^0.15.0",
     "@lion/textarea": "^0.14.0",
-    "@shoelace-style/shoelace": "^2.0.0-beta.73",
+    "@shoelace-style/shoelace": "^2.0.0-beta.79",
     "blueimp-gallery": "^3.4.0",
     "colortranslator": "^1.9.2",
     "lit-flatpickr": "^0.3.0",
