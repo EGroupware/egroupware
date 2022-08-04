@@ -128,7 +128,7 @@
                             </row>
                             <row class="row">
                                 <description value="Location" for="info_location"/>
-                                <textbox id="info_location" size="60" maxlength="255" class="et2_fullWidth"/>
+                                <textbox id="info_location" maxlength="255" class="et2_fullWidth"/>
                             </row>
                             <row>
                                 <description value="Private" for="info_access"/>
