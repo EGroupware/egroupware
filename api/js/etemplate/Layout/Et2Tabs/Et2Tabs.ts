@@ -13,6 +13,7 @@ import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithD
 import {css, PropertyValues} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
 import {et2_createWidget} from "../../et2_core_widget";
+import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 
 
 export class Et2Tabs extends Et2Widget(SlTabGroup)
@@ -21,6 +22,7 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 	{
 		return [
 			...super.styles,
+			colorsDefStyles,
 			...shoelace,
 			css`
 			.tab-group--top {
