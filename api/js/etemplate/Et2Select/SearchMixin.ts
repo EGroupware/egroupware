@@ -177,8 +177,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					margin-left: 0px;
 					width: 100%;
 					height: var(--sl-input-height-medium);
-					position: relative;
+					position: absolute;
 					background-color: white;
+					z-index: 1;
 				}
 				/* Search UI active - show textbox & stuff */
 				::slotted(.search_input.active),.search_input.active,
@@ -407,7 +408,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 
 			// Overridden to add options if allowFreeEntries=true
-			if(typeof this.value == "string" && !this.menuItems.find(o => o.value == this.value))
+			if(typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value))
 			{
 				this.createFreeEntry(this.value);
 			}
@@ -415,7 +416,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.value.forEach((e) =>
 				{
-					if(!this.menuItems.find(o => o.value == e))
+					if(!this._menuItems.find(o => o.value == e))
 					{
 						this.createFreeEntry(e);
 					}
@@ -583,6 +584,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.dropdown.hide();
 				}
+				else
+				{
+					this._searchInputNode.focus();
+				}
 			}
 			else if(event.key == "Enter")
 			{
@@ -608,7 +613,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Stop propagation, or parent key handler will add again
 			event.stopImmediatePropagation();
 
-			if(event.key == "Enter" && this.allowFreeEntries)
+			if(Et2WidgetWithSearch.TAG_BREAK.indexOf(event.key) !== -1 && this.allowFreeEntries)
 			{
 				// Prevent default, since that would try to submit
 				event.preventDefault();
@@ -798,14 +803,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Once added to options, add to value / tags
 			this.updateComplete.then(() =>
 			{
-				this.menuItems.forEach(o =>
-				{
-					if(o.value == text)
-					{
-						o.dispatchEvent(new Event("click"));
-					}
-				});
-				this.syncItemsFromValue();
+				this.handleMenuSlotChange();
 			});
 			return true;
 		}
@@ -865,9 +863,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected stopEdit(abort = false)
 		{
 			// type to select will focus matching entries, but we don't want to stop the edit yet
-			if(typeof abort == "object" && abort.type == "blur" && abort.relatedTarget?.localName == "sl-menu-item")
+			if(typeof abort == "object" && abort.type == "blur")
 			{
-				return;
+				if(abort.relatedTarget?.localName == "sl-menu-item")
+				{
+					return;
+				}
+				// Edit lost focus, accept changes
+				abort = false;
 			}
 
 			let value = abort ? this._editInputNode.dataset.initial : this._editInputNode.value;
@@ -888,7 +891,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._searchInputNode.value = "";
 
 			// Reset options.  It might be faster to re-create instead.
-			this.menuItems.forEach((item) =>
+			this._menuItems.forEach((item) =>
 			{
 				item.disabled = false;
 				item.classList.remove("match");

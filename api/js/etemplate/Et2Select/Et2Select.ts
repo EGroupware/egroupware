@@ -62,8 +62,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		return [
 			// Parent (SlSelect) returns a single cssResult, not an array
-			super.styles,
 			shoelace,
+			super.styles,
 			css`
 			:host {
 				display: block;
@@ -336,7 +336,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			overflow = this.displayTags.pop();
 		}
-		const checkedItems = Object.values(this.menuItems).filter(item => this.value.includes(item.value));
+		const checkedItems = Object.values(this._menuItems).filter(item => this.value.includes(item.value));
 		this.displayTags = checkedItems.map(item => this._createTagNode(item));
 
 		// Re-slice & add overflow tag
@@ -452,6 +452,12 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		return "";
 	}
+
+	public get _menuItems() : HTMLElement[]
+	{
+		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
+	}
+
 
 	/**
 	 * Override parent to always call validate(), as our simple implementation needs to validate on clear as well.

@@ -92,6 +92,7 @@
 
 ::part(form-control-input) {
     flex: 1 1 auto;
+    position: relative;
 }
 
 ::part(form-control-help-text) {
