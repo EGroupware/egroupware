@@ -406,7 +406,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		const tag = <Et2Tag>document.createElement(this.tagTag);
 		tag.value = item.value;
-		tag.textContent = this.getItemLabel(item);
+		tag.textContent = item.getTextLabel().trim();
 		tag.class = item.classList.value + " search_tag";
 		if(this.size)
 		{
@@ -451,11 +451,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			return image;
 		}
 		return "";
-	}
-
-	public get menuItems() : HTMLElement[]
-	{
-		return [...this.querySelectorAll<SlMenuItem>(this.optionTag)];
 	}
 
 	/**

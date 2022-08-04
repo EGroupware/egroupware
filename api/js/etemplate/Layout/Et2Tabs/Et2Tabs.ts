@@ -42,6 +42,9 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 			::slotted(et2-tab-panel) {
 				flex: 1 1 auto;
 			}
+			::slotted(et2-tab-panel:not([active])) {
+    			display: none;
+			}
 			`
 		];
 	}
