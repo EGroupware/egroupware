@@ -296,15 +296,26 @@ export class Et2LinkList extends Et2LinkString
 		link_element.classList.add("loading");
 
 		this.dispatchEvent(new CustomEvent("before_delete", {detail: link}));
-		egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_delete", [link.link_id]).sendRequest()
-			.then((data) =>
-			{
-				if(data)
-				{
-					this.querySelectorAll("[slot='" + this._get_row_id(link) + "']").forEach(e => e.remove());
-				}
-			});
 
+		let removeLink = () => {this.querySelectorAll("[slot='" + this._get_row_id(link) + "']").forEach(e => e.remove());};
+
+		// Unsaved entry, had no ID yet
+		if(typeof this.entryId !== "string" && this.entryId[link.link_id])
+		{
+			delete this.entryId[link.link_id];
+			removeLink();
+		}
+		else if(typeof this.entryId == "string" && link.link_id)
+		{
+			egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_delete", [link.link_id]).sendRequest()
+				.then((data) =>
+				{
+					if(data)
+					{
+						removeLink();
+					}
+				});
+		}
 	}
 
 	/**
