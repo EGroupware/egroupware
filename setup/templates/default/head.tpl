@@ -57,11 +57,11 @@
 							<table width="100%" cellspacing="0" cellpadding="0">
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../index.php">{user_login}</a></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../index.php">{user_login}</a></td>
 								</tr>
 <!-- BEGIN loged_in -->
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
 								</tr>
 
 								<tr class="divSideboxEntry">
@@ -69,10 +69,10 @@
 								</tr>
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
 								</tr>
 <!-- END loged_in -->
 								<tr class="divSideboxEntry">
@@ -84,15 +84,15 @@
 						<div>
 							<table width="100%" cellspacing="0" cellpadding="0">
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td>
 									<td class="textSidebox"><a href="https://github.com/EGroupware/egroupware/wiki" target="_blank">{documentation}</a></td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td>
 									<td class="textSidebox"><a href="https://www.egroupware.org/egroupware-support/" target="_blank">{commercial_support}</a></td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="templates/default/images/bullet.png" alt="ball" /></td>
 									<td class="textSidebox"><a href="https://help.egroupware.org/" target="_blank">{community_forum}</a></td>
 								</tr>
 							</table>
