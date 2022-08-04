@@ -2854,7 +2854,10 @@ div.et2_toolbar.ui-widget-header {
     align-items: end;
     padding-top: 5px;
 }
-
+.et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
+    border: none;
+    background-color: transparent;
+}
 .et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
     background-image: url(images/arrow_down.svg);
     background-size: 12px;
