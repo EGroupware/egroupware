@@ -89,22 +89,22 @@ tr.mail.deleted td:first-child {
   width: 12px;
   height: 12px;
   background-repeat: no-repeat;
-  background-image: url(../default/images/kmmsgread.png);
+  background-image: url(../default/images/kmmsgread.svg);
 }
 tr.deleted .status_img {
-  background-image: url(../default/images/kmmsgdel.png);
+  background-image: url(../default/images/kmmsgdel.svg);
 }
 tr.unseen .status_img {
-  background-image: url(../default/images/kmmsgunseen.png);
+  background-image: url(../default/images/kmmsgunseen.svg);
 }
 tr.flagged_seen .status_img {
-  background-image: url(../default/images/read_flagged_small.png) !important;
+  background-image: url(../default/images/read_flagged_small.svg) !important;
 }
 tr.flagged_unseen .status_img {
-  background-image: url(../default/images/unread_flagged_small.png) !important;
+  background-image: url(../default/images/unread_flagged_small.svg) !important;
 }
 tr.recent .status_img {
-  background-image: url(../default/images/kmmsgnew.png) !important;
+  background-image: url(../default/images/kmmsgnew.svg) !important;
 }
 tr.replied .status_img {
   background-image: url(../default/images/kmmsgreplied.png) !important;
@@ -204,8 +204,6 @@ table tr.attachmentRow > td > img {
 pre {
   white-space: pre-wrap;
   /* Mozilla, since 1999 */
-  white-space: -pre-wrap;
-  /* Opera 4-6 */
   white-space: -o-pre-wrap;
   /* Opera 7 */
   width: 99%;
@@ -429,7 +427,7 @@ div.mail-compose_fileselector {
 }
 .mail-compose_fileselector span.et2_file_span {
   background-repeat: no-repeat;
-  background-image: url(../default/images/attach.png);
+  background-image: url(../default/images/attach.svg);
   background-size: inherit;
   background-position: left;
 }
@@ -441,7 +439,7 @@ div.mail-compose_fileselector {
   font-weight: bold;
   padding-left: 30px;
   width: 80px;
-  background-image: url(../default/images/mail_send.png) !important;
+  background-image: url(../default/images/mail_send.svg) !important;
   background-position: left;
   background-repeat: no-repeat;
 }
@@ -1604,29 +1602,7 @@ tr.mail.deleted td:first-child {
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
-  background-image: url(../api/templates/default/images/kmmsgread.svg);
   background-size: 16px 16px;
-}
-tr.deleted .status_img {
-  background-image: url(../api/templates/default/images/kmmsgdel.svg);
-}
-tr.unseen .status_img {
-  background-image: url(../api/templates/default/images/kmmsgunseen.svg);
-}
-tr.flagged_seen .status_img {
-  background-image: url(../api/templates/default/images/read_flagged_small.svg) !important;
-}
-tr.flagged_unseen .status_img {
-  background-image: url(../api/templates/default/images/unread_flagged_small.svg) !important;
-}
-tr.recent .status_img {
-  background-image: url(../api/templates/default/images/kmmsgnew.svg) !important;
-}
-tr.replied .status_img {
-  background-image: url(../api/templates/default/images/mail_reply.svg) !important;
-}
-tr.forwarded .status_img {
-  background-image: url(../api/templates/default/images/mail_forward.svg) !important;
 }
 .subjectBold {
   font-size: 12px;
@@ -1803,7 +1779,7 @@ input[type=button] {
   text-align: left;
   font-weight: bold;
   padding-left: 25px;
-  background-image: url(../api/templates/default/images/write_mail.png) !important;
+  background-image: url(../default/images/write_mail.png) !important;
   background-position: left;
   background-repeat: no-repeat;
 }

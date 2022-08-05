@@ -75,35 +75,35 @@ tr.mail.deleted  td:first-child{
 	width: 12px;
 	height: 12px;
 	background-repeat: no-repeat;
-	background-image: url(../default/images/kmmsgread.png);
+	background-image: url(../default/images/kmmsgread.svg);
 }
 
 tr.deleted .status_img {
-	background-image: url(../default/images/kmmsgdel.png);
+	background-image: url(../default/images/kmmsgdel.svg);
 }
 
 tr.unseen .status_img {
-	background-image: url(../default/images/kmmsgunseen.png);
+	background-image: url(../default/images/kmmsgunseen.svg);
 }
 
 tr.flagged_seen .status_img {
-	background-image: url(../default/images/read_flagged_small.png) !important;
+	background-image: url(../default/images/read_flagged_small.svg) !important;
 }
 
 tr.flagged_unseen .status_img {
-	background-image: url(../default/images/unread_flagged_small.png) !important;
+	background-image: url(../default/images/unread_flagged_small.svg) !important;
 }
 
 tr.recent .status_img {
-	background-image: url(../default/images/kmmsgnew.png) !important;
+	background-image: url(../default/images/kmmsgnew.svg) !important;
 }
 
 tr.replied .status_img {
-	background-image: url(../default/images/kmmsgreplied.png) !important;
+	background-image: url(../default/images/mail_reply.svg) !important;
 }
 
 tr.forwarded .status_img {
-	background-image: url(../default/images/kmmsgforwarded.png) !important;
+	background-image: url(../default/images/mail_forward.svg) !important;
 }
 
 .subjectBold
@@ -214,7 +214,6 @@ table tr.attachmentRow > td > img {
 
 pre {
  white-space: pre-wrap; /* Mozilla, since 1999 */
- white-space: -pre-wrap; /* Opera 4-6 */
  white-space: -o-pre-wrap; /* Opera 7 */
  width: 99%;
 }
@@ -409,7 +408,6 @@ div.mailUploadSection > div.et2_hbox > label {
 	border-right: 1px solid gray;
 	border-bottom: 1px solid gray;
 	background-color: #c0d2ec;
-	background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
 }
@@ -431,7 +429,7 @@ div.mail-compose_fileselector {
 }
 .mail-compose_fileselector span.et2_file_span {
 	background-repeat: no-repeat;
-	background-image: url(../default/images/attach.png);
+	background-image: url(../default/images/attach.svg);
 	background-size: inherit;
 	background-position: left;
 }
@@ -443,7 +441,7 @@ div.mail-compose_fileselector {
 	font-weight: bold;
 	padding-left: 30px;
 	width: 80px;
-	background-image: url(../default/images/mail_send.png) !important;
+	background-image: url(../default/images/mail_send.svg) !important;
 	background-position: left;
 	background-repeat: no-repeat;
 }
@@ -901,7 +899,7 @@ and (orientation : portrait) {
 /* Smartphones (landscape) ----------- */
 @media only screen
 and (min-width : 321px)
-and (max-device-width:768){
+and (max-device-width:768px){
 	#mail-index div#mail-index_nm tr.mail.row {
 
 	}
