@@ -8,15 +8,16 @@
  * @author Nathan Gray
  */
 import {SlTab, SlTabGroup, SlTabPanel} from "@shoelace-style/shoelace";
-import {Et2Widget, loadWebComponent} from "../../Et2Widget/Et2Widget";
+import {loadWebComponent} from "../../Et2Widget/Et2Widget";
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "../../et2_core_xml";
 import {css, PropertyValues} from "@lion/core";
 import shoelace from "../../Styles/shoelace";
 import {et2_createWidget} from "../../et2_core_widget";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
+import {Et2InputWidget} from "../../Et2InputWidget/Et2InputWidget";
 
 
-export class Et2Tabs extends Et2Widget(SlTabGroup)
+export class Et2Tabs extends Et2InputWidget(SlTabGroup)
 {
 	static get styles()
 	{
@@ -78,7 +79,12 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 			 * @deprecated use "placement" instead
 			 * @see https://shoelace.style/components/tab-group
 			 */
-			alignTabs: {type: String}
+			alignTabs: {type: String},
+
+			/**
+			 * active tab is the value
+			 */
+			value: {type: String}
 		}
 	}
 
@@ -97,6 +103,41 @@ export class Et2Tabs extends Et2Widget(SlTabGroup)
 
 		this.extraTabs = [];
 		this.addTabs = false;
+	}
+
+	get value()
+	{
+		return this.getActiveTab()?.panel;
+	}
+
+	set value(tab)
+	{
+		if (this.tabs && Array.isArray(this.tabs) && this.tabs.length)
+		{
+			this.show(this.__value = tab);
+		}
+		else
+		{
+			this.__value = tab;
+		}
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		this.updateComplete.then(() =>
+		{
+			if (this.__value)
+			{
+				this.show(this.__value);
+			}
+		});
+	}
+
+	isDirty(): boolean
+	{
+		return false;
 	}
 
 	loadFromXML(_node)
