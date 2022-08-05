@@ -488,9 +488,9 @@ class preferences_settings
 					if($setting['no_sel_options'])
 					{
 						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'autocomplete_url', '');
+						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'allowFreeEntries', true);
 					}
 					$setting['type'] = 'et2-select';
-					$setting['multiple'] = true;
 					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiple', true);
 					break;
 			}

@@ -151,6 +151,7 @@ class Select extends Etemplate\Widget
 			$widget_type = substr($widget_type, 4);
 		}
 		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
+		$allowFreeEntries = $this->attrs['allowFreeEntries'] || $this->getElementAttribute($form_name, 'allowFreeEntries');
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -178,7 +179,7 @@ class Select extends Etemplate\Widget
 				if ((string)$val === '' && in_array('', $allowed)) continue;
 
 				// no validation, for allowFreeEntries="true"
-				if (!empty($this->attrs['allowFreeEntries']) && $this->attrs['allowFreeEntries'] !== 'false')
+				if ($allowFreeEntries)
 				{
 					continue;
 				}
