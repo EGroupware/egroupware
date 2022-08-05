@@ -107,10 +107,10 @@ tr.recent .status_img {
   background-image: url(../default/images/kmmsgnew.svg) !important;
 }
 tr.replied .status_img {
-  background-image: url(../default/images/kmmsgreplied.png) !important;
+  background-image: url(../default/images/mail_reply.svg) !important;
 }
 tr.forwarded .status_img {
-  background-image: url(../default/images/kmmsgforwarded.png) !important;
+  background-image: url(../default/images/mail_forward.svg) !important;
 }
 .subjectBold {
   font-size: 12px;
@@ -405,7 +405,6 @@ div.mailUploadSection > div.et2_hbox > label {
   border-right: 1px solid gray;
   border-bottom: 1px solid gray;
   background-color: #c0d2ec;
-  background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
   background-position: center;
   background-repeat: repeat-x;
 }
