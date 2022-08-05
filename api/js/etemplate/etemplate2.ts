@@ -144,6 +144,7 @@ import './et2_widget_countdown';
 import './et2_extension_nextmatch';
 import './et2_extension_customfields';
 import './vfsSelectUI';
+import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 
 
 /**
@@ -1590,14 +1591,19 @@ export class etemplate2
 			}
 			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
 			let tmpWidget = widget;
-			while(tmpWidget.getParent() && tmpWidget.getType() != 'tabbox')
+			while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
 			{
 				tmpWidget = tmpWidget.getParent();
 			}
-			//Acvtivate the tab where the widget with validation error is located
-			if(tmpWidget.getType() == 'tabbox')
+			//Activate the tab where the widget with validation error is located
+			if(tmpWidget.getType() === 'ET2-TABBOX')
 			{
-				(<et2_tabbox><unknown>tmpWidget).activateTab(widget);
+				(<Et2Tabs><unknown>tmpWidget).activateTab(widget);
+			}
+			// scroll the widget into view
+			if (typeof widget.getDOMNode().scrollIntoView === 'function')
+			{
+				widget.scrollIntoView();
 			}
 		}
 		egw().debug("warn", "Validation errors", _response.data);
