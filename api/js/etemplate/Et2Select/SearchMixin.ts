@@ -528,6 +528,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(this.multiple && this.searchEnabled)
 			{
 				this._searchInputNode.focus();
+				this._searchInputNode.select();
 
 				// Scroll the new tag into view
 				if(event.detail && event.detail.item)
