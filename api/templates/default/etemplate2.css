@@ -2797,6 +2797,10 @@ div.ui-dialog div.ui-dialog-content > div {
 
 .et2_toolbar *[class ^="et2_toolbar_draggable"] {cursor: pointer !important;}
 
+.et2_toolbar et2-button.et2_toolbar_onlyCaption,
+.et2_toolbar .et2_toolbar_actionlist et2-button.et2_toolbar_onlyCaption::part(prefix) {
+    width: auto;
+}
 div.et2_toolbar.ui-widget-header {
     background: none;
 }
@@ -2881,7 +2885,7 @@ div.et2_toolbar.ui-widget-header {
     background-color: #fafafa;
 }
 
-.et2_toolbar et2-button {
+.et2_toolbar et2-button, .et2_toolbar et2-switch {
     margin-right: 1ex;
     min-width: 24px;
 }

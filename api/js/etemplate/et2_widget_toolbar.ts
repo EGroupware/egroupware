@@ -630,6 +630,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				toggleOff: action.data.toggle_off,
 				class: `et2_toolbar_draggable${this.id}`,
 			}, this);
+			widget.style.backgroundImage = `url(${action.iconUrl})`;
 			widget.value = action.checked;
 			action.data.widget = widget;
 			widget.onchange = actionHandler;

@@ -1532,12 +1532,14 @@ img.calendar_print_appicon {
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
   width: 24px;
 }
+et2-switch#calendar-toolbar_toolbar-weekend {
+  background-image: none !important;
+}
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch[checked],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"][checked],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"][checked] {
   filter: none;
   box-shadow: inset 1px 1px 1px 1px gray !important;
-  width: var(--width);
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch span.label,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] span.label,
