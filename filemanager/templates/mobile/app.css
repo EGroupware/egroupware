@@ -50,7 +50,7 @@ input#filemanager-index_path {
   height: 22px;
   padding: 0;
   background-position-x: 3px;
-  background-image: url(../../../pixelegg/images/add.svg);
+  background-image: url(../../../api/templates/default/images/add.svg);
   overflow: hidden;
   text-indent: 100px;
 }
