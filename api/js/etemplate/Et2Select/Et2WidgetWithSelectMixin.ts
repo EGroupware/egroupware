@@ -124,6 +124,10 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 						this._optionTargetNode
 					);
 				}
+				if(this.handleMenuSlotChange)
+				{
+					this.handleMenuSlotChange();
+				}
 			}
 		}
 
