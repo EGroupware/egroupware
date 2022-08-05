@@ -15,9 +15,10 @@ import shoelace from "../../Styles/shoelace";
 import {et2_createWidget} from "../../et2_core_widget";
 import {colorsDefStyles} from "../../Styles/colorsDefStyles";
 import {Et2InputWidget} from "../../Et2InputWidget/Et2InputWidget";
+import {et2_IResizeable} from "../../et2_core_interfaces";
 
 
-export class Et2Tabs extends Et2InputWidget(SlTabGroup)
+export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeable
 {
 	static get styles()
 	{
@@ -483,6 +484,15 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup)
 			return this.show(tab);
 		}
 		return super.setActiveTab(<SlTab>tab, options);
+	}
+
+
+	resize(_height)
+	{
+		if(_height)
+		{
+			this.tabHeight = parseInt(this.tabHeight) + parseInt(_height);
+		}
 	}
 }
 
