@@ -638,7 +638,6 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		else
 		{
 			widget = <Et2Button>loadWebComponent("et2-button", {
-				label: action.caption,
 				id: `${this.id}-${action.id}`,
 				image: action.iconUrl || '',
 				slot: "buttons",
@@ -659,6 +658,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				!(isCheckbox && isToggleSwitch)) // no caption for slideswitch checkboxes
 			{
 				widget.classList.add(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
+				widget.label = action.caption;
 			}
 		}
 	}

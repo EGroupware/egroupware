@@ -3125,8 +3125,9 @@ et2-button.transparent-button::part(container) {
     width: 1em;
     overflow: hidden;
 }
-.et2_toolbar_actionlist et2-button::part(prefix) {
-    width: 1.1em;
+.et2_toolbar_actionlist et2-button::part(prefix),
+.ui-toolbar-menulist et2-button::part(prefix){
+    width: 1.2em;
 }
 .et2_toolbar_actionlist et2-button.et2_toolbar_hasCaption {
     width:auto;

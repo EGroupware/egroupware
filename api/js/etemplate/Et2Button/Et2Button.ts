@@ -101,7 +101,6 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			
 			/* Only image, no label */
 			.button--has-prefix:not(.button--has-label) {
-				width: calc(var(--sl-input-height-medium) + var(--sl-input-spacing-small) * 2);
 				justify-content: center;
 			}
             `,
