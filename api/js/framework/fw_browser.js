@@ -169,7 +169,9 @@ window.fw_browser = (function(){ "use strict"; return Class.extend(
 		},5000);
 
 		this.loadingDeferred.always(function() {
-			framework.firstload_animation(self.app.appName);
+			framework.firstload_animation(self.app.appName,
+				framework.activeApp.appName == self.app.appName
+				&& !self.app.browser.contentDiv? 100 : null);
 			if(self.ajaxLoaderDiv)
 			{
 
