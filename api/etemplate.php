@@ -424,7 +424,7 @@ function send_template()
  */
 function parseAttrs($str)
 {
-	if (!preg_match_all('/(^|\s)([a-z\d_-]+)="([^"]+)"/i', $str, $attrs, PREG_PATTERN_ORDER))
+	if (!preg_match_all('/(^|\s)([a-z\d_-]+)="([^"]*)"/i', $str, $attrs, PREG_PATTERN_ORDER))
 	{
 		throw new Exception("Can NOT parse attributes from '$str'");
 	}
