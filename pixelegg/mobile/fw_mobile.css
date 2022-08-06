@@ -3606,7 +3606,7 @@ div.admin-config form > table td b {
   margin-top: 4px;
 }
 .success_message {
-  background-image: url(../../api/templates/default/images/check.png);
+  background-image: url(../../api/templates/default/images/check.svg);
 }
 /**
  * Message in popup
@@ -5608,6 +5608,9 @@ span.overlayContainer img.overlay {
 #egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input) {
   border: none !important;
 }
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control) {
+  margin-left: -3em;
+}
 #egw_fw_topmenu_info_items img#topmenu_info_error {
   width: 16px;
   height: 16px;
@@ -7525,7 +7528,7 @@ img.et2_button_icon[src*="svg"]:hover {
     height: 33px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .close {
-    background-image: url(/egroupware/pixelegg/images/close.svg);
+    background-image: url(../../api/templates/default/images/close.svg);
     width: 18px;
     height: 33px;
     display: inline-block;
