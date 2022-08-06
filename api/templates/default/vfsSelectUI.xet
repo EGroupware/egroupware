@@ -33,7 +33,7 @@
 							</columns>
 							<rows>
 								<row class="row">
-									<vfs-mime align="center" id="$row" size="16" class="selectIcon"/>
+									<vfs-mime align="center" id="$row" width="16px" class="selectIcon"/>
 									<vfs id="$row" onclick="app.vfsSelectUI.select_clicked"/>
 									<checkbox align="right" id="selected[]" selected_value="$row_cont[name]"/>
 								</row>
