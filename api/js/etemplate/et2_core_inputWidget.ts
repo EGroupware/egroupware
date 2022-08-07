@@ -21,7 +21,7 @@ import {et2_valueWidget} from './et2_core_valueWidget'
 import {et2_IInput, et2_ISubmitListener} from "./et2_core_interfaces";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 // fixing circular dependencies by only importing the type (not in compiled .js)
-import type {et2_tabbox} from "./et2_widget_tabs";
+import type {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 
 export interface et2_input
 {
@@ -283,11 +283,11 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 
 				// If on a tab, switch to that tab so user can see it
 				let widget: et2_widget = this;
-				while (widget.getParent() && widget.getType() != 'tabbox')
+				while (widget.getParent() && widget.getType() !== 'et2-tabbox')
 				{
 					widget = widget.getParent();
 				}
-				if (widget.getType() == 'tabbox') (<et2_tabbox><unknown>widget).activateTab(this);
+				if (widget.getType() == 'et2-tabbox') (<Et2Tabs><unknown>widget).activateTab(this);
 			}
 		}
 	}
