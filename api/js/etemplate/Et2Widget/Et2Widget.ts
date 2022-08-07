@@ -799,7 +799,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 		iterateOver(_callback : Function, _context, _type)
 		{
-			if(typeof _type == "undefined" || _type == et2_widget || et2_implements_registry[_type] && et2_implements_registry[_type](this))
+			if (typeof _type === "undefined" || _type === et2_widget || _type === Et2Widget ||
+				typeof _type === 'function' && this instanceof _type ||
+				et2_implements_registry[_type] && et2_implements_registry[_type](this))
 			{
 				_callback.call(_context, this);
 			}

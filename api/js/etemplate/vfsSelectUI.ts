@@ -16,11 +16,10 @@ import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
 import {egw} from "../jsapi/egw_global";
 import {et2_file} from "./et2_widget_file";
-import {Et2Textbox} from "./Et2Textbox/Et2Textbox";
 import {Et2Button} from "./Et2Button/Et2Button";
 import {Et2Select} from "./Et2Select/Et2Select";
-import {et2_checkbox} from "./et2_widget_checkbox";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
+import {Et2Checkbox} from "./Et2Checkbox/Et2Checkbox";
 
 
 /**
@@ -266,11 +265,11 @@ export class vfsSelectUI extends EgwApp
 			let file = widget.value.name;
 			widget.getParent().iterateOver(function(widget)
 			{
-				if(widget.options.selected_value == file)
+				if(widget.options.selectedValue === file)
 				{
-					widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
+					widget.set_value(widget.get_value() === file ? widget.options.unselectedValue : file);
 				}
-			}, null, et2_checkbox);
+			}, null, Et2Checkbox);
 
 		}
 		// Stop event or it will toggle back off

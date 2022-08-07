@@ -17,6 +17,11 @@ import shoelace from "../Styles/shoelace";
 
 export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 {
+	/**
+	 * Value to set checkbox in (third) indeterminate state
+	 */
+	static readonly INDETERMINATE = '***undefined***';
+
 	static get styles()
 	{
 		return [
@@ -53,6 +58,9 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 	constructor()
 	{
 		super();
+
+		this.selectedValue = 'true';
+		this.unselectedValue = '';
 	}
 
 	connectedCallback()
@@ -81,39 +89,39 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 		}
 	}
 
-	get value()
+	get value() : string | boolean
 	{
-		if(this.checked && this.selectedValue)
-		{
-			return this.selectedValue;
-		}
-		if(!this.checked && this.unselectedValue)
-		{
-			return this.unselectedValue;
-		}
-		return this.checked + "";
+		return this.indeterminate ? undefined :
+			(this.checked ? this.selectedValue : this.unselectedValue);
 	}
 
 	set value(new_value : string | boolean)
 	{
 		this.requestUpdate("checked");
 		this.indeterminate = false;
-		if(typeof new_value === "boolean" || !this.selectedValue)
+
+		if(typeof new_value === "boolean")
 		{
-			this.checked = <boolean>new_value;
-			return;
+			this.checked = new_value;
 		}
-		if(this.selectedValue && new_value == this.selectedValue)
+		else if(new_value == this.selectedValue)
 		{
 			this.checked = true;
 		}
-		else if(this.unselectedValue && new_value == this.unselectedValue)
+		else if(new_value == this.unselectedValue)
 		{
 			this.checked = false;
 		}
-		else
+		// concept of an indeterminate value did not exist in eT2 and set value gets called with all kind of truthy of falsy values
+		// therefore we can NOT set everything not matching our (un)selectedValue to indeterminate!
+		// For now, we only do that for an explicit Et2Checkbox.INDETERMINATE value
+		else if (new_value === Et2Checkbox.INDETERMINATE)
 		{
 			this.indeterminate = true;
+		}
+		else
+		{
+			this.checked = !!new_value;
 		}
 	}
 

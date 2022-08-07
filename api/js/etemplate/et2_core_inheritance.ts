@@ -15,6 +15,7 @@
 import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
 import {et2_implements_registry} from "./et2_core_interfaces";
+import {Et2Widget} from "./Et2Widget/Et2Widget";
 
 export class ClassWithInterfaces
 {
@@ -48,6 +49,10 @@ export class ClassWithInterfaces
 				if (typeof _class_or_interfacename === 'string')
 				{
 						return this.implements(_class_or_interfacename);
+				}
+				if (_class_or_interfacename === Et2Widget)
+				{
+					return true;
 				}
 				return this instanceof _class_or_interfacename;
 		}
@@ -274,4 +279,3 @@ export class ClassWithAttributes extends ClassWithInterfaces
 				return attributes;
 		}
 }
-

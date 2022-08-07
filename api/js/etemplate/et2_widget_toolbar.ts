@@ -15,10 +15,9 @@
 */
 
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {egw_getObjectManager, egwActionObject, egwActionObjectManager} from '../egw_action/egw_action.js';
-import {et2_checkbox} from "./et2_widget_checkbox";
 import {et2_IInput} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
@@ -26,7 +25,6 @@ import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2DropdownButton} from "./Et2DropdownButton/Et2DropdownButton";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import interact from "@interactjs/interactjs";
-import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 import {Et2Button} from "./Et2Button/Et2Button";
 import {Et2Checkbox} from "./Et2Checkbox/Et2Checkbox";
 

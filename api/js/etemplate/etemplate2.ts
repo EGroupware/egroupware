@@ -110,7 +110,6 @@ import './et2_widget_textbox';
 import './et2_widget_number';
 import './et2_widget_url';
 import './et2_widget_selectbox';
-import './et2_widget_checkbox';
 import './et2_widget_radiobox';
 import './et2_widget_date';
 import './et2_widget_dialog';
