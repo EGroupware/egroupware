@@ -14,13 +14,13 @@ import {etemplate2} from "../etemplate/etemplate2";
 import type {et2_container} from "../etemplate/et2_core_baseWidget";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
-import {et2_favorites} from "../etemplate/et2_widget_favorites";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
+import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 
 /**
  * Type for push-message
@@ -973,7 +973,7 @@ export abstract class EgwApp
 				{
 					_widget.stored_filters = _widget.load_favorites(self.appname);
 					_widget.init_filters(_widget);
-				}, self, et2_favorites);
+				}, self, Et2Favorites);
 			}
 		}
 		else

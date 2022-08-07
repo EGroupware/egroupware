@@ -8,19 +8,15 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-	egw_inheritance;
-	/api/js/es6-promise.min.js;
-*/
 import {EgwApp} from "./egw_app";
 import './egw_inheritance.js';
 import {etemplate2} from "../etemplate/etemplate2";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
-import {et2_favorites} from "../etemplate/et2_widget_favorites";
 import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 import "sortablejs/Sortable.min.js";
+import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 
 /**
  * Common base class for application javascript
@@ -736,7 +732,7 @@ export const AppJS = (function(){ "use strict"; return Class.extend(
 				et2[i].widgetContainer.iterateOver(function(_widget) {
 					_widget.stored_filters = _widget.load_favorites(self.appname);
 					_widget.init_filters(_widget);
-				}, self, et2_favorites);
+				}, self, Et2Favorites);
 			}
 		}
 		else

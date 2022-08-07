@@ -270,7 +270,7 @@ function send_template()
 		$str = preg_replace('#<passwd ([^>]+)(/|></passwd)>#', '<et2-password $1></et2-password>', $str);
 
 		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>
-		$str = preg_replace_callback('#<(button|buttononly|timestamper|button-timestamp)\s(.*?)(/|></(button|buttononly|timestamper|button-timestamp))>#s', function ($matches) use ($name)
+		$str = preg_replace_callback('#<(button|buttononly|timestamper|button-timestamp|dropdown_button)\s(.*?)(/|></(button|buttononly|timestamper|button-timestamp|dropdown_button))>#s', function ($matches) use ($name)
 		{
 			$tag = 'et2-button';
 			$attrs = parseAttrs($matches[2]);
@@ -283,6 +283,9 @@ function send_template()
 				case 'button-timestamp':
 					$tag .= '-timestamp';
 					$attrs['background_image'] = 'true';
+					break;
+				case 'dropdown_button':
+					$tag = 'et2-dropdown-button';
 					break;
 			}
 			// novalidation --> noValidation

@@ -505,7 +505,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     height: 60px !important;
     background-position: center;
     z-index: 100;
-    background-image: url(../../../pixelegg/images/topmenu_items/mobile/plus_white.svg) !important;
+    background-image: url(../../../api/templates/default/images/topmenu_items/mobile/plus_white.svg) !important;
     background-repeat: no-repeat;
     background-size: 24px 24px;
     margin: 0;
