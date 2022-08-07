@@ -359,9 +359,9 @@ app.classes.mail = AppJS.extend(
 					if (content.is_plain)
 					{
 						// focus
-						jQuery(plainText.node).focus();
+						jQuery(plainText.getDOMNode()).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.node.setSelectionRange !='undefined' && !jQuery(plainText.node).is(":hidden")) plainText.node.setSelectionRange(0,0);
+						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden")) plainText.getDOMNode().setSelectionRange(0,0);
 					}
 					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
@@ -370,12 +370,12 @@ app.classes.mail = AppJS.extend(
 				}
 				else if(to)
 				{
-					jQuery('input',to.node).focus();
+					jQuery('input',to.getDOMNode()).focus();
 					// set cursor to the begining of the textarea only for first focus
 					if (content.is_plain
-						&& typeof plainText.node.setSelectionRange !='undefined')
+						&& typeof plainText.getDOMNode().setSelectionRange !='undefined')
 					{
-						plainText.node.setSelectionRange(0,0);
+						plainText.getDOMNode().setSelectionRange(0,0);
 					}
 				}
 				var smime_sign = this.et2.getWidgetById('smime_sign');
