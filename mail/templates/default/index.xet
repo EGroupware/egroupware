@@ -71,7 +71,7 @@
                                                         <description id="attachmentsBlock[0][partID]" />
                                                         <description id="attachmentsBlock[0][type]" />
                                                         <description id="attachmentsBlock[0][winmailFlag]" />
-                                                        <description class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" no_lang="1" expose_view="true" mime="0[type]" mime_data="attachmentsBlock[0][mime_data]" href="attachmentsBlock[0][mime_url]"/>
+                                                        <description class="et2_link useEllipsis" id="attachmentsBlock[0][filename]" no_lang="1" expose_view="true" mime="@attachmentsBlock[0][type]" mime_data="@attachmentsBlock[0][mime_data]" href="@attachmentsBlock[0][mime_url]"/>
                                                         <description align="right" id="attachmentsBlock[0][size]"/>
                                                     </row>
                                                 </rows>
