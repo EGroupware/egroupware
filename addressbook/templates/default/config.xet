@@ -134,7 +134,7 @@
 					<description value="Account repository" label="%s:"/>
 					<hbox>
 						<description id="newsettings[account_repository]" class="subHeader"/>
-						<description value="Can be changed via Setup >> Configuration"/>
+						<description value="Can be changed via Setup &gt;&gt; Configuration"/>
 					</hbox>
 				</row>
 				<row>
