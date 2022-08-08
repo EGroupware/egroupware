@@ -59,6 +59,8 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 	{
 		super();
 
+		this.isSlComponent = true;
+
 		this.selectedValue = 'true';
 		this.unselectedValue = '';
 	}
