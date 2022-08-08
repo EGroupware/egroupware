@@ -2812,6 +2812,7 @@ div.et2_toolbar.ui-widget-header {
     margin-top: 0px;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
 }
 
 .et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
@@ -2839,10 +2840,7 @@ div.et2_toolbar.ui-widget-header {
     display: inline-block;
     background-position: center;
     float: right;
-}
-
-.et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref:hover {
-    background-color: #ffd555;
+    cursor: pointer;
 }
 
 .et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader {
