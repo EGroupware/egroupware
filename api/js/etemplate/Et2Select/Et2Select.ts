@@ -81,11 +81,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				padding: 0px;
 			}
 			
-			/* Avoid double scrollbar if there are a lot of options */
-			.select__menu
-			{
-				max-height: initial;
-			}
 			/* No horizontal scrollbar, even if options are long */
 			.dropdown__panel {
 				overflow-x: clip;
