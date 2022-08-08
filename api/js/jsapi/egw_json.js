@@ -527,8 +527,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 							return value;
 						}
 					}
+					return undefined;
 				}
-				return undefined;
+				return response;
 			});
 			// pass abort method to returned response
 			if (typeof response.abort === 'function')
@@ -860,4 +861,3 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// Return the extension
 	return json;
 });
-
