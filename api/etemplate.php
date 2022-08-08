@@ -199,7 +199,7 @@ function send_template()
 		}, $str);
 
 		// handling of select and taglist widget, incl. removing of type attribute
-		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</select)>#s', static function (array $matches)
+		$str = preg_replace_callback('#<(select|taglist|listbox)(-[^ ]+)? ([^>]+?)(/|>(.*?)</(select|taglist|listbox))>#s', static function (array $matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 
@@ -209,16 +209,31 @@ function send_template()
 				$attrs['multiple'] = 'true';
 				unset($attrs['tags']);
 			}
-			// taglist had allowFreeEntries and enableEditMode with a default of true, while et2-select has it with a default of false
-			if($matches['1'] === 'taglist' && !$matches[2])
+			// converting taglist to et2-select
+			if($matches['1'] === 'taglist')
 			{
-				if(!isset($attrs['allowFreeEntries']))
+				// taglist had allowFreeEntries and enableEditMode with a default of true, while et2-select has it with a default of false
+				if(!$matches[2] && !isset($attrs['allowFreeEntries']) && (empty($matches[5]) || !preg_match('#</?option(\s[^>]+|/)>#', $matches[5])))
 				{
 					$attrs['allowFreeEntries'] = 'true';
+
+					if(!isset($attrs['editModeEnabled']))
+					{
+						$attrs['editModeEnabled'] = 'true';
+					}
 				}
-				if(!isset($attrs['editModeEnabled']))
+				if (isset($attrs['autocomplete_url']))
 				{
-					$attrs['editModeEnabled'] = 'true';
+					$attrs['searchUrl'] = $attrs['autocomplete_url'];
+					if (isset($attrs['autocomplete_params']))
+					{
+						$attrs['searchOptions'] = $attrs['autocomplete_params'];
+					}
+					unset($attrs['autocomplete_url'], $attrs['autocomplete_params']);
+				}
+				if (isset($attrs['maxSelection']) && $attrs['maxSelection'] === '1')
+				{
+					unset($attrs['multiple'], $attrs['maxSelection']);
 				}
 			}
 			// no multiple="toggle" or expand_multiple_rows="N" currently, thought Shoelace's select multiple="true" is relative close

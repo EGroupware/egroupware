@@ -149,13 +149,11 @@
 					<checkbox label="Use regular expressions (see wikipedia for information on POSIX regular expressions)" id="regexp"/>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox>
+					<hbox width="100%">
 						<button statustext="Saves this rule" label="Save" id="button[save]"/>
 						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
-                        <button label="Cancel" id="button[cancel]"/>
-						<hbox align="right">
-							<button label="Delete" id="button[delete]" />
-						</hbox>
+                        <button label="Cancel" id="button[cancel]" onclick="window.close()"/>
+						<button label="Delete" id="button[delete]" align="right"/>
 					</hbox>
 				</row>
 			</rows>

@@ -239,7 +239,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			this.search = false;
 			this.searchUrl = "";
-			this.searchOptions = {};
+			this.searchOptions = {app: "addressbook"};
 
 			this.allowFreeEntries = false;
 			this.editModeEnabled = false;
@@ -402,13 +402,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			super.value = new_value;
 
-			if(!new_value || !this.allowFreeEntries)
+			if(!new_value || !this.allowFreeEntries && !this.searchUrl)
 			{
 				return;
 			}
 
 			// Overridden to add options if allowFreeEntries=true
-			if(typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value))
+			if(typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value && !o.classList.contains('remote')))
 			{
 				this.createFreeEntry(this.value);
 			}
@@ -416,7 +416,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.value.forEach((e) =>
 				{
-					if(!this._menuItems.find(o => o.value == e))
+					if(!this._menuItems.find(o => o.value == e && !o.classList.contains('remote')))
 					{
 						this.createFreeEntry(e);
 					}
@@ -696,7 +696,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		/**
 		 * Actually query the server.
 		 *
-		 * This can be overridden to change request parameters
+		 * This can be overridden to change request parameters or eg. send them as POST parameters.
+		 *
+		 * Default implementation here sends options as (additional) GET paramters plus search string as $_GET['query']!
 		 *
 		 * @param {string} search
 		 * @param {object} options
@@ -705,7 +707,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().request(this.searchUrl, [search, options]).then((result) =>
+			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.searchUrl), {query: search, ...options})).then((result) =>
 			{
 				this.processRemoteResults(result);
 			});

@@ -167,7 +167,7 @@ class Taglist extends Etemplate\Widget
 					}
 					continue;
 				}
-				if(count($allowed) && !$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))
+				if(count($allowed) && !$this->attrs['allowFreeEntries'] && empty($this->attrs['autocomplete_url']) && !array_key_exists($val,$allowed))
 				{
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					unset($value[$key]);

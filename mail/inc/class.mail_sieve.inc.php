@@ -230,7 +230,7 @@ class mail_sieve
 	{
 		//Instantiate an eTemplate object, representing sieve.edit template
 		$etmpl = new Etemplate('mail.sieve.edit');
-		$etmpl->setElementAttribute('action_folder_text','autocomplete_params', array('noPrefixId'=> true));
+		$etmpl->setElementAttribute('action_folder_text','searchOptions', array('noPrefixId'=> true));
 		if (!is_array($content))
 		{
 			if ( $this->getRules($_GET['ruleID']) && isset($_GET['ruleID']))
@@ -242,7 +242,7 @@ class mail_sieve
 				switch ($rules['action'])
 				{
 					case 'folder':
-						$content['action_folder_text'][] = $rules['action_arg'];
+						$content['action_folder_text'] = $rules['action_arg'];
 
 						break;
 					case 'address':
@@ -297,7 +297,7 @@ class mail_sieve
 						switch ($content['action'])
 						{
 							case 'folder':
-								$newRule['action_arg'] = implode($content['action_folder_text']);
+								$newRule['action_arg'] = $content['action_folder_text'];
 								break;
 							case 'address':
 								$content['action_address_text'] = self::strip_rfc882_addresses($content['action_address_text']);
@@ -398,8 +398,10 @@ class mail_sieve
 		$content['no_forward'] = $this->account->acc_smtp_type !== Api\Mail\Smtp::class && !$this->account->acc_user_forward;
 
 		//Set the preselect_options for mail/folders as we are not allow free entry for folder taglist
-		$sel_options['action_folder_text'] = $this->ajax_getFolders(0,true,null,true);
-
+		if (!empty($content['action_folder_text']))
+		{
+			$sel_options['action_folder_text'] = [$content['action_folder_text'] => $content['action_folder_text']];
+		}
 		return $etmpl->exec('mail.mail_sieve.edit',$content,$sel_options,$readonlys,array(),2);
 	}
 
@@ -1300,4 +1302,3 @@ class mail_sieve
 		$mailCompose->ajax_searchFolder($_searchStringLength, $_returnList, $_mailaccountToSearch, $_noPrefixId);
 	}
 }
-

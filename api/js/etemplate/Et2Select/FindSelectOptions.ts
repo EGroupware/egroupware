@@ -235,7 +235,13 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 		// make sure value is a string, and label not an object with sub-options
 		options.forEach(option =>
 		{
-			if (typeof option.value !== 'string')
+			// old taglist used id, instead of value
+			if (typeof option.value === 'undefined' && typeof option.id !== 'undefined')
+			{
+				option.value = option.id;
+				delete option.id;
+			}
+			if (typeof option.value === 'number')
 			{
 				option.value = option.value.toString();
 			}
