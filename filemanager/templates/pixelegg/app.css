@@ -55,9 +55,8 @@ table.egwGridView_grid .tile .file_tile {
 }
 .tile .file_tile img.vfsMimeIcon,
 .tile .file_tile et2-vfs-mime > img {
-  height: auto;
+  height: 48px;
   width: auto;
-  max-height: 48px;
   display: block;
   margin: 0 auto;
 }
