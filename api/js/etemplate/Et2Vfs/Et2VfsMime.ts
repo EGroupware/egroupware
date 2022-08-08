@@ -19,6 +19,8 @@ export class Et2VfsMime extends Et2ImageExpose
             	bottom: 0px;
             	right: 0px;
             	z-index: 1;
+            	width: 12px;
+            	height: 12px;
             }
             `,
 		];
@@ -225,7 +227,7 @@ export class Et2VfsMime extends Et2ImageExpose
 	{
 		return html`
             <slot></slot>
-            ${this.__symlink ? html`<img src="${this.egw().image("link", "etemplate")}"
+            ${this.__symlink ? html`<img src="${this.egw().image("symlink", "api")}"
                                          class="overlay"/>` : ""}
 		`;
 	}
