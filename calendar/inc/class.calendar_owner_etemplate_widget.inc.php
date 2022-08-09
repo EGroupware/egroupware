@@ -162,7 +162,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		}
 	}
 
-	public static function ajax_search($search_text, $search_options = [])
+	public static function ajax_search($search_text=null, array $search_options = [])
 	{
 
 		$bo = new calendar_bo();
@@ -186,7 +186,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			$mapped = array();
 			$_results = array();
 
-			// Handle Api\Accounts seperately
+			// Handle Api\Accounts separately
 			if($type == '')
 			{
 				$owngroup_options = $options+array('account_type'=>'owngroups');
