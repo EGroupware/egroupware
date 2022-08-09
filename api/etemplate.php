@@ -175,6 +175,9 @@ function send_template()
 				return $tag . '></et2-number>';
 			}, $str);
 
+		// replace just description, as they often contain >, like label="> %s"
+		$str = preg_replace('#<description\s(.*?")/>#s', '<et2-description $1></et2-description>', $str);
+
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace_callback(ADD_ET2_PREFIX_LEGACY_REGEXP, static function (array $matches) {
 			return '<' . $matches[2] . 'et2-' . $matches[3] .
@@ -346,7 +349,7 @@ function send_template()
 		}
 
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
-		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>#s', static function(array $matches)
+		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*>\s*<#s', static function(array $matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 
