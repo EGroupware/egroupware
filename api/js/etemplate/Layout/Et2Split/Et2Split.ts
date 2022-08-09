@@ -129,11 +129,12 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 				// TODO: When dynheight goes away, this can too
 				if(typeof widget.dynheight !== "undefined")
 				{
+					let outerNodetopOffset = widget.dynheight.outerNode.offset().top;
 					widget.dynheight.outerNode = {
 						// Random 3px deducted to make things fit better.  Otherwise nm edges are hidden
 						width: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).width) - 3,
 						height: () => parseInt(getComputedStyle(this.shadowRoot.querySelector(".start")).height) - 3,
-						offset: () => 0
+						offset: () => {return {top:outerNodetopOffset}}
 					};
 					widget.dynheight._collectBottomNodes = function()
 					{
