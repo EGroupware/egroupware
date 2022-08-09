@@ -12,6 +12,7 @@ import {Et2InvokerMixin} from "./Et2InvokerMixin";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {css} from "@lion/core";
+import {egw} from "../../jsapi/egw_global";
 
 /**
  * @customElement et2-url
@@ -99,7 +100,8 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 		if (!value) return;
 		// implicit add http:// if no protocol given
 		if(value.indexOf("://") === -1) value = "http://"+value;
-		this.egw().open_link(value, '_blank');
+		// as this is static, we can NOT use this.egw(), but global egw
+		egw.open_link(value, '_blank');
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
