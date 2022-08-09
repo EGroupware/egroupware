@@ -36,7 +36,7 @@
                             </hbox>
                         </hbox>
                         <hbox width="100%" class="mailPreviewHeaders">
-                                <lavatar src="@avatar" lname="@address" shape="rounded" size="2.45em"/>
+                                <lavatar src="@avatar" lname="@address" shape="rounded" size="2.75em"/>
                                 <vbox>
                                     <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
                                         <et2-select-email slot="summary" id="fromaddress" readonly="true"/>
