@@ -11,6 +11,7 @@
 import {css, PropertyValues} from "@lion/core";
 import {Et2Select} from "./Et2Select";
 import {Et2StaticSelectMixin, StaticOptions} from "./StaticOptions";
+import {cleanSelectOptions} from "./FindSelectOptions";
 
 /**
  * Customised Select widget for categories
@@ -59,7 +60,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 		super();
 		so.cat(this).then(options =>
 		{
-			this.static_options = options
+			this.static_options = cleanSelectOptions(options);
 			this.requestUpdate("select_options");
 		});
 	}
@@ -89,7 +90,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	{
 		super.updated(changedProperties);
 
-		if(changedProperties.has("value"))
+		if(changedProperties.has("value") || changedProperties.has('select_options'))
 		{
 			this.doLabelChange()
 		}
