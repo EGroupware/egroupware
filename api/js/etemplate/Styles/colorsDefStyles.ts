@@ -36,7 +36,5 @@ export const colorsDefStyles = css`
 		--bg_color_50_gray : #808080;
 		
 		--row_hover : rgba(153,204,255,.4);
-		
-		--indicator-color: #696969;
 	}
 `;

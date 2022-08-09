@@ -33,6 +33,9 @@ export default [sl_css, css`
       --sl-input-border-radius-small: 2px;
       --sl-input-border-radius-medium: 3px;
       --sl-input-border-color-focus: #E6E6E6;
+      --indicator-color: #696969;
   }
- 
+  .tab-group--top .tab-group__tabs {
+      --track-width: 3px;
+  }
   `];
