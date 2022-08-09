@@ -176,7 +176,7 @@ function send_template()
 			}, $str);
 
 		// replace just description, as they often contain >, like label="> %s"
-		$str = preg_replace('#<description\s(.*?")/>#s', '<et2-description $1></et2-description>', $str);
+		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
 
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
 		$str = preg_replace_callback(ADD_ET2_PREFIX_LEGACY_REGEXP, static function (array $matches) {
