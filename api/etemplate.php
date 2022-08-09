@@ -318,6 +318,7 @@ function send_template()
 			{
 				$tag = 'et2-image';
 				$attrs['src'] = $attrs['image'];
+				$attrs['class'] = (!empty($attrs['class']) ? $attrs['class'].' ':'').'imageButton';
 				unset($attrs['image']);
 				// Was expected to submit.  Images don't have noValidation, so add directly
 				if (!array_key_exists('onclick', $attrs) && empty($attrs['noSubmit']))

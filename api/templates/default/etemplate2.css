@@ -359,6 +359,13 @@ a.et2_url.url {
 }
 
 /**
+ * Former button without background_image --> <et2-image class="et2-image-button"
+ */
+et2-image.imageButton {
+    height: 20px;
+    vertical-align: middle;}
+
+/**
  * Button widget - text only, and icon
  */
 .et2_button {
