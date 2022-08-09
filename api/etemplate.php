@@ -349,7 +349,7 @@ function send_template()
 		}
 
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
-		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*>\s*<#s', static function(array $matches)
+		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>\s*<#s', static function(array $matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 
