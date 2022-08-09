@@ -3689,7 +3689,7 @@ class mail_compose
 					$completeMailString = call_user_func_array('imap_rfc822_write_address', $args);
 					if(!empty($email) && in_array($completeMailString ,$results) === false) {
 						$results[] = array(
-							'id'=>$completeMailString,
+							'value' => $completeMailString,
 							'label' => $completeMailString,
 							// Add just name for nice display, with title for hover
 							'name' => $contact['n_fn'],

@@ -32,15 +32,25 @@ export class Et2SelectAccount extends Et2Select
 	constructor()
 	{
 		super();
-		
-		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search";
 
+		// currently only account_selection "Primary group and search" needs the search,
+		// all other types have the accounts fully local
+		if (this.egw().preference('account_selection', 'common') === 'primary_group')
+		{
+			this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search";
+		}
+		else	// always allow local search
+		{
+			this.search = true;
+		}
+		this.searchOptions = { type: 'account', account_type: 'accounts' };
 		this.__accountType = 'accounts';
 	}
 
 	set accountType(type : AccountType)
 	{
 		this.__accountType = type;
+		this.searchOptions.account_type = type;
 
 		super.select_options = this.select_options;
 	}
