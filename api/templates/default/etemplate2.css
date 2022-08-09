@@ -2183,8 +2183,8 @@ lion-validation-feedback[type] {
 
 .nextmatch_header_row {
     width: 100%;
-    padding-top: 1px;
-    padding-bottom: 5px;
+    padding-top: 0.2em;
+    padding-bottom: 0.5em;
     position: relative;
     display: flex;
     gap: 1ex;

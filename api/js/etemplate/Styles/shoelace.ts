@@ -34,6 +34,9 @@ export default [sl_css, css`
       --sl-input-border-radius-medium: 3px;
       --sl-input-border-color-focus: #E6E6E6;
       --indicator-color: #696969;
+      --sl-input-focus-ring-color: #373737;
+      --sl-focus-ring-width: 2px;
+      
   }
   .tab-group--top .tab-group__tabs {
       --track-width: 3px;
