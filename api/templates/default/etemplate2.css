@@ -3118,6 +3118,7 @@ et2-button.transparent-button::part(container) {
 .ui-toolbar-menulist > * {
     border: none !important;
     display: block;
+    max-width: none;
 }
 .et2_toolbar_actionlist et2-button {
     width: 1em;
