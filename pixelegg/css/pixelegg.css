@@ -3315,9 +3315,6 @@ table.dialog-main-view {
   color: #000000;
   border-bottom: 3px solid #696969;
 }
-.dialogHeader img[src*="navbar"] {
-  padding: 0 0 0 15px;
-}
 .dialogHeader input[type="radio"],
 .dialogHeader input.et2_radiobox {
   -webkit-appearance: none;
@@ -3494,9 +3491,6 @@ div#etemplate\.tab_widget {
 }
 .dialogFooterToolbar td {
   padding: 5px 5px 0px 0px;
-}
-.dialogFooterToolbar td:first-child {
-  padding-left: 5px;
 }
 .dialogFooterToolbar button {
   min-width: 86px;
