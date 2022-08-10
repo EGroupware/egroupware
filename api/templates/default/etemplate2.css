@@ -1394,10 +1394,6 @@ div.et2_vfsPath ul.scrollable li {
     cursor: url(images/mouse_scroll_lr.svg) 20 1, pointer;
 }
 
-li.vfsPath.et2_clickable:last-child:hover {
-    background: #c0c0c054;
-}
-
 li.vfsPath.et2_clickable:first-child {
     font-weight: bold;
 }
