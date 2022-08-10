@@ -49,6 +49,10 @@ table.egwGridView_grid .tile .file_tile {
   height: 100px;
   width: 135px;
 }
+table.egwGridView_grid .tile .file_tile et2-vfs-mime {
+  width: 4em;
+  margin: 0 auto;
+}
 .egwGridView_grid .tile span.iconOverlayContainer {
   display: block;
   max-width: 140px;
