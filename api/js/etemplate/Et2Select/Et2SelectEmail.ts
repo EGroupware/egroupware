@@ -126,28 +126,6 @@ export class Et2SelectEmail extends Et2Select
 	}
 
 	/**
-	 * Add in remote results
-	 *
-	 * Overridden to get results in a format parent expects.
-	 * Current server-side gives {
-	 * 	icon: "/egroupware/api/avatar.php?contact_id=5&etag=1"
-	 * 	id: "ng@egroupware.org"
-	 * 	label: "ng@egroupware.org"
-	 * 	name: ""
-	 * 	title: "ng@egroupware.org"
-	 * }
-	 * Parent expects value instead of id
-	 *
-	 * @param results
-	 * @protected
-	 */
-	protected processRemoteResults(results)
-	{
-		results.forEach(r => r.value = r.id);
-		super.processRemoteResults(results);
-	}
-
-	/**
 	 * Use a custom tag for when multiple=true
 	 *
 	 * @returns {string}
