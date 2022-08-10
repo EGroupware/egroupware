@@ -176,6 +176,7 @@ function send_template()
 			}, $str);
 
 		// replace just description, as they often contain >, like label="> %s"
+		$str = preg_replace('#<description\s*/>#', '<et2-description></et2-description>', $str);
 		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
 
 		// modify <(vfs-mime|link-string|link-list) --> <et2-*
@@ -245,6 +246,11 @@ function send_template()
 			{
 				$attrs['multiple'] = 'true';
 				unset($attrs['expand_multiple_rows']);
+			}
+			// <select rows="N" (to show N rows) previously also switched multiple on
+			if (!empty($attrs['rows']))
+			{
+				$attrs['multiple'] = true;
 			}
 			// automatic convert empty_label for multiple=true to a placeholder
 			if (!empty($attrs['empty_label']) && !empty($attrs['multiple']))
