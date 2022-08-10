@@ -506,10 +506,17 @@ class Select extends Etemplate\Widget
 		}
 
 		// Check for options-$name in content
-		if (is_array(self::$request->content['options-'.$name]))
+		if (isset(self::$request->content['options-'.$name]) && is_array(self::$request->content['options-'.$name]))
 		{
 			$options += self::$request->content['options-'.$name];
 		}
+
+		// check modifications
+		if (isset(self::$request->modifications[$name]['select_options']) && is_array(self::$request->modifications[$name]['select_options']))
+		{
+			$options += self::$request->modifications[$name]['select_options'];
+		}
+
 		if ($return_values)
 		{
 			$values = array();
@@ -521,11 +528,16 @@ class Select extends Etemplate\Widget
 					{
 						$values[] = $val['value'];
 					}
-					else if ((isset($val['label']) || isset($val['title'])) && count($val) == 1 ||
+					elseif ((isset($val['label']) || isset($val['title'])) && count($val) == 1 ||
 						isset($val['title']) && isset($val['label']) && count($val) == 2)
 					{
 						// key => {label, title}
 						$values[] = $key;
+					}
+					// support "id" used instead of "value" by old taglist
+					elseif (isset($val['id']))
+					{
+						$values[] = $val['id'];
 					}
 					else	// optgroup
 					{
