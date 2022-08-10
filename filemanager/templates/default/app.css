@@ -192,3 +192,7 @@ div.editInfoMarker {
 button#filemanager-index_new img {
 	display: none;
 }
+div#filemanager-index_filemanager-index-header_right {
+	display: inline-flex;
+	gap: 1ex;
+}
