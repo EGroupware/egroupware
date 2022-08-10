@@ -91,7 +91,7 @@
 				<column width="100"/>
 				<column width="105"/>
 				<column width="30"/>
-				<column width="50"/>
+				<column width="30"/>
 			</columns>
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
