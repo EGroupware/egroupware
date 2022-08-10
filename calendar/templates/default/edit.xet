@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="150" resize_ratio="0.7"/>
+		<textbox multiline="true" id="description" rows="8" cols="70" width="99%" resize_ratio="0.7"/>
 		<hbox disabled="@no_add_alarm" height="35">
 			<button label="Add new alarm" id="button[add_alarm]" image="add" background_image="1"/>
 			<menulist>
