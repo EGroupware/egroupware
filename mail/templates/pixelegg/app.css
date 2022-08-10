@@ -478,7 +478,7 @@ div.mail-compose_fileselector {
 }
 #mail-index_mailPreview_subject,
 #mail-display_mail_displaysubject {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   font-size: 1.2em;
 }
 et2-details.details::part(summary),
