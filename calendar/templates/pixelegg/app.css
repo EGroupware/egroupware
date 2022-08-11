@@ -215,6 +215,7 @@ div.calendar_conflicts {
 /* Toolbar */
 #calendar-toolbar {
   height: 30px;
+  margin-top: 0.3em;
 }
 #calendar-toolbar > div {
   display: flex;
