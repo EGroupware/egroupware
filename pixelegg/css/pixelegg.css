@@ -1132,34 +1132,6 @@
   .et2_toolbar span.et2_checkbox_slideSwitch.switchOn {
     filter: none;
   }
-  /*#################################### ADMIN PART #####################################################*/
-  iframe#admin-index_iframe {
-    background-color: yellow;
-  }
-  table.egwGridView_grid img {
-    /*filter grey*/
-    /*filter grey*/
-    filter: none;
-    -webkit-filter: initial;
-    -moz-filter: initial;
-    -ms-filter: initial;
-    -o-filter: initial;
-    /*filter: url(grayscale.svg);  Firefox 4+ */
-    filter: initial;
-    /* IE 6-9 */
-  }
-  .admin_aclAPP {
-    /*filter grey*/
-    filter: none;
-    -webkit-filter: initial;
-    -moz-filter: initial;
-    -ms-filter: initial;
-    -o-filter: initial;
-    /*filter: url(grayscale.svg);  Firefox 4+ */
-    filter: initial;
-    /* IE 6-9 */
-  }
-  /*#################################### END ADMIN PART #####################################################*/
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
