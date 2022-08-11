@@ -1034,7 +1034,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-index_nm tbody tr et2-lavatar {max-width: 3.7em; min-width:3.7em !important;}
 
 .previewWrapper .firstColumnTitle {
-	width: 3em;
+	max-width: 4em;
 	text-align: end;
 }
 .mailPreviewHeaders et2-select-email::part(control) {
