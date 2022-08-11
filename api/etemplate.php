@@ -248,9 +248,13 @@ function send_template()
 				unset($attrs['expand_multiple_rows']);
 			}
 			// <select rows="N" (to show N rows) previously also switched multiple on
-			if (!empty($attrs['rows']))
+			if (!empty($attrs['rows']) && (int)$attrs['rows'] > 1)
 			{
 				$attrs['multiple'] = true;
+			}
+			else
+			{
+				unset($attrs['rows']);
 			}
 			// automatic convert empty_label for multiple=true to a placeholder
 			if (!empty($attrs['empty_label']) && !empty($attrs['multiple']))
