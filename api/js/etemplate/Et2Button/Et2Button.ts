@@ -103,7 +103,7 @@ export class Et2Button extends Et2InputWidget(SlButton)
 			.button--has-prefix:not(.button--has-label) {
 				justify-content: center;
 				width: var(--sl-input-height-medium);
-				padding-inline-start: var(--sl-spacing-small);			
+				padding-inline-start: 0;			
 			}
 			
             `,
