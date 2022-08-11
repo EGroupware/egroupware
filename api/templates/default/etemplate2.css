@@ -4037,3 +4037,8 @@ div.flatpickr-calendar.inline .flatpickr-day {
     border: none;
     cursor: pointer;
 }
+
+.selectedTreeRow {
+    background-color: rgba(102, 153, 204, 0.7);
+    color: #1e1e1e;
+}

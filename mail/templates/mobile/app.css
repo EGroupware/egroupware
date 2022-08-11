@@ -1016,7 +1016,7 @@ div#mail-index_nm.splitter-pane {
   min-width: 3.7em !important;
 }
 .previewWrapper .firstColumnTitle {
-  width: 3em;
+  max-width: 4em;
   text-align: end;
 }
 .mailPreviewHeaders et2-select-email::part(control) {
@@ -1165,12 +1165,6 @@ body {
 }
 .egw_fw_ui_category_content .dtree {
   font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-}
-.egw_fw_ui_category_content .selectedTreeRow,
-.egw_fw_ui_category_content .selectedTreeRow_lor {
-  background-color: rgba(102, 153, 204, 0.7);
-  color: #1E1E1E;
-  text-decoration: none;
 }
 .egw_fw_ui_category_content .standartTreeRow_lor {
   background-color: rgba(153, 204, 255, 0.4);
