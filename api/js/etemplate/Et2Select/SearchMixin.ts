@@ -698,7 +698,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 *
 		 * This can be overridden to change request parameters or eg. send them as POST parameters.
 		 *
-		 * Default implementation here sends options as (additional) GET paramters plus search string as $_GET['query']!
+		 * Default implementation here sends search string and options:
+		 * - as two parameters to the AJAX function
+		 * - and (additional) as GET parameters plus search string as "query"
+		 *
+		 * This is done to support as well the old taglist callbacks, as the regular select ones!
 		 *
 		 * @param {string} search
 		 * @param {object} options
@@ -707,7 +711,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.searchUrl), {query: search, ...options})).then((result) =>
+			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.searchUrl),
+				{query: search, ...options}), [search, options]).then((result) =>
 			{
 				this.processRemoteResults(result);
 			});
