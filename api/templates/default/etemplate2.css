@@ -778,8 +778,8 @@ button.et2_timestamper:hover {
  * It uses jQueryUI, so this is just our little bits - icon on left
  */
 .ui-dialog-content .dialog_icon {
-    margin-right: 2ex;
     vertical-align: middle;
+    width: 2em;
 }
 
 .ui-dialog-content {
