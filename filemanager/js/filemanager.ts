@@ -874,15 +874,7 @@ export class filemanagerAPP extends EgwApp
 		}
 		else
 		{
-			let url;
-			// Build ViewerJS url
-			if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/) &&
-				egw.preference('document_doubleclick_action', 'filemanager') == 'collabeditor')
-			{
-				url = '/ViewerJS/#..' + data.data.download_url;
-			}
-
-			egw.open({path: path, type: data.data.mime, download_url: url}, 'file','view',null,'_browser');
+			egw.open({path: path, type: data.data.mime, download_url: data.data.download_url}, 'file','view',null,'_browser');
 		}
 		return false;
 	}
