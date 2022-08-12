@@ -12,11 +12,12 @@ table.prefTable {
 	width: 100%;
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
-	background-image:url(../../../api/templates/default/images/hint.png);
+	background-image:url(../../../api/templates/default/images/dialog_info.png);
 	background-repeat: no-repeat;
 	background-position: center;
     height: 99%;
 }
+
 tr.prefRow:hover {background-color:#f0f0ff}
 .prefName .et2_label:first-child {
     padding-top: 2px;
@@ -29,7 +30,7 @@ tr.prefRow > td.prefValueColumn {
 }
 /*.prefValueColumn {border-right:none !important;}*/
 .prefHelpColumn {
-	border: none !important;
+	border-left:1px solid #e6e6e6 !important;
 	padding: 0 !important;
 }
 .prefHelp {
@@ -70,6 +71,7 @@ span.prefDefault {
 	font-size: 150%;
 	margin-top: 10px;
 	margin-right: 5px;
+	position: relative;
 }
 .prefType{
 	width:49%;
