@@ -59,7 +59,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 	{
 		super(...args);
 		this.value = "";
-		this.pill = true;
+		this.pill = false;
 		this.removable = true;
 	}
 
