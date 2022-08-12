@@ -55,7 +55,7 @@ $checks = array(
 	),
 	'safe_mode' => array(
 		'func' => 'php_ini_check',
-		'value' => 0,
+		'value' => false,
 		'verbose_value' => 'Off',
 		'warning' => lang('safe_mode is turned on, which is generaly a good thing as it makes your install more secure.')."\n".
 			lang('If safe_mode is turned on, EGw is not able to change certain settings on runtime, nor can we load any not yet loaded module.')."\n".
@@ -64,19 +64,19 @@ $checks = array(
 	),
 	'magic_quotes_runtime' => array(
 		'func' => 'php_ini_check',
-		'value' => 0,
+		'value' => false,
 		'verbose_value' => 'Off',
 		'safe_mode' => 'magic_quotes_runtime = Off'
 	),
 	'register_globals' => array(
 		'func' => 'php_ini_check',
-		'value' => 0,
+		'value' => false,
 		'verbose_value' => 'Off',
 		'warning' => lang("register_globals is turned On, EGroupware does NOT require it and it's generaly more secure to have it turned Off")
 	),
 	'display_errors' => array(
 		'func' => 'php_ini_check',
-		'value' => '',
+		'value' => false,
 		'verbose_value' => 'Off',
 		'warning' => lang('%1 is set to %2. This is NOT recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!','display_errors',ini_get('display_errors')),
 	),
@@ -96,7 +96,7 @@ $checks = array(
 	),
 	'file_uploads' => array(
 		'func' => 'php_ini_check',
-		'value' => 1,
+		'value' => true,
 		'verbose_value' => 'On',
 		'error' => lang('File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!'),
 	),
@@ -116,7 +116,7 @@ $checks = array(
 	),
 	'allow_url_fopen' => array(
 		'func' => 'php_ini_check',
-		'value' => 1,
+		'value' => true,
 		'verbose_value' => 'On',
 		'error' => lang('%1 setting "%2" = %3 disallows access via http!',
 			'php.ini', 'allow_url_fopen', array2string(ini_get('allow_url_fopen'))),
