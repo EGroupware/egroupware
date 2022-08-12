@@ -61,6 +61,10 @@ table.egwGridView_grid .tile .file_tile {
   height: 100px;
   width: 135px;
 }
+table.egwGridView_grid .tile .file_tile et2-vfs-mime {
+  width: 4em;
+  margin: 0 auto;
+}
 .egwGridView_grid .tile span.iconOverlayContainer {
   display: block;
   max-width: 140px;
@@ -220,10 +224,17 @@ div.editInfoMarker {
   margin-right: 6px;
 }
 #filemanager-index_new_wrapper .ui-icon-triangle-1-s {
-  background-position: 0px -192px;
+  background-image: url(../../../api/templates/default/images/add.svg);
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 button#filemanager-index_new img {
   display: none;
+}
+div#filemanager-index_filemanager-index-header_right {
+  display: inline-flex;
+  gap: 1ex;
 }
 /*/*****************************************************************
 // sidebar
@@ -536,3 +547,4 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     display: block;
   }
 }
+/*# sourceMappingURL=app.css.map */
