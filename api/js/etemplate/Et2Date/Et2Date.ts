@@ -442,8 +442,18 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			this.clear();
 			return;
 		}
+		let date;
+		// handle relative time (eg. "+3600" or "-3600") used in calendar
+		if (typeof value === 'string' && (value[0] === '+' || value[0] === '-'))
+		{
+			date = new Date(this.getValue());
+			date.set_value(date.getSeconds() + parseInt(value));
+		}
+		else
+		{
+			date = new Date(value);
+		}
 		// Handle timezone offset, flatpickr uses local time
-		let date = new Date(value);
 		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
 		if(!this._instance)
 		{

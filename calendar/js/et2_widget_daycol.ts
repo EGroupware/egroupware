@@ -258,8 +258,8 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 			// Add timezone offset back in, or formatDate will lose those hours
 			const formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 
-			this.title.html('<span class="long_date">' + flatpickr.formatDate(formatDate, 'l') +
-				'</span><span class="short_date">' + flatpickr.formatDate(formatDate, 'D') + '</span>' +
+			this.title.html('<span class="long_date">' + egw.lang(flatpickr.formatDate(formatDate, 'l')) +
+				'</span><span class="short_date">' + egw.lang(flatpickr.formatDate(formatDate, 'D')) + '</span>' +
 				flatpickr.formatDate(formatDate, 'd'));
 		}
 		this.title

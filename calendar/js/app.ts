@@ -3235,7 +3235,7 @@ export class CalendarApp extends EgwApp
 				}
 			}
 
-			// If current state matches a favorite, hightlight it
+			// If current state matches a favorite, highlight it
 			this.highlight_favorite();
 
 			// Update app header
@@ -3980,7 +3980,7 @@ export class CalendarApp extends EgwApp
 						{
 							if (!month_before_day)
 							{
-								range += flatpickr.formatDate(first_format, "F");
+								range += egw.lang(flatpickr.formatDate(first_format, "F"));
 							}
 							if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
 							{
@@ -4003,7 +4003,7 @@ export class CalendarApp extends EgwApp
 
 							if (month_before_day)
 							{
-								range += flatpickr.formatDate(last_format, 'l');
+								range += egw.lang(flatpickr.formatDate(last_format, 'l'));
 							}
 						}
 						else if (last)
@@ -4024,7 +4024,7 @@ export class CalendarApp extends EgwApp
 						break;
 					case 'm':
 					case 'M':
-						range += ' ' + flatpickr.formatDate(month_before_day || !last ? first_format : last_format, "l") + ' ';
+						range += ' ' + egw.lang(flatpickr.formatDate(month_before_day || !last ? first_format : last_format, "F")) + ' ';
 						break;
 					case 'Y':
 						if (datefmt[0] != 'm')
