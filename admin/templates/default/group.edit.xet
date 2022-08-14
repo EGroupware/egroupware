@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.group.edit.members" template="" lang="" group="0" version="1.9.001">
+		<select-account account_type="accounts" id="account_members" multiple="true" class="et2_fullWidth" needed="true" tags="true"/>
+	</template>
+	<template id="admin.group.edit.apps" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" id="apps" overflow="auto" height="200" resize_ratio="1">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<appicon align="center" src="$row_cont[appname]"/>
+					<checkbox label="$row_cont[appname]" id="${row}[run]"/>
+					<button label="ACL" id="button[$row_cont[appname]]" image="edit" title="Edit ACL" onclick="app.admin.aclGroup"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.group.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100px"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Group name" for="account_lid"/>
+					<textbox id="account_lid" size="40" maxlength="64" class="et2_fullWidth" needed="true" onchange="app.admin.changeGroup"/>
+				</row>
+				<row>
+					<description value="Description" for="account_description"/>
+					<textbox id="account_description" size="40" maxlength="64" class="et2_fullWidth"/>
+				</row>
+				<row disabled="!@mailAllowed">
+					<description value="EMail"/>
+					<url-email id="account_email" size="40" maxlength="64" class="et2_fullWidth"/>
+				</row>
+			</rows>
+		</grid>
+		<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
+			<tabs>
+				<tab id="members" label="Members" statustext="Users in this group"/>
+				<tab id="apps" label="Applications" statustext="Applications this group can use"/>
+			</tabs>
+			<tabpanels>
+				<template id="admin.group.edit.members"/>
+				<template id="admin.group.edit.apps"/>
+			</tabpanels>
+		</tabbox>
+		<hbox class="dialogFooterToolbar">
+			<button label="Save" id="button[save]"/>
+			<button label="Apply" id="button[apply]"/>
+			<button label="Cancel" id="button[cancel]" onclick="window.close();"/>
+			<button align="right" label="Delete" id="button[delete]" onclick="app.admin.deleteGroup"/>
+		</hbox>
+	</template>
+</overlay>

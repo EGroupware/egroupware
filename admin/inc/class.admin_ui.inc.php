@@ -275,11 +275,19 @@ class admin_ui
 
 		$group = 5;	// allow to place actions in different groups by hook, this is the default
 
-		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
-		$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_group')));
+		$apps = Api\Hooks::implemented('edit_group');
+		// register hooks, if no admin one, can be removed after 22.1
+		if (!isset($apps['admin']))
+		{
+			Api\Hooks::read(true);
+			$apps = Api\Hooks::implemented('edit_group');
+		}
+		// skip EPL and groups app, in case their group-admin is still installed
+		$apps = array_unique(array_diff($apps, ['groups', 'stylite']));
 		foreach($apps as $app)
 		{
-			$GLOBALS['menuData'] = $data = array();
+			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
+			$GLOBALS['menuData'] = [];
 			$data = Api\Hooks::single('edit_group', $app);
 			if (!is_array($data)) $data = $GLOBALS['menuData'];
 

@@ -1513,6 +1513,84 @@ class AdminApp extends EgwApp
 			cmds_preview.set_value({content:[data.data]});
 		}
 	}
+
+	/*******************************************************************************************************************
+	 * Groupadmin methods
+	 ******************************************************************************************************************/
+
+	/**
+	 * ACL button clicked
+	 *
+	 * @param {jQuery.Event} _ev
+	 * @param {et2_button} _widget
+	 */
+	aclGroup(_ev, _widget)
+	{
+		let app = _widget.id.substr(7, _widget.id.length-8);	// button[appname]
+		let apps = this.et2.getArrayMgr('content').getEntry('apps');
+		for (let i=0; i < apps.length; i++)
+		{
+			let data = apps[i];
+			if (data.appname == app && data.action)
+			{
+				if (data.action === true)
+				{
+					data.action = this.egw.link('/index.php', {
+						menuaction: 'admin.admin_acl.index',
+						account_id: this.et2.getArrayMgr('content').getEntry('account_id'),
+						acl_filter: 'other',
+						acl_app: app
+					});
+					data.popup = '900x450';
+				}
+				egw(opener).open_link(data.action, data.popup ? '_blank' : '_self', data.popup);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Delete button clicked
+	 *
+	 * @param {jQuery.Event} _ev
+	 * @param {et2_button} _widget
+	 */
+	deleteGroup(_ev, _widget)
+	{
+		let account_id = this.et2.getArrayMgr('content').getEntry('account_id');
+		let egw = this.egw;
+
+		Et2Dialog.show_dialog(function(button)
+		{
+			if(button == Et2Dialog.YES_BUTTON)
+			{
+				egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest(false);	// false = synchronious request
+				window.close();
+			}
+		}, this.egw.lang('Delete this group') + '?');
+	}
+
+	/**
+	 * Field changed, call server validation
+	 *
+	 * @param {jQuery.Event} _ev
+	 * @param {et2_button} _widget
+	 */
+	changeGroup(_ev, _widget)
+	{
+		let account_id = this.et2.getArrayMgr('content').getEntry('account_id');
+		let data = {account_id: account_id};
+		data[_widget.id] = _widget.getValue();
+
+		this.egw.json('EGroupware\\Admin\\Groups::ajax_check', [data], function(_msg)
+		{
+			if (_msg)
+			{
+				egw(window).message(_msg, 'error');	// context gets lost :(
+				_widget.getDOMNode().focus();
+			}
+		}, this).sendRequest();
+	}
 }
 
 app.classes.admin = AdminApp;
