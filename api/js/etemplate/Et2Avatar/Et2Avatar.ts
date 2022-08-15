@@ -120,7 +120,14 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		}
 		if (changedProperties.has("size"))
 		{
-			this.getDOMNode().setAttribute('style', `--size:${this.size}`);
+			if(this.size)
+			{
+				this.getDOMNode().setAttribute('style', `--size:${this.size}`);
+			}
+			else
+			{
+				this.style.removeProperty("--size")
+			}
 		}
 	}
 

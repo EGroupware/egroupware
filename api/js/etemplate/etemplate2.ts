@@ -28,6 +28,7 @@ import './Layout/Et2Tabs/Et2Tab';
 import './Layout/Et2Tabs/Et2Tabs';
 import './Layout/Et2Tabs/Et2TabPanel';
 import './Et2Avatar/Et2Avatar';
+import './Et2Avatar/Et2AvatarGroup';
 import './Et2Button/Et2Button';
 import './Et2Button/Et2ButtonTimestamper';
 import './Et2Checkbox/Et2Checkbox';
