@@ -72,10 +72,11 @@ tr.mail.deleted  td:first-child{
 
 .status_img {
 	display: inline-block;
-	width: 12px;
-	height: 12px;
+	width: 16px;
+	height: 16px;
 	background-repeat: no-repeat;
 	background-image: url(../default/images/kmmsgread.svg);
+	background-size: 16px 16px;
 }
 
 tr.deleted .status_img {
@@ -758,6 +759,13 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   height: 500px;
   overflow: auto;
 }
+#mail-subscribe table.et2_grid tr td et2-box,
+#mail-folder_management table.et2_grid tr td et2-box {
+	margin-top: 16px;
+	height: 484px;
+	overflow: auto;
+}
+
 .mail_importMessageFile{
 	width: 40%;
 }
@@ -908,16 +916,19 @@ and (orientation : landscape) {
 
 }
 
-span#mail-compose_cc_expander,
-span#mail-compose_bcc_expander,
-span#mail-compose_folder_expander,
-span#mail-compose_replyto_expander {
+#mail-compose_cc_expander,
+#mail-compose_bcc_expander,
+#mail-compose_folder_expander,
+#mail-compose_replyto_expander {
 	float: left;
 	width: 100%;
 	margin: 3px;
 	margin-right: 12px;
 	text-align: center;
 	padding: 0;
+	border:	none;
+	color: rgb(38, 83, 124);
+	background-color: transparent;
 }
 /*Make file uploads in compose dialog invisible*/
 .mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_selectFromVFSForCompose, .mail-compose_toolbar_assist {
