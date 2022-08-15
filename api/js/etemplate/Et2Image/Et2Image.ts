@@ -197,7 +197,8 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	{
 		super.transformAttributes(_attrs);
 
-		// Expand src with additional stuff.  Copy & paste from legacy.
+		// Expand src with additional stuff
+		// This should go away, since we're not checking for $ or @
 		if(typeof _attrs["src"] != "undefined")
 		{
 			let manager = this.getArrayMgr("content");
@@ -208,9 +209,16 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 				{
 					if(typeof src == "object")
 					{
-						src = egw().link('/index.php', src);
+						this.src = this.egw().link('/index.php', src);
 					}
-					this.src = src;
+					else if(this.src && this.egw().image(src))
+					{
+						this.src = src;
+					}
+					else if(!this.src)
+					{
+						this.src = src;
+					}
 				}
 			}
 		}
