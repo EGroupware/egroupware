@@ -8,10 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp} from "../jsapi/egw_app";
 import {et2_vfs, et2_vfsPath, et2_vfsSelect} from "./et2_widget_vfs";
 import {egw} from "../jsapi/egw_global";
@@ -20,6 +16,7 @@ import {Et2Button} from "./Et2Button/Et2Button";
 import {Et2Select} from "./Et2Select/Et2Select";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Checkbox} from "./Et2Checkbox/Et2Checkbox";
+import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 
 
 /**
@@ -328,7 +325,7 @@ export class vfsSelectUI extends EgwApp
 	 * search through dir content and set its content base on searched query
 	 * @returns
 	 */
-	search(_widget)
+	search(_ev : Event, _widget : Et2Searchbox)
 	{
 		let dir = <et2_vfsPath>this.et2.getWidgetById('dir');
 		let query = _widget.get_value();
