@@ -408,7 +408,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 
 			// Overridden to add options if allowFreeEntries=true
-			if(typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value && !o.classList.contains('remote')))
+			if(this.allowFreeEntries && typeof this.value == "string" && !this._menuItems.find(o => o.value == this.value && !o.classList.contains('remote')))
 			{
 				this.createFreeEntry(this.value);
 			}
