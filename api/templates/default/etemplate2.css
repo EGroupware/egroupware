@@ -1344,7 +1344,6 @@ et2-link-list et2-link:hover {
 
 div.et2_vfsPath {
     position: relative;
-    overflow: hidden;
 }
 
 div.et2_vfsPath ul {

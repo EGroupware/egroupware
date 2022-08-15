@@ -42,6 +42,7 @@ export class Et2Searchbox extends Et2Textbox
 
 		this.clearable = true;
 		this.type = 'search';
+		this.placeholder = 'search';
 		this.enterkeyhint = 'search';
 	}
 

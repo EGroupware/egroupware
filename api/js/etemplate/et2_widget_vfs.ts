@@ -1251,7 +1251,7 @@ export class et2_vfsSelect extends et2_inputWidget
 				minWidth: 500,
 				minHeight: 400,
 				value: data,
-				template: egw.webserverUrl + '/api/templates/default/vfsSelectUI.xet?1',
+				template: egw.webserverUrl + '/api/templates/default/vfsSelectUI.xet',
 				resizable: false,
 				// Don't destroy on close, it would take out the opening etemplate
 				destroy_on_close: false

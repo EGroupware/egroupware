@@ -5,23 +5,25 @@
 	<template id="api.vfsSelectUI" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" class="vfs-select-container" resize_ratio="0">
 			<columns>
-				<column/>
+				<column width="100%"/>
 			</columns>
 			<rows >
 				<row class="et2_toolbar" disabled="@mode=/(open-multiple|select-dir)/">
 					<textbox id="name" class="et2_fullWidth" blur="enter your file name"/>
 				</row>
 				<row class="nextmatch_header_row">
-					<box class="et2_toolbar et2_fullWidth">
-						<buttononly statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome" background_image="1"/>
-						<buttononly statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="filemanager/goup" background_image="1"/>
-						<buttononly statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="filemanager/fav_filter" background_image="1"/>
-						<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
-						<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir" ro_image="filemanager/createdir_disabled" background_image="1"/>
-						<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
-						<searchbox id="search" onchange="app.vfsSelectUI.search"/>
-						<vfs-path id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)"/>
-					</box>
+					<vbox>
+						<box class="et2_toolbar">
+							<buttononly statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="filemanager/gohome" background_image="1"/>
+							<buttononly statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="filemanager/goup" background_image="1"/>
+							<buttononly statustext="Favorites" id="favorites" onclick="app.vfsSelectUI.change_dir('/apps/favorites', widget);" image="filemanager/fav_filter" background_image="1"/>
+							<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
+							<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="filemanager/button_createdir" ro_image="filemanager/createdir_disabled" background_image="1"/>
+							<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
+							<searchbox id="search" onchange="app.vfsSelectUI.search"/>
+						</box>
+						<vfs-path id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)" width="99.2%"/>
+					</vbox>
 				</row>
 				<row>
 					<hbox class="selectFiles">
