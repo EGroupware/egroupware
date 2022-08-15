@@ -47,6 +47,13 @@ export class Et2SelectAccount extends Et2Select
 		this.__accountType = 'accounts';
 	}
 
+	firstUpdated(changedProperties?)
+	{
+		super.firstUpdated(changedProperties);
+		// Due to the different way Et2SelectAccount handles options, we call this explicitly
+		this._renderOptions();
+	}
+
 	set accountType(type : AccountType)
 	{
 		this.__accountType = type;

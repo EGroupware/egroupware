@@ -117,17 +117,27 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			if(changedProperties.has('select_options') || changedProperties.has("emptyLabel"))
 			{
 				// Add in options as children to the target node
-				if(this._optionTargetNode)
-				{
-					render(html`${this._emptyLabelTemplate()}
-                            ${repeat(<SelectOption[]>this.select_options, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
-						this._optionTargetNode
-					);
-				}
+				this._renderOptions();
 				if(this.handleMenuSlotChange)
 				{
 					this.handleMenuSlotChange();
 				}
+			}
+		}
+
+		/**
+		 * Render select_options as child DOM Nodes
+		 * @protected
+		 */
+		protected _renderOptions()
+		{
+			// Add in options as children to the target node
+			if(this._optionTargetNode)
+			{
+				render(html`${this._emptyLabelTemplate()}
+                        ${repeat(<SelectOption[]>this.select_options, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
+					this._optionTargetNode
+				);
 			}
 		}
 
