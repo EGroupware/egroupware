@@ -1167,13 +1167,13 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			return day_list;
 		}
 
-		let end = this.date_helper(end_date).getTime();
+		let end = this.date_helper(end_date);
 		let i = 1;
 		let start = this.date_helper(start_date);
 
 		do
 		{
-			if(show_weekend || !show_weekend && [0, 6].indexOf(this.date_helper(end_date).getUTCDay()) === -1 || end_date === start_date)
+			if(show_weekend || !show_weekend && [0, 6].indexOf(start.getUTCDay()) === -1 || end_date === start_date)
 			{
 				day_list.push(formatDate(start, {dateFormat: "Ymd"}));
 			}
