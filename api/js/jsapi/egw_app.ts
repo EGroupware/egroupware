@@ -1381,7 +1381,7 @@ export abstract class EgwApp
 		var titleWidget = <et2_valueWidget>this.et2.getWidgetById('title');
 		if(titleWidget)
 		{
-			return titleWidget.get_value();
+			return titleWidget.get_value ? titleWidget.get_value() : (titleWidget.value || "");
 		}
 		else
 		{
