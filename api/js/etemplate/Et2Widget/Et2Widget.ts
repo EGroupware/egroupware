@@ -1352,6 +1352,16 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 
 
 	// Special case attributes
+	if(attributes.attributes)
+	{
+		// Attributes in content? "attributes" is read-only in webComponent
+		let mgr_attributes = mgr.getEntry(attributes.attributes);
+		delete attributes.attributes;
+		if(mgr_attributes)
+		{
+			Object.assign(attributes, ...mgr_attributes);
+		}
+	}
 	if(attributes.width)
 	{
 		widget.style.setProperty("width", attributes.width);
