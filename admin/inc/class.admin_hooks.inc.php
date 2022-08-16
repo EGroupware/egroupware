@@ -244,7 +244,7 @@ class admin_hooks
 				'id'      => 'mail_account',
 				'caption' => 'mail account',
 				'url'     => 'menuaction=admin.admin_mail.edit&account_id=$id',
-				'popup'   => '720x530',
+				'popup'   => '720x560',
 				'icon'    => 'mail/navbar',
 			);
 
