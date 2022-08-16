@@ -100,6 +100,7 @@ function send_template()
 				'description'             => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
 				'button'                  => 'image,ro_image',
 				'buttononly'              => 'image,ro_image',
+				'link'                    => 'app',
 				'link-entry'              => 'only_app,application_list',
 				'nextmatch-filterheader'  => 'empty_label',
 				'nextmatch-customfilter'  => 'widget_type,widget_options',
