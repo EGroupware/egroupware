@@ -60,6 +60,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 				icon.setAttribute("slot", "prefix");
 				icon.setAttribute("src", "api/navbar");
 				icon.style.width = "var(--icon-width)";
+				icon.style.height = "var(--icon-width)";
 				return icon;
 			}
 		}
