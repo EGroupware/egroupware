@@ -43,13 +43,15 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 	{
 		super.transformAttributes(attrs);
 
-		switch(attrs.widgetType)
+		let widgetType = this.getArrayMgr("modifications").getEntry(this.id)?.widgetType || attrs.widgetType || "";
+
+		switch(widgetType)
 		{
 			case "link-entry":
 				this.widgetType = 'et2-nextmatch-header-entry';
 				break;
 			default:
-				this.widgetType = attrs.widgetType;
+				this.widgetType = widgetType;
 				// Prefer webcomponent, if legacy type was sent
 				if(window.customElements.get("et2-" + this.widgetType))
 				{
@@ -90,7 +92,10 @@ export class Et2CustomFilterHeader extends FilterMixin(Et2InputWidget(LitElement
 
 	set value(new_value)
 	{
-		this.filter_node.value = new_value;
+		if(this.filter_node)
+		{
+			this.filter_node.value = new_value;
+		}
 	}
 }
 

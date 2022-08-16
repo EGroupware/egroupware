@@ -31,22 +31,31 @@ class Customfilter extends Widget\Transformer
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
+		parent::beforeSendToClient($cname, $expand);
 		switch($this->attrs['type'])
 		{
 			case "link-entry":
 				self::$transformation['type'] = $this->attrs['type'] = 'et2-nextmatch-header-entry';
 				break;
 			default:
-				list($type) = explode('-',$this->attrs['type']);
+				list($type) = explode('-', $this->attrs['type']);
 				if($type == 'select')
 				{
 					if(in_array($this->attrs['type'], Widget\Select::$cached_types))
 					{
 						$widget_type = $this->attrs['type'];
 					}
-					$this->attrs['type'] = 'et2-nextmatch-header-custom';
 				}
-				self::$transformation['type'] = $this->attrs['type'];
+				else
+				{
+					// Run the new widget type's beforeSendToClient
+					$expanded_child = self::factory($this->attrs['type'], false, $this->id);
+					$expanded_child->id = $this->id;
+					$expanded_child->type = $this->attrs['type'];
+					$expanded_child->run('beforeSendToClient', array($cname, $expand));
+					$widget_type = $expanded_child->attrs['type'];
+				}
+				$this->attrs['type'] = 'et2-nextmatch-header-custom';
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
@@ -55,9 +64,8 @@ class Customfilter extends Widget\Transformer
 		self::setElementAttribute($form_name, 'type', $this->attrs['type']);
 		if($widget_type)
 		{
-			self::setElementAttribute($form_name, 'widget_type', $widget_type);
+			self::setElementAttribute($form_name, 'widgetType', $widget_type);
 		}
-		parent::beforeSendToClient($cname, $expand);
 	}
 
 
@@ -80,4 +88,6 @@ class Customfilter extends Widget\Transformer
 		$valid = $value ? $value : null;
 	}
 }
-Widget::registerWidget(__NAMESPACE__.'\\Customfilter', array('nextmatch-customfilter'));
+
+Widget::registerWidget(__NAMESPACE__ . '\\Customfilter', array('nextmatch-customfilter',
+															   'et2-nextmatch-header-custom'));
