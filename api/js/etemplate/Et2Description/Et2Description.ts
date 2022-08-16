@@ -176,7 +176,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	{
 		// Turn off IDE reformatting, or it will add an extra line break into the template
 		// @formatter:off
-		return html`<slot></slot>`;
+		return html`<slot part="form-control-label" name="label">${this.label}</slot><slot part="form-control-value"></slot>`;
 		// @formatter:on
 	}
 
