@@ -76,6 +76,9 @@ export class Et2Searchbox extends Et2Textbox
 
 		this.value = '';
 		this._oldChange(event);
+
+		// Call super so it works as expected
+		super.handleClearClick(event);
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement

@@ -345,7 +345,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 			// I can't figure out how to get this full width via CSS
 			return html`
-                <input id="search" type="text" part="input" style="width:100%" @keydown=${this._handleSearchKeyDown}/>
+                <et2-searchbox id="search" type="text" part="input" clearable
+                               placeholder="${this.egw().lang("search")}"
+                               style="width:100%"
+                               @keydown=${this._handleSearchKeyDown}
+                ></et2-searchbox>
                 ${edit}
 			`;
 		}
@@ -363,7 +367,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected get _searchInputNode() : HTMLInputElement
 		{
-			return this._activeControls.querySelector("input#search");
+			return this._activeControls.querySelector("#search");
 		}
 
 		protected get _editInputNode() : HTMLInputElement
@@ -426,7 +430,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _bindListeners()
 		{
-			this.addEventListener("sl-blur", this._handleSearchAbort);
 			this.addEventListener("sl-select", this._handleSelect);
 			this.addEventListener("sl-clear", this._handleClear)
 
@@ -444,7 +447,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _unbindListeners()
 		{
-			this.removeEventListener("sl-blur", this._handleSearchAbort);
 			this.removeEventListener("sl-select", this._handleSelect);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
@@ -471,6 +473,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// Hide search explicitly since its so hard via CSS
 				this._searchInputNode.style.display = "none";
 			}
+		}
+
+		focus()
+		{
+			this.dropdown?.show().then(() =>
+			{
+				this._searchInputNode.focus();
+			});
 		}
 
 		handleMenuHide()
