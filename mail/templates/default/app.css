@@ -1052,3 +1052,4 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 .mailPreviewHeaders et2-select-email::part(control) {
 	border: none;
 }
+#popupMainDiv {height: 100%}
