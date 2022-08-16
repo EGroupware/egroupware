@@ -129,7 +129,7 @@ export class Et2LinkSearch extends Et2Select
 				// Not already rendered, update the select option
 				this.requestUpdate("select_options");
 				// update the displayed text
-				this.updateComplete.then(this.syncItemsFromValue);
+				this.updateComplete.then(() => this.syncItemsFromValue());
 			}
 		});
 	}
