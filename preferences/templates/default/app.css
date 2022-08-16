@@ -110,3 +110,6 @@ img.qrCode {
 	font-style: italic;
 	font-size: 120%;
 }
+table.prefTable tbody tr.prefRow .prefHelpColumn {
+	border-bottom: none;
+}
