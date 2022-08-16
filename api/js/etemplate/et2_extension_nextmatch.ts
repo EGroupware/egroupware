@@ -1299,7 +1299,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		const colName = name + (name != "" && child_names.length > 0 ? "_" : "") + child_names.join("_");
 		if(colName == "")
 		{
-			this.egw().debug("info", "Unable to generate nm column name for ", _widget);
+			this.egw().debug("info", "Unable to generate nm column name for %o, no IDs", _widget);
 		}
 		return colName;
 	}
