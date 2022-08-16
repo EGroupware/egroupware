@@ -28,6 +28,29 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 	var prefs = {};
 	var grants = {};
 
+	/**
+	 * App-names in egw_preference table are limited to 16 chars, so we can not store anything longer
+	 *
+	 * Also modify tab-names used in CRM-view ("addressbook-*") to "infolog".
+	 *
+	 * @param _app
+	 * @returns {string}
+	 */
+	function sanitizeApp(_app)
+	{
+		if (typeof _app === 'undefined') _app = 'common';
+
+		if (_app.length > 16)
+		{
+			_app = _app.substring(0, 16);
+		}
+		if (_app.match(/^addressbook-/))
+		{
+			_app = 'infolog';
+		}
+		return _app;
+	}
+
 	// Return the actual extension
 	return {
 		/**
@@ -46,7 +69,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 			}
 			else
 			{
-				prefs[_app] = jQuery.extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
+				prefs[sanitizeApp(_app)] = jQuery.extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
 			}
 		},
 
@@ -68,7 +91,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 */
 		preference: function(_name, _app, _callback, _context)
 		{
-			if (typeof _app === 'undefined') _app = 'common';
+			_app = sanitizeApp(_app);
 
 			if (typeof prefs[_app] === 'undefined')
 			{
@@ -111,6 +134,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 */
 		set_preference: function(_app, _name, _val, _callback)
 		{
+			_app = sanitizeApp(_app);
+
 			// if there is no change, no need to submit it to server
 			if (typeof prefs[_app] != 'undefined')
 			{
@@ -124,7 +149,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 
 			this.jsonq('EGroupware\\Api\\Framework::ajax_set_preference',[_app, _name, _val], _callback);
 
-			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
+			// update own preference cache, if _app prefs are loaded (don't update otherwise, as it would block loading of other _app prefs!)
 			if (typeof prefs[_app] != 'undefined')
 			{
 				if (_val === undefined || _val === "" || _val === null)
@@ -254,4 +279,3 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		}
 	};
 });
-

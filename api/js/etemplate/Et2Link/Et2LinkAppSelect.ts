@@ -112,9 +112,9 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		{
 			// use preference
 			let appname = "";
-			if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.to_app)
+			if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.toApp)
 			{
-				appname = this.parentNode.to_app;
+				appname = this.parentNode.toApp;
 			}
 			this.value = this.egw().preference('link_app', appname || this.egw().app_name());
 		}
@@ -181,9 +181,9 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 		// update preference
 		let appname = "";
-		if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.to_app)
+		if(typeof this.value != 'undefined' && this.parentNode && this.parentNode.toApp)
 		{
-			appname = this.parentNode.to_app;
+			appname = this.parentNode.toApp;
 		}
 		this.egw().set_preference(appname || this.egw().app_name(), 'link_app', this.value);
 	}
