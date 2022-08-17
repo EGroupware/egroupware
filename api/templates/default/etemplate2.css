@@ -2884,11 +2884,18 @@ div.et2_toolbar.ui-widget-header {
     background-color: #fafafa;
 }
 
-.et2_toolbar et2-button, .et2_toolbar et2-switch {
+.et2_toolbar .et2_toolbar_actionlist et2-button,
+.et2_toolbar .et2_toolbar_actionlist et2-switch {
     margin-right: 1ex;
     min-width: 24px;
 }
+.et2_toolbar .ui-toolbar-menulist > *:hover{
+    outline: none;
+    background-color: var(--sl-color-primary-600);
+    color: var(--sl-color-neutral-0);
+}
 
+.et2_toolbar .ui-toolbar-menulist > *:hover::part(label){color: var(--sl-color-neutral-0);}
 .nextmatch_header_row et2-button::part(container) {
     height: 18px;
 }
@@ -3101,20 +3108,21 @@ et2-button.transparent-button::part(container) {
     height: inherit;
     z-index: 999 !important;
     overflow: hidden !important;
-    border: solid black 1px;
     padding: 0 !important;
     margin-top: 3px !important;
     min-width: 150px;
     padding-top: 3px;
     padding-top: 1px;
     padding-bottom: 1px;
-    box-shadow: 2px 3px 13px #666;
-    -moz-box-shadow: 2px 3px 13px #666;
-    -webkit-box-shadow: 2px 3px 13px #666;
-    -khtml-box-shadow: 2px 3px 13px #666;
     -moz-user-select: none;
     background: white;
     right: 0;
+    font-size: 11px;
+    font-weight: 400;
+    box-shadow: 0 2px 8px hsl(240 3.8% 46.1% / 12%);
+    border: 1px solid hsl(240deg 6% 90%);
+    border-radius: 3px;
+    overscroll-behavior: none;
 }
 .ui-toolbar-menulist > * {
     border: none !important;
@@ -3135,6 +3143,7 @@ et2-button.transparent-button::part(container) {
 .ui-toolbar-menulist et2-button::part(base) {
     border: none;
     margin: 0.3em;
+    background-color: transparent;
 }
 .ui-toolbar-menulist > button {
     margin: 0 !important;

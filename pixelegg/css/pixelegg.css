@@ -1050,18 +1050,6 @@
                     margin: 2px !important;
                     min-height: 19px;*/
   }
-  div.ui-toolbar-menulist {
-    position: absolute;
-    height: inherit;
-    z-index: 999 !important;
-    overflow: hidden !important;
-    border: solid black 1px;
-    padding: 0 !important;
-    margin-top: 3px !important;
-  }
-  .ui-toolbar-menulist > h {
-    padding-bottom: 7px;
-  }
   .ui-toolbar-menulistHeader {
     font-size: xx-small;
     height: 100%;
