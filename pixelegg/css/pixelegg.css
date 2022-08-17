@@ -3174,7 +3174,11 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   background-color: hsl(200, 98%, 39%) !important;
   background-image: none !important;
 }
-div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.sub_item_text {
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_icon img.sub_icon {
+  filter: invert(1) brightness(5);
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.sub_item_text,
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_hk div.sub_item_hk {
   color: hsl(0, 0%, 100%);
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_sep {

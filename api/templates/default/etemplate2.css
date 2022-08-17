@@ -2894,7 +2894,7 @@ div.et2_toolbar.ui-widget-header {
     background-color: var(--sl-color-primary-600);
     color: var(--sl-color-neutral-0);
 }
-
+.et2_toolbar .ui-toolbar-menulist > *:hover::part(prefix) {filter:invert(1) brightness(5);}
 .et2_toolbar .ui-toolbar-menulist > *:hover::part(label){color: var(--sl-color-neutral-0);}
 .nextmatch_header_row et2-button::part(container) {
     height: 18px;
