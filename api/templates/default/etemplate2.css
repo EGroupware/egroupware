@@ -3019,6 +3019,11 @@ et2-button.transparent-button::part(container) {
     box-shadow: inset 1px 1px 1px 1px gray !important;
 }
 
+.ui-toolbar-menulist et2-button.toolbar_toggled::part(base) {
+    margin: 0;
+    padding-left: 12px;
+}
+
 .et2_toolbar_more .et2_toolbar-dropdown {
     max-width: initial;
     width: 100%;
