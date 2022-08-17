@@ -3140,10 +3140,20 @@ et2-button.transparent-button::part(container) {
 .et2_toolbar_actionlist et2-button.et2_toolbar_hasCaption {
     width:auto;
 }
+.ui-toolbar-menulist et2-button::part(label) {
+    font-size: 11px;
+}
 .ui-toolbar-menulist et2-button::part(base) {
     border: none;
-    margin: 0.3em;
     background-color: transparent;
+    line-height: var(--sl-line-height-normal);
+    padding: var(--sl-spacing-2x-small) var(--sl-spacing-2x-small);
+    margin: 2px 8px 2px;
+}
+.ui-toolbar-menulist et2-dropdown-button::part(base)
+{
+    border: none;
+    border-radius: 0;
 }
 .ui-toolbar-menulist > button {
     margin: 0 !important;
