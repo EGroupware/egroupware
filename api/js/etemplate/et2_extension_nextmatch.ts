@@ -1978,35 +1978,35 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				if(col.caption && col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT &&
 					col.visibility !== et2_dataview_column.ET2_COL_VISIBILITY_DISABLED)
 				{
-						visibility[col.id] = {visible: false};
-					}
+					visibility[col.id] = {visible: false};
+				}
 			}
 			const value = selectPopup.value;
 
-				// Update & remove letter filter
-				if(self.header.lettersearch)
+			// Update & remove letter filter
+			if(self.header.lettersearch)
+			{
+				var show_letters = true;
+				if(value.indexOf(LETTERS) >= 0)
 				{
-					var show_letters = true;
-					if(value.indexOf(LETTERS) >= 0)
-					{
-						value.splice(value.indexOf(LETTERS), 1);
-					}
-					else
-					{
-						show_letters = false;
-					}
-					self._set_lettersearch(show_letters);
+					value.splice(value.indexOf(LETTERS), 1);
 				}
-			self.sortedColumnsList = [];
-				for(var i = 0; i < value.length; i++)
+				else
 				{
-					// Handle skipped columns
-					let column = 0;
-					while(value[i] != "col_" + column && column < columnMgr.columns.length)
-					{
-						column++;
-					}
-					if(visibility[value[i]])
+					show_letters = false;
+				}
+				self._set_lettersearch(show_letters);
+			}
+			self.sortedColumnsList = [];
+			for(var i = 0; i < value.length; i++)
+			{
+				// Handle skipped columns
+				let column = 0;
+				while(value[i] != "col_" + column && column < columnMgr.columns.length)
+				{
+					column++;
+				}
+				if(visibility[value[i]])
 					{
 						visibility[value[i]].visible = true;
 					}

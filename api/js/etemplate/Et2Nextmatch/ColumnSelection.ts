@@ -270,6 +270,15 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				}
 			}
 		});
+
+		// Add in letters
+		this.shadowRoot.querySelectorAll("[part='columns'] > :not(.column)").forEach((i : SlMenuItem) =>
+		{
+			if(i.checked)
+			{
+				value.push(i.value);
+			}
+		})
 		return value;
 	}
 
