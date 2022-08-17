@@ -1412,6 +1412,16 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 				break;
 			case Function:
+				if(typeof attrValue == "string" && mgr.getPerspectiveData().row == null &&
+					(attrValue.indexOf("$row") > -1 || attrValue.indexOf("$row_cont") > -1)
+				)
+				{
+					// Need row context, defer it until later
+					// Repeating rows & nextmatch will parse it again when doing the row
+					widget.deferredProperties[attribute] = attrValue;
+					console.log("Had to defer %s parsing for %o\nCan it be rewritten to avoid $row & $row_cont?", attribute, widget);
+					break;
+				}
 				// We parse it into a function here so we can pass in the widget as context.
 				// Leaving it to the LitElement conversion loses the widget as context
 				if(typeof attrValue !== "function")

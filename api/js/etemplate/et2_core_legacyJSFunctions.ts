@@ -111,7 +111,8 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 
 	// Execute the code and return its results, pass the egw instance and
 	// the widget
-	return function(ev) {
+	return function(ev, widget?)
+	{
 		// Dump the executed code for debugging
 		egw.debug('log', 'Executing legacy JS code: ', _code);
 
@@ -120,7 +121,7 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 			egw.debug('warn', 'Legacy JS code only supports 2 arguments (event and widget)', _code, arguments);
 		}
 		// Return the result of the called function
-		return func.call(context, ev, _widget);
+		return func.call(context, ev, widget || _widget);
 	};
 }
 

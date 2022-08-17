@@ -170,7 +170,8 @@ export class et2_nextmatch_rowProvider
 			let widget = entry.widget;
 
 			// Parse the attribute expressions
-			var data : any = {};
+			let data : any = {};
+			let attributes = entry.data.map(attr => attr.attribute);
 			for(var j = 0; j < entry.data.length; j++)
 			{
 				var set = entry.data[j];
@@ -216,8 +217,17 @@ export class et2_nextmatch_rowProvider
 			// Adjust data for that row
 			widget.transformAttributes?.call(widget, data);
 
+			// Make sure to only send detached attributes, filter out any deferredProperties
+			let filtered = widget.deferredProperties ? Object.keys(data)
+				.filter(key => attributes.includes(key))
+				.reduce((obj, key) =>
+				{
+					obj[key] = data[key];
+					return obj
+				}, {}) : data;
+
 			// Call the setDetachedAttributes function
-			widget.setDetachedAttributes(nodes, data, _data);
+			widget.setDetachedAttributes(nodes, filtered, _data);
 		}
 
 		// Insert the row into the tr
