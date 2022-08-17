@@ -1261,7 +1261,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		_widget.iterateOver(function(_widget)
 		{
-			const label = self.egw().lang(_widget.label || _widget.empty_label || _widget.options.label || _widget.options.empty_label || '');
+			const label = self.egw().lang(_widget.label || _widget.emptyLabel || _widget.options.label || _widget.options.empty_label || '');
 			if(!label) return;	// skip empty, undefined or null labels
 			if(!result)
 			{
@@ -1980,7 +1980,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 						visibility[col.id] = {visible: false};
 					}
-				}
+			}
 			const value = selectPopup.value;
 
 				// Update & remove letter filter
@@ -1997,10 +1997,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					}
 					self._set_lettersearch(show_letters);
 				}
-				let column = 0;
+			self.sortedColumnsList = [];
 				for(var i = 0; i < value.length; i++)
 				{
 					// Handle skipped columns
+					let column = 0;
 					while(value[i] != "col_" + column && column < columnMgr.columns.length)
 					{
 						column++;
@@ -2009,38 +2010,47 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					{
 						visibility[value[i]].visible = true;
 					}
+					let col_name = self._getColumnName(self.columns[column].widget);
+
 					// Custom fields are listed seperately in column list, but are only 1 column
 					if(self.columns[column] && self.columns[column].widget.instanceOf(et2_nextmatch_customfields))
 					{
 						const cf = self.columns[column].widget.options.customfields;
 						const visible = self.columns[column].widget.options.fields;
+						self.sortedColumnsList.push(self.columns[column].widget.id);
 
 						// Turn off all custom fields
 						for(var field_name in cf)
 						{
 							visible[field_name] = false;
 						}
-						// Turn on selected custom fields - start from 0 in case they're not in order
-						for(let j = 0; j < value.length; j++)
+						// Turn on selected custom fields
+						for(let j = i; j < value.length; j++)
 						{
 							if(value[j].indexOf(et2_customfields_list.PREFIX) != 0)
 							{
 								continue;
 							}
+							self.sortedColumnsList.push(value[j]);
+
 							visible[value[j].substring(1)] = true;
 							i++;
 						}
 						(<et2_customfields_list><unknown>self.columns[column].widget).set_visible(visible);
 					}
+					else
+					{
+						self.sortedColumnsList.push(col_name);
+					}
 				}
-				columnMgr.setColumnVisibilitySet(visibility);
+			columnMgr.setColumnVisibilitySet(visibility);
 
-				// Hide popup
-				self.selectPopup.toggle();
+			// Hide popup
+			self.selectPopup.toggle();
 
-				self.dataview.updateColumns();
+			self.dataview.updateColumns();
 
-				// Auto refresh
+			// Auto refresh
 			self._set_autorefresh(selectPopup.autoRefresh);
 
 			// Set default or clear forced
