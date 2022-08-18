@@ -11,6 +11,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {css, html, LitElement, render} from "@lion/core";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
+import {et2_csvSplit} from "../et2_core_common";
 
 export class Et2Description extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
@@ -174,9 +175,21 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	render()
 	{
+		let label = this.label;
+		let after;
+		if(label)
+		{
+			// Split the label at the "%s"
+			let parts = et2_csvSplit(label, 2, "%s");
+			if(parts.length > 1)
+			{
+				after = html`<label>${parts[1]}</label>`;
+				label = parts[0];
+			}
+		}
 		// Turn off IDE reformatting, or it will add an extra line break into the template
 		// @formatter:off
-		return html`<slot part="form-control-label" name="label">${this.label}</slot><slot part="form-control-value"></slot>`;
+		return html`<slot part="form-control-label" name="label">${label}</slot><slot part="form-control-value"></slot>${after}`;
 		// @formatter:on
 	}
 
