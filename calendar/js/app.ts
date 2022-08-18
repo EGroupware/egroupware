@@ -2473,25 +2473,6 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * Insert selected event(s) into a document
-	 *
-	 * Actually, just pass it off to the nextmatch
-	 *
-	 * @param {egwAction} _action
-	 * @param {egwActionObject[]} _selected
-	 */
-	action_merge(_action, _selected)
-	{
-		var ids = {ids:[]};
-		for(var i = 0; i < _selected.length; i++)
-		{
-			ids.ids.push(_selected[i].id);
-		}
-		nm_action(egw_getActionManager(this.appname,false,1)
-			          .getActionById('nm').getActionById(_action.id), _selected, null, ids);
-	}
-
-	/**
 	 * Sidebox merge
 	 *
 	 * Manage the state and pass the request to the correct place.  Since the nextmatch
