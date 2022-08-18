@@ -64,7 +64,8 @@
 		z-index: 1001;
 		top: 46px;
 	    background: white;
-		.box_shadow;
+		box-shadow: @sl-box-shadow-menu;
+		border: @sl-border-menu;
 		a.powered_by {
 			width: ~"calc(100% - 20px)";
 			display: inline-block;
@@ -162,11 +163,15 @@
 					color: @gray_0;
 					padding: 8px 10px;
 					border-top: @gray_10;
-					&:hover{ background: @color_hover_row;color: @gray_0;}
+					&:hover{
+						background: @sl-bg-color-menu;
+						color: @sl-color-menu;
+						a {filter:@sl-filter-menu}
+					}
 					a {
 						color: @gray_100;
 						text-decoration: none;
-						.fontsize_l;
+						.fontsize_m;
 						padding-left: 26px;
 						line-height: 1.5em;
 						display:inline-block;

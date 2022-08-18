@@ -29,13 +29,13 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon{
 		tr.sub_item_selected  {
 			td.sub_item_icon {
 				img.sub_icon {
-					filter: invert(1) brightness(5);
+					filter: @sl-filter-menu;
 				}
 			}
-			background-color: hsl(200deg 98% 39%) !important;
+			background-color: @sl-bg-color-menu !important;
 			background-image: none !important;
 			div.sub_item_text, td.sub_item_hk div.sub_item_hk {
-				color: hsl(0deg 0% 100%);
+				color: @sl-color-menu;
 			}
 		}
 		div.sub_sep {
