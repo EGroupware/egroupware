@@ -1001,9 +1001,7 @@ et2-image.smime_cert_unknownemail {
 	display: flex;
 	justify-content: end;
 }
-#mail-compose tr.mailComposeHeaders {
-  border-top: 1px solid silver;
-}
+
 #mail-compose tr.mailComposeHeaders .et2_selectbox,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn,
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-sel-ctn input,
