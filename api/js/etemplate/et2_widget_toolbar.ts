@@ -651,6 +651,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 
 		if (action.caption)
 		{
+			widget.statustext = action.caption;
 			if ((this.countActions <= parseInt(this.view_range) ||
 				this.preference[action.id] || !action.iconUrl)	&&
 				!(isCheckbox && isToggleSwitch)) // no caption for slideswitch checkboxes
