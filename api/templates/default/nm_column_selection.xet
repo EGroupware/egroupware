@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="nm_column_selection" template="" lang="" group="0" version="16.1">
+        <et2-nextmatch-columnselection id="columns"></et2-nextmatch-columnselection>
+        <hbox>
+            <et2-select id="autoRefresh" emptyLabel="Refresh" statustext="Automatically refresh list">
+                <option value="30">30 seconds</option>
+                <option value="180">3 Minutes</option>
+                <option value="300">5 Minutes</option>
+                <option value="900">15 Minutes</option>
+                <option value="1800">30 Minutes</option>
+            </et2-select>
+            <et2-select id="default_preference" emptyLabel="Preference">
+                <option value="default" title="Set these columns as the default">Default</option>,
+                <option value="reset" title="Reset all user's column preferences">Reset</option>,
+                <option value="force" title="Force column preference so users cannot change it">Force</option>
+            </et2-select>
+        </hbox>
+    </template>
+</overlay>

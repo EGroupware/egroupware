@@ -2,6 +2,7 @@ import {css, html, ifDefined, LitElement, repeat, SlotMixin} from '@lion/core';
 import {DialogButton, Et2Dialog} from "./Et2Dialog";
 import {et2_template} from "../et2_widget_template";
 import {Et2DialogContent} from "./Et2DialogContent";
+import shoelace from "../Styles/shoelace";
 
 /**
  * This handles the visible portion of the dialog, including the title & close button.
@@ -24,7 +25,8 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 	 */
 	static get _styles()
 	{
-		return css`
+		return [shoelace,
+			css`
         :host {
           display: inline-block;
           background: white;
@@ -95,8 +97,7 @@ export class Et2DialogOverlay extends SlotMixin(LitElement)
 		::slotted([align="right"]) {
 			margin-left: auto;
 			order: 1;
-		}
-      `;
+		}`];
 	}
 
 	get properties()

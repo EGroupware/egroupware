@@ -1,7 +1,7 @@
 /**
  * Column selector for nextmatch
  */
-import {classMap, css, html, LitElement, PropertyValues, repeat, TemplateResult} from "@lion/core";
+import {classMap, css, html, LitElement, repeat, TemplateResult} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {et2_nextmatch_customfields} from "../et2_extension_nextmatch";
 import shoelace from "../Styles/shoelace";
@@ -17,7 +17,6 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	static get styles()
 	{
 		return [
-			// Parent (SlSelect) returns a single cssResult, not an array
 			super.styles,
 			shoelace,
 			css`
@@ -28,19 +27,10 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				flex: 1 1 auto;
 				--icon-width: 20px;
 			}
-			.title {
-				font-size: var(--sl-font-size-large);
-				color: var(--sl-color-neutral-0);
-				background-color: var(--sl-color-primary-600);
-				flex: 1 1 auto;
-			}
-			.title sl-icon {
-				vertical-align: middle;
-				cursor: pointer;
-			}
 			sl-menu {
 				flex: 1 10 auto;
 				overflow-y: auto;
+				max-height: 40em;
 			}
 			/* Drag handle on columns (not individual custom fields or search letter) */
 			sl-menu > .select_row::part(base) {
@@ -67,6 +57,8 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			 * List of currently selected columns
 			 */
 			value: {type: Object},
+
+			columns: {type: Object},
 
 			autoRefresh: {type: Number}
 		}
@@ -100,53 +92,15 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		});
 	}
 
-	protected firstUpdated(_changedProperties : PropertyValues)
-	{
-		super.firstUpdated(_changedProperties);
-
-		if(this._autoRefreshNode)
-		{
-			this._autoRefreshNode.select_options = {
-				// Cause [unknown] problems with mail
-				30: "30 seconds",
-				//60: "1 Minute",
-				180: "3 Minutes",
-				300: "5 Minutes",
-				900: "15 Minutes",
-				1800: "30 Minutes"
-			};
-		}
-
-		if(this._preferenceNode)
-		{
-			this._preferenceNode.select_options = [
-				{value: 'default', label: 'Default', title: 'Set these columns as the default'},
-				{value: 'reset', label: 'Reset', title: "Reset all user's column preferences"},
-				{value: 'force', label: 'Force', title: 'Force column preference so users cannot change it'}
-			];
-		}
-	}
-
 	protected render() : TemplateResult
 	{
-		return html`${this.headerTemplate()}
-        <sl-menu @sl-select="${this.columnClickHandler}" part="columns">
-            ${repeat(this.__columns, (column) => column.id, (column) => this.rowTemplate(column))}
-        </sl-menu>
-        <et2-hbox class="dialogFooterToolbar">
-            <slot name="buttons"></slot>
-            ${this.footerTemplate()}
-        </et2-hbox>`;
-	}
-
-	protected headerTemplate()
-	{
 		return html`
-            <div class="title">
-                <sl-icon name="check-all" @click=${this.handleSelectAll}></sl-icon>
-                ${this.egw().lang("Select columns")}
-            </div>
-		`;
+            <sl-icon slot="header" name="check-all" @click=${this.handleSelectAll}
+                     title="${this.egw().lang("Select all")}"
+                     style="font-size:24px"></sl-icon>
+            <sl-menu @sl-select="${this.columnClickHandler}" part="columns" slot="content">
+                ${repeat(this.__columns, (column) => column.id, (column) => this.rowTemplate(column))}
+            </sl-menu>`;
 	}
 
 	protected footerTemplate()
@@ -160,9 +114,9 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		const apps = this.egw().user('apps');
 
 		return html`
-            ${this.__autoRefresh !== false ? autoRefresh : ''}
+            ${this.__autoRefresh !== "false" ? autoRefresh : ''}
             ${!apps['admin'] ? '' : html`
-                <et2-select id="default_preference" emptyLabel="${this.egw().lang("Preference")}">
+                <et2-select id="default_preference" emptylabel="${this.egw().lang("Preference")}">
                 </et2-select>`
             }
 		`;
@@ -280,6 +234,11 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			}
 		})
 		return value;
+	}
+
+	set value(new_value)
+	{
+		// TODO?  Only here to avoid error right now
 	}
 
 	private get _autoRefreshNode() : Et2Select

@@ -1,5 +1,6 @@
 import {css, CSSResultArray, html, LitElement} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
+import shoelace from "../Styles/shoelace";
 
 /**
  * Widget for the actual content of a dialog, used when we're not doing a template
@@ -8,6 +9,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 export class Et2DialogContent extends Et2Widget(LitElement)
 {
 	static styles : CSSResultArray = [
+		shoelace,
 		css`
 			:host {
 			display: block;

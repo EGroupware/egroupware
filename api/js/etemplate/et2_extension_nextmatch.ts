@@ -71,11 +71,9 @@ import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {egwIsMobile} from "../egw_action/egw_action_common.js";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Select} from "./Et2Select/Et2Select";
-import {Et2Button} from "./Et2Button/Et2Button";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {Et2AccountFilterHeader} from "./Nextmatch/Headers/AccountFilterHeader";
 import {Et2SelectCategory} from "./Et2Select/Et2SelectCategory";
-import {Et2ColumnSelection} from "./Et2Nextmatch/ColumnSelection";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
@@ -1954,22 +1952,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			});
 		}
 
-		// Build the popup
-		let selectPopup = new Et2ColumnSelection();
-		selectPopup.setParent(this);
-		selectPopup.columns = columns;
-		if(!this.options.disable_autorefresh)
+		let updateColumns = function(button, values)
 		{
-			selectPopup.autoRefresh = parseInt(this._get_autorefresh());
-		}
+			if(button != Et2Dialog.OK_BUTTON)
+			{
+				return;
+			}
 
-		const okButton = <Et2Button>loadWebComponent("et2-button", {
-			image: "check",
-			label: this.egw().lang("ok"),
-			slot: "buttons"
-		}, this);
-		okButton.onclick = function()
-		{
 			// Update visibility
 			const visibility = {};
 			for(var i = 0; i < columnMgr.columns.length; i++)
@@ -1981,7 +1970,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					visibility[col.id] = {visible: false};
 				}
 			}
-			const value = selectPopup.value;
+			const value = values.columns;
 
 			// Update & remove letter filter
 			if(self.header.lettersearch)
@@ -2006,54 +1995,54 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					column++;
 				}
-				if(visibility[value[i]])
-					{
-						visibility[value[i]].visible = true;
-					}
-					let col_name = self._getColumnName(self.columns[column].widget);
-
-					// Custom fields are listed seperately in column list, but are only 1 column
-					if(self.columns[column] && self.columns[column].widget.instanceOf(et2_nextmatch_customfields))
-					{
-						const cf = self.columns[column].widget.options.customfields;
-						const visible = self.columns[column].widget.options.fields;
-						self.sortedColumnsList.push(self.columns[column].widget.id);
-
-						// Turn off all custom fields
-						for(var field_name in cf)
-						{
-							visible[field_name] = false;
-						}
-						// Turn on selected custom fields
-						for(let j = i; j < value.length; j++)
-						{
-							if(value[j].indexOf(et2_customfields_list.PREFIX) != 0)
-							{
-								continue;
-							}
-							self.sortedColumnsList.push(value[j]);
-
-							visible[value[j].substring(1)] = true;
-							i++;
-						}
-						(<et2_customfields_list><unknown>self.columns[column].widget).set_visible(visible);
-					}
-					else
-					{
-						self.sortedColumnsList.push(col_name);
-					}
+				if(!self.columns[column])
+				{
+					continue
 				}
-			columnMgr.setColumnVisibilitySet(visibility);
+				if(visibility[value[i]])
+				{
+					visibility[value[i]].visible = true;
+				}
+				let col_name = self._getColumnName(self.columns[column].widget);
 
-			// Hide popup
-			self.selectPopup.toggle();
+				// Custom fields are listed seperately in column list, but are only 1 column
+				if(self.columns[column] && self.columns[column].widget.instanceOf(et2_nextmatch_customfields))
+				{
+					const cf = self.columns[column].widget.options.customfields;
+					const visible = self.columns[column].widget.options.fields;
+					self.sortedColumnsList.push(self.columns[column].widget.id);
+
+					// Turn off all custom fields
+					for(var field_name in cf)
+					{
+						visible[field_name] = false;
+					}
+					// Turn on selected custom fields
+					for(let j = i; j < value.length; j++)
+					{
+						if(value[j].indexOf(et2_customfields_list.PREFIX) != 0)
+						{
+							continue;
+						}
+						self.sortedColumnsList.push(value[j]);
+
+						visible[value[j].substring(1)] = true;
+						i++;
+					}
+					(<et2_customfields_list><unknown>self.columns[column].widget).set_visible(visible);
+				}
+				else
+				{
+					self.sortedColumnsList.push(col_name);
+				}
+			}
+			columnMgr.setColumnVisibilitySet(visibility);
 
 			self.dataview.updateColumns();
 
 			// Auto refresh
-			self._set_autorefresh(selectPopup.autoRefresh);
+			self._set_autorefresh(values.autoRefresh);
 
-			// Set default or clear forced
 			if(show_letters)
 			{
 				self.activeFilters.selectcols.push('lettersearch');
@@ -2063,32 +2052,33 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			self.selectPopup = null;
 		};
 
-		const cancelButton = <Et2Button>loadWebComponent("et2-button", {
-			label: this.egw().lang("cancel"),
-			image: "cancel",
-			slot: "buttons"
-		}, this);
-		cancelButton.onclick = function()
-		{
-			self.selectPopup.toggle();
-		};
+		// Build the popup
+		const apps = this.egw().user('apps');
+		let colDialog = new Et2Dialog(this.egw());
+		colDialog.transformAttributes({
+			title: this.egw().lang("Select columns"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_column_selection.xet"),
+			callback: updateColumns,
+			value: {
+				content: {
+					autoRefresh: parseInt(this._get_autorefresh())
+				},
+				readonlys: {
+					default_preference: typeof apps.admin == "undefined"
+				},
+				modifications: {
+					autoRefresh: {
+						disabled: this.options.disable_autorefresh
+					},
+					columns: {
+						columns: columns,
+					}
+				}
+			}
+		});
 
-		selectPopup.append(okButton);
-		selectPopup.append(cancelButton);
-
-		this.selectPopup = jQuery(document.createElement("div"))
-			.addClass("colselection ui-dialog ui-widget-content")
-			.append(selectPopup)
-			.appendTo(this.innerDiv);
-
-		const t_position = jQuery(e.target).position();
-		const s_position = this.div.position();
-		const max_height = this.getDOMNode().getElementsByClassName('egwGridView_outer')[0]['tBodies'][0].clientHeight -
-			(2 * this.selectPopup.find('.dialogFooterToolbar').height());
-		this.selectPopup.find('.ui-multiselect-checkboxes').css('max-height', max_height);
-		this.selectPopup.css("top", t_position.top)
-			.css("left", s_position.left + this.div.width() - this.selectPopup.width())
-			.css("position", "absolute");
+		document.body.appendChild(colDialog);
 	}
 
 	/**
