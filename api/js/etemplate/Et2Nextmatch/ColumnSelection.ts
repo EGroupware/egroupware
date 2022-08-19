@@ -22,6 +22,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			css`
 			:host {
 				max-height: inherit;
+				min-width: 35em;
 				display: flex;
 				flex-direction: column;
 				flex: 1 1 auto;
@@ -30,7 +31,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 			sl-menu {
 				flex: 1 10 auto;
 				overflow-y: auto;
-				max-height: 40em;
+				max-height: 50em;
 			}
 			/* Drag handle on columns (not individual custom fields or search letter) */
 			sl-menu > .select_row::part(base) {
