@@ -88,6 +88,7 @@ function send_template()
 				'select'                  => 'empty_label,ignore',
 				'select-account'          => 'empty_label,account_type,ignore',
 				'select-number'           => 'empty_label,min,max,interval,suffix',
+				'select-cat'              => 'empty_label,global_categories,ignore,application,parentCat,owner',
 				'box'                     => ',cellpadding,cellspacing,keep',
 				'hbox'                    => 'cellpadding,cellspacing,keep',
 				'vbox'                    => 'cellpadding,cellspacing,keep',

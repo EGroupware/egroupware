@@ -168,11 +168,6 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 
 			this.__select_options = cleanSelectOptions(new_options);
 
-			if (this.__select_options.length > 20)
-			{
-				this.search = true;
-			}
-
 			this.requestUpdate("select_options", old_options);
 		}
 

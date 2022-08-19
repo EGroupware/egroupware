@@ -296,10 +296,37 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		{
 			super.willUpdate(changedProperties);
 
+			// Turn on search if there's more than 20 options
+			if(changedProperties.has("select_options") && this.select_options.length > 20)
+			{
+				this.search = true;
+			}
+
 			// If searchURL is set, turn on search
 			if(changedProperties.has("searchUrl") && this.searchUrl)
 			{
 				this.search = true;
+			}
+		}
+
+		update(changedProperties)
+		{
+			super.update(changedProperties);
+
+			// One of the key properties has changed, need to add the needed nodes
+			if(changedProperties.has("search") || changedProperties.has("editModeEnabled") || changedProperties.has("allowFreeEntries"))
+			{
+				// Missing any of the required attributes?  Now we need to take it out.
+				if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
+				{
+					this._unbindListeners();
+					this.querySelector(".search_input")?.remove();
+					return;
+				}
+
+				// Normally this should be handled in render(), but we have to add our nodes in
+				this._addNodes();
+				this._bindListeners();
 			}
 		}
 
@@ -310,7 +337,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _addNodes()
 		{
-
 			const div = document.createElement("div");
 			div.classList.add("search_input");
 			render(this._searchInputTemplate(), div);
