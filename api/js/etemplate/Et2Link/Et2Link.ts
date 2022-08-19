@@ -172,7 +172,6 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		if(!_value)
 		{
-			this.app = "";
 			this.entryId = "";
 			this.title = "";
 			return;
