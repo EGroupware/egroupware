@@ -101,7 +101,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		this.crop = false;
 		this.size = "2.7em";
 		this.icon = "";
-		this.shape = "rounded";
+		this.shape = this.shape || "rounded";
 	}
 
 	/**
