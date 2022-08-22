@@ -393,7 +393,8 @@ function send_template()
 			}
 
 			// Change size=# attribute to width, size is small|medium|large with Shoelace
-			if (isset($attrs['size']))
+			// Do not drop size if we're setting shoelace size format in the template
+			if (isset($attrs['size']) && !preg_match('/small|medium|large/',$attrs['size']))
 			{
 				$attrs['width'] = (int)$attrs['size'].'em';
 				unset($attrs['size']);
