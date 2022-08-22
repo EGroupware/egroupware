@@ -4,13 +4,21 @@ import {css} from "lit";
 import {registerIconLibrary} from '@shoelace-style/shoelace/dist/utilities/icon-library.js';
 import {egw} from "../../jsapi/egw_global";
 
+
 /**
- * This makes sure the built-in icons can be found
+ * Here is the common overrides and customisations for Shoelace
  */
-registerIconLibrary('default', {
+
+
+/**
+ * Register egw images as an icon library
+ * @example <sl-icon library="egw" name="infolog/navbar"/>
+ * @example <sl-icon library="egw" name="5_day_view"/>
+ */
+registerIconLibrary('egw', {
 	resolver: name =>
 	{
-		return typeof egw !== "undefined" ? `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg` : ''
+		return typeof egw !== "undefined" ? (egw.image(name) || '') : ''
 	},
 });
 

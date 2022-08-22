@@ -28,11 +28,15 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 		{
 			this.src = this.egw().image(new_image);
 		}
+		if(new_image && !this.src)
+		{
+			this.name = new_image;
+		}
 	}
 
 	get image()
 	{
-		return this.src;
+		return this.src || this.name;
 	}
 }
 
