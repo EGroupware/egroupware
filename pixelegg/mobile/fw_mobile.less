@@ -799,6 +799,7 @@
 				position: relative;
 				height: 50px;
 				z-index: 1;
+				display: flex;
 				border-bottom: 1px solid transparent;
 				button {
 					height: @mobile-elem-height;
@@ -829,6 +830,7 @@
 					&:focus{
 						outline:none;
 					}
+					order: 9;
 				}
 				button.nm_action_header {
 					background-image: url(../../api/templates/default/images/dots.svg);
@@ -845,6 +847,7 @@
 					&:focus{
 						outline:none;
 					}
+					order: 10;
 				}
 				button.nm_action_header.back {
 					background-image: url(../../api/templates/default/images/cancelled.svg);
@@ -865,8 +868,10 @@
 					float: right;
 					text-align: center;
 					display:none;
+					order:7;
 				}
 				div.nm_favorites_div {
+					order:8;
 					background-position: center;
 					background-repeat: no-repeat;
 					border-left:1px solid silver;
@@ -958,31 +963,9 @@
 					-webkit-filter: none!important;
 					background-color: white !important;
 				}
-				input[type="search"] {
-					width: 50px;
-					height: @mobile-elem-height;
-					font-size: large;
-					margin:0;
-					border:0;
-					opacity: 0;
-					background-color:@mobile-nm-search-bg;
-					color: black;
-					position: absolute;
-					&:active{
-						border:none;
-						background: @mobile-nm-search-bg;
-					}
-					&:focus {
-						border:none;
-						background:white;
-						outline: none;
-						opacity: 1;
-						left:110px;
-						position: absolute;
-						width:100%;
-						height:@mobile-elem-height;
-						z-index: 2;
-					}
+				et2-searchbox {
+					order: -1;
+					width: -webkit-fill-available;
 				}
 				div.nm_appname_header {
 					width: 100%;
