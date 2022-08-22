@@ -127,13 +127,13 @@ export class SidemenuDate extends Et2Date
 
 	set_value(value)
 	{
-		if(!value || value == 0 || value == "0" || typeof value !== "string")
-		{
-			return super.set_value(value);
-		}
-		if(value.length == 8)
+		if(typeof value !== "string" && value.length == 8)
 		{
 			super.set_value(parseDate(value, "Ymd"));
+		}
+		else
+		{
+			super.set_value(value);
 		}
 	}
 
