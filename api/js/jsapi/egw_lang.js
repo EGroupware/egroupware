@@ -162,9 +162,8 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 			}
 
 			const promise = Promise.all(jss.map((src) => import(src)));
-			return typeof _callback === 'function' ? promise.then(_callback.call(_context)) : promise;
+			return typeof _callback === 'function' ? promise.then(() => _callback.call(_context)) : promise;
 		}
 	};
 
 });
-
