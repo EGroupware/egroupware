@@ -217,6 +217,12 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			this.disabled = false;
 			this._handleClick = this._handleClick.bind(this);
+
+			// make all sizable widgets large by default on mobile template
+			if (egwIsMobile())
+			{
+				this.size = "large";
+			}
 		}
 
 		connectedCallback()
