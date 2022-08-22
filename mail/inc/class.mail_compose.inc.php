@@ -3518,6 +3518,8 @@ class mail_compose
 	/**
 	 * Callback function to search mail folders
 	 *
+	 * New et2-select(-*) widget sends query string and option array as first to parameters
+	 *
 	 * @param int $_searchStringLength
 	 * @param boolean $_returnList
 	 * @param int $_mailaccountToSearch
@@ -3528,6 +3530,9 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.':'.array2string($_REQUEST));
 		static $useCacheIfPossible = null;
 		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
+		// new et2-select(-*) widget sends query string and option array as first to parameters
+		if (!is_int($_searchStringLength)) $_searchStringLength = 2;
+		if (!is_bool($_returnList)) $_returnList = false;
 		$_searchString = trim($_REQUEST['query']);
 		$results = array();
 		$rememberServerID = $this->mail_bo->icServer->ImapServerId;
@@ -3596,6 +3601,7 @@ class mail_compose
 
 	public static function ajax_searchAddress($_searchStringLength=2) {
 		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
+		if (!is_int($_searchStringLength)) $_searchStringLength = 2;
 		$_searchString = trim($_REQUEST['query']);
 		$include_lists = (boolean)$_REQUEST['include_lists'];
 
