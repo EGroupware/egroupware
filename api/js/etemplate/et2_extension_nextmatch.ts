@@ -3333,6 +3333,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			value: settings.search || '',
 			fix: !egwIsMobile(),
 			placeholder: egw.lang("Search"),
+			size: egwIsMobile()?"large":''
 		};
 		// searchbox widget
 		this.et2_searchbox = <Et2Searchbox>loadWebComponent('et2-searchbox', searchbox_options, this);

@@ -15,7 +15,7 @@ Egroupware
 	<template id="calendar.toolbar">
 		<hbox class="et2_nextmatch" >
 			<box class="search nm-mob-header" width="100%">
-				<searchbox id="keywords" blur="Search" overlay="false"  fix="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
+				<searchbox id="keywords" blur="Search" overlay="false" size="large" fix="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
 				<toolbar id="toolbar" flat_list="false"/>
 			</box>
 		</hbox>
