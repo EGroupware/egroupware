@@ -2213,7 +2213,8 @@ lion-validation-feedback[type] {
     flex: 5 1 auto;
 }
 
-.nextmatch_header_row .search {
+.nextmatch_header_row .search > * {
+    width: 16em;
 }
 
 .nextmatch_header_row > div > et2-select, .nextmatch_header_row > div > et2-select-cat {
