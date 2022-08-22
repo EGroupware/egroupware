@@ -328,14 +328,11 @@ function send_template()
 			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
 				!preg_match('/^(index|list)/', $name))
 			{
-				$tag = 'et2-image';
-				$attrs['src'] = $attrs['image'];
-				$attrs['class'] = (!empty($attrs['class']) ? $attrs['class'].' ':'').'imageButton';
-				unset($attrs['image']);
-				// Was expected to submit.  Images don't have noValidation, so add directly
-				if (!array_key_exists('onclick', $attrs) && empty($attrs['noSubmit']))
+				$tag = 'et2-button-icon';
+				if (!isset($attrs['name']))
 				{
-					$attrs['onclick'] = 'this.getInstanceManager().submit(this, undefined, ' . $attrs['noValidation'] . ')';
+					$attrs['name'] = $attrs['image'];
+					unset($attrs['image']);
 				}
 			}
 			unset($attrs['background_image']);
@@ -362,7 +359,7 @@ function send_template()
 		}
 
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
-		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>\s*<#s', static function(array $matches)
+		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>#s', static function(array $matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 
