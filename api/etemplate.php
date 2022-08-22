@@ -333,6 +333,7 @@ function send_template()
 				{
 					$attrs['name'] = $attrs['image'];
 					unset($attrs['image']);
+					$attrs['library'] = 'egw';
 				}
 			}
 			unset($attrs['background_image']);
