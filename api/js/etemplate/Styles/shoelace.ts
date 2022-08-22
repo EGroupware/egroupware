@@ -9,6 +9,15 @@ import {egw} from "../../jsapi/egw_global";
  * Here is the common overrides and customisations for Shoelace
  */
 
+/**
+ * Make shoelace icons available
+ */
+registerIconLibrary('default', {
+	resolver: name =>
+	{
+		return typeof egw !== "undefined" ? `${egw.webserverUrl}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg` : ''
+	},
+});
 
 /**
  * Register egw images as an icon library
