@@ -1060,18 +1060,6 @@
                     margin: 2px !important;
                     min-height: 19px;*/
   }
-  div.ui-toolbar-menulist {
-    position: absolute;
-    height: inherit;
-    z-index: 999 !important;
-    overflow: hidden !important;
-    border: solid black 1px;
-    padding: 0 !important;
-    margin-top: 3px !important;
-  }
-  .ui-toolbar-menulist > h {
-    padding-bottom: 7px;
-  }
   .ui-toolbar-menulistHeader {
     font-size: xx-small;
     height: 100%;
@@ -1142,34 +1130,6 @@
   .et2_toolbar span.et2_checkbox_slideSwitch.switchOn {
     filter: none;
   }
-  /*#################################### ADMIN PART #####################################################*/
-  iframe#admin-index_iframe {
-    background-color: yellow;
-  }
-  table.egwGridView_grid img {
-    /*filter grey*/
-    /*filter grey*/
-    filter: none;
-    -webkit-filter: initial;
-    -moz-filter: initial;
-    -ms-filter: initial;
-    -o-filter: initial;
-    /*filter: url(grayscale.svg);  Firefox 4+ */
-    filter: initial;
-    /* IE 6-9 */
-  }
-  .admin_aclAPP {
-    /*filter grey*/
-    filter: none;
-    -webkit-filter: initial;
-    -moz-filter: initial;
-    -ms-filter: initial;
-    -o-filter: initial;
-    /*filter: url(grayscale.svg);  Firefox 4+ */
-    filter: initial;
-    /* IE 6-9 */
-  }
-  /*#################################### END ADMIN PART #####################################################*/
 }
 /*#################################### Media Queries #####################################################*/
 @media only screen and (min-width: 980px) and (max-width: 1279px) {
@@ -3221,8 +3181,15 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
   color: #373f3f;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
-  background-color: rgba(153, 204, 255, 0.4) !important;
+  background-color: hsl(200, 98%, 39%) !important;
   background-image: none !important;
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_icon img.sub_icon {
+  filter: invert(1) brightness(5);
+}
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.sub_item_text,
+div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_hk div.sub_item_hk {
+  color: hsl(0, 0%, 100%);
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_sep {
   border-top: 1px solid #E6E6E6;
@@ -3324,9 +3291,6 @@ table.dialog-main-view {
 .dialogHeader {
   color: #000000;
   border-bottom: 3px solid #696969;
-}
-.dialogHeader img[src*="navbar"] {
-  padding: 0 0 0 15px;
 }
 .dialogHeader input[type="radio"],
 .dialogHeader input.et2_radiobox {
@@ -3504,9 +3468,6 @@ div#etemplate\.tab_widget {
 }
 .dialogFooterToolbar td {
   padding: 5px 5px 0px 0px;
-}
-.dialogFooterToolbar td:first-child {
-  padding-left: 5px;
 }
 .dialogFooterToolbar button {
   min-width: 86px;
@@ -4292,10 +4253,8 @@ span.overlayContainer img.overlay {
   z-index: 1001;
   top: 46px;
   background: white;
-  box-shadow: 2px 3px 13px #666666;
-  -moz-box-shadow: 2px 3px 13px #666666;
-  -webkit-box-shadow: 2px 3px 13px #666666;
-  -khtml-box-shadow: 2px 3px 13px #666666;
+  box-shadow: 0 2px 8px hsla(240, 3.8%, 46.1%, 0.12);
+  border: 1px solid hsl(240, 6%, 90%);
 }
 #egw_fw_header #egw_fw_topmenu a.powered_by {
   width: calc(100% - 20px);
@@ -4392,13 +4351,16 @@ span.overlayContainer img.overlay {
   border-top: #E6E6E6;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:hover {
-  background: rgba(153, 204, 255, 0.4);
-  color: #FFFFFF;
+  background: hsl(200, 98%, 39%);
+  color: hsl(0, 0%, 100%);
+}
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:hover a {
+  filter: invert(1) brightness(5);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 11px;
   padding-left: 26px;
   line-height: 1.5em;
   display: inline-block;

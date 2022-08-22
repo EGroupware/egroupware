@@ -630,7 +630,7 @@
 				display: none;
 			}
 		}
-		button.plus_button {
+		et2-button.plus_button {
 			position: fixed !important;
 			right: 15px;
 			bottom: 15px;
@@ -650,6 +650,7 @@
 				background-color: #0c5da5;
 			}
 		}
+		et2-button.plus_button::part(base) {display: none;}
 		.et2_nextmatch {
 			.nextmatch_sortheader {
 				padding-right: 0px;
@@ -878,6 +879,9 @@
 
 					&:focus{
 						outline:none;
+					}
+					et2-favorites {
+
 					}
 					div[name="favorite"] {
 

@@ -2,15 +2,11 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.index.left" template="" lang="" group="0" version="1.3.001">
-
-	</template>
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
 		<hbox>
 			<menulist>
 				<menupopup align="right" label="Type" id="col_filter[tid]" empty_label="All"/>
 			</menulist>
-			<buttononly class="plus_button" align="right" parent_node="addressbook-index_plus_button_container" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
 		</hbox>
 	</template>
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
@@ -71,7 +67,9 @@
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
-					<description width="0" id="plus_button_container" />
+					<hbox>
+						<buttononly class="plus_button" size="large" statustext="Add a new contact" id="plus_button" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'850','440','_blank','addressbook',null,true); return false;"/>
+					</hbox>
 				</row>
 				<row>
 					<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add" span="all"/>

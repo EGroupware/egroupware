@@ -2,9 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
-		<button class="plus_button" parent_node="infolog-index_plus_button_container" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
-	</template>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
 		<hbox>
 			<date id="startdate" label="Start"/>
@@ -52,6 +49,7 @@
 		</grid>
 	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
+		<button class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"/>
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="70%"/>
@@ -69,10 +67,7 @@
 					<template id="header_right"/>
 				</row>
 				<row>
-					<description id="plus_button_container"/>
-				</row>
-				<row>
-					<nextmatch id="nm" template="infolog.index.rows" header_right='infolog.index.header_right' header_left="infolog.index.dates" span="all"/>
+					<nextmatch id="nm" template="infolog.index.rows" header_left="infolog.index.dates" span="all"/>
 				</row>
 				<row>
 					<hbox class=" ">

@@ -10,9 +10,6 @@
 			<date statustext="Leave it empty for a full week" id="enddate"/>
 		</hbox>
 	</template>
-	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
-		<buttononly id="add"  class="plus_button" onclick="egw.open('timesheet');" parent_node="timesheet-index_plus_button_container"/>
-	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -52,6 +49,7 @@
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<description id="plus_button_container"/>
-		<nextmatch id="nm" options="timesheet.index.rows" header_right="timesheet.index.add" header_left="timesheet.index.dates"/>
+		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates"/>
+		<buttononly id="add"  class="plus_button" onclick="egw.open('timesheet');" />
 	</template>
 </overlay>

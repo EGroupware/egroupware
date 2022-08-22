@@ -24,7 +24,7 @@ table.prefTable {
   width: 100%;
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
-  background-image: url(../../../api/templates/default/images/hint.png);
+  background-image: url(../../../api/templates/default/images/dialog_info.png);
   background-repeat: no-repeat;
   background-position: center;
   height: 99%;
@@ -43,7 +43,7 @@ tr.prefRow > td.prefValueColumn {
 }
 /*.prefValueColumn {border-right:none !important;}*/
 .prefHelpColumn {
-  border: none !important;
+  border-left: 1px solid #e6e6e6 !important;
   padding: 0 !important;
 }
 .prefHelp {
@@ -70,14 +70,13 @@ tr.prefRow:hover .prefHelp {
 }
 .prefValue {
   margin-right: 5px;
-  width: 49%;
+  width: 99%;
 }
-.prefDefault {
-  float: right;
-  width: 48%;
+span.prefDefault {
   overflow-x: hidden;
   text-overflow: ellipsis;
-  max-width: 300px;
+  padding-bottom: 5px;
+  color: silver;
 }
 .prefValue textarea,
 textarea.prefValue {
@@ -89,6 +88,7 @@ textarea.prefValue {
   font-size: 150%;
   margin-top: 10px;
   margin-right: 5px;
+  position: relative;
 }
 .prefType {
   width: 49%;
@@ -104,9 +104,6 @@ textarea.prefValue {
 }
 .prefValueColumn select.prefValue {
   white-space: pre-line;
-}
-#preferences_settings_country_chzn {
-  width: 49% !important;
 }
 /**
  * 2FA setup
@@ -129,6 +126,9 @@ img.qrCode {
   margin-top: 1em;
   font-style: italic;
   font-size: 120%;
+}
+table.prefTable tbody tr.prefRow .prefHelpColumn {
+  border-bottom: none;
 }
 .prefHelp {
   width: 100%;
@@ -162,3 +162,4 @@ div#preferences-settings_tabs {
     background-position: center !important;
   }
 }
+/*# sourceMappingURL=app.css.map */
