@@ -247,15 +247,25 @@ export class week extends View
 {
 	public static header(state)
 	{
-		var end_date = state.last;
+		let start_date = state.first;
+		let end_date = state.last;
 		if(!week.show_weekend(state))
 		{
+			start_date = new Date(state.first);
+			while([0, 6].indexOf(start_date.getUTCDay()) != -1)
+			{
+				start_date.setUTCDate(start_date.getUTCDate() + 1);
+			}
+
 			end_date = new Date(state.last);
-			end_date.setUTCDate(end_date.getUTCDate() - 2);
+			while([0, 6].indexOf(end_date.getUTCDay()) != -1)
+			{
+				end_date.setUTCDate(end_date.getUTCDate() - 1);
+			}
 		}
 		return super._owner(state) + app.calendar.egw.lang('Week') + ' ' +
-			app.calendar.date.week_number(state.first) + ': ' +
-			app.calendar.date.long_date(state.first, end_date);
+			app.calendar.date.week_number(start_date) + ': ' +
+			app.calendar.date.long_date(start_date, end_date);
 	}
 
 	public static start_date(state)
