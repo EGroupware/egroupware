@@ -17,9 +17,7 @@
 				</row>
 				<row class="row $row_cont[class]">
 					<description id="${row}[ruleID]" />
-					<menulist>
-						<menupopup id="${row}[status]" readonly= "true"/>
-					</menulist>
+					<select id="${row}[status]" readonly="true"/>
 					<description id="${row}[rules]" />
 				</row>
 			</rows>
