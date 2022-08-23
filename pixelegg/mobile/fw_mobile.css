@@ -9089,17 +9089,17 @@ table.egwGridView_grid img.et2_appicon {
   body td.et2_fullWidth {
     width: auto;
   }
-  body div.et2_toolbar.et2_head_toolbar {
+  body .et2_toolbar {
     background-color: transparent;
     padding: 1px 5px 5px 10px !important;
   }
-  body div.et2_toolbar.et2_head_toolbar button {
+  body .et2_toolbar button {
     width: 46px;
     height: 46px;
     background-size: 18px 18px;
     touch-action: auto;
   }
-  body div.et2_toolbar.et2_head_toolbar div.ui-toolbar-menulist {
+  body .et2_toolbar .ui-toolbar-menulist {
     width: 100%;
     left: 0px;
     overflow-y: auto !important;
@@ -9110,13 +9110,13 @@ table.egwGridView_grid img.et2_appicon {
     filter: progid:DXImageTransform.Microsoft.Shadow(color=#999999, direction=135, strength=3);
     -moz-user-select: none;
   }
-  body div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+  body .et2_toolbar button.et2_toolbar_hasCaption {
     width: auto;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+  body .et2_toolbar .et2_toolbar_actionlist {
     margin-left: 50px;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist button.et2_button.ui-draggable {
+  body .et2_toolbar .et2_toolbar_actionlist button.et2_button.ui-draggable {
     border: none !important;
     box-shadow: none !important;
     background-position: center !important;
@@ -9127,13 +9127,13 @@ table.egwGridView_grid img.et2_appicon {
     border: none;
     width: 40px;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more {
+  body .et2_toolbar .et2_toolbar_more {
     position: inherit;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more .ui-state-hover {
+  body .et2_toolbar .et2_toolbar_more .ui-state-hover {
     background: none;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more .ui-toolbar-menulistHeader {
+  body .et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader {
     color: transparent;
     height: 46px;
     width: 50px;
@@ -9148,7 +9148,7 @@ table.egwGridView_grid img.et2_appicon {
     background-size: 24px 24px !important;
     border: none;
   }
-  body div.et2_toolbar.et2_head_toolbar div.et2_toolbar_more .ui-toolbar-menulistHeader span {
+  body .et2_toolbar .et2_toolbar_more .ui-toolbar-menulistHeader span {
     display: none;
   }
   body .et2_tabbox.vertical .et2_tabflag {
