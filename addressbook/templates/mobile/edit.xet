@@ -362,14 +362,14 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox  span="all" width="100%">
-						<button  id="button[apply]" class="button_apply" image="apply" background_image="1"/>
-						<button  id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete" background_image="1"/>
+						<button  id="button[apply]" class="button_apply" image="apply"/>
+						<button  id="button[delete]" class="button_delete" onclick="et2_dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" tabindex="25" image="delete"/>
 					</hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
 					<hbox span="all" width="100%">
-						<button label="Search" id="button[search]" image="search" background_image="1"/>
-						<button label="Cancel" id="button[cancelsearch]" image="cancel" background_image="1"/>
+						<button label="Search" id="button[search]" image="search"/>
+						<button label="Cancel" id="button[cancelsearch]" image="cancel"/>
 					</hbox>
 				</row>
 				<row class="dialogHeader">

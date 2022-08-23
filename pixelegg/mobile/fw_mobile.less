@@ -801,6 +801,10 @@
 				z-index: 1;
 				display: flex;
 				border-bottom: 1px solid transparent;
+				et2-button-icon {
+					font-size: 2.3em;
+					.white-svg;
+				}
 				button {
 					height: @mobile-elem-height;
 					width: @mobile-button-width;
@@ -825,12 +829,12 @@
 					width:50px;
 					height:50px;
 					display:block;
-					float:right;
 					.white-svg;
 					&:focus{
 						outline:none;
 					}
 					order: 9;
+					padding: 0 1em 0 1em;
 				}
 				button.nm_action_header {
 					background-image: url(../../api/templates/default/images/dots.svg);
@@ -842,12 +846,12 @@
 					width:50px;
 					height:50px;
 					display:block;
-					float:right;
 					.white-svg;
 					&:focus{
 						outline:none;
 					}
 					order: 10;
+					padding: 0 1em 0 1em;
 				}
 				button.nm_action_header.back {
 					background-image: url(../../api/templates/default/images/cancelled.svg);
@@ -865,10 +869,10 @@
 					width: 50px;
 					height: 50px;
 					display: inline-block;
-					float: right;
 					text-align: center;
 					display:none;
 					order:7;
+					padding: 0 1em 0 1em;
 				}
 				div.nm_favorites_div {
 					order:8;
@@ -1212,6 +1216,10 @@
 		}
 		div#popupMainDiv {padding:0;}
 		.dialogHeadbar {
+			et2-button-icon {
+				font-size: 2.3em;
+				.white-svg;
+			}
 			button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
 				.white-svg;
 				padding-right: 15px;

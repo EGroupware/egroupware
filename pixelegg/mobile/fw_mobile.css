@@ -7744,7 +7744,7 @@ div[id^="mail-"] .search.nm-mob-header,
 form[id^="mail-"] .search.nm-mob-header,
 div[id^="mail-"] .dialogHeadbar,
 form[id^="mail-"] .dialogHeadbar {
-  background-color: #006699;
+  background-color: #006699 !important;
 }
 #mail_sidebox_header {
   border-left: 6px solid #006699 !important;
@@ -8632,6 +8632,14 @@ table.egwGridView_grid img.et2_appicon {
     display: flex;
     border-bottom: 1px solid transparent;
   }
+  body .et2_nextmatch .nm-mob-header et2-button-icon {
+    font-size: 2.3em;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+  }
   body .et2_nextmatch .nm-mob-header button {
     height: 50px;
     width: 50px;
@@ -8656,13 +8664,13 @@ table.egwGridView_grid img.et2_appicon {
     width: 50px;
     height: 50px;
     display: block;
-    float: right;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
     order: 9;
+    padding: 0 1em 0 1em;
   }
   body .et2_nextmatch .nm-mob-header button.nm_toggle_header:focus {
     outline: none;
@@ -8677,13 +8685,13 @@ table.egwGridView_grid img.et2_appicon {
     width: 50px;
     height: 50px;
     display: block;
-    float: right;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
     background-size: 24px 24px !important;
     border: none;
     order: 10;
+    padding: 0 1em 0 1em;
   }
   body .et2_nextmatch .nm-mob-header button.nm_action_header:focus {
     outline: none;
@@ -8708,10 +8716,10 @@ table.egwGridView_grid img.et2_appicon {
     width: 50px;
     height: 50px;
     display: inline-block;
-    float: right;
     text-align: center;
     display: none;
     order: 7;
+    padding: 0 1em 0 1em;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     order: 8;
@@ -9052,6 +9060,14 @@ table.egwGridView_grid img.et2_appicon {
   }
   body div#popupMainDiv {
     padding: 0;
+  }
+  body .dialogHeadbar et2-button-icon {
+    font-size: 2.3em;
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
   }
   body .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
     -webkit-filter: brightness(0) invert(1) !important;

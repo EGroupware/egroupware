@@ -11,10 +11,10 @@
 			<rows>
 				<row class="dialogHeadbar" >
 					<hbox span="all">
-						<button id="button[save]" onclick="return app.admin.check_owner(widget);" image="save" background_image="1"/>
-						<button  id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply" background_image="1"/>
-						<buttononly id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
-						<buttononly statustext="Delete this category"  id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete','_browser','450x400');window.close();" image="delete" background_image="1"/>
+						<button id="button[save]" onclick="return app.admin.check_owner(widget);" image="save"/>
+						<button  id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply"/>
+						<buttononly id="button[cancel]" onclick="window.close();" image="cancel"/>
+						<buttononly statustext="Delete this category"  id="button[delete]" onclick="egw.open_link('admin.admin_categories.delete','_browser','450x400');window.close();" image="delete"/>
 					</hbox>
 				</row>
 				<row>

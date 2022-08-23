@@ -47,6 +47,6 @@
 			<description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/></vbox>
 		</hbox>
 		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" right_header="mail.index.header_right"/>
-		<buttononly id="button[mailcreate]" class="plus_button" onclick="app.mail.mail_compose(false);" size="large" image="plus" circle="true"/>
+		<buttononly id="composeMail" class="plus_button" onclick="app.mail.mail_compose(false);" size="large" image="plus" circle="true" background_image="true"/>
 	</template>
 </overlay>

@@ -149,10 +149,10 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox  span="all" width="100%">
-						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>
-						<button statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
-						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" background_image="1" image="timestamp" target="info_des"/>
-						<checkbox toggle_on=" " toggle_off=" " id="no_notifications" class="notification_check"/>
+						<button statustext="Apply the changes" id="button[apply]" image="apply"/>
+						<button statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" span="all"/>
+						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" image="timesheet" target="info_des"/>
+						<et2-switch toggle_on=" " toggle_off=" " label="notifications" id="no_notifications" class="notification_check"/>
 						<textbox type="integer" id="info_number" readonly="true" class="entry_id"/>
 					</hbox>
 				</row>

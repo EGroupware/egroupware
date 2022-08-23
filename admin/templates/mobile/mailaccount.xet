@@ -300,8 +300,8 @@
 				<row disabled="!@hide_smime_upload">
 					<description value="Current certificate"/>
 					<hbox>
-						<buttononly id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" background_image="1"/>
-						<buttononly id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" background_image="1"/>
+						<buttononly id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export"/>
+						<buttononly id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete"/>
 					</hbox>
 				</row>
 			</rows>
@@ -318,9 +318,9 @@
 					<hbox span="all">
 						<button id="button[save]"/>
 						<button id="button[apply]" />
-						<button statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand" background_image="1"/>
+						<button statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand"/>
 						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
-						<button label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
+						<button label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete"/>
 					</hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">
