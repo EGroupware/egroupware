@@ -324,17 +324,10 @@ function send_template()
 				unset($attrs['novalidation']);
 				$attrs['noValidation'] = 'true';
 			}
-			// replace not set background_image attribute with et2-image tag, if not in NM / lists
-			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
-				!preg_match('/^(index|list)/', $name))
+			// replace not set background_image attribute with et2-button-icon tag, if not in NM / lists
+			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false'))
 			{
 				$tag = 'et2-button-icon';
-				if (!isset($attrs['name']))
-				{
-					$attrs['name'] = $attrs['image'];
-					unset($attrs['image']);
-					$attrs['library'] = 'egw';
-				}
 			}
 			unset($attrs['background_image']);
 			return "<$tag " . stringAttrs($attrs) . '></' . $tag . '>';
@@ -390,11 +383,9 @@ function send_template()
 				unset($attrs['class']);
 			}
 
-			// Change size=# attribute to width, size is small|medium|large with Shoelace
-			// Do not drop size if we're setting shoelace size format in the template
-			if (isset($attrs['size']) && !preg_match('/small|medium|large/',$attrs['size']))
+			// Drop all (old) size attributes, if it's not shoelace size format: small, medium or large
+			if (isset($attrs['size']) && !in_array($attrs['size'], ['small', 'medium', 'large']))
 			{
-				$attrs['width'] = (int)$attrs['size'].'em';
 				unset($attrs['size']);
 			}
 

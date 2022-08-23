@@ -22,7 +22,8 @@
 					<description for="ident_realname" value="Your name"/>
 					<hbox span="all">
 						<textbox id="ident_realname" size="90" maxlength="128"/>
-						<buttononly label="Placeholders" id="button[placeholders]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" options="dialog_help"/>
+						<buttononly label="Placeholders" id="button[placeholders]" image="question-circle"
+							onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 				</row>
 				<row>
