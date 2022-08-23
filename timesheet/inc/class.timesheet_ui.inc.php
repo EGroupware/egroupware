@@ -934,7 +934,7 @@ class timesheet_ui extends timesheet_bo
 		);
 		if (!is_array($content['nm']))
 		{
-			$date_filters = array('All');
+			$date_filters = array('' => 'All');
 			foreach(array_keys($this->date_filters) as $name)
 			{
 				$date_filters[$name] = $name;
