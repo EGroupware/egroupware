@@ -26,7 +26,7 @@
 			<hbox class="mail-d-h2" disabled="!@toaddress" width="100%">
 				<description value="To"/>
 				<url-email id="toaddress" readonly="true"/>
-				<description id = "toaddressdetails"/>
+				<description id="toaddressdetails"/>
 			</hbox>
 			<hbox>
 				<details class="details" title="details" toggle_align="left">
