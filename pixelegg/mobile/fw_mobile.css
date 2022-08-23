@@ -7744,7 +7744,7 @@ div[id^="mail-"] .search.nm-mob-header,
 form[id^="mail-"] .search.nm-mob-header,
 div[id^="mail-"] .dialogHeadbar,
 form[id^="mail-"] .dialogHeadbar {
-  background-color: #006699 !important;
+  background-color: #006699;
 }
 #mail_sidebox_header {
   border-left: 6px solid #006699 !important;
@@ -8490,6 +8490,7 @@ table.egwGridView_grid img.et2_appicon {
   }
   body .et2_nextmatch .nextmatch_header_row,
   body .et2_nextmatch .nextmatch_header {
+    flex-direction: column;
     background-color: background-color-egw-dark;
   }
   body .et2_nextmatch .nextmatch_header_row div.header_row_right,
@@ -8497,11 +8498,13 @@ table.egwGridView_grid img.et2_appicon {
     position: absolute;
     display: block;
     top: 0;
+    flex-direction: column;
   }
   body .et2_nextmatch .nextmatch_header_row div.filtersContainer,
   body .et2_nextmatch .nextmatch_header div.filtersContainer {
     width: 100%;
-    margin-top: 37px;
+    margin-top: 50px;
+    flex-direction: column;
   }
   body .et2_nextmatch .nextmatch_header_row select,
   body .et2_nextmatch .nextmatch_header select {
@@ -8833,8 +8836,8 @@ table.egwGridView_grid img.et2_appicon {
     height: 50px;
   }
   body .et2_nextmatch .header_row_right * {
-    display: inline-block;
     float: left;
+    max-width: 100% !important;
   }
   body .et2_nextmatch .header_row_right .et2_dropdown button {
     height: 50px;

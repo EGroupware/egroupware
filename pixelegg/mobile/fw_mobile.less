@@ -658,14 +658,17 @@
 			}
 			.nextmatch_header_row, .nextmatch_header
 			{
+				flex-direction: column;
 				div.header_row_right {
 					position: absolute;
 					display: block;
 					top:0;
+					flex-direction: column;
 				}
 				div.filtersContainer {
 					width:100%;
-					margin-top:37px;
+					margin-top:50px;
+					flex-direction: column;
 				}
 				background-color: background-color-egw-dark;
 
@@ -999,8 +1002,8 @@
 				width: 100%;
 				padding:0;
 				* {
-					display:inline-block;
 					float:left;
+					max-width: 100% !important;
 				}
 				.et2_dropdown {
 					button {

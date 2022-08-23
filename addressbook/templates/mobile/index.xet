@@ -29,9 +29,7 @@
 						</vbox>
 					</vbox>
 					<vbox class="addressbookCol3">
-						<hbox class="avatar">
-							<image src="${row}[photo]" height="auto" />
-						</hbox>
+						<lavatar src="$row_cont[photo]" contact_id="$row_cont[id]" lname="$row_cont[n_family]" fname="$row_cont[n_given]"/>
 					</vbox>
 				</row>
 			</rows>
