@@ -38,21 +38,24 @@
                         <hbox width="100%" class="mailPreviewHeaders">
                             <lavatar src="@avatar" lname="@address" shape="rounded" size="2.75em"/>
                             <vbox>
-                                <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                                    <et2-select-email slot="summary" id="fromaddress" readonly="true"/>
-                                    <hbox>
-                                        <description value="From" class="firstColumnTitle"/>
-                                        <et2-select-email id="additionalfromaddress" readonly="true"></et2-select-email>
-                                    </hbox>
-                                    <hbox disabled="!@toaddress" width="100%">
-                                        <description value="To" class="firstColumnTitle"/>
-                                        <et2-select-email id="additionaltoaddress" readonly="true"></et2-select-email>
-                                    </hbox>
-                                    <hbox disabled="!@ccaddress"  width="100%">
-                                        <description value="Cc" class="firstColumnTitle"/>
-                                        <et2-select-email id="ccaddress" readonly="true"></et2-select-email>
-                                    </hbox>
-                                </et2-details>
+                                <hbox>
+                                    <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
+                                        <et2-select-email slot="summary" id="fromaddress" readonly="true"/>
+                                        <hbox>
+                                            <description value="From" class="firstColumnTitle"/>
+                                            <et2-select-email id="additionalfromaddress" readonly="true"></et2-select-email>
+                                        </hbox>
+                                        <hbox disabled="!@toaddress" width="100%">
+                                            <description value="To" class="firstColumnTitle"/>
+                                            <et2-select-email id="additionaltoaddress" readonly="true"></et2-select-email>
+                                        </hbox>
+                                        <hbox disabled="!@ccaddress"  width="100%">
+                                            <description value="Cc" class="firstColumnTitle"/>
+                                            <et2-select-email id="ccaddress" readonly="true"></et2-select-email>
+                                        </hbox>
+                                    </et2-details>
+                                    <date-time-today align="right" id="date" readonly="true"/>
+                                </hbox>
                                 <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" hoist="true" class="attachments" disabled="!@attachmentsBlock">
                                     <hbox slot="summary">
                                         <grid class="previewAttachmentArea egwGridView_grid" >
@@ -102,7 +105,7 @@
                                     </grid>
                                 </et2-details>
                             </vbox>
-                            <date-time-today align="right" id="date" readonly="true"/>
+
                         </hbox>
 
                         <box id="mailPreviewContainer">

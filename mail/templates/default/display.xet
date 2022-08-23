@@ -22,29 +22,32 @@
 			<hbox width="100%" class="mailPreviewHeaders">
 				<lavatar src="@avatar" lname="@address" shape="rounded"/>
 				<vbox class="previewWrapper">
-					<et2-details class="details" title="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                        <et2-select-email slot="summary" value="@from" readonly="true"/>
-                        <hbox  disabled="!@from">
-                            <description value="From" class="firstColumnTitle"/>
-                            <et2-select-email id="from" readonly="true"></et2-select-email>
-                        </hbox>
-                        <hbox disabled="!@sender">
-                            <description value="Sender" class="firstColumnTitle"/>
-                            <et2-select-email id="sender" readonly="true"></et2-select-email>
-                        </hbox>
-                        <hbox disabled="!@to">
-                            <description value="To" class="firstColumnTitle"/>
-                            <et2-select-email id="to" readonly="true"></et2-select-email>
-                        </hbox>
-                        <hbox disabled="!@cc">
-                            <description value="Cc" class="firstColumnTitle"/>
-                            <et2-select-email id="cc" readonly="true"></et2-select-email>
-                        </hbox>
-                        <hbox disabled="!@bcc">
-                            <description value="Bcc" class="firstColumnTitle"/>
-                            <et2-select-email id="bcc" readonly="true"></et2-select-email>
-                        </hbox>
-					</et2-details>
+					<hbox>
+                        <et2-details class="details" title="details" toggleOnHover="true" hoist="true" toggleAlign="left">
+                            <et2-select-email slot="summary" value="@from" readonly="true"/>
+                            <hbox  disabled="!@from">
+                                <description value="From" class="firstColumnTitle"/>
+                                <et2-select-email id="from" readonly="true"></et2-select-email>
+                            </hbox>
+                            <hbox disabled="!@sender">
+                                <description value="Sender" class="firstColumnTitle"/>
+                                <et2-select-email id="sender" readonly="true"></et2-select-email>
+                            </hbox>
+                            <hbox disabled="!@to">
+                                <description value="To" class="firstColumnTitle"/>
+                                <et2-select-email id="to" readonly="true"></et2-select-email>
+                            </hbox>
+                            <hbox disabled="!@cc">
+                                <description value="Cc" class="firstColumnTitle"/>
+                                <et2-select-email id="cc" readonly="true"></et2-select-email>
+                            </hbox>
+                            <hbox disabled="!@bcc">
+                                <description value="Bcc" class="firstColumnTitle"/>
+                                <et2-select-email id="bcc" readonly="true"></et2-select-email>
+                            </hbox>
+                        </et2-details>
+                        <date-time-today align="right" id="mail_displaydate" readonly="true"/>
+                    </hbox>
                     <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@mail_displayattachments">
                         <hbox slot="summary">
                             <grid class="previewAttachmentArea egwGridView_grid" >
@@ -94,7 +97,6 @@
                         </grid>
                     </et2-details>
 				</vbox>
-				<date-time-today align="right" id="mail_displaydate" readonly="true"/>
 			</hbox>
 
 			<box class="mailDisplayContainer">
