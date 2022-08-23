@@ -93,6 +93,7 @@
 ::part(form-control-input) {
     flex: 1 1 auto;
     position: relative;
+    max-width: 100%;
 }
 
 ::part(form-control-help-text) {
@@ -2217,9 +2218,9 @@ lion-validation-feedback[type] {
     width: 12em;
 }
 
-.nextmatch_header_row > div > et2-select, .nextmatch_header_row > div > et2-select-cat {
-    max-width: 14%;
-    min-width: fit-content;
+.nextmatch_header_row > .filtersContainer > et2-select, .nextmatch_header_row > .filtersContainer > et2-select-cat {
+    /* Make all filters the same size.  Otherwise they'll flex for different sized values */
+    max-width: 33%;
 }
 
 .nextmatch_header_row > .header_row_right {
