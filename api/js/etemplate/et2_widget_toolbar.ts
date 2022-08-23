@@ -635,7 +635,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		}
 		else
 		{
-			widget = <Et2Button>loadWebComponent("et2-button", {
+			widget = <Et2Button>loadWebComponent(egwIsMobile() && !this.preference[action.id]?"et2-button-icon":"et2-button", {
 				id: `${this.id}-${action.id}`,
 				image: action.iconUrl || '',
 				slot: "buttons",
