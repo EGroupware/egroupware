@@ -141,20 +141,6 @@ span#admin-mailaccount_acc_id {
     padding-left: 5px;
 }
 
-#admin-mailaccount_button\[multiple\] {
-    height: auto;
-    padding-left: 5px;
-    margin: 2px;
-    width: 16px;
-    vertical-align: top;
-}
-
-#admin-mailaccount_button\[placeholders\] {
-    height: 16px;
-    padding-left: 5px;
-    align-self: center;
-}
-
 /**
  * new et2 site configuration
  */
