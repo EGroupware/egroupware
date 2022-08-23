@@ -326,7 +326,7 @@ function send_template()
 			}
 			// replace not set background_image attribute with et2-button-icon tag, if not in NM / lists
 			if (!empty($attrs['image']) && (empty($attrs['background_image']) || $attrs['background_image'] === 'false') &&
-				!preg_match('/^(index|list)/', $name))
+				empty($attrs['label']) && !preg_match('/^(index|list)/', $name))
 			{
 				$tag = 'et2-button-icon';
 			}
