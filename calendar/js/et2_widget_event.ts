@@ -1349,10 +1349,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 							label: egw.lang("Edit exception"),
 							id: "exception",
 							class: "ui-priority-primary",
-							"default": true
+							default: true,
+							image: 'edit'
 						},
-						{label: egw.lang("Edit series"), id: "series"},
-						{label: egw.lang("Cancel"), id: "cancel"}
+						{label: egw.lang("Edit series"), id: "series", image: 'recur'},
+						{label: egw.lang("Cancel"), id: "cancel", image: 'cancel'}
 					];
 					Et2Dialog.show_dialog(
 						function(button_id)

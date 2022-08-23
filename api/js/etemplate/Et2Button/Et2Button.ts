@@ -18,6 +18,14 @@ import {PropertyValues} from "@lion/core";
 
 export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 {
+	static get properties()
+	{
+		return {
+			...super.properties,
+			label: {type: String}
+		}
+	}
+
 	protected firstUpdated(_changedProperties : PropertyValues)
 	{
 		super.firstUpdated(_changedProperties);
