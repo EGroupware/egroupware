@@ -104,6 +104,10 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 		this.extraTabs = [];
 		this.addTabs = false;
+		if (egwIsMobile())
+		{
+			this.placement = 'end';
+		}
 	}
 
 	get value()
