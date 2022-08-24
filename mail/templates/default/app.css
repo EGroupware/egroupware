@@ -922,16 +922,17 @@ and (orientation : landscape) {
 #mail-compose_bcc_expander,
 #mail-compose_folder_expander,
 #mail-compose_replyto_expander {
-	float: left;
 	width: 100%;
-	margin: 3px;
-	margin-right: 12px;
-	text-align: center;
+	margin: 0px;
+	margin-left: 1em;
+	text-align: left;
 	padding: 0;
+	cursor: pointer;
 	border:	none;
 	color: rgb(38, 83, 124);
 	background-color: transparent;
 }
+#mail-compose_mimeType{margin-left:1em;}
 /*Make file uploads in compose dialog invisible*/
 .mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_selectFromVFSForCompose, .mail-compose_toolbar_assist {
 	display:none;
