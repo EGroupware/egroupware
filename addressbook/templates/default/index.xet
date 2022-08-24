@@ -62,7 +62,7 @@
 					<nextmatch-header label="Birthday" id="bday"/>
 					<vbox>
 						<nextmatch-header label="Business address" id="business"/>
-						<nextmatch-customfilter id="adr_one_countrycode" options="select-country" type="select-country" width="100px" tags="true" empty_label="Country" class="countrySelect"/>
+						<nextmatch-customfilter id="adr_one_countrycode" options="select-country" type="select-country" tags="true" empty_label="Country" class="countrySelect"/>
 						<nextmatch-sortheader label="zip code" id="adr_one_postalcode"/>
 					</vbox>
 					<vbox>
@@ -177,7 +177,7 @@
 	</template>
 	<template id="addressbook.index.row" template="" lang="" group="0" version="1.3.001">
 		<buttononly align="right" statustext="Advanced search" image="advanced-search" background_image="1" id="advanced-search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"/>
-		<select statustext="Select a view" id="grouped_view" no_lang="1" rows="1" empty_label="All contacts" onchange="app.addressbook.change_grouped_view"/>
+		<select statustext="Select a view" id="grouped_view" no_lang="1" width="12em" empty_label="All contacts" onchange="app.addressbook.change_grouped_view"/>
 	</template>
 	<template id="addressbook.index.right" template="" lang="" group="0" version="1.7.001">
 		<select align="right" id="col_filter[tid]" empty_label="All types"/>
