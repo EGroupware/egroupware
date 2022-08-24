@@ -309,13 +309,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					}
 				}
 				// Create widget
-
 				if(window.customElements.get('et2-' + type))
 				{
 					if (typeof attrs.needed !== 'undefined')
 					{
 						attrs.required = attrs.needed;
 						delete attrs.needed;
+					}
+					if (typeof attrs.size !== 'undefined' && ['small', 'medium', 'large'].indexOf(attrs.size) === -1)
+					{
+						if (attrs.size > 0) attrs.width = attrs.size+'em';
+						delete attrs.size;
 					}
 					//this.widgets[field_name] = loadWebComponent('et2-' + type, attrs, null);
 					// et2_extension_customfields.getDOMNode() needs webcomponent to have ID before it can put it in
