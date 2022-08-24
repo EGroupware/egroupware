@@ -1460,7 +1460,6 @@ class AddressbookApp extends EgwApp
 		// defined in addressbook_hooks::config
 		var default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
 		var geo_url = egw.config('geolocation_url');
-		if (geo_url) geo_url = geo_url[0];
 		return geo_url || default_url;
 	}
 
