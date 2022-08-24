@@ -48,7 +48,7 @@
 @media (prefers-color-scheme: dark) {
   html[data-darkmode='2'] {
     background: #000;
-    filter: invert(1) hue-rotate(180deg) brightness(0.7);
+    filter: invert(1) hue-rotate(180deg) brightness(1);
   }
   html[data-darkmode='2'] #loginMainDiv {
     filter: invert(1) hue-rotate(180deg) !important;
@@ -63,8 +63,13 @@
 @media all {
   html[data-darkmode='1'] {
     background: #000;
-    filter: invert(1) hue-rotate(180deg) brightness(0.7);
+    filter: invert(1) hue-rotate(180deg) brightness(1);
   }
+  html[data-darkmode='1'] sl-menu-item::part(prefix),
+  html[data-darkmode='1'] et2-select-country::part(prefix),
+  html[data-darkmode='1'] et2-email-tag::part(prefix),
+  html[data-darkmode='1'] et2-button::part(prefix),
+  html[data-darkmode='1'] *::part(image),
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
@@ -75,6 +80,9 @@
   html[data-darkmode='1'] #loginMainDiv,
   html[data-darkmode='1'] .et2_taglist_tags_icon {
     filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] .dtree img {
+    filter: invert(0) hue-rotate(180deg) !important;
   }
   html[data-darkmode='1'] #blueimp-gallery video,
   html[data-darkmode='1'] #blueimp-gallery .video-content {

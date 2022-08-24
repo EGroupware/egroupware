@@ -40,6 +40,7 @@
     background: #000;
     filter: invert(1) hue-rotate(180deg) brightness(0.7);
   }
+  html[data-darkmode='1'] *::part(image),
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
