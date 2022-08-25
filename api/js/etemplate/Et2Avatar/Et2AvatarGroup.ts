@@ -82,7 +82,7 @@ export class Et2AvatarGroup extends Et2Widget(LitElement)
                     .contactId="${contact.id}"
                     .label="${contact.label}"
                     .title="${contact.label}"
-                    ${this.shape ? html`.shape="${this.shape}"` : ''}
+                    shape="circle"
                     size=""
             ></et2-avatar>`;
 	}
