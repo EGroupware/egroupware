@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="nm_print_dialog" template="" lang="" group="0" version="22.1">
+        <vbox>
+            <et2-textbox id="name" label="Name" class="et2-label-fixed"/>
+            <et2-select-account id="group" label="Groups" account_type="groups" class="et2-label-fixed"/>
+            <et2-details summary="Details">
+                <grid id="current_filters">
+                    <columns>
+                        <column/>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <et2-description id="${row}[label]"/>
+                            <et2-description id="${row}[value]"/>
+                        </row>
+                    </rows>
+                </grid>
+            </et2-details>
+        </vbox>
+    </template>
+</overlay>

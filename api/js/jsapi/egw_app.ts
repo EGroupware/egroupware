@@ -19,7 +19,6 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
-import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 
 /**
@@ -892,65 +891,11 @@ export abstract class EgwApp
 	 */
 	add_favorite(state)
 	{
-		if(typeof this.favorite_popup == "undefined" || // Create popup if it's not defined yet
-			(this.favorite_popup && typeof this.favorite_popup.group != "undefined"
-				&& !this.favorite_popup.group.isAttached())) // recreate the favorite popup if the group selectbox is not attached (eg. after et2 submit)
-		{
-			this._create_favorite_popup();
-		}
 		// Get current state
-		this.favorite_popup.state = jQuery.extend({}, this.getState(), state || {});
-		/*
-				// Add in extras
-				for(var extra in this.options.filters)
-				{
-					// Don't overwrite what nm has, chances are nm has more up-to-date value
-					if(typeof this.popup.current_filters == 'undefined')
-					{
-						this.popup.current_filters[extra] = this.nextmatch.options.settings[extra];
-					}
-				}
-
-				// Add in application's settings
-				if(this.filters != true)
-				{
-					for(var i = 0; i < this.filters.length; i++)
-					{
-						this.popup.current_filters[this.options.filters[i]] = this.nextmatch.options.settings[this.options.filters[i]];
-					}
-				}
-		*/
 		// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
-		this.favorite_popup.state = jQuery.extend(true, {}, this.favorite_popup.state);
+		state = jQuery.extend(true, {}, this.getState(), state || {});
 
-		// Update popup with current set filters (more for debug than user)
-		var filter_list = [];
-		var add_to_popup = function(arr)
-		{
-			filter_list.push("<ul>");
-			jQuery.each(arr, function(index, filter)
-			{
-				filter_list.push("<li id='index'><span class='filter_id'>" + index.toString() + "</span>" +
-					(typeof filter != "object" ? "<span class='filter_value'>" + filter + "</span>" : "")
-				);
-				if(typeof filter == "object" && filter != null) add_to_popup(filter);
-				filter_list.push("</li>");
-			});
-			filter_list.push("</ul>");
-		};
-		add_to_popup(this.favorite_popup.state);
-		jQuery("#" + this.appname + "_favorites_popup_state", this.favorite_popup)
-			.replaceWith(
-				jQuery(filter_list.join("")).attr("id", this.appname + "_favorites_popup_state")
-			);
-		jQuery("#" + this.appname + "_favorites_popup_state", this.favorite_popup)
-			.hide()
-			.siblings(".ui-icon-circle-plus")
-			.removeClass("ui-icon-circle-minus");
-
-		// Popup
-		this.favorite_popup.dialog("open");
-		console.log(this);
+		this._create_favorite_popup(state);
 
 		// Stop the normal bubbling if this is called on click
 		return false;
@@ -985,10 +930,9 @@ export abstract class EgwApp
 	/**
 	 * Create the "Add new" popup dialog
 	 */
-	_create_favorite_popup()
+	_create_favorite_popup(state)
 	{
-		var self = this;
-		var favorite_prefix = 'favorite_';
+		const favorite_prefix = 'favorite_';
 
 		// Clear old, if existing
 		if(this.favorite_popup && this.favorite_popup.group)
@@ -997,154 +941,118 @@ export abstract class EgwApp
 			delete this.favorite_popup;
 		}
 
-		// Create popup
-		this.favorite_popup = jQuery('<div id="' + this.dom_id + '_nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
-			<form>\
-			<label for="name">' +
-			this.egw.lang("name") +
-			'</label>' +
-
-			'<input type="text" name="name" id="name"/>\
-			<div id="' + this.appname + '_favorites_popup_admin"/>\
-			<span>' + this.egw.lang("Details") + '</span><span style="float:left;" class="ui-icon ui-icon-circle-plus ui-button" />\
-			<ul id="' + this.appname + '_favorites_popup_state"/>\
-			</form>\
-			</div>'
-		).appendTo(this.et2 ? this.et2.getDOMNode() : jQuery('body'));
-
-		// @ts-ignore
-		jQuery(".ui-icon-circle-plus", this.favorite_popup).prev().andSelf().click(function()
-		{
-			var details = jQuery("#" + self.appname + "_favorites_popup_state", self.favorite_popup)
-				.slideToggle()
-				.siblings(".ui-icon-circle-plus")
-				.toggleClass("ui-icon-circle-minus");
-		});
-
 		// Add some controls if user is an admin
-		var apps = egw().user('apps');
-		var is_admin = (typeof apps['admin'] != "undefined");
-		if(is_admin)
+		const apps = this.egw.user('apps');
+		const is_admin = (typeof apps['admin'] != "undefined");
+
+		// Setup data
+		let data = {
+			content: {
+				state: state || [],
+				current_filters: []
+			},
+			readonlys: {
+				group: !is_admin
+			}
+		};
+
+
+		// Show current set filters (more for debug than user)
+		let filter_list = [];
+		let add_to_popup = function(arr, inset = "")
 		{
-			this.favorite_popup.group = et2_createWidget("select-account", {
-				id: "favorite[group]",
-				account_type: "groups",
-				empty_label: "Groups",
-				no_lang: true,
-				parent_node: this.appname + '_favorites_popup_admin'
-			}, (this.et2 || null));
-			this.favorite_popup.group.loadingFinished();
-		}
-
-		var buttons = {};
-		buttons['save'] = {
-			text: this.egw.lang('save'),
-			default: true,
-			style: 'background-image: url(' + this.egw.image('save') + ')',
-			click: function()
+			jQuery.each(arr, function(index, filter)
 			{
-				// Add a new favorite
-				var name = jQuery("#name", this);
-
-				if(name.val())
+				filter_list.push({
+					label: inset + index.toString(),
+					value: (typeof filter != "object" ? "" + filter : "")
+				});
+				if(typeof filter == "object" && filter != null)
 				{
-					// Add to the list
-					name.val((<string>name.val()).replace(/(<([^>]+)>)/ig, ""));
-					var safe_name = (<string>name.val()).replace(/[^A-Za-z0-9-_]/g, "_");
-					var favorite = {
-						name: name.val(),
-						group: (typeof self.favorite_popup.group != "undefined" &&
-								self.favorite_popup.group.get_value() ? self.favorite_popup.group.get_value() : false),
-						state: self.favorite_popup.state
-					};
-
-					var favorite_pref = favorite_prefix + safe_name;
-
-					// Save to preferences
-					if(typeof self.favorite_popup.group != "undefined" && self.favorite_popup.group.getValue() != '')
-					{
-						// Admin stuff - save preference server side
-						self.egw.jsonq('EGroupware\\Api\\Framework::ajax_set_favorite',
-							[
-								self.appname,
-								name.val(),
-								"add",
-								self.favorite_popup.group.get_value(),
-								self.favorite_popup.state
-							]
-						);
-						self.favorite_popup.group.set_value('');
-					}
-					else
-					{
-						// Normal user - just save to preferences client side
-						self.egw.set_preference(self.appname, favorite_pref, favorite);
-					}
-
-					// Add to list immediately
-					if(self.sidebox)
-					{
-						// Remove any existing with that name
-						jQuery('[data-id="' + safe_name + '"]', self.sidebox).remove();
-
-						// Create new item
-						var html = "<li data-id='" + safe_name + "' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
-						var href = 'javascript:app.' + self.appname + '.setState(' + JSON.stringify(favorite) + ');';
-						html += "<a href='" + href + "' class='ui-corner-all' tabindex='-1'>";
-						html += "<div class='" + 'sideboxstar' + "'></div>" +
-							favorite.name;
-						html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
-						html += "</a></li>\n";
-						jQuery(html).insertBefore(jQuery('li', self.sidebox).last());
-						self._init_sidebox(self.sidebox);
-					}
-
-					// Try to update nextmatch favorites too
-					self._refresh_fav_nm();
+					add_to_popup(filter, inset + "    ");
 				}
-				// Reset form
-				delete self.favorite_popup.state;
-				name.val("");
-				jQuery("#filters", self.favorite_popup).empty();
-
-				jQuery(this).dialog("close");
-			}
+			});
 		};
-		buttons['cancel'] = {
-			text: this.egw.lang("cancel"),
-			style: 'background-image: url(' + this.egw.image('cancel') + ')',
-			click: function()
+		add_to_popup(data.content.state);
+		data.content.current_filters = filter_list;
+
+		let save_callback = (button, value) =>
+		{
+			if(button !== Et2Dialog.OK_BUTTON)
 			{
-				if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
-				{
-					self.favorite_popup.group.set_value(null);
-				}
-				jQuery(this).dialog("close");
+				return;
 			}
+
+			if(value.name)
+			{
+				// Add to the list
+				value.name = (<string>value.name).replace(/(<([^>]+)>)/ig, "");
+				let safe_name = (<string>value.name).replace(/[^A-Za-z0-9-_]/g, "_");
+				let favorite = {
+					name: value.name,
+					group: value.group || false,
+					state: data.content.state
+				};
+
+				let favorite_pref = favorite_prefix + safe_name;
+
+				// Save to preferences
+				if(typeof value.group != "undefined" && value.group != '')
+				{
+					// Admin stuff - save preference server side
+					this.egw.jsonq('EGroupware\\Api\\Framework::ajax_set_favorite',
+						[
+							this.appname,
+							value.name,
+							"add",
+							value.group,
+							data.content.state
+						]
+					);
+				}
+				else
+				{
+					// Normal user - just save to preferences client side
+					this.egw.set_preference(this.appname, favorite_pref, favorite);
+				}
+
+				// Add to list immediately
+				if(this.sidebox)
+				{
+					// Remove any existing with that name
+					jQuery('[data-id="' + safe_name + '"]', this.sidebox).remove();
+
+					// Create new item
+					var html = "<li data-id='" + safe_name + "' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
+					var href = 'javascript:app.' + this.appname + '.setState(' + JSON.stringify(favorite) + ');';
+					html += "<a href='" + href + "' class='ui-corner-all' tabindex='-1'>";
+					html += "<div class='" + 'sideboxstar' + "'></div>" +
+						favorite.name;
+					html += "<div class='ui-icon ui-icon-trash' title='" + this.egw.lang('Delete') + "'/>";
+					html += "</a></li>\n";
+					jQuery(html).insertBefore(jQuery('li', this.sidebox).last());
+					this._init_sidebox(this.sidebox);
+				}
+
+				// Try to update nextmatch favorites too
+				this._refresh_fav_nm();
+			}
+
+			jQuery(this).dialog("close");
 		};
 
-		this.favorite_popup.dialog({
-			autoOpen: false,
-			modal: true,
-			buttons: buttons,
-			close: function()
-			{
-			}
+
+		// Create popup
+		this.favorite_popup = new Et2Dialog(this.egw);
+		this.favorite_popup.transformAttributes({
+			callback: save_callback,
+			title: this.egw.lang("New favorite"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			width: 400,
+			value: data,
+			template: this.egw.webserverUrl + '/api/templates/default/add_favorite.xet'
 		});
-
-		// Bind handler for enter keypress
-		this.favorite_popup.off('keydown').on('keydown', function(e)
-		{
-			var tagName = e.target.tagName.toLowerCase();
-			tagName = (tagName === 'input' && e.target.type === 'button') ? 'button' : tagName;
-
-			if(e.keyCode == EGW_KEY_ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !== 'button')
-			{
-				e.preventDefault();
-				jQuery('button[default]', this.favorite_popup.parent()).trigger('click');
-				return false;
-			}
-		}.bind(this));
+		document.body.appendChild(this.favorite_popup);
 
 		return false;
 	}
