@@ -575,17 +575,25 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					});
 				}
 			}
+			else if(!this.multiple && this.searchEnabled)
+			{
+				// Stop all the search stuff when they select an option
+				// this shows all non-matching options again
+				this._handleSearchAbort(event);
+			}
 		}
 
 		/**
 		 * Value was cleared
 		 */
-		_handleClear()
+		_handleClear(e)
 		{
 			this._selected_remote = [];
 
 			if(!this.multiple && this.searchEnabled)
 			{
+				this._handleSearchAbort(e);
+
 				// Restore label styling
 				this.shadowRoot.querySelector("[part='display-label']").style.display = "";
 
