@@ -101,5 +101,35 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 			// widget returns what we gave it
 			assert.equal(element.get_value(), test_value);
 		});
-	})
+	});
+
+	describe("Required", () =>
+	{
+		beforeEach(async() =>
+		{
+			element = await before();
+		});
+
+		// This is just visually comparing for a difference, no deep inspection
+		it("looks different when required")
+
+		/*
+		Not yet working attempt to have playwright compare visually
+		I haven't figured out how to get it to actually work
+
+		const pre = await page.locator(element.localName).screenshot();
+
+		element.required = true;
+
+		// wait for asychronous changes to the DOM
+		await elementUpdated(<Element><unknown>element);
+
+
+		const post = await page.locator(element.localName).screenshot();
+
+		expect(post).toMatchSnapshot(pre);
+
+		 */
+
+	});
 }
