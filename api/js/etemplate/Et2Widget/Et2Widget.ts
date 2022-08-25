@@ -1438,8 +1438,12 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				break;
 			case Object:
 			case Array:
-				// Leave it alone...
-				break;
+				// Leave it alone if it's not a string
+				if(typeof attrValue !== "string")
+				{
+					break;
+				}
+			// fall through to look in content
 			default:
 				attrValue = mgr ? mgr.expandName("" + attrValue) : attrValue;
 				if(attrValue && typeof attrValue == "string" && widget_class.translate[attribute])
