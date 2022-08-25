@@ -32,8 +32,8 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
-
-		Framework::includeCSS('calendar','calendar');
+		Framework::includeJS('/calendar/js/app.min.js');
+		Framework::includeCSS('calendar', 'calendar');
 
 		$bo = new calendar_bo();
 
@@ -41,7 +41,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 
 		$value =& self::get_array(self::$request->content, $form_name);
 
-		if (!is_array(self::$request->sel_options[$form_name]))
+		if(!is_array(self::$request->sel_options[$form_name]))
 		{
 			self::$request->sel_options[$form_name] = array();
 		}
@@ -343,4 +343,4 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	}
 }
 
-Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\calendar_owner_etemplate_widget', array('calendar-owner'));
+Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\calendar_owner_etemplate_widget', array('et2-calendar-owner'));

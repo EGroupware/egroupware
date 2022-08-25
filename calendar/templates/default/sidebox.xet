@@ -36,10 +36,10 @@ return false;"/>
             <select id="status_filter" no_lang="true" class="et2_fullWidth"
                     onchange="app.calendar.update_state({status_filter: widget.getValue()});"/>
             <hrule/>
-            <calendar-owner id="owner" class="et2_fullWidth"
-                            onchange="app.calendar.update_state({owner: widget.getValue()}); return false;"
-                            multiple="true" allowFreeEntries="false"
-                            autocomplete_params="{&quot;checkgrants&quot;: true}"/>
+            <et2-calendar-owner id="owner" class="et2_fullWidth"
+                                onchange="app.calendar.update_state({owner: widget.getValue()}); return false;"
+                                multiple="true" allowFreeEntries="false"
+                                autocomplete_params="{&quot;checkgrants&quot;: true}"/>
             <hrule/>
             <select id="merge" empty_label="Insert in document" onchange="app.calendar.sidebox_merge"
                     class="et2_fullWidth"/>
