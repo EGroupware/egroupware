@@ -70,14 +70,7 @@ class Date extends Transformer
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, false, true);
 
-		if($this->type == 'et2-date-range')
-		{
-			$value = $this->attrs['relative'] || $this->getElementAttribute($form_name, 'relative') ?
-				$value :
-				['from' => is_array($value) && array_key_exists('from', $value) ? $this->format_date($value['from']) : '',
-				 'to'   => is_array($value) && array_key_exists('from', $value) ? $this->format_date($value['to']) : ''];
-		}
-		elseif($this->type != 'date-duration' && $value)
+		if($this->type != 'date-duration' && $value)
 		{
 			$value = $this->format_date($value);
 		}
@@ -172,10 +165,6 @@ class Date extends Transformer
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
-			if($value && $this->type == 'et2-date-range')
-			{
-				return $this->validateRange($form_name, $value, $valid);
-			}
 			if($value && $this->type !== 'date-duration')
 			{
 				try
@@ -293,29 +282,8 @@ class Date extends Transformer
 			//error_log("$this : ($valid)" . Api\DateTime::to($valid));
 		}
 	}
-
-	protected function validateRange($form_name, $value, &$valid)
-	{
-		if($this->attrs['relative'] || $this->getElementAttribute($form_name, "relative"))
-		{
-			$valid = "" . $value;
-			return;
-		}
-		foreach(['from', 'to'] as $field)
-		{
-			if(!$value[$field])
-			{
-				continue;
-			}
-			if(substr($value[$field], -1) === 'Z')
-			{
-				$value[$field] = substr($value[$field], 0, -1);
-			}
-			$valid[$field] = new Api\DateTime($value[$field]);
-		}
-	}
 }
 
 \EGroupware\Api\Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Date',
-												 array('et2-date', 'et2-date-time', 'et2-date-range', 'time_or_date')
+												 array('et2-date', 'et2-date-time', 'time_or_date')
 );

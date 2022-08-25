@@ -390,7 +390,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 * @see https://flatpickr.js.org/options/
 	 * @returns {any}
 	 */
-	getOptions()
+	protected getOptions()
 	{
 		let options = super.getOptions();
 
