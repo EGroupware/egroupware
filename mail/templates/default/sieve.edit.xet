@@ -128,7 +128,7 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="350">
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="300">
 						<tabs>
 							<tab id="condition" label="Condition"/>
 							<tab id="action" label="Action"/>
