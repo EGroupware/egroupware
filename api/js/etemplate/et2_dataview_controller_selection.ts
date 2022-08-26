@@ -697,10 +697,13 @@ export class et2_dataview_selectionManager
 			width: 300
 		});
 		(this._context._widget.getDOMNode() || document.body).appendChild(dialog);
-		dialog.addEventListener('load', function()
+		dialog.updateComplete.then(() =>
 		{
-			// Get access to template widgets
-			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+			dialog.template.DOMContainer.addEventListener('load', function()
+			{
+				// Get access to template widgets
+				progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+			});
 		});
 
 		for(var i = 0; i < queryRanges.length; i++)
