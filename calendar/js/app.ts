@@ -3961,7 +3961,7 @@ export class CalendarApp extends EgwApp
 						{
 							if (!month_before_day)
 							{
-								range += egw.lang(flatpickr.formatDate(first_format, "F"));
+								range += " " + egw.lang(flatpickr.formatDate(first_format, "F"));
 							}
 							if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
 							{
