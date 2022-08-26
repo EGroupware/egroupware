@@ -1,7 +1,7 @@
-et2-select-country sl-menu-item::part(prefix), et2-select-country::part(prefix) {
+et2-select-country sl-menu-item::part(prefix), et2-select-country .flag {
     position: relative;
     background-image: url(../images/flags.png);
-    background-position: 0 100px;   /* to NOT display a flag for every value not explict defined below */
+    background-position: 0 100px; /* to NOT display a flag for every value not explict defined below */
     background-repeat: no-repeat;
     text-indent: 15px;
     height: 10px;
@@ -9,1317 +9,1313 @@ et2-select-country sl-menu-item::part(prefix), et2-select-country::part(prefix) 
     margin-right: 10px;
 }
 
-et2-select-country::part(prefix) {
-    margin-right: 0px;
-    margin-left: 10px;
-}
-
-et2-select-country[value="BE"]::part(prefix), et2-select-country [value="BE"]::part(prefix) {
+/* First selector is for the current value, second for the option */
+et2-select-country[value="BE"] .flag, et2-select-country [value="BE"]::part(prefix) {
     width: 18px
 }
 
-et2-select-country[value="CH"]::part(prefix), et2-select-country [value="CH"]::part(prefix) {
+et2-select-country[value="CH"] .flag, et2-select-country [value="CH"]::part(prefix) {
     width: 15px
 }
 
-et2-select-country[value="MC"]::part(prefix), et2-select-country [value="MC"]::part(prefix) {
+et2-select-country[value="MC"] .flag, et2-select-country [value="MC"]::part(prefix) {
     width: 19px
 }
 
-et2-select-country[value="NE"]::part(prefix), et2-select-country [value="NE"]::part(prefix) {
+et2-select-country[value="NE"] .flag, et2-select-country [value="NE"]::part(prefix) {
     width: 18px
 }
 
-et2-select-country[value="NP"]::part(prefix), et2-select-country [value="NP"]::part(prefix) {
+et2-select-country[value="NP"] .flag, et2-select-country [value="NP"]::part(prefix) {
     width: 13px
 }
 
-et2-select-country[value="VA"]::part(prefix), et2-select-country [value="VA"]::part(prefix) {
+et2-select-country[value="VA"] .flag, et2-select-country [value="VA"]::part(prefix) {
     width: 15px
 }
 
-et2-select-country[value="AC"]::part(prefix), et2-select-country [value="AC"]::part(prefix) {
+et2-select-country[value="AC"] .flag, et2-select-country [value="AC"]::part(prefix) {
     height: 10px;
     background-position: 0px 0px
 }
 
-et2-select-country[value="AD"]::part(prefix), et2-select-country [value="AD"]::part(prefix) {
+et2-select-country[value="AD"] .flag, et2-select-country [value="AD"]::part(prefix) {
     height: 14px;
     background-position: -22px 0px
 }
 
-et2-select-country[value="AE"]::part(prefix), et2-select-country [value="AE"]::part(prefix) {
+et2-select-country[value="AE"] .flag, et2-select-country [value="AE"]::part(prefix) {
     height: 10px;
     background-position: -44px 0px
 }
 
-et2-select-country[value="AF"]::part(prefix), et2-select-country [value="AF"]::part(prefix) {
+et2-select-country[value="AF"] .flag, et2-select-country [value="AF"]::part(prefix) {
     height: 14px;
     background-position: -66px 0px
 }
 
-et2-select-country[value="AG"]::part(prefix), et2-select-country [value="AG"]::part(prefix) {
+et2-select-country[value="AG"] .flag, et2-select-country [value="AG"]::part(prefix) {
     height: 14px;
     background-position: -88px 0px
 }
 
-et2-select-country[value="AI"]::part(prefix), et2-select-country [value="AI"]::part(prefix) {
+et2-select-country[value="AI"] .flag, et2-select-country [value="AI"]::part(prefix) {
     height: 10px;
     background-position: -110px 0px
 }
 
-et2-select-country[value="AL"]::part(prefix), et2-select-country [value="AL"]::part(prefix) {
+et2-select-country[value="AL"] .flag, et2-select-country [value="AL"]::part(prefix) {
     height: 15px;
     background-position: -132px 0px
 }
 
-et2-select-country[value="AM"]::part(prefix), et2-select-country [value="AM"]::part(prefix) {
+et2-select-country[value="AM"] .flag, et2-select-country [value="AM"]::part(prefix) {
     height: 10px;
     background-position: -154px 0px
 }
 
-et2-select-country[value="AO"]::part(prefix), et2-select-country [value="AO"]::part(prefix) {
+et2-select-country[value="AO"] .flag, et2-select-country [value="AO"]::part(prefix) {
     height: 14px;
     background-position: -176px 0px
 }
 
-et2-select-country[value="AQ"]::part(prefix), et2-select-country [value="AQ"]::part(prefix) {
+et2-select-country[value="AQ"] .flag, et2-select-country [value="AQ"]::part(prefix) {
     height: 14px;
     background-position: -198px 0px
 }
 
-et2-select-country[value="AR"]::part(prefix), et2-select-country [value="AR"]::part(prefix) {
+et2-select-country[value="AR"] .flag, et2-select-country [value="AR"]::part(prefix) {
     height: 13px;
     background-position: -220px 0px
 }
 
-et2-select-country[value="AS"]::part(prefix), et2-select-country [value="AS"]::part(prefix) {
+et2-select-country[value="AS"] .flag, et2-select-country [value="AS"]::part(prefix) {
     height: 10px;
     background-position: -242px 0px
 }
 
-et2-select-country[value="AT"]::part(prefix), et2-select-country [value="AT"]::part(prefix) {
+et2-select-country[value="AT"] .flag, et2-select-country [value="AT"]::part(prefix) {
     height: 14px;
     background-position: -264px 0px
 }
 
-et2-select-country[value="AU"]::part(prefix), et2-select-country [value="AU"]::part(prefix) {
+et2-select-country[value="AU"] .flag, et2-select-country [value="AU"]::part(prefix) {
     height: 10px;
     background-position: -286px 0px
 }
 
-et2-select-country[value="AW"]::part(prefix), et2-select-country [value="AW"]::part(prefix) {
+et2-select-country[value="AW"] .flag, et2-select-country [value="AW"]::part(prefix) {
     height: 14px;
     background-position: -308px 0px
 }
 
-et2-select-country[value="AX"]::part(prefix), et2-select-country [value="AX"]::part(prefix) {
+et2-select-country[value="AX"] .flag, et2-select-country [value="AX"]::part(prefix) {
     height: 13px;
     background-position: -330px 0px
 }
 
-et2-select-country[value="AZ"]::part(prefix), et2-select-country [value="AZ"]::part(prefix) {
+et2-select-country[value="AZ"] .flag, et2-select-country [value="AZ"]::part(prefix) {
     height: 10px;
     background-position: -352px 0px
 }
 
-et2-select-country[value="BA"]::part(prefix), et2-select-country [value="BA"]::part(prefix) {
+et2-select-country[value="BA"] .flag, et2-select-country [value="BA"]::part(prefix) {
     height: 10px;
     background-position: -374px 0px
 }
 
-et2-select-country[value="BB"]::part(prefix), et2-select-country [value="BB"]::part(prefix) {
+et2-select-country[value="BB"] .flag, et2-select-country [value="BB"]::part(prefix) {
     height: 14px;
     background-position: -396px 0px
 }
 
-et2-select-country[value="BD"]::part(prefix), et2-select-country [value="BD"]::part(prefix) {
+et2-select-country[value="BD"] .flag, et2-select-country [value="BD"]::part(prefix) {
     height: 12px;
     background-position: -418px 0px
 }
 
-et2-select-country[value="BE"]::part(prefix), et2-select-country [value="BE"]::part(prefix) {
+et2-select-country[value="BE"] .flag, et2-select-country [value="BE"]::part(prefix) {
     height: 15px;
     background-position: -440px 0px
 }
 
-et2-select-country[value="BF"]::part(prefix), et2-select-country [value="BF"]::part(prefix) {
+et2-select-country[value="BF"] .flag, et2-select-country [value="BF"]::part(prefix) {
     height: 14px;
     background-position: -460px 0px
 }
 
-et2-select-country[value="BG"]::part(prefix), et2-select-country [value="BG"]::part(prefix) {
+et2-select-country[value="BG"] .flag, et2-select-country [value="BG"]::part(prefix) {
     height: 12px;
     background-position: -482px 0px
 }
 
-et2-select-country[value="BH"]::part(prefix), et2-select-country [value="BH"]::part(prefix) {
+et2-select-country[value="BH"] .flag, et2-select-country [value="BH"]::part(prefix) {
     height: 12px;
     background-position: -504px 0px
 }
 
-et2-select-country[value="BI"]::part(prefix), et2-select-country [value="BI"]::part(prefix) {
+et2-select-country[value="BI"] .flag, et2-select-country [value="BI"]::part(prefix) {
     height: 12px;
     background-position: -526px 0px
 }
 
-et2-select-country[value="BJ"]::part(prefix), et2-select-country [value="BJ"]::part(prefix) {
+et2-select-country[value="BJ"] .flag, et2-select-country [value="BJ"]::part(prefix) {
     height: 14px;
     background-position: -548px 0px
 }
 
-et2-select-country[value="BL"]::part(prefix), et2-select-country [value="BL"]::part(prefix) {
+et2-select-country[value="BL"] .flag, et2-select-country [value="BL"]::part(prefix) {
     height: 14px;
     background-position: -570px 0px
 }
 
-et2-select-country[value="BM"]::part(prefix), et2-select-country [value="BM"]::part(prefix) {
+et2-select-country[value="BM"] .flag, et2-select-country [value="BM"]::part(prefix) {
     height: 10px;
     background-position: -592px 0px
 }
 
-et2-select-country[value="BN"]::part(prefix), et2-select-country [value="BN"]::part(prefix) {
+et2-select-country[value="BN"] .flag, et2-select-country [value="BN"]::part(prefix) {
     height: 10px;
     background-position: -614px 0px
 }
 
-et2-select-country[value="BO"]::part(prefix), et2-select-country [value="BO"]::part(prefix) {
+et2-select-country[value="BO"] .flag, et2-select-country [value="BO"]::part(prefix) {
     height: 14px;
     background-position: -636px 0px
 }
 
-et2-select-country[value="BQ"]::part(prefix), et2-select-country [value="BQ"]::part(prefix) {
+et2-select-country[value="BQ"] .flag, et2-select-country [value="BQ"]::part(prefix) {
     height: 14px;
     background-position: -658px 0px
 }
 
-et2-select-country[value="BR"]::part(prefix), et2-select-country [value="BR"]::part(prefix) {
+et2-select-country[value="BR"] .flag, et2-select-country [value="BR"]::part(prefix) {
     height: 14px;
     background-position: -680px 0px
 }
 
-et2-select-country[value="BS"]::part(prefix), et2-select-country [value="BS"]::part(prefix) {
+et2-select-country[value="BS"] .flag, et2-select-country [value="BS"]::part(prefix) {
     height: 10px;
     background-position: -702px 0px
 }
 
-et2-select-country[value="BT"]::part(prefix), et2-select-country [value="BT"]::part(prefix) {
+et2-select-country[value="BT"] .flag, et2-select-country [value="BT"]::part(prefix) {
     height: 14px;
     background-position: -724px 0px
 }
 
-et2-select-country[value="BV"]::part(prefix), et2-select-country [value="BV"]::part(prefix) {
+et2-select-country[value="BV"] .flag, et2-select-country [value="BV"]::part(prefix) {
     height: 15px;
     background-position: -746px 0px
 }
 
-et2-select-country[value="BW"]::part(prefix), et2-select-country [value="BW"]::part(prefix) {
+et2-select-country[value="BW"] .flag, et2-select-country [value="BW"]::part(prefix) {
     height: 14px;
     background-position: -768px 0px
 }
 
-et2-select-country[value="BY"]::part(prefix), et2-select-country [value="BY"]::part(prefix) {
+et2-select-country[value="BY"] .flag, et2-select-country [value="BY"]::part(prefix) {
     height: 10px;
     background-position: -790px 0px
 }
 
-et2-select-country[value="BZ"]::part(prefix), et2-select-country [value="BZ"]::part(prefix) {
+et2-select-country[value="BZ"] .flag, et2-select-country [value="BZ"]::part(prefix) {
     height: 14px;
     background-position: -812px 0px
 }
 
-et2-select-country[value="CA"]::part(prefix), et2-select-country [value="CA"]::part(prefix) {
+et2-select-country[value="CA"] .flag, et2-select-country [value="CA"]::part(prefix) {
     height: 10px;
     background-position: -834px 0px
 }
 
-et2-select-country[value="CC"]::part(prefix), et2-select-country [value="CC"]::part(prefix) {
+et2-select-country[value="CC"] .flag, et2-select-country [value="CC"]::part(prefix) {
     height: 10px;
     background-position: -856px 0px
 }
 
-et2-select-country[value="CD"]::part(prefix), et2-select-country [value="CD"]::part(prefix) {
+et2-select-country[value="CD"] .flag, et2-select-country [value="CD"]::part(prefix) {
     height: 15px;
     background-position: -878px 0px
 }
 
-et2-select-country[value="CF"]::part(prefix), et2-select-country [value="CF"]::part(prefix) {
+et2-select-country[value="CF"] .flag, et2-select-country [value="CF"]::part(prefix) {
     height: 14px;
     background-position: -900px 0px
 }
 
-et2-select-country[value="CG"]::part(prefix), et2-select-country [value="CG"]::part(prefix) {
+et2-select-country[value="CG"] .flag, et2-select-country [value="CG"]::part(prefix) {
     height: 14px;
     background-position: -922px 0px
 }
 
-et2-select-country[value="CH"]::part(prefix), et2-select-country [value="CH"]::part(prefix) {
+et2-select-country[value="CH"] .flag, et2-select-country [value="CH"]::part(prefix) {
     height: 15px;
     background-position: -944px 0px
 }
 
-et2-select-country[value="CI"]::part(prefix), et2-select-country [value="CI"]::part(prefix) {
+et2-select-country[value="CI"] .flag, et2-select-country [value="CI"]::part(prefix) {
     height: 14px;
     background-position: -961px 0px
 }
 
-et2-select-country[value="CK"]::part(prefix), et2-select-country [value="CK"]::part(prefix) {
+et2-select-country[value="CK"] .flag, et2-select-country [value="CK"]::part(prefix) {
     height: 10px;
     background-position: -983px 0px
 }
 
-et2-select-country[value="CL"]::part(prefix), et2-select-country [value="CL"]::part(prefix) {
+et2-select-country[value="CL"] .flag, et2-select-country [value="CL"]::part(prefix) {
     height: 14px;
     background-position: -1005px 0px
 }
 
-et2-select-country[value="CM"]::part(prefix), et2-select-country [value="CM"]::part(prefix) {
+et2-select-country[value="CM"] .flag, et2-select-country [value="CM"]::part(prefix) {
     height: 14px;
     background-position: -1027px 0px
 }
 
-et2-select-country[value="CN"]::part(prefix), et2-select-country [value="CN"]::part(prefix) {
+et2-select-country[value="CN"] .flag, et2-select-country [value="CN"]::part(prefix) {
     height: 14px;
     background-position: -1049px 0px
 }
 
-et2-select-country[value="CO"]::part(prefix), et2-select-country [value="CO"]::part(prefix) {
+et2-select-country[value="CO"] .flag, et2-select-country [value="CO"]::part(prefix) {
     height: 14px;
     background-position: -1071px 0px
 }
 
-et2-select-country[value="CP"]::part(prefix), et2-select-country [value="CP"]::part(prefix) {
+et2-select-country[value="CP"] .flag, et2-select-country [value="CP"]::part(prefix) {
     height: 14px;
     background-position: -1093px 0px
 }
 
-et2-select-country[value="CR"]::part(prefix), et2-select-country [value="CR"]::part(prefix) {
+et2-select-country[value="CR"] .flag, et2-select-country [value="CR"]::part(prefix) {
     height: 12px;
     background-position: -1115px 0px
 }
 
-et2-select-country[value="CU"]::part(prefix), et2-select-country [value="CU"]::part(prefix) {
+et2-select-country[value="CU"] .flag, et2-select-country [value="CU"]::part(prefix) {
     height: 10px;
     background-position: -1137px 0px
 }
 
-et2-select-country[value="CV"]::part(prefix), et2-select-country [value="CV"]::part(prefix) {
+et2-select-country[value="CV"] .flag, et2-select-country [value="CV"]::part(prefix) {
     height: 12px;
     background-position: -1159px 0px
 }
 
-et2-select-country[value="CW"]::part(prefix), et2-select-country [value="CW"]::part(prefix) {
+et2-select-country[value="CW"] .flag, et2-select-country [value="CW"]::part(prefix) {
     height: 14px;
     background-position: -1181px 0px
 }
 
-et2-select-country[value="CX"]::part(prefix), et2-select-country [value="CX"]::part(prefix) {
+et2-select-country[value="CX"] .flag, et2-select-country [value="CX"]::part(prefix) {
     height: 10px;
     background-position: -1203px 0px
 }
 
-et2-select-country[value="CY"]::part(prefix), et2-select-country [value="CY"]::part(prefix) {
+et2-select-country[value="CY"] .flag, et2-select-country [value="CY"]::part(prefix) {
     height: 13px;
     background-position: -1225px 0px
 }
 
-et2-select-country[value="CZ"]::part(prefix), et2-select-country [value="CZ"]::part(prefix) {
+et2-select-country[value="CZ"] .flag, et2-select-country [value="CZ"]::part(prefix) {
     height: 14px;
     background-position: -1247px 0px
 }
 
-et2-select-country[value="DE"]::part(prefix), et2-select-country [value="DE"]::part(prefix) {
+et2-select-country[value="DE"] .flag, et2-select-country [value="DE"]::part(prefix) {
     height: 12px;
     background-position: -1269px 0px
 }
 
-et2-select-country[value="DG"]::part(prefix), et2-select-country [value="DG"]::part(prefix) {
+et2-select-country[value="DG"] .flag, et2-select-country [value="DG"]::part(prefix) {
     height: 10px;
     background-position: -1291px 0px
 }
 
-et2-select-country[value="DJ"]::part(prefix), et2-select-country [value="DJ"]::part(prefix) {
+et2-select-country[value="DJ"] .flag, et2-select-country [value="DJ"]::part(prefix) {
     height: 14px;
     background-position: -1313px 0px
 }
 
-et2-select-country[value="DK"]::part(prefix), et2-select-country [value="DK"]::part(prefix) {
+et2-select-country[value="DK"] .flag, et2-select-country [value="DK"]::part(prefix) {
     height: 15px;
     background-position: -1335px 0px
 }
 
-et2-select-country[value="DM"]::part(prefix), et2-select-country [value="DM"]::part(prefix) {
+et2-select-country[value="DM"] .flag, et2-select-country [value="DM"]::part(prefix) {
     height: 10px;
     background-position: -1357px 0px
 }
 
-et2-select-country[value="DO"]::part(prefix), et2-select-country [value="DO"]::part(prefix) {
+et2-select-country[value="DO"] .flag, et2-select-country [value="DO"]::part(prefix) {
     height: 13px;
     background-position: -1379px 0px
 }
 
-et2-select-country[value="DZ"]::part(prefix), et2-select-country [value="DZ"]::part(prefix) {
+et2-select-country[value="DZ"] .flag, et2-select-country [value="DZ"]::part(prefix) {
     height: 14px;
     background-position: -1401px 0px
 }
 
-et2-select-country[value="EA"]::part(prefix), et2-select-country [value="EA"]::part(prefix) {
+et2-select-country[value="EA"] .flag, et2-select-country [value="EA"]::part(prefix) {
     height: 14px;
     background-position: -1423px 0px
 }
 
-et2-select-country[value="EC"]::part(prefix), et2-select-country [value="EC"]::part(prefix) {
+et2-select-country[value="EC"] .flag, et2-select-country [value="EC"]::part(prefix) {
     height: 14px;
     background-position: -1445px 0px
 }
 
-et2-select-country[value="EE"]::part(prefix), et2-select-country [value="EE"]::part(prefix) {
+et2-select-country[value="EE"] .flag, et2-select-country [value="EE"]::part(prefix) {
     height: 13px;
     background-position: -1467px 0px
 }
 
-et2-select-country[value="EG"]::part(prefix), et2-select-country [value="EG"]::part(prefix) {
+et2-select-country[value="EG"] .flag, et2-select-country [value="EG"]::part(prefix) {
     height: 14px;
     background-position: -1489px 0px
 }
 
-et2-select-country[value="EH"]::part(prefix), et2-select-country [value="EH"]::part(prefix) {
+et2-select-country[value="EH"] .flag, et2-select-country [value="EH"]::part(prefix) {
     height: 10px;
     background-position: -1511px 0px
 }
 
-et2-select-country[value="ER"]::part(prefix), et2-select-country [value="ER"]::part(prefix) {
+et2-select-country[value="ER"] .flag, et2-select-country [value="ER"]::part(prefix) {
     height: 10px;
     background-position: -1533px 0px
 }
 
-et2-select-country[value="ES"]::part(prefix), et2-select-country [value="ES"]::part(prefix) {
+et2-select-country[value="ES"] .flag, et2-select-country [value="ES"]::part(prefix) {
     height: 14px;
     background-position: -1555px 0px
 }
 
-et2-select-country[value="ET"]::part(prefix), et2-select-country [value="ET"]::part(prefix) {
+et2-select-country[value="ET"] .flag, et2-select-country [value="ET"]::part(prefix) {
     height: 10px;
     background-position: -1577px 0px
 }
 
-et2-select-country[value="EU"]::part(prefix), et2-select-country [value="EU"]::part(prefix) {
+et2-select-country[value="EU"] .flag, et2-select-country [value="EU"]::part(prefix) {
     height: 14px;
     background-position: -1599px 0px
 }
 
-et2-select-country[value="FI"]::part(prefix), et2-select-country [value="FI"]::part(prefix) {
+et2-select-country[value="FI"] .flag, et2-select-country [value="FI"]::part(prefix) {
     height: 12px;
     background-position: -1621px 0px
 }
 
-et2-select-country[value="FJ"]::part(prefix), et2-select-country [value="FJ"]::part(prefix) {
+et2-select-country[value="FJ"] .flag, et2-select-country [value="FJ"]::part(prefix) {
     height: 10px;
     background-position: -1643px 0px
 }
 
-et2-select-country[value="FK"]::part(prefix), et2-select-country [value="FK"]::part(prefix) {
+et2-select-country[value="FK"] .flag, et2-select-country [value="FK"]::part(prefix) {
     height: 10px;
     background-position: -1665px 0px
 }
 
-et2-select-country[value="FM"]::part(prefix), et2-select-country [value="FM"]::part(prefix) {
+et2-select-country[value="FM"] .flag, et2-select-country [value="FM"]::part(prefix) {
     height: 11px;
     background-position: -1687px 0px
 }
 
-et2-select-country[value="FO"]::part(prefix), et2-select-country [value="FO"]::part(prefix) {
+et2-select-country[value="FO"] .flag, et2-select-country [value="FO"]::part(prefix) {
     height: 15px;
     background-position: -1709px 0px
 }
 
-et2-select-country[value="FR"]::part(prefix), et2-select-country [value="FR"]::part(prefix) {
+et2-select-country[value="FR"] .flag, et2-select-country [value="FR"]::part(prefix) {
     height: 14px;
     background-position: -1731px 0px
 }
 
-et2-select-country[value="GA"]::part(prefix), et2-select-country [value="GA"]::part(prefix) {
+et2-select-country[value="GA"] .flag, et2-select-country [value="GA"]::part(prefix) {
     height: 15px;
     background-position: -1753px 0px
 }
 
-et2-select-country[value="GB"]::part(prefix), et2-select-country [value="GB"]::part(prefix) {
+et2-select-country[value="GB"] .flag, et2-select-country [value="GB"]::part(prefix) {
     height: 10px;
     background-position: -1775px 0px
 }
 
-et2-select-country[value="GD"]::part(prefix), et2-select-country [value="GD"]::part(prefix) {
+et2-select-country[value="GD"] .flag, et2-select-country [value="GD"]::part(prefix) {
     height: 12px;
     background-position: -1797px 0px
 }
 
-et2-select-country[value="GE"]::part(prefix), et2-select-country [value="GE"]::part(prefix) {
+et2-select-country[value="GE"] .flag, et2-select-country [value="GE"]::part(prefix) {
     height: 14px;
     background-position: -1819px 0px
 }
 
-et2-select-country[value="GF"]::part(prefix), et2-select-country [value="GF"]::part(prefix) {
+et2-select-country[value="GF"] .flag, et2-select-country [value="GF"]::part(prefix) {
     height: 14px;
     background-position: -1841px 0px
 }
 
-et2-select-country[value="GG"]::part(prefix), et2-select-country [value="GG"]::part(prefix) {
+et2-select-country[value="GG"] .flag, et2-select-country [value="GG"]::part(prefix) {
     height: 14px;
     background-position: -1863px 0px
 }
 
-et2-select-country[value="GH"]::part(prefix), et2-select-country [value="GH"]::part(prefix) {
+et2-select-country[value="GH"] .flag, et2-select-country [value="GH"]::part(prefix) {
     height: 14px;
     background-position: -1885px 0px
 }
 
-et2-select-country[value="GI"]::part(prefix), et2-select-country [value="GI"]::part(prefix) {
+et2-select-country[value="GI"] .flag, et2-select-country [value="GI"]::part(prefix) {
     height: 10px;
     background-position: -1907px 0px
 }
 
-et2-select-country[value="GL"]::part(prefix), et2-select-country [value="GL"]::part(prefix) {
+et2-select-country[value="GL"] .flag, et2-select-country [value="GL"]::part(prefix) {
     height: 14px;
     background-position: -1929px 0px
 }
 
-et2-select-country[value="GM"]::part(prefix), et2-select-country [value="GM"]::part(prefix) {
+et2-select-country[value="GM"] .flag, et2-select-country [value="GM"]::part(prefix) {
     height: 14px;
     background-position: -1951px 0px
 }
 
-et2-select-country[value="GN"]::part(prefix), et2-select-country [value="GN"]::part(prefix) {
+et2-select-country[value="GN"] .flag, et2-select-country [value="GN"]::part(prefix) {
     height: 14px;
     background-position: -1973px 0px
 }
 
-et2-select-country[value="GP"]::part(prefix), et2-select-country [value="GP"]::part(prefix) {
+et2-select-country[value="GP"] .flag, et2-select-country [value="GP"]::part(prefix) {
     height: 14px;
     background-position: -1995px 0px
 }
 
-et2-select-country[value="GQ"]::part(prefix), et2-select-country [value="GQ"]::part(prefix) {
+et2-select-country[value="GQ"] .flag, et2-select-country [value="GQ"]::part(prefix) {
     height: 14px;
     background-position: -2017px 0px
 }
 
-et2-select-country[value="GR"]::part(prefix), et2-select-country [value="GR"]::part(prefix) {
+et2-select-country[value="GR"] .flag, et2-select-country [value="GR"]::part(prefix) {
     height: 14px;
     background-position: -2039px 0px
 }
 
-et2-select-country[value="GS"]::part(prefix), et2-select-country [value="GS"]::part(prefix) {
+et2-select-country[value="GS"] .flag, et2-select-country [value="GS"]::part(prefix) {
     height: 10px;
     background-position: -2061px 0px
 }
 
-et2-select-country[value="GT"]::part(prefix), et2-select-country [value="GT"]::part(prefix) {
+et2-select-country[value="GT"] .flag, et2-select-country [value="GT"]::part(prefix) {
     height: 13px;
     background-position: -2083px 0px
 }
 
-et2-select-country[value="GU"]::part(prefix), et2-select-country [value="GU"]::part(prefix) {
+et2-select-country[value="GU"] .flag, et2-select-country [value="GU"]::part(prefix) {
     height: 11px;
     background-position: -2105px 0px
 }
 
-et2-select-country[value="GW"]::part(prefix), et2-select-country [value="GW"]::part(prefix) {
+et2-select-country[value="GW"] .flag, et2-select-country [value="GW"]::part(prefix) {
     height: 10px;
     background-position: -2127px 0px
 }
 
-et2-select-country[value="GY"]::part(prefix), et2-select-country [value="GY"]::part(prefix) {
+et2-select-country[value="GY"] .flag, et2-select-country [value="GY"]::part(prefix) {
     height: 12px;
     background-position: -2149px 0px
 }
 
-et2-select-country[value="HK"]::part(prefix), et2-select-country [value="HK"]::part(prefix) {
+et2-select-country[value="HK"] .flag, et2-select-country [value="HK"]::part(prefix) {
     height: 14px;
     background-position: -2171px 0px
 }
 
-et2-select-country[value="HM"]::part(prefix), et2-select-country [value="HM"]::part(prefix) {
+et2-select-country[value="HM"] .flag, et2-select-country [value="HM"]::part(prefix) {
     height: 10px;
     background-position: -2193px 0px
 }
 
-et2-select-country[value="HN"]::part(prefix), et2-select-country [value="HN"]::part(prefix) {
+et2-select-country[value="HN"] .flag, et2-select-country [value="HN"]::part(prefix) {
     height: 10px;
     background-position: -2215px 0px
 }
 
-et2-select-country[value="HR"]::part(prefix), et2-select-country [value="HR"]::part(prefix) {
+et2-select-country[value="HR"] .flag, et2-select-country [value="HR"]::part(prefix) {
     height: 10px;
     background-position: -2237px 0px
 }
 
-et2-select-country[value="HT"]::part(prefix), et2-select-country [value="HT"]::part(prefix) {
+et2-select-country[value="HT"] .flag, et2-select-country [value="HT"]::part(prefix) {
     height: 12px;
     background-position: -2259px 0px
 }
 
-et2-select-country[value="HU"]::part(prefix), et2-select-country [value="HU"]::part(prefix) {
+et2-select-country[value="HU"] .flag, et2-select-country [value="HU"]::part(prefix) {
     height: 10px;
     background-position: -2281px 0px
 }
 
-et2-select-country[value="IC"]::part(prefix), et2-select-country [value="IC"]::part(prefix) {
+et2-select-country[value="IC"] .flag, et2-select-country [value="IC"]::part(prefix) {
     height: 14px;
     background-position: -2303px 0px
 }
 
-et2-select-country[value="ID"]::part(prefix), et2-select-country [value="ID"]::part(prefix) {
+et2-select-country[value="ID"] .flag, et2-select-country [value="ID"]::part(prefix) {
     height: 14px;
     background-position: -2325px 0px
 }
 
-et2-select-country[value="IE"]::part(prefix), et2-select-country [value="IE"]::part(prefix) {
+et2-select-country[value="IE"] .flag, et2-select-country [value="IE"]::part(prefix) {
     height: 10px;
     background-position: -2347px 0px
 }
 
-et2-select-country[value="IL"]::part(prefix), et2-select-country [value="IL"]::part(prefix) {
+et2-select-country[value="IL"] .flag, et2-select-country [value="IL"]::part(prefix) {
     height: 15px;
     background-position: -2369px 0px
 }
 
-et2-select-country[value="IM"]::part(prefix), et2-select-country [value="IM"]::part(prefix) {
+et2-select-country[value="IM"] .flag, et2-select-country [value="IM"]::part(prefix) {
     height: 10px;
     background-position: -2391px 0px
 }
 
-et2-select-country[value="IN"]::part(prefix), et2-select-country [value="IN"]::part(prefix) {
+et2-select-country[value="IN"] .flag, et2-select-country [value="IN"]::part(prefix) {
     height: 14px;
     background-position: -2413px 0px
 }
 
-et2-select-country[value="IO"]::part(prefix), et2-select-country [value="IO"]::part(prefix) {
+et2-select-country[value="IO"] .flag, et2-select-country [value="IO"]::part(prefix) {
     height: 10px;
     background-position: -2435px 0px
 }
 
-et2-select-country[value="IQ"]::part(prefix), et2-select-country [value="IQ"]::part(prefix) {
+et2-select-country[value="IQ"] .flag, et2-select-country [value="IQ"]::part(prefix) {
     height: 14px;
     background-position: -2457px 0px
 }
 
-et2-select-country[value="IR"]::part(prefix), et2-select-country [value="IR"]::part(prefix) {
+et2-select-country[value="IR"] .flag, et2-select-country [value="IR"]::part(prefix) {
     height: 12px;
     background-position: -2479px 0px
 }
 
-et2-select-country[value="IS"]::part(prefix), et2-select-country [value="IS"]::part(prefix) {
+et2-select-country[value="IS"] .flag, et2-select-country [value="IS"]::part(prefix) {
     height: 15px;
     background-position: -2501px 0px
 }
 
-et2-select-country[value="IT"]::part(prefix), et2-select-country [value="IT"]::part(prefix) {
+et2-select-country[value="IT"] .flag, et2-select-country [value="IT"]::part(prefix) {
     height: 14px;
     background-position: -2523px 0px
 }
 
-et2-select-country[value="JE"]::part(prefix), et2-select-country [value="JE"]::part(prefix) {
+et2-select-country[value="JE"] .flag, et2-select-country [value="JE"]::part(prefix) {
     height: 12px;
     background-position: -2545px 0px
 }
 
-et2-select-country[value="JM"]::part(prefix), et2-select-country [value="JM"]::part(prefix) {
+et2-select-country[value="JM"] .flag, et2-select-country [value="JM"]::part(prefix) {
     height: 10px;
     background-position: -2567px 0px
 }
 
-et2-select-country[value="JO"]::part(prefix), et2-select-country [value="JO"]::part(prefix) {
+et2-select-country[value="JO"] .flag, et2-select-country [value="JO"]::part(prefix) {
     height: 10px;
     background-position: -2589px 0px
 }
 
-et2-select-country[value="JP"]::part(prefix), et2-select-country [value="JP"]::part(prefix) {
+et2-select-country[value="JP"] .flag, et2-select-country [value="JP"]::part(prefix) {
     height: 14px;
     background-position: -2611px 0px
 }
 
-et2-select-country[value="KE"]::part(prefix), et2-select-country [value="KE"]::part(prefix) {
+et2-select-country[value="KE"] .flag, et2-select-country [value="KE"]::part(prefix) {
     height: 14px;
     background-position: -2633px 0px
 }
 
-et2-select-country[value="KG"]::part(prefix), et2-select-country [value="KG"]::part(prefix) {
+et2-select-country[value="KG"] .flag, et2-select-country [value="KG"]::part(prefix) {
     height: 12px;
     background-position: -2655px 0px
 }
 
-et2-select-country[value="KH"]::part(prefix), et2-select-country [value="KH"]::part(prefix) {
+et2-select-country[value="KH"] .flag, et2-select-country [value="KH"]::part(prefix) {
     height: 13px;
     background-position: -2677px 0px
 }
 
-et2-select-country[value="KI"]::part(prefix), et2-select-country [value="KI"]::part(prefix) {
+et2-select-country[value="KI"] .flag, et2-select-country [value="KI"]::part(prefix) {
     height: 10px;
     background-position: -2699px 0px
 }
 
-et2-select-country[value="KM"]::part(prefix), et2-select-country [value="KM"]::part(prefix) {
+et2-select-country[value="KM"] .flag, et2-select-country [value="KM"]::part(prefix) {
     height: 12px;
     background-position: -2721px 0px
 }
 
-et2-select-country[value="KN"]::part(prefix), et2-select-country [value="KN"]::part(prefix) {
+et2-select-country[value="KN"] .flag, et2-select-country [value="KN"]::part(prefix) {
     height: 14px;
     background-position: -2743px 0px
 }
 
-et2-select-country[value="KP"]::part(prefix), et2-select-country [value="KP"]::part(prefix) {
+et2-select-country[value="KP"] .flag, et2-select-country [value="KP"]::part(prefix) {
     height: 10px;
     background-position: -2765px 0px
 }
 
-et2-select-country[value="KR"]::part(prefix), et2-select-country [value="KR"]::part(prefix) {
+et2-select-country[value="KR"] .flag, et2-select-country [value="KR"]::part(prefix) {
     height: 14px;
     background-position: -2787px 0px
 }
 
-et2-select-country[value="KW"]::part(prefix), et2-select-country [value="KW"]::part(prefix) {
+et2-select-country[value="KW"] .flag, et2-select-country [value="KW"]::part(prefix) {
     height: 10px;
     background-position: -2809px 0px
 }
 
-et2-select-country[value="KY"]::part(prefix), et2-select-country [value="KY"]::part(prefix) {
+et2-select-country[value="KY"] .flag, et2-select-country [value="KY"]::part(prefix) {
     height: 10px;
     background-position: -2831px 0px
 }
 
-et2-select-country[value="KZ"]::part(prefix), et2-select-country [value="KZ"]::part(prefix) {
+et2-select-country[value="KZ"] .flag, et2-select-country [value="KZ"]::part(prefix) {
     height: 10px;
     background-position: -2853px 0px
 }
 
-et2-select-country[value="LA"]::part(prefix), et2-select-country [value="LA"]::part(prefix) {
+et2-select-country[value="LA"] .flag, et2-select-country [value="LA"]::part(prefix) {
     height: 14px;
     background-position: -2875px 0px
 }
 
-et2-select-country[value="LB"]::part(prefix), et2-select-country [value="LB"]::part(prefix) {
+et2-select-country[value="LB"] .flag, et2-select-country [value="LB"]::part(prefix) {
     height: 14px;
     background-position: -2897px 0px
 }
 
-et2-select-country[value="LC"]::part(prefix), et2-select-country [value="LC"]::part(prefix) {
+et2-select-country[value="LC"] .flag, et2-select-country [value="LC"]::part(prefix) {
     height: 10px;
     background-position: -2919px 0px
 }
 
-et2-select-country[value="LI"]::part(prefix), et2-select-country [value="LI"]::part(prefix) {
+et2-select-country[value="LI"] .flag, et2-select-country [value="LI"]::part(prefix) {
     height: 12px;
     background-position: -2941px 0px
 }
 
-et2-select-country[value="LK"]::part(prefix), et2-select-country [value="LK"]::part(prefix) {
+et2-select-country[value="LK"] .flag, et2-select-country [value="LK"]::part(prefix) {
     height: 10px;
     background-position: -2963px 0px
 }
 
-et2-select-country[value="LR"]::part(prefix), et2-select-country [value="LR"]::part(prefix) {
+et2-select-country[value="LR"] .flag, et2-select-country [value="LR"]::part(prefix) {
     height: 11px;
     background-position: -2985px 0px
 }
 
-et2-select-country[value="LS"]::part(prefix), et2-select-country [value="LS"]::part(prefix) {
+et2-select-country[value="LS"] .flag, et2-select-country [value="LS"]::part(prefix) {
     height: 14px;
     background-position: -3007px 0px
 }
 
-et2-select-country[value="LT"]::part(prefix), et2-select-country [value="LT"]::part(prefix) {
+et2-select-country[value="LT"] .flag, et2-select-country [value="LT"]::part(prefix) {
     height: 12px;
     background-position: -3029px 0px
 }
 
-et2-select-country[value="LU"]::part(prefix), et2-select-country [value="LU"]::part(prefix) {
+et2-select-country[value="LU"] .flag, et2-select-country [value="LU"]::part(prefix) {
     height: 12px;
     background-position: -3051px 0px
 }
 
-et2-select-country[value="LV"]::part(prefix), et2-select-country [value="LV"]::part(prefix) {
+et2-select-country[value="LV"] .flag, et2-select-country [value="LV"]::part(prefix) {
     height: 10px;
     background-position: -3073px 0px
 }
 
-et2-select-country[value="LY"]::part(prefix), et2-select-country [value="LY"]::part(prefix) {
+et2-select-country[value="LY"] .flag, et2-select-country [value="LY"]::part(prefix) {
     height: 10px;
     background-position: -3095px 0px
 }
 
-et2-select-country[value="MA"]::part(prefix), et2-select-country [value="MA"]::part(prefix) {
+et2-select-country[value="MA"] .flag, et2-select-country [value="MA"]::part(prefix) {
     height: 14px;
     background-position: -3117px 0px
 }
 
-et2-select-country[value="MC"]::part(prefix), et2-select-country [value="MC"]::part(prefix) {
+et2-select-country[value="MC"] .flag, et2-select-country [value="MC"]::part(prefix) {
     height: 15px;
     background-position: -3139px 0px
 }
 
-et2-select-country[value="MD"]::part(prefix), et2-select-country [value="MD"]::part(prefix) {
+et2-select-country[value="MD"] .flag, et2-select-country [value="MD"]::part(prefix) {
     height: 10px;
     background-position: -3160px 0px
 }
 
-et2-select-country[value="ME"]::part(prefix), et2-select-country [value="ME"]::part(prefix) {
+et2-select-country[value="ME"] .flag, et2-select-country [value="ME"]::part(prefix) {
     height: 10px;
     background-position: -3182px 0px
 }
 
-et2-select-country[value="MF"]::part(prefix), et2-select-country [value="MF"]::part(prefix) {
+et2-select-country[value="MF"] .flag, et2-select-country [value="MF"]::part(prefix) {
     height: 14px;
     background-position: -3204px 0px
 }
 
-et2-select-country[value="MG"]::part(prefix), et2-select-country [value="MG"]::part(prefix) {
+et2-select-country[value="MG"] .flag, et2-select-country [value="MG"]::part(prefix) {
     height: 14px;
     background-position: -3226px 0px
 }
 
-et2-select-country[value="MH"]::part(prefix), et2-select-country [value="MH"]::part(prefix) {
+et2-select-country[value="MH"] .flag, et2-select-country [value="MH"]::part(prefix) {
     height: 11px;
     background-position: -3248px 0px
 }
 
-et2-select-country[value="MK"]::part(prefix), et2-select-country [value="MK"]::part(prefix) {
+et2-select-country[value="MK"] .flag, et2-select-country [value="MK"]::part(prefix) {
     height: 10px;
     background-position: -3270px 0px
 }
 
-et2-select-country[value="ML"]::part(prefix), et2-select-country [value="ML"]::part(prefix) {
+et2-select-country[value="ML"] .flag, et2-select-country [value="ML"]::part(prefix) {
     height: 14px;
     background-position: -3292px 0px
 }
 
-et2-select-country[value="MM"]::part(prefix), et2-select-country [value="MM"]::part(prefix) {
+et2-select-country[value="MM"] .flag, et2-select-country [value="MM"]::part(prefix) {
     height: 14px;
     background-position: -3314px 0px
 }
 
-et2-select-country[value="MN"]::part(prefix), et2-select-country [value="MN"]::part(prefix) {
+et2-select-country[value="MN"] .flag, et2-select-country [value="MN"]::part(prefix) {
     height: 10px;
     background-position: -3336px 0px
 }
 
-et2-select-country[value="MO"]::part(prefix), et2-select-country [value="MO"]::part(prefix) {
+et2-select-country[value="MO"] .flag, et2-select-country [value="MO"]::part(prefix) {
     height: 14px;
     background-position: -3358px 0px
 }
 
-et2-select-country[value="MP"]::part(prefix), et2-select-country [value="MP"]::part(prefix) {
+et2-select-country[value="MP"] .flag, et2-select-country [value="MP"]::part(prefix) {
     height: 10px;
     background-position: -3380px 0px
 }
 
-et2-select-country[value="MQ"]::part(prefix), et2-select-country [value="MQ"]::part(prefix) {
+et2-select-country[value="MQ"] .flag, et2-select-country [value="MQ"]::part(prefix) {
     height: 14px;
     background-position: -3402px 0px
 }
 
-et2-select-country[value="MR"]::part(prefix), et2-select-country [value="MR"]::part(prefix) {
+et2-select-country[value="MR"] .flag, et2-select-country [value="MR"]::part(prefix) {
     height: 14px;
     background-position: -3424px 0px
 }
 
-et2-select-country[value="MS"]::part(prefix), et2-select-country [value="MS"]::part(prefix) {
+et2-select-country[value="MS"] .flag, et2-select-country [value="MS"]::part(prefix) {
     height: 10px;
     background-position: -3446px 0px
 }
 
-et2-select-country[value="MT"]::part(prefix), et2-select-country [value="MT"]::part(prefix) {
+et2-select-country[value="MT"] .flag, et2-select-country [value="MT"]::part(prefix) {
     height: 14px;
     background-position: -3468px 0px
 }
 
-et2-select-country[value="MU"]::part(prefix), et2-select-country [value="MU"]::part(prefix) {
+et2-select-country[value="MU"] .flag, et2-select-country [value="MU"]::part(prefix) {
     height: 14px;
     background-position: -3490px 0px
 }
 
-et2-select-country[value="MV"]::part(prefix), et2-select-country [value="MV"]::part(prefix) {
+et2-select-country[value="MV"] .flag, et2-select-country [value="MV"]::part(prefix) {
     height: 14px;
     background-position: -3512px 0px
 }
 
-et2-select-country[value="MW"]::part(prefix), et2-select-country [value="MW"]::part(prefix) {
+et2-select-country[value="MW"] .flag, et2-select-country [value="MW"]::part(prefix) {
     height: 14px;
     background-position: -3534px 0px
 }
 
-et2-select-country[value="MX"]::part(prefix), et2-select-country [value="MX"]::part(prefix) {
+et2-select-country[value="MX"] .flag, et2-select-country [value="MX"]::part(prefix) {
     height: 12px;
     background-position: -3556px 0px
 }
 
-et2-select-country[value="MY"]::part(prefix), et2-select-country [value="MY"]::part(prefix) {
+et2-select-country[value="MY"] .flag, et2-select-country [value="MY"]::part(prefix) {
     height: 10px;
     background-position: -3578px 0px
 }
 
-et2-select-country[value="MZ"]::part(prefix), et2-select-country [value="MZ"]::part(prefix) {
+et2-select-country[value="MZ"] .flag, et2-select-country [value="MZ"]::part(prefix) {
     height: 14px;
     background-position: -3600px 0px
 }
 
-et2-select-country[value="NA"]::part(prefix), et2-select-country [value="NA"]::part(prefix) {
+et2-select-country[value="NA"] .flag, et2-select-country [value="NA"]::part(prefix) {
     height: 14px;
     background-position: -3622px 0px
 }
 
-et2-select-country[value="NC"]::part(prefix), et2-select-country [value="NC"]::part(prefix) {
+et2-select-country[value="NC"] .flag, et2-select-country [value="NC"]::part(prefix) {
     height: 10px;
     background-position: -3644px 0px
 }
 
-et2-select-country[value="NE"]::part(prefix), et2-select-country [value="NE"]::part(prefix) {
+et2-select-country[value="NE"] .flag, et2-select-country [value="NE"]::part(prefix) {
     height: 15px;
     background-position: -3666px 0px
 }
 
-et2-select-country[value="NF"]::part(prefix), et2-select-country [value="NF"]::part(prefix) {
+et2-select-country[value="NF"] .flag, et2-select-country [value="NF"]::part(prefix) {
     height: 10px;
     background-position: -3686px 0px
 }
 
-et2-select-country[value="NG"]::part(prefix), et2-select-country [value="NG"]::part(prefix) {
+et2-select-country[value="NG"] .flag, et2-select-country [value="NG"]::part(prefix) {
     height: 10px;
     background-position: -3708px 0px
 }
 
-et2-select-country[value="NI"]::part(prefix), et2-select-country [value="NI"]::part(prefix) {
+et2-select-country[value="NI"] .flag, et2-select-country [value="NI"]::part(prefix) {
     height: 12px;
     background-position: -3730px 0px
 }
 
-et2-select-country[value="NL"]::part(prefix), et2-select-country [value="NL"]::part(prefix) {
+et2-select-country[value="NL"] .flag, et2-select-country [value="NL"]::part(prefix) {
     height: 14px;
     background-position: -3752px 0px
 }
 
-et2-select-country[value="NO"]::part(prefix), et2-select-country [value="NO"]::part(prefix) {
+et2-select-country[value="NO"] .flag, et2-select-country [value="NO"]::part(prefix) {
     height: 15px;
     background-position: -3774px 0px
 }
 
-et2-select-country[value="NP"]::part(prefix), et2-select-country [value="NP"]::part(prefix) {
+et2-select-country[value="NP"] .flag, et2-select-country [value="NP"]::part(prefix) {
     height: 15px;
     background-position: -3796px 0px;
     background-color: transparent
 }
 
-et2-select-country[value="NR"]::part(prefix), et2-select-country [value="NR"]::part(prefix) {
+et2-select-country[value="NR"] .flag, et2-select-country [value="NR"]::part(prefix) {
     height: 10px;
     background-position: -3811px 0px
 }
 
-et2-select-country[value="NU"]::part(prefix), et2-select-country [value="NU"]::part(prefix) {
+et2-select-country[value="NU"] .flag, et2-select-country [value="NU"]::part(prefix) {
     height: 10px;
     background-position: -3833px 0px
 }
 
-et2-select-country[value="NZ"]::part(prefix), et2-select-country [value="NZ"]::part(prefix) {
+et2-select-country[value="NZ"] .flag, et2-select-country [value="NZ"]::part(prefix) {
     height: 10px;
     background-position: -3855px 0px
 }
 
-et2-select-country[value="OM"]::part(prefix), et2-select-country [value="OM"]::part(prefix) {
+et2-select-country[value="OM"] .flag, et2-select-country [value="OM"]::part(prefix) {
     height: 10px;
     background-position: -3877px 0px
 }
 
-et2-select-country[value="PA"]::part(prefix), et2-select-country [value="PA"]::part(prefix) {
+et2-select-country[value="PA"] .flag, et2-select-country [value="PA"]::part(prefix) {
     height: 14px;
     background-position: -3899px 0px
 }
 
-et2-select-country[value="PE"]::part(prefix), et2-select-country [value="PE"]::part(prefix) {
+et2-select-country[value="PE"] .flag, et2-select-country [value="PE"]::part(prefix) {
     height: 14px;
     background-position: -3921px 0px
 }
 
-et2-select-country[value="PF"]::part(prefix), et2-select-country [value="PF"]::part(prefix) {
+et2-select-country[value="PF"] .flag, et2-select-country [value="PF"]::part(prefix) {
     height: 14px;
     background-position: -3943px 0px
 }
 
-et2-select-country[value="PG"]::part(prefix), et2-select-country [value="PG"]::part(prefix) {
+et2-select-country[value="PG"] .flag, et2-select-country [value="PG"]::part(prefix) {
     height: 15px;
     background-position: -3965px 0px
 }
 
-et2-select-country[value="PH"]::part(prefix), et2-select-country [value="PH"]::part(prefix) {
+et2-select-country[value="PH"] .flag, et2-select-country [value="PH"]::part(prefix) {
     height: 10px;
     background-position: -3987px 0px
 }
 
-et2-select-country[value="PK"]::part(prefix), et2-select-country [value="PK"]::part(prefix) {
+et2-select-country[value="PK"] .flag, et2-select-country [value="PK"]::part(prefix) {
     height: 14px;
     background-position: -4009px 0px
 }
 
-et2-select-country[value="PL"]::part(prefix), et2-select-country [value="PL"]::part(prefix) {
+et2-select-country[value="PL"] .flag, et2-select-country [value="PL"]::part(prefix) {
     height: 13px;
     background-position: -4031px 0px
 }
 
-et2-select-country[value="PM"]::part(prefix), et2-select-country [value="PM"]::part(prefix) {
+et2-select-country[value="PM"] .flag, et2-select-country [value="PM"]::part(prefix) {
     height: 14px;
     background-position: -4053px 0px
 }
 
-et2-select-country[value="PN"]::part(prefix), et2-select-country [value="PN"]::part(prefix) {
+et2-select-country[value="PN"] .flag, et2-select-country [value="PN"]::part(prefix) {
     height: 10px;
     background-position: -4075px 0px
 }
 
-et2-select-country[value="PR"]::part(prefix), et2-select-country [value="PR"]::part(prefix) {
+et2-select-country[value="PR"] .flag, et2-select-country [value="PR"]::part(prefix) {
     height: 14px;
     background-position: -4097px 0px
 }
 
-et2-select-country[value="PS"]::part(prefix), et2-select-country [value="PS"]::part(prefix) {
+et2-select-country[value="PS"] .flag, et2-select-country [value="PS"]::part(prefix) {
     height: 10px;
     background-position: -4119px 0px
 }
 
-et2-select-country[value="PT"]::part(prefix), et2-select-country [value="PT"]::part(prefix) {
+et2-select-country[value="PT"] .flag, et2-select-country [value="PT"]::part(prefix) {
     height: 14px;
     background-position: -4141px 0px
 }
 
-et2-select-country[value="PW"]::part(prefix), et2-select-country [value="PW"]::part(prefix) {
+et2-select-country[value="PW"] .flag, et2-select-country [value="PW"]::part(prefix) {
     height: 13px;
     background-position: -4163px 0px
 }
 
-et2-select-country[value="PY"]::part(prefix), et2-select-country [value="PY"]::part(prefix) {
+et2-select-country[value="PY"] .flag, et2-select-country [value="PY"]::part(prefix) {
     height: 11px;
     background-position: -4185px 0px
 }
 
-et2-select-country[value="QA"]::part(prefix), et2-select-country [value="QA"]::part(prefix) {
+et2-select-country[value="QA"] .flag, et2-select-country [value="QA"]::part(prefix) {
     height: 8px;
     background-position: -4207px 0px
 }
 
-et2-select-country[value="RE"]::part(prefix), et2-select-country [value="RE"]::part(prefix) {
+et2-select-country[value="RE"] .flag, et2-select-country [value="RE"]::part(prefix) {
     height: 14px;
     background-position: -4229px 0px
 }
 
-et2-select-country[value="RO"]::part(prefix), et2-select-country [value="RO"]::part(prefix) {
+et2-select-country[value="RO"] .flag, et2-select-country [value="RO"]::part(prefix) {
     height: 14px;
     background-position: -4251px 0px
 }
 
-et2-select-country[value="RS"]::part(prefix), et2-select-country [value="RS"]::part(prefix) {
+et2-select-country[value="RS"] .flag, et2-select-country [value="RS"]::part(prefix) {
     height: 14px;
     background-position: -4273px 0px
 }
 
-et2-select-country[value="RU"]::part(prefix), et2-select-country [value="RU"]::part(prefix) {
+et2-select-country[value="RU"] .flag, et2-select-country [value="RU"]::part(prefix) {
     height: 14px;
     background-position: -4295px 0px
 }
 
-et2-select-country[value="RW"]::part(prefix), et2-select-country [value="RW"]::part(prefix) {
+et2-select-country[value="RW"] .flag, et2-select-country [value="RW"]::part(prefix) {
     height: 14px;
     background-position: -4317px 0px
 }
 
-et2-select-country[value="SA"]::part(prefix), et2-select-country [value="SA"]::part(prefix) {
+et2-select-country[value="SA"] .flag, et2-select-country [value="SA"]::part(prefix) {
     height: 14px;
     background-position: -4339px 0px
 }
 
-et2-select-country[value="SB"]::part(prefix), et2-select-country [value="SB"]::part(prefix) {
+et2-select-country[value="SB"] .flag, et2-select-country [value="SB"]::part(prefix) {
     height: 10px;
     background-position: -4361px 0px
 }
 
-et2-select-country[value="SC"]::part(prefix), et2-select-country [value="SC"]::part(prefix) {
+et2-select-country[value="SC"] .flag, et2-select-country [value="SC"]::part(prefix) {
     height: 10px;
     background-position: -4383px 0px
 }
 
-et2-select-country[value="SD"]::part(prefix), et2-select-country [value="SD"]::part(prefix) {
+et2-select-country[value="SD"] .flag, et2-select-country [value="SD"]::part(prefix) {
     height: 10px;
     background-position: -4405px 0px
 }
 
-et2-select-country[value="SE"]::part(prefix), et2-select-country [value="SE"]::part(prefix) {
+et2-select-country[value="SE"] .flag, et2-select-country [value="SE"]::part(prefix) {
     height: 13px;
     background-position: -4427px 0px
 }
 
-et2-select-country[value="SG"]::part(prefix), et2-select-country [value="SG"]::part(prefix) {
+et2-select-country[value="SG"] .flag, et2-select-country [value="SG"]::part(prefix) {
     height: 14px;
     background-position: -4449px 0px
 }
 
-et2-select-country[value="SH"]::part(prefix), et2-select-country [value="SH"]::part(prefix) {
+et2-select-country[value="SH"] .flag, et2-select-country [value="SH"]::part(prefix) {
     height: 10px;
     background-position: -4471px 0px
 }
 
-et2-select-country[value="SI"]::part(prefix), et2-select-country [value="SI"]::part(prefix) {
+et2-select-country[value="SI"] .flag, et2-select-country [value="SI"]::part(prefix) {
     height: 10px;
     background-position: -4493px 0px
 }
 
-et2-select-country[value="SJ"]::part(prefix), et2-select-country [value="SJ"]::part(prefix) {
+et2-select-country[value="SJ"] .flag, et2-select-country [value="SJ"]::part(prefix) {
     height: 15px;
     background-position: -4515px 0px
 }
 
-et2-select-country[value="SK"]::part(prefix), et2-select-country [value="SK"]::part(prefix) {
+et2-select-country[value="SK"] .flag, et2-select-country [value="SK"]::part(prefix) {
     height: 14px;
     background-position: -4537px 0px
 }
 
-et2-select-country[value="SL"]::part(prefix), et2-select-country [value="SL"]::part(prefix) {
+et2-select-country[value="SL"] .flag, et2-select-country [value="SL"]::part(prefix) {
     height: 14px;
     background-position: -4559px 0px
 }
 
-et2-select-country[value="SM"]::part(prefix), et2-select-country [value="SM"]::part(prefix) {
+et2-select-country[value="SM"] .flag, et2-select-country [value="SM"]::part(prefix) {
     height: 15px;
     background-position: -4581px 0px
 }
 
-et2-select-country[value="SN"]::part(prefix), et2-select-country [value="SN"]::part(prefix) {
+et2-select-country[value="SN"] .flag, et2-select-country [value="SN"]::part(prefix) {
     height: 14px;
     background-position: -4603px 0px
 }
 
-et2-select-country[value="SO"]::part(prefix), et2-select-country [value="SO"]::part(prefix) {
+et2-select-country[value="SO"] .flag, et2-select-country [value="SO"]::part(prefix) {
     height: 14px;
     background-position: -4625px 0px
 }
 
-et2-select-country[value="SR"]::part(prefix), et2-select-country [value="SR"]::part(prefix) {
+et2-select-country[value="SR"] .flag, et2-select-country [value="SR"]::part(prefix) {
     height: 14px;
     background-position: -4647px 0px
 }
 
-et2-select-country[value="SS"]::part(prefix), et2-select-country [value="SS"]::part(prefix) {
+et2-select-country[value="SS"] .flag, et2-select-country [value="SS"]::part(prefix) {
     height: 10px;
     background-position: -4669px 0px
 }
 
-et2-select-country[value="ST"]::part(prefix), et2-select-country [value="ST"]::part(prefix) {
+et2-select-country[value="ST"] .flag, et2-select-country [value="ST"]::part(prefix) {
     height: 10px;
     background-position: -4691px 0px
 }
 
-et2-select-country[value="SV"]::part(prefix), et2-select-country [value="SV"]::part(prefix) {
+et2-select-country[value="SV"] .flag, et2-select-country [value="SV"]::part(prefix) {
     height: 12px;
     background-position: -4713px 0px
 }
 
-et2-select-country[value="SX"]::part(prefix), et2-select-country [value="SX"]::part(prefix) {
+et2-select-country[value="SX"] .flag, et2-select-country [value="SX"]::part(prefix) {
     height: 14px;
     background-position: -4735px 0px
 }
 
-et2-select-country[value="SY"]::part(prefix), et2-select-country [value="SY"]::part(prefix) {
+et2-select-country[value="SY"] .flag, et2-select-country [value="SY"]::part(prefix) {
     height: 14px;
     background-position: -4757px 0px
 }
 
-et2-select-country[value="SZ"]::part(prefix), et2-select-country [value="SZ"]::part(prefix) {
+et2-select-country[value="SZ"] .flag, et2-select-country [value="SZ"]::part(prefix) {
     height: 14px;
     background-position: -4779px 0px
 }
 
-et2-select-country[value="TA"]::part(prefix), et2-select-country [value="TA"]::part(prefix) {
+et2-select-country[value="TA"] .flag, et2-select-country [value="TA"]::part(prefix) {
     height: 10px;
     background-position: -4801px 0px
 }
 
-et2-select-country[value="TC"]::part(prefix), et2-select-country [value="TC"]::part(prefix) {
+et2-select-country[value="TC"] .flag, et2-select-country [value="TC"]::part(prefix) {
     height: 10px;
     background-position: -4823px 0px
 }
 
-et2-select-country[value="TD"]::part(prefix), et2-select-country [value="TD"]::part(prefix) {
+et2-select-country[value="TD"] .flag, et2-select-country [value="TD"]::part(prefix) {
     height: 14px;
     background-position: -4845px 0px
 }
 
-et2-select-country[value="TF"]::part(prefix), et2-select-country [value="TF"]::part(prefix) {
+et2-select-country[value="TF"] .flag, et2-select-country [value="TF"]::part(prefix) {
     height: 14px;
     background-position: -4867px 0px
 }
 
-et2-select-country[value="TG"]::part(prefix), et2-select-country [value="TG"]::part(prefix) {
+et2-select-country[value="TG"] .flag, et2-select-country [value="TG"]::part(prefix) {
     height: 13px;
     background-position: -4889px 0px
 }
 
-et2-select-country[value="TH"]::part(prefix), et2-select-country [value="TH"]::part(prefix) {
+et2-select-country[value="TH"] .flag, et2-select-country [value="TH"]::part(prefix) {
     height: 14px;
     background-position: -4911px 0px
 }
 
-et2-select-country[value="TJ"]::part(prefix), et2-select-country [value="TJ"]::part(prefix) {
+et2-select-country[value="TJ"] .flag, et2-select-country [value="TJ"]::part(prefix) {
     height: 10px;
     background-position: -4933px 0px
 }
 
-et2-select-country[value="TK"]::part(prefix), et2-select-country [value="TK"]::part(prefix) {
+et2-select-country[value="TK"] .flag, et2-select-country [value="TK"]::part(prefix) {
     height: 10px;
     background-position: -4955px 0px
 }
 
-et2-select-country[value="TL"]::part(prefix), et2-select-country [value="TL"]::part(prefix) {
+et2-select-country[value="TL"] .flag, et2-select-country [value="TL"]::part(prefix) {
     height: 10px;
     background-position: -4977px 0px
 }
 
-et2-select-country[value="TM"]::part(prefix), et2-select-country [value="TM"]::part(prefix) {
+et2-select-country[value="TM"] .flag, et2-select-country [value="TM"]::part(prefix) {
     height: 14px;
     background-position: -4999px 0px
 }
 
-et2-select-country[value="TN"]::part(prefix), et2-select-country [value="TN"]::part(prefix) {
+et2-select-country[value="TN"] .flag, et2-select-country [value="TN"]::part(prefix) {
     height: 14px;
     background-position: -5021px 0px
 }
 
-et2-select-country[value="TO"]::part(prefix), et2-select-country [value="TO"]::part(prefix) {
+et2-select-country[value="TO"] .flag, et2-select-country [value="TO"]::part(prefix) {
     height: 10px;
     background-position: -5043px 0px
 }
 
-et2-select-country[value="TR"]::part(prefix), et2-select-country [value="TR"]::part(prefix) {
+et2-select-country[value="TR"] .flag, et2-select-country [value="TR"]::part(prefix) {
     height: 14px;
     background-position: -5065px 0px
 }
 
-et2-select-country[value="TT"]::part(prefix), et2-select-country [value="TT"]::part(prefix) {
+et2-select-country[value="TT"] .flag, et2-select-country [value="TT"]::part(prefix) {
     height: 12px;
     background-position: -5087px 0px
 }
 
-et2-select-country[value="TV"]::part(prefix), et2-select-country [value="TV"]::part(prefix) {
+et2-select-country[value="TV"] .flag, et2-select-country [value="TV"]::part(prefix) {
     height: 10px;
     background-position: -5109px 0px
 }
 
-et2-select-country[value="TW"]::part(prefix), et2-select-country [value="TW"]::part(prefix) {
+et2-select-country[value="TW"] .flag, et2-select-country [value="TW"]::part(prefix) {
     height: 14px;
     background-position: -5131px 0px
 }
 
-et2-select-country[value="TZ"]::part(prefix), et2-select-country [value="TZ"]::part(prefix) {
+et2-select-country[value="TZ"] .flag, et2-select-country [value="TZ"]::part(prefix) {
     height: 14px;
     background-position: -5153px 0px
 }
 
-et2-select-country[value="UA"]::part(prefix), et2-select-country [value="UA"]::part(prefix) {
+et2-select-country[value="UA"] .flag, et2-select-country [value="UA"]::part(prefix) {
     height: 14px;
     background-position: -5175px 0px
 }
 
-et2-select-country[value="UG"]::part(prefix), et2-select-country [value="UG"]::part(prefix) {
+et2-select-country[value="UG"] .flag, et2-select-country [value="UG"]::part(prefix) {
     height: 14px;
     background-position: -5197px 0px
 }
 
-et2-select-country[value="UM"]::part(prefix), et2-select-country [value="UM"]::part(prefix) {
+et2-select-country[value="UM"] .flag, et2-select-country [value="UM"]::part(prefix) {
     height: 11px;
     background-position: -5219px 0px
 }
 
-et2-select-country[value="US"]::part(prefix), et2-select-country [value="US"]::part(prefix) {
+et2-select-country[value="US"] .flag, et2-select-country [value="US"]::part(prefix) {
     height: 11px;
     background-position: -5241px 0px
 }
 
-et2-select-country[value="UY"]::part(prefix), et2-select-country [value="UY"]::part(prefix) {
+et2-select-country[value="UY"] .flag, et2-select-country [value="UY"]::part(prefix) {
     height: 14px;
     background-position: -5263px 0px
 }
 
-et2-select-country[value="UZ"]::part(prefix), et2-select-country [value="UZ"]::part(prefix) {
+et2-select-country[value="UZ"] .flag, et2-select-country [value="UZ"]::part(prefix) {
     height: 10px;
     background-position: -5285px 0px
 }
 
-et2-select-country[value="VA"]::part(prefix), et2-select-country [value="VA"]::part(prefix) {
+et2-select-country[value="VA"] .flag, et2-select-country [value="VA"]::part(prefix) {
     height: 15px;
     background-position: -5307px 0px
 }
 
-et2-select-country[value="VC"]::part(prefix), et2-select-country [value="VC"]::part(prefix) {
+et2-select-country[value="VC"] .flag, et2-select-country [value="VC"]::part(prefix) {
     height: 14px;
     background-position: -5324px 0px
 }
 
-et2-select-country[value="VE"]::part(prefix), et2-select-country [value="VE"]::part(prefix) {
+et2-select-country[value="VE"] .flag, et2-select-country [value="VE"]::part(prefix) {
     height: 14px;
     background-position: -5346px 0px
 }
 
-et2-select-country[value="VG"]::part(prefix), et2-select-country [value="VG"]::part(prefix) {
+et2-select-country[value="VG"] .flag, et2-select-country [value="VG"]::part(prefix) {
     height: 10px;
     background-position: -5368px 0px
 }
 
-et2-select-country[value="VI"]::part(prefix), et2-select-country [value="VI"]::part(prefix) {
+et2-select-country[value="VI"] .flag, et2-select-country [value="VI"]::part(prefix) {
     height: 14px;
     background-position: -5390px 0px
 }
 
-et2-select-country[value="VN"]::part(prefix), et2-select-country [value="VN"]::part(prefix) {
+et2-select-country[value="VN"] .flag, et2-select-country [value="VN"]::part(prefix) {
     height: 14px;
     background-position: -5412px 0px
 }
 
-et2-select-country[value="VU"]::part(prefix), et2-select-country [value="VU"]::part(prefix) {
+et2-select-country[value="VU"] .flag, et2-select-country [value="VU"]::part(prefix) {
     height: 12px;
     background-position: -5434px 0px
 }
 
-et2-select-country[value="WF"]::part(prefix), et2-select-country [value="WF"]::part(prefix) {
+et2-select-country[value="WF"] .flag, et2-select-country [value="WF"]::part(prefix) {
     height: 14px;
     background-position: -5456px 0px
 }
 
-et2-select-country[value="WS"]::part(prefix), et2-select-country [value="WS"]::part(prefix) {
+et2-select-country[value="WS"] .flag, et2-select-country [value="WS"]::part(prefix) {
     height: 10px;
     background-position: -5478px 0px
 }
 
-et2-select-country[value="XK"]::part(prefix), et2-select-country [value="XK"]::part(prefix) {
+et2-select-country[value="XK"] .flag, et2-select-country [value="XK"]::part(prefix) {
     height: 15px;
     background-position: -5500px 0px
 }
 
-et2-select-country[value="YE"]::part(prefix), et2-select-country [value="YE"]::part(prefix) {
+et2-select-country[value="YE"] .flag, et2-select-country [value="YE"]::part(prefix) {
     height: 14px;
     background-position: -5522px 0px
 }
 
-et2-select-country[value="YT"]::part(prefix), et2-select-country [value="YT"]::part(prefix) {
+et2-select-country[value="YT"] .flag, et2-select-country [value="YT"]::part(prefix) {
     height: 14px;
     background-position: -5544px 0px
 }
 
-et2-select-country[value="ZA"]::part(prefix), et2-select-country [value="ZA"]::part(prefix) {
+et2-select-country[value="ZA"] .flag, et2-select-country [value="ZA"]::part(prefix) {
     height: 14px;
     background-position: -5566px 0px
 }
 
-et2-select-country[value="ZM"]::part(prefix), et2-select-country [value="ZM"]::part(prefix) {
+et2-select-country[value="ZM"] .flag, et2-select-country [value="ZM"]::part(prefix) {
     height: 14px;
     background-position: -5588px 0px
 }
 
-et2-select-country[value="ZW"]::part(prefix), et2-select-country [value="ZW"]::part(prefix) {
+et2-select-country[value="ZW"] .flag, et2-select-country [value="ZW"]::part(prefix) {
     height: 10px;
     background-position: -5610px 0px
 }

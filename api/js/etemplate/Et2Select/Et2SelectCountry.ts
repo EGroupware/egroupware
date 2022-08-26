@@ -42,6 +42,18 @@ export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 			this.requestUpdate("select_options");
 		});
 	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Add element for current value flag
+		this.querySelector("[slot=prefix].tag_image")?.remove();
+		let image = document.createElement("span");
+		image.slot = "prefix";
+		image.classList.add("tag_image", "flag");
+		this.appendChild(image);
+	}
 }
 
 /**
