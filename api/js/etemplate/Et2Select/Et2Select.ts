@@ -103,8 +103,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				margin-left: 0px;
 				max-height: initial;
 				overflow-y: auto;
-				
-				flex: 1 1 auto;
 				gap: 0.1rem 0.5rem;
 			}
 			:host([rows]) .select__tags {
