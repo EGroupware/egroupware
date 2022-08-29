@@ -8,7 +8,14 @@ et2-select-country sl-menu-item::part(prefix), et2-select-country .flag {
     width: 20px;
     margin-right: 10px;
 }
-
+/* No country selected*/
+et2-select-country[value=""] .flag, et2-select-country [value=""]::part(prefix) {
+    background-image: url(../images/internet.png);
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    height: 20px;
+}
 /* First selector is for the current value, second for the option */
 et2-select-country[value="BE"] .flag, et2-select-country [value="BE"]::part(prefix) {
     width: 18px
