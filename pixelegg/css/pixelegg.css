@@ -5924,7 +5924,7 @@ table.egwGridView_outer thead tr th {
   background-color: #f8f8f8;
 }
 table.egwGridView_outer thead tr th:hover {
-  background-color: #bfbfbf;
+  background-color: #f0f0f0;
   color: #ffffff;
   /*border-right: 5px solid white;*/
   background-image: url(../../api/templates/default/images/hint-arrow-right.png);
