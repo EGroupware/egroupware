@@ -10,6 +10,7 @@
 
 namespace EGroupware\Admin;
 
+use admin_cmd_edit_group;
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
@@ -50,18 +51,18 @@ class Groups
 	 * @var type
 	 */
 	protected $apps_with_acl = array(
-		'calendar'    => True,
-		'infolog'     => True,
-		'filemanager' => array(
+		'calendar'       => True,
+		'infolog'        => True,
+		'filemanager'    => array(
 			'menuaction' => 'filemanager.filemanager_ui.file',
-			'path' => '/home/$account_lid',
-			'tabs' => 'eacl',
-			'popup' => '495x400',
+			'path'       => '/home/$account_lid',
+			'tabs'       => 'eacl',
+			'popup'      => '495x400',
 		),
-		'bookmarks'   => True,
-		'phpbrain'    => True,
+		'bookmarks'      => True,
+		'phpbrain'       => True,
 		'projectmanager' => True,
-		'timesheet'   => True
+		'timesheet'      => True
 	);
 
 	/**
@@ -96,12 +97,12 @@ class Groups
 			{
 				// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
 				Api\Accounts::cache_invalidate((int)$_GET['account_id']);
-				if ($this->accounts->exists((int)$_GET['account_id']) != 2 ||	// 2 = group
+				if ($this->accounts->exists((int)$_GET['account_id']) != 2 ||    // 2 = group
 					!($content = $this->accounts->read((int)$_GET['account_id'])))
 				{
 					Framework::window_close(lang('Entry not found!'));
 				}
-				if ($GLOBALS['egw']->acl->check('group_access', 8, 'admin'))	// no view
+				if ($GLOBALS['egw']->acl->check('group_access', 8, 'admin'))    // no view
 				{
 					Framework::window_close(lang('Permission denied!'));
 				}
@@ -120,7 +121,7 @@ class Groups
 			}
 			else
 			{
-				if ($GLOBALS['egw']->acl->check('group_access', 4, 'admin'))	// no add
+				if ($GLOBALS['egw']->acl->check('group_access', 4, 'admin'))    // no add
 				{
 					Framework::window_close(lang('Permission denied!'));
 				}
@@ -169,11 +170,11 @@ class Groups
 						{
 							//error_log(__METHOD__."() apps added: ".array2string($added));
 							$allow = array(
-								'allow' => true,
-								'account' => $content['account_id'],
-								'apps' => $added,
-							// This is the documentation from policy app
-							)+(array)$content['admin_cmd'];
+									'allow'   => true,
+									'account' => $content['account_id'],
+									'apps'    => $added,
+									// This is the documentation from policy app
+								)+(array)$content['admin_cmd'];
 							$add_cmd = new admin_cmd_account_app($allow);
 							$msg .= $add_cmd->run();
 						}
@@ -182,11 +183,11 @@ class Groups
 						{
 							//error_log(__METHOD__."() apps removed: ".array2string($removed));
 							$allow = array(
-								'allow' => false,
-								'account' => $content['account_id'],
-								'apps' => $removed,
-							// This is the documentation from policy app
-							)+(array)$content['admin_cmd'];
+									'allow'   => false,
+									'account' => $content['account_id'],
+									'apps'    => $removed,
+									// This is the documentation from policy app
+								)+(array)$content['admin_cmd'];
 							$rm_cmd = new admin_cmd_account_app($allow);
 							$msg .= $rm_cmd->run();
 						}
@@ -194,7 +195,7 @@ class Groups
 					}
 					catch (Exception $ex) {
 						$msg .= $ex->getMessage();
-						unset($button);	// do NOT close dialog
+						unset($button);    // do NOT close dialog
 					}
 					if (!$msg)
 					{
@@ -203,7 +204,7 @@ class Groups
 					else
 					{
 						Framework::refresh_opener($msg, 'admin', $content['account_id'], $refresh_type, null, null, null,
-							isset($ex) ? 'error' : 'success');
+												  isset($ex) ? 'error' : 'success');
 					}
 					if ($button != 'save')
 					{
@@ -219,7 +220,7 @@ class Groups
 		{
 			if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
 			{
-				continue;	// do NOT show disabled apps, or our API (status = 3)
+				continue;    // do NOT show disabled apps, or our API (status = 3)
 			}
 
 			$popup = null;
@@ -227,10 +228,10 @@ class Groups
 
 			$content['apps'][] = array(
 				'appname' => $app,
-				'title' => lang($app),
-				'action' => $acl_action,
-				'popup' => $popup,
-				'run' => (int)(boolean)$run_rights[$app],
+				'title'   => lang($app),
+				'action'  => $acl_action,
+				'popup'   => $popup,
+				'run'     => (int)(boolean)$run_rights[$app],
 			);
 			if ($run_rights[$app]) $content['old_run'][] = $app;
 			$readonlys['apps']['button['.$app.']'] = !$acl_action;
@@ -242,8 +243,8 @@ class Groups
 		});
 
 		$readonlys['button[delete]'] = !$content['account_id'] ||
-			$GLOBALS['egw']->acl->check('group_access', 32, 'admin');	// no delete
-		if ($GLOBALS['egw']->acl->check('group_access', $content['account_id'] ? 16 : 4, 'admin'))	// no edit / add
+			$GLOBALS['egw']->acl->check('group_access', 32, 'admin');    // no delete
+		if ($GLOBALS['egw']->acl->check('group_access', $content['account_id'] ? 16 : 4, 'admin'))    // no edit / add
 		{
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		}
@@ -295,14 +296,15 @@ class Groups
 		if(count($account) == 0) return $content['account_id'];
 
 		$cmd = new admin_cmd_edit_group(array(
-			'account' => (int)$content['account_id'],
-			'set' => $account,
-			'old' => $old,
-		// This is the documentation from policy app
-		)+(array)$content['admin_cmd']);
+											'account' => (int)$content['account_id'],
+											'set'     => $account,
+											'old'     => $old,
+											// This is the documentation from policy app
+										)+(array)$content['admin_cmd']);
 		$msg = $cmd->run();
 		return $cmd->account;
 	}
+
 	/**
 	 * Check entered data and return error-msg via json data or null
 	 *
@@ -330,32 +332,32 @@ class Groups
 	 */
 	public static function edit_group($location)
 	{
-		unset($location);	// unused, but required by hooks signature
+		unset($location);    // unused, but required by hooks signature
 
 		$ret = array(
 			array(
-				'id' => 'edit',
+				'id'      => 'edit',
 				'caption' => 'Edit group',
-				'icon' => 'edit',
-				'popup' => '600x400',
-				'url' => 'menuaction=admin.'.self::class.'.edit&account_id=$id',
-				'group' => 2,
+				'icon'    => 'edit',
+				'popup'   => '600x400',
+				'url'     => 'menuaction=admin.'.self::class.'.edit&account_id=$id',
+				'group'   => 2,
 			),
 			array(
-				'id' => 'add_group',
-				'caption' => 'Add group',
-				'icon' => 'new',
-				'popup' => '600x400',
-				'url' => 'menuaction=admin.'.self::class.'.edit',
-				'group' => 2,
+				'id'       => 'add_group',
+				'caption'  => 'Add group',
+				'icon'     => 'new',
+				'popup'    => '600x400',
+				'url'      => 'menuaction=admin.'.self::class.'.edit',
+				'group'    => 2,
 				'enableId' => '',
 			),
 			'delete' => array(
-				'id' => 'delete',
+				'id'      => 'delete',
 				'caption' => 'Delete',
-				'icon' => 'delete',
+				'icon'    => 'delete',
 				'confirm' => 'Delete this group',
-				'group' => 99,
+				'group'   => 99,
 			)
 		);
 		// if policy app is used, use admin_account delete to delete groups
@@ -363,7 +365,7 @@ class Groups
 		{
 			$ret['delete'] += array(
 				'policy_confirmation' => true,
-				'url' => 'menuaction=admin.admin_account.delete&account_id=$id'
+				'url'                 => 'menuaction=admin.admin_account.delete&account_id=$id'
 			);
 		}
 		return $ret;
@@ -389,8 +391,8 @@ class Groups
 			return true;
 		}
 		$replacements = array(
-			'$app' => $app,
-			'$account_id' => $account_id,
+			'$app'         => $app,
+			'$account_id'  => $account_id,
 			'$account_lid' => $account_lid,
 		);
 		foreach($acl_action as &$value)

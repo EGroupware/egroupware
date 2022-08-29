@@ -709,8 +709,9 @@ egwAction.prototype._check_confirm = function(_senders, _target)
 		{
 			if(this.data.policy_confirmation && egw.app('policy'))
 			{
-				egw.includeJS(egw.link('/policy/js/app.js'), function() {
-					if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
+				egw.includeJS(egw.link('/policy/js/app.min.js'), function ()
+				{
+					if (typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
 					{
 						app.policy = new app.classes.policy();
 					}

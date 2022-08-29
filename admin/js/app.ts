@@ -496,7 +496,7 @@ class AdminApp extends EgwApp
 				break;
 
 			case 'delete':
-				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data, this.et2._inst.etemplate_exec_id]).sendRequest();
+				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data, this.et2.getInstanceManager().etemplate_exec_id]).sendRequest();
 				break;
 			default:
 				if (!_action.data.url)
@@ -1564,7 +1564,7 @@ class AdminApp extends EgwApp
 		{
 			if(button == Et2Dialog.YES_BUTTON)
 			{
-				egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest(false);	// false = synchronious request
+				egw.json('admin_account::ajax_delete_group', [account_id, [], _widget.getInstanceManager().etemplate_exec_id]).sendRequest(false);	// false = synchronious request
 				window.close();
 			}
 		}, this.egw.lang('Delete this group') + '?');
