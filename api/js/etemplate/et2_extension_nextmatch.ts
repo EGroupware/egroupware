@@ -3328,7 +3328,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			overlay: (typeof settings.searchbox != 'undefined' && typeof settings.searchbox.overlay != 'undefined') ? settings.searchbox.overlay : false,
 			onchange: function()
 			{
-				if(this.value !== this.nextmatch.activeFilters.search)
+				if(this.value !== self.nextmatch.activeFilters.search)
 				{
 					self.nextmatch.applyFilters({search: this.get_value()});
 				}
