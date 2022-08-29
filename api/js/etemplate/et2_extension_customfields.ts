@@ -523,18 +523,26 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	_setup_text( field_name, field, attrs)
 	{
 		// No label on the widget itself
-		delete(attrs.label);
+		delete (attrs.label);
 
 		field.type = 'textbox';
 		attrs.rows = field.rows > 1 ? field.rows : null;
+		if(attrs.rows && attrs.rows > 0)
+		{
+			field.type = 'textarea';
+		}
 
 		if(field.len)
 		{
 			attrs.size = field.len;
-			if (field.rows == 1) attrs.maxlength = field.len;
+			if(field.rows == 1)
+			{
+				attrs.maxlength = field.len;
+			}
 		}
 		return true;
 	}
+
 	_setup_passwd( field_name, field, attrs)
 	{
 		// No label on the widget itself
