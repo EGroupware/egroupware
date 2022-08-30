@@ -115,7 +115,7 @@
 					<date-timeonly id="end_time" class="et2_fullWidth"/>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="165">
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="200">
 						<tabs>
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>

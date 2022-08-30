@@ -242,7 +242,7 @@
 					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" tab_height="260">
+					<tabbox id="tabs" span="all" tab_height="300">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
