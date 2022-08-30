@@ -204,13 +204,13 @@
 				<column width="50"/>
 			</columns>
 			<rows>
-				<row class="dialogHeader" height="28">
+				<row class="dialogHeader">
 					<description value="Title"/>
 					<textbox id="title" needed="1" maxlength="255" tabindex="1" class="et2_fullWidth" span="5"/>
 					<description font_style="n" id="id"/>
 					<appicon/>
 				</row>
-				<row class="dialogHeader2" height="28">
+				<row class="dialogHeader2">
                     <description for="start" value="Start"/>
 					<date-time id="start" needed="1" class="required" onchange="app.calendar.edit_start_change"/>
 					<description for="duration" value="Duration" id="calendar_edit_duration" />
@@ -220,7 +220,7 @@
 					</menulist>
 					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
 				</row>
-				<row class="dialogHeader2" height="28">
+				<row class="dialogHeader2">
 					<label value="Options"/>
 					<checkbox statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
 					<checkbox label="Private" id="public" options="0,1" statustext="Mark event as private to hide title and description"/>
@@ -233,7 +233,7 @@
 					</hbox>
 					<description/>
 				</row>
-				<row class="dialogHeader3" height="28">
+				<row class="dialogHeader3">
 					<label for="location" value="Location"/>
 					<hbox span="2">
 						<textbox id="location" maxlength="255" class="et2_fullWidth"/>

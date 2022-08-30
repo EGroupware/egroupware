@@ -3739,8 +3739,8 @@ tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 t
 tr.dialogOperators td, .dialogFooterToolbar {
     padding: 5px 0 5px 0px;
 }
-.dialogFooterToolbar td {
-    padding: 5px 5px 0px 0px;
+.dialogFooterToolbar, .dialogFooterToolbar td {
+    padding-top: 10px !important;
 }
 .dialogHeader {
     vertical-align: middle;
@@ -3749,7 +3749,7 @@ tr.dialogOperators td, .dialogFooterToolbar {
 }
 
 tr.dialogHeader2 td {
-    padding-top: 15px;
+    padding-top: 10px !important;
 }
 
 /*readonly widget style*/
