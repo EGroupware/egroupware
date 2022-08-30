@@ -229,7 +229,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	private fix_bad_value()
 	{
-		if(this.multiple || !Array.isArray(this.select_options) || this.select_options.length == 0)
+		if(this.multiple || (!this.emptyLabel && (!Array.isArray(this.select_options) || this.select_options.length == 0)))
 		{
 			// Nothing to do here
 			return;

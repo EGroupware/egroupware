@@ -244,7 +244,7 @@ export class StaticOptions
 
 		for(var i = 0, n = min; n <= max && i <= 100; n += interval, ++i)
 		{
-			options.push({value: n, label: sprintf(format, n)});
+			options.push({value: "" + n, label: sprintf(format, n)});
 		}
 		return options;
 	}
