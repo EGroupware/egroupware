@@ -540,6 +540,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				attrs.maxlength = field.len;
 			}
 		}
+		if(attrs.readonly)
+		{
+			field.type = 'description';
+		}
 		return true;
 	}
 
