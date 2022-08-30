@@ -3738,7 +3738,6 @@ td.avatar {
 tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
 tr.dialogOperators td, .dialogFooterToolbar {
     padding: 5px 0 5px 0px;
-    vertical-align: middle;
 }
 .dialogFooterToolbar td {
     padding: 5px 5px 0px 0px;
