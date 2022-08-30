@@ -57,7 +57,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			et2-image {
 				height: 2ex;
 				padding: 0px;
-				margin-top: -5px;
+				margin-top: -13px;
 				vertical-align: middle;
 			}
 			et2-image[src="trash"] {

@@ -3288,7 +3288,7 @@ table.dialog-main-view {
 /**********    Header Part ********************/
 .dialogHeader {
   color: #000000;
-  border-bottom: 3px solid #696969;
+  border-bottom: 2px solid #696969;
 }
 .dialogHeader input[type="radio"],
 .dialogHeader input.et2_radiobox {
@@ -3461,7 +3461,7 @@ div#etemplate\.tab_widget {
 /*##############################################*/
 .dialogFooterToolbar {
   background-color: transparent;
-  border-top: 3px solid #696969;
+  border-top: 2px solid #696969;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 }
 .dialogFooterToolbar td {

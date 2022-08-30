@@ -226,7 +226,8 @@ div.calendar_conflicts {
 }
 /* Toolbar */
 #calendar-toolbar {
-  height: 30px;
+  height: 3.6em;
+  margin-top: 0.3em;
 }
 #calendar-toolbar > div {
   display: flex;
@@ -1533,7 +1534,6 @@ img.calendar_print_appicon {
 #calendar-toolbar_toolbar et2-switch {
   height: var(--height);
   display: inline-flex;
-  width: var(--width);
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
@@ -1542,14 +1542,15 @@ img.calendar_print_appicon {
   background-repeat: no-repeat;
   background-position: center;
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
-  width: 24px;
+}
+et2-switch#calendar-toolbar_toolbar-weekend {
+  background-image: none !important;
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch[checked],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"][checked],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"][checked] {
   filter: none;
   box-shadow: inset 1px 1px 1px 1px gray !important;
-  width: var(--width);
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch span.label,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] span.label,
@@ -1561,7 +1562,7 @@ img.calendar_print_appicon {
   visibility: hidden;
 }
 #calendar-toolbar_toolbar et2-switch {
-  height: 24px;
+  height: 32px;
   display: inline-block;
   vertical-align: top;
   border: 1px solid silver;
@@ -1668,6 +1669,10 @@ img.calendar_print_appicon {
 }
 #calendar-list_nm .nextmatch_header .search {
   display: none;
+}
+#calendar-edit_description {
+  height: 70%;
+  margin-bottom: 2em;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
@@ -2845,7 +2850,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 21px;
+  height: 28px;
   top: 0;
   filter: invert(1);
 }
@@ -2853,7 +2858,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 21px;
+  height: 28px;
   top: 0;
 }
 #calendar-toolbar_toolbar et2-switch .label span {
@@ -3001,3 +3006,4 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     color: #707070;
   }
 }
+/*# sourceMappingURL=app.css.map */

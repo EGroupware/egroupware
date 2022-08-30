@@ -2194,7 +2194,6 @@ lion-validation-feedback[type] {
 
 .nextmatch_header .header_count {
     padding: 0px 10px;
-    height: 22px;
     border: 1px solid rgb(212, 212, 216);   /* --sl-input-border-color */
     text-align: center;
     border-radius: 3px;
@@ -2205,7 +2204,7 @@ lion-validation-feedback[type] {
 
 .nextmatch_header .header_count span {
     position: relative;
-    top: 4px;
+    top: 8px;
     font-size: 11px;
     color: gray;
 }
@@ -2536,7 +2535,6 @@ div.et2_progress {
     background-color: white;
     width: 30px;
     padding: 1px;
-    margin: 2px;
     text-align: left;
 }
 
@@ -2810,7 +2808,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
     background-image: url(images/dots.svg);
     background-size: 16px;
-    height: 24px;
+    height: 32px;
     width: 20px;
     margin-top: 0px;
     background-repeat: no-repeat;
@@ -2821,7 +2819,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
     padding: 0px !important;
     width: 40px;
-    height: 24px;
+    height: 32px;
     margin-top: 0px;
 }
 
@@ -2889,7 +2887,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar .et2_toolbar_actionlist et2-button,
 .et2_toolbar .et2_toolbar_actionlist et2-switch {
     margin-right: 1ex;
-    min-width: 24px;
+    min-width: 32px;
 }
 .et2_toolbar .ui-toolbar-menulist > *:hover{
     outline: none;
@@ -2935,8 +2933,6 @@ et2-button.transparent-button::part(container) {
 .nextmatch_header_row button,
 .et2_toolbar div.et2_progress,
 .nextmatch_header_row div.et2_progress {
-    margin: 1px 4px 1px 0;
-    height: 24px;
     border-radius: 3px;
     background-color: #fafafa;
     border: 1px solid silver;
@@ -2944,13 +2940,10 @@ et2-button.transparent-button::part(container) {
 
 .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
     padding: 0;
-    height: 22px;
 }
 
 .et2_toolbar .et2_progress > div, .nextmatch_header_row .et2_progress > div {
-    margin: 2px;
     border-radius: 3px;
-    height: 18px;
 }
 
 /**
@@ -3198,7 +3191,6 @@ div.et2_toolbar_more h.ui-accordion-header {
 
 .et2_toolbar_actionlist {
     float: left;
-    height: 24px;
     white-space: nowrap;
     display: flex;
 }
@@ -3741,9 +3733,10 @@ td.avatar {
 
 
 /*Dialog headers styling*/
+.popupMainDiv table.et2_grid > tbody > tr > td,
 tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
 tr.dialogOperators td, .dialogFooterToolbar {
-    padding: 5px 0 5px 3px;
+    padding: 5px 0 5px 0px;
     vertical-align: middle;
 }
 .dialogFooterToolbar td {

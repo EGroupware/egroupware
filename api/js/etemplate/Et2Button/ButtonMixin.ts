@@ -83,7 +83,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 			}
 			/* Make hover border match other widgets (select) */
 			.button--standard.button--default:hover:not(.button--disabled) {
-				background-color: var(--sl-input-background-color-hover);
+				background-color: var(--sl-color-gray-100);
 				border-color: var(--sl-input-border-color-hover);
 				color: var(--sl-input-color-hover);
 			}

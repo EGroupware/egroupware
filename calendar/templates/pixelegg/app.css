@@ -214,7 +214,7 @@ div.calendar_conflicts {
 }
 /* Toolbar */
 #calendar-toolbar {
-  height: 30px;
+  height: 3.6em;
   margin-top: 0.3em;
 }
 #calendar-toolbar > div {
@@ -1522,7 +1522,6 @@ img.calendar_print_appicon {
 #calendar-toolbar_toolbar et2-switch {
   height: var(--height);
   display: inline-flex;
-  width: var(--width);
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
@@ -1531,7 +1530,6 @@ img.calendar_print_appicon {
   background-repeat: no-repeat;
   background-position: center;
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
-  width: 24px;
 }
 et2-switch#calendar-toolbar_toolbar-weekend {
   background-image: none !important;
@@ -1552,7 +1550,7 @@ et2-switch#calendar-toolbar_toolbar-weekend {
   visibility: hidden;
 }
 #calendar-toolbar_toolbar et2-switch {
-  height: 24px;
+  height: 32px;
   display: inline-block;
   vertical-align: top;
   border: 1px solid silver;
@@ -2840,7 +2838,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 21px;
+  height: 28px;
   top: 0;
   filter: invert(1);
 }
@@ -2848,7 +2846,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
-  height: 21px;
+  height: 28px;
   top: 0;
 }
 #calendar-toolbar_toolbar et2-switch .label span {

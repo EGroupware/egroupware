@@ -39,10 +39,10 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-  	  --sl-font-size-medium: 11px;
+  	  --sl-font-size-medium: 12px;
   		
-      --sl-input-height-small: 18px;
-      --sl-input-height-medium: 24px;
+      --sl-input-height-small: 24px;
+      --sl-input-height-medium: 32px;
       
       --sl-spacing-small: 0.1rem;
       --sl-spacing-medium: 0.5rem;
