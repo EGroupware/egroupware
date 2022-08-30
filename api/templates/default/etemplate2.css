@@ -1362,7 +1362,6 @@ div.et2_vfsPath ul {
     height: 100%;
     overflow-y: hidden;
     overflow-x: auto;
-    padding-bottom: 13px;
     max-width: 92%;
     margin-right: 7%;
 }
@@ -1385,7 +1384,7 @@ div.et2_vfsPath li {
     display: inline-block;
     padding-right: 5px;
     flex: none;
-    padding-top: 6px;
+    padding-top: 9px;
     color: #26537C;
     border-radius: 5px 0px 0px 5px;
 }
@@ -1638,7 +1637,7 @@ et2-tab-panel {
     box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
     color: #333;
     line-height: 13px;
-    font-size: 11px;
+    font-size: 12px;
     cursor: default;
     word-break: break-word;
     white-space: normal;
@@ -2016,7 +2015,7 @@ td.et2_required {
     background-color: #FFFE36;
     border: 1px solid var(--error-color, #E1E16D);
     color: #000000;
-    font-size: 11px;
+    font-size: 12px;
     min-height: 15px;
     padding: 4px 10px;
 }
@@ -2111,7 +2110,7 @@ div.message, lion-validation-feedback[type] {
     margin: 0px;
     clear: left;
     max-width: 500px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 div.message.floating, lion-validation-feedback[type] {
@@ -2205,7 +2204,7 @@ lion-validation-feedback[type] {
 .nextmatch_header .header_count span {
     position: relative;
     top: 8px;
-    font-size: 11px;
+    font-size: 12px;
     color: gray;
 }
 
@@ -2848,7 +2847,9 @@ div.et2_toolbar.ui-widget-header {
     border: 1px solid silver;
     border-radius: 3px;
     background-color: #fafafa;
-    font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
     font-size: 9pt;
     font-weight: normal;
     height: 17px;
@@ -2971,7 +2972,7 @@ et2-button.transparent-button::part(container) {
  * Textbox in toolbar or NM header
  */
 .et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox {
-    height: 18px;
+    height: 26px;
     border-radius: 3px;
     background-color: #fafafa;
     border: 1px solid silver;
@@ -3117,7 +3118,7 @@ et2-button.transparent-button::part(container) {
     -moz-user-select: none;
     background: white;
     right: 0;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 400;
     box-shadow: 0 2px 8px hsl(240 3.8% 46.1% / 12%);
     border: 1px solid hsl(240deg 6% 90%);
@@ -3141,7 +3142,7 @@ et2-button.transparent-button::part(container) {
     width:auto;
 }
 .ui-toolbar-menulist et2-button::part(label) {
-    font-size: 11px;
+    font-size: 12px;
 }
 .ui-toolbar-menulist et2-button::part(base) {
     border: none;
@@ -3312,7 +3313,7 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 .et2_toolbar_more span.et2_checkbox_slideSwitch {
     text-align: left;
     color: black;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     width: 100%;
 }
