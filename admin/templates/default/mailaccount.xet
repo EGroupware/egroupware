@@ -348,7 +348,7 @@
                     </hbox>
                 </row>
 				<row>
-					<tabbox id="tabs" span="all" tab_height="420">
+					<tabbox id="tabs" span="all" tab_height="480">
 						<tabs>
 							<tab id="admin.mailaccount.identity" label="Identity+Signature" statustext="Identity&amp;Signature"/>
 							<tab id="admin.mailaccount.imap" label="IMAP" statustext="incoming mail"/>

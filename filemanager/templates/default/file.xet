@@ -247,7 +247,7 @@
 					<description id="msg" span="all" class="redItalic"/>
 				</row>
 				<row class="dialogTabs">
-					<tabbox id="tabs" span="all" tab_height="300">
+					<tabbox id="tabs" span="all" tab_height="330">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
 							<tab id="filemanager.file.perms" label="Permissions"/>
