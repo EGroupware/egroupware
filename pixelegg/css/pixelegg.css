@@ -734,7 +734,7 @@
     width: 50% !important;
   }
   .nextmatch_header > .filters > select > option {
-    font-size: 11px;
+    font-size: 12px;
   }
   .nextmatch_header > .filters input {
     margin-right: 2ex;
@@ -1193,7 +1193,7 @@ option:checked {
 .ui-widget textarea,
 .ui-widget button {
   font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
-  font-size: 11px;
+  font-size: 12px;
 }
 .ui-widget-content {
   /*.bordered (@color-hint,@color-hint,@color-hint,@color-hint);*/
@@ -1830,7 +1830,7 @@ body {
   padding: 0px !important;
   width: 99.9%;
   height: 99.9% !important;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.28;
   font-weight: normal;
   overflow: hidden;
@@ -2235,7 +2235,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
 #loginMainDiv div#centerBox form table.divLoginbox select.onChangeSubmit {
   background-color: #4177A2;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 22px;
   padding-left: 0;
   width: 250px;
   margin-top: 15px;
@@ -2244,7 +2244,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   padding-left: 25px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox .registration {
-  font-size: 11px;
+  font-size: 12px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox .registration a:not(:first-child):before {
   padding-left: 5px;
@@ -4358,7 +4358,7 @@ span.overlayContainer img.overlay {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 12px;
   padding-left: 26px;
   line-height: 1.5em;
   display: inline-block;
@@ -4586,7 +4586,7 @@ span.overlayContainer img.overlay {
   top: 8px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1em;
   margin: 0 15px 2px 2px;
   vertical-align: super;
@@ -4716,7 +4716,7 @@ span.overlayContainer img.overlay {
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
-  font-size: 12px;
+  font-size: 13px;
   line-height: 17px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header object {
@@ -4836,7 +4836,7 @@ span.overlayContainer img.overlay {
   margin: 5px 0px 3px 5px;
   padding: 0px 0px 0px 24px;
   line-height: 1em;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   background-image: url(../../api/templates/default/images/arrow_right.svg);
   background-repeat: no-repeat;
