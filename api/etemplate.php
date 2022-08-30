@@ -108,7 +108,7 @@ function send_template()
 				'nextmatch-accountfilter' => 'empty_label,account_type,ignore',
 			);
 			// prefer more specific type-subtype over just type
-			$names = $legacy_options[$matches[1] . $matches[2]] ?? $legacy_options[$matches[1]] ?? null;
+			$names = $legacy_options[$matches[1] . $matches[2]] ?? $legacy_options[trim($matches[1])] ?? null;
 			if (isset($names))
 			{
 				$names = explode(',', $names);
