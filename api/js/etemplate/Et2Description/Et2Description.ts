@@ -26,6 +26,12 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			* {
 				white-space: pre-wrap;
 			}
+			:host {
+				display:flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				flex: 0 1 auto !important;
+			}
 			:host a {
 				cursor: pointer;
 				color: #26537c;
