@@ -763,7 +763,7 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 #mail-subscribe table.et2_grid tr td et2-box,
 #mail-folder_management table.et2_grid tr td et2-box {
 	margin-top: 16px;
-	height: 484px;
+	height: 460px;
 	overflow: auto;
 }
 

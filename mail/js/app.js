@@ -4369,7 +4369,7 @@ app.classes.mail = AppJS.extend(
 	edit_subscribe: function (_action,_senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x500');
+		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x580');
 	},
 
 	/**
@@ -5432,7 +5432,7 @@ app.classes.mail = AppJS.extend(
 	folderManagement: function (_action,_senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x500');
+		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
 	},
 
 	/**
