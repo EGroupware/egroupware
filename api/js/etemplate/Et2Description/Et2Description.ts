@@ -32,6 +32,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				justify-content: space-evenly;
 				flex: 0 1 auto !important;
 			}
+			label {display: contents;}
 			:host a {
 				cursor: pointer;
 				color: #26537c;
