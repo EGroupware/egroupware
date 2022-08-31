@@ -13,6 +13,7 @@
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
+use EGroupware\Api\Image;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\Etemplate;
 
@@ -573,7 +574,11 @@ class preferences_settings
 		{
 			if ($app != 'preferences' && $GLOBALS['egw_info']['user']['apps'][$app])
 			{
-				$sel_options['appname'][$app] = $GLOBALS['egw_info']['apps'][$app]['title'];
+				$sel_options['appname'][$app] = [
+					'value' => $app,
+					'label' => $GLOBALS['egw_info']['apps'][$app]['title'],
+					'icon' => Image::find($app, 'navbar')
+				];
 			}
 		}
 		natcasesort($sel_options['appname']);

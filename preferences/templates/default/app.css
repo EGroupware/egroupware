@@ -36,12 +36,12 @@ tr.prefRow > td.prefValueColumn {
 .prefHelp {
 	position: absolute;
     display: none;
-    width: 255px;
+    width: 250px;
     max-height: 99%;
-    height: calc(99% - 150px);
+    height: calc(99% - 157px);
     background-color: #f0f0ff;
     padding: 5px;
-    top: 80px;
+    top: 95px;
 	overflow-y: auto;
     z-index: 1;
 }
