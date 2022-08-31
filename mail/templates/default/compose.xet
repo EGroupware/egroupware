@@ -94,7 +94,6 @@
 							<column disabled="!@showtempname" width="10%"/>
 							<column width="85%"/>
 							<column width="8%"/>
-							<column width="" />
 						</columns>
 						<rows>
 							<row class="row attachmentRow">
@@ -102,7 +101,6 @@
 								<description id="attachments[0][tmp_name]"/>
 								<description class="useEllipsis et2_link" id="attachments[0][name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
 								<vfs-size align="right" id="attachments[0][size]" />
-								<button id="delete[@attachments[0][tmp_name]]" value="Delete" image="delete"/>
 							</row>
 						</rows>
 					</grid>

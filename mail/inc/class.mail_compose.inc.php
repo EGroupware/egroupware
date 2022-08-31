@@ -1383,6 +1383,7 @@ class mail_compose
 						? Vfs\Sharing::LINK : $content['filemode'] ?? '';
 				$attach['filemode_title'] = lang(Vfs\Sharing::$modes[$attach['filemode_icon']]['label'] ?? '');
 			}
+			$content['attachmentsBlockTitle'] =  count($content['attachments']).' '.Lang('Attachments');
 		}
 		else
 		{
