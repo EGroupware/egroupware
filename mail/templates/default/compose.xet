@@ -99,7 +99,7 @@
 							<row class="row attachmentRow">
 								<image src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"/>
 								<description id="attachments[0][tmp_name]"/>
-								<description class="useEllipsis et2_link" id="attachments[0][name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+								<description class="useEllipsis et2_link" value="@attachments[0][name]" id="0[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
 								<vfs-size align="right" id="attachments[0][size]" />
 							</row>
 						</rows>
