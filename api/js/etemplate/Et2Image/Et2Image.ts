@@ -133,6 +133,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 
 	protected parse_href(img_href : string) : string
 	{
+		img_href = img_href || '';
 		// allow url's too
 		if(img_href[0] == '/' || img_href.substr(0, 4) == 'http' || img_href.substr(0, 5) == 'data:')
 		{
