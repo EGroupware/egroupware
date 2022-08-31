@@ -139,11 +139,11 @@ class mail_acl
 		}
 		if (!$this->imap->isAdminConnection)
 		{
-			$tmpl->setElementAttribute('mailbox', 'autocomplete_url', 'mail.mail_compose.ajax_searchFolder');
-			$tmpl->setElementAttribute('mailbox', 'autocomplete_params', array('mailaccount' => $acc_id));
+			$tmpl->setElementAttribute('mailbox', 'searchOptions', array('mailaccount' => $acc_id));
 		}
 		else
 		{
+			$tmpl->setElementAttribute('mailbox', 'searchUrl', '');
 			//Todo: Implement autocomplete_url function with admin stuffs consideration
 		}
 		// Unset the content if folder is changed, in order to read acl rights for new selected folder
@@ -253,6 +253,7 @@ class mail_acl
 			}
 		}
 		$readonlys = $sel_options = array();
+		$sel_options['mailbox'] = [['value' => $mailbox, 'label' => $mailbox]];
 		$sel_options['acl'] = $this->aclRightsAbbrvs;
 
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them

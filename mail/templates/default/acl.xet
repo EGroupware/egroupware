@@ -14,7 +14,9 @@
 				</row>
 				<row>
 					<description value="Folder"/>
-					<taglist id="mailbox" width="100%" maxSelection="1" height="150" multiple="false" allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+					<taglist id="mailbox" width="100%" maxSelection="1" height="150" multiple="false"
+                             allowFreeEntries="false" searchUrl="mail.mail_compose.ajax_searchFolder"
+                             onchange='app.mail.acl_folderChange'/>
 				</row>
 				<row>
 					<description value="Rights"/>

@@ -4439,7 +4439,7 @@ app.classes.mail = AppJS.extend(
 
 		if (mailbox)
 		{
-			if (mailbox.taglist.getValue().length > 0)
+			if (mailbox.value.length > 0)
 			{
 				this.et2._inst.submit();
 			}
