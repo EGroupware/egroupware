@@ -24,7 +24,7 @@
 
 			<grid  width="100%" resize_ratio="0">
 				<columns>
-					<column widtd="10%"/>
+					<column width="10%"/>
 					<column width="84%"/>
 					<column width="6%"/>
 				</columns>
@@ -86,19 +86,28 @@
 			</grid>
 		</vbox>
 		<vbox class="mailComposeBodySection" width="100%">
-			<old-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-				<htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
-			</old-hbox>
-			<old-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
-				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
-			</old-hbox>
-			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
-				<hbox>
-					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
-					<date id="expiration" label="Expiration" blur="@expiration_blur" data_format="Y-m-d"/>
-					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
+			<et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
+				<hbox slot="summary">
+					<grid class="previewAttachmentArea egwGridView_grid" >
+						<columns>
+							<column width= "3%"/>
+							<column disabled="!@showtempname" width="10%"/>
+							<column width="85%"/>
+							<column width="8%"/>
+							<column width="" />
+						</columns>
+						<rows>
+							<row class="row attachmentRow">
+								<image src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"/>
+								<description id="attachments[0][tmp_name]"/>
+								<description class="useEllipsis et2_link" id="attachments[0][name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+								<vfs-size align="right" id="attachments[0][size]" />
+								<button id="delete[@attachments[0][tmp_name]]" value="Delete" image="delete"/>
+							</row>
+						</rows>
+					</grid>
 				</hbox>
-				<grid id="attachments" width="100%" maxheight="165" class="egwGridView_grid" resize_ratio="0">
+				<grid id="attachments" class="previewAttachmentArea egwGridView_grid">
 					<columns>
 						<column width= "3%"/>
 						<column disabled="!@showtempname" width="10%"/>
@@ -116,6 +125,22 @@
 						</row>
 					</rows>
 				</grid>
+			</et2-details>
+			<old-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
+				<htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
+			</old-hbox>
+			<old-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
+				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
+			</old-hbox>
+			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
+				<hbox>
+					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
+					<hbox>
+						<description value="Expiration"/>
+						<date id="expiration" blur="@expiration_blur" data_format="Y-m-d"/>
+					</hbox>
+					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
+				</hbox>
 			</vbox>
 		</vbox>
 	</template>

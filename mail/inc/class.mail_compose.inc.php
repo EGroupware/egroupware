@@ -1384,6 +1384,10 @@ class mail_compose
 				$attach['filemode_title'] = lang(Vfs\Sharing::$modes[$attach['filemode_icon']]['label'] ?? '');
 			}
 		}
+		else
+		{
+			unset($content['attachments']);
+		}
 
 		if (isset($content['to'])) $content['to'] = self::resolveEmailAddressList($content['to']);
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
