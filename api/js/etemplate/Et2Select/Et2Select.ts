@@ -193,7 +193,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_triggerChange(e)
 	{
-		this.dispatchEvent(new Event("change"));
+		if(super._triggerChange(e))
+		{
+			this.dispatchEvent(new Event("change"));
+		}
 	}
 
 	/**
@@ -232,6 +235,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		if(this.multiple || (!this.emptyLabel && (!Array.isArray(this.select_options) || this.select_options.length == 0)))
 		{
 			// Nothing to do here
+			return;
+		}
+		// See if parent (search / free entry) is OK with it
+		if(super.fix_bad_value())
+		{
 			return;
 		}
 		// If no value is set, choose the first option

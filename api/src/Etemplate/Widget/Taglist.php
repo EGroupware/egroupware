@@ -152,19 +152,23 @@ class Taglist extends Etemplate\Widget
 						$type == 2 && $account_type == 'users' ||
 						in_array($account_type, array('owngroups', 'memberships')) &&
 							!in_array($val, $GLOBALS['egw']->accounts->memberships(
-								$GLOBALS['egw_info']['user']['account_id'], true))
+								$GLOBALS['egw_info']['user']['account_id'], true
+							)
+							)
 					)
 					{
 						self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val,
-							!$type?'not found' : ($type == 1 ? 'user' : 'group')),'');
+																	!$type ? 'not found' : ($type == 1 ? 'user' : 'group')
+						),                         ''
+						);
 						$value = '';
 						break;
 					}
 					continue;
 				}
-				if(count($allowed) && !$this->attrs['allowFreeEntries'] && empty($this->attrs['autocomplete_url']) && !array_key_exists($val,$allowed))
+				if(count($allowed) && !$this->attrs['allowFreeEntries'] && empty($this->attrs['searchUrl']) && !array_key_exists($val, $allowed))
 				{
-					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
+					self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val, implode("','", array_keys($allowed))), '');
 					unset($value[$key]);
 				}
 				if(str_contains($this->type, 'email') && $this->attrs['include_lists'] && is_numeric($val))

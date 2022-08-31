@@ -140,6 +140,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					flex: 1 1 auto;
 					width: 100%;
 				}
+				/* Full width search textbox covers loading spinner, lift it up */
+				::slotted(sl-spinner) {
+					z-index: 2;
+				}
 				/* Don't show the current value while searching for single, we want the space
 					This lets the current value shrink to nothing so the input can expand
 				 */
@@ -265,6 +269,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._handleClear = this._handleClear.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
+			this._handleSearchChange = this._handleSearchChange.bind(this);
 			this._handleSearchKeyDown = this._handleSearchKeyDown.bind(this);
 			this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
 		}
@@ -393,12 +398,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected get _searchInputNode() : HTMLInputElement
 		{
-			return this._activeControls.querySelector("#search");
+			return this._activeControls?.querySelector("#search");
 		}
 
 		protected get _editInputNode() : HTMLInputElement
 		{
-			return this._activeControls.querySelector("input#edit");
+			return this._activeControls?.querySelector("input#edit");
 		}
 
 		protected get _activeControls()
@@ -454,6 +459,25 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 		}
 
+		protected fix_bad_value()
+		{
+			if(!this.allowFreeEntries && !this.searchEnabled)
+			{
+				// Let regular select deal with it
+				return false;
+			}
+			const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
+
+			// Check any already found options
+			if(Object.values(this.menuItems).filter((option) => valueArray.find(val => val == option.value)).length === 0)
+			{
+				return false;
+			}
+
+			return true;
+			// TODO? Should we check the server, or just be OK with it?  Passing the "current" value in sel_options makes sure the value is there
+		}
+
 		protected _bindListeners()
 		{
 			this.addEventListener("sl-select", this._handleSelect);
@@ -468,6 +492,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// selecting an option fires 2 change events - 1 before the widget is finished adjusting, losing the value
 				// We catch all change events, then call this._oldChange only when value changes
 				this.removeEventListener("change", this._oldChange);
+
+				this._searchInputNode.removeEventListener("change", this._searchInputNode.handleChange);
+				this._searchInputNode.addEventListener("change", this._handleSearchChange);
 			});
 		}
 
@@ -476,6 +503,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this.removeEventListener("sl-select", this._handleSelect);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
+
+			this._searchInputNode?.removeEventListener("change", this._handleSearchChange);
 		}
 
 		handleMenuShow()
@@ -521,6 +550,18 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._activeControls?.classList.remove("active");
 				this.shadowRoot.querySelector('.select__label').style.display = "";
 			}
+		}
+
+		_triggerChange(event)
+		{
+			// Don't want searchbox events to trigger change event
+			if(event.target == this._searchInputNode)
+			{
+				event.stopImmediatePropagation();
+				event.preventDefault();
+				return false;
+			}
+			return true;
 		}
 
 		_handleChange(event)
@@ -792,6 +833,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
 					target
 				);
+				this.handleMenuSlotChange();
 			}
 		}
 
@@ -950,6 +992,19 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				item.classList.remove("no-match");
 			})
 			this.syncItemsFromValue();
+		}
+
+		/**
+		 * et2-searchbox (SlInput) sends out an event on change.
+		 * We don't care, and if we let it bubble it'll get in the way.
+		 * @param e
+		 * @protected
+		 */
+		protected _handleSearchChange(e)
+		{
+			e.stopImmediatePropagation();
+			e.preventDefault();
+			return false;
 		}
 	}
 
