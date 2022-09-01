@@ -77,25 +77,29 @@ export class Et2SelectAccount extends Et2Select
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption> = [];
+		let select_options : Array<SelectOption> = [...this.__select_options] || [];
 		// for primary_group we only display owngroups == own memberships, not other groups
 		if (type === 'primary_group' && this.accountType !== 'accounts')
 		{
 			if (this.accountType === 'both')
 			{
-				select_options = this.egw().accounts('accounts');
+				select_options = select_options.concat(this.egw().accounts('accounts'));
 			}
 			select_options = select_options.concat(this.egw().accounts('owngroups'));
 		}
 		else
 		{
-			select_options = this.egw().accounts(this.accountType);
+			select_options = select_options.concat(this.egw().accounts(this.accountType));
 		}
 		// egw.accounts returns value as number, causing the et2-select to not match the option
-		select_options.forEach(option => {
+		select_options.forEach(option =>
+		{
 			option.value = option.value.toString();
 		});
-		return select_options;
+		return select_options.filter((value, index, self) =>
+		{
+			return self.findIndex(v => v.value === value.value) === index;
+		});
 	}
 
 	set select_options(new_options : SelectOption[])
