@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%">
+		<grid width="100%" height="100%">
 			<columns>
 				<column width="25%"/>
 				<column width="35%"/>
@@ -41,12 +41,11 @@
 				<row>
 					<description value="Resend after how many days?"/>
 					<textbox type="integer" id="days" min="1" max="31"/>
-
 				</row>
 				<row>
 					<description value="With message:"/>
 					<vbox span="all">
-						<textbox multiline="true" id="text" width="99%" height="150px" needed="1" class="et2_required"/>
+						<textbox multiline="true" id="text" rows="10" needed="1" class="et2_required"/>
 						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
 				</row>
