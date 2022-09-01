@@ -242,6 +242,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			return;
 		}
+		// If somebody gave '' as a select_option, let it be
+		if(this.value === '' && this.select_options.filter((option) => this.value === option.value).length == 1)
+		{
+			return;
+		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
