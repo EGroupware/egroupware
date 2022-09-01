@@ -874,7 +874,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return false;
 			}
 			// Make sure not to double-add
-			if(!this.select_options.find(o => o.value == text))
+			if(!this.select_options.find(o => o.value == text) && !this.__select_options.find(o => o.value == text))
 			{
 				this.__select_options.push(<SelectOption>{
 					value: text,
@@ -891,7 +891,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			else if(!this.multiple && this.value !== text)
 			{
 				this.value = text;
-				return;
 			}
 
 			// Once added to options, add to value / tags
@@ -915,7 +914,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			let result = validators.filter(v =>
 				v.execute(text, v.param, {node: this}),
 			);
-			return result.length == 0;
+			return validators.length > 0 && result.length == 0 || validators.length == 0;
 		}
 
 		/**
