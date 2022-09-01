@@ -289,9 +289,9 @@ class mail_acl
 		// set a custom autocomplete method for mailbox taglist
 		if ($account_id)
 		{
-			$tmpl->setElementAttribute('mailbox', 'autocomplete_url', __CLASS__.'::ajax_folders');
-			$tmpl->setElementAttribute('mailbox', 'autocomplete_params', array(
-				'acc_id' => $acc_id,
+			$tmpl->setElementAttribute('mailbox', 'searchUrl', __CLASS__ . '::ajax_folders');
+			$tmpl->setElementAttribute('mailbox', 'searchOptions', array(
+				'acc_id'     => $acc_id,
 				'account_id' => $account_id,
 			));
 		}
