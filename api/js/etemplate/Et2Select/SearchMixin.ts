@@ -190,6 +190,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				.search_input.editing{
 					display: flex;
 				}
+				/* If multiple and no value, overlap search onto widget instead of below */
+				:host([multiple]) .search_input.active.novalue {
+					top: 0px;
+				}
 				
 				/* Hide options that do not match current search text */
 				::slotted(.no-match) {
@@ -358,9 +362,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 				let control = this.shadowRoot.querySelector(".form-control-input");
 				control.append(div);
-
-				// Move menu down to make space for search
-				this.dropdown.setAttribute("distance", parseInt(getComputedStyle(div).getPropertyValue("--sl-input-height-medium")));
 			});
 		}
 
@@ -513,6 +514,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				return;
 			}
+			// Move search (& menu) if there's no value
+			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '');
+			this.dropdown?.setAttribute("distance",
+				this._activeControls?.classList.contains("novalue") ?
+				"" :
+					// Make room for search below
+				parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
+			);
+
 			super.handleMenuShow();
 
 			if(this.searchEnabled || this.allowFreeEntries)
@@ -521,6 +531,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
 			}
+
 			if(this.editModeEnabled && this.allowFreeEntries && !this.multiple)
 			{
 				this.startEdit();
@@ -606,6 +617,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
+
+				// If we were overlapping, reset
+				if(this._activeControls.classList.contains("novalue"))
+				{
+					this.handleMenuShow();
+				}
 
 				// Scroll the new tag into view
 				if(event.detail && event.detail.item)
