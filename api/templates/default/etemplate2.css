@@ -4052,8 +4052,11 @@ div.flatpickr-calendar.inline .flatpickr-day {
     max-width: var(--dayWidth);
     height: var(--dayWidth);
     line-height: var(--dayWidth);
-    border: none;
     cursor: pointer;
+}
+
+div.flatpickr-calendar.inline .flatpickr-day:not(.today) {
+    border: none;
 }
 
 .selectedTreeRow {
