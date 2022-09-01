@@ -84,10 +84,21 @@ class calendar_hooks
 	 */
 	static public function prepareEventPush($event)
 	{
-		$event = array_intersect_key($event, array_flip(['id','owner','participants','start','end']));
+		$send_keys = ['id', 'owner', 'participants', 'start', 'end'];
+		if($event['recur_type'])
+		{
+			// If it's a recurring event, we're only sending the first instance, which may be outside of the current
+			// view and therefore would be ignored by the client.  Include range for additional check.
+			$send_keys[] = 'range_start';
+			$send_keys[] = 'range_end';
+		}
+		$event = array_intersect_key($event, array_flip($send_keys));
 		foreach($event['participants'] as $uid => $status)
 		{
-			if ($uid[0] === 'e') unset($event['participants'][$uid]);
+			if($uid[0] === 'e')
+			{
+				unset($event['participants'][$uid]);
+			}
 		}
 		return $event;
 	}

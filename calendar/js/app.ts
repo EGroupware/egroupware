@@ -649,8 +649,13 @@ export class CalendarApp extends EgwApp
 		// Check if we're interested by date?
 		if(cal_event.end <= new Date(this.state.first).valueOf() /1000 || cal_event.start > new Date(this.state.last).valueOf()/1000)
 		{
-			// The event is outside our current view
-			return;
+			// The event is outside our current view, but check if it's just one of a recurring event
+			if(!cal_event.range_end && !cal_event.range_start ||
+				cal_event.range_end <= new Date(this.state.first).valueOf() / 1000 ||
+				cal_event.range_start > new Date(this.state.last).valueOf() / 1000)
+			{
+				return;
+			}
 		}
 
 		// Do we already have "fresh" data?  Most user actions give fresh data in response
