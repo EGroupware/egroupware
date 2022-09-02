@@ -27,7 +27,7 @@ export function dhtmlxTree_getNode(_tree, _itemId) {
 	{
 		// Get the outer html table node of the tree node - return the first
 		// "tr" child of the element
-		return jQuery("tr:first", node.htmlNode);
+		return jQuery("tr:first", node.htmlNode).get(0);
 	}
 }
 
