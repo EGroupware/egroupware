@@ -1196,7 +1196,18 @@ class Db
 		}
 		if (!empty($timezone) && !empty($sql))
 		{
-			$this->Link_ID->Execute($sql);
+			try {
+				$this->Link_ID->Execute($sql);
+			}
+			catch (\Exception $e) {
+				// do NOT stall because DB does not know the TZ, report once per session
+				if (empty($_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ']))
+				{
+					_egw_log_exception($e);
+					$_SESSION[Session::EGW_APPSESSION_VAR][__CLASS__]['SQL-error-TZ'] = 'reported';
+				}
+				return false;
+			}
 			return true;
 		}
 	}
