@@ -3742,6 +3742,9 @@ tr.dialogOperators td, .dialogFooterToolbar {
 .dialogFooterToolbar, .dialogFooterToolbar td {
     padding-top: 10px !important;
 }
+.dialogFooterToolbar et2-button::part(base):not(:hover) {
+    background: hsl(240 4.8% 95.9%);
+}
 .dialogHeader {
     vertical-align: middle;
     border-bottom: 1px solid #E6E6E6;
