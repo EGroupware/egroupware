@@ -230,9 +230,6 @@ div.calendar_conflicts {
   min-height: 26px;
   justify-content: flex-end;
 }
-#calendar-toolbar #calendar-toolbar_keywords {
-  margin-right: 4px;
-}
 #calendar-toolbar .et2_searchbox input {
   height: 14px;
 }
@@ -258,13 +255,16 @@ div.calendar_conflicts {
   left: 0px;
   right: 0px;
 }
+form#calendar-toolbar > div {
+  column-gap: 1ex;
+}
 #calendar-todo {
   position: absolute;
   width: 30%;
   margin-top: 0px;
   z-index: 10;
   bottom: -10px;
-  height: calc(100% - 75px);
+  height: calc(100% - 92px);
 }
 #calendar-view {
   width: 100%;
@@ -1512,11 +1512,15 @@ img.calendar_print_appicon {
 }
 /*weekend slideSwitch in toolbar*/
 #calendar-toolbar_app_header {
-  color: #616161;
+  color: #000;
   font-size: 14px;
-  height: 16px;
-  position: absolute;
-  left: 44%;
+  height: 1.7em;
+  padding: 4px 3px 3px;
+  background: #b4cee773;
+  border-radius: 3px;
+  width: 25em;
+  border: 1px solid #d4d4d8;
+  text-align: center;
 }
 /* Integration slide switches in toolbar */
 #calendar-toolbar_toolbar et2-switch {
@@ -2711,7 +2715,7 @@ div#calendar-container div.calendar {
 }
 div#calendar-container div.calendar table {
   background-color: #fafafa;
-  font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 div#calendar-container div.calendar table thead .button {
   background-color: #FFDD73;
