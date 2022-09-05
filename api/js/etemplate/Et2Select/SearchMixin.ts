@@ -517,7 +517,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Move search (& menu) if there's no value
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '');
 			this.dropdown?.setAttribute("distance",
-				this._activeControls?.classList.contains("novalue") ?
+				!this._activeControls || this._activeControls?.classList.contains("novalue") ?
 				"" :
 					// Make room for search below
 				parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
