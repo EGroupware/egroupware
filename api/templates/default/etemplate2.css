@@ -3326,6 +3326,18 @@ span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container a {
 .et2_toolbar_more span.et2_checkbox_slideSwitch > input {
     display: none;
 }
+input.et2_radiobox:checked {
+    background-color: dimgrey;
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px dimgrey;
+    transition: 1s easeout;
+}
 
 .et2_radiobox {
     margin-right: 10px;
