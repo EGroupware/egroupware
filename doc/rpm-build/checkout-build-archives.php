@@ -1,4 +1,4 @@
-#!/usr/bin/php -qC
+#!/usr/bin/env php -qC
 <?php
 /**
  * EGroupware - checkout, build and release archives, build Debian and rpm packages
