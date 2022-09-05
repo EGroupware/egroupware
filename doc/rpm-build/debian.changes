@@ -1,3 +1,30 @@
+egroupware-docker (21.1.20220905) hardy; urgency=low
+
+  * Calendar/Mail: allow every participant to apply changes from extern organizer and warn if sender is not identical to iCal organizer or participant
+  * CalDAV/CardDAV/TbSync: fix wrong/minimal privileges on sub-collections causing TbSync not to display this calendars or addressbooks
+  * CalDAV/Calendar: expand-property report used by iCal app (Mac) did not return rights on other users calendar
+  * Mail: register EGroupware as protocol handler for mail, you need to click on the double-diamond in the url bar and confirm it
+  * Mail: explicitly apply default font and -size before sending mail
+  * Mail: do NOT fail setting ACL recursive on folders, if single folder fail (eg. wrongly in subscription file)
+  * Mail/Sieve: fix vacation notice activated by date does not work if the start date is set in future
+  * Mail/Dovecot: allow to use admin credentials to access mail when no session password is available, e.g. for SSO
+  * Mobile view: fix broken Security & Password menu
+  * Kanban: Add columns under Kanban context menu action for other applications
+  * Filemanager/WebDAV: fix WebDAV mounts from other EGroupware or next|ownCloud failed for non-alphanumeric passwords
+  * Filemanager: use bigger popups to open files (PDF: 1024*1024, text: 800*1024, images: 640*800)
+  * Calendar/Mobile view: Add a date indicator for all views in mobile theme
+  * Api: Merge placeholder that checks for EMPTY {{IF fieldname~EMPTY~True text~False text}}
+  * Projectmanager: Fix "add app" in element list has wrong starting app
+  * Rocketchat: fix RC user's status no longer visible
+  * Setup: fix installation check to correctly detect installed packages with Composer 2.x
+  * SAML/Univention: support for Univention SAML IdP for SSO incl. docu
+  * SAML: generate a self-signed certificate (not just the public key)
+  * ActiveDirectory/LDAP: implemented deleting of accounts via full/initial import, periodic import does NOT delete
+  * ActiveDirectory/LDAP: allow to configure an optional group-context
+  * ActiveDirectory/LDAP: periodic import of account into SQL database
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 05 Sep 2022 08:47:01 +0200
+
 egroupware-docker (21.1.20220408) hardy; urgency=low
 
   * All: fix regression causing older browsers (Firefox < 69 and Safari < 14.1) to display EGroupware
