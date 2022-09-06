@@ -168,6 +168,7 @@ export class et2_nextmatch_rowProvider
 		{
 			var entry = this._template.seperated.detachable[i];
 			let widget = entry.widget;
+			const widget_class = window.customElements.get(widget.localName);
 
 			// Parse the attribute expressions
 			let data : any = {};
@@ -178,7 +179,7 @@ export class et2_nextmatch_rowProvider
 				data[set.attribute] = mgrs["content"].expandName(set.expression);
 			}
 			// WebComponent IS the node, and we've already cloned it
-			if(typeof window.customElements.get(widget.localName) != "undefined")
+			if(typeof widget_class != "undefined")
 			{
 				widget = this._cloneWebComponent(entry, row, data);
 				if(!widget)
@@ -216,6 +217,18 @@ export class et2_nextmatch_rowProvider
 
 			// Adjust data for that row
 			widget.transformAttributes?.call(widget, data);
+
+			// Translate
+			if(widget_class)
+			{
+				Object.keys(data).forEach((key) =>
+				{
+					if(widget_class.translate[key])
+					{
+						data[key] = widget.egw().lang(data[key]);
+					}
+				});
+			}
 
 			// Make sure to only send detached attributes, filter out any deferredProperties
 			let filtered = widget.deferredProperties ? Object.keys(data)
