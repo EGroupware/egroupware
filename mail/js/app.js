@@ -6158,12 +6158,11 @@ app.classes.mail = AppJS.extend(
 			{
 				if (toolbar && toolbar.options.actions[actions[i]])
 				{
-					var $d = jQuery('#composeToolbar-'+actions[i]);
-					if ($d.length > 0
-							&& toolbar._actionManager.getActionById(actions[i]).checkbox
+					let d = document.getElementById('mail-compose_composeToolbar-'+actions[i]);
+					if (d && toolbar._actionManager.getActionById(actions[i]).checkbox
 							&& !toolbar._actionManager.getActionById(actions[i]).checked)
 					{
-						$d.trigger('click');
+						d.click();
 					}
 				}
 				else
