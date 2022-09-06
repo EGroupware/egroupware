@@ -4360,7 +4360,7 @@ span.overlayContainer img.overlay {
   text-decoration: none;
   font-size: 12px;
   padding-left: 26px;
-  line-height: 1.5em;
+  line-height: 1.9em;
   display: inline-block;
   width: 100%;
 }
@@ -4370,51 +4370,45 @@ span.overlayContainer img.overlay {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li:first-child :before {
   border: none;
 }
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a {
+  background-size: 20px;
+}
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home {
   margin-left: 0px;
   background-image: url(../../api/templates/default/images/topmenu_items/home.svg);
   background-repeat: no-repeat;
-  background-size: 16px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
   margin-left: 0px;
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/setup.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/category.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/password.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/help.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_current_user {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/users.png);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/topmenu_items/logout.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_print {
   background-repeat: no-repeat;
-  background-size: 16px;
   background-image: url(../../api/templates/default/images/print.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items .timezone span {
@@ -7163,7 +7157,7 @@ table.egwGridView_grid img.et2_appicon {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_calls {
   background-image: url(../../api/templates/default/images/phone.svg);
   background-repeat: no-repeat;
-  background-size: 18px;
+  background-size: 20px;
   background-position-x: -2px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_icon img[src*="svg"] {
