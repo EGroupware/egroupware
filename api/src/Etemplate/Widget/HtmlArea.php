@@ -206,10 +206,13 @@ class HtmlArea extends Etemplate\Widget
  * For LGPL see License.txt in the project root for license information.
  * For commercial licenses see https://www.tiny.cloud/
  */
- body, p, div {
+body, p, div {
   font-family: $font_family;
   font-size: $font_size;
   line-height: 1.4;
+  margin: 1rem 0;
+}
+body {
   margin: 1rem;
 }
 table {
@@ -274,7 +277,7 @@ fieldset {
 	border-right: none;
 	font-family: $font_family;
 	font-size: $font_size;
-	margin: .5rem 0 .5rem 0;
+	margin: .5rem 0;
 }
 /* EGroupware users preferred font and -size */
 h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),
