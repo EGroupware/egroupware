@@ -556,13 +556,6 @@ et2-details.attachments::part(summary){
 #mail-index_toolbar > #toolbar-actionlist {
 	width:auto;
 }
-#mail-index_mailPreviewContainer {
-	position: absolute;
-	top: 9em;
-	bottom: 0;
-	left: 0px;
-	right: 5px;
-}
 #mail-index_previewAttachmentArea {
 	background-color:#f0f0f0;
 	max-height: 3.6em;
@@ -1027,7 +1020,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 #calendar-meeting table.et2_grid.meetingRequest td {
 	padding-left: 8px !important;
 }
-#mail-index_mailPreview_mailPreviewContainer {
+#mail-index_mailPreviewContainer {
 	height: calc(100% - 13em);
 	border-top: 1px solid silver;
 	margin-bottom: 0;

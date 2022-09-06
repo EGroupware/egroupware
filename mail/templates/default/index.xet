@@ -10,7 +10,7 @@
     </template>
     <template id="mail.index.preview">
         <toolbar id="toolbar" list_header="short"/>
-        <grid id="mailPreview" width="100%" height="100%" >
+        <grid id="mailPreview" width="100%">
             <columns>
                 <column/>
             </columns>
@@ -108,13 +108,14 @@
 
                         </hbox>
 
-                        <box id="mailPreviewContainer">
-                            <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
-                        </box>
+
                     </vbox>
                 </row>
             </rows>
         </grid>
+        <box id="mailPreviewContainer">
+            <iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+        </box>
     </template>
     <template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
         <nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows.horizental" header_left="mail.index.add"
