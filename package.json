@@ -66,6 +66,7 @@
     "blueimp-gallery": "^3.4.0",
     "colortranslator": "^1.9.2",
     "lit-flatpickr": "^0.3.0",
+    "shortcut-buttons-flatpickr": "^0.4.0",
     "sortablejs": "^1.14.0"
   },
   "engines": {

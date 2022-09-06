@@ -16,6 +16,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
 import "flatpickr/dist/plugins/scrollPlugin.js";
+import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 import {holidays} from "./Holidays";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
@@ -409,9 +410,21 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			options.inline = this.inline;
 		}
 
-		// Turn on scroll wheel support
-		// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
-		options.plugins = [new scrollPlugin()];
+		options.plugins = [
+			// Turn on scroll wheel support
+			// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
+			new scrollPlugin(),
+
+			// Add "today" button
+			// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
+			ShortcutButtonsPlugin({
+				button: [{label: this.egw().lang("Today")}],
+				onClick: (button_index, fp) =>
+				{
+					fp.setDate(new Date());
+				}
+			})
+		];
 
 		// Listen for flatpickr change so we can update internal value, needed for validation
 		options.onChange = options.onReady = this._updateValueOnChange;
