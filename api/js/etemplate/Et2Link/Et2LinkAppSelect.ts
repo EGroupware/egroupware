@@ -83,8 +83,6 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 
 		// Select options are based off abilities registered with link system
 		this._reset_select_options();
-
-		this._handleChange = this._handleChange.bind(this);
 	}
 
 	set onlyApp(app : string)
@@ -175,7 +173,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		super.value = new_value;
 	}
 
-	private _handleChange(e)
+	_handleChange(e)
 	{
 		// Set icon
 		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");

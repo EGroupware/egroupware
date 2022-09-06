@@ -328,14 +328,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// Missing any of the required attributes?  Now we need to take it out.
 				if(!this.searchEnabled && !this.editModeEnabled && !this.allowFreeEntries || this.readonly)
 				{
-					this._unbindListeners();
 					this.querySelector(".search_input")?.remove();
 					return;
 				}
 
 				// Normally this should be handled in render(), but we have to add our nodes in
 				this._addNodes();
-				this._bindListeners();
 			}
 		}
 
