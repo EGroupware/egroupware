@@ -1562,7 +1562,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 	padding: 4px 3px 3px;
 	background: #b4cee773;
 	border-radius: 3px;
-	width: 25em;
+	min-width: 19em;
 	border: 1px solid #d4d4d8;
 	text-align: center;
 }
@@ -1576,7 +1576,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"] ,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] {
-	background-size: 16px;
+	background-size: 20px;
 	background-repeat: no-repeat;
 	background-position: center;
 	filter: grayscale(1) contrast(0.9999) opacity(0.7);

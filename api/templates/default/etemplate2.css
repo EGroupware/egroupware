@@ -2901,10 +2901,6 @@ div.et2_toolbar.ui-widget-header {
     height: 18px;
 }
 
-.nextmatch_header_row et2-button img {
-    width: 16px;
-}
-
 et2-button.transparent-button {
     border: none;
     background: transparent;
@@ -3133,10 +3129,6 @@ et2-button.transparent-button::part(container) {
 .et2_toolbar_actionlist et2-button {
     width: 1em;
     overflow: hidden;
-}
-.et2_toolbar_actionlist et2-button::part(prefix),
-.ui-toolbar-menulist et2-button::part(prefix){
-    width: 1.2em;
 }
 .et2_toolbar_actionlist et2-button.et2_toolbar_hasCaption {
     width:auto;
