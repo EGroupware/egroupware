@@ -85,9 +85,17 @@ div.addressbook_edit_general_picture img {
  * Index page
  */
 #addressbook-index img.iphoto {
-	height: auto;
+    height: auto;
 }
-#addressbook-index .avatar img.iphoto {border:none;box-shadow: none;}
+
+#addressbook-index_nm_filter {
+    order: 1;
+}
+
+#addressbook-index .avatar img.iphoto {
+    border: none;
+    box-shadow: none;
+}
 #addressbook-index .avatar span {margin-right: 0;}
 #addressbook-index_org_view, #addressbook-index_addressbook-index-right_add > div.et2_box_widget {
 	top: 0;
