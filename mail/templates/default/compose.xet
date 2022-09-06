@@ -86,51 +86,45 @@
 			</grid>
 		</vbox>
 		<vbox class="mailComposeBodySection" width="100%">
-			<et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
-				<hbox slot="summary">
-					<grid class="previewAttachmentArea egwGridView_grid" >
+			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
+				<et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
+					<hbox slot="summary">
+						<grid class="previewAttachmentArea egwGridView_grid" >
+							<columns>
+								<column width= "3%"/>
+								<column disabled="!@showtempname" width="10%"/>
+								<column width="85%"/>
+								<column width="8%"/>
+							</columns>
+							<rows>
+								<row class="row attachmentRow">
+									<image src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"/>
+									<description id="attachments[0][tmp_name]"/>
+									<description class="useEllipsis et2_link" value="@attachments[0][name]" id="0[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+									<vfs-size align="right" id="attachments[0][size]" />
+								</row>
+							</rows>
+						</grid>
+					</hbox>
+					<grid id="attachments" class="previewAttachmentArea egwGridView_grid">
 						<columns>
 							<column width= "3%"/>
 							<column disabled="!@showtempname" width="10%"/>
 							<column width="85%"/>
 							<column width="8%"/>
+							<column width="" />
 						</columns>
 						<rows>
 							<row class="row attachmentRow">
-								<image src="@attachments[0][filemode_icon]" statustext="@attachments[0][filemode_title]"/>
-								<description id="attachments[0][tmp_name]"/>
-								<description class="useEllipsis et2_link" value="@attachments[0][name]" id="0[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
-								<vfs-size align="right" id="attachments[0][size]" />
+								<image src="$row_cont[filemode_icon]" statustext="$row_cont[filemode_title]"/>
+								<description id="${row}[tmp_name]"/>
+								<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
+								<vfs-size align="right" id="${row}[size]" />
+								<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
 							</row>
 						</rows>
 					</grid>
-				</hbox>
-				<grid id="attachments" class="previewAttachmentArea egwGridView_grid">
-					<columns>
-						<column width= "3%"/>
-						<column disabled="!@showtempname" width="10%"/>
-						<column width="85%"/>
-						<column width="8%"/>
-						<column width="" />
-					</columns>
-					<rows>
-						<row class="row attachmentRow">
-							<image src="$row_cont[filemode_icon]" statustext="$row_cont[filemode_title]"/>
-							<description id="${row}[tmp_name]"/>
-							<description class="useEllipsis et2_link" id="${row}[name]" no_lang="1" onclick="app.mail.displayUploadedFile"/>
-							<vfs-size align="right" id="${row}[size]" />
-							<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"/>
-						</row>
-					</rows>
-				</grid>
-			</et2-details>
-			<old-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-				<htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
-			</old-hbox>
-			<old-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
-				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
-			</old-hbox>
-			<vbox class="et2_file mailUploadSection" disabled="@no_griddata">
+				</et2-details>
 				<hbox>
 					<select id="filemode" label="Send files as" onchange="app.mail.check_sharing_filemode"/>
 					<hbox>
@@ -140,6 +134,13 @@
 					<passwd id="password" blur="password protect" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!"/>
 				</hbox>
 			</vbox>
+			<hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
+				<htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" height="478px" width="100%" resize_ratio="0"/>
+			</hbox>
+			<hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
+				<textbox multiline="true" rows="40" cols="120" width="100%" span="all" no_lang="1" name="mail_plaintext" id="mail_plaintext" resize_ratio="0"/>
+			</hbox>
+
 		</vbox>
 	</template>
 </overlay>
