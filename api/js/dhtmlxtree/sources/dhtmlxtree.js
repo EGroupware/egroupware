@@ -65,10 +65,10 @@ function dhtmlXTreeObject(htmlObject, width, height, rootId){
    this.height=height;
    this.rootId=rootId;
    this.childCalc=null;
-      this.def_img_x="18px";
-      this.def_img_y="18px";
-      this.def_line_img_x="18px";
-      this.def_line_img_y="18px";
+      this.def_img_x="20px";
+      this.def_img_y="20px";
+      this.def_line_img_x="20px";
+      this.def_line_img_y="20px";
 
     this._dragged=new Array();
    this._selected=new Array();
@@ -3170,7 +3170,7 @@ dhtmlXTreeObject.prototype._createDragNode=function(htmlObject,e){
             var text=new Array();
             if (this._itim_dg)
                     for (var i=0; i<this._selected.length; i++)
-                        text[i]="<table cellspacing='0' cellpadding='0'><tr><td><img width='18px' height='18px' src='"+this._getSrc(this._selected[i].span.parentNode.previousSibling.childNodes[0])+"'></td><td>"+this._selected[i].span.innerHTML+"</td></tr></table>";
+                        text[i]="<table cellspacing='0' cellpadding='0'><tr><td><img width='20px' height='20px' src='"+this._getSrc(this._selected[i].span.parentNode.previousSibling.childNodes[0])+"'></td><td>"+this._selected[i].span.innerHTML+"</td></tr></table>";
             else
                 text=this.getSelectedItemText().split(this.dlmtr);
 
