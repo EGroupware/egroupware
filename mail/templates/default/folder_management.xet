@@ -3,21 +3,12 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.folder_management" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="20%"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader" >
-					<description value="Folder Management" class="mail_folder_management_header"/>
-				</row>
-				<row>
-					<box scrolling="auto">
-						<tree id="tree" multiple="true" autoloading="mail_ui::ajax_folderMgmtTree_autoloading" multimarking="strict" oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect" onopenstart="app.mail.folderMgmt_autoloadingStart" onopenend="app.mail.folderMgmt_autoloadingEnd" highlighting="true"/>
-					</box>
-				</row>
-			</rows>
-		</grid>
+		<hbox class="dialogHeader" >
+			<description value="Folder Management" class="mail_folder_management_header"/>
+		</hbox>
+		<hbox class="treeContainer">
+			<tree id="tree" multiple="true" autoloading="mail_ui::ajax_folderMgmtTree_autoloading" multimarking="strict" oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect" onopenstart="app.mail.folderMgmt_autoloadingStart" onopenend="app.mail.folderMgmt_autoloadingEnd" highlighting="true"/>
+		</hbox>
 		<hbox  class="dialogFooterToolbar">
 			<button statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"/>
 			<button label="Cancel" id="button[cancel]" onclick="window.close()"/>

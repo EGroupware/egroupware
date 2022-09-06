@@ -1053,3 +1053,4 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	border: none;
 }
 #popupMainDiv {height: 100%}
+.treeContainer {height: calc(100% - 100px)}
