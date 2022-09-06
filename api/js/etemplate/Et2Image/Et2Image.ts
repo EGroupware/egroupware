@@ -80,6 +80,21 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		}
 	}
 
+	set_label(label)
+	{
+		this.label = label;
+	}
+
+	set label(label)
+	{
+		this.__label = this.egw().lang(label);
+	}
+
+	get label()
+	{
+		return this.__label;
+	}
+
 	get slots()
 	{
 		return {
@@ -119,9 +134,9 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${src}"
-                 alt="${this.label}"
+                 alt="${this.egw().lang(this.label)}"
                  part="image"
-                 title="${this.statustext || this.label}"
+                 title="${this.egw().lang(this.statustext || this.label)}"
             >`;
 	}
 
