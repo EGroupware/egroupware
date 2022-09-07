@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
-<overlay>
+<overlay legacy="true">
     <template id="api.show_replacements.placeholder_list">
         <description id="title" class="title"/>
         <grid id="placeholders" width="100%">
@@ -20,24 +20,24 @@
     <template id="api.show_replacements" template="" lang="" group="0" version="21.1.001">
         <vbox>
             <description value="Placeholders" class="group title"/>
-            <box id="placeholders">
+            <old-box id="placeholders">
                 <box id="${row}">
                     <template template="api.show_replacements.placeholder_list"/>
                 </box>
-            </box>
+            </old-box>
             <template template="@extra_template"/>
-                <description value="Common" class="group title"/>
-                <box id="common">
-                    <box id="${row}">
-                        <template template="api.show_replacements.placeholder_list"/>
-                    </box>
+            <description value="Common" class="group title"/>
+            <old-box id="common">
+                <box id="${row}">
+                    <template template="api.show_replacements.placeholder_list"/>
                 </box>
-                <description value="Current user" class="group title"/>
-                <box id="user">
-                    <box id="${row}">
-                        <template template="api.show_replacements.placeholder_list"/>
-                    </box>
+            </old-box>
+            <description value="Current user" class="group title"/>
+            <old-box id="user">
+                <box id="${row}">
+                    <template template="api.show_replacements.placeholder_list"/>
                 </box>
+            </old-box>
         </vbox>
         <styles>
             .et2_details_title, .title {
