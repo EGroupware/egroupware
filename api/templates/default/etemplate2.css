@@ -2774,11 +2774,19 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
 
 .long_task .message {
     height: inherit;
+    display: list-item;
+    border: none;
+    color: initial;
+    margin: 0px;
+    padding: 0px 0px 0px 2em;
+    background-repeat: no-repeat;
+    background-size: 1em;
+    background-image: url(images/check.svg);
 }
 
 .long_task .message.error {
     color: white;
-    background-color: red;
+    background-image: none;
 }
 
 div.ui-dialog div.ui-dialog-content > div {

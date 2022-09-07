@@ -9,7 +9,7 @@
 				<label id="message"/>
 				<progress id="progressbar"/>
 				<label id="totals"/>
-				<box class="log" id="log"/>
+				<vbox class="log" id="log"/>
 			</vbox>
 		</hbox>
 		<styles>
