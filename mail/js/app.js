@@ -4307,7 +4307,7 @@ app.classes.mail = AppJS.extend(
 	edit_vacation: function(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x480');
+		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x560');
 	},
 
 	subscription_refresh: function(_data)

@@ -31,7 +31,7 @@
 				</row>
 				<row>
 					<description value="Respond to mail sent to:"/>
-					<taglist-email id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="all my email addresses" span="2"/>
+					<taglist-email rows="3" id="addresses" needed="true" class="et2_required" allowFreeEntries="true" empty_label="all my email addresses" span="2"/>
 					<button class="$cont[hideIfSieveDisabled] et2_fullWidth"  label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
 				</row>
 				<row>
