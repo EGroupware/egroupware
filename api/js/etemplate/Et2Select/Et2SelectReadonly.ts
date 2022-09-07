@@ -220,17 +220,12 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 {
 	set value(new_value)
 	{
+		super.value = new_value;
 		if(!new_value)
 		{
-			super.value = new_value;
 			return;
 		}
-		// fix scalar (number or string) values
-		if (typeof new_value !== 'object')
-		{
-			new_value = ["" + new_value];
-		}
-		for(let id of new_value)
+		for(let id of this.value)
 		{
 			let account_name = null;
 			let option = <SelectOption>{value: id, label: id + " ..."};
@@ -249,7 +244,6 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 				});
 			}
 		}
-		super.value = new_value;
 	}
 
 	get value()
