@@ -261,6 +261,8 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 	{
 		this._searchNode.app = this._appNode.value;
 		this._searchNode.value = "";
+		this._searchNode.clearSearch();
+		this._searchNode.focus();
 	}
 
 	/**
