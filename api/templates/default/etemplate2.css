@@ -2196,9 +2196,9 @@ lion-validation-feedback[type] {
     border: 1px solid rgb(212, 212, 216);   /* --sl-input-border-color */
     text-align: center;
     border-radius: 3px;
-    float: right;
     position: relative;
     min-width: 40px;
+    order: 99;
 }
 
 .nextmatch_header .header_count span {
