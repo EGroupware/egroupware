@@ -4078,11 +4078,11 @@ app.classes.mail = AppJS.extend(
 					break;
 				case 'add'	:
 					linkData = "mail.mail_sieve.edit";
-					this.egw.open_link(linkData,'_blank',"600x480");
+					this.egw.open_link(linkData,'_blank',"600x680");
 					break;
 				case 'edit'	:
 					linkData = "mail.mail_sieve.edit&ruleID="+ruleID;
-					this.egw.open_link(linkData,'_blank',"600x480");
+					this.egw.open_link(linkData,'_blank',"600x680");
 					break;
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');

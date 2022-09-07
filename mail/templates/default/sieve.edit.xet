@@ -52,7 +52,7 @@
 							<menupopup id="bodytransform"/>
 						</menulist>
 						<description value="Contains(*)"/>
-						<textbox id="field_bodytransform"  width="62%"/>
+						<textbox id="field_bodytransform"/>
 					</hbox>
 				</row>
 				<row>
@@ -62,7 +62,7 @@
 							<menupopup id="ctype"/>
 						</menulist>
 						<description value="/"/>
-						<textbox blur="for eg.: mpeg" id="field_ctype_val" width="71%"/>
+						<textbox blur="for eg.: mpeg" id="field_ctype_val"/>
 					</hbox>
 				</row>
 				<row>
@@ -115,7 +115,7 @@
 		</grid>
 	</template>
 	<template id="mail.sieve.edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
+		<grid width="100%" height="100%">
 			<columns>
 				<column/>
 			</columns>
@@ -128,7 +128,7 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="300">
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="440">
 						<tabs>
 							<tab id="condition" label="Condition"/>
 							<tab id="action" label="Action"/>

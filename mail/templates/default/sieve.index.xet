@@ -31,7 +31,7 @@
 			</columns>
 			<rows>
 				<row class="nextmatch_header_row">
-					<buttononly class="$cont[hideIfSieveDisabled] et2_toolbar" align="left" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+					<buttononly class="$cont[hideIfSieveDisabled] et2_toolbar" align="left" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=680,scrollbars=yes,status=yes'); return false;"/>
 				</row>
 				<row>
 					<template id="rows"/>
