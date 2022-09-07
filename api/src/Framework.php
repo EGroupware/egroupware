@@ -641,7 +641,7 @@ abstract class Framework extends Framework\Extra
 
 		return '<et2-avatar shape="squared" title="'.Accounts::format_username().'" src="'.Egw::link('/api/avatar.php', array(
 								'account_id' => $GLOBALS['egw_info']['user']['account_id'],
-							)).'"></et2-avatar>'.(empty($stat) ?
+							)).'"></et2-avatar>'.(!empty($stat) ?
 				'<span class="fw_avatar_stat '.$stat['class'].'" title="'.$stat['title'].'">'.$stat['body'].'</span>' : '');
 	}
 
