@@ -6162,28 +6162,13 @@ input[type=button],
 input[type=reset],
 button,
 .egwbutton {
-  background-color: #f0f0f0;
-  background-image: none;
-  border: outset 1px #b9d5e3;
-  margin: 1px;
   padding: 1px;
   cursor: pointer;
-  color: #004e7d;
 }
 input[type=submit] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-}
-input[type=submit]:hover,
-input[type=button]:hover,
-input[type=reset]:hover,
-button:hover,
-.egwbutton:hover {
-  background-color: #d9d9d9 !important;
-  background-image: none;
-  border: outset 1px #b9d5e3;
-  color: #004e7d;
 }
 input[type=submit]:active,
 input[type=button]:active,
