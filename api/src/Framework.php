@@ -639,10 +639,10 @@ abstract class Framework extends Framework\Extra
 		$stats = Hooks::process('framework_avatar_stat');
 		$stat = array_pop($stats);
 
-		return '<span title="'.Accounts::format_username().'" class="avatar"><img src="'.Egw::link('/api/avatar.php', array(
+		return '<et2-avatar shape="squared" title="'.Accounts::format_username().'" src="'.Egw::link('/api/avatar.php', array(
 								'account_id' => $GLOBALS['egw_info']['user']['account_id'],
-							)).'"/>'.(!empty($stat) ?
-				'<span class="fw_avatar_stat '.$stat['class'].'" title="'.$stat['title'].'">'.$stat['body'].'</span>' : '').'</span>';
+							)).'"></et2-avatar>'.(empty($stat) ?
+				'<span class="fw_avatar_stat '.$stat['class'].'" title="'.$stat['title'].'">'.$stat['body'].'</span>' : '');
 	}
 
 	/**
