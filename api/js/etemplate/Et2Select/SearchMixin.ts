@@ -513,7 +513,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return;
 			}
 			// Move search (& menu) if there's no value
-			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '');
+			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
 			this.dropdown?.setAttribute("distance",
 				!this._activeControls || this._activeControls?.classList.contains("novalue") ?
 				"" :
@@ -751,6 +751,35 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				spinner.remove();
 			});
+		}
+
+		/**
+		 * Clear search term and any search results
+		 *
+		 * Local options are not removed, but remote options are
+		 */
+		public clearSearch()
+		{
+			// Stop timeout timer
+			clearTimeout(this._searchTimeout);
+
+			// Remove remote options
+			let target = this._optionTargetNode || this;
+			target.querySelectorAll(".remote").forEach(o => o.remove());
+
+			// Reset remaining options.  It might be faster to re-create instead.
+			this._menuItems.forEach((item) =>
+			{
+				item.disabled = false;
+				item.classList.remove("match");
+				item.classList.remove("no-match");
+			});
+
+			// Clear search term
+			if(this._searchInputNode)
+			{
+				this._searchInputNode.value = "";
+			}
 		}
 
 		/**
@@ -996,15 +1025,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _handleSearchAbort(e)
 		{
 			this._activeControls.classList.remove("active");
-			this._searchInputNode.value = "";
-
-			// Reset options.  It might be faster to re-create instead.
-			this._menuItems.forEach((item) =>
-			{
-				item.disabled = false;
-				item.classList.remove("match");
-				item.classList.remove("no-match");
-			})
+			this.clearSearch();
 			this.syncItemsFromValue();
 		}
 
