@@ -1396,7 +1396,7 @@ export class etemplate2
 	 * @return Array list of etemplate2 that have that template
 	 */
 
-	public static getByTemplate(template)
+	public static getByTemplate(template) : etemplate2[]
 	{
 		if(typeof etemplate2._byTemplate[template] != "undefined")
 		{
@@ -1415,9 +1415,9 @@ export class etemplate2
 	 * "Associated" is determined by the first part of the template
 	 *
 	 * @param {string} app app-name
-	 * @return {array} list of etemplate2 that have that app as the first part of their loaded template
+	 * @return {etemplate2[]} list of etemplate2 that have that app as the first part of their loaded template
 	 */
-	public static getByApplication(app)
+	public static getByApplication(app) : etemplate2[]
 	{
 		let list = [];
 		for(let name in etemplate2._byTemplate)
@@ -1436,7 +1436,7 @@ export class etemplate2
 	 * @param {string} id DOM ID of the container node
 	 * @returns {etemplate2|null}
 	 */
-	public static getById(id)
+	public static getById(id) : etemplate2|null
 	{
 		for(let name in etemplate2._byTemplate)
 		{
