@@ -115,8 +115,7 @@ class InfologApp extends EgwApp
 
 						// Decrypt history on hover
 						var history = this.et2.getWidgetById('history');
-						egw.applyFunc('app.stylite.decrypt_hover', [history, 'et2-description']);
-
+						this.egw.applyFunc('app.stylite.decrypt_hover', [history, 'et2-description']);
 					});
 					// This disables the diff in history
 					var history = this.et2.getArrayMgr('content').getEntry('history');
