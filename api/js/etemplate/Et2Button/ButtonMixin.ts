@@ -94,6 +94,8 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 				padding: 0 var(--sl-spacing-medium);
 			}
 			.button__label {
+				text-overflow: ellipsis;
+    			overflow-x: hidden;
 			}
 			.button__prefix {
 				padding-left: 1px;
