@@ -115,14 +115,14 @@ class calendar_wizard_import_ical
 		{
 			$content['text'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
-			if(!array_key_exists('cal_owner', $content) && $content['plugin_options']) {
+			if(!array_key_exists('cal_owner', $content) && $content['plugin_options'])
+			{
 				$content['cal_owner'] = $content['plugin_options']['cal_owner'];
 			}
 
 			// Include calendar-owner widget
-			$response = Api\Json\Response::get();
-			$response->includeScript(Api\Egw::link('/calendar/js/et2_widget_owner.js'));
-			Api\Framework::includeJS('','et2_widget_owner');
+			Api\Framework::includeJS('/calendar/js/app.min.js');
+			Api\Framework::includeCSS('calendar', 'calendar');
 			$preserv = $content;
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];

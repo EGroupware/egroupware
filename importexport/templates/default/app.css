@@ -34,3 +34,7 @@ div.preview .content {
   width: 100%;
   margin-left: 50%;
 }
+
+.wizard_content > div > table {
+    width: 100%;
+}

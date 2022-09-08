@@ -45,6 +45,9 @@ div.preview .content {
   width: 100%;
   margin-left: 50%;
 }
+.wizard_content > div > table {
+  width: 100%;
+}
 /*     Dialog Import Export      */
 #importexport-export_dialog {
   margin: 1em;
@@ -60,7 +63,7 @@ div.preview .content {
   width: 400px;
 }
 #importexport-export_dialog_importexport-export_dialog-general_tab_content table.et2_grid tr:nth-child(even) {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 #importexport-export_dialog_importexport-export_dialog-general_tab_content table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;
@@ -70,7 +73,7 @@ div.preview .content {
 }
 /* Tab Auswahl*/
 #importexport-export_dialog_importexport-export_dialog-selection_tab table.et2_grid tr:nth-child(even) {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 #importexport-export_dialog_importexport-export_dialog-selection_tab table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;
@@ -80,7 +83,7 @@ div.preview .content {
 }
 /* Tab Optionen*/
 #importexport-export_dialog_importexport-export_dialog-options_tab table.et2_grid tr:nth-child(even) {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 #importexport-export_dialog_importexport-export_dialog-options_tab table.et2_grid tr:nth-child(odd) {
   background: #f2f2f2;
@@ -97,7 +100,7 @@ div.preview .content {
 .wizard_content #importexport-wizardbox_importexport-wizard_choosename,
 .wizard_content #importexport-wizardbox_importexport-wizard_basic_import_csv-sample_file,
 .wizard_content #importexport-wizardbox_addressbook-importexport_wizard_vcard_charset {
-  margin: 15em 0 0 10em;
+  margin: 10em 2em 0 2em;
   /*#importexport-wizardbox_msg{font-size: 2em;}*/
 }
 .wizard_content #importexport-wizardbox_importexport-wizard_chooseapp table.et2_grid,
