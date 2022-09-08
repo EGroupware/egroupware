@@ -110,7 +110,7 @@ class InfologApp extends EgwApp
 				if (this.et2.getArrayMgr('content').data.info_des &&
 					this.et2.getArrayMgr('content').data.info_des.indexOf(this.begin_pgp_message) != -1)
 				{
-					this.mailvelopeAvailable(jQuery.proxy(function () {
+					this.mailvelopeAvailable(() => {
 						this.toggleEncrypt();
 
 						// Decrypt history on hover
@@ -119,7 +119,7 @@ class InfologApp extends EgwApp
 						jQuery(history.getDOMNode(history))
 							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
 
-					}, this));
+					});
 					// This disables the diff in history
 					var history = this.et2.getArrayMgr('content').getEntry('history');
 					history['status-widgets'].De = 'description';
@@ -761,10 +761,10 @@ class InfologApp extends EgwApp
 		}
 		if(!this.egw.user('apps').stylite)
 		{
-			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="http://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
+			this.egw.message(this.egw.lang('InfoLog encryption requires EPL Subscription')+': <a href="https://www.egroupware.org/EPL">www.egroupware.org/EPL</a>');
 			return;
 		}
-		egw.applyFunc('app.stylite.toggleEncrypt', [_event, _widget, _node]);
+		this.egw.applyFunc('app.stylite.toggleEncrypt', [_event, _widget, _node]);
 	}
 
 

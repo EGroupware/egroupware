@@ -584,7 +584,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					// check if we need a not yet instantiated app.js object --> instantiate it now
 					else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] === 'function')
 					{
-						parent = parent[parts[1]] = new app.classes[parts[1]]();
+						parent = parent[parts[1]] = new app.classes[parts[1]](parts[1], _wnd);
 					}
 				}
 				if (typeof parent[func] == 'function')

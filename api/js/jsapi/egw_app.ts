@@ -153,10 +153,10 @@ export abstract class EgwApp
 	 * Initialization and setup goes here, but the etemplate2 object
 	 * is not yet ready.
 	 */
-	constructor(appname : string)
+	constructor(appname : string, _wnd? : Window)
 	{
 		this.appname = appname;
-		this.egw = egw(this.appname, window);
+		this.egw = egw(this.appname, _wnd || window);
 
 		// Initialize sidebox for non-popups.
 		// ID set server side
@@ -1961,14 +1961,15 @@ export abstract class EgwApp
 	 */
 	mailvelopeOpenKeyring()
 	{
-		var self = this;
+		let self = this;
+		let mailvelope = this.egw.window.mailvelope;	// use Mailvelope of correct window
 
 		return new Promise(function(_resolve, _reject)
 		{
 			if (self.mailvelope_keyring) _resolve(self.mailvelope_keyring);
 
-			var resolve = _resolve;
-			var reject = _reject;
+			let resolve = _resolve;
+			let reject = _reject;
 
 			mailvelope.getKeyring('egroupware').then(function(_keyring)
 				{
@@ -2015,7 +2016,7 @@ export abstract class EgwApp
 												// if yes, hide settings dialog
 												jQuery(mvelo_settings_selector).each(function(index, item : any)
 												{
-										if (!item.src.match(/keyBackupDialog.html/,'ig')) item.remove();
+													if (!item.src.match(/keyBackupDialog.html/,'ig')) item.remove();
 												});
 												jQuery('button#mailvelope_close_settings').remove();
 
