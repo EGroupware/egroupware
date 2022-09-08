@@ -315,6 +315,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(changedProperties.has("searchUrl") && this.searchUrl)
 			{
 				this.search = true;
+				// Decode URL, possibly again.  If set in template, it can wind up double-encoded.
+				this.searchUrl = this.egw().decodePath(this.searchUrl);
 			}
 		}
 
@@ -840,7 +842,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteQuery(search : string, options : object)
 		{
-			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.searchUrl),
+			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
 				{query: search, ...options}), [search, options]).then((result) =>
 			{
 				this.processRemoteResults(result);
