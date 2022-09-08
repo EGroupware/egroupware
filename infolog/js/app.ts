@@ -115,9 +115,7 @@ class InfologApp extends EgwApp
 
 						// Decrypt history on hover
 						var history = this.et2.getWidgetById('history');
-						egw.applyFunc('app.stylite.decrypt_hover', [history, 'span']);
-						jQuery(history.getDOMNode(history))
-							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
+						egw.applyFunc('app.stylite.decrypt_hover', [history, 'et2-description']);
 
 					});
 					// This disables the diff in history
