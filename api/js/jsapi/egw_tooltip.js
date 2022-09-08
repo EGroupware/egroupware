@@ -37,6 +37,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 	var optionsDefault = {
 		hideonhover: true,
+		position:'right',
 		open: function(){},
 		close: function(){}
 	};
@@ -66,7 +67,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			var cursor_rect = {
 				left: (x - 8),
 				top: (y - 8),
-				right: (x + 8),
+				right: (x + (options.position == "center" ? -1 * tooltip_div.width()/2 : 8)),
 				bottom: (y + 8)
 			};
 
