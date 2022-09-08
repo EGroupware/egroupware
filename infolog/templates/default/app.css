@@ -85,6 +85,7 @@ td.infologTimestamp {
 div#infolog-edit_infolog-edit-description {
     height: 100%;
 }
+div#infolog-edit_infolog-edit-description iframe {height: calc(100% - 1em) !important;}
 #infolog-edit_info_responsible + .chzn-container .chzn-results {
 	max-height: 150px;
 }

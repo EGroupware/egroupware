@@ -188,7 +188,7 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" width="100%" tab_height="300px">
+					<tabbox id="tabs" span="all" width="100%" tab_height="350px">
                         <tabs>
                             <tab id="description" label="Description" statustext="longer textual description"/>
                             <tab id="details" label="Details" statustext="Location, priority , ..."/>
