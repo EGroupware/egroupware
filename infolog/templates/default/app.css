@@ -43,51 +43,36 @@ tr.infolog_rowHasParent > td:first-child {
 .et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a{
 	display: inline-table;
 }
+
 /* break in words if necessary for description */
-#infolog-index_nm div.infoDes > span{
-	overflow-wrap: break-word;
+#infolog-index_nm div.infoDes > span {
+    overflow-wrap: break-word;
 }
+
 /* Put line break for the first column*/
 #infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
-	white-space: normal;
+    white-space: normal;
 }
 
-button.infologExtraButton {
-	background-position: center;
-	background-size: 16px;
-	padding: 0px;
-	width: 24px;
-	height: 24px;
-}
-button.infologExtraButton:hover {
-    background-size: 16px;
+/* Right-align extra buttons in tab */
+.infologExtraButton {
+    margin-left: auto;
 }
 
-#infolog-edit .et2_toolbar {
-    position: relative;
-}
-
-.tab_toolbar {
-    position: absolute;
-    top: 6px;
-	right: 0;
-	z-index: 10000;	/* otherwise et2-tabs gets our clicks! */
-}
-
-.tab_toolbar > button, .tab_toolbar > et2-button {
-    margin: 0px;
-}
-
-td.infologTimestamp {
-    position: relative;
+.infologExtraButton ~ .infologExtraButton {
+    margin: 0;
 }
 
 div#infolog-edit_infolog-edit-description {
     height: 100%;
 }
-div#infolog-edit_infolog-edit-description iframe {height: calc(100% - 1em) !important;}
+
+div#infolog-edit_infolog-edit-description iframe {
+    height: calc(100% - 1em) !important;
+}
+
 #infolog-edit_info_responsible + .chzn-container .chzn-results {
-	max-height: 150px;
+    max-height: 150px;
 }
 
 #infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid ul.et2_link_string li.et2_link {

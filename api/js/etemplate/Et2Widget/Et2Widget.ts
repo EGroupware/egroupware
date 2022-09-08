@@ -144,7 +144,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				 * Widget ID of another node to insert this node into instead of the normal location
 				 * This isn't a normal property...
 				 */
-				parentId: {type: String},
+				parentId: {type: String, noAccessor: true},
 
 				/**
 				 * Tooltip which is shown for this element on hover
@@ -911,15 +911,27 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 */
 		set parentId(parent : string | Element)
 		{
-			if(typeof parent === "string")
+			this.__parentId = parent;
+
+			this.updateComplete.then(() =>
 			{
-				parent = document.querySelector("#" + parent);
-			}
-			if(parent)
-			{
-				parent.append(<Node><unknown>this);
-				this._parent_node = parent;
-			}
+				if(!this.__parentId)
+				{
+					return;
+				}
+
+				let parent = document.querySelector("#" + this.__parentId) || this.__parentId;
+				if(parent && parent instanceof Element)
+				{
+					parent.append(<Node><unknown>this);
+					this._parent_node = parent;
+				}
+			});
+		}
+
+		get parentId()
+		{
+			return this.__parentId;
 		}
 
 		setParent(new_parent : Et2WidgetClass | et2_widget)

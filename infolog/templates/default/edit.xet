@@ -183,9 +183,15 @@
 				<row class="et2_toolbar">
 					<description id="spacer" span="5"/>
 					<hbox class="tab_toolbar">
-						<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"/>
-						<buttononly statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
-					</hbox>
+
+                        <timestamper parentId="infolog-edit_tabs" slot="nav"
+                                     statustext="Insert timestamp into description field" id="timestamp"
+                                     class="infologExtraButton infologTimestamp" target="info_des"/>
+                        <buttononly parentId="infolog-edit_tabs" slot="nav" statustext="Encrypt description"
+                                    id="encrypt"
+                                    class="infologExtraButton infologEncrypt" background_image="1" image="lock"
+                                    onclick="app.infolog.toggleEncrypt"/>
+                    </hbox>
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" width="100%" tab_height="350px">
@@ -199,14 +205,14 @@
                         </tabs>
                         <tabpanels>
                             <template id="infolog.edit.description"/>
-							<template id="infolog.edit.details"/>
-							<template id="infolog.edit.links"/>
-							<template id="infolog.edit.project"/>
-							<template id="infolog.edit.customfields"/>
-							<template id="infolog.edit.history"/>
-						</tabpanels>
-					</tabbox>
-				</row>
+                            <template id="infolog.edit.details"/>
+                            <template id="infolog.edit.links"/>
+                            <template id="infolog.edit.project"/>
+                            <template id="infolog.edit.customfields"/>
+                            <template id="infolog.edit.history"/>
+                        </tabpanels>
+                    </tabbox>
+                </row>
 				<row class="dialogOperators">
 					<description value="Status" for="info_status"/>
 					<select class="et2_fullWidth" statustext="@status_help" id="info_status" onchange="app.infolog.statusChanged"/>
