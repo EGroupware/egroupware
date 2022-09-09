@@ -538,16 +538,23 @@ class Db
 					($Type !== 'mysqli' || ini_get('mysqli.allow_persistent')) ?
 					'PConnect' : 'Connect';
 
-				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
+				try
 				{
-					$this->ServerInfo = $this->Link_ID->ServerInfo();
-					$this->set_capabilities($Type,$this->ServerInfo['version']);
-
-					// switch off MySQL 5.7+ ONLY_FULL_GROUP_BY sql_mode
-					if (substr($this->Type, 0, 5) == 'mysql' && (float)$this->ServerInfo['version'] >= 5.7 && (float)$this->ServerInfo['version'] < 10.0)
+					if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
 					{
-						$this->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", __LINE__, __FILE__);
+						$this->ServerInfo = $this->Link_ID->ServerInfo();
+						$this->set_capabilities($Type, $this->ServerInfo['version']);
+
+						// switch off MySQL 5.7+ ONLY_FULL_GROUP_BY sql_mode
+						if (substr($this->Type, 0, 5) == 'mysql' && (float)$this->ServerInfo['version'] >= 5.7 && (float)$this->ServerInfo['version'] < 10.0)
+						{
+							$this->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", __LINE__, __FILE__);
+						}
 					}
+				}
+				catch (\mysqli_sql_exception $e) {
+					_egw_log_exception($e);
+					$Ok = false;
 				}
 				if (!$Ok)
 				{
