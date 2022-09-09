@@ -144,7 +144,7 @@ import './slider.js';
 			jQuery('#egw_fw_topmenu_items,#egw_fw_topmenu_info_items,#egw_fw_sidemenu,#egw_fw_footer').on('click','a[href^="javascript:"]',function(ev){
 				ev.stopPropagation();	// do NOT execute regular event, as it will violate CSP, when handler does NOT return false
 				// fix for Chrome 94.0.4606.54 returning all but first single quote "'" in href as "%27" :(
-				var matches = this.href.replace(/%27/g, "'").match(href_regexp);
+				var matches = this.href.replaceAll(/%27/g, "'").replaceAll(/%22/g, '"').match(href_regexp);
 				var args = [];
 				if (matches.length > 1 && matches[2] !== undefined)
 				{
