@@ -2433,7 +2433,7 @@ app.classes.mail = AppJS.extend(
 				},
 				messageToDisplay,
 				this.egw.lang("Confirm"),
-				_action.id, buttons);
+				null, buttons);
 			}
 			else
 			{
