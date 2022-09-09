@@ -1476,7 +1476,15 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				else if(attrValue && [Object, Array].indexOf(typeof property === "object" ? property.type : property) != -1)
 				{
 					// Value was not supposed to be a string, but was run through here for expandName
-					attrValue = JSON.parse(attrValue);
+					try
+					{
+						attrValue = JSON.parse(attrValue);
+					}
+					catch(e)
+					{
+						console.info(widget_class.name + "#" + widget.id + " attribute '" + attribute + "' has type " +
+							(typeof property === "object" ? property.type.name : property.name) + " but value %o could not be parsed", attrValue);
+					}
 				}
 				break;
 		}
