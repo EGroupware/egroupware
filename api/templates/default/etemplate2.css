@@ -3749,14 +3749,25 @@ td.avatar {
 .popupMainDiv table.et2_grid > tbody > tr > td,
 tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
 tr.dialogOperators td, .dialogFooterToolbar {
-    padding: 5px 0 5px 0px;
+    padding: 5px 0px 5px 0px;
 }
+
+.popupMainDiv table.et2_grid > tbody > tr > td {
+    padding-right: 5px;
+}
+
+.popupMainDiv table.et2_grid > tbody > tr > td:last-child {
+    padding-right: 0px;
+}
+
 .dialogFooterToolbar, .dialogFooterToolbar td {
     padding-top: 10px !important;
 }
+
 .dialogFooterToolbar et2-button::part(base):not(:hover) {
     background: hsl(240 4.8% 95.9%);
 }
+
 .dialogHeader {
     vertical-align: middle;
     border-bottom: 1px solid #E6E6E6;
