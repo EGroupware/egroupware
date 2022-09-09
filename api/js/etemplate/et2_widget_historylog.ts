@@ -464,16 +464,16 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 
 		if(widget === null)
 		{
-			if(typeof field === "string" && typeof window.customElements.get(field) !== "undefined")
+			// Try to find a webcomponent first
+			const tries = [field, "et2-" + field + "_ro", "et2-" + field];
+			for(let i = 0; i < tries.length && !widget; i++)
 			{
-				widget = loadWebComponent(field, attrs, this);
+				if(typeof window.customElements.get(tries[i]) !== "undefined")
+				{
+					widget = loadWebComponent(tries[i], attrs, this);
+				}
 			}
-			else if(typeof field === "string" && typeof window.customElements.get("et2-" + field) !== "undefined")
-			{
-				widget = loadWebComponent("et2-" + field, attrs, this);
-				console.log("History specified legacy widget '" + field + "' for " + key + ", used web component instead.  Please change in PHP source.");
-			}
-			else
+			if(!widget)
 			{
 				widget = et2_createWidget(typeof field === 'string' ? field : 'select', attrs, this);
 				if(typeof field === "string")
