@@ -11,8 +11,9 @@
 /**
  * CSS for new eTemplate filemanager UI
  */
-select#filemanager-index_filter {
-	width: 160px;
+/* Override default filter width since there's only one, and limited space left */
+#filemanager-index_nm_filter {
+    max-width: initial;
 }
 input#filemanager-index_path {
 	width: 300px;
