@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
-		<split dock_side="bottomDock" id="mailSplitter">
+		<split dock_side="bottomDock" id="mailSplitter" style="--min: 30%;--max:70%;">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
             <template id="mail.index.preview"/>
         </split>
