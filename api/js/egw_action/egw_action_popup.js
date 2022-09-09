@@ -765,61 +765,46 @@ export function egwPopupActionImplementation()
 			if(clipboard_action == null)
 			{
 				// Create an action to add selected to clipboard
-				clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', egw.lang('Copy to OS clipboard'), egw.image('copy'), function(action) {
+				clipboard_action = mgr.addAction('popup', 'egw_os_clipboard', egw.lang('Copy to OS clipboard'), egw.image('copy'), function (action)
+				{
 
-					if(document.queryCommandSupported('copy'))
+					if (document.queryCommandSupported('copy'))
 					{
 						jQuery(action.data.target).trigger('copy');
 					}
-				},true);
+				}, true);
 				clipboard_action.group = 2.5;
 			}
 			let os_clipboard_caption = "";
-			if(this._context.event)
+			if (this._context.event)
 			{
 				os_clipboard_caption = this._context.event.originalEvent.target.innerText.trim();
 				clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
 				clipboard_action.data.target = this._context.event.originalEvent.target;
 			}
-			jQuery(clipboard_action.data.target).off('copy').on('copy', function(event) {
-				// Cancel any no-select css
-				var target = jQuery(clipboard_action.data.target);
-				var old_select = target.css('user-select');
-				target.css('user-select','all');
-
-				var range = document.createRange();
-				range.selectNode(clipboard_action.data.target);
-				window.getSelection().removeAllRanges();
-				window.getSelection().addRange(range);
-
-				target.css('user-select',old_select);
-
-				var successful = false;
-				try {
-					// detect we are in IE via checking setActive, since it's
-					// only supported in IE, and make sure there's clipboardData object
-					if (typeof event.target.setActive !='undefined' && window.clipboardData)
-					{
-						window.clipboardData.setData('Text', jQuery(clipboard_action.data.target).text().trim());
-					}
-					if(event.clipboardData)
-					{
-						event.clipboardData.setData('text/plain', jQuery(clipboard_action.data.target).text().trim());
-						event.clipboardData.setData('text/html', jQuery(clipboard_action.data.target).html());
-					}
-					// Show fail message, just in case
-					egw.message(egw.lang('Use Ctrl-C/Cmd-C to copy'));
-
-					successful = document.execCommand('copy');
-				} catch(err) {}
-
-				if(successful)
+			jQuery(clipboard_action.data.target).off('copy').on('copy', function (event)
+			{
+				try
 				{
-					// Clear fail message
-					egw.message('');
-					window.getSelection().removeAllRanges();
-					target.css('user-select',old_select);
-					return false;
+					copyTextToClipboard(event, clipboard_action, os_clipboard_caption).then((successful) =>
+					{
+						if (successful)
+						{
+							// Clear message
+							egw.message('');
+							window.getSelection().removeAllRanges();
+							return false;
+						}
+						else
+						{
+							// Show fail message
+							egw.message(egw.lang('Use Ctrl-C/Cmd-C to copy'));
+						}
+					});
+
+				}
+				catch (err)
+				{
 				}
 			});
 			if(typeof _links[copy_action.id] == 'undefined')
@@ -952,5 +937,80 @@ export function egwPopupActionImplementation()
 	return ai;
 }
 
+/**
+ * Try some deprecated ways of copying to the OS clipboard
+ *
+ * @param event
+ * @param clipboard_action
+ * @param text
+ * @returns {boolean}
+ */
+function fallbackCopyTextToClipboard(event, clipboard_action, text)
+{
+	// Cancel any no-select css
+	var target = jQuery(clipboard_action.data.target);
+	var old_select = target.css('user-select');
+	target.css('user-select', 'all');
+
+	var range = document.createRange();
+	range.selectNode(clipboard_action.data.target);
+	window.getSelection().removeAllRanges();
+	window.getSelection().addRange(range);
+
+	target.css('user-select', old_select);
+
+	// detect we are in IE via checking setActive, since it's
+	// only supported in IE, and make sure there's clipboardData object
+	if (typeof event.target.setActive != 'undefined' && window.clipboardData)
+	{
+		window.clipboardData.setData('Text', jQuery(clipboard_action.data.target).text().trim());
+	}
+	if (event.clipboardData)
+	{
+		event.clipboardData.setData('text/plain', jQuery(clipboard_action.data.target).text().trim());
+		event.clipboardData.setData('text/html', jQuery(clipboard_action.data.target).html());
+	}
+	if (!window.clipboardData)
+	{
+
+		const textArea = document.createElement("textarea");
+		textArea.value = text;
+
+		// Avoid scrolling to bottom
+		textArea.style.top = "0";
+		textArea.style.left = "0";
+		textArea.style.position = "fixed";
+
+		document.body.appendChild(textArea);
+		textArea.focus();
+		textArea.select();
+	}
+
+	let successful = false;
+	try
+	{
+		successful = document.execCommand('copy');
+		const msg = successful ? 'successful' : 'unsuccessful';
+		console.log('Fallback: Copying text command was ' + msg);
+	}
+	catch (err)
+	{
+		successful = false;
+	}
+
+	document.body.removeChild(textArea);
+	return successful;
+}
+
+function copyTextToClipboard(event, action, text)
+{
+	if (!navigator.clipboard)
+	{
+		let success = fallbackCopyTextToClipboard(event, action, text);
+		return Promise.resolve(success);
+	}
+	// Use Clipboard API
+	return navigator.clipboard.writeText(text);
+}
 
 
