@@ -257,7 +257,7 @@ class AddressbookApp extends EgwApp
 		value[widget.id] = widget.getValue();
 		if(promise)
 		{
-			jQuery.when.apply(null, promise).done(function ()
+			promise.then(() =>
 			{
 				nm.applyFilters(value);
 			});
