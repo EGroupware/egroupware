@@ -1722,16 +1722,16 @@
         },
         {
             "name": "egroupware/imap-client",
-            "version": "2.31.1",
+            "version": "2.31.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Imap_Client.git",
-                "reference": "02fec7b78e81af53a90a7190e1cad9f843f91526"
+                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/02fec7b78e81af53a90a7190e1cad9f843f91526",
-                "reference": "02fec7b78e81af53a90a7190e1cad9f843f91526",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/08fe784122c7a6afdaa11e57ad227ff010cb9efa",
+                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa",
                 "shasum": ""
             },
             "require": {
@@ -1755,16 +1755,16 @@
             "suggest": {
                 "ext-intl": "*",
                 "ext-mbstring": "*",
-                "pear-pear.horde.org/horde_cache": "^2",
-                "pear-pear.horde.org/horde_compress_fast": "^1",
-                "pear-pear.horde.org/horde_crypt_blowfish": "^1.1",
-                "pear-pear.horde.org/horde_db": "^2.2",
-                "pear-pear.horde.org/horde_hashtable": "^1",
-                "pear-pear.horde.org/horde_mongo": "^1",
-                "pear-pear.horde.org/horde_pack": "^1",
-                "pear-pear.horde.org/horde_stringprep": "^1",
-                "pear-pear.horde.org/horde_support": "^2",
-                "pear-pear.horde.org/horde_test": "^2.2.7"
+                "pear-pear.horde.org/Horde_Cache": "^2",
+                "pear-pear.horde.org/Horde_Compress_Fast": "^1",
+                "pear-pear.horde.org/Horde_Crypt_Blowfish": "^1.1",
+                "pear-pear.horde.org/Horde_Db": "^2.2",
+                "pear-pear.horde.org/Horde_HashTable": "^1",
+                "pear-pear.horde.org/Horde_Mongo": "^1",
+                "pear-pear.horde.org/Horde_Pack": "^1",
+                "pear-pear.horde.org/Horde_Stringprep": "^1",
+                "pear-pear.horde.org/Horde_Support": "^2",
+                "pear-pear.horde.org/Horde_Test": "^2.2.7"
             },
             "type": "library",
             "autoload": {
@@ -1786,7 +1786,7 @@
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
             "support": {
-                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.1"
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.2"
             },
             "time": "2019-09-29T00:00:00+00:00"
         },
