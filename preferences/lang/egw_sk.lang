@@ -15,7 +15,6 @@ audio effect	preferences	sk	Zvukový efekt
 audio effect enables|disables sound effects used in the theme	preferences	sk	Zvukový efekt - zapne/vypne zvukvé efekty použité v tejto téme
 automatically start with this font	preferences	sk	Automaticky začať s týmto písmom
 automatically start with this font size	preferences	sk	Automaticky začať s touto veľkosťou písma
-automatically start with this format block.<br/><b>custom paragraph</b> adds less line space between new lines.	preferences	sk	Automaticky začať týmto formátovacím blokom.<br/><b>Vlastný odstavec</b> pridáva menej odsadenia medzi novými riadkami.
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeniť používateľské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
 change password	preferences	sk	Zmeniť heslo
 change your password	preferences	sk	Zmeniť heslo
@@ -30,7 +29,6 @@ color	preferences	sk	Farba
 country	preferences	sk	Krajina
 current password	preferences	sk	Súčasné heslo
 custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
-custom paragraph	preferences	sk	Vlastný odstavec
 custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark moono theme	preferences	sk	Tmavá Moono téma
 data exchange settings	preferences	sk	Nastavenia pre výmenu údajov

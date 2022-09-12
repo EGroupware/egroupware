@@ -435,9 +435,9 @@ class preferences_hooks
 					'h5' => lang("Heading %1", '5'),
 					'h6' => lang("Heading %1", '6'),
 					'pre' => lang("Preformatted"),
-					'customparagraph' => lang("Custom Paragraph")
+					'customparagraph' => lang("Small Paragraph")
 				),
-				'help'   => 'Automatically start with this format block. Custom Paragraph adds less line space between new lines.',
+				'help'   => 'Automatically start with this format block. Small Paragraph adds less line space between new lines.',
 				'xmlrpc' => True,
 				'admin'  => false,
 				'default' => 'p'
