@@ -765,9 +765,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
-			// Remove remote options
+			// Remove remote options that aren't used
 			let target = this._optionTargetNode || this;
-			target.querySelectorAll(".remote").forEach(o => o.remove());
+			let keepers = this._selected_remote.reduce((prev, current) =>
+			{
+				return ":not([value='" + current.value + "'])";
+			}, "");
+			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
 
 			// Reset remaining options.  It might be faster to re-create instead.
 			this._menuItems.forEach((item) =>
