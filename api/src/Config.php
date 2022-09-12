@@ -257,7 +257,7 @@ class Config
 				'site_title','login_logo_file','login_logo_url','login_logo_title','favicon_file',
 				'markuntranslated','link_list_thumbnail','enabled_spellcheck','debug_minify',
 				'call_link','call_popup','fax_email','fax_email_regexp','geolocation_url',	// addressbook
-				'hide_birthdays','calview_no_consolidate', 'egw_tutorial_disable','fw_mobile_app_list'),	// calendar
+				'hide_birthdays','calview_no_consolidate','fw_mobile_app_list'),	// calendar
 			'projectmanager' => array('hours_per_workday', 'duration_units'),
 			'manual' => array('manual_remote_egw_url'),
 			'infolog' => array('status'),

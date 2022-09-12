@@ -434,37 +434,6 @@ window.app = {classes: {}};
 				window.scrollTo(0, 1);
 			}
 			try {
-				// Open tutorial popup with an introduction video about egroupware
-				if (window.framework === window.top.framework && typeof Et2Dialog != 'undefined' &&
-					!egw.preference('egw_tutorial_noautoload', 'common') &&
-					!parseInt(egw_script.getAttribute('data-framework-reload')) &&
-					(!egw.config('egw_tutorial_disable', 'phpgwapi') || egw.config('egw_tutorial_disable', 'phpgwapi') == 'sidebox'))
-				{
-					// we need to wait until common translations are loaded
-					egw.langRequireApp(window, 'common', function ()
-					{
-						var buttons = [
-							{label: egw.lang("Show now"), id: "show", image: "check", default: "true"},
-							{label: egw.lang("Show next login"), id: "later", image: "right"},
-							{label: egw.lang("No thanks"), id: "never", image: "cancel"}
-						];
-						Et2Dialog.show_dialog(function (_button_id)
-							{
-								if (_button_id == "show")
-								{
-									egw.open_link(egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid=introduction-' + egw.preference('lang') + '-0-a'), '_blank', '960x580');
-								}
-								if (_button_id != "later")
-								{
-									egw.set_preference('common', 'egw_tutorial_noautoload', true);
-								}
-							},
-							egw.lang('We would like to introduce you to EGroupware by showing a short introduction video.'),
-							egw.lang('Introduction'),
-							{}, buttons, Et2Dialog.QUESTION_MESSAGE, undefined, egw(window));
-					}, this);
-				}
-
 				// open websocket to push server for our top window
 				if (egw === window.top.egw && egw_script.getAttribute('data-websocket-url'))
 				{

@@ -995,9 +995,7 @@ window.egw_fw_ui_scrollarea = function(_contDiv)
 		// Do not scrolldown/up when we are on selectbox items
 		// seems Firefox does not prevent the mousewheel event over
 		// selectbox items with scrollbars
-		// Do not scroll on video tutorials as well
-		if (e.target.tagName == "OPTION" || e.target.tagName == "SELECT" ||
-				e.target.getAttribute('class') && e.target.getAttribute('class').match(/egw_tutorial/ig))
+		if (e.target.tagName == "OPTION" || e.target.tagName == "SELECT")
 		{
 			noscroll = true;
 		}

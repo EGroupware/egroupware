@@ -141,15 +141,6 @@
 					</select>
 				</row> -->
 				<row>
-					<description value="EGroupware Tutorial" label="%s:"/>
-					<select id="newsettings[egw_tutorial_disable]">
-						<option value="">Enable</option>
-						<option value="sidebox">Hide sidebox video tutorials</option>
-						<option value="intro">Do not offer introduction video</option>
-						<option value="all">Disable all</option>
-					</select>
-				</row>
-				<row>
 					<description value="Applications available on mobile devices" label="%s:"/>
 					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" other=",enabled:home;groupdav;sitemgr-link;sitemgr;developer_tools;etemplate;stylite;archive;importexport;activesync;notifications;esyncpro;preferences;registration" width="100%"/>
 				</row>

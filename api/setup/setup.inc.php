@@ -62,7 +62,6 @@ $setup_info['api']['hooks']['addgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::addGroup
 $setup_info['api']['hooks']['deletegroup'] = array('EGroupware\\Api\\Vfs\\Hooks::deleteGroup', 'EGroupware\\Api\\Mail\\Hooks::deletegroup');
 $setup_info['api']['hooks']['editgroup'] = 'EGroupware\\Api\\Vfs\\Hooks::editGroup';
 $setup_info['api']['hooks']['changepassword'] = 'EGroupware\\Api\\Mail\\Hooks::changepassword';
-$setup_info['api']['hooks']['sidebox_all'] = 'EGroupware\\Api\\Framework\\Tutorial::tutorial_menu';
 
 // Hooks to delete shares when file is deleted
 $setup_info['api']['hooks']['vfs_unlink'] = 'EGroupware\\Api\\Vfs\\Sharing::vfsUpdate';
