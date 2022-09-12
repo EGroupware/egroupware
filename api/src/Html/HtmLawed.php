@@ -177,7 +177,7 @@ class HtmLawed
 		$style = $style2buffer ?? '';
 		// clean out comments and stuff
 		$search = array(
-			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+			'@url\(https?:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
 //			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
 //			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
 		);
