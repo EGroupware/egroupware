@@ -11,7 +11,7 @@
 			<rows>
 				<row span="all">
 					<hbox>
-						<image src="photo" class="photo"/>
+						<lavatar src="@photo" lname="@n_fn"/>
 						<vbox>
 							<description id="n_fn" class="addressbook_sidebox_name"/>
 							<description id="org_name" class="addressbook_sidebox_org"/>
