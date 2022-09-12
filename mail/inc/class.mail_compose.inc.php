@@ -2849,7 +2849,7 @@ class mail_compose
 				}
 			}
 		}
-		return array_values(array_merge($_emailAddressList, $addrFromList));
+		return array_values(array_merge((array)$_emailAddressList, $addrFromList));
 	}
 
 	/**
