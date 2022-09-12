@@ -4267,7 +4267,7 @@ span.overlayContainer img.overlay {
 #egw_fw_header #egw_fw_topmenu {
   position: absolute;
   display: none;
-  right: 5px;
+  right: 2px;
   width: 241px;
   z-index: 1001;
   top: 46px;

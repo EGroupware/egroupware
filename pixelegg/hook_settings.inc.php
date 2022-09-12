@@ -38,6 +38,14 @@ $colors = array(
 	'#84CA8C' => lang('DarkGreen'),
 	'#b4b4b4' => lang('Gray'),
 );
+
+$textsize = array (
+	's' => lang('small'),
+	'm' => lang('medium'),
+	'l' => lang('large'),
+	'xl' => lang('x-large')
+);
+
 asort($colors);
 $colors['custom'] = lang('Custom color');	// custom allways last
 $template_colors = array();
@@ -121,6 +129,24 @@ $GLOBALS['settings'] = array(
 		'name' => 'loginbox_custom_color',
 		'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
 		'xmlrpc' => True,
+		'admin'  => False,
+	),
+	'universalaccesssection' => array(
+		'type'   => 'section',
+		'title'  => lang('Universal Access'),
+		'no_lang'=> true,
+		'xmlrpc' => False,
+		'admin'  => False,
+	),
+	'textsize' => array(
+		'type' => 'select',
+		'label' => 'Set content size',
+		'no_lang' => true,
+		'name' => 'textsize',
+		'help' => lang('It sets content size (text only) according to selected size.'),
+		'xmlrpc' => True,
+		'values' => $textsize,
+		'default' => 'm',
 		'admin'  => False,
 	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
