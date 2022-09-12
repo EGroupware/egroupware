@@ -84,6 +84,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
         }
         // default settings for initialization
         var settings = {
+            base_url: egw.webserverUrl + '/vendor/tinymce/tinymce',
             target: this.htmlNode[0],
             body_id: this.dom_id + '_htmlarea',
             menubar: false,
@@ -129,7 +130,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
             ],
             toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
             block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;" +
-                "Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre;Custom Paragraph=customparagraph",
+                "Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
             font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica," +
                 "sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book " +
                 "antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;" +
@@ -146,7 +147,13 @@ var et2_htmlarea = /** @class */ (function (_super) {
                     egw.preference('rte_font_unit', 'common')),
         };
         var rte_formatblock = (egw.preference('rte_formatblock', 'common') || 'p');
-        if (rte_formatblock !== 'p') {
+        if (rte_formatblock === 'customparagraph') {
+            settings.forced_root_block = false;
+            settings.force_br_newlines = true;
+            settings.force_p_newlines = false;
+            rte_formatblock = 'p';
+        }
+        else if (rte_formatblock !== 'p') {
             settings.formats[rte_formatblock] = jQuery.extend(true, {}, settings.formats.p);
             settings.formats[rte_formatblock].block = rte_formatblock;
         }
@@ -159,7 +166,7 @@ var et2_htmlarea = /** @class */ (function (_super) {
             self.set_value(self.htmlNode.val());
             self.resetDirty();
             if (self.editor && self.editor.editorContainer) {
-                self.editor.formatter.toggle(egw.preference('rte_formatblock', 'common'));
+                self.editor.formatter.toggle(rte_formatblock);
                 jQuery(self.editor.editorContainer).height(self.options.height);
                 jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function () {
                     if (jQuery('#dragover-tinymce').length < 1)

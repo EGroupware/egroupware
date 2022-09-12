@@ -15,7 +15,7 @@ audio effect	preferences	de	Audio-Effekt
 audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
-automatically start with this format block. custom paragraph adds less line space between new lines.	preferences	de	Startet automatisch mit dieser Formatierung.<br/> <b>Absatz schmal</b> erzeugt einen geringeren Zeilenabstand.
+automatically start with this format block. custom paragraph adds less line space between new lines.	preferences	de	Startet automatisch mit dieser Formatierung.<br/> <b>Schmaler Absatz</b> erzeugt einen geringeren Zeilenabstand.
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
@@ -31,7 +31,7 @@ color	preferences	de	Farbe
 country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
-custom paragraph	preferences	de	Absatz schmal
+small paragraph	preferences	de	Schmaler Absatz
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark mode theme	preferences	de	Dark Mode Thema
 dark moono theme	preferences	de	Dunkles Moono Schema

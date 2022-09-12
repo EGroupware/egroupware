@@ -213,7 +213,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				'&request_id='+this.getInstanceManager().etemplate_exec_id+'&type=htmlarea';
 		}
 		// default settings for initialization
-		let settings = {
+		let settings : any = {
+			base_url: egw.webserverUrl + '/vendor/tinymce/tinymce',
 			target: this.htmlNode[0],
 			body_id: this.dom_id + '_htmlarea',
 			menubar: false,
@@ -259,7 +260,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			],
 			toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
 			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
-				"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre;Custom Paragraph=customparagraph",
+				"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
 			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
 				"sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book "+
 				"antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;"+
@@ -275,8 +276,15 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 					egw.preference('rte_font_size', 'common')+'::'+
 					egw.preference('rte_font_unit', 'common')),
 		};
-		const rte_formatblock = <string>(egw.preference('rte_formatblock', 'common') || 'p');
-		if (rte_formatblock !== 'p')
+		let rte_formatblock = <string>(egw.preference('rte_formatblock', 'common') || 'p');
+		if (rte_formatblock === 'customparagraph')
+		{
+			settings.forced_root_block = false;
+			settings.force_br_newlines = true;
+			settings.force_p_newlines = false;
+			rte_formatblock = 'p';
+		}
+		else if (rte_formatblock !== 'p')
 		{
 			settings.formats[rte_formatblock] = jQuery.extend(true, {}, settings.formats.p);
 			settings.formats[rte_formatblock].block = rte_formatblock;
@@ -291,7 +299,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			self.resetDirty();
 			if (self.editor && self.editor.editorContainer)
 			{
-				self.editor.formatter.toggle(<string><unknown>egw.preference('rte_formatblock', 'common'));
+				self.editor.formatter.toggle(rte_formatblock);
 				jQuery(self.editor.editorContainer).height(self.options.height);
 				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
 					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
