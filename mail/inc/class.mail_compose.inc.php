@@ -2832,31 +2832,24 @@ class mail_compose
 	 */
 	static function resolveEmailAddressList($_emailAddressList)
 	{
-		$contacts_obs = null;
+		static $contacts_obs = null;
 		$addrFromList=array();
 		foreach((array)$_emailAddressList as $ak => $address)
 		{
-			if(is_int($address))
+			if(is_numeric($address) && $address > 0 || preg_match('/ <(\\d+)@lists.egroupware.org>$/', $address, $matches))
 			{
 				if (!isset($contacts_obs)) $contacts_obj = new Api\Contacts();
 				// List was selected, expand to addresses
 				unset($_emailAddressList[$ak]);
-				$list = $contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
-				// Just add email addresses, they'll be checked below
-				foreach($list as $email)
+				foreach($contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),
+					'','','',False,'AND',false,
+					['list' => (int)($matches[1] ?? $address)]) as $email)
 				{
-					$addrFromList[] = $email['email'] ? $email['email'] : $email['email_home'];
+					$addrFromList[] = $email['email'] ?: $email['email_home'];
 				}
 			}
 		}
-		if (!empty($addrFromList))
-		{
-			foreach ($addrFromList as $addr)
-			{
-				if (!empty($addr)) $_emailAddressList[]=$addr;
-			}
-		}
-		return is_array($_emailAddressList) ? array_values($_emailAddressList) : (array)$_emailAddressList;
+		return array_values(array_merge($_emailAddressList, $addrFromList));
 	}
 
 	/**
@@ -3766,12 +3759,10 @@ class mail_compose
 		{
 			$type = $key > 0 ? 'manual' : 'group';
 			$list = array(
-				'id'	=> $key,
-				'name'	=> $list_name,
+				'value'	=> $list_name.' <'.$key.'@lists.egroupware.org>',
 				'label'	=> $list_name,
-				'class' => 'mailinglist ' . "{$type}_list",
 				'title' => lang('Mailinglist'),
-				'data'	=> $key
+				'icon' => Api\Image::find('api', 'email'),
 			);
 			${"${type}_lists"}[] = $list;
 		}

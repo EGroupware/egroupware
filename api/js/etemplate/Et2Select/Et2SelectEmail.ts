@@ -51,6 +51,11 @@ export class Et2SelectEmail extends Et2Select
 			allowDragAndDrop: {type: Boolean},
 
 			/**
+			 * Include mailing lists: returns them with their integer list_id
+			 */
+			includeLists: {type: Boolean},
+
+			/**
 			 * Show the full, original value email address under all circumstances, rather than the contact name for known contacts
 			 */
 			fullEmail: {type: Boolean}
@@ -65,6 +70,7 @@ export class Et2SelectEmail extends Et2Select
 		this.allowFreeEntries = true;
 		this.editModeEnabled = true;
 		this.allowDragAndDrop = false;
+		this.includeLists = false;
 		this.multiple = true;
 		this.fullEmail = false;
 		this.defaultValidators.push(new IsEmail());
@@ -74,7 +80,6 @@ export class Et2SelectEmail extends Et2Select
 	{
 		super.connectedCallback();
 	}
-
 
 	protected _bindListeners()
 	{
@@ -119,7 +124,7 @@ export class Et2SelectEmail extends Et2Select
 	 */
 	protected remoteQuery(search : string, options : object)
 	{
-		return this.egw().json(this.searchUrl, [search]).sendRequest().then((result) =>
+		return this.egw().request(this.searchUrl, [search, {includeLists: this.includeLists}]).then((result) =>
 		{
 			this.processRemoteResults(result);
 		});

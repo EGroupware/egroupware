@@ -106,17 +106,18 @@ class Taglist extends Etemplate\Widget
 	 *
 	 * Uses the mail application if available, or addressbook
 	 */
-	public static function ajax_email($search)
+	public static function ajax_email($search=null, array $options=null)
 	{
 		$_REQUEST['query'] = $_REQUEST['query'] ?: $search;
 		// If no mail app access, use link system -> addressbook
-		if(!$GLOBALS['egw_info']['apps']['mail'])
+		if(empty($GLOBALS['egw_info']['apps']['mail']))
 		{
 			$_REQUEST['app'] = 'addressbook-email';
 			return self::ajax_search();
 		}
 
 		// TODO: this should go to a BO, not a UI object
+		$_REQUEST['include_lists'] = $options['includeLists'] ?? false;
 		return mail_compose::ajax_searchAddress();
 	}
 
