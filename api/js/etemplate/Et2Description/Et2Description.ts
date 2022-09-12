@@ -76,7 +76,10 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				type: String,
 				reflect: true
 			},
-			value: String,
+			value: {
+				type: String,
+				noAccessor: true
+			},
 		}
 	}
 
