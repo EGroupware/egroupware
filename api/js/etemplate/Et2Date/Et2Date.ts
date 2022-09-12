@@ -355,6 +355,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
+		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
 	}
 
 	disconnectedCallback()
@@ -419,10 +420,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
 			ShortcutButtonsPlugin({
 				button: [{label: this.egw().lang("Today")}],
-				onClick: (button_index, fp) =>
-				{
-					fp.setDate(new Date());
-				}
+				onClick: this._handleShortcutButtonClick
 			})
 		];
 
@@ -430,6 +428,17 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.onChange = options.onReady = this._updateValueOnChange;
 
 		return options;
+	}
+
+	/**
+	 * Handle click on shortcut button(s) like "Today"
+	 *
+	 * @param button_index
+	 * @param fp Flatpickr instance
+	 */
+	public _handleShortcutButtonClick(button_index, fp)
+	{
+		fp.setDate(new Date());
 	}
 
 	/**

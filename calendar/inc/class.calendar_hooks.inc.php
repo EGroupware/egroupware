@@ -352,13 +352,6 @@ class calendar_hooks
 				'admin'  => False,
 				'default' => ['weekN', 'month'],
 			),
-			'auto_update_on_sidebox_change' => array(
-				'type'	 => 'check',
-				'label'  => 'Update calendar view immediately when navigation calendar in sidebox is changed',
-				'name'   => 'auto_update_on_sidebox_change',
-				'help'   => 'When changing the month',
-				'default'=> false
-			),
 			'2.section' => array(
 				'type'  => 'section',
 				'title' => lang('appointment settings'),

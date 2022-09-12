@@ -43,7 +43,7 @@ export class SidemenuDate extends Et2Date
 		this._handleChange = this._handleChange.bind(this);
 		this._handleDayHover = this._handleDayHover.bind(this);
 		this._clearHover = this._clearHover.bind(this);
-		this._updateGoButton = this._updateGoButton.bind(this);
+		this._handleHeaderChange = this._handleHeaderChange.bind(this);
 	}
 
 	async connectedCallback()
@@ -83,23 +83,6 @@ export class SidemenuDate extends Et2Date
 			this._instance.weekNumbers.addEventListener("mouseover", this._handleDayHover);
 			this._instance.weekNumbers.addEventListener("mouseout", this._clearHover);
 		}
-
-		// Customise next / prev buttons
-		this.querySelector('.flatpickr-next-month').classList.add("et2_button", "et2_button_text");
-		this.egw().tooltipBind(this.querySelector('.flatpickr-next-month'), this.egw().lang("next"));
-		this.querySelector('.flatpickr-prev-month').classList.add("et2_button", "et2_button_text");
-		this.egw().tooltipBind(this.querySelector('.flatpickr-prev-month'), this.egw().lang("prev"));
-
-		// Move buttons into header
-		if(this._goButton && this._headerNode)
-		{
-			this._headerNode.append(this._goButton);
-		}
-		if(this._todayButton && this._headerNode)
-		{
-			this._headerNode.append(this._todayButton);
-		}
-		this._updateGoButton();
 	}
 
 	/**
@@ -114,13 +97,9 @@ export class SidemenuDate extends Et2Date
 
 		options.inline = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
-		options.shorthandCurrentMonth = true;
 
-		options.onMonthChange = this._updateGoButton;
-		options.onYearChange = this._updateGoButton;
-
-		options.nextArrow = "";
-		options.prevArrow = "";
+		options.onMonthChange = this._handleHeaderChange;
+		options.onYearChange = this._handleHeaderChange;
 
 		return options
 	}
@@ -154,7 +133,41 @@ export class SidemenuDate extends Et2Date
 			_ev.stopPropagation();
 			return false;
 		}
-		this._oldChange(_ev);
+		let view_change = app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view);
+		let update = {date: this.getValue()};
+
+		if(view_change >= 0)
+		{
+			update.view = app.calendar.sidebox_changes_views[view_change ? view_change - 1 : view_change];
+		}
+		else if(app.calendar.state.view == 'listview')
+		{
+			update.filter = 'after';
+		}
+		else if(app.calendar.state.view == 'planner')
+		{
+			update.planner_view = 'day';
+		}
+		app.calendar.update_state(update);
+
+	}
+
+	/**
+	 * Handle click on shortcut button(s) like "Today"
+	 *
+	 * @param button_index
+	 * @param fp Flatpickr instance
+	 */
+	public _handleShortcutButtonClick(button_index, fp)
+	{
+		// This just changes the calendar to today
+		super._handleShortcutButtonClick(button_index, fp);
+
+		let temp_date = new Date("" + this._instance.currentYear + "-" + (this._instance.currentMonth + 1) + "-" + (this._instance.selectedDates[0].getDate() || "01"));
+
+		// Go directly
+		let update = {date: temp_date};
+		app.calendar.update_state(update);
 	}
 
 	_handleClick(_ev : MouseEvent) : boolean
@@ -276,34 +289,19 @@ export class SidemenuDate extends Et2Date
 		return this._instance?.monthNav;
 	}
 
-	get _goButton()
-	{
-		return this.querySelector("et2-button[id*='go']");
-	}
-
-	get _todayButton()
-	{
-		return this.querySelector("et2-button[id*='today']");
-	}
-
 	/**
-	 * Update the go button
+	 * Year or month changed
 	 *
 	 * @protected
 	 */
-	protected _updateGoButton()
+	protected _handleHeaderChange()
 	{
-		if(!this._goButton)
-		{
-			return;
-		}
 		let temp_date = new Date("" + this._instance.currentYear + "-" + (this._instance.currentMonth + 1) + "-01");
 		temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 
-		this._goButton.setAttribute('title', egw.lang(this._instance.formatDate(temp_date, "F")));
-		// Store current _displayed_ date in date button for clicking
-		temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
-		this._goButton.setAttribute('data-date', temp_date.toJSON());
+		// Go directly
+		let update = {date: temp_date};
+		app.calendar.update_state(update);
 	}
 }
 

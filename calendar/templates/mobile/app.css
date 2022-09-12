@@ -100,33 +100,6 @@
   border: none;
   box-shadow: none;
 }
-#calendar-sidebox_header_go,
-#calendar-sidebox_header_today {
-  width: 12px;
-  height: 12px;
-  top: 5px;
-  z-index: 1;
-  overflow: hidden;
-  font-size: 10px;
-  line-height: 50%;
-  color: white;
-  background-color: #217bc0;
-  background-image: none;
-  background-position-y: -1px;
-  border: none;
-  border-radius: 100%;
-}
-#calendar-sidebox_header_go {
-  margin-right: 10px;
-}
-#calendar-sidebox_header_today {
-  order: 2;
-}
-#calendar-sidebox_header_go:hover,
-#calendar-sidebox_header_today:hover {
-  background-color: var(--row-hover);
-  box-shadow: none;
-}
 #calendar-sidebox_weekend {
   /* Special css styling goes here */
 }
@@ -179,23 +152,6 @@
   padding: 0;
   flex: 1 1 auto;
 }
-#calendar-sidebox_date .flatpickr-next-month,
-#calendar-sidebox_date .flatpickr-prev-month {
-  background-size: contain;
-  background-color: initial;
-  width: 12px;
-  height: 12px;
-  border: none;
-}
-#calendar-sidebox_date .flatpickr-prev-month {
-  order: 1;
-  background-image: url(../default/images/previous.svg);
-  margin-right: 0px;
-}
-#calendar-sidebox_date .flatpickr-next-month {
-  order: 3;
-  background-image: url(../default/images/next.svg);
-}
 #calendar-sidebox_date div.flatpickr-calendar.inline {
   width: 100% !important;
 }
@@ -242,9 +198,6 @@ div.calendar_conflicts {
   min-height: 26px;
   justify-content: flex-end;
 }
-#calendar-toolbar #calendar-toolbar_keywords {
-  margin-right: 4px;
-}
 #calendar-toolbar .et2_searchbox input {
   height: 14px;
 }
@@ -270,13 +223,16 @@ div.calendar_conflicts {
   left: 0px;
   right: 0px;
 }
+form#calendar-toolbar > div {
+  column-gap: 1ex;
+}
 #calendar-todo {
   position: absolute;
   width: 30%;
   margin-top: 0px;
   z-index: 10;
   bottom: -10px;
-  height: calc(100% - 75px);
+  height: calc(100% - 92px);
 }
 #calendar-view {
   width: 100%;
@@ -1467,15 +1423,6 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_freetime_timeframe {
   position: relative;
 }
-.calendar_freetime_dow {
-  position: absolute;
-  width: 30ex;
-  height: 22em;
-}
-.calendar_freetime_dow ul.ui-multiselect-checkboxes {
-  overflow-y: visible;
-  height: 20em;
-}
 img.calendar_print_button,
 img.calendar_print_appicon {
   height: 24px;
@@ -1524,11 +1471,15 @@ img.calendar_print_appicon {
 }
 /*weekend slideSwitch in toolbar*/
 #calendar-toolbar_app_header {
-  color: #616161;
+  color: #000;
   font-size: 14px;
-  height: 16px;
-  position: absolute;
-  left: 44%;
+  height: 1.7em;
+  padding: 4px 3px 3px;
+  background: #b4cee773;
+  border-radius: 3px;
+  min-width: 19em;
+  border: 1px solid #d4d4d8;
+  text-align: center;
 }
 /* Integration slide switches in toolbar */
 #calendar-toolbar_toolbar et2-switch {
@@ -1538,7 +1489,7 @@ img.calendar_print_appicon {
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-video_toggle"] {
-  background-size: 16px;
+  background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
   filter: grayscale(1) contrast(0.9999) opacity(0.7);
@@ -2749,79 +2700,6 @@ div#calendar-container div.calendar table tbody tr.daysrow:hover {
 div#calendar-container div.calendar table tbody tr.rowhilite td {
   background-color: #ffc200;
 }
-/* Sidebox calendar */
-#calendar-sidebox_date .ui-widget-header {
-  background-color: transparent;
-}
-#calendar-sidebox_date .ui-widget-content,
-#calendar-sidebox_date .ui-state-default,
-#calendar-sidebox_date #calendar-sidebox_date .ui-state-hover {
-  border: none;
-  padding: 2px;
-  text-align: center;
-}
-#calendar-sidebox_date .ui-datepicker td {
-  padding: 0px;
-}
-#calendar-sidebox_date .ui-datepicker-header .ui-state-hover {
-  background-color: transparent;
-  border: none;
-  top: 2px;
-  box-shadow: none;
-}
-#calendar-sidebox_date .ui-datepicker-today {
-  background-color: #FFDD73;
-}
-#calendar-sidebox_date .ui-datepicker-calendar .ui-state-hover {
-  background-color: rgba(153, 204, 255, 0.4);
-}
-#calendar-sidebox_date .ui-datepicker-header .ui-datepicker-next.ui-state-hover {
-  right: 2px;
-}
-#calendar-sidebox_date .ui-datepicker-year {
-  padding-right: 0px !important;
-  min-width: 65px;
-}
-#calendar-sidebox_date .ui-datepicker-month {
-  min-width: 60px;
-  padding-right: 0px !important;
-}
-#calendar-sidebox_date .ui-datepicker-header a span {
-  width: 20px;
-  height: 20px;
-}
-#calendar-sidebox_date .ui-datepicker-header a.ui-state-hover {
-  top: 3px;
-}
-#calendar-sidebox_date .ui-datepicker-header a.ui-state-hover span {
-  transition: none;
-}
-#calendar-sidebox_header_go {
-  width: 20px;
-  height: 20px;
-  background-image: url('../../../api/templates/default/images/check.svg');
-  text-indent: 140%;
-  border: none;
-  border-radius: 0px;
-  background-size: contain;
-  background-color: transparent;
-}
-#calendar-sidebox_header_go:hover {
-  background-color: transparent;
-}
-#calendar-sidebox_header_today {
-  width: 2em;
-  height: 2em;
-  background-image: url('../../../api/templates/default/images/bullet.svg');
-  text-indent: 140%;
-  border: none;
-  border-radius: 0px;
-  background-size: contain;
-  background-color: transparent;
-}
-#calendar-sidebox_header_today:hover {
-  background-color: transparent;
-}
 #calendar_cat_id,
 #calendar_filter,
 #uical_select_owner,
@@ -3006,4 +2884,3 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     color: #707070;
   }
 }
-/*# sourceMappingURL=app.css.map */

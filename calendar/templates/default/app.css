@@ -80,106 +80,12 @@
     box-shadow: none;
 }
 
-#calendar-sidebox_header_go,
-#calendar-sidebox_header_today {
-	width: 12px;
-	height: 12px;
-	top: 5px;
-	z-index: 1;
-	overflow: hidden;
-	font-size: 10px;
-	line-height: 50%;
-	color: white;
-	background-color: #217bc0;
-	background-image: none;
-    background-position-y: -1px;
-	border:none;
-	border-radius: 100%;
-}
-#calendar-sidebox_header_go {
-    margin-right: 10px
-}
-#calendar-sidebox_header_today {
-     order: 2;
- }
-#calendar-sidebox_header_go:hover, #calendar-sidebox_header_today:hover {
-	background-color: var(--row-hover);
-	box-shadow: none;
-}
 #calendar-sidebox_weekend {
 	/* Special css styling goes here */
 }
 
-#calendar-sidebox_date .calendar_calHoliday {
-	background-color: rgba(103, 159, 210, 0.5);
-}
 
-#calendar-sidebox_date .flatpickr-months {
-    gap: 0;
-    background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-months > * {
-    background-repeat: no-repeat;
-}
-#calendar-sidebox_date .flatpickr-months > *:hover {
-    background-color: initial !important;
-    box-shadow: none;
-}
-#calendar-sidebox_date  .flatpickr-months .flatpickr-month {
-    min-width: 16ch;
-    height: initial;
-    background-color: initial;
-}
 
-#calendar-sidebox_date .flatpickr-current-month {
-    height: 25px;
-    font-size: 100%;
-    width: 100%;
-    min-width: 7ch;
-    left: 0;
-    display: flex;
-    align-items: stretch;
-    padding: 0px;
-}
-
-#calendar-sidebox_date .flatpickr-current-month select {
-    padding: 0 !important;
-    background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-current-month .numInputWrapper {
-    width: 7ch;
-    min-width: 7ch;
-    flex: 0;
-}
-#calendar-sidebox_date .flatpickr-current-month .numInputWrapper:hover {
-    background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-current-month input.cur-year {
-    padding-top: 3px;
-}
-#calendar-sidebox_date div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
-    width: 100%;
-    padding: 0;
-    flex: 1 1 auto;
-}
-
-#calendar-sidebox_date  .flatpickr-next-month,
-#calendar-sidebox_date  .flatpickr-prev-month {
-    background-size: contain;
-    background-color: initial;
-    width: 12px;
-    height: 12px;
-    border: none;
-}
-#calendar-sidebox_date  .flatpickr-prev-month {
-    order: 1;
-    background-image: url(../default/images/previous.svg);
-    margin-right: 0px;
-}
-#calendar-sidebox_date  .flatpickr-next-month {
-    order: 3;
-    background-image: url(../default/images/next.svg);
-}
 #calendar-sidebox_date div.flatpickr-calendar.inline {
     width: 100% !important;
 }
