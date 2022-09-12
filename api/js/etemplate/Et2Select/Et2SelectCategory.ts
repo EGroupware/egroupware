@@ -30,7 +30,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 			}
 			/* Border on the (single) selected value */
 			.select--standard .select__control {
-				border-left: 8px solid var(--sl-input-border-color);
+				border-left: 6px solid var(--sl-input-border-color);
 			}			
 			`
 		]
