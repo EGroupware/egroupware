@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.freetimesearch.rows" template="" lang="" group="0" version="1.0.1.001">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -29,7 +29,7 @@
 		</grid>
 	</template>
 	<template id="calendar.freetimesearch" template="" lang="" group="0" version="1.3.001">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -57,9 +57,12 @@
 						<date-timeonly id="start_time" statustext="Timeframe to search"/>
 						<description value="til"/>
 						<date-timeonly id="end_time" statustext="Timeframe to search"/>
-						<description value="Weekdays"/>
-						<select-dow rows="10" id="weekdays" statustext="Weekdays to use in search" class="calendar_freetime_dow"/>
+
 					</hbox>
+				</row>
+				<row>
+					<description value="Weekdays"/>
+					<select-dow rows="10" id="weekdays" statustext="Weekdays to use in search" class="calendar_freetime_dow"/>
 				</row>
 				<row class="dialogFooterToolbar">
 					<button label="New search" id="search" image="search" background_image="1" statustext="new search with the above parameters"/>
