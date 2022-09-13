@@ -270,6 +270,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			this._handleSelect = this._handleSelect.bind(this);
 			this._handleChange = this._handleChange.bind(this);
+			this._handleSearchBlur = this._handleSearchBlur.bind(this);
 			this._handleClear = this._handleClear.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
 			this._handleSearchAbort = this._handleSearchAbort.bind(this);
@@ -381,6 +382,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
                                placeholder="${this.egw().lang("search")}"
                                style="width:100%"
                                @keydown=${this._handleSearchKeyDown}
+                               @blur=${this._handleSearchBlur}
                 ></et2-searchbox>
                 ${edit}
 			`;
@@ -657,6 +659,23 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 				// Start searching again
 				this.updateComplete.then(() => this.handleMenuShow())
+			}
+		}
+
+		/**
+		 * Handle blur from search field
+		 *
+		 * Either the user changed fields, or selected an option.  For selecting don't interfere, but for
+		 * changing fields we need to make sure the menu is hidden.
+		 *
+		 * @param event
+		 */
+		async _handleSearchBlur(event : FocusEvent)
+		{
+			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement)
+			{
+				await this.dropdown.hide();
+				event.relatedTarget.focus();
 			}
 		}
 
