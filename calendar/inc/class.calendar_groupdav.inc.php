@@ -740,7 +740,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 */
 	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null)
 	{
-		if (is_null($bo)) $bo = new calendar_bopdate();
+		if (is_null($bo)) $bo = new calendar_boupdate();
 
 		$params = array(
 			'query' => array('cal_uid' => $uid),
