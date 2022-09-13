@@ -103,55 +103,6 @@
 #calendar-sidebox_weekend {
   /* Special css styling goes here */
 }
-#calendar-sidebox_date .calendar_calHoliday {
-  background-color: rgba(103, 159, 210, 0.5);
-}
-#calendar-sidebox_date .flatpickr-months {
-  gap: 0;
-  background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-months > * {
-  background-repeat: no-repeat;
-}
-#calendar-sidebox_date .flatpickr-months > *:hover {
-  background-color: initial !important;
-  box-shadow: none;
-}
-#calendar-sidebox_date .flatpickr-months .flatpickr-month {
-  min-width: 16ch;
-  height: initial;
-  background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-current-month {
-  height: 25px;
-  font-size: 100%;
-  width: 100%;
-  min-width: 7ch;
-  left: 0;
-  display: flex;
-  align-items: stretch;
-  padding: 0px;
-}
-#calendar-sidebox_date .flatpickr-current-month select {
-  padding: 0 !important;
-  background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-current-month .numInputWrapper {
-  width: 7ch;
-  min-width: 7ch;
-  flex: 0;
-}
-#calendar-sidebox_date .flatpickr-current-month .numInputWrapper:hover {
-  background-color: initial;
-}
-#calendar-sidebox_date .flatpickr-current-month input.cur-year {
-  padding-top: 3px;
-}
-#calendar-sidebox_date div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
-  width: 100%;
-  padding: 0;
-  flex: 1 1 auto;
-}
 #calendar-sidebox_date div.flatpickr-calendar.inline {
   width: 100% !important;
 }
@@ -2884,3 +2835,4 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     color: #707070;
   }
 }
+/*# sourceMappingURL=app.css.map */

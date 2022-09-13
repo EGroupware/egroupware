@@ -18,8 +18,8 @@ Egroupware
 				<buttononly id="add" background_image="true" image="add" onclick="app.calendar.toolbar_action(widget);"/>
 			</box>
 		</box>
-		<description id="app_header"/>
 		<searchbox id="keywords" blur="Search" overlay="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
+		<description id="app_header"/>
 		<toolbar id="toolbar" width="100%" flat_list="false"/>
 		<!-- Fake an app header inside the toolbar -->
 		<box class="egw_fw_ui_app_header_container">
