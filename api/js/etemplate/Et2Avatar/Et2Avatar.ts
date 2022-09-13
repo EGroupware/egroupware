@@ -299,6 +299,8 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 		let widget = document.getElementById('_cropper_image');
 		switch(_buttons)
 		{
+			case 0:
+				return true;
 			case 1:
 				let canvas = jQuery(widget._imageNode).cropper('getCroppedCanvas');
 				this.image =  canvas.toDataURL("image/jpeg", 1.0)
@@ -314,6 +316,8 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 				return false;
 			case '_rotate_r':
 				jQuery(widget._imageNode).cropper('rotate', 90);
+				return false;
+			default:
 				return false;
 		}
 	}
