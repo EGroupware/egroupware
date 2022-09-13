@@ -116,9 +116,7 @@ class HtmLawed
 		// put it back in after purifying; styles are processed for known security risks
 		// in self::getStyles
 		// we allow filtered style sections now throughout egroupware
-		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/
-		$replacement = '<style>.something{color:red}</style>';
-		$styles = self::getStyles($html2check, $replacement);
+		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/ $styles = self::getStyles($html2check);
 		//error_log(__METHOD__.__LINE__.array2string($styles));
 		//error_log(__METHOD__.__LINE__.' Config:'.array2string($Config));
 
@@ -127,28 +125,17 @@ class HtmLawed
 		{
 			$Config['hook_tag']=__NAMESPACE__.'\\'.$Config['hook_tag'];
 		}
-		$validated = htmLawed($html2check, $Config, $Spec);
-		if (strpos($validated, $replacement) !== false)
-		{
-			return str_replace($replacement, $styles, $validated);
-		}
-		// htmLawed seems to remove the style tabs
-		elseif (strpos($validated, $replacement=preg_replace('#</?style>#', '', $replacement)) !== false)
-		{
-			return str_replace($replacement, $styles, $validated);
-		}
-		return ($styles?:'').$validated;
+		return ($styles?$styles:'').htmLawed($html2check, $Config, $Spec);
 	}
 
 	/**
 	 * get all style tag definitions, <style> stuff </style> of the html passed in
 	 * and remove it from input
 	 * @author Leithoff, Klaus
-	 * @param string& html
-	 * @param string $replace='' text to replace returned styles with, default ""
+	 * @param string html
 	 * @return string the style css
 	 */
-	static function getStyles(&$html, $replace='')
+	static function getStyles(&$html)
 	{
 		$ct=0;
 		$newStyle = null;
@@ -159,7 +146,7 @@ class HtmLawed
 			$style2buffer = implode('',$newStyle[0]);
 			// only replace what we have found, we use it here, as we use the same routine in Api\Mail\Html::replaceTagsCompletley
 			// no need to do the extra routine
-			$html = str_ireplace($newStyle[0], $replace, $html);
+			$html = str_ireplace($newStyle[0],'',$html);
 		}
 		if (!empty($style2buffer))
 		{
