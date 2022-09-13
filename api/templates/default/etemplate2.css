@@ -3752,7 +3752,7 @@ tr.dialogOperators td, .dialogFooterToolbar {
     padding: 5px 0px 5px 0px;
 }
 
-table.et2_grid > tbody > tr > td {
+.popupMainDiv table.et2_grid > tbody > tr > td, table.et2_grid > tbody > tr > td {
     padding-right: 5px;
 }
 
