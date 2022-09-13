@@ -165,7 +165,7 @@ class Date extends Transformer
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
-			if($value && $this->type !== 'date-duration')
+			if($value && !in_array($this->type, ['et2-date-duration', 'date-duration']))
 			{
 				try
 				{
@@ -193,7 +193,7 @@ class Date extends Transformer
 			{
 				$valid = null;
 			}
-			elseif($this->type == 'date-duration')
+			elseif(in_array($this->type, ['et2-date-duration', 'date-duration']))
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
@@ -256,7 +256,7 @@ class Date extends Transformer
 					$value = $max;
 				}
 			}
-			if($this->type == 'date-duration')
+			if(in_array($this->type, ['et2-date-duration', 'date-duration']))
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}

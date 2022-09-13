@@ -290,7 +290,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		}
 
 		let val = this._durationNode.length ? this._durationNode[0].value : '';
-		if(val === '')
+		if(val === '' || isNaN(val))
 		{
 			return this.emptyNot0 ? '' : "0";
 		}
@@ -496,7 +496,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			let input = {
 				name: "",
 				title: "",
-				value: value,
+				value: typeof value == "number" ? value : ((this.selectUnit ? value.pop() : value[i]) || ""),
 				min: undefined,
 				max: undefined
 			};

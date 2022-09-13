@@ -71,6 +71,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				.input-group__container > .input-group__input ::slotted(.form-control) {
 					width: 100%;
 				}
+				.form-field__feedback {
+					position: relative;
+				}
 				
 				`
 			];
@@ -411,13 +414,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
 				feedback.feedbackData = feedbackData;
 				feedback.slot = "help-text";
+				this.append(feedback);
 				if(this.shadowRoot.querySelector("slot[name='feedback']"))
 				{
 					feedback.slot = "feedback";
 				}
 				else
 				{
-					this.append(feedback);
 					// Not always visible?
 					(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
 				}
