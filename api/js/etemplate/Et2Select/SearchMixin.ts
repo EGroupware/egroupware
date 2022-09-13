@@ -949,7 +949,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this.handleMenuSlotChange();
 			});
 			// If we were overlapping edit inputbox with the value display, reset
-			if(this._activeControls.classList.contains("novalue"))
+			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
 			{
 				this.handleMenuShow();
 			}
