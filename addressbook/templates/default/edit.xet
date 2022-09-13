@@ -370,7 +370,7 @@
                 <row class="dialogHeader">
                     <box align="center">
                         <hbox disabled="@hidebuttons">
-                            <avatar id="jpegphoto" contact_id="$cont[id]" src="$cont[photo]" crop="false"
+                            <avatar id="jpegphoto" contactId="$cont[id]" src="$cont[photo]" crop="false"
                                     editable="true"/>
                         </hbox>
                     </box>
