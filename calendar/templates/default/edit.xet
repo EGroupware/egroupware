@@ -37,7 +37,7 @@
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
 					</menulist>
-					<button align="left" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
+					<button align="left" disabled="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
 				</row>
 			</rows>
 		</grid>
