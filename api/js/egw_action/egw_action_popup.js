@@ -791,7 +791,7 @@ export function egwPopupActionImplementation()
 						if (successful)
 						{
 							// Clear message
-							egw.message('');
+							egw.message(egw.lang("'%1' copied to clipboard", os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
 							window.getSelection().removeAllRanges();
 							return false;
 						}
@@ -970,10 +970,11 @@ function fallbackCopyTextToClipboard(event, clipboard_action, text)
 		event.clipboardData.setData('text/plain', jQuery(clipboard_action.data.target).text().trim());
 		event.clipboardData.setData('text/html', jQuery(clipboard_action.data.target).html());
 	}
+	let textArea;
 	if (!window.clipboardData)
 	{
 
-		const textArea = document.createElement("textarea");
+		textArea = document.createElement("textarea");
 		textArea.value = text;
 
 		// Avoid scrolling to bottom

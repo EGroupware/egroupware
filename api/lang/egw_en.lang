@@ -26,6 +26,7 @@
 %s notranslation	common	en	%s NoTranslation
 %s onchange	common	en	%s onChange
 %s readonly	common	en	%s readonly
+'%1' copied to clipboard	common	en	'%1' copied to clipboard
 '%1' has an invalid format	common	en	'%1' has an invalid format
 '%1' has an invalid format !!!	common	en	'%1' has an invalid format!
 '%1' is no php file in the egw server root (%2)!	common	en	'%1' is no php file in the eGW server root (%2)!
