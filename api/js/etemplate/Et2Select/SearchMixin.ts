@@ -409,7 +409,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected get _activeControls()
 		{
-			return this.shadowRoot.querySelector(".search_input") ||
+			return this.shadowRoot?.querySelector(".search_input") ||
 				this.querySelector(".search_input");
 		}
 
