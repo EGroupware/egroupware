@@ -63,10 +63,10 @@
     overflow-y: hidden !important;
   }
   /* Let hidden user names be visible */
-  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > span.et2_label {
+  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > et2-description {
     position: static;
   }
-  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > span.et2_label {
+  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > et2-description {
     overflow: visible !important;
   }
   div.calendar_calEvent {
@@ -2666,7 +2666,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer {
   height: calc(1.5em + 32px);
 }
-#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > et2-description {
   width: calc(100% - 58px);
 }
 #calendar-toolbar_toolbar et2-switch .label.on span.off {
