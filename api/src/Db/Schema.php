@@ -948,7 +948,12 @@ class Schema
 		}
 		else
 		{
-			$retval = $this->dict->ExecuteSQLArray($aSql);
+			try {
+				$retval = $this->dict->ExecuteSQLArray($aSql);
+			}
+			catch (\mysqli_sql_exception $e) {
+				$retval = 1;
+			}
 		}
 		if ($retval < 2 || $this->debug >= $debug_level || $this->debug > 3)
 		{
