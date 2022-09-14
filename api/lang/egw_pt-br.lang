@@ -1,12 +1,29 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt-br	%1 (%2 nova) Mensagens escritas para Aplicações '%3' e Idiomas '%4'
 %1 directories %2 found!	admin	pt-br	% 1% 2 diretórios encontrado!
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
+%1 etemplates deleted	common	pt-br	%1 eModelo(s) removido(s)
+%1 etemplates for application '%2' dumped to '%3'	common	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
+%1 etemplates found	common	pt-br	%1 eModelo encontrados
 %1 file	common	pt-br	% 1 arquivo
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
+%1 matches on search criteria	common	pt-br	%1 encontrados para os critérios da busca
+%1 more...	common	pt-br	mais %1...
+%1 new etemplates imported for application '%2'	common	pt-br	%1 novo eModelo importado para a aplicação '%2'
 %1 proxy of %2	common	pt-br	% 1% 2 de procuração
 %1 to sync	groupdav	pt-br	1% para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1EGroupware%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
+%s disabled	common	pt-br	%s inativo
+%s needed	common	pt-br	%s necessário
+%s notranslation	common	pt-br	%s Sem tradução
+%s onchange	common	pt-br	%s Sobre alteração
+%s readonly	common	pt-br	%s apenas leitura
+'%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido !!!
 '%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
+'%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
+'%1' is not a valid floatingpoint number !!!	common	pt-br	%1' não é um número válido para o ponto flutuante!!!
+'%1' is not a valid integer !!!	common	pt-br	%1' não é um inteiro válido!!!
+'%1' is not allowed ('%2')!	common	pt-br	'%1' não é permitido ('%2')!
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 00 (disable)	admin	pt-br	00 (desabilitado)
 1 day	common	pt-br	1 Dia
@@ -15,11 +32,15 @@
 1 week	common	pt-br	1 Semana
 13 (ntp)	admin	pt-br	13 (ntp)
 80 (http)	admin	pt-br	80 (http)
+a pattern to be searched for	common	pt-br	um padrão a ser procurado
 about	common	pt-br	Sobre
 about %1	common	pt-br	Sobre %1
 about egroupware	common	pt-br	Sobre EGroupware
 access	common	pt-br	Acesso
 access not permitted	common	pt-br	Acesso não permitido
+accesskey	common	pt-br	Tecla de atalho
+accesskeys can also be specified with an & in the label (eg. &name)	common	pt-br	Teclas de atalho também pode ser especificadas com um '&' no rótulo (exemplo: &Nome).
+account contactdata	common	pt-br	Dados do contato
 account has been created	common	pt-br	A conta foi criada
 account has been deleted	common	pt-br	A conta foi removida
 account has been updated	common	pt-br	A conta foi atualizada
@@ -29,39 +50,61 @@ acl	common	pt-br	ACL
 action	common	pt-br	Ação
 action when category is an email address	groupdav	pt-br	Ação quando categoria é um endereço de email
 actions	common	pt-br	Ações
+actions...	common	pt-br	Ações...
 active	common	pt-br	Ativo
 add	common	pt-br	Adicionar
 add %1 category for	common	pt-br	Adicionar categoria %1 para
+add a new column (after the existing ones)	common	pt-br	Adicionar uma nova coluna (após as existentes)
 add a new contact	common	pt-br	Adicionar um novo contato
+add a new entry of the selected application	common	pt-br	Adicionar um novo registro do aplicativo selecionado
+add a new multi-column index	common	pt-br	Adicionar um index de novas multi-colunas
 add category	common	pt-br	Adicionar categoria
+add column	common	pt-br	Adicionar Coluna
 add current	common	pt-br	Adicionar atual
+add index	common	pt-br	Adicionar Index
+add new	common	pt-br	Adicionar novo
 add shortcut	common	pt-br	Adicionar tecla de atalho
 add sub	common	pt-br	Adicionar sub-tarefa
+add table	common	pt-br	Adicionar Tabela
+add to clipboard	common	pt-br	Adicionar à prancheta
 add user to responsibles	groupdav	pt-br	adicionar o usuário para responsáveis
 addressbook	common	pt-br	Contatos
 admin	common	pt-br	Administrador
 administration	common	pt-br	Administração
+advanced search	common	pt-br	Pesquisa avançada
 afghanistan	common	pt-br	AFEGANISTÃO
 albania	common	pt-br	ALBANIA
 algeria	common	pt-br	ALGERIA
+align	common	pt-br	Alinhar
+alignment of label and input-field in table-cell	common	pt-br	alinhamento da etiqueta e campo de entrada na célula da tabela
+alignment of the v/hbox containing table-cell	common	pt-br	Alinhamento da V/HBox contendo a célula da tabela
 all	common	pt-br	Todos
 all addressbooks	groupdav	pt-br	Todos os catálogos de endereços
+all days	common	pt-br	Todos os dias
 all fields	common	pt-br	todos os campos
 all in one	groupdav	pt-br	Tudo em um
 all languages	common	pt-br	Todos os idiomas
-alphabet	common	pt-br	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all operations save the template!	common	pt-br	Todas as operações salvam o modelo!
+all users	common	pt-br	Todos usuários
 alt	common	pt-br	Alt
 alternate style-sheet:	common	pt-br	Estilo de folha alternativo
+am	common	pt-br	am
 american samoa	common	pt-br	SAMOA AMERICANA
 an error happened	common	pt-br	Um erro ocorreu
 an existing and by the webserver readable directory enables the image browser and upload.	common	pt-br	Um diretório existente e que o servidor web tenha direito de leitura habilita a navegação e upload de imagem.
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pt-br	uma coluna indexada posicionada acima das querys (custa espaço no disco)
 and	common	pt-br	E
 andorra	common	pt-br	ANDORRA
 angola	common	pt-br	ANGOLA
 anguilla	common	pt-br	ANGUILLA
 antarctica	common	pt-br	ANTARTICA
 antigua and barbuda	common	pt-br	ANTIGUA E BARBUDA
+api	common	pt-br	API EGroupware
 application	common	pt-br	Aplicativo
+application name needed to write a langfile or dump the etemplates !!!	common	pt-br	É preciso o nome da aplicação para escrever um arquivo de idioma ou copiar o eModelo!!!
+applications	common	pt-br	Aplicativos
+applies the changes made	common	pt-br	Aplicar as alterações realizadas
+applies the changes to the given version of the template	common	pt-br	Aplicar as alterações para a versão do modelo informado
 apply	common	pt-br	Aplicar
 april	common	pt-br	Abril
 are you sure you want to delete these entries ?	common	pt-br	Deseja remover estes registros?
@@ -69,6 +112,9 @@ are you sure you want to delete this entry ?	common	pt-br	Deseja remover este re
 argentina	common	pt-br	ARGENTINA
 armenia	common	pt-br	ARMENIA
 aruba	common	pt-br	ARUBA
+as default	common	pt-br	como padrão
+attach	common	pt-br	anexo
+attach file	common	pt-br	arquivo anexo
 attachment	common	pt-br	acessório
 august	common	pt-br	Agosto
 australia	common	pt-br	AUSTRALIA
@@ -89,6 +135,7 @@ bahamas	common	pt-br	BAHAMAS
 bahrain	common	pt-br	BAHRAIN
 bangladesh	common	pt-br	BANGLADESH
 barbados	common	pt-br	BARBADOS
+baseline	common	pt-br	Linha base
 bcc	common	pt-br	Cópia Oculta
 belarus	common	pt-br	BIELO RÚSSIA
 belgium	common	pt-br	BÉLGICA
@@ -97,13 +144,17 @@ benin	common	pt-br	BENIN
 bermuda	common	pt-br	BERMUDA
 bhutan	common	pt-br	BUTÃO
 blocked, too many attempts	common	pt-br	Bloqueado, por excesso de tentativas!
+blurtext	common	pt-br	Texto borrado
 bold	common	pt-br	Negrito
 bolivia	common	pt-br	BOLÍVIA
 border	common	pt-br	Borda
+border-line-thickness for the table-tag	common	pt-br	Espessura da linha de borda para a tabela
 bosnia and herzegovina	common	pt-br	BOSNIA E HERZEGOVINA
 botswana	common	pt-br	BOTSWANA
 bottom	common	pt-br	Fundo
 bouvet island	common	pt-br	ILHA BOUVET
+box	common	pt-br	Caixa
+box...	common	pt-br	Caixa...
 brazil	common	pt-br	BRASIL
 british indian ocean territory	common	pt-br	TERRITÓRIO INGLÊS INDIANO
 brunei darussalam	common	pt-br	BRUNEI DARUSSALAM
@@ -115,10 +166,14 @@ calendar	common	pt-br	Agenda
 calendars to sync in addition to personal calendar	groupdav	pt-br	Calendários para sincronizar, além de calendário pessoal
 cambodia	common	pt-br	CAMBODIA
 cameroon	common	pt-br	CAMARÕES
+can not have special sql-value null	common	pt-br	não há valor SQL especial NULL
 canada	common	pt-br	CANADÁ
-cancel	common	pt-br	Cancelar
+cancel	common	pt-br	Cancel
 cannot replace %1 because it is a directory	common	pt-br	Não se pode trocar %1 porque ele é um diretório
 cannot set this cat as its own parent!	common	pt-br	Não é possível definir esta categoria como seu próprio pai!
+cant delete a single widget from a grid !!!	common	pt-br	Não é possível remover uma simples célula de uma grade.
+cant delete the only column of a grid !!!	common	pt-br	Não é possível remover a única coluna de uma grade.
+cant delete the only row in a grid !!!	common	pt-br	Não é possível remover a única linha de uma grade.
 cant open %1, needs ziparchive	common	pt-br	Cant abrir% 1, precisa ZipArchive
 cant open '%1' for %2	common	pt-br	Não se pode abrir '%1' para '%2'
 cape verde	common	pt-br	CABO VERDE
@@ -129,16 +184,26 @@ category	common	pt-br	Categoria
 category %1 has been added !	common	pt-br	Categoria %1 foi adicionada !
 category %1 has been updated !	common	pt-br	Categoria %1 foi atualizada !
 category owner	common	pt-br	Proprietário Categoria
+category tree	common	pt-br	Árvore de categorias
 cayman islands	common	pt-br	ILHAS CAYMAN
 cc	common	pt-br	Com Cópia
+cellpadding for the table-tag	common	pt-br	Estofamento da célula para a tabela
+cells	common	pt-br	Células
+cellspacing for the table-tag	common	pt-br	Espaçamento da célula para a tabela
+center	common	pt-br	Centralizar
 centered	common	pt-br	Centralizado
 central african republic	common	pt-br	REPÚBLICA CENTRO AFRICANA
 chad	common	pt-br	CHADE
 change	common	pt-br	Alterar
 change owner	common	pt-br	Alterar proprietário
+changed	common	pt-br	Alterado
 charset	common	pt-br	utf-8
+check all	common	pt-br	Verificar todos
+check if content should only be displayed but not altered (the content is not send back then!)	common	pt-br	marque se o conteúdo está sómente sendo mostrado e não alterado (o conteúdo não pode ser desfeito!)
+check if field has to be filled by user	common	pt-br	marque se o campo tiver que ser preenchido pelo usuário
 check installation	common	pt-br	Verificar Instalação
 check now	common	pt-br	Checar agora
+checkbox	common	pt-br	Caixa de seleção
 chile	common	pt-br	CHILE
 china	common	pt-br	CHINA
 choose a background color	common	pt-br	Escolha uma cor de fundo
@@ -152,60 +217,115 @@ choose the parent category	common	pt-br	Escolha a categoria pai
 choose time	common	pt-br	Escolha Tempo
 chosen parent category no longer exists	common	pt-br	Categoria pai escolhido não existe mais
 christmas island	common	pt-br	CHRISTMAS ISLAND
+class	common	pt-br	Classe
+class, valign	common	pt-br	Classe, Validação
 clear	common	pt-br	Limpar
 clear form	common	pt-br	Limpar Formulário
 clear window	common	pt-br	Limpar janela
 click	common	pt-br	Clique
+click here to attach the file	common	pt-br	clique aqui para anexar o arquivo
+click here to create the link	common	pt-br	clique aqui para criar o link
 click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão EGroupware
+click here to start the search	common	pt-br	Clique aqui para inicar uma pesquisa
+click here to upload the file	common	pt-br	Clique aqui para enviar o arquivo
 click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
 click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
 click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
+click to order after that criteria	common	pt-br	Clique para ordenar em seguida ao critério
+clickable path	common	pt-br	Caminho clicável
 close	common	pt-br	Fechar
 close sidebox	common	pt-br	Fechar caixa lateral
+closes the window without saving the changes	common	pt-br	Fecha a janela sem salvar as alterações
 cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
 collection empty.	common	pt-br	Coleção vazio.
 collection listing	common	pt-br	Lista Coleção
 colombia	common	pt-br	COLÔMBIA
+column...	common	pt-br	Coluna...
+columnname	common	pt-br	Nome da Coluna
+comment	common	pt-br	Comentário
 common preferences	common	pt-br	Preferências comuns
 comoros	common	pt-br	COMOROS
 company	common	pt-br	Empresa
+confirm	common	pt-br	Confirmar
+confirmation message or custom javascript (returning true or false)	common	pt-br	Mensagem de confirmação ou javascript personalizado (retornando verdadeiro ou falso).
+confirmation necesary or custom java-script	common	pt-br	Confirmação necessária ou javascript personalizado.
 confirmation required	common	pt-br	A confirmação exigida
 congo	common	pt-br	CONGO
 congo, the democratic republic of the	common	pt-br	REPÚBLICA DEMOCRÁTICA DO CONGO
+contact	common	pt-br	Contato
+contact field to show	common	pt-br	Campo do contato a ser exibido
+contact fields	common	pt-br	Campos de contatos
 contacting server...	common	pt-br	Contactando servidor...
+contains	common	pt-br	contém
 content type	common	pt-br	Tipo de conteúdo
 cook islands	common	pt-br	ILHAS COOK
 copy	common	pt-br	Copiar
+copy to clipboard	common	pt-br	Copiar para a área de transferência
 costa rica	common	pt-br	COSTA RICA
 cote d ivoire	common	pt-br	COTE D IVOIRE
 could not contact server. operation timed out!	common	pt-br	Tentativa de contactar servidor falhou. Tempo limite de operação estourou.
 create	common	pt-br	Criar
+create a new table for the application	common	pt-br	Criar uma nova tabela para aplicação
 created by	common	pt-br	Criado por
+creates an english ('en') langfile from label and helptexts (for application in name)	common	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
+creator	preferences	pt-br	Criador
 croatia	common	pt-br	CROÁCIA
+css class for the table-tag	common	pt-br	Classe CSS para a tabela
+css properties	common	pt-br	Propriedades CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'nmh' = NextMatch cabeçalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'th' = cabeçalho, 'row' = linha alternada 'row_off'+'row_on'
+css-styles	common	pt-br	Estilo-CSS
 ctrl	common	pt-br	Ctrl
 cuba	common	pt-br	CUBA
 currency	common	pt-br	Moeda
 current	common	pt-br	Atualizado
 current users	common	pt-br	Usuários ativos
+custom	common	pt-br	Personalizado
+custom fields	common	pt-br	Campos personalizados
+custom javascript for onchange	common	pt-br	Javascript personalizado para OnChange
+cut	common	pt-br	Recortar
 cyprus	common	pt-br	CHIPRE
 czech republic	common	pt-br	REPÚBLICA CHECA
 database error	common	pt-br	Erro de banco de dados
 database error!	common	pt-br	Erro de banco de dados!
 date	common	pt-br	Data
 date due	common	pt-br	Até data
+date+time	common	pt-br	Data+Horário
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.<br>Quando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.<br>(Porta: 13 / Host: 129.6.15.28)
+day	common	pt-br	Dia
+days	common	pt-br	Dias
+db ensures that every row has a unique value in that column	common	pt-br	O Bando de Dados assegura que cada linha tenha um valor original nessa coluna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	pt-br	db-específico opções de index (separados-por-vírgula.), ex. mysql(FULLTEXT) or mysql(100) para o comprimento determinado de uma coluna
+db-tools	common	pt-br	DB-Ferramentas
 december	common	pt-br	Dezembro
+deck	common	pt-br	Plataforma (interna)
+default	common	pt-br	Padrão
 default category	common	pt-br	Categoria padrão
 default height for the windows	common	pt-br	Altura padrão para as janelas
 default width for the windows	common	pt-br	Largura padrão para as janelas
 del	common	pt-br	Del
 delete	common	pt-br	Remover
+delete a single entry by passing the id.	common	pt-br	Remover um registro simples através do ID.
+delete all selected etemplates, without further inquiry	common	pt-br	remover TODOS eModelos selecionados, SEM requisições adicionais
+delete and cut save the template!	common	pt-br	Remover e recortar o modelo!
 delete category	common	pt-br	Remover categoria
+delete column	common	pt-br	Remover coluna
 delete file	common	pt-br	Excluir arquivo
+delete index	common	pt-br	Remover Index
 delete row	common	pt-br	Remover linha
 delete selected entries?	common	pt-br	Apagar entradas selecionadas?
+delete the spezified etemplate	common	pt-br	Remover o modelo informado.
 delete these entries	common	pt-br	Excluir essas entradas
+delete this column	common	pt-br	Remover esta coluna
 delete this entry	common	pt-br	Apagar este registro
+delete this etemplate	common	pt-br	Remover este eModelo
+delete this file	common	pt-br	Remover este arquivo.
+delete this row	common	pt-br	Remover esta linha.
+delete whole column (can not be undone!!!)	common	pt-br	remover coluna inteira (não pode ser desfeito!!!)
+deletes the above spez. etemplate from the database, can not be undone	common	pt-br	Remover o eModelo informado acima da base de dados, NÃO pode ser desfeito!
+deletes the etemplate spez. above	common	pt-br	remove o eModelo informado acima
+deletes this column	common	pt-br	Remove estas colunas
+deletes this index	common	pt-br	Remove estes index
 denmark	common	pt-br	DINAMARCA
 description	common	pt-br	Descrição
 detail	common	pt-br	Detalhe
@@ -219,14 +339,22 @@ disable slider effects	common	pt-br	Desativar efeitos de transição de slide
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt-br	Desativar os efeitos de animação ao ocultar os menús da página? Os usuários dos navegadores Ópera ou Konqueror serão beneficiados com esta configuração.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desabilitar a execução de um script de correção para o Internet Explorer 5.5 ou superior, para permitir exibição de transparência em imagens PNG?
 disabled	common	pt-br	Desabilitado
+discard changes	common	pt-br	descartar alterações
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt-br	indicado à frente da entrada ou a entrada é inserida para um '%s' na etiqueta (a etiqueta da um Botão Submeter ou Arquivo-de-imagem)
+displayed in statusline of browser if input-field gets focus	common	pt-br	indicado na linha de status do navegador se o campo de entrada começar em foco
+displayed in the top line of the groupbox (legend)	common	pt-br	Exibido acima do groupbox (legenda)
 distribution lists as groups	groupdav	pt-br	As listas de distribuição como grupos
 djibouti	common	pt-br	DJIBOUTI
 do not notify	common	pt-br	Não notificar
 do not notify of these changes	common	pt-br	Não notificar dessas mudanças
 do you also want to delete all subcategories ?	common	pt-br	Deseja remover também todas subcategorias ?
+do you want to save the changes you made in table %s?	common	pt-br	Deseja salvar as alterações efetuadas na tabela %s?
 doctype:	common	pt-br	TIPO DOCUMENTO:
+document '%1' does not exist or is not readable for you!	preferences	pt-br	Documento '%1' não existe ou você não pode ser lido por você!
 document properties	common	pt-br	Propriedades do documento
 document title:	common	pt-br	Título do documento
+documentation	common	pt-br	Documentação
+doesn't matter	common	pt-br	não importa
 domain	common	pt-br	Domínio
 domain name for mail-address, eg. "%1"	common	pt-br	Nome do domínio para endereços de e-mail, ex. "%1"
 domestic	common	pt-br	Doméstico
@@ -235,6 +363,10 @@ dominican republic	common	pt-br	REPÚBLICA DOMINICANA
 done	common	pt-br	Pronto
 dos international	common	pt-br	DOS Internacional
 download	common	pt-br	Baixar
+drop a table - this can not be undone	common	pt-br	Apagar a tabela - isto NÃO pode ser desfeito
+drop table	common	pt-br	Apagar Tabela
+dump4setup	common	pt-br	Copiar para instalação
+duration	common	pt-br	Duração
 e-mail	common	pt-br	E-mail
 east timor	common	pt-br	TIMOR LESTE
 eastern european	common	pt-br	Do leste europeu
@@ -243,21 +375,38 @@ edit	common	pt-br	Editar
 edit %1 category for	common	pt-br	Editar para categoria %1
 edit categories	common	pt-br	Editar categorias
 edit category	common	pt-br	Editar categoria
+edit embeded css styles or of the applications app.css file	common	pt-br	Editar estilos CSS internos ou dos aplicativos em app.css
+edit the etemplate spez. above	common	pt-br	Editar o eModelo informado acima
+edit...	common	pt-br	Editar...
+editable templates - db-tools	common	pt-br	Modelos editáveis - Ferramentas de Base de Dados
+editable templates - delete template	common	pt-br	Modelos editáveis - Remover Modelo
+editable templates - editor	common	pt-br	Modelos editáveis - Editor
+editable templates - search	common	pt-br	Modelos editáveis - Localizar
+editable templates - show template	common	pt-br	Modelos editáveis - Visualizar Modelo
 egroupware	common	pt-br	EGroupware
 egroupware api version	common	pt-br	Versão da API EGroupware
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
 el salvador	common	pt-br	EL SALVADOR
+element role title	common	pt-br	Título papel de elemento
 email	common	pt-br	E-mail
 email-address of the user, eg. "%1"	common	pt-br	Endereço de e-mail do usuário, ex. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt-br	encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe são globais para a página inteira!)
 empty file	common	pt-br	Arquivo vazio
+enable javascript onchange submit	common	pt-br	ativar JavaScript sobre as alterações submetidas
 enable logging	groupdav	pt-br	Ativar registro
 enabled	common	pt-br	Habilitado
 end date	common	pt-br	Data do término
 end time	common	pt-br	Hora do término
+enter '' for an empty default, nothing mean no default	common	pt-br	informe '' para campos vazios, nada não significa padrão algum
+enter a search pattern	common	pt-br	Informe um teste padrão para a busca
+enter filename to upload and attach, use [browse...] to search for it	common	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: http://www.seudomínio.com.br/extranet   ou   /extranet<br><b>Não finalize com uma BARRA</b>
+enter the new version number here (> old_version), empty for no update-file	common	pt-br	informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
+enter the new version number here (has to be > old_version)	common	pt-br	informe o número da nova versão aqui (tem que ser > old_version)
 entry has been deleted sucessfully	common	pt-br	Registro removido com sucesso
 entry not found!	common	pt-br	Registro não localizado!
+entry saved	common	pt-br	Registro salvo
 entry updated sucessfully	common	pt-br	Entrada atualizada com sucesso
 equatorial guinea	common	pt-br	GUINÉ EQUATORIAL
 eritrea	common	pt-br	ERITREA
@@ -265,11 +414,27 @@ error	common	pt-br	Erro
 error creating %1 %2 directory	common	pt-br	Erro criando diretório %1 %2
 error deleting %1 %2 directory	common	pt-br	Erro removendo diretório %1 %2
 error renaming %1 %2 directory	common	pt-br	Erro renomeando diretório %1 %2
+error uploading file!	filemanager	pt-br	Erro carregando arquivo!
+error: template not found !!!	common	pt-br	Erro: Modelo não encontrado!!!
+error: webserver is not allowed to write into '%1' !!!	common	pt-br	Erro: servidor web não possui permissão para escrever em '%1' !!!
+error: while saving !!!	common	pt-br	Erro salvando !
+error: writing file (no write-permission for the webserver) !!!	common	pt-br	Erro: Escrevendo o arquivo (não existe permissão para escrever no servidor) !!!
 estonia	common	pt-br	ESTONIA
 etag	common	pt-br	ETag
+etemplate	common	pt-br	eModelo
+etemplate '%1' imported, use save to put it in the database	common	pt-br	eModelo '%1' importado, use Salvar para colocá-lo na base de dados
+etemplate '%1' written to '%2'	common	pt-br	eModelo '%1' escrito para '%2'
+etemplate editor	common	pt-br	Editor de eModelos
+etemplate reference	common	pt-br	Referência do eModelo
+etemplate tutorial	common	pt-br	Tutorial do eModelo
 ethiopia	common	pt-br	ETIÓPIA
 everything	common	pt-br	Tudo
 exact	common	pt-br	exato(a)
+exchange this row with the one above	common	pt-br	troque esta linha com a acima
+exchange this two columns	common	pt-br	troque estas duas colunas
+export the loaded etemplate into a xml-file	common	pt-br	exportar o eModelo carregado para um arquivo xml
+export xml	common	pt-br	Exportar XML
+extensions loaded:	common	pt-br	Extensões carregadas:
 failed to change password.	common	pt-br	Falha ao alterar a senha.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pt-br	Contato com o servidor falhou ou resposta inválida do servidor. Tente relogar. Contacte o administrador em caso de falha novamente.
 failed to move unconnected %1 %2 to %3!	admin	pt-br	Faild mover% alheio 1% 2 a% 3!
@@ -280,20 +445,30 @@ favorites	common	pt-br	Favoritos
 fax number	common	pt-br	Número do FAX
 features of the editor?	common	pt-br	Funcionalidades do editor ?
 february	common	pt-br	Fevereiro
+field	common	pt-br	Campo
+field must not be empty !!!	common	pt-br	O campo não pode estar vazio!!!
 fields	common	pt-br	Campos
 fiji	common	pt-br	FIJI
+file	common	pt-br	Arquivo
 file %1 has no content in physical filesystem %2!	admin	pt-br	O arquivo% 1 não tem conteúdo no sistema de arquivos físico% 2!
+file contains more than one etemplate, last one is shown !!!	common	pt-br	O arquivo contém mais do que um eModelo, o último será mostrado!!!
+file writen	common	pt-br	Escrever no Arquivo
 files	common	pt-br	Arquivos
+fileupload	common	pt-br	Enviar arquivo
 filter	common	pt-br	Filtro
 finland	common	pt-br	FINLÂNDIA
+first	common	pt-br	Primeiro
 first name	common	pt-br	Primeiro Nome
 first name of the user, eg. "%1"	common	pt-br	Primeiro nome do usuário, ex. "%1"
 first page	common	pt-br	Página Inicial
 firstname	common	pt-br	Primeiro Nome
 fixme!	common	pt-br	ATUALIZE-ME!
+floating point	common	pt-br	Ponto de flutuação
 folder already exists.	common	pt-br	Pasta já existe.
 force selectbox	common	pt-br	Forçar caixa de seleção
+foreign key	common	pt-br	Chave externa
 forever	common	pt-br	Para sempre
+formatted text (html)	common	pt-br	Texto Formatado (HTML)
 found unconnected %1 %2!	admin	pt-br	Encontrado% desconectados 1% 2!
 france	common	pt-br	FRANÇA
 french guiana	common	pt-br	GUIANA FRANCESA
@@ -305,6 +480,7 @@ fullname	common	pt-br	Nome completo
 fullscreen mode	common	pt-br	Modo tela cheia
 gabon	common	pt-br	GABÃO
 gambia	common	pt-br	GAMBIA
+general fields:	preferences	pt-br	Campos gerais:
 general menu	common	pt-br	Menu Geral
 georgia	common	pt-br	GEORGIA
 german	common	pt-br	Alemão
@@ -313,11 +489,18 @@ ghana	common	pt-br	GANA
 gibraltar	common	pt-br	GIBRALTAR
 global	common	pt-br	Global
 global public	common	pt-br	Público a todos
+go to the first entry	common	pt-br	ir para o primeiro registro
+go to the last entry	common	pt-br	ir para o último registro
+go to the next page of entries	common	pt-br	próxima página de registros
+go to the previous page of entries	common	pt-br	página anterior de registros
 grant access	common	pt-br	Permitir acesso
 greece	common	pt-br	GRÉCIA
 greek	common	pt-br	Grego
 greenland	common	pt-br	GREENLAND
 grenada	common	pt-br	GRANADA
+grid	common	pt-br	Grade
+grid column attributes	common	pt-br	Atributos das colunas da grade
+grid row attributes	common	pt-br	Atributos das linhas da grade
 group	common	pt-br	Grupo
 group access	common	pt-br	Acesso ao Grupo
 group has been added	common	pt-br	Grupo adicionado
@@ -325,6 +508,7 @@ group has been deleted	common	pt-br	Grupo removido
 group has been updated	common	pt-br	Grupo atualizado
 group name	common	pt-br	Nome do Grupo
 group public	common	pt-br	Grupo público
+groupbox	common	pt-br	Caixa de seleção
 groupdav	common	pt-br	Servidor CalDAV, CardCAV e GroupDAV
 groups	common	pt-br	Grupos
 groups with permission for %1	common	pt-br	Grupos permitidos para %1
@@ -335,38 +519,76 @@ guatemala	common	pt-br	GUATEMALA
 guinea	common	pt-br	GUINEA
 guinea-bissau	common	pt-br	GUINÉ BISSAU
 guyana	common	pt-br	GUYANA
+h	common	pt-br	h
 haiti	common	pt-br	HAITI
+hbox	common	pt-br	HBox
 heard island and mcdonald islands	common	pt-br	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	pt-br	Altura
+height of row (in % or pixel)	common	pt-br	Altura da linha (em % ou pixel)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	pt-br	altura da linha (em % ou pixel), desativar linha: [! = not]<value>[=<check>] ex.: '!@data' desativa a linha cujo conteúdo seja vazio
+height of the table in % or pixels for the table-tag and (optional) div	common	pt-br	Altura da tabela em % ou pixels, para a tag de tabelas (opcional) div
+height, disabled	common	pt-br	Altura, Desativada
 help	common	pt-br	Ajuda
 high	common	pt-br	Alto
 highest	common	pt-br	Mais alto
+history log	common	pt-br	Registro do histórico
 holy see (vatican city state)	common	pt-br	VATICANO
 home	common	pt-br	Página Inicial
 home email	common	pt-br	E-mail residencial
+home screen	common	pt-br	Tela principal
 honduras	common	pt-br	HONDURAS
 hong kong	common	pt-br	HONG KONG
+horizontal rule	common	pt-br	Filtro horizontal
+hour	common	pt-br	Hora
+hours	common	pt-br	Horas
 how many days to sync in the future (default %1)	groupdav	pt-br	Quantos dias para sincronizar no futuro (o padrão% 1)
 how many days to sync in the past (default %1)	groupdav	pt-br	Quantos dias para sincronizar no passado (padrão% 1)
+how many entries should the list show	common	pt-br	Quantos items a lista deverá exibir
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
 how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do EGroupware ?
+html	common	pt-br	Html
+html link to the current record	common	pt-br	Link HTML para o registro atual
 hungary	common	pt-br	HUNGRIA
 iceland	common	pt-br	ISLÂNDIA
+id	common	pt-br	ID
 iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não detectado. Clique Ok para ir para a página de download.
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt-br	se o campo for desativado uma célula vazia na tabela será mostrada, para remoção (temporária) de um campo/célula
 if the clock is enabled would you like it to update it every second or every minute?	common	pt-br	Se o relógio estiver habilitado, você gostaria de atualizá-lo a cada segundo ou minuto ?
 if there are some images in the background folder you can choose the one you would like to see.	common	pt-br	Se existirem algumas imagens na pasta de fundo, você poderá escolher uma que gostaria de ver.
+image	common	pt-br	Imagem
 image directory relative to document root (use / !), example:	common	pt-br	Diretório de imagem relativo à pasta raiz (use / !), por exemplo:
 image url	common	pt-br	URL da imagem
+import	common	pt-br	Importar
+import an etemplate from a xml-file	common	pt-br	importar um eModelo a partir de um arquivo xml
+import table-definitions from existing db-table	common	pt-br	Importar definições de tabela a partir de uma base de tabelas existente
+import xml	common	pt-br	Importar XML
+increment version to not overwrite the existing template	common	pt-br	Incrementar versão para não sobrescrever o modelo existente.
+index/name of returned content (name of the template, link / method for image)	common	pt-br	nome/index do conteúdo recebido (nome do Modelo, Link / Método para imagem)
+indexed	common	pt-br	Indexado
+indexoptions	common	pt-br	Opções de Indexação
 india	common	pt-br	INDIA
 indonesia	common	pt-br	INDONESIA
 infolog types to sync	common	pt-br	Tipos Infolog para sincronizar
+initial	common	pt-br	Inicial
+insert a column before	common	pt-br	Inserir uma coluna antes
+insert a column behind	common	pt-br	Inserir uma coluna atrás
+insert a row above	common	pt-br	Inserir uma linha acima
+insert a row below	common	pt-br	Inserir uma linha abaixo
+insert a widget before	common	pt-br	Inserir widget antes
+insert a widget behind	common	pt-br	Inserir widget atrás
 insert all %1 addresses of the %2 contacts in %3	common	pt-br	Inserir todos %1 endereços para %2 contatos em %3
 insert column after	common	pt-br	Inserir coluna depois
 insert column before	common	pt-br	Inserir coluna antes
 insert in %1	common	pt-br	Insira em 1%
+insert in document	common	pt-br	Inserir em documento
 insert in dokument	common	pt-br	Insira no documento
+insert new column behind this one	common	pt-br	inserir uma nova coluna antes desta
+insert new column in front of all	common	pt-br	inserir uma nova coluna ao final de todas
+insert new row after this one	common	pt-br	inserir uma nova linha após esta
+insert new row in front of first line	common	pt-br	inserir uma nova linha antes da primeira linha
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
+integer	common	pt-br	Inteiro
 international	common	pt-br	Internacional
 invalid filename	common	pt-br	Nome de arquivo inválido
 invalid ip address	common	pt-br	Endereço IP inválido
@@ -392,6 +614,7 @@ justify left	common	pt-br	Alinhar a esquerda
 justify right	common	pt-br	Alinha à direita
 kazakstan	common	pt-br	KAZAQUISTÃO
 kenya	common	pt-br	QUÊNIA
+key	common	pt-br	Chave
 keywords	common	pt-br	Palavras
 kiribati	common	pt-br	KIRIBATI
 korea, democratic peoples republic of	common	pt-br	CORÉIA DO NORTE
@@ -399,9 +622,14 @@ korea, republic of	common	pt-br	CORÉIA DO SUL
 korean	common	pt-br	Coreano
 kuwait	common	pt-br	KUWAIT
 kyrgyzstan	common	pt-br	QUIRGUISTÃO
+label	common	pt-br	Etiqueta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	pt-br	Etiqueta:[negrito][itálico] Texto:[len][,max] Números:[min][,[max][,len]] T.area:[linhas][,colunas] Botões.:valor H.Rule:[largura] Templ.:[Indexar ao Conteúdo] Selecionar:[multi seleção] Data:[valores: ex. 'd-m-Y']
+lang	common	pt-br	Idioma
 language	common	pt-br	Idioma
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	pt-br	abreviação do idioma (exemplo: 'en' para inglês) para modelos com idioma específico ("ler seus idiomas configurados ou o padrão, use 'default' para ler o modelo padrão")
 language_direction_rtl	common	pt-br	Direção rtl do idioma
 lao peoples democratic republic	common	pt-br	LAOS
+last	common	pt-br	Última
 last modified	common	pt-br	última alteração
 last name	common	pt-br	Último nome
 last name of the user, eg. "%1"	common	pt-br	Último nome do usuário, ex. "%1"
@@ -411,16 +639,28 @@ latvia	common	pt-br	LETÔNIA
 ldap-mgr	common	pt-br	Gerenciador LDAP
 lebanon	common	pt-br	LÍBANO
 left	common	pt-br	Esquerda
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	pt-br	tamanho para char+varchar, precisões em: 2, 4, 8 e flutuante: 4, 8
 lesotho	common	pt-br	LESOTO
 liberia	common	pt-br	LIBERIA
 libyan arab jamahiriya	common	pt-br	LÍBIA
 license	common	pt-br	Licença
 liechtenstein	common	pt-br	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'<br><b>dados csv não combinam com a quantidade de coluna da tabela %3 ==> ignorada</b>
+link	common	pt-br	Link
+link target %1 not found!	common	pt-br	Destino do link% 1 não encontrado!
+linkapps	common	pt-br	Link de aplicativos
+linkentry	common	pt-br	Entradas de link
+linklist	common	pt-br	Listar link
+links and attached files	preferences	pt-br	Links e arquivos anexados
+linkstring	common	pt-br	Texto para link
+linkto	common	pt-br	Linkar para
 list	common	pt-br	Lista
 list members	common	pt-br	Listar membros
+list of files linked to the current record	preferences	pt-br	Lista de arquivos vinculados ao registro atual
 lithuania	common	pt-br	LITUÂNIA
 load	common	pt-br	Carga
+load this template into the editor	common	pt-br	carregar este modelo para o editor
+loading	common	pt-br	carregando
 local	common	pt-br	Local
 location calendars	groupdav	pt-br	Localização calendários
 locations	common	pt-br	Localizações
@@ -439,7 +679,6 @@ macedonia, the former yugoslav republic of	common	pt-br	MACEDONIA
 madagascar	common	pt-br	MADAGASCAR
 mail domain, eg. "%1"	common	pt-br	Domínio do e-mail, ex. "%1"
 main category	common	pt-br	Cetegoria principal
-home screen	common	pt-br	Tela principal
 maintainer	common	pt-br	Administrador
 malawi	common	pt-br	MALAWI
 malaysia	common	pt-br	MALÁSIA
@@ -452,51 +691,81 @@ martinique	common	pt-br	MARTINICA
 mauritania	common	pt-br	MAURITANIA
 mauritius	common	pt-br	MAURITIUS
 max number of icons in navbar	common	pt-br	Número máximo de íciones na barra de navegação
+maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
 may	common	pt-br	Maio
 mayotte	common	pt-br	MAYOTTE
 medium	common	pt-br	Média
 menu	common	pt-br	Menú
 message	common	pt-br	Mensagem
+message ...	common	pt-br	Mensagem...
 mexico	common	pt-br	MÉXICO
 micronesia, federated states of	common	pt-br	MICRONESIA
-minute	common	pt-br	minuto
+middle	common	pt-br	Meio
+minute	common	pt-br	Minuto
+minutes	common	pt-br	Minutos
+modifier	preferences	pt-br	Modifier
 moldova, republic of	common	pt-br	MOLDÁVIA
 monaco	common	pt-br	MÔNACO
 monday	common	pt-br	Segunda
 mongolia	common	pt-br	MONGÓLIA
 montenegro	common	pt-br	MONTENEGRO
+month	common	pt-br	Mês
 montserrat	common	pt-br	MONTSERRAT
+more	common	pt-br	Mais
+more than 1 match for '%1'	common	pt-br	mais de 1 combinação para '%1'
 morocco	common	pt-br	MARROCOS
 moved %1 children from directory fs_id=%2 to %3	admin	pt-br	Movido% 1 filhos do diretório fs_id =% de 2 a 3%
 moved unconnected %1 %2 to %3.	admin	pt-br	Movido% alheio 1% 2% para 3.
 mozambique	common	pt-br	MOÇAMBIQUE
+multicolumn indices	common	pt-br	Indices de multicolunas
 multiple	common	pt-br	múltiplo
 myanmar	common	pt-br	MYANMAR
 name	common	pt-br	Nome
+name of other table where column is a key from	common	pt-br	nome de outras tabelas onde a coluna é uma chave a partir de
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt-br	marcar o nome do phpgw-template (ex. verdilak): " = default (irá ler as preferências do modelo. Como 'default' será lido o modelo padrão")
+name of table to add	common	pt-br	Nome da tabela a adicionar
+name of the etemplate, should be in form application.function[.subtemplate]	common	pt-br	nome para o eModelo, se estiver na aplicação de formulário. Função[.subTemplate]
 name of the user, eg. "%1"	common	pt-br	Nome do usuário, ex. "%1"
 namespace	common	pt-br	Nome espaço
 namibia	common	pt-br	NAMIBIA
 nauru	common	pt-br	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	pt-br	precisa ser original na tabela e nenhuma palavra que seja reservada do SQL, os melhores prefixos recomendados são os atalhos com dois dígitos seguidos de traço-baixo, ex.: 'et_'
 nepal	common	pt-br	NEPAL
 netherlands	common	pt-br	HOLANDA
 netherlands antilles	common	pt-br	ANTILHAS HOLANDESAS
 never	common	pt-br	Nunca
+new	common	pt-br	Novo
 new caledonia	common	pt-br	NOVA CALEDONIA
 new entry added sucessfully	common	pt-br	Entrada adicionada com sucesso
 new main category	common	pt-br	Nova categoria principal
+new search	common	pt-br	Nova pesquisa
+new table created	common	pt-br	Nova tabela criada
 new value	common	pt-br	Novo Valor
 new zealand	common	pt-br	NOVA ZELÂNDIA
+newer version '%1' exists !!!	common	pt-br	Existe(m) '%1' versão(ões) mais atual(ais) !!!
 next	common	pt-br	Próximo
 next page	common	pt-br	Próxima página
+nextmatch	common	pt-br	Próximo campo
+nextmatch accountfilter	common	pt-br	Próximo campo - Filtrar contas
+nextmatch custom filterheader	common	pt-br	Próximo campo - Cabeçalho personalizado
+nextmatch filterheader	common	pt-br	Próximo campo - Filtrar cabeçalho
+nextmatch header	common	pt-br	Próximo campo - Cabeçalho
+nextmatch sortheader	common	pt-br	Próximo campo - Classificar cabeçalho
 nicaragua	common	pt-br	NICARAGUA
 niger	common	pt-br	NIGER
 nigeria	common	pt-br	NIGERIA
 niue	common	pt-br	NIUE
 no	common	pt-br	Não
 no - cancel	common	pt-br	Não - Cancelar
+no column to swap with !!!	common	pt-br	sem coluna para trocar !!!
 no entries found, try again ...	common	pt-br	Nenhum registro encontrado, tente novamente...
+no file	common	pt-br	sem arquivo
+no filename given or selected via browse...	common	pt-br	sem nome de arquivo atribuído ou selecionado através do localizar...
 no filters	common	pt-br	Filtros não
 no history for this record	common	pt-br	Nenhum histórico para este registro
+no matches found	common	pt-br	Nenhuma combinação encontrada
+no rights to export more than %1 entries!	common	pt-br	Nenhum direito a exportar mais de 1% entradas!
+no row to swap with !!!	common	pt-br	sem linha para trocar !!!
 no savant2 template directories were found in:	common	pt-br	Nenhum diretório de modelo Savant2 encontrado em:
 no subject	common	pt-br	Sem assunto
 none	common	pt-br	Nenhum
@@ -508,23 +777,35 @@ norway	common	pt-br	NORUEGA
 not	common	pt-br	não
 not a user yet? register now	common	pt-br	Ainda não é um usuário? Registre-se agora
 not assigned	common	pt-br	Não atribuído
+not null	common	pt-br	NÃO PODE SER VAZIO
 not readable %1 entry of user %2	common	pt-br	Registro %1 do usuário %2 não pode ser lido
 not supported by current application!	common	pt-br	Não suportado pelo aplicativo atual!
 note	common	pt-br	Nota
 notes	common	pt-br	Notas
+nothing	common	pt-br	nada
+nothing found - try again !!!	common	pt-br	Nada encontrado - tente novamente !!!
+nothing in clipboard to paste !!!	common	pt-br	nada na área de transferência para colar !!!
+nothing matched search criteria !!!	common	pt-br	Nada encontrado de acordo com os critérios de pesquisa!!!
 nothing to save.	common	pt-br	Nada para salvar.
 notifications	common	pt-br	notificações
 notify window	common	pt-br	Janela de notificação
 notify your administrator to correct this situation	common	pt-br	Notificar seu administrador para corrigir esta situação
 november	common	pt-br	Novembro
+now	common	pt-br	Agora
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	pt-br	número de colunas que deve medir a célula/campo ou 'all' para as colunas restantes, nome da classe-CSS (para a tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	pt-br	número de linhas/colunas em um V/HBox, Estofamento de célula, Espaçamento de célula
 numbers	common	pt-br	números
 october	common	pt-br	Outubro
-off	groupdav	pt-br	Fora
+of	common	pt-br	de
+off	common	pt-br	Fora
 ok	common	pt-br	OK
 old value	common	pt-br	Valor antigo
 oman	common	pt-br	OMÃ
 on *nix systems please type: %1	common	pt-br	Sobre sistemas *nix tipo: %1
 on mouse over	common	pt-br	Passar o mouse
+onchange	common	pt-br	quando Alterar
+onclick	common	pt-br	quando Clicar
+only an other version found !!!	common	pt-br	apenas um outra versão encontrada!!!
 only private	common	pt-br	Apenas particular
 only yours	common	pt-br	somente as suas
 oops! you caught us in the middle of system maintainance.	common	pt-br	Ôpa! Você nos pegou no meio de uma manutenção do sistema.
@@ -532,12 +813,19 @@ open	common	pt-br	abrir
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
 open sidebox	common	pt-br	Abrir caixa lateral
+open the online help.	common	pt-br	Abrir a ajuda online.
+operator	common	pt-br	Operador
+optional note about the link	common	pt-br	nota opcional para o Link
+options	common	pt-br	Opções
 or	common	pt-br	ou
+order to navigating by tab key through the form	common	pt-br	Ordenar para nevegação por tecla TAB através do formulário
 ordered list	common	pt-br	Lista Classificada
 original	common	pt-br	Original
 other	common	pt-br	Outro
+overflow	common	pt-br	Excesso
 overview	common	pt-br	Visão geral
 owner	common	pt-br	Dono
+padding	common	pt-br	Estofamento
 page	common	pt-br	Página
 page was generated in %1 seconds	common	pt-br	Página gerada em %1 segundos
 pakistan	common	pt-br	PAQUISTÃO
@@ -548,6 +836,7 @@ papua new guinea	common	pt-br	PAPUA NOVA GUINÉ
 paraguay	common	pt-br	PARAGUAI
 parcel	common	pt-br	Parcela
 parent category	common	pt-br	Categoria pai
+parent is a '%1' !!!	common	pt-br	ancestral é um '%1' !!!
 password	common	pt-br	Senha
 password could not be changed	common	pt-br	Senha não pode ser alterada
 password has been updated	common	pt-br	Senha foi alterada
@@ -556,6 +845,8 @@ password must contain at least %1 numbers	common	pt-br	Senha deve ter ao menos %
 password must contain at least %1 special characters	common	pt-br	Senha deve ter ao menos %1 caractere(s) especial(is)
 password must contain at least %1 uppercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) maiúsculo(s)
 password must have at least %1 characters	common	pt-br	Senha deve ter ao menos %1 caractere(s)
+paste	common	pt-br	Colar
+path	common	pt-br	Caminho
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
 permission denied!	common	pt-br	Permissão negada!
 permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
@@ -566,28 +857,33 @@ pg down	common	pt-br	Pg baixo
 pg up	common	pt-br	PG-se
 philippines	common	pt-br	FILIPINAS
 phone number	common	pt-br	Número de Telefone
-api	common	pt-br	API EGroupware
 pitcairn	common	pt-br	PITCAIRN
 placeholders	common	pt-br	Espaços reservados
 please %1 by hand	common	pt-br	%1 pela mão
 please enter a name	common	pt-br	Por favor, digite um nome !
+please enter table-name first !!!	common	pt-br	Informe primeiro o nome da tabela!!!
 please run setup to become current	common	pt-br	Por favor execute a configuração para atualizar o sistema
 please select	common	pt-br	Por favor selecione
 please set your global preferences	common	pt-br	Por favor configure suas preferências gerais
 please set your preferences for this application	common	pt-br	Configure suas preferências para este aplicativo
 please wait...	common	pt-br	Aguarde...
 please, check back with us shortly.	common	pt-br	Por favor, tente novamente mais tarde.
+pm	common	pt-br	pm
 poland	common	pt-br	POLÔNIA
+popup	common	pt-br	Popup
 popup with search	common	pt-br	pop-up com a pesquisa
 portugal	common	pt-br	PORTUGAL
 postal	common	pt-br	CEP
 powered by	common	pt-br	Desenvolvido por
 pre	common	pt-br	Pré
+precision	common	pt-br	Precisão
 preferences	common	pt-br	Preferências
 preferences for the %1 template set	preferences	pt-br	Preferências para o conjunto modelo% 1
 prev	common	pt-br	Anterior
 previous page	common	pt-br	Página anterior
 primary group	common	pt-br	Grupo primário
+primary key	common	pt-br	Chave primária
+primary key for the table, gets automaticaly indexed	common	pt-br	A Chave primária para a tabela, inicia na posição automáticamente
 primary style-sheet:	common	pt-br	Estilho de folha primário:
 print	common	pt-br	Imprimir
 priority	common	pt-br	Prioridade
@@ -598,32 +894,44 @@ properties	common	pt-br	Propriedades
 public	common	pt-br	público
 puerto rico	common	pt-br	PORTO RICO
 qatar	common	pt-br	QATAR
-read	common	pt-br	Leitura
+radiobutton	common	pt-br	Botão de escolha
+read	common	pt-br	Ler
+read a list of entries.	common	pt-br	Ler uma lista de registro
+read a single entry by passing the id and fieldlist.	common	pt-br	Ler uma entrada única passando o ID e a lista de campo.
+read etemplate from database (for the keys above)	common	pt-br	Ler eModelo da base de dados (para as chaves acima)
 read this list of methods.	common	pt-br	Leia a lista de métodos.
 reading	common	pt-br	Lendo
+readonly	common	pt-br	somente leitura
+refresh	common	pt-br	Atualizar
 register	common	pt-br	Registrar
 regular	common	pt-br	Normal
 reject	common	pt-br	Rejeitar
 remember me	common	pt-br	Lembre-me
+remove row (can not be undone!!!)	common	pt-br	remover Linha (NÃO pode ser desfeito!!!)
 remove selected accounts	common	pt-br	apagar contas selecionadas
 remove shortcut	common	pt-br	Remover tecla de atalho
+remove this link (not the entry itself)	common	pt-br	Remover este link (não a própria entrada)
 removed (now) empty directory fs_id=%1	admin	pt-br	Removido (agora) diretório vazio fs_id =% 1
 rename	common	pt-br	Renomear
 replace	common	pt-br	Substituir
 replace with	common	pt-br	Substituir por
 requests and full responses to files directory	common	pt-br	Os pedidos e as respostas completas para diretório de arquivos
+required	common	pt-br	Requerido
 required directory "%1" created.	admin	pt-br	Necessário diretório "% 1" criado.
 required directory "%1" not found!	admin	pt-br	Necessário diretório "% 1" não foi encontrado!
+reset	common	pt-br	Limpar
 resource calendars	groupdav	pt-br	Os calendários de recursos
 resource type	common	pt-br	Tipo de recurso
 resources	common	pt-br	Recursos
 restore failed	common	pt-br	Restauração falhou
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt-br	Retorna a lista complesta de usuários no sistema. Atenção: Isto pode causar lentidão dependendo da quantidade de registros.
 returns an array of todo items	common	pt-br	Retorna uma lista dos itens de Tarefas
+returns savely, without deleting	common	pt-br	retornar ao documento salvo, SEM apagar
 returns struct of users application access	common	pt-br	Retorna a estrutura de usuários e aplicativos para acesso
 reunion	common	pt-br	REUNION
 right	common	pt-br	Direita
 romania	common	pt-br	ROMÊNIA
+row...	common	pt-br	Linha...
 russian	common	pt-br	Russo
 russian federation	common	pt-br	RÚSSIA
 rwanda	common	pt-br	RUANDA
@@ -640,29 +948,72 @@ saudi arabia	common	pt-br	ARÁBIA SAUDITA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 difere do validador Savant2.<br/> Esta versão: %1 <br/> Versão do Savant: %2
 save	common	pt-br	Salvar
 save as	common	pt-br	salvar como
+save as zip	common	pt-br	Salvar como Zip
+save selected columns as default preference for all users.	common	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
+save the changes made and close the window	common	pt-br	Salvar as alterações feitas e fechar a janela
+save the etemplate under the above keys (name, ...), change them for a saveas	common	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
+saves changes to tables_current.inc.php	common	pt-br	salvar alterações para o arquivo tables_current.inc.php
+saves the template with given version number and closes the window	common	pt-br	salvar o modelo com o número de versão informado e fechar a janela.
+scale	common	pt-br	Escala
+scale for float	common	pt-br	escala para flutuação
 scheduling inbox	common	pt-br	Agendamento de caixa de entrada
 scheduling outbox	common	pt-br	Agendamento de caixa de saída
-search	common	pt-br	Procura
+search	common	pt-br	Localizar
 search %1 '%2'	common	pt-br	Procura %1 '%2'
 search accounts	common	pt-br	Procurar contas
+search for '%1'	common	pt-br	Procurar por '%1'
 search or select accounts	common	pt-br	procurar ou selecionar contas
 second	common	pt-br	segundo
 section	common	pt-br	Seção
 select	common	pt-br	Selecionar
+select a category	common	pt-br	selecione uma Categoria
+select a primary contact, to show in the list	common	pt-br	Selecione um contato primário, para ser visualizado na lista
+select access	common	pt-br	Selecione o Acesso
+select account	common	pt-br	Selecione a Conta
 select action	common	pt-br	Selecionar ação
 select all	common	pt-br	Selecionar todos
 select all %1 %2 for %3	common	pt-br	Selecionar todos %1 %2 para %3
 select all entries	common	pt-br	Selecione todas as entradas
-select category	common	pt-br	Selecionar categoria
+select an app first !!!	common	pt-br	Selecione primeiro um aplicativo!!!
+select an app to search in	common	pt-br	Selecione um aplicativo para pesquisar em
+select an application	common	pt-br	Selecione uma aplicação
+select an application, (*) = uninstalled	common	pt-br	Selecione uma aplicação, (*) = removida
+select an entry to link with	common	pt-br	Selecione um registro a ser linkado
+select an table of the application	common	pt-br	Selecione uma tabela para a aplicação
+select application	common	pt-br	Selecione a Aplicação
+select application to search	common	pt-br	Selecione uma aplicação para pesquisar
+select category	common	pt-br	Selecione a Categoria
+select columns	common	pt-br	Selecione colunas
+select country	common	pt-br	Selecione o País
 select date	common	pt-br	Selecionar data
+select day	common	pt-br	Selecione o Dia
+select day of week	common	pt-br	Selecione o dia da semana
+select entry	common	pt-br	Selecionar entrada
+select file(s) from vfs	common	pt-br	Selecione o arquivo (s) a partir de VFS
 select group	common	pt-br	Selecionar grupo
 select home email address	common	pt-br	Selecionar endereço de e-mail residencial
+select hour	common	pt-br	Selecionar hora
+select if content of field should not be translated (label gets always translated)	common	pt-br	selecione o conteúdo do campo caso o índice não seja traduzido (a etiqueta inicia sempre traduzida)
+select language	common	pt-br	Selecione idioma
+select month	common	pt-br	Selecione o Mês
 select multiple accounts	common	pt-br	Selecionar múltimas contas
+select number	common	pt-br	Selecione o Número
 select one	common	pt-br	Selecionar um
+select one ...	common	pt-br	Selecione Um ...
+select percentage	common	pt-br	Selecione a Porcentagem
+select priority	common	pt-br	Selecione a Prioridade
+select state	common	pt-br	Selecione o Estado
+select the columns to display in the list	common	pt-br	Selecione as colunas a serem exibidas na lista
 select the default height for the application windows	common	pt-br	Selecione a altura padrão para a janela do aplicativo
 select the default width for the application windows	common	pt-br	Selecione a largura padrão para a janela do aplicativo
+select the indexed columns in their desired order	common	pt-br	Selecione a coluna indexada na ordem desejada
+select this etemplate to delete it	common	pt-br	selecione este eModelo para removê-lo
 select user	common	pt-br	Selecionar usuário
+select which accounts to show	common	pt-br	Selecione qual conta exibir
+select which values to show	common	pt-br	selecione que valores devem ser visualizados
 select work email address	common	pt-br	Selecionar endereço de e-mail comercial
+select year	common	pt-br	Selecione o Ano
+selectbox	common	pt-br	Caixa de seleção
 selection	common	pt-br	Seleção
 send	common	pt-br	Enviar
 send succeeded to %1	common	pt-br	Enviar sucedeu% 1
@@ -675,10 +1026,15 @@ server contacted. waiting for response...	common	pt-br	Servidor contactado. Agua
 server is unwilling to perform.	common	pt-br	Servidor não está disposto a realizar.
 server name	common	pt-br	Nome do Servidor
 session has been killed	common	pt-br	Sessão foi terminada
+set as default	common	pt-br	Definir como padrão
+sets today as date	common	pt-br	marque hoje como a data
 setup	common	pt-br	Configurar
 setup main menu	common	pt-br	Menu principal de configurações
 seychelles	common	pt-br	SEYCHELLES
 shift	common	pt-br	Mudança
+should the form be submitted or any custom javascript be executed	common	pt-br	Deverá o formulário ser submetido ou qualquer javascript personalizado ser executado
+show	common	pt-br	Exibir
+show (no save)	common	pt-br	Exibir (sem salvar)
 show all	common	pt-br	Exibir tudo
 show all categorys	common	pt-br	Mostrar todas as Categorias
 show as topmenu	common	pt-br	Exibir como menu superior
@@ -692,9 +1048,14 @@ show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé?
 show page generation time?	common	pt-br	Exibir tempo de geração da página?
 show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do EGroupware and X-Desktop na tela.
+show values	common	pt-br	Mostrar valores
+show/hide	common	pt-br	mostrar/ocultar barra lateral
 show_more_apps	common	pt-br	Mostrar mais aplicativos
+showing	common	pt-br	Exibindo
 showing %1	common	pt-br	Exibindo %1
 showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
+shows / allows you to enter values into the etemplate for testing	common	pt-br	exibir / permite que você informe valores ao eModelo apenas para testá-los
+shows/displays etemplate for testing, does not save it before	common	pt-br	exibir eModelo para teste, SEM SALVAR antes
 sierra leone	common	pt-br	SERRA LEOA
 simple	common	pt-br	Simples
 singapore	common	pt-br	SINGAPURA
@@ -708,10 +1069,16 @@ sorry, your login has expired	login	pt-br	Desculpe, sua conta expirou
 south africa	common	pt-br	ÁFRICA DO SUL
 south georgia and the south sandwich islands	common	pt-br	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 space	common	pt-br	Espaço
+spacing	common	pt-br	Espaçamento
 spain	common	pt-br	ESPANHA
+span	common	pt-br	Alcance
+span, class	common	pt-br	Alcance, Classe
 special characters	common	pt-br	caracteres especiais
 sri lanka	common	pt-br	SRI LANKA
+stack	common	pt-br	Pilha
+start a new search, cancel this link	common	pt-br	iniciar uma nova pesquisa, cancelar este link
 start date	common	pt-br	Data de início
+start new search for the above pattern	common	pt-br	iniciar uma nova pesquisa conforme o padrão acima
 start time	common	pt-br	Hora de início
 start with	common	pt-br	iniciar com
 starting up...	common	pt-br	Iniciando...
@@ -719,35 +1086,58 @@ status	common	pt-br	Status
 stretched	common	pt-br	esticado
 subject	common	pt-br	Assunto
 submit	common	pt-br	Enviar
+submit form	common	pt-br	Submeter formulário
+submitbutton	common	pt-br	Botão Submeter
 substitutions and their meanings:	common	pt-br	Substituições e seus efeitos:
 sudan	common	pt-br	SUDÃO
 sunday	common	pt-br	Domingo
 suriname	common	pt-br	SURINAME
 svalbard and jan mayen	common	pt-br	SVALBARD AND JAN MAYEN
+swap	common	pt-br	Trocar
+swap widget with next one	common	pt-br	Trocar widget com o próximo
+swap with next column	common	pt-br	Trocar com a próxima coluna
+swap with next row	common	pt-br	Trocar com a próxima linha
 swaziland	common	pt-br	SUAZILÂNDIA
 sweden	common	pt-br	SUÉCIA
+switch to a parent widget	common	pt-br	Trocar por um widget de nível superior
+switch to an other widgets of that container	common	pt-br	Trocar por um outro widget deste container
 switzerland	common	pt-br	SUÍÇA
 sync all selected into one	groupdav	pt-br	Sincronizar todos os selecionados em um
 syrian arab republic	common	pt-br	SÍRIA
 tab	common	pt-br	Aba
+tabindex	common	pt-br	Índice da tabela
 table properties	common	pt-br	Propriedades da tabela
+table unchanged, no write necessary !!!	common	pt-br	Tabela não alterada, nenhuma escrita necessária!!!
+tablename	common	pt-br	Nome da tabela
+tabs	common	pt-br	Tabs
 taiwan	common	pt-br	TAIWAN/TAIPEI
 tajikistan	common	pt-br	TAJIQUISTÃO
 tanzania, united republic of	common	pt-br	TANZÂNIA
+template	common	pt-br	Modelo
+template deleted	common	pt-br	Modelo removido
+template saved	common	pt-br	Modelo salvo
+text	common	pt-br	Texto
 text color:	common	pt-br	Cor do texto:
+textarea	common	pt-br	Área para texto
 thailand	common	pt-br	TAILÂNDIA
 the following applications require upgrades	common	pt-br	As seguintes aplicações requerem atualização
+the following document-types are supported:	preferences	pt-br	Os seguintes tipos de documentos são suportados:
 the mail server returned	common	pt-br	O servidor de email retornou
 this name has been used already	common	pt-br	Este nome já está em uso !
+this text gets displayed if the input-field is empty and has no focus (blur)	common	pt-br	este texto será indicado quando um campo de entrada estiver vazio e sem foco (borrão).
 thursday	common	pt-br	Quinta
 tiled	common	pt-br	mosaico
-time	common	pt-br	Hora
+time	common	pt-br	Tempo
 time zone	common	pt-br	Fuso horário
 time zone offset	common	pt-br	Faixa de fuso horário
 title	common	pt-br	Título
 to	common	pt-br	Para
 to correct this error for the future you will need to properly set the	common	pt-br	Para corrigir este erro no futuro você deve ajustar as propriedades
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt-br	para desabilitar: [! = não]<valor>[=<check>]. Exemplo: '!data' desabilita se o conteúdo de 'data' estiver vazio.
 to go back to the msg list, click <a href= %1 >here</a>	common	pt-br	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
+to start the db-tools	common	pt-br	iniciar as Ferramentas de DB
+to start the etemplate editor	common	pt-br	iniciar o editor eModelo
+to start the search	common	pt-br	iniciar a Localizaçãoto start the search
 today	common	pt-br	Hoje
 todays date, eg. "%1"	common	pt-br	Data de hoje, ex. "%1"
 togo	common	pt-br	TOGO
@@ -757,6 +1147,7 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	pt-br	Topo
 total	common	pt-br	Total
 transparant bg for the icons?	common	pt-br	Cor de fundo transparente para os ícones?
+tree	common	pt-br	Árvore
 trinidad and tobago	common	pt-br	TRINIDAD E TOBAGO
 tuesday	common	pt-br	Terça
 tunisia	common	pt-br	TUNISIA
@@ -765,20 +1156,26 @@ turkmenistan	common	pt-br	TURCOMENISTÃO
 turks and caicos islands	common	pt-br	ILHAS TURKS E CAICOS
 tuvalu	common	pt-br	TUVALU
 type	common	pt-br	Tipo
+type of the column	common	pt-br	tipo de coluna
+type of the field (select label if field should be empty)	common	pt-br	tipo de campo (selecione a Etiqueta se o campo estiver vazio)
 uganda	common	pt-br	UGANDA
 ukraine	common	pt-br	UCRÂNIA
 un-delete	common	pt-br	Un-Delete
 unconnected nodes will be moved to %1.	admin	pt-br	Nós desconexos será movido para% 1.
 underline	common	pt-br	Sublinhado
 unicode	common	pt-br	Unicode
+unique	common	pt-br	Original
 united arab emirates	common	pt-br	EMIRADOS ÁRABES UNIDOS
 united kingdom	common	pt-br	INGLATERRA
 united states	common	pt-br	ESTADOS UNIDOS
 united states minor outlying islands	common	pt-br	ILHAS MENORES EEUU
 unknown	common	pt-br	Desconhecido
+unlink	common	pt-br	Remover link
 update	common	pt-br	Atualizar
+update a single entry by passing the fields.	common	pt-br	Atualizar uma entrada única passando pelos campos.
+update from version '%s' to	common	pt-br	Atualizar a partir da Versão '%s' para
 update the clock per minute or per second	common	pt-br	Atualizar o relógio por minuto ou por segundo.
-upload	common	pt-br	Carregar
+upload	common	pt-br	Enviar
 upload directory does not exist, or is not writeable by webserver	common	pt-br	Diretório de carregamento não existe ou o servidor web não tem direito de escrita nele.
 upload requires the directory to be writable by the webserver!	common	pt-br	Upload requer que o servidor web tenha poderes de gravação no diretório!
 uppercase letters	common	pt-br	letras maiúsculas
@@ -795,38 +1192,63 @@ username	common	pt-br	Nome do usuário
 users	common	pt-br	Usuários
 users choice	common	pt-br	À escolha dos usuários
 uzbekistan	common	pt-br	UZBEQUIISTÃO
+valign	common	pt-br	Alinhar
 value	common	pt-br	Valor
+value has to be at least '%1' !!!	common	pt-br	Valor tem que ser ao menos '%1' !!!
+value has to be at maximum '%1' !!!	common	pt-br	Value tem que ser no máximo '%1' !!!
 vanuatu	common	pt-br	VANUATU
+vbox	common	pt-br	VBox
 venezuela	common	pt-br	VENEZUELA
 version	common	pt-br	Versão
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt-br	Número da versão, mostrar no formulário: maior.menor.revisão.número (ex.: 0.9.13.001 todos os números se auto-completam com zeros)
+vertical alignment of row	common	pt-br	Alinhamento vertical da linha
 vfs upload directory	common	pt-br	letras maiúsculas
 viet nam	common	pt-br	VIETNÃ
 view	common	pt-br	Exibir
+view this etemplate	common	pt-br	Exibir este eModelo
+view this linked entry in its application	common	pt-br	visualizar esta entrada linkada à sua aplicação
 virgin islands, british	common	pt-br	ILHAS VIRGENS (ING)
 virgin islands, u.s.	common	pt-br	ILHAS VIRGENS (EUA)
 wallis and futuna	common	pt-br	WALLIS E FUTUNA
 wednesday	common	pt-br	Quarta
+weekend	common	pt-br	final de semana
 welcome	common	pt-br	Bem Vindo
 western european	common	pt-br	Europa Ocidental
 western sahara	common	pt-br	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	pt-br	Que cor todo espaço em branco deve ter na tela?
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt-br	o que acontece com o conteúdo excedente: vísivel (default), oculto, scroll, auto (o navegador decide)
 what style would you like the image to have?	common	pt-br	Que estilo você quer que a imagem tenha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.
 which groups	common	pt-br	Qual grupo
 whole query	common	pt-br	toda a consulta
+widget copied into clipboard	common	pt-br	Widget copiado para a área de transferência
 width	common	pt-br	Largura
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	pt-br	largura da coluna (em % ou pixel), desativar col: [! = not]<value>[=<check>] ex.: '!@data' desativa a coluna se o conteúdo for vazio
+width of column (in % or pixel)	common	pt-br	Largura da coluna (em % ou pixels)
+width of the table in % or pixels for the table-tag and (optional) div	common	pt-br	Largura da tabela em % ou pixels para a tab de tabela e (opcional) div
+width, disabled	common	pt-br	Largura, Desabilitada
+wk	common	pt-br	Semana
 work email	common	pt-br	Endereço de e-mail comercial
+working days	common	pt-br	Dias de trabalho
 would you like to display the page generation time at the bottom of every window?	common	pt-br	Você gostaria de exibir o tempo de geração da página no rodapé de cada janela?
+write <app>/setup/tables_current.inc.php	common	pt-br	Escrever <app>/setup/tables_current.inc.php
+write langfile	common	pt-br	Escrever o arquivo de idioma
+write tables	common	pt-br	Escrever as tabelas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	pt-br	escrever um arquivo 'etemplates.inc.php' (para aplicação de Nome) no diretório de configuração do aplicativo
 writing	common	pt-br	gravando
 written by:	common	pt-br	Escrito por:
+xml-file to import	common	pt-br	Importar arquivo xml
+xslt template	common	pt-br	Modelo XSLT
 year	common	pt-br	Ano
 yemen	common	pt-br	YEMEN
 yes	common	pt-br	Sim
 yes - delete	common	pt-br	Sim - Excluir
 yes - delete including sub-entries	common	pt-br	Sim - Excluir incluindo sub-entradas
+you are not allowed to export more than %1 entries!	common	pt-br	Você não tem permissão para exportar mais de %1 registros!
 you are required to change your password during your first login	common	pt-br	Você foi solicitado a alterar a sua senha na primeira sessão.
 you can customize how many icons and toolbars the editor shows.	common	pt-br	Você pode personalizar quantos ícones e barras de tarefas o editor exibe.
+you can respond by visiting:	common	pt-br	Você pode responder acessando:
 you have been successfully logged out	login	pt-br	Você foi desconectado com sucesso
 you have not entered a title	common	pt-br	Você não informou um título
 you have not entered a valid date	common	pt-br	Você não informou uma data válida
@@ -851,453 +1273,3 @@ your settings have been updated	common	pt-br	Suas preferências foram atualizada
 zambia	common	pt-br	ZÂMBIA
 zimbabwe	common	pt-br	ZIMBABUE
 zoom	common	pt-br	Zoom
-search for '%1'	common	pt-br	Procurar por '%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt-br	%1 (%2 nova) Mensagens escritas para Aplicações '%3' e Idiomas '%4'
-%1 etemplates deleted	common	pt-br	%1 eModelo(s) removido(s)
-%1 etemplates for application '%2' dumped to '%3'	common	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
-%1 etemplates found	common	pt-br	%1 eModelo encontrados
-%1 matches on search criteria	common	pt-br	%1 encontrados para os critérios da busca
-%1 more...	common	pt-br	mais %1...
-%1 new etemplates imported for application '%2'	common	pt-br	%1 novo eModelo importado para a aplicação '%2'
-%s disabled	common	pt-br	%s inativo
-%s needed	common	pt-br	%s necessário
-%s notranslation	common	pt-br	%s Sem tradução
-%s onchange	common	pt-br	%s Sobre alteração
-%s readonly	common	pt-br	%s apenas leitura
-'%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido !!!
-'%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
-'%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida !!!
-'%1' is not a valid floatingpoint number !!!	common	pt-br	%1' não é um número válido para o ponto flutuante!!!
-'%1' is not a valid integer !!!	common	pt-br	%1' não é um inteiro válido!!!
-'%1' is not allowed ('%2')!	common	pt-br	'%1' não é permitido ('%2')!
-a pattern to be searched for	common	pt-br	um padrão a ser procurado
-accesskey	common	pt-br	Tecla de atalho
-accesskeys can also be specified with an & in the label (eg. &name)	common	pt-br	Teclas de atalho também pode ser especificadas com um '&' no rótulo (exemplo: &Nome).
-account contactdata	common	pt-br	Dados do contato
-actions...	common	pt-br	Ações...
-add a new column (after the existing ones)	common	pt-br	Adicionar uma nova coluna (após as existentes)
-add a new entry of the selected application	common	pt-br	Adicionar um novo registro do aplicativo selecionado
-add a new multi-column index	common	pt-br	Adicionar um index de novas multi-colunas
-add column	common	pt-br	Adicionar Coluna
-add index	common	pt-br	Adicionar Index
-add new	common	pt-br	Adicionar novo
-add table	common	pt-br	Adicionar Tabela
-add to clipboard	common	pt-br	Adicionar à prancheta
-advanced search	common	pt-br	Pesquisa avançada
-align	common	pt-br	Alinhar
-alignment of label and input-field in table-cell	common	pt-br	alinhamento da etiqueta e campo de entrada na célula da tabela
-alignment of the v/hbox containing table-cell	common	pt-br	Alinhamento da V/HBox contendo a célula da tabela
-all days	common	pt-br	Todos os dias
-all operations save the template!	common	pt-br	Todas as operações salvam o modelo!
-all users	common	pt-br	Todos usuários
-am	common	pt-br	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pt-br	uma coluna indexada posicionada acima das querys (custa espaço no disco)
-and	common	pt-br	E
-application	common	pt-br	Aplicativo
-application name needed to write a langfile or dump the etemplates !!!	common	pt-br	É preciso o nome da aplicação para escrever um arquivo de idioma ou copiar o eModelo!!!
-applications	common	pt-br	Aplicativos
-applies the changes made	common	pt-br	Aplicar as alterações realizadas
-applies the changes to the given version of the template	common	pt-br	Aplicar as alterações para a versão do modelo informado
-as default	common	pt-br	como padrão
-attach	common	pt-br	anexo
-attach file	common	pt-br	arquivo anexo
-baseline	common	pt-br	Linha base
-blurtext	common	pt-br	Texto borrado
-border	common	pt-br	Borda
-border-line-thickness for the table-tag	common	pt-br	Espessura da linha de borda para a tabela
-bottom	common	pt-br	Fundo
-box	common	pt-br	Caixa
-box...	common	pt-br	Caixa...
-can not have special sql-value null	common	pt-br	não há valor SQL especial NULL
-cancel	common	pt-br	Cancel
-cant delete a single widget from a grid !!!	common	pt-br	Não é possível remover uma simples célula de uma grade.
-cant delete the only column of a grid !!!	common	pt-br	Não é possível remover a única coluna de uma grade.
-cant delete the only row in a grid !!!	common	pt-br	Não é possível remover a única linha de uma grade.
-category	common	pt-br	Categoria
-category tree	common	pt-br	Árvore de categorias
-cellpadding for the table-tag	common	pt-br	Estofamento da célula para a tabela
-cells	common	pt-br	Células
-cellspacing for the table-tag	common	pt-br	Espaçamento da célula para a tabela
-center	common	pt-br	Centralizar
-changed	common	pt-br	Alterado
-check all	common	pt-br	Verificar todos
-check if content should only be displayed but not altered (the content is not send back then!)	common	pt-br	marque se o conteúdo está sómente sendo mostrado e não alterado (o conteúdo não pode ser desfeito!)
-check if field has to be filled by user	common	pt-br	marque se o campo tiver que ser preenchido pelo usuário
-checkbox	common	pt-br	Caixa de seleção
-class	common	pt-br	Classe
-class, valign	common	pt-br	Classe, Validação
-click here to attach the file	common	pt-br	clique aqui para anexar o arquivo
-click here to create the link	common	pt-br	clique aqui para criar o link
-click here to start the search	common	pt-br	Clique aqui para inicar uma pesquisa
-click here to upload the file	common	pt-br	Clique aqui para enviar o arquivo
-click to order after that criteria	common	pt-br	Clique para ordenar em seguida ao critério
-clickable path	common	pt-br	Caminho clicável
-closes the window without saving the changes	common	pt-br	Fecha a janela sem salvar as alterações
-column...	common	pt-br	Coluna...
-columnname	common	pt-br	Nome da Coluna
-comment	common	pt-br	Comentário
-confirm	common	pt-br	Confirmar
-confirmation message or custom javascript (returning true or false)	common	pt-br	Mensagem de confirmação ou javascript personalizado (retornando verdadeiro ou falso).
-confirmation necesary or custom java-script	common	pt-br	Confirmação necessária ou javascript personalizado.
-contact	common	pt-br	Contato
-contact field to show	common	pt-br	Campo do contato a ser exibido
-contact fields	common	pt-br	Campos de contatos
-contains	common	pt-br	contém
-copy to clipboard	common	pt-br	Copiar para a área de transferência
-create a new table for the application	common	pt-br	Criar uma nova tabela para aplicação
-creates an english ('en') langfile from label and helptexts (for application in name)	common	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
-creator	preferences	pt-br	Criador
-css class for the table-tag	common	pt-br	Classe CSS para a tabela
-css properties	common	pt-br	Propriedades CSS
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'nmh' = NextMatch cabeçalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'th' = cabeçalho, 'row' = linha alternada 'row_off'+'row_on'
-css-styles	common	pt-br	Estilo-CSS
-custom	common	pt-br	Personalizado
-custom fields	common	pt-br	Campos personalizados
-custom javascript for onchange	common	pt-br	Javascript personalizado para OnChange
-cut	common	pt-br	Recortar
-date+time	common	pt-br	Data+Horário
-day	common	pt-br	Dia
-days	common	pt-br	Dias
-db ensures that every row has a unique value in that column	common	pt-br	O Bando de Dados assegura que cada linha tenha um valor original nessa coluna
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	pt-br	db-específico opções de index (separados-por-vírgula.), ex. mysql(FULLTEXT) or mysql(100) para o comprimento determinado de uma coluna
-db-tools	common	pt-br	DB-Ferramentas
-deck	common	pt-br	Plataforma (interna)
-default	common	pt-br	Padrão
-delete a single entry by passing the id.	common	pt-br	Remover um registro simples através do ID.
-delete all selected etemplates, without further inquiry	common	pt-br	remover TODOS eModelos selecionados, SEM requisições adicionais
-delete and cut save the template!	common	pt-br	Remover e recortar o modelo!
-delete column	common	pt-br	Remover coluna
-delete index	common	pt-br	Remover Index
-delete the spezified etemplate	common	pt-br	Remover o modelo informado.
-delete this column	common	pt-br	Remover esta coluna
-delete this etemplate	common	pt-br	Remover este eModelo
-delete this file	common	pt-br	Remover este arquivo.
-delete this row	common	pt-br	Remover esta linha.
-delete whole column (can not be undone!!!)	common	pt-br	remover coluna inteira (não pode ser desfeito!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	pt-br	Remover o eModelo informado acima da base de dados, NÃO pode ser desfeito!
-deletes the etemplate spez. above	common	pt-br	remove o eModelo informado acima
-deletes this column	common	pt-br	Remove estas colunas
-deletes this index	common	pt-br	Remove estes index
-discard changes	common	pt-br	descartar alterações
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt-br	indicado à frente da entrada ou a entrada é inserida para um '%s' na etiqueta (a etiqueta da um Botão Submeter ou Arquivo-de-imagem)
-displayed in statusline of browser if input-field gets focus	common	pt-br	indicado na linha de status do navegador se o campo de entrada começar em foco
-displayed in the top line of the groupbox (legend)	common	pt-br	Exibido acima do groupbox (legenda)
-do you want to save the changes you made in table %s?	common	pt-br	Deseja salvar as alterações efetuadas na tabela %s?
-document '%1' does not exist or is not readable for you!	preferences	pt-br	Documento '%1' não existe ou você não pode ser lido por você!
-documentation	common	pt-br	Documentação
-doesn't matter	common	pt-br	não importa
-drop a table - this can not be undone	common	pt-br	Apagar a tabela - isto NÃO pode ser desfeito
-drop table	common	pt-br	Apagar Tabela
-dump4setup	common	pt-br	Copiar para instalação
-duration	common	pt-br	Duração
-edit	common	pt-br	Editar
-edit embeded css styles or of the applications app.css file	common	pt-br	Editar estilos CSS internos ou dos aplicativos em app.css
-edit the etemplate spez. above	common	pt-br	Editar o eModelo informado acima
-edit...	common	pt-br	Editar...
-editable templates - db-tools	common	pt-br	Modelos editáveis - Ferramentas de Base de Dados
-editable templates - delete template	common	pt-br	Modelos editáveis - Remover Modelo
-editable templates - editor	common	pt-br	Modelos editáveis - Editor
-editable templates - search	common	pt-br	Modelos editáveis - Localizar
-editable templates - show template	common	pt-br	Modelos editáveis - Visualizar Modelo
-element role title	common	pt-br	Título papel de elemento
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt-br	encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe são globais para a página inteira!)
-enable javascript onchange submit	common	pt-br	ativar JavaScript sobre as alterações submetidas
-enter '' for an empty default, nothing mean no default	common	pt-br	informe '' para campos vazios, nada não significa padrão algum
-enter a search pattern	common	pt-br	Informe um teste padrão para a busca
-enter filename to upload and attach, use [browse...] to search for it	common	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
-enter the new version number here (> old_version), empty for no update-file	common	pt-br	informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
-enter the new version number here (has to be > old_version)	common	pt-br	informe o número da nova versão aqui (tem que ser > old_version)
-entry saved	common	pt-br	Registro salvo
-error uploading file!	filemanager	pt-br	Erro carregando arquivo!
-error: template not found !!!	common	pt-br	Erro: Modelo não encontrado!!!
-error: webserver is not allowed to write into '%1' !!!	common	pt-br	Erro: servidor web não possui permissão para escrever em '%1' !!!
-error: while saving !!!	common	pt-br	Erro salvando !
-error: writing file (no write-permission for the webserver) !!!	common	pt-br	Erro: Escrevendo o arquivo (não existe permissão para escrever no servidor) !!!
-etemplate	common	pt-br	eModelo
-etemplate '%1' imported, use save to put it in the database	common	pt-br	eModelo '%1' importado, use Salvar para colocá-lo na base de dados
-etemplate '%1' written to '%2'	common	pt-br	eModelo '%1' escrito para '%2'
-etemplate editor	common	pt-br	Editor de eModelos
-etemplate reference	common	pt-br	Referência do eModelo
-etemplate tutorial	common	pt-br	Tutorial do eModelo
-exchange this row with the one above	common	pt-br	troque esta linha com a acima
-exchange this two columns	common	pt-br	troque estas duas colunas
-export the loaded etemplate into a xml-file	common	pt-br	exportar o eModelo carregado para um arquivo xml
-export xml	common	pt-br	Exportar XML
-extensions loaded:	common	pt-br	Extensões carregadas:
-field	common	pt-br	Campo
-field must not be empty !!!	common	pt-br	O campo não pode estar vazio!!!
-file	common	pt-br	Arquivo
-file contains more than one etemplate, last one is shown !!!	common	pt-br	O arquivo contém mais do que um eModelo, o último será mostrado!!!
-file writen	common	pt-br	Escrever no Arquivo
-fileupload	common	pt-br	Enviar arquivo
-first	common	pt-br	Primeiro
-floating point	common	pt-br	Ponto de flutuação
-foreign key	common	pt-br	Chave externa
-formatted text (html)	common	pt-br	Texto Formatado (HTML)
-general fields:	preferences	pt-br	Campos gerais:
-go to the first entry	common	pt-br	ir para o primeiro registro
-go to the last entry	common	pt-br	ir para o último registro
-go to the next page of entries	common	pt-br	próxima página de registros
-go to the previous page of entries	common	pt-br	página anterior de registros
-grid	common	pt-br	Grade
-grid column attributes	common	pt-br	Atributos das colunas da grade
-grid row attributes	common	pt-br	Atributos das linhas da grade
-groupbox	common	pt-br	Caixa de seleção
-h	common	pt-br	h
-hbox	common	pt-br	HBox
-height	common	pt-br	Altura
-height of row (in % or pixel)	common	pt-br	Altura da linha (em % ou pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	pt-br	altura da linha (em % ou pixel), desativar linha: [! = not]<value>[=<check>] ex.: '!@data' desativa a linha cujo conteúdo seja vazio
-height of the table in % or pixels for the table-tag and (optional) div	common	pt-br	Altura da tabela em % ou pixels, para a tag de tabelas (opcional) div
-height, disabled	common	pt-br	Altura, Desativada
-help	common	pt-br	Ajuda
-history log	common	pt-br	Registro do histórico
-horizontal rule	common	pt-br	Filtro horizontal
-hour	common	pt-br	Hora
-hours	common	pt-br	Horas
-how many entries should the list show	common	pt-br	Quantos items a lista deverá exibir
-html	common	pt-br	Html
-html link to the current record	common	pt-br	Link HTML para o registro atual
-id	common	pt-br	ID
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt-br	se o campo for desativado uma célula vazia na tabela será mostrada, para remoção (temporária) de um campo/célula
-image	common	pt-br	Imagem
-import	common	pt-br	Importar
-import an etemplate from a xml-file	common	pt-br	importar um eModelo a partir de um arquivo xml
-import table-definitions from existing db-table	common	pt-br	Importar definições de tabela a partir de uma base de tabelas existente
-import xml	common	pt-br	Importar XML
-increment version to not overwrite the existing template	common	pt-br	Incrementar versão para não sobrescrever o modelo existente.
-index/name of returned content (name of the template, link / method for image)	common	pt-br	nome/index do conteúdo recebido (nome do Modelo, Link / Método para imagem)
-indexed	common	pt-br	Indexado
-indexoptions	common	pt-br	Opções de Indexação
-insert a column before	common	pt-br	Inserir uma coluna antes
-insert a column behind	common	pt-br	Inserir uma coluna atrás
-insert a row above	common	pt-br	Inserir uma linha acima
-insert a row below	common	pt-br	Inserir uma linha abaixo
-insert a widget before	common	pt-br	Inserir widget antes
-insert a widget behind	common	pt-br	Inserir widget atrás
-insert in document	common	pt-br	Inserir em documento
-insert new column behind this one	common	pt-br	inserir uma nova coluna antes desta
-insert new column in front of all	common	pt-br	inserir uma nova coluna ao final de todas
-insert new row after this one	common	pt-br	inserir uma nova linha após esta
-insert new row in front of first line	common	pt-br	inserir uma nova linha antes da primeira linha
-integer	common	pt-br	Inteiro
-key	common	pt-br	Chave
-label	common	pt-br	Etiqueta
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	pt-br	Etiqueta:[negrito][itálico] Texto:[len][,max] Números:[min][,[max][,len]] T.area:[linhas][,colunas] Botões.:valor H.Rule:[largura] Templ.:[Indexar ao Conteúdo] Selecionar:[multi seleção] Data:[valores: ex. 'd-m-Y']
-lang	common	pt-br	Idioma
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	pt-br	abreviação do idioma (exemplo: 'en' para inglês) para modelos com idioma específico ("ler seus idiomas configurados ou o padrão, use 'default' para ler o modelo padrão")
-last	common	pt-br	Última
-left	common	pt-br	Esquerda
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	pt-br	tamanho para char+varchar, precisões em: 2, 4, 8 e flutuante: 4, 8
-link	common	pt-br	Link
-link target %1 not found!	common	pt-br	Destino do link% 1 não encontrado!
-linkapps	common	pt-br	Link de aplicativos
-linkentry	common	pt-br	Entradas de link
-linklist	common	pt-br	Listar link
-links and attached files	preferences	pt-br	Links e arquivos anexados
-linkstring	common	pt-br	Texto para link
-linkto	common	pt-br	Linkar para
-list of files linked to the current record	preferences	pt-br	Lista de arquivos vinculados ao registro atual
-load this template into the editor	common	pt-br	carregar este modelo para o editor
-loading	common	pt-br	carregando
-maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
-message ...	common	pt-br	Mensagem...
-middle	common	pt-br	Meio
-minute	common	pt-br	Minuto
-minutes	common	pt-br	Minutos
-modifier	preferences	pt-br	Modifier
-month	common	pt-br	Mês
-more	common	pt-br	Mais
-more than 1 match for '%1'	common	pt-br	mais de 1 combinação para '%1'
-multicolumn indices	common	pt-br	Indices de multicolunas
-name	common	pt-br	Nome
-name of other table where column is a key from	common	pt-br	nome de outras tabelas onde a coluna é uma chave a partir de
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt-br	marcar o nome do phpgw-template (ex. verdilak): " = default (irá ler as preferências do modelo. Como 'default' será lido o modelo padrão")
-name of table to add	common	pt-br	Nome da tabela a adicionar
-name of the etemplate, should be in form application.function[.subtemplate]	common	pt-br	nome para o eModelo, se estiver na aplicação de formulário. Função[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	pt-br	precisa ser original na tabela e nenhuma palavra que seja reservada do SQL, os melhores prefixos recomendados são os atalhos com dois dígitos seguidos de traço-baixo, ex.: 'et_'
-new	common	pt-br	Novo
-new search	common	pt-br	Nova pesquisa
-new table created	common	pt-br	Nova tabela criada
-newer version '%1' exists !!!	common	pt-br	Existe(m) '%1' versão(ões) mais atual(ais) !!!
-nextmatch	common	pt-br	Próximo campo
-nextmatch accountfilter	common	pt-br	Próximo campo - Filtrar contas
-nextmatch custom filterheader	common	pt-br	Próximo campo - Cabeçalho personalizado
-nextmatch filterheader	common	pt-br	Próximo campo - Filtrar cabeçalho
-nextmatch header	common	pt-br	Próximo campo - Cabeçalho
-nextmatch sortheader	common	pt-br	Próximo campo - Classificar cabeçalho
-no column to swap with !!!	common	pt-br	sem coluna para trocar !!!
-no file	common	pt-br	sem arquivo
-no filename given or selected via browse...	common	pt-br	sem nome de arquivo atribuído ou selecionado através do localizar...
-no matches found	common	pt-br	Nenhuma combinação encontrada
-no rights to export more than %1 entries!	common	pt-br	Nenhum direito a exportar mais de 1% entradas!
-no row to swap with !!!	common	pt-br	sem linha para trocar !!!
-not null	common	pt-br	NÃO PODE SER VAZIO
-nothing	common	pt-br	nada
-nothing found - try again !!!	common	pt-br	Nada encontrado - tente novamente !!!
-nothing in clipboard to paste !!!	common	pt-br	nada na área de transferência para colar !!!
-nothing matched search criteria !!!	common	pt-br	Nada encontrado de acordo com os critérios de pesquisa!!!
-now	common	pt-br	Agora
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	pt-br	número de colunas que deve medir a célula/campo ou 'all' para as colunas restantes, nome da classe-CSS (para a tag TD)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	pt-br	número de linhas/colunas em um V/HBox, Estofamento de célula, Espaçamento de célula
-of	common	pt-br	de
-onchange	common	pt-br	quando Alterar
-onclick	common	pt-br	quando Clicar
-only an other version found !!!	common	pt-br	apenas um outra versão encontrada!!!
-open the online help.	common	pt-br	Abrir a ajuda online.
-operator	common	pt-br	Operador
-optional note about the link	common	pt-br	nota opcional para o Link
-options	common	pt-br	Opções
-or	common	pt-br	ou
-order to navigating by tab key through the form	common	pt-br	Ordenar para nevegação por tecla TAB através do formulário
-overflow	common	pt-br	Excesso
-padding	common	pt-br	Estofamento
-parent is a '%1' !!!	common	pt-br	ancestral é um '%1' !!!
-paste	common	pt-br	Colar
-path	common	pt-br	Caminho
-please enter table-name first !!!	common	pt-br	Informe primeiro o nome da tabela!!!
-pm	common	pt-br	pm
-popup	common	pt-br	Popup
-precision	common	pt-br	Precisão
-primary key	common	pt-br	Chave primária
-primary key for the table, gets automaticaly indexed	common	pt-br	A Chave primária para a tabela, inicia na posição automáticamente
-radiobutton	common	pt-br	Botão de escolha
-read	common	pt-br	Ler
-read a list of entries.	common	pt-br	Ler uma lista de registro
-read a single entry by passing the id and fieldlist.	common	pt-br	Ler uma entrada única passando o ID e a lista de campo.
-read etemplate from database (for the keys above)	common	pt-br	Ler eModelo da base de dados (para as chaves acima)
-readonly	common	pt-br	somente leitura
-refresh	common	pt-br	Atualizar
-remove row (can not be undone!!!)	common	pt-br	remover Linha (NÃO pode ser desfeito!!!)
-remove this link (not the entry itself)	common	pt-br	Remover este link (não a própria entrada)
-required	common	pt-br	Requerido
-reset	common	pt-br	Limpar
-returns savely, without deleting	common	pt-br	retornar ao documento salvo, SEM apagar
-right	common	pt-br	Direita
-row...	common	pt-br	Linha...
-save as zip	common	pt-br	Salvar como Zip
-save selected columns as default preference for all users.	common	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
-save the changes made and close the window	common	pt-br	Salvar as alterações feitas e fechar a janela
-save the etemplate under the above keys (name, ...), change them for a saveas	common	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
-saves changes to tables_current.inc.php	common	pt-br	salvar alterações para o arquivo tables_current.inc.php
-saves the template with given version number and closes the window	common	pt-br	salvar o modelo com o número de versão informado e fechar a janela.
-scale	common	pt-br	Escala
-scale for float	common	pt-br	escala para flutuação
-search	common	pt-br	Localizar
-select a category	common	pt-br	selecione uma Categoria
-select a primary contact, to show in the list	common	pt-br	Selecione um contato primário, para ser visualizado na lista
-select access	common	pt-br	Selecione o Acesso
-select account	common	pt-br	Selecione a Conta
-select an app first !!!	common	pt-br	Selecione primeiro um aplicativo!!!
-select an app to search in	common	pt-br	Selecione um aplicativo para pesquisar em
-select an application	common	pt-br	Selecione uma aplicação
-select an application, (*) = uninstalled	common	pt-br	Selecione uma aplicação, (*) = removida
-select an entry to link with	common	pt-br	Selecione um registro a ser linkado
-select an table of the application	common	pt-br	Selecione uma tabela para a aplicação
-select application	common	pt-br	Selecione a Aplicação
-select application to search	common	pt-br	Selecione uma aplicação para pesquisar
-select category	common	pt-br	Selecione a Categoria
-select columns	common	pt-br	Selecione colunas
-select country	common	pt-br	Selecione o País
-select day	common	pt-br	Selecione o Dia
-select day of week	common	pt-br	Selecione o dia da semana
-select entry	common	pt-br	Selecionar entrada
-select file(s) from vfs	common	pt-br	Selecione o arquivo (s) a partir de VFS
-select hour	common	pt-br	Selecionar hora
-select if content of field should not be translated (label gets always translated)	common	pt-br	selecione o conteúdo do campo caso o índice não seja traduzido (a etiqueta inicia sempre traduzida)
-select language	common	pt-br	Selecione idioma
-select month	common	pt-br	Selecione o Mês
-select number	common	pt-br	Selecione o Número
-select one ...	common	pt-br	Selecione Um ...
-select percentage	common	pt-br	Selecione a Porcentagem
-select priority	common	pt-br	Selecione a Prioridade
-select state	common	pt-br	Selecione o Estado
-select the columns to display in the list	common	pt-br	Selecione as colunas a serem exibidas na lista
-select the indexed columns in their desired order	common	pt-br	Selecione a coluna indexada na ordem desejada
-select this etemplate to delete it	common	pt-br	selecione este eModelo para removê-lo
-select which accounts to show	common	pt-br	Selecione qual conta exibir
-select which values to show	common	pt-br	selecione que valores devem ser visualizados
-select year	common	pt-br	Selecione o Ano
-selectbox	common	pt-br	Caixa de seleção
-set as default	common	pt-br	Definir como padrão
-sets today as date	common	pt-br	marque hoje como a data
-should the form be submitted or any custom javascript be executed	common	pt-br	Deverá o formulário ser submetido ou qualquer javascript personalizado ser executado
-show	common	pt-br	Exibir
-show (no save)	common	pt-br	Exibir (sem salvar)
-show values	common	pt-br	Mostrar valores
-showing	common	pt-br	Exibindo
-shows / allows you to enter values into the etemplate for testing	common	pt-br	exibir / permite que você informe valores ao eModelo apenas para testá-los
-shows/displays etemplate for testing, does not save it before	common	pt-br	exibir eModelo para teste, SEM SALVAR antes
-spacing	common	pt-br	Espaçamento
-span	common	pt-br	Alcance
-span, class	common	pt-br	Alcance, Classe
-stack	common	pt-br	Pilha
-start a new search, cancel this link	common	pt-br	iniciar uma nova pesquisa, cancelar este link
-start new search for the above pattern	common	pt-br	iniciar uma nova pesquisa conforme o padrão acima
-submit form	common	pt-br	Submeter formulário
-submitbutton	common	pt-br	Botão Submeter
-swap	common	pt-br	Trocar
-swap widget with next one	common	pt-br	Trocar widget com o próximo
-swap with next column	common	pt-br	Trocar com a próxima coluna
-swap with next row	common	pt-br	Trocar com a próxima linha
-switch to a parent widget	common	pt-br	Trocar por um widget de nível superior
-switch to an other widgets of that container	common	pt-br	Trocar por um outro widget deste container
-tabindex	common	pt-br	Índice da tabela
-table unchanged, no write necessary !!!	common	pt-br	Tabela não alterada, nenhuma escrita necessária!!!
-tablename	common	pt-br	Nome da tabela
-tabs	common	pt-br	Tabs
-template	common	pt-br	Modelo
-template deleted	common	pt-br	Modelo removido
-template saved	common	pt-br	Modelo salvo
-text	common	pt-br	Texto
-textarea	common	pt-br	Área para texto
-the following document-types are supported:	preferences	pt-br	Os seguintes tipos de documentos são suportados:
-this text gets displayed if the input-field is empty and has no focus (blur)	common	pt-br	este texto será indicado quando um campo de entrada estiver vazio e sem foco (borrão).
-time	common	pt-br	Tempo
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt-br	para desabilitar: [! = não]<valor>[=<check>]. Exemplo: '!data' desabilita se o conteúdo de 'data' estiver vazio.
-to start the db-tools	common	pt-br	iniciar as Ferramentas de DB
-to start the etemplate editor	common	pt-br	iniciar o editor eModelo
-to start the search	common	pt-br	iniciar a Localizaçãoto start the search
-today	common	pt-br	Hoje
-top	common	pt-br	Topo
-tree	common	pt-br	Árvore
-type	common	pt-br	Tipo
-type of the column	common	pt-br	tipo de coluna
-type of the field (select label if field should be empty)	common	pt-br	tipo de campo (selecione a Etiqueta se o campo estiver vazio)
-unique	common	pt-br	Original
-unlink	common	pt-br	Remover link
-update a single entry by passing the fields.	common	pt-br	Atualizar uma entrada única passando pelos campos.
-update from version '%s' to	common	pt-br	Atualizar a partir da Versão '%s' para
-upload	common	pt-br	Enviar
-valign	common	pt-br	Alinhar
-value	common	pt-br	Valor
-value has to be at least '%1' !!!	common	pt-br	Valor tem que ser ao menos '%1' !!!
-value has to be at maximum '%1' !!!	common	pt-br	Value tem que ser no máximo '%1' !!!
-vbox	common	pt-br	VBox
-version	common	pt-br	Versão
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt-br	Número da versão, mostrar no formulário: maior.menor.revisão.número (ex.: 0.9.13.001 todos os números se auto-completam com zeros)
-vertical alignment of row	common	pt-br	Alinhamento vertical da linha
-view this etemplate	common	pt-br	Exibir este eModelo
-view this linked entry in its application	common	pt-br	visualizar esta entrada linkada à sua aplicação
-weekend	common	pt-br	final de semana
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt-br	o que acontece com o conteúdo excedente: vísivel (default), oculto, scroll, auto (o navegador decide)
-widget copied into clipboard	common	pt-br	Widget copiado para a área de transferência
-width	common	pt-br	Largura
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	pt-br	largura da coluna (em % ou pixel), desativar col: [! = not]<value>[=<check>] ex.: '!@data' desativa a coluna se o conteúdo for vazio
-width of column (in % or pixel)	common	pt-br	Largura da coluna (em % ou pixels)
-width of the table in % or pixels for the table-tag and (optional) div	common	pt-br	Largura da tabela em % ou pixels para a tab de tabela e (opcional) div
-width, disabled	common	pt-br	Largura, Desabilitada
-wk	common	pt-br	Semana
-working days	common	pt-br	Dias de trabalho
-write <app>/setup/tables_current.inc.php	common	pt-br	Escrever <app>/setup/tables_current.inc.php
-write langfile	common	pt-br	Escrever o arquivo de idioma
-write tables	common	pt-br	Escrever as tabelas
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	pt-br	escrever um arquivo 'etemplates.inc.php' (para aplicação de Nome) no diretório de configuração do aplicativo
-xml-file to import	common	pt-br	Importar arquivo xml
-xslt template	common	pt-br	Modelo XSLT
-year	common	pt-br	Ano
-you are not allowed to export more than %1 entries!	common	pt-br	Você não tem permissão para exportar mais de %1 registros!
-you can respond by visiting:	common	pt-br	Você pode responder acessando:
-initial	common	pt-br	Inicial
-id	common	pt-br	ID

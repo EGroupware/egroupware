@@ -188,7 +188,7 @@ time format	preferences	de	Zeitformat
 two factor auth	preferences	de	2-Faktor-Authentifizierung
 two factor auth enabled.	preferences	de	2-Faktor-Authentifizierung eingeschaltet.
 two factor auth is already setup.	preferences	de	2-Faktor-Authentifizierung ist bereits konfiguriert.
-unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	de	Einzeit für angezeigte Schriftgrößen: entweder "px" wie z.B. bei Webseiten verwendet oder "pt" wie in der Textverarbeitung üblich
+unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	de	Einheit für angezeigte Schriftgrößen: entweder "px" wie z.B. bei Webseiten verwendet oder "pt" wie in der Textverarbeitung üblich
 uppercase letters	preferences	de	Großbuchstaben
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl

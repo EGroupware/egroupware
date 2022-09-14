@@ -332,6 +332,12 @@ select the type of conversion:	addressbook	pt-br	Selecione o tipo de conversão:
 select where you want to store / retrieve contacts	admin	pt-br	Selecione onde você quer salvar / recuperar contatos
 selected contacts	addressbook	pt-br	contatos selecionados
 send emailcopy to receiver	addressbook	pt-br	Enviar cópia de e-mail para o receptor
+share into addressbook	addressbook	pt-br	Compartilhar em lista de endereços
+share writable	addressbook	pt-br	Ações que podem ser escritas
+shared	addressbook	pt-br	compartilhado
+shared by me	addressbook	pt-br	Compartilhado por mim
+shared into addressbook %1	addressbook	pt-br	compartilhado em livro de endereços %1
+shared with	addressbook	pt-br	Compartilhado com
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	pt-br	As colunas de fotos e endereço residencial deverão ser exibidas sempre, mesmo se estiverem vazias.
 show	addressbook	pt-br	Exibir
 show infolog entries for this organisation	addressbook	pt-br	Exibir entrada de Tarefas para esta organização

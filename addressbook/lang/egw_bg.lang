@@ -448,6 +448,12 @@ send succeeded to %1	common	bg	Изпратено успешно до %1
 seperator	addressbook	bg	Разделител
 set full name and file as field in contacts of all users (either all or only empty values)	admin	bg	Задане на цялото име и поле „fileas“ в контактите на всички потребители. Или всички, или само празни стойности.
 set only full name	addressbook	bg	Задаване само на пълно име
+share into addressbook	addressbook	bg	Споделяне в адресна книга
+share writable	addressbook	bg	Споделяне, което може да се записва
+shared	addressbook	bg	споделено
+shared by me	addressbook	bg	Споделено от мен
+shared into addressbook %1	addressbook	bg	споделено в адресна книга %1
+shared with	addressbook	bg	Споделено с
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	bg	Да се показват ли колоните за снимка и личен (домашен) адрес, независимо дали са празни или не.
 show	addressbook	bg	Покажи
 show active accounts	addressbook	bg	Покажи активните акаунти

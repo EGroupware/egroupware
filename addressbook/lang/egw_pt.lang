@@ -187,6 +187,12 @@ select all	addressbook	pt	Seleccionar tudo
 select multiple contacts for a further action	addressbook	pt	Selecionar vários contatos para uma nova acção
 select the type of conversion	addressbook	pt	Seleccionar o tipo de conversão
 select the type of conversion:	addressbook	pt	Seleccionar o tipo de conversão:
+share into addressbook	addressbook	pt	Partilhar em livro de endereços
+share writable	addressbook	pt	Partilhar escrevível
+shared	addressbook	pt	partilhado
+shared by me	addressbook	pt	Partilhado por mim
+shared into addressbook %1	addressbook	pt	partilhado em livro de endereços %1
+shared with	addressbook	pt	Partilhado com
 show	addressbook	pt	Exibir
 start	admin	pt	Início
 startrecord	addressbook	pt	Iniciar registo

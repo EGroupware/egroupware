@@ -421,6 +421,12 @@ send emailcopy to receiver	addressbook	es-es	Enviar copia por correo al destinat
 seperator	addressbook	es-es	Separador
 set full name and file as field in contacts of all users (either all or only empty values)	admin	es-es	Establecer el nombre completo y el fichero como campo de contactos de todos los usuarios (todos o sólo valores vacíos)
 set only full name	addressbook	es-es	Establecer sólo el nombre completo
+share into addressbook	addressbook	es-es	Compartir en la libreta de direcciones
+share writable	addressbook	es-es	Compartir con escritura
+shared	addressbook	es-es	compartido
+shared by me	addressbook	es-es	Compartido por mí
+shared into addressbook %1	addressbook	es-es	compartido en la libreta de direcciones %1
+shared with	addressbook	es-es	Compartido con
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	es-es	¿Mostrar las columnas de foto y domicilio particular, incluso si están vacías?
 show	addressbook	es-es	Mostrar
 show infolog entries for this organisation	addressbook	es-es	Mostrar las entradas del Registro de notas y tareas para esta organización

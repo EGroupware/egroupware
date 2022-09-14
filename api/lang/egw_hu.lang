@@ -24,24 +24,32 @@ accounts	common	hu	Hozzáférés
 acl	common	hu	ACL
 action	common	hu	Művelet
 actions	common	hu	Műveletek
+actions...	common	hu	Műveletek...
 active	common	hu	Aktív
 add	common	hu	Hozzáad
 add %1 category for	common	hu	%1 kategória hozzáadása
 add a new contact	common	hu	Új kapcsolat hozzáadása
 add category	common	hu	Kategória hozzáadása
+add column	common	hu	Oszlop hozzáadása
+add index	common	hu	Index hozzáadása
+add new	common	hu	Új hozzáadása
 add shortcut	common	hu	Gyorsbillentyű hozzáadása
 add sub	common	hu	Albejegyzés hozzáadása
+add table	common	hu	Táblázat hozzáadása
 addressbook	common	hu	Címjegyzék
 admin	common	hu	Admin
 administration	common	hu	Adminisztráció
+advanced search	common	hu	Kiterjesztett keresés
 afghanistan	common	hu	Afganisztán
 albania	common	hu	Albánia
 algeria	common	hu	Algéria
+align	common	hu	Igazítás
 all	common	hu	Összes
 all fields	common	hu	Összes mező
 all languages	common	hu	minden nyelv
-alphabet	common	hu	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	hu	Összes felhasználó
 alternate style-sheet:	common	hu	Stíluslap változtatása
+am	common	hu	de
 american samoa	common	hu	Amerikai Szamoa
 an error happened	common	hu	Hiba történt
 an existing and by the webserver readable directory enables the image browser and upload.	common	hu	Létező és a webszerver által olvasható könyvtár engedélyezi a képfeltöltést és böngészést.
@@ -51,7 +59,9 @@ angola	common	hu	Angola
 anguilla	common	hu	Anguilla
 antarctica	common	hu	Antarktisz
 antigua and barbuda	common	hu	Antigua és Barbuda
+api	common	hu	EGroupware API
 application	common	hu	Alkalmazás
+applications	common	hu	Alkalmazások
 apply	common	hu	Alkalmaz
 april	common	hu	Április
 are you sure you want to delete these entries ?	common	hu	Biztosan törölni akarja ezeket a bejegyzéseket?
@@ -59,6 +69,8 @@ are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja
 argentina	common	hu	Argentína
 armenia	common	hu	Örményország
 aruba	common	hu	Aruba
+attach	common	hu	Csatol
+attach file	common	hu	Állomány csatolása
 august	common	hu	Augusztus
 australia	common	hu	Ausztrália
 austria	common	hu	Ausztria
@@ -78,6 +90,7 @@ bahamas	common	hu	Bahamák
 bahrain	common	hu	Bahrain
 bangladesh	common	hu	Banglades
 barbados	common	hu	Barbados
+baseline	common	hu	Alapvonal
 bcc	common	hu	Bcc
 belarus	common	hu	Fehéroroszország
 belgium	common	hu	Belgium
@@ -116,13 +129,18 @@ category %1 has been added !	common	hu	%1 kategória hozzáadva!
 category %1 has been updated !	common	hu	%1 kategória frissítve!
 cayman islands	common	hu	Kajmán-szigetek
 cc	common	hu	Cc
+cells	common	hu	Cellák
+center	common	hu	Középre
 centered	common	hu	Középre zárt
 central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
 change	common	hu	Változtat
+changed	common	hu	Változott
 charset	common	hu	utf-8
+check all	common	hu	Összes kijelölese
 check installation	common	hu	Telepítés ellenőrzése
 check now	common	hu	Ellenőrzés most
+checkbox	common	hu	Checkbox
 chile	common	hu	Chile
 china	common	hu	Kína
 choose a background color	common	hu	Háttérszín kiválasztása
@@ -133,10 +151,13 @@ choose a text color for the icons	common	hu	Ikon szövegszín kiválasztása
 choose the category	common	hu	Kategória választás
 choose the parent category	common	hu	Szülő kategória választás
 christmas island	common	hu	Karácsony szigetek
+class	common	hu	Osztály
 clear	common	hu	Töröl
 clear form	common	hu	Lap törlése
 click	common	hu	Kattintás
+click here to create the link	common	hu	hivatkozás létrehozásához kattintson ide
 click here to resume your egroupware session.	common	hu	Kattints ide az EGroupware munkamenet visszaállításához
+click here to start the search	common	hu	keresés elindításához kattintson ide
 click or mouse over to show menus	common	hu	Menük megjelenítése kattintással vagy egérkurzor fölé helyezéssel
 click or mouse over to show menus?	common	hu	Menü megjelenítés kattintással vagy egérkurzor fölé helyezéssel?
 click this image on the navbar: %1	common	hu	Kattints %1 képre a navbar-ban.
@@ -144,14 +165,19 @@ close	common	hu	Bezár
 close sidebox	common	hu	Oldalmenü bezárása
 cocos (keeling) islands	common	hu	Kókusz (Keeling)-szigetek
 colombia	common	hu	Kolumbia
+comment	common	hu	Hozzászólás
 common preferences	common	hu	Általános beállítások
 comoros	common	hu	Comore-szigetek
 company	common	hu	Társaság
+confirm	common	hu	megerősít
 congo	common	hu	Kongó
 congo, the democratic republic of the	common	hu	Kongó (Kongói Köztársaság)
+contact	common	hu	Kapcsolat
 contacting server...	common	hu	Csatlakozás szerverhez...
+contains	common	hu	tartalmaz
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
+copy to clipboard	common	hu	Vágólapra másol
 costa rica	common	hu	Costa Rica
 cote d ivoire	common	hu	Elefántcsontpart
 could not contact server. operation timed out!	common	hu	Szerverhez csatlakozás nem sikerült. Időtúllépés.
@@ -162,6 +188,9 @@ cuba	common	hu	Kuba
 currency	common	hu	Pénznem
 current	common	hu	Aktuális
 current users	common	hu	Aktuális felhasználók
+custom	common	hu	egyedi
+custom fields	common	hu	egyedi mezők
+cut	common	hu	Kivág
 cyprus	common	hu	Ciprus
 czech republic	common	hu	Cseh Köztársaság
 database error	common	hu	Adatbázis hiba
@@ -169,12 +198,18 @@ database error!	common	hu	Adatbázis hiba!
 date	common	hu	Dátum
 date due	common	hu	Határidő
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Időszerver port.<br>A 13-as port használatához a tűzfalat ki kell nyitni, mielőtt ez az oldal elküldésre kerülne.<br>
+day	common	hu	Nap
+days	common	hu	napok
 december	common	hu	December
+default	common	hu	Alapértelmezett
 default category	common	hu	Alapértelmezett kategória
 default height for the windows	common	hu	Alapértelmezett ablak magasság
 default width for the windows	common	hu	Alapértelmezett ablak szélesség
 delete	common	hu	Töröl
+delete a single entry by passing the id.	common	hu	Töröl egy bejegyzést az azonosító megadásával.
 delete category	common	hu	Kategória törlése
+delete column	common	hu	Oszlop törlés
+delete index	common	hu	Index törlése
 delete row	common	hu	Sor törlése
 delete this entry	common	hu	Aktuális bejegyzés törlése
 denmark	common	hu	Dánia
@@ -193,8 +228,11 @@ disabled	common	hu	Letiltva
 djibouti	common	hu	Dzsibuti
 do you also want to delete all subcategories ?	common	hu	Az alkategóriákat is törölni szeretné?
 doctype:	common	hu	Doctype:
+document '%1' does not exist or is not readable for you!	preferences	hu	A(z) '%1' dokumentum nem létezik, vagy nincs hozzá olvasási joga!
 document properties	common	hu	Dokumentum jellemzők
 document title:	common	hu	Dokumentum címe:
+documentation	common	hu	Dokumentáció
+doesn't matter	common	hu	nem számít
 domain	common	hu	Tartomány
 domain name for mail-address, eg. "%1"	common	hu	Tartománynév az email címhez, pl. "%1"
 domestic	common	hu	Belföldi
@@ -202,14 +240,16 @@ dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
 done	common	hu	Kész
 download	common	hu	Letölt
+duration	common	hu	Időtartam
 e-mail	common	hu	E-Mail
 east timor	common	hu	Kelet Timor
 eastern european	common	hu	Kelet-európai
 ecuador	common	hu	Ecuador
-edit	common	hu	Módosít
+edit	common	hu	Szerkeszt
 edit %1 category for	common	hu	%1 kategória módosítása
 edit categories	common	hu	Kategóriák módosítása
 edit category	common	hu	Kategória módosítása
+edit...	common	hu	Szerkeszt...
 egroupware	common	hu	EGroupware
 egroupware api version	common	hu	EGroupware API verzió
 egroupware: login blocked for user '%1', ip %2	common	hu	EGroupware: %1 felhasználó bejelentkezése blokkolva az %2 IP címről
@@ -223,6 +263,7 @@ end time	common	hu	Befejezés ideje
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Kérem adja meg az EGroupware URL helyét.<br>Például: http://www.domain.com/eroupware vagy /egroupware<br><b>Lezáró / jel nélkül!<b>
 entry has been deleted sucessfully	common	hu	Bejegyzés törölve
 entry not found!	common	hu	Bejegyzés nem létezik!
+entry saved	common	hu	Bejegyzés elmentve
 entry updated sucessfully	common	hu	Bejegyzés módosítva
 equatorial guinea	common	hu	Egyenlítői Guinea
 eritrea	common	hu	Eritrea
@@ -230,7 +271,9 @@ error	common	hu	Hiba
 error creating %1 %2 directory	common	hu	%1 %2 könyvtár létrehozása során hiba lépett fel
 error deleting %1 %2 directory	common	hu	%1 %2 könyvtár törlése során hiba lépett fel
 error renaming %1 %2 directory	common	hu	%1 %2 könyvtár átnevezése során hiba lépett fel
+error uploading file!	filemanager	hu	HIba a file feltöltése során!
 estonia	common	hu	Észtország
+etemplate	common	hu	eTemplate
 ethiopia	common	hu	Etiópia
 everything	common	hu	Minden
 exact	common	hu	pontos
@@ -242,11 +285,15 @@ favorites	common	hu	Kedvencek
 fax number	common	hu	faxszám
 features of the editor?	common	hu	A szerkesztő tulajdonságai?
 february	common	hu	Február
+field	common	hu	Mező
+field must not be empty !!!	common	hu	A mezőt ki kell tölteni!!!
 fields	common	hu	Mezők
 fiji	common	hu	Fidzsi
+file	common	hu	Állomány
 files	common	hu	Fájlok
 filter	common	hu	Szűrő
 finland	common	hu	Finnország
+first	common	hu	Első
 first name	common	hu	Vezetéknév
 first name of the user, eg. "%1"	common	hu	A felhasználó vezetéktneve, pl. "%1"
 first page	common	hu	Első oldal
@@ -265,6 +312,7 @@ fullname	common	hu	Teljes név
 fullscreen mode	common	hu	Teljes képernyős mód
 gabon	common	hu	Gabon
 gambia	common	hu	Gambia
+general fields:	preferences	hu	Általános mezők:
 general menu	common	hu	Általános menü
 georgia	common	hu	Grúzia
 german	common	hu	Német
@@ -294,6 +342,7 @@ guatemala	common	hu	Guatemala
 guinea	common	hu	Guinea
 guinea-bissau	common	hu	Guinea-Bissau
 guyana	common	hu	Guyana
+h	common	hu	h
 haiti	common	hu	Haiti
 heard island and mcdonald islands	common	hu	Heard-sziget és McDonald-szigetek
 height	common	hu	Magasság
@@ -303,19 +352,27 @@ highest	common	hu	Legmagasabb
 holy see (vatican city state)	common	hu	Vatikán
 home	common	hu	Kezdőlap
 home email	common	hu	otthoni email
+home screen	common	hu	Főképernyő
 honduras	common	hu	Honduras
 hong kong	common	hu	Hong Kong
+hour	common	hu	Óra
+hours	common	hu	órák
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hu	A felső menüsoron látható ikonok maximális száma. A többi alkalmazás ikonja a menüsor jobb oldalán található ikonra kattintva érhető el.
 how to show the general egroupware menu ?	common	hu	Hogyan legyen az EGroupware menü megjelenítve?
+html	common	hu	HTML
 hungary	common	hu	Magyarország
 iceland	common	hu	Izland
+id	common	hu	Azonosító
 iespell not detected. click ok to go to download page.	common	hu	iSpell nem található. Kattintson az OK-ra a letöltéshez.
 if the clock is enabled would you like it to update it every second or every minute?	common	hu	Ha az óra engedélyezve van, akkor minden másodpercben vagy minden percben frissítse az időt?
 if there are some images in the background folder you can choose the one you would like to see.	common	hu	Ha több kép található a Hátterek mappában, akkor kiválaszthatja, hogy melyiket szeretné beállítani.
+image	common	hu	Kép
 image directory relative to document root (use / !), example:	common	hu	Képkönyvtár relatív útvonala a dokumentum gyökérkönyvtárához képest (használja a / előtagot), például:
 image url	common	hu	Kép URL
+import	common	hu	Import
 india	common	hu	India
 indonesia	common	hu	Indonézia
+initial	common	hu	Kezdeti
 insert all %1 addresses of the %2 contacts in %3	common	hu	A %2 kapcsolat összes %1 címének beillesztése ide %3
 insert column after	common	hu	Oszlop szúrása utána
 insert column before	common	hu	Oszlop beszúrása elé
@@ -347,6 +404,7 @@ justify left	common	hu	Balra  zárt
 justify right	common	hu	Jobbra zárt
 kazakstan	common	hu	Kazahsztán
 kenya	common	hu	Kenya
+key	common	hu	Kulcs
 keywords	common	hu	Kulcsszavak
 kiribati	common	hu	Kiribati
 korea, democratic peoples republic of	common	hu	Észak Korea
@@ -354,9 +412,12 @@ korea, republic of	common	hu	Dél Korea
 korean	common	hu	Koreai
 kuwait	common	hu	Kuvait
 kyrgyzstan	common	hu	Kirgizisztán
+label	common	hu	Címke
+lang	common	hu	Nyelv
 language	common	hu	Nyelv
 language_direction_rtl	common	hu	language_direction_rtl
 lao peoples democratic republic	common	hu	Lao Peoples Democratic Rebuplic
+last	common	hu	Utolsó
 last modified	common	hu	utoljára módosítva
 last name	common	hu	Keresztnév
 last name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
@@ -373,10 +434,13 @@ license	common	hu	Licensz
 liechtenstein	common	hu	Liechtenstein
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	hu	A sor %1: '%2'<br><b>csv adat nem tartalmazza ##last-check-run## a tábla %3 ==> figyelmen kívül hagyva/b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'<br><b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
+link	common	hu	Hivatkozás
+link target %1 not found!	common	hu	Link célpontja nem található (%1)!
 list	common	hu	Lista
 list members	common	hu	Listatagok
 lithuania	common	hu	Litvánia
 load	common	hu	Betöltés
+loading	common	hu	betöltés
 local	common	hu	Helyi
 locations	common	hu	helyek
 login	common	hu	Belépés
@@ -392,7 +456,6 @@ macedonia, the former yugoslav republic of	common	hu	Macedónia
 madagascar	common	hu	Madagaszkár
 mail domain, eg. "%1"	common	hu	email tartomány, pl. "%1"
 main category	common	hu	Fő kategória
-home screen	common	hu	Főképernyő
 maintainer	common	hu	Karbantartó
 malawi	common	hu	Malawi
 malaysia	common	hu	Malajzia
@@ -405,6 +468,7 @@ martinique	common	hu	Martinique
 mauritania	common	hu	Mauritania
 mauritius	common	hu	Mauritius
 max number of icons in navbar	common	hu	Ikonok  maximális száma a menüsoron
+maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
 may	common	hu	Május
 mayotte	common	hu	Mayotte
 medium	common	hu	Közepes
@@ -412,13 +476,16 @@ menu	common	hu	Menü
 message	common	hu	Üzenet
 mexico	common	hu	Mexikó
 micronesia, federated states of	common	hu	Mikronézia
-minute	common	hu	perc
+minute	common	hu	Perc
+minutes	common	hu	Percek
 moldova, republic of	common	hu	Moldova
 monaco	common	hu	Monaco
 monday	common	hu	Hétfő
 mongolia	common	hu	Mongólia
 montenegro	common	hu	Montenegro
+month	common	hu	Hónap
 montserrat	common	hu	Montserrat
+more	common	hu	Több
 morocco	common	hu	Marokkó
 mozambique	common	hu	Mozambik
 multiple	common	hu	többszörös
@@ -431,9 +498,11 @@ nepal	common	hu	Nepál
 netherlands	common	hu	Hollandia
 netherlands antilles	common	hu	Holland Antillák
 never	common	hu	Soha
+new	common	hu	Új
 new caledonia	common	hu	Újkaledónia
 new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
 new main category	common	hu	Új főkategória
+new search	common	hu	Új keresés
 new value	common	hu	Új érték
 new zealand	common	hu	Újzéland
 next	common	hu	Következő
@@ -445,7 +514,9 @@ niue	common	hu	Niue
 no	common	hu	Nem
 no - cancel	common	hu	Nem - Mégsem
 no entries found, try again ...	common	hu	nem található bejegyzés, próbálja újra
+no file	common	hu	nincs file
 no history for this record	common	hu	Ehhez a rekordhoz nem tartoznak előzmények
+no matches found	common	hu	Nincs egyezés
 no savant2 template directories were found in:	common	hu	Nem található Savant2 sablon könyvtár ezen a helyen:
 no subject	common	hu	Nincs  tárgy
 none	common	hu	Nincs
@@ -456,13 +527,16 @@ norway	common	hu	Norvégia
 not	common	hu	nem
 not a user yet? register now	common	hu	Nincs hozzáférésed? Regisztrálj!
 not assigned	common	hu	nincs hozzárendelve
+not null	common	hu	NOT NULL
 not readable %1 entry of user %2	common	hu	Nem olvasható bejegyzés %1 %2 felhasználóhoz
 note	common	hu	Megjegyzés
 notes	common	hu	Megjegyzések
+nothing	common	hu	semmi
 notifications	common	hu	figyelmeztetések
 notify window	common	hu	Értesítő ablak
 notify your administrator to correct this situation	common	hu	Értesítse az adminisztrátort a helyzet megoldásához
 november	common	hu	November
+now	common	hu	Most
 october	common	hu	Október
 ok	common	hu	OK
 old value	common	hu	Régi érték
@@ -476,12 +550,14 @@ open	common	hu	Megnyit
 open notify window	common	hu	Értesítő ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
 open sidebox	common	hu	Oldalmenü megnyitása
+options	common	hu	Opciók
 or	common	hu	vagy
 ordered list	common	hu	Számozott lista
 original	common	hu	Eredeti
 other	common	hu	Más
 overview	common	hu	Áttekintés
 owner	common	hu	Tulajdonos
+padding	common	hu	Helykitöltés
 page	common	hu	Oldal
 page was generated in %1 seconds	common	hu	Az oldal %1 másodperc alatt generálódott.
 pakistan	common	hu	Pakisztán
@@ -500,6 +576,8 @@ password must contain at least %1 numbers	common	hu	A jelszónak legalább %1 sz
 password must contain at least %1 special characters	common	hu	A jelszónak legalább %1 speciális karaktert kell tartalmaznia
 password must contain at least %1 uppercase letters	common	hu	A jelszónak legalább %1 nagybetűt kell tartalmaznia
 password must have at least %1 characters	common	hu	A jelszónak legalább %1 karakterből kell állnia
+paste	common	hu	Beilleszt
+path	common	hu	Útvonal
 path to user and group files has to be outside of the webservers document-root!!!	common	hu	A felhasználói és csoport állományokat tartalmazó könyvtár útvonala KÍVÜL KELL ESSEN a webszerver által használt könyvtáron!!! Pl. a /var/docroot lehet a /var/www/localhost/httpdocs/docroot helyett.
 permission denied!	common	hu	Hozzáférés elutasítva!
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
@@ -507,7 +585,6 @@ personal	common	hu	Személyes
 peru	common	hu	Peru
 philippines	common	hu	Fülöp-szigetek
 phone number	common	hu	telefonszám
-api	common	hu	EGroupware API
 pitcairn	common	hu	Pitcairn-szigetek
 please %1 by hand	common	hu	Kérem %1 kézzel
 please enter a name	common	hu	Kérem adjon meg egy nevet!
@@ -517,6 +594,7 @@ please set your global preferences	common	hu	Kérem állítsa be a globális tul
 please set your preferences for this application	common	hu	Kérem állítsa be személyes beállításait ehhez az alkalmazáshoz!
 please wait...	common	hu	Kérem várjon és figyelje a homokórát a szemközti falon...
 please, check back with us shortly.	common	hu	Kérlek nézz vissza kicsit később.
+pm	common	hu	du
 poland	common	hu	Lengyelország
 popup with search	common	hu	Felugró ablak kereséssel
 portugal	common	hu	Portugália
@@ -535,17 +613,24 @@ public	common	hu	nyilvános
 puerto rico	common	hu	Puerto Rico
 qatar	common	hu	Katar
 read	common	hu	Olvas
+read a list of entries.	common	hu	Bejegyzés lista olvasása.
+read a single entry by passing the id and fieldlist.	common	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
 read this list of methods.	common	hu	Eljárás lista olvasása.
 reading	common	hu	olvasás
+readonly	common	hu	csak olvasható
+refresh	common	hu	Frissít
 register	common	hu	Regiszter
 regular	common	hu	Szabályos
 reject	common	hu	Visszautasít
 remember me	common	hu	Emlékezz rám
 remove selected accounts	common	hu	kiválasztott hozzáférések törlése
 remove shortcut	common	hu	Gyorsbillentyű eltávolítása
+remove this link (not the entry itself)	common	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
 rename	common	hu	Átnevez
 replace	common	hu	Csere
 replace with	common	hu	Csere a következőre:
+required	common	hu	Szükséges
+reset	common	hu	Alaphelyzet
 resources	common	hu	Erőforrások
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	hu	A rendszeren található összes felhasználói fiók listája. Figyelem: Ez igazán nagy is lehet.
 returns an array of todo items	common	hu	Tennivalók listáját adja vissza egy tömbben
@@ -568,15 +653,20 @@ saturday	common	hu	Szombat
 saudi arabia	common	hu	Szaúd Arábia
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	hu	A Savant2 verziója és wrappere különbözik. <br/>Ez a verzió: %1 <br/>Savant verzió: %2
 save	common	hu	Elment
+save all	common	hu	Összes mentése
 search	common	hu	Keres
 search %1 '%2'	common	hu	Keres %1 '%2'
 search accounts	common	hu	Felhasználói hozzáférések keresése
+search for '%1'	common	hu	'%1' keresése
 search or select accounts	common	hu	Fiók keresés vagy kiválasztás
 second	common	hu	másodperc
 section	common	hu	Bekezdés
 select	common	hu	Kiválaszt
+select a category	common	hu	Kategória kiválasztása
 select all	common	hu	Minden kiválasztása
 select all %1 %2 for %3	common	hu	Mindet kiválaszt %1 %2 innen %3
+select an app to search in	common	hu	Alkalmazásban keresés
+select an entry to link with	common	hu	Bejegyzés választása hivatkozás készítéshez
 select category	common	hu	Kategória választás
 select date	common	hu	dátum választás
 select group	common	hu	Csoport választás
@@ -587,6 +677,7 @@ select the default height for the application windows	common	hu	Adja meg az alka
 select the default width for the application windows	common	hu	Adja meg az alkalmazás ablakának az alapértelmezett szélességét
 select user	common	hu	Felhasználó kiválasztása
 select work email address	common	hu	Munkahelyi email cím kiválasztása
+selectbox	common	hu	Kiválasztó doboz
 selection	common	hu	Kiválasztás
 send	common	hu	Küld
 senegal	common	hu	Szenegál
@@ -597,9 +688,11 @@ server answered. processing response...	common	hu	A szerver válaszának feldolg
 server contacted. waiting for response...	common	hu	A szerver csatlakozott, válaszra várakozás...
 server name	common	hu	Szerver név
 session has been killed	common	hu	Aktív bejelentkezés kitiltva
+set as default	common	hu	Beállítás alapértelmezettként
 setup	common	hu	Beállítás
 setup main menu	common	hu	Beállítás főmenü
 seychelles	common	hu	Seychelle-szigetek
+show	common	hu	Mutat
 show all	common	hu	mindet megmutat
 show all categorys	common	hu	Összes kategória mutatása
 show as topmenu	common	hu	Megjelenítés felső menüként
@@ -612,6 +705,7 @@ show page generation time	common	hu	Oldal megjelentítési idő mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított időt az oldal alján?
 show page generation time?	common	hu	Oldal generálási idő megjelenítése?
 show the logo's of egroupware and x-desktop on the desktop.	common	hu	EGroupware és x-desktop logójának megjelenítése az asztalon.
+show/hide	common	hu	oldalsáv megjelenítése/elrejtése
 show_more_apps	common	hu	Több alkalmazás mutatása
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
@@ -627,8 +721,10 @@ somalia	common	hu	Szomália
 sorry, your login has expired	login	hu	A hozzáférése lejárt
 south africa	common	hu	Dél Afrika
 south georgia and the south sandwich islands	common	hu	Déli-Georgia és Déli-Sandwich-szigetek
+spacing	common	hu	Betűköz
 spain	common	hu	Spanyolország
 sri lanka	common	hu	Sri Lanka
+start a new search, cancel this link	common	hu	új keresés indítása, hivatkozás elhagyása
 start date	common	hu	Kezdés dátuma
 start time	common	hu	Kezdés időpontja
 start with	common	hu	Kezdés
@@ -650,7 +746,10 @@ table properties	common	hu	Táblázat tulajdonságok
 taiwan	common	hu	Taiwan
 tajikistan	common	hu	Tadzsikisztán
 tanzania, united republic of	common	hu	Tanzánia
+template	common	hu	Sablon
+text	common	hu	Szöveg
 text color:	common	hu	Szöveg szín:
+textarea	common	hu	Szövegterület
 thailand	common	hu	Thaiföld
 the following applications require upgrades	common	hu	A következő alkalmazásokat frissíteni kell
 the mail server returned	common	hu	A levelezőszerver visszatért (Jedi attached ;)
@@ -689,9 +788,11 @@ united kingdom	common	hu	Egyesült Királyság
 united states	common	hu	Egyesült Államok
 united states minor outlying islands	common	hu	Amerikai Egyesült Államok Külső Szigetei
 unknown	common	hu	Ismeretlen
+unlink	common	hu	Hivatkozás törlése
 update	common	hu	Frissít
+update a single entry by passing the fields.	common	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
 update the clock per minute or per second	common	hu	Óra frissítése másodpercenként vagy percenként
-upload	common	hu	Feltöltés
+upload	common	hu	Feltölt
 upload directory does not exist, or is not writeable by webserver	common	hu	A feltöltési könyvtár nem létezik, vagy a webszerver nem rendelkezik írási jogosultsággal
 upload requires the directory to be writable by the webserver!	common	hu	A feltöltés működéséhez a webszervernek írási jogosultságot kell adni a könyvtárhoz.
 url	common	hu	URL
@@ -712,10 +813,12 @@ venezuela	common	hu	Venezuella
 version	common	hu	Verzió
 viet nam	common	hu	Vietnám
 view	common	hu	Megtekint
+view this linked entry in its application	common	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
 virgin islands, british	common	hu	Angol Szűz-szigetek
 virgin islands, u.s.	common	hu	Amerikai Szűz-szigetek
 wallis and futuna	common	hu	Wallis és Futuna
 wednesday	common	hu	Szerda
+weekend	common	hu	hétvége
 welcome	common	hu	Üdvözlet (welcome)
 western european	common	hu	Nyugat-európai
 western sahara	common	hu	Nyugat-Szahara
@@ -726,7 +829,9 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	hu	Melyik csoport
 whole query	common	hu	teljes lekérdezés
 width	common	hu	Szélesség
+wk	common	hu	hét
 work email	common	hu	munkahelyi email
+working days	common	hu	munkanapok
 would you like to display the page generation time at the bottom of every window?	common	hu	Kívánja megjeleníteni az oldal előállítására felhasznált időt minden oldal alján?
 writing	common	hu	írás
 written by:	common	hu	Írta:
@@ -737,6 +842,7 @@ yes - delete	common	hu	Igen - Töröl
 yes - delete including sub-entries	common	hu	Igen - Törlés az összes albejegyzéssel együtt
 you are required to change your password during your first login	common	hu	Első bejelentkezéskor meg kell változtatnia a jelszavát
 you can customize how many icons and toolbars the editor shows.	common	hu	Beállíthatja a szerkesztőben megjelenítendő ikonokat és eszköztárakat.
+you can respond by visiting:	common	hu	Megtekintéshez látogasson el ide:
 you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerből
 you have not entered a title	common	hu	Nem adott meg címet
 you have not entered a valid date	common	hu	Nem adott meg érvényes dátumot
@@ -756,134 +862,3 @@ your settings have been updated	common	hu	A beállításai módosításra kerül
 zambia	common	hu	Zambia
 zimbabwe	common	hu	Zimbabwe
 zoom	common	hu	Nagyítás
-search for '%1'	common	hu	'%1' keresése
-actions...	common	hu	Műveletek...
-add column	common	hu	Oszlop hozzáadása
-add index	common	hu	Index hozzáadása
-add new	common	hu	Új hozzáadása
-add table	common	hu	Táblázat hozzáadása
-advanced search	common	hu	Kiterjesztett keresés
-align	common	hu	Igazítás
-all users	common	hu	Összes felhasználó
-am	common	hu	de
-and	common	hu	És
-application	common	hu	Alkalmazás
-applications	common	hu	Alkalmazások
-attach	common	hu	Csatol
-attach file	common	hu	Állomány csatolása
-baseline	common	hu	Alapvonal
-border	common	hu	Keret
-bottom	common	hu	Alul
-cancel	common	hu	Mégsem
-category	common	hu	Kategória
-cells	common	hu	Cellák
-center	common	hu	Középre
-changed	common	hu	Változott
-check all	common	hu	Összes kijelölese
-checkbox	common	hu	Checkbox
-class	common	hu	Osztály
-click here to create the link	common	hu	hivatkozás létrehozásához kattintson ide
-click here to start the search	common	hu	keresés elindításához kattintson ide
-comment	common	hu	Hozzászólás
-confirm	common	hu	megerősít
-contact	common	hu	Kapcsolat
-contains	common	hu	tartalmaz
-copy to clipboard	common	hu	Vágólapra másol
-custom	common	hu	egyedi
-custom fields	common	hu	egyedi mezők
-cut	common	hu	Kivág
-day	common	hu	Nap
-days	common	hu	napok
-default	common	hu	Alapértelmezett
-delete a single entry by passing the id.	common	hu	Töröl egy bejegyzést az azonosító megadásával.
-delete column	common	hu	Oszlop törlés
-delete index	common	hu	Index törlése
-document '%1' does not exist or is not readable for you!	preferences	hu	A(z) '%1' dokumentum nem létezik, vagy nincs hozzá olvasási joga!
-documentation	common	hu	Dokumentáció
-doesn't matter	common	hu	nem számít
-duration	common	hu	Időtartam
-edit	common	hu	Szerkeszt
-edit...	common	hu	Szerkeszt...
-entry saved	common	hu	Bejegyzés elmentve
-error uploading file!	filemanager	hu	HIba a file feltöltése során!
-etemplate	common	hu	eTemplate
-field	common	hu	Mező
-field must not be empty !!!	common	hu	A mezőt ki kell tölteni!!!
-file	common	hu	Állomány
-first	common	hu	Első
-general fields:	preferences	hu	Általános mezők:
-h	common	hu	h
-height	common	hu	Magasság
-help	common	hu	Segítség
-hour	common	hu	Óra
-hours	common	hu	órák
-html	common	hu	HTML
-id	common	hu	Azonosító
-image	common	hu	Kép
-import	common	hu	Import
-key	common	hu	Kulcs
-label	common	hu	Címke
-lang	common	hu	Nyelv
-last	common	hu	Utolsó
-left	common	hu	Balra
-link	common	hu	Hivatkozás
-link target %1 not found!	common	hu	Link célpontja nem található (%1)!
-loading	common	hu	betöltés
-maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
-minute	common	hu	Perc
-minutes	common	hu	Percek
-month	common	hu	Hónap
-more	common	hu	Több
-name	common	hu	Név
-new	common	hu	Új
-new search	common	hu	Új keresés
-no file	common	hu	nincs file
-no matches found	common	hu	Nincs egyezés
-not null	common	hu	NOT NULL
-nothing	common	hu	semmi
-now	common	hu	Most
-options	common	hu	Opciók
-or	common	hu	vagy
-padding	common	hu	Helykitöltés
-paste	common	hu	Beilleszt
-path	common	hu	Útvonal
-pm	common	hu	du
-read	common	hu	Olvas
-read a list of entries.	common	hu	Bejegyzés lista olvasása.
-read a single entry by passing the id and fieldlist.	common	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
-readonly	common	hu	csak olvasható
-refresh	common	hu	Frissít
-remove this link (not the entry itself)	common	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
-required	common	hu	Szükséges
-reset	common	hu	Alaphelyzet
-right	common	hu	Jobbra
-save all	common	hu	Összes mentése
-search	common	hu	Keres
-select a category	common	hu	Kategória kiválasztása
-select an app to search in	common	hu	Alkalmazásban keresés
-select an entry to link with	common	hu	Bejegyzés választása hivatkozás készítéshez
-selectbox	common	hu	Kiválasztó doboz
-set as default	common	hu	Beállítás alapértelmezettként
-show	common	hu	Mutat
-spacing	common	hu	Betűköz
-start a new search, cancel this link	common	hu	új keresés indítása, hivatkozás elhagyása
-template	common	hu	Sablon
-text	common	hu	Szöveg
-textarea	common	hu	Szövegterület
-time	common	hu	Idő
-today	common	hu	Mai nap
-top	common	hu	Felül
-type	common	hu	Típus
-unlink	common	hu	Hivatkozás törlése
-update a single entry by passing the fields.	common	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
-upload	common	hu	Feltölt
-version	common	hu	Verzió
-view this linked entry in its application	common	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
-weekend	common	hu	hétvége
-width	common	hu	Szélesség
-wk	common	hu	hét
-working days	common	hu	munkanapok
-year	common	hu	Év
-you can respond by visiting:	common	hu	Megtekintéshez látogasson el ide:
-initial	common	hu	Kezdeti
-id	common	hu	Azonosító

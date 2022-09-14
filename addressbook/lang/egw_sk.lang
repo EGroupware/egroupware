@@ -454,6 +454,12 @@ send succeeded to %1	common	sk	Odoslanie sa podarilo pre %1
 seperator	addressbook	sk	Oddeľovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	sk	Nastaviť plné meno a súbor ako pole v kontaktoch všetkých používateľov (buď všetky alebo len prázdne hodnoty)
 set only full name	addressbook	sk	Nastaviť len plné meno
+share into addressbook	addressbook	sk	Zdieľať do adresára
+share writable	addressbook	sk	Zdieľať zapisovateľné
+shared	addressbook	sk	zdieľané
+shared by me	addressbook	sk	Zdieľané mnou
+shared into addressbook %1	addressbook	sk	zdieľané do adresára %1
+shared with	addressbook	sk	Zdieľané s
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	sk	Majú sa stĺpce pre fotku a adresu domov zobrazovať vždy, aj keď sú prázdne?
 show	addressbook	sk	Ukázať
 show active accounts	addressbook	sk	Ukázať aktívne účty

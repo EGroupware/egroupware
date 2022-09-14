@@ -415,6 +415,12 @@ send succeeded to %1	common	nl	Zend verzenden gelukt naar %1
 seperator	addressbook	nl	Scheidingsteken
 set full name and file as field in contacts of all users (either all or only empty values)	admin	nl	Zet volledige naam en 'bestand als'in contacten van alle gebruikers. Of allemaal vullen of allemaal leeg laten
 set only full name	addressbook	nl	Geef alleen de volledig naam
+share into addressbook	addressbook	nl	Delen in adresboek
+share writable	addressbook	nl	Deel beschrijfbaar
+shared	addressbook	nl	gedeeld
+shared by me	addressbook	nl	Gedeeld door mij
+shared into addressbook %1	addressbook	nl	gedeeld in adresboek %1
+shared with	addressbook	nl	Gedeeld met
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	nl	Moeten de kolommen foto en thuisadres altijd worden weergegeven, zelfs als ze leeg zijn?
 show	addressbook	nl	Toon
 show infolog entries for this organisation	addressbook	nl	InfoLog details van deze organisatie weergeven

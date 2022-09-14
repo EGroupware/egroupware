@@ -440,6 +440,12 @@ send succeeded to %1	common	cs	Odeslání do %1 bylo úspěšné
 seperator	addressbook	cs	Oddělovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	cs	Nastavit celé jméno a evidovat jako pole v kontaktech všech uživatelů (buď všechny nebo jen prázdné hodnoty)
 set only full name	addressbook	cs	Nastavit jen celé jméno
+share into addressbook	addressbook	cs	Sdílení do adresáře
+share writable	addressbook	cs	Sdílet zapisovatelné
+shared	addressbook	cs	sdílený
+shared by me	addressbook	cs	Sdílený mnou
+shared into addressbook %1	addressbook	cs	sdíleno do adresáře %1
+shared with	addressbook	cs	Sdílené s
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	cs	Mají být sloupce fotografie a domovská adresa vždy zobrazeny i když jsou prázdné
 show	addressbook	cs	Zobrazit
 show active accounts	addressbook	cs	Zobrazit aktivní účty

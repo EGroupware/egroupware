@@ -144,7 +144,7 @@ days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
 dayview	calendar	de	Tagesansicht
-default alarm added for yourself or all participants	calendar	de	Der Alarm wird automatisch bei neuen Terminen eingefügt für sie selbst oder alle Teilnehmer
+default alarm added for yourself or all participants	calendar	de	Der Alarm wird automatisch bei neuen Terminen eingefügt.<br>Für Sie selbst oder für alle Teilnehmer.
 default alarm for	calendar	de	Standard-Alarm für
 default alarm for regular events	calendar	de	Standard-Alarm für normale Termine
 default alarm for whole-day events	calendar	de	Standard-Alarm für ganztägige Termine

@@ -110,7 +110,6 @@ all operations save the template!	common	cs	Všechny operace ukládají šablonu
 all users	common	cs	Všichni uživatelé
 allowed file type: %1	common	cs	Povolený typ souboru: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	cs	Dovoluje upravit zodpovědné uživatele ze zařízení, které je nepodporují, nastavením e-mailové adresy uživatele jako kategorii.
-alphabet	common	cs	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	cs	Alt
 alternate style-sheet:	common	cs	Alternativní definice zobrazení
 am	common	cs	dopol.
@@ -621,6 +620,7 @@ hold [%1] and [%2] key to drag %3 to your desktop	common	cs	Stiskněte současn�
 holy see (vatican city state)	common	cs	VATIKÁN
 home	common	cs	Hlavní strana
 home email	common	cs	domácí e-mail
+home screen	common	cs	Hlavní obrazovka
 honduras	common	cs	HONDURAS
 hong kong	common	cs	HONGKONG
 horizontal rule	common	cs	Vodorovné pravítko
@@ -659,6 +659,7 @@ indexoptions	common	cs	Volby indexu
 india	common	cs	INDIE
 indonesia	common	cs	INDONÉSIE
 infolog types to sync	common	cs	Typ úkolů pro synchronizaci
+initial	common	cs	Počáteční
 input required	common	cs	Je vyžadován nějaký vstup
 insert a column before	common	cs	vložit sloupec před
 insert a column behind	common	cs	vložit sloupec za
@@ -781,7 +782,6 @@ mail domain, eg. "%1"	common	cs	e-mailová doména, např. "%1"
 mailvelope addon installation failed! please try again.	common	cs	Instalace zásuvného modulu mailvelope se nezdařila. Opakujte instalaci znovu.
 mailvelope addon installation succeded. now you may configure the options.	common	cs	Instalace zásuvného modulu mailvelope byla úspěšná. Nyní můžete nastavit vlastnosti.
 main category	common	cs	Hlavní kategorie
-home screen	common	cs	Hlavní obrazovka
 maintainer	common	cs	Správce
 malawi	common	cs	MALAWI
 malaysia	common	cs	MALAJSIE
@@ -1203,6 +1203,7 @@ show page generation time on the bottom of the page?	common	cs	Přejete si zobra
 show page generation time?	common	cs	Zobrazit čas generovaní stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	cs	Zobrazit logo EGroupware a x-desktopu na pracovní ploše.
 show values	common	cs	Zobrazit hodnoty
+show/hide	common	cs	zobrazit/skrýt postranní panel
 show_more_apps	common	cs	zobrazit_více_aplikací
 showing	common	cs	zobrazuji
 showing %1	common	cs	zobrazeno %1
@@ -1466,5 +1467,3 @@ your settings have been updated	common	cs	Vaše nastavení byla zaktualizována
 zambia	common	cs	ZAMBIE
 zimbabwe	common	cs	ZIMBABWE
 zoom	common	cs	Lupa
-initial	common	cs	Počáteční
-id	common	cs	ID

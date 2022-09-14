@@ -157,6 +157,12 @@ repetition	addressbook	da	Gentagelse
 select all	addressbook	da	Vælg alle
 select the type of conversion	addressbook	da	Vælg type af konvertering
 select the type of conversion:	addressbook	da	Vælg type af konvertering:
+share into addressbook	addressbook	da	Del i adressebog
+share writable	addressbook	da	Del kan skrives
+shared	addressbook	da	delt
+shared by me	addressbook	da	Deles af mig
+shared into addressbook %1	addressbook	da	delt i adressebog %1
+shared with	addressbook	da	Deles med
 show	addressbook	da	Vis
 start	admin	da	Start
 startrecord	addressbook	da	Start postering

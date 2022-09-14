@@ -148,6 +148,12 @@ role	addressbook	lv	Loma
 select all	addressbook	lv	Iezīmēt visus
 select the type of conversion	addressbook	lv	Iezīmēt sarunas veidu
 select the type of conversion:	addressbook	lv	Izvēlēties sarunas veidu:
+share into addressbook	addressbook	lv	Kopīgot adrešu grāmatiņā
+share writable	addressbook	lv	Koplietošana rakstāms
+shared	addressbook	lv	kopīgots
+shared by me	addressbook	lv	kopīgots ar mani
+shared into addressbook %1	addressbook	lv	kopīgots adrešu grāmatiņā %1
+shared with	addressbook	lv	Dalīta ar
 show	addressbook	lv	Rādīt
 startrecord	addressbook	lv	Sākuma ieraksts
 state	common	lv	Štats

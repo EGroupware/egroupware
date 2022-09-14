@@ -292,6 +292,12 @@ select the type of conversion	addressbook	hu	Konverzió típus kiválasztása
 select the type of conversion:	addressbook	hu	Konverzió típus kiválasztása:
 select where you want to store / retrieve contacts	admin	hu	Válassza ki, hol szeretné tárolni, honnan kérdezné le a kapcsolatait
 selected contacts	addressbook	hu	kiválasztott kapcsolatok
+share into addressbook	addressbook	hu	Megosztás a címjegyzékben
+share writable	addressbook	hu	Megosztás írható
+shared	addressbook	hu	megosztott
+shared by me	addressbook	hu	Általam megosztva
+shared into addressbook %1	addressbook	hu	megosztva a címjegyzékben %1
+shared with	addressbook	hu	Megosztva a
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	hu	A fotó és az otthoni cím oszlopok mindig megjelenítésre kerüljenek, még akkor is, ha üresek?
 show	addressbook	hu	Mutat
 show infolog entries for this organisation	addressbook	hu	Jelenítse meg ehhez a szervezethez tartozó InfoLog bejegyzéseket

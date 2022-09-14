@@ -387,6 +387,12 @@ send emailcopy to receiver	addressbook	ru	Отправить копию пись
 seperator	addressbook	ru	Разделитель
 set full name and file as field in contacts of all users (either all or only empty values)	admin	ru	Определите полное имя и файл как поле в контактах для всех пользователей (для всех или пустых величин)
 set only full name	addressbook	ru	Определить только полное имя
+share into addressbook	addressbook	ru	Поделиться в адресной книге
+share writable	addressbook	ru	Общий доступ доступен для записи
+shared	addressbook	ru	общий доступ
+shared by me	addressbook	ru	Разделено мной
+shared into addressbook %1	addressbook	ru	поделиться в записную книжку %1
+shared with	addressbook	ru	Поделиться с
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ru	Всегда отображать поля фото и домашнего адреса, даже если они пусты
 show	addressbook	ru	Показать
 show infolog entries for this organisation	addressbook	ru	Показать записи ИнфоЖурнала для этой организации

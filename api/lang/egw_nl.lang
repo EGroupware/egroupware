@@ -1,13 +1,31 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
 %1 active file(s) with same name as directory inactivated!	admin	nl	%1 actieve bestand(en) met dezelfde naam als de map op niet-actief gezet!
 %1 directories %2 found!	admin	nl	1% mappen van %2 gevonden
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+%1 etemplates deleted	common	nl	%1 eTemplates verwijderd
+%1 etemplates for application '%2' dumped to '%3'	common	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
+%1 etemplates found	common	nl	%1 eTemplates gevonden
 %1 file	common	nl	%1 bestand
 %1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
+%1 matches on search criteria	common	nl	%1 komt overeen met zoekcriteria
+%1 more...	common	nl	%1 meer...
+%1 new etemplates imported for application '%2'	common	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
+%1 not implemented for %2!	common	nl	%1 niet geimplemnteerd voor %2!
 %1 proxy of %2	common	nl	%1 proxy van %2
 %1 to sync	groupdav	nl	%1 om te synchroniseren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1EGroupware%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
+%s disabled	common	nl	%s uitgeschakeld
+%s needed	common	nl	%s nodig
+%s notranslation	common	nl	%s GeenVertaling
+%s onchange	common	nl	%s bij Wijziging
+%s readonly	common	nl	%s alleen lezen
+'%1' has an invalid format !!!	common	nl	'%1' heeft een ongeldig formaat !!!
 '%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
+'%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum !!!
+'%1' is not a valid floatingpoint number !!!	common	nl	'%1' is geen geldig drijvende komma getal !!!
+'%1' is not a valid integer !!!	common	nl	'%1' is geen geldig geheel getal !!!
+'%1' is not allowed ('%2')!	common	nl	'%1' is NIET toegestaan ('%2')!
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
 00 (disable)	admin	nl	00 (uitschakelen)
 1 day	common	nl	1 dag
@@ -16,11 +34,15 @@
 1 week	common	nl	1 week
 13 (ntp)	admin	nl	13 (ntp)
 80 (http)	admin	nl	80 (http)
+a pattern to be searched for	common	nl	een patroon waarnaar gezocht moet worden
 about	common	nl	Over
 about %1	common	nl	Over %1
 about egroupware	common	nl	Over EGroupware
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
+accesskey	common	nl	Toegangssleutel
+accesskeys can also be specified with an & in the label (eg. &name)	common	nl	Accesskeys kunnen ook gedefinieerd worden door een & in het label te plaatsen (bijvoorbeeld: &Naam)
+account contactdata	common	nl	Account contactgegevens
 account has been created	common	nl	Account is aangemaakt
 account has been deleted	common	nl	Account is verwijderd
 account has been updated	common	nl	Account is bijgewerkt
@@ -30,44 +52,67 @@ acl	common	nl	ACL
 action	common	nl	Actie
 action when category is an email address	groupdav	nl	Actie wanneer categorie een email adres is
 actions	common	nl	Acties
+actions...	common	nl	Acties...
 active	common	nl	Actief
 active directory requires ssl or tls to change passwords!	common	nl	om een wachtwoord van Active directory te wijzigen is SSL of TLS vereist
 add	common	nl	Toevoegen
 add %1 category for	common	nl	%1 Categorie toevoegen voor
+add a new column (after the existing ones)	common	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
 add a new contact	common	nl	Voeg een nieuw contact toe
+add a new entry of the selected application	common	nl	Voeg een nieuw record toe van de geselecteerde toepassing
+add a new multi-column index	common	nl	Een nieuwe multi-column index toevoegen
 add category	common	nl	Categorie toevoegen
+add column	common	nl	Kolom toevoegen
 add current	common	nl	Voeg huidige toe
+add index	common	nl	Index toevoegen
+add new	common	nl	Nieuwe toevoegen
 add shortcut	common	nl	Snelkoppeling toevoegen
 add sub	common	nl	Sub toevoegen
+add table	common	nl	Tabel toevoegen
+add to clipboard	common	nl	Voeg toe aan klembord
 add user to responsibles	groupdav	nl	Voeg gebruiker toe aan verantwoordelijkheden
 add user to responsibles, removing evtl. previous category user	groupdav	nl	voeg gebruikers toe aan verantwoordelijkheden, verwijder eventuele eerdere categorieën van gebruiker
 addressbook	common	nl	Adresboek
 addressbooks to sync in addition to personal addressbook	groupdav	nl	Adresboeken welke ook moeten worden gesynchroniseerd buiten het eigen adresboek.
 admin	common	nl	Beheer
 administration	common	nl	Beheer
+advanced search	common	nl	Geavanceerd zoeken
 afghanistan	common	nl	AFGHANISTAN
 albania	common	nl	ALBANIË
 algeria	common	nl	ALGERIJE
+align	common	nl	Uitlijnen
+alignment of label and input-field in table-cell	common	nl	uitlijning van label en inputveld in tabelcel
+alignment of the v/hbox containing table-cell	common	nl	Uitlijning van de V/Hbox die de tabelcel bevat
 all	common	nl	Alles
 all addressbooks	groupdav	nl	Alle adresboeken
+all days	common	nl	alle dagen
 all fields	common	nl	alle velden
 all in one	groupdav	nl	Alles in een
 all languages	common	nl	alle talen
+all operations save the template!	common	nl	alle bewerkingen slaan de template op!
+all users	common	nl	Alle gebruikers
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	nl	Sta verantwoordelijke gebruikers toe om apparaten welke niet door hun worden ondersteund te wijzigen, doormiddel van gebruik Mail adres of een gebruiker als categorie.
-alphabet	common	nl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	nl	Alt
 alternate style-sheet:	common	nl	Afwisselende style-sheet:
+am	common	nl	am
 american samoa	common	nl	AMERIKAANS SAMOA
 an admin required that you must change your password upon login.	common	nl	Administrator geeft aan dat u, uw wachtwoord moet wijzigen bij aanmelden.
 an error happened	common	nl	Een fout trad op
 an existing and by the webserver readable directory enables the image browser and upload.	common	nl	Een bestaande EN door de webserver leesbare directory maakt het mogelijk om door afbeeldingen te bladeren en te uploaden.
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	nl	een geindexeerde kolom versnelt zoekopdrachten op dit kolom (kost wel ruimte op de schijf !!!)
 and	common	nl	En
 andorra	common	nl	ANDORRA
 angola	common	nl	ANGOLA
 anguilla	common	nl	ANGUILLA
 antarctica	common	nl	ANTARTICA
 antigua and barbuda	common	nl	ANTIGUA EN BARBUDA
-application	common	nl	Toepassing
+api	common	nl	EGroupware API
+api-accounts	common	nl	Gebruiker accounts
+application	common	nl	Applicatie
+application name needed to write a langfile or dump the etemplates !!!	common	nl	Applicatie naam is nodig om een taalbestand te schrijven of de eTemplates te kunnen dumpen !!!
+applications	common	nl	Toepassingen
+applies the changes made	common	nl	de gemaakte wijzigingen doorvoeren
+applies the changes to the given version of the template	common	nl	de gemaakte wijzigingen doorvoeren op de opgegeven versie van de template
 apply	common	nl	Toepassen
 apply the action on the whole query, not only the shown entries	common	nl	Voer de aktie uit op voor de gehele query, NIET alleen voor de getoonde invoer
 april	common	nl	April
@@ -76,6 +121,9 @@ are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit it
 argentina	common	nl	ARGENTINIË
 armenia	common	nl	ARMENIË
 aruba	common	nl	ARUBA
+as default	common	nl	als standaard
+attach	common	nl	Bijsluiten
+attach file	common	nl	Bestand bijsluiten
 attachment	common	nl	Bijlage
 august	common	nl	Augustus
 australia	common	nl	AUSTRALIË
@@ -97,6 +145,7 @@ bahamas	common	nl	BAHAMAS
 bahrain	common	nl	BAHREIN
 bangladesh	common	nl	BANGLADESH
 barbados	common	nl	BARBADOS
+baseline	common	nl	Baseline
 bcc	common	nl	Bcc
 belarus	common	nl	WIT-RUSLAND
 belgium	common	nl	BELGIË
@@ -105,13 +154,17 @@ benin	common	nl	BENIN
 bermuda	common	nl	BERMUDA
 bhutan	common	nl	BHUTAN
 blocked, too many attempts	common	nl	Geblokkeerd, te veel pogingen
+blurtext	common	nl	Vage Text
 bold	common	nl	Vet
 bolivia	common	nl	BOLIVIA
 border	common	nl	Rand
+border-line-thickness for the table-tag	common	nl	Randlijndikte voor de table-tag
 bosnia and herzegovina	common	nl	BOSNIË-HERZEGOVINA
 botswana	common	nl	BOTSWANA
-bottom	common	nl	Onder
+bottom	common	nl	Onderzijde
 bouvet island	common	nl	Centraal Afrikaanse Republiek
+box	common	nl	Box
+box...	common	nl	Box...
 brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
@@ -123,12 +176,16 @@ calendar	common	nl	Agenda
 calendars to sync in addition to personal calendar	groupdav	nl	Agenda's welke naast de eigen agenda moet worden gesynchroniseerd
 cambodia	common	nl	CAMBODJA
 cameroon	common	nl	KAMEROEN
+can not have special sql-value null	common	nl	kan geen speciaal SQL-waarde NULL bevatten
 can't create directory %1 to connect found unconnected nodes to it!	admin	nl	Kan de map %1 niet maken op connectie niet aangesloten nodes gevonden !
 canada	common	nl	CANADA
 cancel	common	nl	Annuleren
 cannot replace %1 because it is a directory	common	nl	Kan %1 niet vervangen omdat het een map is
 cannot set a category as parent, which is part of this categorys subtree!	common	nl	Kan geen categorie als ouder instellen, welke onderdeel is van de sub categorie van deze categorie boom
 cannot set this cat as its own parent!	common	nl	Kan deze categorie als zijn eigen ouder aanmaken
+cant delete a single widget from a grid !!!	common	nl	kan één enkele widget niet van een grid verwijderen !!!
+cant delete the only column of a grid !!!	common	nl	kan de enige kolom van een grid niet verwijderen !!!
+cant delete the only row in a grid !!!	common	nl	kan de enige rij in een grid niet verwijderen !!!
 cant open %1, needs ziparchive	common	nl	Kan 1 niet openen, ZipArchief is benodigd
 cant open '%1' for %2	common	nl	Kan '%1' niet openen voor %2
 cape verde	common	nl	KAAPVERDIË
@@ -139,16 +196,26 @@ category	common	nl	Categorie
 category %1 has been added !	common	nl	Categorie %1 is toegevoegd
 category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
 category owner	common	nl	Eigenaar Categorie
+category tree	common	nl	Categorie boom
 cayman islands	common	nl	KAAIMAN EILANDEN
 cc	common	nl	Cc
+cellpadding for the table-tag	common	nl	Cellpadding voor de table-tag
+cells	common	nl	Cellen
+cellspacing for the table-tag	common	nl	Cellspacing voor de table-tag
+center	common	nl	Centreren
 centered	common	nl	gecentreerd
 central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
 chad	common	nl	CHAD
 change	common	nl	Veranderen
 change owner	common	nl	Verander eigenaar
+changed	common	nl	Veranderd
 charset	common	nl	utf-8
+check all	common	nl	Markeer alles
+check if content should only be displayed but not altered (the content is not send back then!)	common	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
+check if field has to be filled by user	common	nl	Check of dit veld door de gebruiker moet worden ingevuld
 check installation	common	nl	Controleer installatie
 check now	common	nl	Nu controleren
+checkbox	common	nl	Keuzevak
 chile	common	nl	CHILI
 china	common	nl	CHINA
 choose a background color	common	nl	Kies een achtergrondkleur
@@ -162,63 +229,118 @@ choose the parent category	common	nl	Kies bovenliggende categorie
 choose time	common	nl	Kies tijd
 chosen parent category no longer exists	common	nl	De gekozen hoofd categorie bestaat niet meer
 christmas island	common	nl	CHRISTMASEILAND
+class	common	nl	Klasse
+class, valign	common	nl	klasse, Valign
 clear	common	nl	Wissen
 clear form	common	nl	Formulier wissen
 clear window	common	nl	Wis Scherm
 click	common	nl	Klik
+click here to attach the file	common	nl	klik hier om een bestand bij te sluiten
+click here to create the link	common	nl	klik hier om een link te maken
 click here to resume your egroupware session.	common	nl	Klik hier om je EGroupware sessie voort te zetten.
+click here to start the search	common	nl	klik hier om een zoekactie te starten
+click here to upload the file	common	nl	klik hier om een bestand te uploaden
 click or mouse over to show menus	common	nl	Klik or Mouse Over om menus weer te geven
 click or mouse over to show menus?	common	nl	Klik or Mouse Over om menus weer te geven?
 click this image on the navbar: %1	common	nl	Klik deze afbeelding op de navigatiebalk: %1
+click to order after that criteria	common	nl	klik om te sorteren op dat criterium
+clickable path	common	nl	klikbaar pad
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	nl	Als Client geen specifieke limiet heeft wordt deze gelimiteerd naar aantal dagen. Een te hoge limiet kan met sommige Clients problemen veroorzaken
 close	common	nl	Sluiten
 close sidebox	common	nl	Zijkant box sluiten
+closes the window without saving the changes	common	nl	sluit het venster zonder de wijzigingen te bewaren
 cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
 collection empty.	common	nl	Verzameling leeg.
 collection listing	common	nl	Verzameling overzicht
 colombia	common	nl	COLOMBIA
+column...	common	nl	Kolom...
+columnname	common	nl	Kolomnaam
 command ⌘	common	nl	Command x
+comment	common	nl	Commentaar
 common preferences	common	nl	Algemene voorkeuren
 comoros	common	nl	COMOROS
 company	common	nl	Bedrijf
+confirm	common	nl	bevestigen
+confirmation message or custom javascript (returning true or false)	common	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
+confirmation necesary or custom java-script	common	nl	bevestiging nodig of aangepast javascript
 confirmation required	common	nl	Bevestiging vereist
 congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
+contact	common	nl	Contact
+contact field to show	common	nl	Contact veld dat getoond moet worden
+contact fields	common	nl	Veldnamen contacten
 contacting server...	common	nl	Verbinden met server...
+contains	common	nl	bevat
 content type	common	nl	Type Inhoud
 cook islands	common	nl	COOKEILANDEN
 cookies are required to login to this site	login	nl	Cookies zijn nodig om aan te melden op deze site
 copy	common	nl	Kopiëren
+copy to clipboard	common	nl	Kopieer naar klembord
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
 could not contact server. operation timed out!	common	nl	Kon geen verbinding met server maken. Bewerkingstijd is overschreden!
 create	common	nl	Maken
+create a new table for the application	common	nl	Maak een nieuwe tabel voor de applicatie
 created by	common	nl	Gemaakt door
+creates an english ('en') langfile from label and helptexts (for application in name)	common	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
+creator	preferences	nl	Melder
 croatia	common	nl	KROATIË
+css class for the table-tag	common	nl	CSS klasse voor de table-tag
+css properties	common	nl	CSS eigenschappen
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	nl	CSS-klasse naam voor deze rij, keuzemogelijkheden: 'nmh' = volgende overeenkomende kop, 'nmr' = afwisselend bij iedere volgende rij, 'nmr0'+'nmr1' volgende rijen
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	nl	CSS-klasse naam voor deze rij, voorkeuze: 'th' = kopregel, 'row' afwisselende rij, 'row_off' + 'row_on' rijen
+css-styles	common	nl	CSS-stijlen
 ctrl	common	nl	Ctrl
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
 current users	common	nl	Huidig aantal gebruikers
+custom	common	nl	aangepast
+custom fields	common	nl	aangepaste velden
+custom javascript for onchange	common	nl	aangepaste javascript voor onChange
+cut	common	nl	Knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
 database error	common	nl	Database fout
 database error!	common	nl	Database fout!
 date	common	nl	Datum
 date due	common	nl	Einddatum
+date+time	common	nl	Datum+Tijd
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br />Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br />(Port: 13 / Host: 129.6.15.28)
+day	common	nl	Dag
+days	common	nl	dagen
+db ensures that every row has a unique value in that column	common	nl	Database zorgt ervoor dat elk record een unieke waarde heeft in deze kolom
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	nl	DB-specifieke index opties (kommagescheiden), bijvoorbeeld mysql(FULLTEXT) of mysql(100) voor de lengte van de index voor een kolom
+db-tools	common	nl	DB-Tools
 december	common	nl	December
+deck	common	nl	Deck (intern)
+default	common	nl	Standaard
 default category	common	nl	Standaard Categorie
 default height for the windows	common	nl	Standaard hoogte voor de vensters
 default width for the windows	common	nl	Standaard breedte voor de vensters
 del	common	nl	Verwinder
 delete	common	nl	Verwijderen
+delete a single entry by passing the id.	common	nl	Verwijder een enkele invoer door het id mee te geven.
+delete all selected etemplates, without further inquiry	common	nl	verwijder ALLE geselecteerde eTemplates, ZONDER verdere vragen te stellen
+delete and cut save the template!	common	nl	verwijderen of knippen zorgen ervoor dat de template wordt opgeslagen!
 delete category	common	nl	Categorie verwijderen
+delete column	common	nl	Kolom verwijderen
 delete file	common	nl	Verwijder bestand
+delete index	common	nl	Index verwijderen
 delete row	common	nl	Rij verwijderen
 delete selected entries?	common	nl	Verwijder geselecteerde invoer
+delete the spezified etemplate	common	nl	Verwijder de gespecificeerde eTemplate
 delete these entries	common	nl	Verwijder deze invoer
+delete this column	common	nl	deze kolom verwijderen
 delete this entry	common	nl	dit infolog verwijderen
+delete this etemplate	common	nl	deze eTemplate verwijderen
+delete this file	common	nl	Dit bestand verwijderen
+delete this row	common	nl	deze rij verwijderen
+delete whole column (can not be undone!!!)	common	nl	complete kolom verwijderen (dit kan  NIET ongedaan gemaakt worden!!!)
+deletes the above spez. etemplate from the database, can not be undone	common	nl	verwijdert de hierboven gespecificeerde eTemplate uit de database, kan NIET ongedaan gemaakt worden
+deletes the etemplate spez. above	common	nl	verwijdert de hierboven gespecificeerde eTemplate
+deletes this column	common	nl	Verwijderd deze kolom
+deletes this index	common	nl	Verwijderd deze index
 denmark	common	nl	DENEMARKEN
 description	common	nl	Beschrijving
 detail	common	nl	Detail
@@ -232,14 +354,22 @@ disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	nl	Schakel de bewegende schuifeffecten uit wanneer een langzame computer gebruikt of problemen met de uitklapmenus ondervind.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het uitvoeren van een bugfixscript voor Internet Explore 5.5 en hoger uitschakelen zodat transparantie in PNG-afbeeldingen zichtbaar wordt?
 disabled	common	nl	Uitgeschakeld
+discard changes	common	nl	Wijzigingen wegdoen
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	nl	getoond voor invoer of invoer wordt ingevoegd voor een '%s' in het label (label van de verzendknop of afbeeldingsbestandsnaam)
+displayed in statusline of browser if input-field gets focus	common	nl	weergegeven in de statusbalk van de browser indien het invoerveld de focus heeft
+displayed in the top line of the groupbox (legend)	common	nl	weergegeven in de bovenste regel van het groepskader (legenda)
 distribution lists as groups	groupdav	nl	Distributie lijsten als groep
 djibouti	common	nl	DJIBOUTI
 do not notify	common	nl	Geen melding maken
 do not notify of these changes	common	nl	Maak geen melding over deze wijzigingen
 do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
+do you want to save the changes you made in table %s?	common	nl	Wilt u de wijzigingen die in tabel %s gemaakt hebt bewaren?
 doctype:	common	nl	DOCTYPE:
+document '%1' does not exist or is not readable for you!	preferences	nl	Document '%1' bestaat niet of is niet toegankelijk voor jou!
 document properties	common	nl	Documenteigenschappen
 document title:	common	nl	Documenttitel:
+documentation	common	nl	Documentatie
+doesn't matter	common	nl	maakt niets uit
 domain	common	nl	Domein
 domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
 domestic	common	nl	thuis
@@ -248,14 +378,26 @@ dominican republic	common	nl	DOMINICAANSE REPUBLIEK
 done	common	nl	Gereed
 dos international	common	nl	DOS Internationaal
 download	common	nl	Download
+drop a table - this can not be undone	common	nl	Tabel verwijderen - dit kan niet ongedaan gemaakt worden
+drop table	common	nl	Tabel verwijderen
+dump4setup	common	nl	Dump4Setup
+duration	common	nl	Duur
 e-mail	common	nl	Email
 east timor	common	nl	OOST TIMOR
 eastern european	common	nl	Oost europees
 ecuador	common	nl	ECUADOR
-edit	common	nl	Bewerken
+edit	common	nl	Wijzigen
 edit %1 category for	common	nl	Bewerk %1 categorie voor
 edit categories	common	nl	Categorieën bewerken
 edit category	common	nl	Bewerk categorie
+edit embeded css styles or of the applications app.css file	common	nl	bewerk ingebedde CSS stijlen of het app.ccs bestand van de toepassing
+edit the etemplate spez. above	common	nl	bewerk de hierboven gespecificeerde eTemplate
+edit...	common	nl	Bewerken...
+editable templates - db-tools	common	nl	Bewerkbare Templates - DB-hulpmiddelen
+editable templates - delete template	common	nl	Bewerkbare Templates - Template verwijderen
+editable templates - editor	common	nl	Bewerkbare Templates - Bewerker
+editable templates - search	common	nl	Bewerkbare Templates - Zoeken
+editable templates - show template	common	nl	Bewerkbare Templates - Template tonen
 egroupware	common	nl	EGroupware
 egroupware api version	common	nl	EGroupware API versie
 egroupware maintenance update %1 available	common	nl	EGroupware onderhoud update %1 is beschikbaar
@@ -265,15 +407,23 @@ egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
 email	common	nl	Email
 email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	nl	ingebedde CSS stijlen, bijvoorbeeld '.red { background: red; }' (let op de '.' voor de klassenaam) of '@import url(...)' (klassenamen zijn globaal voor de hele pagina!)
 empty file	common	nl	Leeg bestand
+enable javascript onchange submit	common	nl	JavaScript onChange submit inschakelen
 enable logging	groupdav	nl	Zet log aan
 enabled	common	nl	Geactiveerd
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	nl	Activeerd logging van CalDav/CardDav verkeer om problemen met apparaten weer te geven
 end date	common	nl	Einddatum
 end time	common	nl	Eindtijd
+enter '' for an empty default, nothing mean no default	common	nl	vul '' in voor een lege standaardwaarde, niets ingevuld betekent "geen standaardwaarde"
+enter a search pattern	common	nl	Geef een zoekpatroon
+enter filename to upload and attach, use [browse...] to search for it	common	nl	Vul de bestandsnaam in die geupload en bijgevoegd moet worden, gebruik (Bladeren...] om het bestand op te zoeken
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de EGroupware URL in.<br />Voorbeeld: http://www.domeinnaam.nl/egroupware of /egroupware.<br /><b>Geen afsluitende slash toevoegen</b>
+enter the new version number here (> old_version), empty for no update-file	common	nl	vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
+enter the new version number here (has to be > old_version)	common	nl	vul het nieuwe versienummer hier in (moet > old_version zijn)
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry not found!	common	nl	Item niet gevonden!
+entry saved	common	nl	Record opgeslagen
 entry updated sucessfully	common	nl	Item succesvol bijgewerkt
 equatorial guinea	common	nl	EQUATORIAAL GUINEA
 eritrea	common	nl	ERITREA
@@ -281,11 +431,30 @@ error	common	nl	Fout
 error creating %1 %2 directory	common	nl	Error tijdens het creëren van %1 %2 directory
 error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory
 error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
+error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
+error: template not found !!!	common	nl	Fout: Template niet gevonden !!!
+error: webserver is not allowed to write into '%1' !!!	common	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
+error: while saving !!!	common	nl	Fout: tijdens het opslaan !!!
+error: writing file (no write-permission for the webserver) !!!	common	nl	Fout bij het schrijven (geen schrijfrechten voor de webserver) !!!
 estonia	common	nl	ESTONIA
 etag	common	nl	ETag
+etemplate	common	nl	eTemplate
+etemplate '%1' imported, use save to put it in the database	common	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
+etemplate '%1' written to '%2'	common	nl	eTemplate '%1' geschreven naar '%2'
+etemplate editor	common	nl	eTemplate Editor
+etemplate reference	common	nl	eTemplate Referentie
+etemplate tutorial	common	nl	eTemplate Tutorial
 ethiopia	common	nl	ETHIOPIË
 everything	common	nl	Alles
 exact	common	nl	exact
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
+exchange this row with the one above	common	nl	verwissel deze rij met die erboven
+exchange this two columns	common	nl	verwissel deze twee kolommen
+export the loaded etemplate into a xml-file	common	nl	exporteer de geladen eTemplate in een XML-bestand
+export xml	common	nl	Exporteer XML
+extensions loaded:	common	nl	Geladen extensies:
 failed to change mode of required directory "%1" to %2!	admin	nl	Veranderen van instellingen van benodigde map "%1"tot %2! mislukt
 failed to change password.	common	nl	Wachtwoord wijzigen is niet gelukt
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	nl	Verbinden met server is mislukt of een ongeldige reactie is ontvangen. Probeer opnieuw in te loggen. Neem contact op met de beheerder indien het mislukt.
@@ -298,23 +467,33 @@ favorites	common	nl	Favorieten
 fax number	common	nl	Faxnummer
 features of the editor?	common	nl	Functies van de tekstverwerker?
 february	common	nl	Februari
+field	common	nl	Veld
+field must not be empty !!!	common	nl	Veld mag niet leeg zijn !!!
 fields	common	nl	Velden
 fiji	common	nl	FIJI
+file	common	nl	Bestand
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2  --> Verwijderen bestand mislukt !
 file %1 has no content in physical filesystem %2 --> file removed!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2  --> bestand verwijdert!
 file %1 has no content in physical filesystem %2!	admin	nl	Bestand %1 heeft geen inhoud in het fysieke bestand systeem %2 !
+file contains more than one etemplate, last one is shown !!!	common	nl	Bestand bevat meer dan één eTemplate, alleen de laatste wordt getoond !!!
+file writen	common	nl	Bestand weggeschreven
 files	common	nl	Bestanden
 files without content in physical filesystem will be removed.	admin	nl	Bestanden zonder fysiek aanwezige inhoud zullen worden verwijdert
+fileupload	common	nl	Bestandsupload
 filter	common	nl	Filter
 finland	common	nl	FINLAND
+first	common	nl	Eerste
 first name	common	nl	Voornaam
 first name of the user, eg. "%1"	common	nl	Voornaam van de gebruiker, bijv. "%1"
 first page	common	nl	Eerste pagina
 firstname	common	nl	Voornaam
 fixme!	common	nl	FIXME!
+floating point	common	nl	Drijvende komma
 folder already exists.	common	nl	Map bestaat reeds.
 force selectbox	common	nl	Forceer Selectbox
+foreign key	common	nl	Foreign Key
 forever	common	nl	Voor altijd
+formatted text (html)	common	nl	Opgemaakte tekst (HTML)
 found unconnected %1 %2!	admin	nl	Niet verbonden %1 %2 ! gevonden
 france	common	nl	FRANKRIJK
 french guiana	common	nl	FRANS GUYANA
@@ -326,6 +505,7 @@ fullname	common	nl	Volledige naam
 fullscreen mode	common	nl	Volledig scherm modus
 gabon	common	nl	GABON
 gambia	common	nl	GAMBIA
+general fields:	preferences	nl	Algemene velden:
 general menu	common	nl	Algemeen menu
 georgia	common	nl	HONGARIJ
 german	common	nl	Duits
@@ -334,11 +514,18 @@ ghana	common	nl	GHANA
 gibraltar	common	nl	GIBRALTAR
 global	common	nl	Globale
 global public	common	nl	Toegang Openbaar
+go to the first entry	common	nl	ga naar de eerste entry
+go to the last entry	common	nl	ga naar de laatste entry
+go to the next page of entries	common	nl	ga naar de volgende pagina met entries
+go to the previous page of entries	common	nl	ga naar de vorige pagina met entries
 grant access	common	nl	Geef toegang
 greece	common	nl	GRIEKENLAND
 greek	common	nl	Grieks
 greenland	common	nl	GROENLAND
 grenada	common	nl	GRENADA
+grid	common	nl	Grid
+grid column attributes	common	nl	Grid kolomattributen
+grid row attributes	common	nl	Grid rijattributen
 group	common	nl	Groep
 group access	common	nl	Groepstoegang
 group has been added	common	nl	Groep is toegevoegd
@@ -346,6 +533,7 @@ group has been deleted	common	nl	Groep is verwijderd
 group has been updated	common	nl	Groep is bijgewerkt
 group name	common	nl	groepsnaam
 group public	common	nl	Toegang voor groep
+groupbox	common	nl	Groepskader
 groupdav	common	nl	CalDAV, CardCAV en GroupDAV server
 groups	common	nl	Groepen
 groups with permission for %1	common	nl	Groepen met toegangsrechten voor %1
@@ -356,40 +544,78 @@ guatemala	common	nl	GUATEMALA
 guinea	common	nl	GUINEA
 guinea-bissau	common	nl	GUINEA-BISSAU
 guyana	common	nl	GUYANA
+h	common	nl	u
 haiti	common	nl	HAITI
+hbox	common	nl	Hbox
 heard island and mcdonald islands	common	nl	HEARD EILAND EN MCDONALD EILANDEN
 height	common	nl	Hoogte
+height of row (in % or pixel)	common	nl	hoogte van de rij (in % of pixels)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	nl	hoogte van de rij (in % of pixels), rij uitschakelen: [! = not]<value>[=<check>] bijvoorbeeld: '!@data' schakelt de rij uit indien de inhoud van data leeg is
+height of the table in % or pixels for the table-tag and (optional) div	common	nl	Hoogte van de tabel in % of pixels voor de table-tag en (optionele) div
+height, disabled	common	nl	Hoogte, uitgeschakeld
 help	common	nl	Help
 high	common	nl	Hoog
 highest	common	nl	Hoogste
+history log	common	nl	Historie log
 hold [%1] and [%2] key to drag %3 to your desktop	common	nl	Houd [%1] en [%2] toets vast om %3 naar uw desktop te slepen
 holy see (vatican city state)	common	nl	VATICAANSTAD
 home	common	nl	Start
 home email	common	nl	email thuis
-api-accounts	common	nl	Gebruiker accounts
+home screen	common	nl	Hoofdscherm
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
+horizontal rule	common	nl	Horizontale lijn
+hour	common	nl	Uur
+hours	common	nl	uren
 how many days to sync in the future (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren in de toekomst (Standaard %1)
 how many days to sync in the past (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren vanuit het verleden (Standaard %1)
+how many entries should the list show	common	nl	Hoeveel items mogen er in de lijst getoond worden
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
 how to show the general egroupware menu ?	common	nl	Hoe moet het algemene EGroupware menu weergegeven worden?
+html	common	nl	HTML
+html link to the current record	common	nl	HTML link naar huidig record
 hungary	common	nl	HONGARIJË
 iceland	common	nl	IJSLAND
+id	common	nl	ID
 iespell not detected. click ok to go to download page.	common	nl	ieSpell is niet gevonden. Klik OK om naar de download pagina te gaan.
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	nl	indien het veld is uitgeschakeld wordt een lege tabelcel getoond, voor (tijdelijke) verwijdering van een veld/cel
 if the clock is enabled would you like it to update it every second or every minute?	common	nl	Indien de klok is ingeschakeld, wilt u dan dat deze iedere seconde of iedere minuut wordt geactualiseerd?
 if there are some images in the background folder you can choose the one you would like to see.	common	nl	Indien er enkele afbeeldingen in de achtergrond map aanwezig zijn, kunt u er een kiezen die u wilt weergeven.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
+image	common	nl	Afbeelding
 image directory relative to document root (use / !), example:	common	nl	Afbeeldingen directory relatief ten opzichte van de document root (gebruik / !), bijvoorbeeld:
 image url	common	nl	Afbeelding URL
+import	common	nl	Importeren
+import an etemplate from a xml-file	common	nl	importeer een eTemplate vanuit een XML-bestand
+import table-definitions from existing db-table	common	nl	Importeer tabeldefinities vanuit een bestaande DB tabel
+import xml	common	nl	Importeer XML
+increment version to not overwrite the existing template	common	nl	verhoog versie zodat de bestaande template niet wordt overschreven
+index/name of returned content (name of the template, link / method for image)	common	nl	index/naam van de teruggegeven inhoud (naam van de Template, Link / Methode voor afbeelding)
+indexed	common	nl	Geindexeerd
+indexoptions	common	nl	Indexopties
 india	common	nl	INDIA
 indonesia	common	nl	INDONESIË
 infolog types to sync	common	nl	Infolog soorten om te synchroniseren
+initial	common	nl	Initiaal
+insert a column before	common	nl	een kolom hiervoor invoegen
+insert a column behind	common	nl	een kolom hierna invoegen
+insert a row above	common	nl	een rij hierboven invoegen
+insert a row below	common	nl	een rij hieronder invoegen
+insert a widget before	common	nl	een of ander iets hiervoor invoegen
+insert a widget behind	common	nl	een of ander iets hierna invoegen
 insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
 insert column after	common	nl	Kolom invoegen achter
 insert column before	common	nl	Kolom invoegen voor
 insert in %1	common	nl	Voeg toe in %1
+insert in document	common	nl	Invoegen in document
 insert in dokument	common	nl	Voeg toe aan document
+insert new column behind this one	common	nl	voeg een nieuwe kolom na deze kolom in
+insert new column in front of all	common	nl	voeg een nieuwe kolom voor deze kolom in
+insert new row after this one	common	nl	voeg een nieuwe rij onder deze rij in
+insert new row in front of first line	common	nl	voeg een nieuwe rij boven de eerste rij in
 insert row after	common	nl	Rij invoegen onder
 insert row before	common	nl	Rij invoegen boven
+integer	common	nl	Geheel getal
 international	common	nl	Internationaal
 invalid filename	common	nl	Ongelde bestandsnaam
 invalid ip address	common	nl	Ongeldig IP-adres
@@ -416,6 +642,7 @@ justify left	common	nl	Links uitlijnen
 justify right	common	nl	Rechts uitlijnen
 kazakstan	common	nl	KAZACHSTAN
 kenya	common	nl	KENIA
+key	common	nl	Sleutel
 keywords	common	nl	Trefwoorden
 kiribati	common	nl	KIRIBATI
 korea, democratic peoples republic of	common	nl	NOORD-KOREA
@@ -423,9 +650,14 @@ korea, republic of	common	nl	ZUID-KOREA
 korean	common	nl	Koreaans
 kuwait	common	nl	KOEWEIT
 kyrgyzstan	common	nl	KIRGIZIË
+label	common	nl	Label
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	nl	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: bijvoorbeeld 'd-m-Y']
+lang	common	nl	Taal
 language	common	nl	Taal
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	nl	Taalafkorting (bijvoorbeeld 'nl' voor Nederlands) voor een taalgebonden template ('' leest uw voorkeurstalen of de standaardtaal, gebruik 'standaard' om de standaard template te lezen)
 language_direction_rtl	common	nl	language_direction_rtl
 lao peoples democratic republic	common	nl	LAOS
+last	common	nl	Laatste
 last modified	common	nl	laatste wijziging
 last name	common	nl	Achternaam
 last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1"
@@ -435,6 +667,7 @@ latvia	common	nl	LETLAND
 ldap-mgr	common	nl	LDAP-beheerder
 lebanon	common	nl	LIBANON
 left	common	nl	Links
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	nl	lengte voor char+varchar, precisie integer 2,4,8 en decimalen 4,8
 lesotho	common	nl	LESOTHO
 liberia	common	nl	LIBERIE
 libyan arab jamahiriya	common	nl	LIBIË
@@ -442,10 +675,21 @@ license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
+link	common	nl	Link
+link target %1 not found!	common	nl	Link doel %1 niet gevonden !
+linkapps	common	nl	Linktoepassingen
+linkentry	common	nl	Linkitem
+linklist	common	nl	Linklijst
+links and attached files	preferences	nl	Link naar bijgesloten bestand
+linkstring	common	nl	LinkString
+linkto	common	nl	LinkNaar
 list	common	nl	Lijst
 list members	common	nl	Lijst van leden
+list of files linked to the current record	preferences	nl	Lijs van bestanden gelinkt aan huidig record
 lithuania	common	nl	LITOUWEN
 load	common	nl	Laad
+load this template into the editor	common	nl	laad deze tempate in de editor
+loading	common	nl	wordt geladen
 local	common	nl	Lokaal
 location calendars	groupdav	nl	Plaats van kalenders
 locations	common	nl	locaties
@@ -464,7 +708,6 @@ macedonia, the former yugoslav republic of	common	nl	MACEDONIË
 madagascar	common	nl	MADAGASKAR
 mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
 main category	common	nl	Hoofdcategorie
-home screen	common	nl	Hoofdscherm
 maintainer	common	nl	Beheerder
 malawi	common	nl	MALAWI
 malaysia	common	nl	MALEISIË
@@ -477,54 +720,82 @@ martinique	common	nl	MARTINIQUE
 mauritania	common	nl	MAURITANIË
 mauritius	common	nl	MAURITIUS
 max number of icons in navbar	common	nl	Max. aantal iconen in navigatiebalk?
+maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
 may	common	nl	Mei
 mayotte	common	nl	MAYOTTE
 medium	common	nl	Gemiddeld
 menu	common	nl	Menu
 message	common	nl	Bericht
+message ...	common	nl	Bericht...
 mexico	common	nl	MEXICO
 micronesia, federated states of	common	nl	MICRONESIË
-minute	common	nl	minuut
+middle	common	nl	Midden
+minute	common	nl	Minuut
+minutes	common	nl	Minuten
 mode of required directory "%1" changed to %2.	admin	nl	Toegang tot benodigde map "%1" gewijzigd naar %2.
 moldova, republic of	common	nl	MOLDOVIË
 monaco	common	nl	MONACO
 monday	common	nl	Maandag
 mongolia	common	nl	MONGOLIË
 montenegro	common	nl	MONTENEGRO
+month	common	nl	Maand
 montserrat	common	nl	MONTSERRAT
+more	common	nl	Meer
+more than 1 match for '%1'	common	nl	Meer dan 1 overeenkomst voor '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	nl	Meer dan 1 actief bestand %1 gevonden. deactiveer %2 oudere revisies
 morocco	common	nl	MAROKKO
 moved %1 children from directory fs_id=%2 to %3	admin	nl	Verplaatst %1 onderliggende mappen van map fs_id=%2 naar %3
 moved unconnected %1 %2 to %3.	admin	nl	Niet verbonden %1 %2 tot %3 verplaatst
 mozambique	common	nl	MOZAMBIQUE
+multicolumn indices	common	nl	Multi-column Indices
 multiple	common	nl	meerdere
 myanmar	common	nl	BIRMA (MYANMAR)
 name	common	nl	Naam
+name of other table where column is a key from	common	nl	naam van de andere tabel waar de kolom een sleutelwaarde van is
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	nl	naam van phpgw-template set (bijvoorbeeld verdilak): '' = default (zal de template uit de voorkeursinstellingen lezen, gebruik 'default' om de standaard template te lezen '')
+name of table to add	common	nl	Naam van de toe te voegen tabel
+name of the etemplate, should be in form application.function[.subtemplate]	common	nl	naam van de eTemplate, moet voorkomen in de vorm van application,function[,subTemplate)
 name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
 namespace	common	nl	Name space
 namibia	common	nl	NAMIBIË
 nauru	common	nl	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	nl	moet uniek zijn in de tabel en mag geen gereserveerd woord van SQL zijn, het is verstandig om alles een prefix te geven van een 2 letterige afkorting voor de toepassing, bijvoorbeeld 'et_'
 nepal	common	nl	NEPAL
 netherlands	common	nl	NEDERLAND
 netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
 never	common	nl	Nooit
+new	common	nl	Nieuw
 new caledonia	common	nl	NIEUW-CALEDONIË
 new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
 new favorite	common	nl	Nieuwe Favoriet
 new main category	common	nl	Nieuwe hoofdcategorie
+new search	common	nl	Nieuwe zoekopdracht
+new table created	common	nl	Nieuwe tabel gemaakt
 new value	common	nl	Nieuwe waarde
 new zealand	common	nl	NIEUW ZEELAND
+newer version '%1' exists !!!	common	nl	niewere versie '%1' bestaat reeds !!!
 next	common	nl	Volgende
 next page	common	nl	volgende pagina
+nextmatch	common	nl	Volgende overeenkomst
+nextmatch accountfilter	common	nl	Volgende overeenkomst Accountfilter
+nextmatch custom filterheader	common	nl	Volgende overeenkomst aangepaste Filterdeader
+nextmatch filterheader	common	nl	Volgende overeenkomst Filterheader
+nextmatch header	common	nl	Volgende overeenkomst kop
+nextmatch sortheader	common	nl	Volgende overeenkomst Sortheader
 nicaragua	common	nl	NICARAGUA
 niger	common	nl	NIGER
 nigeria	common	nl	NIGERIA
 niue	common	nl	NIUE
 no	common	nl	Nee
 no - cancel	common	nl	Nee - Annuleer
+no column to swap with !!!	common	nl	geen kolom om mee te wisselen !!!
 no entries found, try again ...	common	nl	Geen items gevonden, probeer het nogmaals ...
+no file	common	nl	geen bestand
+no filename given or selected via browse...	common	nl	geen bestandsnaam ingevoerd of geselecteerd met Bladeren ...
 no filters	common	nl	Geen filters
 no history for this record	common	nl	Geen geschiedenis voor dit item
+no matches found	common	nl	Geen overeenkomsten gevonden
+no row to swap with !!!	common	nl	geen rij om mee te wisselen !!!
 no savant2 template directories were found in:	common	nl	Geen Savant2 template mappen gevonden in:
 no subject	common	nl	Geen onderwerp
 none	common	nl	Geen
@@ -536,23 +807,35 @@ norway	common	nl	NOORWEGEN
 not	common	nl	niet
 not a user yet? register now	common	nl	Nog geen gebruiker? Registreer nu
 not assigned	common	nl	Niet toegewezen
+not null	common	nl	NIET NULL
 not readable %1 entry of user %2	common	nl	Niet leesbaar item %1 van gebruiker %2
 not supported by current application!	common	nl	Niet ondersteund door huidige toepassing
 note	common	nl	Notitie
 notes	common	nl	Notities
+nothing	common	nl	niets
+nothing found - try again !!!	common	nl	Niets gevonden - probeer opnieuw !!!
+nothing in clipboard to paste !!!	common	nl	niets in het klembord om te plakken !!!
+nothing matched search criteria !!!	common	nl	Niets kwam overeen met de zoekcriteria !!!
 nothing to save.	common	nl	Niets om te bewaren
 notifications	common	nl	meldingen
 notify window	common	nl	Attentievenster
 notify your administrator to correct this situation	common	nl	Waarschuw uw beheerder om deze situatie te laten corrigeren
 november	common	nl	November
+now	common	nl	Nu
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	nl	aantal kolommen waarover het veld/de kolom een span moet leggen of 'all' voor de overgebleven kolommen, CSS-klasse naam (voor de TD tag)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	nl	aantal rijen/kolommen in een V/HBox, Cellpadding, Cellspacing
 numbers	common	nl	Nummer
 october	common	nl	Oktober
-off	groupdav	nl	Uit
+of	common	nl	van
+off	common	nl	Uit
 ok	common	nl	Oké
 old value	common	nl	Oude waarde
 oman	common	nl	OMAN
 on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
 on mouse over	common	nl	Bij Mouse Over
+onchange	common	nl	onChange
+onclick	common	nl	onClick
+only an other version found !!!	common	nl	alleen een andere versie gevonden !!!
 only private	common	nl	alleen privé
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	nl	Alleen ondersteund bij weinig volledig bevestigde clients (bijvoorbeeld van Apple). Als u een URL in moet geven wordt deze naar alle waarschijnlijkheid niet ondersteund !
 only yours	common	nl	alleen eigen weergeven
@@ -561,12 +844,19 @@ open	common	nl	open
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
 open sidebox	common	nl	Zijkant box openen
+open the online help.	common	nl	De online help openen.
+operator	common	nl	Operator
+optional note about the link	common	nl	optionele opmerking over de link
+options	common	nl	Opties
 or	common	nl	of
+order to navigating by tab key through the form	common	nl	Volgorde van TAB toets navigatie door het formulier
 ordered list	common	nl	Genummerde lijst
 original	common	nl	Origineel
 other	common	nl	Andere
+overflow	common	nl	Overflow
 overview	common	nl	Overzicht
 owner	common	nl	Eigenaar
+padding	common	nl	Padding
 page	common	nl	Pagina
 page was generated in %1 seconds	common	nl	Deze pagina werd gegenereerd in %1 seconden.
 pakistan	common	nl	PAKISTAN
@@ -577,6 +867,7 @@ papua new guinea	common	nl	PAPUA NIEUW-GUINEA
 paraguay	common	nl	PARAGUAY
 parcel	common	nl	Pakketten
 parent category	common	nl	Bovenliggende categorie
+parent is a '%1' !!!	common	nl	bovenliggende is een '%1' !!!
 password	common	nl	Wachtwoord
 password contains only %1 of required %2 character classes: no %3	common	nl	Wachtwoord bevat %1 van de benodigde %2 karakters klassen: geen %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	nl	Wachtwoord bevat "%1" delen van uw gebruiker - of volledige naam (meer dan 3 karakters)
@@ -587,6 +878,8 @@ password must contain at least %1 numbers	common	nl	Wachtwoord moet minstens %1 
 password must contain at least %1 special characters	common	nl	Wachtwoord moet minstens %1 bijzondere tekens bevatten
 password must contain at least %1 uppercase letters	common	nl	Wachtwoord moet minstens %1 hoofdletters bevatten
 password must have at least %1 characters	common	nl	Wachtwoord moet minstens %1  tekens bevatten
+paste	common	nl	Plakken
+path	common	nl	Pad
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 permission denied!	common	nl	Toestemming geweigerd!
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
@@ -597,28 +890,33 @@ pg down	common	nl	Pagina naar benenden
 pg up	common	nl	Pagina omhoog
 philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
-api	common	nl	EGroupware API
 pitcairn	common	nl	PITCAIRN (EILAND)
 placeholders	common	nl	Tijdelijke aanduiding
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
 please enter a name	common	nl	Vul a.u.b. een naam in !
+please enter table-name first !!!	common	nl	Vul a.u.b. eerst de tabelnaam in !!!
 please run setup to become current	common	nl	Voer a.u.b. de setup uit om een actuele versie te verkrijgen
 please select	common	nl	Selecteer a.u.b.
 please set your global preferences	common	nl	Stel a.u.b. uw persoonlijke voorkeuren in !
 please set your preferences for this application	common	nl	Stel a.u.b. uw voorkeuren in voor deze toepassing !
 please wait...	common	nl	Even geduld a.u.b.
 please, check back with us shortly.	common	nl	Kom svp spoedig bij ons terug.
+pm	common	nl	pm
 poland	common	nl	POLEN
+popup	common	nl	Popup
 popup with search	common	nl	Popup met zoeken
 portugal	common	nl	PORTUGAL
 postal	common	nl	Post
 powered by	common	nl	Ondersteund door
 pre	common	nl	Voor
+precision	common	nl	Precisie
 preferences	common	nl	Voorkeuren
 preferences for the %1 template set	preferences	nl	Voorkeur voor set template %1
 prev	common	nl	Vorige
 previous page	common	nl	Vorige pagina
 primary group	common	nl	Primaire groep
+primary key	common	nl	Primaire sleutel
+primary key for the table, gets automaticaly indexed	common	nl	Primaire sleutel van de tabel, wordt automatisch geindexeerd
 primary style-sheet:	common	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
@@ -629,34 +927,46 @@ properties	common	nl	Eigenschappen
 public	common	nl	publiek
 puerto rico	common	nl	PUERTO RICO
 qatar	common	nl	QATAR
+radiobutton	common	nl	Radiobutton
 read	common	nl	Lezen
+read a list of entries.	common	nl	Lees een lijst van entries.
+read a single entry by passing the id and fieldlist.	common	nl	Lees één entry door het ID en veldlijst mee te geven
+read etemplate from database (for the keys above)	common	nl	lees eTemplate uit de database (voor de sleutels hierboven)
 read this list of methods.	common	nl	Lees deze lijst met methodes.
 reading	common	nl	leest
+readonly	common	nl	alleen lezen
+refresh	common	nl	Verversen
 register	common	nl	Registreer
 regular	common	nl	Regulier
 reject	common	nl	Afwijzen
 remember me	common	nl	Onthoud mij
+remove row (can not be undone!!!)	common	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
 remove selected accounts	common	nl	verwijder geselecteerde accounts
 remove shortcut	common	nl	Snelkoppeling verwijderen
+remove this link (not the entry itself)	common	nl	Verwijder deze link (niet de entry zelf)
 removed (now) empty directory fs_id=%1	admin	nl	Verwijdert (nu) lege map fs_id=%1
 rename	common	nl	Hernoemen
 replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
 requests and full responses to files directory	common	nl	Vraag en volledige reactie op bestanden in map
 requests and truncated responses to apache error-log	groupdav	nl	Vragen en afgekapte reactie van Apache fouten-log
+required	common	nl	Vereist
 required directory "%1" created.	admin	nl	Benodigde map "%1"aangemaakt
 required directory "%1" has wrong mode %2 instead of %3!	admin	nl	Benodigde map "%1" heeft de verkeerde machtiging %2 in paats van %3!
 required directory "%1" not found!	admin	nl	Benodige map "%1"niet gevonden !
+reset	common	nl	Herstel
 resource calendars	groupdav	nl	Bron Kalenders
 resource type	common	nl	Bron typen
 resources	common	nl	Hulpmiddelen
 restore failed	common	nl	Terugzetten mislukte
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een serie van todo items
+returns savely, without deleting	common	nl	komt veilig terug ZONDER te vewijderen
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
 reunion	common	nl	RÉUNION (EILAND)
 right	common	nl	Rechts
 romania	common	nl	ROMANIË
+row...	common	nl	Rij...
 russian	common	nl	Russisch
 russian federation	common	nl	RUSLAND
 rwanda	common	nl	RWANDA
@@ -672,12 +982,23 @@ saturday	common	nl	Zaterdag
 saudi arabia	common	nl	SAUDI ARABIË
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.<br />Deze versie: %1<br />Savants versie: %2
 save	common	nl	Opslaan
+save all	common	nl	Bewaar alle
 save as	common	nl	Bewaar als
+save as zip	common	nl	Bewaar als Zip
+save selected columns as default preference for all users.	common	nl	Bewaar geselecteerde kolommen als voorkeursstandaard voor alle gebruikers.
+save the changes made and close the window	common	nl	Bewaar de gemaakte wijzigingen en sluit het venster
+save the etemplate under the above keys (name, ...), change them for a saveas	common	nl	bewaar de eTemaplate onder de hierboven genoemde sleutels (naam, ...), wijzig ze om Opslaan Als uit te voeren
+saves changes to tables_current.inc.php	common	nl	bewaart de wijzigingen in tables_current_inc.php
+saves the template with given version number and closes the window	common	nl	bewaart de template met het opgegeven versienummer en sluit het venster
+scale	common	nl	Schaal
+scale for float	common	nl	schaal voor drijvende komma
 scheduling inbox	common	nl	Planning inbox
 scheduling outbox	common	nl	Planning verzend map
 search	common	nl	Zoeken
 search %1 '%2'	common	nl	Zoek %1 '%2'
 search accounts	common	nl	Zoek accounts
+search for '%1'	common	nl	Zoek naar '%1'
+search letter	common	nl	Zoek letter
 search or select accounts	common	nl	Zoek of selecteer accounts
 second	common	nl	seconde
 section	common	nl	Sectie
@@ -685,20 +1006,54 @@ securest	common	nl	Veiligst
 select	common	nl	Selecteren
 select "%1", if your client does not support multiple addressbooks.	groupdav	nl	Selecteer "%1", als uw client niet meerdere adresboeken ondersteund
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	nl	Selecteer "%1"", als uw client groepen ondersteund, bijvoorbeeld OS X of IOS adresboek.
+select a category	common	nl	Selecteer een categorie
+select a primary contact, to show in the list	common	nl	Selecteer een primaire contact om in de lijst weer te geven
+select access	common	nl	Selecteer toegang
+select account	common	nl	Selecteer account
 select action	common	nl	Selecteer actie
 select all	common	nl	Selecteer lle
 select all %1 %2 for %3	common	nl	Selecteer alle %1 %2  voor %3
 select all entries	common	nl	Selecteer alle gegevens
-select category	common	nl	Selecteer Categorie
+select an app first !!!	common	nl	Eerst een applicatie selecteren
+select an app to search in	common	nl	Selecteer een applicatie om in te zoeken
+select an application	common	nl	Selecteer een applicatie
+select an application, (*) = uninstalled	common	nl	Selecteer een applicatie, (*) = niet geïnstaleerd
+select an entry to link with	common	nl	Selecteer een entry om een link mee te maken
+select an table of the application	common	nl	Selecteer een tabel van de toepassing
+select application	common	nl	Selecteer applicatie
+select application to search	common	nl	Selecteer toepassingen voor zoeken
+select category	common	nl	Selecteer categorie
+select columns	common	nl	Selecteer kolommen
+select country	common	nl	Selecteer land
 select date	common	nl	Selecteer datum
+select day	common	nl	Selecteer dag
+select day of week	common	nl	Selecteer dag van de week
+select entry	common	nl	Selecteer entry
+select file(s) from vfs	common	nl	Selecteer bestand(en) van VFS
 select group	common	nl	Selecteer groep
 select home email address	common	nl	Selecteer emailadres thuis
+select hour	common	nl	Selecteer uur
+select if content of field should not be translated (label gets always translated)	common	nl	markeer als de inhoud van het veld niet vertaald mag worden (label wordt altijd vertaald)
+select language	common	nl	Selecteer taal
+select month	common	nl	Selecteer maand
 select multiple accounts	common	nl	selecteer meerdere accounts
+select number	common	nl	Selecteer nummer
 select one	common	nl	Selecteer een
+select one ...	common	nl	Selecteer één ...
+select percentage	common	nl	Selecteer percentage
+select priority	common	nl	Selecteer prioriteit
+select state	common	nl	Selecteer staat / provincie / streek
+select the columns to display in the list	common	nl	Selecteer de kolommen die in de lijst getoond moeten worden
 select the default height for the application windows	common	nl	Selecteer de standaard hoogte voor de toepassingsvensters
 select the default width for the application windows	common	nl	Selecteer de standaard breedte voor de toepassingsvensters
+select the indexed columns in their desired order	common	nl	Selecteer de geindexeerde kolommen in hun gewenste volgorde
+select this etemplate to delete it	common	nl	Select deze eTemplate om hem te verwijderen
 select user	common	nl	Selecteer gebruiker
+select which accounts to show	common	nl	selecteer welke accounts u wilt weergeven
+select which values to show	common	nl	Selecteer welke waarden uw wilt weergeven
 select work email address	common	nl	Selecteer emailadres werk
+select year	common	nl	Selecteer jaar
+selectbox	common	nl	Selectieveld
 selection	common	nl	Selectie
 send	common	nl	Verzend
 send succeeded to %1	common	nl	Verzenden naar %1 gelukt
@@ -711,13 +1066,18 @@ server contacted. waiting for response...	common	nl	Server verbonden. Wacht op r
 server is unwilling to perform.	common	nl	Server wil niet reageren
 server name	common	nl	Servernaam
 session has been killed	common	nl	Sessie is beëindigd
+set as default	common	nl	Instellen als standaard
 set user as only responsible user, but keeping groups	groupdav	nl	Maak gebruiker alleen verantwoordelijk, maar behoud de groep
 set user as only responsible, removing all existing responsibles	groupdav	nl	Maak gebruiker alleen verantwoordelijk, verwijder alle bestaande verantwoordelijkheden
+sets today as date	common	nl	Zet vandaag als datum
 setup	common	nl	Setup
 setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
 shift	common	nl	Shift
 shift ⇧	common	nl	Shift ⇧
+should the form be submitted or any custom javascript be executed	common	nl	Moet het formulier verzonden worden of aangepaste javascript worden uitgevoerd
+show	common	nl	Weergeven
+show (no save)	common	nl	Weergeven (niet opslaan)
 show all	common	nl	laat alles zien
 show all categorys	common	nl	Alle categorieën weergegeven
 show as topmenu	common	nl	Toon als Topmenu
@@ -731,9 +1091,14 @@ show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
 show page generation time?	common	nl	Verlooptijd pagina weergeven?
 show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van EGroupware en x-desktop op het bureaublad.
+show values	common	nl	Waarden weergeven
+show/hide	common	nl	zijbalk tonen/verbergen
 show_more_apps	common	nl	Meer applicaties weergeven
+showing	common	nl	geeft weer
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
+shows / allows you to enter values into the etemplate for testing	common	nl	toont / staat u toe om testwaardes in de eTemplate in te vullen
+shows/displays etemplate for testing, does not save it before	common	nl	toont eTemplate om te testen, slaat het NIET eerder op
 sierra leone	common	nl	SIERRA LEONE
 simple	common	nl	Eenvoudig
 singapore	common	nl	SINGAPORE
@@ -747,11 +1112,17 @@ sorry, your login has expired	login	nl	Excuses, uw sessie is verlopen
 south africa	common	nl	ZUID AFRIKA
 south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDELIJKE SANDWICHEILANDEN
 space	common	nl	Spatie
+spacing	common	nl	Afstand
 spain	common	nl	SPANJE
+span	common	nl	Breedte
+span, class	common	nl	Breedte, klasse
 special characters	common	nl	speciale karakters
 sri lanka	common	nl	SRI LANKA
+stack	common	nl	Stapel
+start a new search, cancel this link	common	nl	start een nieuwe zoekopdracht, annuleer deze link
 start date	common	nl	Startdatum
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	nl	Start map voor afbeeldingen browser met rich text editor in EGroupware Bestand Manager
+start new search for the above pattern	common	nl	start een nieuwe zoekopdracht naar het hierboven genoemde patroon
 start time	common	nl	Starttijd
 start with	common	nl	starten met
 starting up...	common	nl	Wordt opgestart...
@@ -759,50 +1130,76 @@ status	common	nl	Status
 stretched	common	nl	uitgerekt
 subject	common	nl	Onderwerp
 submit	common	nl	Verzenden
+submit form	common	nl	formulier verzenden
+submitbutton	common	nl	Verzendknop
 substitutions and their meanings:	common	nl	Vervangingen en hun betekenissen:
 successful created new directory %1 for unconnected nods.	admin	nl	Nieuwe map %1 aanmaken voor niet verbonden nods gelukt
 sudan	common	nl	SUDAN
 sunday	common	nl	Zondag
 suriname	common	nl	SURINAME
 svalbard and jan mayen	common	nl	SVALBARD EN JAN MAYEN (EILANDEN)
+swap	common	nl	verwisselen
+swap widget with next one	common	nl	verwissel iets met de volgende
+swap with next column	common	nl	verwissel met volgende kolom
+swap with next row	common	nl	verwissel met volgende rij
 swaziland	common	nl	SWAZILAND
 sweden	common	nl	ZWEDEN
+switch to a parent widget	common	nl	schakel om naar een bovenliggend iets
+switch to an other widgets of that container	common	nl	schakel om naar een ander iets in die container
 switzerland	common	nl	ZWITSERLAND
 sync all selected into one	groupdav	nl	Synchroniseer alle gelecteerd in 1
 syrian arab republic	common	nl	SYRIË
 tab	common	nl	Tab
+tabindex	common	nl	Tabindex
 table %1 is excluded from backup and restore. data will not be restored.	common	nl	Table %1 is uitgesloten van backup en terugzetten. Data wil niet worden terug gezet
 table properties	common	nl	Tabel-eigenschappen
+table unchanged, no write necessary !!!	common	nl	Tabel niet gewijzigd, schrijven niet nodig !!!
+tablename	common	nl	Tabelnaam
+tabs	common	nl	Tabs
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
 tanzania, united republic of	common	nl	TANZANIA
+template	common	nl	Template
+template deleted	common	nl	Template verwijderd
+template saved	common	nl	Template opgeslagen
+text	common	nl	Tekst
 text color:	common	nl	Tekstkleur:
+textarea	common	nl	Textruimte
 thailand	common	nl	THAILAND
 the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	nl	De browser popup blocker staat aan.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
 the following applications require upgrades	common	nl	De volgende toepassingen vereisen een upgrade
+the following document-types are supported:	preferences	nl	De volgende document types worden ondersteund :
 the mail server returned	common	nl	De mailserver gaf als reactie
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	nl	Er is al een systeem gebruiker met deze naam. Selecteer svp een andere naam
 they will be sub-folders in users home (%1 attribute).	common	nl	Zij zullen onderliggende mappen zijn in gebruikers home (%1 attribuut)
 this name has been used already	common	nl	Deze naam is reeds in gebruik !
+this text gets displayed if the input-field is empty and has no focus (blur)	common	nl	tekst wordt getoond als het invoerveld lees is en niet de focus heeft (blur)
 thursday	common	nl	Donderdag
 tiled	common	nl	als tegels
 time	common	nl	Tijd
 time zone	common	nl	Tijdzone
 time zone offset	common	nl	Tijdzoneverschil
 title	common	nl	Titel
+titles of any entries linked to the current record, excluding attached files	preferences	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 to	common	nl	Aan
 to correct this error for the future you will need to properly set the	common	nl	Om deze fout in de toekomst te voorkomen moet u de juiste
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	nl	om uit te schakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt uit als data geen inhoud heeft
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	nl	Om bestanden te bekijken of opnieuw te activeren, moet u misschien versiebeheer aanzetten.
 to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
+to start the db-tools	common	nl	om de DB-tools te starten
+to start the etemplate editor	common	nl	om de eTemplate editor te starten
+to start the search	common	nl	om de zoekactie te starten
 today	common	nl	Vandaag
 todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
 togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
-top	common	nl	Boven
+top	common	nl	Bovenzijde
 total	common	nl	Totaal
 transparant bg for the icons?	common	nl	Transparante achtergrond voor de pictogrammen?
+tree	common	nl	Boom
 trinidad and tobago	common	nl	TRINIDAD EN TOBAGO
 tuesday	common	nl	Dinsdag
 tunisia	common	nl	TUNISIË
@@ -811,18 +1208,24 @@ turkmenistan	common	nl	TURKMENISTAN
 turks and caicos islands	common	nl	TURKS EN CAICOSEILANDEN
 tuvalu	common	nl	TUVALU
 type	common	nl	Type
+type of the column	common	nl	Kolomtype
+type of the field (select label if field should be empty)	common	nl	veldtype (selecteer Label indiend veld leeg moet zijn)
 uganda	common	nl	UGANDA
 ukraine	common	nl	OEKRAÏNE
 un-delete	common	nl	Verwijderen ongedaan maken
 unconnected nodes will be moved to %1.	admin	nl	Niet aangesloten nodes zullen worden verplaatst %1
 underline	common	nl	Onderstrepen
 unicode	common	nl	Unicode
+unique	common	nl	Uniek
 united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
 united kingdom	common	nl	VERENIGD KONINKRIJK
 united states	common	nl	VERENIGDE STATES
 united states minor outlying islands	common	nl	VERENIGDE STATES: KLEINE EILANDEN
 unknown	common	nl	Onbekend
+unlink	common	nl	Link opheffen
 update	common	nl	Bijwerken
+update a single entry by passing the fields.	common	nl	Een entry bijwerken door de velden mee te geven.
+update from version '%s' to	common	nl	Update van versie '%s' naar
 update the clock per minute or per second	common	nl	De klok per minuut of per seconde actualiseren
 upload	common	nl	Upload
 upload directory does not exist, or is not writeable by webserver	common	nl	Upload map bestaat niet of is niet schrijfbaar voor de webserver
@@ -841,39 +1244,64 @@ username	common	nl	Gebruikersnaam
 users	common	nl	gebruikers
 users choice	common	nl	Gebruikerskeuze
 uzbekistan	common	nl	OEZBEKISTAN
+valign	common	nl	vAlign
 value	common	nl	Waarde
+value has to be at least '%1' !!!	common	nl	Waarde moet op z'n minst '%1' zijn !!!
+value has to be at maximum '%1' !!!	common	nl	Waarde kan op hoogstens '%1' zijn !!!
 vanuatu	common	nl	VANUATU
+vbox	common	nl	VBox
 venezuela	common	nl	VENEZUELA
 version	common	nl	Versie
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	nl	versienummer, moet het volgende formaat hebben: major.minor.revision.number (voorbeeld: 0.9.13.001, alle getallen opvullen met nullen)
+vertical alignment of row	common	nl	vertikale uitlijning van de rij
 vfs upload directory	common	nl	VFS map voor upload
 viet nam	common	nl	VIETNAM
 view	common	nl	Bekijken
+view this etemplate	common	nl	toon deze eTemplate
+view this linked entry in its application	common	nl	toon deze gelinkte entry in zijn toepassing
 virgin islands, british	common	nl	BRITSE MAAGDENEILANDEN
 virgin islands, u.s.	common	nl	AMERIKAANSE MAAGDENEILANDEN
 wallis and futuna	common	nl	WALLIS EN FUTUNA
 wednesday	common	nl	Woensdag
+weekend	common	nl	weekend
 welcome	common	nl	Welkom
 western european	common	nl	West europees
 western sahara	common	nl	WESTELIJK SAHARA
 what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	nl	wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
 what style would you like the image to have?	common	nl	Welke stijl wilt u dat de afbeelding heeft?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de EGroupware links zoals voorkeuren, informatie en uitloggen getoond worden.
 which groups	common	nl	Welke groepen
 which infolog types should be synced with the device, default only tasks.	common	nl	Welke Infolog typen zouden met dit apparaat moeten worden gesynchroniseerd, standaard is het alleen taken
 whole query	common	nl	gehele query
+widget copied into clipboard	common	nl	iets is naar het klembord gekopieerd
 width	common	nl	Breedte
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	nl	breedte van de kolom (in % of pixels), kolom uitschakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt de kolom uit indien de inhoud van data leeg is
+width of column (in % or pixel)	common	nl	kolombreedte (in % of pixels)
+width of the table in % or pixels for the table-tag and (optional) div	common	nl	Tabelbreedte in % of pixels voor de table-tag en (optionele) div
+width, disabled	common	nl	Breedte, uitgeschakeld
+wk	common	nl	Wk
 work email	common	nl	email werk
+working days	common	nl	werkdagen
 would you like to display the page generation time at the bottom of every window?	common	nl	Wilt u de pagina gerereer tijd onderaan iedere pagina laten weergeven?
+write <app>/setup/tables_current.inc.php	common	nl	Schrijf <app>setup/tables_current.inc.php
+write langfile	common	nl	Taalbestand wegschrijven
+write tables	common	nl	Schrijf tabellen
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	nl	schrijft een 'etemplates.inc.php' bestand (voor de toepassing in Naam) in de setup-directory van de toepassing
 writing	common	nl	schrijft
 written by:	common	nl	Geschreven door:
+xml-file to import	common	nl	XML-bestand om te importeren
+xslt template	common	nl	XSLT Template
 year	common	nl	Jaar
 yemen	common	nl	JEMEN
 yes	common	nl	Ja
 yes - delete	common	nl	Ja -Verwijder
 yes - delete including sub-entries	common	nl	Ja - Verwijder inclusief alle onderliggende invoer
+you are not allowed to export more than %1 entries!	common	nl	Je mag niet meer dan %1 items exporteren!
 you are required to change your password during your first login	common	nl	U moet nadat u voor het eerst bent ingelogd uw wachtwoord wijzigen.
 you can customize how many icons and toolbars the editor shows.	common	nl	U kunt instellen hoeveel pictogrammen en taakbalken de editor moet tonen.
+you can respond by visiting:	common	nl	Ju kunt reageren via:
 you have been successfully logged out	login	nl	U bent succesvol afgemeld
 you have not entered a title	common	nl	U heeft geen titel ingevoerd !
 you have not entered a valid date	common	nl	U heeft geen geldige datum ingevoerd !
@@ -902,459 +1330,3 @@ your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
 zoom	common	nl	Inzoemen
-search for '%1'	common	nl	Zoek naar '%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
-%1 etemplates deleted	common	nl	%1 eTemplates verwijderd
-%1 etemplates for application '%2' dumped to '%3'	common	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
-%1 etemplates found	common	nl	%1 eTemplates gevonden
-%1 matches on search criteria	common	nl	%1 komt overeen met zoekcriteria
-%1 more...	common	nl	%1 meer...
-%1 new etemplates imported for application '%2'	common	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
-%1 not implemented for %2!	common	nl	%1 niet geimplemnteerd voor %2!
-%s disabled	common	nl	%s uitgeschakeld
-%s needed	common	nl	%s nodig
-%s notranslation	common	nl	%s GeenVertaling
-%s onchange	common	nl	%s bij Wijziging
-%s readonly	common	nl	%s alleen lezen
-'%1' has an invalid format !!!	common	nl	'%1' heeft een ongeldig formaat !!!
-'%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
-'%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum !!!
-'%1' is not a valid floatingpoint number !!!	common	nl	'%1' is geen geldig drijvende komma getal !!!
-'%1' is not a valid integer !!!	common	nl	'%1' is geen geldig geheel getal !!!
-'%1' is not allowed ('%2')!	common	nl	'%1' is NIET toegestaan ('%2')!
-a pattern to be searched for	common	nl	een patroon waarnaar gezocht moet worden
-accesskey	common	nl	Toegangssleutel
-accesskeys can also be specified with an & in the label (eg. &name)	common	nl	Accesskeys kunnen ook gedefinieerd worden door een & in het label te plaatsen (bijvoorbeeld: &Naam)
-account contactdata	common	nl	Account contactgegevens
-actions...	common	nl	Acties...
-add a new column (after the existing ones)	common	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
-add a new entry of the selected application	common	nl	Voeg een nieuw record toe van de geselecteerde toepassing
-add a new multi-column index	common	nl	Een nieuwe multi-column index toevoegen
-add column	common	nl	Kolom toevoegen
-add index	common	nl	Index toevoegen
-add new	common	nl	Nieuwe toevoegen
-add table	common	nl	Tabel toevoegen
-add to clipboard	common	nl	Voeg toe aan klembord
-advanced search	common	nl	Geavanceerd zoeken
-align	common	nl	Uitlijnen
-alignment of label and input-field in table-cell	common	nl	uitlijning van label en inputveld in tabelcel
-alignment of the v/hbox containing table-cell	common	nl	Uitlijning van de V/Hbox die de tabelcel bevat
-all days	common	nl	alle dagen
-all operations save the template!	common	nl	alle bewerkingen slaan de template op!
-all users	common	nl	Alle gebruikers
-am	common	nl	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	nl	een geindexeerde kolom versnelt zoekopdrachten op dit kolom (kost wel ruimte op de schijf !!!)
-and	common	nl	En
-application	common	nl	Applicatie
-application name needed to write a langfile or dump the etemplates !!!	common	nl	Applicatie naam is nodig om een taalbestand te schrijven of de eTemplates te kunnen dumpen !!!
-applications	common	nl	Toepassingen
-applies the changes made	common	nl	de gemaakte wijzigingen doorvoeren
-applies the changes to the given version of the template	common	nl	de gemaakte wijzigingen doorvoeren op de opgegeven versie van de template
-as default	common	nl	als standaard
-attach	common	nl	Bijsluiten
-attach file	common	nl	Bestand bijsluiten
-baseline	common	nl	Baseline
-blurtext	common	nl	Vage Text
-border	common	nl	Rand
-border-line-thickness for the table-tag	common	nl	Randlijndikte voor de table-tag
-bottom	common	nl	Onderzijde
-box	common	nl	Box
-box...	common	nl	Box...
-can not have special sql-value null	common	nl	kan geen speciaal SQL-waarde NULL bevatten
-cancel	common	nl	Annuleren
-cant delete a single widget from a grid !!!	common	nl	kan één enkele widget niet van een grid verwijderen !!!
-cant delete the only column of a grid !!!	common	nl	kan de enige kolom van een grid niet verwijderen !!!
-cant delete the only row in a grid !!!	common	nl	kan de enige rij in een grid niet verwijderen !!!
-category	common	nl	Categorie
-category tree	common	nl	Categorie boom
-cellpadding for the table-tag	common	nl	Cellpadding voor de table-tag
-cells	common	nl	Cellen
-cellspacing for the table-tag	common	nl	Cellspacing voor de table-tag
-center	common	nl	Centreren
-changed	common	nl	Veranderd
-check all	common	nl	Markeer alles
-check if content should only be displayed but not altered (the content is not send back then!)	common	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
-check if field has to be filled by user	common	nl	Check of dit veld door de gebruiker moet worden ingevuld
-checkbox	common	nl	Keuzevak
-class	common	nl	Klasse
-class, valign	common	nl	klasse, Valign
-click here to attach the file	common	nl	klik hier om een bestand bij te sluiten
-click here to create the link	common	nl	klik hier om een link te maken
-click here to start the search	common	nl	klik hier om een zoekactie te starten
-click here to upload the file	common	nl	klik hier om een bestand te uploaden
-click to order after that criteria	common	nl	klik om te sorteren op dat criterium
-clickable path	common	nl	klikbaar pad
-closes the window without saving the changes	common	nl	sluit het venster zonder de wijzigingen te bewaren
-column...	common	nl	Kolom...
-columnname	common	nl	Kolomnaam
-comment	common	nl	Commentaar
-confirm	common	nl	bevestigen
-confirmation message or custom javascript (returning true or false)	common	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
-confirmation necesary or custom java-script	common	nl	bevestiging nodig of aangepast javascript
-contact	common	nl	Contact
-contact field to show	common	nl	Contact veld dat getoond moet worden
-contact fields	common	nl	Veldnamen contacten
-contains	common	nl	bevat
-copy to clipboard	common	nl	Kopieer naar klembord
-create a new table for the application	common	nl	Maak een nieuwe tabel voor de applicatie
-creates an english ('en') langfile from label and helptexts (for application in name)	common	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
-creator	preferences	nl	Melder
-css class for the table-tag	common	nl	CSS klasse voor de table-tag
-css properties	common	nl	CSS eigenschappen
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	nl	CSS-klasse naam voor deze rij, keuzemogelijkheden: 'nmh' = volgende overeenkomende kop, 'nmr' = afwisselend bij iedere volgende rij, 'nmr0'+'nmr1' volgende rijen
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	nl	CSS-klasse naam voor deze rij, voorkeuze: 'th' = kopregel, 'row' afwisselende rij, 'row_off' + 'row_on' rijen
-css-styles	common	nl	CSS-stijlen
-custom	common	nl	aangepast
-custom fields	common	nl	aangepaste velden
-custom javascript for onchange	common	nl	aangepaste javascript voor onChange
-cut	common	nl	Knippen
-date+time	common	nl	Datum+Tijd
-day	common	nl	Dag
-days	common	nl	dagen
-db ensures that every row has a unique value in that column	common	nl	Database zorgt ervoor dat elk record een unieke waarde heeft in deze kolom
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	nl	DB-specifieke index opties (kommagescheiden), bijvoorbeeld mysql(FULLTEXT) of mysql(100) voor de lengte van de index voor een kolom
-db-tools	common	nl	DB-Tools
-deck	common	nl	Deck (intern)
-default	common	nl	Standaard
-delete a single entry by passing the id.	common	nl	Verwijder een enkele invoer door het id mee te geven.
-delete all selected etemplates, without further inquiry	common	nl	verwijder ALLE geselecteerde eTemplates, ZONDER verdere vragen te stellen
-delete and cut save the template!	common	nl	verwijderen of knippen zorgen ervoor dat de template wordt opgeslagen!
-delete column	common	nl	Kolom verwijderen
-delete index	common	nl	Index verwijderen
-delete the spezified etemplate	common	nl	Verwijder de gespecificeerde eTemplate
-delete this column	common	nl	deze kolom verwijderen
-delete this etemplate	common	nl	deze eTemplate verwijderen
-delete this file	common	nl	Dit bestand verwijderen
-delete this row	common	nl	deze rij verwijderen
-delete whole column (can not be undone!!!)	common	nl	complete kolom verwijderen (dit kan  NIET ongedaan gemaakt worden!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	nl	verwijdert de hierboven gespecificeerde eTemplate uit de database, kan NIET ongedaan gemaakt worden
-deletes the etemplate spez. above	common	nl	verwijdert de hierboven gespecificeerde eTemplate
-deletes this column	common	nl	Verwijderd deze kolom
-deletes this index	common	nl	Verwijderd deze index
-discard changes	common	nl	Wijzigingen wegdoen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	nl	getoond voor invoer of invoer wordt ingevoegd voor een '%s' in het label (label van de verzendknop of afbeeldingsbestandsnaam)
-displayed in statusline of browser if input-field gets focus	common	nl	weergegeven in de statusbalk van de browser indien het invoerveld de focus heeft
-displayed in the top line of the groupbox (legend)	common	nl	weergegeven in de bovenste regel van het groepskader (legenda)
-do you want to save the changes you made in table %s?	common	nl	Wilt u de wijzigingen die in tabel %s gemaakt hebt bewaren?
-document '%1' does not exist or is not readable for you!	preferences	nl	Document '%1' bestaat niet of is niet toegankelijk voor jou!
-documentation	common	nl	Documentatie
-doesn't matter	common	nl	maakt niets uit
-drop a table - this can not be undone	common	nl	Tabel verwijderen - dit kan niet ongedaan gemaakt worden
-drop table	common	nl	Tabel verwijderen
-dump4setup	common	nl	Dump4Setup
-duration	common	nl	Duur
-edit	common	nl	Wijzigen
-edit embeded css styles or of the applications app.css file	common	nl	bewerk ingebedde CSS stijlen of het app.ccs bestand van de toepassing
-edit the etemplate spez. above	common	nl	bewerk de hierboven gespecificeerde eTemplate
-edit...	common	nl	Bewerken...
-editable templates - db-tools	common	nl	Bewerkbare Templates - DB-hulpmiddelen
-editable templates - delete template	common	nl	Bewerkbare Templates - Template verwijderen
-editable templates - editor	common	nl	Bewerkbare Templates - Bewerker
-editable templates - search	common	nl	Bewerkbare Templates - Zoeken
-editable templates - show template	common	nl	Bewerkbare Templates - Template tonen
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	nl	ingebedde CSS stijlen, bijvoorbeeld '.red { background: red; }' (let op de '.' voor de klassenaam) of '@import url(...)' (klassenamen zijn globaal voor de hele pagina!)
-enable javascript onchange submit	common	nl	JavaScript onChange submit inschakelen
-enter '' for an empty default, nothing mean no default	common	nl	vul '' in voor een lege standaardwaarde, niets ingevuld betekent "geen standaardwaarde"
-enter a search pattern	common	nl	Geef een zoekpatroon
-enter filename to upload and attach, use [browse...] to search for it	common	nl	Vul de bestandsnaam in die geupload en bijgevoegd moet worden, gebruik (Bladeren...] om het bestand op te zoeken
-enter the new version number here (> old_version), empty for no update-file	common	nl	vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
-enter the new version number here (has to be > old_version)	common	nl	vul het nieuwe versienummer hier in (moet > old_version zijn)
-entry saved	common	nl	Record opgeslagen
-error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
-error: template not found !!!	common	nl	Fout: Template niet gevonden !!!
-error: webserver is not allowed to write into '%1' !!!	common	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
-error: while saving !!!	common	nl	Fout: tijdens het opslaan !!!
-error: writing file (no write-permission for the webserver) !!!	common	nl	Fout bij het schrijven (geen schrijfrechten voor de webserver) !!!
-etemplate	common	nl	eTemplate
-etemplate '%1' imported, use save to put it in the database	common	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
-etemplate '%1' written to '%2'	common	nl	eTemplate '%1' geschreven naar '%2'
-etemplate editor	common	nl	eTemplate Editor
-etemplate reference	common	nl	eTemplate Referentie
-etemplate tutorial	common	nl	eTemplate Tutorial
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
-exchange this row with the one above	common	nl	verwissel deze rij met die erboven
-exchange this two columns	common	nl	verwissel deze twee kolommen
-export the loaded etemplate into a xml-file	common	nl	exporteer de geladen eTemplate in een XML-bestand
-export xml	common	nl	Exporteer XML
-extensions loaded:	common	nl	Geladen extensies:
-field	common	nl	Veld
-field must not be empty !!!	common	nl	Veld mag niet leeg zijn !!!
-file	common	nl	Bestand
-file contains more than one etemplate, last one is shown !!!	common	nl	Bestand bevat meer dan één eTemplate, alleen de laatste wordt getoond !!!
-file writen	common	nl	Bestand weggeschreven
-fileupload	common	nl	Bestandsupload
-first	common	nl	Eerste
-floating point	common	nl	Drijvende komma
-foreign key	common	nl	Foreign Key
-formatted text (html)	common	nl	Opgemaakte tekst (HTML)
-general fields:	preferences	nl	Algemene velden:
-go to the first entry	common	nl	ga naar de eerste entry
-go to the last entry	common	nl	ga naar de laatste entry
-go to the next page of entries	common	nl	ga naar de volgende pagina met entries
-go to the previous page of entries	common	nl	ga naar de vorige pagina met entries
-grid	common	nl	Grid
-grid column attributes	common	nl	Grid kolomattributen
-grid row attributes	common	nl	Grid rijattributen
-groupbox	common	nl	Groepskader
-h	common	nl	u
-hbox	common	nl	Hbox
-height	common	nl	Hoogte
-height of row (in % or pixel)	common	nl	hoogte van de rij (in % of pixels)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	nl	hoogte van de rij (in % of pixels), rij uitschakelen: [! = not]<value>[=<check>] bijvoorbeeld: '!@data' schakelt de rij uit indien de inhoud van data leeg is
-height of the table in % or pixels for the table-tag and (optional) div	common	nl	Hoogte van de tabel in % of pixels voor de table-tag en (optionele) div
-height, disabled	common	nl	Hoogte, uitgeschakeld
-help	common	nl	Help
-history log	common	nl	Historie log
-horizontal rule	common	nl	Horizontale lijn
-hour	common	nl	Uur
-hours	common	nl	uren
-how many entries should the list show	common	nl	Hoeveel items mogen er in de lijst getoond worden
-html	common	nl	HTML
-html link to the current record	common	nl	HTML link naar huidig record
-id	common	nl	ID
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	nl	indien het veld is uitgeschakeld wordt een lege tabelcel getoond, voor (tijdelijke) verwijdering van een veld/cel
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
-image	common	nl	Afbeelding
-import	common	nl	Importeren
-import an etemplate from a xml-file	common	nl	importeer een eTemplate vanuit een XML-bestand
-import table-definitions from existing db-table	common	nl	Importeer tabeldefinities vanuit een bestaande DB tabel
-import xml	common	nl	Importeer XML
-increment version to not overwrite the existing template	common	nl	verhoog versie zodat de bestaande template niet wordt overschreven
-index/name of returned content (name of the template, link / method for image)	common	nl	index/naam van de teruggegeven inhoud (naam van de Template, Link / Methode voor afbeelding)
-indexed	common	nl	Geindexeerd
-indexoptions	common	nl	Indexopties
-insert a column before	common	nl	een kolom hiervoor invoegen
-insert a column behind	common	nl	een kolom hierna invoegen
-insert a row above	common	nl	een rij hierboven invoegen
-insert a row below	common	nl	een rij hieronder invoegen
-insert a widget before	common	nl	een of ander iets hiervoor invoegen
-insert a widget behind	common	nl	een of ander iets hierna invoegen
-insert in document	common	nl	Invoegen in document
-insert new column behind this one	common	nl	voeg een nieuwe kolom na deze kolom in
-insert new column in front of all	common	nl	voeg een nieuwe kolom voor deze kolom in
-insert new row after this one	common	nl	voeg een nieuwe rij onder deze rij in
-insert new row in front of first line	common	nl	voeg een nieuwe rij boven de eerste rij in
-integer	common	nl	Geheel getal
-key	common	nl	Sleutel
-label	common	nl	Label
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	nl	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: bijvoorbeeld 'd-m-Y']
-lang	common	nl	Taal
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	nl	Taalafkorting (bijvoorbeeld 'nl' voor Nederlands) voor een taalgebonden template ('' leest uw voorkeurstalen of de standaardtaal, gebruik 'standaard' om de standaard template te lezen)
-last	common	nl	Laatste
-left	common	nl	Links
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	nl	lengte voor char+varchar, precisie integer 2,4,8 en decimalen 4,8
-link	common	nl	Link
-link target %1 not found!	common	nl	Link doel %1 niet gevonden !
-linkapps	common	nl	Linktoepassingen
-linkentry	common	nl	Linkitem
-linklist	common	nl	Linklijst
-links and attached files	preferences	nl	Link naar bijgesloten bestand
-linkstring	common	nl	LinkString
-linkto	common	nl	LinkNaar
-list of files linked to the current record	preferences	nl	Lijs van bestanden gelinkt aan huidig record
-load this template into the editor	common	nl	laad deze tempate in de editor
-loading	common	nl	wordt geladen
-maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
-message ...	common	nl	Bericht...
-middle	common	nl	Midden
-minute	common	nl	Minuut
-minutes	common	nl	Minuten
-month	common	nl	Maand
-more	common	nl	Meer
-more than 1 match for '%1'	common	nl	Meer dan 1 overeenkomst voor '%1'
-multicolumn indices	common	nl	Multi-column Indices
-name	common	nl	Naam
-name of other table where column is a key from	common	nl	naam van de andere tabel waar de kolom een sleutelwaarde van is
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	nl	naam van phpgw-template set (bijvoorbeeld verdilak): '' = default (zal de template uit de voorkeursinstellingen lezen, gebruik 'default' om de standaard template te lezen '')
-name of table to add	common	nl	Naam van de toe te voegen tabel
-name of the etemplate, should be in form application.function[.subtemplate]	common	nl	naam van de eTemplate, moet voorkomen in de vorm van application,function[,subTemplate)
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	nl	moet uniek zijn in de tabel en mag geen gereserveerd woord van SQL zijn, het is verstandig om alles een prefix te geven van een 2 letterige afkorting voor de toepassing, bijvoorbeeld 'et_'
-new	common	nl	Nieuw
-new search	common	nl	Nieuwe zoekopdracht
-new table created	common	nl	Nieuwe tabel gemaakt
-newer version '%1' exists !!!	common	nl	niewere versie '%1' bestaat reeds !!!
-nextmatch	common	nl	Volgende overeenkomst
-nextmatch accountfilter	common	nl	Volgende overeenkomst Accountfilter
-nextmatch custom filterheader	common	nl	Volgende overeenkomst aangepaste Filterdeader
-nextmatch filterheader	common	nl	Volgende overeenkomst Filterheader
-nextmatch header	common	nl	Volgende overeenkomst kop
-nextmatch sortheader	common	nl	Volgende overeenkomst Sortheader
-no column to swap with !!!	common	nl	geen kolom om mee te wisselen !!!
-no file	common	nl	geen bestand
-no filename given or selected via browse...	common	nl	geen bestandsnaam ingevoerd of geselecteerd met Bladeren ...
-no matches found	common	nl	Geen overeenkomsten gevonden
-no row to swap with !!!	common	nl	geen rij om mee te wisselen !!!
-not null	common	nl	NIET NULL
-nothing	common	nl	niets
-nothing found - try again !!!	common	nl	Niets gevonden - probeer opnieuw !!!
-nothing in clipboard to paste !!!	common	nl	niets in het klembord om te plakken !!!
-nothing matched search criteria !!!	common	nl	Niets kwam overeen met de zoekcriteria !!!
-now	common	nl	Nu
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	nl	aantal kolommen waarover het veld/de kolom een span moet leggen of 'all' voor de overgebleven kolommen, CSS-klasse naam (voor de TD tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	nl	aantal rijen/kolommen in een V/HBox, Cellpadding, Cellspacing
-of	common	nl	van
-onchange	common	nl	onChange
-onclick	common	nl	onClick
-only an other version found !!!	common	nl	alleen een andere versie gevonden !!!
-open the online help.	common	nl	De online help openen.
-operator	common	nl	Operator
-optional note about the link	common	nl	optionele opmerking over de link
-options	common	nl	Opties
-or	common	nl	of
-order to navigating by tab key through the form	common	nl	Volgorde van TAB toets navigatie door het formulier
-overflow	common	nl	Overflow
-padding	common	nl	Padding
-parent is a '%1' !!!	common	nl	bovenliggende is een '%1' !!!
-paste	common	nl	Plakken
-path	common	nl	Pad
-please enter table-name first !!!	common	nl	Vul a.u.b. eerst de tabelnaam in !!!
-pm	common	nl	pm
-popup	common	nl	Popup
-precision	common	nl	Precisie
-primary key	common	nl	Primaire sleutel
-primary key for the table, gets automaticaly indexed	common	nl	Primaire sleutel van de tabel, wordt automatisch geindexeerd
-radiobutton	common	nl	Radiobutton
-read	common	nl	Lezen
-read a list of entries.	common	nl	Lees een lijst van entries.
-read a single entry by passing the id and fieldlist.	common	nl	Lees één entry door het ID en veldlijst mee te geven
-read etemplate from database (for the keys above)	common	nl	lees eTemplate uit de database (voor de sleutels hierboven)
-readonly	common	nl	alleen lezen
-refresh	common	nl	Verversen
-remove row (can not be undone!!!)	common	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
-remove this link (not the entry itself)	common	nl	Verwijder deze link (niet de entry zelf)
-required	common	nl	Vereist
-reset	common	nl	Herstel
-returns savely, without deleting	common	nl	komt veilig terug ZONDER te vewijderen
-right	common	nl	Rechts
-row...	common	nl	Rij...
-save all	common	nl	Bewaar alle
-save as zip	common	nl	Bewaar als Zip
-save selected columns as default preference for all users.	common	nl	Bewaar geselecteerde kolommen als voorkeursstandaard voor alle gebruikers.
-save the changes made and close the window	common	nl	Bewaar de gemaakte wijzigingen en sluit het venster
-save the etemplate under the above keys (name, ...), change them for a saveas	common	nl	bewaar de eTemaplate onder de hierboven genoemde sleutels (naam, ...), wijzig ze om Opslaan Als uit te voeren
-saves changes to tables_current.inc.php	common	nl	bewaart de wijzigingen in tables_current_inc.php
-saves the template with given version number and closes the window	common	nl	bewaart de template met het opgegeven versienummer en sluit het venster
-scale	common	nl	Schaal
-scale for float	common	nl	schaal voor drijvende komma
-search	common	nl	Zoeken
-search letter	common	nl	Zoek letter
-select a category	common	nl	Selecteer een categorie
-select a primary contact, to show in the list	common	nl	Selecteer een primaire contact om in de lijst weer te geven
-select access	common	nl	Selecteer toegang
-select account	common	nl	Selecteer account
-select an app first !!!	common	nl	Eerst een applicatie selecteren
-select an app to search in	common	nl	Selecteer een applicatie om in te zoeken
-select an application	common	nl	Selecteer een applicatie
-select an application, (*) = uninstalled	common	nl	Selecteer een applicatie, (*) = niet geïnstaleerd
-select an entry to link with	common	nl	Selecteer een entry om een link mee te maken
-select an table of the application	common	nl	Selecteer een tabel van de toepassing
-select application	common	nl	Selecteer applicatie
-select application to search	common	nl	Selecteer toepassingen voor zoeken
-select category	common	nl	Selecteer categorie
-select columns	common	nl	Selecteer kolommen
-select country	common	nl	Selecteer land
-select day	common	nl	Selecteer dag
-select day of week	common	nl	Selecteer dag van de week
-select entry	common	nl	Selecteer entry
-select file(s) from vfs	common	nl	Selecteer bestand(en) van VFS
-select hour	common	nl	Selecteer uur
-select if content of field should not be translated (label gets always translated)	common	nl	markeer als de inhoud van het veld niet vertaald mag worden (label wordt altijd vertaald)
-select language	common	nl	Selecteer taal
-select month	common	nl	Selecteer maand
-select number	common	nl	Selecteer nummer
-select one ...	common	nl	Selecteer één ...
-select percentage	common	nl	Selecteer percentage
-select priority	common	nl	Selecteer prioriteit
-select state	common	nl	Selecteer staat / provincie / streek
-select the columns to display in the list	common	nl	Selecteer de kolommen die in de lijst getoond moeten worden
-select the indexed columns in their desired order	common	nl	Selecteer de geindexeerde kolommen in hun gewenste volgorde
-select this etemplate to delete it	common	nl	Select deze eTemplate om hem te verwijderen
-select which accounts to show	common	nl	selecteer welke accounts u wilt weergeven
-select which values to show	common	nl	Selecteer welke waarden uw wilt weergeven
-select year	common	nl	Selecteer jaar
-selectbox	common	nl	Selectieveld
-set as default	common	nl	Instellen als standaard
-sets today as date	common	nl	Zet vandaag als datum
-should the form be submitted or any custom javascript be executed	common	nl	Moet het formulier verzonden worden of aangepaste javascript worden uitgevoerd
-show	common	nl	Weergeven
-show (no save)	common	nl	Weergeven (niet opslaan)
-show values	common	nl	Waarden weergeven
-showing	common	nl	geeft weer
-shows / allows you to enter values into the etemplate for testing	common	nl	toont / staat u toe om testwaardes in de eTemplate in te vullen
-shows/displays etemplate for testing, does not save it before	common	nl	toont eTemplate om te testen, slaat het NIET eerder op
-spacing	common	nl	Afstand
-span	common	nl	Breedte
-span, class	common	nl	Breedte, klasse
-stack	common	nl	Stapel
-start a new search, cancel this link	common	nl	start een nieuwe zoekopdracht, annuleer deze link
-start new search for the above pattern	common	nl	start een nieuwe zoekopdracht naar het hierboven genoemde patroon
-submit form	common	nl	formulier verzenden
-submitbutton	common	nl	Verzendknop
-swap	common	nl	verwisselen
-swap widget with next one	common	nl	verwissel iets met de volgende
-swap with next column	common	nl	verwissel met volgende kolom
-swap with next row	common	nl	verwissel met volgende rij
-switch to a parent widget	common	nl	schakel om naar een bovenliggend iets
-switch to an other widgets of that container	common	nl	schakel om naar een ander iets in die container
-tabindex	common	nl	Tabindex
-table unchanged, no write necessary !!!	common	nl	Tabel niet gewijzigd, schrijven niet nodig !!!
-tablename	common	nl	Tabelnaam
-tabs	common	nl	Tabs
-template	common	nl	Template
-template deleted	common	nl	Template verwijderd
-template saved	common	nl	Template opgeslagen
-text	common	nl	Tekst
-textarea	common	nl	Textruimte
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
-the following document-types are supported:	preferences	nl	De volgende document types worden ondersteund :
-this text gets displayed if the input-field is empty and has no focus (blur)	common	nl	tekst wordt getoond als het invoerveld lees is en niet de focus heeft (blur)
-time	common	nl	Tijd
-titles of any entries linked to the current record, excluding attached files	preferences	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	nl	om uit te schakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt uit als data geen inhoud heeft
-to start the db-tools	common	nl	om de DB-tools te starten
-to start the etemplate editor	common	nl	om de eTemplate editor te starten
-to start the search	common	nl	om de zoekactie te starten
-today	common	nl	Vandaag
-top	common	nl	Bovenzijde
-tree	common	nl	Boom
-type	common	nl	Type
-type of the column	common	nl	Kolomtype
-type of the field (select label if field should be empty)	common	nl	veldtype (selecteer Label indiend veld leeg moet zijn)
-unique	common	nl	Uniek
-unlink	common	nl	Link opheffen
-update a single entry by passing the fields.	common	nl	Een entry bijwerken door de velden mee te geven.
-update from version '%s' to	common	nl	Update van versie '%s' naar
-upload	common	nl	Upload
-valign	common	nl	vAlign
-value	common	nl	Waarde
-value has to be at least '%1' !!!	common	nl	Waarde moet op z'n minst '%1' zijn !!!
-value has to be at maximum '%1' !!!	common	nl	Waarde kan op hoogstens '%1' zijn !!!
-vbox	common	nl	VBox
-version	common	nl	Versie
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	nl	versienummer, moet het volgende formaat hebben: major.minor.revision.number (voorbeeld: 0.9.13.001, alle getallen opvullen met nullen)
-vertical alignment of row	common	nl	vertikale uitlijning van de rij
-view this etemplate	common	nl	toon deze eTemplate
-view this linked entry in its application	common	nl	toon deze gelinkte entry in zijn toepassing
-weekend	common	nl	weekend
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	nl	wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
-widget copied into clipboard	common	nl	iets is naar het klembord gekopieerd
-width	common	nl	Breedte
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	nl	breedte van de kolom (in % of pixels), kolom uitschakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt de kolom uit indien de inhoud van data leeg is
-width of column (in % or pixel)	common	nl	kolombreedte (in % of pixels)
-width of the table in % or pixels for the table-tag and (optional) div	common	nl	Tabelbreedte in % of pixels voor de table-tag en (optionele) div
-width, disabled	common	nl	Breedte, uitgeschakeld
-wk	common	nl	Wk
-working days	common	nl	werkdagen
-write <app>/setup/tables_current.inc.php	common	nl	Schrijf <app>setup/tables_current.inc.php
-write langfile	common	nl	Taalbestand wegschrijven
-write tables	common	nl	Schrijf tabellen
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	nl	schrijft een 'etemplates.inc.php' bestand (voor de toepassing in Naam) in de setup-directory van de toepassing
-xml-file to import	common	nl	XML-bestand om te importeren
-xslt template	common	nl	XSLT Template
-year	common	nl	Jaar
-you are not allowed to export more than %1 entries!	common	nl	Je mag niet meer dan %1 items exporteren!
-you can respond by visiting:	common	nl	Ju kunt reageren via:
-initial	common	nl	Initiaal
-id	common	nl	ID

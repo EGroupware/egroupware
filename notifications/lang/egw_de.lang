@@ -55,6 +55,7 @@ last month	notifications	de	letzter Monat
 linked entries:	common	de	Verknüpfte Einträge:
 login aborted, application exit?	notifications	de	Login abgebrochen, Anwendung beenden?
 login in egroupware:	notifications	de	Login in EGroupware
+mail account to use for notifications	admin	de	E-Mail-Konto, das für Benachrichtigungen verwendet werden soll
 mail backend	admin	de	E-Mail Schnittstelle
 mark all as read	notifications	de	Alle als gelesen markieren
 mark as read	notifications	de	Als gelesen markieren
