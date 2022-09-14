@@ -4052,7 +4052,8 @@ div.flatpickr-calendar.inline .dayContainer {
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-month {
     flex: 1 1 auto;
     padding-top: 4px;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
+    height: initial;
 }
 
 div.flatpickr-calendar.inline .flatpickr-months {
@@ -4063,12 +4064,13 @@ div.flatpickr-calendar.inline .flatpickr-months {
 div.flatpickr-calendar.inline .flatpickr-current-month {
     left: 0;
     width: 100%;
+    padding-top: 0px;
 }
 
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-prev-month,
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-next-month {
     position: relative;
-    padding: 10px 3px 0px 5px;
+    padding: 3px 3px 0px 5px;
     height: 26px;
 }
 
