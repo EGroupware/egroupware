@@ -123,7 +123,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'];
 		if (!empty($textsize) && $textsize != '12')
 		{
-
+			$iconSize = $textsize+4;
 			$ret['app_css'] .= "
 			/*
 			sharing
@@ -138,6 +138,11 @@ class pixelegg_framework extends Api\Framework\Ajax
 				font-size: {$textsize}px;
 			}
 			et2-lavatar, et2-avatar {font-size: 12px}
+			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon,
+			 .dtree img{
+				width: {$iconSize}px !important;
+				height: {$iconSize}px !important;
+			}
 		";
 		}
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
