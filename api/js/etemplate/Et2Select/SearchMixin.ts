@@ -8,7 +8,7 @@
  */
 
 
-import {css, html, LitElement, render, repeat, SlotMixin} from "@lion/core";
+import {css, html, LitElement, render, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
@@ -268,7 +268,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			 */
 			this.defaultValidators = [];
 
-			this._handleSelect = this._handleSelect.bind(this);
+			this.handleMenuSelect = this.handleMenuSelect.bind(this);
 			this._handleChange = this._handleChange.bind(this);
 			this._handleSearchBlur = this._handleSearchBlur.bind(this);
 			this._handleClear = this._handleClear.bind(this);
@@ -450,16 +450,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.createFreeEntry(this.value);
 			}
-			else if(this.multiple)
-			{
-				this.value.forEach((e) =>
-				{
-					if(!this._menuItems.find(o => o.value == e && !o.classList.contains('remote')))
-					{
-						this.createFreeEntry(e);
-					}
-				});
-			}
 		}
 
 		protected fix_bad_value()
@@ -483,7 +473,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _bindListeners()
 		{
-			this.addEventListener("sl-select", this._handleSelect);
 			this.addEventListener("sl-clear", this._handleClear)
 
 			// Need our own change to catch the change event from search input
@@ -606,41 +595,45 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		/**
 		 * An option was selected
 		 */
-		_handleSelect(event)
+		handleMenuSelect(event)
 		{
 			// Need to keep the remote option - only if selected
 			if(event.detail.item.classList.contains("remote") && !this._selected_remote.find(o => o.value == event.detail.item.value))
 			{
 				this._selected_remote.push({...event.detail.item.option});
 			}
+			super.handleMenuSelect(event);
 
-			// If they just chose one from the list, re-focus the search
-			if(this.multiple && this.searchEnabled)
+			this.updateComplete.then(() =>
 			{
-				this._searchInputNode.focus();
-				this._searchInputNode.select();
-
-				// If we were overlapping, reset
-				if(this._activeControls.classList.contains("novalue"))
+				// If they just chose one from the list, re-focus the search
+				if(this.multiple && this.searchEnabled)
 				{
-					this.handleMenuShow();
-				}
+					this._searchInputNode.focus();
+					this._searchInputNode.select();
 
-				// Scroll the new tag into view
-				if(event.detail && event.detail.item)
-				{
-					this.updateComplete.then(() =>
+					// If we were overlapping, reset
+					if(this._activeControls.classList.contains("novalue"))
 					{
-						this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']")?.scrollIntoView();
-					});
+						this.handleMenuShow();
+					}
+
+					// Scroll the new tag into view
+					if(event.detail && event.detail.item)
+					{
+						this.updateComplete.then(() =>
+						{
+							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']")?.scrollIntoView();
+						});
+					}
 				}
-			}
-			else if(!this.multiple && this.searchEnabled)
-			{
-				// Stop all the search stuff when they select an option
-				// this shows all non-matching options again
-				this._handleSearchAbort(event);
-			}
+				else if(!this.multiple && this.searchEnabled)
+				{
+					// Stop all the search stuff when they select an option
+					// this shows all non-matching options again
+					this._handleSearchAbort(event);
+				}
+			});
 		}
 
 		/**
@@ -675,7 +668,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement)
 			{
 				await this.dropdown.hide();
-				event.relatedTarget.focus();
+				if(event.relatedTarget)
+				{
+					event.relatedTarget.focus();
+				}
 			}
 		}
 
@@ -764,6 +760,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			spinner.slot = "suffix";
 			this.appendChild(spinner);
 
+			// Hide clear button
+			let clear_button = <HTMLElement>this._searchInputNode.shadowRoot.querySelector(".input__clear")
+			if(clear_button)
+			{
+				clear_button.style.display = "none";
+			}
+
 			// Start the searches
 			Promise.all([
 				this.localSearch(this._searchInputNode.value, this.searchOptions),
@@ -771,6 +774,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			]).then(() =>
 			{
 				spinner.remove();
+				// Restore clear button
+				if(clear_button)
+				{
+					clear_button.style.display = "";
+				}
 			});
 		}
 
@@ -791,6 +799,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return ":not([value='" + current.value + "'])";
 			}, "");
 			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
+			target.childNodes.forEach((n) =>
+			{
+				if(n.nodeType == Node.COMMENT_NODE)
+				{
+					n.remove();
+				}
+			})
 
 			// Reset remaining options.  It might be faster to re-create instead.
 			this._menuItems.forEach((item) =>
@@ -899,10 +914,32 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					return null;
 				});
 
-				render(html`${repeat(<SelectOption[]>entries, (option : SelectOption) => option.value, this._optionTemplate.bind(this))}`,
-					target
-				);
-				this.handleMenuSlotChange();
+				let options = html`${entries.map(this._optionTemplate.bind(this))}`;
+
+				/**
+				 * Doing all this garbage to get the options to always show up.
+				 * If we just do `render(options, target)`, they only show up in the DOM the first time.  If the
+				 * same option comes back in a subsequent search, it map() does not put it into the DOM.
+				 * If we render into a new target, the options get rendered, but we have to wait for them to be
+				 * rendered before we can do anything else with them.
+				 */
+
+				let temp_target = document.createElement("div");
+
+				render(options, temp_target);
+				return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
+					.then(() =>
+					{
+						temp_target.querySelectorAll(":scope > *").forEach((item) =>
+						{
+							// Avoid duplicate error
+							if(!target.querySelector("[value='" + item.value + "']"))
+							{
+								target.appendChild(item);
+							}
+						})
+						this.handleMenuSlotChange();
+					});
 			}
 		}
 
@@ -962,11 +999,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this.value = text;
 			}
 
-			// Once added to options, add to value / tags
-			this.updateComplete.then(() =>
-			{
-				this.handleMenuSlotChange();
-			});
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
 			{
