@@ -499,7 +499,7 @@ class setup
 
 		if($GLOBALS['DEBUG'])
 		{
-			echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', tables: ' . implode(', ',$setup_info[$appname]['tables']) . '<br>';
+			echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', tables: ' . implode(', ',(array)$setup_info[$appname]['tables']) . '<br>';
 			// _debug_array($setup_info[$appname]);
 		}
 
