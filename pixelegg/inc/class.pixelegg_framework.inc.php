@@ -120,7 +120,25 @@ class pixelegg_framework extends Api\Framework\Ajax
 				background-image: url($header);
 			}
 		";
+		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'];
+		if (!empty($textsize) && $textsize != '12')
+		{
 
+			$ret['app_css'] .= "
+			/*
+			sharing
+			*/
+			body,
+			#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header h1,
+			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1,
+			 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h2,
+			 table.egwGridView_grid,
+			 .selectedTreeRow,
+			 .standartTreeRow{
+				font-size: {$textsize}px;
+			}
+		";
+		}
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
 		{
 			if (!Api\Header\UserAgent::mobile())

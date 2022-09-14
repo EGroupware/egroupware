@@ -357,14 +357,14 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader .calendar_calDayColHeader > div[data-date] {
   display: none;
 }
-#calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader > span.et2_label {
+#calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader > et2-description {
   position: absolute;
   top: 2em;
 }
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer {
   height: calc(1.5em + 32px);
 }
-#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > et2-description {
   white-space: nowrap;
   display: block;
   position: static;

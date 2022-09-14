@@ -40,10 +40,10 @@ $colors = array(
 );
 
 $textsize = array (
-	's' => lang('small'),
-	'm' => lang('medium'),
-	'l' => lang('large'),
-	'xl' => lang('x-large')
+	'10' => lang('small'),
+	'12' => lang('standard'),
+	'14' => lang('large'),
+	'16' => lang('x-large')
 );
 
 asort($colors);
@@ -146,7 +146,7 @@ $GLOBALS['settings'] = array(
 		'help' => lang('It sets content size (text only) according to selected size.'),
 		'xmlrpc' => True,
 		'values' => $textsize,
-		'default' => 'm',
+		'default' => '12',
 		'admin'  => False,
 	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)

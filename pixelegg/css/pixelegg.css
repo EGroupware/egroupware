@@ -4358,7 +4358,6 @@ span.overlayContainer img.overlay {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a {
   color: #000000;
   text-decoration: none;
-  font-size: 12px;
   padding-left: 26px;
   line-height: 1.9em;
   display: inline-block;
@@ -5084,7 +5083,6 @@ span.overlayContainer img.overlay {
   position: relative;
   min-height: 18px;
   background-color: #FFFFFF;
-  overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

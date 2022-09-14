@@ -39,11 +39,11 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-  	  --sl-font-size-medium: 12px;
+  	  --sl-font-size-medium: ${egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
   		
       --sl-input-height-small: 24px;
       --sl-input-height-medium: 32px;
-      
+      --sl-button-font-size-medium: ${egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
       --sl-spacing-small: 0.1rem;
       --sl-spacing-medium: 0.5rem;
       
