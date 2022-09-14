@@ -646,7 +646,7 @@ html	common	sk	HTML
 html link to the current record	common	sk	HTML odkaz na aktuálny záznam
 hungary	common	sk	MAĎARSKO
 iceland	common	sk	ISLAND
-id	common	sk	Id
+id	common	sk	ID
 iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nenašiel. Kliknutím na OK sa presuniete na stránku, odkiaľ ho môžete stiahnuť.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sk	Ak je položka vypnutá, zobrazuje sa prázdna bunka tabuľky
 if the clock is enabled would you like it to update it every second or every minute?	common	sk	Ak sú hodiny zapnuté, chcete aby sa aktualizovali každú sekundu, alebo stačí každú minútu?
@@ -670,6 +670,7 @@ indexoptions	common	sk	Nastavenia Indexu
 india	common	sk	INDIA
 indonesia	common	sk	INDONÉZIA
 infolog types to sync	common	sk	Typy Záznamníka pre synchronizáciu
+initial	common	sk	Počiatočné
 input required	common	sk	Vyžaduje sa vstup
 insert a column before	common	sk	Vložiť stĺpec pred
 insert a column behind	common	sk	Vložiť stĺpec za
@@ -1214,6 +1215,7 @@ show page generation time on the bottom of the page?	common	sk	Ukázať čas gen
 show page generation time?	common	sk	Ukázať čas generovania stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá EGroupware a x-desktopu.
 show values	common	sk	Zobraziť hodnoty
+show/hide	common	sk	Zobraziť/skryť bočný panel
 show_more_apps	common	sk	ukázať viacero aplikácií
 showing	common	sk	Zobrazujem
 showing %1	common	sk	zobrazujem %1
@@ -1475,5 +1477,3 @@ your settings have been updated	common	sk	Vaše nastavenia boli upravené
 zambia	common	sk	ZAMBIA
 zimbabwe	common	sk	ZIMBABWE
 zoom	common	sk	Lupa
-initial	common	sk	Počiatočné
-id	common	sk	ID

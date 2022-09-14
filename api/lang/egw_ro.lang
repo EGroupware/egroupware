@@ -1,3 +1,4 @@
 cancel	common	ro	Renunţă
 charset	common	ro	utf-8
 ok	common	ro	Acceptă
+show/hide	common	ro	afișați / ascundeți bara laterală

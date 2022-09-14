@@ -257,6 +257,12 @@ select the type of conversion	addressbook	sv	Välj konverteringstyp
 select the type of conversion:	addressbook	sv	Välj konverteringstyp
 select where you want to store / retrieve contacts	admin	sv	Välj var du vill spara / hämta kontakter
 selected contacts	addressbook	sv	Valda kontakter
+share into addressbook	addressbook	sv	Dela i adressboken
+share writable	addressbook	sv	Dela skrivbart
+shared	addressbook	sv	delad
+shared by me	addressbook	sv	Delad av mig
+shared into addressbook %1	addressbook	sv	delad i adressboken %1
+shared with	addressbook	sv	Delat med
 show	addressbook	sv	Visa
 show infolog entries for this organisation	addressbook	sv	Visa organisationens InfoLogg poster
 show the contacts of this organisation	addressbook	sv	Visa organisationens kontakter

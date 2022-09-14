@@ -1,9 +1,24 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	lv	%1(%2 jauns) Ziņojumi uzrakstīti aplikācijai %3 un valodām %4'
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
+%1 etemplates deleted	common	lv	%1 eVeidnes izdzēstas
+%1 etemplates for application '%2' dumped to '%3'	common	lv	%1 eVeidnes %2' aplikācijai izmestas %3'
+%1 etemplates found	common	lv	atrasti %1 eVeidnes
 %1 is not executable by the webserver !!!	common	lv	%1 : Šo webserveris nevar palaist !!!
+%1 matches on search criteria	common	lv	meklēšanas kritērijiem atbilst %1 ieraksti
+%1 new etemplates imported for application '%2'	common	lv	%2 Aplikācijai inmportētas %1 jauni eVeidnes
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1EGroupware%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
+%s disabled	common	lv	%s nav atļauts
+%s needed	common	lv	%s vajadzīgs
+%s notranslation	common	lv	%s Nav tulkojuma
+%s onchange	common	lv	%s Mainās
+%s readonly	common	lv	%s tikai lasāms
+'%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!!!
+'%1' is not a valid floatingpoint number !!!	common	lv	%1' nav derīgs peldošā komata skaitlis!!!
+'%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis
 00 (disable)	admin	lv	00 (disable)
 13 (ntp)	admin	lv	3 (ntp)
 80 (http)	admin	lv	80 (http)
+a pattern to be searched for	common	lv	meklējamais paraugs
 about	common	lv	Par
 about %1	common	lv	Par %1
 access	common	lv	Piekļuve
@@ -18,26 +33,41 @@ actions	common	lv	Darbības
 active	common	lv	Aktīvs
 add	common	lv	Pievienot
 add %1 category for	common	lv	Pievienot %1 kategoriju priekš
+add a new column (after the existing ones)	common	lv	Pievienot jaunu kolonnu (aiz eksistējošām)
+add a new entry of the selected application	common	lv	Pievienot atzīmetas aplikacijas jaunu ierakstu
+add a new multi-column index	common	lv	Pievienot jaunu daudzkolonnu priekšmetu rādītāju
 add category	common	lv	Pievienot kategoriju
+add column	common	lv	Pievienot kolonnu
+add index	common	lv	Pievienot indeksu
+add new	common	lv	Pievienot jaunu
 add sub	common	lv	Pievienot apakškategoriju
+add table	common	lv	PIevienot tabulu
 addressbook	common	lv	Adrešu grāmata
 admin	common	lv	Administrators
 administration	common	lv	Administrēšana
+advanced search	common	lv	Uzlabota meklēšana
 afghanistan	common	lv	AFGANISTĀNA
 albania	common	lv	ALBĀNIJA
 algeria	common	lv	ALŽĪRIJA
+align	common	lv	Centrēt
+alignment of label and input-field in table-cell	common	lv	iezīmes un ievades lauka novietojums tabulas kolonnā
+alignment of the v/hbox containing table-cell	common	lv	V/Hbox satura novietojums tabulas kolonnā
 all	common	lv	Visi
 all fields	common	lv	visi lauki
-alphabet	common	lv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	lv	Visi lietotāji
 alternate style-sheet:	common	lv	Alternatīvs stila-izklājums:
+am	common	lv	noo rīta
 american samoa	common	lv	AMERIKĀŅU SAMOA
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	lv	indeksēta kolonna paātrina pieprasījumu (izrēķina vietu diskā!!!)
 and	common	lv	Un
 andorra	common	lv	ANDORA
 angola	common	lv	ANGOLA
 anguilla	common	lv	ANGILJA
 antarctica	common	lv	ANTARKTĪDA
 antigua and barbuda	common	lv	ANTIGVA UN BARBUDA
-application	common	lv	Aplikācija
+application	common	lv	Programmatūra
+application name needed to write a langfile or dump the etemplates !!!	common	lv	Programmatūras nosaukumam vajag uzrakstīt <i>langfile</i> vai izmest eVeidnes!!!
+applications	common	lv	Aplikācijas
 apply	common	lv	Aktualizēt
 april	common	lv	Aprīlis
 are you sure you want to delete these entries ?	common	lv	Vai esi drošs, ka vēlies dzēst šos ierakstus ?
@@ -45,6 +75,8 @@ are you sure you want to delete this entry ?	common	lv	Vai esi drošs, ka vēlie
 argentina	common	lv	ARGENTĪNA
 armenia	common	lv	ARMĒNIJA
 aruba	common	lv	ARUBA
+attach	common	lv	Pievienot
+attach file	common	lv	pievienot datni
 august	common	lv	Augusts
 australia	common	lv	AUSTRĀLIJA
 austria	common	lv	AUSTRIJA
@@ -69,8 +101,10 @@ benin	common	lv	BENINA
 bermuda	common	lv	BERMUDU SALAS
 bhutan	common	lv	BUTĀNA
 blocked, too many attempts	common	lv	Bloķēts, pārāk daudz neveiksmīgu mēģinājumu.
+blurtext	common	lv	neskaidrs teksts
 bolivia	common	lv	BOLĪVIJA
 border	common	lv	Robeža
+border-line-thickness for the table-tag	common	lv	tabulas taga robežlīnijas biezums
 bosnia and herzegovina	common	lv	BOSNIJA UN HERCOGOVINA
 botswana	common	lv	BOTSVĀNA
 bottom	common	lv	augšā
@@ -84,8 +118,9 @@ burundi	common	lv	BURUNDI
 calendar	common	lv	Kalendārs
 cambodia	common	lv	KAMBODŽA
 cameroon	common	lv	KAMERŪNA
+can not have special sql-value null	common	lv	nevar būt speciāls SQL- vērtība NULL
 canada	common	lv	KANĀDA
-cancel	common	lv	Atcelt
+cancel	common	lv	Arcelt
 cannot replace %1 because it is a directory	common	lv	Nevar aizvietot %1 jo tā ir mape
 cape verde	common	lv	KABOVERDE
 categories	common	lv	Kategorijas
@@ -95,49 +130,90 @@ category %1 has been added !	common	lv	Kategorija %1 tika pievienota !
 category %1 has been updated !	common	lv	Kategorija %1 tika mainīta !
 cayman islands	common	lv	KAIMANU SALAS
 cc	common	lv	Cc
+cellpadding for the table-tag	common	lv	Kolonnas paplašināšana tabulas tagam
+cells	common	lv	Kolonnas
+cellspacing for the table-tag	common	lv	Kolonnas atstarpe tabulas tagam
+center	common	lv	Centrs
 central african republic	common	lv	CENTRĀLĀFRIKAS REPUBLIKA
 chad	common	lv	ČADA
 change	common	lv	Mainīt
+changed	common	lv	Mainīts
 charset	common	lv	utf-8
+check all	common	lv	Parbaudīt visu
+check if content should only be displayed but not altered (the content is not send back then!)	common	lv	atzīmē, ja ierakstu vajag tikai parādīt nevis mainīt (saturs atpakaļ netiek sūtīts!)
+check if field has to be filled by user	common	lv	atzīmē, ja lauks jāaizpilda lietotājam
 check installation	common	lv	Pārbaudīt installāciju
 check now	common	lv	Pārbaudīt tūlīt
+checkbox	common	lv	izvēles rūtiņa <i>Checkbox</i>
 chile	common	lv	ČĪLE
 china	common	lv	ĶĪNA
 choose the category	common	lv	Izvēlies kategoriju
 choose the parent category	common	lv	Izvēlies tēva kategoriju
 christmas island	common	lv	ZIEMASSVĒTKU SALA
+class	common	lv	Klase
 clear	common	lv	Nodzēst
 clear form	common	lv	Nodzēst formu
 click	common	lv	Klikšķini
+click here to attach the file	common	lv	uzklišķini šeit, ja vēlies pievienot datni
+click here to create the link	common	lv	uzklikšķini šeit, lai izveidotu saiti
+click here to start the search	common	lv	Uzklikšķini šeit, lai sāktu meklēšanu
+click here to upload the file	common	lv	Uzklikšķini šeit, lai atjauninātu datni
 click or mouse over to show menus	common	lv	Klikšķināt vai uzbraukt ar peli virsū, lai  redzētu izvēles
 click or mouse over to show menus?	common	lv	Klikšķināt vai uzbraukt ar peli virsū, lai  redzētu izvēles?
+click to order after that criteria	common	lv	uzklikšķini, lai sakārtotu pēc tā kritērija
 close	common	lv	Aizvērt
 cocos (keeling) islands	common	lv	KOKOSU (KĪLINGA) SALAS
 colombia	common	lv	KOLUMBIJA
+columnname	common	lv	Kolonnas nosaukums
+comment	common	lv	Komentārs
 comoros	common	lv	KOMORU SALAS
 company	common	lv	Organizācija
+confirm	common	lv	Apstiprināt
 congo	common	lv	KONGO
 congo, the democratic republic of the	common	lv	KONGO DEMOKRĀTISKĀ REPUBLIKA
+contact	common	lv	Kontakts
+contains	common	lv	satur
 cook islands	common	lv	KUKA SALAS
 copy	common	lv	Kopēt
 costa rica	common	lv	KOSTARIKA
 cote d ivoire	common	lv	KOTDIVUĀRA
 create	common	lv	Izveidot
+create a new table for the application	common	lv	Izveidot jaunu tabulu aplikācijai
 created by	common	lv	Pateicoties
+creates an english ('en') langfile from label and helptexts (for application in name)	common	lv	izveido angļu ('en')<i>langfile</i> no iezīmes un palīgtekstiem
 croatia	common	lv	HORVĀTIJA
+css class for the table-tag	common	lv	CSS klase tabulas tagam
+css-styles	common	lv	CSS veidi
 cuba	common	lv	KUBA
 currency	common	lv	Valūta
 current	common	lv	Pašreizējais
 current users	common	lv	Pašreizējie lietotāji
+custom	common	lv	Mainīt
+custom fields	common	lv	Mainīti lauki
 cyprus	common	lv	KIPRA
 czech republic	common	lv	ČEHIJAS REPUBLIKA
 date	common	lv	Datums
 date due	common	lv	Datums paredzēts
+date+time	common	lv	Datums+Laiks
+day	common	lv	Diena
+days	common	lv	dienas
+db ensures that every row has a unique value in that column	common	lv	DB pārliecinās, ka katrā kolonnas rindiņā ir unikāla vērtība
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	lv	DB īpašas indeksa opcijas (atdalītas ar komatu),piem., mysql(FULLTEXT)vai mysql(100)kolonnas indeksētajam garumam
+db-tools	common	lv	DB rīki
 december	common	lv	Decembris
+default	common	lv	Noklusējums
 default category	common	lv	Noklusētā Kategorija
 delete	common	lv	Dzēst
+delete a single entry by passing the id.	common	lv	Dzēst atsevišķu ierakstu apejot id
+delete all selected etemplates, without further inquiry	common	lv	izdzēst visas atzīmētās eVeidnes bez atkārtotas jautāšanas
 delete category	common	lv	Izdzēst kategoriju
+delete column	common	lv	Izdzēst kolonnu
+delete index	common	lv	Izdzēst indeksu
 delete this entry	common	lv	dzēst šo ierakstu
+delete this etemplate	common	lv	izdzēst šo eVeidni
+delete whole column (can not be undone!!!)	common	lv	izdzēst visu kolonnu (nevar būt neizdarīts!!!)
+deletes this column	common	lv	Idzēš šo kolonnu
+deletes this index	common	lv	Izdzēs šo indeksu
 denmark	common	lv	DĀNIJA
 description	common	lv	Izklāsts
 detail	common	lv	Detaļa
@@ -145,10 +221,15 @@ details	common	lv	Detaļas
 directory	common	lv	Direktorija
 disable internet explorer png-image-bugfix	common	lv	Izslēgt Internet Explorer png-image-bugfix
 disabled	common	lv	Izslēgts
+discard changes	common	lv	atcelt izmaiņas
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	lv	parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds)
+displayed in statusline of browser if input-field gets focus	common	lv	attēlots pārlūka statusjoslā, ja ievades lauks tiek nofokusēts
 djibouti	common	lv	DŽIBUTIJA
 do you also want to delete all subcategories ?	common	lv	Vai vēlies dzēst arī visas apakškategorijas?
+do you want to save the changes you made in table %s?	common	lv	Vai vēlies saglabāt izmaiņas, ko veici %s tabulā?
 document properties	common	lv	Dokumenta rekvizīti
 document title:	common	lv	Dokumenta virsraksts:
+documentation	common	lv	Dokumentācija
 domain	common	lv	Domeins
 domain name for mail-address, eg. "%1"	common	lv	domeina vārs e-pasta adresēm, piem. "%1"
 domestic	common	lv	Kopmītne
@@ -156,6 +237,10 @@ dominica	common	lv	DOMINIKA
 dominican republic	common	lv	DOMINIKĀNA
 done	common	lv	Gatavs
 download	common	lv	Lejupielādēt
+drop a table - this can not be undone	common	lv	Pabeigt tabulu- tas nevar būt neizdarīts
+drop table	common	lv	Pabeigt tabulu
+dump4setup	common	lv	izmest iestatīšanai
+duration	common	lv	Izpildes laiks
 e-mail	common	lv	E-pasts
 east timor	common	lv	AUSTRUMTIMORA
 ecuador	common	lv	EKVADORA
@@ -163,16 +248,29 @@ edit	common	lv	Rediģēt
 edit %1 category for	common	lv	Rediģēt %1 kategoriju par
 edit categories	common	lv	Rediģēt Kategorijas
 edit category	common	lv	Rediģēt kategoriju
+editable templates - db-tools	common	lv	Rediģējamas veidnes -DB rīki
+editable templates - delete template	common	lv	Rediģējamas veidnes- Izdzdēst veidni
+editable templates - editor	common	lv	Rediģējamas veidnes- Redaktors
+editable templates - search	common	lv	Rediģējamas veidnes- Meklēt
+editable templates - show template	common	lv	rediģējamas veidnes- Rādīt veidni
 egroupware: login blocked for user '%1', ip %2	common	lv	EGroupware: bloķēts lietotājvārds '%1', IP %2
 egypt	common	lv	ĒĢIPTE
 el salvador	common	lv	SALVADORA
 email	common	lv	E-Pasts
 email-address of the user, eg. "%1"	common	lv	lietotāja e-pasta adrese, piemēram, "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	lv	iegultie CSS stili, piem.'.red { background: red; }' (atzīmē '.' pirms klases nosaukuma) or '@import url(...)' (klases nosaukums ir vispārējs visai lapai!)
+enable javascript onchange submit	common	lv	aktivizē JavaScript uz Izmaiņu apstiprināšanas
 enabled	common	lv	Aktivizēts
 end date	common	lv	Beigu datums
 end time	common	lv	Beigu laiks
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter '' for an empty default, nothing mean no default	common	lv	ievadi " tukšam noklusējumam, tukšums nozīmē, ka nav noklusējuma
+enter a search pattern	common	lv	Ievadi meklēšanas paraugu
+enter filename to upload and attach, use [browse...] to search for it	common	lv	Ievadi datnes nosaukumu, ko ielādēt un pievienot, lieto [Browse...] lai to sameklētu
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
+enter the new version number here (> old_version), empty for no update-file	common	lv	ievadi jaunās versijas numuru šeit (>vecā versija), atstāj tukšu, lai neielādētu datni
+enter the new version number here (has to be > old_version)	common	lv	ievadi jaunās versijas numuru šeit(jābūt>vecā_versija)
 entry has been deleted sucessfully	common	lv	Ieraksts tika veiksmīgi izdzēsts
+entry saved	common	lv	Ieraksts saglabāts
 entry updated sucessfully	common	lv	Ieraksts veiksmīgi tika atjaunināts
 equatorial guinea	common	lv	EKVATORIĀLĀ GVINEJA
 eritrea	common	lv	ERITREJA
@@ -180,24 +278,46 @@ error	common	lv	Kļūda
 error creating %1 %2 directory	common	lv	Kļūda veidojot %1 %2 direktoriju
 error deleting %1 %2 directory	common	lv	Kļūda dzēšot %1 %2 direktoriju
 error renaming %1 %2 directory	common	lv	Kļūda pārsaucot %1 %2 direktoriju
+error: template not found !!!	common	lv	Kļūda: Veidne nav atrasta!!!
+error: webserver is not allowed to write into '%1' !!!	common	lv	Kļūda: vebserverim nav atļaut ierakstīt "%1"!!!
+error: writing file (no write-permission for the webserver) !!!	common	lv	Kļuda rakstot failu (vebserverim nav rakstīšanas atļaujas)!!!
 estonia	common	lv	IGAUNIJA
+etemplate	common	lv	eVeidne
+etemplate '%1' imported, use save to put it in the database	common	lv	eVeidne "%1" importēta, lieto "Saglabāt", lai saglabātu to datubāzē
+etemplate '%1' written to '%2'	common	lv	eVeidne"%1" paarrakstīta "%2"
+etemplate editor	common	lv	eVeidnes redaktors
+etemplate tutorial	common	lv	eVeidnes pamācība
 ethiopia	common	lv	ETIOPIJA
 exact	common	lv	tieši
+exchange this row with the one above	common	lv	samainīt šo rindu ar iepriekšējo
+exchange this two columns	common	lv	apmainīt šīs divas kolonnas
+export the loaded etemplate into a xml-file	common	lv	pārsūtīt ielādēto eVeidni xml datnē
+export xml	common	lv	Pārsūtīt XML
+extensions loaded:	common	lv	Ielādētie paplašinājumi:
 failed to change password.	common	lv	Neizdevād nomainīt paroli.
 falkland islands (malvinas)	common	lv	FOLKLENDA (MELVINU)SALAS
 faroe islands	common	lv	FARĒRU(FĒRU) SALAS
 fax number	common	lv	faksa nummurs
 february	common	lv	Februāris
+field must not be empty !!!	common	lv	Lauks nedīkst būt tukšs
 fields	common	lv	Lauki
 fiji	common	lv	FIDŽI
+file	common	lv	Datne
+file contains more than one etemplate, last one is shown !!!	common	lv	Datnē ir vairāk kā viena eVeidne, tiek parādīta pēdējā!!!
+file writen	common	lv	Datne uzrakstīta
 files	common	lv	Faili
+fileupload	common	lv	Datne augšupiel'
 filter	common	lv	Filtrs
 finland	common	lv	SOMIJA
+first	common	lv	Pirmā
 first name	common	lv	Vārds
 first name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1"
 first page	common	lv	Pirmā lapa
 firstname	common	lv	Vārds
 fixme!	common	lv	SALABOMANI!
+floating point	common	lv	Peldošais punkts
+foreign key	common	lv	Ārējā atslēga
+formatted text (html)	common	lv	Noformatēts teksts(HTML)
 france	common	lv	FRANCIJA
 french guiana	common	lv	FRANČU GVIĀNA
 french polynesia	common	lv	FRANČU POLINĒZIJA
@@ -213,6 +333,10 @@ germany	common	lv	Vācija
 ghana	common	lv	GANA
 gibraltar	common	lv	GIBRALTĀRS
 global	common	lv	Globāls
+go to the first entry	common	lv	iet uz pirmo ierakstu
+go to the last entry	common	lv	Iet uz pēdējo ierakstu
+go to the next page of entries	common	lv	iet uz ierakstu nākamo lapu
+go to the previous page of entries	common	lv	iet uz ierakstu iepriekšējo lapu
 grant access	common	lv	Atļaut Piekļuvi
 greece	common	lv	GRIEĶIJA
 greenland	common	lv	GRENLANDE
@@ -232,24 +356,49 @@ guatemala	common	lv	GVATEMALA
 guinea	common	lv	GVINEJA
 guinea-bissau	common	lv	GVINEJA-BISAVA
 guyana	common	lv	GAJANA
+h	common	lv	h
 haiti	common	lv	HAITI
+hbox	common	lv	HBox
 heard island and mcdonald islands	common	lv	HĒRDA UN MAKDONALDA SALAS
 height	common	lv	Augstums
-help	common	lv	Palīdzība
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	lv	rindas augstums(% vai pikseļos), neatļaut rindiņu:[!=not]<value>[=<check>]piem., '!@data'neatļauj rindiņu, ja ieraksts ir tukšs
+height of the table in % or pixels for the table-tag and (optional) div	common	lv	Tabulas augstums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījumam
+height, disabled	common	lv	Augstums,nav atļauts
+help	common	lv	Palīgs
 high	common	lv	Augsta
 highest	common	lv	Augstākā
 holy see (vatican city state)	common	lv	VATIKĀNS
 home	common	lv	Mājas
 home email	common	lv	e-pasts mājās
+home screen	common	lv	Galvenais logs
 honduras	common	lv	HONDURASA
 hong kong	common	lv	HONKONGA
+horizontal rule	common	lv	Horizontālā kārtula
+hour	common	lv	Stundas
+hours	common	lv	stundas
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	lv	Cik daudz ikonas tiek rādītas rīku joslā (lapas augšpusē). Citas ikonas atrodas izvēlnē, kuru var atvērt uzspiežot uz ikonas, kas atrodas rīku joslas labajā malā.
+html	common	lv	HTML
 hungary	common	lv	UNGĀRIJA
 iceland	common	lv	ISLANDE
+id	common	lv	ID
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	lv	ja lauks nav atļauts,īslaicīgai lauka/kolonnas pārcelšanai tiek parādītas tabulas tukšās kolonnas.
+image	common	lv	Attēls
 image url	common	lv	Attēla URL
+import	common	lv	Importēt
+import an etemplate from a xml-file	common	lv	importēt eveidni no xml datnes
+import table-definitions from existing db-table	common	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
+import xml	common	lv	Importēt XML
+index/name of returned content (name of the template, link / method for image)	common	lv	atgrieztā satura(veidnes nosaukums,saite/attēla veids) indekss/nosaukums
+indexed	common	lv	Indeksēts
+indexoptions	common	lv	Indeksa opcijas
 india	common	lv	INDIJA
 indonesia	common	lv	INDONĒZIJA
 insert all %1 addresses of the %2 contacts in %3	common	lv	Ievietot visas %1adreses no %2 kontaktiem %3
+insert new column behind this one	common	lv	ievieto jaunu kolonnu aiz šīs
+insert new column in front of all	common	lv	pirms visām kolonnām ievieto jaunu kolonnu
+insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindiņu
+insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
+integer	common	lv	Vesels skaitlis
 international	common	lv	Internacionāls
 invalid filename	common	lv	Nederīgs lauka nosaukums
 invalid ip address	common	lv	Nederīga IP adrese
@@ -275,14 +424,19 @@ justify left	common	lv	Kreisā izlīdzināšana
 justify right	common	lv	Labējā izlīdzināšana
 kazakstan	common	lv	KAZAHSTANA
 kenya	common	lv	KENIJA
+key	common	lv	Atslēga
 keywords	common	lv	Atslēgvārdi
 kiribati	common	lv	KIRIBATI
 korea, democratic peoples republic of	common	lv	KOREJAS TAUTAS DEMOKRĀTISKĀ REPUBLIKA
 korea, republic of	common	lv	KOREJEAS REPUBLIKA
 kuwait	common	lv	KUVEITA
 kyrgyzstan	common	lv	KIRGĪZIJA
+label	common	lv	Iezīme
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	lv	Iezīme:[bold][italic] Teksts:[len][,max] Skaitļi:[min][,[max][,len]] Teksta lauks:[rows][,cols] Radiopogas.:value <i>H.Rule</i>:[width] Veidnes:[IndexInContent] Atzīmē:[multiselect] Datums:[values: eg. 'Y-m-d']
+lang	common	lv	Valoda
 language	common	lv	Valoda
 lao peoples democratic republic	common	lv	LAOSAS TAUTAS DEMOKRĀTISKĀ REPUBLIKA
+last	common	lv	Pēdējais
 last modified	common	lv	Pēdējo reizi pārveidots
 last name	common	lv	Uzvārds
 last name of the user, eg. "%1"	common	lv	lietotāja uzvārds, piemēram, "%1"
@@ -296,10 +450,15 @@ liberia	common	lv	LIBĒRIJA
 libyan arab jamahiriya	common	lv	LĪBIJAS SOCIĀLISTISKĀ ARĀBU TAUTAS DŽAMAHĪRIJA
 license	common	lv	Licence
 liechtenstein	common	lv	LIHTENŠTEINA
+link	common	lv	Saite
+linklist	common	lv	Saistīt sarakstu
+linkstring	common	lv	Saistīt virkni
+linkto	common	lv	Saistīt ar
 list	common	lv	Saraksts
 list members	common	lv	Saraksta dalībnieki
 lithuania	common	lv	LIETUVA
 load	common	lv	Ielādēt
+load this template into the editor	common	lv	ielādēt šo veidni redaktorā
 local	common	lv	Vietējais
 login	common	lv	Pieteikties
 loginid	common	lv	Pieteikuma ID
@@ -314,7 +473,6 @@ macedonia, the former yugoslav republic of	common	lv	MAĶEDONIJA
 madagascar	common	lv	MADAGASKARA
 mail domain, eg. "%1"	common	lv	pasta domēns, piemēram, "%1
 main category	common	lv	Galvenā kategorija
-home screen	common	lv	Galvenais logs
 maintainer	common	lv	Uzturētājs
 malawi	common	lv	MALĀVIJA
 malaysia	common	lv	MALAIZIJA
@@ -335,15 +493,22 @@ message	common	lv	Ziņa
 mexico	common	lv	MEKSIKA
 micronesia, federated states of	common	lv	MIKRONĒZIJAS FEDERATĪVĀS VALSTIS
 minute	common	lv	Minūte
+minutes	common	lv	minūtes
 moldova, republic of	common	lv	MOLDOVAS REPUBLIKA
 monaco	common	lv	MONAKO
 monday	common	lv	Pirmdiena
 mongolia	common	lv	MONGOLIJA
+month	common	lv	Mēnesis
 montserrat	common	lv	MONTSERRATA
+more	common	lv	Vēl
 morocco	common	lv	MAROKA
 mozambique	common	lv	MOZAMBIKA
+multicolumn indices	common	lv	Daudzkolonnu indeksi
 myanmar	common	lv	MJANMA
 name	common	lv	Vārds
+name of other table where column is a key from	common	lv	citas kolonnas, no kurienes ir atslēga, nosaukums
+name of table to add	common	lv	Tabulas , kur pievienot, nosaukums
+name of the etemplate, should be in form application.function[.subtemplate]	common	lv	eVeidnes nosaukumam jābūt application.function formā [.apakšveidne]
 name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1
 namibia	common	lv	NAMĪBIJA
 nauru	common	lv	NAURU
@@ -351,11 +516,15 @@ nepal	common	lv	NEPĀLA
 netherlands	common	lv	NĪDERLANDE
 netherlands antilles	common	lv	NĪDERLANEDES ANTIĻAS
 never	common	lv	Nekad
+new	common	lv	Jauna
 new caledonia	common	lv	JAUNKALEDONIJA
 new entry added sucessfully	common	lv	Jaunais ieraksts tika veiksmīgi pievienots
 new main category	common	lv	Jauna galvenā kategorija
+new search	common	lv	Jauna meklēšana
+new table created	common	lv	Izveidota jauna tabula
 new value	common	lv	Jauna Vērtība
 new zealand	common	lv	JAUNZĒLANDE
+newer version '%1' exists !!!	common	lv	eksistē "%1"jaunāka versija!!!
 next	common	lv	Nākošais
 next page	common	lv	Nākošā lapa
 nicaragua	common	lv	NIKARAGVA
@@ -365,7 +534,10 @@ niue	common	lv	NIUE
 no	common	lv	Nē
 no - cancel	common	lv	Nē- Atcelt
 no entries found, try again ...	common	lv	neviens ieraksts netika atrasts, mēģiniet vēlreiz ...
+no file	common	lv	nav datnes
+no filename given or selected via browse...	common	lv	Meklēt...nav dots vai atzīmēts datnes nosaukums
 no history for this record	common	lv	nav pieejama šī ieraksta vēsture
+no matches found	common	lv	Nav atbilstošu ierakstu
 no subject	common	lv	Nav Tēmas
 none	common	lv	Neviens
 norfolk island	common	lv	NORFOLKAS SALA
@@ -375,27 +547,37 @@ norway	common	lv	NORVĒĢIJA
 not	common	lv	ne
 not a user yet? register now	common	lv	Vēl neesi lietotājs? Reģistrēties tagad
 not assigned	common	lv	nav piešķirts
+not null	common	lv	NOT NULL
 note	common	lv	Piezīme
 notes	common	lv	Piezimes
+nothing found - try again !!!	common	lv	Nekas netika atrasts- mēģini vēlreiz!!!
+nothing matched search criteria !!!	common	lv	Nav atzīmēti meklēšanas kritēriji!!!
 notify window	common	lv	Informācijas Logs
 notify your administrator to correct this situation	common	lv	Paziņo to savam administratoram, lai labotu šo situāciju
 november	common	lv	Novembris
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	lv	rindu/kolonnu skaits V/HBox, šūnu paplašināšana, atstarpes starp šūnām
 october	common	lv	Oktobris
+of	common	lv	no
 ok	common	lv	OK
 old value	common	lv	Iepriekšejā Vērtība
 oman	common	lv	OMĀNA
 on *nix systems please type: %1	common	lv	*nix sistēmās lūdzu rakstīt: %1
 on mouse over	common	lv	Kad uzbrauc ar peli
+only an other version found !!!	common	lv	atrasta tikai cita versija !!!
 only private	common	lv	tikai privātos
 only yours	common	lv	tikai Jūsu
 open	common	lv	atvērt
 open notify window	common	lv	Atvērt informācijas logu
 open popup window	common	lv	Atvērt papildus logu
+optional note about the link	common	lv	atzīme par saiti pēc izvēles
+options	common	lv	Opcijas
 or	common	lv	vai
 original	common	lv	Orģināls
 other	common	lv	Citi
+overflow	common	lv	Pārpilde
 overview	common	lv	Pārskats
 owner	common	lv	Īpašnieks
+padding	common	lv	Papildināšana
 page	common	lv	Lapa
 page was generated in %1 seconds	common	lv	Lapa tika ģenerēta %1 sekundes
 pakistan	common	lv	PAKISTĀNA
@@ -418,10 +600,12 @@ phone number	common	lv	telefona nummurs
 pitcairn	common	lv	PITKERNA
 please %1 by hand	common	lv	Lūdzu, %1 ar roku
 please enter a name	common	lv	Lūdzu, ieraksti savu vārdu !
+please enter table-name first !!!	common	lv	VIspirms norādiet tabulas nosaukumu, lūdzu !!!
 please select	common	lv	Lūdzu izvēlies
 please set your global preferences	common	lv	Lūdzu ierakstiet galvenos datus par sevi !
 please set your preferences for this application	common	lv	Lūdzu uzstādi savas izvēles šai programmatūrai
 please wait...	common	lv	Lūdzu uzgaidi...
+pm	common	lv	pēcpusdienā
 poland	common	lv	POLIJA
 popup with search	common	lv	Uzsākt ar meklēšanu
 portugal	common	lv	PORTUGĀLE
@@ -429,6 +613,8 @@ postal	common	lv	Pasta
 preferences	common	lv	Iestādījumi
 previous page	common	lv	Iepriekšējā lapa
 primary group	common	lv	galvenā grupa
+primary key	common	lv	Primārā atslēga
+primary key for the table, gets automaticaly indexed	common	lv	Tabulas primārā atslēga tiek indeksēta automātiski
 primary style-sheet:	common	lv	Primārā stilu lapa:
 print	common	lv	Drukāt
 priority	common	lv	Prioritāte
@@ -437,16 +623,27 @@ project	common	lv	Projekts
 public	common	lv	publisks
 puerto rico	common	lv	PUERTORIKO
 qatar	common	lv	KATARA
+radiobutton	common	lv	Radiopogas
 read	common	lv	Lasīt
+read a list of entries.	common	lv	Las
+read a single entry by passing the id and fieldlist.	common	lv	Lasīt atsevišķu ierakstu apejot id un lauku sarakstu
+read etemplate from database (for the keys above)	common	lv	lasīt eVeidni no datubāzes (ar iepriekšminētajām atslēgām)
 read this list of methods.	common	lv	Izlasiet šo metožu sarakstu.
 reading	common	lv	lasīšana
+readonly	common	lv	tikai lasāms
+refresh	common	lv	Atsvaidzināt
 reject	common	lv	Noraidīt
+remove row (can not be undone!!!)	common	lv	izdzēst rindiņu (nevar but nepabeigts!!!)
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
+remove this link (not the entry itself)	common	lv	Izdzēst šo saiti (ne pašu ierakstu)
 rename	common	lv	Pārsaukt
+required	common	lv	Pieprasīts
+reset	common	lv	Atiestate
 resources	common	lv	resursi
 restore failed	common	lv	Atjaunošana neizdevās
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	lv	Atgriež pilnu sistēmas lietotāju kontu sarakstu. Uzmanību: saraksts var būt samērā liels
 returns an array of todo items	common	lv	Atgriež darāmo lietu sarakstu
+returns savely, without deleting	common	lv	atgriežas saglabājot , BEZ dzēšanas
 returns struct of users application access	common	lv	Atgriež lietotāju darbināto aplikāciju struktūru
 reunion	common	lv	REINJONA
 right	common	lv	Pa labi
@@ -464,21 +661,51 @@ sao tome and principe	common	lv	SANTOME UN PRINSIPI
 saturday	common	lv	Sestdiena
 saudi arabia	common	lv	SAŪDA ARĀBIJA
 save	common	lv	Saglabāt
+save all	common	lv	Saglabāt visus
+save the etemplate under the above keys (name, ...), change them for a saveas	common	lv	saglabā eVeidni ar minētajām atslēgām (vārds,...)Save As lai nomainītu
+saves changes to tables_current.inc.php	common	lv	saglabā izmaiņas tables_current.inc.php
+scale	common	lv	Skala
+scale for float	common	lv	slīdēšanas skala
 search	common	lv	Meklēt
 search %1 '%2'	common	lv	Meklēt %1 '%2'
 search accounts	common	lv	Meklēt kontus
 search or select accounts	common	lv	Meklēt vai izvēlēties kontus
 section	common	lv	Nodaļa
 select	common	lv	Iezīmēt
+select a category	common	lv	Atzīmē kategoriju
+select a primary contact, to show in the list	common	lv	Atzīmē primāro kontaktu, ko rādīt sarakstā
+select access	common	lv	Atzīmē pieeju
+select account	common	lv	Atzīmē kontu
 select all	common	lv	Iezīmēt visus
 select all %1 %2 for %3	common	lv	Iezīmēt visus %1 %2 priekš %3
-select category	common	lv	Izvēlēties Kategoriju
+select an app first !!!	common	lv	Vispirms atzīmē aplikāciju!!!
+select an app to search in	common	lv	Atzīmē, kurā aplikācijā meklēt
+select an application	common	lv	atzīmē aolikāciju
+select an application, (*) = uninstalled	common	lv	Atzīmē programmatūru, (*)=atinstalēts
+select an entry to link with	common	lv	Atzīmē ierakstu, ar kuru saistīt
+select an table of the application	common	lv	Atzīmē aplikāciju tabulu
+select application	common	lv	Atzīmē programmatūtu
+select category	common	lv	Atzīmē kategoriju
+select country	common	lv	Atzīmē valsto
 select date	common	lv	Izvēlēties datumu
+select day	common	lv	Atzīmē dienu
 select group	common	lv	Izvēlēties grupu
 select home email address	common	lv	Izvēlēties mājas e-pasta adresi
+select if content of field should not be translated (label gets always translated)	common	lv	atzīmē, ja lauka saturs nav jātuko (iezīmes vienmēr tiek tulkotas)
+select month	common	lv	Atzīmē mēnesi
+select number	common	lv	Atzīmē skaiti
 select one	common	lv	Izvēlies vienu no
+select one ...	common	lv	Atzīmē vienu...
+select percentage	common	lv	Atzīmē procentus
+select priority	common	lv	Atzīmē prioritāti
+select state	common	lv	Atzīmē štatu
+select the indexed columns in their desired order	common	lv	Atzīmē indeksētas kolonnas izvēlētajā secībā
+select this etemplate to delete it	common	lv	atzīmē šo eVeidni, lai to izdzēstu
 select user	common	lv	Izvēlies personu
+select which values to show	common	lv	atzīmē, kuras vērtības rādīt
 select work email address	common	lv	Izvēlies e-pasta adresi darbā
+select year	common	lv	Atzīmē gadu
+selectbox	common	lv	<i>Selectbox</i>
 selection	common	lv	Izvēle
 send	common	lv	Sūtīt
 senegal	common	lv	SENEGĀLA
@@ -486,17 +713,25 @@ september	common	lv	Septembris
 server %1 has been added	common	lv	Serveris %1 tika pievienots
 server name	common	lv	Servera vārds
 session has been killed	common	lv	Sesija tika nogalināta ;-)
+sets today as date	common	lv	šodienu uzstāda kā datumu
 setup	common	lv	Iestatīšana
 setup main menu	common	lv	Iestatīšanas galvenā izvēlne
 seychelles	common	lv	SEIŠELU SALAS
+show	common	lv	Rādīt
+show (no save)	common	lv	Rādīt (bez saglabāšanas)
 show all	common	lv	rādīt visus
 show all categorys	common	lv	Rādīt visas kategorijas
 show menu	common	lv	rādīt izvēlni
 show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
 show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē?
+show values	common	lv	Rādīt vērtības
+show/hide	common	lv	parādīt/noslēpt sānu joslu
 show_more_apps	common	lv	rādīt_vairāk_aplikācijas
+showing	common	lv	rādīšana
 showing %1	common	lv	rādu %1
 showing %1 - %2 of %3	common	lv	rādu %1 - %2 no %3
+shows / allows you to enter values into the etemplate for testing	common	lv	parāda/ ļauj ievadīt vērtības eVeidnē testēšanai
+shows/displays etemplate for testing, does not save it before	common	lv	parāda/ attēlo eVeidni testēšanai, pirms tam nesaglabājot
 sierra leone	common	lv	SJERRALEONE
 singapore	common	lv	SINGAPŪRA
 site configuration	common	lv	Lapas konfigurācija
@@ -508,14 +743,19 @@ somalia	common	lv	SOMĀLIJA
 sorry, your login has expired	login	lv	Atvainojiet, Jūsu lietotājvārda lietošnas laiks ir beidzies
 south africa	common	lv	DIENVIDĀFRIKA
 south georgia and the south sandwich islands	common	lv	DIENVIDDŽORDŽIJA UN DIENVIDSENDVIČU SALAS
+spacing	common	lv	Atstarpe
 spain	common	lv	SPĀNIJA
 sri lanka	common	lv	ŠRILANKA
+stack	common	lv	Steks
+start a new search, cancel this link	common	lv	sākt jaunu meklēšanu, atcelt šo saiti
 start date	common	lv	Sākuma datums
+start new search for the above pattern	common	lv	sākt jaunu meklēšanu norādītajiem kritērijiem
 start time	common	lv	Sākuma laiks
 start with	common	lv	sākt ar
 status	common	lv	Stāvoklis
 subject	common	lv	Temats
 submit	common	lv	Saglabāt
+submitbutton	common	lv	Piekrišanas poga
 substitutions and their meanings:	common	lv	Substitūcijas un to nozīmes
 sudan	common	lv	SUDĀNA
 sunday	common	lv	Svētdiena
@@ -525,14 +765,22 @@ swaziland	common	lv	SVAZILENDA
 sweden	common	lv	ZVIEDRIJA
 switzerland	common	lv	ŠVEICE
 syrian arab republic	common	lv	SĪRIJAS ARĀBU REPUBLIKA
+table unchanged, no write necessary !!!	common	lv	Neizmainīta tabula nav nepieciešams rakstīt!!!
+tablename	common	lv	Tabulas nosaukums
 taiwan	common	lv	TAIVANA/TAIPEJA
 tajikistan	common	lv	TADŽIKISTĀNA
 tanzania, united republic of	common	lv	TANZĀNIJA
+template	common	lv	Veidne
+template deleted	common	lv	Veidne izdzēsta
+template saved	common	lv	Veidne saglabāta
+text	common	lv	Teksts
 text color:	common	lv	Texta krāsa:
+textarea	common	lv	Teksta lauks
 thailand	common	lv	TAIZEME
 the following applications require upgrades	common	lv	Sekojoša programmatūra pieprasa jauninajumus
 the mail server returned	common	lv	Pasta serveris atgrieza
 this name has been used already	common	lv	Šis vārds jau ir aizņemts  !
+this text gets displayed if the input-field is empty and has no focus (blur)	common	lv	šis teksts tiek attēlots, ja ievades lauks nav fokusēt(izplūdis)
 thursday	common	lv	Ceturtdiena
 time	common	lv	Laiks
 time zone	common	lv	Laika zona
@@ -541,7 +789,10 @@ title	common	lv	Nosaukums
 to	common	lv	Kam
 to correct this error for the future you will need to properly set the	common	lv	Lai izlabotu šo kļudu, Jums ir nepieciešms pareizi uzstādit
 to go back to the msg list, click <a href= %1 >here</a>	common	lv	Lai atgrieztos pie msg saraksta, klikšķini <a href="%1">šeit</a>
-today	common	lv	Šodien
+to start the db-tools	common	lv	sākt DB rīkus
+to start the etemplate editor	common	lv	sākt eVeidnes redaktoru
+to start the search	common	lv	sākt meklēšanu
+today	common	lv	šodien
 todays date, eg. "%1"	common	lv	šodienas datums, piemēram, "%1"
 togo	common	lv	TOGO
 tokelau	common	lv	TOKELAU
@@ -557,14 +808,20 @@ turkmenistan	common	lv	TURKMENISTĀNA
 turks and caicos islands	common	lv	TĒRKSAS UN KAIKOSAS SALAS
 tuvalu	common	lv	TUVALU
 type	common	lv	Tips
+type of the column	common	lv	kolonnas tips
+type of the field (select label if field should be empty)	common	lv	lauka tips(atzīmē iezīmi, ja laukam jābūt tukšam)
 uganda	common	lv	UGANDA
 ukraine	common	lv	UKRAINA
+unique	common	lv	Unikāls
 united arab emirates	common	lv	APVIENOTIE ARĀBU EMIRĀTI
 united kingdom	common	lv	APVIENOTĀ KARALISTE
 united states	common	lv	ASV
 united states minor outlying islands	common	lv	ASV MAZĀS AIZJŪRAS TERITORIJAS
 unknown	common	lv	Nezināms
+unlink	common	lv	Noņemt saiti
 update	common	lv	Atjaunināt
+update a single entry by passing the fields.	common	lv	Atjaunini vienu ierakstu apejot laukus
+update from version '%s' to	common	lv	Atjaunināt no versijas "%s"uz
 upload	common	lv	Ielādēt
 url	common	lv	URL
 uruguay	common	lv	URUGVAJA
@@ -580,11 +837,15 @@ users	common	lv	lietotāji
 users choice	common	lv	Lietotāja Izvēle
 uzbekistan	common	lv	UZBEKIJA
 value	common	lv	Vērtība
+value has to be at least '%1' !!!	common	lv	Vērtībai jābūt vismaz "%1"!!!
+value has to be at maximum '%1' !!!	common	lv	Vērtībai jābūt ne lielākai par "%1"!!!
 vanuatu	common	lv	VANUATU
+vbox	common	lv	VBox
 venezuela	common	lv	VENECUĒLA
 version	common	lv	Versija
 viet nam	common	lv	VJETNAMA
 view	common	lv	Rādīt
+view this linked entry in its application	common	lv	rādīt šo saistīto ierakstu tā aplikācijā
 virgin islands, british	common	lv	VIRDŽĪNU SALAS, BRITU
 virgin islands, u.s.	common	lv	VIRDŽĪNU SALAS
 wallis and futuna	common	lv	VOLISA SALAS UN FUTUNA
@@ -593,9 +854,18 @@ welcome	common	lv	Laipni Lūdzam
 western sahara	common	lv	RIETUMSAHĀRA
 which groups	common	lv	Kuras grubas
 width	common	lv	Platums
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	lv	kolonnas platums(% vai pikseļos), neatļauj kolonnu:! = not]<value>[=<check>]piem.,'!@data' neatļauj kolonnu, ja ieraksts ir tukšs
+width of the table in % or pixels for the table-tag and (optional) div	common	lv	Tabulas platums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījums
+width, disabled	common	lv	Platums,neatļauts
 work email	common	lv	darba e-pasts
+write <app>/setup/tables_current.inc.php	common	lv	Raksti <app>/setup/tables_current.inc.php
+write langfile	common	lv	Ieraksti <i>Langfile</i>
+write tables	common	lv	Ieraksti tabulas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	lv	programmatūras iestatīšanas direktorijā raksta 'etemplates.inc.php'
 writing	common	lv	raksta
 written by:	common	lv	Autors:
+xml-file to import	common	lv	xml datne importēšanai
+xslt template	common	lv	XSLT veidne
 year	common	lv	Gads
 yemen	common	lv	JEMENA
 yes	common	lv	Jā
@@ -617,300 +887,3 @@ your search returned 1 match	common	lv	atradu 1 ierakstu
 your settings have been updated	common	lv	Iestādījumi tika saglabāti
 zambia	common	lv	ZAMBIJA
 zimbabwe	common	lv	ZIMBABVE
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	lv	%1(%2 jauns) Ziņojumi uzrakstīti aplikācijai %3 un valodām %4'
-%1 etemplates deleted	common	lv	%1 eVeidnes izdzēstas
-%1 etemplates for application '%2' dumped to '%3'	common	lv	%1 eVeidnes %2' aplikācijai izmestas %3'
-%1 etemplates found	common	lv	atrasti %1 eVeidnes
-%1 matches on search criteria	common	lv	meklēšanas kritērijiem atbilst %1 ieraksti
-%1 new etemplates imported for application '%2'	common	lv	%2 Aplikācijai inmportētas %1 jauni eVeidnes
-%s disabled	common	lv	%s nav atļauts
-%s needed	common	lv	%s vajadzīgs
-%s notranslation	common	lv	%s Nav tulkojuma
-%s onchange	common	lv	%s Mainās
-%s readonly	common	lv	%s tikai lasāms
-'%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!!!
-'%1' is not a valid floatingpoint number !!!	common	lv	%1' nav derīgs peldošā komata skaitlis!!!
-'%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis
-a pattern to be searched for	common	lv	meklējamais paraugs
-add a new column (after the existing ones)	common	lv	Pievienot jaunu kolonnu (aiz eksistējošām)
-add a new entry of the selected application	common	lv	Pievienot atzīmetas aplikacijas jaunu ierakstu
-add a new multi-column index	common	lv	Pievienot jaunu daudzkolonnu priekšmetu rādītāju
-add column	common	lv	Pievienot kolonnu
-add index	common	lv	Pievienot indeksu
-add new	common	lv	Pievienot jaunu
-add table	common	lv	PIevienot tabulu
-advanced search	common	lv	Uzlabota meklēšana
-align	common	lv	Centrēt
-alignment of label and input-field in table-cell	common	lv	iezīmes un ievades lauka novietojums tabulas kolonnā
-alignment of the v/hbox containing table-cell	common	lv	V/Hbox satura novietojums tabulas kolonnā
-all users	common	lv	Visi lietotāji
-am	common	lv	noo rīta
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	lv	indeksēta kolonna paātrina pieprasījumu (izrēķina vietu diskā!!!)
-and	common	lv	Un
-application	common	lv	Programmatūra
-application name needed to write a langfile or dump the etemplates !!!	common	lv	Programmatūras nosaukumam vajag uzrakstīt <i>langfile</i> vai izmest eVeidnes!!!
-applications	common	lv	Aplikācijas
-attach	common	lv	Pievienot
-attach file	common	lv	pievienot datni
-blurtext	common	lv	neskaidrs teksts
-border	common	lv	Robeža
-border-line-thickness for the table-tag	common	lv	tabulas taga robežlīnijas biezums
-bottom	common	lv	augšā
-can not have special sql-value null	common	lv	nevar būt speciāls SQL- vērtība NULL
-cancel	common	lv	Arcelt
-category	common	lv	Kategorija
-cellpadding for the table-tag	common	lv	Kolonnas paplašināšana tabulas tagam
-cells	common	lv	Kolonnas
-cellspacing for the table-tag	common	lv	Kolonnas atstarpe tabulas tagam
-center	common	lv	Centrs
-changed	common	lv	Mainīts
-check all	common	lv	Parbaudīt visu
-check if content should only be displayed but not altered (the content is not send back then!)	common	lv	atzīmē, ja ierakstu vajag tikai parādīt nevis mainīt (saturs atpakaļ netiek sūtīts!)
-check if field has to be filled by user	common	lv	atzīmē, ja lauks jāaizpilda lietotājam
-checkbox	common	lv	izvēles rūtiņa <i>Checkbox</i>
-class	common	lv	Klase
-click here to attach the file	common	lv	uzklišķini šeit, ja vēlies pievienot datni
-click here to create the link	common	lv	uzklikšķini šeit, lai izveidotu saiti
-click here to start the search	common	lv	Uzklikšķini šeit, lai sāktu meklēšanu
-click here to upload the file	common	lv	Uzklikšķini šeit, lai atjauninātu datni
-click to order after that criteria	common	lv	uzklikšķini, lai sakārtotu pēc tā kritērija
-columnname	common	lv	Kolonnas nosaukums
-comment	common	lv	Komentārs
-confirm	common	lv	Apstiprināt
-contact	common	lv	Kontakts
-contains	common	lv	satur
-create a new table for the application	common	lv	Izveidot jaunu tabulu aplikācijai
-creates an english ('en') langfile from label and helptexts (for application in name)	common	lv	izveido angļu ('en')<i>langfile</i> no iezīmes un palīgtekstiem
-css class for the table-tag	common	lv	CSS klase tabulas tagam
-css-styles	common	lv	CSS veidi
-custom	common	lv	Mainīt
-custom fields	common	lv	Mainīti lauki
-date+time	common	lv	Datums+Laiks
-day	common	lv	Diena
-days	common	lv	dienas
-db ensures that every row has a unique value in that column	common	lv	DB pārliecinās, ka katrā kolonnas rindiņā ir unikāla vērtība
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	lv	DB īpašas indeksa opcijas (atdalītas ar komatu),piem., mysql(FULLTEXT)vai mysql(100)kolonnas indeksētajam garumam
-db-tools	common	lv	DB rīki
-default	common	lv	Noklusējums
-delete a single entry by passing the id.	common	lv	Dzēst atsevišķu ierakstu apejot id
-delete all selected etemplates, without further inquiry	common	lv	izdzēst visas atzīmētās eVeidnes bez atkārtotas jautāšanas
-delete column	common	lv	Izdzēst kolonnu
-delete index	common	lv	Izdzēst indeksu
-delete this etemplate	common	lv	izdzēst šo eVeidni
-delete whole column (can not be undone!!!)	common	lv	izdzēst visu kolonnu (nevar būt neizdarīts!!!)
-deletes this column	common	lv	Idzēš šo kolonnu
-deletes this index	common	lv	Izdzēs šo indeksu
-discard changes	common	lv	atcelt izmaiņas
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	lv	parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds)
-displayed in statusline of browser if input-field gets focus	common	lv	attēlots pārlūka statusjoslā, ja ievades lauks tiek nofokusēts
-do you want to save the changes you made in table %s?	common	lv	Vai vēlies saglabāt izmaiņas, ko veici %s tabulā?
-documentation	common	lv	Dokumentācija
-drop a table - this can not be undone	common	lv	Pabeigt tabulu- tas nevar būt neizdarīts
-drop table	common	lv	Pabeigt tabulu
-dump4setup	common	lv	izmest iestatīšanai
-duration	common	lv	Izpildes laiks
-edit	common	lv	Rediģēt
-editable templates - db-tools	common	lv	Rediģējamas veidnes -DB rīki
-editable templates - delete template	common	lv	Rediģējamas veidnes- Izdzdēst veidni
-editable templates - editor	common	lv	Rediģējamas veidnes- Redaktors
-editable templates - search	common	lv	Rediģējamas veidnes- Meklēt
-editable templates - show template	common	lv	rediģējamas veidnes- Rādīt veidni
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	lv	iegultie CSS stili, piem.'.red { background: red; }' (atzīmē '.' pirms klases nosaukuma) or '@import url(...)' (klases nosaukums ir vispārējs visai lapai!)
-enable javascript onchange submit	common	lv	aktivizē JavaScript uz Izmaiņu apstiprināšanas
-enter '' for an empty default, nothing mean no default	common	lv	ievadi " tukšam noklusējumam, tukšums nozīmē, ka nav noklusējuma
-enter a search pattern	common	lv	Ievadi meklēšanas paraugu
-enter filename to upload and attach, use [browse...] to search for it	common	lv	Ievadi datnes nosaukumu, ko ielādēt un pievienot, lieto [Browse...] lai to sameklētu
-enter the new version number here (> old_version), empty for no update-file	common	lv	ievadi jaunās versijas numuru šeit (>vecā versija), atstāj tukšu, lai neielādētu datni
-enter the new version number here (has to be > old_version)	common	lv	ievadi jaunās versijas numuru šeit(jābūt>vecā_versija)
-entry saved	common	lv	Ieraksts saglabāts
-error: template not found !!!	common	lv	Kļūda: Veidne nav atrasta!!!
-error: webserver is not allowed to write into '%1' !!!	common	lv	Kļūda: vebserverim nav atļaut ierakstīt "%1"!!!
-error: writing file (no write-permission for the webserver) !!!	common	lv	Kļuda rakstot failu (vebserverim nav rakstīšanas atļaujas)!!!
-etemplate	common	lv	eVeidne
-etemplate '%1' imported, use save to put it in the database	common	lv	eVeidne "%1" importēta, lieto "Saglabāt", lai saglabātu to datubāzē
-etemplate '%1' written to '%2'	common	lv	eVeidne"%1" paarrakstīta "%2"
-etemplate editor	common	lv	eVeidnes redaktors
-etemplate tutorial	common	lv	eVeidnes pamācība
-exchange this row with the one above	common	lv	samainīt šo rindu ar iepriekšējo
-exchange this two columns	common	lv	apmainīt šīs divas kolonnas
-export the loaded etemplate into a xml-file	common	lv	pārsūtīt ielādēto eVeidni xml datnē
-export xml	common	lv	Pārsūtīt XML
-extensions loaded:	common	lv	Ielādētie paplašinājumi:
-field must not be empty !!!	common	lv	Lauks nedīkst būt tukšs
-file	common	lv	Datne
-file contains more than one etemplate, last one is shown !!!	common	lv	Datnē ir vairāk kā viena eVeidne, tiek parādīta pēdējā!!!
-file writen	common	lv	Datne uzrakstīta
-fileupload	common	lv	Datne augšupiel'
-first	common	lv	Pirmā
-floating point	common	lv	Peldošais punkts
-foreign key	common	lv	Ārējā atslēga
-formatted text (html)	common	lv	Noformatēts teksts(HTML)
-go to the first entry	common	lv	iet uz pirmo ierakstu
-go to the last entry	common	lv	Iet uz pēdējo ierakstu
-go to the next page of entries	common	lv	iet uz ierakstu nākamo lapu
-go to the previous page of entries	common	lv	iet uz ierakstu iepriekšējo lapu
-h	common	lv	h
-hbox	common	lv	HBox
-height	common	lv	Augstums
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	lv	rindas augstums(% vai pikseļos), neatļaut rindiņu:[!=not]<value>[=<check>]piem., '!@data'neatļauj rindiņu, ja ieraksts ir tukšs
-height of the table in % or pixels for the table-tag and (optional) div	common	lv	Tabulas augstums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījumam
-height, disabled	common	lv	Augstums,nav atļauts
-help	common	lv	Palīgs
-horizontal rule	common	lv	Horizontālā kārtula
-hour	common	lv	Stundas
-hours	common	lv	stundas
-html	common	lv	HTML
-id	common	lv	ID
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	lv	ja lauks nav atļauts,īslaicīgai lauka/kolonnas pārcelšanai tiek parādītas tabulas tukšās kolonnas.
-image	common	lv	Attēls
-import	common	lv	Importēt
-import an etemplate from a xml-file	common	lv	importēt eveidni no xml datnes
-import table-definitions from existing db-table	common	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
-import xml	common	lv	Importēt XML
-index/name of returned content (name of the template, link / method for image)	common	lv	atgrieztā satura(veidnes nosaukums,saite/attēla veids) indekss/nosaukums
-indexed	common	lv	Indeksēts
-indexoptions	common	lv	Indeksa opcijas
-insert new column behind this one	common	lv	ievieto jaunu kolonnu aiz šīs
-insert new column in front of all	common	lv	pirms visām kolonnām ievieto jaunu kolonnu
-insert new row after this one	common	lv	pēc šīs rindiņas ievieto jaunu rindiņu
-insert new row in front of first line	common	lv	pierms pirmās līnijas ievieto jaunu rindiņu
-integer	common	lv	Vesels skaitlis
-key	common	lv	Atslēga
-label	common	lv	Iezīme
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	lv	Iezīme:[bold][italic] Teksts:[len][,max] Skaitļi:[min][,[max][,len]] Teksta lauks:[rows][,cols] Radiopogas.:value <i>H.Rule</i>:[width] Veidnes:[IndexInContent] Atzīmē:[multiselect] Datums:[values: eg. 'Y-m-d']
-lang	common	lv	Valoda
-last	common	lv	Pēdējais
-left	common	lv	Kreisais
-link	common	lv	Saite
-linklist	common	lv	Saistīt sarakstu
-linkstring	common	lv	Saistīt virkni
-linkto	common	lv	Saistīt ar
-load this template into the editor	common	lv	ielādēt šo veidni redaktorā
-minute	common	lv	Minūte
-minutes	common	lv	minūtes
-month	common	lv	Mēnesis
-more	common	lv	Vēl
-multicolumn indices	common	lv	Daudzkolonnu indeksi
-name	common	lv	Vārds
-name of other table where column is a key from	common	lv	citas kolonnas, no kurienes ir atslēga, nosaukums
-name of table to add	common	lv	Tabulas , kur pievienot, nosaukums
-name of the etemplate, should be in form application.function[.subtemplate]	common	lv	eVeidnes nosaukumam jābūt application.function formā [.apakšveidne]
-new	common	lv	Jauna
-new search	common	lv	Jauna meklēšana
-new table created	common	lv	Izveidota jauna tabula
-newer version '%1' exists !!!	common	lv	eksistē "%1"jaunāka versija!!!
-no file	common	lv	nav datnes
-no filename given or selected via browse...	common	lv	Meklēt...nav dots vai atzīmēts datnes nosaukums
-no matches found	common	lv	Nav atbilstošu ierakstu
-not null	common	lv	NOT NULL
-nothing found - try again !!!	common	lv	Nekas netika atrasts- mēģini vēlreiz!!!
-nothing matched search criteria !!!	common	lv	Nav atzīmēti meklēšanas kritēriji!!!
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	lv	rindu/kolonnu skaits V/HBox, šūnu paplašināšana, atstarpes starp šūnām
-of	common	lv	no
-only an other version found !!!	common	lv	atrasta tikai cita versija !!!
-optional note about the link	common	lv	atzīme par saiti pēc izvēles
-options	common	lv	Opcijas
-or	common	lv	vai
-overflow	common	lv	Pārpilde
-padding	common	lv	Papildināšana
-please enter table-name first !!!	common	lv	VIspirms norādiet tabulas nosaukumu, lūdzu !!!
-pm	common	lv	pēcpusdienā
-primary key	common	lv	Primārā atslēga
-primary key for the table, gets automaticaly indexed	common	lv	Tabulas primārā atslēga tiek indeksēta automātiski
-radiobutton	common	lv	Radiopogas
-read	common	lv	Lasīt
-read a list of entries.	common	lv	Las
-read a single entry by passing the id and fieldlist.	common	lv	Lasīt atsevišķu ierakstu apejot id un lauku sarakstu
-read etemplate from database (for the keys above)	common	lv	lasīt eVeidni no datubāzes (ar iepriekšminētajām atslēgām)
-readonly	common	lv	tikai lasāms
-refresh	common	lv	Atsvaidzināt
-remove row (can not be undone!!!)	common	lv	izdzēst rindiņu (nevar but nepabeigts!!!)
-remove this link (not the entry itself)	common	lv	Izdzēst šo saiti (ne pašu ierakstu)
-required	common	lv	Pieprasīts
-reset	common	lv	Atiestate
-returns savely, without deleting	common	lv	atgriežas saglabājot , BEZ dzēšanas
-right	common	lv	Pa labi
-save all	common	lv	Saglabāt visus
-save the etemplate under the above keys (name, ...), change them for a saveas	common	lv	saglabā eVeidni ar minētajām atslēgām (vārds,...)Save As lai nomainītu
-saves changes to tables_current.inc.php	common	lv	saglabā izmaiņas tables_current.inc.php
-scale	common	lv	Skala
-scale for float	common	lv	slīdēšanas skala
-search	common	lv	Meklēt
-select a category	common	lv	Atzīmē kategoriju
-select a primary contact, to show in the list	common	lv	Atzīmē primāro kontaktu, ko rādīt sarakstā
-select access	common	lv	Atzīmē pieeju
-select account	common	lv	Atzīmē kontu
-select an app first !!!	common	lv	Vispirms atzīmē aplikāciju!!!
-select an app to search in	common	lv	Atzīmē, kurā aplikācijā meklēt
-select an application	common	lv	atzīmē aolikāciju
-select an application, (*) = uninstalled	common	lv	Atzīmē programmatūru, (*)=atinstalēts
-select an entry to link with	common	lv	Atzīmē ierakstu, ar kuru saistīt
-select an table of the application	common	lv	Atzīmē aplikāciju tabulu
-select application	common	lv	Atzīmē programmatūtu
-select category	common	lv	Atzīmē kategoriju
-select country	common	lv	Atzīmē valsto
-select day	common	lv	Atzīmē dienu
-select if content of field should not be translated (label gets always translated)	common	lv	atzīmē, ja lauka saturs nav jātuko (iezīmes vienmēr tiek tulkotas)
-select month	common	lv	Atzīmē mēnesi
-select number	common	lv	Atzīmē skaiti
-select one ...	common	lv	Atzīmē vienu...
-select percentage	common	lv	Atzīmē procentus
-select priority	common	lv	Atzīmē prioritāti
-select state	common	lv	Atzīmē štatu
-select the indexed columns in their desired order	common	lv	Atzīmē indeksētas kolonnas izvēlētajā secībā
-select this etemplate to delete it	common	lv	atzīmē šo eVeidni, lai to izdzēstu
-select which values to show	common	lv	atzīmē, kuras vērtības rādīt
-select year	common	lv	Atzīmē gadu
-selectbox	common	lv	<i>Selectbox</i>
-sets today as date	common	lv	šodienu uzstāda kā datumu
-show	common	lv	Rādīt
-show (no save)	common	lv	Rādīt (bez saglabāšanas)
-show values	common	lv	Rādīt vērtības
-showing	common	lv	rādīšana
-shows / allows you to enter values into the etemplate for testing	common	lv	parāda/ ļauj ievadīt vērtības eVeidnē testēšanai
-shows/displays etemplate for testing, does not save it before	common	lv	parāda/ attēlo eVeidni testēšanai, pirms tam nesaglabājot
-spacing	common	lv	Atstarpe
-stack	common	lv	Steks
-start a new search, cancel this link	common	lv	sākt jaunu meklēšanu, atcelt šo saiti
-start new search for the above pattern	common	lv	sākt jaunu meklēšanu norādītajiem kritērijiem
-submitbutton	common	lv	Piekrišanas poga
-table unchanged, no write necessary !!!	common	lv	Neizmainīta tabula nav nepieciešams rakstīt!!!
-tablename	common	lv	Tabulas nosaukums
-template	common	lv	Veidne
-template deleted	common	lv	Veidne izdzēsta
-template saved	common	lv	Veidne saglabāta
-text	common	lv	Teksts
-textarea	common	lv	Teksta lauks
-this text gets displayed if the input-field is empty and has no focus (blur)	common	lv	šis teksts tiek attēlots, ja ievades lauks nav fokusēt(izplūdis)
-time	common	lv	Laiks
-to start the db-tools	common	lv	sākt DB rīkus
-to start the etemplate editor	common	lv	sākt eVeidnes redaktoru
-to start the search	common	lv	sākt meklēšanu
-today	common	lv	šodien
-top	common	lv	augšā
-type	common	lv	Tips
-type of the column	common	lv	kolonnas tips
-type of the field (select label if field should be empty)	common	lv	lauka tips(atzīmē iezīmi, ja laukam jābūt tukšam)
-unique	common	lv	Unikāls
-unlink	common	lv	Noņemt saiti
-update a single entry by passing the fields.	common	lv	Atjaunini vienu ierakstu apejot laukus
-update from version '%s' to	common	lv	Atjaunināt no versijas "%s"uz
-upload	common	lv	Ielādēt
-value	common	lv	Vērtība
-value has to be at least '%1' !!!	common	lv	Vērtībai jābūt vismaz "%1"!!!
-value has to be at maximum '%1' !!!	common	lv	Vērtībai jābūt ne lielākai par "%1"!!!
-vbox	common	lv	VBox
-version	common	lv	Versija
-view this linked entry in its application	common	lv	rādīt šo saistīto ierakstu tā aplikācijā
-width	common	lv	Platums
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	lv	kolonnas platums(% vai pikseļos), neatļauj kolonnu:! = not]<value>[=<check>]piem.,'!@data' neatļauj kolonnu, ja ieraksts ir tukšs
-width of the table in % or pixels for the table-tag and (optional) div	common	lv	Tabulas platums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījums
-width, disabled	common	lv	Platums,neatļauts
-write <app>/setup/tables_current.inc.php	common	lv	Raksti <app>/setup/tables_current.inc.php
-write langfile	common	lv	Ieraksti <i>Langfile</i>
-write tables	common	lv	Ieraksti tabulas
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	lv	programmatūras iestatīšanas direktorijā raksta 'etemplates.inc.php'
-xml-file to import	common	lv	xml datne importēšanai
-xslt template	common	lv	XSLT veidne
-year	common	lv	Gads
-id	common	lv	ID

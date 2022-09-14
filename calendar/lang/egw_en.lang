@@ -143,7 +143,7 @@ days	calendar	en	Days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
 days repeated	calendar	en	Days repeated
 dayview	calendar	en	Day view
-default alarm added for yourself or all participants	calendar	en	Default alarm added for yourself or all participants
+default alarm added for yourself or all participants	calendar	en	The alarm is automatically inserted for new appointments.<br>For yourself or for all participants.
 default alarm for	calendar	en	Default alarm for
 default alarm for regular events	calendar	en	Default alarm for regular events
 default alarm for whole-day events	calendar	en	Default alarm for whole-day events

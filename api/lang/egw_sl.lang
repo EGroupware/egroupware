@@ -623,6 +623,7 @@ hold [%1] key to select text eg. to copy it	common	sl	Držite tipko [%1], da izb
 holy see (vatican city state)	common	sl	SVETI SEDEŽ (MESTNA DRŽAVA VATIKAN)
 home	common	sl	Domov
 home email	common	sl	Domači E-naslov
+home screen	common	sl	Glavni zaslon
 honduras	common	sl	HONDURAS
 hong kong	common	sl	HONG KONG
 horizontal rule	common	sl	Vodoravno ravnilo
@@ -638,7 +639,7 @@ html	common	sl	HTML
 html link to the current record	common	sl	Povezava HTML s trenutnim zapisom
 hungary	common	sl	MADŽARSKA
 iceland	common	sl	ISLANDIJA
-id	common	sl	Šifra
+id	common	sl	ID
 iespell not detected. click ok to go to download page.	common	sl	ieSpell ni bil zaznan. Kliknite V redu za obisk spletne strani za prenos.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sl	Če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
 if the clock is enabled would you like it to update it every second or every minute?	common	sl	Če je ura omogočena, bi jo radi posodobili vsako sekundo ali vsako minutu?
@@ -661,6 +662,7 @@ indexoptions	common	sl	Nastavitve kazala
 india	common	sl	INDIJA
 indonesia	common	sl	INDONEZIJA
 infolog types to sync	common	sl	Tip InfoLog za sinhronizacijo
+initial	common	sl	Začetno
 input required	common	sl	Potreben je vnos
 insert a column before	common	sl	Vstavi stolpec spredaj
 insert a column behind	common	sl	Vstavi stolpec zadaj
@@ -783,7 +785,6 @@ mail domain, eg. "%1"	common	sl	E-poštna domena, npr. "%1"
 mailvelope addon installation failed! please try again.	common	sl	Namestitev dodatka Mailvelope neuspešna! Poskusi še enkrat.
 mailvelope addon installation succeded. now you may configure the options.	common	sl	Namestitev dodatka Mailvelope je uspela. Zdaj lahko konfigurirate možnosti.
 main category	common	sl	Glavna kategorija
-home screen	common	sl	Glavni zaslon
 maintainer	common	sl	Vzdrževalec
 malawi	common	sl	MALAVI
 malaysia	common	sl	MALEZIJA
@@ -1211,6 +1212,7 @@ show page generation time on the bottom of the page?	common	sl	Pokažem čas gen
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani?
 show the logo's of egroupware and x-desktop on the desktop.	common	sl	Prikaži logotipa EGroupware in x-desktop na namizju.
 show values	common	sl	Prikaži vrednosti
+show/hide	common	sl	prikaži/skrij stransko vrstico
 show_more_apps	common	sl	Prikaži več aplikacij
 showing	common	sl	Prikazovanje
 showing %1	common	sl	Prikazanih %1
@@ -1475,5 +1477,3 @@ your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABVE
 zoom	common	sl	Zoom
-initial	common	sl	Začetno
-id	common	sl	ID

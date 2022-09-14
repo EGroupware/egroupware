@@ -1184,7 +1184,7 @@ scale	common	de	Scale
 scale for float	common	de	Nachkommastellen für Gleitkommawerte
 scheduling inbox	common	de	Posteingang Terminplanung
 scheduling outbox	common	de	Postausgang Terminplanung
-search	common	de	Suchen
+search	common	de	Suche
 search %1 '%2'	common	de	Suche %1 '%2'
 search accounts	common	de	Benutzer suchen
 search for '%1'	common	de	Suche nach '%1'
@@ -1304,6 +1304,7 @@ show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
 show password	common	de	Zeige Passwort
 show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf dem Desktop.
 show values	common	de	Werte anzeigen
+show/hide	common	de	anzeigen/ausblenden Seitenleiste
 show_more_apps	common	de	Mehr Applikationen anzeigen
 showing	common	de	zeigt
 showing %1	common	de	%1 Einträge

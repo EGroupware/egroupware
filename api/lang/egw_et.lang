@@ -21,6 +21,7 @@ account is expired	common	et	Konto on aegunud
 accounts	common	et	Kontod
 action	common	et	Tegevus
 actions	common	et	Tegevused
+actions...	common	et	Tegevused...
 active	common	et	Aktiivne
 add	common	et	Lisa
 add %1 category for	common	et	Lisa %1 kategooria
@@ -31,12 +32,13 @@ add sub	common	et	Lisa alam
 addressbook	common	et	Aadressiraamat
 admin	common	et	Admin
 administration	common	et	Administreerimine
+advanced search	common	et	Laiendatud Otsing
 afghanistan	common	et	AFGANISTAN
 albania	common	et	ALBAANIA
 algeria	common	et	ALŽEERIA
 all	common	et	Kõik
 all fields	common	et	kõik väljad
-alphabet	common	et	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	et	Kõik kasutajad
 alternate style-sheet:	common	et	Alternatiivne stiilileht:
 american samoa	common	et	AMEERIKA SAMOA
 and	common	et	Ja
@@ -46,6 +48,7 @@ anguilla	common	et	ANGUILLA
 antarctica	common	et	ANTARKTIKA
 antigua and barbuda	common	et	ANTIGUA JA BARBUDA
 application	common	et	Rakendus
+applications	common	et	Rakendused
 apply	common	et	Uuenda
 april	common	et	Aprill
 are you sure you want to delete these entries ?	common	et	Oled kindel, et soovid neid kirjeid kustutada ?
@@ -53,6 +56,7 @@ are you sure you want to delete this entry ?	common	et	Oled kindel, et soovid se
 argentina	common	et	ARGENTIINA
 armenia	common	et	ARMEENIA
 aruba	common	et	ARUBA
+attach file	common	et	Kaasa fail
 august	common	et	August
 australia	common	et	AUSTRAALIA
 austria	common	et	AUSTRIA
@@ -108,6 +112,7 @@ central african republic	common	et	KESK-AAFRIKA VABARIIK
 chad	common	et	TŠAAD
 change	common	et	Muuda
 charset	common	et	utf-8
+check all	common	et	Kontrolli kõik
 check installation	common	et	Kontrolli installeeritust
 check now	common	et	Kontrolli Nüüd
 chile	common	et	TŠIILI
@@ -123,14 +128,20 @@ christmas island	common	et	Jõulusaar
 clear	common	et	Puhasta
 clear form	common	et	Puhasta vorm
 click	common	et	Vajuta
+click here to create the link	common	et	vajuta siia tegemaks Link
+click here to start the search	common	et	vajuta siia alustamaks otsingut
 close	common	et	Sule
 colombia	common	et	KOLUMBIA
+comment	common	et	Kommentaar
 common preferences	common	et	Üldised eelistused
 comoros	common	et	KOMOORID
 company	common	et	Firma
+confirm	common	et	kinnita
 congo	common	et	Kongo
 congo, the democratic republic of the	common	et	KONGO DEMOKRAATLIK VABARIIK
+contact	common	et	Kontakt
 contacting server...	common	et	Ühendan Serveriga...
+contains	common	et	sisaldab
 cook islands	common	et	COOKI SAARED
 copy	common	et	Kopeeri
 costa rica	common	et	KOSTARIIKA
@@ -143,27 +154,41 @@ cuba	common	et	KUUBA
 currency	common	et	Valuuta
 current	common	et	Käesolev
 current users	common	et	Aktiivseid kasutajaid
+cut	common	et	Lõika
 cyprus	common	et	KÜPROS
 czech republic	common	et	TŠEHHOSLOVAKKIA
 date	common	et	Kuupäev
 date due	common	et	Tähtaeg
+date+time	common	et	Kuupäev+Aeg
+day	common	et	Päev
+days	common	et	päeva
 december	common	et	Detsember
+default	common	et	Vaikimisi
 default category	common	et	Vaikimisi Kategooria
 default height for the windows	common	et	Vaikimisi akna kõrgus
 default width for the windows	common	et	Vaikimisi akna laius
 delete	common	et	Kustuta
 delete category	common	et	Kustuta kategooria
 delete row	common	et	Kustuta rida
+delete this column	common	et	kustuta see tulp
 delete this entry	common	et	kustuta see kirje
+delete this file	common	et	Kustuta see fail
+delete this row	common	et	Kustuta see rida
+delete whole column (can not be undone!!!)	common	et	kustuta terve tulp (EI SAA tagasi võtta!!!)
+deletes this column	common	et	Kustutab selle tulba
 denmark	common	et	TAANI
 description	common	et	Kirjeldus
 detail	common	et	Detail
 details	common	et	Detailselt
 direction left to right	common	et	Suund vasakult paremale
 disabled	common	et	Väljalülitatud
+discard changes	common	et	unusta muudatused
 do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid ?
+do you want to save the changes you made in table %s?	common	et	Kas soovid salvestada muudatused mida tegid tabelis %s?
 document properties	common	et	Dokumendi omadused
 document title:	common	et	Dokumendi pealkiri:
+documentation	common	et	Dokumentatsioon
+doesn't matter	common	et	pole tähtis
 domain	common	et	Doomeninimi
 domain name for mail-address, eg. "%1"	common	et	doomeninimi mail-aadressijaoks, nagu "%1"
 domestic	common	et	Kodumaine
@@ -171,6 +196,7 @@ dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
 done	common	et	Valmis
 download	common	et	Lae alla
+duration	common	et	Kestvus
 e-mail	common	et	E-Mail
 east timor	common	et	IDA TIMOR
 ecuador	common	et	ECUADOR
@@ -178,6 +204,7 @@ edit	common	et	Muuda
 edit %1 category for	common	et	Muuda %1 kategooriat
 edit categories	common	et	Muuda Kategooriaid
 edit category	common	et	Muuda katekooria
+edit...	common	et	Muuda ...
 egroupware	common	et	EGroupware
 egroupware api version	common	et	EGroupware API versioon
 egroupware: login blocked for user '%1', ip %2	common	et	EGroupware: logimine blokeeritud kasutajale '%1', IP %2
@@ -189,6 +216,7 @@ enabled	common	et	Lubatud
 end date	common	et	Lõpu kuupäev
 end time	common	et	Lõpu aeg
 entry has been deleted sucessfully	common	et	Kirje kustutatud täielikult
+entry saved	common	et	Kirje salvestatud
 entry updated sucessfully	common	et	Kirje uuendatud täielikult
 equatorial guinea	common	et	EKVATORIAALl-GUINEA
 eritrea	common	et	ERITREA
@@ -200,14 +228,21 @@ estonia	common	et	EESTI
 ethiopia	common	et	ETIOOPIA
 everything	common	et	Kõik
 exact	common	et	täpne
+export xml	common	et	Expordi XML
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	et	Ühendus serveriga ebaõnnestus või vigane serveri vastus. Proovi uuesti sisse logida. Kui ebaõnnestub kontakteeru Administraatoriga.
 fax number	common	et	faksi number
 features of the editor?	common	et	fax number
 february	common	et	Veebruar
+field	common	et	Väli
+field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks !!!
 fields	common	et	Väljad
+file	common	et	Pail
+file writen	common	et	Fail kirjutatud
 files	common	et	Failid
+fileupload	common	et	Faili Üleslaadimine
 filter	common	et	Filter
 finland	common	et	Soome
+first	common	et	Esimene
 first name	common	et	Eesnimi
 first name of the user, eg. "%1"	common	et	kasutaja eesnimi, nagu "%1"
 first page	common	et	Esimene leht
@@ -249,9 +284,16 @@ home	common	et	Kodu
 home email	common	et	kodu email
 honduras	common	et	HONDURAS
 hong kong	common	et	HONG KONG
+hour	common	et	Tund
+hours	common	et	tundi
+html	common	et	Html
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
+id	common	et	ID
+image	common	et	Pilt
 image url	common	et	Pildi URL
+import	common	et	Import
+import xml	common	et	Impordi XML
 india	common	et	INDIA
 indonesia	common	et	INDONEESIA
 insert column after	common	et	Sisesta veerg enne
@@ -268,8 +310,10 @@ january	common	et	Jaanuar
 japan	common	et	JAAPAN
 july	common	et	Juuli
 june	common	et	Juuni
+key	common	et	Võti
 keywords	common	et	Märksõnad
 language	common	et	Keel
+last	common	et	Viimane
 last modified	common	et	Viimati muudetud
 last name	common	et	perekonnanimi
 last page	common	et	Viimane leht
@@ -277,6 +321,7 @@ latvia	common	et	LÄTI
 left	common	et	Vasak
 liberia	common	et	LIBEERIA
 license	common	et	Litsents
+link	common	et	Link
 list	common	et	Nimekiri
 lithuania	common	et	LEEDU
 load	common	et	Lae
@@ -295,14 +340,20 @@ medium	common	et	Keskmine
 menu	common	et	Menüü
 message	common	et	Teade
 minute	common	et	minut
+minutes	common	et	minutit
 monaco	common	et	MONACO
 monday	common	et	Esmaspäev
 mongolia	common	et	MONGOOLIA
+month	common	et	Kuu
+more	common	et	Rohkem
 multiple	common	et	mitmik
 name	common	et	Nimi
 never	common	et	Mittekunagi
+new	common	et	Uus
+new search	common	et	Uus otsing
 new value	common	et	Uus Väärtus
 new zealand	common	et	UUS MEREMAA
+newer version '%1' exists !!!	common	et	uuem versioon '%1' eksisteerib !!!
 next	common	et	Järgmine
 next page	common	et	Järgmine leht
 nicaragua	common	et	NICARAGUA
@@ -312,6 +363,8 @@ niue	common	et	NIUE
 no	common	et	Ei
 no - cancel	common	et	Ei -Tühista
 no entries found, try again ...	common	et	kirjeid ei leitud, proovi uuesti
+no file	common	et	pole faili
+no matches found	common	et	sobivaid ei leitud
 none	common	et	Pole
 normal	common	et	Normaalne
 norway	common	et	NORRA
@@ -319,8 +372,10 @@ not	common	et	ei
 not a user yet? register now	common	et	Pole vee kasutaja? Registreeru nüüd
 note	common	et	Teavitus
 notes	common	et	Teavitused
+nothing found - try again !!!	common	et	Midagi ei leitud - proovi uuesti !!!
 notify window	common	et	Teavituse aken
 november	common	et	November
+now	common	et	Nüüd
 october	common	et	Oktoober
 ok	common	et	OK
 old value	common	et	Vana Väärtus
@@ -329,6 +384,7 @@ only private	common	et	ainult privaatne
 only yours	common	et	ainult sinu
 open	common	et	avatud
 open popup window	common	et	Ava hüpikaken
+options	common	et	Omadused
 or	common	et	või
 original	common	et	Originaal
 overview	common	et	Ülevaade
@@ -337,6 +393,7 @@ page	common	et	Leht
 page was generated in %1 seconds	common	et	Leht genereeriti %1 sekundit
 password	common	et	Parool
 password has been updated	common	et	Parool on uuendatud
+path	common	et	Teekond
 personal	common	et	Personaalne
 phone number	common	et	telefoni number
 please enter a name	common	et	Palun sisesta nimi !
@@ -354,19 +411,23 @@ priority	common	et	Prioriteet
 private	common	et	Privaatne
 programs	common	et	Programmid
 project	common	et	Projekt
-read	common	et	Lugema
+read	common	et	Loe
 reading	common	et	loen
+readonly	common	et	loeainult
 register	common	et	registreeru
 regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
 remove selected accounts	common	et	eemalda märgitud kontod
 rename	common	et	Nimeta ümber
 replace	common	et	Asenda
+required	common	et	Nõutav
+reset	common	et	Tühista
 resources	common	et	Resursid
 restore failed	common	et	Taastamine ebaõnnestus
 reunion	common	et	REUNION
 right	common	et	Parem
 romania	common	et	RUMEENIA
+row...	common	et	Rida ...
 russian federation	common	et	VENEMAA
 saturday	common	et	Laupäev
 save	common	et	Salvesta
@@ -376,18 +437,33 @@ search accounts	common	et	Otsi kontosid
 second	common	et	teine
 section	common	et	Selektsioon
 select	common	et	Vali
+select a category	common	et	Vali Kategooria
+select access	common	et	Vali Ligipääs
+select account	common	et	Vali Konto
 select all	common	et	Märgi kõik
 select all %1 %2 for %3	common	et	Vali kõik %1 %2 for %3
-select category	common	et	Vali Kategooria
+select category	common	et	Vali kategooria
+select columns	common	et	Vali tulbad
+select country	common	et	Vali Riik
 select date	common	et	Vali kuupäev
+select day	common	et	Vali päev
+select day of week	common	et	vali päev nädalast
 select group	common	et	Vali grupp
 select home email address	common	et	Vali kodune email aadress
+select hour	common	et	Vali tund
+select language	common	et	Vali Keel
+select month	common	et	Vali Kuu
 select multiple accounts	common	et	Vali mitu kontot
+select number	common	et	Vali Number
 select one	common	et	Vali üks
+select one ...	common	et	Vali Üks ...
+select priority	common	et	Vali Prioriteet
 select the default height for the application windows	common	et	Vali vaikimisi rakenduse akna kõrgus
 select the default width for the application windows	common	et	Vali vaikimisi rakenduse akna laius
 select user	common	et	Vali kasutaja
+select which values to show	common	et	vali mis väärtusi näidata
 select work email address	common	et	Vali töö email aadress
+select year	common	et	Vali Aasta
 selection	common	et	Valik
 send	common	et	Saada
 senegal	common	et	SENEGAL
@@ -396,13 +472,18 @@ serbia	common	et	Serbia
 server %1 has been added	common	et	Server %1 on lisatud
 server name	common	et	Serveri Nimi
 session has been killed	common	et	Sessioon tapeti
+show	common	et	Näita
+show (no save)	common	et	Näita (ära salvesta)
 show all	common	et	näita kõik
 show all categorys	common	et	Näita kõik kategooriad
 show clock?	common	et	Näita kella?
 show menu	common	et	näita menüüd
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega?
+show values	common	et	Näita Väärtusi
+show/hide	common	et	näita/peida külgriba
 show_more_apps	common	et	Näita rohkem programme
+showing	common	et	näitan
 showing %1	common	et	näitan %1
 simple	common	et	Lihtne
 singapore	common	et	SINGAPUR
@@ -421,7 +502,10 @@ submit	common	et	Saada
 sudan	common	et	SUDAAN
 sunday	common	et	Pühapäev
 sweden	common	et	ROOTSI
+tablename	common	et	Tabeli Nimi
+text	common	et	Tekst
 text color:	common	et	Teksti värv:
+textarea	common	et	Tekstiväli
 thailand	common	et	TAI
 the following applications require upgrades	common	et	Järgmised rakendused vajavad uuendusi
 this name has been used already	common	et	See nimi on juba kasutusel !
@@ -436,12 +520,13 @@ togo	common	et	TOGO
 tokelau	common	et	TOKELAU
 tonga	common	et	TONGA
 total	common	et	Kokku
+tree	common	et	Puu
 trinidad and tobago	common	et	TRINIDAD JA TOBAGO
 tuesday	common	et	Teisipäev
 tunisia	common	et	TUNEESIA
 turkey	common	et	TÜRGI
 turkmenistan	common	et	TÜRKMENISTAN
-type	common	et	TÜÜP
+type	common	et	Tüüp
 uganda	common	et	UGANDA
 ukraine	common	et	UKRAINA
 underline	common	et	Allajoonitud
@@ -468,7 +553,10 @@ welcome	common	et	Tere tulemast
 western sahara	common	et	LÄÄNE SAHARA
 which groups	common	et	Millised grupid
 width	common	et	Laius
+wk	common	et	Nd
 work email	common	et	töö email
+write langfile	common	et	Kirjuta Keel
+write tables	common	et	Kirjuta Tabelid
 writing	common	et	kirjutan
 written by:	common	et	Kirjutatud:
 year	common	et	Aasta
@@ -477,6 +565,7 @@ yes	common	et	Jah
 yes - delete	common	et	Jah - Kustuta
 yes - delete including sub-entries	common	et	Jah - Kustuta koos alam-kirjetega
 you are required to change your password during your first login	common	et	Sa pead muutma oma parooli esmasel sisselogimisel
+you can respond by visiting:	common	et	Sa saad vastata külastates:
 you have been successfully logged out	login	et	Oled täielikult välja loginud
 you have not entered a title	common	et	Sa ei sisestanud pealkirja
 you have not entered a valid date	common	et	Sa ei sisestanud kehtivat kuupäeva
@@ -492,109 +581,3 @@ your settings have been updated	common	et	Sinu seadistused on Uuendatud
 zambia	common	et	SAMBIA
 zimbabwe	common	et	ZIMBABWE
 zoom	common	et	Suurenda
-actions...	common	et	Tegevused...
-advanced search	common	et	Laiendatud Otsing
-all users	common	et	Kõik kasutajad
-and	common	et	Ja
-applications	common	et	Rakendused
-attach file	common	et	Kaasa fail
-check all	common	et	Kontrolli kõik
-click here to create the link	common	et	vajuta siia tegemaks Link
-click here to start the search	common	et	vajuta siia alustamaks otsingut
-comment	common	et	Kommentaar
-confirm	common	et	kinnita
-contact	common	et	Kontakt
-contains	common	et	sisaldab
-cut	common	et	Lõika
-date+time	common	et	Kuupäev+Aeg
-day	common	et	Päev
-days	common	et	päeva
-default	common	et	Vaikimisi
-delete this column	common	et	kustuta see tulp
-delete this file	common	et	Kustuta see fail
-delete this row	common	et	Kustuta see rida
-delete whole column (can not be undone!!!)	common	et	kustuta terve tulp (EI SAA tagasi võtta!!!)
-deletes this column	common	et	Kustutab selle tulba
-discard changes	common	et	unusta muudatused
-do you want to save the changes you made in table %s?	common	et	Kas soovid salvestada muudatused mida tegid tabelis %s?
-documentation	common	et	Dokumentatsioon
-doesn't matter	common	et	pole tähtis
-duration	common	et	Kestvus
-edit	common	et	Muuda
-edit...	common	et	Muuda ...
-entry saved	common	et	Kirje salvestatud
-export xml	common	et	Expordi XML
-field	common	et	Väli
-field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks !!!
-file	common	et	Pail
-file writen	common	et	Fail kirjutatud
-fileupload	common	et	Faili Üleslaadimine
-first	common	et	Esimene
-height	common	et	Kõrgus
-help	common	et	Abi
-hour	common	et	Tund
-hours	common	et	tundi
-html	common	et	Html
-id	common	et	Id
-image	common	et	Pilt
-import	common	et	Import
-import xml	common	et	Impordi XML
-key	common	et	Võti
-last	common	et	Viimane
-link	common	et	Link
-minutes	common	et	minutit
-month	common	et	Kuu
-more	common	et	Rohkem
-name	common	et	Nimi
-new	common	et	Uus
-new search	common	et	Uus otsing
-newer version '%1' exists !!!	common	et	uuem versioon '%1' eksisteerib !!!
-no file	common	et	pole faili
-no matches found	common	et	sobivaid ei leitud
-nothing found - try again !!!	common	et	Midagi ei leitud - proovi uuesti !!!
-now	common	et	Nüüd
-options	common	et	Omadused
-or	common	et	või
-path	common	et	Teekond
-read	common	et	Loe
-readonly	common	et	loeainult
-required	common	et	Nõutav
-reset	common	et	Tühista
-right	common	et	Parem
-row...	common	et	Rida ...
-search	common	et	Otsi
-select a category	common	et	Vali Kategooria
-select access	common	et	Vali Ligipääs
-select account	common	et	Vali Konto
-select category	common	et	Vali kategooria
-select columns	common	et	Vali tulbad
-select country	common	et	Vali Riik
-select day	common	et	Vali päev
-select day of week	common	et	vali päev nädalast
-select hour	common	et	Vali tund
-select language	common	et	Vali Keel
-select month	common	et	Vali Kuu
-select number	common	et	Vali Number
-select one ...	common	et	Vali Üks ...
-select priority	common	et	Vali Prioriteet
-select which values to show	common	et	vali mis väärtusi näidata
-select year	common	et	Vali Aasta
-show	common	et	Näita
-show (no save)	common	et	Näita (ära salvesta)
-show values	common	et	Näita Väärtusi
-showing	common	et	näitan
-tablename	common	et	Tabeli Nimi
-text	common	et	Tekst
-textarea	common	et	Tekstiväli
-time	common	et	Aeg
-today	common	et	Täna
-tree	common	et	Puu
-type	common	et	Tüüp
-version	common	et	Versioon
-width	common	et	Laius
-wk	common	et	Nd
-write langfile	common	et	Kirjuta Keel
-write tables	common	et	Kirjuta Tabelid
-year	common	et	Aasta
-you can respond by visiting:	common	et	Sa saad vastata külastates:
-id	common	et	ID

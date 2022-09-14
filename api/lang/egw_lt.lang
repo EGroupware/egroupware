@@ -14,6 +14,7 @@ albania	common	lt	ALBANIJA
 algeria	common	lt	ALŽYRAS
 andorra	common	lt	ANDORA
 angola	common	lt	ANGOLA
+api	common	lt	EGroupware API
 april	common	lt	Balandis
 argentina	common	lt	ARGENTINA
 armenia	common	lt	ARMĖNIJA
@@ -147,12 +148,12 @@ paraguay	common	lt	PARAGVAJUS
 password	common	lt	Slaptažodis
 peru	common	lt	PERU
 phone number	common	lt	telefono numeris
-api	common	lt	EGroupware API
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas
 print	common	lt	Spausdinti
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
+show/hide	common	lt	rodyti/paslėpti šoninę juostą
 yemen	common	lt	JEMENAS
 zimbabwe	common	lt	ZIMBABVĖ

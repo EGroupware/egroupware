@@ -23,6 +23,7 @@ accounts	common	bg	Акаунти
 acl	common	bg	Списък за контрол на достъпа
 action	common	bg	Действие
 actions	common	bg	Действия
+actions...	common	bg	Действия...
 active	common	bg	Активен
 add	common	bg	Добави
 add %1 category for	common	bg	Добави %1 категория за
@@ -33,12 +34,13 @@ add sub	common	bg	Добави подкатегория
 addressbook	common	bg	Адресен указател
 admin	common	bg	Админ
 administration	common	bg	Администрация
+advanced search	common	bg	Разширено търсене
 afghanistan	common	bg	Афганистан
 albania	common	bg	Албания
 algeria	common	bg	Алжир
 all	common	bg	Всички
 all fields	common	bg	всички полета
-alphabet	common	bg	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ь,ю,я
+all users	common	bg	Всички потребители
 alternate style-sheet:	common	bg	Алтернативен style-sheet:
 american samoa	common	bg	Американска Самоа
 an error happened	common	bg	Възникнала е грешка
@@ -57,6 +59,7 @@ are you sure you want to delete this entry ?	common	bg	Наистина ли и�
 argentina	common	bg	Аржентина
 armenia	common	bg	Армения
 aruba	common	bg	Аруба
+attach file	common	bg	Приложи файл
 august	common	bg	Август
 australia	common	bg	Австралия
 austria	common	bg	Автсрия
@@ -111,6 +114,7 @@ categories for	common	bg	категории за
 category	common	bg	Категория
 category %1 has been added !	common	bg	Категорията %1 беше добавена!
 category %1 has been updated !	common	bg	Категорията %1 беше обновена!
+category tree	common	bg	Дърво на категориите
 cayman islands	common	bg	Каймански острови
 cc	common	bg	Cc
 centered	common	bg	центриран
@@ -118,6 +122,7 @@ central african republic	common	bg	Централноафриканска Реп
 chad	common	bg	Чад
 change	common	bg	Промяна
 charset	common	bg	utf-8
+check all	common	bg	Маркира всички
 check installation	common	bg	Проверка на инсталацията
 check now	common	bg	Провери сега
 chile	common	bg	Чили
@@ -133,7 +138,9 @@ christmas island	common	bg	Великденски острови
 clear	common	bg	Изчистване
 clear form	common	bg	Изчистване на формата
 click	common	bg	Кликнете
+click here to create the link	common	bg	кликнете тук за създаване на връзката
 click here to resume your egroupware session.	common	bg	Кликнете за възстановяване на сесията Ви в EGroupware
+click here to start the search	common	bg	кликнете тук за начало на търсенето
 click or mouse over to show menus	common	bg	Кликнете или доближете мишката за показване на менюта
 click or mouse over to show menus?	common	bg	Клик или доближaване с мишката за показване на менюта?
 click this image on the navbar: %1	common	bg	Кликнете това изображение на лентата за навигация: %1
@@ -141,14 +148,19 @@ close	common	bg	Затвори
 close sidebox	common	bg	Затвори стр.кутия (sidebox)
 cocos (keeling) islands	common	bg	Кокосови острови (о-ви Кийлинг)
 colombia	common	bg	Колумбия
+comment	common	bg	Коментар
 common preferences	common	bg	Общи настройки
 comoros	common	bg	Коморски оствори
 company	common	bg	Фирма
+confirm	common	bg	Потвърди
 congo	common	bg	Конго
 congo, the democratic republic of the	common	bg	Демократична Република Конго
+contact	common	bg	Контакт
 contacting server...	common	bg	Свързване със сървъра...
+contains	common	bg	съдържа
 cook islands	common	bg	Острови Кук
 copy	common	bg	Копиране
+copy to clipboard	common	bg	Копиране в клипборд
 costa rica	common	bg	Коста Рика
 cote d ivoire	common	bg	Бряг на Слоновата Кост
 could not contact server. operation timed out!	common	bg	Неуспех при връзка със сървъра поради таймаут!
@@ -159,6 +171,9 @@ cuba	common	bg	Куба
 currency	common	bg	Валута
 current	common	bg	Текущ
 current users	common	bg	Включени потребители
+custom	common	bg	по избор
+custom fields	common	bg	Полета по избор
+cut	common	bg	преместен(и)
 cyprus	common	bg	Кипър
 czech republic	common	bg	Чешка Република
 database error	common	bg	Грешка в базата данни
@@ -166,11 +181,14 @@ database error!	common	bg	Грешка в базата данни!
 date	common	bg	Дата
 date due	common	bg	Краен срок
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.<br>Ако използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.<br>(Port: 13 / Host: 129.6.15.28)
+days	common	bg	дни
 december	common	bg	Декември
+default	common	bg	по подразбиране
 default category	common	bg	Категория по подразбиране
 default height for the windows	common	bg	Височина на прозорците по подразбиране
 default width for the windows	common	bg	Ширина на прозорците по подразбиране
 delete	common	bg	Изтриване
+delete a single entry by passing the id.	common	bg	Изтриване на единичен запис чрез предаване на ID.
 delete row	common	bg	Изтриване на ред
 delete this entry	common	bg	изтриване на този запис
 denmark	common	bg	Дания
@@ -189,8 +207,10 @@ disabled	common	bg	Забранено
 djibouti	common	bg	Джибути
 do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
 doctype:	common	bg	Тип документ:
+document '%1' does not exist or is not readable for you!	preferences	bg	Документът '%1' не съществува или нямате право на достъп до него!
 document properties	common	bg	Свойства на документа
 document title:	common	bg	Заглавие на документа:
+doesn't matter	common	bg	без значение
 domain	common	bg	Домейн
 domain name for mail-address, eg. "%1"	common	bg	Име на домейн за e-mail адреси, напр. "%1"
 domestic	common	bg	Домашен
@@ -198,6 +218,7 @@ dominica	common	bg	Доминика
 dominican republic	common	bg	Доминиканска Република
 done	common	bg	Готово
 download	common	bg	Изтегляне
+duration	common	bg	Продължителност
 e-mail	common	bg	E-Mail
 east timor	common	bg	Източен Тимур
 ecuador	common	bg	Еквадор
@@ -218,6 +239,7 @@ end time	common	bg	Краен час
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на EGroupware.<br>Пример: http://www.domain.com/egroupware  или   /egroupware<br><b>Да не завършва с "/"!!!</b>
 entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
 entry not found!	common	bg	Записът не е намерен!
+entry saved	common	bg	Записът е запазен
 entry updated sucessfully	common	bg	Записът беше обновен успешно
 equatorial guinea	common	bg	Екваториална Гвинея
 eritrea	common	bg	Еритрея
@@ -225,6 +247,7 @@ error	common	bg	Грешка
 error creating %1 %2 directory	common	bg	Грешка при създаване на директория %1 %2
 error deleting %1 %2 directory	common	bg	Грешка при изтриване на директория %1 %2
 error renaming %1 %2 directory	common	bg	Грешка при преименуване на директория %1 %2
+error uploading file!	filemanager	bg	Грешка при качване на файла!
 estonia	common	bg	Естония
 ethiopia	common	bg	Етиопия
 everything	common	bg	Всичко
@@ -235,8 +258,10 @@ faroe islands	common	bg	Фаройски острови
 fax number	common	bg	номер на факс
 features of the editor?	common	bg	Допълнителни възможности на редактора?
 february	common	bg	Февруари
+field must not be empty !!!	common	bg	Полето не може да бъде празно !!!
 fields	common	bg	Полета
 fiji	common	bg	Острови Фиджи
+file	common	bg	Файл
 files	common	bg	Файлове
 filter	common	bg	Филтър
 finland	common	bg	Финландия
@@ -258,6 +283,7 @@ fullname	common	bg	Пълно име
 fullscreen mode	common	bg	Режим на цял екран
 gabon	common	bg	Габон
 gambia	common	bg	Гамбия
+general fields:	preferences	bg	Общи полета:
 general menu	common	bg	Основно меню
 georgia	common	bg	Грузия
 german	common	bg	Немски
@@ -295,22 +321,28 @@ highest	common	bg	Най-висок
 holy see (vatican city state)	common	bg	Ватикана
 home	common	bg	Начало
 home email	common	bg	домашен e-mail
+home screen	common	bg	Основен екран
 honduras	common	bg	Хондурас
 hong kong	common	bg	Хонг-Конг
+hours	common	bg	часа
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	bg	Колко икони да се покажат в лентата за навигация (горе на страницата)? Останалите икони се показват чрез падащо меню, активирано чрез иконата в крайната дясна част на лентата.
 how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на EGroupware ?
+html	common	bg	HTML
 hungary	common	bg	Унгария
 iceland	common	bg	Исландия
+id	common	bg	Документ за самоличност / ID
 iespell not detected. click ok to go to download page.	common	bg	Не е открит   ieSpell. Кликнете OK за пренасочване към страницата за изтеглянето му.
 if the clock is enabled would you like it to update it every second or every minute?	common	bg	Ако часовникът е разрешен как да се обновява - на всяка секунда или на всяка минута?
 if there are some images in the background folder you can choose the one you would like to see.	common	bg	Ако има изображения в директорията за фон може да изберете кое да виждате.
 image directory relative to document root (use / !), example:	common	bg	Директория за изображенията, относително спрямо document root (използвайте / !), например:
 image url	common	bg	URL на изображението
+import	common	bg	Импорт
 india	common	bg	Индия
 indonesia	common	bg	Индонезия
 insert all %1 addresses of the %2 contacts in %3	common	bg	Вмъкване на всички %1 адреси на %2 контакти в %3
 insert column after	common	bg	Вмъкни колона след
 insert column before	common	bg	Вмъкни колона преди
+insert in document	common	bg	Вмъкване в документа
 insert row after	common	bg	Вмъкни ред след
 insert row before	common	bg	Вмъкни ред преди
 international	common	bg	Международен
@@ -344,8 +376,10 @@ korea, democratic peoples republic of	common	bg	Народно Демократ�
 korea, republic of	common	bg	Република Корея
 kuwait	common	bg	Кувейт
 kyrgyzstan	common	bg	Киргизстан
+label	common	bg	Етикет
 language	common	bg	Език
 lao peoples democratic republic	common	bg	Лаос
+last	common	bg	последен
 last modified	common	bg	Последно модифициран
 last name	common	bg	Фамилно име
 last name of the user, eg. "%1"	common	bg	фамилията на потребителя, например "%1"
@@ -362,9 +396,11 @@ license	common	bg	Лиценз
 liechtenstein	common	bg	Лихтенщайн
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
+link	common	bg	Връзка
 list	common	bg	Списък
 list members	common	bg	Списък с членове
 lithuania	common	bg	Литва
+loading	common	bg	зареждане
 local	common	bg	Локален
 locations	common	bg	местоположения
 login	common	bg	Влизане (Login)
@@ -380,7 +416,6 @@ macedonia, the former yugoslav republic of	common	bg	Македония
 madagascar	common	bg	Мадагаскар
 mail domain, eg. "%1"	common	bg	пощенски домейн, например "%1"
 main category	common	bg	Основна категория
-home screen	common	bg	Основен екран
 maintainer	common	bg	Поддържа се от
 malawi	common	bg	Малави
 malaysia	common	bg	Малайзия
@@ -393,6 +428,7 @@ martinique	common	bg	Мартиника
 mauritania	common	bg	Мавритания
 mauritius	common	bg	Мавриций
 max number of icons in navbar	common	bg	Максимален брой икони в лентата за управление
+maximum size for uploads	filemanager	bg	Максимален размер за качване
 may	common	bg	Май
 mayotte	common	bg	Майот
 medium	common	bg	Средно
@@ -401,12 +437,14 @@ message	common	bg	Съобщение
 mexico	common	bg	Мексико
 micronesia, federated states of	common	bg	Микронезия
 minute	common	bg	минута
+minutes	common	bg	минути
 moldova, republic of	common	bg	Молдовска Република
 monaco	common	bg	Монако
 monday	common	bg	Понеделник
 mongolia	common	bg	Монголия
 montenegro	common	bg	Черна гора
 montserrat	common	bg	Монтсерат
+more	common	bg	повече
 morocco	common	bg	Мароко
 mozambique	common	bg	Мозамбик
 multiple	common	bg	множество
@@ -419,9 +457,11 @@ nepal	common	bg	Непал
 netherlands	common	bg	Холандия
 netherlands antilles	common	bg	Холандски Антили
 never	common	bg	Никога
+new	common	bg	Нова
 new caledonia	common	bg	Нова Каледония
 new entry added sucessfully	common	bg	Новият запис е добавен успешно
 new main category	common	bg	Нова основна категория
+new search	common	bg	Ново търсене
 new value	common	bg	Нова стойност
 new zealand	common	bg	Нова Зеландия
 next	common	bg	Следващ
@@ -434,6 +474,7 @@ no	common	bg	Не
 no - cancel	common	bg	Не - Отменя
 no entries found, try again ...	common	bg	няма резултати, опитайте отново...
 no history for this record	common	bg	Няма история за този запис
+no matches found	common	bg	Не са открити съвпадения
 no savant2 template directories were found in:	common	bg	Не са намерени Savant2 template директории в:
 no subject	common	bg	Няма Относно
 none	common	bg	Няма
@@ -464,6 +505,7 @@ open	common	bg	отвори
 open notify window	common	bg	Отваряне на прозореца за известяване
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
 open sidebox	common	bg	Отваряне на страничната кутия
+options	common	bg	Опции
 or	common	bg	или
 ordered list	common	bg	Подреден списък
 original	common	bg	Оригинал
@@ -521,6 +563,8 @@ public	common	bg	общ
 puerto rico	common	bg	Пуерто Рико
 qatar	common	bg	Катар
 read	common	bg	Четене
+read a list of entries.	common	bg	Четене на списък със записи.
+read a single entry by passing the id and fieldlist.	common	bg	Четене на единичен запис чрез подаване на id и списък с полета
 read this list of methods.	common	bg	Четене на списъкът с методи.
 reading	common	bg	четене
 register	common	bg	Регистрация
@@ -529,9 +573,11 @@ reject	common	bg	Отхвърляне
 remember me	common	bg	Запомни ме
 remove selected accounts	common	bg	премахване на избраните акаунти
 remove shortcut	common	bg	Премахване на Shortcut-и
+remove this link (not the entry itself)	common	bg	Премахване на връзката (не и на записа)
 rename	common	bg	Преименуване
 replace	common	bg	Замяна
 replace with	common	bg	Замяна с
+reset	common	bg	Нулиране
 resources	common	bg	Ресурси
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	bg	Пълен списък на потребителите на системата. Внимание: списъкът може да бъде много дълъг!
 returns an array of todo items	common	bg	Връща масив с Предстоящи
@@ -555,12 +601,15 @@ save	common	bg	Запис
 search	common	bg	Търсене
 search %1 '%2'	common	bg	Търсене на %1 '%2'
 search accounts	common	bg	Търсене в акаунтите
+search for '%1'	common	bg	Търсене на '%1'
 search or select accounts	common	bg	търсене или избор на акаунти
 second	common	bg	секунда
 section	common	bg	Секция
 select	common	bg	Изберете
 select all	common	bg	Избиране на всичко
 select all %1 %2 for %3	common	bg	Избор на всички %1 %2 за %3
+select an app to search in	common	bg	Изберете приложение, в което да се търси
+select an entry to link with	common	bg	Изберете запис, с който да се свърже
 select category	common	bg	Изберете категория
 select date	common	bg	Изберете дата
 select group	common	bg	Изберете група
@@ -581,9 +630,11 @@ server answered. processing response...	common	bg	Получен отговор 
 server contacted. waiting for response...	common	bg	Установена връзка със сървъра. Очакваме отговор...
 server name	common	bg	Име на сървър
 session has been killed	common	bg	Сесията е премахната
+set as default	common	bg	По подразбиране
 setup	common	bg	Настройка
 setup main menu	common	bg	Главно меню за настройка
 seychelles	common	bg	Сейшелски острови
+show	common	bg	Покажи
 show all	common	bg	показване на всички
 show all categorys	common	bg	Показване на всички категории
 show as topmenu	common	bg	Показване като горно меню
@@ -596,6 +647,7 @@ show page generation time	common	bg	Показване на времето за 
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците?
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците?
 show the logo's of egroupware and x-desktop on the desktop.	common	bg	Показване на логото на EGroupware и x-desktop на desktop-а.
+show/hide	common	bg	показване/скриване на страничната лента
 showing %1	common	bg	показване на %1
 showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
 sierra leone	common	bg	Сиера Леоне
@@ -612,6 +664,7 @@ south africa	common	bg	Южна Африка
 south georgia and the south sandwich islands	common	bg	Южна Джорджия и Южни Сандвичеви острови
 spain	common	bg	Испания
 sri lanka	common	bg	Шри-Ланка
+start a new search, cancel this link	common	bg	Започва ново търсене, отказва тази връзка
 start date	common	bg	Начална дата
 start time	common	bg	Начален час
 start with	common	bg	започва с
@@ -633,6 +686,7 @@ table properties	common	bg	Свойства на таблицата
 taiwan	common	bg	Тайван/Тайпе
 tajikistan	common	bg	Таджикистан
 tanzania, united republic of	common	bg	Обединена Република Танзания
+template	common	bg	Шаблон
 text color:	common	bg	Цвят на текста:
 thailand	common	bg	Тайланд
 the following applications require upgrades	common	bg	Следните приложения имат нужда от обновяване
@@ -671,7 +725,9 @@ united kingdom	common	bg	Великобритания
 united states	common	bg	Съединени Американски Щати
 united states minor outlying islands	common	bg	Малки далечни острови на САЩ
 unknown	common	bg	Неизвестен
+unlink	common	bg	Премахва връзка
 update	common	bg	Обновяване
+update a single entry by passing the fields.	common	bg	Актуализация на единичен запис чрез предаване на полетата.
 update the clock per minute or per second	common	bg	Обновяване на часовника на всяка минута или секунда
 upload	common	bg	Качване
 upload directory does not exist, or is not writeable by webserver	common	bg	Директорията за Upload не съществува или не е позволен запис за WEB сървъра
@@ -694,6 +750,7 @@ venezuela	common	bg	Венецуела
 version	common	bg	Версия
 viet nam	common	bg	Виетнам
 view	common	bg	Преглед
+view this linked entry in its application	common	bg	показва свързания запис в съотв. приложение
 virgin islands, british	common	bg	Британски Вирджински острови
 virgin islands, u.s.	common	bg	Американски Вирджински острови
 wallis and futuna	common	bg	Уолис и Футуна
@@ -707,6 +764,7 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	bg	Кои групи
 whole query	common	bg	всички резултати
 width	common	bg	Ширина
+wk	common	bg	Седм.
 work email	common	bg	служебен e-mail
 would you like to display the page generation time at the bottom of every window?	common	bg	Желаете ли да се изобразява времето за генериране на страницата в долната част на всеки прозорец?
 writing	common	bg	запис
@@ -718,6 +776,7 @@ yes - delete	common	bg	Да - Изтриване
 yes - delete including sub-entries	common	bg	Да - Изтриване с под-записите
 you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
 you can customize how many icons and toolbars the editor shows.	common	bg	Може да определите колко икони и ленти с инструменти да показва Редактора.
+you can respond by visiting:	common	bg	За преглед посетете:
 you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно
 you have not entered a title	common	bg	Не сте въвели заглавие
 you have not entered a valid date	common	bg	Не сте въвели валидна дата
@@ -737,65 +796,3 @@ your settings have been updated	common	bg	Настройките ви са об�
 zambia	common	bg	Замбия
 zimbabwe	common	bg	Зимбабве
 zoom	common	bg	Увеличаване/намаляне
-search for '%1'	common	bg	Търсене на '%1'
-actions...	common	bg	Действия...
-advanced search	common	bg	Разширено търсене
-all users	common	bg	Всички потребители
-and	common	bg	И
-attach file	common	bg	Приложи файл
-category tree	common	bg	Дърво на категориите
-check all	common	bg	Маркира всички
-click here to create the link	common	bg	кликнете тук за създаване на връзката
-click here to start the search	common	bg	кликнете тук за начало на търсенето
-comment	common	bg	Коментар
-confirm	common	bg	Потвърди
-contact	common	bg	Контакт
-contains	common	bg	съдържа
-copy to clipboard	common	bg	Копиране в клипборд
-custom	common	bg	по избор
-custom fields	common	bg	Полета по избор
-cut	common	bg	преместен(и)
-days	common	bg	дни
-default	common	bg	по подразбиране
-delete a single entry by passing the id.	common	bg	Изтриване на единичен запис чрез предаване на ID.
-document '%1' does not exist or is not readable for you!	preferences	bg	Документът '%1' не съществува или нямате право на достъп до него!
-doesn't matter	common	bg	без значение
-duration	common	bg	Продължителност
-entry saved	common	bg	Записът е запазен
-error uploading file!	filemanager	bg	Грешка при качване на файла!
-field must not be empty !!!	common	bg	Полето не може да бъде празно !!!
-file	common	bg	Файл
-general fields:	preferences	bg	Общи полета:
-hours	common	bg	часа
-html	common	bg	HTML
-id	common	bg	ИД
-import	common	bg	Импорт
-insert in document	common	bg	Вмъкване в документа
-label	common	bg	Етикет
-last	common	bg	последен
-link	common	bg	Връзка
-loading	common	bg	зареждане
-maximum size for uploads	filemanager	bg	Максимален размер за качване
-minutes	common	bg	минути
-more	common	bg	повече
-new	common	bg	Нова
-new search	common	bg	Ново търсене
-no matches found	common	bg	Не са открити съвпадения
-options	common	bg	Опции
-or	common	bg	или
-read a list of entries.	common	bg	Четене на списък със записи.
-read a single entry by passing the id and fieldlist.	common	bg	Четене на единичен запис чрез подаване на id и списък с полета
-remove this link (not the entry itself)	common	bg	Премахване на връзката (не и на записа)
-reset	common	bg	Нулиране
-select an app to search in	common	bg	Изберете приложение, в което да се търси
-select an entry to link with	common	bg	Изберете запис, с който да се свърже
-set as default	common	bg	По подразбиране
-show	common	bg	Покажи
-start a new search, cancel this link	common	bg	Започва ново търсене, отказва тази връзка
-template	common	bg	Шаблон
-unlink	common	bg	Премахва връзка
-update a single entry by passing the fields.	common	bg	Актуализация на единичен запис чрез предаване на полетата.
-view this linked entry in its application	common	bg	показва свързания запис в съотв. приложение
-wk	common	bg	Седм.
-you can respond by visiting:	common	bg	За преглед посетете:
-id	common	bg	Документ за самоличност / ID

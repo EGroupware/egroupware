@@ -42,9 +42,14 @@
 1 week	common	it	1 settimana
 13 (ntp)	admin	it	13 (ntp)
 15 minutes	common	it	15 minuti
+2-factor authentication code required	common	it	È richiesto un codice di autenticazione a 2 fattori
+2-factor-authentication	common	it	Autenticazione a 2 fattori
+2-factor-authentication required	common	it	Autenticazione a 2 fattori richiesta
+3 minutes	common	it	3 minuti
 30 minutes	common	it	30 minuti
 30 seconds	common	it	30 secondi
 5 minutes	common	it	5 minuti
+5 seconds	common	it	5 secondi
 80 (http)	admin	it	80 (http)
 a pattern to be searched for	common	it	un pattern da cercare
 a request to the egroupware server returned with an error	common	it	Una richiesta al server di EGroupware ha restituito un errore
@@ -137,6 +142,7 @@ applies the changes made	common	it	applica le modifiche fatte
 applies the changes to the given version of the template	common	it	applica le modifiche alla data versione del template
 apply	common	it	Applica
 apply the action on the whole query, not only the shown entries	common	it	Applica l'azione all'intera query, NON solo le voci visualizzate
+apps &amp; license	common	it	Applicazioni e licenza
 april	common	it	Aprile
 are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
 are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
@@ -149,6 +155,7 @@ as default	common	it	Come predefinito
 attach	common	it	Allega
 attach file	common	it	Allega file
 attachment	common	it	Allegato
+attention: action will be applied to all rows, not only visible ones!	api	it	Attenzione: l'azione sarà applicata a tutte le righe, non solo a quelle visibili!
 august	common	it	Agosto
 australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
@@ -164,6 +171,7 @@ autosave default category	common	it	Categoria predefinita per il salvataggio aut
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al Login utente
+backcolor	common	it	Colore di fondo
 background color:	common	it	Colore di sfondo:
 backup key	common	it	Chiave di backup
 backup/restore	common	it	Backup/Ripristino
@@ -243,6 +251,7 @@ change owner	common	it	Cambia proprietario
 changed	common	it	Modificato
 charset	common	it	utf-8
 check all	common	it	Seleziona tutto
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	it	Controlla i valori vuoti nelle istruzioni IF. Esempio {{IF url~EMPTY~~Website:}} - Se url non è vuoto, scrive "Website:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	it	spunta se il contenuto deve essere solo visualizzato ma non alterato (il contenuto non viene rispedito allora!)
 check if field has to be filled by user	common	it	spunta se il campo deve essere riempito dall'utente
 check installation	common	it	Controlla installazione
@@ -257,6 +266,7 @@ choose a background style.	common	it	Scegli un stile per lo sfondo
 choose a text color for the icons	common	it	Scegli un colore per il testo delle icone
 choose file...	common	it	Seleziona file...
 choose the category	common	it	Scegli la categoria
+choose the default filename for merged documents.	preferences	it	Scegliere il nome del file predefinito per i documenti uniti.
 choose the parent category	common	it	Scegli la categoria superiore
 choose time	common	it	Seleziona orario
 chosen parent category no longer exists	common	it	La categoria scelta non esiste più
@@ -312,12 +322,14 @@ cookies are required to login to this site	login	it	Sono necessari i cookie per 
 copy	common	it	Copia
 copy "%1"	common	it	Copia "%1"
 copy of:	common	it	Copia di:
+copy to	common	it	Copia in
 copy to clipboard	common	it	Copia negli appunti
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 could not contact server. operation timed out!	common	it	Impossibile contattare il server. Operazione fuori tempo massimo!
 create	common	it	Crea
 create a new table for the application	common	it	Crea una nuova tabella per l'applicazione
+create directory	common	it	Crea cartella
 create link	common	it	Crea collegamento
 created	common	it	Creati
 created by	common	it	Creato da
@@ -359,7 +371,9 @@ december	common	it	Dicembre
 deck	common	it	Deck (interno)
 default	common	it	Predefinito
 default category	common	it	Categoria Predefinita
+default document to insert entries	preferences	it	Documento predefinito per inserire le voci
 default height for the windows	common	it	Altezza predefinita per le finestre
+default visible actions	common	it	Azioni visibili predefinite
 default width for the windows	common	it	Larghezza predefinita per le finestre
 del	common	it	Canc
 delete	common	it	Elimina
@@ -397,6 +411,8 @@ diable the execution a bugfixscript for internet explorer 5.5 and higher to show
 direction left to right	common	it	Direzione da sinistra a destra
 directory	common	it	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	it	La directory non esiste, non è leggibile dal server o non è relativa alla base dei documenti (docroot)
+directory for storing merged documents	preferences	it	Cartella per la memorizzazione dei documenti uniti
+directory with documents to insert entries	preferences	it	Cartella con i documenti da inserire
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
@@ -544,6 +560,7 @@ file %1 has no content in physical filesystem %2 --> failed to remove file!	admi
 file %1 has no content in physical filesystem %2 --> file removed!	admin	it	Il file %1 non ha contenuto nel filesystem fisico %2 --> file rimosso!
 file %1 has no content in physical filesystem %2!	admin	it	Il file %1 non ha contenuto nel filesystem fisico %2
 file '%1' not found!	common	it	File '%1' non trovato
+file a file	common	it	Caricare il file
 file contains more than one etemplate, last one is shown !!!	common	it	Il file contiene più di un eTemplate, l'ultimo è visualizzato !!!
 file information	common	it	Informazioni del file
 file is of wrong type (%1 != %2)!	common	it	Il file è di tipo non corretto (%1 != %2)
@@ -577,6 +594,7 @@ french southern territories	common	it	FRENCH SOUTHERN TERRITORIES
 friday	common	it	Venerdì
 ftp	common	it	FTP
 fullname	common	it	Nome completo
+fullscreen	common	it	Schermo intero
 fullscreen mode	common	it	Modalità schermo intero
 gabon	common	it	GABON
 gambia	common	it	GAMBIA
@@ -631,6 +649,7 @@ height, disabled	common	it	Altezza, Disabilitata
 help	common	it	Aiuto
 high	common	it	Alta
 highest	common	it	Più Alta
+history	common	it	La storia
 history log	common	it	Log cronologia
 hold [%1] and [%2] key to drag %3 to your desktop	common	it	Premere [%1] e [%2] per trascire sul tuo desktop
 hold [%1] key to select text eg. to copy it	common	it	Premere [%1] per selezionare il testo p.es. per copiarlo
@@ -661,6 +680,7 @@ if the error persists, contact your administrator for help and ask to check the 
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
+if you use "2-factor-authentication", please enter the code here.	common	it	Se si utilizza l'autenticazione a due fattori, inserire il codice qui.
 image	common	it	Immagine
 image directory relative to document root (use / !), example:	common	it	La cartella delle immagini relativa alla base dei documenti (docroot) (usare / !), esempio:
 image url	common	it	URL immagine
@@ -694,13 +714,17 @@ insert new column behind this one	common	it	insert new column behind this one
 insert new column in front of all	common	it	insert new column in front of all
 insert new row after this one	common	it	insert new row after this one
 insert new row in front of first line	common	it	insert new row in front of first Line
+insert placeholder	common	it	Inserire un segnaposto
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
+insert timestamp into description field	common	it	Inserire il timestamp nel campo descrizione
 integer	common	it	Intero
 international	common	it	Internazionale
 introduction	common	it	Introduzione
+invalid 2-factor authentication code	common	it	Codice di autenticazione a 2 fattori non valido
 invalid filename	common	it	Nome file non valido
 invalid ip address	common	it	Indirizzo IP errato
+invalid or expired 'remember me' token	common	it	Token "ricordami" non valido o scaduto
 invalid password	common	it	Password errata
 iran, islamic republic of	common	it	IRAN, REPUBBLICA ISLAMICA DELL
 iraq	common	it	IRAQ
@@ -757,6 +781,7 @@ liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
+light mode	common	it	Modalità luce
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	it	Riga %1: '%2'<br><b> dati csv contengono ##last-check-run## della tabella %3 ==> ignorato</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	it	Linea %1: '%2'<br><b>dati csv non corrisponde al numero colonne della tabella %3 ==> ignorato</b>
 link	common	it	Link
@@ -817,6 +842,7 @@ maybe	common	it	Forse
 mayotte	common	it	MAYOTTE
 medium	common	it	Medio
 menu	common	it	Menù
+merged document filename	preferences	it	Nome del file del documento unito
 message	common	it	Messaggio
 message ...	common	it	Messaggio...
 message prepared for sending.	common	it	Messaggio pronto all'invio.
@@ -844,6 +870,7 @@ more	common	it	Altro
 more than 1 match for '%1'	common	it	Più di una corrispondenza per '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	it	Trovati %1 più di un file attivi, disattivazione delle revisioni più datate %2!
 morocco	common	it	MAROCCO
+move	common	it	muoversi
 moved %1 children from directory fs_id=%2 to %3	admin	it	Spostato %1 figli dalla directory fs_id=%2 a %3
 moved unconnected %1 %2 to %3.	admin	it	Spostato disconnessi %1 %2 a %3
 mozambique	common	it	MOZAMBICO
@@ -1043,6 +1070,7 @@ protocol is required	common	it	Protocollo richiesto
 public	common	it	pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
+quick add	common	it	Aggiunta rapida
 radiobutton	common	it	Radiobutton
 read	common	it	Leggi
 read a list of entries.	common	it	Leggi un elenco di voci
@@ -1051,6 +1079,7 @@ read etemplate from database (for the keys above)	common	it	read eTemplate from 
 read this list of methods.	common	it	Leggi questo elenco di metodi.
 reading	common	it	leggendo
 readonly	common	it	sola lettura
+readonly filemanager directory	common	it	Cartella del filemanager di sola lettura
 readonly share	common	it	Condivisione in sola lettura
 redo	common	it	Ripeti
 refresh	common	it	Aggiorna
@@ -1153,6 +1182,7 @@ select an app to search in	common	it	Seleziona un'applicazione in cui cercare
 select an application	common	it	Seleziona una applicazione
 select an application, (*) = uninstalled	common	it	Seleziona una applicazione, (*) = disinstallata
 select an entry to link with	common	it	Seleziona una voce con cui collegarsi
+select an opened dialog	common	it	Selezionare una finestra di dialogo aperta
 select an table of the application	common	it	Seleziona una tabella dell'applicazione
 select application	common	it	Seleziona Applicazione
 select application to search	common	it	Seleziona l'applicazione in cui cercare
@@ -1215,8 +1245,12 @@ setup	common	it	Setup
 setup main menu	common	it	Menù Principale Setup
 seychelles	common	it	SEYCHELLES
 share	common	it	Condividi
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	it	Condividere in sola lettura, ma consentire il caricamento. I caricamenti sono nascosti e accessibili solo da chi ha un account.
+share filemanager directory	common	it	Cartella Filemanager
 share files	common	it	Condividi documenti
+share just the associated filemanager directory, not the %1	common	it	Condivide solo la cartella filemanager associata, non la %1
 share link	common	it	Condividi indirizzo
+share this %1 via url	common	it	Condividi questo %1 via URL
 shift	common	it	Maiusc
 shift ⇧	common	it	Maiusc ⇧
 should the form be submitted or any custom javascript be executed	common	it	Il form andrebbe inviato oppure del javascript andrebbe eseguito?
@@ -1240,6 +1274,7 @@ show page generation time?	common	it	Mostrare tempo generazione pagina?
 show password	common	it	Mostra password
 show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di EGroupware e di x-desktop sul desktop.
 show values	common	it	Mostra Valori
+show/hide	common	it	Mostra/nascondi barra laterale
 show_more_apps	common	it	show_more_apps
 showing	common	it	showing
 showing %1	common	it	visualizzati %1
@@ -1438,6 +1473,7 @@ western sahara	common	it	SAHARA OCCIDENTALE
 what color should all the blank space on the desktop have	common	it	Di che colore dovrebbe essere lo spazio vuoto sul desktop?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 what style would you like the image to have?	common	it	Che stile vuoi che abbia l'immagine?
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	it	Quando si uniscono le voci in un documento, queste vengono memorizzate qui. Se non viene fornita alcuna cartella, verranno memorizzate nella propria home directory (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni
 where and how will the egroupware links like preferences, about and logout be displayed.	common	it	Come e dove verranno visualizzati i collegamenti come Preferenze, About e Log
 which groups	common	it	Quali gruppi
@@ -1454,6 +1490,8 @@ work email	common	it	e-mail ufficio
 working days	common	it	giorni lavorativi
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	it	Funziona bene con 1-2 MB, potrà funzionare per 5-10 MB, fallirà molto probabilmente con dimensioni > 10 MB
 would you like to display the page generation time at the bottom of every window?	common	it	Mostra il tempo per la generazione della pagina in fondo ad ogni finestra
+writable	common	it	Scrivibile
+writable filemanager directory	common	it	Cartella del filemanager scrivibile
 writable share	common	it	Condivisione scrivibile
 write <app>/setup/tables_current.inc.php	common	it	Scrivi <app>/setup/tables_current.inc.php
 write langfile	common	it	Scrivi File Linguaggio

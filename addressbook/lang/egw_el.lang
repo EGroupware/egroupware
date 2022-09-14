@@ -444,6 +444,12 @@ send succeeded to %1	common	el	Η αποστολή ήταν επιτυχείς �
 seperator	addressbook	el	Χαρακτήρας διαχωρισμού
 set full name and file as field in contacts of all users (either all or only empty values)	admin	el	Ορισμός πλήρους ονόματος και πεδίου 'αποθήκευση ως' για όλους τους χρήστες. Είτε όλα ή μόνο κενές τιμές.
 set only full name	addressbook	el	Να ορίζεται μόνο το πλήρες όνομα
+share into addressbook	addressbook	el	Μοιραστείτε στο βιβλίο διευθύνσεων
+share writable	addressbook	el	Μοιραστείτε εγγράψιμο
+shared	addressbook	el	κοινόχρηστο
+shared by me	addressbook	el	Κοινή χρήση από εμένα
+shared into addressbook %1	addressbook	el	κοινή χρήση στο βιβλίο διευθύνσεων %1
+shared with	addressbook	el	Κοινή χρήση με
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	el	Επιθυμείτε να εμφανίζονται πάντα οι στήλες φωτογραφίας και διεύθυνσης οικίας, ακόμα και αν είναι κενές.
 show	addressbook	el	Εμφάνιση
 show active accounts	addressbook	el	Εμφάνιση ενεργών λογαριασμών

@@ -562,7 +562,6 @@ the mimeparser can not parse this message.	mail	it	Il mime parser non riesce a i
 the rule with priority %1 successfully saved!	mail	it	La regola con priorità %1 è stata salvata
 then	mail	it	DI
 there is no imap server configured.	mail	it	Non c'è alcun server IMAP configurato!
-this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	it	Questo messaggio contiene immagini da recuperare tramite protocollo HTTP non sicuro. Fare attenzione poiché quest'azione potrebbe compromettere la sicurezza!
 this message is smime encrypted and password protected.	mail	it	Questo messaggio è criptato via smime e protetto da password
 timeout on connections to your imap server	mail	it	Timeout della connessione al server IMAP
 to do	mail	it	da fare
@@ -629,5 +628,4 @@ you need to enter your s/mime passphrase to send this message.	mail	it	È necess
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	it	E' necessario installare il plugin Mailvelope disponibile per Chrome e Firefox da %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	it	Devi prima salvare il messaggio come bozza per poterlo salvare nel VFS
 you will loose current message body, unless you save it to your clipboard!	mail	it	Il corpo del messaggio attuale verrà perso, a meno che non venga salvato negli appunti!
-you've got new mail	mail	it	Hai nuovi messaggi
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare / ricevere ulteriori email.\n Ripulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.\n Se ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.

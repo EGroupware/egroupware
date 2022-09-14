@@ -528,7 +528,7 @@ how to show the general egroupware menu ?	common	pl	Jak wyświetlić
 html	common	pl	HTML
 hungary	common	pl	WĘGRY
 iceland	common	pl	ISLANDIA
-id	common	pl	id
+id	common	pl	ID
 iespell not detected. click ok to go to download page.	common	pl	Nie znaleziono ieSpell. Wybierz OK aby przejść na stronę pobierania.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pl	jeżeli pole jest wyłączone, pojawia się pusta komórka tabeli - dla (tymczasowego) usunięcia pola lub komórki
 if the clock is enabled would you like it to update it every second or every minute?	common	pl	Jeżeli zegar jest aktywny, czy chcesz odświeżać go co sekundę czy co minutę?
@@ -546,6 +546,7 @@ indexed	common	pl	Indeksowana
 indexoptions	common	pl	Opcje indeksu
 india	common	pl	INDIE
 indonesia	common	pl	INDONEZJA
+initial	common	pl	Początkowe
 insert a column before	common	pl	wstaw kolumnę przed
 insert a column behind	common	pl	wstaw kolumnę po
 insert a row above	common	pl	wstaw wiersz przed
@@ -994,6 +995,7 @@ show page generation time on the bottom of the page?	common	pl	Wyświetlać czas
 show page generation time?	common	pl	Czy pokazywać czas generowania strony?
 show the logo's of egroupware and x-desktop on the desktop.	common	pl	Pokazuj logo EGroupware oraz x-desktop na pulpicie.
 show values	common	pl	Pokaż wartości
+show/hide	common	pl	pokaż/ukryj pasek boczny
 show_more_apps	common	pl	show_more_apps
 showing	common	pl	Wyświetlono
 showing %1	common	pl	Wyświetlono %1
@@ -1207,5 +1209,3 @@ your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE
 zoom	common	pl	Powiększenie
-initial	common	pl	Początkowe
-id	common	pl	ID

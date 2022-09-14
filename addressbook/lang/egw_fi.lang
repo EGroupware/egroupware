@@ -377,6 +377,12 @@ send emailcopy to receiver	addressbook	fi	Lähetä sähköpostikopio vastaanotta
 seperator	addressbook	fi	Erotin (Separator)
 set full name and file as field in contacts of all users (either all or only empty values)	admin	fi	Aseta "koko nimi" ja "tiedosto nimellä" (File as) kenttä kaikille käyttäjille. (joko kaikki tai tyhjä).
 set only full name	addressbook	fi	Ainoastaan koko nimi
+share into addressbook	addressbook	fi	Jaa osoitekirjaan
+share writable	addressbook	fi	Jaa kirjoitettavissa
+shared	addressbook	fi	jaettu
+shared by me	addressbook	fi	Jaettu minun toimesta
+shared into addressbook %1	addressbook	fi	jaettu osoitekirjaan %1
+shared with	addressbook	fi	Jaettu
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	fi	Näytetäänkö kuva- ja kotiosoitesarake aina, vaikka ne olisivat tyhjiä?
 show	addressbook	fi	Näytä
 show infolog entries for this organisation	addressbook	fi	Näytä InfoLogin merkinnät tästä organisaatiosta

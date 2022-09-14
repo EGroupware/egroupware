@@ -2,3 +2,9 @@ move to addressbook	addressbook	lt	Perkelti į adresų knygelę
 no country selected	addressbook	lt	Šalis nepasirinkta
 no distribution list	addressbook	lt	Nėra paskirstymo sąrašo
 prevent deleting of contacts	admin	lt	Neleisti ištrinti kontaktų
+share into addressbook	addressbook	lt	Bendrinti į adresinę
+share writable	addressbook	lt	Dalijimasis rašomas
+shared	addressbook	lt	bendrinama
+shared by me	addressbook	lt	Dalijamasi su manimi
+shared into addressbook %1	addressbook	lt	pasidalinta į adresų knygelę %1
+shared with	addressbook	lt	Dalijamasi su

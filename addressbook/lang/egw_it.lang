@@ -454,6 +454,12 @@ send succeeded to %1	common	it	Inviato con successo a %1
 seperator	addressbook	it	Separatore
 set full name and file as field in contacts of all users (either all or only empty values)	admin	it	Imposta i campi nome completo e "salva come" nei contatti di tutti gli utenti. Tutti o solo quelli vuoti.
 set only full name	addressbook	it	Imposta solo nome completo
+share into addressbook	addressbook	it	Condivisione in rubrica
+share writable	addressbook	it	Condivisione scrivibile
+shared	addressbook	it	condiviso
+shared by me	addressbook	it	Condiviso da me
+shared into addressbook %1	addressbook	it	condiviso nella rubrica %1
+shared with	addressbook	it	Condiviso con
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	it	Mostrare foto e indirizzo abitazione sempre, anche se le colonne sono vuote
 show	addressbook	it	Mostra
 show active accounts	addressbook	it	Mostra account attivi

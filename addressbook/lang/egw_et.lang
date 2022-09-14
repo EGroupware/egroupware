@@ -52,6 +52,12 @@ photo	addressbook	et	Foto
 prevent deleting of contacts	admin	et	Kontaktide kustutamise vältimine
 repetition	addressbook	et	Kordus
 select all	addressbook	et	Märgi kõik
+share into addressbook	addressbook	et	Jaga aadressiraamatusse
+share writable	addressbook	et	Jaga kirjutatav
+shared	addressbook	et	jagatud
+shared by me	addressbook	et	Jagatud minu poolt
+shared into addressbook %1	addressbook	et	jagatud aadressiraamatusse %1
+shared with	addressbook	et	Jagatud koos
 show	addressbook	et	Näita
 start	admin	et	Start
 state	common	et	Maakond
