@@ -334,7 +334,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			// if not create new share
 			if ($mode == 'link')
 			{
-				$user_tmp = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp';
+				$user_tmp = '/home/'.Api\Accounts::id2name(Api\Vfs::$user).'/.tmp';
 				if (!Vfs::file_exists($user_tmp) && !Vfs::mkdir($user_tmp, null, STREAM_MKDIR_RECURSIVE))
 				{
 					throw new Api\Exception\AssertionFailed("Could NOT create temp. directory '$user_tmp'!");
