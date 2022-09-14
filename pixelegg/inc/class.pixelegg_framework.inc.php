@@ -137,6 +137,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			 .standartTreeRow{
 				font-size: {$textsize}px;
 			}
+			et2-lavatar, et2-avatar {font-size: 12px}
 		";
 		}
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color) || preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$loginbox_color))	// a little xss check
