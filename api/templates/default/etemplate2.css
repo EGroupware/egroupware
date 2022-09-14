@@ -4060,14 +4060,21 @@ div.flatpickr-calendar.inline .flatpickr-months {
     gap: 4px;
 }
 
+div.flatpickr-calendar.inline .flatpickr-current-month {
+    left: 0;
+    width: 100%;
+}
+
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-prev-month,
 div.flatpickr-calendar.inline .flatpickr-months .flatpickr-next-month {
     position: relative;
-    padding: 3px 5px;
+    padding: 10px 3px 0px 5px;
+    height: 26px;
 }
 
 div.flatpickr-calendar.inline .flatpickr-current-month .flatpickr-monthDropdown-months {
     width: 75%;
+    padding-left: 0;
 }
 
 div.flatpickr-calendar.inline .flatpickr-days {
