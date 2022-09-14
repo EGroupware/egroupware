@@ -228,15 +228,12 @@ function send_template()
 						$attrs['editModeEnabled'] = 'true';
 					}
 				}
-				if (isset($attrs['autocomplete_url']))
+				$attrs['searchUrl'] = $attrs['autocomplete_url'] ?? 'EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search';
+				if (isset($attrs['autocomplete_params']))
 				{
-					$attrs['searchUrl'] = $attrs['autocomplete_url'];
-					if (isset($attrs['autocomplete_params']))
-					{
-						$attrs['searchOptions'] = $attrs['autocomplete_params'];
-					}
-					unset($attrs['autocomplete_url'], $attrs['autocomplete_params']);
+					$attrs['searchOptions'] = $attrs['autocomplete_params'];
 				}
+				unset($attrs['autocomplete_url'], $attrs['autocomplete_params']);
 				if (isset($attrs['maxSelection']) && $attrs['maxSelection'] === '1')
 				{
 					unset($attrs['multiple'], $attrs['maxSelection']);
