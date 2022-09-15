@@ -450,6 +450,16 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.createFreeEntry(this.value);
 			}
+			else if(this.allowFreeEntries && this.multiple)
+			{
+				this.value.forEach((e) =>
+				{
+					if(!this._menuItems.find(o => o.value == e))
+					{
+						this.createFreeEntry(e);
+					}
+				});
+			}
 		}
 
 		protected fix_bad_value()
