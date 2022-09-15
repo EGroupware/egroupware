@@ -138,6 +138,15 @@ LDAP Attribute Name: givenName
 LDAP Attribute Name: sn
 ```
 
+* If you want an automatic SAML SingleSignOn, eg. by clicking on an EGroupware tile in the portal, 
+you need to switch in Setup > Site configuration ```Authentication``` to ```SAML``` and remove the
+```Test SSO``` label from the beginning of the SAML configuration.
+* To be able to use a password login in the above case, you need to add the following to your DB:
+```sql
+INSERT INTO egw_config VALUES ('phpgwapi', 'univention_discovery', 'true');
+```
+&nbsp; &nbsp; &nbsp; &nbsp; Clear the cache and use the following URL: ```https://example.org/egroupware/login.php?auth=univention```
+
 * Some useful links
     * [How does Single Sign-on work?](https://www.univention.com/blog-en/2021/08/how-does-single-sign-on-work-with-saml-and-openidconnect/)
     * [Reconfigure UCS Single Sign On](https://help.univention.com/t/reconfigure-ucs-single-sign-on/16161)
@@ -166,4 +175,7 @@ Admin user: dovecotadmin
 Password:   secretpassword
             X Use admin credentials to connect without a session-password, e.g. for SSO
 ```
+> Currently, there are two bugs, you need to work around:
+> 1. EGroupware checks the above user/password as an IMAP user, so you need to additionally create him as UCS user with mail, in order to be able to store the dialog.
+> 2. The account you use for testing, must NOT have any additional personal mail accounts, as you get an error in that case, when you open the mail app.
 * log out and in again with SSO and check everything works
