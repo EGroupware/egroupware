@@ -188,6 +188,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					this.validators.push(new Required());
 				}
 			}
+
+			if(changedProperties.has("value"))
+			{
+				// Base off this.value, not this.getValue(), to ignore readonly
+				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+			}
 		}
 
 		/**

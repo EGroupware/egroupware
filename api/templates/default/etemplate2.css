@@ -1996,7 +1996,7 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required, .et2_required::part(base), [required]::part(base) {
+.et2_required:not(.hasValue), .et2_required:not(.hasValue)::part(base), [required]:not(.hasValue)::part(base) {
     background-color: #ffffd0;
 }
 
