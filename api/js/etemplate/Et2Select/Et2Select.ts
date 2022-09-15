@@ -80,10 +80,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			sl-menu::part(base) {
 				padding: 0px;
 			}
-			/* allow required background color to show */
-			.select--standard .select__control {
-				background-color: inherit;
-			}
 			/* No horizontal scrollbar, even if options are long */
 			.dropdown__panel {
 				overflow-x: clip;

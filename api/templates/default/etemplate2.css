@@ -1996,7 +1996,11 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
 /**
 * Validation
 */
-.et2_required:not(.hasValue), .et2_required:not(.hasValue)::part(base), [required]:not(.hasValue)::part(base) {
+.et2_required:not(.hasValue), .et2_required:not(.hasValue)::part(base), .et2_required:not(.hasValue)::part(control),
+    /* most inputs */
+[required]:not(.hasValue)::part(base),
+    /* selects */
+[required]:not(.hasValue)::part(control) {
     background-color: #ffffd0;
 }
 
