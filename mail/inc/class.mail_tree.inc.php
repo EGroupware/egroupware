@@ -479,33 +479,52 @@ class mail_tree
 	{
 		$roots = array(Tree::ID => 0, Tree::CHILDREN => array());
 
-		foreach(Mail\Account::search(true, false) as $acc_id => $accObj)
+		foreach(Mail\Account::search(true, 'params') as $acc_id => $params)
 		{
-			if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
-			$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true, $GLOBALS['egw_info']['user']['account_id'], true));
-			// Open top level folders for active account
-			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
+			try {
+				$accObj = new Mail\Account($params);
+				if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
+				$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true, $GLOBALS['egw_info']['user']['account_id'], true));
+				// Open top level folders for active account
+				$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
 
-			$baseNode = array(
-							Tree::ID=> (string)$acc_id,
-							Tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
-							Tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($identity),
-							Tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
-							Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderAccount'],
-							Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderAccount'],
-							'path'=> array($acc_id),
-							Tree::CHILDREN => array(), // dynamic loading on unfold
-							Tree::AUTOLOAD_CHILDREN => true,
-							'parent' => '',
-							Tree::OPEN => $_openTopLevel?$_openTopLevel:$openActiveAccount,
-							// mark on account if Sieve is enabled
-							'data' => array(
-										'sieve' => $accObj->imapServer()->acc_sieve_enabled,
-										'spamfolder'=> $accObj->imapServer()->acc_folder_junk&&(strtolower($accObj->imapServer()->acc_folder_junk)!='none')?true:false,
-										'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false
-									),
-							Tree::NOCHECKBOX  => $_noCheckbox
-			);
+				$baseNode = array(
+					Tree::ID => (string)$acc_id,
+					Tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
+					Tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($identity),
+					Tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
+					Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderAccount'],
+					Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderAccount'],
+					'path'=> array($acc_id),
+					Tree::CHILDREN => array(), // dynamic loading on unfold
+					Tree::AUTOLOAD_CHILDREN => true,
+					'parent' => '',
+					Tree::OPEN => $_openTopLevel?:$openActiveAccount,
+					// mark on account if Sieve is enabled
+					'data' => array(
+						'sieve' => $accObj->imapServer()->acc_sieve_enabled,
+						'spamfolder'=> $accObj->imapServer()->acc_folder_junk&&(strtolower($accObj->imapServer()->acc_folder_junk)!='none')?true:false,
+						'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false
+					),
+					Tree::NOCHECKBOX  => $_noCheckbox
+				);
+			}
+			catch (\Exception $ex) {
+				$baseNode = array(
+					Tree::ID => (string)$acc_id,
+					Tree::LABEL => lang('Error').': '.lang($ex->getMessage()),
+					Tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($params['acc_name']),
+					Tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
+					Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderAccount'],
+					Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderAccount'],
+					'path'=> array($acc_id),
+					Tree::CHILDREN => array(), // dynamic loading on unfold
+					Tree::AUTOLOAD_CHILDREN => false,
+					'parent' => '',
+					Tree::OPEN => false,
+					Tree::NOCHECKBOX  => true
+				);
+			}
 			self::setOutStructure($baseNode, $roots,self::DELIMITER);
 		}
 		return $roots;
