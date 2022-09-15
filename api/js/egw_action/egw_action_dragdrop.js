@@ -461,7 +461,7 @@ export function egwDropActionImplementation()
 				}
 				if (!self.getTheDraggedDOM()) return ;
 
-					const data = {
+				const data = {
 					event: event,
 					ui: self.getTheDraggedData()
 				};
@@ -486,6 +486,9 @@ export function egwDropActionImplementation()
 				};
 
 				_aoi.triggerEvent(EGW_AI_DRAG_ENTER, data);
+
+				// cleanup drop hover class from all other DOMs if there's still anything left
+				Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
 
 				this.classList.add('drop-hover');
 
