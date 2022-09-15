@@ -395,7 +395,7 @@ class setup_detection
 			// ignore db errors
 		}
 		$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
-		if(!count($config))
+		if(empty($config))
 		{
 			return 1;
 		}
