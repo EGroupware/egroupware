@@ -70,6 +70,7 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 
 		// keep track of opened popups
 		this.popups = [];
+		window.addEventListener("beforeunload", this.beforeUnloadHandler.bind(this));
 
 
 		// initiate dark mode
@@ -1040,6 +1041,18 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 			}
 		}
 		return popups.flat();
+	},
+
+	/**
+	 * If this window is closed, notify popups about it
+	 * @param event
+	 */
+	beforeUnloadHandler: function (event)
+	{
+		this.popups.forEach(function (popup)
+		{
+			popup.egw_rejoin(popup);
+		});
 	},
 
 	/**

@@ -476,3 +476,30 @@ window.et2_call = function(_func)
 {
 	return egw.applyFunc(_func, [].slice.call(arguments, 1), window);
 }
+
+/**
+ * Main window was reloaded, rejoin
+ */
+window.egw_rejoin = function ()
+{
+	let warning = egw(this).message(egw.lang("Lost connection to main window"), "warning");
+
+	window.setTimeout(function ()
+	{
+		opener.addEventListener("load", () =>
+		{
+			/* It takes more than just re-setting this.framework to get things working again
+
+			let reconnecting = egw(this).message("Reconnecting...");
+			window.setTimeout(() =>
+			{
+				opener.console.log("Re-set framework");
+				warning.close();
+				reconnecting.close();
+				this.framework = this.opener.framework;
+				this.framework.egw_appWindow().console.log("Popup %s rejoined", this.location.href);
+			}, 5000);
+			 */
+		});
+	}.bind(window), 500);
+}
