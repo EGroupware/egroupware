@@ -121,7 +121,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			}
 		";
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'];
-		if (!empty($textsize) && $textsize != '12')
+		if (!empty($textsize) && is_numeric($textsize) && $textsize != '12')
 		{
 			$iconSize = $textsize+4;
 			$ret['app_css'] .= "
