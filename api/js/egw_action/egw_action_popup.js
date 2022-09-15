@@ -788,7 +788,8 @@ export function egwPopupActionImplementation()
 				{
 					copyTextToClipboard(event, clipboard_action, os_clipboard_caption).then((successful) =>
 					{
-						if (successful)
+						// Fallback
+						if (typeof successful == "undefined")
 						{
 							// Clear message
 							egw.message(egw.lang("'%1' copied to clipboard", os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
@@ -1008,7 +1009,7 @@ function copyTextToClipboard(event, action, text)
 	if (!navigator.clipboard)
 	{
 		let success = fallbackCopyTextToClipboard(event, action, text);
-		return Promise.resolve(success);
+		return Promise.resolve(success ? undefined : false);
 	}
 	// Use Clipboard API
 	return navigator.clipboard.writeText(text);
