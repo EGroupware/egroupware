@@ -125,12 +125,11 @@
         <buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add"/>
     </template>
     <template id="mail.index.header_right" template="" lang="" group="0" version="1.9.001">
-        <hbox id="mail.index.vacationnotice" class="mail-index_vacation">
-            <vbox>
-                <description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
-                <description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/>
-            </vbox>
-        </hbox>
+        <et2-details id="mail.index.vacationnotice" summary="on vacation" toggleOnHover="true" hoist="true" class="vacationnotice">
+            <description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
+            <description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/>
+        </et2-details>
+
         <hbox id="mail.index.datefilter" class="mail-index_datefilter">
             <date id="startdate" label="Start" onchange="app.mail.mail_refreshMessageGrid(false,true);"/>
             <date id="enddate" label="End" onchange="app.mail.mail_refreshMessageGrid(false,true);"/>

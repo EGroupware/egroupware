@@ -1543,11 +1543,13 @@ app.classes.mail = AppJS.extend(
 		if (!this.et2 && !this.checkET2()) return;
 		if (_data == null)
 		{
+			this.et2.getWidgetById('mail.index.vacationnotice').set_disabled(true);
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value('');
 			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value('');
 		}
 		else
 		{
+			this.et2.getWidgetById('mail.index.vacationnotice').set_disabled(false);
 			this.et2.getWidgetById(this.nm_index+'[vacationnotice]').set_value(_data.vacationnotice);
 			this.et2.getWidgetById(this.nm_index+'[vacationrange]').set_value(_data.vacationrange);
 		}

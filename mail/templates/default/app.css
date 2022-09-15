@@ -1047,3 +1047,13 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 }
 #popupMainDiv {height: 100%}
 .treeContainer {height: calc(100% - 100px)}
+#mail-index_mail-index-header_right {gap: 1ex;}
+#mail-index_mail-index-header_right et2-details.vacationnotice {
+	min-width: 8em;
+}
+#mail-index_mail-index-header_right et2-details.vacationnotice::part(base) {
+	background: #dee9f3;
+	border-color: #0f65968f;
+	border-width: 1px;
+	height: 2.6em;
+}
