@@ -118,6 +118,8 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			{
 				// Add in options as children to the target node
 				this._renderOptions();
+
+				// This is needed to display initial load value in some cases, like infolog nm header filters
 				if(this.handleMenuSlotChange)
 				{
 					this.handleMenuSlotChange();
