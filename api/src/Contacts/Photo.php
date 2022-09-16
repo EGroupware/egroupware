@@ -142,6 +142,9 @@ class Photo
 				'contact_id' => $this->contact['id'],
 			]));
 		}
+		// to test/debug behavior for accounts in LDAP or AD uncomment the following line
+		//if ($path[0] === '/') $path = file_get_contents(Api\Vfs::PREFIX.$path);
+
 		// if we got photo, we have to create a temp. file to share
 		if ($path[0] !== '/')
 		{
