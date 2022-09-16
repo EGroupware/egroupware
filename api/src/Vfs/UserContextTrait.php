@@ -61,9 +61,9 @@ trait UserContextTrait
 		}
 
 		// if we have no user set, set the current one / Api\Vfs::$user
-		if (empty(stream_context_get_options($this->context)[Vfs::SCHEME]['user']) && !empty(Api\Vfs::$user))
+		if (empty($this->user) && !empty(Api\Vfs::$user))
 		{
-			stream_context_set_option($this->context, [Vfs::SCHEME => ['user' => Api\Vfs::$user]]);
+			$this->user = Api\Vfs::$user;
 		}
 	}
 
