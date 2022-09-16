@@ -69,10 +69,10 @@ export class Et2LinkSearch extends Et2Select
 		{
 			if(!this.query(request, this))
 			{
-				return;
+				return Promise.resolve();
 			}
 		}
-		request.then((result) =>
+		return request.then((result) =>
 		{
 			this.processRemoteResults(result);
 		});

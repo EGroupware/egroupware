@@ -359,8 +359,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			super.updateComplete.then(() =>
 			{
-				this.menu.querySelector("slot").textContent = this.egw().lang("No suggestions");
-
 				let control = this.shadowRoot.querySelector(".form-control-input");
 				control.append(div);
 			});
@@ -760,8 +758,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 * If we have local options, we'll search & display any matches.
 		 * If serverUrl is set, we'll ask the server for results as well.
 		 */
-		public startSearch()
+		public async startSearch()
 		{
+			this.menu.querySelector("slot").textContent = "";
+
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
@@ -777,18 +777,31 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				clear_button.style.display = "none";
 			}
 
+			// Clear previous results
+			this._clearResults();
+			await this.updateComplete;
+
 			// Start the searches
-			Promise.all([
+			return Promise.all([
 				this.localSearch(this._searchInputNode.value, this.searchOptions),
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(() =>
 			{
+				// Show / hide no results indicator
+				this.menu.querySelector("slot").textContent = this.menuItems.length == 0 ? this.egw().lang("No suggestions") : "";
+
+				// Remove spinner
 				spinner.remove();
+
 				// Restore clear button
 				if(clear_button)
 				{
 					clear_button.style.display = "";
 				}
+			}).then(() =>
+			{
+				// Not sure why this stays hidden if there's no results but it sticks and hides all results afterward
+				this.dropdown.shadowRoot.querySelector(".dropdown__panel").removeAttribute("hidden");
 			});
 		}
 
@@ -802,6 +815,17 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
+			this._clearResults();
+
+			// Clear search term
+			if(this._searchInputNode)
+			{
+				this._searchInputNode.value = "";
+			}
+		}
+
+		protected _clearResults()
+		{
 			// Remove remote options that aren't used
 			let target = this._optionTargetNode || this;
 			let keepers = this._selected_remote.reduce((prev, current) =>
@@ -824,12 +848,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				item.classList.remove("match");
 				item.classList.remove("no-match");
 			});
-
-			// Clear search term
-			if(this._searchInputNode)
-			{
-				this._searchInputNode.value = "";
-			}
 		}
 
 		/**
@@ -904,8 +922,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected processRemoteResults(results)
 		{
+
 			let entries = cleanSelectOptions(results);
 
+			if(entries.length == 0)
+			{
+				return Promise.resolve();
+			}
 			// Add a "remote" class so we can tell these apart from any local results
 			entries.forEach((entry) => entry.class = (entry.class || "") + " remote");
 
