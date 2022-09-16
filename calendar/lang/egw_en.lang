@@ -485,6 +485,7 @@ repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 replacements for inserting events into documents	calendar	en	Replacements for inserting events into documents
 reply to meeting request	calendar	en	Reply to meeting request
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	en	Replying "%1" is NOT a participant of the event! Only continue if you want to add as new participant.
 requested	calendar	en	Requested
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 requested meeting is in the past!	calendar	en	Requested meeting is in the past!

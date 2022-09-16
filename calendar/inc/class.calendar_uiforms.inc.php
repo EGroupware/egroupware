@@ -2198,6 +2198,25 @@ class calendar_uiforms extends calendar_ui
 						if ($event['ical_sender_uid'] && $this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
 						{
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
+							// check if email matches, in case we have now something like "Name <email>"
+							if (!isset($existing_status) && $event['ical_sender_uid'][0] === 'e')
+							{
+								foreach((array)$existing_event['participant_types']['e'] as $email => $status)
+								{
+									if (preg_match('/<(.*)>$/', $email, $matches)) $email = $matches[1];
+									if (strtolower($email) === strtolower($participant))
+									{
+										$existing_status = $status;
+										break;
+									}
+								}
+							}
+							// warn user about party-crashers (non-participants sending a reply)
+							if (!isset($existing_status))
+							{
+								if (!empty($event['sender_warning'])) $event['sender_warning'] .= "\n";
+								$event['sender_warning'] .= lang('Replying "%1" is NOT a participant of the event! Only continue if you want to add as new participant.', $participant);
+							}
 							calendar_so::split_status($existing_status, $quantity, $role);
 							if ($existing_status != $event['ical_sender_status'])
 							{
@@ -2308,7 +2327,8 @@ class calendar_uiforms extends calendar_ui
 
 			$msg = [];
 			// do we need to update the event itself (user-status is reset to old in event_changed!)
-			if ($button !== 'delete' && !empty($event['old']) && self::event_changed($event, $event['old']))
+			if (strtolower($event['ics_method']) !== 'reply' && // do NOT apply (all) data from participants replying
+				$button !== 'delete' && !empty($event['old']) && self::event_changed($event, $event['old']))
 			{
 				// check if we are allowed to update the event
 				if($this->bo->check_perms(Acl::EDIT, $event['old']) || $event['extern_organizer'])
