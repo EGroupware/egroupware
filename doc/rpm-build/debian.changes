@@ -1,3 +1,15 @@
+egroupware-docker (21.1.20220916) hardy; urgency=low
+
+  * Mail/RichTextEditor: common preference "small paragraph" now changes return key to a line break instead of a paragraph (with margin)
+  * Mail: remove left (and right) margin of p and div, which can interact bad with the signature
+  * Mail/Calendar: fix applying a participant reply as organizer overwrote event with data send by the participant (not just his status)
+  * Mail/SAML/SSO: show mail accounts requiring the session password as Error, but load the other accounts
+  * OpenID Connect: autodiscovery support via /.well-known/openid-configuration
+  * LDAP/AD/OpenID Connect: fix error creating tokens with profile claim, if user has a picture
+  * EPL/CTI/Placetel: set CSP to fix not playing voice-mail
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 16 Sep 2022 11:42:21 +0200
+
 egroupware-docker (21.1.20220905) hardy; urgency=low
 
   * Calendar/Mail: allow every participant to apply changes from extern organizer and warn if sender is not identical to iCal organizer or participant
