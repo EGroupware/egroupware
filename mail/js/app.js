@@ -354,7 +354,7 @@ app.classes.mail = AppJS.extend(
 				// depending on To field value
 				var to = this.et2.getWidgetById('to');
 				var content = this.et2.getArrayMgr('content').data;
-				if (to && to.get_value() && to.get_value() != '')
+				if (to && to.get_value() && to.get_value().length > 0)
 				{
 					if (content.is_plain)
 					{
@@ -365,7 +365,7 @@ app.classes.mail = AppJS.extend(
 					}
 					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.tinymce.then(()=>{textAreaWidget.editor.focus()});
+						textAreaWidget.tinymce.then(()=>{setTimeout(function(){textAreaWidget.editor.focus()}, 500);});
 					}
 				}
 				else if(to)
