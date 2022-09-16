@@ -4022,6 +4022,7 @@ div#egwpopup_message {
 }
 .egw_fw_ui_app_header_container {
   height: auto;
+  display: none;
 }
 .egw_fw_ui_app_header_container .egw_fw_ui_app_header {
   padding: 1px 0 0 0;
@@ -4619,6 +4620,7 @@ span.overlayContainer img.overlay {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  margin-top: 0.8em;
 }
 #egw_fw_main .egw_fw_ui_tab_content > div {
   width: 100%;
