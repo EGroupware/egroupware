@@ -386,6 +386,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			`;
 		}
 
+		protected _noResultsTemplate()
+		{
+			return html`
+                <div class="no-results">${this.egw().lang("no suggestions")}</div>`;
+		}
 
 		/**
 		 * Do we have the needed properties set, so we can actually do searching
@@ -760,8 +765,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		public async startSearch()
 		{
-			this.menu.querySelector("slot").textContent = "";
-
 			// Stop timeout timer
 			clearTimeout(this._searchTimeout);
 
@@ -787,8 +790,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this.remoteSearch(this._searchInputNode.value, this.searchOptions)
 			]).then(() =>
 			{
-				// Show / hide no results indicator
-				this.menu.querySelector("slot").textContent = this.menuItems.length == 0 ? this.egw().lang("No suggestions") : "";
+				// Show no results indicator
+				if(this.menuItems.filter(e => !e.classList.contains("no-match")).length == 0)
+				{
+					let target = this._optionTargetNode || this;
+					let temp = document.createElement("div");
+					render(this._noResultsTemplate(), temp);
+					target.append(temp.children[0]);
+				}
 
 				// Remove spinner
 				spinner.remove();
@@ -826,8 +835,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _clearResults()
 		{
-			// Remove remote options that aren't used
 			let target = this._optionTargetNode || this;
+
+			// Remove "no suggestions"
+			target.querySelector(".no-results")?.remove();
+
+			// Remove remote options that aren't used
 			let keepers = this._selected_remote.reduce((prev, current) =>
 			{
 				return ":not([value='" + current.value + "'])";
