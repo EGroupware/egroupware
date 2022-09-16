@@ -484,6 +484,7 @@ repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 replacements for inserting events into documents	calendar	de	Platzhalter für das Einfügen von Terminen in Dokumente
 reply to meeting request	calendar	de	Antwort auf Terminanfrage
+replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	de	Der antwortende "%1" ist kein Teilnehmer des Termins! Nur weiter machen, wenn Sie ihn als neuen Teilnehmer hinzufügen wollen.
 requested	calendar	de	Erforderlich
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholende Termine ausgelassen!
 requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
