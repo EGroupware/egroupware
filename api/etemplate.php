@@ -72,6 +72,7 @@ function send_template()
 
 		// fix <menulist...><menupopup type="select-*"/></menulist> --> <select type="select-*" .../>
 		$str = preg_replace('#<menulist([^>]*)>[\r\n\s]*(<!--[^>]+-->[\r\n\s]*)?<menupopup([^>]+>)[\r\n\s]*</menulist>#', '$2<select$1$3', $str);
+		$str = preg_replace('#<menupopup([^>]*)>#', '<select$1>', $str);
 
 		// fix legacy options, so new client-side has not to deal with them
 		$str = preg_replace_callback('#<([^- />]+)(-[^ ]+)?[^>]* (options="([^"]+)")[ />]#', static function ($matches) {
@@ -332,6 +333,7 @@ function send_template()
 			return "<$tag " . stringAttrs($attrs) . '></' . $tag . '>';
 		}, $str);
 
+		$str = preg_replace('#<time_or_date\s([^>]+)/>#', '<et2-date-time-today $1></et2-date-time-today>', $str);
 		$str = preg_replace_callback('#<date(-time[^\s]*|-duration|-since)?\s([^>]+)/>#', static function($matches)
 		{
 			if ($matches[1] === '-time_today') $matches[1] = '-time-today';
