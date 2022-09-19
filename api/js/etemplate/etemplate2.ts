@@ -80,6 +80,7 @@ import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Spinner/Et2Spinner';
 import './Et2Switch/Et2Switch';
 import './Et2Textarea/Et2Textarea';
+import './Et2Textarea/Et2TextareaReadonly';
 import './Et2Textbox/Et2Textbox';
 import './Et2Textbox/Et2TextboxReadonly';
 import './Et2Textbox/Et2Number';
