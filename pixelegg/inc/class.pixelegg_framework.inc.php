@@ -132,7 +132,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header h1,
 			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1,
 			 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h2,
-			 table.egwGridView_grid,
+			 table.egwGridView_grid, .calendar_calTimeRow .calendar_calTimeRowTime, .calendar_calGridHeader .calendar_calDayColHeader > div[data-date],
 			 .selectedTreeRow,
 			 .standartTreeRow{
 				font-size: {$textsize}px;
