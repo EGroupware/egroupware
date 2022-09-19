@@ -178,6 +178,16 @@ export class Et2SelectEmail extends Et2Select
 		}
 		return tag;
 	}
+
+	/**
+	 * Override image to skip it, we add images in Et2EmailTag using CSS
+	 * @param item
+	 * @protected
+	 */
+	protected _createImage(item)
+	{
+		return this.multiple ? "" : super._createImage(item);
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
