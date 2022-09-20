@@ -436,10 +436,10 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				const line_height = parseFloat(this.div.css('line-height'));
 				let visible_lines = Math.floor(this.div.innerHeight() / line_height);
 
-				if (!this.title.height())
+				if(!this.title[0].clientHeight)
 				{
-						// Handle sizing while hidden, such as when calendar is not the active tab
-						visible_lines = Math.floor(egw.getHiddenDimensions(this.div).h / egw.getHiddenDimensions(this.title).h);
+					// Handle sizing while hidden, such as when calendar is not the active tab
+					visible_lines = 1;
 				}
 				visible_lines = Math.max(1, visible_lines);
 
