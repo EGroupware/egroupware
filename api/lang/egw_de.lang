@@ -26,6 +26,7 @@
 %s notranslation	common	de	%s nicht übersetzen
 %s onchange	common	de	%s onChange
 %s readonly	common	de	%s Schreibschutz
+'%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
 '%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
 '%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
 '%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
