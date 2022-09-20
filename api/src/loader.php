@@ -25,7 +25,7 @@ use EGroupware\Api\Egw;
 // --> switching it off for now, as it makes error-log unusable
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
-$egw_min_php_version = '7.3';
+$egw_min_php_version = '7.4';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)
 {
 	die("EGroupware requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
