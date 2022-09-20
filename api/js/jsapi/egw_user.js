@@ -122,11 +122,16 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				// Synchronous
 				egw.json("EGroupware\\Api\\Framework::ajax_user_list",[], cache_it, this, false).sendRequest(false);
 			}
+			let result = [];
 			if (type === 'both')
 			{
-				return [].concat(accountStore.accounts, accountStore.groups);
+				result = [].concat(accountStore.accounts, accountStore.groups);
 			}
-			return [].concat(accountStore[type]);
+			else
+			{
+				result = [].concat(accountStore[type]);
+			}
+			return async ? Promise.resolve(result) : result;
 		},
 
 		/**

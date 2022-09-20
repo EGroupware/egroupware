@@ -81,79 +81,87 @@ export class Et2ButtonTimestamper extends Et2Button
 
 		// Get properly formatted user name
 		const user = parseInt(egw.user('account_id'));
-		const account = egw.accounts('accounts').filter(option => option.value == user)[0];
-		text += account.label + ': ';
-
-		const widget = this._get_input(this.target);
-		let input = widget.input ? widget.input : widget.getDOMNode();
-		if(input.context)
+		egw.accounts('accounts', true).then((accounts) =>
 		{
-			input = input.get(0);
-		}
+			const account = accounts.filter(option => option.value == user)[0];
+			text += account.label + ': ';
 
-		let scrollPos = input.scrollTop;
-		let browser = ((input.selectionStart || input.selectionStart == "0") ?
-			"standards" : (document["selection"] ? "ie" : false ) );
-
-		let pos = 0;
-		let tinymce = tinyMCE && tinyMCE.EditorManager.get(input.id) || false;
-
-		// Find cursor or selection
-		if (browser == "ie")
-		{
-			input.focus();
-			let range = document["selection"].createRange();
-			range.moveStart ("character", -input.value.length);
-			pos = range.text.length;
-		}
-		else if (browser == "standards")
-		{
-			pos = input.selectionStart;
-		}
-
-		// If on a tab, switch to that tab so user can see it
-		let tabbox = widget;
-		while(tabbox._parent && tabbox.nodeName !== 'ET2-TABBOX')
-		{
-			tabbox = tabbox._parent;
-		}
-		if (tabbox.nodeName === 'ET2-TABBOX') (<Et2Tabs>tabbox).activateTab(widget);
-
-		// If tinymce, update it
-		if(tinymce)
-		{
-			tinymce.insertContent(text);
-		}
-		else
-		{
-			// Insert the text
-			let front = (input.value).substring(0, pos);
-			let back = (input.value).substring(pos, input.value.length);
-			// for webComponent, we need to set the component value too, otherwise the change is lost!
-			if (typeof widget.tagName !== 'undefined')
+			const widget = this._get_input(this.target);
+			let input = widget.input ? widget.input : widget.getDOMNode();
+			if(input.context)
 			{
-				widget.value = front+text+back;
+				input = input.get(0);
 			}
-			input.value = front+text+back;
 
-			// Clean up a little
-			pos = pos + text.length;
-			if (browser == "ie") {
+			let scrollPos = input.scrollTop;
+			let browser = ((input.selectionStart || input.selectionStart == "0") ?
+						   "standards" : (document["selection"] ? "ie" : false));
+
+			let pos = 0;
+			let tinymce = tinyMCE && tinyMCE.EditorManager.get(input.id) || false;
+
+			// Find cursor or selection
+			if(browser == "ie")
+			{
 				input.focus();
 				let range = document["selection"].createRange();
-				range.moveStart ("character", -input.value.length);
-				range.moveStart ("character", pos);
-				range.moveEnd ("character", 0);
-				range.select();
+				range.moveStart("character", -input.value.length);
+				pos = range.text.length;
 			}
-			else if (browser == "standards") {
-				input.selectionStart = pos;
-				input.selectionEnd = pos;
+			else if(browser == "standards")
+			{
+				pos = input.selectionStart;
+			}
+
+			// If on a tab, switch to that tab so user can see it
+			let tabbox = widget;
+			while(tabbox._parent && tabbox.nodeName !== 'ET2-TABBOX')
+			{
+				tabbox = tabbox._parent;
+			}
+			if(tabbox.nodeName === 'ET2-TABBOX')
+			{
+				(<Et2Tabs>tabbox).activateTab(widget);
+			}
+
+			// If tinymce, update it
+			if(tinymce)
+			{
+				tinymce.insertContent(text);
+			}
+			else
+			{
+				// Insert the text
+				let front = (input.value).substring(0, pos);
+				let back = (input.value).substring(pos, input.value.length);
+				// for webComponent, we need to set the component value too, otherwise the change is lost!
+				if(typeof widget.tagName !== 'undefined')
+				{
+					widget.value = front + text + back;
+				}
+				input.value = front + text + back;
+
+				// Clean up a little
+				pos = pos + text.length;
+				if(browser == "ie")
+				{
+					input.focus();
+					let range = document["selection"].createRange();
+					range.moveStart("character", -input.value.length);
+					range.moveStart("character", pos);
+					range.moveEnd("character", 0);
+					range.select();
+				}
+				else if(browser == "standards")
+				{
+					input.selectionStart = pos;
+					input.selectionEnd = pos;
+					input.focus();
+				}
+				input.scrollTop = scrollPos;
 				input.focus();
 			}
-			input.scrollTop = scrollPos;
-			input.focus();
-		}
+		});
 	}
 
 	private _get_input(target)
