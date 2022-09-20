@@ -102,14 +102,12 @@ services:
     #
     # extra non-default apps (need to start with EGW_EXTRA_APP!)
     #
-    # new push server not yet in composer.json
-    - EGW_EXTRA_APP_PUSH=https://github.com/EGroupware/swoolepush.git
     # EPL apps (need extra credentials!)
     #- EGW_EXTRA_APPS_EPL=https://github.com/EGroupwareGmbH/epl.git https://github.com/EGroupwareGmbH/esyncpro.git https://github.com/EGroupwareGmbH/policy.git https://github.com/EGroupwareGmbH/webauthn.git
     # old Wiki
-    - EGW_EXTRA_APP_WIKI=https://github.com/EGroupware/wiki.git
-    # old API and eTemplate(1)
-    - EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
+    #- EGW_EXTRA_APP_WIKI=https://github.com/EGroupware/wiki.git
+    # old API and eTemplate(1), required for upgrades from before 14.3
+    #- EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
     #
     # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
     - XDEBUG_REMOTE_HOST=docker.for.mac.localhost
@@ -146,12 +144,13 @@ services:
     container_name: egroupware-nginx
     restart: always
 
-  # run an own MariaDB:10.5 (you can use EGroupware's database backup and restore to add your existing database)
+  # run an own MariaDB:10.6 (you can use EGroupware's database backup and restore to add your existing database)
   db:
-    image: mariadb:10.5
+    image: mariadb:10.6
     environment:
     #- MYSQL_ROOT=root
     - MYSQL_ROOT_PASSWORD=secret
+    - MARIADB_AUTO_UPGRADE=true
     volumes:
     - db:/var/lib/mysql
     # to add an own persistent configuration

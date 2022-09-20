@@ -3,7 +3,7 @@
 ## EGroupware development container using Ubuntu 20.04 and PHP from ondrej/php PPA
 ##
 ################################################################################
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 MAINTAINER rb@egroupware.org
 
 ARG VERSION=dev-master
