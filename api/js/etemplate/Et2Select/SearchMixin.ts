@@ -270,6 +270,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 			this.handleMenuSelect = this.handleMenuSelect.bind(this);
 			this._handleChange = this._handleChange.bind(this);
+			this._handleAfterShow = this._handleAfterShow.bind(this);
 			this._handleSearchBlur = this._handleSearchBlur.bind(this);
 			this._handleClear = this._handleClear.bind(this);
 			this._handleDoubleClick = this._handleDoubleClick.bind(this);
@@ -486,11 +487,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		protected _bindListeners()
 		{
-			this.addEventListener("sl-clear", this._handleClear)
+			this.addEventListener("sl-clear", this._handleClear);
+			this.addEventListener("sl-after-show", this._handleAfterShow);
 
 			// Need our own change to catch the change event from search input
 			this.addEventListener("change", this._handleChange);
-			
+
 			this.updateComplete.then(() =>
 			{
 				// Search messes up event order.  Since it throws its own bubbling change event,
@@ -506,6 +508,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected _unbindListeners()
 		{
 			this.removeEventListener("sl-select", this._handleSelect);
+			this.removeEventListener("sl-after-show", this._handleAfterShow);
 			this.removeEventListener("sl-clear", this._handleClear)
 			this.removeEventListener("change", this._handleChange);
 
@@ -520,12 +523,6 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			}
 			// Move search (& menu) if there's no value
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
-			this.dropdown?.setAttribute("distance",
-				!this._activeControls || this._activeControls?.classList.contains("novalue") ?
-				"" :
-					// Make room for search below
-				parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
-			);
 
 			super.handleMenuShow();
 
@@ -540,8 +537,30 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.startEdit();
 				this._editInputNode.select();
-				// Hide search explicitly since its so hard via CSS
+				// Hide search explicitly since it's so hard via CSS
 				this._searchInputNode.style.display = "none";
+			}
+		}
+
+		/**
+		 * Reposition the dropdown to allow space for current value and search.  If the dropdown was positioned above
+		 * instead of below, we don't need the extra space - remove it.
+		 */
+		_handleAfterShow()
+		{
+			if(this.dropdown?.getAttribute("distance") && this.dropdown?.positioner.getAttribute("data-placement") == "top")
+			{
+				this.dropdown.setAttribute("distance", 0);
+				this.dropdown.reposition();
+			}
+			else
+			{
+				this.dropdown?.setAttribute("distance",
+					!this._activeControls || this._activeControls?.classList.contains("novalue") ?
+					"" :
+						// Make room for search below
+					parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
+				);
 			}
 		}
 
@@ -809,8 +828,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				}
 			}).then(() =>
 			{
-				// Not sure why this stays hidden if there's no results but it sticks and hides all results afterward
+				// Not sure why this stays hidden if there's no results, but it sticks and hides all results afterward
 				this.dropdown.shadowRoot.querySelector(".dropdown__panel").removeAttribute("hidden");
+
+				// Call our resize stuff explicitly, but need to give positioner a chance to position.
+				// If we call it right away, it has not updated.
+				// I haven't found an event or Promise to hook on to
+				window.setTimeout(this._handleAfterShow, 100);
 			});
 		}
 
