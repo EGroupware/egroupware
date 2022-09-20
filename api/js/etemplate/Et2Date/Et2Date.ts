@@ -455,7 +455,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		};
 	}
 
-	set_value(value)
+	set value(value)
 	{
 		if(!value || value == 0 || value == "0")
 		{
@@ -487,13 +487,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		}
 	}
 
-	getValue()
+	get value()
 	{
-		if(this.readonly || this.disabled)
-		{
-			return null;
-		}
-
 		// Copied from flatpickr, since Et2InputWidget overwrote flatpickr.getValue()
 		if(!this._inputElement)
 		{
