@@ -1,5 +1,13 @@
 egroupware-docker (21.1.20220916) hardy; urgency=low
 
+  * first 22.1 test-build
+  * new web-components based eTemplate2 widgets derived from Shoelace (https://shoelace.style)
+  * new JS loading with rollup
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 20 Sep 2022 15:40:01 +0200
+
+egroupware-docker (21.1.20220916) hardy; urgency=low
+
   * Mail/RichTextEditor: common preference "small paragraph" now changes return key to a line break instead of a paragraph (with margin)
   * Mail: remove left (and right) margin of p and div, which can interact bad with the signature
   * Mail/Calendar: fix applying a participant reply as organizer overwrote event with data send by the participant (not just his status)
