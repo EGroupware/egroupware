@@ -2846,7 +2846,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
     background-image: url(images/setup.svg);
     background-repeat: no-repeat;
-    background-size: 12px;
+    background-size: 20px;
     width: 20px;
     height: 100%;
     display: inline-block;
