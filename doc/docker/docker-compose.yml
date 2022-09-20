@@ -53,7 +53,7 @@ volumes:
       device: $PWD/data/default/rocketchat/uploads
 services:
   egroupware:
-    image: egroupware/egroupware:20.1
+    image: egroupware/egroupware:22.1
     # EPL image: download.egroupware.org/egroupware/epl:20.1
     # setting a default language for a new installation
     #environment:
@@ -139,10 +139,11 @@ services:
 
   # run an own MariaDB:10.4 (you can use EGroupware's database backup and restore to add your existing database)
   db:
-    image: mariadb
+    image: mariadb:10.6
     environment:
     #- MYSQL_ROOT=root
     - MYSQL_ROOT_PASSWORD=secret
+    - MARIADB_AUTO_UPGRADE=true
     volumes:
     - db:/var/lib/mysql
     container_name: egroupware-db
