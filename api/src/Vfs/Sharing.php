@@ -153,8 +153,8 @@ class Sharing extends \EGroupware\Api\Sharing
 		// in Session->read_repositories() to make sure we get access to these apps when the session loads the apps.
 		$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
 		$GLOBALS['egw_info']['user']['apps'] = array(
-				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] || true,
-				'collabora' => $GLOBALS['egw_info']['apps']['collabora'] || $apps['collabora']
+			'filemanager' => $GLOBALS['egw_info']['apps']['filemanager'] ?? true,
+			'collabora'   => $GLOBALS['egw_info']['apps']['collabora'] ?? $apps['collabora']
 		);
 
 		// Need to re-init stream wrapper, as some of them look at preferences or permissions
