@@ -1003,6 +1003,10 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					{
 						columns[c][i].div.prependTo(this.event_wrapper);
 					}
+					else if(this.event_wrapper.has(columns[c][i].div).length == 0)
+					{
+						columns[c][i].div.appendTo(this.event_wrapper);
+					}
 					columns[c][i].div.css('top', '');
 					columns[c][i].div.css('height', '');
 					columns[c][i].div.css('left', '');
