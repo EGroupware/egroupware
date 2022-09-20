@@ -524,6 +524,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Move search (& menu) if there's no value
 			this._activeControls?.classList.toggle("novalue", this.multiple && this.value == '' || !this.multiple);
 
+			// Reset for parent calculations, will be adjusted after if needed
+			this.dropdown.setAttribute("distance", 0);
+
 			super.handleMenuShow();
 
 			if(this.searchEnabled || this.allowFreeEntries)
@@ -548,20 +551,26 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleAfterShow()
 		{
-			if(this.dropdown?.getAttribute("distance") && this.dropdown?.positioner.getAttribute("data-placement") == "top")
+			// Need to give positioner a chance to position.
+			// If we call it right away, it has not updated.
+			// I haven't found an event or Promise to hook on to
+			window.setTimeout(() =>
 			{
-				this.dropdown.setAttribute("distance", 0);
-				this.dropdown.reposition();
-			}
-			else
-			{
-				this.dropdown?.setAttribute("distance",
-					!this._activeControls || this._activeControls?.classList.contains("novalue") ?
-					"" :
-						// Make room for search below
-					parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
-				);
-			}
+				if(this.dropdown?.getAttribute("distance") && this.dropdown?.positioner.getAttribute("data-placement") == "top")
+				{
+					this.dropdown.setAttribute("distance", 0);
+					this.dropdown.reposition();
+				}
+				else
+				{
+					this.dropdown?.setAttribute("distance",
+						!this._activeControls || this._activeControls?.classList.contains("novalue") ?
+						"" :
+							// Make room for search below
+						parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
+					);
+				}
+			}, 100);
 		}
 
 		focus()
@@ -831,10 +840,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// Not sure why this stays hidden if there's no results, but it sticks and hides all results afterward
 				this.dropdown.shadowRoot.querySelector(".dropdown__panel").removeAttribute("hidden");
 
-				// Call our resize stuff explicitly, but need to give positioner a chance to position.
-				// If we call it right away, it has not updated.
-				// I haven't found an event or Promise to hook on to
-				window.setTimeout(this._handleAfterShow, 100);
+				// Call our resize stuff explicitly
+				this._handleAfterShow();
 			});
 		}
 
