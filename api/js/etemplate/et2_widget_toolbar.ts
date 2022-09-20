@@ -640,6 +640,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				image: action.iconUrl || '',
 				slot: "buttons",
 				class: `et2_toolbar_draggable${this.id}`,
+				readonly: false
 			}, this);
 			if (isCheckbox)
 			{
