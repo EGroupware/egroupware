@@ -35,6 +35,7 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 					visibility: hidden;
 					border-radius: 50%;
 					margin: -4px;
+					z-index: 1;
 				}
 				
 				:host(:hover)::part(edit) {
@@ -227,10 +228,10 @@ export class Et2Avatar extends Et2Widget(SlotMixin(SlAvatar)) implements et2_IDe
 	private _buildEditableLayer(_noDelete : boolean)
 	{
 		let self = this;
-		this._editBtn = document.createElement('sl-icon-button');
+		this._editBtn = document.createElement('et2-button-icon');
 		this._editBtn.setAttribute('name', 'pencil');
 		this._editBtn.setAttribute('part', 'edit');
-		this._delBtn = document.createElement('sl-icon-button');
+		this._delBtn = document.createElement('et2-button-icon');
 		this._delBtn.setAttribute('name', 'trash');
 		this._delBtn.setAttribute('part', 'edit');
 		this._baseNode.append(this._editBtn);
