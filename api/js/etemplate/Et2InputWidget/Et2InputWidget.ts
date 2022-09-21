@@ -352,6 +352,13 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		/**
 		 * Massively simplified validate, as compared to what ValidatorMixin gives us, since ValidatorMixin extends
 		 * FormControlMixin which breaks SlSelect's render()
+		 *
+		 * We take all validators for the widget, and if there's a value (or field is required) we check the value
+		 * with each validator.  For array values we check each element with each validator.  If the value does not
+		 * pass the validator, we collect the message and display feedback to the user.
+		 *
+		 * We handle validation errors from the server with ManualMessages, which always "fail".
+		 * If the value is empty, we only validate if the field is required.
 		 */
 		async validate()
 		{
@@ -360,6 +367,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			let feedbackData = [];
 			let resultPromises = [];
 			this.querySelector("lion-validation-feedback")?.remove();
+
+			// Collect message of a (failing) validator
 			const doValidate = async function(validator, value)
 			{
 				if(validator.config.fieldName)
@@ -376,6 +385,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					feedbackData.push({message, type: validator.type, validator});
 				});
 			}.bind(this);
+
+			// Check if a validator fails
 			const doCheck = async(value, validator) =>
 			{
 				const result = validator.execute(value, validator.param, {node: this});
@@ -407,7 +418,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				{
 					doCheck(values, validator);
 				}
-				else
+					// Only validate if field is required, or not required and has a value
+				// Don't bother to validate empty fields
+				else if(this.required || !this.required && this.getValue() != '')
 				{
 					// Validate each individual item
 					values.forEach((value) => doCheck(value, validator));
@@ -415,6 +428,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			});
 			await Promise.all(resultPromises);
 
+			// Show feedback from all failing validators
 			if(feedbackData.length > 0)
 			{
 				let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
