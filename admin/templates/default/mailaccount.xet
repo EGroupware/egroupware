@@ -261,12 +261,12 @@
 				</row>
 				<row>
 					<description for="mailAlternateAddress" value="Alternate email address"/>
-					<select-email id="mailAlternateAddress" autocomplete_url="" full_email="true" allowFreeEntries="true"/>
+					<select-email id="mailAlternateAddress" autocomplete_url="" full_email="true" allowFreeEntries="true" multiple="true"/>
 					<description/>
 				</row>
 				<row disabled="@no_forward_available">
 					<description for="mailForwardingAddress" value="Forward email's to"/>
-					<select-email id="mailForwardingAddress" autocomplete_url="" full_email="true" allowFreeEntries="true"/>
+					<select-email id="mailForwardingAddress" autocomplete_url="" full_email="true" allowFreeEntries="true" multiple="true"/>
 					<vbox>
 						<checkbox label="Forward only" id="deliveryMode" selected_value="forwardOnly" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');"/>
 						<checkbox label="Allow users to change forwards" id="acc_user_forward"/>
