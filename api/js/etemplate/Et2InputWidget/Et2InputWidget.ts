@@ -54,6 +54,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		protected validators : Validator[];
 		// Validators for every instance of a type of widget
 		protected defaultValidators : Validator[];
+		// Promise used during validation
+		protected validateComplete : Promise<undefined>;
 
 		protected isSlComponent = false;
 
@@ -426,25 +428,31 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					values.forEach((value) => doCheck(value, validator));
 				}
 			});
-			await Promise.all(resultPromises);
+			this.validateComplete = Promise.all(resultPromises);
 
-			// Show feedback from all failing validators
-			if(feedbackData.length > 0)
+			// Wait until all validation is finished, then update UI
+			this.validateComplete.then(() =>
 			{
-				let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
-				feedback.feedbackData = feedbackData;
-				feedback.slot = "help-text";
-				this.append(feedback);
-				if(this.shadowRoot.querySelector("slot[name='feedback']"))
+				// Show feedback from all failing validators
+				if(feedbackData.length > 0)
 				{
-					feedback.slot = "feedback";
+					let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
+					feedback.feedbackData = feedbackData;
+					feedback.slot = "help-text";
+					this.append(feedback);
+					if(this.shadowRoot.querySelector("slot[name='feedback']"))
+					{
+						feedback.slot = "feedback";
+					}
+					else
+					{
+						// Not always visible?
+						(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
+					}
 				}
-				else
-				{
-					// Not always visible?
-					(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
-				}
-			}
+			});
+
+			return this.validateComplete;
 		}
 
 		set_validation_error(err : string | false)
@@ -480,6 +488,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			// Force a validate - not needed normally, but if you call set_validation_error() manually,
 			// it won't show up without validate()
 			this.validate();
+		}
+
+		/**
+		 * Get a list of feedback types
+		 *
+		 * @returns {string[]}
+		 */
+		public get hasFeedbackFor() : string[]
+		{
+			let feedback = (<LionValidationFeedback>this.querySelector("lion-validation-feedback"))?.feedbackData || [];
+			return feedback.map((f) => f.type);
 		}
 
 		/**

@@ -1086,14 +1086,18 @@ export class etemplate2
 			{
 				let invalid_widgets = widgets.filter((widget) => widget);
 
-				if(invalid_widgets.length)
+				if(invalid_widgets.length && !(invalid_widgets[0] instanceof et2_widget))
 				{
-					// Show the first invalid widget, not the last
-					if(invalid_widgets[0] && invalid_widgets[0] instanceof et2_widget)
+					// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
+					let tmpWidget = invalid_widgets[0];
+					while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
 					{
-						let messages = [];
-						let valid = invalid_widgets[0].isValid(messages);
-						invalid_widgets[0].set_validation_error(messages);
+						tmpWidget = tmpWidget.getParent();
+					}
+					//Activate the tab where the widget with validation error is located
+					if(tmpWidget.getType() === 'ET2-TABBOX')
+					{
+						(<Et2Tabs><unknown>tmpWidget).activateTab(invalid_widgets[0]);
 					}
 				}
 				else
