@@ -348,6 +348,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected _addNodes()
 		{
+			if(this._activeControls)
+			{
+				// Already there
+				this._activeControls.remove();
+			}
+
 			const div = document.createElement("div");
 			div.classList.add("search_input");
 			render(this._searchInputTemplate(), div);
@@ -372,6 +378,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				edit = html`<input id="edit" type="text" part="input" style="width:100%"
                                    @keydown=${this._handleEditKeyDown}
+                                   @click=${(e) => e.stopPropagation()}
                                    @blur=${this.stopEdit.bind(this)}
                 />`;
 			}
@@ -534,9 +541,14 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				this._activeControls?.classList.add("active");
 				this._searchInputNode.focus();
 				this._searchInputNode.select();
+				// Hide edit explicitly since it's so hard via CSS
+				if(this._editInputNode)
+				{
+					this._editInputNode.style.display = "none";
+				}
 			}
 
-			if(this.editModeEnabled && this.allowFreeEntries && !this.multiple)
+			if(this.editModeEnabled && this.allowFreeEntries && !this.multiple && this.value)
 			{
 				this.startEdit();
 				this._editInputNode.select();
@@ -588,6 +600,17 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return;
 			}
 			super.handleMenuHide();
+
+			// Reset display
+			if(this._searchInputNode)
+			{
+				this._searchInputNode.style.display = "";
+			}
+			if(this._editInputNode)
+			{
+				this._editInputNode.style.display = "";
+			}
+
 			if(this.searchEnabled || this.allowFreeEntries)
 			{
 				this._activeControls?.classList.remove("active");
@@ -657,6 +680,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					if(this._activeControls.classList.contains("novalue"))
 					{
 						this.handleMenuShow();
+						this._handleAfterShow();
 					}
 
 					// Scroll the new tag into view
@@ -682,7 +706,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		_handleClear(e)
 		{
-			this._selected_remote = [];
+			// Only keep remote options that are still used
+			this._selected_remote = this._selected_remote.filter((option) => this.getValueAsArray().indexOf(option.value) !== -1);
 
 			if(!this.multiple && this.searchEnabled)
 			{
@@ -709,7 +734,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement)
 			{
 				await this.dropdown.hide();
-				if(event.relatedTarget)
+				if(event.relatedTarget && event.relatedTarget !== this)
 				{
 					event.relatedTarget.focus();
 				}
@@ -739,14 +764,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				event.preventDefault();
 				this._searchInputNode.value = "";
-				if(!this.multiple)
+				this.dropdown.hide().then(async() =>
 				{
-					this.dropdown.hide();
-				}
-				else
-				{
-					this._searchInputNode.focus();
-				}
+					// update sizing / position before getting ready for another one
+					if(this.multiple)
+					{
+						await this.dropdown.show();
+						this._searchInputNode.focus();
+					}
+				});
 			}
 			else if(event.key == "Enter")
 			{
@@ -1057,7 +1083,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return false;
 			}
 			// Make sure not to double-add
-			if(!this.select_options.find(o => o.value == text) && !this.__select_options.find(o => o.value == text))
+			if(!this.querySelector("[value='" + text + "']") && !this.__select_options.find(o => o.value == text))
 			{
 				this.__select_options.push(<SelectOption>{
 					value: text,
@@ -1079,7 +1105,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
 			{
-				this.handleMenuShow();
+				this._searchInputNode.style.display = "";
 			}
 			return true;
 		}
@@ -1116,17 +1142,10 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			this._activeControls.classList.add("editing", "active");
 
 			// Pre-set value to tag value
+			this._editInputNode.style.display = "";
 			this._editInputNode.value = tag_value
 			this._editInputNode.focus();
 
-			// Remove from value & DOM.  If they finish the edit, the new one will be added.
-			if(this.multiple)
-			{
-				this.value = this.value.filter(v => v !== tag_value);
-				this.querySelector("[value='" + tag_value + "']").remove();
-			}
-			this.select_options = this.select_options.filter(v => v.value !== tag_value);
-			this.querySelector("[value='" + tag_value + "']")?.remove();
 			if(tag)
 			{
 				tag.remove();
@@ -1149,15 +1168,49 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				abort = false;
 			}
 
-			let value = abort ? this._editInputNode.dataset.initial : this._editInputNode.value;
-
-			this.createFreeEntry(value);
+			const original = this._editInputNode.dataset.initial;
 			delete this._editInputNode.dataset.initial;
+
+			let value = abort ? original : this._editInputNode.value;
+			this._editInputNode.value = "";
+
+			if(value && value != original)
+			{
+				this.createFreeEntry(value);
+
+				this.updateComplete.then(() =>
+				{
+					const item = this.querySelector("[value='" + value + "']");
+					item.dispatchEvent(new CustomEvent("sl-select", {detail: {item}}));
+				})
+			}
+
+			// Remove original from value & DOM
+			if(value != original)
+			{
+				if(this.multiple)
+				{
+					this.value = this.value.filter(v => v !== original);
+					this.querySelector("[value='" + original + "']")?.remove();
+				}
+				else
+				{
+					this.value = value;
+				}
+				this.select_options = this.select_options.filter(v => v.value !== original);
+			}
+
 
 			this._activeControls.classList.remove("editing", "active");
 			if(!this.multiple)
 			{
-				this.dropdown.hide();
+				this.updateComplete.then(async() =>
+				{
+					// Don't know why, but this doesn't always work leaving the value hidden by prefix
+					await this.dropdown.hide();
+					this.dropdown.classList.remove("select--open");
+					this.dropdown.panel.setAttribute("hidden", "");
+				});
 			}
 		}
 
