@@ -21,9 +21,11 @@
 							<row class="th">
 								<description value="Field"/>
 								<hbox>
-									<description value="Export"/>
-									<buttononly statustext="Check all" label="Check all" id="check_all" needed="1" onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;" options="check"/>
-								</hbox>
+                                    <description value="Export"/>
+                                    <buttononly statustext="Check all" label="Check all" id="check_all"
+                                                onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;"
+                                                image="check"/>
+                                </hbox>
 							</row>
 							<row>
 								<description id="${row}[name]" no_lang="1"/>
