@@ -71,7 +71,7 @@ export class Et2SelectEmail extends Et2Select
 		this.editModeEnabled = true;
 		this.allowDragAndDrop = false;
 		this.includeLists = false;
-		this.multiple = true;
+		this.multiple = false;
 		this.fullEmail = false;
 		this.defaultValidators.push(new IsEmail());
 	}
