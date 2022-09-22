@@ -62,9 +62,14 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
                	max-width: 125px;
                	min-width: fit-content;
             }
+            /* Override general disabled=hide from Et2Widget */
+            :host([disabled]) {
+            	display: initial;
+            }
             :host([hideonreadonly][disabled]) {
             	display:none;
             }
+            
             /* Set size for icon */
             ::slotted(img.imageOnly) {
     			padding-right: 0px !important;
