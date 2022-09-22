@@ -437,9 +437,44 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return this.querySelectorAll(this.optionTag + ":not(.remote)");
 		}
 
+		/**
+		 * Only remote options from search results
+		 * @returns {NodeList}
+		 * @protected
+		 */
 		protected get remoteItems() : NodeList
 		{
 			return this.querySelectorAll(this.optionTag + ".remote");
+		}
+
+		/**
+		 * Only free entries
+		 * @returns {NodeList}
+		 * @protected
+		 */
+		protected get freeEntries() : NodeList
+		{
+			return this.querySelectorAll(this.optionTag + ".freeEntry");
+		}
+
+		get search_options() : SelectOption[]
+		{
+			let options = [];
+
+			if(this.allowFreeEntries)
+			{
+				this.freeEntries.forEach((item) =>
+				{
+					options.push({value: item.value, label: item.textContent, class: item.classList.toString()});
+				})
+			}
+			// Any provided options
+			options = options.concat(this.__search_options);
+
+			// Any kept remote options
+			options = options.concat(this._selected_remote);
+
+			return options;
 		}
 
 		get value()
@@ -897,6 +932,11 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Remove "no suggestions"
 			target.querySelector(".no-results")?.remove();
 
+			// Remove any previously selected remote options that aren't used anymore
+			this._selected_remote = this._selected_remote.filter((option) =>
+			{
+				return this.value.indexOf(option.value) != -1;
+			});
 			// Remove remote options that aren't used
 			let keepers = this._selected_remote.reduce((prev, current) =>
 			{
@@ -1005,9 +1045,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			let target = this._optionTargetNode || this;
 			if(target)
 			{
-				// Keep local options first, add in remote options
-				// Include already selected remote entries, or they will be removed and we lose icon/class
-				this.select_options.concat(this._selected_remote).filter(function(item)
+				// Add in remote options, avoiding duplicates
+				this.select_options.filter(function(item)
 				{
 					let i = entries.findIndex(x => (x.value == item.value));
 					if(i <= -1)
@@ -1020,11 +1059,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				let options = html`${entries.map(this._optionTemplate.bind(this))}`;
 
 				/**
-				 * Doing all this garbage to get the options to always show up.
-				 * If we just do `render(options, target)`, they only show up in the DOM the first time.  If the
-				 * same option comes back in a subsequent search, it map() does not put it into the DOM.
-				 * If we render into a new target, the options get rendered, but we have to wait for them to be
-				 * rendered before we can do anything else with them.
+				 * Add in new options.
+				 * Rendering directly into target will remove existing options, which we don't need to do
 				 */
 
 				let temp_target = document.createElement("div");
@@ -1087,7 +1123,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.__select_options.push(<SelectOption>{
 					value: text,
-					label: text
+					label: text,
+					class: "freeEntry"
 				});
 				this.requestUpdate('select_options');
 			}
