@@ -444,10 +444,15 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 					{
 						feedback.slot = "feedback";
 					}
-					else
+					else if(<HTMLElement>this.shadowRoot.querySelector("#help-text"))
 					{
 						// Not always visible?
 						(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
+					}
+					else
+					{
+						// No place to show the validation error.  That's a widget problem, but we'll show it as message
+						this.egw().message(feedback.textContent, "error");
 					}
 				}
 			});
