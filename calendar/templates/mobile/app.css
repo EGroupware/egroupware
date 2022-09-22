@@ -1424,11 +1424,11 @@ img.calendar_print_appicon {
 #calendar-toolbar_app_header {
   color: #000;
   font-size: 14px;
-  height: 1.7em;
+  height: 1.6em;
   padding: 4px 3px 3px;
   background: #b4cee773;
   border-radius: 3px;
-  min-width: 19em;
+  min-width: fit-content;
   border: 1px solid #d4d4d8;
   text-align: center;
 }
@@ -1436,7 +1436,6 @@ img.calendar_print_appicon {
 #calendar-toolbar_toolbar et2-switch {
   height: var(--height);
   display: inline-flex;
-  min-width: 60px;
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch,
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
@@ -1457,6 +1456,15 @@ et2-switch#calendar-toolbar_toolbar-weekend {
   height: 30px;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label {
+  width: 100%;
+}
+#calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend {
+  min-width: 60px;
+}
+et2-switch#calendar-toolbar_toolbar-weekend::part(control) {
+  width: 100%;
+}
+et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   width: 100%;
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch[checked],

@@ -1416,7 +1416,7 @@ img.calendar_print_appicon {
   padding: 4px 3px 3px;
   background: #b4cee773;
   border-radius: 3px;
-  min-width: 19em;
+  min-width: fit-content;
   border: 1px solid #d4d4d8;
   text-align: center;
 }
