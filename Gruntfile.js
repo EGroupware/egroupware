@@ -471,5 +471,5 @@ module.exports = function (grunt) {
 	//grunt.loadNpmTasks('grunt-hub');
 
 	// Default task(s).
-	grunt.registerTask("default", ["newer:terser", "newer:cssmin"]);//, 'hub']);
+	grunt.registerTask("default", ["terser", "cssmin"]);//, 'hub']);
 };
