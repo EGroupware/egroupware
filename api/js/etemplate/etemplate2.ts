@@ -1099,6 +1099,11 @@ export class etemplate2
 					{
 						(<Et2Tabs><unknown>tmpWidget).activateTab(invalid_widgets[0]);
 					}
+					// scroll the widget into view
+					if(typeof widget.scrollIntoView === 'function')
+					{
+						widget.scrollIntoView();
+					}
 				}
 				else
 				{
