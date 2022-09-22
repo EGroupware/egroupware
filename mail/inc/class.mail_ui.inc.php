@@ -2114,17 +2114,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
 			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
 			$data['attachmentsBlock'] = $imageHTMLBlock;
-			$data['address'] = ($_folderType?$data["toaddress"]:$data["fromaddress"]);
-			$email = Mail::stripRFC822Addresses(array($data['address']));
+			if ($_folderType)
+			{
+				$fromcontact = self::getContactFromAddress($data['fromaddress']);
+				if (!empty($fromcontact))
+				{
+					$data['fromavatar'] = self::getContactFromAddress($data['fromaddress'])[0]['photo'];
+				}
+			}
+			$data['address'] = ($_folderType ? $data["toaddress"] : $data["fromaddress"]);
 
-			$contact = $GLOBALS['egw']->contacts->search(
-				array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
-				array('contact_id', 'email', 'email_home', 'n_fn'),
-				'', '', '', false, 'OR', false
-			);
+			$contact = self::getContactFromAddress($data['address']);
 			if (!empty($contact))
 			{
 				$data['avatar'] = $contact[0]['photo'];
+				if (!$_folderType) $data['fromavatar'] = $data['avatar'];
 			}
 
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
@@ -2329,9 +2333,32 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
+		$contact = self::getContactFromAddress($content['from'][0]);
 
-		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
+		if (!empty($contact))
+		{
+			$content['avatar'] = $contact[0]['photo'];
+		}
+
+		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
 	}
+
+	/**
+	 * Retrive contact info from a given address
+	 * @param $address
+	 * @return mixed
+	 */
+	static function getContactFromAddress(string $address)
+	{
+		$email = Mail::stripRFC822Addresses([$address]);
+
+		return $GLOBALS['egw']->contacts->search(
+			array('contact_email' => $email[0], 'contact_email_home' => $email[0]),
+			array('contact_id', 'email', 'email_home', 'n_fn'),
+			'', '', '', false, 'OR', false
+		);
+	}
+
 
 	/**
 	 * This is a helper function to trigger Push method

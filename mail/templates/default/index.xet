@@ -36,7 +36,7 @@
                             </hbox>
                         </hbox>
                         <hbox width="100%" class="mailPreviewHeaders">
-                            <lavatar src="@avatar" lname="@address" shape="rounded" size="2.75em"/>
+                            <lavatar src="@fromavatar" lname="@fromaddress" shape="rounded" size="2.75em"/>
                             <vbox>
                                 <hbox>
                                     <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">

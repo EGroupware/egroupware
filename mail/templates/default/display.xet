@@ -20,7 +20,7 @@
 			</hbox>
 
 			<hbox width="100%" class="mailPreviewHeaders">
-				<lavatar src="@avatar" lname="@address" shape="rounded"/>
+				<lavatar src="@avatar" lname="@from[0]" shape="rounded"/>
 				<vbox class="previewWrapper">
 					<hbox>
                         <et2-details class="details" title="details" toggleOnHover="true" hoist="true" toggleAlign="left">

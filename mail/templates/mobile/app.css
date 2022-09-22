@@ -31,21 +31,21 @@
     padding: 1px 8px 0 8px;
     background: none;
   }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar {
+  body #popupMainDiv .et2_toolbar.et2_head_toolbar {
     padding: 1px 5px 5px 10px !important;
   }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button {
+  body #popupMainDiv .et2_toolbar.et2_head_toolbar et2-button {
     width: 46px;
     height: 46px;
     background-size: 18px 18px;
   }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar button.et2_toolbar_hasCaption {
+  body #popupMainDiv .et2_toolbar.et2_head_toolbar .et2_toolbar_hasCaption {
     width: auto;
   }
-  body #popupMainDiv div.et2_toolbar.et2_head_toolbar div.et2_toolbar_actionlist {
+  body #popupMainDiv .et2_toolbar.et2_head_toolbar .et2_toolbar_actionlist {
     margin-left: 50px;
   }
-  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send {
+  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send {
     height: 46px;
     width: auto;
     margin-top: 0.7px !important;
@@ -60,11 +60,11 @@
     background-color: #fafafa;
     color: black;
   }
-  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:hover {
+  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send:hover {
     box-shadow: none;
     background-color: none;
   }
-  body #popupMainDiv #mail-compose_composeToolbar button#composeToolbar-send:disabled {
+  body #popupMainDiv #mail-compose_composeToolbar #composeToolbar-send:disabled {
     background-color: none;
   }
   body #popupMainDiv .mail-d-h1 {
