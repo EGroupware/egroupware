@@ -1638,7 +1638,7 @@ export class CalendarApp extends EgwApp
 		// array of participants
 		let value = participant.value;
 
-		add.set_readonly(value.length <= 0);
+		add.disabled = (value.length <= 0);
 
 		quantity.set_readonly(false);
 
