@@ -384,8 +384,9 @@ function send_template()
 				unset($attrs['class']);
 			}
 
-			// Drop all (old) size attributes, if it's not shoelace size format: small, medium or large
-			if (isset($attrs['size']) && !in_array($attrs['size'], ['small', 'medium', 'large']))
+			// Drop all (old) size attributes of input like fields, if it's not shoelace size format: small, medium or large
+			if (preg_match('/^<et2-(textbox|number|int|float|password|url|vfs-|input)/', $matches[0]) &&
+				isset($attrs['size']) && !in_array($attrs['size'], ['small', 'medium', 'large']))
 			{
 				unset($attrs['size']);
 			}
