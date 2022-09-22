@@ -1114,7 +1114,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		public createFreeEntry(text : string) : boolean
 		{
-			if(!this.validateFreeEntry(text))
+			if(!text || !this.validateFreeEntry(text))
 			{
 				return false;
 			}
@@ -1138,6 +1138,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				this.value = text;
 			}
+			this.requestUpdate("value");
 
 			// If we were overlapping edit inputbox with the value display, reset
 			if(!this.readonly && this._activeControls?.classList.contains("novalue"))
