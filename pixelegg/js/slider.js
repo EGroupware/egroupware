@@ -15,23 +15,12 @@ egw_ready.then(function()
 	 * Must run after DOM is ready!
 	 */
 	jQuery('#quick_add').on({
-		mouseover: function(ev){
+		click: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
 			var select = document.getElementById('quick_add_selectbox');
-			select.dropdown.open = true;
+			select.dropdown.open = !select.dropdown.open ? true : false;
 			ev.stopPropagation();
 
-		},
-		mouseout: function(ev){
-			var select = document.getElementById('quick_add_selectbox');
-
-			// do NOT react on bubbeling events from contained selectbox
-			if (ev.target && ev.relatedTarget && ev.currentTarget.id != "quick_add" && ev.currentTarget.nodeName != 'ET2-SELECT')
-			{
-
-
-			}
-			ev.stopPropagation();
 		}
 	});
 });
