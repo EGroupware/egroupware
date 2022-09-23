@@ -2735,7 +2735,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   }
   #calendar-toolbar #toolbar-actionlist {
     margin-left: 60px;
-    margin-top: 14px;
+    margin-top: 4px;
   }
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;

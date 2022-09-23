@@ -349,6 +349,7 @@ class calendar_uiviews extends calendar_ui
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Today',
 				'toolbarDefault' => true,
+				'icon' => Api\Header\UserAgent::mobile() ? 'today' : ''
 			),
 			'next' => array(
 				'caption' => 'Next',
