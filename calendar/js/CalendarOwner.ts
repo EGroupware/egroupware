@@ -38,20 +38,6 @@ export class CalendarOwner extends Et2Select
 		super(...args);
 		this.searchUrl = "calendar_owner_etemplate_widget::ajax_search";
 		this.multiple = true;
-
-		this._handleMouseWheel = this._handleMouseWheel.bind(this);
-	}
-
-	_bindListeners()
-	{
-		super._bindListeners();
-
-		this.addEventListener("mousewheel", this._handleMouseWheel);
-	}
-
-	_unbindListeners()
-	{
-		this.removeEventListener("mousewheel", this._handleMouseWheel);
 	}
 
 	/**
@@ -104,16 +90,6 @@ export class CalendarOwner extends Et2Select
 				}, this, true, this).sendRequest();
 			}
 		});
-	}
-
-	/**
-	 * Stop scroll from bubbling so the sidemenu doesn't scroll too
-	 *
-	 * @param {MouseEvent} e
-	 */
-	_handleMouseWheel(e : MouseEvent)
-	{
-		e.stopPropagation();
 	}
 
 	/**

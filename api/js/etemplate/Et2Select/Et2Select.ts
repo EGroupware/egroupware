@@ -163,11 +163,14 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
+		this._handleMouseWheel = this._handleMouseWheel.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
+
+		this.addEventListener("mousewheel", this._handleMouseWheel);
 
 		this.updateComplete.then(() =>
 		{
@@ -180,6 +183,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.disconnectedCallback();
 
+		this.removeEventListener("mousewheel", this._handleMouseWheel);
 		this.removeEventListener("sl-clear", this._triggerChange)
 		this.removeEventListener("sl-change", this._triggerChange);
 		this.removeEventListener("sl-after-show", this._doResize);
@@ -208,6 +212,16 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		this.menu.style.minWidth = this.menu.style.width;
 		this.menu.style.width = "";
+	}
+
+	/**
+	 * Stop scroll from bubbling so the sidemenu doesn't scroll too
+	 *
+	 * @param {MouseEvent} e
+	 */
+	private _handleMouseWheel(e : MouseEvent)
+	{
+		e.stopPropagation();
 	}
 
 	/**
