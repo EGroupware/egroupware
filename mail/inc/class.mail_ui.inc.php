@@ -2344,12 +2344,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * Retrive contact info from a given address
-	 * @param $address
-	 * @return mixed
+	 * Retrieve contact info from a given address
+	 *
+	 * @param string|null $address
+	 * @return array
 	 */
-	static function getContactFromAddress(string $address)
+	static function getContactFromAddress($address)
 	{
+		if (empty($address)) return [];
+
 		$email = Mail::stripRFC822Addresses([$address]);
 
 		return $GLOBALS['egw']->contacts->search(
