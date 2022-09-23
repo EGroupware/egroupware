@@ -171,7 +171,8 @@ class Select extends Etemplate\Widget
 			}
 			$allowed = array_map('strval', $allowed);
 
-			if (!$multiple || $this->attrs['multiple'] === "dynamic") $allowed[] = '';
+			// Add empty as an option, we check for required value later
+			$allowed[] = '';
 
 			foreach((array) $value as $val)
 			{
