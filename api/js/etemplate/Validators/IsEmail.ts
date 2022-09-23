@@ -39,6 +39,6 @@ export class IsEmail extends Pattern
 	 */
 	static async getMessage(data)
 	{
-		return data.formControl.egw().lang("Invalid email");
+		return data.formControl.egw().lang("Invalid email") + (data.modelValue ? ' "' + data.modelValue + '"' : "");
 	}
 }
