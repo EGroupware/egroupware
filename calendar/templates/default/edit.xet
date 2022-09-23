@@ -46,16 +46,13 @@
 		<grid width="99%" id="participants">
 			<columns>
 				<column width="85"/>
-				<column width="350"/>
+				<column/>
 				<column width="88"/>
 				<column width="70"/>
 				<column width="100"/>
-				<column/>
+				<column width="80"/>
 			</columns>
 			<rows>
-				<row>
-					<select label="Notify externals" id="notify_externals" span="all" align="right"/>
-				</row>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
                     <calendar-owner id="participant" allowFreeEntries="true" span="4"
                                     empty_label="Add new participants or resource"
@@ -69,6 +66,12 @@
                                 background_image="1" disabled="true" ro_image="add"/>
                     </hbox>
                 </row>
+				<row>
+					<hbox span="all">
+						<description width="20%"/>
+						<select label="Notify externals" id="notify_externals"/>
+					</hbox>
+				</row>
 				<row class="th thb">
 					<description value="Type"/>
 					<description value="Participants"/>
@@ -85,7 +88,7 @@
 					<menulist>
 						<menupopup id="${row}[status]" onchange="1"/>
 					</menulist>
-					<button align="left" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
+					<button align="right" label="Delete" id="delete[$row_cont[delete_id]]" image="delete"/>
 				</row>
 			</rows>
 		</grid>
