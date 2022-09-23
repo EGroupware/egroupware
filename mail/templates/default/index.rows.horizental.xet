@@ -32,7 +32,7 @@
                     <nextmatch-header statustext="security" label="Security" id="security"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="2.75em" shape="square"/>
+                    <lavatar image="$row_cont[avatar]" fname="$row_cont[address]" size="2.75em" shape="rounded"/>
                     <description span="1" class="status_img"/>
                     <html id="${row}[attachments]"/>
                     <vbox>
