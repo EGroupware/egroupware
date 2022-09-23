@@ -521,7 +521,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				// Apply widget's class to td, for backward compatability
 				if (node.getAttribute("class"))
 				{
-					cell.class += (cell.class ? " " : "") + this.getArrayMgr("content").expandName(node.getAttribute("class"));
+					let widget_class = this.getArrayMgr("content").expandName(node.getAttribute("class"))
+						// Do not pass et2_required into parent cell, it looks bad
+						.replace("et2_required", "")
+					cell.class += (cell.class ? " " : "") + widget_class;
 				}
 
 				// Create the element
