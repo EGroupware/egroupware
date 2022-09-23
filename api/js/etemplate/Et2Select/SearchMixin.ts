@@ -818,6 +818,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			else if(event.key == "Escape")
 			{
 				this._handleSearchAbort(event);
+				this.dropdown.hide();
 				return;
 			}
 
