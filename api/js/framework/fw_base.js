@@ -1387,8 +1387,12 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 			}
 
 		})
-		egw.setSessionItem('api', 'darkmode',state);
-		egw.json('EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag',[state]).sendRequest();
+		// only update darkmode pref, if necessary
+		if (egw.getSessionItem('api', 'darkmode') !== state)
+		{
+			egw.setSessionItem('api', 'darkmode',state);
+			egw.json('EGroupware\\Api\\Framework\\Ajax::ajax_set_darkmode_flag',[state]).sendRequest();
+		}
 	},
 
 	/**
