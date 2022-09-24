@@ -565,6 +565,9 @@ class Egw extends Egw\Base
 		{
 			define('EGW_SHUTDOWN',True);
 
+			// must be before headers are sent, as we somehow can NOT reopen the session (to update session vars) after
+			Cache::onShutdown();
+
 			// send json response BEFORE flushing output
 			if (Json\Request::isJSONRequest())
 			{

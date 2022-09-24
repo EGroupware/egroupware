@@ -104,7 +104,10 @@ class Request
 			$this->handleRequest($menuaction, $parameters);
 		}
 		// check if we have push notifications, if notifications app available
-		if (class_exists('notifications_push')) notifications_push::get();
+		if (Push::onlyFallback() && class_exists('notifications_push'))
+		{
+			notifications_push::get();
+		}
 	}
 
 	/**

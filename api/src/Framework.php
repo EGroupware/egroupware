@@ -1616,6 +1616,7 @@ abstract class Framework extends Framework\Extra
 	{
 		// dont block session, while we read preferences, they are not supposed to change something in the session
 		$GLOBALS['egw']->session->commit_session();
+		Session::cache_control(true);   // allow browser to cache
 
 		if (preg_match('/^[a-z0-9_]+$/i', $app))
 		{
