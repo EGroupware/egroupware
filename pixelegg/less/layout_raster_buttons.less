@@ -236,52 +236,6 @@
 		// quick_add selectbox
 		// ADD different APPs
 
-		.chzn-container {
-			z-index: 1000;
-			position: absolute;
-			right: -54px !important;
-			top: 47px;
-			min-width: 160px !important;
-			width: 160px !important;
-			background: @gray_0;
-			&:before {
-				content: '';
-				position: absolute;
-				bottom: 51%;
-				left: 42%;
-				width: 0;
-				height: 0px;
-				border-left: 14px solid transparent;
-				border-right: 15px solid transparent;
-				border-bottom: 12px solid #aaa;
-				margin-bottom: 12px;
-				margin-left: 1px;
-			}
-			&:after {
-				content: '';
-				position: absolute;
-				bottom: 50%;
-				left: 42%;
-				width: 0;
-				height: 0;
-				border-left: 15px solid transparent;
-				border-right: 15px solid transparent;
-				border-bottom: 12px solid #ffffff;
-				margin-bottom: 11px;
-			}
-			.chzn-single span {display: none;}
-			a.chzn-single.chzn-default {
-				border: 1px solid #bfc0bf;
-				border-radius: 0px;
-			}
-			.chzn-drop {
-				border-radius: 0px;
-				margin-top: -2px;
-			}
-			.chzn-results {
-				max-height: none;
-			}
-		}
 		#quick_add_selectbox {
 			height: 0px;
 			float: left;
@@ -295,6 +249,12 @@
 		}
 		#quick_add_selectbox::part(menu) {
 			max-height: 60vh;
+		}
+		/* do NOT show empty label */
+		et2-select#quick_add_selectbox {
+			sl-menu-item[value=""] {
+				display: none;
+			}
 		}
     }
 
