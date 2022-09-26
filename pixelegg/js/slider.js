@@ -18,8 +18,15 @@ egw_ready.then(function()
 		click: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
 			var select = document.getElementById('quick_add_selectbox');
-			select.dropdown.open = !select.dropdown.open ? true : false;
-			ev.stopPropagation();
+			ev.stopImmediatePropagation();
+			if (select.dropdown.open)
+			{
+				select.dropdown.hide();
+			}
+			else
+			{
+				select.dropdown.show();
+			}
 
 		}
 	});

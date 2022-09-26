@@ -158,11 +158,25 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				if (select.value) timerAction(select.value);
 				select.value = '';
 			});
+
+			select.addEventListener('sl-hide', (e) => {
+				if (e.currentTarget.nodeName === 'ET2-SELECT')
+				{
+					e.stopImmediatePropagation();
+				}
+			});
 			// bind click handler
 			timer_container.addEventListener('click', (ev) =>
 			{
-				select.dropdown.open = !select.dropdown.open ? true : false;
-				ev.stopPropagation();
+				ev.stopImmediatePropagation();
+				if (select.dropdown.open)
+				{
+					select.dropdown.hide();
+				}
+				else
+				{
+					select.dropdown.show();
+				}
 			});
 			// need to load timesheet translations for app-names
 			this.langRequire(window, [{app: 'timesheet', lang: this.preference('lang')}], () =>
