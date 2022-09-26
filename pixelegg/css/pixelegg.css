@@ -5477,6 +5477,8 @@ span.overlayContainer img.overlay {
   display: block;
   white-space: nowrap;
   color: #606060;
+  height: 45px;
+  width: 45px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
   color: black;
