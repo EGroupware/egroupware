@@ -515,7 +515,6 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				{
 					select.dropdown.trigger.style.visibility = 'hidden';
 					select.dropdown.trigger.style.height = '0px';
-					select.querySelector('sl-menu-item[value=""]').style.display = 'none';
 				});
 			});
 		}

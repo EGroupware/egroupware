@@ -213,4 +213,12 @@ class timesheet_hooks
 
 		return true;
 	}
+
+	public static function add_timer($data)
+	{
+		$state = timesheet_bo::timerState();
+		$GLOBALS['egw']->framework->_add_topmenu_info_item('<div id="topmenu_timer" title="'.
+			lang('Start & stop timer').'"'.
+			($state ? ' data-state="'.htmlspecialchars(json_encode($state)).'"' : '').'>0:00</div>', 'timer');
+	}
 }

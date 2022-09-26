@@ -5248,7 +5248,8 @@ span.overlayContainer img.overlay {
     Author     : stefanreinhardt
 */
 #egw_fw_topmenu_info_items {
-  display: inline-block;
+  display: flex !important;
+  flex-direction: row-reverse;
   height: 45px;
   position: absolute;
   padding-right: 2px;
@@ -5436,7 +5437,6 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add {
   position: relative;
-  /* do NOT show empty label */
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add span#quick_add {
   float: right;
@@ -5455,22 +5455,70 @@ span.overlayContainer img.overlay {
   line-height: 0.6em;
   background-color: white;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox {
+#egw_fw_topmenu_info_items #topmenu_info_timer {
+  order: 1;
+  position: relative;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  top: 10px !important;
+  display: block;
+  white-space: nowrap;
+  color: #606060;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
+  color: black;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer:hover {
+  cursor: pointer;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../timesheet/templates/default/images/navbar.svg);
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-position: center center;
+  filter: opacity(0.3);
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox,
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox,
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox,
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox {
   height: 0px;
   float: left;
   display: inline-block;
+  /* do NOT show empty label */
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input) {
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox sl-menu-item[value=""],
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox sl-menu-item[value=""],
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox sl-menu-item[value=""],
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox sl-menu-item[value=""] {
+  display: none;
+}
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control-input),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(form-control-input),
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(form-control-input),
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox::part(form-control-input) {
   border: none !important;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control) {
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(form-control),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(form-control),
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(form-control),
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox::part(form-control) {
   margin-left: -3em;
 }
-#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(menu) {
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox::part(menu),
+#egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox::part(menu),
+#egw_fw_topmenu_info_items #topmenu_info_quick_add #timer_selectbox::part(menu),
+#egw_fw_topmenu_info_items #topmenu_info_timer #timer_selectbox::part(menu) {
   max-height: 60vh;
-}
-#egw_fw_topmenu_info_items #topmenu_info_quick_add et2-select#quick_add_selectbox sl-menu-item[value=""] {
-  display: none;
 }
 #egw_fw_topmenu_info_items img#topmenu_info_error {
   width: 16px;

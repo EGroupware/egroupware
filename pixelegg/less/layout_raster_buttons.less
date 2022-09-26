@@ -19,7 +19,8 @@
 @import (reference) "definitions.less";
 
 #egw_fw_topmenu_info_items {
-	display: inline-block;
+	display: flex !important;
+	flex-direction: row-reverse;
 	height: 45px;
 	position: absolute;
     padding-right: 2px;
@@ -42,7 +43,6 @@
 		}
 	}
 	#topmenu_info_user_avatar {
-
 		span.fw_avatar_stat {
 			position: absolute;
 		}
@@ -231,30 +231,60 @@
 				background-color: white;
 			}
 		}
+	}
 
-		// ##############################################################################
-		// quick_add selectbox
-		// ADD different APPs
+	#topmenu_info_timer {
+		order: 1;
+		position: relative;
+		#topmenu_timer {
+			text-align: center;
+			font-size: 20px;
+			position: relative;
+			top: 10px !important;
+			display: block;
+			white-space: nowrap;
+			color: #606060;
+		}
+		#topmenu_timer.running {
+			color: black;
+		}
+		&:hover {
+			cursor: pointer;
+		}
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url(../../timesheet/templates/default/images/navbar.svg);
+			background-repeat: no-repeat;
+			background-size: 32px;
+			background-position: center center;
+			filter: opacity(0.3);
+		}
+	}
 
-		#quick_add_selectbox {
+	// quick_add and timer selectbox / menu
+	#topmenu_info_quick_add, #topmenu_info_timer {
+		#quick_add_selectbox, #timer_selectbox {
 			height: 0px;
 			float: left;
 			display: inline-block;
-		}
-		#quick_add_selectbox::part(form-control-input) {
-			border: none !important;
-		}
-		#quick_add_selectbox::part(form-control) {
-			margin-left: -3em;
-		}
-		#quick_add_selectbox::part(menu) {
-			max-height: 60vh;
-		}
-		/* do NOT show empty label */
-		et2-select#quick_add_selectbox {
+			/* do NOT show empty label */
 			sl-menu-item[value=""] {
 				display: none;
 			}
+		}
+		#quick_add_selectbox::part(form-control-input), #timer_selectbox::part(form-control-input) {
+			border: none !important;
+		}
+		#quick_add_selectbox::part(form-control), #timer_selectbox::part(form-control) {
+			margin-left: -3em;
+		}
+		#quick_add_selectbox::part(menu), #timer_selectbox::part(menu) {
+			max-height: 60vh;
 		}
     }
 

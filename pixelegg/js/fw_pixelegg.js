@@ -138,6 +138,7 @@ import './slider.js';
 				.on('change', function() { framework.tzSelection(this.value); return false; })
 				.on('click', function(e) { e.stopPropagation(); });
 			window.egw.link_quick_add('topmenu_info_quick_add');
+			window.egw.add_timer('topmenu_info_timer');
 
 			// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
 			var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;

@@ -45,5 +45,23 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
+	),
+	'egw_timesheet_events' => array(
+		'fd' => array(
+			'tse_id' => array('type' => 'auto','nullable' => False),
+			'ts_id' => array('type' => 'int','precision' => '4','comment' => 'or NULL for not yet created'),
+			'tse_timestamp' => array('type' => 'timestamp','nullable' => False,'comment' => 'original time'),
+			'tse_time' => array('type' => 'timestamp','comment' => 'edited time'),
+			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'user timesheet is for'),
+			'tse_modified' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp','comment' => 'automatic modification TS'),
+			'tse_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'modifier'),
+			'tse_app' => array('type' => 'ascii','precision' => '24','comment' => 'app, if set on creation'),
+			'tse_app_id' => array('type' => 'ascii','precision' => '64','comment' => 'app-id, if set on creation'),
+			'tse_type' => array('type' => 'int','precision' => '16','nullable' => False,'comment' => '&1=start,&2=stop/pause,&16=overal-working-time')
+		),
+		'pk' => array('tse_id'),
+		'fk' => array(),
+		'ix' => array('ts_id'),
+		'uc' => array('tse_id')
 	)
 );

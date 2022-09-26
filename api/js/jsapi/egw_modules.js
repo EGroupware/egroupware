@@ -29,4 +29,5 @@ import "./egw_tail.js";
 import "./egw_inheritance.js";
 import "./egw_message.js";
 import "./egw_notification.js";
+import "./egw_timer.js";
 import "./jsapi.js";
