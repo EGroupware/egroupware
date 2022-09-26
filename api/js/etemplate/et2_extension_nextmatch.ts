@@ -1853,7 +1853,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				this._parseHeaderRow(_grid.cells[y], _grid.colData);
 			}
-			else
+			else if(this.controller == null)
 			{
 				this._parseDataRow(_grid.cells[y], _grid.rowData[y],
 					_grid.colData);
