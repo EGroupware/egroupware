@@ -173,6 +173,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 						 'filter' => array('account_id' => null)) +
 			$search_options;
 		$results = array();
+		$is_admin = !!($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		// Contacts matching accounts the user does not have permission for cause
 		// confusion as user selects the contact and there's nothing there, so
@@ -186,8 +187,8 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			$mapped = array();
 			$_results = array();
 
-			// Handle Api\Accounts separately
-			if($type == '')
+			// Handle Api\Accounts separately, if user is allowed to see accounts
+			if($type == '' && ($is_admin || !$is_admin && $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] !== 'none'))
 			{
 				$owngroup_options = $options+array('account_type'=>'owngroups');
 				$own_groups = Api\Accounts::link_query('',$owngroup_options);
