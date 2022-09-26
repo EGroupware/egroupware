@@ -131,6 +131,14 @@ class preferences_hooks
 			$font_size_options = Api\Etemplate\Widget\HtmlArea::$font_size_options;
 		}
 
+
+		$textsize = array (
+			'10' => lang('small'),
+			'12' => lang('standard'),
+			'14' => lang('large'),
+			'16' => lang('x-large')
+		);
+
 		// Settings array for this app
 		$settings = array(
 			array(
@@ -146,6 +154,17 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => 20,	// hidden as not used in eTemplate2
+			),
+			'textsize' => array(
+				'type' => 'select',
+				'label' => 'Set content size',
+				'no_lang' => true,
+				'name' => 'textsize',
+				'help' => lang('It sets content size (text only) according to selected size.'),
+				'xmlrpc' => True,
+				'values' => $textsize,
+				'default' => '12',
+				'admin'  => False,
 			),
 			'lazy-update' => array(
 				'type'   => 'select',

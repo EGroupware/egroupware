@@ -39,13 +39,6 @@ $colors = array(
 	'#b4b4b4' => lang('Gray'),
 );
 
-$textsize = array (
-	'10' => lang('small'),
-	'12' => lang('standard'),
-	'14' => lang('large'),
-	'16' => lang('x-large')
-);
-
 asort($colors);
 $colors['custom'] = lang('Custom color');	// custom allways last
 $template_colors = array();
@@ -136,17 +129,6 @@ $GLOBALS['settings'] = array(
 		'title'  => lang('Universal Access'),
 		'no_lang'=> true,
 		'xmlrpc' => False,
-		'admin'  => False,
-	),
-	'textsize' => array(
-		'type' => 'select',
-		'label' => 'Set content size',
-		'no_lang' => true,
-		'name' => 'textsize',
-		'help' => lang('It sets content size (text only) according to selected size.'),
-		'xmlrpc' => True,
-		'values' => $textsize,
-		'default' => '12',
 		'admin'  => False,
 	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
