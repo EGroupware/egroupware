@@ -2710,7 +2710,8 @@ class Contacts extends Contacts\Storage
 
 		if (substr($contact_id,0,8) == 'account:')
 		{
-			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id,8),'person_id');
+			$id = substr($contact_id, 8);
+			$contact_id = $GLOBALS['egw']->accounts->id2name(substr($contact_id, 8), 'person_id');
 		}
 
 		$contact = $this->read($contact_id);
@@ -2720,7 +2721,15 @@ class Contacts extends Contacts\Storage
 			!(($contact['files'] & \EGroupware\Api\Contacts::FILES_BIT_PHOTO) && // new SQL in VFS
 				($size = filesize($url= \EGroupware\Api\Link::vfs_path('addressbook', $contact_id, \EGroupware\Api\Contacts::FILES_PHOTO)))))
 		{
-			if (is_array($contact))
+			if(!$contact_id && $id < 0)
+			{
+				$group = $GLOBALS['egw']->accounts->read($id);
+				$contact = array(
+					'id'      => $id,
+					'n_given' => $group['account_firstname']
+				);
+			}
+			if(is_array($contact))
 			{
 				header('Content-type: image/jpeg');
 				$contact['jpegphoto'] =  \EGroupware\Api\avatar::lavatar(array(

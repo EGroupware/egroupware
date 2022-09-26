@@ -441,12 +441,11 @@ class Accounts
 				$accounts[] = [
 					'value' => $account['account_id'],
 					'label' => $displayName,
-				]+($account['account_id'] <= 0 ? [] : [ // there is currently no avatar for groups, no need to ask server about it
-					'icon' => Framework::link('/api/avatar.php', [
+					'icon'  => Framework::link('/api/avatar.php', [
 						'account_id' => $account['account_id'],
-						'modified' => $account['account_modified'],
+						'modified'   => $account['account_modified'],
 					]),
-				]);
+				];
 			}
 			else
 			{
