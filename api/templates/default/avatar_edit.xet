@@ -4,7 +4,7 @@
 <overlay>
 	<template id="etemplate.avatar_edit" template="" lang="" group="0" version="16.2">
 		<vbox>
-			<avatar crop="true" id="cropper_image" contactId="$cont[contact_id]" src="$cont[src]" size="6em" shape="square"/>
+			<avatar crop="true" id="cropper_image" contactId="$cont[contact_id]" src="$cont[src]" size="8em" shape="square"/>
 			<hbox>
 				<buttononly id="rotate_reset" label="Reset"  image="recur" background_image="1"/>
 				<buttononly id="rotate_l" label="Rotate Left"  image="rotate_l" background_image="1"/>
@@ -15,7 +15,10 @@
 			</hbox>
 		</vbox>
 		<styles>
-			div.et2_file {margin-top: 5px;}
+			#_cropper_image {
+				display: inline-flex;
+				justify-content: center;
+			}
 		</styles>
 	</template>
 </overlay>
