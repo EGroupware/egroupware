@@ -595,9 +595,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	_setup_select( field_name, field, attrs)
 	{
 		// No label on the widget itself
-		delete(attrs.label);
+		delete (attrs.label);
 
 		attrs.rows = field.rows;
+		if(attrs.rows > 1)
+		{
+			attrs.multiple = true;
+		}
 		// select_options are now send from server-side incl. ones defined via a file in EGroupware root
 		attrs.tags = field.tags;
 
