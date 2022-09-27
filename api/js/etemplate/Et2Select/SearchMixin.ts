@@ -723,7 +723,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					{
 						this.updateComplete.then(() =>
 						{
-							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value + "']")?.scrollIntoView();
+							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value.replace(/'/g, "\\\'") + "']")?.scrollIntoView();
 						});
 					}
 				}
@@ -941,7 +941,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Remove remote options that aren't used
 			let keepers = this._selected_remote.reduce((prev, current) =>
 			{
-				return ":not([value='" + current.value + "'])";
+				return ":not([value='" + current.value.replace(/'/g, "\\\'") + "'])";
 			}, "");
 			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
 			target.childNodes.forEach((n) =>
@@ -1073,7 +1073,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 						temp_target.querySelectorAll(":scope > *").forEach((item) =>
 						{
 							// Avoid duplicate error
-							if(!target.querySelector("[value='" + item.value + "']"))
+							if(!target.querySelector("[value='" + item.value.replace(/'/g, "\\\'") + "']"))
 							{
 								target.appendChild(item);
 							}
@@ -1120,7 +1120,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				return false;
 			}
 			// Make sure not to double-add
-			if(!this.querySelector("[value='" + text + "']") && !this.__select_options.find(o => o.value == text))
+			if(!this.querySelector("[value='" + text.replace(/'/g, "\\\'") + "']") && !this.__select_options.find(o => o.value == text))
 			{
 				this.__select_options.push(<SelectOption>{
 					value: text,
@@ -1219,7 +1219,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 				this.updateComplete.then(() =>
 				{
-					const item = this.querySelector("[value='" + value + "']");
+					const item = this.querySelector("[value='" + value.replace(/'/g, "\\\'") + "']");
 					item.dispatchEvent(new CustomEvent("sl-select", {detail: {item}}));
 				})
 			}
@@ -1230,7 +1230,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				if(this.multiple)
 				{
 					this.value = this.value.filter(v => v !== original);
-					this.querySelector("[value='" + original + "']")?.remove();
+					this.querySelector("[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
 				}
 				else
 				{

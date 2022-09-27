@@ -156,7 +156,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 					temp_target.querySelectorAll(":scope > *").forEach((item) =>
 					{
 						// Avoid duplicate error
-						if(!this._optionTargetNode.querySelector("[value='" + item.value + "']"))
+						if(!this._optionTargetNode.querySelector("[value='" + item.value.replace(/'/g, '\\\'') + "']"))
 						{
 							this._optionTargetNode.appendChild(item);
 						}
