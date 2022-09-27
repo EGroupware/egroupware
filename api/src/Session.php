@@ -298,15 +298,10 @@ class Session
 	 */
 	function commit_session()
 	{
-		if (session_status() == PHP_SESSION_ACTIVE)
-		{
-			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]).' '.function_backtrace());
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]).' '.function_backtrace());
+		self::encrypt($this->kp3);
 
-			//error_log(__METHOD__."() $_SERVER[REQUEST_URI] closing session after ".number_format(microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'], 3));
-			self::encrypt($this->kp3);
-
-			session_write_close();
-		}
+		session_write_close();
 	}
 
 	/**
@@ -1279,11 +1274,10 @@ class Session
 			case PHP_SESSION_DISABLED:
 				throw new ErrorException('EGroupware requires the PHP session extension!');
 			case PHP_SESSION_NONE:
-				if (isset($_SESSION)) break;  // session already started, but closed again
 				session_name(self::EGW_SESSION_NAME);
 				session_id($this->sessionid);
 				self::cache_control();
-				session_start(empty($GLOBALS['egw_info']['flags']['close_session']) ? [] : ['read_and_close' => true]);
+				session_start();
 				break;
 			case PHP_SESSION_ACTIVE:
 				// session already started eg. by managementserver_client
@@ -2015,14 +2009,14 @@ class Session
 			case PHP_SESSION_DISABLED:
 				throw new \ErrorException('EGroupware requires PHP session extension!');
 			case PHP_SESSION_NONE:
-				if (isset($_SESSION)) return true;  // session already started, but closed again
 				if (headers_sent()) return false;	// only gives warnings
+				ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 				session_name(self::EGW_SESSION_NAME);
 				if (isset($sessionid) || ($sessionid = self::get_sessionid()))
 				{
 					session_id($sessionid);
 					self::cache_control();
-					$ok = session_start(empty($GLOBALS['egw_info']['flags']['close_session']) ? [] : ['read_and_close' => true]);
+					$ok = session_start();
 					self::decrypt();
 					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
 					return $ok;

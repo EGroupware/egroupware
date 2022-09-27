@@ -483,98 +483,6 @@ class Cache
 	 */
 	const SESSION_EXPIRATION_PREFIX = '*expiration*';
 
-	protected static $closed_session_sets = [];
-
-	/**
-	 * If session is already closed, record value(s) and reopen session to store them on shutdown
-	 *
-	 * @param string $app
-	 * @param string $location
-	 * @param mixed $data =null null: unset
-	 * @param int $expiration
-	 * @return void
-	 */
-	protected static function checkSetClosedSession($app, $location, $data=null, $expiration=0)
-	{
-		if (isset($_SESSION) && session_status() !== PHP_SESSION_ACTIVE)
-		{
-			self::$closed_session_sets[$app][$location] = $data;
-			//error_log(__METHOD__."(".json_encode(func_get_args()).") session_status()=closed");
-		}
-	}
-
-	/**
-	 * Called on shutdown to re-open session and store values set since session was closed
-	 *
-	 * It is called in Egw::onShutdown(), before any output is sent, as we can NOT reopen the session after!
-	 */
-	public static function onShutdown()
-	{
-		// first run closures used to check references returned by getSession() are used for updates
-		foreach(self::$closed_session_sets as $app => $app_data)
-		{
-			foreach($app_data as $location => $func)
-			{
-				if (is_callable($func))
-				{
-					$data = $func();
-					if (isset($data))
-					{
-						self::$closed_session_sets[$app][$location] = $data;
-					}
-					else
-					{
-						unset(self::$closed_session_sets[$app][$location]);
-						if (!self::$closed_session_sets[$app])
-						{
-							unset(self::$closed_session_sets[$app]);
-						}
-					}
-				}
-			}
-		}
-		// if we really have to (un)set something, re-open the session and do so
-		if (self::$closed_session_sets)
-		{
-			if (empty($GLOBALS['egw']->session) || empty($GLOBALS['egw']->session->sessionid))
-			{
-				// no session, eg. async service
-				return;
-			}
-			if (headers_sent())
-			{
-				error_log(__METHOD__."() headers_sent() --> can not re-open session of $_SERVER[REQUEST_URI] to set: ".json_encode(self::$closed_session_sets));
-				return;
-			}
-			if (!session_start())
-			{
-				error_log(__METHOD__."() could NOT reopen session of $_SERVER[REQUEST_URI] to set: ".json_encode(self::$closed_session_sets));
-				return;
-			}
-			foreach(self::$closed_session_sets as $app => $app_data)
-			{
-				foreach($app_data as $location => $data)
-				{
-					if (is_callable($data))
-					{
-						$data();
-					}
-					elseif (isset($data))
-					{
-						self::setSession($app, $location, $data);
-					}
-					else
-					{
-						self::unsetSession($app, $location);
-					}
-				}
-			}
-			error_log(__METHOD__."() updated session of $_SERVER[REQUEST_URI] with ".json_encode(self::$closed_session_sets));
-			$GLOBALS['egw']->session->commit_session();
-			self::$closed_session_sets = [];
-		}
-	}
-
 	/**
 	 * Set some data in the cache for the whole source tree (all instances)
 	 *
@@ -586,17 +494,16 @@ class Cache
 	 */
 	public static function setSession($app,$location,$data,$expiration=0)
 	{
-		// only update, if there is a change, no need to reopen session otherwise
-		if ($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] !== $data)
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
-			$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
-			self::checkSetClosedSession($app, $location, $data);
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
+		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
 
 		if ($expiration > 0)
 		{
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] = time()+$expiration;
-			self::checkSetClosedSession(self::SESSION_EXPIRATION_PREFIX.$app, $location, time()+$expiration);
 		}
 
 		return true;
@@ -607,10 +514,6 @@ class Cache
 	 *
 	 * Returns a reference to the var in the session!
 	 *
-	 * Better would be two separate functions one returning a value and the other a reference,
-	 * as we now need to check via a closure, if the reference was used for an update,
-	 * to reopen the session and run the update (use "=\s*&.*Cache::getSession" to find references).
-	 *
 	 * @param string $app application storing data
 	 * @param string $location location name for data
 	 * @param callback $callback =null callback to get/create the value, if it's not cache
@@ -620,6 +523,12 @@ class Cache
 	 */
 	public static function &getSession($app, $location, $callback=null, array $callback_params=array(), $expiration=0)
 	{
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
+		{
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			$ret = null;	// can no longer store something in the session, eg. because commit_session() was called
+			return $ret;
+		}
 		// check if entry is expired and clean it up in that case
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
@@ -630,18 +539,7 @@ class Cache
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]) && !is_null($callback))
 		{
 			$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = call_user_func_array($callback,$callback_params);
-			self::checkSetClosedSession($app, $location, $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
 		}
-		// as getSession returns a reference, which can be used to update the session, we store a function to check,
-		// if the value was actually changed and only in that case return it
-		$data = $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location];
-		self::checkSetClosedSession($app, $location, function() use ($app, $location, $data)
-		{
-			if ($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] !== $data)
-			{
-				return $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location];
-			}
-		});
 		return $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location];
 	}
 
@@ -654,21 +552,23 @@ class Cache
 	 */
 	public static function unsetSession($app,$location)
 	{
+		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
+		{
+			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
+			return false;	// can no longer store something in the session, eg. because commit_session() was called
+		}
 		// check if entry is expired and clean it up in that case
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
 		{
 			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
 				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
-			self::checkSetClosedSession($app, $location, null);
-			self::checkSetClosedSession(self::SESSION_EXPIRATION_PREFIX.$app, $location, null);
 		}
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]))
 		{
 			return false;
 		}
 		unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
-		self::checkSetClosedSession($app, $location, null);
 
 		return true;
 	}
