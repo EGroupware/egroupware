@@ -61,7 +61,6 @@
 					<description/>
 				</row>
 				<row disabled="1">
-					<template id="addressbook.index.left"/>
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
