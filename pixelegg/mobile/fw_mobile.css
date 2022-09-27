@@ -5498,6 +5498,8 @@ span.overlayContainer img.overlay {
   display: block;
   white-space: nowrap;
   color: #606060;
+  height: 45px;
+  width: 45px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
   color: black;
@@ -8051,6 +8053,9 @@ table.egwGridView_grid img.et2_appicon {
     /* active app header*/
   }
   body #egw_fw_basecontainer #egw_fw_main {
+    margin-top: 0px;
+  }
+  body #egw_fw_basecontainer #egw_fw_main .egw_fw_ui_tab_content {
     margin-top: 0px;
   }
   body #egw_fw_basecontainer .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
