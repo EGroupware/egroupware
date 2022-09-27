@@ -125,7 +125,7 @@
         <buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" image="add"/>
     </template>
     <template id="mail.index.header_right" template="" lang="" group="0" version="1.9.001">
-        <et2-details id="mail.index.vacationnotice" summary="on vacation" toggleOnHover="true" hoist="true" class="vacationnotice">
+        <et2-details id="mail.index.vacationnotice" disabled="true" summary="on vacation" toggleOnHover="true" hoist="true" class="vacationnotice">
             <description id="nm[vacationnotice]" class="@nm[vacationclass]"/>
             <description id="nm[vacationrange]" class="@nm[vacationrangeclass]"/>
         </et2-details>
