@@ -197,7 +197,7 @@
  * Add / remove link or category popup used for actions on multiple entries
  */
 
-div.action_popup[id] {
+.action_popup[id] {
 	position: fixed;
 	top: 200px;
 	left: 450px;

@@ -104,7 +104,7 @@
 		</grid>
 		<styles>
 
-div.action_popup[id] {
+.action_popup[id] {
 	position: fixed;
 	top: 200px;
 	left: 450px;
