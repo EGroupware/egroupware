@@ -62,6 +62,8 @@
 			background-repeat: repeat-x;
 			background-color: transparent;
 			height: 39px;
+			display: flex;
+			align-items: baseline;
 			h1 {
 				display: inline;
 				width: 100%;
@@ -109,9 +111,11 @@
 				&:hover {
 					background-color: @color_hover_row;
 					padding-bottom: 0px;
-					padding-top: 8px;
+					padding-top: 7px;
 					transition: none;
-
+					width: -webkit-fill-available;
+					width: -moz-available;
+					max-width: fit-content !important;
 					.egw_fw_ui_tab_close_button {
 						background-image: url(../../api/templates/default/images/close.svg);
 					}

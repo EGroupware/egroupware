@@ -4499,6 +4499,8 @@ span.overlayContainer img.overlay {
   background-repeat: repeat-x;
   background-color: transparent;
   height: 39px;
+  display: flex;
+  align-items: baseline;
   /*active Tabs*/
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header h1 {
@@ -4550,8 +4552,11 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
-  padding-top: 8px;
+  padding-top: 7px;
   transition: none;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  max-width: fit-content !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
   background-image: url(../../api/templates/default/images/close.svg);
