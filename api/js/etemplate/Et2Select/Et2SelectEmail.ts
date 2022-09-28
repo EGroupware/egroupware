@@ -12,6 +12,14 @@ import {css} from "@lion/core";
 import {IsEmail} from "../Validators/IsEmail";
 import interact from "@interactjs/interact";
 
+/**
+ * Select email address(es)
+ *
+ * Allows free entries of valid email addresses, but also searches contacts.
+ *
+ * You should set multiple="true" for most cases for better UI
+ * @see Et2SelectEmail
+ */
 export class Et2SelectEmail extends Et2Select
 {
 	static get styles()
