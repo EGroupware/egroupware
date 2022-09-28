@@ -40,18 +40,18 @@
                             <vbox>
                                 <hbox>
                                     <et2-details class="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                                        <et2-select-email slot="summary" id="fromaddress" readonly="true"/>
+                                        <et2-select-email slot="summary" id="fromaddress" readonly="true" multiple="true"/>
                                         <hbox>
                                             <description value="From" class="firstColumnTitle"/>
-                                            <et2-select-email id="additionalfromaddress" readonly="true"></et2-select-email>
+                                            <et2-select-email id="additionalfromaddress" readonly="true" multiple="true"></et2-select-email>
                                         </hbox>
                                         <hbox disabled="!@toaddress" width="100%">
                                             <description value="To" class="firstColumnTitle"/>
-                                            <et2-select-email id="additionaltoaddress" readonly="true"></et2-select-email>
+                                            <et2-select-email id="additionaltoaddress" readonly="true" multiple="true"></et2-select-email>
                                         </hbox>
                                         <hbox disabled="!@ccaddress"  width="100%">
                                             <description value="Cc" class="firstColumnTitle"/>
-                                            <et2-select-email id="ccaddress" readonly="true"></et2-select-email>
+                                            <et2-select-email id="ccaddress" readonly="true" multiple="true"></et2-select-email>
                                         </hbox>
                                     </et2-details>
                                     <date-time-today align="right" id="date" readonly="true"/>
