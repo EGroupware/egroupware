@@ -24,26 +24,26 @@
 				<vbox class="previewWrapper">
 					<hbox>
                         <et2-details class="details" title="details" toggleOnHover="true" hoist="true" toggleAlign="left">
-                            <et2-select-email slot="summary" value="@from" readonly="true"/>
+                            <et2-select-email slot="summary" value="@from" readonly="true" multiple="true"/>
                             <hbox  disabled="!@from">
                                 <description value="From" class="firstColumnTitle"/>
-                                <et2-select-email id="from" readonly="true"></et2-select-email>
+                                <et2-select-email id="from" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                             <hbox disabled="!@sender">
                                 <description value="Sender" class="firstColumnTitle"/>
-                                <et2-select-email id="sender" readonly="true"></et2-select-email>
+                                <et2-select-email id="sender" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                             <hbox disabled="!@to">
                                 <description value="To" class="firstColumnTitle"/>
-                                <et2-select-email id="to" readonly="true"></et2-select-email>
+                                <et2-select-email id="to" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                             <hbox disabled="!@cc">
                                 <description value="Cc" class="firstColumnTitle"/>
-                                <et2-select-email id="cc" readonly="true"></et2-select-email>
+                                <et2-select-email id="cc" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                             <hbox disabled="!@bcc">
                                 <description value="Bcc" class="firstColumnTitle"/>
-                                <et2-select-email id="bcc" readonly="true"></et2-select-email>
+                                <et2-select-email id="bcc" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                         </et2-details>
                         <date-time-today align="right" id="mail_displaydate" readonly="true"/>
