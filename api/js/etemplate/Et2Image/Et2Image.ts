@@ -216,7 +216,7 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 					{
 						this.src = src;
 					}
-					else if(!this.src)
+					else
 					{
 						this.src = src;
 					}
