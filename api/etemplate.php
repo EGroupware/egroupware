@@ -163,10 +163,15 @@ function send_template()
 		// fix <textbox multiline="true" .../> --> <et2-textarea .../>
 		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#', '<et2-textarea$1$2></et2-textarea>', $str);
 
-		// fix <(textbox|int(eger)?|float) precision="int(eger)?|float" .../> --> <et2-number precision=.../> or <et2-textbox .../>
-		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number).*?\s(type="(int(eger)?|float)")?.*?(/|></textbox)>#',
+		// fix <(textbox|int(eger)?|float|passwd) precision="int(eger)?|float|passwd" .../> --> <et2-number precision=.../>, <et2-password .../> or <et2-textbox .../>
+		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?\s(type="(int(eger)?|float|passwd)")?.*?(/|></textbox)>#',
 			static function ($matches)
 			{
+				if ($matches[1] === 'passwd' || $matches['4'] === 'passwd')
+				{
+					return '<et2-password'.str_replace('type="passwd"', '',
+						substr($matches[0], 1+strlen($matches[1]), -strlen($matches[6])-1)).'></et2-password>';
+				}
 				if ($matches[1] === 'textbox' && !in_array($matches[4], ['float', 'int', 'integer'], true))
 				{
 					return '<et2-'.substr($matches[0], 1, -strlen($matches[6])-1).'></et2-textbox>'; // regular textbox --> nothing to do
@@ -295,8 +300,6 @@ function send_template()
 
 			return '<et2-nextmatch-header-' . $matches[2] . ' ' . stringAttrs($attrs) . '/>';
 		}, $str);
-
-		$str = preg_replace('#<passwd ([^>]+)(/|></passwd)>#', '<et2-password $1></et2-password>', $str);
 
 		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>
 		$str = preg_replace_callback('#<(button|buttononly|timestamper|button-timestamp|dropdown_button)\s(.*?)(/|></(button|buttononly|timestamper|button-timestamp|dropdown_button))>#s', function ($matches) use ($name)
