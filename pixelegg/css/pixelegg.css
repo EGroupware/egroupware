@@ -4669,7 +4669,6 @@ span.overlayContainer img.overlay {
   overflow: hidden;
   z-index: 0;
   font-size: 0.9em;
-  border-right: 1px solid #bfbfbf;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv {
   background-color: #fafafa;
@@ -5014,7 +5013,7 @@ span.overlayContainer img.overlay {
   background-image: url(../../api/templates/default/images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;
+  background-color: #E6E6E6;
   position: absolute;
   width: 4px;
   height: 100%;
