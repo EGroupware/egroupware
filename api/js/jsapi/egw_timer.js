@@ -29,15 +29,20 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	{
 		timer_start = _state.start ? new Date(_state.start) : undefined;
 		timer_offset = _state.offset || 0;
-		if (timer_offset && timer_start)
+		timer_paused = _state.paused || false
+		if (timer_paused)
 		{
-			timer_start.setMilliseconds(timer_start.getMilliseconds()-timer_offset);
+			startTimer();	// to show offset / paused time
+			stopTimer(true);
 		}
-		if (timer_start || _state.paused)
+		else if (timer_start)
 		{
-			startTimer();
-
-			if (_state.paused) stopTimer(true);	// sets timer_paused
+			startTimer(_state.start);
+		}
+		else
+		{
+			startTimer();	// to show offset / stopped time
+			stopTimer();
 		}
 	}
 
@@ -77,31 +82,55 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		egw.request('timesheet.timesheet_bo.ajax_event', [state])
 	}
 
-	function startTimer()
+	/**
+	 * Enable/disable menu items based on timer state
+	 */
+	function setMenuState()
 	{
-		timer_paused = false;
-		timer_start = new Date();
+		const menu = document.querySelector('et2-select#timer_selectbox').menu;
+		// disable not matching / available menu-items
+		menu.getAllItems('et2-selectbox#timer_selecbox sl-menu-item').forEach(item =>
+		{
+			// timer running: disable only start, enable pause and stop
+			if (timer_start)
+			{
+				item.disabled = item.value === 'overall-start';
+			}
+			// timer paused: disable pause, enable start and stop
+			else if (timer_paused)
+			{
+				item.disabled = item.value === 'overall-pause';
+			}
+			// timer stopped: disable stop and pause, enable start
+			else
+			{
+				item.disabled = item.value !== 'overall-start';
+			}
+		});
+	}
+
+	function startTimer(_time)
+	{
+		if (_time)
+		{
+			timer_start = new Date(_time);
+		}
+		else
+		{
+			timer_start = new Date();
+		}
 		if (timer_offset > 0)
 		{
 			timer_start.setMilliseconds(timer_start.getMilliseconds()-timer_offset);
 		}
+		timer_offset = 0;	// it's now set in start-time
+		timer_paused = false;
 		const update = () =>
 		{
-			if (!timer_start)
-			{
-				timer.textContent = '0:00';
-			}
-			else if (timer_paused)
-			{
-				// do nothing
-			}
-			else
-			{
-				let diff = Math.round(((new Date()).valueOf() - timer_start.valueOf())/1000.0);
-				const sep = diff % 2 ? ' ' : ':';
-				diff = Math.round(diff / 60.0);
-				timer.textContent = sprintf('%d%s%02d', Math.round(diff/60), sep, diff % 60);
-			}
+			let diff = Math.round(((new Date()).valueOf() - timer_start.valueOf())/1000.0);
+			const sep = diff % 2 ? ' ' : ':';
+			diff = Math.round(diff / 60.0);
+			timer.textContent = sprintf('%d%s%02d', Math.round(diff/60), sep, diff % 60);
 		}
 		timer.classList.add('running');
 		timer.classList.remove('paused');
@@ -123,9 +152,14 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			timer.classList.add('paused');
 			timer_paused = true;
 		}
-		timer_offset = (new Date()).valueOf() - timer_start.valueOf();
-		if (!_pause)
+		else
 		{
+			timer.classList.remove('paused');
+			timer_paused = false;
+		}
+		if (timer_start)
+		{
+			timer_offset = (new Date()).valueOf() - timer_start.valueOf();
 			timer_start = undefined;
 		}
 	}
@@ -149,7 +183,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			}
 
 			// create selectbox / menu
-			const select = document.createElement('et2-select', {id: 'timer_selectbox'});
+			const select = document.createElement('et2-select');
+			select.id = 'timer_selectbox';
 			timer_container.append(select);
 
 			// bind change handler
@@ -175,6 +210,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				}
 				else
 				{
+					setMenuState();
 					select.dropdown.show();
 				}
 			});

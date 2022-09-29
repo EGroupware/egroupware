@@ -4509,6 +4509,8 @@ span.overlayContainer img.overlay {
   background-repeat: repeat-x;
   background-color: transparent;
   height: 39px;
+  display: flex;
+  align-items: baseline;
   /*active Tabs*/
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header h1 {
@@ -4560,8 +4562,11 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
-  padding-top: 8px;
+  padding-top: 7px;
   transition: none;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  max-width: fit-content !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
   background-image: url(../../api/templates/default/images/close.svg);
@@ -4674,7 +4679,6 @@ span.overlayContainer img.overlay {
   overflow: hidden;
   z-index: 0;
   font-size: 0.9em;
-  border-right: 1px solid #bfbfbf;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv {
   background-color: #fafafa;
@@ -5019,7 +5023,7 @@ span.overlayContainer img.overlay {
   background-image: url(../../api/templates/default/images/splitter_vert.png);
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;
+  background-color: #E6E6E6;
   position: absolute;
   width: 4px;
   height: 100%;
@@ -5487,9 +5491,14 @@ span.overlayContainer img.overlay {
   display: block;
   white-space: nowrap;
   color: #606060;
+  height: 45px;
+  width: 45px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
   color: black;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.paused {
+  color: orange;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer:hover {
   cursor: pointer;
