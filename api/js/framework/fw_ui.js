@@ -1353,13 +1353,20 @@ window.egw_fw_ui_splitter.prototype.dragHandler = function(event)
 	this.constraints[0].size += delta;
 	this.constraints[1].size -= delta;
 
+	// reset the size to minsize if it's dragged beyond it
+	if (this.constraints[0].size + delta <= this.constraints[0].minsize)
+	{
+		this.constraints[0].size = 	this.constraints[0].minsize;
+		return;
+	}
+
 	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
 };
 
 
 window.egw_fw_ui_splitter.prototype.dragStopHandler = function(event)
 {
-	return; // let draghandler taking care of resize callback
+	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
 };
 
 /**
