@@ -16,42 +16,68 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	"use strict";
 
 	/**
-	 * Timer state
+	 * Overall timer state
 	 */
-	let timer_start;
-	let timer_offset = 0;
-	let timer_paused = false;
-
+	let overall = {};
+	/**
+	 * Specific timer state
+	 */
+	let specific = {};
+	/**
+	 * Timer container in top-menu
+	 * @type {Element}
+	 */
 	const timer = document.querySelector('#topmenu_timer');
+	/**
+	 * Reference from setInterval to stop periodic update
+	 */
 	let timer_interval;
 
+	/**
+	 * Set state of timer
+	 *
+	 * @param _state
+	 */
 	function setState(_state)
 	{
-		timer_start = _state.start ? new Date(_state.start) : undefined;
-		timer_offset = _state.offset || 0;
-		timer_paused = _state.paused || false
-		if (timer_paused)
+		// initiate overall timr
+		startTimer(overall, _state.overall?.start, _state.overall?.offset);	// to show offset / paused time
+		if (_state.overall?.paused)
 		{
-			startTimer();	// to show offset / paused time
-			stopTimer(true);
+			stopTimer(overall, true);
 		}
-		else if (timer_start)
+		else if (!_state.overall?.start)
 		{
-			startTimer(_state.start);
+			stopTimer(overall);
 		}
-		else
+
+		// initiate specific timer, only if running or paused
+		if (_state.specific?.start || _state.specific?.paused)
 		{
-			startTimer();	// to show offset / stopped time
-			stopTimer();
+			startTimer(specific, _state.specific?.start, _state.specifc?.offset);	// to show offset / paused time
+			if (_state.specific?.paused)
+			{
+				stopTimer(specific, true);
+			}
+			else if (!_state.specific?.start)
+			{
+				stopTimer(specific);
+			}
 		}
 	}
 
-	function getState()
+	/**
+	 * Get state of timer
+	 * @param string _action last action
+	 * @returns {{action: string, overall: {}, specific: {}, ts: Date}}
+	 */
+	function getState(_action)
 	{
 		return {
-			start: timer_start,
-			offset: timer_offset,
-			paused: timer_paused
+			action: _action,
+			ts: new Date(),
+			overall: overall,
+			specific: specific
 		}
 	}
 
@@ -65,21 +91,34 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		switch(_action)
 		{
 			case 'overall-start':
-				startTimer();
+				startTimer(overall);
 				break;
 
 			case 'overall-pause':
-				stopTimer(true);
+				stopTimer(overall,true);
+				if (specific?.start) stopTimer(specific, true);
 				break;
 
 			case 'overall-stop':
-				stopTimer();
+				stopTimer(overall);
+				if (specific?.start) stopTimer(specific);
+				break;
+
+			case 'specific-start':
+				if (overall?.paused) startTimer(overall);
+				startTimer(specific);
+				break;
+
+			case 'specific-pause':
+				stopTimer(specific,true);
+				break;
+
+			case 'specific-stop':
+				stopTimer(specific);
 				break;
 		}
 		// persist state
-		let state = getState();
-		state.action = _action;
-		egw.request('timesheet.timesheet_bo.ajax_event', [state])
+		egw.request('timesheet.timesheet_bo.ajax_event', [getState(_action)])
 	}
 
 	/**
@@ -91,76 +130,125 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		// disable not matching / available menu-items
 		menu.getAllItems('et2-selectbox#timer_selecbox sl-menu-item').forEach(item =>
 		{
-			// timer running: disable only start, enable pause and stop
-			if (timer_start)
+			if (item.value.substring(0, 8) === 'overall-')
 			{
-				item.disabled = item.value === 'overall-start';
+				// timer running: disable only start, enable pause and stop
+				if (overall?.start)
+				{
+					item.disabled = item.value === 'overall-start';
+				}
+				// timer paused: disable pause, enable start and stop
+				else if (overall?.paused)
+				{
+					item.disabled = item.value === 'overall-pause';
+				}
+				// timer stopped: disable stop and pause, enable start
+				else
+				{
+					item.disabled = item.value !== 'overall-start';
+				}
 			}
-			// timer paused: disable pause, enable start and stop
-			else if (timer_paused)
+			else if (item.value.substring(0, 9) === 'specific-')
 			{
-				item.disabled = item.value === 'overall-pause';
-			}
-			// timer stopped: disable stop and pause, enable start
-			else
-			{
-				item.disabled = item.value !== 'overall-start';
+				// timer running: disable only start, enable pause and stop
+				if (specific?.start)
+				{
+					item.disabled = item.value === 'specific-start';
+				}
+				// timer paused: disable pause, enable start and stop
+				else if (specific?.paused)
+				{
+					item.disabled = item.value === 'specific-pause';
+				}
+				// timer stopped: disable stop and pause, enable start
+				else
+				{
+					item.disabled = item.value !== 'specific-start';
+				}
 			}
 		});
 	}
 
-	function startTimer(_time)
+	/**
+	 * Start given timer
+	 *
+	 * @param object _timer
+	 * @param string|undefined _start to initialise with time different from current time
+	 * @param number|undefined _offset to set an offset
+	 */
+	function startTimer(_timer, _start, _offset)
 	{
-		if (_time)
+		// update _timer state object
+		if (_start)
 		{
-			timer_start = new Date(_time);
+			_timer.start = new Date(_start);
 		}
-		else
+		else if(typeof _timer.start === 'undefined')
 		{
-			timer_start = new Date();
+			_timer.start = new Date();
 		}
-		if (timer_offset > 0)
+		if (_offset || _timer.offset)
 		{
-			timer_start.setMilliseconds(timer_start.getMilliseconds()-timer_offset);
+			_timer.start.setMilliseconds(_timer.start.getMilliseconds()-(_offset || _timer.offset));
 		}
-		timer_offset = 0;	// it's now set in start-time
-		timer_paused = false;
-		const update = () =>
+		_timer.offset = 0;	// it's now set in start-time
+		_timer.paused = false;
+
+		// only initiate periodic update, for specific timer, or overall, when specific is not started or paused
+		if (_timer === specific || _timer === overall && !(specific?.start || specific?.paused))
 		{
-			let diff = Math.round(((new Date()).valueOf() - timer_start.valueOf())/1000.0);
-			const sep = diff % 2 ? ' ' : ':';
-			diff = Math.round(diff / 60.0);
-			timer.textContent = sprintf('%d%s%02d', Math.round(diff/60), sep, diff % 60);
+			const update = () => {
+				let diff = Math.round(((new Date()).valueOf() - _timer.start.valueOf()) / 1000.0);
+				const sep = diff % 2 ? ' ' : ':';
+				diff = Math.round(diff / 60.0);
+				timer.textContent = sprintf('%d%s%02d', Math.round(diff / 60), sep, diff % 60);
+			}
+			timer.classList.add('running');
+			timer.classList.remove('paused');
+			timer.classList.toggle('overall', _timer === overall);
+			update();
+			if (timer_interval) {
+				window.clearInterval(timer_interval);
+			}
+			timer_interval = window.setInterval(update, 1000);
 		}
-		timer.classList.add('running');
-		timer.classList.remove('paused');
-		update();
-		timer_interval = window.setInterval(update, 1000);
 	}
 
-	function stopTimer(_pause)
+	/**
+	 * Stop or pause timer
+	 *
+	 * If specific timer is stopped, it will automatically display the overall timer, if running or paused
+	 *
+	 * @param object _timer
+	 * @param bool|undefined _pause true: pause, else: stop
+	 */
+	function stopTimer(_timer, _pause)
 	{
+		// stop periodic update
 		if (timer_interval)
 		{
 			window.clearInterval(timer_interval);
 		}
+
+		// update timer of stopped/paused state
 		timer.classList.remove('running');
+		timer.classList.toggle('paused', _pause || false);
 		timer.textContent = timer.textContent.replace(' ', ':');
 
-		if (_pause)
+		// update _timer state object
+		_timer.paused = _pause || false;
+		if (_timer.start)
 		{
-			timer.classList.add('paused');
-			timer_paused = true;
+			_timer.offset = (new Date()).valueOf() - _timer.start.valueOf();
+			_timer.start = undefined;
 		}
-		else
+
+		// if specific timer is stopped AND overall timer is running or paused, re-start overall to display it again
+		if (!_pause && _timer === specific && (overall.start || overall.paused))
 		{
-			timer.classList.remove('paused');
-			timer_paused = false;
-		}
-		if (timer_start)
-		{
-			timer_offset = (new Date()).valueOf() - timer_start.valueOf();
-			timer_start = undefined;
+			const paused = overall.paused;
+			startTimer(overall);
+			if (paused) stopTimer(overall, true);
 		}
 	}
 
@@ -219,9 +307,12 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			{
 				select.select_options = [
 					{ value:'', label: this.lang('Select one...')},
-					{ value: 'overall-start', label: this.lang('Start working time')},
-					{ value: 'overall-pause', label: this.lang('Pause working time')},
-					{ value: 'overall-stop', label: this.lang('Stop working time')},
+					{ value: 'specific-start', label: this.lang('Start specific time'), icon: 'timesheet/play-blue'},
+					{ value: 'specific-pause', label: this.lang('Pause specific time'), icon: 'timesheet/pause-orange'},
+					{ value: 'specific-stop', label: this.lang('Stop specific time'), icon: 'timesheet/stop'},
+					{ value: 'overall-start', label: this.lang('Start working time'), icon: 'timesheet/play'},
+					{ value: 'overall-pause', label: this.lang('Pause working time'), icon: 'timesheet/pause-orange'},
+					{ value: 'overall-stop', label: this.lang('Stop working time'), icon: 'timesheet/stop'},
 				];
 				select.updateComplete.then(() =>
 				{

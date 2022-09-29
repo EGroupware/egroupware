@@ -5506,6 +5506,9 @@ span.overlayContainer img.overlay {
   width: 45px;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
+  color: blue;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running.overall {
   color: black;
 }
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.paused {
