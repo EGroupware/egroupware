@@ -361,7 +361,13 @@ app.classes.mail = AppJS.extend(
 						// focus
 						jQuery(plainText.getDOMNode()).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden")) plainText.getDOMNode().setSelectionRange(0,0);
+						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden"))
+						{
+							setTimeout(function(){
+								plainText.getDOMNode().setSelectionRange(0,0)
+								plainText.focus();
+							}, 2000);
+						}
 					}
 					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
