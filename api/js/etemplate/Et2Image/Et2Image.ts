@@ -212,10 +212,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 					{
 						this.src = this.egw().link('/index.php', src);
 					}
-					else if(this.src && this.egw().image(src))
-					{
-						this.src = src;
-					}
 					else
 					{
 						this.src = src;
