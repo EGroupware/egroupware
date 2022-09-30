@@ -482,7 +482,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		link_quick_add: function(_parent)
 		{
 			// check if quick-add selectbox is already there, only create it again if not
-			if (document.getElementById('quick_add_selectbox')) return;
+			if (document.getElementById('quick_add_selectbox') || egwIsMobile()) return;
 
 			const select = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');

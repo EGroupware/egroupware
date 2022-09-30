@@ -997,7 +997,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 				var $sidebar = jQuery('#'+egw.app_name()+'_sidebox_content');
 				$sidebar.toggle();
 				jQuery(this).css({
-					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'pixelegg/images/apps.svg':egw.app_name()+'/templates/pixelegg/images/navbar.svg)')
+					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'api/templates/default/images/apps.svg':egw.app_name()+'/templates/default/images/navbar.svg)')
 				});
 
 			});
