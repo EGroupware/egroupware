@@ -290,7 +290,7 @@ class admin_categories
 		}
 		if($this->appname == 'admin' || ($content['id'] && !((int)$content['owner'] > 0)))
 		{
-			if($content['owner'] > 0)
+			if((int)$content['owner'] > 0)
 			{
 				$content['msg'] .= "\n".lang('owner "%1" removed, please select group-owner', Api\Accounts::username($content['owner']));
 				$content['owner'] = 0;
