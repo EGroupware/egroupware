@@ -15,6 +15,7 @@ use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
+use EGroupware\Timesheet\Events;
 
 /**
  * User interface object of the TimeSheet
@@ -75,6 +76,7 @@ class timesheet_ui extends timesheet_bo
 				{
 					$view = true;
 				}
+				$this->data['events'] = Events::get($this->data['ts_id']);
 			}
 			else	// new entry
 			{
@@ -92,6 +94,20 @@ class timesheet_ui extends timesheet_bo
 				{
 					$this->data['pm_id'] = $this->find_pm_id($_REQUEST['ts_project']);
 				}
+				if (isset($_REQUEST['events']))
+				{
+					$this->data['events'] = array_values(Events::getPending($_REQUEST['events'] === 'overall', $time));
+					$start = $this->data['events'][0]['tse_time'];
+					$this->data['ts_start'] = $start;
+					$this->data['start_time'] = Api\DateTime::server2user($start, 'H:s');
+					$this->data['end_time'] = '';
+					$this->data['ts_duration'] = round($time / 60); // minutes
+					$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0; // hours
+				}
+			}
+			if (!empty($this->data['events']))
+			{
+				array_unshift($this->data['events'], false);
 			}
 			$matches = null;
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
@@ -272,6 +288,13 @@ class timesheet_ui extends timesheet_bo
 						{
 							Link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
+						if (empty($content['ts_id']) && !empty($content['events']))
+						{
+							Events::addToTimesheet($this->data['ts_id'], array_map(static function($event)
+							{
+								return $event['tse_id'];
+							}, $content['events']));
+						}
 					}
 					Framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
 					if ($button == 'apply') break;
@@ -427,6 +450,7 @@ class timesheet_ui extends timesheet_bo
 			'button[save]'     => $view,
 			'button[save_new]' => $view,
 			'button[apply]'    => $view,
+			'tabs[events]'     => empty($this->data['events']), // hide events tab, if we have none
 		);
 
 		if ($view)
@@ -448,6 +472,14 @@ class timesheet_ui extends timesheet_bo
 		{
 			$edit_grants[$content['ts_owner']] = Api\Accounts::username($content['ts_owner']);
 		}
+		$sel_options['tse_type'] = [
+			Events::START => 'start',
+			Events::STOP  => 'stop',
+			Events::PAUSE => 'pause',
+			Events::OVERALL|Events::START => 'start',
+			Events::OVERALL|Events::STOP  => 'stop',
+			Events::OVERALL|Events::PAUSE => 'pause',
+		];
 		$sel_options['ts_owner']  = $edit_grants;
 		$sel_options['ts_status']  = $this->get_status_labels($only_admin_edit);
 		if($this->config_data['history'] && $content['ts_status'] == self::DELETED_STATUS)

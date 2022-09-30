@@ -1041,14 +1041,4 @@ class timesheet_bo extends Api\Storage
 		}
 		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
 	}
-
-	public function ajax_event(array $state)
-	{
-		Api\Cache::setSession(__CLASS__, 'timer', $state);
-	}
-
-	public static function timerState()
-	{
-		return Api\Cache::getSession(__CLASS__, 'timer');
-	}
 }

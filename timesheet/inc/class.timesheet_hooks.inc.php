@@ -15,6 +15,7 @@ use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Acl;
+use EGroupware\Timesheet\Events;
 
 if (!defined('TIMESHEET_APP'))
 {
@@ -216,7 +217,7 @@ class timesheet_hooks
 
 	public static function add_timer($data)
 	{
-		$state = timesheet_bo::timerState();
+		$state = Events::timerState();
 		$GLOBALS['egw']->framework->_add_topmenu_info_item('<div id="topmenu_timer" title="'.
 			lang('Start & stop timer').'"'.
 			($state ? ' data-state="'.htmlspecialchars(json_encode($state)).'"' : '').'>0:00</div>', 'timer');

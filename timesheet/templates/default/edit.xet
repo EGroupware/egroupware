@@ -82,6 +82,27 @@
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
 		<historylog id="history"/>
 	</template>
+	<template id="timesheet.edit.events" template="" lang="" group="0" version="0.1.001">
+		<grid width="100%" overflow="auto" id="events">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Time"/>
+					<description value="Type"/>
+					<description value="Duration"/>
+				</row>
+				<row>
+					<date-time id="${row}[tse_time]" readonly="true"/>
+					<select id="${row}[tse_type]" readonly="true"/>
+					<date-timeonly id="${row}[total]" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
@@ -122,6 +143,7 @@
 							<tab id="links" label="Links"/>
 							<tab id="customfields" label="Custom Fields"/>
 							<tab id="history" label="History"/>
+							<tab id="events" label="Events"/>
 						</tabs>
 						<tabpanels class="dialog-main-timeframe">
 							<template id="timesheet.edit.notes"/>
@@ -129,6 +151,7 @@
 							<template id="timesheet.edit.links"/>
 							<template id="timesheet.edit.customfields"/>
 							<template id="timesheet.edit.history"/>
+							<template id="timesheet.edit.events"/>
 						</tabpanels>
 					</tabbox>
 				</row>

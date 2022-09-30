@@ -118,7 +118,12 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				break;
 		}
 		// persist state
-		egw.request('timesheet.timesheet_bo.ajax_event', [getState(_action)])
+		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action)]).then(() => {
+			if (_action === 'specific-stop')
+			{
+				egw.open(null, 'timesheet', 'add', {events: 'specific'});
+			}
+		});
 	}
 
 	/**
