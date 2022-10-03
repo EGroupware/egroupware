@@ -152,43 +152,53 @@ class Events extends Api\Storage\Base
 		return $minutes;
 	}
 
+	/**
+	 * Get state of timer
+	 *
+	 * @return array[]|void
+	 */
 	public static function timerState()
 	{
-		$state = [
-			'overall' => [
-				'offset' => 0,
-				'start' => null,
-				'paused' => false,
-			],
-			'specific' => [
-				'offset' => 0,
-				'start' => null,
-				'paused' => false,
-			],
-		];
-		foreach(self::getInstance()->search('', false, 'tse_id', '', '', false, 'AND', false, [
-			'ts_id' => null,
-			'account_id' => self::getInstance()->user,
-		]) as $row)
-		{
-			if ($row['tse_type'] & self::OVERALL)
+		try {
+			$state = [
+				'overall' => [
+					'offset' => 0,
+					'start' => null,
+					'paused' => false,
+				],
+				'specific' => [
+					'offset' => 0,
+					'start' => null,
+					'paused' => false,
+				],
+			];
+			foreach(self::getInstance()->search('', false, 'tse_id', '', '', false, 'AND', false, [
+				'ts_id' => null,
+				'account_id' => self::getInstance()->user,
+			]) as $row)
 			{
-				self::evaluate($state['overall'], $row);
+				if ($row['tse_type'] & self::OVERALL)
+				{
+					self::evaluate($state['overall'], $row);
+				}
+				else
+				{
+					self::evaluate($state['specific'], $row);
+				}
 			}
-			else
+			// format start-times in UTZ as JavaScript Date() understands
+			foreach($state as &$timer)
 			{
-				self::evaluate($state['specific'], $row);
+				if (isset($timer['start']))
+				{
+					$timer['start'] = (new Api\DateTime($timer['start'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
+				}
 			}
+			return $state;
 		}
-		// format start-times in UTZ as JavaScript Date() understands
-		foreach($state as &$timer)
-		{
-			if (isset($timer['start']))
-			{
-				$timer['start'] = (new Api\DateTime($timer['start'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
-			}
+		catch (\Exception $e) {
+			_egw_log_exception($e);
 		}
-		return $state;
 	}
 
 	/**
