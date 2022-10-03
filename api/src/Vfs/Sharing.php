@@ -147,6 +147,12 @@ class Sharing extends \EGroupware\Api\Sharing
 			$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
 		}
 		$share['share_root'] = '/';
+		if(!$GLOBALS['egw_info']['user']['account_lid'] || $GLOBALS['egw_info']['user']['account_lid'] == 'anonymous')
+		{
+			// Do not mount to root or it will be overwritten if they open another share
+			$share['share_root'] = '/' . Vfs::basename($share['share_path']);
+		}
+
 
 		// only allow filemanager app & collabora
 		// In some cases, $GLOBALS['egw_info']['apps'] is not yet set at all.  Set it to app => true, it will be used
@@ -166,26 +172,28 @@ class Sharing extends \EGroupware\Api\Sharing
 
 		// mounting share
 		Vfs::$is_root = true;
-		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, true))
+		if(!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, true))
 		{
 			sleep(1);
 			return static::share_fail(
 				'404 Not Found',
-				"Requested resource '/".htmlspecialchars($share['share_token'])."' does NOT exist!\n"
+				"Requested resource '/" . htmlspecialchars($share['share_token']) . "' does NOT exist!\n"
 			);
 		}
 
-		/* ToDo: is this still needed and for what reason, as Vfs::mount() already supports session / non-persistent mounts
-		$session_fstab =& Api\Cache::getSession('api', 'fstab');
+		/*
+		We want to hide any normal VFS folders from anonymous users, so we emptied the fstab (above)
+		and now add any other shares from this session
+		*/
+		$session_fstab = $_SESSION[Api\Session::EGW_INFO_CACHE]['server']['vfs_fstab'];
 		if(!$session_fstab)
 		{
 			$session_fstab = array();
 		}
-		foreach($session_fstab as $mount => $info)
+		foreach($session_fstab as $path => $url)
 		{
-			Vfs::mount($info['mount'], $mount, false, false);
+			Vfs::mount($url, $path, false, false);
 		}
-		static::session_mount($share['share_root'], $share['resolve_url']);*/
 
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
