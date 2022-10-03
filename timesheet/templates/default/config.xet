@@ -42,6 +42,13 @@
 						<option value="userpurge">Yes, users can purge their deleted items</option>
 					</select>
 				</row>
+				<row>
+					<description value="Working time" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Category for 'Working time'"/>
+					<select-cat empty_label="Will be created when saving ..." id="newsettings[working_time_cat]"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

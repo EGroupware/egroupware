@@ -10,7 +10,9 @@ applies the changes	timesheet	en	Applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!
 both: allow to use projectmanager and free project-names	admin	en	Both: allow to use Project Manager and free project names
 by	timesheet	en	by
+category for 'working time'	admin	en	Category for 'Working time'
 change category	timesheet	en	Change category
+change owner when updating	timesheet	en	Change owner when updating
 changed category to %1	timesheet	en	Changed category to %1
 changed status	timesheet	en	Changed status.
 check all	timesheet	en	Check all
@@ -35,6 +37,7 @@ entry deleted	timesheet	en	Entry deleted.
 entry saved	timesheet	en	Entry saved.
 error deleting the entry!!!	timesheet	en	Error deleting the entry!
 error saving the entry!!!	timesheet	en	Error saving the entry!
+events	timesheet	en	Events
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
@@ -75,7 +78,9 @@ links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
 links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application.  Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record
+manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
+mode	timesheet	en	Mode
 modified	timesheet	en	Modified
 modify status	timesheet	en	Modify status
 name of current user, all other contact fields are valid too	timesheet	en	Name of current user, all other contact fields are valid too
@@ -100,6 +105,7 @@ projectmanager integration	admin	en	Project Manager integration
 quantity	timesheet	en	Quantity
 recovered	timesheet	en	recovered
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
+restore this entry	timesheet	en	Restore this entry
 save & new	timesheet	en	Save & New
 saves the changes made	timesheet	en	Saves the changes made
 saves the changes made and leaves	timesheet	en	Saves the changes made and leaves
@@ -115,6 +121,7 @@ set to	timesheet	en	Set to
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum e.g. to sum up negative overtime
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
+start & stop timer	common	en	Start & stop timer
 starttime	timesheet	en	Start time
 starttime has to be before endtime !!!	timesheet	en	Start time has to be before endtime!
 status	timesheet	en	Status
@@ -144,11 +151,17 @@ timesheet-%1 '%2' updated.	timesheet	en	TimeSheet-%1 '%2' updated.
 timesheet-%1 deleted.	timesheet	en	TimeSheet-%1 deleted.
 titles of any entries linked to the current record, excluding attached files	timesheet	en	Titles of any entries linked to the current record, excluding attached files
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	en	Unable to convert "%1" to account ID. Using plugin setting (%2) for %3.
+undelete	timesheet	en	Undelete
 unitprice	timesheet	en	Unit price
+use field from csv if possible	timesheet	en	Use field from CSV if possible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
+what should be done with unknown values?	timesheet	en	What should be done with unknown values?
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	en	When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (/home/ralf)
+will be created when saving ...	common	en	Will be created when saving ...
+working time	common	en	Working time
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 yesterday	timesheet	en	Yesterday

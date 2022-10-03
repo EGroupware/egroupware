@@ -100,6 +100,56 @@ class Events extends Api\Storage\Base
 			'tse_modifier' => $this->user,
 			'tse_type' => $type,
 		]);
+
+		// create timesheet for stopped working time
+		if ($timer === 'overall' && $action === 'stop')
+		{
+			try {
+				$minutes = $this->storeWorkingTime();
+				Api\Json\Response::get()->message(lang('Working time of %1 hours stored',
+					sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60)), 'success');
+			}
+			catch(\Exception $e) {
+				Api\Json\Response::get()->message(lang('Error storing working time').': '.$e->getMessage(), 'error');
+			}
+		}
+	}
+
+	/**
+	 * Store pending overall timer events as a working time timesheet
+	 *
+	 * @return int minutes
+	 */
+	public function storeWorkingTime()
+	{
+		if (!($events = self::getPending(true, $time)) || !$time)
+		{
+			throw new Api\Exception\AssertionFailed("No pending overall events!");
+		}
+		$ids = array_keys($events);
+		$start = array_shift($events)['tse_time'];
+		$timespan = Api\DateTime::to($start, true);
+		$last = array_pop($events);
+		if ($timespan !== ($end = Api\DateTime::to($last['tse_time'], true)))
+		{
+			$timespan .= ' - '.$end;
+		}
+		$title = lang('Working time from %1', $timespan);
+		$bo = new \timesheet_bo();
+		$bo->init();
+		$bo->save([
+			'ts_title' => $title,
+			'cat_id' => self::workingTimeCat(),
+			'ts_start' => $start,
+			'start_time' => Api\DateTime::server2user($start, 'H:s'),
+			'end_time' => '',
+			'ts_duration' => $minutes = round($time / 60),
+			'ts_quantity' => $minutes / 60.0,
+			'ts_owner' => $this->user,
+		]);
+		self::addToTimesheet($bo->data['ts_id'], $ids);
+
+		return $minutes;
 	}
 
 	public static function timerState()
@@ -201,6 +251,10 @@ class Events extends Api\Storage\Base
 				$timer = $init_timer;
 				$open = 0;
 			}
+			elseif ($row['tse_type'] & self::PAUSE)
+			{
+				$row['total'] = $time + $timer['offset'] / 1000;
+			}
 			$events[$row['tse_id']] = $row;
 		}
 		// remove open / unstopped timer events
@@ -240,5 +294,50 @@ class Events extends Api\Storage\Base
 	public static function addToTimesheet(int $ts_id, array $events)
 	{
 		return self::getInstance()->db->update(self::TABLE, ['ts_id' => $ts_id], ['tse_id' => $events], __LINE__, __FILE__, self::APP);
+	}
+
+	/**
+	 * Register site config validation hooks
+	 */
+	public static function config_validate()
+	{
+		$GLOBALS['egw_info']['server']['found_validation_hook'] = [
+			'final_validation' => self::class.'::final_validation',
+		];
+	}
+
+	/**
+	 * Final validation called after storing the config
+	 *
+	 * @param array $config
+	 * @param Api\Config $c
+	 */
+	public static function final_validation($config, Api\Config $c)
+	{
+		// check if category for 'working time' is configured, otherwise create and store it
+		if ($config['working_time_cat'] === '')
+		{
+			$c->config_data['working_time_cat'] = self::workingTimeCat();
+		}
+	}
+
+	/**
+	 * Get working time category, create it if not yet configured
+	 *
+	 * @return int
+	 */
+	public static function workingTimeCat()
+	{
+		$config = Api\Config::read(self::APP);
+		if (empty($config['working_time_cat']))
+		{
+			$cats = new Api\Categories(Api\Categories::GLOBAL_ACCOUNT, Api\Categories::GLOBAL_APPNAME);
+			Api\Config::save_value('working_time_cat', $config['working_time_cat'] = $cats->add([
+				'name' => lang('Working time'),
+				//'data' => ['color' => '#ffb6c1'],
+				'description' => lang('Created by TimeSheet configuration'),
+			]), self::APP);
+		}
+		return $config['working_time_cat'];
 	}
 }

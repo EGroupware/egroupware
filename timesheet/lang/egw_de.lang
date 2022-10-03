@@ -10,7 +10,9 @@ applies the changes	timesheet	de	Änderungen durchführen
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur die angezeigten Stundenzettel!!
 both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
+category for 'working time'	admin	de	Kategorie für 'Arbeitszeit'
 change category	timesheet	de	Kategorie ändern
+change owner when updating	timesheet	de	Ändere Eigentümer beim aktualisieren
 changed category to %1	timesheet	de	Kategorie geändert zu %1
 changed status	timesheet	de	Status geändert
 check all	timesheet	de	Alle selektieren
@@ -35,6 +37,7 @@ entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
+events	timesheet	de	Ereignisse
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	de	Beispiel: {{IF n_prefix~Herr~sehr geehrter Herr~sehr geehrte Frau}} - wenn im Feld 'n_prefix' 'Herr' steht wird 'sehr geehrter Herr' geschrieben, ansonsten 'sehr geehrte Frau'.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Herr Dr. Müller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	de	Beispiel: {{NELF role}} - wenn das Feld 'role' nicht leer ist wird der Inhalt des Feldes in eine neue Zeile geschrieben
@@ -75,7 +78,9 @@ links	timesheet	de	Verknüpfungen
 links and attached files	timesheet	de	Verknüpfungen und angehangene Dateien
 links to specified application.  example: {{links/infolog}}	timesheet	de	Verknüpfung zu Anwendungen. Beispiel: {{links/infolog}}
 list of files linked to the current record	timesheet	de	Liste der zum aktuellen Eintrag verknüpften Dateien.
+manage mapping	timesheet	de	Zuordnungen verwalten
 max length of the input [, length of the inputfield (optional)]	timesheet	de	maximale Länge der Eingabe[,Länge des Eingabefeldes (optional)]
+mode	timesheet	de	Modus
 modified	timesheet	de	Geändert
 modify status	timesheet	de	Status ändern
 name of current user, all other contact fields are valid too	timesheet	de	Name des aktuellen Benutzers, all anderen Kontaktfelder sind weiterhin gültig.
@@ -100,6 +105,7 @@ projectmanager integration	admin	de	Integration des Projektmanagers
 quantity	timesheet	de	Menge
 recovered	timesheet	de	wiederhergestellt
 replacements for inserting entries into documents	timesheet	de	Platzhalter für das Einfügen in Dokumente
+restore this entry	timesheet	de	Diesen Eintrag wiederherstellen
 save & new	timesheet	de	Speichern & Neu
 saves the changes made	timesheet	de	Speichert die Änderungen
 saves the changes made and leaves	timesheet	de	Änderungen  speichern und beenden
@@ -115,6 +121,7 @@ set to	timesheet	de	Änderungen anwenden für
 show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
 skip record	timesheet	de	Eintrag überspringen
 start	timesheet	de	Start
+start & stop timer	common	de	Zeitnehmer starten & stoppen
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
 status	timesheet	de	Status
@@ -144,11 +151,17 @@ timesheet-%1 '%2' updated.	timesheet	de	Stundenzettel Status %1 '%2' geändert
 timesheet-%1 deleted.	timesheet	de	Stundenzettel %1 gelöscht
 titles of any entries linked to the current record, excluding attached files	timesheet	de	Titel der zum aktuellen Eintrag verknüpften Einträge, ausgenommen angehangene Dateien.
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	de	Das System konnte "%1" nicht in die Benutzer-ID umwandeln. Verwenden Sie besser die Einstellung (%2) für %3.
+undelete	timesheet	de	Wiederherstellen
 unitprice	timesheet	de	Preis pro Einheit
+use field from csv if possible	timesheet	de	Benutze Feld vom CSV, wenn möglich
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	de	Verwenden Sie diesen Platzhalter für den den Seriendruck. Fügen Sie den Inhalt, der wiederholt werden soll, zwischen zwei Platzhaltern ein.
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
+what should be done with unknown values?	timesheet	de	Was soll mit unbekannten Werte passieren?
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	de	Wenn Sie Einträge in Dokumente einfügen, werden diese hier gespeichert. Wenn kein Verzeichnis angegeben ist, werden sie in Ihrem Home Verzeichnis gespeichert.
+will be created when saving ...	common	de	Wird beim Speichern angelegt ...
+working time	common	de	Arbeitszeit
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern
