@@ -666,10 +666,18 @@ class SharingBase extends LoggedInTest
 	 * @param $data Data passed to the etemplate
 	 * @param $keep_session = true Keep the current session, or access with new session as anonymous
 	 */
-	public function getShare($link, &$data, $keep_session = true)
+	public function getShare($link, &$data, $keep_session = true, &$_curl = null)
 	{
 		// Set up curl
-		$curl = curl_init($link);
+		if($_curl == null)
+		{
+			$curl = curl_init($link);
+		}
+		else
+		{
+			$curl = $_curl;
+			curl_setopt($curl, CURLOPT_URL, $link);
+		}
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
@@ -681,7 +689,10 @@ class SharingBase extends LoggedInTest
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
 		$html = curl_exec($curl);
-		curl_close($curl);
+		if($_curl == null)
+		{
+			curl_close($curl);
+		}
 
 		if(!$html)
 		{
