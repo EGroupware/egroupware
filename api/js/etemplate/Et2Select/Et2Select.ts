@@ -241,9 +241,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 * Careful when this is called.  We change the value here, so an infinite loop is possible if the widget has
 	 * onchange.
 	 *
-	 * @private
 	 */
-	private fix_bad_value()
+	protected fix_bad_value()
 	{
 		if(this.multiple || (!this.emptyLabel && (!Array.isArray(this.select_options) || this.select_options.length == 0)))
 		{
@@ -322,7 +321,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	loadFromXML(_node : Element)
 	{
 		super.loadFromXML(_node);
-		this.fix_bad_value();
+
+		// Wait for update to be complete before we check for bad value so extending selects can have a chance
+		this.updateComplete.then(() => this.fix_bad_value());
 	}
 
 	/** @param {import('@lion/core').PropertyValues } changedProperties */
@@ -332,7 +333,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 		if(changedProperties.has('select_options') || changedProperties.has("value") || changedProperties.has('emptyLabel'))
 		{
-			this.fix_bad_value();
+			this.updateComplete.then(() => this.fix_bad_value());
 		}
 		if(changedProperties.has("select_options") && changedProperties.has("value"))
 		{

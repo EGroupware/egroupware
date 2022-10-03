@@ -87,7 +87,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 
 		if(changedProperties.has("global_categories") || changedProperties.has("application") || changedProperties.has("parentCat"))
 		{
-			so.cat(this).then(options =>
+			this.fetchComplete = so.cat(this).then(options =>
 			{
 				this.static_options = cleanSelectOptions(options);
 				this.requestUpdate("select_options");

@@ -29,13 +29,19 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 	class Et2StaticSelectOptions extends (superclass)
 	{
 
+		// Hold the static widget options separately so other options (like sent from server in sel_options) won't
+		// conflict or be wiped out
 		protected static_options : SelectOption[];
+
+		// If widget needs to fetch options from server, we might want to wait for them
+		protected fetchComplete : Promise<SelectOption[] | void>;
 
 		constructor(...args)
 		{
 			super(...args);
 
 			this.static_options = [];
+			this.fetchComplete = Promise.resolve();
 
 			// Trigger the options to get rendered into the DOM
 			this.requestUpdate("select_options");
@@ -62,6 +68,23 @@ export const Et2StaticSelectMixin = <T extends Constructor<Et2WidgetWithSelect>>
 		{
 			this.static_options = new_static_options;
 			this.requestUpdate("select_options");
+		}
+
+		/**
+		 * Override the parent fix_bad_value() to wait for server-side options
+		 * to come back before we check to see if the value is not there.
+		 */
+		fix_bad_value()
+		{
+			this.fetchComplete.then(() =>
+			{
+				// @ts-ignore Doesn't know it's an Et2Select
+				if(typeof super.fix_bad_value == "function")
+				{
+					// @ts-ignore Doesn't know it's an Et2Select
+					super.fix_bad_value();
+				}
+			})
 		}
 	}
 
