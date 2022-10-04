@@ -128,6 +128,26 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 	}
 
 	/**
+	 * Render select_options as child DOM Nodes
+	 *
+	 * Overridden here so we can re-do the displayed label after first load of select options.
+	 * Initial load order / lifecycle does not have all the options at the right time
+	 * @protected
+	 */
+	protected _renderOptions()
+	{
+		// @ts-ignore Doesn't know about Et2WidgetWithSelectMixin._renderOptions()
+		return super._renderOptions().then(() =>
+		{
+			// @ts-ignore Doesn't know about SlSelect.menuItems
+			if(this.menuItems.length > 0)
+			{
+				this.doLabelChange();
+			}
+		});
+	}
+
+	/**
 	 * Use a custom tag for when multiple=true
 	 *
 	 * @returns {string}
