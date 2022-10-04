@@ -339,7 +339,7 @@ class Events extends Api\Storage\Base
 	public static function workingTimeCat()
 	{
 		$config = Api\Config::read(self::APP);
-		if (empty($config['working_time_cat']))
+		if (empty($config['working_time_cat']) || !Api\Categories::read($config['working_time_cat']))
 		{
 			$cats = new Api\Categories(Api\Categories::GLOBAL_ACCOUNT, Api\Categories::GLOBAL_APPNAME);
 			Api\Config::save_value('working_time_cat', $config['working_time_cat'] = $cats->add([

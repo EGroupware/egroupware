@@ -167,6 +167,39 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			return cache[_name];
 		},
 
+		/**
+		 * Invalidate / delete given part of the cache
+		 *
+		 * @param {string} _name unique name of cache-object
+		 * @param {string|RegExp|undefined} _attr undefined: invalidate/unset whole object or just the given attribute _attr or matching RegExp _attr
+		 */
+		invalidateCache: function(_name, _attr)
+		{
+			// string with regular expression like "/^something/i"
+			if (typeof _attr === 'string' && _attr[0] === '/', _attr.indexOf('/', 1) !== -1)
+			{
+				let parts = _attr.split('/');
+				parts.shift();
+				const flags = parts.pop();
+				_attr = new RegExp(parts.join('/'), flags);
+			}
+			if (typeof _attr === 'undefined' || typeof cache[_name] === 'undefined')
+			{
+				delete cache[_name];
+			}
+			else if (typeof _attr === 'object' && _attr.constructor.name === 'RegExp')
+			{
+				for(const attr in cache[_name])
+				{
+					if (attr.match(_attr)) delete cache[_name][attr];
+				}
+			}
+			else
+			{
+				delete cache[_name][_attr];
+			}
+		},
+
 		ajaxUrl: function(_menuaction) {
 			if(_menuaction.indexOf('menuaction=') >= 0)
 			{

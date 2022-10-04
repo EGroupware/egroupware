@@ -19,6 +19,9 @@
 
 namespace EGroupware\Api;
 
+use EGroupware\Api\Json\Push;
+use EGroupware\Api\Json\Response;
+
 /**
  * class to manage categories in eGroupWare
  *
@@ -97,6 +100,11 @@ class Categories
 	 * account_id for global categories
 	 */
 	const GLOBAL_ACCOUNT = 0;
+
+	/**
+	 * App name used to push category changes
+	 */
+	const PUSH_APP = 'api-cats';
 
 	/**
 	 * Owners for global accounts
@@ -463,6 +471,17 @@ class Categories
 		// update cache accordingly
 		self::invalidate_cache(Db::strip_array_keys($cat, 'cat_'));
 
+		// push category change
+		$push = new Push($cat['cat_access'] === 'public' || (int)$cat['cat_owner'] <= 0 ? Push::ALL : (int)$cat['cat_owner']);
+		$push->apply("egw.push", [[
+			'app'   => self::PUSH_APP,
+			'id'    => $id,
+			'type'  => empty($values['id']) ? 'add' : 'edit',
+			// assuming there is nothing private about a cat, thought private cats are only pushed to that account
+			'acl'   => Db::strip_array_keys($cat, 'cat_'),
+			'account_id' => $GLOBALS['egw_info']['user']['account_id']
+		]]);
+
 		return $id;
 	}
 
@@ -637,6 +656,21 @@ class Categories
 
 		// update cache accordingly
 		self::invalidate_cache($modify_subs ? null : $where['cat_id']);
+
+		// push category change
+		$push = new Push(Push::ALL);
+		$push->apply("egw.push", [[
+			'app'   => self::PUSH_APP,
+			'id'    => $where['cat_id'],    // can be an array, if $drop_subs
+			'type'  => 'delete',
+			// sending parameters and new parent, probably client-side will do a full reload, if modify_subs is true
+			'acl'   => [
+				'modify_subs' => $modify_subs,
+				'new_parent' => $new_parent,
+			],
+			'account_id' => $GLOBALS['egw_info']['user']['account_id']
+		]]);
+
 	}
 
 	/**
@@ -662,6 +696,16 @@ class Categories
 				),__LINE__,__FILE__);
 				$cat['level'] = $values['level'] + 1;
 				self::invalidate_cache($cat['id']);
+				// push category change
+				$push = new Push($cat['cat_access'] === 'public' || (int)$cat['cat_owner'] <= 0 ? Push::ALL : (int)$cat['cat_owner']);
+				$push->apply("egw.push", [[
+					'app'   => self::PUSH_APP,
+					'id'    => $cat['id'],
+					'type'  => 'edit',
+					// assuming there is nothing private about a cat, thought private cats are only pushed to that account
+					'acl'   => Db::strip_array_keys($cat, 'cat_'),
+					'account_id' => $GLOBALS['egw_info']['user']['account_id']
+				]]);
 				$this->adapt_level_in_subtree($cat);
 			}
 			else
@@ -752,6 +796,17 @@ class Categories
 
 		// update cache accordingly
 		self::invalidate_cache(Db::strip_array_keys($cat, 'cat_'));
+
+		// push category change
+		$push = new Push($cat['cat_access'] === 'public' || (int)$cat['cat_owner'] <= 0 ? Push::ALL : (int)$cat['cat_owner']);
+		$push->apply("egw.push", [[
+			'app'   => self::PUSH_APP,
+			'id'    => $values['id'],
+			'type'  => 'edit',
+			// assuming there is nothing private about a cat, thought private cats are only pushed to that account
+			'acl'   => Db::strip_array_keys($cat, 'cat_'),
+			'account_id' => $GLOBALS['egw_info']['user']['account_id']
+		]]);
 
 		return (int)$values['id'];
 	}
@@ -998,8 +1053,14 @@ class Categories
 	{
 		//error_log(__METHOD__."(".array2string($cat).') '.function_backtrace());
 
-		// allways invalidate instance-global cache, as updating our own cache is not perfect and does not help other sessions
+		// always invalidate instance-global cache, as updating our own cache is not perfect and does not help other sessions
 		Cache::unsetInstance(self::CACHE_APP, self::CACHE_NAME);
+
+		// update client-side eT2 cache
+		if (Response::isJSONResponse())
+		{
+			Response::get()->call('egw.invalidateCache', 'Et2Select', '/^ET2-SELECT-CAT/');
+		}
 
 		// if cat given update our own cache, to work around failed sitemgr install via setup (cant read just added categories)
 		if ($cat)
