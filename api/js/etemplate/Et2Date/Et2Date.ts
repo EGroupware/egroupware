@@ -326,7 +326,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			/**
 			 * Display the calendar inline instead of revealed as needed
 			 */
-			inline: {type: Boolean}
+			inline: {type: Boolean},
+			/**
+			 * Placeholder text for input
+			 */
+			placeholder: {type: String},
 		}
 	}
 
@@ -338,6 +342,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			{
 				const text = <Et2Textbox>document.createElement('et2-textbox');
 				text.type = "text";
+				text.placeholder = this.placeholder;
 				return text;
 			}
 		}
