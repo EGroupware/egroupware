@@ -1662,7 +1662,8 @@ abstract class Framework extends Framework\Extra
 		// close session now, to not block other user actions
 		$GLOBALS['egw']->session->commit_session();
 
-		$list = array('accounts' => array(),'groups' => array(), 'owngroups' => array());
+		$list = array('accounts'  => array('num_rows' => Link::DEFAULT_NUM_ROWS), 'groups' => array(),
+					  'owngroups' => array());
 		if($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'primary_group')
 		{
 			$list['accounts']['filter']['group'] = $GLOBALS['egw_info']['user']['account_primary_group'];

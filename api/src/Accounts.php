@@ -427,11 +427,12 @@ class Accounts
 		}
 		$accounts = array();
 		foreach(self::getInstance()->search(array(
-			'type' => $options['filter']['group'] < 0 ? $options['filter']['group'] : $type,
-			'query' => $pattern,
-			'query_type' => 'all',
-			'order' => $order,
-		)) as $account)
+												'type'       => $options['filter']['group'] < 0 ? $options['filter']['group'] : $type,
+												'query'      => $pattern,
+												'query_type' => 'all',
+												'order'      => $order,
+												'offset'     => $options['num_rows']
+											)) as $account)
 		{
 			$displayName = self::format_username($account['account_lid'],
 				$account['account_firstname'],$account['account_lastname'],$account['account_id']);
@@ -451,6 +452,11 @@ class Accounts
 			{
 				$accounts[$account['account_id']] = $displayName;
 			}
+		}
+		// If limited rows were requested, send the total number of rows
+		if(array_key_exists('num_rows', $options))
+		{
+			$options['total'] = self::getInstance()->total;
 		}
 		return $accounts;
 	}

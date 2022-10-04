@@ -230,8 +230,29 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		protected validators : Validator[];
 
 		private _searchTimeout : number;
+
+		/**
+		 * When user is typing, we wait this long for them to be finished before we start the search
+		 * @type {number}
+		 * @protected
+		 */
 		protected static SEARCH_TIMEOUT = 500;
+
+		/**
+		 * We need at least this many characters before we start the search
+		 *
+		 * @type {number}
+		 * @protected
+		 */
 		protected static MIN_CHARS = 2;
+
+		/**
+		 * Limit server searches to 100 results, matches Link::DEFAULT_NUM_ROWS
+		 * @type {number}
+		 */
+		static RESULT_LIMIT : number = 100;
+
+
 		// Hold the original option data from earlier search results, since we discard on subsequent search
 		private _selected_remote = <SelectOption[]>[];
 
@@ -1019,8 +1040,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected remoteQuery(search : string, options : object)
 		{
+			// Include a limit, even if options don't, to avoid massive lists breaking the UI
+			let sendOptions = {
+				num_rows: Et2WidgetWithSearch.RESULT_LIMIT,
+				...options
+			}
 			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
-				{query: search, ...options}), [search, options]).then((result) =>
+				{query: search, ...sendOptions}), [search, sendOptions]).then((result) =>
 			{
 				this.processRemoteResults(result);
 			});
@@ -1033,8 +1059,16 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected processRemoteResults(results)
 		{
-
+			// If results have a total included, pull it out.
+			// It will cause errors if left in the results
+			let total = null;
+			if(typeof results.total !== "undefined")
+			{
+				total = results.total;
+				delete results.total;
+			}
 			let entries = cleanSelectOptions(results);
+			let resultCount = entries.length;
 
 			if(entries.length == 0)
 			{
@@ -1073,12 +1107,23 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 						temp_target.querySelectorAll(":scope > *").forEach((item) =>
 						{
 							// Avoid duplicate error
-							if(!target.querySelector("[value='" + item.value.replace(/'/g, "\\\'") + "']"))
+							if(!target.querySelector("[value='" + ('' + item.value).replace(/'/g, "\\\'") + "']"))
 							{
 								target.appendChild(item);
 							}
 						})
 						this.handleMenuSlotChange();
+					})
+					.then(() =>
+					{
+						if(total && total > resultCount)
+						{
+							// More results available that were not sent
+							let count = document.createElement("span")
+							count.classList.add("remote");
+							count.textContent = this.egw().lang("%1 more...", total - resultCount);
+							target.appendChild(count);
+						}
 					});
 			}
 		}

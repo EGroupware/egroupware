@@ -87,13 +87,20 @@ class Taglist extends Etemplate\Widget
 				$results[] = ['value' => $id, 'label' => $name];
 			}
 		}
-		usort($results, static function ($a, $b) use ($query) {
-		    similar_text($query, $a["label"], $percent_a);
-		    similar_text($query, $b["label"], $percent_b);
-		    return $percent_a === $percent_b ? 0 : ($percent_a > $percent_b ? -1 : 1);
+		usort($results, static function ($a, $b) use ($query)
+		{
+			similar_text($query, $a["label"], $percent_a);
+			similar_text($query, $b["label"], $percent_b);
+			return $percent_a === $percent_b ? 0 : ($percent_a > $percent_b ? -1 : 1);
 		});
 
-		 // switch regular JSON response handling off
+		// If we have a total, include it too so client knows if results were limited
+		if(array_key_exists('total', $options))
+		{
+			$results['total'] = intval($options['total']);
+		}
+
+		// switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
