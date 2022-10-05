@@ -66,6 +66,7 @@ import './Et2Nextmatch/Headers/AccountFilterHeader';
 import './Et2Nextmatch/Headers/CustomFilterHeader';
 import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
+import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
 import './Et2Select/Et2SelectAccount';
 import './Et2Select/Et2SelectCategory';

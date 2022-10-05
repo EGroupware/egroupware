@@ -173,6 +173,15 @@ export class et2_placeholder_select extends et2_inputWidget
 				this._do_insert_callback(submit_value);
 				return true;
 			}
+			else if(submit_button_id == 'cancel')
+			{
+				return true;
+			}
+			else
+			{
+				// Keep dialog open
+				return false;
+			}
 		}.bind(this);
 
 		this.dialog = new Et2Dialog(this.egw());
@@ -448,12 +457,12 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 		app.onchange = (node, widget) =>
 		{
 			entry.set_value({app: widget.get_value()});
-			placeholder_list.set_select_options(this._get_placeholders(app.get_value(), "addresses"));
+			placeholder_list.set_select_options(this._get_placeholders(app.value, "addresses"));
 		}
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
 
-		app.set_value(app.get_value());
+		app.set_value(app.value);
 		this._on_placeholder_select();
 	}
 
@@ -463,16 +472,22 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	 */
 	_on_placeholder_select()
 	{
+		let app = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("app");
 		let entry = <Et2LinkEntry><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("entry");
 		let placeholder_list = <Et2Select><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("placeholder_list");
 		let preview_content = <Et2Description><unknown>this.dialog.template.widgetContainer.getDOMWidgetById("preview_content");
+		let placeholder = "";
+		if(app && app.value)
+		{
+			placeholder = Object.keys(et2_placeholder_snippet_select.placeholders[<string>app.value]["addresses"])[<string>placeholder_list.value];
+		}
 
-		if(placeholder_list.value && entry.get_value())
+		if(placeholder && entry.get_value())
 		{
 			// Show the selected placeholder replaced with value from the selected entry
 			this.egw().json(
 				'EGroupware\\Api\\Etemplate\\Widget\\Placeholder::ajax_fill_placeholders',
-				[placeholder_list.value, {app: "addressbook", id: entry.get_value()}],
+				[placeholder, {app: "addressbook", id: entry.get_value()}],
 				function(_content)
 				{
 					if(!_content)
@@ -525,11 +540,11 @@ export class et2_placeholder_snippet_select extends et2_placeholder_select
 	_get_placeholders(appname : string, group : string)
 	{
 		let options = [];
-		Object.keys(et2_placeholder_snippet_select.placeholders[appname][group]).map((key) =>
+		Object.keys(et2_placeholder_snippet_select.placeholders[appname][group]).map((key, index) =>
 		{
 			options.push(
 				{
-					value: key,
+					value: index,
 					label: this.egw().lang(et2_placeholder_snippet_select.placeholders[appname][group][key])
 				});
 		});

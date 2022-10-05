@@ -10,12 +10,12 @@
                     <select id="group"/>
 
                 </vbox>
-                <select id="placeholder_list" rows="10"/>
+                <et2-listbox id="placeholder_list" rows="10"/>
             </hbox>
             <hbox class="preview">
                 <description id="preview_placeholder"/>
                 <button background_image="true" id="insert_placeholder" label="Insert" statustext="Insert placeholder"
-                        image="export"></button>
+                        align="right" image="export"></button>
             </hbox>
             <hrule/>
             <link-entry id="entry" label="Preview with entry"/>
@@ -23,6 +23,7 @@
                 <description id="preview_content"/>
                 <buttononly background_image="true" id="insert_content" label="Insert"
                             statustext="Insert merged content"
+                            align="right"
                             image="export"></buttononly>
             </hbox>
         </vbox>

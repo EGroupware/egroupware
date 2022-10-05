@@ -6,7 +6,7 @@
         <vbox id="outer_box">
             <vbox id="selects">
                 <select id="app"/>
-                <select id="placeholder_list"/>
+                <et2-listbox id="placeholder_list" rows="10"/>
             </vbox>
             <hrule/>
             <link-entry id="entry" label="Select entry" only_app="addressbook"/>
