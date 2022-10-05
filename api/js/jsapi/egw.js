@@ -488,8 +488,7 @@ window.egw_rejoin = function ()
 	{
 		opener.addEventListener("load", () =>
 		{
-			/* It takes more than just re-setting this.framework to get things working again
-
+			/* It takes more than just re-setting this.framework to get everything working again, but this helps */
 			let reconnecting = egw(this).message("Reconnecting...");
 			window.setTimeout(() =>
 			{
@@ -499,7 +498,6 @@ window.egw_rejoin = function ()
 				this.framework = this.opener.framework;
 				this.framework.egw_appWindow().console.log("Popup %s rejoined", this.location.href);
 			}, 5000);
-			 */
 		});
 	}.bind(window), 500);
 }

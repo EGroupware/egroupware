@@ -3906,9 +3906,10 @@ app.classes.mail = AppJS.extend(
 				}
 				else
 				{
-
-					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-						var res = self.savingDraft_response(_data,action);
+					// Send request through framework main window, so it works even if the main window is reloaded
+					framework.egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], function (_data)
+					{
+						var res = self.savingDraft_response(_data, action);
 						if (res)
 						{
 							_resolve();
