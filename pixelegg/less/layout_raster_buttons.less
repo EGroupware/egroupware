@@ -18,6 +18,25 @@
 
 @import (reference) "definitions.less";
 
+.timesheet_timer, #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
+	text-align: center;
+	font-size: 20px;
+	white-space: nowrap;
+	color: #606060;
+	&.running {
+		color: blue;
+	}
+	&.running.overall {
+		color: black;
+	}
+	&.paused {
+		color: orange;
+	}
+}
+div.timesheet_timer {
+	width: 60px;
+	text-align: right;
+}
 #egw_fw_topmenu_info_items {
 	display: flex !important;
 	flex-direction: row-reverse;
@@ -42,6 +61,35 @@
 			background-color: @color_hover_row;
 		}
 	}
+
+	#topmenu_info_timer {
+		order: 1;
+		position: relative;
+		#topmenu_timer {
+			position: relative;
+			top: 10px !important;
+			display: block;
+			height: 45px;
+			width: 45px;
+		}
+		&:hover {
+			cursor: pointer;
+		}
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url(../../timesheet/templates/default/images/navbar.svg);
+			background-repeat: no-repeat;
+			background-size: 32px;
+			background-position: center center;
+			filter: opacity(0.3);
+		}
+	}
+
 	#topmenu_info_user_avatar {
 		span.fw_avatar_stat {
 			position: absolute;
@@ -230,47 +278,6 @@
 				line-height: 0.6em;
 				background-color: white;
 			}
-		}
-	}
-
-	#topmenu_info_timer {
-		order: 1;
-		position: relative;
-		#topmenu_timer {
-			text-align: center;
-			font-size: 20px;
-			position: relative;
-			top: 10px !important;
-			display: block;
-			white-space: nowrap;
-			color: #606060;
-			height: 45px;
-			width: 45px;
-		}
-		#topmenu_timer.running {
-			color: blue;
-		}
-		#topmenu_timer.running.overall {
-			color: black;
-		}
-		#topmenu_timer.paused {
-			color: orange;
-		}
-		&:hover {
-			cursor: pointer;
-		}
-		&:before {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-image: url(../../timesheet/templates/default/images/navbar.svg);
-			background-repeat: no-repeat;
-			background-size: 32px;
-			background-position: center center;
-			filter: opacity(0.3);
 		}
 	}
 

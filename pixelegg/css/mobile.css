@@ -5271,6 +5271,29 @@ span.overlayContainer img.overlay {
     Created on : 23.07.2014, 13:25:11
     Author     : stefanreinhardt
 */
+.timesheet_timer,
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
+  text-align: center;
+  font-size: 20px;
+  white-space: nowrap;
+  color: #606060;
+}
+.timesheet_timer.running,
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
+  color: blue;
+}
+.timesheet_timer.running.overall,
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running.overall {
+  color: black;
+}
+.timesheet_timer.paused,
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.paused {
+  color: orange;
+}
+div.timesheet_timer {
+  width: 60px;
+  text-align: right;
+}
 #egw_fw_topmenu_info_items {
   display: flex !important;
   flex-direction: row-reverse;
@@ -5306,6 +5329,33 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_topmenu_info_items .topmenu_info_item:hover {
   background-color: rgba(153, 204, 255, 0.4);
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer {
+  order: 1;
+  position: relative;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
+  position: relative;
+  top: 10px !important;
+  display: block;
+  height: 45px;
+  width: 45px;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer:hover {
+  cursor: pointer;
+}
+#egw_fw_topmenu_info_items #topmenu_info_timer:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../timesheet/templates/default/images/navbar.svg);
+  background-repeat: no-repeat;
+  background-size: 32px;
+  background-position: center center;
+  filter: opacity(0.3);
 }
 #egw_fw_topmenu_info_items #topmenu_info_user_avatar span.fw_avatar_stat {
   position: absolute;
@@ -5478,46 +5528,6 @@ span.overlayContainer img.overlay {
   color: #0C5DA5;
   line-height: 0.6em;
   background-color: white;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer {
-  order: 1;
-  position: relative;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
-  text-align: center;
-  font-size: 20px;
-  position: relative;
-  top: 10px !important;
-  display: block;
-  white-space: nowrap;
-  color: #606060;
-  height: 45px;
-  width: 45px;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running {
-  color: blue;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.running.overall {
-  color: black;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer.paused {
-  color: orange;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer:hover {
-  cursor: pointer;
-}
-#egw_fw_topmenu_info_items #topmenu_info_timer:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(../../timesheet/templates/default/images/navbar.svg);
-  background-repeat: no-repeat;
-  background-size: 32px;
-  background-position: center center;
-  filter: opacity(0.3);
 }
 #egw_fw_topmenu_info_items #topmenu_info_quick_add #quick_add_selectbox,
 #egw_fw_topmenu_info_items #topmenu_info_timer #quick_add_selectbox,

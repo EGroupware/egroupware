@@ -32,6 +32,11 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * Reference from setInterval to stop periodic update
 	 */
 	let timer_interval;
+	/**
+	 * Reference to open dialog or undefined if not open
+	 * @type {Et2-dialog}
+	 */
+	let dialog;
 
 	/**
 	 * Set state of timer
@@ -40,7 +45,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function setState(_state)
 	{
-		// initiate overall timr
+		// initiate overall timer
 		startTimer(overall, _state.overall?.start, _state.overall?.offset);	// to show offset / paused time
 		if (_state.overall?.paused)
 		{
@@ -54,7 +59,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		// initiate specific timer, only if running or paused
 		if (_state.specific?.start || _state.specific?.paused)
 		{
-			startTimer(specific, _state.specific?.start, _state.specifc?.offset);	// to show offset / paused time
+			startTimer(specific, _state.specific?.start, _state.specific?.offset);	// to show offset / paused time
 			if (_state.specific?.paused)
 			{
 				stopTimer(specific, true);
@@ -85,8 +90,9 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * Run timer action eg. start/stop
 	 *
 	 * @param {string} _action
+	 * @param {string} _time
 	 */
-	function timerAction(_action)
+	function timerAction(_action, _time)
 	{
 		switch(_action)
 		{
@@ -127,52 +133,95 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	}
 
 	/**
-	 * Enable/disable menu items based on timer state
+	 * Enable/disable buttons based on timer state
 	 */
-	function setMenuState()
+	function setButtonState()
 	{
-		const menu = document.querySelector('et2-select#timer_selectbox').menu;
+		if (!dialog) return;
+
 		// disable not matching / available menu-items
-		menu.getAllItems('et2-selectbox#timer_selecbox sl-menu-item').forEach(item =>
+		dialog._overlayContentNode.querySelectorAll('et2-button').forEach(button =>
 		{
-			if (item.value.substring(0, 8) === 'overall-')
+			if (button.id.substring(0, 7) === 'overall')
 			{
 				// timer running: disable only start, enable pause and stop
 				if (overall?.start)
 				{
-					item.disabled = item.value === 'overall-start';
+					button.disabled = button.id === 'overall[start]';
 				}
 				// timer paused: disable pause, enable start and stop
 				else if (overall?.paused)
 				{
-					item.disabled = item.value === 'overall-pause';
+					button.disabled = button.id === 'overall[pause]';
 				}
 				// timer stopped: disable stop and pause, enable start
 				else
 				{
-					item.disabled = item.value !== 'overall-start';
+					button.disabled = button.id !== 'overall[start]';
 				}
 			}
-			else if (item.value.substring(0, 9) === 'specific-')
+			else if (button.id.substring(0, 8) === 'specific')
 			{
 				// timer running: disable only start, enable pause and stop
 				if (specific?.start)
 				{
-					item.disabled = item.value === 'specific-start';
+					button.disabled = button.id === 'specific[start]';
 				}
 				// timer paused: disable pause, enable start and stop
 				else if (specific?.paused)
 				{
-					item.disabled = item.value === 'specific-pause';
+					button.disabled = button.id === 'specific[pause]';
 				}
 				// timer stopped: disable stop and pause, enable start
 				else
 				{
-					item.disabled = item.value !== 'specific-start';
+					button.disabled = button.id !== 'specific[start]';
 				}
 			}
 		});
 	}
+
+	/**
+	 * Update the timer DOM node according to _timer state
+	 *
+	 * @param {DOMNode} _node
+	 * @param {object} _timer
+	 */
+	function updateTimer(_node, _timer)
+	{
+		let sep = ':';
+		let diff = Math.round((_timer.offset || 0) / 60000.0)
+		if (_timer.start)
+		{
+			const now = Math.round((new Date()).valueOf() / 1000.0);
+			sep = now % 2 ? ' ' : ':';
+			diff = Math.round((now - Math.round(_timer.start.valueOf() / 1000.0)) / 60.0);
+		}
+		_node.textContent = sprintf('%d%s%02d', Math.round(diff / 60), sep, diff % 60);
+		// set CSS classes accordingly
+		_node.classList.toggle('running', !!_timer.start);
+		_node.classList.toggle('paused', _timer.paused || false);
+		_node.classList.toggle('overall', _timer === overall);
+	}
+
+	/**
+	 * Update all timers: topmenu and dialog (if open)
+	 */
+	function update()
+	{
+		// topmenu only shows either specific, if running or paused, or the overall timer
+		updateTimer(timer, specific.start || specific.paused ? specific : overall);
+
+		// if dialog is open, it shows both timers
+		if (dialog)
+		{
+			const specific_timer = dialog._overlayContentNode.querySelector('div#_specific_timer');
+			const overall_timer = dialog._overlayContentNode.querySelector('div#_overall_timer');
+			if (specific_timer) updateTimer(specific_timer, specific);
+			if (overall_timer) updateTimer(overall_timer, overall);
+		}
+	}
+
 
 	/**
 	 * Start given timer
@@ -199,22 +248,12 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		_timer.offset = 0;	// it's now set in start-time
 		_timer.paused = false;
 
-		// only initiate periodic update, for specific timer, or overall, when specific is not started or paused
-		if (_timer === specific || _timer === overall && !(specific?.start || specific?.paused))
+		// update now
+		update();
+
+		// initiate periodic update, if not already runing
+		if (!timer_interval)
 		{
-			const update = () => {
-				let diff = Math.round(((new Date()).valueOf() - _timer.start.valueOf()) / 1000.0);
-				const sep = diff % 2 ? ' ' : ':';
-				diff = Math.round(diff / 60.0);
-				timer.textContent = sprintf('%d%s%02d', Math.round(diff / 60), sep, diff % 60);
-			}
-			timer.classList.add('running');
-			timer.classList.remove('paused');
-			timer.classList.toggle('overall', _timer === overall);
-			update();
-			if (timer_interval) {
-				window.clearInterval(timer_interval);
-			}
 			timer_interval = window.setInterval(update, 1000);
 		}
 	}
@@ -229,17 +268,6 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function stopTimer(_timer, _pause)
 	{
-		// stop periodic update
-		if (timer_interval)
-		{
-			window.clearInterval(timer_interval);
-		}
-
-		// update timer of stopped/paused state
-		timer.classList.remove('running');
-		timer.classList.toggle('paused', _pause || false);
-		timer.textContent = timer.textContent.replace(' ', ':');
-
 		// update _timer state object
 		_timer.paused = _pause || false;
 		if (_timer.start)
@@ -247,13 +275,29 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			_timer.offset = (new Date()).valueOf() - _timer.start.valueOf();
 			_timer.start = undefined;
 		}
+		// update timer display
+		updateTimer(timer, _timer);
 
-		// if specific timer is stopped AND overall timer is running or paused, re-start overall to display it again
-		if (!_pause && _timer === specific && (overall.start || overall.paused))
+		// if dialog is shown, update its timer(s) too
+		if (dialog)
 		{
-			const paused = overall.paused;
-			startTimer(overall);
-			if (paused) stopTimer(overall, true);
+			const specific_timer = dialog._overlayContentNode.querySelector('div#_specific_timer');
+			const overall_timer = dialog?._overlayContentNode.querySelector('div#_overall_timer');
+			if (specific_timer && _timer === specific)
+			{
+				updateTimer(specific_timer, specific)
+			}
+			if (overall_timer && _timer === overall)
+			{
+				updateTimer(overall_timer, overall);
+			}
+		}
+
+		// stop periodic update, only if NO more timer is running
+		if (timer_interval && !specific.start && !overall.start)
+		{
+			window.clearInterval(timer_interval);
+			timer_interval = undefined;
 		}
 	}
 
@@ -270,59 +314,53 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 
 			// set state if given
 			const timer = document.getElementById('topmenu_timer');
-			if (timer && timer.getAttribute('data-state'))
-			{
+			if (timer && timer.getAttribute('data-state')) {
 				setState(JSON.parse(timer.getAttribute('data-state')));
 			}
 
-			// create selectbox / menu
-			const select = document.createElement('et2-select');
-			select.id = 'timer_selectbox';
-			timer_container.append(select);
-
-			// bind change handler
-			select.addEventListener('change', () =>
-			{
-				if (select.value) timerAction(select.value);
-				select.value = '';
-			});
-
-			select.addEventListener('sl-hide', (e) => {
-				if (e.currentTarget.nodeName === 'ET2-SELECT')
-				{
-					e.stopImmediatePropagation();
-				}
-			});
 			// bind click handler
-			timer_container.addEventListener('click', (ev) =>
-			{
-				ev.stopImmediatePropagation();
-				if (select.dropdown.open)
-				{
-					select.dropdown.hide();
-				}
-				else
-				{
-					setMenuState();
-					select.dropdown.show();
-				}
-			});
-			// need to load timesheet translations for app-names
-			this.langRequire(window, [{app: 'timesheet', lang: this.preference('lang')}], () =>
-			{
-				select.select_options = [
-					{ value:'', label: this.lang('Select one...')},
-					{ value: 'specific-start', label: this.lang('Start specific time'), icon: 'timesheet/play-blue'},
-					{ value: 'specific-pause', label: this.lang('Pause specific time'), icon: 'timesheet/pause-orange'},
-					{ value: 'specific-stop', label: this.lang('Stop specific time'), icon: 'timesheet/stop'},
-					{ value: 'overall-start', label: this.lang('Start working time'), icon: 'timesheet/play'},
-					{ value: 'overall-pause', label: this.lang('Pause working time'), icon: 'timesheet/pause-orange'},
-					{ value: 'overall-stop', label: this.lang('Stop working time'), icon: 'timesheet/stop'},
-				];
-				select.updateComplete.then(() =>
-				{
-					select.dropdown.trigger.style.visibility = 'hidden';
-					select.dropdown.trigger.style.height = '0px';
+			timer_container.addEventListener('click', (ev) => {
+				// Pass egw in the constructor
+				dialog = new Et2Dialog(egw);
+
+				// Set attributes.  They can be set in any way, but this is convenient.
+				dialog.transformAttributes({
+					// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+					callback: (button_id, value) =>		// return false to prevent dialog closing
+					{
+						if (button_id !== 'close') {
+							timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'), value.time);
+							setButtonState();
+							return false;
+						}
+						dialog = undefined;
+					},
+					title: 'Start & stop timer',
+					template: egw.webserverUrl + '/timesheet/templates/default/timer.xet',
+					buttons: [
+						{label: egw.lang("Close"), id: "close", default: true, image: "cancel"},
+					],
+					value: {
+						content: {
+							disable: 'overwrite'
+						},
+						sel_options: {}
+					}
+				});
+				// Add to DOM, dialog will auto-open
+				document.body.appendChild(dialog);
+				dialog.getUpdateComplete().then(() => {
+					// add default content to timer-divs
+					dialog._overlayContentNode.querySelectorAll('div.timesheet_timer').forEach(timer => {
+						timer.textContent = '0:00';
+					});
+					// enable/disable buttons based on timer state
+					setButtonState();
+					// update Timers
+					update();
+					// set current time for overwrite time input
+					let now = new Date((new Date).valueOf() - egw.getTimezoneOffset() * 60000);
+					//dialog._overlayContentNode.querySelector('et2-date-time').value = now;
 				});
 			});
 		}

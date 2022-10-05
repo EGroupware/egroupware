@@ -82,7 +82,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * If browser / OS is configured correct, identical to: (new Date()).getTimezoneOffset()
 		 *
-		 * @return {number} offset to UTC in seconds
+		 * @return {number} offset to UTC in minutes
 		 */
 		getTimezoneOffset: function() {
 			return isNaN(egw.preference('timezoneoffset')) ? (new Date()).getTimezoneOffset() : parseInt(egw.preference('timezoneoffset'));
