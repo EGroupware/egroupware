@@ -418,10 +418,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		try
 		{
 			let et2_widget_result = super._handleClick(ev);
-			if(!et2_widget_result)
+			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
+			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
+			ev.preventDefault();
+			ev.stopPropagation();
+			if(et2_widget_result === false)
 			{
-				ev.preventDefault();
-				ev.stopPropagation();
 				return false;
 			}
 		}
@@ -434,11 +436,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// Callback expects (button_id, value)
 		try
 		{
-			let callback_result = this.callback ? this.callback(this._button_id, this.value) : true;
+			let callback_result = this.callback ? this.callback(this._button_id, this.value, ev) : true;
+			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
+			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
+			ev.preventDefault();
+			ev.stopPropagation();
 			if(callback_result === false)
 			{
-				ev.preventDefault();
-				ev.stopPropagation();
 				return false;
 			}
 		}
