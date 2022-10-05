@@ -194,6 +194,10 @@ class Events extends Api\Storage\Base
 					$timer['start'] = (new Api\DateTime($timer['start'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
 				}
 			}
+			// send timer configuration to client-side
+			$config = Api\Config::read(self::APP);
+			$state['disable'] = $config['disable_timer'] ?? [];
+
 			return $state;
 		}
 		catch (\Exception $e) {

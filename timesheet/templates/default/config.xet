@@ -43,7 +43,15 @@
 					</select>
 				</row>
 				<row>
-					<description value="Working time" span="all" class="subHeader"/>
+					<description value="Working time and timer" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Disable timers"/>
+					<select id="newsettings[disable_timer]" multiple="true">
+						<option value="overall">Working time</option>
+						<option value="specific">Timer</option>
+						<option value="overwrite">Overwriting start or stop time</option>
+					</select>
 				</row>
 				<row>
 					<description value="Category for 'Working time'"/>

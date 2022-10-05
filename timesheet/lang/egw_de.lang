@@ -28,6 +28,7 @@ deleted	timesheet	de	gelöscht
 deletes this field	timesheet	de	Dieses Feld löschen
 determines the order the fields are displayed	timesheet	de	verändert die Reihenfolge der angezeigten Felder
 directory with documents to insert entries	timesheet	de	Ordner mit Dokumenten zum Einfügen.
+disable timers	timesheet	de	Zeitnehmer ausschalten
 each value is a line like <id>[=<label>]	timesheet	de	jeder Wert ist eine Zeile in dem Format <id>[=|label>]
 edit status	common	de	Status bearbeiten
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
@@ -37,6 +38,7 @@ entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
+error storing working time	timesheet	de	Fehler beim Speichern der Arbeitszeit
 events	timesheet	de	Ereignisse
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	de	Beispiel: {{IF n_prefix~Herr~sehr geehrter Herr~sehr geehrte Frau}} - wenn im Feld 'n_prefix' 'Herr' steht wird 'sehr geehrter Herr' geschrieben, ansonsten 'sehr geehrte Frau'.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Herr Dr. Müller
@@ -95,7 +97,10 @@ only admin	admin	de	nur Administratoren
 only admin can edit this status	admin	de	nur Administratoren dürfen Stundenzettel mit diesen Status bearbeiten
 or endtime	timesheet	de	oder Endzeit
 order	timesheet	de	Reihenfolge
+overwrite	common	de	Überschreiben
+overwriting start or stop time	timesheet	de	Überschreiben der Start- oder Stop-Zeit
 parent	admin	de	Übergeordnet
+pause	common	de	Pause
 permission denied!!!	timesheet	de	Zugriff verweigert!!!
 permissions error - %1 could not %2	timesheet	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 prevent deleting	admin	de	Verhindert Löschung
@@ -128,6 +133,7 @@ status	timesheet	de	Status
 status deleted.	timesheet	de	Status gelöscht
 status of created timesheets	timesheet	de	Status für neue Stundenzettel
 status updated.	timesheet	de	Status geändert
+stop	common	de	Stop
 sum %1:	timesheet	de	Summe %1:
 tag to mark positions for address labels	timesheet	de	Platzhalter, um die Position der Adresslabels festzulegen
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	de	Das Dokument kann Platzhalter wie {{%3}} beinhalten, die mit den entsprechenden Inhalten ersetzt werden (%1Liste der Platzhalter%2).
@@ -138,6 +144,7 @@ this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
 ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
+timer	common	de	Zeitnehmer
 timesheet	common	de	Stundenzettel
 timesheet csv export	timesheet	de	Export des  Stundenzettels als CSV
 timesheet csv import	timesheet	de	Stundenzettels CSV Import
@@ -162,6 +169,9 @@ what should be done with unknown values?	timesheet	de	Was soll mit unbekannten W
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	de	Wenn Sie Einträge in Dokumente einfügen, werden diese hier gespeichert. Wenn kein Verzeichnis angegeben ist, werden sie in Ihrem Home Verzeichnis gespeichert.
 will be created when saving ...	common	de	Wird beim Speichern angelegt ...
 working time	common	de	Arbeitszeit
+working time and timer	timesheet	de	Arbeitszeit und Zeitnehmer
+working time from %1	timesheet	de	Arbeitszeit vom %1
+working time of %1 hours stored	timesheet	de	Arbeitszeit von %1 Stunden gespeichert
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern

@@ -97,30 +97,30 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		switch(_action)
 		{
 			case 'overall-start':
-				startTimer(overall);
+				startTimer(overall, _time);
 				break;
 
 			case 'overall-pause':
-				stopTimer(overall,true);
-				if (specific?.start) stopTimer(specific, true);
+				stopTimer(overall,true, _time);
+				if (specific?.start) stopTimer(specific, true, _time);
 				break;
 
 			case 'overall-stop':
-				stopTimer(overall);
-				if (specific?.start) stopTimer(specific);
+				stopTimer(overall, false, _time);
+				if (specific?.start) stopTimer(specific, false, _time);
 				break;
 
 			case 'specific-start':
-				if (overall?.paused) startTimer(overall);
-				startTimer(specific);
+				if (overall?.paused) startTimer(overall, _time);
+				startTimer(specific, _time);
 				break;
 
 			case 'specific-pause':
-				stopTimer(specific,true);
+				stopTimer(specific,true, _time);
 				break;
 
 			case 'specific-stop':
-				stopTimer(specific);
+				stopTimer(specific, false, _time);
 				break;
 		}
 		// persist state
@@ -227,7 +227,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * Start given timer
 	 *
 	 * @param object _timer
-	 * @param string|undefined _start to initialise with time different from current time
+	 * @param string|Date|undefined _start to initialise with time different from current time
 	 * @param number|undefined _offset to set an offset
 	 */
 	function startTimer(_timer, _start, _offset)
@@ -241,7 +241,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		{
 			_timer.start = new Date();
 		}
-		if (_offset || _timer.offset)
+		if (_offset || _timer.offset && _timer.paused)
 		{
 			_timer.start.setMilliseconds(_timer.start.getMilliseconds()-(_offset || _timer.offset));
 		}
@@ -265,14 +265,16 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 *
 	 * @param object _timer
 	 * @param bool|undefined _pause true: pause, else: stop
+	 * @param string|Date|undefined _time stop-time, default current time
 	 */
-	function stopTimer(_timer, _pause)
+	function stopTimer(_timer, _pause, _time)
 	{
+		const time = _time ? new Date(_time) : new Date();
 		// update _timer state object
 		_timer.paused = _pause || false;
 		if (_timer.start)
 		{
-			_timer.offset = (new Date()).valueOf() - _timer.start.valueOf();
+			_timer.offset = time.valueOf() - _timer.start.valueOf();
 			_timer.start = undefined;
 		}
 		// update timer display
@@ -314,8 +316,10 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 
 			// set state if given
 			const timer = document.getElementById('topmenu_timer');
-			if (timer && timer.getAttribute('data-state')) {
-				setState(JSON.parse(timer.getAttribute('data-state')));
+			const state = timer && timer.getAttribute('data-state') ? JSON.parse(timer.getAttribute('data-state')) : undefined;
+			if (timer && state)
+			{
+				setState(state);
 			}
 
 			// bind click handler
@@ -329,7 +333,9 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 					callback: (button_id, value) =>		// return false to prevent dialog closing
 					{
 						if (button_id !== 'close') {
-							timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'), value.time);
+							timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
+								// eT2 operates in user-time, while timers here always operate in UTC
+								value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
 							setButtonState();
 							return false;
 						}
@@ -342,7 +348,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 					],
 					value: {
 						content: {
-							disable: 'overwrite'
+							disable: state.disable.join(':')
 						},
 						sel_options: {}
 					}
@@ -350,16 +356,12 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				// Add to DOM, dialog will auto-open
 				document.body.appendChild(dialog);
 				dialog.getUpdateComplete().then(() => {
-					// add default content to timer-divs
-					dialog._overlayContentNode.querySelectorAll('div.timesheet_timer').forEach(timer => {
-						timer.textContent = '0:00';
-					});
 					// enable/disable buttons based on timer state
 					setButtonState();
-					// update Timers
+					// update timers in dialog
 					update();
-					// set current time for overwrite time input
-					let now = new Date((new Date).valueOf() - egw.getTimezoneOffset() * 60000);
+					// set current time for overwrite time input (eT2 operates in user-time!)
+					//let now = new Date((new Date).valueOf() - egw.getTimezoneOffset() * 60000);
 					//dialog._overlayContentNode.querySelector('et2-date-time').value = now;
 				});
 			});

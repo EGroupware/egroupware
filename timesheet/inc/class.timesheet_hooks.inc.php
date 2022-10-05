@@ -218,8 +218,12 @@ class timesheet_hooks
 	public static function add_timer($data)
 	{
 		$state = Events::timerState();
-		$GLOBALS['egw']->framework->_add_topmenu_info_item('<div id="topmenu_timer" title="'.
-			lang('Start & stop timer').'"'.
-			($state ? ' data-state="'.htmlspecialchars(json_encode($state)).'"' : '').'>0:00</div>', 'timer');
+		// only send/display if at least one timer is not disabled
+		if (array_diff(['specific', 'overall'], $state['disable']))
+		{
+			$GLOBALS['egw']->framework->_add_topmenu_info_item('<div id="topmenu_timer" title="'.
+				lang('Start & stop timer').'"'.
+				($state ? ' data-state="'.htmlspecialchars(json_encode($state)).'"' : '').'>0:00</div>', 'timer');
+		}
 	}
 }
