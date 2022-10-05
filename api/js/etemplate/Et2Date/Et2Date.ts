@@ -432,6 +432,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		// Listen for flatpickr change so we can update internal value, needed for validation
 		options.onChange = options.onReady = this._updateValueOnChange;
 
+		// Remove Lion's inert attribute so we can work in Et2Dialog
+		options.onOpen = [() =>
+		{
+			this._instance.calendarContainer.removeAttribute("inert")
+		}];
+
 		return options;
 	}
 
