@@ -68,6 +68,7 @@ import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the Time Sheet from a CSV file
 insert	timesheet	en	Insert
 invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
+invalid input	common	en	Invalid input
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	en	Invalid owner ID: %1. Might be a bad field translation. Used %2 instead.
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
@@ -135,6 +136,7 @@ status deleted.	timesheet	en	Status deleted.
 status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
 stop	common	en	Stop
+stop- or pause-time can not be before the start-time!	common	en	Stop- or pause-time can not be before the start-time!
 sum	timesheet	en	Sum
 sum %1:	timesheet	en	Sum %1:
 tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels

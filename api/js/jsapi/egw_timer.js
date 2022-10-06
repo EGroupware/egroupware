@@ -92,6 +92,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 *
 	 * @param {string} _action
 	 * @param {string} _time
+	 * @throws string error-message
 	 */
 	function timerAction(_action, _time)
 	{
@@ -267,17 +268,22 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * @param object _timer
 	 * @param bool|undefined _pause true: pause, else: stop
 	 * @param string|Date|undefined _time stop-time, default current time
+	 * @throws string error-message when timer.start < _time
 	 */
 	function stopTimer(_timer, _pause, _time)
 	{
 		const time = _time ? new Date(_time) : new Date();
 		// update _timer state object
-		_timer.paused = _pause || false;
 		if (_timer.start)
 		{
+			if (time.valueOf() < _timer.start.valueOf())
+			{
+				throw egw.lang('Stop- or pause-time can not be before the start-time!');
+			}
 			_timer.offset = time.valueOf() - _timer.start.valueOf();
 			_timer.start = undefined;
 		}
+		_timer.paused = _pause || false;
 		// update timer display
 		updateTimer(timer, _timer);
 
@@ -334,10 +340,15 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 					callback: (button_id, value) =>		// return false to prevent dialog closing
 					{
 						if (button_id !== 'close') {
-							timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
-								// eT2 operates in user-time, while timers here always operate in UTC
-								value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
-							dialog._overlayContentNode.querySelector('et2-date-time').value = '';
+							try {
+								timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
+									// eT2 operates in user-time, while timers here always operate in UTC
+									value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
+								dialog._overlayContentNode.querySelector('et2-date-time').value = '';
+							}
+							catch (e) {
+								Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
+							}
 							setButtonState();
 							return false;
 						}
