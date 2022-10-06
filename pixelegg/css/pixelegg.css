@@ -4591,6 +4591,9 @@ span.overlayContainer img.overlay {
   border-right: 1px solid #bfc0bf;
   border-bottom: 4px solid white !important;
   border-top: 4px solid transparent;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  max-width: fit-content !important;
   background-color: #ffffff;
   background-image: none !important;
 }
