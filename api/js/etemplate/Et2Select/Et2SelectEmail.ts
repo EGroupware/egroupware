@@ -196,6 +196,30 @@ export class Et2SelectEmail extends Et2Select
 	{
 		return this.multiple ? "" : super._createImage(item);
 	}
+
+	/**
+	 * Overwritten to NOT split RFC822 addresses containing a comma in quoted name part
+	 *
+	 * E.g. '"Becker, Ralf" <rb@egroupware.org>'
+	 *
+	 * @param val
+	 */
+	set_value(val : string | string[] | number | number[])
+	{
+		if(typeof val === 'string' && val.indexOf(',') !== -1)
+		{
+			val = val.split(',');
+			for(let n=0; n < val.length-1; n++)
+			{
+				while (val[n].indexOf('@') === -1 && n < val.length-1)
+				{
+					val[n] += ',' + val[n+1];
+					val.splice(n+1, 1);
+				}
+			}
+		}
+		super.set_value(val);
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
