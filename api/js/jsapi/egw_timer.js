@@ -74,13 +74,14 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	/**
 	 * Get state of timer
 	 * @param string _action last action
+	 * @param string|Date|undefined _time time to report
 	 * @returns {{action: string, overall: {}, specific: {}, ts: Date}}
 	 */
-	function getState(_action)
+	function getState(_action, _time)
 	{
 		return {
 			action: _action,
-			ts: new Date(),
+			ts: new Date(_time || new Date),
 			overall: overall,
 			specific: specific
 		}
@@ -124,7 +125,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				break;
 		}
 		// persist state
-		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action)]).then(() => {
+		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then(() => {
 			if (_action === 'specific-stop')
 			{
 				egw.open(null, 'timesheet', 'add', {events: 'specific'});
@@ -336,6 +337,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 							timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
 								// eT2 operates in user-time, while timers here always operate in UTC
 								value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
+							dialog._overlayContentNode.querySelector('et2-date-time').value = '';
 							setButtonState();
 							return false;
 						}
@@ -360,9 +362,6 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 					setButtonState();
 					// update timers in dialog
 					update();
-					// set current time for overwrite time input (eT2 operates in user-time!)
-					//let now = new Date((new Date).valueOf() - egw.getTimezoneOffset() * 60000);
-					//dialog._overlayContentNode.querySelector('et2-date-time').value = now;
 				});
 			});
 		}

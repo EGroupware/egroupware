@@ -88,16 +88,22 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="th">
 					<description value="Time"/>
+					<description value="Recorded"/>
 					<description value="Type"/>
 					<description value="Duration"/>
+					<description value="Sum"/>
 				</row>
 				<row>
 					<date-time id="${row}[tse_time]" readonly="true"/>
+					<date-time id="${row}[tse_timestamp]" readonly="true"/>
 					<select id="${row}[tse_type]" readonly="true"/>
+					<date-timeonly id="${row}[time]" readonly="true"/>
 					<date-timeonly id="${row}[total]" readonly="true"/>
 				</row>
 			</rows>

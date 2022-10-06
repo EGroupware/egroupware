@@ -12,8 +12,9 @@
 			</columns>
 			<rows>
 				<row disabled="@disable=/overwrite/">
-					<description value="Overwrite" span="2"/>
-					<et2-date-time id="time" span="all"/>
+					<description value="Overwrite time" span="2"/>
+					<et2-date-time id="time" span="all" placeholder="now"
+						onclick="if (!this.value) this.value = new Date((new Date).valueOf() - egw.getTimezoneOffset() * 60000)"/>
 				</row>
 				<row disabled="@disable=/specific/">
 					<description value="Timer"/>

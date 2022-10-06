@@ -97,7 +97,7 @@ only admin	admin	en	Only admin
 only admin can edit this status	admin	en	Only admins can edit timesheets with this status
 or endtime	timesheet	en	or end time
 order	timesheet	en	Order
-overwrite	common	en	Overwrite
+overwrite time	common	en	Overwrite time
 overwriting start or stop time	timesheet	en	Overwriting start or stop time
 parent	admin	en	Parent
 pause	common	en	Pause
@@ -108,6 +108,7 @@ price	timesheet	en	Price
 project fields	timesheet	en	Project fields
 projectmanager integration	admin	en	Project Manager integration
 quantity	timesheet	en	Quantity
+recorded	timesheet	en	Recorded
 recovered	timesheet	en	recovered
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 restore this entry	timesheet	en	Restore this entry
@@ -134,6 +135,7 @@ status deleted.	timesheet	en	Status deleted.
 status of created timesheets	timesheet	en	Status of created timesheets
 status updated.	timesheet	en	Status updated.
 stop	common	en	Stop
+sum	timesheet	en	Sum
 sum %1:	timesheet	en	Sum %1:
 tag to mark positions for address labels	timesheet	en	Tag to mark positions for address labels
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).

@@ -210,7 +210,7 @@ class Events extends Api\Storage\Base
 	 *
 	 * @param array& $timer array with keys 'start', 'offset' and 'paused'
 	 * @param array $row
-	 * @return void
+	 * @return int? time in ms for stop or pause events, null for start
 	 */
 	protected static function evaluate(array &$timer, array $row)
 	{
@@ -221,7 +221,7 @@ class Events extends Api\Storage\Base
 		}
 		elseif ($timer['start'])
 		{
-			$timer['offset'] += 1000 * ($row['tse_time']->getTimestamp() - $timer['start']->getTimestamp());
+			$timer['offset'] += $time = 1000 * ($row['tse_time']->getTimestamp() - $timer['start']->getTimestamp());
 			$timer['start'] = null;
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
@@ -229,6 +229,7 @@ class Events extends Api\Storage\Base
 		{
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
+		return $time ?? null;
 	}
 
 	/**
@@ -237,10 +238,10 @@ class Events extends Api\Storage\Base
 	 * Not stopped events-sequences are NOT returned (stopped sequences end with a stop event).
 	 *
 	 * @param int|array $filter
-	 * @param int &$time=null on return time in seconds
+	 * @param int &$total=null on return time in seconds
 	 * @return array[] tse_id => array pairs plus extra key sum (time-sum in seconds)
 	 */
-	public static function get($filter, int &$time=null)
+	public static function get($filter, int &$total=null)
 	{
 		if (!is_array($filter))
 		{
@@ -251,24 +252,25 @@ class Events extends Api\Storage\Base
 			'offset' => 0,
 			'paused' => false,
 		];
-		$time = $open = 0;
+		$total = $open = 0;
 		$events = [];
 		foreach(self::getInstance()->search('', false, 'tse_id', '', '',
 			false, 'AND', false, $filter) as $row)
 		{
-			self::evaluate($timer, $row);
+			$time = self::evaluate($timer, $row);
 			++$open;
 
 			if ($row['tse_type'] & self::STOP)
 			{
-				$row['total'] = $time += $timer['offset'] / 1000;
+				$row['total'] = $total += $timer['offset'] / 1000;
 				$timer = $init_timer;
 				$open = 0;
 			}
 			elseif ($row['tse_type'] & self::PAUSE)
 			{
-				$row['total'] = $time + $timer['offset'] / 1000;
+				$row['total'] = $total + $timer['offset'] / 1000;
 			}
+			$row['time'] = $time / 1000;
 			$events[$row['tse_id']] = $row;
 		}
 		// remove open / unstopped timer events
