@@ -1386,7 +1386,7 @@ export class etemplate2
 			}
 
 			const result = _widget.beforePrint();
-			if(typeof result == "object" && result.done)
+			if(typeof result == "object")
 			{
 				deferred.push(result);
 			}

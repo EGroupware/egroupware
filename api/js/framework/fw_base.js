@@ -1307,9 +1307,11 @@ window.fw_base = (function(){ "use strict"; return Class.extend(
 					appWindow.onafterprint = afterPrint;
 
 					// Wait for everything to be loaded, then send it off
-					jQuery.when.apply(jQuery, deferred).done(function() {
+					Promise.all(deferred).then(() =>
+					{
 						appWindow.setTimeout(appWindow.print, 0);
-					}).fail(function() {
+					}).catch(function ()
+					{
 						afterPrint();
 					});
 				}
