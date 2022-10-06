@@ -414,14 +414,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// @ts-ignore
 		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
 
+		// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
+		// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
+		ev.preventDefault();
+		ev.stopPropagation();
+
 		// Handle anything bound via et2 onclick property
 		try
 		{
 			let et2_widget_result = super._handleClick(ev);
-			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
-			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
-			ev.preventDefault();
-			ev.stopPropagation();
 			if(et2_widget_result === false)
 			{
 				return false;
@@ -432,15 +433,10 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			console.log(e);
 		}
 
-
 		// Callback expects (button_id, value)
 		try
 		{
 			let callback_result = this.callback ? this.callback(this._button_id, this.value, ev) : true;
-			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
-			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
-			ev.preventDefault();
-			ev.stopPropagation();
 			if(callback_result === false)
 			{
 				return false;

@@ -180,7 +180,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 	_handleClick(event : MouseEvent) : boolean
 	{
 		// ignore click on readonly button
-		if(this.disabled || this.readonly)
+		if(this.disabled || this.readonly || event.defaultPrevented)
 		{
 			event.preventDefault();
 			event.stopImmediatePropagation();
