@@ -296,7 +296,12 @@ export class SidemenuDate extends Et2Date
 	 */
 	protected _handleHeaderChange()
 	{
-		let temp_date = new Date("" + this._instance.currentYear + "-" + (this._instance.currentMonth + 1) + "-01");
+		const maxDays = new Date(this._instance.currentYear, this._instance.currentMonth + 1, 0).getDate();
+
+		let temp_date = new Date("" + this._instance.currentYear + "-" +
+			(this._instance.currentMonth + 1) + "-" +
+			("" + Math.min(maxDays, new Date(this.value).getUTCDate())).padStart(2, "0")
+		);
 		temp_date.setUTCMinutes(temp_date.getUTCMinutes() + temp_date.getTimezoneOffset());
 
 		// Go directly
