@@ -48,7 +48,7 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 			}
 			
 			:host([rows])::part(base) {
-				max-height: calc(var(--rows, 5) * 1.9rem);
+				height: calc(var(--rows, 5) * 1.9rem);
 				overflow-y: auto;
 			}
 			`
@@ -130,13 +130,16 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 		{
 			new_value = [new_value]
 		}
-		this.getAllItems().forEach((item) => item.checked = false);
-		for(let i = 0; i < new_value.length; i++)
-		{
-			const value = new_value[i];
-			(<SlMenuItem>this.querySelector("[value='" + value + "']")).checked = true;
-		}
 		this.requestUpdate("value", oldValue);
+		this.updateComplete.then(() =>
+		{
+			this.getAllItems().forEach((item) => item.checked = false);
+			for(let i = 0; i < new_value.length; i++)
+			{
+				const value = new_value[i];
+				(<SlMenuItem>this.querySelector("[value='" + value + "']")).checked = true;
+			}
+		});
 	}
 
 	_optionTemplate(option : SelectOption) : TemplateResult
