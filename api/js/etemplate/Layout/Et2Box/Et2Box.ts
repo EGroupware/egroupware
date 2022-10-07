@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, LitElement} from "@lion/core";
+import {classMap, css, html, LitElement} from "@lion/core";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 
@@ -53,16 +53,37 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             	margin-left: auto;
             	order: 1;
             }
+            
+            /* work around for chromium print bug, see render() */
+            :host > .no-print-gap {
+            	gap: 0px;
+            }
             `,
 		];
 	}
 
 	render()
 	{
+		/**
+		 * Work around Chromium bug
+		 * https://bugs.chromium.org/p/chromium/issues/detail?id=1161709
+		 *
+		 * Printing with gap on empty element gives huge print output
+		 */
+		let noGap = false;
+		if(this.querySelectorAll(":scope > :not([disabled])").length == 0)
+		{
+			noGap = true;
+		}
+
+		
 		return html`
-            <div part="base" ${this.id ? html`id="${this.id}"` : ''}>
+            <div part="base" ${this.id ? html`id="${this.id}"` : ''} class=${classMap({
+                "no-print-gap": noGap
+            })} hey>
                 <slot></slot>
             </div> `;
+
 	}
 
 	set_label(new_label)
