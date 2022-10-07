@@ -414,10 +414,15 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		// @ts-ignore
 		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
 
-		// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
-		// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
-		ev.preventDefault();
-		ev.stopPropagation();
+		// we need to consider still buttons used in dialogs that may actually submit and have server-side interactions(eg.vfsSelect)
+		if (!ev.target?.getInstanceManager()?._etemplate_exec_id)
+		{
+			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
+			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)
+			ev.preventDefault();
+			ev.stopPropagation();
+		}
+
 
 		// Handle anything bound via et2 onclick property
 		try
