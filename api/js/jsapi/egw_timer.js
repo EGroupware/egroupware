@@ -59,7 +59,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		// initiate specific timer, only if running or paused
 		if (_state.specific?.start || _state.specific?.paused)
 		{
-			startTimer(specific, _state.specific?.start, _state.specific?.offset);	// to show offset / paused time
+			startTimer(specific, _state.specific?.start, _state.specific?.offset, _state.specific.app_id);	// to show offset / paused time
+			specific.id = _state.specific.id;
 			if (_state.specific?.paused)
 			{
 				stopTimer(specific, true);
@@ -126,10 +127,25 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				break;
 		}
 		// persist state
-		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then(() => {
+		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) => {
+			if (_action.substring(8) === 'specific')
+			{
+				specific.id = tse_id;
+			}
 			if (_action === 'specific-stop')
 			{
-				egw.open(null, 'timesheet', 'add', {events: 'specific'});
+				let type = 'add';
+				let extra = {events: 'specific'};
+				if (specific.app_id && specific.app_id.substring(0, 11) === 'timesheet::')
+				{
+					extra.ts_id = specific.app_id.substring(11);
+					type = 'edit';
+				}
+				egw.open(null, 'timesheet', type, extra);
+
+				// unset the app_id and the tse_id to not associate the next start with it
+				specific.app_id = undefined;
+				specific.id = undefined;
 			}
 		});
 	}
@@ -231,8 +247,9 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * @param object _timer
 	 * @param string|Date|undefined _start to initialise with time different from current time
 	 * @param number|undefined _offset to set an offset
+	 * @param string|undefined _app_id
 	 */
-	function startTimer(_timer, _start, _offset)
+	function startTimer(_timer, _start, _offset, _app_id)
 	{
 		// update _timer state object
 		if (_start)
@@ -249,6 +266,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		}
 		_timer.offset = 0;	// it's now set in start-time
 		_timer.paused = false;
+		_timer.app_id = _app_id;
 
 		// update now
 		update();
@@ -311,6 +329,44 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	}
 
 	return {
+		/**
+		 * Start timer for given app and id
+		 *
+		 * @param {Object} _action
+		 * @param {Array} _senders
+		 */
+		start_timer(_action, _senders)
+		{
+			if (_action.parent.data.nextmatch?.getSelection().all || _senders.length !== 1)
+			{
+				egw.message(egw.lang('You must select a single entry!'), 'error');
+				return;
+			}
+			// timer already running, ask user if he wants to associate it with the entry, or cancel
+			if (specific.start || specific.paused)
+			{
+				Et2Dialog.show_dialog((_button) => {
+						if (_button === Et2Dialog.OK_BUTTON)
+						{
+							if (specific.paused)
+							{
+								startTimer(specific, undefined, undefined, _senders[0].id);
+							}
+							else
+							{
+								specific.app_id = _senders[0].id;
+								egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateAppId', [specific.id, specific.app_id]);
+							}
+						}
+					},
+					egw.lang('Do you want to associate it with the selected %1 entry?', egw.lang(_senders[0].id.split('::')[0])),
+					egw.lang('Timer already running or paused'), {},
+					Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.QUESTION_MESSAGE, undefined, egw);
+				return;
+			}
+			startTimer(specific, undefined, undefined, _senders[0].id);
+		},
+
 		/**
 		 * Create timer in top-menu
 		 *

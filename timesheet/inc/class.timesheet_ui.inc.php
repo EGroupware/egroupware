@@ -82,27 +82,57 @@ class timesheet_ui extends timesheet_bo
 			{
 				$this->data = array(
 					'ts_start' => $this->today,
-					'start_time' => '',	// force empty start-time
-					'end_time' => Api\DateTime::to($this->now,'H:i'),
+					'start_time' => '',    // force empty start-time
+					'end_time' => Api\DateTime::to($this->now, 'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
-					'cat_id'   => (int) $_REQUEST['cat_id'],
-					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+					'cat_id' => (int)$_REQUEST['cat_id'],
+					'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 					'ts_project' => $_REQUEST['ts_project'],
 					'ts_title_blur' => $_REQUEST['ts_project'],
+					'events' => [],
 				);
-				if(!is_numeric($_REQUEST['ts_project']))
+				if (!is_numeric($_REQUEST['ts_project']))
 				{
 					$this->data['pm_id'] = $this->find_pm_id($_REQUEST['ts_project']);
 				}
-				if (isset($_REQUEST['events']))
+			}
+			// are we supposed to add pending events, to a new or an existing timesheet
+			if (isset($_REQUEST['events']))
+			{
+				$pending = Events::getPending($_REQUEST['events'] === 'overall', $time);
+				$this->data['events'] = array_merge($this->data['events'], array_values($pending));
+				$start = $this->data['events'][0]['tse_time'];
+				$this->data['ts_start'] = $start;
+				$this->data['start_time'] = Api\DateTime::server2user($start, 'H:s');
+				$this->data['end_time'] = '';
+				$this->data['ts_duration'] = (int)$this->data['ts_duration'] + round($time / 60); // minutes
+				$this->data['ts_quantity'] = (float)$this->data['ts_quantity'] + $this->data['ts_duration'] / 60.0; // hours
+				// check if any of the events contains an app::id to link the timesheet to
+				foreach($pending as $event)
 				{
-					$this->data['events'] = array_values(Events::getPending($_REQUEST['events'] === 'overall', $time));
-					$start = $this->data['events'][0]['tse_time'];
-					$this->data['ts_start'] = $start;
-					$this->data['start_time'] = Api\DateTime::server2user($start, 'H:s');
-					$this->data['end_time'] = '';
-					$this->data['ts_duration'] = round($time / 60); // minutes
-					$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0; // hours
+					if (!empty($event['tse_app']) && $event['tse_app'] !== TIMESHEET_APP && !empty($event['tse_app_id']))
+					{
+						// existing timesheets can be directly linked (takes care to not link multiple times)
+						if ($this->data['ts_id'])
+						{
+							Api\Link::link(TIMESHEET_APP, $this->data['ts_id'], $event['tse_app'], $event['tse_app_id']);
+						}
+						// new timesheets will be linked on saving (need to check to not add multiple times)
+						else
+						{
+							if (!isset($this->data['link_to']['to_id']))
+							{
+								$this->data['link_to']['to_id'] = [];
+							}
+							if (!in_array($app_id = [
+								'to_app' => $event['tse_app'],
+								'to_id'  => $event['tse_app_id'],
+							], $this->data['link_to']['to_id']))
+							{
+								$this->data['link_to']['to_id'][] = $app_id;
+							}
+						}
+					}
 				}
 			}
 			if (!empty($this->data['events']))
@@ -288,7 +318,8 @@ class timesheet_ui extends timesheet_bo
 						{
 							Link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
-						if (empty($content['ts_id']) && !empty($content['events']))
+						// associate events with the now stored timesheet (need to run for existing timesheets too, if new events are added!)
+						if (!empty($content['events']))
 						{
 							Events::addToTimesheet($this->data['ts_id'], array_map(static function($event)
 							{
@@ -1112,6 +1143,19 @@ class timesheet_ui extends timesheet_bo
 				'icon' => 'filemanager/navbar',
 				'caption' => 'Filemanager',
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/timesheet/$id&ajax=true',
+				'allowOnMultiple' => false,
+				'group' => $group,
+				'disableClass' => 'th',
+			);
+		}
+		// if specific timer is NOT disabled, allow to book further time on existing sheets
+		$config = Api\Config::read(TIMESHEET_APP);
+		if (!in_array('specific', $config['disable_timer'] ?? []))
+		{
+			$actions['timer'] = array(
+				'icon' => 'timesheet/navbar',
+				'caption' => 'Start timer',
+				'onExecute' => 'javaScript:app.timesheet.egw.start_timer',
 				'allowOnMultiple' => false,
 				'group' => $group,
 				'disableClass' => 'th',

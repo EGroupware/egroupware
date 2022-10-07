@@ -75,6 +75,7 @@ class Events extends Api\Storage\Base
 	 * Record/persist timer events from UI
 	 *
 	 * @param array $state
+	 * @return int tse_id of created event
 	 * @throws Api\Exception
 	 * @throws Api\Exception\WrongParameter
 	 */
@@ -92,6 +93,16 @@ class Events extends Api\Storage\Base
 		$type = ($timer === 'overall' ? self::OVERALL : 0) |
 			($action === 'start' ? self::START : ($action === 'stop' ? self::STOP : self::PAUSE));
 
+		$app = $id = $ts_id = null;
+		if ($timer === 'specific' && !empty($state['app_id']))
+		{
+			list($app, $id) = explode('::', $state['app_id'], 2);
+			if ($app === self::APP)
+			{
+				$ts_id = $id;
+			}
+		}
+
 		$this->init();
 		$this->save([
 			'tse_timestamp' => new Api\DateTime(),
@@ -99,6 +110,9 @@ class Events extends Api\Storage\Base
 			'account_id' => $this->user,
 			'tse_modifier' => $this->user,
 			'tse_type' => $type,
+			'tse_app'  => $app,
+			'tse_app_id' => $id,
+			'ts_id'    => $ts_id,
 		]);
 
 		// create timesheet for stopped working time
@@ -112,6 +126,27 @@ class Events extends Api\Storage\Base
 			catch(\Exception $e) {
 				Api\Json\Response::get()->message(lang('Error storing working time').': '.$e->getMessage(), 'error');
 			}
+		}
+		return $this->data['tse_id'];
+	}
+
+	/**
+	 * Set app::id on an already started timer
+	 *
+	 * @param int $tse_id id of the running timer-event
+	 * @param string $app_id "app::id" string
+	 * @return void
+	 * @throws Api\Db\Exception\InvalidSql
+	 */
+	public function ajax_updateAppId(int $tse_id, string $app_id)
+	{
+		if ($tse_id > 0 && !empty($app_id))
+		{
+			list($app, $id) = explode('::', $app_id);
+			$this->db->update(self::TABLE, [
+				'tse_app' => $app,
+				'tse_app_id' => $id,
+			], ['tse_id' => $tse_id], __LINE__, __FILE__, self::APP);
 		}
 	}
 
@@ -184,6 +219,21 @@ class Events extends Api\Storage\Base
 				else
 				{
 					self::evaluate($state['specific'], $row);
+
+					// if event is associated with an app:id, set it again
+					if ($row['tse_app'] && $row['tse_app_id'])
+					{
+						$state['specific']['app_id'] = $row['tse_app'].'::'.$row['tse_app_id'];
+					}
+					// for not stopped events, set the tse_id, so we can associate with an "app:id"
+					if ($row['tse_type'] & self::STOP)
+					{
+						$state['specific']['id'] = null;
+					}
+					else
+					{
+						$state['specific']['id'] = $row['tse_id'];
+					}
 				}
 			}
 			// format start-times in UTZ as JavaScript Date() understands

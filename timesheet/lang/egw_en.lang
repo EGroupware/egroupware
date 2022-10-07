@@ -29,6 +29,7 @@ deletes this field	timesheet	en	Deletes this field
 determines the order the fields are displayed	timesheet	en	Determines the order the fields are displayed
 directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
 disable timers	timesheet	en	Disable timers
+do you want to associate it with the selected %1 entry?	common	en	Do you want to associate it with the selected %1 entry?
 each value is a line like <id>[=<label>]	timesheet	en	Each value is a line like <id>[=<label>]
 edit status	common	en	Edit status
 edit this entry	timesheet	en	Edit this entry
@@ -129,6 +130,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity s
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
 start & stop timer	common	en	Start & stop timer
+start timer	timesheet	en	Start timer
 starttime	timesheet	en	Start time
 starttime has to be before endtime !!!	timesheet	en	Start time has to be before endtime!
 status	timesheet	en	Status
@@ -149,6 +151,7 @@ this week	timesheet	en	This week
 this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
 timer	common	en	Timer
+timer already running or paused	common	en	Timer already running or paused
 timesheet	common	en	Time Sheet
 timesheet csv export	timesheet	en	TimeSheet CSV export
 timesheet csv import	timesheet	en	TimeSheet CSV import

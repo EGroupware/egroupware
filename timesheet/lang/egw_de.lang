@@ -29,6 +29,7 @@ deletes this field	timesheet	de	Dieses Feld löschen
 determines the order the fields are displayed	timesheet	de	verändert die Reihenfolge der angezeigten Felder
 directory with documents to insert entries	timesheet	de	Ordner mit Dokumenten zum Einfügen.
 disable timers	timesheet	de	Zeitnehmer ausschalten
+do you want to associate it with the selected %1 entry?	common	de	Wollen Sie ihn mit dem ausgewählten %1 Eintrag verbinden?
 each value is a line like <id>[=<label>]	timesheet	de	jeder Wert ist eine Zeile in dem Format <id>[=|label>]
 edit status	common	de	Status bearbeiten
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
@@ -129,6 +130,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengen
 skip record	timesheet	de	Eintrag überspringen
 start	timesheet	de	Start
 start & stop timer	common	de	Zeitnehmer starten & stoppen
+start timer	timesheet	de	Zeitnehmer starten
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
 status	timesheet	de	Status
@@ -149,6 +151,7 @@ this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
 ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
 timer	common	de	Zeitnehmer
+timer already running or paused	common	de	Zeitnehmer läuft bereits oder ist pausiert
 timesheet	common	de	Stundenzettel
 timesheet csv export	timesheet	de	Export des  Stundenzettels als CSV
 timesheet csv import	timesheet	de	Stundenzettels CSV Import
