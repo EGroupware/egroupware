@@ -367,60 +367,17 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		this.fnct = _value;
 	}
-
-	// Global function (on window)
-	else if (typeof _value == "string" &&
-	         _value.substr(0,11) == "javaScript:" &&
-	         typeof window[_value.substr(11)] == "function")
+	else if (typeof _value == "string" && _value.substring(0, 11) === 'javaScript:')
 	{
-		this.fnct = window[_value.substr(11)];
-		console.log("Global function is bad!", _value);
+		this.fnct = function()
+		{
+			return egw.applyFunc(_value.substring(11), arguments, this);
+		}
 	}
 	else if (this.acceptedTypes.indexOf(typeof _value) >= 0)
 	{
 		this.value = _value;
 	}
-
-	// egw application specific function
-	else if (typeof _value === "string" &&
-	         _value.substr(0,15) === "javaScript:app." && app)
-	{
-		var parts = _value.split(".");
-		var existing_func = parts.pop();
-		var manager = this.context && this.context.getManager ? this.context.getManager() : null;
-		var parent = (manager ? manager.data.context : null) || window.app;
-		for (var i = 1; i < parts.length; ++i) {
-			if (typeof parent[parts[i]] !== "undefined") {
-				parent = parent[parts[i]];
-			}
-			// check if we need a not yet included app.js object --> include it now and re-set when it arrives
-			else if (i === 1 && typeof app.classes[parts[1]] === "undefined")
-			{
-				return import(egw.webserverUrl+"/"+parts[1]+"/js/app.min.js?"+((new Date).valueOf()/86400|0).toString())
-					.then(() => {
-						if(typeof app.classes[parts[i]] === "undefined")
-						{
-							throw new Error("app.classes."+parts[i]+" not found!");
-						}
-						this.setValue(_value);
-					});
-			}
-			// check if we need a not yet instantiated app.js object --> instantiate it now
-			else if (i === 1 && typeof app.classes[parts[1]] === "function")
-			{
-				parent = parent[parts[1]] = new app.classes[parts[1]]();
-			}
-			// Nope
-			else {
-				break;
-			}
-		}
-		if (typeof parent[existing_func] === "function") {
-			this.fnct = parent[existing_func];
-			this.context = parent;
-		}
-	}
-
 	// Something, but could not figure it out
 	else if (_value)
 	{
@@ -560,4 +517,3 @@ export function sprintf() {
 	}
 	return o.join('');
 }
-
