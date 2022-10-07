@@ -52,6 +52,7 @@ class Customfilter extends Widget\Transformer
 					$expanded_child = self::factory($this->attrs['type'], false, $this->id);
 					$expanded_child->id = $this->id;
 					$expanded_child->type = $this->attrs['type'];
+					$expanded_child->attrs = $this->attrs;
 					$expanded_child->run('beforeSendToClient', array($cname, $expand));
 					$widget_type = $expanded_child->attrs['type'];
 				}
