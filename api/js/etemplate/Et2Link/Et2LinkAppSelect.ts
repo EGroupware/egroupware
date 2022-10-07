@@ -105,7 +105,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 		super.connectedCallback();
 
 		// Set icon
-		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.value + "/navbar");
 
 		if(!this.value)
 		{
@@ -176,7 +176,7 @@ export class Et2LinkAppSelect extends SlotMixin(Et2Select)
 	_handleChange(e)
 	{
 		// Set icon
-		this.querySelector("[slot='prefix']").setAttribute("src", this.value + "/navbar");
+		this.querySelector(":scope > [slot='prefix']").setAttribute("src", this.value + "/navbar");
 
 		// update preference
 		let appname = "";
