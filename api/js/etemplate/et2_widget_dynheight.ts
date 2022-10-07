@@ -162,7 +162,7 @@ export class et2_dynheight
 			jQuery(_node).children().each(function() {
 				const $this = jQuery(this);
 				const top = $this.offset().top;
-				if (this != self.innerNode[0] && top >= _bottom)
+				if(this != self.innerNode[0] && top >= _bottom && ["fixed", "absolute"].indexOf(getComputedStyle(this).position) == -1)
 				{
 					self.bottomNodes.push($this);
 				}
