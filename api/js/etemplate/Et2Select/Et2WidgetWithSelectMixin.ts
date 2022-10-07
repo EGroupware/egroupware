@@ -153,14 +153,10 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
 				.then(() =>
 				{
-					temp_target.querySelectorAll(":scope > *").forEach((item) =>
-					{
-						// Avoid duplicate error
-						if(!this._optionTargetNode.querySelector("[value='" + item.value.replace(/'/g, '\\\'') + "']"))
-						{
-							this._optionTargetNode.appendChild(item);
-						}
-					});
+					this._optionTargetNode.replaceChildren(
+						...Array.from(temp_target.querySelectorAll(":scope > *")),
+						...Array.from(this._optionTargetNode.querySelectorAll(":scope > [slot]"))
+					);
 					if(typeof this.handleMenuSlotChange == "function")
 					{
 						this.handleMenuSlotChange();
