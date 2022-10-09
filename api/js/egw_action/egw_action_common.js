@@ -371,7 +371,7 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		this.fnct = function()
 		{
-			return egw.applyFunc(_value.substring(11), arguments, this);
+			return egw.applyFunc(_value.substring(11), arguments);
 		}
 	}
 	else if (this.acceptedTypes.indexOf(typeof _value) >= 0)
