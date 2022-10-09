@@ -112,26 +112,11 @@ class timesheet_ui extends timesheet_bo
 				{
 					if (!empty($event['tse_app']) && $event['tse_app'] !== TIMESHEET_APP && !empty($event['tse_app_id']))
 					{
-						// existing timesheets can be directly linked (takes care to not link multiple times)
-						if ($this->data['ts_id'])
+						if (!isset($this->data['link_to']['to_id']))
 						{
-							Api\Link::link(TIMESHEET_APP, $this->data['ts_id'], $event['tse_app'], $event['tse_app_id']);
+							$this->data['link_to']['to_id'] = $this->data['ts_id'] ?? [];
 						}
-						// new timesheets will be linked on saving (need to check to not add multiple times)
-						else
-						{
-							if (!isset($this->data['link_to']['to_id']))
-							{
-								$this->data['link_to']['to_id'] = [];
-							}
-							if (!in_array($app_id = [
-								'to_app' => $event['tse_app'],
-								'to_id'  => $event['tse_app_id'],
-							], $this->data['link_to']['to_id']))
-							{
-								$this->data['link_to']['to_id'][] = $app_id;
-							}
-						}
+						Api\Link::link(TIMESHEET_APP, $this->data['link_to']['to_id'], $event['tse_app'], $event['tse_app_id']);
 					}
 				}
 			}

@@ -1294,6 +1294,17 @@ class infolog_ui
 					)
 				)
 			);
+			// if specific timer is NOT disabled, allow to book further time on existing sheets
+			$config = Api\Config::read('timesheet');
+			if (!in_array('specific', $config['disable_timer'] ?? []))
+			{
+				$actions['timesheet']['children']['timer'] = array(
+					'icon' => 'timesheet/navbar',
+					'caption' => 'Start timer',
+					'onExecute' => 'javaScript:app.timesheet.egw.start_timer',
+					'allowOnMultiple' => false,
+				);
+			}
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
 		{

@@ -130,7 +130,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity s
 skip record	timesheet	en	Skip record
 start	timesheet	en	Start
 start & stop timer	common	en	Start & stop timer
-start timer	timesheet	en	Start timer
+start timer	common	en	Start timer
 starttime	timesheet	en	Start time
 starttime has to be before endtime !!!	timesheet	en	Start time has to be before endtime!
 status	timesheet	en	Status

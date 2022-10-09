@@ -94,9 +94,9 @@ class Events extends Api\Storage\Base
 			($action === 'start' ? self::START : ($action === 'stop' ? self::STOP : self::PAUSE));
 
 		$app = $id = $ts_id = null;
-		if ($timer === 'specific' && !empty($state['app_id']))
+		if ($timer === 'specific' && !empty($state['specific']['app_id']))
 		{
-			list($app, $id) = explode('::', $state['app_id'], 2);
+			list($app, $id) = explode('::', $state['specific']['app_id'], 2);
 			if ($app === self::APP)
 			{
 				$ts_id = $id;
@@ -127,7 +127,8 @@ class Events extends Api\Storage\Base
 				Api\Json\Response::get()->message(lang('Error storing working time').': '.$e->getMessage(), 'error');
 			}
 		}
-		return $this->data['tse_id'];
+		// return (new) tse_id
+		Api\Json\Response::get()->data($this->data['tse_id']);
 	}
 
 	/**

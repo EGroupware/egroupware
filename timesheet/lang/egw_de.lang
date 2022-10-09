@@ -130,7 +130,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengen
 skip record	timesheet	de	Eintrag überspringen
 start	timesheet	de	Start
 start & stop timer	common	de	Zeitnehmer starten & stoppen
-start timer	timesheet	de	Zeitnehmer starten
+start timer	common	de	Zeitnehmer starten
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
 status	timesheet	de	Status

@@ -1105,6 +1105,27 @@ class calendar_uilist extends calendar_ui
 				'allowOnMultiple' => 'only',
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
 			);
+			// if specific timer is NOT disabled, allow to book further time on existing sheets
+			$config = Api\Config::read('timesheet');
+			if (!in_array('specific', $config['disable_timer'] ?? []))
+			{
+				$actions['timesheet'] = [
+					'icon' => 'timesheet/navbar',
+					'caption' => 'Timesheet',
+					'group' => $group,
+					'children' => array_map(static function($child) { unset($child['group']); return $child; }, [
+						'timesheet-interactive' => ['caption' => 'Add']+$actions['timesheet'],
+						'timesheet-add' => ['caption' => 'Add']+$actions['timesheet-add'],
+						'timer' => [
+							'icon' => 'timesheet/navbar',
+							'caption' => 'Start timer',
+							'onExecute' => 'javaScript:app.timesheet.egw.start_timer',
+							'allowOnMultiple' => false,
+						],
+					]),
+				];
+				unset($actions['timesheet-add']);
+			}
 		}
 		$actions['ical'] = array(
 			'icon' => 'ical',

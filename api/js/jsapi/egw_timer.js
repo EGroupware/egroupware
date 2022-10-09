@@ -93,9 +93,10 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 *
 	 * @param {string} _action
 	 * @param {string} _time
+	 * @param {string} _app_id
 	 * @throws string error-message
 	 */
-	function timerAction(_action, _time)
+	function timerAction(_action, _time, _app_id)
 	{
 		switch(_action)
 		{
@@ -126,9 +127,14 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				stopTimer(specific, false, _time);
 				break;
 		}
+		// set _app_id on timer, if specified
+		if (_app_id && _action.substring(0, 8) === 'specific')
+		{
+			specific.app_id = _app_id;
+		}
 		// persist state
 		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) => {
-			if (_action.substring(8) === 'specific')
+			if (_action.substring(0, 8) === 'specific')
 			{
 				specific.id = tse_id;
 			}
@@ -247,9 +253,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * @param object _timer
 	 * @param string|Date|undefined _start to initialise with time different from current time
 	 * @param number|undefined _offset to set an offset
-	 * @param string|undefined _app_id
 	 */
-	function startTimer(_timer, _start, _offset, _app_id)
+	function startTimer(_timer, _start, _offset)
 	{
 		// update _timer state object
 		if (_start)
@@ -266,7 +271,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		}
 		_timer.offset = 0;	// it's now set in start-time
 		_timer.paused = false;
-		_timer.app_id = _app_id;
+		_timer.app_id = undefined;
 
 		// update now
 		update();
@@ -350,7 +355,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						{
 							if (specific.paused)
 							{
-								startTimer(specific, undefined, undefined, _senders[0].id);
+								timerAction('specific-start', undefined, _senders[0].id);
 							}
 							else
 							{
@@ -364,7 +369,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 					Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.QUESTION_MESSAGE, undefined, egw);
 				return;
 			}
-			startTimer(specific, undefined, undefined, _senders[0].id);
+			timerAction('specific-start', undefined, _senders[0].id);
 		},
 
 		/**
