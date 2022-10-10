@@ -1225,7 +1225,6 @@ abstract class Framework extends Framework\Extra
 		// array of topmenu info items (orders of the items matter)
 		$topmenu_info_items = [
 			'user_avatar' => $this->_user_avatar_menu(),
-			'logout' => (Header\UserAgent::mobile()) ? self::_logout_menu() : null,
 			'update' => ($update = Framework\Updates::notification()) ? $update : null,
 			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
 			'quick_add' => $vars['quick_add'],
