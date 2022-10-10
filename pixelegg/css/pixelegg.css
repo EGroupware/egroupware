@@ -4552,7 +4552,7 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
-  padding-top: 7px;
+  border-top: 7px solid transparent;
   transition: none;
   width: -webkit-fill-available;
   width: -moz-available;
