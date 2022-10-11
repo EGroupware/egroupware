@@ -903,7 +903,7 @@ class infolog_ui
 			if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']) && !$this->called_by)
 			{
 				$values['nm']['filter'] = $_GET['filter'] && $_GET['filter'] != 'default' ? $_GET['filter'] :
-					$this->prefs['defaultFilter'];
+					($this->prefs['defaultFilter'] == 'none' ? '' : $this->prefs['defaultFilter']);
 			}
 			if (!isset($values['nm']['order']) || !$values['nm']['order'])
 			{
