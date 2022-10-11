@@ -169,6 +169,11 @@ class preferences_settings
 
 		$sel_options = $readonlys = null;
 		$data = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
+		if($data['appname'] == 'common')
+		{
+			// 'common' is not in the options list, we use the empty label for common
+			$data['appname'] = '';
+		}
 		$preserve['appname'] = $preserve['old_appname'] = $data['appname'];
 		$preserve['type'] = $preserve['old_type'] = $data['type'];
 		$preserve['is_admin'] = $is_admin;
