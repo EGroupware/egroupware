@@ -1314,14 +1314,23 @@ export class filemanagerAPP extends EgwApp
 	 * Check if a row can have the Hidden Uploads action
 	 * Needs to be a directory
 	 */
-	hidden_upload_enabled(_action: egwAction, _senders: egwActionObject[])
+	hidden_upload_enabled(_action : egwAction, _senders : egwActionObject[])
 	{
-		if (_senders[0].id == 'nm') return false;
+		if(_senders[0].id == 'nm')
+		{
+			return false;
+		}
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let readonly = (data?.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		return (!_senders[0].id || data.data.is_dir && !readonly);
+	}
+
+	hiddenUploadOnOne(event)
+	{
+		let path = event.data?.options?.uploadPath || this.get_path() + "/Upload";
+		this.upload(event, 1, '/Shared dir/Upload', 'rename', 'EGroupware\\Filemanager\\Sharing\\HiddenUpload::ajax_action');
 	}
 
 	/**
