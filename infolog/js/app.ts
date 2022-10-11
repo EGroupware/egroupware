@@ -324,12 +324,7 @@ class InfologApp extends EgwApp
 	show_details(show, dom_node)
 	{
 		// Show / hide descriptions
-        egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + ".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
-		if (egwIsMobile())
-		{
-			var $select = jQuery('.infoDetails');
-			(show)? $select.each(function(i,e){jQuery(e).hide();}): $select.each(function(i,e){jQuery(e).show();});
-		}
+        egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + (egwIsMobile()? ".infoDescRow" : ".infoDes"),"display:" + (show ? "block;" : "none;"));
 	}
 
 	/**
