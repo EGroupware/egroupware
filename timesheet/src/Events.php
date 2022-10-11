@@ -201,11 +201,13 @@ class Events extends Api\Storage\Base
 					'offset' => 0,
 					'start' => null,
 					'paused' => false,
+					'last' => null,
 				],
 				'specific' => [
 					'offset' => 0,
 					'start' => null,
 					'paused' => false,
+					'last' => null,
 				],
 			];
 			foreach(self::getInstance()->search('', false, 'tse_id', '', '', false, 'AND', false, [
@@ -244,6 +246,10 @@ class Events extends Api\Storage\Base
 				{
 					$timer['start'] = (new Api\DateTime($timer['start'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
 				}
+				if (isset($timer['last']))
+				{
+					$timer['last'] = (new Api\DateTime($timer['last'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
+				}
 			}
 			// send timer configuration to client-side
 			$config = Api\Config::read(self::APP);
@@ -280,6 +286,7 @@ class Events extends Api\Storage\Base
 		{
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
+		$timer['last'] = $row['tse_time'];
 		return $time ?? null;
 	}
 

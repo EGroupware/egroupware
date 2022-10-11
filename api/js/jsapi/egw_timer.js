@@ -55,6 +55,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		{
 			stopTimer(overall);
 		}
+		overall.last = _state.overall.last ? new Date(_state.overall.last) : undefined;
 
 		// initiate specific timer, only if running or paused
 		if (_state.specific?.start || _state.specific?.paused)
@@ -70,6 +71,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				stopTimer(specific);
 			}
 		}
+		specific.last = _state.specific.last ? new Date(_state.specific.last) : undefined;
 	}
 
 	/**
@@ -256,15 +258,14 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function startTimer(_timer, _start, _offset)
 	{
+		const time = _start ? new Date(_start) : new Date();
+		if (_timer.last && time.valueOf() < _timer.last.valueOf())
+		{
+			throw egw.lang('Start-time can not be before last stop- or pause-time %1!', formatUTCTime(_timer.last));
+		}
 		// update _timer state object
-		if (_start)
-		{
-			_timer.start = new Date(_start);
-		}
-		else if(typeof _timer.start === 'undefined')
-		{
-			_timer.start = new Date();
-		}
+		_timer.last = _timer.start = time;
+
 		if (_offset || _timer.offset && _timer.paused)
 		{
 			_timer.start.setMilliseconds(_timer.start.getMilliseconds()-(_offset || _timer.offset));
@@ -296,17 +297,29 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	function stopTimer(_timer, _pause, _time)
 	{
 		const time = _time ? new Date(_time) : new Date();
+		if (time.valueOf() < _timer.last.valueOf())
+		{
+			const last_time = formatUTCTime(_timer.last);
+			if (_timer.start)
+			{
+				throw egw.lang('Stop- or pause-time can not be before the start-time %1!', last_time);
+			}
+			else
+			{
+				throw egw.lang('Start-time can not be before last stop- or pause-time %1!', last_time);
+			}
+		}
 		// update _timer state object
 		if (_timer.start)
 		{
 			if (time.valueOf() < _timer.start.valueOf())
 			{
-				throw egw.lang('Stop- or pause-time can not be before the start-time!');
 			}
 			_timer.offset = time.valueOf() - _timer.start.valueOf();
 			_timer.start = undefined;
 		}
 		_timer.paused = _pause || false;
+		_timer.last = time;
 		// update timer display
 		updateTimer(timer, _timer);
 
@@ -331,6 +344,50 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			window.clearInterval(timer_interval);
 			timer_interval = undefined;
 		}
+	}
+
+	/**
+	 * Format a time according to user preference
+	 *
+	 * Cant import from DateTime.ts, gives an error ;)
+	 *
+	 * @param {Date} date
+	 * @param {Object|undefined} options object containing attribute timeFormat=12|24, default user preference
+	 * @returns {string}
+	 */
+	function formatTime(date, options)
+	{
+		if(!date || !(date instanceof Date))
+		{
+			return "";
+		}
+		let _value = '';
+
+		let timeformat = options?.timeFormat || egw.preference("timeformat") || "24";
+		let hours = (timeformat == "12" && date.getUTCHours() > 12) ? (date.getUTCHours() - 12) : date.getUTCHours();
+		if(timeformat == "12" && hours == 0)
+		{
+			// 00:00 is 12:00 am
+			hours = 12;
+		}
+
+		_value = (timeformat == "24" && hours < 10 ? "0" : "") + hours + ":" +
+			(date.getUTCMinutes() < 10 ? "0" : "") + (date.getUTCMinutes()) +
+			(timeformat == "24" ? "" : (date.getUTCHours() < 12 ? " am" : " pm"));
+
+		return _value;
+	}
+
+	/**
+	 * Format a UTC time according to user preference
+	 *
+	 * @param {Date} date
+	 * @returns {string}
+	 */
+	function formatUTCTime(date)
+	{
+		// eT2 operates in user-time, while timers here always operate in UTC
+		return formatTime(new Date(date.valueOf() - egw.getTimezoneOffset() * 60000));
 	}
 
 	return {
