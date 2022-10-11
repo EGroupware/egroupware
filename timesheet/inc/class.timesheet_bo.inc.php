@@ -13,6 +13,7 @@
 use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
+use EGroupware\Timesheet\Events;
 
 if (!defined('TIMESHEET_APP'))
 {
@@ -701,6 +702,7 @@ class timesheet_bo extends Api\Storage
 		}
 		elseif (($ret = parent::delete($keys)) && $ts_id)
 		{
+			(new Events())->delete($ts_id);
 			// delete all links to timesheet entry $ts_id
 			Link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
@@ -722,6 +724,7 @@ class timesheet_bo extends Api\Storage
 		if (!$new_owner)
 		{
 			Link::unlink(0, TIMESHEET_APP, '', $account_id);
+			(new Events())->delete(['ts_id' => parent::delete(['ts_owner' => $account_id], true)]);
 			parent::delete(array('ts_owner' => $account_id));
 		}
 		else
