@@ -419,6 +419,7 @@ prevent deleting of contacts	admin	de	Das Löschen von Adressen verhindern
 private address	addressbook	de	Privatadresse
 private custom fields	addressbook	de	Private Benutzerdefinierte Felder
 public key	addressbook	de	öffentlicher Schlüssel
+public sharing url	addressbook	de	Geteilt mit Link
 publish into groups:	addressbook	de	In folgenden Gruppen veröffentlichen:
 read a list / search for entries.	addressbook	de	Lese die Liste / Suche nach Einträgen
 read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.

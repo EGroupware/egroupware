@@ -3118,7 +3118,7 @@ abstract class Merge
 			}
 			else
 			{
-				$placeholders['customfields'][] = [
+				$placeholders['custom fields'][] = [
 					'value' => $this->prefix($prefix, '#' . $name, '{'),
 					'label' => $field['label'] . ($field['type'] == 'select-account' ? '*' : '')
 				];
@@ -3294,7 +3294,7 @@ abstract class Merge
 			else
 			{
 				$new_list[] = [
-					'title'        => ($title_prefix ? $title_prefix . ': ' : '') . $group_title,
+					'title'        => ($title_prefix ? lang($title_prefix) . ': ' : '') . lang($group_title),
 					'placeholders' => $group_placeholders
 				];
 			}

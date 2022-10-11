@@ -419,6 +419,7 @@ prevent deleting of contacts	admin	en	Prevent deleting of contacts
 private address	addressbook	en	Private address
 private custom fields	addressbook	en	Private custom fields
 public key	addressbook	en	Public key
+public sharing url	addressbook	en	Public sharing URL
 publish into groups:	addressbook	en	Publish into groups:
 read a list / search for entries.	addressbook	en	Read a list / search for entries.
 read a list of entries.	addressbook	en	Read a list of entries.

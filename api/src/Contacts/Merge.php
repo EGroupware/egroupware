@@ -203,7 +203,7 @@ class Merge extends Api\Storage\Merge
 					$group = 'private';
 					break;
 				case 'tel_work':
-					$group = 'phone';
+					$group = 'phone numbers';
 					break;
 				case 'email':
 				case 'email_home':
@@ -232,16 +232,16 @@ class Merge extends Api\Storage\Merge
 		// Correctly formatted address by country / preference
 		$placeholders['business'][] = [
 			'value' => $this->prefix($prefix, 'adr_one_formatted', '{'),
-			'label' => "Formatted business address"
+			'label' => lang('Formatted business address')
 		];
 		$placeholders['private'][] = [
 			'value' => $this->prefix($prefix, 'adr_two_formatted', '{'),
-			'label' => "Formatted private address"
+			'label' => lang('Formatted private address')
 		];
 
 		$placeholders['EPL only'][] = [
 			'value' => $this->prefix($prefix, 'share', '{'),
-			'label' => 'Public sharing URL'
+			'label' => lang('Public sharing URL')
 		];
 
 		$this->add_customfield_placeholders($placeholders, $prefix);
