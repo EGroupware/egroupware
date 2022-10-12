@@ -4573,7 +4573,7 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
-  padding-top: 7px;
+  border-top: 7px solid transparent;
   transition: none;
   width: -webkit-fill-available;
   width: -moz-available;
@@ -4612,6 +4612,9 @@ span.overlayContainer img.overlay {
   border-right: 1px solid #bfc0bf;
   border-bottom: 4px solid white !important;
   border-top: 4px solid transparent;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  max-width: fit-content !important;
   background-color: #ffffff;
   background-image: none !important;
 }
@@ -6960,8 +6963,7 @@ img.et2_button_icon[src*="svg"]:hover {
     width: 50px;
     height: 50px;
     float: left;
-    background-image: url('../../api/templates/default/images/cancelled.png');
-    /*url(../../api/templates/default/images/topmenu_items/mobile/menu_active.png);*/
+    background-image: url('../../api/templates/default/images/cancelled.svg');
     -webkit-filter: contrast(2);
     background-repeat: no-repeat;
     z-index: 1000;
@@ -6989,7 +6991,7 @@ img.et2_button_icon[src*="svg"]:hover {
     margin-left: 60px;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout a#topmenu_logout {
-    background-image: url(../../api/templates/default/images/logout.png);
+    background-image: url(../../api/templates/default/images/logout.svg);
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
@@ -7037,7 +7039,7 @@ img.et2_button_icon[src*="svg"]:hover {
     box-shadow: none;
   }
   body #egw_fw_basecontainer div#egw_fw_menu {
-    background-image: url(../../api/templates/default/images/topmenu_items/mobile/menu_active.png);
+    background-image: url(../../api/templates/default/images/topmenu_items/mobile/menu_active.svg);
     cursor: pointer;
     position: fixed;
     width: 50px;
@@ -9318,15 +9320,13 @@ table.egwGridView_grid img.et2_appicon {
   body .entry_id {
     position: absolute;
     right: 10px;
-    top: 15px;
-  }
-  body .entry_id::before {
-    content: "#";
+    top: 6px;
     color: white;
     font-size: 12pt;
     font-weight: bold;
   }
-  body .entry_id span {
+  body .entry_id::before {
+    content: "#";
     color: white;
     font-size: 12pt;
     font-weight: bold;
