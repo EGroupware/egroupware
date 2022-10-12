@@ -1330,7 +1330,7 @@ export class filemanagerAPP extends EgwApp
 	hiddenUploadOnOne(event)
 	{
 		let path = event.data?.options?.uploadPath || this.get_path() + "/Upload";
-		this.upload(event, 1, '/Shared dir/Upload', 'rename', 'EGroupware\\Filemanager\\Sharing\\HiddenUpload::ajax_action');
+		this.upload(event, 1, path, 'rename', 'EGroupware\\Filemanager\\Sharing\\HiddenUpload::ajax_action');
 	}
 
 	/**
