@@ -562,7 +562,7 @@ class Sharing
 			Vfs::clearstatcache();
 
 			$webdav_server = new Vfs\WebDAV();
-			$webdav_server->ServeRequest(Vfs::concat('/', $this->share['share_token']));
+			$webdav_server->ServeRequest('/');
 			return;
 		}
 		return $this->get_ui();
