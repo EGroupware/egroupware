@@ -14,7 +14,7 @@
   #infolog-index_nm .gridCont_0_div_col_0.innerContainer {
     min-width: auto;
   }
-  div.infoDescRow {
+  .infoDescRow {
     height: 32px;
     font-size: 10pt;
     max-width: 99%;
@@ -116,4 +116,3 @@
     filter: invert(1) brightness(2.5);
   }
 }
-/*# sourceMappingURL=app.css.map */
