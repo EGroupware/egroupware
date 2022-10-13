@@ -29,7 +29,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2Select)
 				border-left: 6px solid var(--category-color, transparent);
 			}
 			/* Border on the (single) selected value */
-			.select--standard .select__control {
+			:host(.hasValue:not([multiple])) .select--standard .select__control {
 				border-left: 6px solid var(--sl-input-border-color);
 			}			
 			`
