@@ -2055,7 +2055,7 @@ export class CalendarApp extends EgwApp
 		this.quick_add = options;
 
 		// Open dialog to use as target
-		let add_dialog = Et2Dialog.show_dialog(null, '', 'Add new event', null, [], Et2Dialog.PLAIN_MESSAGE, this.egw);
+		let add_dialog = Et2Dialog.show_dialog(null, '', 'Add new event', null, [], Et2Dialog.PLAIN_MESSAGE, "", this.egw);
 		add_dialog.id = "quick_add";
 		// Position by the event
 		if(event)

@@ -1362,7 +1362,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						},
 						(!event_data.is_private ? event_data['title'] : egw.lang('private')) + "\n" +
 						egw.lang("Do you want to edit this event as an exception or the whole series?"),
-						"This event is part of a series", {}, buttons, Et2Dialog.QUESTION_MESSAGE
+						"This event is part of a series", {}, buttons, Et2Dialog.QUESTION_MESSAGE,
+						"", egw
 					);
 				}
 				else
