@@ -47,6 +47,7 @@ export class Et2LinkSearch extends Et2Select
 		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search";
 		this.clearable = true;
 		this.hoist = true;
+		this.placeholder = this.getAttribute("placeholder") || this.egw().lang("search");
 	}
 
 	get _appNode() : Et2LinkAppSelect
@@ -57,9 +58,8 @@ export class Et2LinkSearch extends Et2Select
 	/**
 	 * Override parent to do nothing - option is often not in select options
 	 *
-	 * @private
 	 */
-	private fix_bad_value()
+	protected fix_bad_value()
 	{}
 
 	protected remoteQuery(search : string, options : object)
