@@ -454,7 +454,7 @@ function expose(Base) {
                 position: "right bottom,right-50 bottom-10",
                 value: {
                     content: {
-                        src: mediaContent.download_href
+                        src: mediaContent.download_href || mediaContent.href
                     }
                 },
                 resizable: false,
