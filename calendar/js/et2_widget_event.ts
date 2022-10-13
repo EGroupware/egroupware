@@ -529,7 +529,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 					nodeName: "ET2-SELECT-CAT_RO",
 					egw: () => this.egw()
 				}, "select-cat", ",,,calendar", false) || [];
-				cat_label = options.find((o) => o.value = this.options.value.category)?.label || "";
+				cat_label = options.find((o) => o.value == this.options.value.category)?.label || "";
 			}
 
 				// Activate links in description
