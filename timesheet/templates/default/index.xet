@@ -72,29 +72,29 @@
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
-					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
-					<vbox>
-						<link id="${row}[ts_link]" no_lang="1"/>
-						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
-						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
-					</vbox>
-					<menulist class="noWrap">
-						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
-					</menulist>
-					<date-duration id="${row}[ts_duration]" readonly="true" display_format="h" select_unit="true" align="right"/>
-					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
-					<description id="${row}[ts_unitprice]" no_lang="1"/>
-					<textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
-					<menulist class="$cont[ownerClass]">
-						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
-					</menulist>
-					<date-time id="${row}[ts_created]" readonly="true"/>
-					<description id="${row}[ts_id]"/>
-					<menulist>
-						<menupopup id="${row}[ts_status]" readonly="true"/>
-					</menulist>
-					<customfields-list id="$row" readonly="true"/>
-				</row>
+                    <date-time id="${row}[ts_start]" readonly="true" options=",8"/>
+                    <vbox>
+                        <link id="${row}[ts_link]" no_lang="1"/>
+                        <description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
+                        <description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
+                    </vbox>
+                    <menulist class="noWrap">
+                        <menupopup type="select-cat" id="${row}[cat_id]" readonly="true"/>
+                    </menulist>
+                    <date-duration id="${row}[ts_duration]" readonly="true" display_format="hm" select_unit="false" align="right"/>
+                    <textbox type="float" id="${row}[ts_quantity]" no_lang="1" readonly="true" precision="3"/>
+                    <description id="${row}[ts_unitprice]" no_lang="1"/>
+                    <textbox type="float" id="${row}[ts_total]" no_lang="1" readonly="true" precision="2"/>
+                    <menulist class="$cont[ownerClass]">
+                        <menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
+                    </menulist>
+                    <date-time id="${row}[ts_created]" readonly="true"/>
+                    <description id="${row}[ts_id]"/>
+                    <menulist>
+                        <menupopup id="${row}[ts_status]" readonly="true"/>
+                    </menulist>
+                    <customfields-list id="$row" readonly="true"/>
+                </row>
 			</rows>
 		</grid>
 	</template>
