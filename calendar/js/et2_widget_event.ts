@@ -518,9 +518,9 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 			const end = parent.date_helper(this.options.value.end);
 
 			const times = !this.options.value.multiday ?
-						  '<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>:' + timespan :
-						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>:' + start + ' ' +
-							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>:' + end;
+						  '<span class="calendar_calEventLabel">' + this.egw().lang('Time') + '</span>: ' + timespan :
+						  '<span class="calendar_calEventLabel">' + this.egw().lang('Start') + '</span>: ' + start + ' ' +
+							  '<span class="calendar_calEventLabel">' + this.egw().lang('End') + '</span>: ' + end;
 			let cat_label : (string | string[]) = '';
 			if(this.options.value.category)
 			{
@@ -547,8 +547,8 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						let location_node = document.createElement("span");
 						location_node.className = "calendar_calEventLabel";
 						et2_insertLinkText(et2_activateLinks(
-								this.egw().lang('Location') + ':' +
-								egw.htmlspecialchars(this.options.value.location)), location_node, '_blank');
+							this.egw().lang('Location') + ': ' +
+							egw.htmlspecialchars(this.options.value.location)), location_node, '_blank');
 						location += location_node.outerHTML;
 
 						if (this.options.value['##videoconference'])
@@ -581,19 +581,19 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				}
 
 				return '<div class="calendar_calEventTooltip ' + this._status_class() + ' ' + this.options.class +
-						'" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
-						'<div class="calendar_calEventHeaderSmall">' +
-						'<span style="color:' + header_color + '">' + timespan + '</span>' +
-						this.icons[0].outerHTML +
-						'</div>' +
-						'<div class="calendar_calEventBody">' +
-						'<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
-						description_node.outerHTML +
-						'<p style="margin: 2px 0px;">' + times + '</p>' +
-						location +
-						(cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ':</h2>' + cat_label + '</p>' : '') +
-						'<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Participants') + ':</h2><br />' +
-						participants + '</p>' + this._participant_summary(this.options.value.participants) +
+					'" style="border-color: ' + border + '; background-color: ' + bg_color + ';">' +
+					'<div class="calendar_calEventHeaderSmall">' +
+					'<span style="color:' + header_color + '">' + timespan + '</span>' +
+					this.icons[0].outerHTML +
+					'</div>' +
+					'<div class="calendar_calEventBody">' +
+					'<h1 class="calendar_calEventTitle">' + egw.htmlspecialchars(this.options.value.title) + '</h1><br>' +
+					description_node.outerHTML +
+					'<p style="margin: 2px 0px;">' + times + '</p>' +
+					location +
+					(cat_label ? '<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Category') + ': </h2>' + cat_label + '</p>' : '') +
+					'<p><h2 class="calendar_calEventLabel">' + this.egw().lang('Participants') + ': </h2><br />' +
+					participants + '</p>' + this._participant_summary(this.options.value.participants) +
 						'</div>' +
 						'</div>';
 		}
