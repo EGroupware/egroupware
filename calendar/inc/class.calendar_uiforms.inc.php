@@ -1906,7 +1906,12 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['exception_label'] = $this->bo->long_date(max($preserved['actual_date'], $event['start']));
 		}
-		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(Acl::DELETE,$event);
+		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(Acl::DELETE, $event);
+		if($readonlys['action'])
+		{
+			// Hide action entirely, not just readonly
+			$content['action_class'] = 'hideme';
+		}
 
 		if (!$event['id'] || $this->bo->check_perms(Acl::EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{

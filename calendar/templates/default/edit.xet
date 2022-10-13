@@ -285,7 +285,8 @@
 			<button statustext="apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1" onclick="app.calendar.move_edit_series"/>
 			<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 			<menulist>
-				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
+				<menupopup statustext="Execute a further action for this entry" id="action"
+                           onchange="app.calendar.actions_change" empty_label="Actions..." class="@action_class"/>
 			</menulist>
 			<checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"/>
 			<buttononly statustext="Find free timeslots where the selected participants are available for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" background_image="1" span="all"/>
