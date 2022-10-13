@@ -224,7 +224,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			sep = now % 2 ? ' ' : ':';
 			diff = Math.round((now - Math.round(_timer.start.valueOf() / 1000.0)) / 60.0);
 		}
-		_node.textContent = sprintf('%d%s%02d', Math.round(diff / 60), sep, diff % 60);
+		_node.textContent = sprintf('%d%s%02d', (diff / 60)|0, sep, diff % 60);
 		// set CSS classes accordingly
 		_node.classList.toggle('running', !!_timer.start);
 		_node.classList.toggle('paused', _timer.paused || false);
