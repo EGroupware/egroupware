@@ -1028,7 +1028,10 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 
 #mail-index_nm .mail.row et2-url-email_ro {width: fit-content}
 #mail-index_nm  .et2_label.et2_vfs {text-align: center}
-
+.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr[class*="label"].row_category td:first-child>div,
+.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.flagged.row_category td:first-child>div{
+	margin-left: -1px;
+}
 .et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child>div {
 	margin-left: 0px;
 }
