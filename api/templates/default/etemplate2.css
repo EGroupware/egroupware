@@ -3872,6 +3872,11 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover {
 .vfs-select-container div.et2_file {
     width: 86px;
 }
+.vfs-select-container div.et2_file et2-button.et2_file_span.et2_file_ro {
+    min-width: initial;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+}
 
 .vfs-select-container div.et2_file .progress {
     width: 252px;
