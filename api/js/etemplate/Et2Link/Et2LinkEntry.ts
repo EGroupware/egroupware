@@ -356,7 +356,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 		{
 			value.id = String(val);
 		}
-		else if(typeof val === "object")	// object with attributes: app, id, title
+		else if(typeof val === "object" && val !== null)	// object with attributes: app, id, title
 		{
 			value = (<LinkInfo>val);
 		}
