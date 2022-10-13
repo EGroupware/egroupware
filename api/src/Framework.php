@@ -1226,6 +1226,7 @@ abstract class Framework extends Framework\Extra
 		$topmenu_info_items = [
 			'user_avatar' => $this->_user_avatar_menu(),
 			'update' => ($update = Framework\Updates::notification()) ? $update : null,
+			'logout' => (Header\UserAgent::mobile()) ? self::_logout_menu() : null,
 			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
 			'quick_add' => $vars['quick_add'],
 			'print_title' => $this->_print_menu(),
@@ -1275,7 +1276,7 @@ abstract class Framework extends Framework\Extra
 		// set topmenu info items
 		foreach ($topmenu_info_items as $id => $content)
 		{
-			if (!$content || (in_array($id, ['search', 'quick_add', 'update', 'darkmode']) && (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
+			if (!$content || (in_array($id, ['search', 'quick_add', 'update', 'darkmode', 'print_title']) && (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')))
 			{
 				continue;
 			}
