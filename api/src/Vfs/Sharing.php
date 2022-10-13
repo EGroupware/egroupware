@@ -104,9 +104,11 @@ class Sharing extends \EGroupware\Api\Sharing
 	public static function setup_share($keep_session, &$share)
 	{
 		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
-		if (empty($GLOBALS['egw_info']['server']['vfs_fstab']) || count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
+		if(empty($GLOBALS['egw_info']['server']['vfs_fstab']) || count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1 ||
+			// anonymous always needs a reset since we clear normal fstab
+			$GLOBALS['egw_info']['user']['account_lid'] == 'anonymous')
 		{
-			unset($GLOBALS['egw_info']['server']['vfs_fstab']);	// triggers reset of fstab in mount()
+			unset($GLOBALS['egw_info']['server']['vfs_fstab']);    // triggers reset of fstab in mount()
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 			Vfs::clearstatcache();
 		}
