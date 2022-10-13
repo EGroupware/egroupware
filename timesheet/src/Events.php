@@ -265,6 +265,10 @@ class Events extends Api\Storage\Base
 	/**
 	 * Evaluate events
 	 *
+	 * Returned time and offset/duration are always rounded to full minutes, independent of their actual unit!
+	 * This is done, as we only show full minutes in the UI, and we want to avoid seconds in timestamps
+	 * leading to unexpected results in the minutes display.
+	 *
 	 * @param array& $timer array with keys 'start', 'offset' and 'paused'
 	 * @param array $row
 	 * @return int? time in ms for stop or pause events, null for start
@@ -278,7 +282,7 @@ class Events extends Api\Storage\Base
 		}
 		elseif ($timer['start'])
 		{
-			$timer['offset'] += $time = 1000 * ($row['tse_time']->getTimestamp() - $timer['start']->getTimestamp());
+			$timer['offset'] += $time = 60000 * round(($row['tse_time']->getTimestamp() - $timer['start']->getTimestamp())/60);
 			$timer['start'] = null;
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
