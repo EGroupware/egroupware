@@ -855,7 +855,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		{
 			// Check to see if we're in a nextmatch, do magic
 			let nm = this.find_nextmatch(this);
-			if(nm)
+			if(nm && !nm.update_in_progress)
 			{
 				// Check to see if we're near the end, or maybe some pagination
 				// would be good.
