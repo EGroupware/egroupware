@@ -8,6 +8,7 @@ all projects	timesheet	en	All projects
 and its members	timesheet	en	And its members
 applies the changes	timesheet	en	Applies the changes
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!
+ask to start and stop working time with session	timesheet	en	Ask to start and stop working time with session
 both: allow to use projectmanager and free project-names	admin	en	Both: allow to use Project Manager and free project names
 by	timesheet	en	by
 category for 'working time'	admin	en	Category for 'Working time'
@@ -30,6 +31,8 @@ determines the order the fields are displayed	timesheet	en	Determines the order 
 directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
 disable timers	timesheet	en	Disable timers
 do you want to associate it with the selected %1 entry?	common	en	Do you want to associate it with the selected %1 entry?
+do you want to start your working time?	common	en	Do you want to start your working time?
+do you want to stop your working time?	common	en	Do you want to stop your working time?
 each value is a line like <id>[=<label>]	timesheet	en	Each value is a line like <id>[=<label>]
 edit status	common	en	Edit status
 edit this entry	timesheet	en	Edit this entry
@@ -54,6 +57,7 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 favorites	timesheet	en	Favorites
 field must not be empty !!!	timesheet	en	Field must not be empty!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
+forgot to switch off working time?	common	en	Forgot to switch off working time?
 full: use only projectmanager	admin	en	Full: use only Project Manager
 general fields:	timesheet	en	General fields:
 global categories	timesheet	en	Global categories
@@ -180,6 +184,7 @@ working time	common	en	Working time
 working time and timer	timesheet	en	Working time and timer
 working time from %1	timesheet	en	Working time from %1
 working time of %1 hours stored	timesheet	en	Working time of %1 hours stored
+would you like to be asked, to start and stop working time, when login in or off	timesheet	en	Would you like to be asked, to start and stop working time, when login in or off
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 yesterday	timesheet	en	Yesterday

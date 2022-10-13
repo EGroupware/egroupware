@@ -8,6 +8,7 @@ all projects	timesheet	de	Alle Projekte
 and its members	timesheet	de	und die Mitglieder
 applies the changes	timesheet	de	Änderungen durchführen
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur die angezeigten Stundenzettel!!
+ask to start and stop working time with session	timesheet	de	Fragen die Arbeitszeit mit der Sitzung zu starten oder stoppen
 both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
 category for 'working time'	admin	de	Kategorie für 'Arbeitszeit'
@@ -30,6 +31,8 @@ determines the order the fields are displayed	timesheet	de	verändert die Reihen
 directory with documents to insert entries	timesheet	de	Ordner mit Dokumenten zum Einfügen.
 disable timers	timesheet	de	Zeitnehmer ausschalten
 do you want to associate it with the selected %1 entry?	common	de	Wollen Sie ihn mit dem ausgewählten %1 Eintrag verbinden?
+do you want to start your working time?	common	de	Wollen Sie Ihre Arbeitszeit starten?
+do you want to stop your working time?	common	de	Wollen Sie Ihre Arbeitszeit beenden?
 each value is a line like <id>[=<label>]	timesheet	de	jeder Wert ist eine Zeile in dem Format <id>[=|label>]
 edit status	common	de	Status bearbeiten
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
@@ -54,6 +57,7 @@ exports entries from your timesheet into a csv file. csv means 'comma separated 
 favorites	timesheet	de	Favoriten
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	de	Für den Seriendruck, wählen die diesen Platzhalter. Fügen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Platzhaltern ein.
+forgot to switch off working time?	common	de	Haben Sie vergessen Ihre Arbeitszeit zu beenden?
 full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general fields:	timesheet	de	Das Löschen von Einträgen verhindern
 global categories	timesheet	de	Globale Kategorien
@@ -180,6 +184,7 @@ working time	common	de	Arbeitszeit
 working time and timer	timesheet	de	Arbeitszeit und Zeitnehmer
 working time from %1	timesheet	de	Arbeitszeit vom %1
 working time of %1 hours stored	timesheet	de	Arbeitszeit von %1 Stunden gespeichert
+would you like to be asked, to start and stop working time, when login in or off	timesheet	de	Wollen Sie gefragt werden die Arbeitszeit to starten oder stoppen, wenn Sie sich an- oder abmelden
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren dürfen gelöschte Einträge endgültig löschen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer dürfen ihre gelöschten Einträge endgültig löschen
 yesterday	timesheet	de	Gestern

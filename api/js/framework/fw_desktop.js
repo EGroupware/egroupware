@@ -402,8 +402,10 @@ import "sortablejs/Sortable.min.js";
 			{
 				$logout.on('click', function(e){
 					e.preventDefault();
-					self.callOnLogout(e);
-					window.framework.redirect(this.href);
+					egw.onLogout_timer().then(() => {
+						self.callOnLogout(e);
+						window.framework.redirect(this.href);
+					});
 				});
 				$logout.addClass('onLogout');
 			}

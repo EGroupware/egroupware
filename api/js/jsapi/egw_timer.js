@@ -96,6 +96,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 * @param {string} _action
 	 * @param {string} _time
 	 * @param {string} _app_id
+	 * @return Promise from egw.request() to wait for state being persisted on server
 	 * @throws string error-message
 	 */
 	function timerAction(_action, _time, _app_id)
@@ -135,7 +136,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			specific.app_id = _app_id;
 		}
 		// persist state
-		egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) => {
+		return egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) => {
 			if (_action.substring(0, 8) === 'specific')
 			{
 				specific.id = tse_id;
@@ -390,6 +391,59 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		return formatTime(new Date(date.valueOf() - egw.getTimezoneOffset() * 60000));
 	}
 
+	/**
+	 * Open the timer dialog to start/stop timers
+	 *
+	 * @param {Array} disable
+	 * @param {string} _title default "Start & stop timer"
+	 */
+	function timerDialog(disable, _title)
+	{
+		// Pass egw in the constructor
+		dialog = new Et2Dialog(egw);
+
+		// Set attributes.  They can be set in any way, but this is convenient.
+		dialog.transformAttributes({
+			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
+			callback: (button_id, value) =>		// return false to prevent dialog closing
+			{
+				if (button_id !== 'close') {
+					try {
+						timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
+							// eT2 operates in user-time, while timers here always operate in UTC
+							value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
+						dialog._overlayContentNode.querySelector('et2-date-time').value = '';
+					}
+					catch (e) {
+						Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
+					}
+					setButtonState();
+					return false;
+				}
+				dialog = undefined;
+			},
+			title: _title || 'Start & stop timer',
+			template: egw.webserverUrl + '/timesheet/templates/default/timer.xet',
+			buttons: [
+				{label: egw.lang("Close"), id: "close", default: true, image: "cancel"},
+			],
+			value: {
+				content: {
+					disable: disable.join(':')
+				},
+				sel_options: {}
+			}
+		});
+		// Add to DOM, dialog will auto-open
+		document.body.appendChild(dialog);
+		dialog.getUpdateComplete().then(() => {
+			// enable/disable buttons based on timer state
+			setButtonState();
+			// update timers in dialog
+			update();
+		});
+	}
+
 	return {
 		/**
 		 * Start timer for given app and id
@@ -449,50 +503,68 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 
 			// bind click handler
 			timer_container.addEventListener('click', (ev) => {
-				// Pass egw in the constructor
-				dialog = new Et2Dialog(egw);
+				timerDialog(state.disable);
+			});
 
-				// Set attributes.  They can be set in any way, but this is convenient.
-				dialog.transformAttributes({
-					// If you use a template, the second parameter will be the value of the template, as if it were submitted.
-					callback: (button_id, value) =>		// return false to prevent dialog closing
+			// check if overall working time is not disabled
+			if (state.disable.indexOf('overall') === -1)
+			{
+				// check if we should ask on login to start working time
+				this.preference('workingtime_session', 'timesheet', true).then(pref =>
+				{
+					if (pref === 'no') return;
+
+					// overall timer not running, ask to start
+					if (overall && !overall.start)
 					{
-						if (button_id !== 'close') {
-							try {
-								timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
-									// eT2 operates in user-time, while timers here always operate in UTC
-									value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
-								dialog._overlayContentNode.querySelector('et2-date-time').value = '';
+						Et2Dialog.show_dialog((button) => {
+							if (button === Et2Dialog.YES_BUTTON)
+							{
+								timerAction('overall-start');
 							}
-							catch (e) {
-								Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
-							}
-							setButtonState();
-							return false;
-						}
-						dialog = undefined;
-					},
-					title: 'Start & stop timer',
-					template: egw.webserverUrl + '/timesheet/templates/default/timer.xet',
-					buttons: [
-						{label: egw.lang("Close"), id: "close", default: true, image: "cancel"},
-					],
-					value: {
-						content: {
-							disable: state.disable.join(':')
-						},
-						sel_options: {}
+						}, 'Do you want to start your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
+					}
+					// overall timer running for more than 16 hours, ask to stop
+					else if (overall?.start && (((new Date()).valueOf() - overall.start.valueOf()) / 3600000) >= 16)
+					{
+						// gives a JS error, if called direct
+						window.setTimeout(() => {
+							timerDialog(state.disable, 'Forgot to switch off working time?');
+						}, 1000);
 					}
 				});
-				// Add to DOM, dialog will auto-open
-				document.body.appendChild(dialog);
-				dialog.getUpdateComplete().then(() => {
-					// enable/disable buttons based on timer state
-					setButtonState();
-					// update timers in dialog
-					update();
+			}
+		},
+
+		/**
+		 * Ask user to stop working time
+		 *
+		 * @returns {Promise<void>} resolved once user answered, to continue logout
+		 */
+		onLogout_timer: function()
+		{
+			let promise;
+			if (overall.start || overall.paused)
+			{
+				promise = new Promise((_resolve, _reject) =>
+				{
+					Et2Dialog.show_dialog((button) => {
+						if (button === Et2Dialog.YES_BUTTON)
+						{
+							timerAction('overall-stop').then(_resolve);
+						}
+						else
+						{
+							_resolve();
+						}
+					}, 'Do you want to stop your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
 				});
-			});
+			}
+			else
+			{
+				promise = Promise.resolve();
+			}
+			return promise;
 		}
 	};
 });
