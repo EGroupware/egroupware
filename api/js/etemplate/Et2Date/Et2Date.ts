@@ -15,6 +15,7 @@ import 'lit-flatpickr';
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
 import {LitFlatpickr} from "lit-flatpickr";
+import {Instance} from 'flatpickr/dist/types/instance';
 import "flatpickr/dist/plugins/scrollPlugin.js";
 import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 import {holidays} from "./Holidays";
@@ -589,7 +590,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 * @param _ev
 	 * @returns
 	 */
-	_updateValueOnChange(_ev : Event)
+	_updateValueOnChange(selectedDates : Date[], dateStr : string, instance : Instance)
 	{
 		this.modelValue = this.getValue();
 	}

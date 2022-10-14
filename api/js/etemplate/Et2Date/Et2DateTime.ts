@@ -11,6 +11,7 @@
 
 import {css} from "@lion/core";
 import {Et2Date} from "./Et2Date";
+import {Instance} from "flatpickr/dist/types/instance";
 
 
 export class Et2DateTime extends Et2Date
@@ -65,6 +66,32 @@ export class Et2DateTime extends Et2Date
 		options.defaultHour = new Date().getHours();
 
 		return options;
+	}
+
+	/**
+	 * Change handler setting modelValue for validation
+	 *
+	 * @returns
+	 * @param selectedDates
+	 * @param dateStr
+	 * @param instance
+	 */
+	_updateValueOnChange(selectedDates : Date[], dateStr : string, instance : Instance)
+	{
+		super._updateValueOnChange(selectedDates, dateStr, instance);
+		if(this._instance && instance.config.minuteIncrement > 1)
+		{
+			let i = instance.latestSelectedDateObj;
+			const d = i ? i : new Date();
+			const original = d.getMinutes();
+
+			let bound = Math.round(original / instance.config.minuteIncrement) * instance.config.minuteIncrement;
+			if(bound != original)
+			{
+				d.setMinutes(bound);
+				instance.setDate(d, false);
+			}
+		}
 	}
 
 	/**
