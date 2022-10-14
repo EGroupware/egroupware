@@ -88,6 +88,7 @@
 
 #calendar-sidebox_date div.flatpickr-calendar.inline {
     width: 100% !important;
+	box-shadow: none;
 }
 
 #calendar-sidebox_date .flatpickr-day {
