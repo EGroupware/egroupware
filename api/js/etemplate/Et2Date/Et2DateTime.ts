@@ -66,6 +66,19 @@ export class Et2DateTime extends Et2Date
 
 		return options;
 	}
+
+	/**
+	 * Add "today" button below calendar
+	 * @protected
+	 */
+	protected _buttonPlugin()
+	{
+		// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
+		return ShortcutButtonsPlugin({
+			button: [{label: this.egw().lang("Now")}],
+			onClick: this._handleShortcutButtonClick
+		})
+	}
 }
 
 // @ts-ignore TypeScript is not recognizing that Et2DateTime is a LitElement

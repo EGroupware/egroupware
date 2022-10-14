@@ -374,8 +374,8 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this._inputNode.removeEventListener('change', this._onChange);
-		this._inputNode.removeEventListener("input", this._handleInputChange);
+		this._inputNode?.removeEventListener('change', this._onChange);
+		this._inputNode?.removeEventListener("input", this._handleInputChange);
 		this.destroy();
 	}
 
@@ -433,11 +433,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			new scrollPlugin(),
 
 			// Add "today" button
-			// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
-			ShortcutButtonsPlugin({
-				button: [{label: this.egw().lang("Today")}],
-				onClick: this._handleShortcutButtonClick
-			})
+			this._buttonPlugin()
 		];
 
 		// Listen for flatpickr change so we can update internal value, needed for validation
@@ -475,6 +471,19 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.locale = {
 			firstDayOfWeek: DOW_MAP[first_dow]
 		};
+	}
+
+	/**
+	 * Add "today" button below calendar
+	 * @protected
+	 */
+	protected _buttonPlugin()
+	{
+		// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
+		return ShortcutButtonsPlugin({
+			button: [{label: this.egw().lang("Today")}],
+			onClick: this._handleShortcutButtonClick
+		})
 	}
 
 	set value(value)
