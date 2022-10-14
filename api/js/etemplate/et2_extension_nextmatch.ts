@@ -2442,7 +2442,23 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					this.dynheight = this._getDynheight();
 				}
 				this.dynheight.initialized = false;
-				this.resize();
+
+				// Give components a chance to finish.  Their size will affect available space, especially column headers.
+				let waitForWebComponents = [];
+				this.getChildren().forEach((w) =>
+				{
+					// @ts-ignore
+					if(typeof w.updateComplete !== "undefined")
+					{
+						// @ts-ignore
+						waitForWebComponents.push(w.updateComplete)
+					}
+				});
+
+				Promise.all(waitForWebComponents).then(() =>
+				{
+					this.resize();
+				});
 			}
 		).finally(() => this.template_promise = null);
 
