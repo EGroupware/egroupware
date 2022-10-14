@@ -59,7 +59,7 @@ export class SidemenuDate extends Et2Date
 		super.disconnectedCallback();
 
 		this.removeEventListener("change", this._handleChange);
-		if(this._instance.daysContainer !== undefined)
+		if(this._instance && this._instance.daysContainer !== undefined)
 		{
 			this._instance.weekNumbers.removeEventListener("mouseover", this._handleDayHover);
 			this._instance.weekNumbers.removeEventListener("mouseout", this._clearHover);
@@ -100,6 +100,7 @@ export class SidemenuDate extends Et2Date
 
 		options.onMonthChange = this._handleHeaderChange;
 		options.onYearChange = this._handleHeaderChange;
+		options.wrap = false;
 
 		return options
 	}
@@ -116,6 +117,14 @@ export class SidemenuDate extends Et2Date
 		}
 	}
 
+	/**
+	 * Override from super due to customisation
+	 * @returns {any}
+	 */
+	findInputField() : HTMLInputElement
+	{
+		return this._valueNode;
+	}
 
 	/**
 	 * Handler for change events.  Re-bound to be able to cancel month changes, since it's an input and emits them
