@@ -563,8 +563,8 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				// We catch all change events, then call this._oldChange only when value changes
 				this.removeEventListener("change", this._oldChange);
 
-				this._searchInputNode.removeEventListener("change", this._searchInputNode.handleChange);
-				this._searchInputNode.addEventListener("change", this._handleSearchChange);
+				this._searchInputNode?.removeEventListener("change", this._searchInputNode.handleChange);
+				this._searchInputNode?.addEventListener("change", this._handleSearchChange);
 			});
 		}
 
