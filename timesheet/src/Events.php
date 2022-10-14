@@ -147,7 +147,45 @@ class Events extends Api\Storage\Base
 			$this->db->update(self::TABLE, [
 				'tse_app' => $app,
 				'tse_app_id' => $id,
-			], ['tse_id' => $tse_id], __LINE__, __FILE__, self::APP);
+			], [
+				'tse_id' => $tse_id,
+				'account_id' => $this->user,
+				'ts_id IS NULL',
+			], __LINE__, __FILE__, self::APP);
+		}
+	}
+
+	/**
+	 * Set tse_time on an already started timer
+	 *
+	 * @param int $tse_id id of the running timer-event
+	 * @param string $time
+	 * @return void
+	 * @throws Api\Db\Exception\InvalidSql
+	 */
+	public function ajax_updateTime(int $tse_id, string $time)
+	{
+		if ($tse_id > 0 && !empty($time) && ($event = $this->read($tse_id)))
+		{
+			$time = new Api\DateTime($time);
+			$this->db->update(self::TABLE, [
+				'tse_time' => $time,
+			], [
+				'tse_id' => $tse_id,
+				'account_id' => $this->user,
+			], __LINE__, __FILE__, self::APP);
+
+			// if a stop event is overwritten, we need to adjust the timesheet duration and quantity
+			if (!empty($event['ts_id']) && ($diff = round(($time->getTimestamp() - $event['tse_time'].getTimestamp()) / 60)))
+			{
+				$bo = new \timesheet_bo();
+				if ($bo->read($event['ts_id']))
+				{
+					$bo->data['ts_duration'] += $diff;
+					$bo->data['ts_quantity'] += $diff / 60;
+					$bo->save();
+				}
+			}
 		}
 	}
 
@@ -254,13 +292,12 @@ class Events extends Api\Storage\Base
 			// format start-times in UTZ as JavaScript Date() understands
 			foreach($state as &$timer)
 			{
-				if (isset($timer['start']))
+				foreach(['start', 'started', 'last'] as $name)
 				{
-					$timer['start'] = (new Api\DateTime($timer['start'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
-				}
-				if (isset($timer['last']))
-				{
-					$timer['last'] = (new Api\DateTime($timer['last'], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
+					if (isset($timer[$name]))
+					{
+						$timer[$name] = (new Api\DateTime($timer[$name], new \DateTimeZone('UTC')))->format(Api\DateTime::ET2);
+					}
 				}
 			}
 			// send timer configuration to client-side
@@ -299,7 +336,8 @@ class Events extends Api\Storage\Base
 	{
 		if ($row['tse_type'] & self::START)
 		{
-			$timer['start'] = $row['tse_time'];
+			$timer['start'] = $timer['started'] = $row['tse_time'];
+			$timer['started_id'] = $row['tse_id'];
 			$timer['paused'] = false;
 		}
 		elseif ($timer['start'])

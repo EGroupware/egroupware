@@ -4542,7 +4542,7 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
-  padding-top: 7px;
+  border-top: 7px solid transparent;
   transition: none;
   width: -webkit-fill-available;
   width: -moz-available;
@@ -4581,6 +4581,9 @@ span.overlayContainer img.overlay {
   border-right: 1px solid #bfc0bf;
   border-bottom: 4px solid white !important;
   border-top: 4px solid transparent;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  max-width: fit-content !important;
   background-color: #ffffff;
   background-image: none !important;
 }
@@ -5251,6 +5254,11 @@ span.overlayContainer img.overlay {
     Created on : 23.07.2014, 13:25:11
     Author     : stefanreinhardt
 */
+et2-date-time-today[id^=_times] {
+  text-align: center;
+  color: gray;
+  cursor: pointer;
+}
 .timesheet_timer,
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
   text-align: center;

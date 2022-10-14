@@ -5264,6 +5264,11 @@ span.overlayContainer img.overlay {
     Created on : 23.07.2014, 13:25:11
     Author     : stefanreinhardt
 */
+et2-date-time-today[id^=_times] {
+  text-align: center;
+  color: gray;
+  cursor: pointer;
+}
 .timesheet_timer,
 #egw_fw_topmenu_info_items #topmenu_info_timer #topmenu_timer {
   text-align: center;

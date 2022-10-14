@@ -24,6 +24,11 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	let specific = {};
 	/**
+	 * Disable config with values "overall", "specific" or "overwrite"
+	 * @type {string[]}
+	 */
+	let disable = [];
+	/**
 	 * Timer container in top-menu
 	 * @type {Element}
 	 */
@@ -45,8 +50,11 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function setState(_state)
 	{
+		disable = _state.disable;
 		// initiate overall timer
 		startTimer(overall, _state.overall?.start, _state.overall?.offset);	// to show offset / paused time
+		overall.started = _state.overall?.started ? new Date(_state.overall.started) : undefined;
+		overall.started_id = _state.overall?.started_id;
 		if (_state.overall?.paused)
 		{
 			stopTimer(overall, true);
@@ -61,6 +69,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		if (_state.specific?.start || _state.specific?.paused)
 		{
 			startTimer(specific, _state.specific?.start, _state.specific?.offset, _state.specific.app_id);	// to show offset / paused time
+			specific.started = _state.specific?.started ? new Date(_state.specific.started) : undefined;
+			specific.started_id = _state.specific?.started_id;
 			specific.id = _state.specific.id;
 			if (_state.specific?.paused)
 			{
@@ -140,6 +150,18 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			if (_action.substring(0, 8) === 'specific')
 			{
 				specific.id = tse_id;
+				if (_action.substring(9) === 'start')
+				{
+					specific.started_id = tse_id;
+				}
+			}
+			else
+			{
+				overall.id = tse_id;
+				if (_action.substring(9) === 'start')
+				{
+					overall.started_id = tse_id;
+				}
 			}
 			if (_action === 'specific-stop')
 			{
@@ -259,13 +281,13 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function startTimer(_timer, _start, _offset)
 	{
-		const time = _start ? new Date(_start) : new Date();
-		if (_timer.last && time.valueOf() < _timer.last.valueOf())
+		_timer.started = _start ? new Date(_start) : new Date();
+		if (_timer.last && _timer.started.valueOf() < _timer.last.valueOf())
 		{
 			throw egw.lang('Start-time can not be before last stop- or pause-time %1!', formatUTCTime(_timer.last));
 		}
 		// update _timer state object
-		_timer.last = _timer.start = time;
+		_timer.start = new Date(_timer.last = _timer.started);
 
 		if (_offset || _timer.offset && _timer.paused)
 		{
@@ -394,10 +416,9 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	/**
 	 * Open the timer dialog to start/stop timers
 	 *
-	 * @param {Array} disable
 	 * @param {string} _title default "Start & stop timer"
 	 */
-	function timerDialog(disable, _title)
+	function timerDialog(_title)
 	{
 		// Pass egw in the constructor
 		dialog = new Et2Dialog(egw);
@@ -418,6 +439,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
 					}
 					setButtonState();
+					updateTimes();
 					return false;
 				}
 				dialog = undefined;
@@ -429,7 +451,11 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			],
 			value: {
 				content: {
-					disable: disable.join(':')
+					disable: disable.join(':'),
+					times: {
+						specific: getTimes(specific),
+						overall: getTimes(overall)
+					}
 				},
 				sel_options: {}
 			}
@@ -444,14 +470,92 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		});
 	}
 
+	/**
+	 * Update times displayed under buttons
+	 */
+	function updateTimes()
+	{
+		if (!dialog) return;
+
+		const times = {
+			specific: getTimes(specific),
+			overall: getTimes(overall)
+		};
+
+		// disable not matching / available menu-items
+		dialog._overlayContentNode.querySelectorAll('et2-date-time-today').forEach(_widget => {
+			const [,timer, action] = _widget.id.match(/times\[([^\]]+)\]\[([^\]]+)\]/);
+			_widget.value = times[timer][action];
+		});
+	}
+
+	/**
+	 * Get start, pause and stop time of timer to display in UI
+	 *
+	 * @param {Object} _timer
+	 * @return {Object} with attributes start, pause, stop
+	 */
+	function getTimes(_timer)
+	{
+		const started = _timer.started ? new Date(_timer.started.valueOf() - egw.getTimezoneOffset() * 60000) : undefined;
+		const last = _timer.last ? new Date(_timer.last.valueOf() - egw.getTimezoneOffset() * 60000) : undefined;
+		return {
+			start: started,
+			paused: _timer.paused ? last : undefined,
+			stop: !_timer.start && !_timer.paused ? last : undefined
+		};
+	}
+
 	return {
+		/**
+		 * Change/overwrite time
+		 *
+		 * @param {PointerEvent} _ev
+		 * @param {Et2DateTimeToday} _widget
+		 */
+		change_timer: function(_ev, _widget)
+		{
+			// if there is no value, or timer overwrite is disabled --> ignore click
+			if (!_widget?.value || disable.indexOf('overwrite') !== -1) {
+				return;
+			}
+			const [, which, action] = _widget.id.match(/times\[([^\]]+)\]\[([^\]]+)\]/);
+			const timer = which === 'overall' ? overall : specific;
+			const tse_id = timer[action === 'start' ? 'started_id' : 'id'];
+			const time = _widget.value;
+			const dialog = new Et2Dialog(egw);
+
+			// Set attributes.  They can be set in any way, but this is convenient.
+			dialog.transformAttributes({
+				callback: (_button, _values) => {
+					if (_button === Et2Dialog.OK_BUTTON)
+					{
+						_widget.value = _values.time;
+						// for start we need to take the (not stored) offset into account
+						const offset = action === 'start' ? timer.started.valueOf() - timer.start.valueOf() : 0;
+						timer[action] = new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000 - offset);
+						egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
+							[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
+					}
+				},
+				title: egw.lang('Change time'),
+				template: 'timesheet.timer.change',
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+				value: {
+					content: { time: _widget.value }
+				}
+			});
+			// Add to DOM, dialog will auto-open
+			document.body.appendChild(dialog);
+		},
+
 		/**
 		 * Start timer for given app and id
 		 *
 		 * @param {Object} _action
 		 * @param {Array} _senders
 		 */
-		start_timer(_action, _senders)
+		start_timer: function(_action, _senders)
 		{
 			if (_action.parent.data.nextmatch?.getSelection().all || _senders.length !== 1)
 			{
@@ -503,7 +607,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 
 			// bind click handler
 			timer_container.addEventListener('click', (ev) => {
-				timerDialog(state.disable);
+				timerDialog();
 			});
 
 			// check if overall working time is not disabled
@@ -534,7 +638,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						// overall timer running for more than 16 hours, ask to stop
 						else if (overall?.start && (((new Date()).valueOf() - overall.start.valueOf()) / 3600000) >= 16)
 						{
-							timerDialog(state.disable, 'Forgot to switch off working time?');
+							timerDialog('Forgot to switch off working time?');
 						}
 					});
 
