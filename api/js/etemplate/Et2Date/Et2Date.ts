@@ -20,6 +20,7 @@ import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
 import {holidays} from "./Holidays";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
+import {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 
 // Request this year's holidays now
@@ -315,6 +316,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			:host {
 				width: auto;
 			}
+			::slotted([slot='input'])
+			{
+				flex: 1 1 auto;
+			}
             `,
 		];
 	}
@@ -340,9 +345,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			...super.slots,
 			input: () =>
 			{
+				// This element gets hidden and used for value, but copied by flatpicr and used for input
 				const text = <Et2Textbox>document.createElement('et2-textbox');
 				text.type = "text";
 				text.placeholder = this.placeholder;
+				text.setAttribute("data-input", "");
 				return text;
 			}
 		}
@@ -353,6 +360,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		super();
 
 		this._onDayCreate = this._onDayCreate.bind(this);
+		this._handleInputChange = this._handleInputChange.bind(this);
 	}
 
 
@@ -367,6 +375,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		super.disconnectedCallback();
 		this._inputNode.removeEventListener('change', this._onChange);
+		this._inputNode.removeEventListener("input", this._handleInputChange);
 		this.destroy();
 	}
 
@@ -388,6 +397,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			// initializeComponent() so this._inputNode is not available before this
 			this._inputNode.setAttribute("slot", "input");
 			this._inputNode.addEventListener('change', this._updateValueOnChange);
+			this._inputNode.addEventListener("input", this._handleInputChange);
 		}
 	}
 
@@ -406,6 +416,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.allowInput = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.weekNumbers = true;
+		options.wrap = true;
 
 		options.onDayCreate = this._onDayCreate;
 
@@ -501,11 +512,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	get value()
 	{
 		// Copied from flatpickr, since Et2InputWidget overwrote flatpickr.getValue()
-		if(!this._inputElement)
+		if(!this._inputNode)
 		{
 			return '';
 		}
-		let value = this._inputElement.value;
+		let value = this._valueNode.value;
 
 		// Empty field, return ''
 		if(!value)
@@ -531,6 +542,36 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
                 <slot/>
             </div>
 		`;
+	}
+
+	/**
+	 * Update the calendar when the input value changes
+	 * Otherwise, user's change will be overwritten by calendar popup when the input loses focus
+	 *
+	 * @param e
+	 */
+	_handleInputChange(e : InputEvent)
+	{
+		// Update
+		const value = this._inputNode.value;
+		let parsedDate = null
+		try
+		{
+			parsedDate = this._instance.parseDate(value, this._instance.config.altFormat)
+		}
+		catch(e)
+		{
+			// Invalid date string
+		}
+		// If they typed a valid date/time, try to update flatpickr
+		if(parsedDate)
+		{
+			const formattedDate = this._instance.formatDate(parsedDate, this._instance.config.altFormat)
+			if(value === formattedDate)
+			{
+				this._instance.setDate(value, true, this._instance.config.altFormat)
+			}
+		}
 	}
 
 	/**
@@ -659,18 +700,26 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 * Override from flatpickr
 	 * @returns {any}
 	 */
-	findInputField()
+	findInputField() : HTMLInputElement
 	{
-		return this._inputNode;
+		return <HTMLInputElement><unknown>this;
 	}
 
 	/**
 	 * The interactive (form) element.
 	 * @protected
 	 */
-	get _inputNode() : HTMLElement
+	get _inputNode() : HTMLElementWithValue
 	{
-		return this.querySelector('et2-textbox');
+		return this.querySelector('et2-textbox:not([data-input])');
+	}
+
+	/**
+	 * The holder of value for flatpickr
+	 */
+	get _valueNode() : HTMLElementWithValue
+	{
+		return this.querySelector('[data-input]');
 	}
 }
 
