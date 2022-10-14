@@ -509,30 +509,32 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			// check if overall working time is not disabled
 			if (state.disable.indexOf('overall') === -1)
 			{
-				// check if we should ask on login to start working time
-				this.preference('workingtime_session', 'timesheet', true).then(pref =>
+				// we need to wait that all JS is loaded
+				window.egw_ready.then(() => { window.setTimeout(() =>
 				{
-					if (pref === 'no') return;
+					// check if we should ask on login to start working time
+					this.preference('workingtime_session', 'timesheet', true).then(pref =>
+					{
+						if (pref === 'no') return;
 
-					// overall timer not running, ask to start
-					if (overall && !overall.start)
-					{
-						Et2Dialog.show_dialog((button) => {
-							if (button === Et2Dialog.YES_BUTTON)
-							{
-								timerAction('overall-start');
-							}
-						}, 'Do you want to start your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
-					}
-					// overall timer running for more than 16 hours, ask to stop
-					else if (overall?.start && (((new Date()).valueOf() - overall.start.valueOf()) / 3600000) >= 16)
-					{
-						// gives a JS error, if called direct
-						window.setTimeout(() => {
+						// overall timer not running, ask to start
+						if (overall && !overall.start)
+						{
+							Et2Dialog.show_dialog((button) => {
+								if (button === Et2Dialog.YES_BUTTON)
+								{
+									timerAction('overall-start');
+								}
+							}, 'Do you want to start your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
+						}
+						// overall timer running for more than 16 hours, ask to stop
+						else if (overall?.start && (((new Date()).valueOf() - overall.start.valueOf()) / 3600000) >= 16)
+						{
 							timerDialog(state.disable, 'Forgot to switch off working time?');
-						}, 1000);
-					}
-				});
+						}
+					});
+
+				}, 2000)});
 			}
 		},
 

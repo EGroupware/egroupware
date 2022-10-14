@@ -19,6 +19,7 @@ changed status	timesheet	en	Changed status.
 check all	timesheet	en	Check all
 choose 'creator' of imported data	timesheet	en	Choose 'creator' of imported data
 comment by %1 at %2:	timesheet	en	Comment by %1 at %2:
+create a single 'working time' timesheet per	timesheet	en	Create a single 'Working time' timesheet per
 create new links	timesheet	en	Create new links
 creates a new field	timesheet	en	Creates a new field
 creating new entry	timesheet	en	Creating new entry

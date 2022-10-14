@@ -1596,6 +1596,11 @@ class Db
 		{
 			$value = implode($glue,$value);
 		}
+		// timestamp given das DateTime object stored in string column, e.g. in history-log
+		if (is_object($value) && ($value instanceof \DateTime))
+		{
+			$value = DateTime::user2server($value,'string');
+		}
 		// truncate to long strings for varchar(X) columns as PostgreSQL and newer MySQL/MariaDB given an error otherwise
 		if (!is_null($length) && mb_strlen($value) > $length)
 		{

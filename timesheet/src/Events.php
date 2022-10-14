@@ -163,6 +163,13 @@ class Events extends Api\Storage\Base
 			throw new Api\Exception\AssertionFailed("No pending overall events!");
 		}
 		$ids = array_keys($events);
+		$bo = new \timesheet_bo();
+		// check if we already have a timesheet for the current periode
+		if (($period_ts = $bo->periodeWorkingTimesheet(reset($events)['tse_time'])))
+		{
+			$events = array_merge(self::get(['ts_id' => $period_ts['ts_id']], $period_total), $events);
+			$time += $period_total;
+		}
 		$start = array_shift($events)['tse_time'];
 		$timespan = Api\DateTime::to($start, true);
 		$last = array_pop($events);
@@ -171,8 +178,7 @@ class Events extends Api\Storage\Base
 			$timespan .= ' - '.$end;
 		}
 		$title = lang('Working time from %1', $timespan);
-		$bo = new \timesheet_bo();
-		$bo->init();
+		$bo->init($period_ts);
 		$bo->save([
 			'ts_title' => $title,
 			'cat_id' => self::workingTimeCat(),

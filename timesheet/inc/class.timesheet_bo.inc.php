@@ -181,6 +181,7 @@ class timesheet_bo extends Api\Storage
 		{
 			$GLOBALS['timesheet_bo'] =& $this;
 		}
+		$this->user = (int)$GLOBALS['egw_info']['user']['account_id'];
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
 	}
 
@@ -1043,5 +1044,48 @@ class timesheet_bo extends Api\Storage
 			$data['ts_project'] = $data['pm_id'] ? Link::title('projectmanager', $data['pm_id']) : '';
 		}
 		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
+	}
+
+	/**
+	 * Find working time timesheet for given time and confibured period
+	 *
+	 * @param DateTime $time time to define the periode
+	 * @param string &$periode on return "day", "week" or "month"
+	 * @param Api\DateTime|null &$start on return start-time of periode
+	 * @param Api\DateTime|null &$end on return end-time of periode
+	 * @return array|null ts or null, if there is none yet
+	 * @throws Api\Exception
+	 */
+	function periodeWorkingTimesheet(DateTime $time, string &$periode=null, Api\DateTime &$start=null, Api\DateTime &$end=null)
+	{
+		$start = new Api\DateTime($time, Api\DateTime::$user_timezone);
+		$start->setTime(0, 0, 0);
+		$end = new Api\DateTime($start);
+		switch($periode = $this->config_data['working_time_period'] ?? 'day')
+		{
+			case 'day':
+				$end->setDate($start->format('Y'), $start->format('m'), 1+$start->format('d'));
+				break;
+
+			case 'week':
+				$start->setWeekstart();
+				$end = new Api\DateTime($start);
+				$end->setDate($start->format('Y'), $start->format('m'), 7+$start->format('d'));
+				break;
+
+			case 'month':
+				$start->setDate($start->format('Y'), $start->format('m'), 1);
+				$end->setDate($start->format('Y'), 1+$start->format('m'), 1);
+				break;
+		}
+		foreach($this->search('', false, 'ts_id DESC', '', '', false, 'AND', [0, 1], [
+			'cat_id' => Events::workingTimeCat(),
+			'ts_owner' => $this->user,
+			'ts_start BETWEEN '.$this->db->quote($start, 'int').' AND '.$this->db->quote($end, 'int'),
+		]) ?? [] as $row)
+		{
+			return $row;
+		}
+		return null;
 	}
 }

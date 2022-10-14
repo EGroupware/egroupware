@@ -54,6 +54,14 @@
 					</select>
 				</row>
 				<row>
+					<description value="Create a single 'Working time' timesheet per"/>
+					<select id="newsettings[working_time_period]">
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+					</select>
+				</row>
+				<row>
 					<description value="Category for 'Working time'"/>
 					<select-cat empty_label="Will be created when saving ..." id="newsettings[working_time_cat]"/>
 				</row>

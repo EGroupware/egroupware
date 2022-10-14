@@ -19,6 +19,7 @@ changed status	timesheet	de	Status geändert
 check all	timesheet	de	Alle selektieren
 choose 'creator' of imported data	timesheet	de	Wählen Sie den 'Ersteller' der Importierten Daten.
 comment by %1 at %2:	timesheet	de	Übertragen von %1 am %2
+create a single 'working time' timesheet per	timesheet	de	Erstelle einen einzigen 'Arbeitszeit' Stundenzettel pro
 create new links	timesheet	de	Neue Verknüpfung erstellen
 creates a new field	timesheet	de	neues Feld anlegen
 creating new entry	timesheet	de	neuen Eintrag anlegen
