@@ -195,6 +195,11 @@ class Events extends Api\Storage\Base
 	}
 
 	/**
+	 * Name of session variable to not ask again if user denied starting working time
+	 */
+	const DONT_ASK_AGAIN_WORKING_TIME = 'dont-ask-again-working-time';
+
+	/**
 	 * Get state of timer
 	 *
 	 * @return array[]|void
@@ -208,6 +213,7 @@ class Events extends Api\Storage\Base
 					'start' => null,
 					'paused' => false,
 					'last' => null,
+					'dont_ask' => Api\Cache::getSession(__CLASS__, self::DONT_ASK_AGAIN_WORKING_TIME),
 				],
 				'specific' => [
 					'offset' => 0,
@@ -266,6 +272,16 @@ class Events extends Api\Storage\Base
 		catch (\Exception $e) {
 			_egw_log_exception($e);
 		}
+	}
+
+	/**
+	 * Remember for 18h to not ask again to start working time
+	 *
+	 * @return void
+	 */
+	static function ajax_dontAskAgainWorkingTime()
+	{
+		Api\Cache::setSession(__CLASS__, self::DONT_ASK_AGAIN_WORKING_TIME, true, 18*3600);
 	}
 
 	/**

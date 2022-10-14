@@ -518,12 +518,16 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						if (pref === 'no') return;
 
 						// overall timer not running, ask to start
-						if (overall && !overall.start)
+						if (overall && !overall.start && !state.overall.dont_ask)
 						{
 							Et2Dialog.show_dialog((button) => {
 								if (button === Et2Dialog.YES_BUTTON)
 								{
 									timerAction('overall-start');
+								}
+								else
+								{
+									egw.request('EGroupware\\Timesheet\\Events::ajax_dontAskAgainWorkingTime');
 								}
 							}, 'Do you want to start your working time?', 'Working time', {}, Et2Dialog.BUTTONS_YES_NO);
 						}
