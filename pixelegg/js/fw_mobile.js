@@ -1101,6 +1101,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 				.on('change', function() { framework.tzSelection(this.value); return false; })
 				.on('click', function(e) { e.stopPropagation(); });
 			window.egw.link_quick_add('quick_add');
+			window.egw.add_timer('topmenu_info_timer');
 			history.pushState({type:'main'}, 'main', '#main');
 			jQuery(window).on('popstate', function(e){
 				// Check if user wants to logout and ask a confirmation
