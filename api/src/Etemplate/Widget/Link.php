@@ -320,7 +320,7 @@ class Link extends Etemplate\Widget
 	 */
 	public static function ajax_delete(int $value)
 	{
-		if ($value <= 0)
+		if (!$value)
 		{
 			throw new InvalidArgumentException();
 		}
