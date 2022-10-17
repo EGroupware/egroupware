@@ -169,6 +169,15 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			let data = {};
 			if (mime_info)
 			{
+				if (this.isEditable(_type))
+				{
+					data = {
+						'menuaction': 'collabora.EGroupware\\collabora\\Ui.editor',
+						'path': path,
+						'cd': 'no'	// needed to not reload framework in sharing
+					};
+					return data;
+				}
 				for(let attr in mime_info)
 				{
 					switch(attr)
@@ -517,6 +526,25 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					select.dropdown.trigger.style.height = '0px';
 				});
 			});
+		},
+
+		/**
+		 * Check if a mimetype is editable
+		 *
+		 * Check mimetype & user preference
+		 */
+		isEditable: function (mime)
+		{
+			if (!mime)
+			{
+				return false;
+			}
+			let fe = egw_get_file_editor_prefered_mimes(mime);
+			if (!fe || !fe.mime || fe && fe.mime && !fe.mime[mime])
+			{
+				return false;
+			}
+			return ['edit'].indexOf(fe.mime[mime].name) !== -1;
 		}
 	}
 });
