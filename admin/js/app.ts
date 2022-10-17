@@ -211,6 +211,12 @@ class AdminApp extends EgwApp
 		this.nm.set_disabled(!!_url || ajax);
 		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
+
+		if(!this.nm.disabled)
+		{
+			// If nm was just re-enabled, resize it _after_ ajax_target gets hidden
+			this.ajax_target.updateComplete.then(() => this.nm.resize())
+		}
 	}
 
 	/**
