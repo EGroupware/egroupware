@@ -394,6 +394,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 					this.egw().tooltipBind(this, this.statustext);
 				}
 			}
+			if(changedProperties.has("onclick"))
+			{
+				this.classList.toggle("et2_clickable", this.onclick != null && typeof this.onclick != "undefined");
+			}
 		}
 
 		/**
