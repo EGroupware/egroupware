@@ -352,6 +352,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 			for(let h of hide)
 			{
 				h.style.visibility = "hidden";
+				egw.loading_prompt(this.id,true,egw.lang('Recalculating frame size...'), h.parentElement)
 			}
 		}
 	}
@@ -364,6 +365,7 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		for(let h of this._hidden)
 		{
 			h.style.visibility = "initial";
+			egw.loading_prompt(this.id, false);
 		}
 	}
 
