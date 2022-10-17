@@ -176,7 +176,7 @@ class Events extends Api\Storage\Base
 			], __LINE__, __FILE__, self::APP);
 
 			// if a stop event is overwritten, we need to adjust the timesheet duration and quantity
-			if (!empty($event['ts_id']) && ($diff = round(($time->getTimestamp() - $event['tse_time'].getTimestamp()) / 60)))
+			if (!empty($event['ts_id']) && ($diff = round(($time->getTimestamp() - $event['tse_time']->getTimestamp()) / 60)))
 			{
 				$bo = new \timesheet_bo();
 				if ($bo->read($event['ts_id']))
@@ -278,15 +278,6 @@ class Events extends Api\Storage\Base
 					{
 						$state['specific']['app_id'] = $row['tse_app'].'::'.$row['tse_app_id'];
 					}
-					// for not stopped events, set the tse_id, so we can associate with an "app:id"
-					if ($row['tse_type'] & self::STOP)
-					{
-						$state['specific']['id'] = null;
-					}
-					else
-					{
-						$state['specific']['id'] = $row['tse_id'];
-					}
 				}
 			}
 			// format start-times in UTZ as JavaScript Date() understands
@@ -351,6 +342,7 @@ class Events extends Api\Storage\Base
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
 		$timer['last'] = $row['tse_time'];
+		$timer['id'] = $row['tse_id'];
 		return $time ?? null;
 	}
 

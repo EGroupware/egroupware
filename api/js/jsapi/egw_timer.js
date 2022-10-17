@@ -64,6 +64,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			stopTimer(overall);
 		}
 		overall.last = _state.overall.last ? new Date(_state.overall.last) : undefined;
+		overall.id = _state.overall?.id;
 
 		// initiate specific timer, only if running or paused
 		if (_state.specific?.start || _state.specific?.paused)
@@ -82,6 +83,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			}
 		}
 		specific.last = _state.specific.last ? new Date(_state.specific.last) : undefined;
+		specific.id = _state.specific?.id;
 	}
 
 	/**
@@ -111,6 +113,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	 */
 	function timerAction(_action, _time, _app_id)
 	{
+		const [type, action] = _action.split('-');
 		switch(_action)
 		{
 			case 'overall-start':
@@ -141,27 +144,22 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 				break;
 		}
 		// set _app_id on timer, if specified
-		if (_app_id && _action.substring(0, 8) === 'specific')
+		if (_app_id && type === 'specific')
 		{
 			specific.app_id = _app_id;
 		}
 		// persist state
-		return egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) => {
-			if (_action.substring(0, 8) === 'specific')
+		return egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_event', [getState(_action, _time)]).then((tse_id) =>
+		{
+			const timer = type === 'specific' ? specific : overall;
+			// do NOT set/change timer.id, if a paused timer get stopped (to show and update paused time, not irrelevant stop)
+			if (timer.start || typeof timer.paused !== 'undefined')
 			{
-				specific.id = tse_id;
-				if (_action.substring(9) === 'start')
-				{
-					specific.started_id = tse_id;
-				}
+				timer.id = tse_id;
 			}
-			else
+			if (action === 'start')
 			{
-				overall.id = tse_id;
-				if (_action.substring(9) === 'start')
-				{
-					overall.started_id = tse_id;
-				}
+				timer.started_id = tse_id;
 			}
 			if (_action === 'specific-stop')
 			{
@@ -176,7 +174,6 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 
 				// unset the app_id and the tse_id to not associate the next start with it
 				specific.app_id = undefined;
-				specific.id = undefined;
 			}
 		});
 	}
@@ -282,6 +279,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	function startTimer(_timer, _start, _offset)
 	{
 		_timer.started = _start ? new Date(_start) : new Date();
+		_timer.started.setSeconds(0);	// only use full minutes, as this is what we display
 		if (_timer.last && _timer.started.valueOf() < _timer.last.valueOf())
 		{
 			throw egw.lang('Start-time can not be before last stop- or pause-time %1!', formatUTCTime(_timer.last));
@@ -320,6 +318,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	function stopTimer(_timer, _pause, _time)
 	{
 		const time = _time ? new Date(_time) : new Date();
+		time.setSeconds(0);	// only use full minutes, as this is what we display
 		if (time.valueOf() < _timer.last.valueOf())
 		{
 			const last_time = formatUTCTime(_timer.last);
@@ -341,8 +340,16 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			_timer.offset = time.valueOf() - _timer.start.valueOf();
 			_timer.start = undefined;
 		}
-		_timer.paused = _pause || false;
-		_timer.last = time;
+		// if we stop an already paused timer, we keep the paused event as last, not the stop
+		if (_timer.paused)
+		{
+			_timer.paused = _pause || undefined;
+		}
+		else
+		{
+			_timer.last = time;
+			_timer.paused = _pause || false;
+		}
 		// update timer display
 		updateTimer(timer, _timer);
 
@@ -433,7 +440,6 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
 							// eT2 operates in user-time, while timers here always operate in UTC
 							value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
-						dialog._overlayContentNode.querySelector('et2-date-time').value = '';
 					}
 					catch (e) {
 						Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
@@ -522,18 +528,27 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			const [, which, action] = _widget.id.match(/times\[([^\]]+)\]\[([^\]]+)\]/);
 			const timer = which === 'overall' ? overall : specific;
 			const tse_id = timer[action === 'start' ? 'started_id' : 'id'];
-			const time = _widget.value;
 			const dialog = new Et2Dialog(egw);
 
 			// Set attributes.  They can be set in any way, but this is convenient.
 			dialog.transformAttributes({
 				callback: (_button, _values) => {
-					if (_button === Et2Dialog.OK_BUTTON)
+					const change = (new Date(_widget.value)).valueOf() - (new Date(_values.time)).valueOf();
+					if (_button === Et2Dialog.OK_BUTTON && change)
 					{
 						_widget.value = _values.time;
-						// for start we need to take the (not stored) offset into account
-						const offset = action === 'start' ? timer.started.valueOf() - timer.start.valueOf() : 0;
-						timer[action] = new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000 - offset);
+						timer[action === 'start' ? 'started' : action] = new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000);
+						// for a stopped or paused timer, we need to adjust the offset (duration) and the displayed timer too
+						if (timer.offset)
+						{
+							timer.offset -= action === 'start' ? -change : change;
+							update();
+						}
+						// for a running timer, we need to adjust the (virtual) start too
+						else if (timer.start)
+						{
+							timer.start = new Date(timer.start.valueOf() - change);
+						}
 						egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
 							[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
 					}
