@@ -655,6 +655,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			{
 				return;
 			}
+			clearTimeout(this._searchTimeout);
 			super.handleMenuHide();
 
 			// Reset display
@@ -787,6 +788,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		async _handleSearchBlur(event : FocusEvent)
 		{
+			clearTimeout(this._searchTimeout);
 			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement)
 			{
 				await this.dropdown.hide();
