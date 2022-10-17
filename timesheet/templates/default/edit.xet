@@ -105,8 +105,8 @@
 					<date-time id="${row}[tse_time]" readonly="true"/>
 					<date-time id="${row}[tse_timestamp]" readonly="true"/>
 					<select id="${row}[tse_type]" readonly="true"/>
-					<date-timeonly id="${row}[time]" readonly="true"/>
-					<date-timeonly id="${row}[total]" readonly="true"/>
+					<date-duration display_format="h:m" data_format="s" id="${row}[time]" readonly="true"/>
+					<date-duration display_format="h:m" data_format="s" id="${row}[total]" readonly="true"/>
 				</row>
 			</rows>
 		</grid>
