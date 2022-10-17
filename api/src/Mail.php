@@ -3189,7 +3189,7 @@ class Mail
 			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
 			// avoid calling sortByAutoFolder as it is not regarding subfolders
 			$autoFolderObjectsTmp = $autoFolderObjects;
-			unset($autoFolderObjects);
+			$autoFolderObjects = [];
 			uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
 			foreach($autoFoldersTmp as $afk=>$aF)
 			{
