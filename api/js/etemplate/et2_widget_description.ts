@@ -291,7 +291,14 @@ export class et2_description extends expose(class et2_description extends et2_ba
 			$span.click(function(e) {
 				if (self.options.expose_view && typeof self.options.mime !='undefined' && self.options.mime.match(self.mime_regexp,'ig'))
 				{
-					self._init_blueimp_gallery(e, href);
+					if (self.options.mime.match(self.mime_audio_regexp, 'ig'))
+					{
+						self._audio_player(href);
+					}
+					else
+					{
+						self._init_blueimp_gallery(e, href);
+					}
 				}
 				else
 				{
