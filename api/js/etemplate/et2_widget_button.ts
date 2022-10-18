@@ -463,4 +463,4 @@ export class et2_button extends et2_baseWidget implements et2_IInput, et2_IDetac
 		});
 	}
 }
-et2_register_widget(et2_button, ["button", "buttononly"]);
+et2_register_widget(et2_button, ["button", "buttononly", "old-button", "old-buttononly"]);

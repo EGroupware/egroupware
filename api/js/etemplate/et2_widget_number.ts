@@ -169,7 +169,7 @@ export class et2_number extends et2_textbox
 		}
 	}
 }
-et2_register_widget(et2_number, ["int", "integer", "float"]);
+et2_register_widget(et2_number, ["int", "integer", "float", "old-int"]);
 
 /**
  * Extend read-only to tell it to ignore special attributes, which
