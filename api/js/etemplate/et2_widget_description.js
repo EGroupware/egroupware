@@ -172,7 +172,12 @@ var et2_description = /** @class */ (function (_super) {
                 var $span = this.options.mime_data ? jQuery(this.span) : jQuery('a', this.span);
                 $span.click(function (e) {
                     if (self.options.expose_view && typeof self.options.mime != 'undefined' && self.options.mime.match(self.mime_regexp, 'ig')) {
-                        self._init_blueimp_gallery(e, href);
+                        if (self.options.mime.match(self.mime_audio_regexp, 'ig')) {
+                            self._audio_player(href);
+                        }
+                        else {
+                            self._init_blueimp_gallery(e, href);
+                        }
                     }
                     else {
                         egw(window).open_link(mime_data || href, self.options.extra_link_target, self.options.extra_link_popup, null, null, self.options.mime);
