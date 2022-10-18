@@ -4107,6 +4107,11 @@ div.flatpickr-calendar.inline .flatpickr-day:not(.today) {
     border: none;
 }
 
+/* put bottom buttons in a row */
+div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons {
+    display: flex;
+}
+
 button.shortcut-buttons-flatpickr-button:hover {
     background-color: #eceef1;
 }

@@ -105,6 +105,12 @@ export class SidemenuDate extends Et2Date
 		return options
 	}
 
+	protected _buttonPlugin()
+	{
+		// No buttons
+		return null;
+	}
+
 	set_value(value)
 	{
 		if(typeof value !== "string" && value.length == 8)

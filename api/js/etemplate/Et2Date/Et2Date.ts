@@ -431,11 +431,15 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.plugins = [
 			// Turn on scroll wheel support
 			// @ts-ignore TypeScript can't find scrollPlugin, but rollup does
-			new scrollPlugin(),
-
-			// Add "today" button
-			this._buttonPlugin()
+			new scrollPlugin()
 		];
+		// Add "Ok" and "today" buttons
+		const buttons = this._buttonPlugin();
+		if(buttons)
+		{
+			options.plugins.push(buttons)
+		}
+
 
 		// Listen for flatpickr change so we can update internal value, needed for validation
 		options.onChange = options.onReady = this._updateValueOnChange;
@@ -457,7 +461,14 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 */
 	public _handleShortcutButtonClick(button_index, fp)
 	{
-		fp.setDate(new Date());
+		switch(button_index)
+		{
+			case 0: // OK
+				fp.close();
+				break;
+			default:
+				fp.setDate(new Date());
+		}
 	}
 
 	/**
@@ -482,7 +493,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
 		return ShortcutButtonsPlugin({
-			button: [{label: this.egw().lang("Today")}],
+			button: [
+				{label: this.egw().lang("ok")},
+				{label: this.egw().lang("Today")}
+			],
 			onClick: this._handleShortcutButtonClick
 		})
 	}

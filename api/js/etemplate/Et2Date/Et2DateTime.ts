@@ -102,7 +102,10 @@ export class Et2DateTime extends Et2Date
 	{
 		// @ts-ignore TypeScript can't find ShortcutButtonsPlugin, but rollup does
 		return ShortcutButtonsPlugin({
-			button: [{label: this.egw().lang("Now")}],
+			button: [
+				{label: this.egw().lang("ok")},
+				{label: this.egw().lang("Now")}
+			],
 			onClick: this._handleShortcutButtonClick
 		})
 	}
