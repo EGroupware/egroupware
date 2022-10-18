@@ -18,6 +18,7 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw} from "../../api/js/jsapi/egw_global.js";
 import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action.js';
 import {LitElement} from "@lion/core";
+import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 
 /**
  * UI for Admin
@@ -264,6 +265,10 @@ class AdminApp extends EgwApp
 					}
 					return false;	// --> no regular refresh
 				}
+				else
+				{
+					return false;
+				}
 				// invalidate client-side account-cache
 				this.egw.invalidate_account(_id, _type);
 				// group deleted, added or updated
@@ -295,24 +300,6 @@ class AdminApp extends EgwApp
 				// not a user or group, eg. categories
 				else if (!_id)
 				{
-					// Try just refreshing the nextmatch
-					if(this.nm)
-					{
-						this.nm.refresh();
-					}
-					if(this.groups)
-					{
-						this.groups.refresh();
-					}
-					if(this.et2 && this.et2.getWidgetById('nm') && this.nm !== this.et2.getWidgetById('nm'))
-					{
-						this.et2.getWidgetById('nm').refresh();
-					}
-					else
-					{
-						// Load something else
-						this.load();
-					}
 					return false;	// --> no regular refresh needed
 				}
 		}
@@ -338,16 +325,25 @@ class AdminApp extends EgwApp
 	 */
 	push(pushData : PushData)
 	{
-		// We'll listen to addressbook, but only if it has an account ID
-		if (pushData.app != this.appname) return;
+		// Filter out what we're not interested in
+		if([this.appname, "api-cats"].indexOf(pushData.app) == -1)
+		{
+			return;
+		}
 
-		if(pushData.id > 0)
+		const cat_template = "admin.categories.index";
+
+		if(this.appname.indexOf(pushData.app) != -1 && pushData.id > 0)
 		{
 			this.nm.refresh(pushData.id, pushData.type);
 		}
-		else if (pushData.id < 0)
+		else if(pushData.app == this.appname && pushData.id < 0)
 		{
 			this.groups.refresh(pushData.id, pushData.type);
+		}
+		else if(pushData.app == "api-cats" && etemplate2.getByTemplate(cat_template).length == 1)
+		{
+			(<et2_nextmatch>etemplate2.getByTemplate(cat_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
 		}
 	}
 
@@ -894,7 +890,7 @@ class AdminApp extends EgwApp
 
 		if (typeof select_owner != 'undefined')
 		{
-			var owner = select_owner.get_value();
+			var owner = select_owner.value;
 		}
 
 		if(typeof owner != 'object')
@@ -908,7 +904,7 @@ class AdminApp extends EgwApp
 
 		// If they checked all users, uncheck the others
 		if(all_users) {
-			select_owner.set_value(['0']);
+			select_owner.value = ['0'];
 			return true;
 		}
 
@@ -916,7 +912,7 @@ class AdminApp extends EgwApp
 		var cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner');
 		if (cat_original_owner)
 		{
-			var selected_groups = select_owner.get_value().toString();
+			var selected_groups = select_owner.value.toString();
 
 			for(var i =0;i < cat_original_owner.length;i++)
 			{

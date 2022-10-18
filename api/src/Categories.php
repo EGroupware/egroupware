@@ -800,13 +800,13 @@ class Categories
 		// push category change
 		$push = new Push($cat['cat_access'] === 'public' || (int)$cat['cat_owner'] <= 0 ? Push::ALL : (int)$cat['cat_owner']);
 		$push->apply("egw.push", [[
-			'app'   => self::PUSH_APP,
-			'id'    => $values['id'],
-			'type'  => 'edit',
-			// assuming there is nothing private about a cat, thought private cats are only pushed to that account
-			'acl'   => Db::strip_array_keys($cat, 'cat_'),
-			'account_id' => $GLOBALS['egw_info']['user']['account_id']
-		]]);
+									  'app'        => self::PUSH_APP,
+									  'id'         => $values['id'],
+									  'type'       => 'update',
+									  // assuming there is nothing private about a cat, thought private cats are only pushed to that account
+									  'acl'        => Db::strip_array_keys($cat, 'cat_'),
+									  'account_id' => $GLOBALS['egw_info']['user']['account_id']
+								  ]]);
 
 		return (int)$values['id'];
 	}
