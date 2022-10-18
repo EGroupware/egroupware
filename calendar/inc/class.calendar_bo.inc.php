@@ -2014,7 +2014,7 @@ class calendar_bo
 						$extra_fields [$val] = $this->format_date($event[$val]);
 						break;
 					case 'participants':
-						foreach (array_keys($event[$val]) as $key)
+						foreach(array_keys((array)$event[$val]) as $key)
 						{
 							$extra_fields [$val] = Api\Accounts::id2name($key, 'account_fullname');
 						}
