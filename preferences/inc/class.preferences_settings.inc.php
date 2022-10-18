@@ -437,13 +437,10 @@ class preferences_settings
 					$setting['run_lang'] = false;	// already done now
 					// handle as textarea
 				case 'textarea':
-					$setting['type'] = is_a($tpl, 'etemplate') ? 'textarea' : 'et2-textbox';
-					$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'multiline', 'true');
-					// anyway setting via css: width: 99%, height: 5em
-					// for old eT use size attribute
-					if(is_a($tpl, 'etemplate') && (!empty($setting['cols']) || !empty($setting['rows'])))
+					$setting['type'] = 'et2-textarea';
+					if(!empty($setting['rows']))
 					{
-						$setting['size'] = $setting['rows'] . ',' . $setting['cols'];
+						$tpl->setElementAttribute($tab . '[' . $setting['name'] . ']', 'rows', $setting['rows']);
 					}
 					break;
 				case 'password':
