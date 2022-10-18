@@ -15,7 +15,7 @@ import {css, html, LitElement, render} from "@lion/core";
 import {et2_nextmatch} from "../et2_extension_nextmatch";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {ET2_DATAVIEW_STEPSIZE} from "../et2_dataview_controller";
-import {egw, egw_get_file_editor_prefered_mimes} from "../../jsapi/egw_global";
+import {egw} from "../../jsapi/egw_global";
 
 // Minimum data to qualify as an image and not cause errors
 const IMAGE_DEFAULT = {
@@ -182,7 +182,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				}
 				else
 				{
-					let fe = egw_get_file_editor_prefered_mimes(_value.mime);
+					let fe = egw.file_editor_prefered_mimes(_value.mime);
 					if(fe && fe.mime[_value.mime] && fe.mime[_value.mime].favIconUrl)
 					{
 						mediaContent[0].thumbnail = fe.mime[_value.mime].favIconUrl;

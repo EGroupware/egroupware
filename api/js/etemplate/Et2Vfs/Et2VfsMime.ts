@@ -92,7 +92,7 @@ export class Et2VfsMime extends Et2ImageExpose
 		let gallery = super.isExposable();
 
 		// @ts-ignore Wants an argument, but does not require it
-		let fe = egw_get_file_editor_prefered_mimes();
+		let fe = egw.file_editor_prefered_mimes();
 		if(fe && fe.mime && fe.edit && fe.mime[this.exposeValue.mime])
 		{
 			return true;
@@ -131,7 +131,7 @@ export class Et2VfsMime extends Et2ImageExpose
 		if(true == super_handled)
 		{
 			// @ts-ignore Wants an argument, but does not require it
-			let fe = egw_get_file_editor_prefered_mimes();
+			let fe = egw.file_editor_prefered_mimes();
 			if(fe && fe.mime && fe.edit && fe.mime[this.exposeValue.mime])
 			{
 				egw.open_link(egw.link('/index.php', {

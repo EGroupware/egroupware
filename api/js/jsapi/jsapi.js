@@ -700,31 +700,11 @@ window.addOption = function(id,label,value,do_onchange)
 }
 
 /**
- *
- * @param {string} _mime current mime type
- * @returns {object|null} returns object of filemanager editor hook
+ * @deprecated use egw.file_editor_prefered_mimes()
  */
 window.egw_get_file_editor_prefered_mimes = function(_mime)
 {
-	var fe = jQuery.extend(true, {},egw.link_get_registry('filemanager-editor'));
-	var ex_mimes = egw.preference('collab_excluded_mimes', 'filemanager');
-	var dblclick_action = egw.preference('document_doubleclick_action', 'filemanager');
-	if (dblclick_action == 'download' && typeof _mime === 'string')
-	{
-		ex_mimes = !ex_mimes ? _mime : ex_mimes+','+_mime;
-	}
-	if (fe && fe.mime && ex_mimes && typeof ex_mimes === 'string')
-	{
-		ex_mimes = ex_mimes.split(',');
-		for (var mime in fe.mime)
-		{
-			for (var i in ex_mimes)
-			{
-				if (ex_mimes[i] == mime) delete(fe.mime[mime]);
-			}
-		}
-	}
-	return fe && fe.mime?fe:null;
+	return egw.file_editor_prefered_mimes(_mime);
 }
 /**
  * Install click handlers for popup and multiple triggers of uiaccountselection

@@ -276,6 +276,35 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 				if (typeof _callback == 'function') return false;
 			}*/
 			return typeof grants[_app] === 'object' ? jQuery.extend({}, grants[_app]) : grants[_app];
+		},
+
+		/**
+		 * Get mime types supported by file editor AND not excluded by user
+		 *
+		 * @param {string} _mime current mime type
+		 * @returns {object|null} returns object of filemanager editor hook
+		 */
+		file_editor_prefered_mimes: function(_mime)
+		{
+			const fe = jQuery.extend(true, {}, this.link_get_registry('filemanager-editor'));
+			let ex_mimes = this.preference('collab_excluded_mimes', 'filemanager');
+			const dblclick_action = this.preference('document_doubleclick_action', 'filemanager');
+			if (dblclick_action === 'download' && typeof _mime === 'string')
+			{
+				ex_mimes = !ex_mimes ? _mime : ex_mimes+','+_mime;
+			}
+			if (fe && fe.mime && ex_mimes && typeof ex_mimes === 'string')
+			{
+				ex_mimes = ex_mimes.split(',');
+				for (let mime in fe.mime)
+				{
+					for (let i in ex_mimes)
+					{
+						if (ex_mimes[i] === mime) delete(fe.mime[mime]);
+					}
+				}
+			}
+			return fe && fe.mime ? fe : null;
 		}
 	};
 });

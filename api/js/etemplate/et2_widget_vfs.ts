@@ -27,7 +27,7 @@ import {et2_file} from "./et2_widget_file";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
-import {egw, egw_get_file_editor_prefered_mimes} from "../jsapi/egw_global";
+import {egw} from "../jsapi/egw_global";
 import {egw_getAppObjectManager, egwActionObject} from "../egw_action/egw_action.js";
 import {egw_keyHandler} from '../egw_action/egw_keymanager.js';
 import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants.js';
@@ -893,7 +893,7 @@ export class et2_vfsUpload extends et2_file
 		let vfs_attrs = {value: file_data, onclick: undefined};
 		if (file_data && (typeof file_data.download_url != 'undefined'))
 		{
-			var fe_mime = egw_get_file_editor_prefered_mimes(file_data.mime);
+			var fe_mime = egw.file_editor_prefered_mimes(file_data.mime);
 			// Check if the link entry is mime with media type, in order to open it in expose view
 			if (typeof file_data.mime === 'string' &&
 				(file_data.mime.match(mime.mime_regexp,'ig') || (fe_mime && fe_mime.mime[file_data.mime])))

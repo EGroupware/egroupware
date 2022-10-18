@@ -454,6 +454,13 @@ declare interface IegwGlobal
 	 * @return grant object, false if not (yet) loaded and no callback or undefined
 	 */
 	grants(_app : string) /*, _callback, _context)*/ : any;
+	/**
+	 * Get mime types supported by file editor AND not excluded by user
+	 *
+	 * @param {string} _mime current mime type
+	 * @returns {object|null} returns object of filemanager editor hook
+	 */
+	file_editor_prefered_mimes(_mime : string) : object|null;
 
 	/**
 	 * implemented in egw_store.js

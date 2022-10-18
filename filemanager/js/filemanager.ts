@@ -17,7 +17,7 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
 import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
-import {egw, egw_get_file_editor_prefered_mimes} from "../../api/js/jsapi/egw_global";
+import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 
@@ -853,7 +853,7 @@ export class filemanagerAPP extends EgwApp
 		let mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
 		let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("span#filemanager-index_\\$row");
-		let fe = egw_get_file_editor_prefered_mimes();
+		let fe = egw.file_editor_prefered_mimes();
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
@@ -1420,7 +1420,7 @@ export class filemanagerAPP extends EgwApp
 		if (_senders.length>1) return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
-		let fe = egw_get_file_editor_prefered_mimes(data.data.mime);
+		let fe = egw.file_editor_prefered_mimes(data.data.mime);
 		if (fe && fe.mime && !fe.mime[data.data.mime]) return false;
 		return !!data.data.mime.match(mime.mime_odf_regex);
 	}

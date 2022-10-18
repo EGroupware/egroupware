@@ -539,7 +539,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				return false;
 			}
-			let fe = egw_get_file_editor_prefered_mimes(mime);
+			let fe = this.file_editor_prefered_mimes(mime);
 			if (!fe || !fe.mime || fe && fe.mime && !fe.mime[mime])
 			{
 				return false;
