@@ -482,9 +482,7 @@ window.et2_call = function(_func)
  */
 window.egw_rejoin = function ()
 {
-	let warning = egw(this).message(egw.lang("Lost connection to main window"), "warning");
-
-	window.setTimeout(function ()
+		window.setTimeout(function ()
 	{
 		opener.addEventListener("load", () =>
 		{
@@ -493,7 +491,6 @@ window.egw_rejoin = function ()
 			window.setTimeout(() =>
 			{
 				opener.console.log("Re-set framework");
-				warning.close();
 				reconnecting.close();
 				this.framework = this.opener.framework;
 				this.framework.egw_appWindow().console.log("Popup %s rejoined", this.location.href);
