@@ -147,7 +147,10 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			 */
 			let temp_target = document.createElement("div");
 
-			let options = html`${this._emptyLabelTemplate()}${this.select_options.map(this._optionTemplate.bind(this))}`;
+			let options = html`${this._emptyLabelTemplate()}${this.select_options
+				// Filter out empty values if we have empty label to avoid duplicates
+				.filter(o => this.emptyLabel ? o.value !== '' : o)
+				.map(this._optionTemplate.bind(this))}`;
 
 			render(options, temp_target);
 			return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))

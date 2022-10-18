@@ -4119,9 +4119,10 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 			let widget = null;
 			if(field.type == 'select' || field.type == 'select-account')
 			{
-				if(field.values && typeof field.values[''] !== 'undefined')
+				// Remove empty label
+				if(field.values && field.values.findIndex && field.values.findIndex((i) => i.value == '') !== -1)
 				{
-					delete (field.values['']);
+					field.values.splice(field.values.findIndex((i) => i.value == ''), 1);
 				}
 				widget = loadWebComponent(
 					field.type == 'select-account' ? 'et2-nextmatch-header-account' : "et2-nextmatch-header-filter",
