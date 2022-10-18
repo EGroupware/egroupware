@@ -2222,6 +2222,11 @@ class infolog_ui
 		{
 			unset($content['info_cat']);
 		}
+		// Don't send '0' if there is no price list
+		if($content['pl_id'] == '0')
+		{
+			unset($content['pl_id']);
+		}
 		$content['duration_format'] = $this->duration_format;
 		$content['hours_per_workday'] = $this->hours_per_workday;
 		if ($this->prefs['show_id']) $content['info_number'] = $info_id;

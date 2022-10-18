@@ -578,6 +578,11 @@ class infolog_so
 				$to_write[$key] = $this->data[$key] = $val;   // update internal data
 			}
 		}
+		// If no price list use NULL not 0
+		if($to_write['pl_id'] == '')
+		{
+			$to_write['pl_id'] = NULL;
+		}
 		// writing no price as SQL NULL (required by postgres)
 		if ($to_write['info_price'] === '') $to_write['info_price'] = NULL;
 
