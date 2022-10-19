@@ -79,10 +79,25 @@ class AddressbookApp extends EgwApp
 		// r49769 let's CRM view run under currentapp == "addressbook", which causes
 		// app.addressbook.et2_ready called before app.infolog.et2_ready and therefore
 		// app.addressbook.et2 would point to infolog template, if we not stop here
-		if (name.match(/^infolog|tracker\./)) return;
+		if(name.match(/^infolog|tracker\./))
+		{
+			return;
+		}
+
+		// Contact view will also replace this.et2
+		if(name == 'addressbook.view')
+		{
+			// Still need to run super.et2_ready(), but replace this.et2 after
+			const list_et2 = this.et2;
+			super.et2_ready(et2, name);
+			this.et2 = list_et2;
+		}
 
 		// call parent
-		super.et2_ready(et2, name);
+		else
+		{
+			super.et2_ready(et2, name);
+		}
 
 		switch (name)
 		{
