@@ -340,6 +340,10 @@ class AdminApp extends EgwApp
 		else if(pushData.app == this.appname && pushData.id < 0)
 		{
 			this.groups.refresh(pushData.id, pushData.type);
+			if(this.tree)
+			{
+				this.tree.refreshItem('/groups');
+			}
 		}
 		else if(pushData.app == "api-cats" && etemplate2.getByTemplate(cat_template).length == 1)
 		{
