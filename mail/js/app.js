@@ -3273,8 +3273,8 @@ app.classes.mail = AppJS.extend(
 				   {label: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
 				   {label: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
 			   ];
-			   et2_createWidget("dialog",
-			   {
+			   const dialog = new Et2Dialog(this.egw);
+			   dialog.transformAttributes({
 				   callback: function (_buttons, _value)
 				   {
 					   if (_buttons == 'cancel')
@@ -3295,7 +3295,8 @@ app.classes.mail = AppJS.extend(
 					   }
 				   },
 				   template: egw.webserverUrl + '/mail/templates/default/integration_to_entry_dialog.xet'
-			   }, Et2Dialog._create_parent('mail'));
+			   });
+			   document.body.appendChild(dialog);
 		   }
 		   else // there is an entry saved related to this mail's subject
 		   {
