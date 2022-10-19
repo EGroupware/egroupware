@@ -294,13 +294,18 @@ class AddressbookApp extends EgwApp
 		};
 		let data = egw.dataGetUIDdata(_senders[0].id)['data'];
 		// CRM list
-		if (_action.id != 'view')
+		if(_action.id != 'view')
 		{
-			extras.crm_list = _action.id.replace('view-','');
+			extras.crm_list = _action.id.replace('view-', '');
 		}
-		if (!extras.crm_list) extras.crm_list = <string>egw.preference('crm_list', 'addressbook');
-		extras.title = (_action.id.match(/\-organisation/) && data.org_name != "") ? data.org_name
-			: data.n_fn+" ("+egw.lang(extras.crm_list)+")";
+		if(!extras.crm_list)
+		{
+			extras.crm_list = <string>egw.preference('crm_list', 'addressbook');
+		}
+		const title_app = extras.crm_list == "tracker" ? " (" + egw.lang(extras.crm_list) + ")" : "";
+		extras.title = (_action.id.match(/\-organisation/) && data.org_name != "")
+					   ? data.org_name
+					   : data.n_fn + title_app;
 		extras.icon = data.photo;
 		return this.openCRMview(extras);
 	}
