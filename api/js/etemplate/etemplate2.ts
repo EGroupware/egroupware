@@ -357,7 +357,7 @@ export class etemplate2
 			{
 				if(this.app_obj[app_name] instanceof EgwApp)
 				{
-					this.app_obj[app_name].destroy();
+					this.app_obj[app_name].destroy(this.app_obj);
 				}
 			}
 		}

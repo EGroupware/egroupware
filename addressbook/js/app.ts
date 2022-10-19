@@ -84,15 +84,6 @@ class AddressbookApp extends EgwApp
 			return;
 		}
 
-		// Contact view will also replace this.et2
-		if(name == 'addressbook.view')
-		{
-			// Still need to run super.et2_ready(), but replace this.et2 after
-			const list_et2 = this.et2;
-			super.et2_ready(et2, name);
-			this.et2 = list_et2;
-		}
-
 		// call parent
 		else
 		{
