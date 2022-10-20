@@ -160,8 +160,9 @@ function send_template()
 		$str = preg_replace('/<(image|description)\s([^><]*)expose_view="true"\s([^><]*)\\/>/',
 			'<et2-$1-expose $2 $3></et2-$1-expose>', $str);
 
-		// fix <textbox multiline="true" .../> --> <et2-textarea .../>
+		// fix <textbox multiline="true" or rows="..." --> <et2-textarea .../>
 		$str = preg_replace('#<textbox(.*?)\smultiline="true"(.*?)/>#', '<et2-textarea$1$2></et2-textarea>', $str);
+		$str = preg_replace('#<textbox(.*?\srows="\d+".*?)/>#', '<et2-textarea$1></et2-textarea>', $str);
 
 		// fix <(textbox|int(eger)?|float|passwd) precision="int(eger)?|float|passwd" .../> --> <et2-number precision=.../>, <et2-password .../> or <et2-textbox .../>
 		$str = preg_replace_callback('#<(textbox|int(eger)?|float|number|passwd).*?\s(type="(int(eger)?|float|passwd)")?.*?(/|></textbox)>#',
