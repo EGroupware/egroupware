@@ -53,7 +53,7 @@ export class Et2DateTime extends Et2Date
 	 * @see https://flatpickr.js.org/options/
 	 * @returns {any}
 	 */
-	protected getOptions()
+	public getOptions()
 	{
 		let options = super.getOptions();
 
@@ -79,7 +79,7 @@ export class Et2DateTime extends Et2Date
 	_updateValueOnChange(selectedDates : Date[], dateStr : string, instance : Instance)
 	{
 		super._updateValueOnChange(selectedDates, dateStr, instance);
-		if(this._instance && instance.config.minuteIncrement > 1)
+		if(!this.freeMinuteEntry && dateStr && instance && instance.config.minuteIncrement > 1)
 		{
 			let i = instance.latestSelectedDateObj;
 			const d = i ? i : new Date();
@@ -108,6 +108,23 @@ export class Et2DateTime extends Et2Date
 			],
 			onClick: this._handleShortcutButtonClick
 		})
+	}
+
+	/**
+	 * Handle clicks on scroll buttons
+	 *
+	 * @param e
+	 */
+	public handleScroll(e)
+	{
+		if(e.target && !e.target.dataset.direction)
+		{
+			return;
+		}
+		e.stopPropagation();
+
+		const direction = parseInt(e.target.dataset.direction, 10) || 1;
+		this.increment(direction * this.getOptions().minuteIncrement, "minute", true);
 	}
 }
 

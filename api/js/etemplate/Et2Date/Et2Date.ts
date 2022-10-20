@@ -10,11 +10,8 @@
 
 
 import {css, html} from "@lion/core";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import 'lit-flatpickr';
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {dateStyles} from "./DateStyles";
-import {LitFlatpickr} from "lit-flatpickr";
 import {Instance} from 'flatpickr/dist/types/instance';
 import "flatpickr/dist/plugins/scrollPlugin.js";
 import "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
@@ -23,7 +20,13 @@ import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
 import {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
+import {Et2ButtonIcon} from "../Et2Button/Et2ButtonIcon";
+import {FormControlMixin} from "@lion/form-core";
+import {LitFlatpickr} from "lit-flatpickr";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import shoelace from "../Styles/shoelace";
 
+const button = new Et2ButtonIcon();
 // Request this year's holidays now
 holidays(new Date().getFullYear());
 
@@ -306,12 +309,14 @@ export function formatDateTime(date : Date, options = {dateFormat: "", timeForma
 	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
-export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFlatpickr)))
+// !!! ValidateMixin !!!
+export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 {
 	static get styles()
 	{
 		return [
-			...super.styles,
+			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+			shoelace,
 			dateStyles,
 			css`
 			:host {
@@ -320,6 +325,28 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			::slotted([slot='input'])
 			{
 				flex: 1 1 auto;
+			}
+			
+			/* Scroll buttons */
+			.input-group__container {
+				position: relative;
+			}
+			.input-group__container:hover .et2-date-time__scrollbuttons {
+				display: flex;
+			}
+			.et2-date-time__scrollbuttons {
+				display: none;
+				flex-direction: column;
+				width: calc(var(--sl-input-height-medium) / 2);
+				position: absolute;
+				right: 0px;
+			}
+			.et2-date-time__scrollbuttons > * {
+				font-size: var(--sl-font-size-2x-small);
+				height: calc(var(--sl-input-height-medium) / 2);
+			}
+			.et2-date-time__scrollbuttons > *::part(base) {
+				padding: 3px;
 			}
             `,
 		];
@@ -337,6 +364,16 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 			 * Placeholder text for input
 			 */
 			placeholder: {type: String},
+
+			/**
+			 * Allow value that is not a multiple of minuteIncrement
+			 *
+			 * eg: 11:23 with default 5 minuteIncrement = 11:25
+			 * 16:47 with 30 minuteIncrement = 17:00
+			 * If false (default), it is impossible to have a time that is not a multiple of minuteIncrement.
+			 * Does not affect scroll, which always goes to nearest multiple.
+			 */
+			freeMinuteEntry: {type: Boolean}
 		}
 	}
 
@@ -350,7 +387,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 				const text = <Et2Textbox>document.createElement('et2-textbox');
 				text.type = "text";
 				text.placeholder = this.placeholder;
-				text.setAttribute("data-input", "");
+				text.required = this.required;
 				return text;
 			}
 		}
@@ -360,8 +397,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		super();
 
+		// By default, 5 minute resolution (see minuteIncrement to change resolution)
+		this.freeMinuteEntry = false;
+
 		this._onDayCreate = this._onDayCreate.bind(this);
 		this._handleInputChange = this._handleInputChange.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
 	}
 
 
@@ -376,8 +417,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	{
 		super.disconnectedCallback();
 		this._inputNode?.removeEventListener('change', this._onChange);
-		this._inputNode?.removeEventListener("input", this._handleInputChange);
-		this.destroy();
+		this.findInputField()?.removeEventListener("input", this._handleInputChange);
 	}
 
 	/**
@@ -392,13 +432,29 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		}
 		if(typeof this._instance === "undefined")
 		{
+			if(this.getOptions().allowInput)
+			{
+				// Change this so it uses findInputField() to get the input
+				this._hasSlottedElement = true;
+
+				// Wait for everything to be there before we start flatpickr
+				await this.updateComplete;
+				this._inputNode.requestUpdate();
+				await this._inputNode.updateComplete;
+
+				// Set flag attribute on _internal_ input - flatpickr needs an <input>
+				if(this._inputNode.shadowRoot.querySelectorAll("input[type='text']").length == 1)
+				{
+					this.findInputField().setAttribute("data-input", "");
+				}
+			}
+
 			this.initializeComponent();
 
 			// This has to go in init() rather than connectedCallback() because flatpickr creates its nodes in
 			// initializeComponent() so this._inputNode is not available before this
-			this._inputNode.setAttribute("slot", "input");
-			this._inputNode.addEventListener('change', this._updateValueOnChange);
-			this._inputNode.addEventListener("input", this._handleInputChange);
+			this.findInputField().addEventListener('change', this._updateValueOnChange);
+			this.findInputField().addEventListener("input", this._handleInputChange);
 		}
 	}
 
@@ -408,7 +464,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 * @see https://flatpickr.js.org/options/
 	 * @returns {any}
 	 */
-	protected getOptions()
+	public getOptions()
 	{
 		let options = super.getOptions();
 
@@ -417,7 +473,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		options.allowInput = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 		options.weekNumbers = true;
-		options.wrap = true;
+		// Wrap needs to be false because flatpickr can't look inside et2-textbox and find the <input> it wants
+		// We provide it directly through findInputField()
+		options.wrap = false;
 
 		options.onDayCreate = this._onDayCreate;
 
@@ -506,7 +564,6 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		if(!value || value == 0 || value == "0")
 		{
 			value = "";
-			this.modelValue = "";
 			this.clear();
 			return;
 		}
@@ -515,7 +572,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		if (typeof value === 'string' && (value[0] === '+' || value[0] === '-'))
 		{
 			date = new Date(this.getValue());
-			date.set_value(date.getSeconds() + parseInt(value));
+			date.setSeconds(date.getSeconds() + parseInt(value));
 		}
 		else
 		{
@@ -535,12 +592,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 
 	get value()
 	{
-		// Copied from flatpickr, since Et2InputWidget overwrote flatpickr.getValue()
-		if(!this._inputNode)
+		if(!this._inputElement)
 		{
 			return '';
 		}
-		let value = this._valueNode.value;
+		let value = this._inputElement.value;
 
 		// Empty field, return ''
 		if(!value)
@@ -549,6 +605,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		}
 
 		return value;
+	}
+
+	get parse() : Function
+	{
+		return parseDate;
 	}
 
 	/**
@@ -577,7 +638,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	_handleInputChange(e : InputEvent)
 	{
 		// Update
-		const value = this._inputNode.value;
+		const value = this.findInputField().value;
+
+		if(value === "" && this._instance.selectedDates.length > 0)
+		{
+			return this._instance.clear();
+		}
 		let parsedDate = null
 		try
 		{
@@ -591,7 +657,9 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 		if(parsedDate)
 		{
 			const formattedDate = this._instance.formatDate(parsedDate, this._instance.config.altFormat)
-			if(value === formattedDate)
+			if(value === formattedDate &&
+				// Avoid infinite loop of setting the same value back triggering another change
+				this._instance.input.value !== this._instance.formatDate(parsedDate, this._instance.config.dateFormat))
 			{
 				this._instance.setDate(value, true, this._instance.config.altFormat)
 			}
@@ -721,21 +789,23 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	}
 
 	/**
-	 * Override from flatpickr
+	 * Override from flatpickr - This is the node we tell flatpickr to use
+	 * It must be an <input>, flatpickr doesn't understand anything else
 	 * @returns {any}
 	 */
 	findInputField() : HTMLInputElement
 	{
-		return <HTMLInputElement><unknown>this;
+		return <HTMLInputElement>this._inputNode.shadowRoot.querySelector('input:not([type="hidden"])');
 	}
 
 	/**
 	 * The interactive (form) element.
+	 * This is an et2-textbox, which causes some problems with flatpickr
 	 * @protected
 	 */
 	get _inputNode() : HTMLElementWithValue
 	{
-		return this.querySelector('et2-textbox:not([data-input])');
+		return this.querySelector('[slot="input"]');
 	}
 
 	/**
@@ -743,7 +813,92 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(ValidateMixin(LitFl
 	 */
 	get _valueNode() : HTMLElementWithValue
 	{
-		return this.querySelector('[data-input]');
+		return this.querySelector('et2-textbox');
+	}
+
+	/**
+	 * Handle clicks on scroll buttons
+	 *
+	 * @param e
+	 */
+	public handleScroll(e)
+	{
+		if(e.target && !e.target.dataset.direction)
+		{
+			return;
+		}
+		e.stopPropagation();
+
+		const direction = parseInt(e.target.dataset.direction, 10) || 1;
+		this.increment(direction, "day", true);
+	}
+
+	/**
+	 * Increment the current value
+	 *
+	 * @param {number} delta Amount of change, positive or negative
+	 * @param {"day" | "hour" | "minute"} field
+	 * @param {boolean} roundToDelta Round the current value to a multiple of delta before incrementing
+	 * 	Useful for keeping things to a multiple of 5, for example.
+	 */
+	public increment(delta : number, field : "day" | "hour" | "minute", roundToDelta = true)
+	{
+		let date;
+		if(this._inputElement.value)
+		{
+			date = new Date(this._inputElement.value);
+			// Handle timezone offset, flatpickr uses local time
+			date = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+		}
+		else
+		{
+			// No current value - start with "now", but don't increment at all
+			date = new Date();
+			delta = 0;
+		}
+		const fieldMap = {day: "UTCDate", hour: "UTCHours", minute: "UTCMinutes"};
+		const original = date["get" + fieldMap[field]]();
+		// Avoid divide by 0 in case we have no current value, or delta of 0 passed in
+		const roundResolution = delta || {
+			day: 1,
+			hour: this.getOptions().hourIncrement,
+			minute: this.getOptions().minuteIncrement
+		}[field];
+
+		let bound = roundToDelta ? (Math.round(original / roundResolution) * roundResolution) : original;
+		date["set" + fieldMap[field]](bound + delta);
+
+
+		this.setDate(date, false, null);
+	}
+
+	render()
+	{
+		return html`
+            <div class="form-field__group-one">${this._groupOneTemplate()}</div>
+            <div class="form-field__group-two">${this._groupTwoTemplate()}</div>
+		`;
+	}
+
+	protected _inputGroupInputTemplate()
+	{
+		return html`
+            <slot name="input"></slot>
+            <div class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
+                <et2-button-icon
+                        noSubmit
+                        name="chevron-up"
+                        data-direction="1"
+                >↑
+                </et2-button-icon>
+                <et2-button-icon
+                        noSubmit
+                        name="chevron-down"
+                        data-direction="-1"
+                >↓
+                </et2-button-icon>
+            </div>
+		`;
 	}
 }
 

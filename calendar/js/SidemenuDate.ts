@@ -35,6 +35,20 @@ export class SidemenuDate extends Et2Date
 		];
 	}
 
+	get slots()
+	{
+		return {
+			...super.slots,
+			input: () =>
+			{
+				// This element gets hidden and used for value - overridden from parent
+				const text = document.createElement('input');
+				text.type = "text";
+				return text;
+			}
+		}
+	}
+
 	constructor()
 	{
 		super();
@@ -91,10 +105,11 @@ export class SidemenuDate extends Et2Date
 	 * @see https://flatpickr.js.org/options/
 	 * @returns {any}
 	 */
-	protected getOptions()
+	public getOptions()
 	{
 		let options = super.getOptions();
 
+		options.allowInput = false;
 		options.inline = true;
 		options.dateFormat = "Y-m-dT00:00:00\\Z";
 
@@ -111,6 +126,16 @@ export class SidemenuDate extends Et2Date
 		return null;
 	}
 
+	/**
+	 * Override from parent - This is the node we tell flatpickr to use
+	 * It must be an <input>, flatpickr doesn't understand anything else
+	 * @returns {any}
+	 */
+	findInputField() : HTMLInputElement
+	{
+		return <HTMLInputElement>this._inputNode;
+	}
+
 	set_value(value)
 	{
 		if(typeof value !== "string" && value.length == 8)
@@ -121,15 +146,6 @@ export class SidemenuDate extends Et2Date
 		{
 			super.set_value(value);
 		}
-	}
-
-	/**
-	 * Override from super due to customisation
-	 * @returns {any}
-	 */
-	findInputField() : HTMLInputElement
-	{
-		return this._valueNode;
 	}
 
 	/**
