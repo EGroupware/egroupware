@@ -24,7 +24,7 @@
                         <menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1"
                                    onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
                     </menulist>
-                    <date-time id="end" onchange="app.calendar.edit_update_participant"/>
+                    <date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"/>
                 </row>
             </rows>
         </grid>

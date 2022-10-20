@@ -221,7 +221,7 @@
                         <menupopup statustext="Duration of the meeting" id="duration" no_lang="1"
                                    onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 					</menulist>
-					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
+					<date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"/>
 				</row>
 				<row class="dialogHeader2">
 					<label value="Options"/>

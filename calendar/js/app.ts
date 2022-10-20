@@ -56,6 +56,7 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
 import {CalendarOwner} from "./CalendarOwner";
 import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
+import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
 
 /**
  * UI for calendar
@@ -1455,12 +1456,12 @@ export class CalendarApp extends EgwApp
 	 */
 	set_enddate_visibility()
 	{
-		var duration = <et2_selectbox> this.et2.getWidgetById('duration');
-		var start = <et2_date> this.et2.getWidgetById('start');
-		var end = <et2_date> this.et2.getWidgetById('end');
-		var content = this.et2.getArrayMgr('content').data;
+		let duration = <Et2Select>this.et2.getWidgetById('duration');
+		let start = <Et2DateTime>this.et2.getWidgetById('start');
+		let end = <Et2DateTime>this.et2.getWidgetById('end');
+		let content = this.et2.getArrayMgr('content').data;
 
-		if (typeof duration != 'undefined' && typeof end != 'undefined')
+		if(duration != null && end != null)
 		{
 			end.set_disabled(duration.get_value()!=='');
 
@@ -3446,7 +3447,7 @@ export class CalendarApp extends EgwApp
 			}
 			return label;
 		};
-		if (typeof content['alarm'][1]['default'] == 'undefined')
+		if(content['alarm'] && typeof content['alarm'] && typeof content['alarm'][1]['default'] == 'undefined')
 		{
 			// user deleted alarm --> nothing to do
 		}
