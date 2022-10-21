@@ -174,6 +174,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			$search_options;
 		$results = array();
 		$is_admin = !!($GLOBALS['egw_info']['user']['apps']['admin']);
+		$total = 0;
 
 		// Contacts matching accounts the user does not have permission for cause
 		// confusion as user selects the contact and there's nothing there, so
@@ -194,21 +195,32 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				$own_groups = Api\Accounts::link_query('',$owngroup_options);
 				$account_options = $options + array('account_type' => 'both');
 				$_results += $remove_contacts = Api\Accounts::link_query($search_text, $account_options);
+				$total += $account_options['total'];
 				if (!empty($_REQUEST['checkgrants']))
 				{
 					$grants = (array)$GLOBALS['egw']->acl->get_grants('calendar') + $own_groups;
 					$_results = array_intersect_key($_results, $grants);
+					// Grants reduces how many results we get.  This only works since we do accounts first.
+					$total = count($_results);
 				}
 			}
 			// App provides a custom search function
 			else if ($data['app'] && $data['search'])
 			{
 				$_results = call_user_func_array($data['search'], array($search_text, $options));
+				if(array_key_exists('total', $options))
+				{
+					$total += $options['total'];
+				}
 			}
 			// Use standard link registry
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
 				$_results = Link::query($data['app'], $search_text, $options);
+				if(array_key_exists('total', $options))
+				{
+					$total += $options['total'];
+				}
 			}
 
 			// There are always special cases
@@ -249,6 +261,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$results = array_merge($results, $mapped);
 			}
+		}
+		if($total)
+		{
+			$results['total'] = $total;
 		}
 
 		Api\Json\Response::get()->data($results);
