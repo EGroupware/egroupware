@@ -116,17 +116,15 @@
 					width: -webkit-fill-available;
 					width: -moz-available;
 					max-width: fit-content !important;
+
+				}
+				&:hover
+				{
 					.egw_fw_ui_tab_close_button {
+						top: 0px;
 						background-image: url(../../api/templates/default/images/close.svg);
 					}
 				}
-				&:hover:not(.egw_fw_ui_tab_header_active)
-				{
-					.egw_fw_ui_tab_close_button {
-						top: 8px;
-					}
-				}
-
 				// APP Name
 				h1 {
 					.fontsize_m;
@@ -159,6 +157,9 @@
 				&:hover {
 					.background_color_0_gray;
 					padding-top: 0px;
+					.egw_fw_ui_tab_close_button {
+						top: 2px;
+					}
 				}
 				// aktive Bilder
 				img.egw_fw_ui_tab_icon {

@@ -4558,11 +4558,9 @@ span.overlayContainer img.overlay {
   width: -moz-available;
   max-width: fit-content !important;
 }
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
+  top: 0px;
   background-image: url(../../api/templates/default/images/close.svg);
-}
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
-  top: 8px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 12px;
@@ -4600,6 +4598,9 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
   background-color: #ffffff;
   padding-top: 0px;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover .egw_fw_ui_tab_close_button {
+  top: 2px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
   padding-top: 3px;
