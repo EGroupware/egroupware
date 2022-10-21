@@ -161,11 +161,8 @@ class timesheet_hooks
 	 */
 	static function settings()
 	{
-		$settings = array();
-		if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
-		if (self::$timesheet_bo->status_labels)
-		{
-			$settings['workingtime_session'] = array(
+		$settings = [
+			'workingtime_session' => [
 				'type'   => 'select',
 				'label'  => 'Ask to start and stop working time with session',
 				'name'   => 'workingtime_session',
@@ -176,7 +173,11 @@ class timesheet_hooks
 				'help'   => 'Would you like to be asked, to start and stop working time, when login in or off',
 				'xmlrpc' => True,
 				'admin'  => False,
-			);
+			],
+		];
+		if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
+		if (self::$timesheet_bo->status_labels)
+		{
 			$settings['predefined_status'] = array(
 				'type'   => 'select',
 				'label'  => 'Status of created timesheets',
