@@ -253,6 +253,14 @@ export class Et2Split extends Et2Widget(SlotMixin(SlSplitPanel))
 		let size = this.vertical ? {sizeTop: Math.round(this.position)} : {sizeLeft: Math.round(this.position)};
 		this.egw().set_preference(this.egw().getAppName(), Et2Split.PREF_PREFIX + this.id, size);
 
+		// make sure mouse up is handled when the mouse position has crossed the min/max points. The mouseup event does not
+		// get called naturally in those situations.
+		if (this.position <= parseInt(this.style.getPropertyValue('--min'))
+			|| this.position >= parseInt(this.style.getPropertyValue('--max')))
+		{
+			this._handleMouseUp();
+		}
+
 	}
 
 	/**
