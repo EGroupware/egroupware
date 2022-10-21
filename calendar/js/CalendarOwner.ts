@@ -38,6 +38,9 @@ export class CalendarOwner extends Et2Select
 		super(...args);
 		this.searchUrl = "calendar_owner_etemplate_widget::ajax_search";
 		this.multiple = true;
+
+		// Take grants into account for search
+		this.searchOptions['checkgrants'] = true;
 	}
 
 	/**
