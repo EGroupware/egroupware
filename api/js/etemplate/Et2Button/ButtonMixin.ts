@@ -67,7 +67,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
             	display: initial;
             }
             :host([hideonreadonly][disabled]) {
-            	display:none;
+            	display:none !important;
             }
             
             /* Set size for icon */
