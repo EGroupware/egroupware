@@ -88,8 +88,6 @@ class admin_ui
 				'title' => $data['account_description'],
 			);
 		}
-		$sel_options['account_primary_group'] = $sel_options['filter'];
-		unset($sel_options['account_primary_group']['']);
 
 		$sel_options['filter2'] = array(
 			''            => 'All',

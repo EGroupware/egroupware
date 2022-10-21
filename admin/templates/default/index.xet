@@ -42,9 +42,7 @@
 					<description id="${row}[account_firstname]" no_lang="1"/>
 					<description id="${row}[account_lastname]" no_lang="1"/>
 					<url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
-					<menulist>
-						<menupopup id="${row}[account_primary_group]" no_lang="1" readonly="true"/>
-					</menulist>
+					<select-account id="${row}[account_primary_group]" no_lang="1" readonly="true"/>
 					<description id="${row}[status]" no_lang="1" class="adminStatus"/>
 					<date-time id="${row}[account_created]" readonly="true"/>
 					<date-time id="${row}[account_modified]" readonly="true"/>
