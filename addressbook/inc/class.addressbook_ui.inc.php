@@ -434,7 +434,7 @@ class addressbook_ui extends addressbook_bo
 			{
 				$actions['view']['children']["view-$app"] = array(
 					'caption' => $app,
-					'icon' => "$app/navbar"
+					'icon' => $app == 'infolog-organisation' ? "infolog/navbar" : "$app/navbar"
 				);
 			}
 		}
