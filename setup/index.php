@@ -356,7 +356,6 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 						{
 							echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 							$db_backup->backup($f);
-							fclose($f);
 							echo '<p align="center">'.lang('backup finished')."</p>\n";
 						}
 						else	// backup failed ==> dont start the upgrade
