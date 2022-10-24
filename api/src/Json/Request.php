@@ -103,8 +103,12 @@ class Request
 		{
 			$this->handleRequest($menuaction, $parameters);
 		}
-		// check if we have push notifications, if notifications app available
-		if (class_exists('notifications_push')) notifications_push::get();
+		// check if we have push notifications, if notifications app available AND enabled for the user
+		if (!empty($GLOBALS['egw_info']['user']['apps']['notifications']) &&
+			class_exists('notifications_push'))
+		{
+			notifications_push::get();
+		}
 	}
 
 	/**
