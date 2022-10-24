@@ -95,7 +95,7 @@ export abstract class EgwApp
 	 *
 	 *
 	 * @example <caption>Access via etemplate2 object</caption>
-	 * // Instead of this.et2, using it's unique ID
+	 * // Instead of this.et2, using its unique ID
 	 * var et2 = etemplate2.getById("myapp-index")
 	 * if(et2)
 	 * {
@@ -255,8 +255,8 @@ export abstract class EgwApp
 	/**
 	 * Handle a push notification about entry changes from the websocket
 	 *
-	 * Get's called for data of all apps, but should only handle data of apps it displays,
-	 * which is by default only it's own, but can be for multiple apps eg. for calendar.
+	 * Gets called for data of all apps, but should only handle data of apps it displays,
+	 * which is by default only its own, but can be for multiple apps eg. for calendar.
 	 *
 	 * @param  pushData
 	 * @param {string} pushData.app application name
@@ -1290,7 +1290,7 @@ export abstract class EgwApp
 	 * the filemanager to link it since we can't link directly.
 	 *
 	 * This doesn't happen automatically.  Each application must indicate that
-	 * it will accept dropped mail by it's nextmatch actions:
+	 * it will accept dropped mail by its nextmatch actions:
 	 *
 	 * $actions['info_drop_mail'] = array(
 	 *		'type' => 'drop',
@@ -1512,7 +1512,7 @@ export abstract class EgwApp
 	/**
 	 * Create backup dialog
 	 * @param {string} _selector DOM selector to attach backupDialog
-	 * @param {boolean} _initSetup determine wheter it's an initialization backup or restore backup
+	 * @param {boolean} _initSetup determine whether it's an initialization backup or restore backup
 	 *
 	 * @returns {Promise.<backupPopupId, Error>}
 	 */

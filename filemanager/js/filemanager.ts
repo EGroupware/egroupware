@@ -11,7 +11,7 @@
 /*egw:uses
 	/api/js/jsapi/egw_app.js;
  */
-import {EgwApp} from "../../api/js/jsapi/egw_app";
+import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -29,13 +29,30 @@ import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
 export class filemanagerAPP extends EgwApp
 {
 	/**
+	 * If pushData.acl has fields that can help filter based on ACL grants, list them
+	 * here and we can check them and ignore push messages if there is no ACL for that entry.
+	 * We don't use fields, but setting this allows our custom check to run.
+	 * @protected
+	 */
+	protected push_grant_fields : string[] = ['acl'];
+
+	/**
+	 * If pushData.acl has fields that can help filter based on current nextmatch filters,
+	 * list them here and we can check and ignore push messages if the nextmatch filters do not exclude them.
+	 * We only check path, which is the ID, but setting this allows our custom check to run.
+	 *
+	 * @protected
+	 */
+	protected push_filter_fields : string[] = ['id'];
+
+	/**
 	 * path widget, by template
 	 */
-	path_widget: {} = {};
+	path_widget : {} = {};
 	/**
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
-	clipboard_is_cut: boolean = false;
+	clipboard_is_cut : boolean = false;
 
 	/**
 	 * Regexp to convert id to a path, use this.id2path(_id)
@@ -198,6 +215,40 @@ export class filemanagerAPP extends EgwApp
 			state.view = nm.view;
 		}
 		return state;
+	}
+
+	/**
+	 * Check grants to see if we can quickly tell if this entry is not for us
+	 *
+	 * Overridden to check current user and their memberships against pushData.acl, which is a list of account IDs
+	 * that should have at least read access.
+	 *
+	 * @param pushData
+	 * @param grant_fields List of fields in pushData.acl with account IDs that might grant access eg: info_responsible
+	 * @param appname Optional, to check against the grants for a different application.  Defaults to this.appname.
+	 *
+	 * @return boolean Entry has ACL access
+	 */
+	_push_grant_check(pushData : PushData, grant_fields : string[], appname? : string) : boolean
+	{
+		let grants = [this.egw.user("account_id"), ...this.egw.user("memberships")];
+
+		// check user has a something in the pushData ACL list
+		return grants.filter(value => pushData.acl.includes(value)).length > 0;
+	}
+
+	/**
+	 * Check pushData path to see if we care about this entry based on current nextmatch path.
+	 * This is not a definitive yes or no (the server will tell us when we ask), we just want to cheaply
+	 * avoid a server call if we know it won't be in the list.
+	 *
+	 * @param pushData
+	 * @param filter_fields List of filter field names eg: [owner, cat_id]
+	 * @return boolean True if the nextmatch filters might include the entry, false if not
+	 */
+	_push_field_filter(pushData : PushData, nm : et2_nextmatch, filter_fields : string[]) : boolean
+	{
+		return pushData.id && (<string>pushData.id).startsWith(this.get_path());
 	}
 
 	/**
