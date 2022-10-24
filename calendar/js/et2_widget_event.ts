@@ -696,7 +696,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 
 						if (this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
 						{
-								icons.push('<img src="' + this.egw().image('alarm', 'calendar') + '" title="' + this.egw().lang('alarm') + '"/>');
+								icons.push('<img src="' + this.egw().image('notification_message') + '" title="' + this.egw().lang('alarm') + '"/>');
 						}
 						if (this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
 						{
