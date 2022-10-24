@@ -294,7 +294,7 @@ class AddressbookApp extends EgwApp
 			extras.crm_list = <string>egw.preference('crm_list', 'addressbook');
 		}
 		const title_app = extras.crm_list == "tracker" ? " (" + egw.lang(extras.crm_list) + ")" : "";
-		extras.title = (_action.id.match(/\-organisation/) && data.org_name != "")
+		extras.title = ((_action.id.match(/\-organisation/) || extras.crm_list.endsWith("-organisation")) && data.org_name != "")
 					   ? data.org_name
 					   : data.n_fn + title_app;
 		extras.icon = data.photo;
