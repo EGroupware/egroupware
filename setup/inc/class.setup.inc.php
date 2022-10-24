@@ -616,7 +616,7 @@ class setup
 			//echo '<br>' . $setup_info[$appname]['version'];
 			if($setup_info[$appname]['tables'])
 			{
-				$tables = implode(',',$setup_info[$appname]['tables']);
+				$tables = implode(',', (array)$setup_info[$appname]['tables']);
 			}
 			$this->db->update($this->applications_table,array(
 					'app_enabled'	=> $setup_info[$appname]['enable'],
