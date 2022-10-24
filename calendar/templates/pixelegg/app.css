@@ -1442,7 +1442,6 @@ et2-switch#calendar-toolbar_toolbar-weekend {
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label span {
   background-size: 20px;
-  height: 30px;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label {
   width: 100%;
