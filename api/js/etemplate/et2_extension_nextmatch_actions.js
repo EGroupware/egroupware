@@ -400,6 +400,9 @@ export function nm_compare_field(_action, _senders, _target)
 
 // TODO: This code is rather suboptimal! No global variables as this code will
 // run in a global context
+window.nm_action = nm_action;
+window.fetchAll = fetchAll;
+window.doLongTask = doLongTask;
 window.nm_popup_action = null;
 window.nm_popup_ids = null;
 
