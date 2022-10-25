@@ -21,7 +21,7 @@
                 <row>
                     <vbox class="previewWrapper">
                         <box id="blank" disabled="@fromaddress">
-                            <image src="mail"/>
+                            <image src="email"/>
                             <description value="Select an item to read"/>
                         </box>
                         <hbox class="mailPreviewHeaders">

@@ -315,10 +315,14 @@ pre {
     justify-content: center;
     font-size: 200%;
 }
-#mail-index_mailPreview_blank::part(base)
-{
-	justify-content: center;
-	align-items: center;
+
+#mail-index_mailPreview_blank::part(base) {
+    justify-content: center;
+    align-items: center;
+}
+
+#mail-index_mailPreview_blank img {
+    vertical-align: text-bottom;
 }
 #mail-index_mailPreview_blank[disabled] {display: none}
 .mail_DisplayNone {
