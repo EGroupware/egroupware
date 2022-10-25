@@ -19,7 +19,7 @@ use EGroupware\Api;
  * This function is useful for exception handlers or early stages of the initialisation of the egw object,
  * as calling lang would try to load the translations, evtl. cause more errors, eg. because there's no db-connection.
  *
- * @param string $key message in englich with %1, %2, ... placeholders
+ * @param string $key message in English with %1, %2, ... placeholders
  * @param string $vars =null multiple values to replace the placeholders
  * @return string translated message with placeholders replaced
  */
@@ -32,7 +32,16 @@ function try_lang($key,$vars=null)
 		$vars = func_get_args();
 		array_shift($vars);	// remove $key
 	}
-	return class_exists('EGroupware\Api\Translation',false) ? Api\Translation::translate($key,$vars) : str_replace($varnames,$vars,$key);
+	if (class_exists('EGroupware\Api\Translation',false))
+	{
+		try {
+			return Api\Translation::translate($key, $vars);
+		}
+		catch (\Throwable $e) {
+			// ignore
+		}
+	}
+	return str_replace($varnames,$vars,$key);
 }
 
 /**
