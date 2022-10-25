@@ -11,6 +11,7 @@
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
+use EGroupware\Api\Json\Push;
 use EGroupware\Api\Vfs;
 
 /**
@@ -297,7 +298,7 @@ class filemanager_hooks
 	{
 		foreach (Api\Hooks::process('filemanager-editor-link', 'collabora') as $app => $link)
 		{
-			if ($link && !empty($GLOBALS['egw_info']['user']['apps'][$app]) &&
+			if($link && !empty($GLOBALS['egw_info']['user']['apps'][$app]) &&
 				(empty($GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action']) ||
 					$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_doubleclick_action'] == $app))
 			{
@@ -306,4 +307,129 @@ class filemanager_hooks
 		}
 		return $link;
 	}
+
+	/**
+	 * Hooks called by vfs, implemented to be able to notify subscribed users about changed files
+	 *
+	 * No need to care for rename or unlink/rmdir as subscriptions are store as properties of the file/directory!
+	 *
+	 * @param array $data
+	 * @param string $data [location] 'vfs_read', 'vfs_added', 'vfs_modified', 'vfs_unlink', 'vfs_rename', 'vfs_mkdir', 'vfs_rmdir'
+	 * @param string $data [path] vfs path
+	 * @param string $data [url]  backend url
+	 * @param string $data [mode] mode of fopen for location=vfs_file_modified
+	 * @param string $data [to|from|to_url|from_url] for location=vfs_file_rename
+	 * @param string $data [stat] only for vfs_(unlink|rmdir), as hook get's called after successful unlink/rmdir call
+	 */
+	public static function vfs_hooks(array $data)
+	{
+		$path = $data['path'];
+		if(!$path && $data['to'])
+		{
+			$path = $data['to'];
+		}
+
+		// ignore / do NOT notify about temporary files or lockfiles created by office programms
+		if(preg_match('/(^~\$|^\.~lock\.|\.tmp$)/', Vfs::basename($path)))
+		{
+			return;
+		}
+
+		$stat = isset($data['stat']) ? $data['stat'] : Vfs::stat($path);
+
+		// we ignore notifications about zero size files, created by some WebDAV clients prior to every real update!
+		if($stat['size'] || Vfs::is_dir($path))
+		{
+			self::push($data, $stat);
+		}
+	}
+
+	/**
+	 * Push change information to clients
+	 *
+	 * @param array $data
+	 * @return void
+	 * @throws Api\Json\Exception
+	 */
+	protected static function push(array $data, array $stat)
+	{
+		// Who do we want to broadcast to
+		$account_id = [];
+		if(str_starts_with($data['from'], '/home/') || str_starts_with($data['to'], '/home/'))
+		{
+			// In home, send to just owner and group members
+			if($stat['uid'])
+			{
+				$account_id[] = $stat['uid'];
+			}
+			if($stat['gid'])
+			{
+				$account_id += $GLOBALS['egw']->accounts->members('-' . $stat['gid'], true);
+			}
+		}
+		else
+		{
+			// Send to everyone
+			$account_id = Push::ALL;
+		}
+
+		// Send along some ACL info - a list of account_ids that should have read access
+		$acl = [];
+		if($stat['uid'])
+		{
+			$acl[] = $stat['uid'];
+		}
+		if($stat['gid'])
+		{
+			$acl[] = -$stat['gid'];
+		}
+		foreach(['to', 'from'] as $field)
+		{
+			$eacl = Vfs::get_eacl($data['to']);
+			if($eacl)
+			{
+				$acl = array_merge($acl, array_column($eacl, 'owner'));
+			}
+		}
+		$acl = array_unique($acl);
+		$type = '';
+		$push = new Push($account_id);
+		switch($data['location'])
+		{
+			case 'vfs_rename':
+				// Extra push to remove the old, since path = ID
+				$push->apply("egw.push",
+							 [[
+								  'app'        => 'filemanager',
+								  'id'         => $data['from'],
+								  'type'       => 'delete',
+								  'acl'        => $acl,
+								  'account_id' => $GLOBALS['egw_info']['user']['account_id']
+							  ]]
+				);
+			// fall through
+			case 'vfs_added':
+			case 'vfs_mkdir':
+				$type = 'add';
+				break;
+			case 'vfs_modified':
+				$type = 'update';
+				break;
+			case 'vfs_unlink':
+			case 'vfs_rmdir':
+				$type = 'delete';
+				break;
+		}
+
+		$push->apply("egw.push",
+					 [[
+						  'app'        => 'filemanager',
+						  'id'         => $data['to'],
+						  'type'       => $type,
+						  'acl'        => $acl,
+						  'account_id' => $GLOBALS['egw_info']['user']['account_id']
+					  ]]
+		);
+	}
+
 }

@@ -19,7 +19,7 @@ $setup_info['filemanager']['maintainer'] = array(
 	'name'  => 'Ralf Becker',
 	'email' => 'ralfbecker@outdoor-training.de'
 );
-$setup_info['filemanager']['license']  = 'GPL';
+$setup_info['filemanager']['license'] = 'GPL';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['filemanager']['hooks']['settings'] = 'filemanager_hooks::settings';
@@ -28,9 +28,15 @@ $setup_info['filemanager']['hooks']['sidebox_menu'] = 'filemanager_hooks::sidebo
 $setup_info['filemanager']['hooks']['admin'] = 'filemanager_hooks::admin';
 $setup_info['filemanager']['hooks']['search_link'] = 'filemanager_hooks::search_link';
 
+$setup_info['filemanager']['hooks']['vfs_added'] = 'filemanager_hooks::vfs_hooks';
+$setup_info['filemanager']['hooks']['vfs_modified'] = 'filemanager_hooks::vfs_hooks';
+$setup_info['filemanager']['hooks']['vfs_unlink'] = 'filemanager_hooks::vfs_hooks';
+$setup_info['filemanager']['hooks']['vfs_rename'] = 'filemanager_hooks::vfs_hooks';
+$setup_info['filemanager']['hooks']['vfs_rmdir'] = 'filemanager_hooks::vfs_hooks';
+$setup_info['filemanager']['hooks']['vfs_mkdir'] = 'filemanager_hooks::vfs_hooks';
 
 /* Dependencies for this app to work */
 $setup_info['filemanager']['depends'][] = array(
-	'appname' => 'api',
+	'appname'  => 'api',
 	'versions' => array('21.1')
 );

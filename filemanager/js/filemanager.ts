@@ -234,7 +234,8 @@ export class filemanagerAPP extends EgwApp
 		let grants = [this.egw.user("account_id"), ...this.egw.user("memberships")];
 
 		// check user has a something in the pushData ACL list
-		return grants.filter(value => pushData.acl.includes(value)).length > 0;
+		// Don't use strict comparison since sometimes account IDs are strings, sometimes ints
+		return grants.filter(value => pushData.acl.find(acl => acl == value)).length > 0;
 	}
 
 	/**
