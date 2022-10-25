@@ -11,8 +11,13 @@
 }
 .timesheet_titleSum,.timesheet_titleDetails { font-weight: bold; }
 
-#timesheet-edit.et2_container
-{
+/* Let category & total columns line up vertically with the 2-element headers (Duration, Total, etc) */
+#timesheet-index .innerContainer > span {
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+#timesheet-edit.et2_container {
 }
 
 /* add # sign behind the ts_id */
