@@ -75,6 +75,11 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			.input-group {
 				display: flex;
 				width: 100%;
+				gap: 0.5rem;
+			}
+			.input-group__before {
+				display: flex;
+				gap: 0.5rem;
 			}
 			::slotted(.et2_file) {
 				width: 30px;

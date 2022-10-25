@@ -32,6 +32,9 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(ValidateMixin(
 			:host(.hideApp) ::slotted([slot="app"]) {
 				display: none;
 			}
+			.input-group__input {
+				gap: 0.5rem;
+			}
 			
 			`
 		];
