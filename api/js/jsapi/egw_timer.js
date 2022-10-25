@@ -543,11 +543,18 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 						{
 							timer.offset -= action === 'start' ? -change : change;
 							update();
+							// for stop/pause set last time, otherwise we might not able to start again directly after
+							if (action !== 'start')
+							{
+								timer.last = new Date(timer[action]);
+							}
 						}
 						// for a running timer, we need to adjust the (virtual) start too
 						else if (timer.start)
 						{
 							timer.start = new Date(timer.start.valueOf() - change);
+							// for running timer set last time, otherwise we might not able to stop directly after
+							timer.last = new Date(timer.start);
 						}
 						egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
 							[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
