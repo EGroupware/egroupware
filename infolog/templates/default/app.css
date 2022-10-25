@@ -34,14 +34,15 @@ table.infolog_fullWidth { width: 100%; }
 }
 
 tr.infolog_rowHasParent > td:first-child {
-	background-image: url(../../../api/templates/default/images/egw_action/arrow_up.png);
-	background-repeat: no-repeat;
-	background-position: 6px -2px;
+    background-image: url(../../../api/templates/default/images/arrow_up.svg);
+    background-repeat: no-repeat;
+    background-size: 10px;
+    background-position: 6px 6px;
 }
 
 /*get <a> tags inside description in listview with no breakline*/
-.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a{
-	display: inline-table;
+.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a {
+    display: inline-table;
 }
 
 /* break in words if necessary for description */
@@ -49,9 +50,20 @@ tr.infolog_rowHasParent > td:first-child {
     overflow-wrap: break-word;
 }
 
+/* Spacing for parent / sub indicators */
+#infolog-index .egwGridView_grid .infolog_CompletedClmn {
+    max-width: fit-content;
+    margin-left: 10px;
+}
+
+#infolog-index tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
+    margin-left: 16px;
+}
+
 /* Put line break for the first column*/
-#infolog-index .egwGridView_grid .et2_hbox.et2_box_widget.infolog_CompletedClmn {
-    white-space: normal;
+#infolog-index .egwGridView_grid .infolog_CompletedClmn::part(base) {
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* Right-align extra buttons in tab */
