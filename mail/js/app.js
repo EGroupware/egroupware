@@ -5987,6 +5987,7 @@ app.classes.mail = AppJS.extend(
 			mail_container.classList.add((data.class='smime_cert_unknownemail'));
 			smime_signature.set_class(data.class);
 		}
+		data.class = data.class ? data.class : "";
 		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).off().on('click',function(){
 			self.smime_certAddToContact(data,true);
 		}).addClass('et2_clickable');
@@ -6044,6 +6045,7 @@ app.classes.mail = AppJS.extend(
 			'presets[org_name]': _metadata.certDetails.subject.organizationName,
 			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
 		};
+		content.class="";
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
