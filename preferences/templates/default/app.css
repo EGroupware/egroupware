@@ -12,7 +12,7 @@ table.prefTable {
 	width: 100%;
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
-	background-image:url(../../../api/templates/default/images/dialog_info.png);
+	background-image:url(../../../api/templates/default/images/dialog_info.svg);
 	background-repeat: no-repeat;
 	background-position: center;
     height: 99%;

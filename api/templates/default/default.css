@@ -955,7 +955,7 @@ td.lettersearch {
 	background-image: url(images/dialog_error.png);
 }
 .info_message {
-	background-image: url(images/dialog_info.png);
+	background-image: url(images/dialog_info.svg);
 }
 .help_message {
 	background-image: url(images/dialog_help.png);
