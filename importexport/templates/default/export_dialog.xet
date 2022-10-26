@@ -3,55 +3,56 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="importexport.export_dialog.general_tab_content" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<description span="all"/>
-				</row>
-				<row class="select_appname ">
-					<description value="Select application"/>
-					<menulist>
-						<menupopup id="appname" no_lang="1" onchange="1"/>
-					</menulist>
-				</row>
-				<row class="select_definition">
-					<description value="Select definition"/>
-					<menulist>
-						<menupopup id="definition" no_lang="1" onchange="widget.getInstanceManager().postSubmit(); return false;"/>
-					</menulist>
-				</row>
-				<row class="select_plugin">
-					<description value="Select plugin"/>
-					<menulist>
-						<menupopup id="plugin" no_lang="1" onchange="1"/>
-					</menulist>
-				</row>
-				<row>
-					<box id="plugin_description" span="all">
-						<description id="description" no_lang="1" span="all"/>
-					</box>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="importexport.export_dialog.general_tab" template="" lang="" group="0" version="">
-		<grid height="200px">
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<image src="export"/>
-					<template id="importexport.export_dialog.general_tab_content"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
+        <grid width="100%">
+            <columns>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <description span="all"/>
+                </row>
+                <row class="select_appname ">
+                    <description value="Select application"/>
+                    <menulist>
+                        <menupopup id="appname" no_lang="1" onchange="1"/>
+                    </menulist>
+                </row>
+                <row class="select_definition">
+                    <description value="Select definition"/>
+                    <menulist>
+                        <menupopup id="definition" no_lang="1"
+                                   onchange="widget.getInstanceManager().postSubmit(); return false;"/>
+                    </menulist>
+                </row>
+                <row class="select_plugin">
+                    <description value="Select plugin"/>
+                    <menulist>
+                        <menupopup id="plugin" no_lang="1" onchange="1"/>
+                    </menulist>
+                </row>
+                <row>
+                    <box id="plugin_description" span="all">
+                        <description id="description" no_lang="1" span="all"/>
+                    </box>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="importexport.export_dialog.general_tab" template="" lang="" group="0" version="">
+        <grid height="200px" width="100%">
+            <columns>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row valign="top">
+                    <image src="export"/>
+                    <template id="importexport.export_dialog.general_tab_content"/>
+                </row>
+            </rows>
+        </grid>
+    </template>
 	<template id="importexport.export_dialog.selection_tab" template="" lang="" group="0" version="">
 		<grid width="100%" height="200px">
 			<columns>
@@ -136,45 +137,48 @@
 			<columns>
 				<column/>
 			</columns>
-			<rows>
-				<row>
-					<description id="msg"/>
-				</row>
-				<row>
-					<tabbox id="general_tab|selection_tab|options_tab">
-						<tabs>
-							<tab id="general_tab" label="General"/>
-							<tab id="selection_tab" label="Selection"/>
-							<tab id="options_tab" label="Options"/>
-						</tabs>
-						<tabpanels>
-							<template id="importexport.export_dialog.general_tab"/>
-							<template id="importexport.export_dialog.selection_tab"/>
-							<template id="importexport.export_dialog.options_tab"/>
-						</tabpanels>
-					</tabbox>
-				</row>
-				<row class="save_definition dialog-operators high">
-					<checkbox label="Save as definition" id="save_as_definition"/>
-				</row>
-				<row class="dialog-footer-toolbar">
-					<hbox span="all">
-						<hbox>
-							<button label="Export" id="export" image="export" background_image="1"/>
-							<button label="Preview" id="preview" onclick="app.importexport.export_preview" image="prieview" background_image="1"/>
-						</hbox>
-						<button class="cancel" align="right" label="Cancel" id="cancel" onclick="window.close(); return false;" image="cancel" background_image="1"/>
-					</hbox>
-				</row>
-				<row>
-					<box id="preview_box" span="all" class="preview_box">
-						<html id="preview-box" class="content"/>
-						<box align="center" id="preview-box-buttons" class="preview-box-buttons">
-							<button align="center" label="OK" onclick="jQuery(this).parents('div.preview_box').css('display','none'); return false;"/>
-						</box>
-					</box>
-				</row>
-			</rows>
+            <rows>
+                <row>
+                    <description id="msg"/>
+                </row>
+                <row>
+                    <tabbox id="general_tab|selection_tab|options_tab">
+                        <tabs>
+                            <tab id="general_tab" label="General"/>
+                            <tab id="selection_tab" label="Selection"/>
+                            <tab id="options_tab" label="Options"/>
+                        </tabs>
+                        <tabpanels>
+                            <template id="importexport.export_dialog.general_tab"/>
+                            <template id="importexport.export_dialog.selection_tab"/>
+                            <template id="importexport.export_dialog.options_tab"/>
+                        </tabpanels>
+                    </tabbox>
+                </row>
+                <row class="save_definition dialog-operators high">
+                    <checkbox label="Save as definition" id="save_as_definition"/>
+                </row>
+                <row class="dialog-footer-toolbar">
+                    <hbox span="all">
+                        <hbox>
+                            <button label="Export" id="export" image="export" background_image="1"/>
+                            <button label="Preview" id="preview" onclick="app.importexport.export_preview"
+                                    image="prieview" background_image="1"/>
+                        </hbox>
+                        <button class="cancel" align="right" label="Cancel" id="cancel"
+                                onclick="window.close(); return false;" image="cancel" background_image="1"/>
+                    </hbox>
+                </row>
+                <row>
+                    <vbox id="preview_box" span="all" class="preview">
+                        <html id="preview-box" class="content"/>
+                        <box align="center" id="preview-box-buttons" class="preview-box-buttons">
+                            <button align="center" label="OK"
+                                    onclick="jQuery(this).parents('.preview').css('display','none'); return false;"/>
+                        </box>
+                    </vbox>
+                </row>
+            </rows>
 		</grid>
 		<styles>
 			div.preview_box {
@@ -203,9 +207,6 @@
   overflow: auto;
 }
 .preview-box-buttons  {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
   margin-left: 50%;
 }
 		</styles>

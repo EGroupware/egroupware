@@ -1,38 +1,36 @@
-div.preview {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 97%;
-  height: 95%;
-  overflow: hidden;
-  background-color: white;
-  z-index: 999;
-  display: none;
-  border: 1px solid black;
-  margin: 1.5%;
+.preview {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 97%;
+    height: 95%;
+    overflow: hidden;
+    background-color: white;
+    z-index: 999;
+    display: none;
+    border: 1px solid black;
+    margin: 1.5%;
 }
 
-div.preview .content {
-	overflow: auto;
-	max-height: 99%;
-	display: block;
+.preview .content {
+    overflow: auto;
+    max-height: 99%;
+    display: block;
 }
+
 .preview_box .header, .preview .header {
-  font-size: 150%;
-  margin-bottom: 5px;
-  padding: 5px;
-  border-bottom: 1px outset;
+    font-size: 150%;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 1px outset;
 }
 
 .preview  tr{
   vertical-align: top;
 }
 
-.preview div[id$='buttons']  {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  margin-left: 50%;
+.preview [id$='buttons'] {
+    margin-left: 50%;
 }
 
 .wizard_content > div > table {

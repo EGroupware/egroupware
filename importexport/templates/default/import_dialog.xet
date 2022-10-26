@@ -22,42 +22,43 @@
 		</grid>
 	</template>
 	<template id="importexport.import_dialog" template="" lang="" group="0" version="1.9.005">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@message">
-					<html id="message" span="all" class="message"/>
-					<description/>
-				</row>
-				<row>
-					<description value="Application"/>
-					<menulist>
-						<menupopup id="appname" onchange="1"/>
-					</menulist>
-				</row>
-				<row>
-					<description value="Import definition"/>
-					<menulist>
-						<menupopup id="definition" onchange="1"/>
-					</menulist>
-				</row>
-				<row>
-					<description value="Please select file to import"/>
-					<file id="file" accept="@file_type"/>
-				</row>
-				<row disabled="!@plugin_options_template">
-					<template template="@plugin_options_template"/>
-				</row>
-				<row>
-					<box id="preview_box" span="all" class="preview">
-						<html id="preview" class="content"/>
-						<box align="center" id="buttons">
-							<buttononly align="center" label="OK" onclick="jQuery(this).parents('div.preview').css('display','none'); return false;"/>
-						</box>
-					</box>
+        <grid width="100%">
+            <columns>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row disabled="!@message">
+                    <html id="message" span="all" class="message"/>
+                    <description/>
+                </row>
+                <row>
+                    <description value="Application"/>
+                    <menulist>
+                        <menupopup id="appname" onchange="1"/>
+                    </menulist>
+                </row>
+                <row>
+                    <description value="Import definition"/>
+                    <menulist>
+                        <menupopup id="definition" onchange="1"/>
+                    </menulist>
+                </row>
+                <row>
+                    <description value="Please select file to import"/>
+                    <file id="file" accept="@file_type"/>
+                </row>
+                <row disabled="!@plugin_options_template">
+                    <template template="@plugin_options_template"/>
+                </row>
+                <row>
+                    <vbox id="preview_box" span="all" class="preview">
+                        <html id="preview" class="content"/>
+                        <box align="center" id="buttons">
+                            <buttononly align="center" label="OK"
+                                        onclick="jQuery(this).parents('.preview').css('display','none'); return false;"/>
+                        </box>
+                    </vbox>
 					<description/>
 				</row>
 				<row>

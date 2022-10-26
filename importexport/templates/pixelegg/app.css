@@ -11,7 +11,7 @@
  * @package projectmanager
  * @version $Id$
  */
-div.preview {
+.preview {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -24,7 +24,7 @@ div.preview {
   border: 1px solid black;
   margin: 1.5%;
 }
-div.preview .content {
+.preview .content {
   overflow: auto;
   max-height: 99%;
   display: block;
@@ -39,10 +39,7 @@ div.preview .content {
 .preview tr {
   vertical-align: top;
 }
-.preview div[id$='buttons'] {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
+.preview [id$='buttons'] {
   margin-left: 50%;
 }
 .wizard_content > div > table {

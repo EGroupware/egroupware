@@ -100,35 +100,44 @@ class ImportExportApp extends EgwApp
 	export_preview(event, widget)
 	{
 		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
-		jQuery('.content',preview).empty()
+		// TD gets the class too
+		preview.parent().show();
+		jQuery('.content', preview).empty()
 			.append('<div class="loading" style="width:100%;height:100%"></div>');
 
 		preview
-			.show(100, jQuery.proxy(function() {
+			.show(100, jQuery.proxy(function()
+			{
 				widget.clicked = true;
 				widget.getInstanceManager().submit(false, true);
 				widget.clicked = false;
-			},this));
+			}, this));
 		return false;
 	}
 
 	import_preview(event, widget)
 	{
 		var test = widget.getRoot().getWidgetById('dry-run');
-		if(test.getValue() == test.options.unselected_value) return true;
+		if(test.getValue() == test.options.unselected_value)
+		{
+			return true;
+		}
 
 		// Show preview
 		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
-		jQuery('.content',preview).empty();
+		// TD gets the class too
+		preview.parent().show();
+		jQuery('.content', preview).empty();
 		preview
 			.addClass('loading')
-			.show(100, jQuery.proxy(function() {
+			.show(100, jQuery.proxy(function()
+			{
 				widget.clicked = true;
 				widget.getInstanceManager().submit(false, true);
-					widget.clicked = false;
-					jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode())
-						.removeClass('loading');
-			},this));
+				widget.clicked = false;
+				jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode())
+					.removeClass('loading');
+			}, this));
 		return false;
 	}
 

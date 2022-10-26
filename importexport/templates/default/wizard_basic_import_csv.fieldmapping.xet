@@ -13,28 +13,28 @@
 				</row>
 				<row>
 					<grid overflow="auto" id="mapping">
-						<columns>
-							<column width="4ex"/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row class="th">
-								<description/>
-								<description value="CSV Field"/>
-								<description value="Target Field"/>
-								<description value="Translation"/>
-							</row>
-							<row>
-								<description id="$row_cont[index]" value="$row_cont[index]" no_lang="1"/>
-								<description value="$row_cont[title]" no_lang="1"/>
-								<listbox id="{$row}[field]" no_lang="1"/>
-								<textbox id="{$row}[conversion]"/>
-							</row>
-						</rows>
-					</grid>
+                        <columns>
+                            <column width="4ex"/>
+                            <column/>
+                            <column/>
+                            <column/>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row class="th">
+                                <description/>
+                                <description value="CSV Field"/>
+                                <description value="Target Field"/>
+                                <description value="Translation"/>
+                            </row>
+                            <row>
+                                <description value="$row_cont[index]" no_lang="1"/>
+                                <description value="$row_cont[title]" no_lang="1"/>
+                                <listbox id="{$row}[field]" no_lang="1"/>
+                                <textbox id="{$row}[conversion]"/>
+                            </row>
+                        </rows>
+                    </grid>
 				</row>
 			</rows>
 		</grid>
