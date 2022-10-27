@@ -1607,7 +1607,7 @@ class Session
 	{
 		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
 		{
-			$forwarded_for = preg_replace('/, *10\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']);
+			$forwarded_for = preg_replace('/, *(192\.168|172\.(1[6789]|2[0-9]|3[01])|10)\..*$/', '', $_SERVER['HTTP_X_FORWARDED_FOR']);
 			if (preg_match(self::IP_REGEXP, $forwarded_for))
 			{
 				return $forwarded_for;
