@@ -74,9 +74,16 @@ class admin_cmd_customfield extends admin_cmd
 		if(array_keys($this->set) == array('id','name'))
 		{
 			// Delete
-			$so = new Api\Storage\Base('phpgwapi','egw_customfields',null,'',true);
+			$so = new Api\Storage\Base('phpgwapi', 'egw_customfields', null, '', true);
 			$so->delete($this->set['id']);
 			$deleted = true;
+
+			$push = new Api\Json\Push(Api\Json\Push::ALL);
+			$push->apply("egw.push", [[
+										  'app'  => Api\Storage\Customfields::PUSH_APP,
+										  'id'   => $this->set['id'],
+										  'type' => 'delete'
+									  ]]);
 		}
 		else
 		{

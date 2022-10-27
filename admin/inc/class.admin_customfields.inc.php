@@ -205,14 +205,15 @@ class admin_customfields
 		{
 			// Initialize nextmatch
 			$content['nm'] = array(
-				'get_rows'       =>	'admin.admin_customfields.get_rows',
-				'no_cat'         => 'true',
-				'no_filter'      => 'true',
-				'no_filter2'     => 'true',
-				'row_id'         => 'cf_id',
-				'order'          =>	'cf_order',// IO name of the column to sort
-				'sort'           =>	'ASC',// IO direction of the sort: 'ASC' or 'DESC'
-				'actions'        => $this->get_actions()
+				'get_rows'        => 'admin.admin_customfields.get_rows',
+				'no_cat'          => 'true',
+				'no_filter'       => 'true',
+				'no_filter2'      => 'true',
+				'row_id'          => 'cf_id',
+				'order'           => 'cf_order',// IO name of the column to sort
+				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
+				'actions'         => $this->get_actions(),
+				'dataStorePrefix' => 'customfield'
 			);
 		}
 		$content['nm']['appname'] = $this->appname;

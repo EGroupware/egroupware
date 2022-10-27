@@ -13,6 +13,7 @@
 namespace EGroupware\Api\Storage;
 
 use EGroupware\Api;
+use EGroupware\Api\Json\Push;
 
 /**
  * Managing custom-field definitions
@@ -50,6 +51,11 @@ class Customfields implements \IteratorAggregate
 	 * @var \ADORecordSet
 	 */
 	protected $iterator;
+
+	/**
+	 * App name used to push custom field changes
+	 */
+	const PUSH_APP = 'api-cf';
 
 	/**
 	 * Constructor
@@ -441,6 +447,35 @@ class Customfields implements \IteratorAggregate
 		}
 
 		self::invalidate_cache($cf['app']);
+
+		// push category change
+		$type = 'update';
+		if(!$cf['id'])
+		{
+			$cfs = self::get($cf['app'], true);
+			$cf = $cfs[$cf['name']];
+			$type = 'add';
+		}
+		$accounts = Push::ALL;
+		if(count($cf['private']) > 0)
+		{
+			$accounts = [];
+			foreach($cf['private'] as $account_id)
+			{
+				$accounts = array_merge(
+					$account_id > 0 ? [$account_id] :
+						$GLOBALS['egw']->accounts->members($account_id, true)
+				);
+			}
+		}
+		$push = new Push($accounts);
+		$push->apply("egw.push", [[
+									  'app'        => self::PUSH_APP,
+									  'id'         => $cf['id'],
+									  'type'       => $type,
+									  'acl'        => ['private' => $cf['private']],
+									  'account_id' => $GLOBALS['egw_info']['user']['account_id']
+								  ]]);
 	}
 
 	/**

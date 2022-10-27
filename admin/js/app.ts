@@ -326,12 +326,13 @@ class AdminApp extends EgwApp
 	push(pushData : PushData)
 	{
 		// Filter out what we're not interested in
-		if([this.appname, "api-cats"].indexOf(pushData.app) == -1)
+		if([this.appname, "api-cats", "api-cf"].indexOf(pushData.app) == -1)
 		{
 			return;
 		}
 
 		const cat_template = "admin.categories.index";
+		const cf_template = "admin.customfields";
 
 		if(this.appname.indexOf(pushData.app) != -1 && pushData.id > 0)
 		{
@@ -348,6 +349,10 @@ class AdminApp extends EgwApp
 		else if(pushData.app == "api-cats" && etemplate2.getByTemplate(cat_template).length == 1)
 		{
 			(<et2_nextmatch>etemplate2.getByTemplate(cat_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
+		}
+		else if(pushData.app == "api-cf" && etemplate2.getByTemplate(cf_template).length == 1)
+		{
+			(<et2_nextmatch>etemplate2.getByTemplate(cf_template)[0].widgetContainer.getWidgetById("nm")).refresh(pushData.id, pushData.type);
 		}
 	}
 
