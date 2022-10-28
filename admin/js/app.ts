@@ -253,9 +253,9 @@ class AdminApp extends EgwApp
 					if(iframe_node && iframe_node.contentWindow && iframe_node.contentWindow.etemplate2)
 					{
 						var templates = iframe_node.contentWindow.etemplate2.getByApplication('admin');
-						for(var i = 0; i < templates.length; i++)
+						for(let i = 0; i < templates.length; i++)
 						{
-							templates[i].refresh(_msg,_app,_id,_type);
+							templates[i].refresh(_msg, _app, _id, _type);
 							refresh_done = true;
 						}
 					}
@@ -267,6 +267,21 @@ class AdminApp extends EgwApp
 				}
 				else
 				{
+					// No iframe, but if there's a nm in the current view, refresh it
+					let et2s = etemplate2.getByApplication('admin');
+					for(let i = 0; i < et2s.length; i++)
+					{
+						let nm = <et2_nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
+						if(nm)
+						{
+							nm.refresh(undefined, undefined);
+						}
+					}
+					// Get group list too, if visible, since it wasn't found in the loop above
+					if(!this.groups.disabled)
+					{
+						this.groups.refresh(undefined, undefined);
+					}
 					return false;
 				}
 				// invalidate client-side account-cache
