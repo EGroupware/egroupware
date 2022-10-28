@@ -21,6 +21,7 @@ import {etemplate2} from "../etemplate2";
 import {IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
+import {Et2Button} from "../Et2Button/Et2Button";
 
 export interface DialogButton
 {
@@ -326,6 +327,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._onOpen = this._onOpen.bind(this);
 		this._onClose = this._onClose.bind(this);
 		this._onClick = this._onClick.bind(this);
+		this._onButtonClick = this._onButtonClick.bind(this);
 		this._onMoveResize = this._onMoveResize.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
 
@@ -348,6 +350,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			this._overlayCtrl?.addEventListener("show", this._onOpen);
 			this._overlayCtrl.addEventListener('hide', this._onClose);
 
+			// Bind on the ancestor, not the buttons, so their click handler gets a chance to run
+			this._overlayContentNode.addEventListener("click", this._onButtonClick);
 			window.setTimeout(this.open, 0);
 		});
 	}
@@ -357,6 +361,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		super.disconnectedCallback();
 		this._overlayCtrl.removeEventListener("hide", this._onClose);
 		this._overlayCtrl.removeEventListener("show", this._onOpen);
+		this._overlayContentNode.removeEventListener("click", this._onButtonClick);
 	}
 
 	// Need to wait for Overlay
@@ -370,9 +375,6 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			await this._template_promise;
 		}
-
-		// This calls _onClose() when the dialog is closed
-		this._overlayContentNode.querySelectorAll("et2-button").forEach((button) => button.addEventListener("click", this._onClick));
 	}
 
 	getComplete() : Promise<[number, Object]>
@@ -409,13 +411,28 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		}
 	}
 
+	/**
+	 * Only internally do our onClick on buttons
+	 * This calls _onClose() when the dialog is closed
+	 *
+	 * @param {MouseEvent} ev
+	 * @returns {boolean}
+	 */
+	_onButtonClick(ev : MouseEvent)
+	{
+		if(ev.target instanceof Et2Button)
+		{
+			return this._onClick(ev);
+		}
+	}
+
 	_onClick(ev : MouseEvent)
 	{
 		// @ts-ignore
 		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
 
 		// we need to consider still buttons used in dialogs that may actually submit and have server-side interactions(eg.vfsSelect)
-		if (!ev.target?.getInstanceManager()?._etemplate_exec_id)
+		if(!ev.target?.getInstanceManager()?._etemplate_exec_id)
 		{
 			// we always need to stop the event as otherwise the result would be submitted to server-side eT2 handler
 			// which does not know what to do with it, as the dialog was initiated from client-side (no eT2 request)

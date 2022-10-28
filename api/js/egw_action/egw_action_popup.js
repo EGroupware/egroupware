@@ -786,7 +786,7 @@ export function egwPopupActionImplementation()
 			{
 				try
 				{
-					copyTextToClipboard(event, clipboard_action, os_clipboard_caption).then((successful) =>
+					egw.copyTextToClipboard(os_clipboard_caption, clipboard_action.data.target, event).then((successful) =>
 					{
 						// Fallback
 						if (typeof successful == "undefined")
@@ -937,82 +937,3 @@ export function egwPopupActionImplementation()
 	};
 	return ai;
 }
-
-/**
- * Try some deprecated ways of copying to the OS clipboard
- *
- * @param event
- * @param clipboard_action
- * @param text
- * @returns {boolean}
- */
-function fallbackCopyTextToClipboard(event, clipboard_action, text)
-{
-	// Cancel any no-select css
-	var target = jQuery(clipboard_action.data.target);
-	var old_select = target.css('user-select');
-	target.css('user-select', 'all');
-
-	var range = document.createRange();
-	range.selectNode(clipboard_action.data.target);
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(range);
-
-	target.css('user-select', old_select);
-
-	// detect we are in IE via checking setActive, since it's
-	// only supported in IE, and make sure there's clipboardData object
-	if (typeof event.target.setActive != 'undefined' && window.clipboardData)
-	{
-		window.clipboardData.setData('Text', jQuery(clipboard_action.data.target).text().trim());
-	}
-	if (event.clipboardData)
-	{
-		event.clipboardData.setData('text/plain', jQuery(clipboard_action.data.target).text().trim());
-		event.clipboardData.setData('text/html', jQuery(clipboard_action.data.target).html());
-	}
-	let textArea;
-	if (!window.clipboardData)
-	{
-
-		textArea = document.createElement("textarea");
-		textArea.value = text;
-
-		// Avoid scrolling to bottom
-		textArea.style.top = "0";
-		textArea.style.left = "0";
-		textArea.style.position = "fixed";
-
-		document.body.appendChild(textArea);
-		textArea.focus();
-		textArea.select();
-	}
-
-	let successful = false;
-	try
-	{
-		successful = document.execCommand('copy');
-		const msg = successful ? 'successful' : 'unsuccessful';
-		console.log('Fallback: Copying text command was ' + msg);
-	}
-	catch (err)
-	{
-		successful = false;
-	}
-
-	document.body.removeChild(textArea);
-	return successful;
-}
-
-function copyTextToClipboard(event, action, text)
-{
-	if (!navigator.clipboard)
-	{
-		let success = fallbackCopyTextToClipboard(event, action, text);
-		return Promise.resolve(success ? undefined : false);
-	}
-	// Use Clipboard API
-	return navigator.clipboard.writeText(text);
-}
-
-

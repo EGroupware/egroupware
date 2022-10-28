@@ -343,6 +343,22 @@ export class filemanagerAPP extends EgwApp
 	}
 
 	/**
+	 * Copy a share link to the system clipboard
+	 *
+	 * @param widget
+	 */
+	copy_share_link(ev, widget)
+	{
+		egw.copyTextToClipboard(widget.value, widget, ev).then((success) =>
+		{
+			if(success !== false)
+			{
+				egw.message(egw.lang('share link copied into clipboard'));
+			}
+		});
+	}
+
+	/**
 	 * Mail files action: open compose with already linked files
 	 * We're only interested in hidden upload shares here, open_mail can handle
 	 * the rest

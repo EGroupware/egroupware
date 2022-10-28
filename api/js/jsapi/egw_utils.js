@@ -143,6 +143,76 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		}
 	}
 
+
+	/**
+	 * Try some deprecated ways of copying to the OS clipboard
+	 *
+	 * @param event Optional, but if you have an event we can try some things on it
+	 * @param target_element Element whose contents you're trying to copy
+	 * @param text Actual text.  Usually target_element.value.
+	 * @returns {boolean}
+	 */
+	function fallbackCopyTextToClipboard(event, target_element, text)
+	{
+		// Cancel any no-select css
+		if (target_element)
+		{
+			let old_select = target_element.style.userSelect;
+			target_element.style.userSelect = 'all'
+
+			let range = document.createRange();
+			range.selectNode(target_element);
+			window.getSelection().removeAllRanges();
+			window.getSelection().addRange(range);
+
+			target_element.style.userSelect = old_select;
+
+
+			// detect we are in IE via checking setActive, since it's
+			// only supported in IE, and make sure there's clipboardData object
+			if (event && typeof event.target.setActive != 'undefined' && window.clipboardData)
+			{
+				window.clipboardData.setData('Text', target_element.textContent.trim());
+			}
+			if (event && event.clipboardData)
+			{
+				event.clipboardData.setData('text/plain', target_element.textContent.trim());
+				event.clipboardData.setData('text/html', target_element.outerHTML);
+			}
+		}
+		let textArea;
+		if (!window.clipboardData)
+		{
+
+			textArea = document.createElement("textarea");
+			textArea.value = text;
+
+			// Avoid scrolling to bottom
+			textArea.style.top = "0";
+			textArea.style.left = "0";
+			textArea.style.position = "fixed";
+
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+		}
+
+		let successful = false;
+		try
+		{
+			successful = document.execCommand('copy');
+			const msg = successful ? 'successful' : 'unsuccessful';
+			console.log('Fallback: Copying text command was ' + msg);
+		}
+		catch (err)
+		{
+			successful = false;
+		}
+
+		document.body.removeChild(textArea);
+		return successful;
+	}
+
 	var uid_counter = 0;
 
 	/**
@@ -410,16 +480,41 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @param {Window|String} closed Window that was closed, or its name
 		 * @returns {undefined}
 		 */
-		windowClosed: function(appname, closed) {
+		windowClosed: function (appname, closed)
+		{
 			var closed_name = typeof closed == "string" ? closed : closed.name;
 			var closed_window = typeof closed == "string" ? null : closed;
-			window.setTimeout(function() {
-				if(closed_window != null && !closed_window.closed) return;
+			window.setTimeout(function ()
+			{
+				if (closed_window != null && !closed_window.closed)
+				{
+					return;
+				}
 
 				var open_windows = JSON.parse(egw().getSessionItem(appname, 'windows')) || {};
 				delete open_windows[closed_name];
 				egw.setSessionItem(appname, 'windows', JSON.stringify(open_windows));
 			}, 100);
+		},
+
+		/**
+		 * Copy text to the clipboard
+		 *
+		 * @param text Actual text to copy.  Usually target_element.value
+		 * @param target_element Optional, but useful for fallback copy attempts
+		 * @param event Optional, but if you have an event we can try some fallback options with it
+		 *
+		 * @returns {Promise<undefined|boolean>|Promise<void>}
+		 */
+		copyTextToClipboard: function (text, target_element, event)
+		{
+			if (!navigator.clipboard)
+			{
+				let success = fallbackCopyTextToClipboard(event, target_element, text);
+				return Promise.resolve(success ? undefined : false);
+			}
+			// Use Clipboard API
+			return navigator.clipboard.writeText(text);
 		}
 	};
 

@@ -3,6 +3,15 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="filemanager.share_dialog" template="" lang="" group="0" version="1.9.003">
-		<textbox id="share_link" no_lang="1" class="et2_fullWidth"/>
-	</template>
+        <textbox id="share_link" no_lang="1" class="et2_fullWidth"
+                 onclick="app.filemanager.copy_share_link">
+            <!-- just let this click bubble -->
+            <et2-button slot="suffix" image="copy" noSubmit="true" statustext="Copy to clipboard"/>
+        </textbox>
+        <styles>
+            et2-button[slot='suffix'] {
+            padding-inline-end: 0;
+            }
+        </styles>
+    </template>
 </overlay>
