@@ -357,6 +357,17 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		return this.__displayFormat;
 	}
 
+
+	render()
+	{
+		return html`
+            <div part="form-control" class="form-control">
+                <div class="form-field__group-one" part="form-control-label">${this._groupOneTemplate()}</div>
+                <div class="form-field__group-two" part="form-control-input">${this._groupTwoTemplate()}</div>
+            </div>
+		`;
+	}
+
 	/**
 	 * @return {TemplateResult}
 	 * @protected

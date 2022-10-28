@@ -875,8 +875,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	render()
 	{
 		return html`
-            <div class="form-field__group-one">${this._groupOneTemplate()}</div>
-            <div class="form-field__group-two">${this._groupTwoTemplate()}</div>
+            <div part="form-control" class="form-control">
+                <div class="form-field__group-one" part="form-control-label">${this._groupOneTemplate()}</div>
+                <div class="form-field__group-two" part="form-control-input">${this._groupTwoTemplate()}</div>
+            </div>
 		`;
 	}
 
