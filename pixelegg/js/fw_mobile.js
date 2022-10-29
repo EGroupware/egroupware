@@ -1135,19 +1135,20 @@
 			var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
 			jQuery('#egw_fw_topmenu_items,#egw_fw_topmenu_info_items,#egw_fw_sidemenu,#egw_fw_footer').on('click','a[href^="javascript:"]',function(ev){
 				ev.stopPropagation();	// do NOT execute regular event, as it will violate CSP, when handler does NOT return false
-				var matches = this.href.match(href_regexp);
+				// fix for Chrome 94.0.4606.54 returning all but first single quote "'" in href as "%27" :(
+				var matches = this.href.replaceAll(/%27/g, "'").replaceAll(/%22/g, '"').match(href_regexp);
 				var args = [];
 				if (matches.length > 1 && matches[2] !== undefined)
 				{
 					try {
-						args = JSON.parse('['+decodeURI(matches[2])+']');
+						args = JSON.parse('['+matches[2]+']');
 					}
-					catch(e) {	// deal with '-encloded strings (JSON allows only ")
+					catch(e) {	// deal with '-enclosed strings (JSON allows only ")
 						args = JSON.parse('['+matches[2].replace(/','/g, '","').replace(/((^|,)'|'(,|$))/g, '$2"$3')+']');
 					}
 				}
 				args.unshift(matches[1]);
-				et2_call.apply(this, args);
+				if (matches[1] !== 'void') et2_call.apply(this, args);
 				return false;	// IE11 seems to require this, ev.stopPropagation() does NOT stop link from being executed
 			});
 		});
