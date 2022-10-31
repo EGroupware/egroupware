@@ -13,6 +13,9 @@
             et2-button[slot='suffix'] {
             padding-inline-end: 0;
             }
+            et2-textbox {
+            min-width: 40em;
+            }
         </styles>
     </template>
 </overlay>
