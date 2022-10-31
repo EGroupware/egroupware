@@ -2,7 +2,8 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.share_dialog" template="" lang="" group="0" version="1.9.003">
+    <template id="filemanager.share_dialog" template="" lang="" group="0" version="1.9.003"
+              onload="widget = widget.widgetContainer.getWidgetById('share_link'); app.filemanager.copy_share_link(ev,widget)">
         <textbox id="share_link" no_lang="1" class="et2_fullWidth"
                  onclick="app.filemanager.copy_share_link">
             <!-- just let this click bubble -->
