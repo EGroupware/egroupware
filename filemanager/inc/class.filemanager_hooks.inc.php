@@ -424,7 +424,7 @@ class filemanager_hooks
 		$push->apply("egw.push",
 					 [[
 						  'app'        => 'filemanager',
-						  'id'         => $data['to'],
+						  'id'         => $data['to'] ?? $data['path'],
 						  'type'       => $type,
 						  'acl'        => $acl,
 						  'account_id' => $GLOBALS['egw_info']['user']['account_id']
