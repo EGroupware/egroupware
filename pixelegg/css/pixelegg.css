@@ -2189,7 +2189,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   opacity: 0.5;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
-  background-image: url(../../api/templates/default/images/personal.png);
+  background-image: url(../../api/templates/default/images/personal.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
   background-image: url(../../api/templates/default/images/password.svg);
@@ -4381,7 +4381,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_current_user {
   background-repeat: no-repeat;
-  background-image: url(../../api/templates/default/images/users.png);
+  background-image: url(../../api/templates/default/images/users.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
