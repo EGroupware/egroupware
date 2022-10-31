@@ -119,7 +119,14 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			...dateStyles,
 			css`
 			.form-field__group-two {
-				width: 100%;
+				max-width: 100%;
+			}
+			.input-group {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				align-items: baseline;
+				gap: 1ex;
 			}
 			et2-select {
 				color: var(--input-text-color);
