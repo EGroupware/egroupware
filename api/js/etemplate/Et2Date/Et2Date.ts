@@ -383,6 +383,13 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			...super.slots,
 			input: () =>
 			{
+				if(egwIsMobile())
+				{
+					// Plain input for mobile
+					const text = document.createElement('input');
+					text.type = this._mobileInputType();
+					return text;
+				}
 				// This element gets hidden and used for value, but copied by flatpicr and used for input
 				const text = <Et2Textbox>document.createElement('et2-textbox');
 				text.type = "text";
@@ -426,6 +433,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	 */
 	async init()
 	{
+		// Plain input for mobile
+		if(egwIsMobile())
+		{
+			return;
+		}
+
 		if(this.locale)
 		{
 			//	await loadLocale(this.locale);
@@ -544,6 +557,15 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	}
 
 	/**
+	 * For mobile, we use a plain input of the proper type
+	 * @returns {string}
+	 */
+	_mobileInputType() : string
+	{
+		return "date";
+	}
+
+	/**
 	 * Add "today" button below calendar
 	 * @protected
 	 */
@@ -569,7 +591,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		}
 		let date;
 		// handle relative time (eg. "+3600" or "-3600") used in calendar
-		if (typeof value === 'string' && (value[0] === '+' || value[0] === '-'))
+		if(typeof value === 'string' && (value[0] === '+' || value[0] === '-'))
 		{
 			date = new Date(this.getValue());
 			date.setSeconds(date.getSeconds() + parseInt(value));
@@ -580,6 +602,14 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		}
 		// Handle timezone offset, flatpickr uses local time
 		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+		if(egwIsMobile())
+		{
+			this.updateComplete.then(() =>
+			{
+				this._inputNode.value = this.format(formatDate, {dateFormat: 'Y-m-d'});
+			});
+			return;
+		}
 		if(!this._instance)
 		{
 			this.defaultDate = formatDate;
@@ -594,7 +624,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	{
 		if(!this._inputElement)
 		{
-			return '';
+			return this._inputNode?.value || '';
 		}
 		let value = this._inputElement.value;
 
@@ -610,6 +640,11 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	get parse() : Function
 	{
 		return parseDate;
+	}
+
+	get format() : Function
+	{
+		return formatDate;
 	}
 
 	/**
@@ -886,6 +921,19 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	{
 		return html`
             <slot name="input"></slot>
+            ${this._incrementButtonTemplate()}
+		`;
+	}
+
+	protected _incrementButtonTemplate()
+	{
+		// No increment buttons on mobile
+		if(egwIsMobile())
+		{
+			return '';
+		}
+
+		return html`
             <div class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
                 <et2-button-icon
                         noSubmit
@@ -899,8 +947,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
                         data-direction="-1"
                 >↓
                 </et2-button-icon>
-            </div>
-		`;
+            </div>`;
 	}
 }
 

@@ -66,6 +66,15 @@ export class Et2DateTimeOnly extends Et2DateTime
 		return options;
 	}
 
+	/**
+	 * For mobile, we use a plain input of the proper type
+	 * @returns {string}
+	 */
+	_mobileInputType() : string
+	{
+		return "time";
+	}
+
 	set_value(value)
 	{
 		let adjustedValue : Date | string = '';

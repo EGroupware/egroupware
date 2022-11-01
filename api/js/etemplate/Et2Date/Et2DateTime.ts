@@ -95,6 +95,15 @@ export class Et2DateTime extends Et2Date
 	}
 
 	/**
+	 * For mobile, we use a plain input of the proper type
+	 * @returns {string}
+	 */
+	_mobileInputType() : string
+	{
+		return "datetime-local";
+	}
+
+	/**
 	 * Add "today" button below calendar
 	 * @protected
 	 */
