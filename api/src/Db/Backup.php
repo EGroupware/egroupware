@@ -505,9 +505,10 @@ class Backup
 	 *
 	 * @param resource $f file opened with fopen for reading
 	 * @param int|string $insert_n_rows =500 how many rows to insert in one sql statement, or string with column-name used as unique key for insert
+	 * @param bool $only_egw=false true: only restore egw_* tables, setting this to true often helps to import/update ancient EGroupware dumps
 	 * @returns int number of rows read from csv file
 	 */
-	function db_restore($f, $insert_n_rows=500)
+	function db_restore($f, $insert_n_rows=500, bool $only_egw=false)
 	{
 		$convert_to_system_charset = true;
 		$table = null;
@@ -560,7 +561,10 @@ class Backup
 					}
 					unset($def);
 					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
-					$this->schema_proc->CreateTable($table_name, $schema);
+					if (!$only_egw || preg_match('/^egw_/', $table_name))
+					{
+						$this->schema_proc->CreateTable($table_name, $schema);
+					}
 				}
 				continue;
 			}
@@ -594,7 +598,7 @@ class Backup
 			}
 			if ($table)	// do we already reached the data part
 			{
-				$import = true;
+				$import = !$only_egw || (bool)preg_match('/^egw_/', $table_name);
 				$data = self::csv_split($line, $cols, $blobs, $bools);
 
 				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
@@ -882,7 +886,7 @@ class Backup
 		//echo "function backup($f)<br>";	// !
 		@set_time_limit(0);
 		$dir = $this->files_dir; // $GLOBALS['egw_info']['server']['files_dir'];
-		// we may have to clean up old backup - left overs
+		// we may have to clean up old backup - leftovers
 		if (is_dir($dir.'/database_backup'))
 		{
 			self::remove_dir_content($dir.'/database_backup/');

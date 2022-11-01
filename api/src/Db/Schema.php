@@ -1330,7 +1330,7 @@ class Schema
 							{
 								$definition['fd'][$name]['precision'] = 8;
 							}
-							elseif ($column->max_length > 6 || !$column->max_length)
+							elseif ($column->max_length > 6 || $column->max_length <= 0)
 							{
 								$definition['fd'][$name]['precision'] = 4;
 							}
