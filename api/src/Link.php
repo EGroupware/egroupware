@@ -426,10 +426,11 @@ class Link extends Link\Storage
 			$link_id = self::temp_link_id($app2,$id2);
 
 			$id1[$link_id] = array(
-				'app' => $app2,
-				'id'  => $id2,
-				'remark' => $remark,
-				'owner'  => $owner,
+				'app'     => $app2,
+				'id'      => $id2,
+				'title'   => $id2['title'] ?? $id2['name'],
+				'remark'  => $remark,
+				'owner'   => $owner,
 				'link_id' => $link_id,
 				'lastmod' => time()
 			);

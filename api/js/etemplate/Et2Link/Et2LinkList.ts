@@ -152,9 +152,10 @@ export class Et2LinkList extends Et2LinkString
 	 */
 	protected _linkTemplate(link) : TemplateResult
 	{
+		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
             ${this._thumbnailTemplate(link)}
-            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entry_id="${link.id}"
+            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entry_id="${id}"
                       ._parent=${this}
                       .value=${link}></et2-link>
             <et2-description slot="${this._get_row_id(link)}" ._parent=${this} class="remark"
@@ -248,7 +249,7 @@ export class Et2LinkList extends Et2LinkString
             <et2-image-expose
                     slot="${this._get_row_id(link)}" ._parent=${this}
                     href="${link.href}"
-                    src=${this.egw().image(link.icon)}></et2-image-expose>`;
+                    src=${this.egw().image("" + link.icon)}></et2-image-expose>`;
 	}
 
 	/**

@@ -123,21 +123,35 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			_value.to_app = this.application;
 		}
-		if(typeof _value == 'object' && !Array.isArray(_value) && _value.to_app && _value.to_id)
+
+		// We have app & ID - fetch list
+		if(typeof _value == 'object' && !Array.isArray(_value) && _value.to_app && _value.to_id && typeof _value.to_id === "string")
 		{
 			this.application = _value.to_app;
 			this.entryId = _value.to_id;
 			this.get_links();
 			return;
 		}
+
+		// CSV list of IDs for one app
 		if(typeof _value === "string")
 		{
 			let ids = _value.split(",");
 			ids.forEach((id) => (<LinkInfo[]>this._link_list).push(<LinkInfo>{app: this.application, id: id}));
 		}
+		// List of LinkInfo
 		else if(Array.isArray(_value))
 		{
 			this._link_list = _value;
+		}
+		// List of LinkInfo stuffed into to_id - entry is not yet saved
+		else if(typeof _value.to_id !== "string")
+		{
+			this.entryId = _value.to_id;
+			Object.keys(_value.to_id).forEach((key) =>
+			{
+				this._link_list.push(<LinkInfo>_value.to_id[key]);
+			});
 		}
 		this._addLinks(this._link_list);
 		super.requestUpdate();
@@ -170,10 +184,11 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * @returns {TemplateResult}
 	 * @protected
 	 */
-	protected _linkTemplate(link) : TemplateResult
+	protected _linkTemplate(link : LinkInfo) : TemplateResult
 	{
+		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
-            <et2-link app="${link.app}" entryId="${link.id}" .value=${link} ._parent=${this}></et2-link>`;
+            <et2-link app="${link.app}" entryId="${id}" .value=${link} ._parent=${this}></et2-link>`;
 	}
 
 	/**

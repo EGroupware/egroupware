@@ -1788,7 +1788,7 @@ class calendar_uiforms extends calendar_ui
 
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		// set notify_externals in participants from cfs
-		if (!empty($event['##notify_externals']))
+		if(!empty($event['##notify_externals']))
 		{
 			$content['participants']['notify_externals'] = $event['##notify_externals'];
 		}
@@ -1796,17 +1796,19 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['participants']['notify_externals'] = $this->cal_prefs['notify_externals'];
 		}
-		$preserved = array_merge($preserv,$content);
+		$preserved = array_merge($preserv, $content);
+		// Don't preserve link_to, it causes problems if user removes a link
+		unset($preserved['link_to']);
 		$event['new_alarm']['options'] = $content['new_alarm']['options'];
-		if ($event['alarm'])
+		if($event['alarm'])
 		{
 			// makes keys of the alarm-array starting with 1
 			$content['alarm'] = array(false);
 			foreach(array_values($event['alarm']) as $id => $alarm)
 			{
-				if (!$alarm['all'] && !$this->bo->check_perms(Acl::READ,0,$alarm['owner']))
+				if(!$alarm['all'] && !$this->bo->check_perms(Acl::READ, 0, $alarm['owner']))
 				{
-					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
+					continue;    // no read rights to the calendar of the alarm-owner, dont show the alarm
 				}
 				$alarm['all'] = (int) $alarm['all'];
 				// fix alarm time in case of alread run alarms, where the time will be their keep_time / when they will be cleaned up otherwise
