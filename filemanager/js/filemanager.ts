@@ -716,8 +716,7 @@ export class filemanagerAPP extends EgwApp
 						}
 					}
 				}
-				self._do_action('createdir', egw.encodePathComponent(dir), true, path);	// true=synchronous request
-				self.change_dir((path == '/' ? '' : path) + '/' + egw.encodePathComponent(dir));
+				self._do_action('createdir', egw.encodePathComponent(dir), false, path);
 			}
 		}, 'New directory', 'Create directory');
 	}
