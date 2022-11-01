@@ -203,12 +203,12 @@ class importexport_definitions_ui
 		$group = 0;
 		$actions = array(
 			'edit' => array(
-				'caption' => 'Open',
-				'default' => true,
+				'caption'         => 'Open',
+				'default'         => true,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=importexport.importexport_definitions_ui.edit&definition=$id',
-				'popup' => '500x500',
-				'group' => $group,
+				'url'             => 'menuaction=importexport.importexport_definitions_ui.edit&definition=$id',
+				'popup'           => '1000x600',
+				'group'           => $group,
 			),
 			'add' => array(
 				'caption' => 'Add',
