@@ -353,9 +353,26 @@ class filemanager_hooks
 	 */
 	protected static function push(array $data, array $stat)
 	{
+		$path = $data['to'] ?? $data['from'] ?? $data['path'];
+		if($path && $data['url'] && $path != $data['url'] &&
+			($path_dir = Vfs::parse_url($path, PHP_URL_PATH)) !== ($url_dir = Vfs::parse_url($data['url'], PHP_URL_PATH)))
+		{
+			// Looks like some path remapping going on, probably a share
+			// Try to notify the url path too
+			$remap = [];
+			foreach(['from', 'to', 'path'] as $map_path)
+			{
+				if($data[$map_path])
+				{
+					$remap[$map_path] = str_replace($path_dir, $url_dir, Vfs::parse_url($data[$map_path], PHP_URL_PATH));
+				}
+			}
+			static::push($remap + $data, $stat);
+		}
+
 		// Who do we want to broadcast to
 		$account_id = [];
-		if(str_starts_with($data['from'], '/home/') || str_starts_with($data['to'], '/home/'))
+		if(str_starts_with($data['from'], '/home/') || str_starts_with($data['to'], '/home/') || str_starts_with($path, '/home/'))
 		{
 			// In home, send to just owner and group members
 			if($stat['uid'])
@@ -383,9 +400,9 @@ class filemanager_hooks
 		{
 			$acl[] = -$stat['gid'];
 		}
-		foreach(['to', 'from'] as $field)
+		foreach(['to', 'from', 'path'] as $field)
 		{
-			$eacl = Vfs::get_eacl($data['to']);
+			$eacl = Vfs::get_eacl($data[$field]);
 			if($eacl)
 			{
 				$acl = array_merge($acl, array_column($eacl, 'owner'));
@@ -424,7 +441,7 @@ class filemanager_hooks
 		$push->apply("egw.push",
 					 [[
 						  'app'        => 'filemanager',
-						  'id'         => $data['to'] ?? $data['path'],
+						  'id'         => $data['to'] ?? $path,
 						  'type'       => $type,
 						  'acl'        => $acl,
 						  'account_id' => $GLOBALS['egw_info']['user']['account_id']
