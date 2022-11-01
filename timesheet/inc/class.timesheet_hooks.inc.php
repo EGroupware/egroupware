@@ -232,7 +232,7 @@ class timesheet_hooks
 	{
 		$state = Events::timerState();
 		// only send/display if at least one timer is not disabled
-		if (array_diff(['specific', 'overall'], $state['disable']))
+		if (array_diff(['specific', 'overall'], $state['disable'] ?? []))
 		{
 			$GLOBALS['egw']->framework->_add_topmenu_info_item('<div id="topmenu_timer" title="'.
 				lang('Start & stop timer').'"'.
