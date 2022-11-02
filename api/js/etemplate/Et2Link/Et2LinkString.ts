@@ -125,7 +125,8 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		}
 
 		// We have app & ID - fetch list
-		if(typeof _value == 'object' && !Array.isArray(_value) && _value.to_app && _value.to_id && typeof _value.to_id === "string")
+		if(typeof _value == 'object' && !Array.isArray(_value) && _value.to_app && _value.to_id && (
+			typeof _value.to_id === "string" || typeof _value.to_id == "number"))
 		{
 			this.application = _value.to_app;
 			this.entryId = _value.to_id;
