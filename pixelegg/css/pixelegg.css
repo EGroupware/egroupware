@@ -3541,12 +3541,16 @@ div.admin-config form > table td b {
  */
 body .egw_message_wrapper {
   background-color: #d9d9d9;
-  right: 33%;
+  right: 0 !important;
+  max-width: 25%;
+  min-width: 25%;
   box-shadow: 2px 3px 13px #666666;
   -moz-box-shadow: 2px 3px 13px #666666;
   -webkit-box-shadow: 2px 3px 13px #666666;
   -khtml-box-shadow: 2px 3px 13px #666666;
-  top: 0px;
+  bottom: 0;
+  max-height: 60%;
+  overflow-y: auto;
   z-index: 100000;
 }
 body .egw_message_wrapper > div:last-child {

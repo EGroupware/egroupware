@@ -441,9 +441,13 @@ div.admin-config form > table {
  */
 body .egw_message_wrapper {
 	.background_color_15_gray;
-	right: 33%;
+	right: 0 !important;
+	max-width: 25%;
+	min-width: 25%;
 	.box_shadow;
-	top: 0px;
+	bottom: 0;
+	max-height: 60%;
+	overflow-y: auto;
 	z-index: 100000;
 	& > div:last-child {
 		margin-bottom: 0px !important;
