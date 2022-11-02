@@ -56,17 +56,17 @@
 				<row>
 					<groupbox>
 						<caption label="Accessrights"/>
-						<grid>
-							<columns>
-								<column width="80"/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<description value="Owner"/>
-									<menulist>
-										<menupopup id="perms[owner]"/>
-									</menulist>
+						<grid width="100%">
+                            <columns>
+                                <column width="80"/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <description value="Owner"/>
+                                    <menulist>
+                                        <menupopup id="perms[owner]"/>
+                                    </menulist>
 								</row>
 								<row>
 									<description value="Group"/>
