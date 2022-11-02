@@ -80,58 +80,49 @@
 	<template id="infolog.config.notification" template="" lang="" group="0" version="">
 		<grid width="100%">
 			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<menulist>
-						<menupopup label="Type" id="notification_type" onchange="1"/>
-					</menulist>
-					<checkbox label="Use custom notification message" id="notification[use_custom]"/>
-				</row>
-				<row>
-					<htmlarea id="notification[message]" height="180px" width="100%" toolbar="false" span="all"/>
-				</row>
-				<row>
-					<description value="Full list of placeholder names" href="infolog.infolog_merge.show_replacements" extra_link_target="_blank"/>
-					<description/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="infolog.config" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="100%"/>
-			</columns>
-			<rows>
-				<row>
-					<description id="msg" span="all" class="message"/>
-				</row>
-				<row valign="top" height="350px">
-					<tabbox id="configuration|notification">
-						<tabs>
-							<tab id="configuration" label="Configuration"/>
-							<tab id="notification" label="Notification"/>
-						</tabs>
-						<tabpanels>
-							<template id="infolog.config.configuration"/>
-							<template id="infolog.config.notification"/>
-						</tabpanels>
-					</tabbox>
-				</row>
-				<row>
-					<hbox span="all">
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]"/>
-					</hbox>
-				</row>
-			</rows>
-		</grid>
-		<styles>select {
-  min-width: 30em;
-}</styles>
-	</template>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <menulist>
+                        <menupopup label="Type" id="notification_type" onchange="1"/>
+                    </menulist>
+                    <checkbox label="Use custom notification message" id="notification[use_custom]"/>
+                </row>
+                <row>
+                    <htmlarea id="notification[message]" height="180px" width="100%" toolbar="false" span="all"/>
+                </row>
+                <row>
+                    <description value="Full list of placeholder names" href="infolog.infolog_merge.show_replacements"
+                                 extra_link_target="_blank"/>
+                    <description/>
+                </row>
+            </rows>
+        </grid>
+    </template>
+    <template id="infolog.config" template="" lang="" group="0" version="1.9.001">
+        <vbox>
+            <description id="msg" span="all" class="message"/>
+            <tabbox id="configuration|notification">
+                <tabs>
+                    <tab id="configuration" label="Configuration"/>
+                    <tab id="notification" label="Notification"/>
+                </tabs>
+                <tabpanels>
+                    <template id="infolog.config.configuration"/>
+                    <template id="infolog.config.notification"/>
+                </tabpanels>
+            </tabbox>
+            <hbox class="dialogFooterToolbar">
+                <button statustext="Save the changes made" label="Save" id="save"/>
+                <button statustext="apply the changes" label="Apply" id="apply"/>
+                <button statustext="Exit without saving" label="Cancel" id="cancel"/>
+            </hbox>
+        </vbox>
+        <styles>select {
+            min-width: 30em;
+            }
+        </styles>
+    </template>
 </overlay>
