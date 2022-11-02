@@ -145,7 +145,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			this._link_list = _value;
 		}
 		// List of LinkInfo stuffed into to_id - entry is not yet saved
-		else if(typeof _value.to_id !== "string")
+		else if(_value.to_id && typeof _value.to_id !== "string")
 		{
 			this.entryId = _value.to_id;
 			Object.keys(_value.to_id).forEach((key) =>
