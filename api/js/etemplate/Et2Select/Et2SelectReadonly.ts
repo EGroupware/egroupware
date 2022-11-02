@@ -218,6 +218,19 @@ customElements.define("et2-select_ro", Et2SelectReadonly);
 
 export class Et2SelectAccountReadonly extends Et2SelectReadonly
 {
+
+	protected account_options = [];
+
+	get select_options()
+	{
+		return [...this.account_options, ...super.select_options];
+	}
+
+	set select_options(value : SelectOption[])
+	{
+		super.select_options = value;
+	}
+
 	set value(new_value)
 	{
 		super.value = new_value;
@@ -229,7 +242,7 @@ export class Et2SelectAccountReadonly extends Et2SelectReadonly
 		{
 			let account_name = null;
 			let option = <SelectOption>{value: id, label: id + " ..."};
-			this.select_options = [].concat(this.select_options, option);
+			this.account_options.push(option);
 			if(new_value && (account_name = this.egw().link_title('api-accounts', id, false)))
 			{
 				option.label = account_name;
