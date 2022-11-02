@@ -747,6 +747,14 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 				this._overlayContentNode.appendChild(button);
 			})
 		}
+		// do NOT submit dialog, if it has no etemplate_exec_id, it only gives and error on server-side
+		if (this._template_widget && !this._template_widget.widgetContainer.getInstanceManager().etemplate_exec_id)
+		{
+			this._template_widget?.DOMContainer.querySelectorAll('et2-button').forEach((button : Et2Button) =>
+			{
+				button.noSubmit = true;
+			});
+		}
 		return template_buttons;
 	}
 
