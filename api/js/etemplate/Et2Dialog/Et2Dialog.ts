@@ -734,11 +734,13 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		// Check for something with buttons slot set
 		let search_in = this._template_widget?.DOMContainer || this._overlayContentNode._contentNode;
-		let template_buttons = search_in.querySelectorAll('[slot="buttons"]') ||
+		let template_buttons = [
+			...search_in.querySelectorAll('[slot="buttons"]'),
 			// Look for a dialog footer, which will contain several buttons and possible other widgets
-			search_in.querySelectorAll(".dialogFooterToolbar") ||
-			// Look for buttons anywhere
-			search_in.querySelectorAll("et2-button");
+			...search_in.querySelectorAll(".dialogFooterToolbar"),
+			// Look for buttons at high level (not everywhere, otherwise we can't have other buttons in the template)
+			...search_in.querySelectorAll(":scope > et2-button, :scope > * > et2-button")
+		];
 		if(template_buttons)
 		{
 			template_buttons.forEach((button) =>
