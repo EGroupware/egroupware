@@ -2210,7 +2210,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   opacity: 0.5;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
-  background-image: url(../../api/templates/default/images/personal.png);
+  background-image: url(../../api/templates/default/images/personal.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
   background-image: url(../../api/templates/default/images/password.svg);
@@ -3548,7 +3548,7 @@ div.admin-config form > table td b {
   background-image: url(../../api/templates/default/images/dialog_error.png);
 }
 .info_message {
-  background-image: url(../../api/templates/default/images/dialog_info.png);
+  background-image: url(../../api/templates/default/images/dialog_info.svg);
 }
 .info_message .discard {
   float: right;
@@ -3562,12 +3562,16 @@ div.admin-config form > table td b {
  */
 body .egw_message_wrapper {
   background-color: #d9d9d9;
-  right: 33%;
+  right: 0 !important;
+  max-width: 25%;
+  min-width: 25%;
   box-shadow: 2px 3px 13px #666666;
   -moz-box-shadow: 2px 3px 13px #666666;
   -webkit-box-shadow: 2px 3px 13px #666666;
   -khtml-box-shadow: 2px 3px 13px #666666;
-  top: 0px;
+  bottom: 0;
+  max-height: 60%;
+  overflow-y: auto;
   z-index: 100000;
 }
 body .egw_message_wrapper > div:last-child {
@@ -4402,7 +4406,7 @@ span.overlayContainer img.overlay {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_current_user {
   background-repeat: no-repeat;
-  background-image: url(../../api/templates/default/images/users.png);
+  background-image: url(../../api/templates/default/images/users.svg);
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
@@ -4570,7 +4574,7 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header .notifyTabDiv:hover {
   background-color: #1E1E1E;
 }
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover {
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) {
   background-color: rgba(153, 204, 255, 0.4);
   padding-bottom: 0px;
   border-top: 7px solid transparent;
@@ -4580,10 +4584,8 @@ span.overlayContainer img.overlay {
   max-width: fit-content !important;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
+  top: 0px;
   background-image: url(../../api/templates/default/images/close.svg);
-}
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover:not(.egw_fw_ui_tab_header_active) .egw_fw_ui_tab_close_button {
-  top: 8px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 12px;
@@ -4621,6 +4623,9 @@ span.overlayContainer img.overlay {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover {
   background-color: #ffffff;
   padding-top: 0px;
+}
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active:hover .egw_fw_ui_tab_close_button {
+  top: 2px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active img.egw_fw_ui_tab_icon {
   padding-top: 3px;
@@ -6068,7 +6073,7 @@ table.egwGridView_grid tbody td table.customfields tbody tr td .et2_textbox_ro {
   /*white-space: inherit;*/
 }
 table.egwGridView_grid tbody td[align="right"] {
-  padding: 3px 5px 3px 0;
+  padding: 1px 5px 3px 0;
 }
 table.egwGridView_grid > tr {
   border-bottom: 1px solid;
@@ -7150,7 +7155,7 @@ img.et2_button_icon[src*="svg"]:hover {
     background-image: url(../../api/templates/default/images/logout.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_current_user {
-    background-image: url(../../api/templates/default/images/users.png);
+    background-image: url(../../api/templates/default/images/users.svg);
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
     height: 50px;
