@@ -428,7 +428,7 @@ class Link extends Link\Storage
 			$id1[$link_id] = array(
 				'app'     => $app2,
 				'id'      => $id2,
-				'title'   => $id2['title'] ?? $id2['name'],
+				'title'   => is_array($id2) ? $id2['title'] ?? $id2['name'] : null,
 				'remark'  => $remark,
 				'owner'   => $owner,
 				'link_id' => $link_id,
