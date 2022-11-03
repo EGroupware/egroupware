@@ -1084,17 +1084,9 @@ div.et2_link_entry:after {
 }
 
 /* Special layout for inside nm grid */
-.et2_nextmatch div.et2_link_entry {
-    padding-right: 4px;
-}
-
-.et2_nextmatch .et2_link_entry:after {
-    margin: -12px;
-}
-
-div.et2_link_entry select, div.et2_link_entry {
-    /*width: 40%;*/
-    margin-right: 10px;
+/* Hide links with no value entirely for better spacing*/
+.et2_nextmatch et2-link[entryid=""] {
+    display: none;
 }
 
 /* Icons in app selection */
