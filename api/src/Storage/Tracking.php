@@ -1266,9 +1266,9 @@ abstract class Tracking
 		{
 			error_log($this->app . ' did not properly implement bo_tracking->id_field.  Merge skipped.');
 		}
-		elseif(class_exists($this->app. '_merge'))
+		elseif(class_exists($this->app . '_merge') && $config['signature'])
 		{
-			$merge_class = $this->app.'_merge';
+			$merge_class = $this->app . '_merge';
 			$merge = new $merge_class();
 			$error = null;
 			$sig = $merge->merge_string($config['signature']??null, array($data[$this->id_field]), $error, 'text/html');
