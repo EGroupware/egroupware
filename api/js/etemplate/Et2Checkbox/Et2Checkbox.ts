@@ -31,7 +31,7 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 			:host {
 				/* Make it line up with the middle of surroundings */
 				margin: auto 0px;
-				vertical-align: -webkit-baseline-middle;
+				vertical-align: baseline;
 			}
             :host([disabled]) {
             	display:initial;
