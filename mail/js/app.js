@@ -4968,7 +4968,7 @@ app.classes.mail = AppJS.extend(
 	*/
 	check_sharing_filemode: function(_node, _widget)
 	{
-		if (this.et2.getArrayMgr('content').getEntry('no_griddata')) return;
+		if (!this.et2 || this.et2.getArrayMgr('content').getEntry('no_griddata')) return;
 		if (!_widget) _widget = this.et2.getWidgetById('filemode');
 
 		var extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
