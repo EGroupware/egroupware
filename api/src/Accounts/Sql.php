@@ -50,6 +50,10 @@ class Sql
 	const TABLE = 'egw_accounts';
 	var $table = self::TABLE;
 	/**
+	 * Location for group-memberships in ACL table
+	 */
+	const ACL_GROUP_LOCATION = 'phpgw_group';
+	/**
 	 * table name for the contacts
 	 *
 	 * @var string
@@ -316,22 +320,24 @@ class Sql
 	}
 
 	/**
-	 * Get all memberships of an account $accountid / groups the account is a member off
+	 * Get all memberships of an account $account_id / groups the account is a member off
 	 *
 	 * @param int $account_id numeric account-id
-	 * @return array/boolean array with account_id => account_lid pairs or false if account not found
+	 * @return array|boolean array with account_id => account_lid pairs or false if account not found
 	 */
 	function memberships($account_id)
 	{
 		if (!(int)$account_id) return false;
 
 		$memberships = array();
-		if(($gids = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id)))
+		foreach($this->db->select(Api\Acl::TABLE, 'account_id,account_lid',
+		[
+			'acl_account' => $account_id,
+			'acl_appname' => self::ACL_GROUP_LOCATION
+		], __LINE__, __FILE__, false, 'ORDER BY account_lid', false, 0,
+		'JOIN '.self::TABLE.' ON ABS('.$this->db->to_int('acl_location').')=account_id') as $row)
 		{
-			foreach($gids as $gid)
-			{
-				$memberships[(string) $gid] = $this->id2name($gid);
-			}
+			$memberships['-'.$row['account_id']] = $row['account_lid'];
 		}
 		return $memberships;
 	}
@@ -348,11 +354,11 @@ class Sql
 
 		$acl = new Api\Acl($account_id);
 		$acl->read_repository();
-		$acl->delete('phpgw_group',false);
+		$acl->delete(self::ACL_GROUP_LOCATION,false);
 
 		foreach($groups as $group)
 		{
-			$acl->add('phpgw_group',$group,1);
+			$acl->add(self::ACL_GROUP_LOCATION,$group,1);
 		}
 		$acl->save_repository();
 	}
@@ -360,7 +366,7 @@ class Sql
 	/**
 	 * Get all members of the group $accountid
 	 *
-	 * @param int/string $account_id numeric account-id
+	 * @param int|string $account_id numeric account-id
 	 * @return array with account_id => account_lid pairs
 	 */
 	function members($account_id)
@@ -370,9 +376,9 @@ class Sql
 		$members = array();
 		foreach($this->db->select($this->table, 'account_id,account_lid',
 			$this->db->expression(Api\Acl::TABLE, array(
-				'acl_appname'  => 'phpgw_group',
+				'acl_appname'  => self::ACL_GROUP_LOCATION,
 				'acl_location' => $account_id,
-			)), __LINE__, __FILE__, false, '', false, 0,
+			)), __LINE__, __FILE__, false, 'ORDER BY account_lid', false, 0,
 			'JOIN '.Api\Acl::TABLE.' ON account_id=acl_account'
 		) as $row)
 		{
@@ -389,13 +395,13 @@ class Sql
 	 */
 	function set_members($members,$gid)
 	{
-		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid,false);
+		$GLOBALS['egw']->acl->delete_repository(self::ACL_GROUP_LOCATION,$gid,false);
 
 		if (is_array($members))
 		{
 			foreach($members as $id)
 			{
-				$GLOBALS['egw']->acl->add_repository('phpgw_group',$gid,$id,1);
+				$GLOBALS['egw']->acl->add_repository(self::ACL_GROUP_LOCATION,$gid,$id,1);
 			}
 		}
 	}
