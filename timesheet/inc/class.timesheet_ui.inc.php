@@ -112,19 +112,8 @@ class timesheet_ui extends timesheet_bo
 				{
 					if (!empty($event['tse_app']) && $event['tse_app'] !== TIMESHEET_APP && !empty($event['tse_app_id']))
 					{
-						if (!isset($_REQUEST['link_app']))
-						{
-							$_REQUEST['link_app'] = $event['tse_app'];
-							$_REQUEST['link_id']  = $event['tse_app_id'];
-						}
-						else
-						{
-							if (!isset($this->data['link_to']['to_id']))
-							{
-								$this->data['link_to']['to_id'] = $this->data['ts_id'] ?? [];
-							}
-							Api\Link::link(TIMESHEET_APP, $this->data['link_to']['to_id'], $event['tse_app'], $event['tse_app_id']);
-						}
+						$_REQUEST['link_app'] = $event['tse_app'];
+						$_REQUEST['link_id']  = $event['tse_app_id'];
 					}
 				}
 			}
