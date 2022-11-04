@@ -1013,6 +1013,16 @@ class filemanager_ui
 		$GLOBALS['egw']->session->commit_session();
 		$rows = $dir_is_writable = array();
 		$vfs_options = $this->get_vfs_options($query);
+
+		if($query['col_filter']['path'] && $vfs_options['name'])
+		{
+			// Query the requested path, in case it's nested
+			foreach($query['col_filter']['path'] as $filter_path)
+			{
+				$query['col_filter']['dir'][] = Vfs::is_dir($filter_path) ? $filter_path : Vfs::dirname($filter_path);
+			}
+		}
+
 		// query and cache locks for whole directory
 		$locks = [];
 		foreach(!empty($query['col_filter']['dir']) ? (array)$query['col_filter']['dir'] : (array)$query['path'] as $path)
@@ -1171,6 +1181,11 @@ class filemanager_ui
 		if($namefilter)
 		{
 			$vfs_options['name'] = $query['search'];
+		}
+		if($query['col_filter']['path'])
+		{
+			$path = is_array($query['col_filter']['path']) ? $query['col_filter']['path'][0] : $query['col_filter']['path'];
+			$vfs_options['name'] = Vfs::basename($path);
 		}
 
 		return $vfs_options;
