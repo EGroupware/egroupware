@@ -59,4 +59,9 @@ export default [sl_css, css`
   .tab-group--top .tab-group__tabs {
       --track-width: 3px;
   }
+  .form-control--has-label .form-control__label {
+    display: inline-block;
+    color: var(--sl-input-label-color);
+    margin-right: var(--sl-spacing-medium);
+  }
   `];

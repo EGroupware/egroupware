@@ -77,11 +77,11 @@
 .hide {
     display: none;
 }
+
 /* Put widget label to the left of the widget, with fixed width */
 ::part(form-control) {
     display: flex;
     align-items: center;
-    gap: 1em;
     flex-wrap: wrap;
 }
 

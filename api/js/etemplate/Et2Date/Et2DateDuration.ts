@@ -9,11 +9,12 @@
  */
 
 
-import {css, html, LitElement} from "@lion/core";
+import {classMap, css, html, LitElement} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
 import {FormControlMixin} from "@lion/form-core";
+import shoelace from "../Styles/shoelace";
 
 export interface formatOptions
 {
@@ -116,6 +117,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	{
 		return [
 			...super.styles,
+			shoelace,
 			...dateStyles,
 			css`
 			.form-field__group-two {
@@ -126,7 +128,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				flex-direction: row;
 				flex-wrap: nowrap;
 				align-items: baseline;
-				gap: 1ex;
+			}
+			.input-group__after {
+				margin-inline-start: var(--sl-input-spacing-medium);
 			}
 			et2-select {
 				color: var(--input-text-color);
@@ -368,8 +372,13 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 	render()
 	{
 		return html`
-            <div part="form-control" class="form-control">
-                <div class="form-field__group-one" part="form-control-label">${this._groupOneTemplate()}</div>
+            <div part="form-control" class=${classMap({
+                'form-control': true,
+                'form-control--has-label': this.label.split("%")[0] || false
+            })}>
+                <div class="form-field__group-one form-control__label" part="form-control-label">
+                    ${this._groupOneTemplate()}
+                </div>
                 <div class="form-field__group-two" part="form-control-input">${this._groupTwoTemplate()}</div>
             </div>
 		`;
