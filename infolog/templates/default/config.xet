@@ -114,7 +114,7 @@
                     <template id="infolog.config.notification"/>
                 </tabpanels>
             </tabbox>
-            <hbox class="dialogFooterToolbar">
+            <hbox class="dialogFooterToolbar" id="button">
                 <button statustext="Save the changes made" label="Save" id="save"/>
                 <button statustext="apply the changes" label="Apply" id="apply"/>
                 <button statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"/>
