@@ -349,6 +349,35 @@ function send_template()
 			return "<et2-date$matches[1] $matches[2]></et2-date$matches[1]>";
 		}, $str);
 
+		if ($template === 'mobile')
+		{
+			// replace tabs in mobile template with details widgets
+			$str = preg_replace_callback('#^(\s+)<et2-tabbox\s*([^>]*)>\n\s*<tabs>\n(.*)\n\s*</tabs>\n\s*<tabpanels>\n(.*)\n\s*</tabpanels>\n\s*</et2-tabbox>#ms',
+				static function($matches)
+				{
+					$indent = $matches[1];
+					$tabbox_attrs = parseAttrs($matches[2]);
+					unset($tabbox_attrs['align_tabs'], $tabbox_attrs['id']);
+					if (preg_match_all('#<tab\s(.*)/>#', $matches[3], $tabs) !==
+						preg_match_all('#<template\s(.*)/>#', $matches[4], $panels))
+					{
+						throw Exception("Error parsing tabbox for mobile template into details");
+					}
+					$details = [];
+					foreach($tabs[1] as $n => $tab)
+					{
+						$tab_attrs = parseAttrs($tab);
+						$tab_attrs['id'] = $tab_attrs['id'] ?? $tabbox_attrs['id'].$n;
+						$tab_attrs['summary'] = $tab_attrs['label'];
+						$tab_attrs['title'] = $tab_attrs['statustext'];
+						unset($tab_attrs['label'], $tab_attrs['statustext']);
+						$tab_attrs += $tabbox_attrs;
+						$details[] = $indent.'<et2-details '.stringAttrs($tab_attrs).'>'."\n\t$indent".$panels[0][$n]."\n$indent</et2-details>";
+					}
+					return implode("\n", $details);
+				}, $str);
+		}
+
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
 
 		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
