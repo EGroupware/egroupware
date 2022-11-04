@@ -117,7 +117,7 @@
             <hbox class="dialogFooterToolbar">
                 <button statustext="Save the changes made" label="Save" id="save"/>
                 <button statustext="apply the changes" label="Apply" id="apply"/>
-                <button statustext="Exit without saving" label="Cancel" id="cancel"/>
+                <button statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"/>
             </hbox>
         </vbox>
         <styles>select {

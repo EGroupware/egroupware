@@ -2479,17 +2479,19 @@ class infolog_ui
 	public function admin($content = array())
 	{
 		$fields = array(
-			'info_cat'      => 'Category',
-			'info_from'     => 'Contact',
-			'info_subject'  => 'Subject',
-			'info_des'      => 'Description',
-			'link_to'       => 'Links',
-			'info_priority' => 'Priority',
-			'info_location' => 'Location',
+			'info_status'       => 'Status',
+			'info_cat'          => 'Category',
+			'info_from'         => 'Contact',
+			'info_subject'      => 'Subject',
+			'info_des'          => 'Description',
+			'link_to'           => 'Links',
+			'info_priority'     => 'Priority',
+			'info_location'     => 'Location',
 			'info_planned_time' => 'Planned time',
 			'info_used_time'    => 'Used time',
 		);
 		$excludefields = array(
+			'info_id'		=> 'ID',
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
 			'info_subject'  => 'Subject',
