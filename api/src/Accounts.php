@@ -1528,7 +1528,6 @@ class Accounts
 	 */
 	public function isHuge(int $total=null)
 	{
-		return true;
 		if (isset($total))
 		{
 			$is_huge = $total > self::HUGE_LIMIT;
