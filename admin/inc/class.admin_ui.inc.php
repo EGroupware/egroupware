@@ -437,8 +437,14 @@ class admin_ui
 
 	/**
 	 * Callback for the nextmatch to get groups
+	 *
+	 * Does NOT set members for huge installations, but return "is_huge" === true in $rows.
+	 *
+	 * @param array &$query
+	 * @param array|null &$rows on return rows plus boolean value for key "is_huge" === Accounts::isHuge()
+	 * @return int total number of rows
 	 */
-	public static function get_groups(&$query, &$rows)
+	public static function get_groups(array &$query, array &$rows=null)
 	{
 		$groups = $GLOBALS['egw']->accounts->search(array(
 				'type'  => 'groups',
@@ -463,7 +469,8 @@ class admin_ui
 			$apps[] = $app;
 		}
 
-		$rows = array();
+		$rows = [];
+		$is_huge = $GLOBALS['egw']->accounts->isHuge();
 		foreach($groups as &$group)
 		{
 			$run_rights = $GLOBALS['egw']->acl->get_user_applications($group['account_id'], false, false);
@@ -475,10 +482,14 @@ class admin_ui
 				}
 			}
 
-			$group['members'] = $GLOBALS['egw']->accounts->members($group['account_id'],true);
+			// do NOT set members for huge installations, but return "is_huge" === true in $rows
+			if (!$is_huge)
+			{
+				$group['members'] = $GLOBALS['egw']->accounts->members($group['account_id'],true);
+			}
 			$rows[] = $group;
 		}
-
+		$rows['is_huge'] = $is_huge;
 		return $GLOBALS['egw']->accounts->total;
 	}
 

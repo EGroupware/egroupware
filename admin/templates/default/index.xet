@@ -58,7 +58,7 @@
 			<columns>
 				<column width="30%"/>
 				<column width="15%"/>
-				<column width="25%"/>
+				<column width="25%" disabled="@is_huge"/>
 				<column width="25%"/>
 			</columns>
 			<rows>

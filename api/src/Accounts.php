@@ -1514,6 +1514,43 @@ class Accounts
 	}
 
 	/**
+	 * Number of accounts to consider an installation huge
+	 */
+	const HUGE_LIMIT = 500;
+
+	/**
+	 * Check if instance is huge, has more than self::HUGE_LIMIT=500 users
+	 *
+	 * Can be used to disable features not working well for a huge installation.
+	 *
+	 * @param int|null $set=null to set call with total number of accounts
+	 * @return bool
+	 */
+	public function isHuge(int $total=null)
+	{
+		return true;
+		if (isset($total))
+		{
+			$is_huge = $total > self::HUGE_LIMIT;
+			Cache::setInstance(__CLASS__, 'is_huge', $is_huge);
+			return $is_huge;
+		}
+		return Cache::getInstance(__CLASS__, 'is_huge', function()
+		{
+			$save_total = $this->total; // save and restore current total, to not have an unwanted side effect
+			$this->search([
+				'type'   => 'accounts',
+				'start'  => 0,
+				'offset' => 1,
+				'active' => false,  // as this is set by admin_ui::get_users() and therefore we only return the cached result
+			]);
+			$total = $this->total;
+			$this->total = $save_total;
+			return $this->isHuge($total);
+		});
+	}
+
+	/**
 	 * Internal functions not meant to use outside this class!!!
 	 */
 
