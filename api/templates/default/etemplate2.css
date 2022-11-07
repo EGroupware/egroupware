@@ -3943,8 +3943,9 @@ tr.disableIfNoEPL {
 
 .egw_fw_ui_sidemenu_entry_content hr {
     /* HR in sidebox */
-    border-top: 1px solid silver;
-    margin: 10px 5px 2px 5px;
+    margin: 5px 0px 0px 0px;
+    border: none !important;
+    height: 0px !important;
 }
 
 .inactive_blur > * {
