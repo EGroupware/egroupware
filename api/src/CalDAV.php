@@ -387,6 +387,15 @@ class CalDAV extends HTTP_WebDAV_Server
 		// make options (readonly) available to all class methods, eg. prop_requested
 		$this->propfind_options = $options;
 
+		$nresults = null;
+		foreach($options['other'] ?? [] as $option)
+		{
+			if ($option['name'] === 'nresults' && (int)$option['data'] > 0)
+			{
+				$nresults = (int)$option['data'];
+			}
+		}
+
 		// parse path in form [/account_lid]/app[/more]
 		$id = $app = $user = $user_prefix = null;
 		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user && $user !== 0)
@@ -421,9 +430,23 @@ class CalDAV extends HTTP_WebDAV_Server
 				$files['files'][] = $this->add_collection('/principals/', array(
 					'displayname' => lang('Accounts'),
 				));
-				foreach($this->accounts->search(array('type' => 'both','order'=>'account_lid')) as $account)
+				foreach($this->accounts->search([
+					'type'   => 'both',
+					'order'  =>'account_lid',
+					'start'  => $_GET['start'] ?? 0,
+					'offset' => $nresults,
+				]) as $account)
 				{
 					$this->add_home($files, $path.$account['account_lid'].'/', $account['account_id'], $options['depth'] == 'infinity' ? 'infinity' : $options['depth']-1);
+				}
+
+				// if nresults-limit is set respond correct
+				if (isset($nresults) && $this->accounts->total > ($_GET['start'] ?? 0)+$nresults)
+				{
+					$handler = new CalDAV\Principals('calendar', $this);
+					$handler->sync_collection_toke = '?start='.(($_GET['start'] ?? 0)+$nresults);
+					$files['sync-token'] = [$handler, 'get_sync_collection_token'];
+					$files['sync-token-parameters'] = ['/', '', true];
 				}
 			}
 			return true;
@@ -1239,9 +1262,11 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	protected function autoindex($options)
 	{
+		$chunk_size = 500;
 		$propfind_options = array(
 			'path'  => $options['path'],
 			'depth' => 1,
+			'other' => [['name' => 'nresults', 'data' => $chunk_size]],
 		);
 		$files = array();
 		if (($ret = $this->PROPFIND($propfind_options,$files)) !== true)
@@ -1328,6 +1353,16 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		else
 		{
+			if (!empty($files['sync-token-parameters'][2]) || !empty($_GET['start']))
+			{
+				echo "\t<tr class='th'><td colspan='".(2+count($props2show))."'>".
+					(empty($_GET['start']) ? '' :
+						Html::a_href('<<< '.lang('Previous %1 accounts', $chunk_size), '/groupdav.php'.$options['path'].'?start='.max(0, $_GET['start']-$chunk_size))).
+					(!empty($_GET['start']) && !empty($files['sync-token-parameters'][2]) ? ' | ' : '').
+					(empty($files['sync-token-parameters'][2]) ? '' :
+						Html::a_href(lang('Next %1 accounts', $chunk_size).' >>>', '/groupdav.php'.$options['path'].'?start='.(($_GET['start'] ?? 0)+$chunk_size))).
+					"</td></tr></tr>\n";
+			}
 			echo "</table>\n";
 		}
 		echo '<h3>'.lang('Properties')."</h3>\n";

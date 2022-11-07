@@ -754,7 +754,7 @@ abstract class Handler
 		if (!isset($token)) $token = $this->getctag($path, $user);
 
 		// never return current time, as more modifications might happen due to second granularity --> return 1sec less
-		if ($token >= (int)$GLOBALS['egw_info']['flags']['page_start_time'])
+		if (is_numeric($token) && $token >= (int)$GLOBALS['egw_info']['flags']['page_start_time'])
 		{
 			$token = (int)$GLOBALS['egw_info']['flags']['page_start_time'] - 1;
 		}
