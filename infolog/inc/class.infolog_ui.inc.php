@@ -2559,10 +2559,7 @@ class infolog_ui
 
 			if($button == 'save' || $button == 'cancel')
 			{
-				Egw::redirect_link('/index.php', array(
-					'menuaction' => 'admin.admin_ui.index',
-					'ajax' => 'true'
-				), 'admin');
+				Api\Json\Response::get()->apply('app.admin.load');
 			}
 		}
 		else
