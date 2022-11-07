@@ -1583,6 +1583,10 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   height: 70%;
   margin-bottom: 2em;
 }
+et2-button#calendar-toolbar_toolbar-today::part(label) {
+  font-weight: bold;
+  color: dimgrey;
+}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;
