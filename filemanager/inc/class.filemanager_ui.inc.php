@@ -385,23 +385,26 @@ class filemanager_ui
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
-					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'filter'         => '',	// current dir only
-					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
-					'no_cat'         => True,	// I  disable the cat-selectbox
-					'lettersearch'   => True,	// I  show a lettersearch
-					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
-					'start'          =>	0,		// IO position in list
-					'order'          =>	'name',	// IO name of the column to sort after (optional for the sortheaders)
-					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
-					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
-									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'row_id'         => 'path',
-					'row_modified'   => 'mtime',
-					'parent_id'      => 'dir',
-					'is_parent'      => 'is_dir',
-					'favorites'      => true
+					'get_rows'     => 'filemanager.filemanager_ui.get_rows',
+					// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+					'filter'       => '',    // current dir only
+					'no_filter2'   => True,    // I  disable the 2. filter (params are the same as for filter)
+					'no_cat'       => True,    // I  disable the cat-selectbox
+					'lettersearch' => True,    // I  show a lettersearch
+					'searchletter' => false,    // I0 active letter of the lettersearch or false for [all]
+					'start'        => 0,        // IO position in list
+					'order'        => 'mtime',    // IO name of the column to sort after (optional for the sortheaders)
+					'sort'         => 'DESC',    // IO direction of the sort: 'ASC' or 'DESC'
+					'default_cols' => '!comment,ctime',
+					// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					'csv_fields'   => false,
+					// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
+					//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+					'row_id'       => 'path',
+					'row_modified' => 'mtime',
+					'parent_id'    => 'dir',
+					'is_parent'    => 'is_dir',
+					'favorites'    => true
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}
