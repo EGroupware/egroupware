@@ -20,7 +20,7 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-filterheader label="Application" id="app" options=","/>
+					<nextmatch-filterheader label="Application" id="app"/>
 					<nextmatch-accountfilter label="Owner" id="owner" options="all,both"/>
 					<nextmatch-filterheader label="Private" id="access" options="All"/>
 					<nextmatch-header align="center" label="Icon" id="icon"/>

@@ -3627,7 +3627,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			}
 		}
 		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
+		if(name == 'cat_id' && (options == null || options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != '')))
 		{
 			widget_options.empty_label = this.egw().lang('All categories');
 		}

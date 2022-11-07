@@ -106,11 +106,14 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		{
 			super.updated(changedProperties);
 
-			// If the ID changed (or was just set) find the select options
-			if(changedProperties.has("id"))
+			// If the ID changed (or was just set) and select_options wasn't, find the new select options
+			if(changedProperties.has("id") && !changedProperties.has("select_options"))
 			{
 				const options = find_select_options(this, {}, this._xmlOptions);
-				if (options.length) this.select_options = options;
+				if(options.length)
+				{
+					this.select_options = options;
+				}
 			}
 
 			// Add in actual option tags to the DOM based on the new select_options
@@ -120,7 +123,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				this._renderOptions();
 
 				// This is needed to display initial load value in some cases, like infolog nm header filters
-				if(this.handleMenuSlotChange)
+				if(this.handleMenuSlotChange && !this.hasUpdated)
 				{
 					this.handleMenuSlotChange();
 				}
