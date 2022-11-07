@@ -540,7 +540,10 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_upload_callback(_data)
 	{
-		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
+		if(_data.msg)
+		{
+			this.egw.message(_data.msg);
+		}
 
 		let that = this;
 		for (let file in _data.uploaded)
