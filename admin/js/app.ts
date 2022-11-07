@@ -500,6 +500,7 @@ class AdminApp extends EgwApp
 	{
 		this.nm.set_disabled(true);
 		this.groups.set_disabled(false);
+		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
 	}
 
 

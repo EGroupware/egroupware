@@ -2428,10 +2428,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// TODO this.controller.setFilters(this.activeFilters);
 
 			// If no data was sent from the server, and num_rows is 0, the nm will be empty.
-			// This triggers a cache check.
+			// This triggers a cache check if visible
 			if(!this.options.settings.num_rows && this.controller)
 			{
-				this.controller.update();
+				if(jQuery(this.getDOMNode()).filter(":visible").length > 0)
+				{
+					this.controller.update();
+				}
+				else
+				{
+					// Not visible, queue it up
+					this._queue_refresh([], et2_nextmatch.EDIT);
+				}
 			}
 
 			// Load the default sort order

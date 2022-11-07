@@ -65,12 +65,13 @@ class admin_ui
 			'placeholder_actions' => array('add')
 		);
 		$content['groups'] = array(
-			'get_rows'   => 'admin_ui::get_groups',
-			'no_cat'     => true,
-			'no_filter'  => true,
-			'no_filter2' => true,
-			'row_id'     => 'account_id',
-			'actions'    => self::group_actions(),
+			'get_rows'            => 'admin_ui::get_groups',
+			'no_cat'              => true,
+			'no_filter'           => true,
+			'no_filter2'          => true,
+			'num_rows'            => 0,
+			'row_id'              => 'account_id',
+			'actions'             => self::group_actions(),
 			'placeholder_actions' => array('add')
 		);
 
