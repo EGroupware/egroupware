@@ -93,6 +93,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		};
 	}
 
+	const min_reconnect_time = 1000;
+	const max_reconnect_time = 300000;
+	const check_interval = 30000;	// 30 sec
+	const max_ping_response_time = 1000;
+	let reconnect_time = min_reconnect_time;
+
 	/**
 	 * Open websocket to push server (and keeps it open)
 	 *
@@ -104,11 +110,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 */
 	json_request.prototype.openWebSocket = function(url, tokens, account_id, error, reconnect)
 	{
-		const min_reconnect_time = 1000;
-		const max_reconnect_time = 300000;
-		const check_interval = 30000;	// 30 sec
-		const max_ping_response_time = 1000;
-		let reconnect_time = reconnect || min_reconnect_time;
+		reconnect_time = reconnect || min_reconnect_time;
 		let check_timer;
 		let check = function()
 		{
@@ -429,7 +431,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	};
 
-	var json = {
+	var json =
+	{
+		/**
+		 * Check if there is a *working* connection to a push server
+		 *
+		 * @return {boolean}
+		 */
+		pushAvailable: function()
+		{
+			return reconnect_time === min_reconnect_time;
+		},
 
 		/** The constructor of the egw_json_request class.
 		 *
