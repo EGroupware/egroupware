@@ -72,6 +72,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			var jQuery = _wnd.jQuery;
 			var wrapper = jQuery('.egw_message_wrapper').length > 0 ? jQuery('.egw_message_wrapper')
 				: jQuery(_wnd.document.createElement('div')).addClass('egw_message_wrapper noPrint').css('position', 'absolute');
+
+			// add popup indicator class to be able to distinguish between mainframe message or popup message
+			if (this.is_popup()) wrapper.addClass('isPopup');
+
 			if (_msg && !_type)
 			{
 				if (typeof error_reg_exp == 'undefined') error_reg_exp = new RegExp('(error|'+egw.lang('error')+')', 'i');
