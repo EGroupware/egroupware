@@ -540,10 +540,20 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_upload_callback(_data)
 	{
-		if(_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
+		if(_data.msg || _data.uploaded)
+		{
+			if(this.egw.pushAvailable())
+			{
+				this.egw.message(_data.msg);
+			}
+			else
+			{
+				window.egw_refresh(_data.msg, this.appname, undefined, undefined, undefined, undefined, undefined, _data.type);
+			}
+		}
 
 		let that = this;
-		for (let file in _data.uploaded)
+		for(let file in _data.uploaded)
 		{
 			if(_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
