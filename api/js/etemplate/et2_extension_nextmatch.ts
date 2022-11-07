@@ -892,32 +892,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				{
 					// Pre-ask for the row data, and only proceed if we actually get it
 					// need to send nextmatch filters too, as server-side will merge old version from request otherwise
-					this.egw().dataFetch(
-						this.getInstanceManager().etemplate_exec_id,
-						{refresh: _row_ids},
-						this.controller._filters,
-						this.id, function(data)
-						{
-							// In the event that the etemplate got removed before the data came back (Usually an action caused
-							// a full submit) just stop here.
-							if(!this.nm.getParent()) return;
-
-							if(data.total >= 1)
-							{
-								this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type)
-															   : this.nm.refresh_update(this.uid);
-							}
-							else if(this.type == et2_nextmatch.UPDATE)
-							{
-								// Remove row from controller
-								this.nm.controller.deleteRow(this.uid);
-
-								// Adjust total rows, clean grid
-								this.nm.controller._grid.setTotalCount(this.nm.controller._grid._total - _row_ids.length);
-								this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
-							}
-						}, {type: _type, nm: this, uid: uid, prefix: this.controller.dataStorePrefix}, [_row_ids]
-					);
+					this._refresh_grid(_type, this.controller, _row_ids, uid);
 					return;
 				}
 				switch(_type)
@@ -949,23 +924,64 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		jQuery(this).triggerHandler("refresh", [this, _row_ids, _type]);
 	}
 
+	protected _refresh_grid(type, controller, row_ids, uid)
+	{
+		// Pre-ask for the row data, and only proceed if we actually get it
+		// need to send nextmatch filters too, as server-side will merge old version from request otherwise
+		return this.egw().dataFetch(
+			this.getInstanceManager().etemplate_exec_id,
+			{refresh: row_ids},
+			controller._filters,
+			this.id, function(data)
+			{
+				// In the event that the etemplate got removed before the data came back (Usually an action caused
+				// a full submit) just stop here.
+				if(!this.nm.getParent())
+				{
+					return;
+				}
+
+				if(data.total >= 1)
+				{
+					this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type, controller)
+												   : this.nm.refresh_update(this.uid, controller);
+				}
+				else if(this.type == et2_nextmatch.UPDATE)
+				{
+					// Remove row from controller
+					this.controller.deleteRow(this.uid);
+
+					// Adjust total rows, clean grid
+					this.controller._grid.setTotalCount(this.nm.controller._grid._total - row_ids.length);
+					this.controller._selectionMgr.setTotalCount(this.nm.controller._grid._total);
+				}
+			}, {
+				type: type,
+				nm: this,
+				controller: controller,
+				uid: uid,
+				prefix: this.controller.dataStorePrefix
+			}, [row_ids]
+		);
+	}
+
 	/**
 	 * An entry has been updated.  Request new data, and ask app about where the row
 	 * goes now.
 	 *
 	 * @param uid
 	 */
-	protected refresh_update(uid : string)
+	protected refresh_update(uid : string, controller : et2_nextmatch_controller)
 	{
 		// Row data update has been sent, let's move it where app wants it
-		let entry = this.controller._selectionMgr._getRegisteredRowsEntry(uid);
+		let entry = controller._selectionMgr._getRegisteredRowsEntry(uid);
 
 		// Need to delete first as there's a good chance indexes will change in an unknown way
 		// and we can't always find it by UID after due to duplication
-		this.controller.deleteRow(uid);
+		controller.deleteRow(uid);
 
 		// Pretend it's a new row, let app tell us where it goes and we'll mark it as new
-		if(!this.refresh_add(uid, et2_nextmatch.UPDATE))
+		if(!this.refresh_add(uid, et2_nextmatch.UPDATE, controller))
 		{
 			// App did not want the row, or doesn't know where it goes but we've already removed it...
 			// Put it back before anyone notices.  New data coming from server anyway.
@@ -975,11 +991,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				this.egw().dataUnregisterUID(uid, callback, this);
 			};
 			this.egw().dataRegisterUID(uid, callback, this, this.getInstanceManager().etemplate_exec_id, this.id);
-			this.controller._insertDataRow(entry, true);
+			controller._insertDataRow(entry, true);
 		}
 		// Update does not need to increase row count, but refresh_add() adds it in
-		this.controller._grid.setTotalCount(this.controller._grid.getTotalCount() - 1);
-		this.controller._selectionMgr.setTotalCount(this.controller._grid.getTotalCount());
+		controller._grid.setTotalCount(controller._grid.getTotalCount() - 1);
+		controller._selectionMgr.setTotalCount(controller._grid.getTotalCount());
 
 		return true;
 	}
@@ -990,7 +1006,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 * @param uid
 	 * @return boolean false: not added, true: added
 	 */
-	protected refresh_add(uid : string, type = et2_nextmatch.ADD)
+	protected refresh_add(uid : string, type = et2_nextmatch.ADD, controller)
 	{
 		let index : boolean | number = egw.preference("lazy-update") !== "exact" ? 0 :
 									   (this.is_sorted_by_modified() ? 0 : false);
@@ -1005,6 +1021,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		this.egw().dataRegisterUID(uid, this._push_add_callback, {
 			nm: this,
+			controller: controller,
 			uid: uid,
 			index: index
 		}, this.getInstanceManager().etemplate_exec_id, this.id);
@@ -1016,7 +1033,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 *
 	 * Expected context: {nm: this, uid: string, index: number}
 	 */
-	protected _push_add_callback(this : { nm : et2_nextmatch, uid : string, index : number }, data : any)
+	protected _push_add_callback(this : { nm : et2_nextmatch, uid : string, index : number, controller : et2_nextmatch_controller }, data : any)
 	{
 		if(data && this.nm && this.nm.getParent())
 		{
@@ -1029,21 +1046,21 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			//if(stored?.timestamp >= time) return;
 
 			// Increase displayed row count or we lose the last row when we add and the total is wrong
-			this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() + 1);
-			this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
+			this.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() + 1);
+			this.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
 
 			// Insert at the top of the list, or where app said
-			var entry = this.nm.controller._selectionMgr._getRegisteredRowsEntry(this.uid);
+			var entry = this.controller._selectionMgr._getRegisteredRowsEntry(this.uid);
 			entry.idx = typeof this.index == "number" ? this.index : 0;
-			this.nm.controller._insertDataRow(entry, true);
+			this.controller._insertDataRow(entry, true);
 		}
 		else if(this.nm && this.nm.getParent())
 		{
 			// Server didn't give us our row data
 			// Delete from internal references
-			this.nm.controller.deleteRow(this.uid);
-			this.nm.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() - 1);
-			this.nm.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
+			this.controller.deleteRow(this.uid);
+			this.controller._grid.setTotalCount(this.nm.controller._grid.getTotalCount() - 1);
+			this.controller._selectionMgr.setTotalCount(this.nm.controller._grid.getTotalCount());
 		}
 		this.nm.egw().dataUnregisterUID(this.uid, this.nm._push_add_callback, this);
 	}

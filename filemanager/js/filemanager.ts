@@ -148,16 +148,69 @@ export class filemanagerAPP extends EgwApp
 		{
 			let fe = egw.link_get_registry('filemanager-editor');
 			let new_widget =  this.et2.getWidgetById('new');
-			if (fe && fe["edit"])
+			if(fe && fe["edit"])
 			{
 				let new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
 				new_widget.set_select_options(new_options);
 			}
-			else if (new_widget)
+			else if(new_widget)
 			{
 				new_widget.set_disabled(true);
 			}
 		}
+	}
+
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * Overridden here so we can handle notifications about file in subdirectories
+	 *
+	 * @param  pushData
+	 * @param {string} pushData.app application name
+	 * @param {(string|number)} pushData.id id of entry to refresh or null
+	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param {number} pushData.account_id User that caused the notification
+	 */
+	push(pushData : PushData)
+	{
+		super.push(pushData);
+
+		// don't care about other apps data
+		if(pushData.app !== this.appname)
+		{
+			return;
+		}
+
+		// Special handling only for sub-dirs, super.push() handled everything else
+		if(pushData.id == this.get_path() || !pushData.id.toString().startsWith(this.get_path()))
+		{
+			return;
+		}
+		// Nextmatch controller has the sub-grids.
+		let nm = <et2_nextmatch>this.et2?.getDOMWidgetById('nm');
+		if(!nm)
+		{
+			return;
+		}
+
+		nm.controller._children.forEach((subgrid) =>
+		{
+			if(subgrid._parentId === this.dirname(pushData.id))
+			{
+				console.log(subgrid);
+				let uid = pushData.id.toString().indexOf(nm.controller.dataStorePrefix) == 0 ? pushData.id : nm.controller.dataStorePrefix + "::" + pushData.id;
+				debugger;
+				nm._refresh_grid(pushData.type, subgrid, [pushData.id], uid);
+			}
+
+		});
+
 	}
 
 	/**
@@ -249,7 +302,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	_push_field_filter(pushData : PushData, nm : et2_nextmatch, filter_fields : string[]) : boolean
 	{
-		return pushData.id && (<string>pushData.id).startsWith(this.get_path());
+		return pushData.id && this.dirname(<string>pushData.id) === this.get_path();
 	}
 
 	/**
