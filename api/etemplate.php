@@ -357,7 +357,7 @@ function send_template()
 				{
 					$indent = $matches[1];
 					$tabbox_attrs = parseAttrs($matches[2]);
-					unset($tabbox_attrs['align_tabs'], $tabbox_attrs['id']);
+					unset($tabbox_attrs['align_tabs']);
 					if (preg_match_all('#<tab\s(.*)/>#', $matches[3], $tabs) !==
 						preg_match_all('#<template\s(.*)/>#', $matches[4], $panels))
 					{
@@ -371,10 +371,9 @@ function send_template()
 						$tab_attrs['summary'] = $tab_attrs['label'];
 						$tab_attrs['title'] = $tab_attrs['statustext'];
 						unset($tab_attrs['label'], $tab_attrs['statustext']);
-						$tab_attrs += $tabbox_attrs;
-						$details[] = $indent.'<et2-details '.stringAttrs($tab_attrs).'>'."\n\t$indent".$panels[0][$n]."\n$indent</et2-details>";
+						$details[] = $indent."\t".'<et2-details '.stringAttrs($tab_attrs).'>'."\n$indent\t\t".$panels[0][$n]."\n$indent\t</et2-details>";
 					}
-					return implode("\n", $details);
+					return $indent.'<vbox '.stringAttrs($tabbox_attrs).">\n".implode("\n", $details)."\n$indent</vbox>";
 				}, $str);
 		}
 
