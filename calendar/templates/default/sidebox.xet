@@ -28,8 +28,6 @@ Egroupware
                                 multiple="true" allowFreeEntries="false"
                                 autocomplete_params="{&quot;checkgrants&quot;: true}"/>
             <hrule/>
-            <select id="merge" empty_label="Insert in document" onchange="app.calendar.sidebox_merge"
-                    class="et2_fullWidth"/>
             <box>
                 <grid id="integration" disabled="!@integration" width="100%">
                     <columns>
@@ -42,6 +40,8 @@ Egroupware
                     </rows>
                 </grid>
             </box>
+            <select id="merge" empty_label="Insert in document" onchange="app.calendar.sidebox_merge"
+                    class="et2_fullWidth"/>
         </vbox>
         <iframe id="iframe" width="100%" height="100%"/>
         <styles>
