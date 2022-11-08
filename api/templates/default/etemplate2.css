@@ -827,7 +827,7 @@ action buttons, left aligned for "extra" controls
 
 /* Custom field list inside nextmatch rows gets an icon for each row */
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
-    background-image: url('images/hint.png');
+    background-image: url('images/dialog_info.svg');
     background-repeat: no-repeat;
     background-size: 1em;
 }
