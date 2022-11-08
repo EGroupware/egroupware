@@ -183,10 +183,32 @@ class Events extends Api\Storage\Base
 				{
 					$bo->data['ts_duration'] += $diff;
 					$bo->data['ts_quantity'] += $diff / 60;
+					// set title, in case date(s) changed
+					$events = self::get(['ts_id' => $event['ts_id']]);
+					$bo->data['ts_title'] = self::workingTimeTitle($events);
 					$bo->save();
 				}
 			}
 		}
+	}
+
+	/**
+	 * Generate working time title
+	 *
+	 * @param array $events
+	 * @param Api\DateTime|null &$start on return start-time
+	 * @return string
+	 */
+	protected static function workingTimeTitle(array $events, Api\DateTime &$start=null)
+	{
+		$start = array_shift($events)['tse_time'];
+		$timespan = Api\DateTime::to($start, true);
+		$last = array_pop($events);
+		if ($timespan !== ($end = Api\DateTime::to($last['tse_time'], true)))
+		{
+			$timespan .= ' - '.$end;
+		}
+		return lang('Working time from %1', $timespan);
 	}
 
 	/**
@@ -208,14 +230,7 @@ class Events extends Api\Storage\Base
 			$events = array_merge(self::get(['ts_id' => $period_ts['ts_id']], $period_total), $events);
 			$time += $period_total;
 		}
-		$start = array_shift($events)['tse_time'];
-		$timespan = Api\DateTime::to($start, true);
-		$last = array_pop($events);
-		if ($timespan !== ($end = Api\DateTime::to($last['tse_time'], true)))
-		{
-			$timespan .= ' - '.$end;
-		}
-		$title = lang('Working time from %1', $timespan);
+		$title = self::workingTimeTitle($events, $start);
 		$bo->init($period_ts);
 		$bo->save([
 			'ts_title' => $title,
