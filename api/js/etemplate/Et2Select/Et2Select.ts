@@ -159,12 +159,20 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 	}
 
+	/**
+	 * If fix_bad_value() has to change the value, the update will trigger a change event.
+	 * We don't want that event to fire since it happens too soon, before the handler is ready and app.ts has set up
+	 * @type {boolean}
+	 * @private
+	 */
+	private _block_change_event = false;
+
 	constructor(...args : any[])
 	{
 		super();
 		// We want this on more often than off
 		this.hoist = true;
-		
+
 		this._triggerChange = this._triggerChange.bind(this);
 		this._doResize = this._doResize.bind(this);
 		this._handleMouseWheel = this._handleMouseWheel.bind(this);
@@ -200,9 +208,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	_triggerChange(e)
 	{
-		if(super._triggerChange(e))
+		if(super._triggerChange(e) && !this._block_change_event)
 		{
 			this.dispatchEvent(new Event("change"));
+		}
+		if(this._block_change_event)
+		{
+			this.updateComplete.then(() => this._block_change_event = false);
 		}
 	}
 
@@ -272,6 +284,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			let oldValue = this.value;
 			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
+			this._block_change_event = true;
 			// ""+ to cast value of 0 to "0", to not replace with ""
 			this.requestUpdate("value", oldValue);
 		}
