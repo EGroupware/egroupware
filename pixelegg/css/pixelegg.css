@@ -3553,8 +3553,8 @@ body .egw_message_wrapper.isPopup {
 body .egw_message_wrapper {
   background-color: #d9d9d9;
   right: 0 !important;
-  max-width: 25%;
-  min-width: 25%;
+  max-width: 40%;
+  min-width: 40%;
   box-shadow: 2px 3px 13px #666666;
   -moz-box-shadow: 2px 3px 13px #666666;
   -webkit-box-shadow: 2px 3px 13px #666666;
