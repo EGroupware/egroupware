@@ -284,7 +284,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		{
 			let oldValue = this.value;
 			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
-			this._block_change_event = true;
+			this._block_change_event = (oldValue != this.value);
 			// ""+ to cast value of 0 to "0", to not replace with ""
 			this.requestUpdate("value", oldValue);
 		}
