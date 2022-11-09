@@ -236,8 +236,10 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			const controller = new AbortController();
 			const signal = controller.signal;
+			let response_ok = false;
 			promise = (this.egw.window?this.egw.window:window).fetch(url, {...init, ...signal})
 				.then((response) => {
+					response_ok = response.ok;
 					if (!response.ok) {
 						throw response;
 					}
@@ -245,7 +247,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				})
 				.then((data) => this.handleResponse(data) || data)
 				.catch((_err) => {
-					(error || this.handleError).call(this, _err)
+					// no response / empty body causing response.json() to throw (a different error per browser!)
+					if (response_ok && !_err.message.match(/Unexpected end of/i))
+					{
+						(error || this.handleError).call(this, _err)
+					}
 				});
 
 			// offering a simple abort mechanism and compatibility with jQuery.ajax
