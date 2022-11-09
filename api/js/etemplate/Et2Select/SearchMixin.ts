@@ -633,7 +633,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				{
 					this.dropdown?.setAttribute("distance",
 						!this._activeControls || this._activeControls?.classList.contains("novalue") ?
-						"" :
+						parseInt(getComputedStyle(this.control).getPropertyValue("border-width")) :
 							// Make room for search below
 						parseInt(getComputedStyle(this._activeControls).getPropertyValue("--sl-input-height-medium"))
 					);
