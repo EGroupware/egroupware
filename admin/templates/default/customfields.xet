@@ -16,7 +16,7 @@
 				<row>
 					<hbox>
 						<description id="appname"/>
-						<description value=" - "/>
+						<description value="-"/>
 						<description value="type"/>
 					</hbox>
 					<select id="types" no_lang="1" onchange="1"/>
