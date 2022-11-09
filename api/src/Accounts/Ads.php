@@ -1810,6 +1810,29 @@ class adLDAPUsers extends \adLDAPUsers
 		}
 		return true;
 	}
+
+	/**
+	 * Find information about the users. Returned in a raw array format from AD.
+	 *
+	 * Reimplemented to deal with InvalidArgumentException caused by calling
+	 * ldap_search or ldap_get_entries under PHP 8.x.
+	 *
+	 * @param string $username The username to query
+	 * @param array  $fields   Array of parameters to query
+	 * @param bool   $isGUID   Is the username passed a GUID or a samAccountName
+	 *
+	 * @return array|false false on error
+	 */
+	public function info($username, $fields = null, $isGUID = false)
+	{
+		try {
+			return parent::info($username, $fields, $isGUID);
+		}
+		catch(\InvalidArgumentException $e) {
+			// ignore the exceptions caused by calling ldap_get_entries or ldap_get_entries under PHP 8.x
+		}
+		return false;
+	}
 }
 
 /**
