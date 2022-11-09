@@ -5,7 +5,7 @@
     <template id="mail.index.rows.horizental" template="" lang="" group="0" version="1.9.001">
         <grid width="100%">
             <columns>
-                <column minWidth="50" maxWidth="50" width="50"/>
+                <column minWidth="60" maxWidth="60" width="60"/>
                 <column width="20"/>
                 <column width="20"/>
                 <column width="40%"/>
