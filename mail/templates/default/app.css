@@ -455,17 +455,28 @@ div.mail-compose_fileselector {
 	width: 100%;
 	height: 100%;
 }
+
 #mail-index_mail-index-preview {
     overflow: hidden;
     position: relative;
     background-color: white;
 	width: calc(100% - 1em);
-	margin-left: 1em;
+	margin-left: 1ex;
 }
-.previewWrapper {height: 100%}
+
+#mail-index_mailSplitter[vertical] #mail-index_mail-index-preview {
+    margin-left: 0;
+    margin-top: 1ex;
+}
+
+.previewWrapper {
+    height: 100%
+}
+
 .previewWrapper > * {
 	margin-bottom: 0.5em;
 }
+
 .previewWrapper .et2_details.et2_details_expanded .et2_details_wrapper {
 	display: block;
 	position: absolute;
