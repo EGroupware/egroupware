@@ -3549,6 +3549,14 @@ div.admin-config form > table td b {
 /**
  * Message in popup
  */
+body .egw_message_wrapper.isPopup {
+  top: 0px;
+  bottom: auto;
+  overflow-y: unset;
+  right: 33% !important;
+  max-width: unset;
+  min-width: unset;
+}
 body .egw_message_wrapper {
   background-color: #d9d9d9;
   right: 0 !important;
@@ -3875,6 +3883,12 @@ td.lettersearch {
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
   height: 63px;
   overflow: hidden;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
+  max-width: 60em;
+  display: inline-block;
+  overflow-wrap: break-word;
+  vertical-align: text-top;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
   display: inline-block;

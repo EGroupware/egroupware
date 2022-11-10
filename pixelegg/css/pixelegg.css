@@ -3877,6 +3877,12 @@ td.lettersearch {
   height: 63px;
   overflow: hidden;
 }
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
+  max-width: 60em;
+  display: inline-block;
+  overflow-wrap: break-word;
+  vertical-align: text-top;
+}
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
   display: inline-block;
   width: 100%;

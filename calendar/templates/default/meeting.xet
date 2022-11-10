@@ -102,36 +102,42 @@
 			</rows>
 		</grid>
 		<styles>
-			#popupMainDiv {
- border: none;
- margin: 0;
-}
+            #popupMainDiv {
+            border: none;
+            margin: 0;
+            }
 
-.meetingRequestMessage {
- font-size: 120%;
-}
+            .meetingRequestMessage {
+            font-size: 120%;
+            }
 
-table.meetingRequest {
- border: 2px solid black;
-}
-.meetingRequest tr.th {
- background-color: #4040FF;
-}
-.meetingRequest tr.th td {
- font-weight: bold;
- font-size: 120%;
- color: white;
-}
-.meetingRequest td {
- padding: 3px;
-}
+            table.meetingRequest {
+            border: 2px solid black;
+            }
+            .meetingRequest tr.th {
+            background-color: #4040FF;
+            }
+            .meetingRequest tr.th td {
+            font-weight: bold;
+            font-size: 120%;
+            color: white;
+            }
+            .meetingRequest td {
+            padding: 3px;
+            }
+            .meetingRequest a {
+            display: inline-block;
+            max-width: 60em;
+            overflow-wrap: break-word;
+            vertical-align: text-top;
+            }
 
-.meetingRequestError {
-	color: red;
-	font-style: italic;
-	font-size: 120%;
-}
+            .meetingRequestError {
+            color: red;
+            font-style: italic;
+            font-size: 120%;
+            }
 
-		</styles>
+        </styles>
 	</template>
 </overlay>
