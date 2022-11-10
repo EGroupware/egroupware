@@ -1456,6 +1456,23 @@ class adLDAP extends \adLDAP
         }
         return $this->utilClass;
     }
+
+	/**
+	 * Get last error from Active Directory.
+	 *
+	 * Reimplemented to return which AD we're connecting.
+	 *
+	 * return string
+	 */
+	public function getLastError()
+	{
+		$url = $this->useTLS ? 'ldaps://' : 'ldap://';
+		if (!empty($this->adminUsername)) $url .= $this->adminUsername.'@'.$this->accountSuffix.'@';
+		$url .= implode(',', $this->domainControllers);
+		if (!empty($this->adPort)) $url .= ':'.$this->adPort;
+
+		return $url.': '.parent::getLastError();
+	}
 }
 
 /**
