@@ -92,7 +92,7 @@
   position: relative;
 }
 #calendar-sidebox_cat_id {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #calendar-sidebox_cat_id ~ * {
   vertical-align: top;
@@ -1451,12 +1451,15 @@ et2-switch#calendar-toolbar_toolbar-weekend {
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend::part(base) {
   width: 100%;
+  height: 100%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label span {
-  background-size: 20px;
+  background-size: contain;
+  height: 75%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label {
   width: 100%;
+  height: 100%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend {
   min-width: 60px;
@@ -1466,6 +1469,7 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(control) {
 }
 et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   width: 100%;
+  height: 100%;
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch[checked],
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"][checked],
@@ -1594,6 +1598,10 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
 #calendar-edit_description {
   height: 70%;
   margin-bottom: 2em;
+}
+et2-button#calendar-toolbar_toolbar-today::part(label) {
+  font-weight: bold;
+  color: dimgrey;
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {

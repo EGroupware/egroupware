@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, PropertyValues, SlotMixin} from "@lion/core";
+import {css, html, SlotMixin} from "@lion/core";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlSwitch} from "@shoelace-style/shoelace";
@@ -50,6 +50,7 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 			 {
 				width: var(--width);
 				display: inline-flex;
+				align-items: center;
 				height: var(--height);
 			}
             `,
