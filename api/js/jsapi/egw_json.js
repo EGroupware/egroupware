@@ -98,6 +98,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	const check_interval = 30000;	// 30 sec
 	const max_ping_response_time = 1000;
 	let reconnect_time = min_reconnect_time;
+	let websocket = null;
 
 	/**
 	 * Open websocket to push server (and keeps it open)
@@ -128,7 +129,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}.bind(this), max_ping_response_time);
 		}.bind(this);
 
-		this.websocket = new WebSocket(url);
+		websocket = this.websocket = new WebSocket(url);
 		this.websocket.onopen = (e) =>
 		{
 			check_timer = window.setTimeout(check, check_interval);
@@ -446,7 +447,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		pushAvailable: function()
 		{
-			return reconnect_time === min_reconnect_time;
+			return websocket !== null && websocket.readyState == websocket.OPEN && reconnect_time === min_reconnect_time;
 		},
 
 		/** The constructor of the egw_json_request class.
