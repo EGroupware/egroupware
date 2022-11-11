@@ -608,7 +608,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				return;
 			}
 			// Remove the loading class if the slide is loaded
-			else
+			else if(this._gallery.slides[index])
 			{
 				this._gallery.slides[index].classList.remove(this._gallery.options.slideLoadingClass);
 			}
@@ -637,7 +637,10 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// Move into place in DOM
 				let node = this._gallery[var_name][index];
 				node.setAttribute('data-index', index)
-				this._gallery.slidesContainer[0].insertBefore(this._gallery.slides[(index + 1)], undefined);
+				if(this._gallery.slides[(index + 1)])
+				{
+					this._gallery.slidesContainer[0].insertBefore(this._gallery.slides[(index + 1)], undefined);
+				}
 				if(active)
 				{
 					node.classList.add(this._gallery.options.activeIndicatorClass);
