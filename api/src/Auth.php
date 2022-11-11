@@ -303,7 +303,12 @@ class Auth
 	}
 
 	/**
-	 * password authentication against password stored in sql datababse
+	 * How long to cache authentication, before asking backend again
+	 */
+	const AUTH_CACHE_TIME = 3600;
+
+	/**
+	 * Password authentication against authentication backend
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
@@ -312,7 +317,11 @@ class Auth
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		return $this->backend->authenticate($username, $passwd, $passwd_type);
+		return Cache::getCache($GLOBALS['egw_info']['server']['install_id'],
+			__CLASS__, sha1($username.':'.$passwd.':'.$passwd_type), function($username, $passwd, $passwd_type)
+		{
+			return $this->backend->authenticate($username, $passwd, $passwd_type);
+		}, [$username, $passwd, $passwd_type], self::AUTH_CACHE_TIME);
 	}
 
 	/**
@@ -345,6 +354,10 @@ class Auth
 			Accounts::cache_invalidate($account_id);
 
 			self::changepwd($old_passwd, $new_passwd, $account_id);
+
+			// unset (possibly) cached authentication
+			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
+				__CLASS__, sha1(Accounts::id2name($account_id).':'.$old_passwd.':text'));
 		}
 		return $ret;
 	}
