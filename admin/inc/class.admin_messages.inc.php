@@ -44,7 +44,7 @@ class admin_messages
 		}
 		else
 		{
-			$button = @key($content['button']);
+			$button = key($content['button'] ?? []);
 
 			if ($button)
 			{
@@ -59,7 +59,7 @@ class admin_messages
 						}
 						Framework::message(lang('message has been updated'));
 						if ($button == 'apply') break;
-					//fall through
+						//fall through
 					default:
 						Egw::redirect_link('/index.php', array(
 							'menuaction' => 'admin.admin_ui.index',
