@@ -780,7 +780,7 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 	{
 		return {
 			...super.properties,
-			country_code: String,
+			countryCode: String,
 		}
 	}
 
@@ -788,24 +788,24 @@ export class Et2SelectState extends Et2StaticSelectMixin(Et2Select)
 	{
 		super();
 
-		this.country_code = 'DE';
+		this.countryCode = 'DE';
 	}
 
-	get country_code()
+	get countryCode()
 	{
-		return this.__country_code;
+		return this.__countryCode;
 	}
 
-	set country_code(code : string)
+	set countryCode(code : string)
 	{
-		this.__country_code = code;
-		this.static_options = so.state(this, {country_code: this.__country_code});
+		this.__countryCode = code;
+		this.static_options = so.state(this, {country_code: code});
 		this.requestUpdate("select_options");
 	}
 
 	set_country_code(code)
 	{
-		this.country_code = code;
+		this.countryCode = code;
 	}
 }
 
