@@ -48,8 +48,15 @@
 		</grid>
 	</template>
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
-		<file label="Upload" statustext="Select file to upload in current directory" id="upload" progress_dropdownlist = "true" drop_target="filemanager-index" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
-	</template>
+        <!-- Anonymous view has some extras - logo & button -->
+        <image src="logo" disabled="!@show_refresh" hideOnReadonly="true" width="150px"/>
+        <buttononly id="reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
+                    disabled="!@show_refresh" hideOnReadonly="true"
+                    background_image="true" image="reload"/>
+        <file label="Upload" statustext="Select file to upload in current directory" id="upload"
+              progress_dropdownlist="true" drop_target="filemanager-index" multiple="true"
+              onFinishOne="app.filemanager.uploadOnOne"/>
+    </template>
 	<template id="filemanager.index.header_row" template="" lang="" group="0" version="1.9.002">
 		<buttononly id="home" statustext="Go to your home directory" image="gohome" background_image="true" onclick="app.filemanager.change_dir('~',widget);"/>
 		<buttononly id="up" statustext="Up" image="goup" background_image="true" onclick="app.filemanager.change_dir('..',widget);"/>

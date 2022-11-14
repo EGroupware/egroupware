@@ -24,52 +24,53 @@ select#filemanager-index_filter, span.selectcols, #filemanager-index_filemanager
 	display: none !important;
 }
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
-	display: inline-block !important;
-	position: absolute;
-	right: 360px;
-	top: 4px;
+    display: inline-block !important;
+    position: absolute;
+    right: 360px;
+    top: 4px;
+}
+
+.nextmatch_header_row {
+    background-color: #fbfbfb;
 }
 
 div.filemanager_navigation {
-	margin: -5px 0 8px 10px !important;
+    margin: -5px 0 8px 10px !important;
 }
 
 div.filemanager_navigation > label {
 	right: 427px !important;
 }
 
-div.search {
-	position: absolute;
-	top: 4px;
-	right: 190px;
-}
-
 div#filemanager-index_buttons div.et2_file {
-	width: 160px;
-	margin-top: 3px;
-	padding-right: 20px;
+    width: 160px;
+    margin-top: 3px;
+    padding-right: 20px;
 }
 
 div.et2_nextmatch div.nextmatch_header_row {
-	padding-bottom: 0px;
+    padding-bottom: 0px;
 }
-div.et2_nextmatch  thead{
-	display: none;
+
+div.et2_nextmatch thead {
+    display: none;
 }
+
 div.nextmatch_header {
 
 }
 
-div.search {
-  position: relative;
-  width: 35%;
-  right: 6px;
-  max-width: 98%;
-  top: 0;
-  float: right !important;
+#filemanager-index_nm_reload et2-image {
+    width: 50px;
 }
+
+div.search {
+    width: 25%;
+    max-width: 98%;
+}
+
 div.search .et2_searchbox .flex {
-  width: 100%;
-  float: right;
-  padding-right: 0;
+    width: 100%;
+    float: right;
+    padding-right: 0;
 }
