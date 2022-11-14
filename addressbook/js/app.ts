@@ -110,6 +110,8 @@ class AddressbookApp extends EgwApp
 						this.check_value(this.et2.getWidgetById(content.presets_fields),0);
 					}
 				}
+				this.regionSetCountry(null, this.et2.getWidgetById("adr_one_countrycode"));
+				this.regionSetCountry(null, this.et2.getWidgetById("adr_two_countrycode"));
 				break;
 		}
 	}
