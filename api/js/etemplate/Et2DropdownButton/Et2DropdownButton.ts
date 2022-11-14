@@ -123,9 +123,12 @@ export class Et2DropdownButton extends Et2widgetWithSelectMixin(Et2Button)
 	{
 		return html`
             <sl-button-group>
-                <sl-button size="${egwIsMobile()?"large":"medium"}" id="main">${this.label}</sl-button>
+                <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main" ?disabled=${this.disabled}>
+                    ${this.label}
+                </sl-button>
                 <sl-dropdown placement="bottom-end" hoist>
-                    <sl-button size="${egwIsMobile()?"large":"medium"}" slot="trigger" caret></sl-button>
+                    <sl-button size="${egwIsMobile() ? "large" : "medium"}" slot="trigger" caret
+                               ?disabled=${this.disabled}></sl-button>
                     <sl-menu>
                     </sl-menu>
                 </sl-dropdown>

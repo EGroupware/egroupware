@@ -755,7 +755,8 @@ export class et2_file extends et2_inputWidget
 		if (typeof _ro != "undefined")
 		{
 			this.options.readonly = _ro;
-			this.span.toggleClass('et2_file_ro',_ro);
+			this.span.toggleClass('et2_file_ro', _ro);
+			this.span[0].readonly = _ro;
 			if (this.options.readonly)
 			{
 				this.span.unbind('click');
