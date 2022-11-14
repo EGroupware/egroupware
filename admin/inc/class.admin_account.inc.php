@@ -236,8 +236,6 @@ class admin_account
 		)+(array)$content['admin_cmd']);
 		$cmd->run();
 
-		Api\Json\Response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');
-
 		$addressbook_bo = new Api\Contacts();
 		if (!($content['id'] = Api\Accounts::id2name($cmd->account, 'person_id')) ||
 			!($contact = $addressbook_bo->read($content['id'])))
