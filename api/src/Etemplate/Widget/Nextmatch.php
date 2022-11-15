@@ -127,6 +127,9 @@ class Nextmatch extends Etemplate\Widget
 
 		$value['rows'] = array();
 
+		// These can be added by sub-grids, but interfere with columns
+		unset($value[0], $value[1], $value[2], $value[3]);
+
 		$send_value = $value;
 
 		list($app) = explode('.',$value['get_rows']);
