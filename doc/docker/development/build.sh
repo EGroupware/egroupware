@@ -7,7 +7,7 @@ RECOMMENDED_PHP_VERSION=8.1
 
 PHP_VERSION=${1:-8.1}
 
-TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:$PHP_VERSION -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/focal[^ ]* .*\([78]\.[0-9]*\.[0-9]*\).*|\1|g")
+TAG=$(docker run --rm -i --entrypoint bash $REPO/$IMAGE:$PHP_VERSION -c "apt update && apt search php$PHP_VERSION-fpm" 2>/dev/null|grep php$PHP_VERSION-fpm|sed "s|^php$PHP_VERSION-fpm/[^ ]* \([78]\.[0-9]*\.[0-9]*\).*|\1|g")
 test -z "$TAG" && {
 	echo "Can't get new tag of $REPO/$IMAGE container --> existing"
 	exit 1
