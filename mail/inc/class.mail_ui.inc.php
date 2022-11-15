@@ -3821,7 +3821,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$file = $content['uploadForImport'];
 			}
-			$destination = $content['FOLDER'][0];
+			$destination = $content['FOLDER'];
 
 			if (stripos($destination,self::$delimiter)!==false) list($icServerID,$destination) = explode(self::$delimiter,$destination,2);
 			if ($icServerID && $icServerID != $this->mail_bo->profileID)
