@@ -271,6 +271,21 @@ services:
     depends_on:
       - mongo
 
+  # phpMyAdmin
+  phpmyadmin:
+    restart: unless-stopped
+    image: phpmyadmin
+    container_name: phpmyadmin
+    hostname: phpmyadmin
+    # pre 20.1 installs run MariaDB on the host and need to pass the socket (to use egroupware user and it's password only valid on localhost)
+    #volumes:
+    #  - /var/run/mysqld/mysqld.sock:/tmp/mysql.sock
+    environment:
+      # PMA_HOST: use localhost, if you use a socket (pre 20.1 install) or db for 20.1+ installations
+      - PMA_HOST=db
+      # phpMyAdmin needs the full URL incl. protocol, domain, path and a trailing slash!
+      - PMA_ABSOLUTE_URI=http://localhost/phpmyadmin/
+
   # Portainer: Docker GUI (needs to be enabled in nginx.conf too!)
 #   portainer:
 #    image: portainer/portainer
