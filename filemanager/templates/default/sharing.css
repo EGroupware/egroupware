@@ -31,7 +31,8 @@ div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
 }
 
 .nextmatch_header_row {
-    background-color: #fbfbfb;
+    background-color: #f4f4f4;
+    padding: 0.5em 0;
 }
 
 div.filemanager_navigation {
@@ -49,7 +50,6 @@ div#filemanager-index_buttons div.et2_file {
 }
 
 div.et2_nextmatch div.nextmatch_header_row {
-    padding-bottom: 0px;
 }
 
 div.et2_nextmatch thead {
@@ -58,6 +58,10 @@ div.et2_nextmatch thead {
 
 div.nextmatch_header {
 
+}
+
+#filemanager-index_filemanager-index-header_left > et2-image {
+    padding: 0 1em;
 }
 
 #filemanager-index_nm_reload et2-image {
