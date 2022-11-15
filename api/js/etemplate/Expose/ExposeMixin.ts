@@ -570,7 +570,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 					continue;
 				}
 				let data = egw.dataGetUIDdata(uid);
-				if(typeof data?.data?.mime === "string" && MIME_REGEX.test(data.data.mime) && !(MIME_AUDIO_REGEX.test(data.data.mime)))
+				if(typeof data?.data?.mime === "string" && MIME_REGEX.test(data.data.mime))
 				{
 					let media = this.getMedia(data.data);
 					images[image_index++] = Object.assign({}, data.data, media[0]);
