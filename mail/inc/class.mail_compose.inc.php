@@ -3616,7 +3616,7 @@ class mail_compose
 			explode(',', $mailPrefs['contactLabel']) : $mailPrefs['contactLabel'];
 
 		// Add some matching mailing lists, and some groups, limited by config
-		if($include_lists)
+		if($include_lists && strlen($_searchString) >= $_searchStringLength)
 		{
 			$results += static::get_lists($_searchString, $contacts_obj);
 		}
