@@ -457,7 +457,7 @@ class Customfields implements \IteratorAggregate
 			$type = 'add';
 		}
 		$accounts = Push::ALL;
-		if(count($cf['private']) > 0)
+		if(is_array($cf['private']) && count($cf['private']) > 0)
 		{
 			$accounts = [];
 			foreach($cf['private'] as $account_id)
