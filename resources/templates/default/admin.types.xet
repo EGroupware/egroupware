@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="resources.customfields.types">
+    </template>
+    <template id="resources.customfields.add" template="" lang="" group="0" version="1.9.001">
+        <buttononly label="Add" id="add"
+                    onclick="egw.open_link('resources.resources_customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]'),false,'450x380');"/>
+    </template>
+    <template id="resources.admin.types" template="" lang="" group="0" version="">
+        <template id="resources.customfields.types" content="content_types"/>
+        <styles>.header{
+            font-weight: bold;
+            }
+        </styles>
+    </template>
+</overlay>

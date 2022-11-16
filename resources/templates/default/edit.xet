@@ -113,7 +113,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row valign="top">
-					<customfields/>
+					<customfields type_filter="@cat_id"/>
 				</row>
 			</rows>
 		</grid>
@@ -141,16 +141,16 @@
 					<appicon/>
 					<description/>
 				</row>
-				<row class="dialogHeader2">
-					<description value="Quantity"/>
-					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10" class="et2_fullWidth"/>
-					<description/>
-					<description value="Category"/>
-					<menulist span="3">
-						<menupopup align="right" statustext="Which category does this resource belong to?" id="cat_id" needed="1" no_lang="1" class="et2_fullWidth" />
-					</menulist>
-					<description/>
-				</row>
+                <row class="dialogHeader2">
+                    <description value="Quantity"/>
+                    <textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10"
+                             class="et2_fullWidth"/>
+                    <description/>
+                    <description value="Category"/>
+                    <select span="3" tatustext="Which category does this resource belong to?" id="cat_id"
+                            needed="1" no_lang="1" onchange="1" class="et2_fullWidth"/>
+                    <description/>
+                </row>
 				<row class="dialogHeader3">
 					<description value="Useable"/>
 					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" class="et2_fullWidth"/>

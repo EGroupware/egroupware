@@ -58,26 +58,27 @@
 					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
-					<select id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All" readonly="true"/>
-					<description id="${row}[cf_name]" no_lang="1" />
-					<vbox>
-						<description id="${row}[cf_label]" no_lang="1"/>
-						<description id="${row}[cf_label]"/>
-					</vbox>
-					<customfields-types statustext="Type of customfield" id="{$row}[cf_type]" readonly="true"/>
-					<checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0" readonly="true"/>
-					<select-account id="${row}[cf_private]" account_type="both" readonly="true"/>
-					<description id="${row}[cf_values]" no_lang="1" class="values"/>
-					<vbox>
-						<description id="${row}[cf_len]" no_lang="1"/>
-						<description id="${row}[cf_rows]" no_lang="1"/>
-					</vbox>
-					<description id="${row}[cf_order]" no_lang="1"/>
-					<vbox>
-						<date-time id="${row}[cf_modified]" readonly="true"/>
-						<select-account id="${row}[cf_modifier]" readonly="true"/>
-					</vbox>
-				</row>
+                    <select id="${row}[cf_type2]" no_lang="1" multiple="true" empty_label="All" readonly="true"/>
+                    <description id="${row}[cf_name]" no_lang="1"/>
+                    <vbox>
+                        <description id="${row}[cf_label]" no_lang="1"/>
+                        <description id="${row}[cf_label]"/>
+                    </vbox>
+                    <customfields-types statustext="Type of customfield" id="{$row}[cf_type]" readonly="true"
+                                        app="$cont[appname]"/>
+                    <checkbox id="${row}[cf_needed]" selected_value="1" unselected_value="0" readonly="true"/>
+                    <select-account id="${row}[cf_private]" account_type="both" readonly="true"/>
+                    <description id="${row}[cf_values]" no_lang="1" class="values"/>
+                    <vbox>
+                        <description id="${row}[cf_len]" no_lang="1"/>
+                        <description id="${row}[cf_rows]" no_lang="1"/>
+                    </vbox>
+                    <description id="${row}[cf_order]" no_lang="1"/>
+                    <vbox>
+                        <date-time id="${row}[cf_modified]" readonly="true"/>
+                        <select-account id="${row}[cf_modifier]" readonly="true"/>
+                    </vbox>
+                </row>
 			</rows>
 		</grid>
 	</template>
