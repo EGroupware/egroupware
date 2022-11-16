@@ -430,7 +430,10 @@ class admin_customfields
 		$test = new Etemplate();
 		if($test->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 
-		$this->tmpl = new Etemplate();
+		if(is_null($this->tmpl))
+		{
+			$this->tmpl = new Etemplate();
+		}
 		$this->tmpl->read('admin.customfield_edit');
 
 		Api\Translation::add_app('infolog');	// til we move the translations
@@ -501,13 +504,14 @@ class admin_customfields
 		}
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
+		$exec = static::class == 'admin_customfields' ? 'admin.admin_customfields.edit' : $this->appname . '.' . static::class . '.edit';
 
-		$this->tmpl->exec('admin.admin_customfields.edit',$content,$sel_options,$readonlys,array(
-			'cf_id' => $cf_id,
-			'cf_app' => $this->appname,
-			'cf_name' => $content['cf_name'],
+		$this->tmpl->exec($exec, $content, $sel_options, $readonlys, array(
+			'cf_id'       => $cf_id,
+			'cf_app'      => $this->appname,
+			'cf_name'     => $content['cf_name'],
 			'use_private' => $this->use_private,
-		),2);
+		),                2);
 	}
 
 	/**

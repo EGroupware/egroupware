@@ -52,18 +52,22 @@ class resources_hooks
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$file = Array(
-				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
-				'Global Categories'  => Egw::link('/index.php',array(
-					'menuaction' => 'admin.admin_categories.index',
-					'appname'    => $appname,
-					'global_cats'=> true,
-					'ajax' => 'true'
+			$file = array(
+				'Site Configuration'           => Egw::link('/index.php', 'menuaction=admin.admin_config.index&appname=' . $appname . '&ajax=true'),
+				'Global Categories'            => Egw::link('/index.php', array(
+					'menuaction'  => 'admin.admin_categories.index',
+					'appname'     => $appname,
+					'global_cats' => true,
+					'ajax'        => 'true'
 				)),
-				'Configure Access Permissions' => Egw::link('/index.php',
-					'menuaction=resources.resources_acl_ui.index&ajax=true'),
-				'Custom Fields'=>egw::link('/index.php',
-					'menuaction=admin.admin_customfields.index&appname=resources&ajax=true'),
+				'Configure Access Permissions' => Egw::link(
+					'/index.php',
+					'menuaction=resources.resources_acl_ui.index&ajax=true'
+				),
+				'Custom Fields'                => egw::link(
+					'/index.php',
+					'menuaction=resources.resources_customfields.index&appname=resources&ajax=true'
+				),
 			);
 			if ($location == 'admin')
 			{
