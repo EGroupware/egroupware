@@ -406,7 +406,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			if(success !== false)
 			{
-				egw.message(egw.lang('share link copied into clipboard'));
+				egw.message(this.egw.lang('share link copied into clipboard'));
 			}
 		});
 	}
