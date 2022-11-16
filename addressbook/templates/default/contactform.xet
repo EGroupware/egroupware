@@ -135,7 +135,7 @@
 					<description/>
 				</row>
 				<row disabled="!@show[captcha]">
-					<image src="private.png"/>
+					<image src="private.svg"/>
 					<description value="Verification"/>
 					<description value="@captcha_task"/>
 					<textbox label="%s please calculate the result" needed="1" span="3" id="captcha" size="3"/>
