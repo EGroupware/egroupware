@@ -16,6 +16,7 @@ namespace EGroupware\Api\Vfs;
 use EGroupware\Api;
 use EGroupware\Api\Json\Response;
 use EGroupware\Api\Vfs;
+use EGroupware\Collabora\Wopi;
 use EGroupware\Filemanager\Sharing\AnonymousList;
 use EGroupware\Filemanager\Sharing\Ui;
 use EGroupware\Filemanager\Sharing\Ui as ShareUi;
@@ -439,12 +440,15 @@ class Sharing extends \EGroupware\Api\Sharing
 			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
 			{
 				// Not sure why stat puts a / on the end of files, but remove it
-				if(substr($stat['url'],-1) == '/' && !Vfs::is_dir($stat['url']))
+				if(substr($stat['url'], -1) == '/' && !Vfs::is_dir($stat['url']))
 				{
-					$stat['url'] = substr($stat['url'],0,strlen($stat['url'])-1);
+					$stat['url'] = substr($stat['url'], 0, strlen($stat['url']) - 1);
 				}
 				// Make sure we get the correct path if sharing from a share
-				if(isset($GLOBALS['egw']->sharing) && array_key_exists(static::get_token(), $GLOBALS['egw']->sharing) && $exists)
+				if(isset($GLOBALS['egw']->sharing) && array_key_exists(static::get_token(), $GLOBALS['egw']->sharing) && $exists
+					// Not for Collabora, it's working with share fstab and can't access full URL
+					&& $mode !== Wopi::WOPI_WRITABLE
+				)
 				{
 					$path = $stat['url'];
 				}
