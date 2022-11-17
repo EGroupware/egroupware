@@ -1467,7 +1467,7 @@ class adLDAP extends \adLDAP
 	public function getLastError()
 	{
 		$url = $this->useTLS ? 'ldaps://' : 'ldap://';
-		if (!empty($this->adminUsername)) $url .= $this->adminUsername.'@'.$this->accountSuffix.'@';
+		if (!empty($this->adminUsername)) $url .= $this->adminUsername.$this->accountSuffix.'@';
 		$url .= implode(',', $this->domainControllers);
 		if (!empty($this->adPort)) $url .= ':'.$this->adPort;
 
