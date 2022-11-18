@@ -180,5 +180,5 @@ class Textbox extends Etemplate\Widget
 	}
 }
 Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Textbox', array('et2-textarea', 'et2-textbox', 'textbox', 'text',
-																	'int', 'integer', 'float', 'hidden', 'colorpicker',
-																	'hidden'));
+																	'int', 'integer', 'float', 'et2-number', 'hidden',
+																	'colorpicker'));
