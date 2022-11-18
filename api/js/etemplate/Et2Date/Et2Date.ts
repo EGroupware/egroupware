@@ -830,7 +830,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	 */
 	findInputField() : HTMLInputElement
 	{
-		return <HTMLInputElement>this._inputNode.shadowRoot.querySelector('input:not([type="hidden"])');
+		return <HTMLInputElement>this._inputNode?.shadowRoot?.querySelector('input:not([type="hidden"])');
 	}
 
 	/**
