@@ -598,7 +598,7 @@ class Backup
 			}
 			if ($table)	// do we already reached the data part
 			{
-				$import = !$only_egw || (bool)preg_match('/^egw_/', $table_name);
+				$import = !$only_egw || preg_match('/^egw_/', $table);
 				$data = self::csv_split($line, $cols, $blobs, $bools);
 
 				if ($table == 'egw_async' && in_array('##last-check-run##',$data))
