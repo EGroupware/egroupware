@@ -1130,7 +1130,7 @@ class Vfs extends Vfs\Base
 		$val = trim($_val);
 
 		$matches = null;
-		preg_match('#([0-9]+)[\s]*([a-z]+)#i', $val, $matches);
+		preg_match('#([0-9.]+)[\s]*([a-z]+)#i', $val, $matches);
 
 		$last = '';
 		if(isset($matches[2])){
