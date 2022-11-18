@@ -2803,7 +2803,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			if (!$extra_tabs) continue;
 
-			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)
+			foreach(count(array_filter(array_keys($extra_tabs), 'is_int')) ? $extra_tabs : array($extra_tabs) as $extra_tab)
 			{
 				if ($extra_tab['data'] && is_array($extra_tab['data']))
 				{
