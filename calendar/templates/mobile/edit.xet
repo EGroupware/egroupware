@@ -77,9 +77,9 @@
 					<menulist>
 						<menupopup class="selectRole" id="role"/>
 					</menulist>
-					<hbox >
-						<textbox label="Quantity" type="integer" class="quantity" id="quantity" min="1" size="3"/>
-					</hbox>
+					<hbox>
+                        <textbox label="Quantity" type="integer" class="quantity" id="quantity" min="1" size="3"/>
+                    </hbox>
 					<button align="center" id="add" image="add" background_image="1" novalidate="1"/>
 				</row>
 				<row class="th">
