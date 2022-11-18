@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="filemanager.quota" template="" lang="" group="0" version="1.9.004">
+        <vbox>
+            <textbox label="Home quota" id="quota" blur="(EPL Only)" disabled="true"/>
+            <button label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"/>
+
+            <hbox span="2" class="dialogFooterToolbar">
+                <button label="Save" id="button[save]"/>
+                <button label="Apply" id="button[apply]"/>
+                <button label="Cancel" id="button[cancel]"/>
+            </hbox>
+        </vbox>
+        <styles>
+            #filemanager-quota_quota::part(form-control-input) {
+            max-width: 15ex;
+            }
+
+            #filemanager-quota > div > et2-vbox {
+            height: 100%;
+            }
+            .dialogFooterToolbar {
+            margin-top: auto;
+            }
+        </styles>
+    </template>
+</overlay>

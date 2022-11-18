@@ -504,30 +504,51 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
      */
     function PUT(&$options)
     {
-        $fspath = $this->base . $options["path"];
+		$fspath = $this->base . $options["path"];
 
-        $dir = dirname($fspath);
-        if (!file_exists($dir) || !is_dir($dir)) {
-            return "409 Conflict"; // TODO right status code for both?
-        }
+		$dir = dirname($fspath);
+		if(!file_exists($dir) || !is_dir($dir))
+		{
+			return "409 Conflict"; // TODO right status code for both?
+		}
 
-        $options["new"] = ! file_exists($fspath);
+		$options["new"] = !file_exists($fspath);
 
-        if ($options["new"] && !$this->_is_writable($dir)) {
-            return "403 Forbidden";
-        }
-        if (!$options["new"] && !$this->_is_writable($fspath)) {
-            return "403 Forbidden";
-        }
-        if (!$options["new"] && is_dir($fspath)) {
-            return "403 Forbidden";
-        }
+		if($options["new"] && !$this->_is_writable($dir))
+		{
+			return "403 Forbidden";
+		}
+		if(!$options["new"] && !$this->_is_writable($fspath))
+		{
+			return "403 Forbidden";
+		}
+		if(!$options["new"] && is_dir($fspath))
+		{
+			return "403 Forbidden";
+		}
+
+		// Check quota
+		try
+		{
+			\EGroupware\Api\Hooks::process(
+				array(
+					'location' => 'vfs_pre-write',
+					'path'     => $options['path'],
+					'length'   => $options['content_length']
+				)
+			);
+		}
+		catch (Exception $e)
+		{
+			// $e->getMessage() has information about limits
+			return "413 Payload Too Large";
+		}
 
 		// for range requests we need to open with "c" as "w" truncates the file!
 		$fp = fopen($fspath, empty($options['ranges']) ? "w" : "c");
 
-        return $fp;
-    }
+		return $fp;
+	}
 
 
     /**

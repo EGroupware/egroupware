@@ -275,7 +275,15 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	 */
 	function stream_write ( $data )
 	{
-		return fwrite($this->opened_stream,$data);
+		Api\Hooks::process(
+			array(
+				'location' => 'vfs_pre-write',
+				'path'     => $this->opened_stream_path,
+				'length'   => strlen($data)
+			)
+		);
+
+		return fwrite($this->opened_stream, $data);
 	}
 
  	/**

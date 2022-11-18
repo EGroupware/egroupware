@@ -94,11 +94,11 @@ class filemanager_hooks
 	{
 		if (is_array($location)) $location = $location['location'];
 
-		$file = Array(
+		$file = array(
 			//'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
-			'Custom fields' => Egw::link('/index.php','menuaction=admin.admin_customfields.index&appname='.self::$appname.'&ajax=true'),
-			'Check virtual filesystem' => Egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
-			'Recalculate quota' => Egw::link('/index.php','menuaction=filemanager.filemanager_admin.quotaRecalc'),
+			'Custom fields'             => Egw::link('/index.php', 'menuaction=admin.admin_customfields.index&appname=' . self::$appname . '&ajax=true'),
+			'Check virtual filesystem'  => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.fsck'),
+			'Quota'                     => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.quota&ajax=true'),
 			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index&ajax=true'),
 		);
 		if ($location == 'admin')

@@ -28,8 +28,8 @@ class filemanager_admin extends filemanager_ui
 	 */
 	public $public_functions = array(
 		'index' => true,
-		'fsck' => true,
-		'quotaRecalc' => true,
+		'fsck'  => true,
+		'quota' => true,
 	);
 
 	/**
@@ -359,18 +359,69 @@ class filemanager_admin extends filemanager_ui
 		}
 		$check_only = !isset($_POST['fix']);
 
-		if (!($msgs = Vfs\Sqlfs\Utils::fsck($check_only)))
+		if(!($msgs = Vfs\Sqlfs\Utils::fsck($check_only)))
 		{
 			$msgs = lang('Filesystem check reported no problems.');
 		}
-		$content = '<p>'.implode("</p>\n<p>", (array)$msgs)."</p>\n";
+		$content = '<p>' . implode("</p>\n<p>", (array)$msgs) . "</p>\n";
 
-		$content .= Api\Html::form('<p>'.($check_only&&is_array($msgs) ?
-			Api\Html::submit_button('fix', lang('Fix reported problems')) : '').
-			Api\Html::submit_button('cancel', lang('Cancel')).'</p>',
-			'','/index.php',array('menuaction'=>'filemanager.filemanager_admin.fsck'));
+		$content .= Api\Html::form('<p>' . ($check_only && is_array($msgs) ?
+									   Api\Html::submit_button('fix', lang('Fix reported problems')) : '') .
+								   Api\Html::submit_button('cancel', lang('Cancel')) . '</p>',
+								   '', '/index.php', array('menuaction' => 'filemanager.filemanager_admin.fsck')
+		);
 
-		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);
+		$GLOBALS['egw']->framework->render($content, lang('Admin') . ' - ' . lang('Check virtual filesystem'), true);
+	}
+
+	/**
+	 * Admin tasks related to quota
+	 *
+	 * Manually trigger a directory size recalculation
+	 *
+	 * @param array $content
+	 * @return void
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function quota(array $content = null)
+	{
+		if(is_array($content))
+		{
+			$button = key($content['button']);
+			switch($button)
+			{
+				case  'recalculate':
+					Framework::message($this->quotaRecalc());
+					break;
+				case 'save':
+				case 'apply':
+
+
+					if($button == 'apply')
+					{
+						break;
+					}
+				// fall-through for save
+				case 'cancel':
+
+					// Reload tracker app
+					if(Api\Json\Response::isJSONResponse())
+					{
+						Api\Json\Response::get()->apply('app.admin.load');
+					}
+					Framework::redirect_link('/index.php', array(
+						'menuaction' => 'admin.admin_ui.index',
+						'ajax'       => 'true'
+					),                       'admin');
+					break;
+			}
+		}
+
+		$content = [];
+		$readonlys['quota'] = !($GLOBALS['egw_info']['apps']['stylite']);
+		$tpl = new Etemplate('filemanager.quota');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Quota');
+		$tpl->exec('filemanager.filemanager_admin.quota', $content, $sel_options, $readonlys);
 	}
 
 	/**
@@ -380,6 +431,6 @@ class filemanager_admin extends filemanager_ui
 	{
 		list($dirs, $iterations, $time) = Vfs\Sqlfs\Utils::quotaRecalc();
 
-		echo lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1))."\n";
+		return lang("Recalculated %1 directories in %2 iterations and %3 seconds", $dirs, $iterations, number_format($time, 1)) . "\n";
 	}
 }

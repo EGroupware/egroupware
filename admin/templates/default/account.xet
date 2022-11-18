@@ -52,13 +52,13 @@
 					<description/>
 				</row>
 				<row>
-					<description value="Primary group" for="account_primary_group"/>
-					<select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
+                    <description value="Primary group" for="account_primary_group"/>
+                    <select-account id="account_primary_group" account_type="groups" class="et2_fullWidth"/>
+                    <description/>
+                    <description value="Filesystem quota" disabled="!@epl"/>
+                    <textbox id="quota" readonly="true" blur="@default_quota"/>
+                    <description/>
+                </row>
 				<row>
 					<description value="Groups" for="account_groups"/>
 					<select-account account_type="groups" id="account_groups" multiple="true" class="et2_fullWidth" span="4" tags="true"/>

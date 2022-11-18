@@ -36,7 +36,7 @@ $setup_info['admin']['hooks']['config'] = 'admin_hooks::config';
 $setup_info['admin']['hooks']['edit_group'] = \EGroupware\Admin\Groups::class.'::edit_group';
 
 // add account tab to addressbook.edit
-$setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.addressbook_edit';
+$setup_info['admin']['hooks']['addressbook_edit'][] = 'admin.admin_account.addressbook_edit';
 
 // Dependencies for this app to work
 $setup_info['admin']['depends'][] = array(
