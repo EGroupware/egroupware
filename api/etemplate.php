@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(tabbox|description|details|searchbox|textbox|label|avatar|lavatar|image|appicon|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(tabbox|description|searchbox|textbox|label|avatar|lavatar|image|appicon|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -136,8 +136,20 @@ function send_template()
 			return $matches[0];
 		}, $str);
 
+		// Change details title --> summary
+		$str = preg_replace_callback('#<details([^>]*?)>(.*?)</details>#su', static function ($matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (isset($attrs['title']) && !isset($attrs['summary']))
+			{
+				$attrs['summary'] = $attrs['title'];
+				unset($attrs['title']);
+			}
+			return "<et2-details " . stringAttrs($attrs) . '>' . $matches[2] . "</et2-details>";
+		}, $str);
+
 		// Change splitter dockside -> primary + vertical
-		$str = preg_replace_callback('#<split([^>]*?)>(.*)</split>#su', static function ($matches)
+		$str = preg_replace_callback('#<split([^>]*?)>(.*?)</split>#su', static function ($matches)
 		{
 			$tag = 'et2-split';
 			$attrs = parseAttrs($matches[1]);
