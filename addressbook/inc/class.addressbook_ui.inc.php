@@ -291,7 +291,7 @@ class addressbook_ui extends addressbook_bo
 		}
 
 		// Organisation stuff is not (yet) availible with ldap
-		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+		if($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap' && Api\Header\UserAgent::mobile() == '')
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
