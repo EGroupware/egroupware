@@ -50,7 +50,8 @@ try {
 		$import->showLog();
 		return;
 	}
-	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false');
+	$import->run(!empty($_GET['initial']) && $_GET['initial'] !== 'false',
+		!empty($_GET['dry_run'] ?? $_GET['dry-run']) && ($_GET['dry_run'] ?? $_GET['dry-run']) !== 'false');
 }
 catch (\Exception $e) {
 	http_response_code(500);
