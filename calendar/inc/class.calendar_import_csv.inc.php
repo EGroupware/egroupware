@@ -102,7 +102,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		}
 
 		// Handle errors in length or start/end date
-		if($record->start > $record->end)
+		if(is_numeric($record->start) && is_numeric($record->end) && $record->start > $record->end)
 		{
 			$record->end = $record->start + $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength'] * 60;
 			$this->warnings[$import_csv->get_current_position()] = lang('error: starttime has to be before the endtime !!!');
