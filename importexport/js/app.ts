@@ -12,7 +12,6 @@
 
 import "../../vendor/bower-asset/jquery/dist/jquery.min.js";
 //import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {egw} from "../../api/js/jsapi/egw_global";
 
@@ -166,36 +165,36 @@ class ImportExportApp extends EgwApp
 	 * Allowed users widget has been changed, if 'All users' or 'Just me'
 	 * was selected, turn off any other options.
 	 */
-	allowed_users_change(node, widget)
+	allowed_users_change(event, widget)
 	{
 		var value = widget.getValue();
 
 		// Only 1 selected, no checking needed
-		if(value == null || value.length <= 1) return;
+		if(value == null || value.length <= 1)
+		{
+			return;
+		}
 
 		// Don't jump it to the top, it's weird
 		widget.selected_first = false;
 
 		var index = null;
-		var specials = ['','all']
+		var specials = ['', 'all']
 		for(var i = 0; i < specials.length; i++)
 		{
 			var special = specials[i];
 			if((index = value.indexOf(special)) >= 0)
 			{
-				if(window.event.target.value == special)
+				if(value.indexOf(special) == value.length - 1)
 				{
-					// Just clicked all/private, clear the others
+					// Just clicked all/private (it's at the end), clear the others
 					value = [special];
 				}
 				else
 				{
 					// Just added another, clear special
-					value.splice(index,1);
+					value.splice(index, 1);
 				}
-
-				// A little highlight to call attention to the change
-				jQuery('input[value="'+special+'"]',node).parent().parent().effect('highlight',{},500);
 				break;
 			}
 		}
