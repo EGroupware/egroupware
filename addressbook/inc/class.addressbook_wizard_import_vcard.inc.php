@@ -107,7 +107,7 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 
 			foreach(array('override_values') as $field)
 			{
-				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
+				if(!$content[$field] && is_array($content['plugin_options']) && array_key_exists($field, $content['plugin_options']))
 				{
 					$content[$field] = $content['plugin_options'][$field];
 				}
