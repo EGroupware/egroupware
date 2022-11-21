@@ -500,8 +500,9 @@
    <tr class="row_on">
     <td>{lang_You_must_save_AND_run_an_inital_import,_before_the_periodic_import_will_start}:</td>
     <td>
-      <button onclick="window.open('account_import.php?initial=true', '_blank')">{lang_Initial_import}</button>
-      <button onclick="window.open('account_import.php', '_blank')">{lang_Incremental_import}</button><br/>
+      <button onclick="window.open('account_import.php?initial=true'+(document.getElementById('import_dry_run')?.checked?'&dry_run=true':''), '_blank')">{lang_Initial_import}</button>
+      <button onclick="window.open('account_import.php'+(document.getElementById('import_dry_run')?.checked?'?dry_run=true':''), '_blank')">{lang_Incremental_import}</button>
+      <label><input type="checkbox" id="import_dry_run"/> {lang_Dry-run_(only_show_what_would_happen)}</label><br/>
       {lang_We_strongly_recomment_to_run_a_DB_backup_BEFORE_running_the_import!}
     </td>
    </tr>

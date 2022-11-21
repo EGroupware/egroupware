@@ -145,11 +145,12 @@ class Import
 
 	/**
 	 * @param bool $initial_import true: initial sync, false: incremental sync
+	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
 	 * @return array with int values for keys 'created', 'updated', 'uptodate', 'errors' and string 'result'
 	 * @throws \Exception also gets logged as level "fatal"
 	 * @throws \InvalidArgumentException if not correctly configured
 	 */
-	public function run(bool $initial_import=true)
+	public function run(bool $initial_import=true, bool $dry_run=false)
 	{
 		try {
 			// determine from where we migrate to what
@@ -182,7 +183,7 @@ class Import
 			if (in_array('groups', explode('+', $type)))
 			{
 				foreach($this->groups($initial_import ? null : $GLOBALS['egw_info']['server']['account_import_lastrun'],
-					$delete, $groups, $set_members) as $name => $val)
+					$delete, $groups, $set_members, $dry_run) as $name => $val)
 				{
 					$$name += $val;
 				}
@@ -234,7 +235,11 @@ class Import
 						{
 							unset($sql_account['account_id']);
 						}
-						if (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
+						if ($dry_run)
+						{
+							$this->logger("Dry-run: would created user '$account[account_lid]' (#$account[account_id])", 'detail');
+						}
+						elseif (($account_id = $sql_account['account_id'] = $this->accounts_sql->save($sql_account, true)) > 0)
 						{
 							// run addaccount hook to create eg. home-directory or mail account
 							Api\Hooks::process($sql_account+array(
@@ -274,7 +279,12 @@ class Import
 						}
 						if (($diff = array_diff_assoc($to_update, $sql_account)))
 						{
-							if ($this->accounts_sql->save($to_update) > 0)
+							if ($dry_run)
+							{
+								$this->logger("Dry-run: would updated user '$account[account_lid]' (#$account_id): " .
+									json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
+							}
+							elseif ($this->accounts_sql->save($to_update) > 0)
 							{
 								// run editaccount hook to create eg. home-directory or mail account
 								Api\Hooks::process($to_update+array(
@@ -297,7 +307,7 @@ class Import
 							$this->logger("User '$account[account_lid]' (#$account_id) already up to date", 'debug');
 						}
 					}
-					if (!($sql_contact = $this->contacts_sql->read(['account_id' => $account_id])))
+					if (!$dry_run && !($sql_contact = $this->contacts_sql->read(['account_id' => $account_id])))
 					{
 						$sql_contact = $contact;
 						unset($sql_contact['id']);  // LDAP contact-id is the UID!
@@ -314,7 +324,7 @@ class Import
 							continue;
 						}
 					}
-					else
+					elseif (!$dry_run)
 					{
 						// photo and public keys are not stored in SQL but in filesystem, fetch it to compare
 						$contact['files'] = 0;
@@ -379,7 +389,7 @@ class Import
 						}
 					}
 					// if requested, also set memberships
-					if ($type === 'users+groups')
+					if ($type === 'users+groups' && !$dry_run)
 					{
 						// LDAP backend does not query it automatic
 						if (!isset($account['memberships']))
@@ -412,7 +422,7 @@ class Import
 
 			if ($set_members)
 			{
-				foreach($this->setMembers($set_members) as $name => $num)
+				foreach($this->setMembers($set_members, $dry_run) as $name => $num)
 				{
 					$$name += $num;
 				}
@@ -421,15 +431,23 @@ class Import
 			// do we need to delete (or deactivate) no longer existing users
 			if ($delete !== 'no' && $sql_users)
 			{
-				if ($delete === 'deactivate')
+				$num = count($sql_users);
+				if ($dry_run)
+				{
+					$this->logger("Dry-run: would ".($delete === 'deactivate' ? 'deactivate' : 'delete')." $num no longer existing user(s): ".implode(', ', array_map(static function ($account_id, $account_lid)
+					{
+						return $account_lid.' (#'.$account_id.')';
+					}, array_keys($sql_users), $sql_users)), 'detail');
+					$deleted += $num;
+				}
+				elseif ($delete === 'deactivate')
 				{
 					$GLOBALS['egw']->db->update(Sql::TABLE, ['account_status' => null], ['account_id' => array_keys($sql_users)], __LINE__, __FILE__);
-					$num = count($sql_users);
 					$this->logger("Deactivated $num no longer existing user(s): ".implode(', ', array_map(static function ($account_id, $account_lid)
 					{
 						return $account_lid.' (#'.$account_id.')';
 					}, array_keys($sql_users), $sql_users)), 'detail');
-					$deleted += count($sql_users);
+					$deleted += $num;
 				}
 				else
 				{
@@ -450,13 +468,20 @@ class Import
 			$last_run = max($start_import-1, $last_modified);
 			Api\Config::save_value('account_import_lastrun', $last_run, 'phpgwapi');
 			$str = gmdate('Y-m-d H:i:s', $last_run). ' UTC';
-			if (!$errors)
+			if (!$errors && !$dry_run)
 			{
 				$this->logger("Setting new incremental import time to: $str ($last_run)", 'detail');
 			}
 			if ($created || $updated || $errors || $deleted)
 			{
-				$result = "Created $created, updated $updated and deleted $deleted account(s), with $errors error(s).";
+				if ($dry_run)
+				{
+					$result = "Dry-run: would created $created, updated $updated and deleted $deleted account(s).";
+				}
+				else
+				{
+					$result = "Created $created, updated $updated and deleted $deleted account(s), with $errors error(s).";
+				}
 			}
 			else
 			{
@@ -464,7 +489,7 @@ class Import
 			}
 			$this->logger($result, 'info');
 
-			if ($initial_import && self::installAsyncJob())
+			if (!$dry_run && $initial_import && self::installAsyncJob())
 			{
 				$this->logger('Async job for periodic import installed', 'info');
 			}
@@ -500,9 +525,10 @@ class Import
 	 * @param string $delete what to do with no longer existing groups: "yes": delete incl. data, "deactivate": delete group, "no": do nothing
 	 * @param array|null &$groups on return all current groups as account_id => account_lid pairs
 	 * @param array|null &$set_members on return, if modified: (sql)account_id => [(ldap)account_id => account_lid] pairs
+	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
 	 * @return int[] values for keys "created", "updated", "uptodate", "errors", "deleted"
 	 */
-	protected function groups(?int $modified, string $delete, array &$groups=null, array &$set_members=null)
+	protected function groups(?int $modified, string $delete, array &$groups=null, array &$set_members=null, bool $dry_run=false)
 	{
 		// to delete no longer existing groups, we have to query all groups!
 		if ($modified) $delete = 'no';
@@ -537,6 +563,12 @@ class Import
 				{
 					unset($group['account_id']);
 				}
+				if ($dry_run)
+				{
+					$this->logger("Dry-run: would create group '$group[account_lid]' (#$account_id".($sql_id != $account_id ? " as #$sql_id" : '').')', 'detail');
+					$created++;
+					continue;
+				}
 				if (($sql_id = $group['account_id'] = $this->accounts_sql->save($group, true)) < 0)
 				{
 					// run addgroup hook to create eg. home-directory or mail account
@@ -569,7 +601,12 @@ class Import
 				$to_update = $relevant + $sql_group;
 				if (($diff = array_diff_assoc($to_update, $sql_group)))
 				{
-					if ($this->accounts_sql->save($to_update) < 0)
+					if ($dry_run)
+					{
+						$this->logger("Dry-run: would update group '$group[account_lid]' (#$sql_id): ".json_encode($diff), 'detail');
+						$updated++;
+					}
+					elseif ($this->accounts_sql->save($to_update) < 0)
 					{
 						Api\Hooks::process($to_update+array(
 								'location' => 'editgroup',
@@ -607,10 +644,9 @@ class Import
 		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
 		foreach($delete !== 'no' ? $sql_groups : [] as $account_id => $account_lid)
 		{
-			static $acl=null;
 			if ($delete === 'yes')
 			{
-				if ($this->deleteAccount($account_id, $account_lid, $this->logger))
+				if ($this->deleteAccount($account_id, $account_lid, $dry_run))
 				{
 					$deleted++;
 				}
@@ -636,9 +672,10 @@ class Import
 	 *
 	 * @param int $account_id
 	 * @param string $account_lid
+	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
 	 * @return bool
 	 */
-	protected function deleteAccount(int $account_id, string $account_lid)
+	protected function deleteAccount(int $account_id, string $account_lid, bool $dry_run=false)
 	{
 		// make sure admin_cmd_delete_account uses the SQL accounts object, to not delete in the source, but in EGroupware DB!
 		$backup_accounts = $GLOBALS['egw']->accounts;
@@ -647,8 +684,15 @@ class Import
 		$type = $account_id < 0 ? 'group' : 'user';
 
 		try {
-			$cmd = new \admin_cmd_delete_account($account_id, null, $account_id > 0);
-			$this->logger("Successful deleted no longer existing $type '$account_lid' (#$account_id): ".$cmd->run(), 'detail');
+			if ($dry_run)
+			{
+				$this->logger("Dry-run: would deleted no longer existing $type '$account_lid' (#$account_id)", 'detail');
+			}
+			else
+			{
+				$cmd = new \admin_cmd_delete_account($account_id, null, $account_id > 0);
+				$this->logger("Successful deleted no longer existing $type '$account_lid' (#$account_id): ".$cmd->run(), 'detail');
+			}
 		}
 		catch (\Exception $e) {
 			$this->logger("Error deleting no longer existing $type '$account_lid' (#$account_id): ".$e->getMessage(), 'error');
@@ -799,14 +843,21 @@ class Import
 	 * Set members of a group specified by its (sql)account_id after an incremental update of the groups
 	 *
 	 * We need to take into account:
-	 * - members/users might not yet be added, if visible members are by membership to that group (eg. custom account-filter by membership in Default group)
-	 * - members might not be readable from LDAP, because the are not in account-filter
+	 * - members/users might not yet be added, if visible members are by membership to that group (e.g. custom account-filter by membership in Default group)
+	 * - members might not be readable from LDAP, because they are not in account-filter
 	 *
 	 * @param array $set_members (sql)account_id => [(ldap)account_id => account_lid] pairs
+	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
 	 * @return int[] values for keys "created", "updated" and "errors"
+	 * @todo add dry_run support
 	 */
-	protected function setMembers(array $set_members)
+	protected function setMembers(array $set_members, bool $dry_run=false)
 	{
+		if ($dry_run)
+		{
+			$this->logger("Dry-run: setting (or adding) members of groups not (yet) supported --> ignored", 'detail');
+			return [];
+		}
 		// setting (new) members
 		$created = $updated = $errors = 0;
 		foreach($set_members as $sql_group_id => $members)
