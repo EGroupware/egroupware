@@ -115,7 +115,10 @@ export class Et2SelectAccount extends Et2Select
 	protected _createImage(item) : Et2Image
 	{
 		const image = super._createImage(item);
-		image.src = "/egroupware/api/avatar.php?account_id=" + item.value + "&etag=1";
+		if(image)
+		{
+			image.src = "/egroupware/api/avatar.php?account_id=" + item.value + "&etag=1";
+		}
 		return image;
 	}
 }
