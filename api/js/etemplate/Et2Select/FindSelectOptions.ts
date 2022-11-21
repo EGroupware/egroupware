@@ -173,10 +173,13 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 			}
 			if(!added)
 			{
-				options.splice(parseInt(i), 0, typeof value == "object" ? value : {
-					value: value,
-					label: <string><unknown>content_options[i]
-				});
+				let insert = typeof content_options[i] == "object" && content_options[i].value === value && content_options[i].label ?
+							 content_options[i] :
+					{
+						value: value,
+						label: <string><unknown>content_options[i]
+					};
+				options.splice(parseInt(i), 0, insert);
 			}
 		}
 		content_options = options;
