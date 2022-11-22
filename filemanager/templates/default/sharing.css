@@ -30,7 +30,7 @@ div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
     top: 4px;
 }
 
-.nextmatch_header_row {
+#filemanager-index_nm .nextmatch_header_row {
     background-color: #f4f4f4;
     padding: 0.5em 0;
 }
