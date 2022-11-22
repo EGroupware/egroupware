@@ -576,8 +576,8 @@ class resources_ui
 		}
 
 		// Disable custom tab if there are no custom fields defined
-		$read_only['tabs']['custom'] = !(Api\Storage\Customfields::get('resources',true));
-		$read_only['tabs']['history'] = ($content['history']['id'] != 0?false:true);
+		$read_only['tabs']['custom'] = !(Api\Storage\Customfields::get('resources', true, $content['cat_id']));
+		$read_only['tabs']['history'] = ($content['history']['id'] != 0 ? false : true);
 
 		$preserv = $content;
 
