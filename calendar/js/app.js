@@ -658,8 +658,12 @@ var CalendarApp = /** @class */ (function (_super) {
         }
         // Check if we're interested by date?
         if (cal_event.end <= new Date(this.state.first).valueOf() / 1000 || cal_event.start > new Date(this.state.last).valueOf() / 1000) {
-            // The event is outside our current view
-            return;
+            // The event is outside our current view, but check if it's just one of a recurring event
+            if (!cal_event.range_end && !cal_event.range_start ||
+                cal_event.range_end <= new Date(this.state.first).valueOf() / 1000 ||
+                cal_event.range_start > new Date(this.state.last).valueOf() / 1000) {
+                return;
+            }
         }
         // Do we already have "fresh" data?  Most user actions give fresh data in response
         var existing = egw.dataGetUIDdata('calendar::' + pushData.id);
@@ -2169,22 +2173,6 @@ var CalendarApp = /** @class */ (function (_super) {
         var data = egw.dataGetUIDdata(_selected[0].id) || { data: {} };
         var event = data.data;
         this.egw.json('calendar.calendar_uiforms.ajax_custom_mail', [event, false, _action.id === 'sendrequest'], null, null, null, null).sendRequest();
-    };
-    /**
-     * Insert selected event(s) into a document
-     *
-     * Actually, just pass it off to the nextmatch
-     *
-     * @param {egwAction} _action
-     * @param {egwActionObject[]} _selected
-     */
-    CalendarApp.prototype.action_merge = function (_action, _selected) {
-        var ids = { ids: [] };
-        for (var i = 0; i < _selected.length; i++) {
-            ids.ids.push(_selected[i].id);
-        }
-        nm_action(egw_getActionManager(this.appname, false, 1)
-            .getActionById('nm').getActionById(_action.id), _selected, null, ids);
     };
     /**
      * Sidebox merge
