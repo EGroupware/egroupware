@@ -76,6 +76,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
     			width: 16px !important;
 			}
             ::slotted(et2-image) {
+            	width: 20px;
                 max-width: 20px;
                 display: flex;
             }
