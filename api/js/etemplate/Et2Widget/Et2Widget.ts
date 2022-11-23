@@ -186,6 +186,15 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				align: {
 					type: String,
 					reflect: true
+				},
+
+				/**
+				 * comma-separated name:value pairs set as data attributes on DOM node
+				 * data="mime:${row}[mime]" would generate data-mime="..." in DOM, eg. to use it in CSS on a parent
+				 */
+				data: {
+					type: String,
+					reflect: false
 				}
 			};
 		}
@@ -369,6 +378,40 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		get id()
 		{
 			return this._widget_id;
+		}
+
+		/**
+		 * Set the dataset from a CSV
+		 * @param {string} value
+		 */
+		set data(value : string)
+		{
+			// Clear existing
+			Object.keys(this.dataset).forEach(dataKey =>
+			{
+				delete this.dataset[dataKey];
+			});
+
+			let data = value.split(",");
+			data.forEach((field) =>
+			{
+				let f = field.split(":");
+				if(f[0] && typeof f[1] !== "undefined")
+				{
+					this.dataset[f[0]] = f[1];
+				}
+			});
+
+		}
+
+		get data() : string
+		{
+			let data = [];
+			Object.keys(this.dataset).forEach((k) =>
+			{
+				data.push(k + ":" + this.dataset[k]);
+			})
+			return data.join(",");
 		}
 
 		/**
