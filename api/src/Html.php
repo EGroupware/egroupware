@@ -63,7 +63,7 @@ class Html
 			//  First match things beginning with http:// (or other protocols)
 			$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
 			$Domain = '([\w-]+\.[\w\-.]+)';
-			$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
+			$Subdir = '([\w\-\.,@?^=%&!;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 			$optStuff = '(&quot;|&quot|;)?';
 			$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optStuff . '/i';
 			// use preg_replace_callback as we experienced problems with https links
