@@ -57,6 +57,10 @@ class AnonymousList extends filemanager_ui
 		// Override and take over get_rows so we can customize
 		$content['nm']['get_rows'] = '.' . get_class($this) . '.get_rows';
 		$content['nm']['show_refresh'] = true;
+		$content['nm']['no_filter'] = true;
+		$content['nm']['favorites'] = false;
+
+		$this->etemplate->setElementAttribute("nm", "header_right", '');
 
 		return parent::listview($content, $msg);
 	}
