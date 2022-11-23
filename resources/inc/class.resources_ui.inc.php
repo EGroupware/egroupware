@@ -419,7 +419,7 @@ class resources_ui
 	{
 		if (is_array($content))
 		{
-			$button = @key($content['button']);
+			$button = is_array($content['button']) ? @key($content['button']) : null;
 			unset($content['button']);
 			switch($button)
 			{
@@ -468,7 +468,7 @@ class resources_ui
 			}
 			Framework::refresh_opener($msg, 'resources',$content['res_id'],($button == 'delete'?'delete':'edit'));
 
-			if($button != 'apply')
+			if($button && $button != 'apply')
 			{
 				Framework::window_close();
 			}
@@ -480,13 +480,13 @@ class resources_ui
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-		$content = array('res_id' => $res_id);
+		$content = $content ?? array('res_id' => $res_id);
 		if ($res_id > 0)
 		{
-			$content = $this->bo->read($res_id);
-			$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
+			$content = array_merge($this->bo->read($res_id), $content);
+			$content['picture_src'] = strpos($content['picture_src'], '.') !== false ? 'gen_src' : $content['picture_src'];
 			$content['link_to'] = array(
-				'to_id' => $res_id,
+				'to_id'  => $res_id,
 				'to_app' => 'resources'
 			);
 		} elseif ($accessory_of > 0) {
@@ -500,12 +500,15 @@ class resources_ui
 			}
 			$content['cat_id'] = $owner['cat_id'];
 			$content['bookable'] = true;
-		} else {
+		}
+		elseif(!$content['cat_id'])
+		{
 			// New resource
 			$content['cat_id'] = $nm_session_data['filter'];
 			$content['bookable'] = true;
 		}
-		if($msg) {
+		if($msg)
+		{
 			$content['msg'] = $msg;
 		}
 
