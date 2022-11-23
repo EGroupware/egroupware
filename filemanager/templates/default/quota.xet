@@ -4,7 +4,9 @@
 <overlay>
     <template id="filemanager.quota" template="" lang="" group="0" version="1.9.004">
         <vbox>
-            <textbox label="Home quota" id="quota" blur="(EPL Only)" disabled="true"/>
+            <textbox label="User home quota" id="quota" blur="(EPL Only)" disabled="true"/>
+            <textbox label="Group home quota" id="group_quota" blur="(EPL Only)" disabled="true"
+                     help-text="Enter a file size, e.g. 100K, 200M or 2G"/>
             <button label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"/>
 
             <hbox span="2" class="dialogFooterToolbar">
@@ -14,7 +16,8 @@
             </hbox>
         </vbox>
         <styles>
-            #filemanager-quota_quota::part(form-control-input) {
+            #filemanager-quota_quota::part(form-control-input),
+            #filemanager-quota_group_quota::part(form-control-input){
             max-width: 15ex;
             }
 

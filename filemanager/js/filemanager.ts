@@ -544,7 +544,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			if(this.egw.pushAvailable())
 			{
-				this.egw.message(_data.msg);
+				this.egw.message(_data.msg, _data.errs > 0 ? "error" : "success");
 			}
 			else
 			{

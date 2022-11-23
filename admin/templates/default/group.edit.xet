@@ -28,19 +28,24 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="dialogHeader">
-					<description value="Group name" for="account_lid"/>
-					<textbox id="account_lid" size="40" maxlength="64" class="et2_fullWidth" needed="true" onchange="app.admin.changeGroup"/>
-				</row>
-				<row>
-					<description value="Description" for="account_description"/>
-					<textbox id="account_description" size="40" maxlength="64" class="et2_fullWidth"/>
-				</row>
-				<row disabled="!@mailAllowed">
-					<description value="EMail"/>
-					<url-email id="account_email" size="40" maxlength="64" class="et2_fullWidth"/>
-				</row>
-			</rows>
+                <row class="dialogHeader">
+                    <description value="Group name" for="account_lid"/>
+                    <textbox id="account_lid" size="40" maxlength="64" class="et2_fullWidth" needed="true"
+                             onchange="app.admin.changeGroup"/>
+                </row>
+                <row>
+                    <description value="Description" for="account_description"/>
+                    <textbox id="account_description" size="40" maxlength="64" class="et2_fullWidth"/>
+                </row>
+                <row disabled="!@mailAllowed">
+                    <description value="EMail"/>
+                    <url-email id="account_email" size="40" maxlength="64" class="et2_fullWidth"/>
+                </row>
+                <row>
+                    <description value="Filesystem quota" disabled="!@epl"/>
+                    <textbox id="quota" readonly="true" blur="@default_quota"/>
+                </row>
+            </rows>
 		</grid>
 		<tabbox id="tabs" class="et2_nowrap" span="all" width="100%" tab_height="250px">
 			<tabs>

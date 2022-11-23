@@ -1790,14 +1790,34 @@ class filemanager_ui
 					$tmp_path = ini_get('upload_tmp_dir') . '/' . basename($tmp_name);
 				}
 
-				if (Vfs::copy_uploaded($tmp_path, $path, $props, false))
+				try
 				{
-					++$arr['files'];
-					$uploaded[] = $data['name'];
+					if(Vfs::copy_uploaded($tmp_path, $path, $props, false))
+					{
+						++$arr['files'];
+						$uploaded[] = $data['name'];
+					}
+					else
+					{
+						++$arr['errs'];
+					}
 				}
-				else
+				catch (\EGroupware\Stylite\Vfs\QuotaExceededException $e)
 				{
+					// File was touched but not written.  Might need to delete it
+					$stat = Vfs::stat($path);
+					if($stat && $stat['size'] == 0)
+					{
+						Vfs::unlink($path);
+					}
+
+					// Send error
 					++$arr['errs'];
+					++$script_error;
+					$arr['msg'] = $e->getMessage();
+					$arr['msg'] .= "\n" . lang("You can either delete some files or get in touch with your administrator to get more space");
+					// No point continuing
+					break;
 				}
 			}
 		}

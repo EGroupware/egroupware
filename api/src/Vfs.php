@@ -1112,10 +1112,19 @@ class Vfs extends Vfs\Base
 	 */
 	static function hsize($size)
 	{
-		if ($size < 1024) return $size;
-		if ($size < 1024*1024) return sprintf('%3.1fk',(float)$size/1024);
-		if ($size < 1024*1024*1024) return sprintf('%3.1fM',(float)$size/(1024*1024));
-		return sprintf('%3.1fG',(float)$size/(1024*1024*1024));
+		if($size < 1024)
+		{
+			return $size;
+		}
+		if($size < 1024 * 1024)
+		{
+			return sprintf('%3.2Gk', (float)$size / 1024);
+		}
+		if($size < 1024 * 1024 * 1024)
+		{
+			return sprintf('%3.4GM', (float)$size / (1024 * 1024));
+		}
+		return sprintf('%3.4GG', (float)$size / (1024 * 1024 * 1024));
 	}
 
 	/**
@@ -1133,22 +1142,24 @@ class Vfs extends Vfs\Base
 		preg_match('#([0-9.]+)[\s]*([a-z]+)#i', $val, $matches);
 
 		$last = '';
-		if(isset($matches[2])){
+		if(isset($matches[2]))
+		{
 			$last = $matches[2];
 		}
 
-		if(isset($matches[1])){
-			$val = (int) $matches[1];
+		if(isset($matches[1]))
+		{
+			$val = (float)$matches[1];
 		}
 
-		switch (strtolower($last))
+		switch(strtolower($last))
 		{
 			case 'g':
 			case 'gb':
-			$val *= 1024;
+				$val *= 1024;
 			case 'm':
 			case 'mb':
-			$val *= 1024;
+				$val *= 1024;
 			case 'k':
 			case 'kb':
 			$val *= 1024;
