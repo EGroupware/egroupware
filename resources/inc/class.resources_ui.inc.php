@@ -419,7 +419,7 @@ class resources_ui
 	{
 		if (is_array($content))
 		{
-			$button = @key($content['button']);
+			$button = is_array($content['button']) ? @key($content['button']) : null;
 			unset($content['button']);
 			switch($button)
 			{
@@ -468,7 +468,7 @@ class resources_ui
 			}
 			Framework::refresh_opener($msg, 'resources',$content['res_id'],($button == 'delete'?'delete':'edit'));
 
-			if($button != 'apply')
+			if($button && $button != 'apply')
 			{
 				Framework::window_close();
 			}
@@ -480,10 +480,10 @@ class resources_ui
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-		$content = array('res_id' => $res_id);
+		$content = array('res_id' => $res_id, 'cat_id' => $content['cat_id']);
 		if ($res_id > 0)
 		{
-			$content = $this->bo->read($res_id);
+			$content = array_merge($this->bo->read($res_id), $content);
 			$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
 			$content['link_to'] = array(
 				'to_id' => $res_id,
