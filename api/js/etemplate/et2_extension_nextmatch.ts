@@ -1256,6 +1256,14 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 		else if(tab && tab.contentDiv)
 		{
+			// Bind a resize while we're here
+			if(tab.flagDiv)
+			{
+				tab.flagDiv.addEventListener("click", (e) =>
+				{
+					window.setTimeout(() => this.resize(), 1);
+				});
+			}
 			return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
 		}
 
