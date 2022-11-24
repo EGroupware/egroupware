@@ -68,6 +68,10 @@ div.nextmatch_header {
     width: 50px;
 }
 
+#filemanager-index_filemanager-index-header_right > et2-button:not([id*="createdir"]) {
+    display: none;
+}
+
 div.search {
     width: 25%;
     max-width: 98%;

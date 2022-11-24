@@ -60,7 +60,17 @@ class AnonymousList extends filemanager_ui
 		$content['nm']['no_filter'] = true;
 		$content['nm']['favorites'] = false;
 
-		$this->etemplate->setElementAttribute("nm", "header_right", '');
+		if(!Vfs::is_writable($content['nm']['path']))
+		{
+			// share is read-only, we can just hide everything
+			$this->etemplate->setElementAttribute("nm", "header_right", '');
+		}
+		else
+		{
+			// Set some unwanted buttons readonly - hide via CSS
+			$this->etemplate->setElementAttribute("nm[button][edit]", "disabled", true);
+			$this->etemplate->setElementAttribute("nm[button][symlink]", "disabled", true);
+		}
 
 		return parent::listview($content, $msg);
 	}
