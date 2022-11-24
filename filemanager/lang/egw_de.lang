@@ -115,6 +115,7 @@ edit settings	filemanager	de	Eigenschaften bearbeiten
 edit share	filemanager	de	Freigabe bearbeiten
 enable	filemanager	de	Einschalten
 enable versioning for given mountpoint	filemanager	de	Versionierung für angegebenen Mountpoint einschalten
+enter a file size, e.g. 100k, 200m or 2g	filemanager	de	Geben Sie eine Quota Größe ein, z.B. 100K, 200M oder 2G
 enter setup user and password	filemanager	de	Superuser Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Superuser Benutzer und Passwort eingeben um Superuser-Rechte zu erhalten
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
@@ -176,6 +177,7 @@ go home	filemanager	de	Gehe zum Heimordner
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem persönlichen Ordner wechseln
 go up	filemanager	de	in den übergeordneten Ordner wechseln
+group home quota	filemanager	de	Quota Gruppen Home-Verzeichnis
 hidden upload	filemanager	de	Hochladen nicht einsehbar
 hidden uploads	filemanager	de	Hochladen nicht einsehbar
 hostname/ip for webdav and smb	filemanager	de	Hostname/IP für WebDAV und SMB
@@ -242,9 +244,12 @@ properties saved.	filemanager	de	Eigenschaften gespeichert
 protocol to use	filemanager	de	Zu benutzendes Protokoll
 protocols	filemanager	de	Protokolle
 quick jump to	filemanager	de	Springe zu
+quota exceeded	filemanager	de	Speicherplatz Quota überschritten
 read & write access	filemanager	de	Lese- und Schreibzugriff
 read access only	filemanager	de	Nur Lesezugriff
 readonly share link	filemanager	de	Nur lesende Freigabe - Link
+recalculate	filemanager	de	Neuberechnung Speicherplatz
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	de	Neuberechnung Speicherplatz von %1 Verzeichnissen in %2 Iterationen und %3 Sekunden
 reload	filemanager	de	Aktualisieren
 rename of %1 to %2 failed!	filemanager	de	Umbenennung von %1 nach %2 schlug fehl!
 rename, change permissions or ownership	filemanager	de	Umbennen, Zugriffsrechte oder Besitzer ändern
@@ -316,6 +321,7 @@ upload files	filemanager	de	Dateien hochladen
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
 user color indicator	filemanager	de	Benutzer-Farbe
+user home quota	filemanager	de	Quota Benutzer Home-Verzeichnis
 username for webdav and smb, use $user for name of logged in user	filemanager	de	Benutzername für WebDAV und SMB, benutzer $user für den Benutzername des angemeldeten Benutzers
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
@@ -329,6 +335,7 @@ writable share link	filemanager	de	Beschreibbare Freigabe-Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to finally delete older versions and deleted files!	filemanager	de	Sie haben nicht die Berechtigung ältere Versionen oder gelöschte Dateien endgültig zu löschen!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
+you can either delete some files or get in touch with your administrator to get more space	filemanager	de	Sie können entweder einige Dateien löschen oder sich mit Ihrem Administrator in Verbindung setzen, um mehr Speicherplatz zu erhalten
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie können nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
 you can use regular upload [+] button to upload files.	filemanager	de	Sie können Dateien über den regulären [+] Button hochladen.
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1

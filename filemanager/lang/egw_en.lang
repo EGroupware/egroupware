@@ -115,6 +115,7 @@ edit settings	filemanager	en	Edit settings
 edit share	filemanager	en	Edit share
 enable	filemanager	en	Enable
 enable versioning for given mountpoint	filemanager	en	Enable versioning for given mountpoint
+enter a file size, e.g. 100k, 200m or 2g	filemanager	en	Enter a file size, e.g. 100K, 200M or 2G
 enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
@@ -176,6 +177,7 @@ go home	filemanager	en	Go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home folder
 go up	filemanager	en	Go up
+group home quota	filemanager	en	Group home quota
 hidden upload	filemanager	en	Hidden upload
 hidden uploads	filemanager	en	Hidden uploads
 hostname/ip for webdav and smb	filemanager	en	Hostname/IP for WebDAV and SMB
@@ -241,10 +243,13 @@ properties saved.	filemanager	en	Properties saved.
 protocol to use	filemanager	en	Protocol to use
 protocols	filemanager	en	Protocols
 quick jump to	filemanager	en	Quick jump to
+quota	filemanager	en	Quota
 quota exceeded	filemanager	en	Quota exceeded
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
 readonly share link	filemanager	en	Readonly Share link
+recalculate	filemanager	en	Recalculate
+recalculated %1 directories in %2 iterations and %3 seconds	filemanager	en	Recalculated %1 directories in %2 iterations and %3 seconds
 reload	filemanager	en	Reload
 rename of %1 to %2 failed!	filemanager	en	Rename of %1 to %2 failed!
 rename, change permissions or ownership	filemanager	en	Rename, change permissions or ownership
@@ -316,6 +321,7 @@ upload files	filemanager	en	Upload files
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 user color indicator	filemanager	en	User color indicator
+user home quota	filemanager	en	User home quota
 username for webdav and smb, use $user for name of logged in user	filemanager	en	Username for WebDAV and SMB, use $user for name of logged in user
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
