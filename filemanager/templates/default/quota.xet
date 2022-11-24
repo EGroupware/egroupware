@@ -8,7 +8,27 @@
             <textbox label="Group home quota" id="group_quota" blur="(EPL Only)" disabled="true"
                      help-text="Enter a file size, e.g. 100K, 200M or 2G"/>
             <button label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"/>
-
+            <grid id="oversize" disabled="!@oversize">
+                <columns>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row class="th">
+                        <description value="Path"/>
+                        <description value="quota"/>
+                        <description value="Size"/>
+                    </row>
+                    <row>
+                        <vfs id="${row}"/>
+                        <vfs-size id="${row}[quota]"/>
+                        <vfs-size id="${row}[size]"/>
+                        <url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
+                    </row>
+                </rows>
+            </grid>
             <hbox span="2" class="dialogFooterToolbar">
                 <button label="Save" id="button[save]"/>
                 <button label="Apply" id="button[apply]"/>

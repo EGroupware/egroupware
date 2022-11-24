@@ -388,6 +388,7 @@ class filemanager_admin extends filemanager_ui
 		if(is_array($content))
 		{
 			$button = key($content['button']);
+			unset($content['button']);
 			switch($button)
 			{
 				case  'recalculate':
@@ -417,7 +418,11 @@ class filemanager_admin extends filemanager_ui
 			}
 		}
 
-		$content = [];
+		$content = $content ?: [];
+		if($button == 'recalculate')
+		{
+			$content['check_oversize'] = true;
+		}
 		$readonlys['quota'] = !($GLOBALS['egw_info']['apps']['stylite']);
 		$tpl = new Etemplate('filemanager.quota');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Quota');
