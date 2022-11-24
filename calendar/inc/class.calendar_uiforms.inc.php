@@ -2171,7 +2171,7 @@ class calendar_uiforms extends calendar_ui
 				// check if mail is from extern organizer
 				$from_extern_organizer = false;
 				if (strtolower($ical_method) !== 'reply' &&
-					($extern_organizer = !empty($ical_sender) ? array_filter($existing_event['participants'], static function($status, $user)
+					($extern_organizer = !empty($ical_sender) ? array_filter($existing_event['participants'] ?? [], static function($status, $user)
 				{
 					calendar_so::split_status($status, $quantity, $role);
 					return $role === 'CHAIR' && is_string($user) && in_array($user[0], ['e', 'c']);
