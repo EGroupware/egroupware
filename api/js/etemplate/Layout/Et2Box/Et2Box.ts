@@ -117,12 +117,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		if(_values.data)
 		{
-			var pairs = _values.data.split(/,/g);
-			for(var i = 0; i < pairs.length; ++i)
-			{
-				var name_value = pairs[i].split(':');
-				jQuery(_nodes[0]).attr('data-' + name_value[0], name_value[1]);
-			}
+			this.data = _values.data;
 		}
 	}
 }
