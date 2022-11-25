@@ -689,10 +689,10 @@ class calendar_ui
 		if(!$event['recur_type'] || $recurrence_date)
 		{
 			$this->to_client($event);
-			$response->generic('data', array('uid' => 'calendar::'.$event['row_id'], 'data' => $event));
+			$response->generic('data', array('uid' => 'calendar::' . $event['row_id'], 'data' => $event));
 		}
-		// If it's recurring, try to send the next month or so
-		else if($event['recur_type'] )
+		// If it is (or was) recurring, try to send the next month or so
+		if($event['recur_type'] || (!$event['recur_type'] && $old_event['recur_type']))
 		{
 			$this_month = new Api\DateTime('next month');
 			$data = [];
@@ -710,17 +710,20 @@ class calendar_ui
 				}
 				while($old_rrule->valid() && $occurrence <= $this_month);
 			}
-			$rrule = calendar_rrule::event2rrule($event, true);
-			$rrule->rewind();
-			do
+			if($event['recur_type'])
 			{
-				$occurrence = $rrule->current();
-				$converted = $this->bo->read($event['id'], $occurrence);
-				$this->to_client($converted);
-				$data['calendar::' . $converted['row_id']] = $converted;
-				$rrule->next();
+				$rrule = calendar_rrule::event2rrule($event, true);
+				$rrule->rewind();
+				do
+				{
+					$occurrence = $rrule->current();
+					$converted = $this->bo->read($event['id'], $occurrence);
+					$this->to_client($converted);
+					$data['calendar::' . $converted['row_id']] = $converted;
+					$rrule->next();
+				}
+				while($rrule->valid() && $occurrence <= $this_month);
 			}
-			while($rrule->valid() && $occurrence <= $this_month);
 
 			// Now we have to go through and send each one individually, since client side data can't handle more than one
 			foreach($data as $uid => $cal_data)
