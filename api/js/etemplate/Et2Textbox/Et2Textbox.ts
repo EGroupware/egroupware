@@ -52,6 +52,13 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		}
 	}
 
+	static get translate()
+	{
+		return Object.assign({
+			helpText: true
+		}, super.translate);
+	}
+
 	constructor(...args : any[])
 	{
 		super(...args);
