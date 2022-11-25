@@ -145,6 +145,9 @@ class AnonymousList extends filemanager_ui
 	 */
 	function get_rows(&$query, &$rows)
 	{
+		// We turned off filter but still need to use the value
+		$query['filter'] = '';
+
 		// Check for navigating outside share, redirect back to share
 		if (!empty($query['path']) && (!Vfs::stat($query['path'], false) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'], Vfs::READABLE)))
 		{
