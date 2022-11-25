@@ -44,6 +44,10 @@
             #filemanager-quota > div > et2-vbox {
             height: 100%;
             }
+            #filemanager-quota_button\[recalculate\],
+            #filemanager-quota_oversize {
+            margin: 2ex 0;
+            }
             .dialogFooterToolbar {
             margin-top: auto;
             }
