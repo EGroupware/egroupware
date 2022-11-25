@@ -191,6 +191,10 @@ export class Et2LinkList extends Et2LinkString
 	 */
 	protected _handleRowHover(_ev)
 	{
+		if(this.readonly)
+		{
+			return;
+		}
 		let slot_name = "";
 		let target = _ev.target;
 
@@ -508,7 +512,7 @@ export class Et2LinkList extends Et2LinkString
 	protected _handleRowContext(_ev)
 	{
 		// Do not trigger expose view if one of the operator keys are held
-		if(_ev.altKey || _ev.ctrlKey || _ev.shiftKey || _ev.metaKey)
+		if(this.readonly || _ev.altKey || _ev.ctrlKey || _ev.shiftKey || _ev.metaKey)
 		{
 			return;
 		}
