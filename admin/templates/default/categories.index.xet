@@ -31,7 +31,7 @@
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
 					<hbox options="0,0">
-						<html id="${row}[level_spacer]"/>
+						<html id="${row}[level_spacer]" class="level_spacer"/>
 						<description id="${row}[name]" class="$row_cont[class]"/>
 					</hbox>
 					<description id="${row}[description]"/>
@@ -74,28 +74,28 @@
 			</vbox>
 		</box>
 		<styles>
-			.level0 { font-weight: bold; }
-
-.action_popup {
-	position: fixed;
-	top: 200px;
-	left: 450px;
-	width: 76ex;
-	z-index: 20000;
-	display: none;
-	border-collapse:collapse;
-	border-spacing:0px
-}
-.action_popup-content {
-	display:block;
-	padding:2ex;
-	color:#666666;
-	margin: -2px -1px 0px -2px;
-}
-.action_popup &gt; table {
-	width: 100%
-}
-.action_popup .promptheader {
+            .level0 { font-weight: bold; }
+            .level_spacer { flex: 0 0 auto;}
+            .action_popup {
+            position: fixed;
+            top: 200px;
+            left: 450px;
+            width: 76ex;
+            z-index: 20000;
+            display: none;
+            border-collapse:collapse;
+            border-spacing:0px
+            }
+            .action_popup-content {
+            display:block;
+            padding:2ex;
+            color:#666666;
+            margin: -2px -1px 0px -2px;
+            }
+            .action_popup &gt; table {
+            width: 100%
+            }
+            .action_popup .promptheader {
 	padding: 1ex;
 	width: 100%
 }
