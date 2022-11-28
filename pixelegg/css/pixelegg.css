@@ -3552,14 +3552,14 @@ body .egw_message_wrapper.isPopup {
 }
 body .egw_message_wrapper {
   background-color: #d9d9d9;
-  right: 0 !important;
+  right: 11px !important;
   max-width: 40%;
   min-width: 40%;
   box-shadow: 2px 3px 13px #666666;
   -moz-box-shadow: 2px 3px 13px #666666;
   -webkit-box-shadow: 2px 3px 13px #666666;
   -khtml-box-shadow: 2px 3px 13px #666666;
-  bottom: 0;
+  bottom: 10px;
   max-height: 60%;
   overflow-y: auto;
   z-index: 100000;

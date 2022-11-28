@@ -3177,31 +3177,25 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon {
   border-radius: 2px;
 }
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item td.sub_item_hk div.sub_item_hk {
-    color: #373f3f;
+  color: #373f3f;
 }
-
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected {
-    background-color: hsl(200, 98%, 39%) !important;
-    background-image: none !important;
+  background-color: hsl(200, 98%, 39%) !important;
+  background-image: none !important;
 }
-
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_icon img.sub_icon {
-    filter: invert(1) brightness(5);
+  filter: invert(1) brightness(5);
 }
-
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_icon img[id$="filemanager"] {
-    filter: invert(0) brightness(5) !important;
+  filter: invert(0) brightness(5) !important;
 }
-
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected div.sub_item_text,
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub_item_selected td.sub_item_hk div.sub_item_hk {
-    color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 100%);
 }
-
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.sub_sep {
-    border-top: 1px solid #E6E6E6;
+  border-top: 1px solid #E6E6E6;
 }
-
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -3559,41 +3553,37 @@ div.admin-config form > table td b {
 .info_message {
   background-image: url(../../api/templates/default/images/dialog_info.svg);
 }
-
 .info_message .discard {
-    float: right;
-    margin-top: 4px;
+  float: right;
+  margin-top: 4px;
 }
-
 .success_message {
-    background-image: url(../../api/templates/default/images/check.svg);
+  background-image: url(../../api/templates/default/images/check.svg);
 }
-
 /**
  * Message in popup
  */
 body .egw_message_wrapper.isPopup {
-    top: 0px;
-    bottom: auto;
-    overflow-y: unset;
-    right: 33% !important;
-    max-width: unset;
-    min-width: unset;
+  top: 0px;
+  bottom: auto;
+  overflow-y: unset;
+  right: 33% !important;
+  max-width: unset;
+  min-width: unset;
 }
-
 body .egw_message_wrapper {
-    background-color: #d9d9d9;
-    right: 0 !important;
-    max-width: 40%;
-    min-width: 40%;
-    box-shadow: 2px 3px 13px #666666;
-    -moz-box-shadow: 2px 3px 13px #666666;
-    -webkit-box-shadow: 2px 3px 13px #666666;
-    -khtml-box-shadow: 2px 3px 13px #666666;
-    bottom: 0;
-    max-height: 60%;
-    overflow-y: auto;
-    z-index: 100000;
+  background-color: #d9d9d9;
+  right: 11px !important;
+  max-width: 40%;
+  min-width: 40%;
+  box-shadow: 2px 3px 13px #666666;
+  -moz-box-shadow: 2px 3px 13px #666666;
+  -webkit-box-shadow: 2px 3px 13px #666666;
+  -khtml-box-shadow: 2px 3px 13px #666666;
+  bottom: 10px;
+  max-height: 60%;
+  overflow-y: auto;
+  z-index: 100000;
 }
 body .egw_message_wrapper > div:last-child {
   margin-bottom: 0px !important;
@@ -3899,35 +3889,29 @@ td.lettersearch {
   overflow: hidden;
   padding: 10px;
   background-color: #fafafa;
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
-
 #egwpopup #egwpopup_list .egwpopup_message:hover {
-    background-color: rgba(103, 159, 210, 0.2);
+  background-color: rgba(103, 159, 210, 0.2);
 }
-
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
-    height: 63px;
-    overflow: hidden;
+  height: 63px;
+  overflow: hidden;
 }
-
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
-    max-width: 60em;
-    display: inline-block;
-    overflow-wrap: break-word;
-    vertical-align: text-top;
+  max-width: 60em;
+  display: inline-block;
+  overflow-wrap: break-word;
+  vertical-align: text-top;
 }
-
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
-
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_date {
-    float: left;
-    color: #767676;
+  float: left;
+  color: #767676;
 }
-
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_open {
   display: inline-block;
   float: right;
