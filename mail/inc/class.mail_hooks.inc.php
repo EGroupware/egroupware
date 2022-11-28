@@ -559,7 +559,7 @@ class mail_hooks
 		);
 
 		$file = array(
-			'import message' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
+			'import message' => "javascript:egw_openWindowCentered2('" . Egw::link('/index.php', $linkData, false) . "','importMessageDialog',600,180,'no','$appname');",
 		);
 
 		// create account wizard
