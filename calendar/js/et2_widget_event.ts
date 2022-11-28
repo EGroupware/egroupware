@@ -30,6 +30,7 @@ import {ColorTranslator} from "colortranslator";
 import {StaticOptions} from "../../api/js/etemplate/Et2Select/StaticOptions";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {CalendarApp} from "./app";
 
 /**
  * Class for a single event, displayed in either the timegrid or planner view
