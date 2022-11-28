@@ -3,77 +3,65 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.editstatus" template="" lang="" group="0" version="1.7.004">
-		<grid width="100%" height="450" overflow="auto">
-			<columns>
-				<column width="100"/>
-				<column/>
-				<column/>
-				<column width="30%"/>
-			</columns>
-			<rows>
-				<row disabled="!@msg">
-					<description id="msg" span="all" class="redItalic" align="center"/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<groupbox rows="1" cols="1">
-						<grid width="100%" height="300" overflow="auto">
-							<columns>
-								<column width="100"/>
-								<column/>
-								<column/>
-								<column width="30%"/>
-							</columns>
-							<rows>
-								<row class="row" valign="top">
-									<description value="Status"/>
-									<grid width="100%" height="280" overflow="auto" id="statis">
-										<columns>
-											<column/>
-											<column/>
-											<column/>
-											<column/>
-											<column width="5%"/>
-										</columns>
-										<rows>
-											<row class="th">
-												<description value="ID"/>
-												<description value="Name"/>
-												<description value="Parent"/>
-												<description value="Only Admin"/>
-												<description value="Actions"/>
-											</row>
-											<row class="row">
-												<description id="${row}[id]"/>
-												<textbox size="80" maxlength="150" blur="--&gt; enter new name" id="${row}[name]"/>
-												<menulist>
-													<menupopup id="${row}[parent]" options="Select one ..."/>
-												</menulist>
-												<checkbox id="${row}[admin]" statustext="Only admin can edit this status"/>
-												<button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"/>
-											</row>
-										</rows>
-									</grid>
-								</row>
-							</rows>
-						</grid>
-					</groupbox>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<hbox span="2">
-						<button label="Save" id="button[save]"/>
-						<button id="button[apply]" label="Apply"/>
-						<button label="Cancel" id="button[cancel]"/>
-					</hbox>
-					<description/>
-					<description/>
-				</row>
-			</rows>
-		</grid>
-	</template>
+        <grid width="100%" height="450" overflow="auto">
+            <columns>
+                <column width="100%"/>
+            </columns>
+            <rows>
+                <row>
+                    <groupbox rows="1" cols="1">
+                        <grid width="100%" overflow="auto">
+                            <columns>
+                                <column width="100"/>
+                                <column/>
+                                <column/>
+                                <column width="30%"/>
+                            </columns>
+                            <rows>
+                                <row class="row" valign="top">
+                                    <description value="Status"/>
+                                    <grid width="100%" overflow="auto" id="statis">
+                                        <columns>
+                                            <column/>
+                                            <column/>
+                                            <column/>
+                                            <column/>
+                                            <column width="5%"/>
+                                        </columns>
+                                        <rows>
+                                            <row class="th">
+                                                <description value="ID"/>
+                                                <description value="Name"/>
+                                                <description value="Parent"/>
+                                                <description value="Only Admin"/>
+                                                <description value="Actions"/>
+                                            </row>
+                                            <row class="row">
+                                                <description id="${row}[id]"/>
+                                                <textbox size="80" maxlength="150" blur="--&gt; enter new name"
+                                                         id="${row}[name]"/>
+                                                <menulist>
+                                                    <menupopup id="${row}[parent]" options="Select one ..."/>
+                                                </menulist>
+                                                <checkbox id="${row}[admin]"
+                                                          statustext="Only admin can edit this status"/>
+                                                <button image="delete" label="Delete" align="center"
+                                                        id="delete[$row_cont[id]]" statustext="Delete this status"
+                                                        onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </row>
+                            </rows>
+                        </grid>
+                    </groupbox>
+                </row>
+            </rows>
+        </grid>
+        <hbox class="dialogFooterToolbar">
+            <button label="Save" id="button[save]"/>
+            <button id="button[apply]" label="Apply"/>
+            <button label="Cancel" id="button[cancel]"/>
+        </hbox>
+    </template>
 </overlay>
