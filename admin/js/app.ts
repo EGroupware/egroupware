@@ -620,8 +620,8 @@ class AdminApp extends EgwApp
 		{
 			dialog_options['width'] = 550;
 			modifications.tabs = {
-				add_tabs: true,
-				tabs: [{
+				addTabs: true,
+				extraTabs: [{
 					label: egw.lang('Documentation'),
 					template: 'policy.admin_cmd',
 					prepend: false

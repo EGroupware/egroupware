@@ -186,7 +186,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		if (!dialog) return;
 
 		// disable not matching / available menu-items
-		dialog._overlayContentNode.querySelectorAll('et2-button').forEach(button =>
+		dialog.querySelectorAll('et2-button').forEach(button =>
 		{
 			if (button.id.substring(0, 7) === 'overall')
 			{
@@ -261,10 +261,16 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		// if dialog is open, it shows both timers
 		if (dialog)
 		{
-			const specific_timer = dialog._overlayContentNode.querySelector('div#_specific_timer');
-			const overall_timer = dialog._overlayContentNode.querySelector('div#_overall_timer');
-			if (specific_timer) updateTimer(specific_timer, specific);
-			if (overall_timer) updateTimer(overall_timer, overall);
+			const specific_timer = dialog.querySelector('div#_specific_timer');
+			const overall_timer = dialog.querySelector('div#_overall_timer');
+			if (specific_timer)
+			{
+				updateTimer(specific_timer, specific);
+			}
+			if (overall_timer)
+			{
+				updateTimer(overall_timer, overall);
+			}
 		}
 	}
 
@@ -356,8 +362,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		// if dialog is shown, update its timer(s) too
 		if (dialog)
 		{
-			const specific_timer = dialog._overlayContentNode.querySelector('div#_specific_timer');
-			const overall_timer = dialog?._overlayContentNode.querySelector('div#_overall_timer');
+			const specific_timer = dialog.querySelector('div#_specific_timer');
+			const overall_timer = dialog?.querySelector('div#_overall_timer');
 			if (specific_timer && _timer === specific)
 			{
 				updateTimer(specific_timer, specific)
@@ -489,8 +495,9 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		};
 
 		// disable not matching / available menu-items
-		dialog._overlayContentNode.querySelectorAll('et2-date-time-today').forEach(_widget => {
-			const [,timer, action] = _widget.id.match(/times\[([^\]]+)\]\[([^\]]+)\]/);
+		dialog.querySelectorAll('et2-date-time-today').forEach(_widget =>
+		{
+			const [, timer, action] = _widget.id.match(/times\[([^\]]+)\]\[([^\]]+)\]/);
 			_widget.value = times[timer][action];
 		});
 	}

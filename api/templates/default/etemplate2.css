@@ -776,35 +776,18 @@ button.et2_timestamper:hover {
 
 /**
  * Dialog widget
- * It uses jQueryUI, so this is just our little bits - icon on left
  */
-.ui-dialog-content .dialog_icon {
+et2-dialog .dialog_icon {
     vertical-align: middle;
     width: 2em;
+    margin: 0.5em;
 }
 
-.ui-dialog-content {
+et2-dialog .dialog--has_message {
     vertical-align: middle;
+    display: flex;
 }
 
-.ui-dialog-content > div {
-    white-space: pre-wrap;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* These change button alignment, but it seems the standard is right-aligned for
-action buttons, left aligned for "extra" controls
-.ui-dialog .ui-dialog-buttonpane {
-	text-align: left;
-}
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-	float: none;
-}
-.ui-dialog .ui-dialog-buttonpane button {
-	float: none;
-}
-*/
 /**
  * Custom field list
  */

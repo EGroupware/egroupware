@@ -11,17 +11,17 @@
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_button} from "../et2_widget_button";
-import {LionDialog} from "@lion/dialog";
 import {et2_widget} from "../et2_core_widget";
-import {html, LitElement, ScopedElementsMixin, SlotMixin} from "@lion/core";
-import {Et2DialogOverlay} from "./Et2DialogOverlay";
-import {Et2DialogContent} from "./Et2DialogContent";
+import {classMap, css, html, ifDefined, LitElement, render, repeat, SlotMixin, styleMap} from "@lion/core";
 import {et2_template} from "../et2_widget_template";
 import {etemplate2} from "../etemplate2";
-import {IegwAppLocal} from "../../jsapi/egw_global";
+import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {Et2Button} from "../Et2Button/Et2Button";
+import shoelace from "../Styles/shoelace";
+import {SlDialog} from "@shoelace-style/shoelace";
+import {egwIsMobile} from "../../egw_action/egw_action_common";
 
 export interface DialogButton
 {
@@ -122,11 +122,9 @@ export interface DialogButton
  *	let result = await dialog.getComplete();
  *```
  *
- * Because of how LionDialog does its layout and rendering, it's easiest to separate the dialog popup from
- * the dialog content.  This allows us to easily preserve the WebComponent styling.  You should interact with the
- * Et2Dialog though, and ignore the Et2DialogOverlay & Et2DialogContent.
+ * Customize initial focus by setting the "autofocus" attribute on a control, otherwise first input will have focus
  */
-export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialog)))
+export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 {
 	/**
 	 * Dialogs don't always get added to an etemplate, so we keep our own egw
@@ -183,6 +181,31 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	public static readonly OK_BUTTON : number = 1;
 	public static readonly YES_BUTTON : number = 2;
 	public static readonly NO_BUTTON : number = 3;
+
+
+	static get styles()
+	{
+		return [
+			...shoelace,
+			...(super.styles || []),
+			css`
+				:host {
+					--header-spacing: var(--sl-spacing-medium);
+					--body-spacing: var(--sl-spacing-medium)
+				}
+				.dialog__title {
+					user-select: none;
+				}
+				.dialog__footer	{
+					display: flex;
+					flex-wrap: nowrap;
+					justify-content: flex-start;
+					align-items: stretch;
+					gap: 5px;
+				}
+			`
+		];
+	}
 
 	static get properties()
 	{
@@ -245,19 +268,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	get slots()
 	{
 		return {
-			...super.slots
+			...super.slots,
+			'': () =>
+			{
+				return this._contentTemplate();
+			}
 		}
-	}
-
-	// Still not sure what this does, but it's important.
-	// Seems to be related to the constructor, and what's available during the "creation"
-	static get scopedElements()
-	{
-		return {
-			...super.scopedElements,
-			'et2-dialog-overlay-frame': Et2DialogOverlay,
-			'et2-dialog-content': Et2DialogContent
-		};
 	}
 
 	/*
@@ -323,13 +339,19 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this.destroyOnClose = true;
 		this.hideOnEscape = this.hideOnEscape === false ? false : true;
 		this.__value = {};
+		this.open = true;
 
-		this._onOpen = this._onOpen.bind(this);
-		this._onClose = this._onClose.bind(this);
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 		this._onClick = this._onClick.bind(this);
 		this._onButtonClick = this._onButtonClick.bind(this);
 		this._onMoveResize = this._onMoveResize.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this._adoptTemplateButtons = this._adoptTemplateButtons.bind(this);
+
+		// Don't leave it undefined, it's easier to deal with if it's just already resolved.
+		// It will be re-set if a template is loaded
+		this._template_promise = Promise.resolve(false);
 
 		// Create this here so we have something, otherwise the creator might continue with undefined while we
 		// wait for the dialog to complete & open
@@ -343,32 +365,82 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	{
 		super.connectedCallback();
 
-		// Wait for everything to complete, then auto-open
-		this.getUpdateComplete().then(() =>
+		// Prevent close if they click the overlay when the dialog is modal
+		this.addEventListener('sl-request-close', event =>
 		{
-			// _overlayCtrl is not available earlier
-			this._overlayCtrl?.addEventListener("show", this._onOpen);
-			this._overlayCtrl.addEventListener('hide', this._onClose);
+			if(this.modal && event.detail.source === 'overlay')
+			{
+				event.preventDefault();
+			}
+		})
 
-			// Bind on the ancestor, not the buttons, so their click handler gets a chance to run
-			this._overlayContentNode.addEventListener("click", this._onButtonClick);
-			window.setTimeout(this.open, 0);
-		});
+		this.addEventListener("sl-after-show", this.handleOpen);
+		this.addEventListener('sl-hide', this.handleClose);
+
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this._overlayCtrl.removeEventListener("hide", this._onClose);
-		this._overlayCtrl.removeEventListener("show", this._onOpen);
-		this._overlayContentNode.removeEventListener("click", this._onButtonClick);
+		this.removeEventListener("sl-hide", this.handleClose);
+		this.removeEventListener("sl-after-show", this.handleOpen);
+	}
+
+	addOpenListeners()
+	{
+		//super.addOpenListeners();
+
+		// Bind on the ancestor, not the buttons, so their click handler gets a chance to run
+		this.addEventListener("click", this._onButtonClick);
+		this.addEventListener("keydown", this.handleKeyDown);
+	}
+
+	removeOpenListeners()
+	{
+		//super.removeOpenListeners();
+		this.removeEventListener("click", this._onButtonClick);
+		this.removeEventListener("keydown", this.handleKeyDown);
+	}
+
+	handleKeyDown(event : KeyboardEvent)
+	{
+		// Parent handles escape, but is already bound
+		super.handleKeyDown(event);
+
+		// Trigger the "primary" or first button
+		if(this.open && event.key === 'Enter')
+		{
+			let button = this.querySelectorAll("[varient='primary']");
+			if(button.length == 0)
+			{
+				// Nothing explicitly marked, check for buttons in the footer
+				button = this.querySelectorAll("et2-button[slot='footer']");
+			}
+			if(button && button[0])
+			{
+				event.stopPropagation();
+				button[0].dispatchEvent(new CustomEvent('click', {bubbles: true}));
+			}
+		}
+	}
+
+	firstUpdated()
+	{
+		super.firstUpdated();
+
+		// If we start open, fire handler to get setup done
+		if(this.open)
+		{
+			this.handleOpenChange();
+		}
+
+		this.updateComplete.then(() => this._setDefaultAutofocus());
 	}
 
 	// Need to wait for Overlay
 	async getUpdateComplete()
 	{
 		await super.getUpdateComplete();
-		await this._overlayContentNode.getUpdateComplete();
 
 		// Wait for template to finish loading
 		if(this._template_widget)
@@ -382,18 +454,28 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		return this._complete_promise;
 	}
 
-	_onOpen()
+	handleOpen()
 	{
+		this.addOpenListeners();
 		this._button_id = null;
 		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
 
-		this._setupMoveResize(this._overlayContentNode);
 		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
 		this.dispatchEvent(new Event('open'));
+
+		Promise.all([this._template_promise, this.updateComplete])
+			.then(() => this._setupMoveResize());
 	}
 
-	_onClose(ev : PointerEvent)
+	handleClose(ev : PointerEvent)
 	{
+		// Avoid closing if a selectbox is closed
+		if(ev.target !== this)
+		{
+			return;
+		}
+
+		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 		this._button_id = null;
 		this._complete_promise = undefined;
@@ -406,7 +488,6 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			{
 				this._template_widget.clear();
 			}
-			this._overlayCtrl.teardown();
 			this.remove();
 		}
 	}
@@ -468,7 +549,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			console.log(e);
 		}
-		this.close();
+		this.hide();
 	}
 
 	/**
@@ -519,15 +600,6 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	}
 
 	/**
-	 * Fire the close-overlay event to use all registered listeners
-	 * @deprecated
-	 */
-	destroy()
-	{
-		this._overlayContentNode.dispatchEvent(new Event('close-overlay'));
-	}
-
-	/**
 	 * @deprecated
 	 * @returns {Object}
 	 */
@@ -555,6 +627,12 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		return this._template_widget || null;
 	}
 
+	get title() : string { return this.label }
+
+	set title(new_title : string)
+	{
+		this.label = new_title;
+	}
 
 	updated(changedProperties)
 	{
@@ -562,6 +640,11 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		if(changedProperties.has("template"))
 		{
 			this._loadTemplate();
+		}
+		if(changedProperties.has("buttons"))
+		{
+			render(this._buttonsTemplate(), this);
+			this.requestUpdate();
 		}
 	}
 
@@ -571,13 +654,14 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			this._template_widget.clear();
 		}
+		this._contentNode.replaceChildren();
 
 		// Etemplate wants a content
 		if(typeof this.__value.content === "undefined")
 		{
 			this.__value.content = {};
 		}
-		this._template_widget = new etemplate2(this._overlayContentNode._contentNode);
+		this._template_widget = new etemplate2(this._contentNode);
 
 		// Fire an event so consumers can do their thing - etemplate will fire its own load event when its done
 		if(!this.dispatchEvent(new CustomEvent("before-load", {
@@ -631,83 +715,103 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
 
 		// Look for buttons after load
-		this._overlayContentNode._contentNode.addEventListener("load", this._adoptTemplateButtons);
-	}
+		this._contentNode.addEventListener("load", this._adoptTemplateButtons);
 
-	render()
-	{
-		return this._overlayTemplate();
-	}
+		// Default autofocus to first input if autofocus is not set
+		this._contentNode.addEventListener("load", this._setDefaultAutofocus);
 
-	/**
-	 * Don't allow any children here, pass them on to the content node
-	 *
-	 * @param {HTMLElement} node
-	 * @returns {any}
-	 */
-	appendChild(node : HTMLElement)
-	{
-		return this._overlayContentNode.appendChild(node);
-	}
-
-	/**
-	 * Defining this overlay as a templates from OverlayMixin
-	 * this is our source to give as .contentNode to OverlayController.
-	 * @protected
-	 */
-	protected _overlayTemplate()
-	{
-		return html`
-            <div id="overlay-content-node-wrapper">
-                <et2-dialog-overlay-frame class="dialog__overlay-frame"
-                                          .width=${this.width}
-                                          .height=${this.height}
-                                          ._dialog=${this}
-                                          .buttons=${this._getButtons()}>
-                    <span slot="heading">${this.title}</span>
-                    ${this._contentTemplate()}
-
-                </et2-dialog-overlay-frame>
-            </div>
-		`;
-	}
-
-	/**
-	 * @override Configures OverlayMixin
-	 */
-	get _overlayContentNode()
-	{
-		if(this._cachedOverlayContentNode)
-		{
-			return this._cachedOverlayContentNode;
-		}
-		this._cachedOverlayContentNode = /** @type {HTMLElement} */ (
-			/** @type {ShadowRoot} */ (this.shadowRoot).querySelector('.dialog__overlay-frame')
-		);
-		return this._cachedOverlayContentNode;
+		// Need to update to pick up changes
+		this.requestUpdate();
 	}
 
 	_contentTemplate()
 	{
-		if(this.__template)
+		/**
+		 * Classes for dialog type options
+		 */
+		const _dialogTypes : any = [
+			//PLAIN_MESSAGE: 0
+			"",
+			//INFORMATION_MESSAGE: 1,
+			"dialog_info",
+			//QUESTION_MESSAGE: 2,
+			"dialog_help",
+			//WARNING_MESSAGE: 3,
+			"dialog_warning",
+			//ERROR_MESSAGE: 4,
+			"dialog_error"
+		];
+		let icon = this.icon || this.egw().image(_dialogTypes[this.dialogType] || "") || "";
+		let type = _dialogTypes[this.dialogType];
+		let classes = {
+			dialog_content: true,
+			"dialog--has_message": this.message,
+			"dialog--has_template": this.__template
+		};
+		if(type)
 		{
-			return html`
-                <div slot="content"></div>`;
+			classes[type] = true;
 		}
-		else
+
+		// Add in styles set via property
+		let styles = {};
+		if(this.width)
 		{
-			return html`
-                <et2-dialog-content slot="content" ?icon=${this.icon}
-                                    .dialog_type=${this.dialog_type}
-                                    .value=${this.value}
-                >
-                    ${this.message}
-                </et2-dialog-content>
-			`;
+			styles["--width"] = this.width;
 		}
+		if(this.height)
+		{
+			styles.height = "--height: " + this.height;
+		}
+
+		return html`
+            <div class=${classMap(classes)} style="${styleMap(styles)}">
+                ${this.__template ? "" :
+                  html` <img class="dialog_icon" src=${icon}/>
+                  <slot>${this.message}</slot>`
+                }
+
+            </div>`;
+
 	}
 
-	_getButtons()
+	_buttonsTemplate()
+	{
+		if(!this.buttons)
+		{
+			return;
+		}
+
+		let buttons = this._getButtons();
+		let hasDefault = false;
+		buttons.forEach((button) =>
+		{
+			if(button.default)
+			{
+				hasDefault = true;
+			}
+		})
+
+		// Set button._parent here, otherwise button will have trouble finding our egw()
+		return html`${repeat(buttons, (button : DialogButton) => button.id, (button, index) =>
+		{
+			let isDefault = hasDefault && button.default || !hasDefault && index == 0;
+			return html`
+                <et2-button ._parent=${this} id=${button.id} button_id=${button.button_id}
+                            label=${button.label}
+                            slot="footer"
+                            .image=${ifDefined(button.image)}
+                            .noSubmit=${true}
+                            ?disabled=${button.disabled}
+                            variant=${isDefault ? "primary" : "default"}
+                            ?outline=${isDefault}
+                            align=${ifDefined(button.align)}>
+                </et2-button>
+			`
+		})}`;
+	}
+
+	_getButtons() : DialogButton[]
 	{
 		if(Number.isInteger(this.buttons))
 		{
@@ -733,7 +837,7 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	_adoptTemplateButtons()
 	{
 		// Check for something with buttons slot set
-		let search_in = this._template_widget?.DOMContainer || this._overlayContentNode._contentNode;
+		let search_in = <HTMLElement>(this._template_widget?.DOMContainer || this._contentNode);
 		let template_buttons = [
 			...search_in.querySelectorAll('[slot="buttons"]'),
 			// Look for a dialog footer, which will contain several buttons and possible other widgets
@@ -745,8 +849,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 		{
 			template_buttons.forEach((button) =>
 			{
-				button.setAttribute("slot", "buttons");
-				this._overlayContentNode.appendChild(button);
+				button.setAttribute("slot", "footer");
+				this.appendChild(button);
 			})
 		}
 		// do NOT submit dialog, if it has no etemplate_exec_id, it only gives and error on server-side
@@ -761,36 +865,56 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 	}
 
 	/**
-	 * @override Configures OverlayMixin
-	 * @desc overrides default configuration options for this component
-	 * @returns {Object}
+	 * Set autofocus on first input element if nothing has autofocus
 	 */
-	_defineOverlayConfig()
+	_setDefaultAutofocus()
 	{
-		let not_modal = {
-			hasBackdrop: false,
-			preventsScroll: false,
-			trapsKeyboardFocus: false,
+		const autofocused = this.querySelector("[autofocus]");
+		if(autofocused)
+		{
+			return;
 		}
-		return {
-			...super._defineOverlayConfig(),
-			hidesOnEscape: this.hideOnEscape,
-			...(this.modal ? {} : not_modal)
+		if(this.template)
+		{
+			this.template.focusOnFirstInput();
 		}
+		else
+		{
+			// Not a template, but maybe something?
+			const $input = jQuery('input:visible,et2-textbox:visible,et2-select-email:visible', this)
+				// Date fields open the calendar popup on focus
+				.not('.et2_date')
+				.filter(function()
+				{
+					// Skip inputs that are out of tab ordering
+					const $this = jQuery(this);
+					return !$this.attr('tabindex') || parseInt($this.attr('tabIndex')) >= 0;
+				}).first();
 
-
+			// mobile device, focus only if the field is empty (usually means new entry)
+			// should focus always for non-mobile one
+			if(egwIsMobile() && $input.val() == "" || !egwIsMobile())
+			{
+				$input.focus();
+			}
+		}
 	}
 
-	_setupMoveResize(element)
+	get _contentNode() : HTMLElement
+	{
+		return this.querySelector('.dialog_content');
+	}
+
+	_setupMoveResize()
 	{
 		// Quick calculation of min size - dialog is made up of header, content & buttons
 		let minHeight = 0;
-		for(let e of element.shadowRoot.querySelector('.overlay').children)
+		for(let e of this.panel.children)
 		{
 			minHeight += e.getBoundingClientRect().height + parseFloat(getComputedStyle(e).marginTop) + parseFloat(getComputedStyle(e).marginBottom)
 		}
 
-		interact(element)
+		interact(this.panel)
 			.resizable({
 				edges: {bottom: true, right: true},
 				listeners: {
@@ -810,7 +934,8 @@ export class Et2Dialog extends Et2Widget(ScopedElementsMixin(SlotMixin(LionDialo
 			})
 
 			.draggable({
-				allowFrom: ".overlay__heading",
+				allowFrom: ".dialog__header",
+				ignoreFrom: ".dialog__close",
 				listeners: {
 					move: this._onMoveResize
 				},

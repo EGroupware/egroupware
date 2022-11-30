@@ -445,47 +445,50 @@ export function nm_open_popup(_action, _selected)
 	var popup = document.body.querySelector("et2-dialog[id*='" + _action.id + "_popup']") || document.body.querySelector("#" + (uid || "") + "_" + _action.id + "_popup") || document.body.querySelector("[id*='" + _action.id + "_popup']");
 	if (popup && popup instanceof Et2Dialog)
 	{
-		popup.open();
+		popup.show();
 	}
 	else if (popup)
 	{
-
-
 		let dialog = new Et2Dialog();
-		dialog.destroy_on_close = false;
+		dialog.destroyOnClose = false;
 		dialog.id = popup.id;
-		popup.setAttribute("id", "_" + popup.id);
+		popup.removeAttribute("id");
+
+		// Set title
+		let title = popup.querySelector(".promptheader")
+		if (title)
+		{
+			title.slot = "label"
+			dialog.appendChild(title);
+		}
+		popup.slot = "";
+
 		dialog.addEventListener("close", () =>
 		{
 			window.nm_popup_action = null;
-		})
-		dialog.getUpdateComplete().then(() =>
-		{
-			let title = popup.querySelector(".promptheader")
-			if (title)
-			{
-				title.slot = "heading"
-				dialog.appendChild(title);
-			}
-			popup.slot = "content";
-
-			// Move buttons
-			popup.querySelectorAll('et2-button').forEach((button) =>
-			{
-				button.slot = "buttons";
-				let button_click = button.onclick;
-				button.onclick = (e) =>
-				{
-					window.nm_popup_action = button_click ? action : null;
-					window.nm_popup_ids = selected;
-					dialog.close();
-
-					return button_click?.apply(button, e.currentTarget);
-				};
-				dialog.appendChild(button);
-			})
-			dialog.appendChild(popup);
 		});
+		// Move buttons
+		popup.querySelectorAll('et2-button').forEach((button, index) =>
+		{
+			button.slot = "footer";
+			if (index == 0)
+			{
+				button.variant = "primary";
+				button.outline = true;
+			}
+			let button_click = button.onclick;
+			button.onclick = (e) =>
+			{
+				window.nm_popup_action = button_click ? action : null;
+				window.nm_popup_ids = selected;
+				dialog.hide();
+
+				return button_click?.apply(button, e.currentTarget);
+			};
+			dialog.appendChild(button);
+		})
+		dialog.appendChild(popup);
+		dialog.requestUpdate();
 
 		document.body.appendChild(dialog);
 
