@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="mail_navbar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" width="28.348px" height="28.348px" viewBox="0 0 28.348 28.348" enable-background="new 0 0 28.348 28.348"
-	 xml:space="preserve">
-<path fill="#006699" d="M25.699,5.285V5.281L2.538,5.271c-0.755,0.103-1.347,0.7-1.439,1.459H1.091v1.001l12.98,8.124l13.068-8.158
-	V6.728C27.038,5.976,26.451,5.385,25.699,5.285z"/>
-	<path fill="#006699" d="M25.684,23.124c0.758-0.1,1.353-0.699,1.445-1.461h0.01V10.132l-13.068,8.313L1.091,10.42v11.244h0.003
-	c0.092,0.762,0.687,1.361,1.444,1.461v0.002h8.085l15.06,0.004V23.124z"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path d="M2 5C.892 5 0 5.892 0 7v1l16 10L32 8V7c0-1.108-.892-2-2-2zm-2 6v14c0 1.108.892 2 2 2h28c1.108 0 2-.892 2-2V11L16 21z" fill="#069" />
 </svg>
