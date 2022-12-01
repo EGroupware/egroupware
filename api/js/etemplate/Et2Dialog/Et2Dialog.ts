@@ -193,15 +193,33 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					--header-spacing: var(--sl-spacing-medium);
 					--body-spacing: var(--sl-spacing-medium)
 				}
+				.dialog__panel {
+					border: 1px solid silver;
+					box-shadow: -2px 1px 9px 3px #b4b4b4;
+					min-width: 250px;
+					touch-action: none;
+				}
+				.dialog__header {
+					display: flex;
+          			border-bottom: 1px inset;
+				}
 				.dialog__title {
 					user-select: none;
 				}
+				.dialog__close {
+					background-color: #f3f3f3;
+					padding: 0;
+					order: 99;
+				}
 				.dialog__footer	{
+					--footer-spacing: 5px;
 					display: flex;
 					flex-wrap: nowrap;
 					justify-content: flex-start;
 					align-items: stretch;
 					gap: 5px;
+					border-top: 1px solid silver;
+					margin-top: 0.5em;
 				}
 			`
 		];
@@ -871,7 +889,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		];
 		if(template_buttons)
 		{
-			if(template_buttons[0].instanceOf(Et2Button))
+			if(template_buttons[0]?.instanceOf(Et2Button))
 			{
 				template_buttons[0].variant = "primary";
 				template_buttons[0].outline = true;
