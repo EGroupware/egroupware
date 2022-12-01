@@ -395,6 +395,17 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this.remove();
 	}
 
+	/**
+	 * Hide the dialog.
+	 * Depending on destroyOnClose, it may be removed as well
+	 *
+	 * N.B. We can't have open() because it conflicts with SlDialog.  Use show() instead.
+	 */
+	close()
+	{
+		this.hide();
+	}
+
 	addOpenListeners()
 	{
 		//super.addOpenListeners();

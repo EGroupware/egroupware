@@ -453,6 +453,8 @@ export function nm_open_popup(_action, _selected)
 		dialog.destroyOnClose = false;
 		dialog.id = popup.id;
 		popup.removeAttribute("id");
+		// Remove class that hides
+		popup.classList.remove("prompt");
 
 		// Set title
 		let title = popup.querySelector(".promptheader")
