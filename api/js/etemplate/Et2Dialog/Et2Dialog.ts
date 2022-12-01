@@ -386,6 +386,15 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		this.removeEventListener("sl-after-show", this.handleOpen);
 	}
 
+	destroy()
+	{
+		if(this.template)
+		{
+			this.template.clear(true);
+		}
+		this.remove();
+	}
+
 	addOpenListeners()
 	{
 		//super.addOpenListeners();

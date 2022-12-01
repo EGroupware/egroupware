@@ -2088,12 +2088,12 @@ export class CalendarApp extends EgwApp
 					return false;
 				}
 				// Insert the content into the correct place
-				add_dialog._overlayContentNode._contentNode.remove();
-				add_dialog._overlayContentNode.insertAdjacentHTML("beforeend", content.html);
-				let template = add_dialog._overlayContentNode.querySelector("[id='calendar-add']");
+				add_dialog._contentNode.remove();
+				add_dialog.insertAdjacentHTML("beforeend", content.html);
+				let template = add_dialog.querySelector("[id='calendar-add']");
 				if(template)
 				{
-					template.slot = "content";
+					template.slot = "";
 					template.addEventListener("load", add_dialog._adoptTemplateButtons);
 				}
 			}
