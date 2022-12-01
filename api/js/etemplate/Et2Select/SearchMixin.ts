@@ -789,9 +789,15 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		async _handleSearchBlur(event : FocusEvent)
 		{
 			clearTimeout(this._searchTimeout);
-			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement)
+			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement || event.relatedTarget === null)
 			{
+				// Try any value they had in progress
+				if(this._searchInputNode.value && this.allowFreeEntries)
+				{
+					this.createFreeEntry(this._searchInputNode.value);
+				}
 				await this.dropdown.hide();
+				this.clearSearch();
 				if(event.relatedTarget && event.relatedTarget !== this)
 				{
 					event.relatedTarget.focus();
