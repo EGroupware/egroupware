@@ -789,7 +789,9 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		async _handleSearchBlur(event : FocusEvent)
 		{
 			clearTimeout(this._searchTimeout);
-			if(event.relatedTarget && this !== (<Element>event.relatedTarget).parentElement || event.relatedTarget === null)
+			if(event.relatedTarget && [this, this.dropdown].indexOf((<Element>event.relatedTarget).parentElement) == -1 ||
+				event.relatedTarget === null
+			)
 			{
 				// Try any value they had in progress
 				if(this._searchInputNode.value && this.allowFreeEntries)
@@ -1304,6 +1306,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					this.dropdown.panel.setAttribute("hidden", "");
 				});
 			}
+			this.syncItemsFromValue();
 		}
 
 		protected _handleSearchAbort(e)
