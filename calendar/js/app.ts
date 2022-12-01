@@ -2088,12 +2088,11 @@ export class CalendarApp extends EgwApp
 					return false;
 				}
 				// Insert the content into the correct place
-				add_dialog._contentNode.remove();
-				add_dialog.insertAdjacentHTML("beforeend", content.html);
+				add_dialog._contentNode.replaceChildren();
+				add_dialog._contentNode.insertAdjacentHTML("beforeend", content.html);
 				let template = add_dialog.querySelector("[id='calendar-add']");
 				if(template)
 				{
-					template.slot = "";
 					template.addEventListener("load", add_dialog._adoptTemplateButtons);
 				}
 			}
@@ -2158,7 +2157,7 @@ export class CalendarApp extends EgwApp
 			if(invalid.filter((widget) => widget).length == 0)
 			{
 				// Close the dialog, if everything is OK
-				(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).close();
+				(<Et2Dialog><unknown>document.querySelector('et2-dialog#quick_add')).hide();
 			}
 		});
 

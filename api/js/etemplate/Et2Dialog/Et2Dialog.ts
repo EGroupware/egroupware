@@ -847,8 +847,12 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	{
 		// Check for something with buttons slot set
 		let search_in = <HTMLElement>(this._template_widget?.DOMContainer || this._contentNode);
+		if(!search_in)
+		{
+			return;
+		}
 		let template_buttons = [
-			...search_in.querySelectorAll('[slot="buttons"]'),
+			...search_in.querySelectorAll('[slot="footer"],[slot="buttons"]'),
 			// Look for a dialog footer, which will contain several buttons and possible other widgets
 			...search_in.querySelectorAll(".dialogFooterToolbar"),
 			// Look for buttons at high level (not everywhere, otherwise we can't have other buttons in the template)
@@ -856,11 +860,17 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		];
 		if(template_buttons)
 		{
+			if(template_buttons[0].instanceOf(Et2Button))
+			{
+				template_buttons[0].variant = "primary";
+				template_buttons[0].outline = true;
+			}
 			template_buttons.forEach((button) =>
 			{
 				button.setAttribute("slot", "footer");
 				this.appendChild(button);
-			})
+			});
+			this.requestUpdate();
 		}
 		// do NOT submit dialog, if it has no etemplate_exec_id, it only gives and error on server-side
 		if (this._template_widget && !this._template_widget.widgetContainer.getInstanceManager().etemplate_exec_id)
