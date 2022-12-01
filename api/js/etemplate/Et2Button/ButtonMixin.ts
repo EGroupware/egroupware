@@ -61,10 +61,11 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
                 /* These should probably come from somewhere else */
                	max-width: 125px;
                	min-width: fit-content;
+               	display: block;
             }
             /* Override general disabled=hide from Et2Widget */
             :host([disabled]) {
-            	display: initial;
+            	display: block;
             }
             :host([hideonreadonly][disabled]) {
             	display:none !important;
