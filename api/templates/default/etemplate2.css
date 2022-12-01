@@ -2860,6 +2860,11 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar details[open].et2_toolbar_more.admin .ui-toolbar-menulistHeader.list_header-short {
     background-position: left;
 }
+
+.et2_toolbar .et2_toolbar_actionlist span[data-group] {
+    display: flex;
+}
+
 .et2_toolbar .et2_toolbar_actionlist span[data-group]:not(:first-child) > button.et2_button:first-child {
     margin-left: 7px;
 }
