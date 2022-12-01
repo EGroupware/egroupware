@@ -777,7 +777,7 @@ class Base
 			$data = $keys; $keys = array();
 			foreach($this->db_cols as $db_col => $col)
 			{
-				if (isset($data[$col]))
+				if (isset($data[$col]) || isset($data[$db_col]))
 				{
 					$keys[$db_col] = $col;
 				}
