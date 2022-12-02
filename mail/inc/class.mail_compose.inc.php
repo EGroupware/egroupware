@@ -660,7 +660,7 @@ class mail_compose
 			$isFirstLoad = "switchedplaintohtml";
 			//error_log(__METHOD__.__LINE__.$content['mail_plaintext']);
 			$suppressSigOnTop = true;
-			$content['mail_plaintext'] = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$content['mail_plaintext']);
+			$content['mail_plaintext'] = str_replace(['<',"\r\n","\n","\r"], ['&lt;',"<br>","<br>","<br>"], $content['mail_plaintext']);
 			//$this->replaceEmailAdresses($content['mail_plaintext']);
 			$content['body'] = $content['mail_plaintext'];
 			unset($content['mail_plaintext']);
