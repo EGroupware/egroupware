@@ -3,7 +3,7 @@
 
 cd $(dirname $0)
 
-DEFAULT_PHP_VERSION=7.4
+DEFAULT_PHP_VERSION=8.1
 PHP_VERSION=$DEFAULT_PHP_VERSION
 
 if [[ $1 =~ ^[78]\.[0-9]$ ]]
