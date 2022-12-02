@@ -438,6 +438,7 @@ Hide subsequent headers in week view with non-consolidated owners
 /* Calendar Id #
 */
 .calendar_calId:before {}
+#calendar-edit_id { display: inline;}
 #calendar-edit_id:before { content:"#"}
 
 /* header for the dayCol
@@ -1613,8 +1614,11 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {width: 100%; height: 1
 #calendar-list_nm .nextmatch_header .search {
 	display: none;
 }
-
-#calendar-edit_description {height:70%;margin-bottom: 2em;}
+#calendar-edit_calendar-edit-description {
+    display: flex;
+    flex-direction: column;
+  }
+et2-textarea#calendar-edit_description {height:70%;margin-bottom: 2em;}
 
 et2-button#calendar-toolbar_toolbar-today::part(label) {
 	font-weight: bold;

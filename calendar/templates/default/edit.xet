@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" rows="8" cols="70" resize_ratio="0.7"/>
+		<textbox multiline="true" id="description" cols="70"/>
 		<hbox disabled="@no_add_alarm" height="35">
 			<button label="Add new alarm" id="button[add_alarm]" image="add" background_image="1"/>
 			<menulist>
@@ -14,17 +14,17 @@
 				<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
 			</menulist>
 		</hbox>
-		<grid id="alarm" width="100%" resize_ratio="0.3">
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th thb">
-					<description value="Time"/>
+        <grid id="alarm" width="100%">
+            <columns>
+                <column/>
+                <column/>
+                <column/>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row class="th thb">
+                    <description value="Time"/>
 					<description value="before the event"/>
 					<description value="All participants"/>
 					<description value="Owner"/>
