@@ -415,6 +415,7 @@ main email-address	admin	cs	Hlavní e-mailová adresa
 manage mapping	admin	cs	Spravovat mapování
 manage stationery templates	admin	cs	Spravovat šablony dopisů
 manager	admin	cs	Správce
+manual entry	admin	cs	Ruční zadávání
 maximum account id (e.g. 65535 or 1000000)	admin	cs	Maximální id účtu (např. 65535 nebo 1000000)
 maximum entries in click path history	admin	cs	Maximální počet záznamů v historii kliknutí
 members	admin	cs	Členové
@@ -563,6 +564,7 @@ sieve server hostname or ip address	admin	cs	DNS jméno nebo IP adresa Sieve ser
 sieve server port	admin	cs	Port Sieve serveru
 sieve settings	admin	cs	Nastavení Sieve
 site	admin	cs	Web
+skip imap	admin	cs	Vynechat IMAP
 smtp authentication	admin	cs	SMTP autentikace
 smtp options	admin	cs	Volby SMTP
 smtp server name	admin	cs	Jméno SMTP serveru
