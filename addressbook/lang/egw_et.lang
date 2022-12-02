@@ -1,4 +1,5 @@
 %1 added	addressbook	et	%1 lisatud
+%1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4
 accounts	addressbook	et	Kontod
 actions	addressbook	et	Tegevused
 add %1	addressbook	et	Lisa %1
@@ -26,31 +27,45 @@ delete this contact	addressbook	et	Kustuta see kontakt
 deleted	addressbook	et	kustutatud
 doesn't matter	addressbook	et	pole tähtis
 download	addressbook	et	Lae alla
+duplicate threshold	addressbook	et	Duplitseeritud künnis
+duplicate warning	addressbook	et	Duplikaadi hoiatus
+duplicates	addressbook	et	Duplikaadid
 duration	addressbook	et	Kestvus
 email & internet	addressbook	et	Email & Internet
 empty for all	addressbook	et	tühi kõigijaoks
 end	addressbook	et	Lõpp
 existing links	addressbook	et	Eksisteerivad lingid
 fax	addressbook	et	Faks
+fields to check for duplicates	addressbook	et	Väljad duplikaatide kontrollimiseks
+fields to consider when looking for duplicate contacts.	addressbook	et	Väljad, mida dubleerivate kontaktide otsimisel arvesse võtta.
 fieldseparator	addressbook	et	Väljaeraldaja
 full name	addressbook	et	Täis nimi
 general	admin	et	Üldine
 global categories	addressbook	et	Globaalsed Kategooriad
+hide all accounts	addressbook	et	Peida kõik kontod
+hide user groups as distribution lists	addressbook	et	Peida kasutajarühmad kui jaotamisloendid
+hides accounts completly from the adressbook.	addressbook	et	Peida kasutajakontod täielikult aadressiraamatust.
+how many fields must match for the record to be considered a duplicate.	addressbook	et	Mitu välja peab kattuma, et kirjet saaks pidada duplikaadiks.
 icon	addressbook	et	Ikoon
 import	addressbook	et	Import
-infolog	addressbook	et	InfoLog
+infolog	addressbook	et	InfoLog Kontakt
+infolog-organisation	addressbook	et	InfoLog Organisatsioon
 last modified	addressbook	et	Viimati muudetud
 links	addressbook	et	Lingid
 location	addressbook	et	Asukoht
+merge duplicates	addressbook	et	Dubleeringute ühendamine
+merge into first or account, deletes all other!	addressbook	et	Ühenda esimesse või kontosse, kustutab kõik teised!
 move to addressbook	addressbook	et	Liikumine aadressiraamatusse
 no country selected	addressbook	et	Riik ei ole valitud
 no distribution list	addressbook	et	Jaotamisloend puudub
+not shared	addressbook	et	ei ole jagatud
 organisation	addressbook	et	Organisatsioon
 participants	addressbook	et	Osalejad
 permission denied !!!	addressbook	et	Õigused puuduvad !!!
 photo	addressbook	et	Foto
 prevent deleting of contacts	admin	et	Kontaktide kustutamise vältimine
 repetition	addressbook	et	Kordus
+search letter	addressbook	et	Otsi kirja
 select all	addressbook	et	Märgi kõik
 share into addressbook	addressbook	et	Jaga aadressiraamatusse
 share writable	addressbook	et	Jaga kirjutatav
@@ -63,7 +78,12 @@ start	admin	et	Start
 state	common	et	Maakond
 street	common	et	Tänav
 translation	addressbook	et	Tõlkimine
+unshare	addressbook	et	Enam ei jaga
+unshared	addressbook	et	ei ole enam jagatud
 updated	addressbook	et	uuendatud
+user groups are automatically shown as distribution lists.	addressbook	et	Kasutajagrupid kuvatakse automaatselt jaotamisloenditena.
 weekday	addressbook	et	Nädalati
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	et	Kui ühendate kirjeid dokumentidesse, salvestatakse need siia. Kui kataloogi pole antud, salvestatakse need teie kodukataloogi (/home/...).
 wrong - try again ...	addressbook	et	Vale - proovi uuesti ...
+you are not allowed to share into the addressbook of %1	addressbook	et	Teil ei ole lubatud jagada aadressiraamatusse %1
 you can respond by visiting:	addressbook	et	Sa saad vastata külastates:

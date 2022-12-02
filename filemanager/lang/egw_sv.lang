@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	sv	%1 finns redan som fil
+%1 files unlocked.	filemanager	sv	%1 filer är upplåsta.
 %1 starts with '%2'	filemanager	sv	%1 börjar med '%2'
 actions	filemanager	sv	Åtgärder
 applications	common	sv	Applikationer
@@ -43,9 +44,12 @@ go home	filemanager	sv	Gå hem
 go to	filemanager	sv	Gå till
 go to your home directory	filemanager	sv	Gå till din hemkatalog
 go up	filemanager	sv	Gå upp
+hidden upload	filemanager	sv	Dold uppladdning
+hidden uploads	filemanager	sv	Dolda uppladdningar
 id	filemanager	sv	ID
 link	filemanager	sv	Länk
 location	filemanager	sv	Plats
+lock	filemanager	sv	Lås
 mime type	filemanager	sv	MIME-typ
 modified	filemanager	sv	Ändrad
 move	filemanager	sv	Flytta
@@ -81,4 +85,5 @@ upload fields	filemanager	sv	Ladda upp fält
 upload files	filemanager	sv	Ladda upp filer
 used space	filemanager	sv	Använt diskutrymme
 you do not have access to %1	filemanager	sv	Du har inte behörighet till %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	sv	Du måste bli superuser för att aktivera eller inaktivera versionshantering för en mapp!
 your home dir did not exist, egroupware created a new one.	filemanager	sv	Det fanns ingen hemkatalog för dig, EGroupware skapade en ny åt dig.

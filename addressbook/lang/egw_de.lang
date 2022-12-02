@@ -319,8 +319,8 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	de	Importiert Kontakte in Ihr Adressbuch von einer vCard-Datei
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
-infolog	addressbook	de	InfoLog
-infolog-organisation	addressbook	de	Öffnet Infolog CRM-Ansicht der Organisation
+infolog	addressbook	de	InfoLog Kontakt
+infolog-organisation	addressbook	de	InfoLog Organisation
 insert	addressbook	de	einfügen
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 insufficent rights to edit this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu ändern!

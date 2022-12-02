@@ -319,8 +319,8 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your Addressbook from a vCard File.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
-infolog	addressbook	en	InfoLog
-infolog-organisation	addressbook	en	Open Infolog CRM view of the organisation
+infolog	addressbook	en	InfoLog contact
+infolog-organisation	addressbook	en	InfoLog organisation
 insert	addressbook	en	Insert
 insufficent rights to delete this list!	addressbook	en	Insufficient rights to delete this list!
 insufficent rights to edit this list!	addressbook	en	Insufficent rights to edit this list!
@@ -349,7 +349,7 @@ load custom fields in index, even if custom field column is off (eg. to display 
 load vcard	addressbook	en	Load vCard
 location	addressbook	en	Location
 locations	addressbook	en	Locations
-mail vcard	addressbook	en	Mail VCard
+mail vcard	addressbook	en	Mail vCard
 main categories in their own field	addressbook	en	Main categories in their own field
 manage mapping	addressbook	en	Manage mapping
 mark records as private	addressbook	en	Mark records as private

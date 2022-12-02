@@ -26,6 +26,7 @@ color	preferences	cs	Barva
 country	preferences	cs	Země
 custom login box color, defaults to above color darkened	preferences	cs	Uživatelská barva přihlašovacího okna, přednastavená je tmavý odstín výše uvedené barvy
 custom sidebar menu active color, defaults to above color darkened	preferences	cs	Uživatelská barva postranní nabídky, přednastavená je tmavý odstín výše uvedené barvy
+dark mode theme	preferences	cs	Tmavý režim motivu
 dark moono theme	preferences	cs	téma temný měsíc
 data exchange settings	preferences	cs	Nastavení výměny dat
 date format	preferences	cs	Formát datumu
@@ -56,6 +57,8 @@ enter your new password	preferences	cs	Zadejte Vaše nové heslo
 enter your old password	preferences	cs	Zadejte Vaše staré heslo
 error	preferences	cs	Chyba
 failed to change password.	preferences	cs	Nepodařilo se změnit heslo.
+fast	preferences	cs	Rychlý
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	cs	Rychlá aktualizace přidává nové záznamy vždy na začátek seznamu a aktualizuje stávající na místě, pokud není seznam seřazen podle poslední změny. Přesné aktualizace provedou úplnou aktualizaci, pokud není seznam seřazen podle poslední změny.
 features of the editor	preferences	cs	Vlastnosti editoru
 font size unit	preferences	cs	Jednotka velikosti písma
 forced preferences	preferences	cs	Vynucené předvolby
@@ -70,6 +73,7 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně lišty.
 how many toolbar buttons are available	preferences	cs	Kolik bude viditelných tlačítek v nástrojové liště
 how should egroupware display dates for you.	preferences	cs	Jak má EGroupware zobrazovat datumy.
+how to update lists	preferences	cs	Jak aktualizovat seznamy
 icon	preferences	cs	Ikona
 icons and text	preferences	cs	Ikony a text
 icons only	preferences	cs	Jen ikony
@@ -77,11 +81,13 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	cs	Obrázky připojené k záznamu mohou být zobrazeny jako náhledy. Funkci můžete vypnout, pokud chcete zrychlit vykreslování stránek.
 in which country are you. this is used to set certain defaults for you.	preferences	cs	V jaké se nacházíte zemi. Dle této informace Vám budou nastaveny některé výchozí hodnoty.
 interface/template selection	preferences	cs	Výběr rozhranní/šablony
+it sets content size (text only) according to selected size.	preferences	cs	Nastaví velikost obsahu (pouze textu) podle zvolené velikosti.
 just clicking on the line, like a checkbox	preferences	cs	pouze klikáním na řádek, jako u zaškrtávacího políčka
 kama theme	preferences	cs	téma Kama
 language	preferences	cs	Jazyk
 look & feel	preferences	cs	Vzhled
 lowercase letters	preferences	cs	malá písmena
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	cs	Umožnit posouvání seznamu aplikací pomocí tlačítek pro posouvání nahoru/dolů (užitečné pro uživatele pracující s myší bez rolovacího kolečka).
 max matches per page	preferences	cs	Maximální počet zobrazených výsledků na stránku
 max number of icons in navbar	preferences	cs	Maximální počet ikon v navigační liště
 moono color theme	preferences	cs	téma barevný měsíc
@@ -120,6 +126,7 @@ selectbox	preferences	cs	Rozbalovací nabídka
 selectbox with groupmembers	common	cs	Rozbalovací nabídka se členy skupiny
 selectbox with primary group and search	preferences	cs	Rozbalovací nabídka s primární skupinou a hledáním
 server is unwilling to perform.	preferences	cs	Server si nepřeje provést.
+set content size	preferences	cs	Nastavení velikosti obsahu
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	cs	Nastavte dle své chuti. Z bezpečnostních důvodů však nemusí být žádoucí zobrazovat veřejně Vaše uživatelské jméno.
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.

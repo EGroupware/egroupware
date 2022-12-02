@@ -11,6 +11,7 @@
 %1 files copied.	filemanager	pl	Skopiowano %1 plików
 %1 files deleted.	filemanager	pl	Usunięto %1 plików.
 %1 files moved.	filemanager	pl	Przeniesiono %1 plików.
+%1 files unlocked.	filemanager	pl	%1 plików odblokowanych.
 %1 starts with '%2'	filemanager	pl	%1 zaczyna się od %2
 %1 successful uploaded.	filemanager	pl	Załadowano %1 plików.
 %1 the following files into current directory	filemanager	pl	%1 wybrane pliki do katalogu obecnego
@@ -104,13 +105,16 @@ go home	filemanager	pl	Idź do strony głównej
 go to	filemanager	pl	Idź do
 go to your home directory	filemanager	pl	Idź do katalogu domowego
 go up	filemanager	pl	w górę
+hidden upload	filemanager	pl	Ukryty upload
+hidden uploads	filemanager	pl	Ukryte ładunki
 id	filemanager	pl	id
 inherited	filemanager	pl	Odziedziczone
 link	filemanager	pl	Link do zdarzenia
 link %1: %2	filemanager	pl	Link %1: %2
 link target %1 not found!	filemanager	pl	Cel linku %1 nie odnaleziony!
 location	filemanager	pl	Położenie
-log out as superuser	filemanager	pl	Wyloguj jako super-użytkownik
+lock	filemanager	pl	Zablokuj
+log out as superuser	filemanager	pl	Wyloguj jako superuser
 max folderlinks	admin	pl	maksymalna ilość linków folderów
 mime type	filemanager	pl	Typ MIME
 modified	filemanager	pl	Zmodyfikowany
@@ -187,6 +191,7 @@ wrong username or password!	filemanager	pl	Niepoprawna nazwa użytkownika lub ha
 you are not allowed to upload a script!	filemanager	pl	Nie możesz załadować skryptu!
 you can only grant additional rights, you can not take rights away!	filemanager	pl	Możesz tylko dodać prawa, nie możesz ich zabrać!
 you do not have access to %1	filemanager	pl	Nie masz uprawnień do %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	pl	Musisz zostać superuser, aby włączyć lub wyłączyć wersjonowanie na folderze!
 you need to select an owner!	filemanager	pl	Musisz wybrać właściciela!
 you need to select some files first!	filemanager	pl	Musisz najpierw wybrać jakieś pliki!
 you will be redirected to your home directory.	filemanager	pl	Zostaniesz przekierowany do katalogu domowego

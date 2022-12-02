@@ -326,6 +326,8 @@ message saved successfully.	mail	it	Messaggio salvato correttamente
 message send failed: %1	mail	it	L'invio del messaggio non è riuscito: %1
 message send successfully.	mail	it	Messaggio correttamente inviato.
 miscellaneous	mail	it	Miscellanea
+modify subject	mail	it	Modificare l'oggetto
+modify subject of this message	mail	it	Modificare l'oggetto di questo messaggio
 move	mail	it	Sposta
 move folder	mail	it	Sposta cartella
 move selected mails to archive	mail	it	Sposta i messaggi selezionati nell'archivio
@@ -340,6 +342,7 @@ never display html emails	mail	it	Non visualizzare mai le e-mail scritte in HTML
 never show	mail	it	non mostrare mai
 new mail notification	mail	it	Notifica di nuovo messaggio email
 new message type	mail	it	Nuovo tipo di messaggio
+new subject	mail	it	Nuovo oggetto
 no (valid) send folder set in preferences	mail	it	Non hai impostato una cartella valida nelle preferenze per la posta inviata!
 no access	mail	it	nessun accesso
 no action defined!	mail	it	Nessuna azione definita!
@@ -386,6 +389,7 @@ please select a address	mail	it	Prego seleziona un indirizzo
 please select the number of days to wait between responses	mail	it	Prego seleziona il numero di giorni da aspettare tra le risposte
 please supply the message to send with auto-responses	mail	it	Prego fornisci il messaggio ta inviare con la risposta automatica
 post	mail	it	post
+predefined addresses for compose	mail	it	Indirizzi predefiniti per la composizione
 prevent managing filters	mail	it	Inibire la gestione dei filtri
 prevent managing folders	mail	it	Inibire la gestione delle cartelle
 prevent managing notifications	mail	it	Inibire la gestione delle notifiche
@@ -447,6 +451,7 @@ rule priority position	mail	it	Posizione di priorità della regola
 rule with priority	mail	it	regola con priorità
 rules	mail	it	regole
 save all	mail	it	Salva tutti
+save all attachments to filemanager	mail	it	Salva tutti gli allegati nel filemanager
 save as calendar	mail	it	Salva come Agenda
 save as default	mail	it	salva come predefinito
 save as draft	mail	it	Salva come Bozza
@@ -477,6 +482,7 @@ select file to import into folder	mail	it	Seleziona file da importare nella cart
 select file(s) from vfs	mail	it	Seleziona file dal sistema virtuale di file (vfs)
 select files to upload	mail	it	Seleziona file da caricare
 select multiple	mail	it	Selezione multipla
+select or insert email address	mail	it	Selezionare o inserire l'indirizzo e-mail
 selected	mail	it	selezionato
 selected date range (with quicksearch)	mail	it	Selezionare intervallo di date
 send a reject message:	mail	it	Invia un messaggio di rigetto

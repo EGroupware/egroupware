@@ -7,6 +7,7 @@
 %1 files copied.	filemanager	zh	%1文件已复制。
 %1 files deleted.	filemanager	zh	%1文件已删除。
 %1 files moved.	filemanager	zh	%1文件已移动。
+%1 files unlocked.	filemanager	zh	%1文件已解锁。
 %1 starts with '%2'	filemanager	zh	%1以'%2'开始
 %1 the following files into current directory	filemanager	zh	以下文件%1在当前目录里
 %1 urls %2 to clipboard.	filemanager	zh	%1 URLs %2到剪贴板。
@@ -69,9 +70,12 @@ go home	filemanager	zh	返回首页
 go to	filemanager	zh	跳转到
 go to your home directory	filemanager	zh	跳转到主目录
 go up	filemanager	zh	向上
+hidden upload	filemanager	zh	隐藏的上传
+hidden uploads	filemanager	zh	隐藏的上传
 id	filemanager	zh	编号
 link	filemanager	zh	链接
 location	filemanager	zh	文件位置
+lock	filemanager	zh	锁定
 mime type	filemanager	zh	MIME类型
 modified	filemanager	zh	修改日期
 modified between	filemanager	zh	修改介于
@@ -117,5 +121,6 @@ upload fields	filemanager	zh	上传字段
 upload files	filemanager	zh	上传文件
 used space	filemanager	zh	已用空间
 you do not have access to %1	filemanager	zh	您无权访问%1
+you need to become root, to enable or disable versioning on a directory!	filemanager	zh	你需要成为超级用户，以启用或禁用一个文件夹的版本管理
 you need to select some files first!	filemanager	zh	您需要首先选择某文件!
 your home dir did not exist, egroupware created a new one.	filemanager	zh	您的主目录不存在，EGroupware 已创建一个新目录。

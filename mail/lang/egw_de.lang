@@ -351,8 +351,8 @@ matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
 mbstring.func_overload=0 is required for correct mail processing!	mail	de	mbstring.func_overload=0 wird von der Anwendung Mail zwingend benötigt!
 message body	mail	de	Nachricht
-message learned as ham (not spam) and moved back to inbox	mail	de	Nachricht wurde als "gute E-Mail" (kein Spam) gelernt und in den Posteingang verschoben - funktioniert nur mit "lernenden" Spam-Lösungen wie SpamTitan
-message learned as spam and moved to spam folder	mail	de	Nachricht wurde als Spam gelernt und in den Spam-Ordner verschoben - funktioniert nur mit "lernenden" Spam-Lösungen wie SpamTitan
+message learned as ham (not spam) and moved back to inbox	mail	de	Nachricht wurde als "gute E-Mail" (kein Spam) gelernt und in den Posteingang verschoben
+message learned as spam and moved to spam folder	mail	de	Nachricht wurde als Spam gelernt und in den Spam-Ordner verschoben
 message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
@@ -596,7 +596,7 @@ step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige Filterregeln (Sieve) einrichten
 step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten
-store to folder	mail	de	Ablageordner
+store to folder	mail	de	Importordner
 subject(a->z)	mail	de	Betreff (A->Z)
 subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren

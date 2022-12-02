@@ -74,7 +74,6 @@ company name	addressbook	id	nama lembaga
 configuration	common	id	Konfigurasi
 contact	common	id	Kontak
 contact application	admin	id	Aplikasi Kontak
-contact copied	addressbook	id	Kontak disalin
 contact deleted	addressbook	id	Kontak dihapus
 contact id	addressbook	id	ID Kontak
 contact maintenance	admin	id	Pemeliharaan kontak
@@ -117,6 +116,9 @@ domestic	addressbook	id	Domestik
 don't hide empty columns	addressbook	id	Jangan sembunyikan kolom kosong
 download	addressbook	id	Unduh
 download this contact as vcard file	addressbook	id	unduh kontak sebagai vCard
+duplicate threshold	addressbook	id	Ambang batas duplikat
+duplicate warning	addressbook	id	Peringatan duplikat
+duplicates	addressbook	id	Duplikat
 duration	addressbook	id	Durasi
 edit custom fields	admin	id	edit custom fields
 edit phonenumbers -	addressbook	id	Edit Nomor telepon -
@@ -141,6 +143,8 @@ fax number	common	id	Nomor Fax
 field %1 has been added !	addressbook	id	Field %1 telah ditambahkan!
 field %1 has been updated !	addressbook	id	Field %1 telah dikinikan!
 field name	addressbook	id	Nama Field
+fields to check for duplicates	addressbook	id	Bidang untuk memeriksa duplikat
+fields to consider when looking for duplicate contacts.	addressbook	id	Bidang yang perlu dipertimbangkan saat mencari kontak duplikat.
 fields to show in address list	addressbook	id	Field yang ditampilkan dalam daftar alamat
 fieldseparator	addressbook	id	Pemisah field
 freebusy uri	addressbook	id	URI Senggang/sibuk
@@ -153,6 +157,8 @@ grant addressbook access	common	id	Ijinkan Akses BukuAlamat
 group %1	addressbook	id	Kelompok %1
 h	addressbook	id	h
 hide accounts from addressbook	addressbook	id	Sembunyikan akoun dari bukualamat
+hide all accounts	addressbook	id	Sembunyikan semua akun
+hide user groups as distribution lists	addressbook	id	Sembunyikan grup pengguna sebagai daftar distribusi
 hides accounts completly from the adressbook.	addressbook	id	Sembunyikan sama sekali dari buku alamat.
 history logging	admin	id	Catatan riwayat
 home address	addressbook	id	Alamat Rumah
@@ -164,6 +170,7 @@ home phone	addressbook	id	Telepon Rumah
 home state	addressbook	id	Provinsi Rumah
 home street	addressbook	id	Jalan Rumah
 home zip code	addressbook	id	Kodepos Rumah
+how many fields must match for the record to be considered a duplicate.	addressbook	id	Berapa banyak bidang yang harus cocok agar catatan dianggap duplikat.
 icon	addressbook	id	Ikon
 ignore first line	addressbook	id	abaikan baris pertama
 import	addressbook	id	Impor
@@ -176,7 +183,8 @@ import from outlook	addressbook	id	Impor dari Outlook
 import multiple vcard	addressbook	id	Impor beberapa vCard
 import next set	addressbook	id	Impor kelompok berikutnya
 in %1 days (%2) is %3's birthday.	addressbook	id	Tinggal %1 hari (%2) adalah HUT %3.
-infolog	addressbook	id	InfoLog
+infolog	addressbook	id	Kontak InfoLog
+infolog-organisation	addressbook	id	Organisasi InfoLog
 international	addressbook	id	Internasional
 internet	addressbook	id	Internet
 label	addressbook	id	Label
@@ -189,11 +197,14 @@ links	addressbook	id	Tautan
 list all categories	addressbook	id	Daftar semua kategori
 list already exists!	addressbook	id	Daftar telah ada!
 list created	addressbook	id	Daftar dibuat
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	id	Memuat custom field dalam indeks, bahkan jika kolom custom field tidak aktif (misalnya, untuk menampilkannya dalam kolom indeks tertentu)
 load vcard	addressbook	id	Muatkan vCard
 location	addressbook	id	Lokasi
 locations	addressbook	id	lokasi
 manage mapping	addressbook	id	Mengelola pemetaan
 mark records as private	addressbook	id	Tandai rekaman sebagai privat
+merge duplicates	addressbook	id	Gabungkan duplikat
+merge into first or account, deletes all other!	addressbook	id	Gabungkan ke dalam akun pertama atau akun, hapus semua yang lain!
 merged	addressbook	id	digabung
 message after submitting the form	addressbook	id	Pesan setelah mengirimkan formulir
 middle name	addressbook	id	Nama Tengah
@@ -211,6 +222,7 @@ new contact submitted by %1 at %2	addressbook	id	Kontak baru dikirim oleh %1 pad
 next date	addressbook	id	Tanggal selanjutnya
 no categories selected	addressbook	id	Tiada kategori yang dipilih
 no vcard	addressbook	id	Tiada vCard
+not shared	addressbook	id	tidak dibagikan
 number	addressbook	id	Nomor
 number of records to read (%1)	addressbook	id	Jumlah rekord yang dibaca (%1)
 options for type	admin	id	Opsi Tipe
@@ -246,6 +258,7 @@ repetition	addressbook	id	Pengulangan
 required fields *	addressbook	id	Field diperlukan *
 role	addressbook	id	Peran
 room	addressbook	id	Ruang
+search letter	addressbook	id	Surat pencarian
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	id	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
 select a view	addressbook	id	Pilih tampilan
 select addressbook type	addressbook	id	Pilih tipe buku alamat
@@ -254,6 +267,12 @@ select migration type	admin	id	Pilih tipe migrasi
 select multiple contacts for a further action	addressbook	id	Pilih beberapa kontak untuk tindakan selanjutnya
 selected contacts	addressbook	id	Kontak terpilih
 seperator	addressbook	id	Pemisah
+share into addressbook	addressbook	id	Bagikan ke buku alamat
+share writable	addressbook	id	Bagikan dapat diedit
+shared	addressbook	id	bersama
+shared by me	addressbook	id	Dibagikan oleh saya
+shared into addressbook %1	addressbook	id	dibagikan di buku alamat %1
+shared with	addressbook	id	Berbagi dengan
 show	addressbook	id	Tampilkan
 stadt	addressbook	id	Mulai
 start	admin	id	Mulai
@@ -275,16 +294,21 @@ translation	addressbook	id	Terjemahan
 two of: %1	addressbook	id	dua dari: %1
 type	addressbook	id	Tipe
 unique id (uid)	addressbook	id	Unique ID (UID)
+unshare	addressbook	id	Tidak lagi berbagi
+unshared	addressbook	id	tidak lagi dibagikan
 updated	addressbook	id	Dikinikan
 upload or delete the photo	addressbook	id	Unggah atau hapus foto
 use country list	addressbook	id	Gunakan Daftar Negara
+user groups are automatically shown as distribution lists.	addressbook	id	Grup pengguna secara otomatis ditampilkan sebagai daftar distribusi.
 vcard	common	id	vCard
 verification	addressbook	id	Pengujian
 view linked infolog entries	addressbook	id	Lihat entri InfoLog terkait
 weekday	addressbook	id	Hari kerja
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	id	Ketika Anda menggabungkan entri ke dalam dokumen, entri-entri tersebut akan disimpan di sini. Jika tidak ada direktori yang disediakan, mereka akan disimpan di direktori rumah Anda (/home/...)
 whole query	addressbook	id	seluruh query
 work phone	addressbook	id	Telepon Kerja
 wrong - try again ...	addressbook	id	Keliru - coba lagi...
+you are not allowed to share into the addressbook of %1	addressbook	id	Anda tidak diizinkan untuk berbagi ke buku alamat %1
 you can respond by visiting:	addressbook	id	Untuk melihatnya, kunjungi:
 you must select a vcard. (*.vcf)	addressbook	id	Anda musti memilih vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	id	Anda musti memilih sedikitnya 1 kolom untuk menampilkan

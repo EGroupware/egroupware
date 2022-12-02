@@ -14,6 +14,7 @@ change your settings	preferences	da	Redigér Dine indstillinger
 click to select a color	preferences	da	Klik for at vælge en farve
 color	preferences	da	Farve
 country	preferences	da	Land
+dark mode theme	preferences	da	Tema i mørk tilstand
 date format	preferences	da	Dato format
 default	preferences	da	standard
 default application	preferences	da	Standard applikation
@@ -27,6 +28,8 @@ enable	preferences	da	aktivere
 enter your new password	preferences	da	Indtast din nye adgangskode
 enter your old password	preferences	da	Indtast din gamle adgangskode
 failed to change password.	preferences	da	Det lykkedes ikke at ændre adgangskoden.
+fast	preferences	da	Hurtig
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	da	Hurtig opdatering tilføjer nye poster altid øverst på listen og opdaterer eksisterende poster på stedet, medmindre listen er sorteret efter senest ændret. Præcise opdateringer foretager en fuldstændig opdatering, hvis listen ikke er sorteret efter senest ændrede.
 forced preferences	preferences	da	Tvungne præferencer
 help off	preferences	da	Ingen Hjælp
 hours	preferences	da	timer
@@ -35,11 +38,13 @@ how do you like to select accounts	preferences	da	Hvordan vil du vælge kontoern
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	da	Hvor mange timer er du før eller efter den tidszone som serveren befinder sig i.<br>Hvis du er i den samme tidszone som serveren vælg 0 timer, ellers vælg din lokale dato og tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	da	Hvor mange ikoner skal være vist i navigationsbjælken øverst på siden. Yderligere ikoner bliver placeret i en nedtræknings menu, via ikonet helt i højre side af navigations bjælken.
 how should egroupware display dates for you.	preferences	da	Hvordan skal eGrouWare fremvise datoer for dig.
+how to update lists	preferences	da	Sådan opdaterer du lister
 icon	preferences	da	Ikon
 icons and text	preferences	da	Ikoner og tekst
 icons only	preferences	da	kun ikoner
 in which country are you. this is used to set certain defaults for you.	preferences	da	I hvilket land er du. Denne indstilling er brugt til at sætte visse standarder for dig.
 interface/template selection	preferences	da	Brugerflade/Skabelon Valg
+it sets content size (text only) according to selected size.	preferences	da	Den indstiller indholdsstørrelsen (kun tekst) i overensstemmelse med den valgte størrelse.
 language	preferences	da	Sprog
 max matches per page	preferences	da	Maksimale antal resultater pr. side
 max number of icons in navbar	preferences	da	Maksimal antal ikoner i navigations bjælken.
@@ -56,6 +61,7 @@ select the language of texts and messages within egroupware.<br>some languages m
 selectbox	preferences	da	Udvælgelses vindue
 selectbox with groupmembers	common	da	Udvælgelses vindue med gruppe medlemmer
 selectbox with primary group and search	preferences	da	Udvælgelses vindue med primær gruppe og søgning
+set content size	preferences	da	Indstil indholdsstørrelse
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	da	Sæt dette efter din smag. Af sikkerhedsgrunde vil du måske ikke vise dit brugernavn frem.
 should the number of active sessions be displayed for you all the time.	preferences	da	Skal antal aktive brugere vises hele tiden?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	da	Skal denne hjælp altid vises når du ændre dine præferencer, eller kun når du beder om det

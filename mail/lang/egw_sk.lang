@@ -96,6 +96,7 @@ compose as new	mail	sk	Vytvoriť ako nové
 compress folder	mail	sk	Zhutniť priečinok
 condition	mail	sk	Okolnosť
 configuration settings	mail	sk	Konfiguračné nastavenia
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sk	Prednastavené hodnoty sa automaticky nastavia v dialógovom okne compose pre rešpektované pole pri zostavovaní nového e-mailu.
 confirm	mail	sk	Potvrdiť
 confirm attach message	mail	sk	Potvrdiť priloženú správu
 confirm move to folder	mail	sk	Potvrdiť presun do priečinka
@@ -397,6 +398,7 @@ please select the number of days to wait between responses	mail	sk	Prosím vyber
 please supply the message to send with auto-responses	mail	sk	Prosím zadajte správu, ktorá sa má posielať v rámci automatickej odpovede
 please wait while sending your mail	mail	sk	Prosím počkajte na dokončenie odosielania správy
 post	mail	sk	Odoslať
+predefined addresses for compose	mail	sk	Preddefinované adresy pre zostavenie
 prevent managing filters	mail	sk	Zabrániť spravovaniu filtrov
 prevent managing folders	mail	sk	Zabrániť spravovaniu priečinkov
 prevent managing notifications	mail	sk	Zabrániť spravovaniu upozornení
@@ -506,6 +508,7 @@ serverside vacationnotice (via sieve) are not activated	mail	sk	Správy o neprí
 set / remove flags	mail	sk	Pridať / Odstrániť značky
 set / remove labels	mail	sk	Pridať / Odstrániť menovky
 set it as default:	mail	sk	nastaviť to ako predvolené:
+set predefined values for compose...	mail	sk	Nastavenie preddefinovaných hodnôt pre compose ...
 should new messages show up on the home page	mail	sk	Chcete, aby sa nové správy zobrazovali na domovskej stránke?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sk	Umiestňovať podpis za (bežné) alebo pred odpoveď alebo preposlanú správu? A má sa podpis zobraziť už počas úprav textu, vrátane možnosti úpravy podpisu?
 show	mail	sk	Zobraziť

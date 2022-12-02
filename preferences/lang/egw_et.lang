@@ -5,6 +5,7 @@ change your settings	preferences	et	Muuda setinguid
 click to select a color	preferences	et	Vajuta valimaks värv
 color	preferences	et	Värv
 country	preferences	et	Riik
+dark mode theme	preferences	et	Tumedas režiimis teema
 default	preferences	et	vaikimisi
 default application	preferences	et	Vaikimisi programm
 delete categories	preferences	et	Kustuta kategooriad
@@ -12,16 +13,21 @@ disable	preferences	et	Keela
 enable	preferences	et	luba
 enter your new password	preferences	et	Sisesta uus parool
 enter your old password	preferences	et	Sisesta vana parool
+fast	preferences	et	Kiire
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	et	Kiire uuendamine lisab uued kirjed alati nimekirja ülaosas ja uuendab olemasolevad nimekirjad kohapeal, välja arvatud juhul, kui nimekiri on sorteeritud viimase muudatuse järgi. Täpne värskendamine teeb täieliku värskenduse, kui nimekiri ei ole sorteeritud viimase muudatuse järgi.
 help off	preferences	et	Lülita abi välja
 hours	preferences	et	tundi
 how do you like to display accounts	preferences	et	Kuidas tahad näidata kontosid
 how do you like to select accounts	preferences	et	Kuidas tahad valida kontosid
+how to update lists	preferences	et	Kuidas uuendada nimekirju
 icon	preferences	et	Ikoon
 icons and text	preferences	et	Ikoonid ja tekst
 icons only	preferences	et	ainult ikoonid
+it sets content size (text only) according to selected size.	preferences	et	See määrab sisu suuruse (ainult teksti) vastavalt valitud suurusele.
 language	preferences	et	Keel
 no default	preferences	et	Mitte vaikimisi
 re-enter your password	preferences	et	Sisesta parool uuesti
+set content size	preferences	et	Sisu suuruse määramine
 show_more_apps	common	et	Näita rohkem programme
 text only	preferences	et	Ainult tekst
 the old password is not correct	preferences	et	Vana parool pole õige

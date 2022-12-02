@@ -1,4 +1,5 @@
 %1 is not writable by you!	mail	ru	%1 недоступно для записи!
+(leave empty for no quota)	mail	ru	(Оставьте пустым для отсутствия квоты)
 (no subject)	mail	ru	(без темы)
 (select mails by clicking on the line, like a checkbox)	mail	ru	(выберите письма нажатием на строчку, как место выбора)
 (with checkbox enforced)	mail	ru	(с отмеченным флажком)
@@ -32,6 +33,7 @@ compose as new	mail	ru	Создать как новое
 compress folder	mail	ru	Сжать папку
 condition	mail	ru	Условия
 configuration settings	mail	ru	Установки конфигурации
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ru	Настроенные значения будут автоматически устанавливаться в диалоге составления для уважаемого поля при составлении нового письма.
 confirm attach message	mail	ru	Подтвердить вложение сообщения
 confirm move to folder	mail	ru	Подтвердить перемещение в каталог
 connection status	mail	ru	Статус соединения
@@ -194,6 +196,7 @@ please configure access to an existing individual imap account.	mail	ru	Наст
 please select a address	mail	ru	Пожалуйста выберите адрес
 please select the number of days to wait between responses	mail	ru	Пожалуйста выберите количество дней ожидания между ответами
 please supply the message to send with auto-responses	mail	ru	Пожалуйста введите сообщение для отправки автоответа
+predefined addresses for compose	mail	ru	Предопределенные адреса для составления
 prevent managing filters	mail	ru	Ограничить управление файлами
 prevent managing folders	mail	ru	Ограничить управление каталогами
 prevent managing notifications	mail	ru	Ограничить управление уведомлениями
@@ -221,6 +224,7 @@ required pear class mail/mimedecode.php not found.	mail	ru	Необходимы�
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
 save all	mail	ru	Сохранить всё
+save all attachments to filemanager	mail	ru	Сохранить все вложения в файловом менеджере
 save as calendar	mail	ru	Сохранить как событие Календаря
 save as draft	mail	ru	Сохранить как черновик
 save as infolog	mail	ru	Сохранить в ИнфоЖурнале
@@ -235,12 +239,14 @@ saving of message %1 succeeded. check folder %2.	mail	ru	Сохранение с
 select all	mail	ru	Выбрать все
 select an existing entry in order to append mail content to it	mail	ru	Выберите существующую запись для добавления в неё содержимого письма
 select an item to read	mail	ru	Выберите сообщение для просмотра
+select or insert email address	mail	ru	Выберите или вставьте адрес электронной почты
 selected	mail	ru	Выбранный
 send message and move to send folder (if configured)	mail	ru	Отправить сообщение и переместить в папку Отправленные
 sender	mail	ru	Отправитель
 sent	mail	ru	Отправленные
 sent folder	mail	ru	Отправленные
 set flags	mail	ru	Пометить электронную почту как
+set predefined values for compose...	mail	ru	Установите предопределенные значения для составления ...
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 show all folders	mail	ru	Отображать все каталоги
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ru	Отображать в панели команд главной страницы все каталоги, как подписные, так и те, на которые пользователь не подписан

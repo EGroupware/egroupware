@@ -1,4 +1,5 @@
 %1 is not writable by you!	mail	fi	%1, sinulla ei ole oikeutta kirjoittaa!
+(leave empty for no quota)	mail	fi	(Jätä tyhjäksi, jos kiintiötä ei ole)
 (no subject)	mail	fi	Ei aihetta
 activating by date requires a start- and end-date!	mail	fi	Aktivointi päiväyksen perusteella vaatii SEKÄ aloitus- ETTÄ lopetuspäivän!
 add to addressbook	mail	fi	Lisää osoitekirjaan
@@ -16,6 +17,7 @@ compose	mail	fi	Kirjoita viesti
 compose as new	mail	fi	Kirjoita uusi viesti
 compress folder	mail	fi	Tiivistä kansio
 condition	mail	fi	Ehdot
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fi	Määritetyt arvot asetetaan automaattisesti laatimisvalintaikkunassa arvostetulle kentälle, kun laadit uutta sähköpostia.
 contains	mail	fi	Sisältää
 copy to	mail	fi	Kopio
 date(newest first)	mail	fi	Päivämäärä - uusin ensin
@@ -103,10 +105,13 @@ mail settings	mail	fi	Sähköpostiasetukset
 mark as deleted	mail	fi	Merkitse poistetuksi
 matches	mail	fi	Täsmäävät
 matches regexp	mail	fi	Täsmäävät merkkijonoon
+modify subject	mail	fi	Aiheen muuttaminen
+modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
 move selected to	mail	fi	Siirrä valitut
 move to	mail	fi	Siirrä valitut:
 move to trash	mail	fi	Siirrä roskakoriin
 never display html emails	mail	fi	Älä näytä HTML -sähköposteja
+new subject	mail	fi	Uusi aihe
 no access	mail	fi	Ei pääsyä
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	fi	Osoitetta ei ole annettu kohtaan Kenelle/Kopio/Piilokopio , eikä Kansiota, mihin viesti pitäisi tallentaa löydy.
 no folders	mail	fi	Ei kansioita
@@ -127,6 +132,7 @@ please configure access to an existing individual imap account.	mail	fi	Konfigur
 please select a address	mail	fi	Valitse osoite
 please select the number of days to wait between responses	mail	fi	Valitse päivien lukumäärä, joka vastausten välillä odotetaan
 please supply the message to send with auto-responses	mail	fi	Anna viesti joka lähetetään automaattisella vastauksella
+predefined addresses for compose	mail	fi	Ennalta määritetyt osoitteet laatimista varten
 printview	mail	fi	Tulostuksen esikatselu
 quicksearch	mail	fi	Pikahaku
 refresh time in minutes	mail	fi	Päivitysaika minuutteina
@@ -141,6 +147,7 @@ reply to	mail	fi	Vastaanottaja
 replyto	mail	fi	Vastaanottaja
 row order style	mail	fi	Rivijärjestyksen muotoilu
 save all	mail	fi	Tallenna kaikki
+save all attachments to filemanager	mail	fi	Tallenna kaikki liitetiedostot tiedostonhallintaan
 save as draft	mail	fi	Tallenna luonnoksena
 save as infolog	mail	fi	Tallenna InfoLogina
 save as ticket	mail	fi	Tallenna reklamaationa
@@ -148,11 +155,13 @@ save message to disk	mail	fi	Tallenna viesti levylle
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	fi	Viestin %1 tallennus epäonnistui. Viestiä ei voitu tallentaa kansioon %2. Syy: %3
 save:	mail	fi	Tallenna:
 select all	mail	fi	Valitse kaikki
+select or insert email address	mail	fi	Valitse tai lisää sähköpostiosoite
 send message and move to send folder (if configured)	mail	fi	Lähetä viesti ja siirrä Lähetetyt kansioon
 sender	mail	fi	Lähettäjä
 sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
 set flags	mail	fi	Merkitse sähköposti
+set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot lähettämistä varten ...
 sieve	mail	fi	Sieve
 sieve script name	mail	fi	Sieve skriptin nimi
 signature	mail	fi	Allekirjoitus

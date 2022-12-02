@@ -1,4 +1,5 @@
 %1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
+(leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)
 activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
 add to addressbook	mail	pl	dodaj do książki adresowej
@@ -16,6 +17,7 @@ compose	mail	pl	Utwórz
 compose as new	mail	pl	Utwórz nowe
 compress folder	mail	pl	Kompaktuj folder
 condition	mail	pl	warunek
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
 contains	mail	pl	zawiera
 copy to	mail	pl	Kopiuj do
 date(newest first)	mail	pl	Data (od najnowszych)
@@ -100,6 +102,7 @@ mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
 message body	mail	pl	wiadomość
+modify subject	mail	pl	Zmień temat
 modify subject of this message	mail	pl	Zmień temat tej wiadomości
 move selected to	mail	pl	przenieś wiadomości do
 move to	mail	pl	przenieś wiadomości do
@@ -126,6 +129,7 @@ please configure access to an existing individual imap account.	mail	pl	proszę 
 please select a address	mail	pl	Proszę wybrać adres
 please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
 please supply the message to send with auto-responses	mail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
+predefined addresses for compose	mail	pl	Predefiniowane adresy dla kompozycji
 printview	mail	pl	wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
 quicksearch	mail	pl	Szybkie wyszukiwanie
@@ -142,15 +146,18 @@ reply to	mail	pl	Odpowiedz
 replyto	mail	pl	Odpowiedz
 row order style	mail	pl	styl porządku wierszy
 save all	mail	pl	Zapisz wszystko
+save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
 save as draft	mail	pl	zapisz jako szkic
 save as infolog	mail	pl	zapisz jako zadanie Dziennika CRM
 save message to disk	mail	pl	zachowaj wiadomość na dysku
 select all	mail	pl	Zaznacz wszystkie
+select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
 selected date range (with quicksearch)	mail	pl	Zakres dat ( z szybkim wyszukiwaniem)
 sender	mail	pl	nadawca
 sent	mail	pl	Wysłano
 sent folder	mail	pl	Folder Wysłane
 set flags	mail	pl	Oznacz e-mail jako
+set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
 signature	mail	pl	Sygnaturka

@@ -118,8 +118,8 @@ enable versioning for given mountpoint	filemanager	de	Versionierung für angegeb
 enter a file size, e.g. 100k, 200m or 2g	filemanager	de	Geben Sie eine Quota Größe ein, z.B. 100K, 200M oder 2G
 enter setup user and password	filemanager	de	Superuser Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Superuser Benutzer und Passwort eingeben um Superuser-Rechte zu erhalten
-enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
-enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsordner ein
+enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS-Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
+enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS-Pfad zu Ihrem gewünschten Anfangsordner ein
 enter your file name	filemanager	de	Dateiname
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
@@ -207,7 +207,6 @@ modified between	filemanager	de	verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
 mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
-mount permanently	filemanager	de	Dauerhaft mounten
 mountpoints	filemanager	de	Mountpunkte
 move	filemanager	de	verschieben
 move into folder	filemanager	de	Verschieben in Ordner

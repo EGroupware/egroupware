@@ -14,6 +14,7 @@
 %1 files deleted.	filemanager	bg	%1 файл(а) изтрит(и).
 %1 files moved.	filemanager	bg	%1 файл(а) преместен(и).
 %1 files or directories deleted in %2 seconds.	filemanager	bg	%1 файла или директории изтрити за %2 секунди.
+%1 files unlocked.	filemanager	bg	%1 файлове са отключени.
 %1 shares deleted.	filemanager	bg	%1 споделяния са изтрити.
 %1 starts with '%2'	filemanager	bg	%1 започва с '%2'
 %1 successful unmounted.	filemanager	bg	%1 успешен демонтиран.
@@ -163,6 +164,8 @@ go home	filemanager	bg	Към домашната
 go to	filemanager	bg	промени в текущ
 go to your home directory	filemanager	bg	Към домашната (home) директория
 go up	filemanager	bg	нагоре
+hidden upload	filemanager	bg	Скрито качване
+hidden uploads	filemanager	bg	Скрито качване
 id	filemanager	bg	ID (ИД - документ за самоличност)
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	bg	Ако посочите тук директория (full vfs path), %1 показва действие за всеки документ. Това действие позволява да изтеглите указания документ с вмъкнати данни %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	bg	Ако посочите тук документ (full vfs path), %1 показва допълнителна иконка на документ за всеки запис. Тази иконка позволява да изтеглите посочения документ с вмъкнатите данни.
@@ -176,6 +179,7 @@ link into folder	filemanager	bg	Връзка в папка
 link target	filemanager	bg	Целева връзка
 link target %1 not found!	filemanager	bg	Целева връзка %1 не е намерена!
 location	filemanager	bg	Местоположение
+lock	filemanager	bg	Заключване на
 log out as superuser	filemanager	bg	Излез от профила си като супер потребител
 mail files	filemanager	bg	Файлове за поща
 max folderlinks	admin	bg	макс. връзки към директории
@@ -290,7 +294,7 @@ you are not allowed to upload a script!	filemanager	bg	Нямате право �
 you can only grant additional rights, you can not take rights away!	filemanager	bg	Вие можете да предоставяте само допълнителни права, НЕ можете да отнемете права!
 you can use regular upload [+] button to upload files.	filemanager	bg	Можете да използвате само [+] бутона за качване на файлове.
 you do not have access to %1	filemanager	bg	Нямате достъп до %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	bg	Трябва да ви бъде предоставен Основен достъп (root), за да активирате или деактивирате версията в директория!
+you need to become root, to enable or disable versioning on a directory!	filemanager	bg	Трябва да ви бъде предоставен Основен достъп (superuser), за да активирате или деактивирате версията в директория!
 you need to select an owner!	filemanager	bg	Изберете собственик!
 you need to select some files first!	filemanager	bg	Първо изберете файлове!
 you will be redirected to your home directory.	filemanager	bg	Ще бъдете пренасочени към Домашната си директория.

@@ -54,6 +54,7 @@ compose as new	mail	nl	Stel samen als nieuw
 compress folder	mail	nl	Comprimeer map
 condition	mail	nl	Conditie
 configuration settings	mail	nl	Configuratie instellinen
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	nl	Geconfigureerde waarden zullen automatisch worden ingesteld in het samenstelvenster voor gerespecteerde velden bij het samenstellen van een nieuwe e-mail.
 confirm attach message	mail	nl	Bevestig toevoegen bericht
 confirm move to folder	mail	nl	Bevestig verplaats naar map
 connect to profile %1	mail	nl	Verbind naar profiel %1
@@ -245,6 +246,8 @@ message preview area	mail	nl	Berichten voorbeeld gebied
 message saved successfully.	mail	nl	Bericht succesvol bewaard
 message send failed: %1	mail	nl	Bericht versturen mislukt : %1
 message send successfully.	mail	nl	Bericht succesvol verstuurd
+modify subject	mail	nl	Onderwerp wijzigen
+modify subject of this message	mail	nl	Wijzig het onderwerp van dit bericht
 move selected to	mail	nl	verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
 move to trash	mail	nl	Verplaatsen naar prullenmand
@@ -253,6 +256,7 @@ name of account	mail	nl	Naam van
 never display html emails	mail	nl	Nooit HTML-emails weergeven
 new mail notification	mail	nl	Melding nieuw bericht
 new message type	mail	nl	Nieuw berichten type
+new subject	mail	nl	Nieuw onderwerp
 no (valid) send folder set in preferences	mail	nl	Geen (geldige) Verzonden map in voorkeuren
 no access	mail	nl	geen toegang
 no action defined!	mail	nl	Geen aktie gedefineerd
@@ -291,6 +295,7 @@ please select a address	mail	nl	Kies s.v.p. een adres
 please select the number of days to wait between responses	mail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
 please supply the message to send with auto-responses	mail	nl	Vul s.v.p. het bericht in dat met de automatisch antwoorden meegezonden moet worden
 post	mail	nl	Post
+predefined addresses for compose	mail	nl	Vooraf gedefinieerde adressen voor samenstellen
 prevent managing filters	mail	nl	Voorkom bewerken van filters
 prevent managing folders	mail	nl	Voorkom bewerken mappen
 prevent managing notifications	mail	nl	Voorkom bewerken meldingen
@@ -331,6 +336,7 @@ rule priority position	mail	nl	Regel prioriteit positie
 rule with priority	mail	nl	regels met prioriteit
 rules	mail	nl	regels
 save all	mail	nl	Bewaar alle
+save all attachments to filemanager	mail	nl	Alle bijlagen opslaan in bestandsbeheer
 save as default	mail	nl	Bewaar als standaard
 save as draft	mail	nl	Bewaar als concept
 save as draft and print	mail	nl	Bewaar als concept en Afdruk
@@ -350,6 +356,7 @@ select all	mail	nl	Selecteer alles
 select file to attach to message	mail	nl	Selecteer een bestand om met dit bericht te verzenden
 select file to import into folder	mail	nl	Selecteer het bestand om in deze map te importeren
 select file(s) from vfs	mail	nl	Selecteer het cq de bestand(en) van VFS
+select or insert email address	mail	nl	Selecteer of voeg e-mailadres in
 selected	mail	nl	Geselecteerd
 send a reject message:	mail	nl	Stuur een bericht met afwijzing :
 send message and move to send folder (if configured)	mail	nl	Stuur berichten en verplaats deze naar de map verzonden (als dit is geconfigureerd)
@@ -363,6 +370,7 @@ set / remove flags	mail	nl	Maak / Verwijder flags
 set / remove labels	mail	nl	Maak / Verwijder labels
 set flags	mail	nl	Markeer e-mail als
 set it as default:	mail	nl	Maak dit standaard
+set predefined values for compose...	mail	nl	Voorgedefinieerde waarden instellen voor samenstellen ...
 should new messages show up on the home page	mail	nl	Moeten nieuwe bercihten getoond worden op beginpagina
 show all folders	mail	nl	Toon alle mappen
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	nl	Tool alle mappen, (geabonneerd EN niet) in hoofd scherm mappen paneel

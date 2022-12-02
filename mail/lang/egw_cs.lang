@@ -69,6 +69,7 @@ compose as new	mail	cs	Vytvořit jako novou zprávu
 compress folder	mail	cs	Komprimovat složku
 condition	mail	cs	podmínka
 configuration settings	mail	cs	Nastavení konfigurace
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	cs	Configured values will be set automatically on compose dialog for respected field when composing a new email.
 confirm	mail	cs	Potvrzení
 confirm attach message	mail	cs	Potvrzení přílohy e-mailu
 confirm move to folder	mail	cs	Potvrzení při přesunu složky
@@ -153,6 +154,8 @@ email notification update failed	mail	cs	aktualizace e-mailových upozornění s
 email notification update failed! you need to set an email address!	mail	cs	Aktualizace e-mailových upozornění se nezdařila, musíte nastavit e-mailovou adresu!
 emailaddress	admin	cs	e-mailová adresa
 emailadmin: profilemanagement	mail	cs	Správa profilů
+emails in blacklisted domains are marked as spam	mail	cs	E-maily v doménách na černé listině jsou označeny jako spam
+emails in whitelisted domains are not marked as spam	mail	cs	E-maily v doménách na bílé listině nejsou označeny jako spam
 empty junk	mail	cs	Vyprázdnit složku spam
 empty trash	mail	cs	Vyprázdnit koš
 enable	mail	cs	povolit
@@ -284,11 +287,15 @@ matches	mail	cs	shoduje se s
 matches regexp	mail	cs	shoduje se s regulárním výrazem
 mbstring.func_overload=0 is required for correct mail processing!	mail	cs	Pro správné zpracování e-mailu je nutné nastavit proměnou mbstring.func_overload=0
 message body	mail	cs	Zpráva
+message learned as ham (not spam) and moved back to inbox	mail	cs	Zpráva se naučila jako ham (ne spam) a byla přesunuta zpět do složky doručené pošty.
+message learned as spam and moved to spam folder	mail	cs	Zpráva poznána jako spam a přesunuta do složky spam
 message preview area	mail	cs	Plocha pro náhled zprávy
 message saved successfully.	mail	cs	Zpráva úspěšně uložena
 message send failed: %1	mail	cs	Odeslání e-mailu nebylo úspěšné: %1
 message send successfully.	mail	cs	E-mail byl úspěšně odeslán
 miscellaneous	mail	cs	Různé
+modify subject	mail	cs	Upravit předmět
+modify subject of this message	mail	cs	Upravit předmět této zprávy
 move	mail	cs	Přesunout
 move folder	mail	cs	Přesunout složku
 move selected mails to archive	mail	cs	Přesunout vybrané zprávy do archivu
@@ -346,6 +353,7 @@ please select a address	mail	cs	Prosím vyberte adresu
 please select the number of days to wait between responses	mail	cs	Vyberte prosím počet dní, jak dlouho čekat mezi odpovědmi
 please supply the message to send with auto-responses	mail	cs	Zadejte prosím zprávu, která se má odesílat v rámci automatické odpovědi
 post	mail	cs	Pošta
+predefined addresses for compose	mail	cs	Předdefinované adresy pro compose
 prevent managing filters	mail	cs	Zabránit změně filtrovacích pravidel
 prevent managing folders	mail	cs	Zabránit změně nastavení složek
 prevent managing notifications	mail	cs	Zabránit změně nastavení oznámení
@@ -384,6 +392,10 @@ reply all	mail	cs	Odpovědět všem
 reply message type	mail	cs	Formátovat  e-mail při odpovídání / přeposílání
 reply to	mail	cs	Odpovědět (komu)
 replyto	mail	cs	Odpovědět (komu)
+report as ham	mail	cs	Nahlásit jako ham
+report as spam	mail	cs	Nahlásit jako spam
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako ham (ne spam)
+report this email content as spam - spam solutions like spamtitan will learn	mail	cs	Nahlásit tento e-mail jako spam
 required pear class mail/mimedecode.php not found.	mail	cs	Požadovaná třída  PEAR class Mail/mimeDecode.php nebyla nalezena
 resend after how many days?	mail	cs	Po kolika dnech opakovat odeslání?
 respond to mail sent to:	mail	cs	Odpovědět:
@@ -394,6 +406,7 @@ rule priority position	mail	cs	Priorita pravidla
 rule with priority	mail	cs	Pravidlo s prioritou
 rules	mail	cs	Pravidla
 save all	mail	cs	Uložit vše
+save all attachments to filemanager	mail	cs	Uložit všechny přílohy do správce souborů
 save as calendar	mail	cs	Termín uložit do kalendáře
 save as default	mail	cs	Uložit jako výchozí
 save as draft	mail	cs	Uložit jako rozepsané
@@ -404,7 +417,7 @@ save as ticket	mail	cs	Uložit do sledovacího systému
 save as tracker on send	mail	cs	Uložit do sledovacího systému při odeslání
 save message to disk	mail	cs	Uložit zprávu na disk
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	cs	Uložení zprávy %1 nebylo úspěšné. Není možné uložit zprávu do složky %2 z důvodu: %3
-save the drafted message as eml file into vfs	mail	cs	Uložit zozepsanou zprávu jako EML fo VFS
+save the drafted message as eml file into vfs	mail	cs	Uložit zozepsanou zprávu jako eml fo VFS
 save to disk	mail	cs	Uložit jako ...
 save to filemanager	mail	cs	Uložit do správce souborů
 save:	mail	cs	Uložit:
@@ -422,6 +435,7 @@ select file to import into folder	mail	cs	Vyberte soubor, který se má importov
 select file(s) from vfs	mail	cs	Vyberte soubor(y) z VFS
 select files to upload	mail	cs	Vyberte soubory pro nahrání
 select multiple	mail	cs	Vyberte více
+select or insert email address	mail	cs	Vyberte nebo vložte e-mailovou adresu
 selected	mail	cs	Vybráno
 selected date range (with quicksearch)	mail	cs	Zvolený rozsah datumu (pro rychlé hledání)
 send a reject message:	mail	cs	Odeslat odmítnutí:
@@ -437,6 +451,7 @@ set / remove flags	mail	cs	Označit / Odznačit
 set / remove labels	mail	cs	Přidat / odebrat štítek
 set flags	mail	cs	Označit e-mail jako
 set it as default:	mail	cs	Nastavit jako výchozí
+set predefined values for compose...	mail	cs	Nastavení předdefinovaných hodnot pro sestavení ...
 should new messages show up on the home page	mail	cs	Mají se nové zprávy zobrazit na Hlavní stránce?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	cs	Má se podpis vložit za (výchozí), nebo před odpověď při odpovědi nebo přeposílání zprávy a má být podpis viditelný a upravitelný během vytváření odpovědi?
 show	mail	cs	Ukázat

@@ -1,10 +1,33 @@
+%1 shared this contact on %2 with %3 %4	addressbook	lt	%1 pasidalijo šiuo kontaktu %2 %3 %4
+duplicate threshold	addressbook	lt	Dublikato riba
+duplicate warning	addressbook	lt	Įspėjimas dėl pasikartojimo
+duplicates	addressbook	lt	Dublikatai
+fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
+fields to consider when looking for duplicate contacts.	addressbook	lt	Laukai, į kuriuos reikia atsižvelgti ieškant pasikartojančių kontaktų.
+hide accounts from addressbook	addressbook	lt	Paslėpti naudotojų paskyras
+hide all accounts	addressbook	lt	Paslėpti visas paskyras
+hide user groups as distribution lists	addressbook	lt	Paslėpti naudotojų grupes kaip paskirstymo sąrašus
+hides accounts completly from the adressbook.	addressbook	lt	Visiškai paslėpti naudotojų paskyras iš adresų knygos.
+how many fields must match for the record to be considered a duplicate.	addressbook	lt	Kiek laukų turi sutapti, kad įrašas būtų laikomas dublikatu.
+infolog	addressbook	lt	InfoLog kontaktai
+infolog-organisation	addressbook	lt	InfoLog organizacija
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lt	Įkelti pasirinktinius laukus į rodyklę, net jei pasirinktinių laukų stulpelis išjungtas (pvz., norint juos rodyti konkrečiame rodyklės stulpelyje)
+merge duplicates	addressbook	lt	Sujungti dublikatus
+merge into first or account, deletes all other!	addressbook	lt	Sujungti į pirmąją arba paskyrą, ištrina visus kitus!
 move to addressbook	addressbook	lt	Perkelti į adresų knygelę
 no country selected	addressbook	lt	Šalis nepasirinkta
 no distribution list	addressbook	lt	Nėra paskirstymo sąrašo
+not shared	addressbook	lt	nesidalijama
 prevent deleting of contacts	admin	lt	Neleisti ištrinti kontaktų
+search letter	addressbook	lt	Paieškos raidė
 share into addressbook	addressbook	lt	Bendrinti į adresinę
 share writable	addressbook	lt	Dalijimasis rašomas
 shared	addressbook	lt	bendrinama
 shared by me	addressbook	lt	Dalijamasi su manimi
 shared into addressbook %1	addressbook	lt	pasidalinta į adresų knygelę %1
 shared with	addressbook	lt	Dalijamasi su
+unshare	addressbook	lt	Daugiau nebesidalyti
+unshared	addressbook	lt	nebesidalijama
+user groups are automatically shown as distribution lists.	addressbook	lt	Vartotojų grupės automatiškai rodomos kaip paskirstymo sąrašai.
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lt	Sujungiant įrašus į dokumentus, jie bus saugomi čia. Jei katalogas nenurodytas, jie bus saugomi jūsų namų kataloge (/home/...).
+you are not allowed to share into the addressbook of %1	addressbook	lt	Jums neleidžiama bendrinti su adresų knyga %1

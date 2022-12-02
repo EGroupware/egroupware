@@ -1,0 +1,9 @@
+(leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
+modify subject	mail	lt	Pakeisti temą
+modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
+new subject	mail	lt	Nauja tema
+predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
+save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
+select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
+set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...

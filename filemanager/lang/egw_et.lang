@@ -1,3 +1,4 @@
+%1 files unlocked.	filemanager	et	%1 failid on lukustamata.
 actions	filemanager	et	Tegevused
 applications	common	et	Rakendused
 check all	filemanager	et	Kontrolli kõik
@@ -10,9 +11,12 @@ enable	filemanager	et	luba
 expires	filemanager	et	Aegub
 file	common	et	Pail
 general	filemanager	et	Üldine
+hidden upload	filemanager	et	Varjatud üleslaadimine
+hidden uploads	filemanager	et	Varjatud üleslaadimised
 id	filemanager	et	Id
 link	filemanager	et	Link
 location	filemanager	et	Asukoht
+lock	filemanager	et	Lukusta
 modified	filemanager	et	Muudetud
 move	filemanager	et	liiguta
 noone	filemanager	et	Mittekeegi
@@ -23,3 +27,4 @@ save changes	filemanager	et	Salvesta muudatused
 show	filemanager	et	Näita
 size	filemanager	et	suurus
 up	filemanager	et	üles
+you need to become root, to enable or disable versioning on a directory!	filemanager	et	Sa pead saama superuser, et lubada või keelata kausta versioonimine!

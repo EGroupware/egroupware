@@ -94,6 +94,7 @@ compose as new	mail	fr	Composer comme nouveau
 compress folder	mail	fr	Compresser le dossier
 condition	mail	fr	Condition
 configuration settings	mail	fr	Paramètres de configuration
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fr	Les valeurs configurées seront automatiquement définies dans la boîte de dialogue de composition pour les champs respectés lors de la composition d'un nouvel e-mail.
 confirm	mail	fr	Confirmer
 confirm attach message	mail	fr	Confirmer l'attachement au message
 confirm move to folder	mail	fr	Confirmer le déplacement vers un dossier
@@ -366,6 +367,7 @@ please select a address	mail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	mail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
 please supply the message to send with auto-responses	mail	fr	Ecriver le message pour envoyer en réponse automatique
 please wait while sending your mail	mail	fr	Veuillez patienter pendant l'envoi de votre email
+predefined addresses for compose	mail	fr	Adresses prédéfinies pour la composition
 prevent managing filters	mail	fr	Empêcher la gestion des filtres
 prevent managing folders	mail	fr	Empêcher la gestion des dossiers
 prevent managing notifications	mail	fr	Empêcher la gestion des notifications
@@ -473,6 +475,7 @@ set / remove flags	mail	fr	Marquer
 set / remove labels	mail	fr	Etiquettes
 set flags	mail	fr	Marquer l'e-mail comme
 set it as default:	mail	fr	Définir par défaut :
+set predefined values for compose...	mail	fr	Définir les valeurs prédéfinies pour la composition ...
 should new messages show up on the home page	mail	fr	Est-ce que les nouveaux messages doivent apparaître sur la page d'accueil
 show	mail	fr	Afficher
 show all addresses	mail	fr	Afficher toutes les adresses

@@ -14,6 +14,7 @@
 %1 files deleted.	filemanager	sk	%1 súborov bolo odstránených.
 %1 files moved.	filemanager	sk	%1 súborov bolo presunutých.
 %1 files or directories deleted in %2 seconds.	filemanager	sk	%1 súborov alebo priečinkov bolo zmazaných za %2 sekúnd.
+%1 files unlocked.	filemanager	sk	%1 súborov odomknutých.
 %1 shares deleted.	filemanager	sk	%1 zdieľaných priečinkov bolo odstránených.
 %1 starts with '%2'	filemanager	sk	%1 začína na '%2'
 %1 successful unmounted.	filemanager	sk	%1 bol úspešne odpojený.
@@ -164,6 +165,8 @@ go home	filemanager	sk	návrat domov
 go to	filemanager	sk	Choď na
 go to your home directory	filemanager	sk	Choď do svojho domovského adresára
 go up	filemanager	sk	nahor
+hidden upload	filemanager	sk	Skryté nahrávanie
+hidden uploads	filemanager	sk	Skryté nahrávanie
 id	filemanager	sk	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sk	Ak tu určíte adresár (plná cesta VFS), %1 zobrazí akciu pre každý dokument. Táto akcia umožňuje stiahnuť vybraný dokument s vloženými údajmi %1.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
@@ -178,6 +181,7 @@ link target	filemanager	sk	Cieľ odkazu
 link target %1 not found!	filemanager	sk	Cieľ odkazu %1 sa nenašiel!
 list view	filemanager	sk	Pohľad zoznamu
 location	filemanager	sk	Umiestnenie
+lock	filemanager	sk	Uzamknúť
 log out as superuser	filemanager	sk	Odhlásiť sa ako supervízor
 mail files	filemanager	sk	Odoslať súbory mailom
 mail paste	filemanager	sk	Prilepiť správu
@@ -299,7 +303,7 @@ you are not allowed to upload a script!	filemanager	sk	Nemáte dovolené odovzd�
 you can only grant additional rights, you can not take rights away!	filemanager	sk	Môžete len pridať ďalšie práva, nemôžete práva odobrať!
 you can use regular upload [+] button to upload files.	filemanager	sk	Môžete použiť bežné tlačítko [+] pre odovzdanie súborov.
 you do not have access to %1	filemanager	sk	Nemáte prístup ku %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	sk	Ak chcete zapnúť verzie pre priečinok, musíte sa stať správcom (root)!
+you need to become root, to enable or disable versioning on a directory!	filemanager	sk	Ak chcete zapnúť verzie pre priečinok, musíte sa stať správcom (superuser)!
 you need to select an owner!	filemanager	sk	Najprv musíte vybrať vlastníka!
 you need to select some files first!	filemanager	sk	Najprv musíte vybrať nejaké súbory!
 you will be redirected to your home directory.	filemanager	sk	Budete presmerovaní do vášho Domovského priečinka.

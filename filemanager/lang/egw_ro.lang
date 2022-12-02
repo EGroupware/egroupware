@@ -1,0 +1,5 @@
+%1 files unlocked.	filemanager	ro	%1 fișiere deblocate.
+hidden upload	filemanager	ro	Încărcare ascunsă
+hidden uploads	filemanager	ro	Încărcări ascunse
+lock	filemanager	ro	Blocați
+you need to become root, to enable or disable versioning on a directory!	filemanager	ro	Trebuie să deveniți superuser, pentru a activa sau dezactiva versionarea pe un dosar!

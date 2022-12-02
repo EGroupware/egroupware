@@ -6,6 +6,7 @@
 %1 is not writable by you!	mail	bg	% 1 НЕ е писан от вас!
 %1 mails selected	mail	bg	% 1 избрани писма
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	bg	(*) Моля, да имате в предвид, че пренасочването към няколко адреса няма да работи, ако броят на адресите надвишава зададения лимит. За повечето Пощенски сървъри лимитът е 4 (по подразбиране). Моля, свържете се с Администратора на вашия Пощенски сървър за допълнителна информация.
+(leave empty for no quota)	mail	bg	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	bg	(без тема)
 (not connected)	mail	bg	(няма връзка)
 (select mails by clicking on the line, like a checkbox)	mail	bg	(изберете имейли, като щракнете върху линията, като например: квадратче за отметка)
@@ -92,6 +93,7 @@ compose as new	mail	bg	Създай като ново
 compress folder	mail	bg	Компресиране на папката
 condition	mail	bg	условие
 configuration settings	mail	bg	Настройки за конфигурацията
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	bg	Конфигурираните стойности ще бъдат зададени автоматично в диалоговия прозорец за съставяне за уважаваното поле при съставяне на нов имейл.
 confirm	mail	bg	Потвърди
 confirm attach message	mail	bg	Потвърди прикаченото съобщение
 confirm move to folder	mail	bg	Потвърди преместването в папката
@@ -296,10 +298,13 @@ mail settings	mail	bg	Настройки на пощата
 mark as deleted	mail	bg	Маркирай като изтрито
 matches	mail	bg	съвпада с
 matches regexp	mail	bg	съвпада с рег. израз
+modify subject	mail	bg	Tárgy módosítása
+modify subject of this message	mail	bg	Az üzenet tárgyának módosítása
 move selected to	mail	bg	премести избраните в
 move to	mail	bg	премести избраните в
 move to trash	mail	bg	Премести в Кошчето
 never display html emails	mail	bg	Не показва HTML съобщения
+new subject	mail	bg	Új tárgy
 no access	mail	bg	Няма достъп
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.
 no plain text part found	mail	bg	липсва текстова част
@@ -315,6 +320,7 @@ permission denied	mail	bg	Не е позволено
 please select a address	mail	bg	Моля, изберете адрес
 please select the number of days to wait between responses	mail	bg	Моля, изберете брой дни за изчакване между отговорите
 please supply the message to send with auto-responses	mail	bg	Моля, въведете съобщение за изпращане като Автоматичен отговор
+predefined addresses for compose	mail	bg	Предварително зададени адреси за compose
 printview	mail	bg	изглед за печат
 quicksearch	mail	bg	Бързо търсене
 refresh time in minutes	mail	bg	Време на опресняване в минути
@@ -328,15 +334,18 @@ reply all	mail	bg	Отговор до всички
 reply to	mail	bg	Отговор До
 replyto	mail	bg	Отговор До
 row order style	mail	bg	Стил на изгледа
+save all attachments to filemanager	mail	bg	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	bg	запис като чернова
 save as infolog	mail	bg	запис в Дневника
 save message to disk	mail	bg	запис на съобщението на диска
 select all	mail	bg	Избиране на всичко
+select or insert email address	mail	bg	Válassza ki vagy illessze be az e-mail címet
 sent	mail	bg	Изпратени
 sent folder	mail	bg	Папка "Изпратени"
 serverside filterrules (sieve) are not activated	mail	bg	Филтърните правила от страна на сървъра (Sieve) не са активирани
 serverside vacationnotice (via sieve) are not activated	mail	bg	Съобщенията за отсъствие от страна на сървъра (чрез Sieve) не са активирани
 set flags	mail	bg	Маркирайте имейл като
+set predefined values for compose...	mail	bg	Задаване на предварително определени стойности за compose ...
 sieve script name	mail	bg	име на sieve скрипт
 sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 signature	mail	bg	Подпис

@@ -15,7 +15,6 @@ audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
-automatically start with this format block. custom paragraph adds less line space between new lines.	preferences	fr	Démarrer automatiquement avec ce format de bloc.<br/><b>Petit Paragraphe</b> ajoute moins d'espace entre les nouvelles lignes.
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
@@ -31,8 +30,8 @@ color	preferences	fr	Couleur
 country	preferences	fr	Pays
 current password	preferences	fr	Mot de passe actuel
 custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
-small paragraph	preferences	fr	Paragraphe petit
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
+dark mode theme	preferences	fr	Thème du mode sombre
 dark moono theme	preferences	fr	Thème Dark Moono
 data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
@@ -73,6 +72,8 @@ error	preferences	fr	Erreur
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
 failed to delete secret!	preferences	fr	Echec à la suppression de la clé secrète !
 failed to store secret!	preferences	fr	Echec à l'enregistrement de la clé secrète !
+fast	preferences	fr	Rapide
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	fr	La mise à jour rapide ajoute les nouvelles entrées toujours en haut de la liste et met à jour les entrées existantes, sauf si la liste est triée par dernière modification. Les mises à jour exactes effectuent un rafraîchissement complet, si la liste n'est pas triée par dernière modification.
 features of the editor	preferences	fr	Fonctionnalités de l'éditeur
 font size unit	preferences	fr	Unité de taille de police
 forced preferences	preferences	fr	Préférences forcées
@@ -91,6 +92,7 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fr	Combien d'icônes devraient-ils apparaître dans la barre de navigation en haut de page. Les icônes excédentaires iront dans un menu déroulant, appelé par l'icône située tout à droite de la barre de navigation.
 how many toolbar buttons are available	preferences	fr	Combien de boutons sont disponibles dans la barre d'outils ?
 how should egroupware display dates for you.	preferences	fr	Choisir le format d'affichage des dates
+how to update lists	preferences	fr	Comment mettre à jour les listes
 icon	preferences	fr	Icône
 icons and text	preferences	fr	Icônes et texte
 icons only	preferences	fr	Icônes seulement
@@ -98,6 +100,7 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	fr	Les images liées à un élément peuvent être affichées en miniature. Désactiver cette option va accélérer l'affichage de la page.
 in which country are you. this is used to set certain defaults for you.	preferences	fr	Dans quel pays êtes-vous ? Ceci est utilisé pour définir certaines valeurs par défaut.
 interface/template selection	preferences	fr	Sélection de l'interface/modèle
+it sets content size (text only) according to selected size.	preferences	fr	Il définit la taille du contenu (texte uniquement) en fonction de la taille sélectionnée.
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 kama theme	preferences	fr	Thème Kama
 language	preferences	fr	Langue
@@ -153,6 +156,7 @@ selectbox	preferences	fr	Boîte de sélection
 selectbox with groupmembers	common	fr	Boîte de sélection avec membres du groupe
 selectbox with primary group and search	preferences	fr	Boîte de sélection avec groupe primaire et recherche
 server is unwilling to perform.	preferences	fr	Le serveur ne veut pas effectuer cette action...
+set content size	preferences	fr	Définir la taille du contenu
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fr	Réglez ceci à votre convenance. Pour des raisons de sécurité, vous pourriez ne pas montrer votre nom d'utilisateur en public.
 settings	preferences	fr	Paramètres
 setup two factor authentication	preferences	fr	Configurer l'authentification à double facteur
@@ -166,6 +170,7 @@ show qrcode	preferences	fr	Afficher le QRCode
 show qrcode to enable on an additional device.	preferences	fr	Afficher le QRCode pour ajouter un périphérique
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
+small paragraph	preferences	fr	Paragraphe petit
 special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte

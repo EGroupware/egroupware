@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	sk	%1 verejných kľúčov pridaných.
 %1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sk	Bolo prečítaných %1 záznamov (zatiaľ neimportované, môžete se vrátit %2späť%3 a odznačit Test importu)
+%1 shared this contact on %2 with %3 %4	addressbook	sk	%1 zdieľal tento kontakt na %2 s %3 %4
 %1 starts with '%2'	addressbook	sk	%1 začína na '%2'
 %s please calculate the result	addressbook	sk	%s prosím spočítajte výsledok
 (e.g. 1969)	addressbook	sk	(napr. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	sk	Pridané cez synchronizáciu
 added to distribution list	addressbook	sk	Pridané do distribučného zoznamu
 additional information about using ldap as contact repository	admin	sk	Ďalšie informácie o používaní LDAP ako zdroja kontaktov
 address book	common	sk	Adresár
-address book - vcard in	addressbook	sk	Adresár - vizitka VCard v
+address book - vcard in	addressbook	sk	Adresár - vizitka vCard v
 address book - view	addressbook	sk	Adresár - pohľad
 address line 2	addressbook	sk	Adresa riadok 2
 address line 2 (private)	addressbook	sk	Adresa riadok 2 (súkromné)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	sk	Adresár, v ktorom sa má
 addressbook vcard export	addressbook	sk	Adresár - export vCard
 addressbook vcard import	addressbook	sk	Adresár - import vCard
 addressbook-fieldname	addressbook	sk	Pole adresára
-addvcard	addressbook	sk	Pridať vizitku VCard
+addvcard	addressbook	sk	Pridať vizitku vCard
 advanced search	addressbook	sk	Pokročilé hľadanie
 all addressbooks	addressbook	sk	Všetky adresáre
 all contacts	addressbook	sk	Všetky kontakty
@@ -237,7 +238,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	sk	Existujúce odkazy
 exists	addressbook	sk	existuje
 export as csv	addressbook	sk	Exportovať ako CSV
-export as vcard	addressbook	sk	Exportovať ako vizitku VCard
+export as vcard	addressbook	sk	Exportovať ako vizitku vCard
 export contacts	addressbook	sk	Exportovať kontakty
 export definition to use for nextmatch export	addressbook	sk	Exportná definícia pre použitie v exporte
 export definitition to use for nextmatch export	addressbook	sk	Definícia exportu pre použitie v nasledujúcom exporte
@@ -306,11 +307,11 @@ import contacts	addressbook	sk	Importovať kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
 import file	addressbook	sk	Importuj súbor
 import from	addressbook	sk	Import z
-import from ldif, csv, or vcard	addressbook	sk	Import z LDIF, CSV alebo VCard
+import from ldif, csv, or vcard	addressbook	sk	Import z LDIF, CSV alebo vCard
 import from outlook	addressbook	sk	Importuj z Outlooku
-import multiple vcard	addressbook	sk	Import viacerých vizitek VCard
+import multiple vcard	addressbook	sk	Import viacerých vizitek vCard
 import next set	addressbook	sk	Importovať ďalšiu sadu
-import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v ponuke <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoľte <b>Import a export...</b> z ponuky <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými čiarkami.<p>V Palm Desktop 4.0 a vyššom otvorete adresár a zvoľte <b>Export</b> z ponuky <b>Súbor</b>. Exportované dáta budú vo formáte VCard.
+import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v ponuke <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoľte <b>Import a export...</b> z ponuky <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými čiarkami.<p>V Palm Desktop 4.0 a vyššom otvorete adresár a zvoľte <b>Export</b> z ponuky <b>Súbor</b>. Exportované dáta budú vo formáte vCard.
 importer's personal	addressbook	sk	Importérove súkromné
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Naimportuje kontakty do Vášho Adresára z CSV súboru (CSV znamená Comma Separated Values). V karte možností môžete samozrejme vybrať iný oddeľovač než čiarku.
 imports contacts into your addressbook from a vcard file.	addressbook	sk	Naimportuje kontakty do vášho Adresára zo súboru vCard.
@@ -343,10 +344,10 @@ list created	addressbook	sk	Zoznam bol vytvorený
 list creation failed, no rights!	addressbook	sk	Nepodarilo sa vytvoriť zoznam, nemáte práva!
 list of files linked to the current record	addressbook	sk	Zoznam súborov priložených k súčasnému záznamu
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	sk	Nahrať vlastné polia do indexu aj v prípade, keď je vlastné pole vypnuté (napr. aby sa dali zobraziť v určitom stĺpci indexu)
-load vcard	addressbook	sk	Nahrať vizitku VCard
+load vcard	addressbook	sk	Nahrať vizitku vCard
 location	addressbook	sk	Umiestnenie
 locations	addressbook	sk	Umiestnenia
-mail vcard	addressbook	sk	Poslať VCard e-mailom
+mail vcard	addressbook	sk	Poslať vCard e-mailom
 main categories in their own field	addressbook	sk	Hlavné kategórie v samostatných poliach
 manage mapping	addressbook	sk	Správa mapovania
 mark records as private	addressbook	sk	Označiť záznamy ako súkromé
@@ -366,7 +367,7 @@ modem phone	addressbook	sk	Číslo na modem
 more ...	addressbook	sk	Viac ...
 move to addressbook	addressbook	sk	Presunúť do adresára
 moved	addressbook	sk	Presunuté
-multiple vcard	addressbook	sk	Viacero vizitiek VCard
+multiple vcard	addressbook	sk	Viacero vizitiek vCard
 name for the distribution list	addressbook	sk	Názov pre distribučný zoznam
 name of current user, all other contact fields are valid too	addressbook	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
 name, address	addressbook	sk	Meno, Adresa
@@ -378,6 +379,7 @@ no country selected	addressbook	sk	Žiadna vybraná krajina
 no distribution list	addressbook	sk	Bez distribučného zoznamu
 no fallback	addressbook	sk	Bez návratu
 no vcard	addressbook	sk	Žiadna vizitka
+not shared	addressbook	sk	ni v skupni rabi
 number	addressbook	sk	Číslo
 number of records to read (%1)	addressbook	sk	Počet záznamov k načítaniu (%1)
 open %1 crm view	addressbook	sk	Otvoriť %1 CRM obrazenie
@@ -512,6 +514,8 @@ unable to import into %1, using %2	addressbook	sk	Nedá sa naimportovať do %1, 
 unique id (uid)	addressbook	sk	Jedinečné ID (UID)
 unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID<br />(pre aktualizáciu existujúcich záznamov)
 unknown type %1, imported as %2	addressbook	sk	Neznámy typ %1, naimportvaný ako %2
+unshare	addressbook	sk	Ni več v skupni rabi
+unshared	addressbook	sk	ni več v skupni rabi
 update a single entry by passing the fields.	addressbook	sk	Aktualizovať jednotlivý záznam podľa zadaných polí
 update fields by edited organisations?	admin	sk	Aktualizovať polia podľa upravených organizácií?
 updated	addressbook	sk	Aktualizované
@@ -528,7 +532,7 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used for links and for the own sorting of the list	addressbook	sk	Používa sa pre odkazy a vlastné spôsoby triedenia zoznamu
 user groups are automatically shown as distribution lists.	addressbook	sk	Používateľské skupiny sa automaticky ukážu akodistribučné zoznamy.
 user preference	addressbook	sk	Používateľská voľba
-vcard	common	sk	Vizitka VCard
+vcard	common	sk	Vizitka vCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
 vcards require a last name entry.	addressbook	sk	Vizitky potřebujú zadané priezvisko.
 verification	addressbook	sk	Kontrola
@@ -538,6 +542,7 @@ warning: all contacts found will be deleted!	addressbook	sk	POZOR: Všetky konta
 weekday	addressbook	sk	Deň v týždni
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sk	Čo sa má v iných aplikáciách zobraziť na mieste odkazu na adresár. Prázdne hodnoty sa vynechajú. Ak zmeníte toto nastavenie, musíte sa znovu prihlásiť!
 when viewing a contact, show linked entries from the selected application	addressbook	sk	Pri zobrazení kontaktu ukázať odkazované položky z vybranej ikácie
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sk	Pri spájaní záznamov do dokumentov sa budú ukladať sem. Ak nie je uvedený žiadny adresár, budú uložené vo vašom domovskom adresári (/home/...).
 where to add the email address	addressbook	sk	Kde pridať E-mailovú adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sk	Aký formát adries sa má použiť pre krajiny, u ktorých formát nie je známy? Pozn. Ak formát tej-ktorej krajiny známy JE, tak sa použije, nezávisle od tohto nastavenia.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sk	Ktorý adresár sa má použiť, keď pridávate nový kontakt A PRITOM nemáte právo pridať ho do aktuálneho adresára.
@@ -556,13 +561,14 @@ yes, for the next week	addressbook	sk	Áno, pre nasledujúci týždeň
 yes, for today and tomorrow	addressbook	sk	Áno, pre dnešok a zajtrajšok
 yes, only admins can purge deleted items	admin	sk	Áno, iba správci môžu vymazať odstránené položky
 yes, users can purge their deleted items	admin	sk	Áno, používatelia môžu vymazať ich odstránené položky
+you are not allowed to share into the addressbook of %1	addressbook	sk	Skupna raba v imeniku ni dovoljena %1
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie k odstráneniu kontaktu %1
 you are not permittet to delete this contact	addressbook	sk	Nemáte oprávnenie odstrániť tento kontakt
 you are not permittet to edit this contact	addressbook	sk	Nemáte oprávnenie upraviť tento kontakt
 you are not permittet to view this contact	addressbook	sk	Nemáte oprávnenie vidieť tento kontakt
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	sk	LDAP ako zdroj kontaktov sa dá používať len vtedy, keď sú aj účty uložené v LDAP!
 you can respond by visiting:	addressbook	sk	Ak si chcete pozrieť, navštívte:
-you must select a vcard. (*.vcf)	addressbook	sk	Musíte vybrať VCard (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	sk	Musíte vybrať vCard (*.vcf)
 you must select at least 1 column to display	addressbook	sk	Musíte vybrať aspoň 1 stĺpec k zobrazeniu.
 you need to select a distribution list	addressbook	sk	Najprv musíte vybrať distribučný zoznam
 you need to select some contacts first	addressbook	sk	Najprv musíte vybrať nejaké kontakty.

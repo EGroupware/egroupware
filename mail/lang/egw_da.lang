@@ -1,3 +1,4 @@
+(leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
 add to addressbook	mail	da	tilføj til adressebog
 always show html emails	mail	da	Vis altid HTML e-mails
@@ -5,6 +6,7 @@ answered	mail	da	besvaret
 attachments	mail	da	vedhæftet filer
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	da	Konfigurerede værdier vil automatisk blive indstillet i dialogboksen for det respekterede felt, når du skriver en ny e-mail.
 contains	mail	da	indeholder
 copy to	mail	da	Kopier til
 date(newest first)	mail	da	Dato (nyeste først)
@@ -49,13 +51,17 @@ mail settings	mail	da	Post indstillinger
 mark as deleted	mail	da	Marker som slettet
 matches	mail	da	resultater
 matches regexp	mail	da	resultater regexp
+modify subject	mail	da	Ændre emne
+modify subject of this message	mail	da	Ændre emnet for denne meddelelse
 move selected to	mail	da	flyt valgte til
 move to	mail	da	flyt valgte til
 move to trash	mail	da	Flyt til skraldespanden
 never display html emails	mail	da	Vis aldrig HTML emails
+new subject	mail	da	Nyt emne
 organisation	admin	da	Organisation
 organization	mail	da	organisation
 permission denied	mail	da	Adgang nægtet
+predefined addresses for compose	mail	da	Foruddefinerede adresser til sammensætning
 quicksearch	mail	da	Hurtig søg.
 refresh time in minutes	mail	da	Opdaterings interval i minutter
 remove immediately	mail	da	Fjern nu
@@ -66,9 +72,12 @@ reply all	mail	da	Besvar Alle
 reply to	mail	da	Besvar Til
 replyto	mail	da	Besvar Til
 save all	mail	da	Gem alle
+save all attachments to filemanager	mail	da	Gem alle vedhæftede filer i filemanager
 select all	mail	da	Vælg alle
+select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
 sent folder	mail	da	Sendt Mappe
 set flags	mail	da	Markér e-mail som
+set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
 signature	mail	da	Signatur
 size(...->0)	mail	da	Størrelse (...->0)
 size(0->...)	mail	da	Størrelse (0->...)

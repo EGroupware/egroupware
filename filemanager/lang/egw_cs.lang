@@ -11,6 +11,7 @@
 %1 files copied.	filemanager	cs	Zkopírováno %1 souborů.
 %1 files deleted.	filemanager	cs	Smazáno %1 souborů.
 %1 files moved.	filemanager	cs	Přesunuto %1 souborů.
+%1 files unlocked.	filemanager	cs	%1 souborů odemčeno.
 %1 starts with '%2'	filemanager	cs	%1 začíná s '%2'
 %1 successful uploaded.	filemanager	cs	%1 úspěšně uploadováno
 %1 the following files into current directory	filemanager	cs	%1 následujících souborů do aktuálního adresáře
@@ -104,12 +105,15 @@ go home	filemanager	cs	zpět domů
 go to	filemanager	cs	Jít na
 go to your home directory	filemanager	cs	Jít do domovského adresáře
 go up	filemanager	cs	Jít výše
+hidden upload	filemanager	cs	Skryté nahrávání
+hidden uploads	filemanager	cs	Skryté nahrávání
 id	filemanager	cs	ID
 inherited	filemanager	cs	Zděděné
 link	filemanager	cs	Odkaz
 link %1: %2	filemanager	cs	Odkaz %1: %2
 link target %1 not found!	filemanager	cs	Odkaz na cíl %1 nebyl nalezen!
 location	filemanager	cs	Umístění
+lock	filemanager	cs	Zamknout
 log out as superuser	filemanager	cs	Odhlášení superuživatele
 max folderlinks	admin	cs	maximálně odkazů na složky
 mime type	filemanager	cs	MIME typ
@@ -186,6 +190,7 @@ wrong username or password!	filemanager	cs	Chybné uživatelské jméno nebo hes
 you are not allowed to upload a script!	filemanager	cs	Nemáte oprávnění uploadovat skript!
 you can only grant additional rights, you can not take rights away!	filemanager	cs	Můžete pouze přidělit dodatečná oprávnění, ne odebrat ta stávající!
 you do not have access to %1	filemanager	cs	Nemáte přístup k %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	cs	Chcete-li povolit nebo zakázat verzování složky, musíte se stát superuser!
 you need to select an owner!	filemanager	cs	Musíte vybrat vlastníka!
 you need to select some files first!	filemanager	cs	Nejprve musíte vybrat nějaké soubory!
 you will be redirected to your home directory.	filemanager	cs	Budete přesměrován(a) do Vašeho domovského adresáře.

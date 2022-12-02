@@ -1,9 +1,11 @@
+(leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
 (no subject)	mail	lv	(nav temata)
 add to addressbook	mail	lv	pievienot adrešu grāmatai
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 attachments	mail	lv	Pielikumi
 compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
 contains	mail	lv	satur
 copy to	mail	lv	Kopēt Uz:
 date(newest first)	mail	lv	Datums (jaunākais pirmais)
@@ -45,14 +47,18 @@ kilobytes	mail	lv	kb
 less than	mail	lv	mazāk nekā
 mail settings	mail	lv	Sūtījumu uzstādījumi
 mark as deleted	mail	lv	Atzīmēt kā izdzēstu
+modify subject	mail	lv	Mainīt tematu
+modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
 move selected to	mail	lv	pārvietot atlasītās uz
 move to	mail	lv	pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
+new subject	mail	lv	Jauns temats
 on	mail	lv	ieslēgts
 organization	mail	lv	organizācija
 permission denied	mail	lv	Atļauja liegta
 please select a address	mail	lv	Lūdzu, izvēlieties adresi
+predefined addresses for compose	mail	lv	Iepriekš noteiktas adreses sastādīšanai
 quicksearch	mail	lv	Ātrā meklēšana
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
 remove all	mail	lv	Pārvietot visu
@@ -64,8 +70,11 @@ reply all	mail	lv	Atbildēt visiem
 reply to	mail	lv	Atbildēt
 replyto	mail	lv	Atbildēt
 save all	mail	lv	Saglabāt visus
+save all attachments to filemanager	mail	lv	Saglabāt visus pielikumus failu pārvaldniekā
 select all	mail	lv	Iezīmēt visus
+select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
 sent folder	mail	lv	Mape nosūtīts
+set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vērtības sastādīšanai ...
 signature	mail	lv	Paraksts
 size(...->0)	mail	lv	Izmērs (...->0)
 size(0->...)	mail	lv	Izmērs (0->...)

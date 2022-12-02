@@ -9,13 +9,12 @@
 %1 errors linking (%2)!	filemanager	sl	%1 napak pri povezovanju (%2)!
 %1 errors moving (%2 files moved)!	filemanager	sl	%1 napak med premikanjem (%2 datotek je bilo premaknjenih).
 %1 failed, %2 succeded	filemanager	sl	%1 ni uspelo, %2 je uspelo.
-%1 file	filemanager	sl	%1 datoteka
 %1 files	common	sl	%1 datotek
 %1 files copied.	filemanager	sl	%1 datotek je bilo kopiranih.
 %1 files deleted.	filemanager	sl	%1 datotek je bilo izbrisanih.
 %1 files moved.	filemanager	sl	%1 datotek je bilo premaknjenih.
 %1 files or directories deleted in %2 seconds.	filemanager	sl	%1 datotek ali imenikov je izbrisanih v %2 sekundah.
-%1 share link	filemanager	sl	%1 Skupna raba povezave
+%1 files unlocked.	filemanager	sl	%1 datotek je odklenjenih.
 %1 shares deleted.	filemanager	sl	% 1 skupne rabe je izbrisanih.
 %1 starts with '%2'	filemanager	sl	%1 se začne z '%2'
 %1 successful unmounted.	filemanager	sl	%1 je bil uspešno odklopljen.
@@ -35,7 +34,6 @@ acl added.	filemanager	sl	ACL dodan.
 acl deleted.	filemanager	sl	ACL izbrisan.
 actions	filemanager	sl	Dejanja
 add to clipboard	filemanager	sl	Vse v odložišče
-admin	filemanager	sl	Skrbnik
 administrators	filemanager	sl	Administratorji
 all files	filemanager	sl	Vse datoteke
 all subdirectories	filemanager	sl	Vsi podimeniki
@@ -44,13 +42,11 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	sl	in vse njihove podmape
 application fields	filemanager	sl	Polja Aplikacij
 applications	common	sl	Aplikacije
-are you sure that you want to discard all modifications applied to this document by you and other participants?	filemanager	sl	Ali ste prepričani, da želite zavreči vse spremembe, ki so jih uporabili v tem dokumentu, vi in ​​drugi udeleženci?
 backend	filemanager	sl	Backend
 backend url	filemanager	sl	Backend URL
 backend url to mount	filemanager	sl	Backend URL to mount
 basedirectory	filemanager	sl	Osnovna mapa
 can't open directory %1!	filemanager	sl	Ne morem odpreti mape %1!
-cancel	filemanager	sl	Prekliči
 cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranjevanja
 cannot create directory because it begins or ends in a space	filemanager	sl	Mapa ne more biti ustvarjena, ker se začne ali konča s presledkom.
 cautiously rejecting to remove folder '%1'!	filemanager	sl	Ne morem odstraniti mape '%1'!
@@ -78,7 +74,6 @@ create a link	filemanager	sl	Ustvari povezavo
 create directory	filemanager	sl	Ustvari mapo
 create file	filemanager	sl	Ustvari datoteko
 create folder	filemanager	sl	Ustvari mapo
-create link	filemanager	sl	Ustvari povezavo
 created	filemanager	sl	Ustvarjeno
 created %1,%2	filemanager	sl	Ustvarjen %1,%2
 created directory %1	filemanager	sl	Ustvarjena mapa %1
@@ -86,13 +81,10 @@ current directory	filemanager	sl	Trenutna mapa
 custom fields	filemanager	sl	Polja po meri
 cut	filemanager	sl	Izreži
 cut to clipboard	filemanager	sl	Izreži v odložišče
-date	filemanager	sl	Datum
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sl	Privzeta nastavitev je NE. Povezava ne bo prikazana, vseeno pa boste lahko prišli do lokacije ali določili to lokacijo kot začetno mapo ali povezavo na mapo.
 default document to insert entries	filemanager	sl	Privzeti dokument za vstavljanje
 defines how to open a merge print document	filemanager	sl	Določa, kako naj odpre dokument za združitev
-delete	filemanager	sl	Izbriši
 delete all older versions and deleted files older then %s days	filemanager	sl	Izbrišite vse starejše različice in izbrisane datoteke, starejše od %s dni
-delete file %1?	filemanager	sl	Izbriši datoteko %1?
 delete these files or directories?	filemanager	sl	Izbrišem te datoteke ali mape?
 delete these shares?	filemanager	sl	Želite izbrisati to skupno rabo?
 delete this file or directory	filemanager	sl	Izbriši to datoteko ali mapo
@@ -112,7 +104,6 @@ display of content	filemanager	sl	Prikaz vsebine
 do you want more information about epl subscription?	common	sl	Želite več informacij o naročnini EPL?
 do you want to overwrite existing file %1 in directory %2?	filemanager	sl	Želite prepisati obstoječo datoteko %1 v imeniku %2?
 do you want to overwrite the existing file %1?	filemanager	sl	Želite prepisati obstoječo datoteko %1?
-document %1 has been saved successfully.	filemanager	sl	Dokument %1 je bil uspešno shranjen.
 download	filemanager	sl	Prenesi
 edit comments	filemanager	sl	Uredi komentarje
 edit settings	filemanager	sl	Uredi nastavitve
@@ -132,7 +123,6 @@ error while creating directory.	filemanager	sl	Napaka pri ustvarjanju mape
 everyone	filemanager	sl	Vse
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	sl	Primer {{IF n_prefix ~ Mr ~ Pozdravljeni g. ~ Pozdravljeni gospa}} - poiščite polje »n_prefix«, za »gospod«, če najdete, pišite Hello Hello, drugače pišite Hello gospa.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	sl	Primer {{LETTERPREFIXCUSTOM n_prefix naslov n_family}} - Primer: g. Dr. James Miller
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	filemanager	sl	Primer {{LETTERPREFIX}} - daje črkovno predpono brez dvojnih presledkov, če je naslov prazen, na primer
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	sl	Primer {{NELF vloga}} - če poljska vloga ni prazna, boste dobili novo vrstico z vrednostjo vloge na poljubnem mestu
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	sl	Primer {{nenvlf role}} - če poljska vloga ni prazna, nastavite LF brez poljubne vrednosti polja
 excludes selected mime types	filemanager	sl	Izključuje izbrane vrste mime
@@ -149,7 +139,6 @@ file	common	sl	Datoteka
 file %1 already exists	filemanager	sl	Datoteka %1 že obstaja
 file %1 could not be created.	filemanager	sl	Ne morem ustvariti datoteke %1.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	sl	Mogoče je datoteka %1 prevelika. Za več informacij kontaktirajte sistemskega administratorja.
-file a file	filemanager	sl	Napolnjena datoteka
 file a file is only available with an epl subscription.	filemanager	sl	Napolnjena datoteke je na voljo samo z naročnino EPL.
 file deleted.	filemanager	sl	Datoteka izbrisana.
 file names cannot contain "%1"	filemanager	sl	Imena datotek ne smejo vsebovati "%1"
@@ -174,16 +163,15 @@ for files linked to an application entry (inside /apps/appname/id/) the placehol
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 general	filemanager	sl	Splošno
 general fields:	filemanager	sl	Splošna polja:
-general settings	filemanager	sl	Splošne nastavitve
 go home	filemanager	sl	Pojdi domov
 go to	filemanager	sl	Pojdi na
 go to your home directory	filemanager	sl	Pojdi na domačo mapo
 go up	filemanager	sl	Pojdi navzgor
+hidden upload	filemanager	sl	Skrito nalaganje
+hidden uploads	filemanager	sl	Skriti prenosi
 id	filemanager	sl	Šifra
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sl	Če določite imenik (celotna pot vfs), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki %1.
-if you specify a directory (full vfs path) here, dokumenti displays an action for each document. that action allows to download the specified document with the dokumenti data inserted. the document can contain placeholder like {{name}}, to be replaced with the data. the following document-types are supported:txt,rtf,odt,ods,docx,xml,eml	filemanager	sl	Če podate naslov (celotno pot vfs), Dokumenti prikaže dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi dokumenti Dokumenti. Dokument lahko vsebuje vsebnika kot {{name}}, ki jo je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: txt, rtf, odt, ods, docx, xml, eml
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sl	Če določite dokument (celotno pot vfs) tukaj, %1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
-if you specify a document (full vfs path) here, dokumenti displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted. the document can contain placeholder like {{name}}, to be replaced with the data. the following document-types are supported:txt,rtf,odt,ods,docx,xml,eml	filemanager	sl	Če podate dokument (celotno pot vfs), Dokumenti prikaže ikono dodatne dokumentacije za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki. Dokument lahko vsebuje vsebnika kot {{name}}, ki jo je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: txt, rtf, odt, ods, docx, xml, eml
 if you specify an export definition, it will be used when you export	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 if you specify an export definition, it will be used when you export*	filemanager	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili *
 inherited	filemanager	sl	Podedovano
@@ -195,11 +183,11 @@ link target	filemanager	sl	Poveži cilj
 link target %1 not found!	filemanager	sl	Cilj povezave %1 ni bil najden
 list view	filemanager	sl	Pogled seznama
 location	filemanager	sl	Lokacija
+lock	filemanager	sl	Zaklepanje
 log out as superuser	filemanager	sl	Odjavi se kot superuser
 mail files	filemanager	sl	Pošlji datoteke po e-pošti
 mail paste	filemanager	sl	Prilepi pošto
 max folderlinks	admin	sl	Največje število povezav do map
-menu	filemanager	sl	Meni
 merge print open handler	filemanager	sl	Spoji tiskalnik
 mime type	filemanager	sl	MIME tip
 modified	filemanager	sl	Spremenjeno
@@ -214,7 +202,6 @@ move to	filemanager	sl	Premakni v
 moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2
 name of current user, all other contact fields are valid too	filemanager	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 new directory	common	sl	Nva mapa
-no	filemanager	sl	Ne
 no access	filemanager	sl	Ni dostopa
 no files in this directory.	filemanager	sl	V tej mapi ni datotek
 no preview available	filemanager	sl	Predogled ni na voljo
@@ -224,16 +211,13 @@ older versions or deleted files	filemanager	sl	Starejše različice ali izbrisan
 only owner can rename or delete the content	filemanager	sl	Samo lastnik sme preimenovati ali izbrisati vsebino
 open	filemanager	sl	Odpri
 operation	filemanager	sl	Operacija
-paste	filemanager	sl	Prilepi
 paste link	filemanager	sl	Prilepi povezavo
 path %1 not found or not a directory!	filemanager	sl	Pot %1 ni nila najdena ali pa ni mapa!
 percentage	filemanager	sl	Odstotek
-permission denied	filemanager	sl	Dostop zavrnjen
 permission denied!	filemanager	sl	Dostop zavrnjen!
 permissions	filemanager	sl	Pravice
 permissions of %1 changed.	filemanager	sl	Pravice za %1 so bile spremenjene.
 please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.
-preferences	filemanager	sl	Nastavitve
 preview	filemanager	sl	Predogled
 preview %1	filemanager	sl	Predogled %1
 preview of %1	filemanager	sl	Predogled %1
@@ -244,7 +228,6 @@ read & write access	filemanager	sl	Pravice branja in pisanja
 read access only	filemanager	sl	Dostop samo za branje
 readonly share link	filemanager	sl	Povezava samo za branje
 reload	filemanager	sl	Osveži
-rename	filemanager	sl	Preimenuj
 rename of %1 to %2 failed!	filemanager	sl	Preimenovanje %1 v %1 ni bilo uspešno!
 rename, change permissions or ownership	filemanager	sl	Preimenuj, spremeni previce ali lastništvo
 renamed %1 to %2	filemanager	sl	%1 je bilo preimenovano v %2
@@ -257,7 +240,6 @@ root access granted.	filemanager	sl	Dostop do root je bil odobren.
 root access stopped.	filemanager	sl	Dostop do korena je bil ustavljen.
 save %1	filemanager	sl	Shrani %1
 save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
-save as	filemanager	sl	Shrani kot
 save as zip	filemanager	sl	Shrani kot Zip
 save changes	filemanager	sl	Shrani spremembe
 saved %1	filemanager	sl	Shranjen %1
@@ -285,20 +267,17 @@ some functionalities require superuser permissions, please login here as fileman
 sqlfs statistics	filemanager	sl	Statistike sqlFS
 start search	filemanager	sl	Začni iskanje
 startfolder	filemanager	sl	Začetna mapa
-submit	filemanager	sl	Potrdi
 successful mounted %1 on %2.	filemanager	sl	Uspešno priklopljen %1 na %2.
 superuser	filemanager	sl	Superuser
 superuser (root)	filemanager	sl	Superuser (root)
 symlink to %1 created.	filemanager	sl	Povezava do %1 je bila ustvarjena
 tag to mark positions for address labels	filemanager	sl	Oznaka za označitev položajev oznak adresarja
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sl	Privzeta začetna mapa je vaša osebna mapa. Če pustite to prazno ali vnesena pt ne obstaja ali nimate ustreznih pravic za dostop, bo uporabljena privzeta vrednost.
-the document can contain placeholder like {{%1}}, to be replaced with the data.	filemanager	sl	Dokument lahko vsebuje vsebnik kot {{%1}}, ki ga je treba zamenjati s podatki.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sl	Dokument lahko vsebuje mesto, na primer {{%3}}, ki ga je treba zamenjati s podatki (%1 popoln seznam imen imenika %2).
 the following document-types are supported:	filemanager	sl	Podprte so naslednje vrste dokumentov:
 the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo.
 there's already a directory with that name!	filemanager	sl	Mapa s tem imenom že obstaja.
 there's already a file with that name!	filemanager	sl	Datoteka s tem imenom že obstaja!
-this session is not valid anymore! save as your local changes if you need them or reload to join new session.	filemanager	sl	Ta seja ni več veljavna! Shranite jih kot svoje lokalne spremembe, če jih potrebujete ali ponovno naložite, da se pridružite novi seji.
 tile view	filemanager	sl	Pogled na ploščico
 to overwrite the existing file store again.	filemanager	sl	Če želite prepisati obstoječo datoteko, shranite še enkrat.
 total files	filemanager	sl	Vseh datotek
@@ -309,28 +288,22 @@ up	filemanager	sl	Navzgor
 updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
 upload fields	filemanager	sl	Naloži polja
 upload files	filemanager	sl	Naloži datoteke
-use eg. #ff0000 or orange	filemanager	sl	Uporabite npr. # FF0000 ali oranžna
-use eg. %1 or %2	filemanager	sl	Uporabite npr. %1 ali %2
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used space	filemanager	sl	Uporabljen prostor
 user color indicator	filemanager	sl	Kazalnik barve uporabnika
-username	filemanager	sl	Uporabniško ime
 users and groups	filemanager	sl	Uporabniki in skupine
 versioning	filemanager	sl	Vodenje različic
-versioning requires <a href="http://www.egroupware.org/products">stylite egroupware enterprise line (epl)</a>!	filemanager	sl	Za različico potrebujete <a href="http://www.egroupware.org/products"> Stylite EGroupware Enterprise Line (EPL) </a>!
 vfs mounts and versioning	common	sl	VFS namestitve in različice
 webdav link copied into clipboard	filemanager	sl	Povezava WebDAV je bila kopirana v odložišče
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	sl	Kdo ima pravice dokončno izbrisati starejše različice dokumenta ali izbrisane datoteke:
 writable share link	filemanager	sl	Povezava, ki jo je mogoče zapisati
 wrong username or password!	filemanager	sl	Napačno uporabniško ime ali geslo!
-yes	filemanager	sl	Da
 you are not allowed to finally delete older versions and deleted files!	filemanager	sl	NISO dovoliti, da končno izbrišete starejše različice in izbrisane datoteke!
 you are not allowed to upload a script!	filemanager	sl	Nimate dovoljenja nalagati skripte
-you are the last one on this session. what would you like to do with all unsaved changes in this document?	filemanager	sl	Zadnji ste na tej seji. Kaj bi želeli narediti z vsemi neshranjenimi spremembami v tem dokumentu?
 you can only grant additional rights, you can not take rights away!	filemanager	sl	Dodatne pravice lahko samo dodelte, ne morete jih odvzeti.
 you can use regular upload [+] button to upload files.	filemanager	sl	Za nalaganje datotek lahko uporabite gumb za običajni prenos [+].
 you do not have access to %1	filemanager	sl	Nimate dostopa do %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	sl	Če želite omogočiti/inemogočiti spremljanje različic v mapi, morate biti prijavljeni kot root!
+you need to become root, to enable or disable versioning on a directory!	filemanager	sl	Če želite omogočiti/inemogočiti spremljanje različic v mapi, morate biti prijavljeni kot superuser!
 you need to select an owner!	filemanager	sl	Izbrati morate lastnika!
 you need to select some files first!	filemanager	sl	Najprej morate izbrati nekaj datotek!
 you will be redirected to your home directory.	filemanager	sl	Preusmerjeni boste v vašo domačo mapo.

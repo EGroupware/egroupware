@@ -419,7 +419,7 @@ select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag a
 select a price	infolog	de	Preis auswählen
 select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
 select a project	infolog	de	Projekt auswählen
-select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en) der Sie diese Aufgabe delegieren wollen
+select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en), der Sie diese Aufgabe delegieren wollen
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
 select an action	infolog	de	Befehl oder Aktion auswählen
 select an action...	infolog	de	Befehl oder Aktion auswählen...

@@ -95,6 +95,7 @@ compose as new	mail	es-es	Redactar como nuevo
 compress folder	mail	es-es	Comprimir carpeta
 condition	mail	es-es	Condición
 configuration settings	mail	es-es	Ajustes de la configuración
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	es-es	Los valores configurados se establecerán automáticamente en el diálogo de composición para el campo respetado al componer un nuevo correo electrónico.
 confirm	mail	es-es	Confirmar
 confirm attach message	mail	es-es	Confirmar adjuntar mensaje
 confirm move to folder	mail	es-es	Confirmar mover a carpeta
@@ -374,6 +375,7 @@ please configure access to an existing individual imap account.	mail	es-es	por f
 please select a address	mail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	mail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	mail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
+predefined addresses for compose	mail	es-es	Direcciones predefinidas para componer
 prevent managing filters	mail	es-es	Impedir la gestión de filtros
 prevent managing folders	mail	es-es	Impedir la gestión de carpetas
 prevent managing notifications	mail	es-es	Impedir la gestión de notificaciones
@@ -430,6 +432,7 @@ rule priority position	mail	es-es	Posición de prioridad de la regla
 rule with priority	mail	es-es	Regla con prioridad
 rules	mail	es-es	reglas
 save all	mail	es-es	Grabar todo
+save all attachments to filemanager	mail	es-es	Guardar todos los archivos adjuntos en el gestor de archivos
 save as calendar	mail	es-es	Grabar como calendario
 save as default	mail	es-es	grabar como predeterminado
 save as draft	mail	es-es	Grabar como borrador
@@ -453,6 +456,7 @@ select file to import into folder	mail	es-es	Seleccionar archivo para importar a
 select file(s) from vfs	mail	es-es	Seleccionar ficheros desde VFS
 select files to upload	mail	es-es	Seleccionar archivos para subir
 select multiple	mail	es-es	Seleccionar varios
+select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
 selected	mail	es-es	seleccionado
 send a reject message:	mail	es-es	Enviar un mensaje de rechazo:
 send files as	mail	es-es	Enviar archivos como
@@ -465,6 +469,7 @@ set / remove flags	mail	es-es	Establecer / quitar marcas
 set / remove labels	mail	es-es	Establecer / quitar etiquetas
 set flags	mail	es-es	Marcar el correo electrónico como
 set it as default:	mail	es-es	establezca como predeterminado:
+set predefined values for compose...	mail	es-es	Establecer valores predefinidos para componer ...
 should new messages show up on the home page	mail	es-es	Nuevos mensajes deberían aparecer en la página principal
 show	mail	es-es	Mostrar
 show all addresses	mail	es-es	Mostrar todas las direcciones

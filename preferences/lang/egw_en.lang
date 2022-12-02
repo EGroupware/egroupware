@@ -31,7 +31,6 @@ color	preferences	en	Color
 country	preferences	en	Country
 current password	preferences	en	Current password
 custom login box color, defaults to above color darkened	preferences	en	Custom login box color, defaults to above color darkened
-small paragraph	preferences	en	Small Paragraph
 custom sidebar menu active color, defaults to above color darkened	preferences	en	Custom sidebar menu active color, defaults to above color darkened
 dark mode theme	preferences	en	Dark mode theme
 dark moono theme	preferences	en	Dark Moono Theme
@@ -102,6 +101,7 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	en	Images linked to an entry can be displayed as thumbnails. Turn this off to speed up page display.
 in which country are you. this is used to set certain defaults for you.	preferences	en	Select the country. It sets some defaults e.g. in Calendar.
 interface/template selection	preferences	en	Interface | Template
+it sets content size (text only) according to selected size.	preferences	en	It sets content size (text only) according to selected size.
 just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
 kama theme	preferences	en	Kama theme
 language	preferences	en	Language
@@ -157,6 +157,7 @@ selectbox	preferences	en	Select box
 selectbox with groupmembers	common	en	Select box with group members
 selectbox with primary group and search	preferences	en	Select box with primary group and search
 server is unwilling to perform.	preferences	en	Server is unwilling to perform.
+set content size	preferences	en	Set content size
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	en	Selection is shown to all users. For security reasons you may not want to show your user name in public.
 settings	preferences	en	Settings
 setup two factor authentication	preferences	en	Setup Two Factor Authentication
@@ -170,6 +171,7 @@ show qrcode	preferences	en	Show QRCode
 show qrcode to enable on an additional device.	preferences	en	Show QRCode to enable on an additional device.
 show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
+small paragraph	preferences	en	Small Paragraph
 special characters	preferences	en	special characters
 spellchecker language	addressbook	en	Spellchecker language
 text editor settings	preferences	en	Text editor settings

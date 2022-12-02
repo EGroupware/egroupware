@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	sl	Dodani so javni ključ i%1.
 %1 records imported	addressbook	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sl	1% zapisov prebranih (niso še uvoženi, lahko greste %2nazaj%3 in odznačite preizkus uvoza)
+%1 shared this contact on %2 with %3 %4	addressbook	sl	%1 je ta stik delil na %2 %3 %4
 %1 starts with '%2'	addressbook	sl	%1 se začne z '%2'
 %s please calculate the result	addressbook	sl	%s izračunaj rezultat
 (e.g. 1969)	addressbook	sl	(npr. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	sl	Dodano s sinhronizacijo
 added to distribution list	addressbook	sl	Dodano v distribucijski seznam
 additional information about using ldap as contact repository	admin	sl	Dodatne informacije o uporabi LDAP kot repozitorija za kontakte
 address book	common	sl	Adresar
-address book - vcard in	addressbook	sl	Adresar - VCard
+address book - vcard in	addressbook	sl	Adresar - vCard
 address book - view	addressbook	sl	Adresar - pogled
 address line 2	addressbook	sl	Naslov - 2. vrstica
 address line 2 (private)	addressbook	sl	Naslovna vrstica 2 (zasebna)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	sl	Adresar, katerega kontakt
 addressbook vcard export	addressbook	sl	Izvoz vCard adresarja
 addressbook vcard import	addressbook	sl	Uvoz vCard imenika
 addressbook-fieldname	addressbook	sl	Adresar-Ime polja
-addvcard	addressbook	sl	Dodaj VCard
+addvcard	addressbook	sl	Dodaj vCard
 advanced search	addressbook	sl	Napredno iskanje
 all addressbooks	addressbook	sl	Vsi adresarji
 all contacts	addressbook	sl	Vsi kontakti
@@ -230,7 +231,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	sl	Obstoječe povezave
 exists	addressbook	sl	Obstaja
 export as csv	addressbook	sl	Izvozi v CSV
-export as vcard	addressbook	sl	Izvozi kot VCard
+export as vcard	addressbook	sl	Izvozi kot vCard
 export contacts	addressbook	sl	Izvozi stike
 export definition to use for nextmatch export	addressbook	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
 export definitition to use for nextmatch export	addressbook	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
@@ -274,6 +275,7 @@ group %1	addressbook	sl	Skupina %1
 h	addressbook	sl	h
 hide accounts from addressbook	addressbook	sl	Skrij uporabniške račune iz adresarja
 hide all accounts	addressbook	sl	Skrij vse račune
+hide user groups as distribution lists	addressbook	sl	Skrijte skupine uporabnikov kot distribucijske sezname
 hides accounts completly from the adressbook.	addressbook	sl	Skrij uporabniške račune iz adresarja
 history logging	admin	sl	Beleženje zgodovine
 home address	addressbook	sl	Domači naslov
@@ -297,9 +299,9 @@ import contacts	addressbook	sl	Uvozi  stike
 import csv-file into addressbook	addressbook	sl	Uvozi CSV-polja v imenik
 import file	addressbook	sl	Uvozi datoteko
 import from	addressbook	sl	Uvozi iz
-import from ldif, csv, or vcard	addressbook	sl	Uvoz iz LDIF, CSV ali VCard
+import from ldif, csv, or vcard	addressbook	sl	Uvoz iz LDIF, CSV ali vCard
 import from outlook	addressbook	sl	Uvoz iz Outlook-a
-import multiple vcard	addressbook	sl	Uvoz večih VCard
+import multiple vcard	addressbook	sl	Uvoz večih vCard
 import next set	addressbook	sl	Uvozi naslednji niz
 import_instructions	addressbook	sl	V Netscapu odprite adresar in izberite <b>Export</b> v meniju <b>File</b>. Izvožena datoteka bo v obliki LDIF.<p>V Outlooku izberite mapo Stiki (Contacts), izberite <b>Uvoz/izvoz (Import/Export)</b> v meniju <b>Datoteka (File)</b>. Izvožena datoteka bo v obliki CSV.
 importer's personal	addressbook	sl	Uvoznik je oseben
@@ -307,6 +309,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	sl	Uvozi s
 in %1 days (%2) is %3's birthday.	addressbook	sl	V %1 dneh (%2) je rojstni dan %3.
 income	addressbook	sl	Priliv
 infolog	addressbook	sl	InfoDnevnik
+infolog-organisation	addressbook	sl	Organizacija InfoLog
 insert	addressbook	sl	Vstavi
 insufficent rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
 insufficent rights to edit this list!	addressbook	sl	Neustrezne pravice za urejanje tega seznama!
@@ -331,10 +334,11 @@ list already exists!	addressbook	sl	Seznam že obstaja!
 list created	addressbook	sl	Seznam ustvarjen
 list creation failed, no rights!	addressbook	sl	Napak pri ustvarjanju seznama - nimate pravic!
 list of files linked to the current record	addressbook	sl	Seznam datotek, povezanih s trenutnim zapisom
-load vcard	addressbook	sl	Naloži VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	sl	Naloži polja po meri v indeks, tudi če je stolpec za polja po meri izklopljen (npr. če jih želite prikazati v določenem stolpcu indeksa)
+load vcard	addressbook	sl	Naloži vCard
 location	addressbook	sl	Lokacija
 locations	addressbook	sl	Lokacije
-mail vcard	addressbook	sl	Pošta VCard
+mail vcard	addressbook	sl	Pošta vCard
 main categories in their own field	addressbook	sl	Glavne kategorije v scojih poljih
 manage mapping	addressbook	sl	Upravljaj mapiranje
 mark records as private	addressbook	sl	Označi zapise kot zasebne
@@ -354,7 +358,7 @@ modem phone	addressbook	sl	Modem
 more ...	addressbook	sl	Več ...
 move to addressbook	addressbook	sl	Premakni v adresar
 moved	addressbook	sl	Premaknjeno
-multiple vcard	addressbook	sl	Več VCard zapisov
+multiple vcard	addressbook	sl	Več vCard zapisov
 name for the distribution list	addressbook	sl	Ime za distribucijski seznam
 name of current user, all other contact fields are valid too	addressbook	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 name, address	addressbook	sl	Ime, naslov
@@ -365,7 +369,8 @@ no categories selected	addressbook	sl	Nobena kategorija ni izbrana
 no country selected	addressbook	sl	Nobena država ni izbrana
 no distribution list	addressbook	sl	Ni seznama distribucij
 no fallback	addressbook	sl	Brez rezerve
-no vcard	addressbook	sl	Ni VCard zapisov
+no vcard	addressbook	sl	Ni vCard zapisov
+not shared	addressbook	sl	ni v skupni rabi
 number	addressbook	sl	Število
 number of records to read (%1)	addressbook	sl	Število zapisov za branje (%1)
 open %1 crm view	addressbook	sl	Open %1 CRM view
@@ -497,6 +502,8 @@ unable to import into %1, using %2	addressbook	sl	Ni mogoče uvoziti v %1, z upo
 unique id (uid)	addressbook	sl	Edinstven ID (UID)
 unique id<br />(to update existing records)	addressbook	sl	Edinstven ID<br />(za posodobitev obstoječih zapisov)
 unknown type %1, imported as %2	addressbook	sl	Neznan tip% 1, uvožen kot% 2
+unshare	addressbook	sl	Ni več v skupni rabi
+unshared	addressbook	sl	ni več v skupni rabi
 update a single entry by passing the fields.	addressbook	sl	Popravi en zapis z vnosom polj.
 update fields by edited organisations?	admin	sl	Posodobim polja urejanih organizacij?
 updated	addressbook	sl	Podosodobljeno
@@ -511,10 +518,11 @@ use country list	addressbook	sl	Uporabi seznam držav
 use setup for a full account-migration	admin	sl	Uporabi namestitev za popolno migracijo računov
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used for links and for the own sorting of the list	addressbook	sl	Uporabno za povezave in za lastno razvrščanje seznama
+user groups are automatically shown as distribution lists.	addressbook	sl	Skupine uporabnikov se samodejno prikažejo kot distribucijski seznami.
 user preference	addressbook	sl	Prednost uporabnika
-vcard	common	sl	VCard
-vcards require a first name entry.	addressbook	sl	VCards zahteva vpis imena.
-vcards require a last name entry.	addressbook	sl	VCards zahteva vpis priimka.
+vcard	common	sl	vCard
+vcards require a first name entry.	addressbook	sl	vCards zahteva vpis imena.
+vcards require a last name entry.	addressbook	sl	vCards zahteva vpis priimka.
 verification	addressbook	sl	Potrditev
 view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
@@ -522,6 +530,7 @@ warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najde
 weekday	addressbook	sl	Delovnik
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
 when viewing a contact, show linked entries from the selected application	addressbook	sl	Ko si ogledujete vizitko, prikažite povezane vnose iz izbrane aplikacije
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sl	Ko vnose združite v dokumente, bodo shranjeni tukaj. Če imenik ni naveden, bodo shranjeni v vašem domačem imeniku (/home/...).
 where to add the email address	addressbook	sl	Kje naj se doda e-naslov?
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sl	Katero obliko naslova naj Adresar uporabi za države, za katere ne pozna oblike. Če je oblika naslova znana, ta nastavitev nima vpliva.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sl	Kateri adresar naj se izbere pri dodajanju stika IN nimate pravic dodajanja v trenutni adresar.
@@ -540,13 +549,14 @@ yes, for the next week	addressbook	sl	Da, za naslednji teden
 yes, for today and tomorrow	addressbook	sl	Da, za jutri in pojutrišnjem
 yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
 yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
+you are not allowed to share into the addressbook of %1	addressbook	sl	Skupna raba v imeniku ni dovoljena %1
 you are not permitted to delete contact %1	addressbook	sl	Nimate dovoljenja brisati stik %1
 you are not permittet to delete this contact	addressbook	sl	Nimate dovoljenja brisati tega stika
 you are not permittet to edit this contact	addressbook	sl	Nimate dovoljenja spremeniti tega stika
 you are not permittet to view this contact	addressbook	sl	Nimate dovoljenja pogledati tega stika
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	sl	LDAP lahko uporabite za shranjevanje stikov samo, če LDAP uporabite tudi za shranjevanje računov!
 you can respond by visiting:	addressbook	sl	Za ogled pojdite na:
-you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate VCard. (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	sl	Izbrati morate najmanj 1 stolpec za prikaz
 you need to select a distribution list	addressbook	sl	Izbrati morate distribucijski seznam
 you need to select some contacts first	addressbook	sl	Najprej morate izbrati nekaj stikov

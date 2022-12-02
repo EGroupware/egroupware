@@ -11,6 +11,7 @@
 %1 files copied.	filemanager	fi	%1 tiedosto(a) kopioitu.
 %1 files deleted.	filemanager	fi	%1 tiedosto(a) poistettu.
 %1 files moved.	filemanager	fi	%1 tiedosto(a) siirretty.
+%1 files unlocked.	filemanager	fi	%1 tiedostoa avattu.
 %1 starts with '%2'	filemanager	fi	%1 alkaa '%2':lla.
 %1 successful unmounted.	filemanager	fi	%1: Versiointi otettu pois käytöstä
 %1 successful uploaded.	filemanager	fi	%1 ladattu.
@@ -132,6 +133,8 @@ go home	filemanager	fi	Kotiin
 go to	filemanager	fi	Mene
 go to your home directory	filemanager	fi	Kotihakemistoon
 go up	filemanager	fi	ylös
+hidden upload	filemanager	fi	Piilotettu lataus
+hidden uploads	filemanager	fi	Piilotetut lataukset
 id	filemanager	fi	Id
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
 if you specify an export definition, it will be used when you export	filemanager	fi	Valitse viennin oletusasetus
@@ -142,6 +145,7 @@ link %1: %2	filemanager	fi	Linkki %1: %2
 link target	filemanager	fi	Linkkikohde
 link target %1 not found!	filemanager	fi	Linkkikohdetta %1 ei löytynyt!
 location	filemanager	fi	Sijainti
+lock	filemanager	fi	Lukitse
 log out as superuser	filemanager	fi	Kirjaudu ulos SuperUserina
 mail files	filemanager	fi	Lähetä sähköpostilla
 max folderlinks	admin	fi	Kansioiden maksimilinkkimäärä
@@ -235,7 +239,7 @@ wrong username or password!	filemanager	fi	Väärä käyttäjätunnus tai salasa
 you are not allowed to upload a script!	filemanager	fi	Sinulla ei ole riittäviä oikeuksia ladata skriptiä!
 you can only grant additional rights, you can not take rights away!	filemanager	fi	Voit ainoastaan antaa lisää oikeuksia, et voi vähentää/ottaa niitä pois!
 you do not have access to %1	filemanager	fi	Sinulla ei ole käyttöoikeutta kohteeseen %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	fi	Vain Super User voi ottaa versioinnin käyttöön tai poistaa sen käytöstä!
+you need to become root, to enable or disable versioning on a directory!	filemanager	fi	Vain supeuser voi ottaa versioinnin käyttöön tai poistaa sen käytöstä!
 you need to select an owner!	filemanager	fi	Valitse omistaja!
 you need to select some files first!	filemanager	fi	Valitse ensin tiedosto!
 you will be redirected to your home directory.	filemanager	fi	Jälleenohjautuu kotihakemistoon.

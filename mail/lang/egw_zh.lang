@@ -1,3 +1,4 @@
+(leave empty for no quota)	mail	zh	(留空表示没有配额)
 (no subject)	mail	zh	(无主题)
 activating by date requires a start- and end-date!	mail	zh	以日期激活需要一个开始和结束日期！
 add to addressbook	mail	zh	添加至通讯录
@@ -13,6 +14,7 @@ check message against next rule also	mail	zh	也用下一个规则检查邮件
 compose	mail	zh	撰写
 compress folder	mail	zh	压缩文件夹
 condition	mail	zh	条件
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	zh	在撰写新邮件时，配置的值将在撰写对话框中自动设置，用于尊重的领域。
 contains	mail	zh	包含
 copy to	mail	zh	复制到
 date(newest first)	mail	zh	日期 (最近邮件优先)
@@ -71,10 +73,13 @@ mail settings	mail	zh	邮件设置
 mark as deleted	mail	zh	标记为已删除
 matches	mail	zh	符合
 matches regexp	mail	zh	符合规则
+modify subject	mail	zh	修改主题
+modify subject of this message	mail	zh	修改此信息的主题
 move selected to	mail	zh	将选定邮件移至
 move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
 never display html emails	mail	zh	从不显示 HTML 邮件
+new subject	mail	zh	新的主题
 no access	mail	zh	无访问
 no plain text part found	mail	zh	未找到纯文本部分
 no recipient address given!	mail	zh	没有给定收件人地址！
@@ -89,6 +94,7 @@ permission denied	mail	zh	没有权限
 please select a address	mail	zh	请选择地址
 please select the number of days to wait between responses	mail	zh	请选择回复之间要等待的天数
 please supply the message to send with auto-responses	mail	zh	请提供要自动回复的内容
+predefined addresses for compose	mail	zh	撰写的预定义地址
 quicksearch	mail	zh	快速搜索
 refresh time in minutes	mail	zh	刷新时间分钟数
 reject with	mail	zh	拒绝
@@ -102,11 +108,14 @@ reply to	mail	zh	回复到
 replyto	mail	zh	回复到
 row order style	mail	zh	行排序类型
 save all	mail	zh	保存所有
+save all attachments to filemanager	mail	zh	保存所有附件到文件管理器
 save as draft	mail	zh	存为草稿
 save as infolog	mail	zh	存为记事本
 save message to disk	mail	zh	保存邮件到磁盘
 select all	mail	zh	全选
+select or insert email address	mail	zh	选择或插入电子邮件地址
 sent folder	mail	zh	发件夹
+set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
 sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
 size(...->0)	mail	zh	大小 (...->0)

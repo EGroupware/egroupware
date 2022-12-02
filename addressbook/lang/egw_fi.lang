@@ -34,7 +34,7 @@ added by synchronisation	addressbook	fi	Lisätty synkronoinnin yhteydessä
 added to distribution list	addressbook	fi	Lisätty jakelulistalle
 additional information about using ldap as contact repository	admin	fi	Lisätietoa LDAP:n käyttämisestä yhteystietojen varastona.
 address book	common	fi	Osoitekirja
-address book - vcard in	addressbook	fi	Osoitekirja - VCard kohteessa
+address book - vcard in	addressbook	fi	Osoitekirja - vCard kohteessa
 address book - view	addressbook	fi	Osoitekirja - näkymä
 address line 2	addressbook	fi	Osoiterivi 2
 address type	addressbook	fi	Osoitteen tyyppi
@@ -164,6 +164,9 @@ don't hide empty columns	addressbook	fi	Älä piiloita tyhjiä sarakkeita
 download	addressbook	fi	Lataa
 download export file (uncheck to debug output in browser)	addressbook	fi	Lataa vientitiedosto (Poista debug valinta selaimesta)
 download this contact as vcard file	addressbook	fi	Lataa tämä kontakti vCard-tiedostona
+duplicate threshold	addressbook	fi	Kaksinkertainen kynnysarvo
+duplicate warning	addressbook	fi	Kaksoiskappaleen varoitus
+duplicates	addressbook	fi	Kaksoiskappaleet
 duration	addressbook	fi	Kesto
 each category in its own field	addressbook	fi	Jokainen kategoria omassa kentissään
 each option in its own field	addressbook	fi	Jokainen arvo omassa kentässään
@@ -189,7 +192,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	fi	Olemassaolevat linkit
 exists	addressbook	fi	Olemassaoleva
 export as csv	addressbook	fi	Vie CSV -muodossa
-export as vcard	addressbook	fi	Vie VCard -muodossa
+export as vcard	addressbook	fi	Vie vCard -muodossa
 export contacts	addressbook	fi	Vie yhteystiedot
 export definition to use for nextmatch export	addressbook	fi	Vienti asetukset 'nextmatch' vientiin
 export definitition to use for nextmatch export	addressbook	fi	Vienti asetukset 'nextmatch' vientiin
@@ -210,6 +213,8 @@ field %1 has been updated !	addressbook	fi	Kenttä %1 on päivitetty!
 field name	addressbook	fi	Kentän nimi
 fields for the csv export	addressbook	fi	Kentät CSV -vientiä varten
 fields the user is allowed to edit himself	admin	fi	Kentät, joita käyttäjä voi itse muuttaa
+fields to check for duplicates	addressbook	fi	Kentät, jotka tarkistetaan päällekkäisyyksien varalta
+fields to consider when looking for duplicate contacts.	addressbook	fi	Kentät, jotka otetaan huomioon, kun etsitään päällekkäisiä yhteystietoja.
 fields to copy when copying an address?	admin	fi	Mitkä kentät kopiodaan osoitteesta?
 fields to show in address list	addressbook	fi	Kentät, jotka näkyvät osoitelistassa
 fieldseparator	addressbook	fi	Kenttäerotin
@@ -225,6 +230,8 @@ grant addressbook access	common	fi	Myönnä ACL-oikeuksia osoitekirjaan
 group %1	addressbook	fi	Ryhmä %1
 h	addressbook	fi	t
 hide accounts from addressbook	addressbook	fi	Piiloita käyttäjätilit osoitekirjasta
+hide all accounts	addressbook	fi	Piilota kaikki tilit
+hide user groups as distribution lists	addressbook	fi	Piilota käyttäjäryhmät jakelulistoiksi
 hides accounts completly from the adressbook.	addressbook	fi	Piiloita käyttäjätilit kokonaan osoitekirjasta.
 history logging	admin	fi	Historialoki
 home address	addressbook	fi	Kotiosoite
@@ -238,6 +245,7 @@ home state	addressbook	fi	Osavaltio (yksit.)
 home street	addressbook	fi	Katuosoite (yksit.)
 home zip code	addressbook	fi	Postinumero (yksit.)
 how many contacts should non-admins be able to export	admin	fi	Kuinka monta yhteystietoa muiden kuin ylläpitäjien sallitaan viedä kerralla?
+how many fields must match for the record to be considered a duplicate.	addressbook	fi	Kuinka monen kentän on täsmättävä, jotta tietue katsotaan kaksoiskappaleeksi.
 icon	addressbook	fi	Kuvake
 if accounts are already in ldap	admin	fi	Jos käyttäjätili on jo LDAP:ssa
 ignore first line	addressbook	fi	Ohita ensimmäinen rivi
@@ -246,16 +254,17 @@ import contacts	addressbook	fi	Tuo yhteystiedot
 import csv-file into addressbook	addressbook	fi	Tuo CSV-tiedosto osoitekirjaan
 import file	addressbook	fi	Tuo tiedosto
 import from	addressbook	fi	Tuo kohteesta:
-import from ldif, csv, or vcard	addressbook	fi	Tuo LDIF-, CSV- tai VCard-muodosta
+import from ldif, csv, or vcard	addressbook	fi	Tuo LDIF-, CSV- tai vCard-muodosta
 import from outlook	addressbook	fi	Tuo Outlookista
-import multiple vcard	addressbook	fi	Tuo useita VCard:ja
+import multiple vcard	addressbook	fi	Tuo useita vCard:ja
 import next set	addressbook	fi	Tuo seuraava ryhmä
 import_instructions	addressbook	fi	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in vCard format.
 importer's personal	addressbook	fi	Tuojan henkilökohtainen
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 in %1 days (%2) is %3's birthday.	addressbook	fi	%1:n päivän kuluttua (%2) on syntymäpäivä henkilöllä %3.
 income	addressbook	fi	Tulo
-infolog	addressbook	fi	InfoLog
+infolog	addressbook	fi	InfoLog Yhteystiedot
+infolog-organisation	addressbook	fi	InfoLog Organisaatio
 insert	addressbook	fi	Syötä
 insufficent rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!
 international	addressbook	fi	Kansainvälinen
@@ -279,7 +288,7 @@ list already exists!	addressbook	fi	Lista on jo olemassa!
 list created	addressbook	fi	Lista luotu
 list creation failed, no rights!	addressbook	fi	Listan luonti epäonnistui, ei riittävästi oikeuksia!
 list of files linked to the current record	addressbook	fi	Lista liitetyistä tiedostoista
-load vcard	addressbook	fi	Lataa VCard
+load vcard	addressbook	fi	Lataa vCard
 location	addressbook	fi	Sijainti
 locations	addressbook	fi	Sijainnit
 mail vcard	addressbook	fi	Lähetä vCard
@@ -287,6 +296,7 @@ main categories in their own field	addressbook	fi	Pääkategoriat omassa kentiss
 manage mapping	addressbook	fi	Hallitse mappingiä
 mark records as private	addressbook	fi	Merkitse tietueet yksityisiksi
 merge contacts	addressbook	fi	Sulauta osoitteet
+merge duplicates	addressbook	fi	Yhdistä kaksoiskappaleet
 merge into first or account, deletes all other!	addressbook	fi	Sulauta ensimmäiseen tietueesseen, poistaa muut tietueet!
 merged	addressbook	fi	Sulautettu
 message after submitting the form	addressbook	fi	Viesti kaavakkeen lähettämisen jälkeen
@@ -301,12 +311,12 @@ modem phone	addressbook	fi	Modem Phone
 more ...	addressbook	fi	Lisää ...
 move to addressbook	addressbook	fi	Siirrä osoitekirjaan
 moved	addressbook	fi	Siirretty
-multiple vcard	addressbook	fi	Monta VCardia
+multiple vcard	addressbook	fi	Monta vCard
 name for the distribution list	addressbook	fi	Nimeä jakelulista
 name of current user, all other contact fields are valid too	addressbook	fi	Nykyisen käyttäjän nimi, myös muut yhteystietokentät ovat voimassa.
 name, address	addressbook	fi	Nimi, osoite
 new contact submitted by %1 at %2	addressbook	fi	Uusi yhteystieto lisätty: %1, %2
-new window opened to edit infolog for your selection	addressbook	fi	Uusi ikkuna avattu, voit muokata valitsemaasi InfoLogia.
+new window opened to edit infolog for your selection	addressbook	fi	Uusi ikkuna avattu, voit muokata valitsemaasi InfoLog.
 next date	addressbook	fi	Seuraava tapaaminen
 no categories selected	addressbook	fi	Kategorioita ei ole valittu
 no country selected	addressbook	fi	Ei valittua maata
@@ -360,6 +370,7 @@ replacements for inserting contacts into documents	addressbook	fi	Komennot (repl
 required fields *	addressbook	fi	Vaaditut kentät *
 role	addressbook	fi	Ammatti
 room	addressbook	fi	Huone
+search letter	addressbook	fi	Hakukirjain
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fi	Valitse jpeg muodossa oleva kuva. Se muokkautuu 60 pikseliä leveäksi kuvaksi.
 select a view	addressbook	fi	Valitse näkymä
 select addressbook type	addressbook	fi	Valitse osoitekirjan tyyppi
@@ -385,7 +396,7 @@ shared into addressbook %1	addressbook	fi	jaettu osoitekirjaan %1
 shared with	addressbook	fi	Jaettu
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	fi	Näytetäänkö kuva- ja kotiosoitesarake aina, vaikka ne olisivat tyhjiä?
 show	addressbook	fi	Näytä
-show infolog entries for this organisation	addressbook	fi	Näytä InfoLogin merkinnät tästä organisaatiosta
+show infolog entries for this organisation	addressbook	fi	Näytä InfoLog merkinnät tästä organisaatiosta
 show the contacts of this organisation	addressbook	fi	Näytä tämän organisaation yhteystiedot
 similar contacts found:	addressbook	fi	Sama yhteystieto löydetty:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	fi	Popup ikkunan koko (korkeus x leveys, esim 400 x 300, jos popup ikkunat ovat käytössä)
@@ -434,16 +445,18 @@ use an extra tab for private custom fields?	admin	fi	Käytä ylimääräistä v�
 use country list	addressbook	fi	Käytä maaluetteloa
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fi	Käytä tägiä esim. osoitetarroihin. Lisää haluamasi kentät kahden tägin väliin.
 used for links and for the own sorting of the list	addressbook	fi	Käytä linkeissä ja omassa lajittelulistassa
+user groups are automatically shown as distribution lists.	addressbook	fi	Käyttäjäryhmät näytetään automaattisesti jakelulistoina.
 user preference	addressbook	fi	Käyttäjäasetukset
-vcard	common	fi	VCard
-vcards require a first name entry.	addressbook	fi	VCard vaatii etunimen.
-vcards require a last name entry.	addressbook	fi	VCard vaatii sukunimen.
+vcard	common	fi	vCard
+vcards require a first name entry.	addressbook	fi	vCard vaatii etunimen.
+vcards require a last name entry.	addressbook	fi	vCard vaatii sukunimen.
 verification	addressbook	fi	Varmentaminen
 view linked infolog entries	addressbook	fi	Näytä linkitetyt InfoLog-merkinnät
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fi	VAROITUS!! LDAP soveltuu vain, jos sitä ei käytetä käyttäjättilien tallentamiseen!
 warning: all contacts found will be deleted!	addressbook	fi	VAROITUS: Kaikki löytyneet osoitteet poistetaan!
 weekday	addressbook	fi	Viikonpäivä
-what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa sovelluksissa esim. InfoLogissa. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa sovelluksissa esim. InfoLog. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	fi	Kun yhdistät merkintöjä asiakirjoihin, ne tallennetaan tähän. Jos hakemistoa ei ole annettu, ne tallennetaan kotihakemistoosi (/home/...).
 where to add the email address	addressbook	fi	Mihin sähköpostiosoite tulisi lisätä?
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fi	Mitä osoitteen muotoa osoitekirja käyttää maista joiden osoitemuoto on tuntematon. Jos maan osoitemuoto on tiedossa, se käyttää sitä riippumatta tästä asetuksesta.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fi	Mihin osoitekirjaan yhteystiedot lisätään, JOS sinulla ei ole ACL-oikeuksia lisätä yhteystietoja valitsemaasi/haluamaasi osoitekirjaan.

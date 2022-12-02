@@ -70,6 +70,7 @@ failed to change password.	preferences	it	Impossibile cambiare la password.
 failed to delete secret!	preferences	it	Non è stato possibile eliminare il codice segreto!
 failed to store secret!	preferences	it	Non è stato possibile salvare il codice segreto!
 fast	preferences	it	Veloce
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	it	L'aggiornamento rapido aggiunge nuove voci sempre in cima all'elenco e aggiorna quelle esistenti al loro posto, a meno che l'elenco non sia ordinato per ultima modifica. Gli aggiornamenti esatti eseguono un aggiornamento completo, se l'elenco non è ordinato in base all'ultima modifica.
 features of the editor	preferences	it	Funzioni dell'editor
 font size unit	preferences	it	Unità misura dimensione font
 forced preferences	preferences	it	Preferenze Forzate
@@ -87,6 +88,7 @@ how many hours are you in front or after the timezone of the server.<br>if you a
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	it	Quante icone devono essere visualizzare nella barra di navigazione in cima alla pagina. Le altre icone saranno nel menu a discesa richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many toolbar buttons are available	preferences	it	Quanti pulsanti dell barra degli strumenti sono disponibili
 how should egroupware display dates for you.	preferences	it	Come EGroupware deve visualizzare le date.
+how to update lists	preferences	it	Come aggiornare gli elenchi
 icon	preferences	it	Icona
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
@@ -94,11 +96,13 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	it	Le immagini collegate ad una voce possono essere mostrate come miniature. Togliere questa opzione per velocizzare il caricamento della pagina.
 in which country are you. this is used to set certain defaults for you.	preferences	it	In quale nazione sei. Sarà usato per impostare alcuni parametri predefiniti.
 interface/template selection	preferences	it	Selezione Interfaccia/Template
+it sets content size (text only) according to selected size.	preferences	it	Imposta le dimensioni del contenuto (solo testo) in base alle dimensioni selezionate.
 just clicking on the line, like a checkbox	preferences	it	semplicemente cliccando sulla riga come se fosse una casella da spuntare
 kama theme	preferences	it	Tema Kama
 language	preferences	it	Lingua
 look & feel	preferences	it	Look & Feel
 lowercase letters	preferences	it	lettere minuscole
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	it	Rendere l'elenco delle applicazioni scrollabile con i pulsanti di scorrimento verso l'alto e verso il basso (utile per gli utenti che lavorano con il mouse senza rotellina).
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
 moono color theme	preferences	it	Colori tema Moono
@@ -148,6 +152,7 @@ selectbox	preferences	it	Casella di selezione
 selectbox with groupmembers	common	it	Selezionare il box con i membri del gruppo
 selectbox with primary group and search	preferences	it	Casella di selezione con gruppo primario e ricerca
 server is unwilling to perform.	preferences	it	Il server non accetta di procedere.
+set content size	preferences	it	Imposta le dimensioni del contenuto
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	it	Impostalo come preferisci. Per ragioni di sicurezza, puoi forzare di non visualizzare la tua Username in pubblico.
 settings	preferences	it	Impostazioni
 setup two factor authentication	preferences	it	Imposta autenticazione a due fattori
@@ -161,6 +166,7 @@ show qrcode	preferences	it	Mostra codice QR
 show qrcode to enable on an additional device.	preferences	it	Mostra il codice QR da abilitare su altro dispositivo
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 show_more_apps	common	it	Visualizza altre applicazioni
+small paragraph	preferences	it	Carattere piccolo
 special characters	preferences	it	caratteri speciali
 spellchecker language	addressbook	it	Lingua del correttore ortografico
 text editor settings	preferences	it	Impostazioni dell'editor di testo

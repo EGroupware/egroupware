@@ -339,7 +339,7 @@ you can either delete some files or get in touch with your administrator to get 
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
 you can use regular upload [+] button to upload files.	filemanager	en	You can use regular upload [+] button to upload files.
 you do not have access to %1	filemanager	en	You do not have access to %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become root, to enable or disable versioning on a folder!
+you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become superuser, to enable or disable versioning on a folder!
 you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
 you will be redirected to your home directory.	filemanager	en	You will be redirected to your home folder.

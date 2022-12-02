@@ -3,16 +3,22 @@ charset for the csv export	addressbook	el	Κωδικοσελίδα για την
 click to select a color	preferences	el	Κάντε κλικ για να επιλέξετε ένα χρ΄'ωμα
 color	preferences	el	Χρώμα
 country	preferences	el	Χώρα
+dark mode theme	preferences	el	Θέμα σκοτεινής λειτουργίας
 default	preferences	el	προκαθορισμένο
 description can not exceed 255 characters in length !	preferences	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
 disable	preferences	el	Απενεργοποίηση
 edit custom fields	preferences	el	Επεξεργασία προσαρμοσμένων πεδίων
 enable	preferences	el	ενεργοποίηση
+fast	preferences	el	Γρήγορο
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	el	Η γρήγορη ενημέρωση προσθέτει νέες καταχωρήσεις πάντα στην κορυφή της λίστας και ενημερώνει τις υπάρχουσες στη θέση τους, εκτός αν η λίστα είναι ταξινομημένη με βάση την τελευταία τροποποίηση. Οι ακριβείς ενημερώσεις κάνουν πλήρη ανανέωση, αν η λίστα δεν είναι ταξινομημένη με βάση την τελευταία τροποποίηση.
 hours	preferences	el	Ωρες
+how to update lists	preferences	el	Πώς να ενημερώσετε λίστες
 icon	preferences	el	Εικόνα
 icons and text	preferences	el	Εικόνες και κείμενο
 icons only	preferences	el	Μόνο εικόνες
+it sets content size (text only) according to selected size.	preferences	el	Ορίζει το μέγεθος του περιεχομένου (μόνο κείμενο) σύμφωνα με το επιλεγμένο μέγεθος.
 selectbox	preferences	el	Κουτί επιλογής
+set content size	preferences	el	Ορισμός μεγέθους περιεχομένου
 text only	preferences	el	Μόνο κείμενο
 the two passwords are not the same	preferences	el	Τα δυο συνθηματικά δέν είναι ίδια
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.

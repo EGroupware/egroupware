@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	el	%1 δημόσια κλειδιά προστέθηκαν.
 %1 records imported	addressbook	el	%1 εγγραφές εισήχθησαν
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	el	%1 εγγραφές αναγνώσθηκαν (δεν εισηχθησαν ακόμη, μπορείτε να %2επιστρέψετε%3 και να ξετσεκάρετε τη Δοκιμαστική Εισαγωγή)
+%1 shared this contact on %2 with %3 %4	addressbook	el	%1 μοιράστηκε αυτή την επαφή στο %2 %3 %4
 %1 starts with '%2'	addressbook	el	%1 ξεκινά με '%2'
 %s please calculate the result	addressbook	el	%s παρακαλώ υπολογίστε το αποτέλεσμα
 (e.g. 1969)	addressbook	el	(π.χ. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	el	προστέθηκε συγχρονισ�
 added to distribution list	addressbook	el	προστέθηκε στη λίστα διανομής
 additional information about using ldap as contact repository	admin	el	Επιπρόσθετες πληροφορίες για τη χρήση του LDAP ως αποθήκη επαφής
 address book	common	el	Επαφές
-address book - vcard in	addressbook	el	Επαφές - VCard in
+address book - vcard in	addressbook	el	Επαφές - vCard in
 address book - view	addressbook	el	Επαφές - εμφάνιση
 address line 2	addressbook	el	Γραμμή Διευθύνσεων 2
 address line 2 (private)	addressbook	el	Γραμμή Διευθύνσεων 2 (προσ.)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	el	Βιβλίο διαυθύ
 addressbook vcard export	addressbook	el	Βιβλίο διευθύνσεων εξαγωγή vCard
 addressbook vcard import	addressbook	el	Βιβλίο διευθύνσεων εισαγωγή  vCard
 addressbook-fieldname	addressbook	el	Επαφές-Πεδίο ονόματος
-addvcard	addressbook	el	Προσθήκη VCard
+addvcard	addressbook	el	Προσθήκη vCard
 advanced search	addressbook	el	Αναζήτηση για προχωρημένους
 all addressbooks	addressbook	el	Όλα τα  βιβλία διευθύνσεων
 all contacts	addressbook	el	Όλες οι επαφές
@@ -232,7 +233,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	e
 existing links	addressbook	el	Υπάρχοντες σύνδεσμοι
 exists	addressbook	el	Υπάρχει
 export as csv	addressbook	el	Εξαγωγή ως CSV
-export as vcard	addressbook	el	Εξαγωγή ως VCard
+export as vcard	addressbook	el	Εξαγωγή ως vCard
 export contacts	addressbook	el	Εξαγωγή επαφών
 export definition to use for nextmatch export	addressbook	el	Εξαγωγή ορισμών για χρήση στην εξαγωγή nextmatch
 export definitition to use for nextmatch export	addressbook	el	Εξαγωγή ορισμών για χρήση στην εξαγωγή nextmatch
@@ -298,17 +299,17 @@ import contacts	addressbook	el	Εισαγωγή επαφών
 import csv-file into addressbook	addressbook	el	Εισαγωγή αρχείου CSV στο βιβλίο Διευθύνσεων
 import file	addressbook	el	Εισαγωγή Αρχείου
 import from	addressbook	el	Εισαγωγή από
-import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV, ή VCard
+import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV, ή vCard
 import from outlook	addressbook	el	Εισαγωγή από το Outlook
-import multiple vcard	addressbook	el	Εισαγωγή  πολλαπλών VCard
+import multiple vcard	addressbook	el	Εισαγωγή  πολλαπλών vCard
 import next set	addressbook	el	Εισαγωγή επόμενου σετ
-import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε VCard μορφή.
+import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε vCard μορφή.
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων από ένα αρχείο CSV ( 'Comma Separated Values'). Στις σχετικές ρυθμίσεις μπορείτε να επιλέξετε και χαρακτήρα διαχωρισμού.
 imports contacts into your addressbook from a vcard file.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων σας από ένα αρχείο vCard
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
 income	addressbook	el	Εισόδημα
-infolog	addressbook	el	InfoLog
-infolog-organisation	addressbook	el	Άνοιγμα εμφάνισης Infolog CRM του οργανισμού
+infolog	addressbook	el	InfoLog Επικοινωνία
+infolog-organisation	addressbook	el	Οργάνωση InfoLog
 insert	addressbook	el	Εισαγωγή
 insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικαιώματα για διαγραφή αυτής της λίστας!
 insufficent rights to edit this list!	addressbook	el	Ανεπαρκή δικαιώματα για την επεξεργασία αυτής της λίστας!
@@ -333,10 +334,11 @@ list already exists!	addressbook	el	Η λίστα υπάρχει ήδη
 list created	addressbook	el	Η λίστα δημιουργήθηκε
 list creation failed, no rights!	addressbook	el	Η δημιουργία της λίστας απέτυχε, δεν έχετε το δικαίωμα!
 list of files linked to the current record	addressbook	el	Λίστα αρχείων συνδεδεμένα με την τρέχουσα εγγραφή
-load vcard	addressbook	el	Φόρτωση VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	el	Φόρτωση προσαρμοσμένων πεδίων στο ευρετήριο, ακόμη και αν η στήλη προσαρμοσμένου πεδίου είναι απενεργοποιημένη (π.χ. για να τα εμφανίσετε σε μια συγκεκριμένη στήλη ευρετηρίου)
+load vcard	addressbook	el	Φόρτωση vCard
 location	addressbook	el	Τοποθεσία
 locations	addressbook	el	τοποθεσίες
-mail vcard	addressbook	el	Αποστολή VCard με ηλεκτρονικό ταχυδρομείο
+mail vcard	addressbook	el	Αποστολή vCard με ηλεκτρονικό ταχυδρομείο
 main categories in their own field	addressbook	el	Κύριες κατηγορίες στο δικό τους πεδίο
 manage mapping	addressbook	el	Επεξεργασία αντιστοιχίσεων
 mark records as private	addressbook	el	Σημείωση εγγραφών ως ιδιωτικές
@@ -356,24 +358,25 @@ modem phone	addressbook	el	Τηλέφωνο modem
 more ...	addressbook	el	Περισσότερα
 move to addressbook	addressbook	el	Μεταφορά στο βιβλίο διευθύνσεων
 moved	addressbook	el	μετακινήθηκε
-multiple vcard	addressbook	el	Πολλαπλή VCard
+multiple vcard	addressbook	el	Πολλαπλή vCard
 name for the distribution list	addressbook	el	Όνομα για την λίστα διανομής
 name of current user, all other contact fields are valid too	addressbook	el	Όνομα του συνδεδεμένου χρήστη,  επίσης ισχύουν όλα τα πεδία επαφών.
 name, address	addressbook	el	Όνομα, Διεύθυνση
 new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
-new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του Infolog
+new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του InfoLog
 next date	addressbook	el	Επόμενη ημερομηνία
 no categories selected	addressbook	el	Δεν έχουν επιλεγεί κατηγορίες
 no country selected	addressbook	el	Δεν έχει επιλεγεί χώρα
 no distribution list	addressbook	el	Δεν υπάρχει λίστα διανομής
 no fallback	addressbook	el	Δεν υπάρχει εναλλακτική
-no vcard	addressbook	el	Οχι VCard
+no vcard	addressbook	el	Οχι vCard
+not shared	addressbook	el	δεν μοιράζεται
 number	addressbook	el	Αριθμός
 number of records to read (%1)	addressbook	el	Αριθμός εγγραφών προς ανάγνωση (%1)
 open %1 crm view	addressbook	el	Άνοιγμα %1 σε εμφάνιση CRM
 open email addresses in external mail program	addressbook	el	Άνοιγμα διευθύνσεων ηλεκτρονικού ταχυδρομείου σε εξωτερική εφαρμογή
 open for editing?	addressbook	el	Άνοιγμα για επεξεργασία;
-open infolog crm view	preferences	el	Άνοιγμα εμφάνισης Infolog CRM της επαφής
+open infolog crm view	preferences	el	Άνοιγμα εμφάνισης InfoLog CRM της επαφής
 open tracking system crm view	preferences	el	Άνοιγμα εμφάνισης Tracker System CRM
 options for type	admin	el	Επιλογές για τον τύπο
 organisation	addressbook	el	οργανισμός
@@ -501,6 +504,8 @@ unable to import into %1, using %2	addressbook	el	Αδυναμία εισαγω�
 unique id (uid)	addressbook	el	Μοναδικό (Unique) ID (UID)
 unique id<br />(to update existing records)	addressbook	el	Μοναδικό (Unique) ID (UID)<br/>για την ενημέρωση υφιστάμενων εγγραφών
 unknown type %1, imported as %2	addressbook	el	Άγνωστος τύπος %1, έγινε εισαγωγή ως %2
+unshare	addressbook	el	Δεν μοιράζεται πλέον
+unshared	addressbook	el	δεν μοιράζεται πλέον
 update a single entry by passing the fields.	addressbook	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία.
 update fields by edited organisations?	admin	el	Πεδία που πρέπει να ενημερώνονται όταν γίνεται επεξεργασία οργανισμού.
 updated	addressbook	el	Ενημερώθηκε
@@ -515,9 +520,9 @@ use setup for a full account-migration	admin	el	χρήση της εγκατάσ
 used for links and for the own sorting of the list	addressbook	el	χρησιμοποιείται για συνδέσμους και προσωπικές ταξινομήσεις της λίστας
 user groups are automatically shown as distribution lists.	addressbook	el	Οι ομάδες χρηστών εμφανίζονται αυτόματα ως λίστες διανομής.
 user preference	addressbook	el	Επιλογή χρήστη
-vcard	common	el	VCard
-vcards require a first name entry.	addressbook	el	VCards απαιτούν καταχώρηση ονόματος
-vcards require a last name entry.	addressbook	el	VCards απαιτούν καταχώρηση επίθετου
+vcard	common	el	vCard
+vcards require a first name entry.	addressbook	el	vCards απαιτούν καταχώρηση ονόματος
+vcards require a last name entry.	addressbook	el	vCards απαιτούν καταχώρηση επίθετου
 verification	addressbook	el	Επαλήθευση
 view linked infolog entries	addressbook	el	Εμφάνιση συνδεδεμένων καταχωρήσεων του InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! Το LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση λογαριασμών!
@@ -541,13 +546,14 @@ yes, for the next week	addressbook	el	Ναι, για την επόμενη εβ�
 yes, for today and tomorrow	addressbook	el	Ναι, για σήμερα και αύριο
 yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
 yes, users can purge their deleted items	admin	el	Ναι, οι χρήστες μπορούν να καθαρίζουν τα διαγραμμένα αντικείμενα
+you are not allowed to share into the addressbook of %1	addressbook	el	Δεν επιτρέπεται η κοινή χρήση στο βιβλίο διευθύνσεων %1
 you are not permitted to delete contact %1	addressbook	el	Δεν έχετε άδεια να διαγράψετε την επαφή %1
 you are not permittet to delete this contact	addressbook	el	Δεν έχετε άδεια να διαγράψετε αυτήν την επαφή
 you are not permittet to edit this contact	addressbook	el	Δεν έχετε άδεια να επεξεργαστείτε αυτήν την επαφή
 you are not permittet to view this contact	addressbook	el	Δεν έχετε άδεια να δείτε τα στοιχεία αυτής της επαφής
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	el	Μπορείτε να χρησιμοποιήσετε το LDAP ως αποθήκη επαφής μόνο αν οι λογαριασμοί αποθηκεύονται στο LDAP επίσης!
 you can respond by visiting:	addressbook	el	Για να το δείτε επισκεφθείτε:
-you must select a vcard. (*.vcf)	addressbook	el	Πρέπει να επιλέξετε μια VCard (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	el	Πρέπει να επιλέξετε μια vCard (*.vcf)
 you must select at least 1 column to display	addressbook	el	Πρέπει να επιλέξετε τουλάχιστο μία στήλη για εμφάνιση
 you need to select a distribution list	addressbook	el	Πρέπει να επιλέξετε μια λίστα διανομής
 you need to select some contacts first	addressbook	el	Πρέπει να επιλέξετε κάποιες επαφές πρώτα
