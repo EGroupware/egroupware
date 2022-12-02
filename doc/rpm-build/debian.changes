@@ -1,3 +1,17 @@
+egroupware-docker (21.1.20221202) hardy; urgency=low
+
+  * PHP 8.1: our standard container uses now PHP 8.1, as 7.4 no longer receives security updates from PHP project itself
+  * PHP 7.4: there will be a container with PHP 7.4 with tag 21.1-7.4, which you can use on your own risk, we recommend NOT to use it
+  * SiteMgr, KnowledgeBase, Wiki under PHP 8.1: see https://github.com/EGroupware/egroupware/wiki/Running-own-apps-in-standard-Docker-installation
+  * smallPART: add start-page with course information and optional disclaimer to confirm when subscribe to a course
+  * Resources: Customfields can now be per category
+  * Collabora: use hostname of request to allow calling CO with different hostnames like EGroupware (eg. an internal and external one)
+  * MySQL 8.0: fix DB backup recorded Int columns as TinyInt and stalls restore
+  * MySQL 8.0: timestamp columns had no default and did not update automatic
+  * Setup: add dry-run option to account import from AD or LDAP
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 02 Dec 2022 10:36:07 +0100
+
 egroupware-docker (21.1.20220916) hardy; urgency=low
 
   * Mail/RichTextEditor: common preference "small paragraph" now changes return key to a line break instead of a paragraph (with margin)
