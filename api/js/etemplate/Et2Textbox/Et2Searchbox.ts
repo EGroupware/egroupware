@@ -61,6 +61,9 @@ export class Et2Searchbox extends Et2Textbox
 		{
 			event.preventDefault();
 
+			// Stop from bubbling; enter in search is just for here.
+			event.stopPropagation();
+
 			this._oldChange(event);
 		}
 	}
