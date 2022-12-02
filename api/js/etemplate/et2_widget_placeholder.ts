@@ -191,7 +191,8 @@ export class et2_placeholder_select extends et2_inputWidget
 			buttons: buttons,
 			value: data,
 			template: this.egw().webserverUrl + this.TEMPLATE,
-			resizable: true
+			resizable: true,
+			width: ''
 		});
 		document.body.appendChild(<HTMLElement><unknown>this.dialog);
 		this.dialog.addEventListener('open', this._on_template_load.bind(this));
@@ -249,7 +250,7 @@ export class et2_placeholder_select extends et2_inputWidget
 			let options = this._get_placeholders(app.get_value(), group.get_value())
 			placeholder_list.set_select_options(options);
 			preview.set_value("");
-			placeholder_list.set_value(options[0].value);
+			placeholder_list.updateComplete.then(() => placeholder_list.set_value(options[0].value));
 		}
 		placeholder_list.onchange = this._on_placeholder_select.bind(this);
 		entry.onchange = this._on_placeholder_select.bind(this);
@@ -280,7 +281,7 @@ export class et2_placeholder_select extends et2_inputWidget
 		// Show the selected placeholder
 		this.set_value(placeholder_list.get_value());
 		preview.set_value(placeholder_list.get_value());
-		preview.getDOMNode().parentNode.style.visibility = placeholder_list.get_value().trim() ? null : 'hidden';
+		preview.getDOMNode().parentNode.style.visibility = placeholder_list.get_value()?.trim() ? null : 'hidden';
 
 		if(placeholder_list.get_value() && entry.get_value())
 		{
