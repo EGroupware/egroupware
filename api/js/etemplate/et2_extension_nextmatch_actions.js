@@ -476,7 +476,6 @@ export function nm_open_popup(_action, _selected)
 			if (index == 0)
 			{
 				button.variant = "primary";
-				button.outline = true;
 			}
 			let button_click = button.onclick;
 			button.onclick = (e) =>

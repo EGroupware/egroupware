@@ -3752,7 +3752,8 @@ table.et2_grid > tbody > tr > td:last-child {
     padding-top: 10px !important;
 }
 
-.dialogFooterToolbar et2-button::part(base):not(:hover) {
+.dialogFooterToolbar et2-button::part(base):not(:hover),
+et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
     background: hsl(240 4.8% 95.9%);
 }
 

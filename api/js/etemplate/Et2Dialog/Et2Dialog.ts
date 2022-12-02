@@ -204,6 +204,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
           			border-bottom: 1px inset;
 				}
 				.dialog__title {
+					font-size: var(--sl-font-size-medium);
 					user-select: none;
 				}
 				.dialog__close {
@@ -846,7 +847,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
                             .noSubmit=${true}
                             ?disabled=${button.disabled}
                             variant=${isDefault ? "primary" : "default"}
-                            ?outline=${isDefault}
                             align=${ifDefined(button.align)}>
                 </et2-button>
 			`
@@ -896,7 +896,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			if(template_buttons[0]?.instanceOf(Et2Button))
 			{
 				template_buttons[0].variant = "primary";
-				template_buttons[0].outline = true;
 			}
 			template_buttons.forEach((button) =>
 			{

@@ -115,6 +115,23 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 				padding-inline-start: 0;			
 			}
 			
+			/* Override primary styling - we use variant=primary on first dialog button */
+			.button--standard.button--primary {
+				background-color: var(--sl-color-gray-200);
+				border-color: var(--sl-color-gray-400);
+				color: var(--sl-input-color-hover);
+			}
+			.button--standard.button--primary:hover:not(.button--disabled),
+			.button--standard.button--primary.button--checked:not(.button--disabled) {
+				background-color: var(--sl-color-gray-200);
+				border-color: var(--sl-color-gray-600);
+				color: initial;
+			}
+			.button--standard.button--primary:active:not(.button--disabled) {
+				border-color: var(--sl-color-gray-700);
+				background-color: var(--sl-color-gray-300);
+				color: initial;
+			}
             `,
 		];
 	}
