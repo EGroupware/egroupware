@@ -305,13 +305,14 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			self.resetDirty();
 			if (self.editor && self.editor.editorContainer)
 			{
+				const activeElement = document.activeElement;
 				self.editor.formatter.toggle(rte_formatblock);
 				jQuery(self.editor.editorContainer).height(self.options.height);
 				jQuery(self.editor.iframeElement.contentWindow.document).on('dragenter', function(){
 					if (jQuery('#dragover-tinymce').length < 1) jQuery("<style id='dragover-tinymce'>.dragover:after {height:calc(100% - "+jQuery(this).height()+"px) !important;}</style>").appendTo('head');
 				});
-				//set back focus to the first field in the form
-				self.getInstanceManager().focusOnFirstInput();
+				// give focus back
+				activeElement && activeElement.focus && activeElement.focus();
 			}
 		});
 	}
