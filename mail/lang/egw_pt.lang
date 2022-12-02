@@ -46,6 +46,7 @@ compose as new	mail	pt	Compor como novo
 compress folder	mail	pt	Comprimir pasta
 condition	mail	pt	Condição
 configuration settings	mail	pt	As definições de configuração
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pt	Os valores configurados serão definidos automaticamente no diálogo de composição para um campo respeitado quando se compõe um novo e-mail.
 confirm attach message	mail	pt	Confirme anexar mensagem
 confirm move to folder	mail	pt	Confirme Mover para pasta
 connect to profile %1	mail	pt	Conecte-se ao Perfil 1%
@@ -209,6 +210,8 @@ message preview area	mail	pt	Área de visualização de mensagens
 message saved successfully.	mail	pt	Mensagem gravada com sucesso.
 message send failed: %1	mail	pt	Mensagem de envio falhou:% 1
 message send successfully.	mail	pt	Mensagem enviar com êxito.
+modify subject	mail	pt	Modificar o assunto
+modify subject of this message	mail	pt	Modificar o assunto desta mensagem
 move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
@@ -217,6 +220,7 @@ name of account	mail	pt	Nome da conta
 never display html emails	mail	pt	Nunca apresentar mensagens HTML
 new mail notification	mail	pt	Notificação de correio Nova
 new message type	mail	pt	Novo tipo de mensagem
+new subject	mail	pt	Novo tema
 no (valid) send folder set in preferences	mail	pt	Não (válido) Enviar pasta definido nas preferências
 no access	mail	pt	sem acesso
 no action defined!	mail	pt	Nenhuma ação definida!
@@ -248,6 +252,7 @@ please select a address	mail	pt	Por favor, seleccione um endereço
 please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
 please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
 post	mail	pt	cargo
+predefined addresses for compose	mail	pt	Endereços pré-definidos para composição
 prevent managing filters	mail	pt	Impedir filtros gestão
 prevent managing folders	mail	pt	Impedir pastas gestão
 prevent managing notifications	mail	pt	Impedir notificações gestão
@@ -285,6 +290,7 @@ row order style	mail	pt	estilo ordem de linha
 rule priority position	mail	pt	Regra posição prioridade
 rule with priority	mail	pt	governar com prioridade
 save all	mail	pt	Guardar tudo
+save all attachments to filemanager	mail	pt	Guardar todos os anexos para o gestor de ficheiros
 save as default	mail	pt	salvar como padrão
 save as draft	mail	pt	Salvar como rascunho
 save as draft and print	mail	pt	Salvar como rascunho e impressão
@@ -302,6 +308,7 @@ select all	mail	pt	Selecionar todos
 select file to attach to message	mail	pt	Selecione o arquivo para anexar a mensagem
 select file to import into folder	mail	pt	Selecione o arquivo para importar para pasta
 select file(s) from vfs	mail	pt	Selecione o arquivo (s) a partir de VFS
+select or insert email address	mail	pt	Seleccionar ou inserir endereço de e-mail
 selected	mail	pt	selecionado
 send a reject message:	mail	pt	Enviar uma mensagem de rejeitar:
 sender	mail	pt	remetente
@@ -313,6 +320,7 @@ set / remove flags	mail	pt	Set / Remover Bandeiras
 set / remove labels	mail	pt	Set / Remover Rótulos
 set flags	mail	pt	Bandeiras de bandeira
 set it as default:	mail	pt	defini-lo como padrão:
+set predefined values for compose...	mail	pt	Definir valores pré-definidos para compor ...
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 show all folders	mail	pt	mostrar todas as pastas
 show new messages on home page	mail	pt	mostrar novas mensagens em home page

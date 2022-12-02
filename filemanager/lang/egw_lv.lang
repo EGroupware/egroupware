@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	lv	%1 jau pastāv kā fails
+%1 files unlocked.	filemanager	lv	%1 faili atbloķēti.
 actions	filemanager	lv	Darbības
 administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
@@ -40,9 +41,12 @@ go home	filemanager	lv	iet uz Mājām
 go to	filemanager	lv	Iet Uz
 go to your home directory	filemanager	lv	Iet uz mājas direktoriju
 go up	filemanager	lv	pārvietoties uz augšu
+hidden upload	filemanager	lv	Slēptā augšupielāde
+hidden uploads	filemanager	lv	Slēptās augšupielādes
 id	filemanager	lv	ID
 link	filemanager	lv	Saite
 location	filemanager	lv	Atrašanās vieta
+lock	filemanager	lv	Bloķēt
 mime type	filemanager	lv	MIME tips
 modified	filemanager	lv	Pārveidots
 move	filemanager	lv	pārvietot
@@ -77,4 +81,5 @@ upload fields	filemanager	lv	augšupielādēt laukus
 upload files	filemanager	lv	Augšupielādēt datnes
 used space	filemanager	lv	Izmantotais apjoms
 you do not have access to %1	filemanager	lv	Tev nav pieeja %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	lv	Jums jākļūst par superuser, lai iespējotu vai atspējotu versiju iestatīšanu mapē!
 your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, EGroupware izveidoja jaunu!

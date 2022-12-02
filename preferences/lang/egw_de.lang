@@ -15,7 +15,7 @@ audio effect	preferences	de	Audio-Effekt
 audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
-automatically start with this format block. custom paragraph adds less line space between new lines.	preferences	de	Startet automatisch mit dieser Formatierung.<br/> <b>Schmaler Absatz</b> erzeugt einen geringeren Zeilenabstand.
+automatically start with this format block. small paragraph adds less line space between new lines.	preferences	de	Startet mit diesem Format. "Schmaler Absatz" fügt weniger Zeilenabstand zwischen neuen Zeilen hinzu.
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
@@ -31,7 +31,6 @@ color	preferences	de	Farbe
 country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
-small paragraph	preferences	de	Schmaler Absatz
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark mode theme	preferences	de	Dark Mode Thema
 dark moono theme	preferences	de	Dunkles Moono Schema
@@ -102,6 +101,7 @@ if a line is already selected, further lines get either selected by holding ctrl
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
+it sets content size (text only) according to selected size.	preferences	de	Stellt die Schriftgröße des Inhalts (nur Text) entsprechend der gewählten Größe ein.
 just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
 kama theme	preferences	de	Kama Farbschema
 language	preferences	de	Sprache
@@ -157,10 +157,11 @@ selectbox	preferences	de	Auswahlfeld
 selectbox with groupmembers	common	de	Auswahlbox mit Gruppenmitgliedern
 selectbox with primary group and search	preferences	de	Auswahlfeld mit primärer Gruppe und Suche
 server is unwilling to perform.	preferences	de	Server ist unwillig die Änderung auszuführen.
+set content size	preferences	de	Größe des Inhalts festlegen
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	de	Stellen Sie das nach Ihren Vorlieben ein. Aus Sicherheitsgründen sollte der Benutzername nicht in der Öffentlichkeit gezeigt werden.
 settings	preferences	de	Einstellungen
 setup two factor authentication	preferences	de	Setup 2-Faktor-Authentifizierung
-should the number of active sessions be displayed for you all the time.	preferences	de	Zeigt die Anzahl aktiver Sitzungen permanent unten rechts an.
+should the number of active sessions be displayed for you all the time.	preferences	de	Zeigt die Anzahl aktiver Sitzungen im Avatar-Menü an.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn Sie die Einstellungen aufrufen oder nur auf Anforderung?
 show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
 show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Anwendungen als
@@ -170,6 +171,7 @@ show qrcode	preferences	de	QR-Code anzeigen
 show qrcode to enable on an additional device.	preferences	de	Zeigt den QRCode wieder an um ihn auf weiteren Geräten einzurichten.
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
+small paragraph	preferences	de	Schmaler Absatz
 special characters	preferences	de	Sonderzeichen
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 text editor settings	preferences	de	Einstellungen des Texteditors

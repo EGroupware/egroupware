@@ -1,4 +1,5 @@
 %1 files	common	id	%1 berkas
+%1 files unlocked.	filemanager	id	%1 file tidak terkunci.
 %1 starts with '%2'	filemanager	id	%1 diawali dengan '%2'
 accessrights	filemanager	id	Hak akses
 acl added.	filemanager	id	ACL ditambakan.
@@ -48,10 +49,13 @@ general fields:	filemanager	id	Field Umum:
 go home	filemanager	id	go home
 go to	filemanager	id	Menuju
 go up	filemanager	id	go up
+hidden upload	filemanager	id	Unggahan tersembunyi
+hidden uploads	filemanager	id	Unggahan tersembunyi
 id	filemanager	id	ID
 inherited	filemanager	id	Inherited
 link	filemanager	id	Tautan
 location	filemanager	id	Lokasi
+lock	filemanager	id	Kunci
 max folderlinks	admin	id	max folderlinks
 mime type	filemanager	id	mime type
 modified	filemanager	id	diubah
@@ -91,3 +95,4 @@ total files	filemanager	id	Total Berkas
 unused space	filemanager	id	Ruang tidak digunakan
 up	filemanager	id	Up
 used space	filemanager	id	Ruang digunakan
+you need to become root, to enable or disable versioning on a directory!	filemanager	id	Anda perlu menjadi superuser, untuk mengaktifkan atau menonaktifkan versi pada folder!

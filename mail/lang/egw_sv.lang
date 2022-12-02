@@ -1,3 +1,4 @@
+(leave empty for no quota)	mail	sv	(Lämna tomt för ingen kvot)
 (no subject)	mail	sv	(ingen rubrik)
 add to addressbook	mail	sv	Lägg till i Adressbok
 all of	mail	sv	Alla
@@ -12,6 +13,7 @@ check message against next rule also	mail	sv	Verifiera meddelande även mot näs
 compose	mail	sv	Skriv
 compress folder	mail	sv	Komprimera katalog
 condition	mail	sv	vilkor
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sv	De konfigurerade värdena kommer att ställas in automatiskt i dialogrutan för det respekterade fältet när du skriver ett nytt e-postmeddelande.
 contains	mail	sv	Innehåller
 copy to	mail	sv	Kopiera
 date(newest first)	mail	sv	Datum (nyaste först)
@@ -73,10 +75,13 @@ mail settings	mail	sv	E-post alternativ
 mark as deleted	mail	sv	Markera som raderad
 matches	mail	sv	Matchar
 matches regexp	mail	sv	Matchar regexp
+modify subject	mail	sv	Ändra ämne
+modify subject of this message	mail	sv	Ändra ämnet för detta meddelande
 move selected to	mail	sv	Flytta valda till
 move to	mail	sv	Flytta valda till
 move to trash	mail	sv	Flytta till Borttaget
 never display html emails	mail	sv	Visa inte HTML meddelanden
+new subject	mail	sv	Nytt ämne
 no plain text part found	mail	sv	Hittade inget textfält
 on	mail	sv	På
 one address is not valid	mail	sv	En adress är ogiltig
@@ -87,6 +92,7 @@ permission denied	mail	sv	Åtkomst nekad
 please select a address	mail	sv	Välj adress
 please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
 please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
+predefined addresses for compose	mail	sv	Fördefinierade adresser för sammansättning
 quicksearch	mail	sv	Snabbsök
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
@@ -100,12 +106,15 @@ reply to	mail	sv	Svara till
 replyto	mail	sv	Svara till
 row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
+save all attachments to filemanager	mail	sv	Spara alla bilagor i filhanteraren
 save as draft	mail	sv	Spara som utkast
 save as infolog	mail	sv	Spara som InfoLogg
 save message to disk	mail	sv	Spara meddelanden till disk
 select all	mail	sv	Välj samtliga
+select or insert email address	mail	sv	Välj eller infoga e-postadress
 sent folder	mail	sv	Skickat katalog
 set flags	mail	sv	Markera e-post som
+set predefined values for compose...	mail	sv	Ställ in fördefinierade värden för sammansättning ...
 sieve	mail	sv	Sieve
 sieve script name	mail	sv	Sieve skript namn
 signature	mail	sv	Signatur

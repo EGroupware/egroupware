@@ -14,6 +14,7 @@
 %1 files deleted.	filemanager	ja	%1 個のファイルを削除しました。
 %1 files moved.	filemanager	ja	%1 個のファイルを移動しました。
 %1 files or directories deleted in %2 seconds.	filemanager	ja	%1 個のファイル/ディレクトリを削除しました。(所要時間 %2秒）
+%1 files unlocked.	filemanager	ja	1ファイルのロックが解除されました。
 %1 shares deleted.	filemanager	ja	%1 個の共有を削除しました。
 %1 starts with '%2'	filemanager	ja	%1 は '%2' から始まります。
 %1 successful unmounted.	filemanager	ja	%1 をアンマウントしました。
@@ -86,7 +87,7 @@ defines how to open a merge print document	filemanager	ja	マージ印刷ドキ�
 delete all older versions and deleted files older then %s days	filemanager	ja	古いバージョン、および %s 日以上前に削除したファイルを全て削除
 delete these files or directories?	filemanager	ja	これらのファイル/ディレクトリを削除しますか？
 delete these shares?	filemanager	ja	これらの共有を削除しますか？
-delete this extended ACL?	filemanager	ja	この拡張ACLを削除しますか？
+delete this extended acl?	filemanager	ja	この拡張ACLを削除しますか？
 delete this file or directory	filemanager	ja	このファイル/ディレクトリを削除しますか？
 deleted %1	filemanager	ja	%1を削除しました。
 directories sorted in	filemanager	ja	ディレクトリ: 格納先
@@ -121,11 +122,10 @@ error unmounting %1!	filemanager	ja	%1 をアンマウント中にエラー!
 error uploading file!	filemanager	ja	ファイルのアップロード中にエラー!
 error while creating directory.	filemanager	ja	ディレクトリの作成中にエラー
 everyone	filemanager	ja	Everyone
-Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	filemanager	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
-Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	filemanager	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
-Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
-Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
-Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	filemanager	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
 excludes selected mime types	filemanager	ja	選択されたMIMEタイプを除外する
 excludes selected mime types from being opened by editor	filemanager	ja	選択されたMIMEタイプを、エディタで開く対象から除外する
 executable	filemanager	ja	実行可能
@@ -168,9 +168,11 @@ go home	filemanager	ja	ホーム
 go to	filemanager	ja	移動:
 go to your home directory	filemanager	ja	ホーム・ディレクトリに移動
 go up	filemanager	ja	上に移動
+hidden upload	filemanager	ja	隠しアップロード
+hidden uploads	filemanager	ja	非表示のアップロード
 id	filemanager	ja	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	calendar	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ja	ドキュメント（VFS フルパス）を指定すると、%1の各項目ごとに拡張ドキュメント・アイコンが表示され、ドキュメントをダウンロードすることができるようになります。
 if you specify an export definition, it will be used when you export	filemanager	ja	エクスポート時に使用する設定を指定します。
 if you specify an export definition, it will be used when you export*	filemanager	ja	エクスポート時に使用する設定を指定します。*
 inherited	filemanager	ja	継承
@@ -182,6 +184,7 @@ link target	filemanager	ja	リンク先
 link target %1 not found!	filemanager	ja	リンク先 %1 が見つかりません!
 list view	filemanager	ja	一覧表示
 location	filemanager	ja	場所
+lock	filemanager	ja	ロック
 log out as superuser	filemanager	ja	スーパー・ユーザからログアウト
 mail files	filemanager	ja	メール・ファイル
 mail paste	filemanager	ja	メール貼り付け
@@ -189,7 +192,7 @@ max folderlinks	admin	ja	フォルダ・リンクの最大数
 merge print open handler	filemanager	ja	印刷オープン・ハンドラをマージ
 mime type	filemanager	ja	MIMEタイプ
 modified	filemanager	ja	変更日時
-modified between	filemanager	ja	変更: 
+modified between	filemanager	ja	変更:
 modify all subdirectories and their content	filemanager	ja	全サブフォルダおよびその内容を変更
 mount	filemanager	ja	マウント
 mount /etemplates to allow customizing of etemplates	filemanager	ja	eTemplate のカスタマイズを許可するために /etemplates をマウント
@@ -272,7 +275,7 @@ symlink to %1 created.	filemanager	ja	%1 に対するシンボリック・リン
 tag to mark positions for address labels	filemanager	ja	アドレスラベルで、位置を記録するためのタグ
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	ja	既定の開始フォルダは個人フォルダです。空に設定したり、指定されたパスが存在しない/アクセス権が無い場合は、既定値が使用されます。
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ja	ドキュメントにはプレース・ホルダー（例: {{%3}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます（%1 全プレース・ホルダー一覧 %2）。
-the following document-types are supported:	filemanager	ja	下記のドキュメント・タイプがサポートされます: 
+the following document-types are supported:	filemanager	ja	下記のドキュメント・タイプがサポートされます:
 the requested path %1 is not available.	filemanager	ja	指定されたパス %1 は利用できません!
 there's already a directory with that name!	filemanager	ja	同名のディレクトリが既に存在します!
 there's already a file with that name!	filemanager	ja	同名のファイルが既に存在します!
@@ -293,7 +296,7 @@ users and groups	filemanager	ja	ユーザとグループ
 versioning	filemanager	ja	バージョン管理
 vfs mounts and versioning	common	ja	VFS マウントとバージョン管理
 webdav link copied into clipboard	filemanager	ja	WebDAV リンクをクリップボードにコピーしました
-who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ja	完全削除（古いバージョンや削除済みファイルを削除すること）ができるユーザ: 
+who should be allowed to finally delete deleted files or old versions of a file:	filemanager	ja	完全削除（古いバージョンや削除済みファイルを削除すること）ができるユーザ:
 writable share link	filemanager	ja	書き込み可能共有リンク
 wrong username or password!	filemanager	ja	ユーザ名またはパスワードが不正です!
 you are not allowed to finally delete older versions and deleted files!	filemanager	ja	完全削除を実行する権限がありません!

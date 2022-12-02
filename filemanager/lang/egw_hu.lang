@@ -11,6 +11,7 @@
 %1 files copied.	filemanager	hu	%1 file másolva.
 %1 files deleted.	filemanager	hu	%1 file törölve.
 %1 files moved.	filemanager	hu	%1 file átmozgatva.
+%1 files unlocked.	filemanager	hu	%1 fájl feloldva.
 %1 starts with '%2'	filemanager	hu	%1 '%2'-vel kezdődik
 %1 successful uploaded.	filemanager	hu	%1 sikeresen feltöltve.
 %1 the following files into current directory	filemanager	hu	%1 a következő fileokat az aktuális mappába
@@ -102,12 +103,15 @@ go home	filemanager	hu	Saját mappára ugrás
 go to	filemanager	hu	Ugorj ide
 go to your home directory	filemanager	hu	Saját mappára ugrás
 go up	filemanager	hu	Egy szinttel feljebb
+hidden upload	filemanager	hu	Elrejtett feltöltés
+hidden uploads	filemanager	hu	Rejtett feltöltések
 id	filemanager	hu	Azonosító
 inherited	filemanager	hu	lemásolva
 link	filemanager	hu	Link
 link %1: %2	filemanager	hu	Link %1: %2
 link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
 location	filemanager	hu	Hely
+lock	filemanager	hu	Lock
 log out as superuser	filemanager	hu	Rendszergazda kijelentkezés
 max folderlinks	admin	hu	maximális mappalink száma
 mime type	filemanager	hu	MIME típus
@@ -179,6 +183,7 @@ wrong username or password!	filemanager	hu	Hibás felhasználónév vagy jelszó
 you are not allowed to upload a script!	filemanager	hu	Végrehajtható file feltöltéséhez nincs hjogosultságod!
 you can only grant additional rights, you can not take rights away!	filemanager	hu	Jogosultságot csak hozzáadhatsz, el nem vehetsz!
 you do not have access to %1	filemanager	hu	Nincs jogosultsága %1 eléréséhez
+you need to become root, to enable or disable versioning on a directory!	filemanager	hu	Superuser kell lenned, hogy engedélyezd vagy letiltsd a verziókezelést egy mappán!
 you need to select an owner!	filemanager	hu	Választanod kell tulajdonost!
 you need to select some files first!	filemanager	hu	Először válaszd ki a fileokat!
 you will be redirected to your home directory.	filemanager	hu	A saját mappádhoz lépek.

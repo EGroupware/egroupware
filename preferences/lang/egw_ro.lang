@@ -1,0 +1,7 @@
+dark mode theme	preferences	ro	Tema modului întunecat
+fast	preferences	ro	Rapid
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ro	Actualizarea rapidă adaugă noi intrări întotdeauna în partea de sus a listei și le actualizează pe cele existente pe loc, cu excepția cazului în care lista este ordonată după ultima modificare. Actualizările exacte fac o reîmprospătare completă, dacă lista nu este ordonată după ultima modificare.
+how to update lists	preferences	ro	Cum se actualizează listele
+it sets content size (text only) according to selected size.	preferences	ro	Setează dimensiunea conținutului (numai pentru text) în funcție de dimensiunea selectată.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ro	Lista de aplicații poate fi derulată cu ajutorul butoanelor de derulare sus/jos (util pentru utilizatorii care lucrează cu un mouse fără rotiță de derulare).
+set content size	preferences	ro	Setați dimensiunea conținutului

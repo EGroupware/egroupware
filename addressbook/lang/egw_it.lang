@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	it	%1 chiavi pubbliche aggiunte
 %1 records imported	addressbook	it	%1 record importati
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare %2indietro%3 e deselezionare Test Importazione)
+%1 shared this contact on %2 with %3 %4	addressbook	it	%1 ha condiviso questo contatto su %2 con %3 %4
 %1 starts with '%2'	addressbook	it	%1 inizia con '%2'
 %s please calculate the result	addressbook	it	%s per favore calcolare il risultato
 (e.g. 1969)	addressbook	it	(es. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	it	Aggiunto da sincronizzazione
 added to distribution list	addressbook	it	Aggiunto alla lista di distribuzione
 additional information about using ldap as contact repository	admin	it	Informazione aggiuntiva riguardante l'utilizzo di LDAP come archivio contatti
 address book	common	it	Rubrica
-address book - vcard in	addressbook	it	Rubrica - VCard in
+address book - vcard in	addressbook	it	Rubrica - vCard in
 address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
 address line 2 (private)	addressbook	it	Indirizzo linea 2 (privato)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	it	La rubrica in cui il cont
 addressbook vcard export	addressbook	it	Esportazione vCard
 addressbook vcard import	addressbook	it	Importazione da vCard rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
-addvcard	addressbook	it	Aggiungi Vcard
+addvcard	addressbook	it	Aggiungi vCard
 advanced search	addressbook	it	Ricerca avanzata
 all addressbooks	addressbook	it	Tutte le rubriche
 all contacts	addressbook	it	Tutti i contatti
@@ -237,7 +238,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	it	Collegamenti esistenti
 exists	addressbook	it	Esiste
 export as csv	addressbook	it	Esporta come CSV
-export as vcard	addressbook	it	Esporta come VCard
+export as vcard	addressbook	it	Esporta come vCard
 export contacts	addressbook	it	Esporta Contatti
 export definition to use for nextmatch export	addressbook	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 export definitition to use for nextmatch export	addressbook	it	Esporta la definizione da utilizzare per la esportazione
@@ -306,11 +307,11 @@ import contacts	addressbook	it	Importa Contatti
 import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
 import file	addressbook	it	Importa File
 import from	addressbook	it	Importa da
-import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or VCard
+import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or vCard
 import from outlook	addressbook	it	Importa da Outlook
-import multiple vcard	addressbook	it	Importa Molteplici VCard
+import multiple vcard	addressbook	it	Importa Molteplici vCard
 import next set	addressbook	it	Import il prossimo set
-import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato VCard.
+import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato vCard.
 importer's personal	addressbook	it	Personale dell'account importatore
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	it	Importa contatti nella tua rubrica da un file vCard.
@@ -343,7 +344,7 @@ list created	addressbook	it	Lista creata
 list creation failed, no rights!	addressbook	it	La creazione della lista è fallita, non ci sono i permessi sufficienti
 list of files linked to the current record	addressbook	it	Elenco dei file collegati al record attuale
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	it	Carica i campi personalizzati nell'indice, anche quando la colonna del campo è disabilitata (p.es. per mostrarli in una specifica colonna indice)
-load vcard	addressbook	it	Carica VCard
+load vcard	addressbook	it	Carica vCard
 location	addressbook	it	Località
 locations	addressbook	it	Località
 mail vcard	addressbook	it	Invia email vCard
@@ -366,7 +367,7 @@ modem phone	addressbook	it	Telefono modem
 more ...	addressbook	it	Altro ...
 move to addressbook	addressbook	it	Sposta alla rubrica
 moved	addressbook	it	spostato
-multiple vcard	addressbook	it	Molteplici VCard
+multiple vcard	addressbook	it	Molteplici vCard
 name for the distribution list	addressbook	it	Nome della lista di distribuzione
 name of current user, all other contact fields are valid too	addressbook	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
 name, address	addressbook	it	Nome, Indirizzo
@@ -377,7 +378,8 @@ no categories selected	addressbook	it	Nessuna categoria selezionata
 no country selected	addressbook	it	Nessun paese selezionato
 no distribution list	addressbook	it	Nessuna lista di distribuzione
 no fallback	addressbook	it	Nessun fallback
-no vcard	addressbook	it	Nessuna VCard
+no vcard	addressbook	it	Nessuna vCard
+not shared	addressbook	it	non condiviso
 number	addressbook	it	Numero
 number of records to read (%1)	addressbook	it	Numero di record da leggere (%1)
 open %1 crm view	addressbook	it	Apri %1 in vista CRM
@@ -512,6 +514,8 @@ unable to import into %1, using %2	addressbook	it	Impossibile importare %1, usan
 unique id (uid)	addressbook	it	ID univoco (UID)
 unique id<br />(to update existing records)	addressbook	it	ID univoco<br /> per l'aggiornamento di voci esistenti
 unknown type %1, imported as %2	addressbook	it	Tipo %1 sconosciuto, importato come %2
+unshare	addressbook	it	Non condividere
+unshared	addressbook	it	non condiviso
 update a single entry by passing the fields.	addressbook	it	Aggiorna una singola voce passando i campi.
 update fields by edited organisations?	admin	it	Campi di organizzazioni modificate da aggiornare
 updated	addressbook	it	Aggiornato
@@ -528,9 +532,9 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used for links and for the own sorting of the list	addressbook	it	usato per collegamenti e per il proprio ordinamento della lista
 user groups are automatically shown as distribution lists.	addressbook	it	I gruppi di utenti sono automaticamente mostrati come liste di distribuzione
 user preference	addressbook	it	Preferenza utente
-vcard	common	it	VCard
-vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
-vcards require a last name entry.	addressbook	it	Le Vcards richiedono un valore per il cognome
+vcard	common	it	vCard
+vcards require a first name entry.	addressbook	it	Le vCard richiedono un valore per il nome.
+vcards require a last name entry.	addressbook	it	Le vCards richiedono un valore per il cognome
 verification	addressbook	it	Verifica
 view linked infolog entries	addressbook	it	Visualizzare le schede Attività collegate
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
@@ -538,6 +542,7 @@ warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i 
 weekday	addressbook	it	Giorno della settimana
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	it	Collegamenti della rubrica, visibili nelle altre applicazioni. I valori vuoti resteranno fuori. Bisognera uscire e accedere di nuovo a EPL se si cambia questa impostazione
 when viewing a contact, show linked entries from the selected application	addressbook	it	Quando si visualizza un contatto, mostra le voci collegate dalla applicazione selezionata
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	it	Quando si uniscono le voci nei documenti, vengono memorizzate qui. Se non viene fornita alcuna directory, verranno memorizzate nella propria directory home (/home/...).
 where to add the email address	addressbook	it	Dove aggiungere l'indirizzo email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	it	Seleziona il formato di indirizzo da usare per Paesi con formati sconosciuti
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	it	La rubrica da usare per l'aggiunta di contatti, quando non si hanno i permessi per la rubrica corrente
@@ -556,13 +561,14 @@ yes, for the next week	addressbook	it	Sì, per la prossima settimana
 yes, for today and tomorrow	addressbook	it	Sì, per oggi e domani
 yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
 yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
+you are not allowed to share into the addressbook of %1	addressbook	it	Non sei autorizzato a condividere nella rubrica di %1
 you are not permitted to delete contact %1	addressbook	it	Non hai il permesso di cancellare il contatto %1
 you are not permittet to delete this contact	addressbook	it	Non hai il permesso di cancellare questo contatto
 you are not permittet to edit this contact	addressbook	it	Non hai il permesso di modificare questo contatto
 you are not permittet to view this contact	addressbook	it	Non hai il permesso di visualizzare questo contatto
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	it	LDAP può essere usato come repository di contatto solo se gli account sono memorizzati anche in LDAP!
 you can respond by visiting:	addressbook	it	Puoi rispondere visitando:
-you must select a vcard. (*.vcf)	addressbook	it	Devi selezionare una vcard (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	it	Devi selezionare una vCard (*.vcf)
 you must select at least 1 column to display	addressbook	it	Devi selezionare almeno una colonna da visualizzare
 you need to select a distribution list	addressbook	it	Seleziona lista di distribuzione
 you need to select some contacts first	addressbook	it	Devi prima selezionare qualche contatto

@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	da	%1 eksistere allerede som fil
+%1 files unlocked.	filemanager	da	%1 filer er låst op.
 actions	filemanager	da	Handling
 administrators	filemanager	da	administratorer
 applications	common	da	Applikationer
@@ -39,9 +40,12 @@ go home	filemanager	da	gå hjem
 go to	filemanager	da	Gå til
 go to your home directory	filemanager	da	Gå til hjemmebibliotek
 go up	filemanager	da	gå op
+hidden upload	filemanager	da	Skjult upload
+hidden uploads	filemanager	da	Skjult uploads
 id	filemanager	da	ID
 link	filemanager	da	Link
 location	filemanager	da	Sti
+lock	filemanager	da	Lås
 mime type	filemanager	da	MIME type
 modified	filemanager	da	Ændret
 move	filemanager	da	flyt
@@ -74,4 +78,5 @@ upload fields	filemanager	da	upload felter
 upload files	filemanager	da	Upload filer
 used space	filemanager	da	Brugt plads
 you do not have access to %1	filemanager	da	Du har ikke adgang til %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	da	Du skal være superuser for at aktivere eller deaktivere versionering af en mappe!
 your home dir did not exist, egroupware created a new one.	filemanager	da	Dit hjemme bibliotek fandtes ikke, EGroupware har oprette en ny til dig.

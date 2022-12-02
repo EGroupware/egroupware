@@ -1,4 +1,3 @@
-st.	mail	ja	状態
 %1 attachments	mail	ja	%1 個の添付ファイル
 %1 has been added to blacklisted email addresses	mail	ja	ブラックリストに %1 を追加しました
 %1 has been added to whiltelisted email addresses	mail	ja	ホワイトリストに %1 を追加しました
@@ -7,14 +6,11 @@ st.	mail	ja	状態
 %1 is not writable by you!	mail	ja	%1 に対する書き込み権限がありません!
 %1 mails selected	mail	ja	%1 件のメールが選択済み
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	ja	(*) 転送先アドレス数が制限値を越える可能性があるため、複数宛先の転送は失敗する恐れがあります。多くのサーバーでは転送先は 4 個までに制限されています。詳細はサーバー管理者にお問い合わせ下さい。
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。
-sieve_edit_instructions	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。論理否定の目的でない行頭のエクスクラメーション記号（!）をエスケープする場合は、エスケープした正規表現（\!）を使用してください。
 (leave empty for no quota)	mail	ja	（空欄にするとクォータ設定無し）
 (no subject)	mail	ja	(件名無し)
 (not connected)	mail	ja	(接続されていません)
 (select mails by clicking on the line, like a checkbox)	mail	ja	（行をクリックしてメールを選択）
 (with checkbox enforced)	mail	ja	（チェックボックス強制）
-access by	mail	ja	アクセスするユーザ/グループ
 account editable by user	mail	ja	ユーザによるアカウント編集可能
 acl rights retrieve failed, seems there are no rights set!	mail	ja	ACL 権限の取得に失敗しました（権限不足の可能性）!
 acl rights retrieved successfully	mail	ja	ACL 権限を取得しました
@@ -71,8 +67,6 @@ attachment	mail	ja	添付
 attachments	mail	ja	添付
 authentication	mail	ja	認証
 available personal email-accounts/profiles	mail	ja	利用可能なメール・アカウント/プロフィール
-backup/restore ...	mail	ja	バックアップ/復元 ...
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	mail	ja	作業を進める前に、このビデオ説明を見て、eGroupwareとMailvelopeプラグインがどのように作用するか理解しておくことをお勧めします。
 before reply, visible during compose	mail	ja	返信前（メール作成中は表示）
 blacklisted mails are marked as spam	mail	ja	ブラックリスト・メールをスパムとして処理
 but check shared folders	mail	ja	ただし共有フォルダを検査する
@@ -89,13 +83,13 @@ check to save as calendar event on send	mail	ja	送信時にイベントとし�
 check to save as infolog on send	mail	ja	送信後インフォログとして保存
 check to save as tracker entry on send	mail	ja	送信後トラッカーに保存
 choose file	mail	ja	ファイルを選択してください
-close	mail	ja	閉じる
 common acl	mail	ja	共通ACL
 compose	mail	ja	作成
 compose as new	mail	ja	新規作成
 compress folder	mail	ja	フォルダを圧縮
 condition	mail	ja	条件
 configuration settings	mail	ja	構成設定
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ja	設定された値は、新しいメールを作成するときに、作成ダイアログで指定されたフィールドに自動的に設定されます。
 confirm	mail	ja	確認
 confirm attach message	mail	ja	添付メッセージの確認
 confirm move to folder	mail	ja	フォルダ移動の確認
@@ -103,7 +97,6 @@ connect to profile %1	mail	ja	プロフィール %1 に接続
 connection status	mail	ja	接続状態
 contains	mail	ja	含む
 contains(*)	mail	ja	含む(*)
-continue	mail	ja	次へ
 convert mail to item and attach its attachments to this item (standard)	mail	ja	メール本文と添付ファイルを保存（標準）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ja	メール本文、添付ファイル、およびRFC822 (.eml)形式のメール・ソースを保存
 convert only mail to item (ignore possible attachments)	mail	ja	メール本文を保存（添付ファイルを無視）
@@ -114,7 +107,6 @@ could not save the acl because some names are empty	mail	ja	名前の一部が�
 create new account	mail	ja	新規アカウントの作成
 current folder	mail	ja	現在のフォルダ
 currently:	mail	ja	現在値:
-data from	mail	ja	データの取得元
 date(newest first)	mail	ja	日時(新しい順)
 date(oldest first)	mail	ja	日時(古い順)
 deactive	mail	ja	無効化
@@ -176,7 +168,6 @@ edit folder acl	mail	ja	フォルダ ACL を編集
 edit folder acl ...	mail	ja	フォルダ ACL を編集 ...
 edit vacation settings	mail	ja	不在案内設定を編集
 effective only if server supports acl at all	admin	ja	サーバーで ACL を利用可能である場合に限り有効
-email address	mail	ja	メール・アドレス
 email notification successfully updated!	mail	ja	メール通知を更新しました!
 email notification update failed	mail	ja	メール通知の更新に失敗しました
 email notification update failed! you need to set an email address!	mail	ja	メール通知の更新に失敗しました!メール・アドレスを指定してください!
@@ -294,11 +285,9 @@ important	mail	ja	重要
 in mailbox: %1, with id: %2, and partid: %3	mail	ja	メールボックス: %1, ID: %2, パートID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	ja	プライバシー保護のため、このメール中の外部ソースは全てブロックされました。
 inbox	mail	ja	INBOX
-infolog	mail	ja	インフォログ
 initialization of mail failed. please use the wizard to cope with the problem.	mail	ja	メールの初期化に失敗しました。ウィザードを使ってメールを構成してください。
 inline	mail	ja	転送
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	ja	新規作成ダイアログを開く時、署名を新規（または返信）メッセージの上に挿入
-install	mail	ja	インストール
 job	mail	ja	仕事
 junk	mail	ja	ジャンク
 junk folder	mail	ja	ジャンク・フォルダ
@@ -311,7 +300,6 @@ less than	mail	ja	指定値よりサイズが小さい
 mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
-mail server denied authentication.	mail	ja	認証に失敗しました
 mail settings	mail	ja	電子メール設定
 mail source	mail	ja	メールのソース
 mail-address	mail	ja	メール・アドレス
@@ -320,7 +308,6 @@ mailinglist	mail	ja	メーリング・リスト
 mails	common	ja	メール
 mails can be copied to that folder via context menu, if folder is configured.	mail	ja	フォルダを構成した後、コンテキスト・メニューからメールのコピーが可能
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ja	サーバー応答:\n%1 \n選択されたメッセージを直ちに削除しますか？(OKを選択）\n削除しない場合は、ゴミ箱フォルダを空にしてから続けてください（キャンセルを選択）
-manual entry	mail	ja	直接入力
 mark all as read	mail	ja	既読にする
 mark all messages in folder as read	mail	ja	選択されたメッセージを既読にする
 mark as deleted	mail	ja	削除済みとしてマーク
@@ -336,6 +323,8 @@ message saved successfully.	mail	ja	メッセージを保存しました。
 message send failed: %1	mail	ja	メッセージ送信失敗: %1
 message send successfully.	mail	ja	メッセージを送信しました。
 miscellaneous	mail	ja	その他
+modify subject	mail	ja	件名の変更
+modify subject of this message	mail	ja	このメッセージの件名を変更する
 move	mail	ja	移動
 move folder	mail	ja	フォルダを移動
 move selected mails to archive	mail	ja	選択されたメールをアーカイブに移動
@@ -350,6 +339,7 @@ never display html emails	mail	ja	HTMLメールを表示しない
 never show	mail	ja	表示しない
 new mail notification	mail	ja	新着メール通知
 new message type	mail	ja	新規メッセージのタイプ
+new subject	mail	ja	新しい件名
 no (valid) send folder set in preferences	mail	ja	送信済みフォルダが設定されていません
 no access	mail	ja	アクセス無し
 no action defined!	mail	ja	アクションが定義されていません!
@@ -371,7 +361,6 @@ no valid %1 folder configured!	mail	ja	No valid %1 folder configured!
 non	mail	ja	無し
 none, create all	mail	ja	無し（全て作成）
 nothing to change.	mail	ja	変更無し
-notification	mail	ja	通知
 notify about new mail in this folders	mail	ja	これらのフォルダの新着メールを通知する
 notify when new mails arrive in these folders	mail	ja	これらのフォルダに新着がある場合に通知
 on	mail	ja	on
@@ -396,16 +385,16 @@ please enter password	mail	ja	パスワードを入力してください
 please select a address	mail	ja	メール・アドレスを選択してください
 please select the number of days to wait between responses	mail	ja	回答待ちの最大日数を選択してください
 please supply the message to send with auto-responses	mail	ja	自動回答用メッセージを定義してください
-port	mail	ja	ポート
 post	mail	ja	ポスト
+predefined addresses for compose	mail	ja	メール作成用アドレスの設定
 prevent managing filters	mail	ja	メッセージ・フィルターを抑制
 prevent managing folders	mail	ja	フォルダ管理を抑制
 prevent managing notifications	mail	ja	通知管理を抑制
 prevent managing vacation notice	mail	ja	不在通知管理を抑制
 preview pane	mail	ja	プリビュー画面
 primary profile	mail	ja	プライマリ・プロフィール
-printview	mail	ja	印刷用表示
 printing	mail	ja	印刷中
+printview	mail	ja	印刷用表示
 processing of file %1 failed. failed to meet basic restrictions.	mail	ja	ファイル %1 の処理に失敗しました。基本的な制限値に抵触。
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ja	不在通知の内容の既定値を定義します。
 quicksearch	mail	ja	クイック検索
@@ -459,6 +448,7 @@ rule priority position	mail	ja	ルールの優先順位
 rule with priority	mail	ja	優先順位付きルール
 rules	mail	ja	ルール
 save all	mail	ja	全て保存
+save all attachments to filemanager	mail	ja	すべての添付ファイルをファイルマネージャに保存する
 save as calendar	mail	ja	カレンダーに保存
 save as default	mail	ja	既定として保存
 save as draft	mail	ja	下書きとして保存
@@ -479,7 +469,6 @@ saves this rule	mail	ja	このルールを保存
 saving of message %1 failed. destination folder %2 does not exist.	mail	ja	メッセージ %1 の保存に失敗しました。 保存先フォルダ %2 が存在しません。
 saving of message %1 succeeded. check folder %2.	mail	ja	メッセージ %1 を保存しました。 フォルダ %2 を確認してください。
 saving the rule failed:	mail	ja	ルールの保存に失敗しました:
-secure connection	mail	ja	セキュア接続
 security	mail	ja	セキュリティ
 see attachments for content of the orignial mail	mail	ja	元のメールの内容については添付を参照
 select all	mail	ja	全て選択
@@ -490,12 +479,13 @@ select file to import into folder	mail	ja	フォルダにインポートする�
 select file(s) from vfs	mail	ja	VFSからファイルを選択
 select files to upload	mail	ja	アップロードするファイルを選択
 select multiple	mail	ja	複数選択
+select or insert email address	mail	ja	メールアドレスの選択または挿入
 selected	mail	ja	を選択しました
 selected date range (with quicksearch)	mail	ja	日付範囲 (クイック検索)
 send a reject message:	mail	ja	Send a reject message:
 send files as	mail	ja	形式を指定してファイルを送信:
 send message and move to send folder (if configured)	mail	ja	メッセージを送信後、送信済みフォルダに移動
-Send message PGP encrypted: requires keys from all recipients!	mail	ja	PGP暗号化メッセージを送信（全ての宛先の暗号化キーが必要)
+send message pgp encrypted: requires keys from all recipients!	mail	ja	PGP暗号化メッセージを送信（全ての宛先の暗号化キーが必要)
 sender	mail	ja	差出人
 sent	mail	ja	送信済み
 sent folder	mail	ja	送信済みフォルダ
@@ -505,6 +495,7 @@ serverside vacationnotice (via sieve) are not activated	mail	ja	サーバー側�
 set / remove flags	mail	ja	フラグを立てる／外す
 set / remove labels	mail	ja	ラベルを付ける／外す
 set it as default:	mail	ja	既定に設定:
+set predefined values for compose...	mail	ja	メール作成用の定義済み値を設定する ...
 should new messages show up on the home page	mail	ja	新着メールをホームに表示
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ja	署名を返信（インライン転送）メッセージの後に挿入する（標準）か、前に挿入するか。またメッセージ作成中に署名を表示して編集可能とするか。
 show	mail	ja	表示
@@ -525,13 +516,12 @@ sieve connection status	mail	ja	Sieve 接続状態
 sieve not activated	mail	ja	Sieve 無効
 sieve script name	mail	ja	Sieve スクリプト名
 sieve server	mail	ja	Sieve サーバー
+sieve_edit_instructions	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。論理否定の目的でない行頭のエクスクラメーション記号（!）をエスケープする場合は、エスケープした正規表現（\!）を使用してください。
 signature	mail	ja	署名
 signature at top	mail	ja	署名を上部に表示
 signature position and visibility	mail	ja	署名の表示位置
-size	mail	ja	サイズ
 size(...->0)	mail	ja	サイズ(降順)
 size(0->...)	mail	ja	サイズ(昇順)
-skip imap	mail	ja	IMAP構成を省略
 small view	mail	ja	スモール・ビュー
 smtp	mail	ja	SMTP
 sneak preview in list	mail	ja	スニークプリビュー有効
@@ -577,7 +567,6 @@ then	mail	ja	THEN
 there is no imap server configured.	mail	ja	IMAP サーバーが構成されていません。
 this message is smime encrypted and password protected.	mail	ja	このメッセージはS/MIME暗号化されておりパスワードで保護されています。
 timeout on connections to your imap server	mail	ja	IMAP サーバー接続でタイムアウトが発生
-to	mail	ja	宛先
 to do	mail	ja	ToDo
 toggle all folders view for %1	mail	ja	全フォルダの表示を %1 に変更
 trash	mail	ja	ゴミ箱
@@ -606,7 +595,7 @@ vacation notice sucessfully updated.	mail	ja	不在案内を更新しました�
 vacation notice update failed	mail	ja	不在案内の更新に失敗
 vacation start-date must be before the end-date!	mail	ja	不在期間の開始日は終了日より前である必要があります!
 vacation update failed	mail	ja	不在案内の更新に失敗
-valid for	mail	ja	有効: 
+valid for	mail	ja	有効:
 validate addresses on submit:	mail	ja	送信時にメール・アドレスを検証:
 validate selected addresses on submit:	mail	ja	送信時に選択済みメール・アドレスを検証:
 view full mail source	mail	ja	メールの全ソースを表示
@@ -639,7 +628,6 @@ you can either choose to save as infolog or tracker, not both.	mail	ja	インフ
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ja	開始日を $$start$$、終了日を $$end$$ で記述できます。
 you may add this certificate into your contact, if you trust this signature.	mail	ja	署名を信頼できる場合は、この証明書をアドレス帳に追加することができます。
 you need to enter your s/mime passphrase to send this message.	mail	ja	S/MIME パスフレーズを入力してメッセージを送信します。
-you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	mail	ja	暗号化を利用するためには、Mailvelope プラグイン(Chrome、およびFirefox向け）を www.mailvelope.com から直接インストールするか、またはインストール・ボタンを押してインストールする必要があります。
 you need to save the message as draft first before to be able to save it into vfs	mail	ja	VFSに保存するには、前もってメッセージを下書きとして保存する必要があります。
 you will loose current message body, unless you save it to your clipboard!	mail	ja	クリップボードに保存しないと現在のメッセージが失われます!
 you've got new mail	mail	ja	メールが届きました!

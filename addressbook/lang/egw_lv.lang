@@ -1,5 +1,6 @@
 %1 records imported	addressbook	lv	Tika importēti %1 ieraksti
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari atgriezties %2 atpakaļ %3 un izslēgt Importēšanas pārbaudi)
+%1 shared this contact on %2 with %3 %4	addressbook	lv	%1 kopīgojis šo kontaktu %2 %3 %4
 (e.g. 1969)	addressbook	lv	(piem?ram, 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	lv	<b>nav pārveidošanas tipa <neviens> nevar tikt novienots.</b> Lūdzu izvēlies pārveidošanas veidu no saraksta.
 @-eval() is only availible to admins!!!	addressbook	lv	@-eval() ir pieejams tikai administratoriem!!!
@@ -8,14 +9,14 @@ add a single entry by passing the fields.	addressbook	lv	Pievienot vienu ierakst
 add custom field	addressbook	lv	Pievienot papildus lauku
 added	addressbook	lv	PIevienots
 address book	common	lv	Adrešu grāmata
-address book - vcard in	addressbook	lv	Adrešu grāmata - Vkarte iekš
+address book - vcard in	addressbook	lv	Adrešu grāmata - vCard iekš
 address book - view	addressbook	lv	Adrešu grāmata - skats
 address line 2	addressbook	lv	Adreses 2. rindiņa
 address type	addressbook	lv	Adreses Tips
 addressbook	common	lv	Adrešu grāmata
 addressbook preferences	addressbook	lv	Adrešu grāmatas iestādījumi
 addressbook-fieldname	addressbook	lv	Adrešu grāmatas - Lauka nosaukums
-addvcard	addressbook	lv	Pievienot VCard
+addvcard	addressbook	lv	Pievienot vCard
 advanced search	addressbook	lv	Uzlabota meklēšana
 alt. csv import	addressbook	lv	Alternatīva CSV importēšana
 always	addressbook	lv	Vienmēr
@@ -61,6 +62,9 @@ department	common	lv	Nodaļa
 domestic	addressbook	lv	Kopmītne
 download	addressbook	lv	Lejupielādēt
 download export file (uncheck to debug output in browser)	addressbook	lv	Lejupieldēt eksporta failu (Atķeksē, lai redzētu izvadu pārlūkprogrammā)
+duplicate threshold	addressbook	lv	Dublēšanās slieksnis
+duplicate warning	addressbook	lv	Divkāršs brīdinājums
+duplicates	addressbook	lv	Dublikāti
 duration	addressbook	lv	Izpildes laiks
 edit custom field	addressbook	lv	Mainīt lauku
 edit custom fields	admin	lv	Mainīt laukus
@@ -77,6 +81,8 @@ fax number	common	lv	Faksa numurs
 field %1 has been added !	addressbook	lv	Lauks %1 tika pievienots !
 field %1 has been updated !	addressbook	lv	Lauks %1 tika atjaunināts !
 field name	addressbook	lv	Lauka vārds
+fields to check for duplicates	addressbook	lv	Lauki, kuros pārbauda, vai nav dublikātu
+fields to consider when looking for duplicate contacts.	addressbook	lv	Lauki, kas jāņem vērā, meklējot dublējošos kontaktus.
 fields to show in address list	addressbook	lv	Lauki kuri tiek rādīti adrešu sarakstā
 fieldseparator	addressbook	lv	Lauku atdal?t?js
 full name	addressbook	lv	Pilns vārds
@@ -85,6 +91,10 @@ geo	addressbook	lv	GEO
 global categories	addressbook	lv	Globālās kategorijas
 grant addressbook access	common	lv	Nodrošināt piekļuvi adrešu grāmatai
 h	addressbook	lv	h
+hide accounts from addressbook	addressbook	lv	Paslēpt lietotāju kontus
+hide all accounts	addressbook	lv	Paslēpt visus kontus
+hide user groups as distribution lists	addressbook	lv	Paslēpt lietotāju grupas kā sadales sarakstus
+hides accounts completly from the adressbook.	addressbook	lv	Pilnībā paslēpt lietotāju kontus no adrešu grāmatas.
 home city	addressbook	lv	Pilsēta
 home country	addressbook	lv	Valsts
 home email	addressbook	lv	Mājas e-pasts
@@ -92,17 +102,19 @@ home phone	addressbook	lv	Mājas telefons
 home state	addressbook	lv	Štats
 home street	addressbook	lv	Iela
 home zip code	addressbook	lv	Pasta indekss
+how many fields must match for the record to be considered a duplicate.	addressbook	lv	Cik daudziem laukiem jābūt vienādiem, lai ieraksts tiktu uzskatīts par dublikātu.
 icon	addressbook	lv	Ikona
 import	addressbook	lv	Importēt
 import contacts	addressbook	lv	Importēt kontaktus
 import csv-file into addressbook	addressbook	lv	Importēt CSV-failu adrešu grāmatā
 import file	addressbook	lv	Importēt failu
 import from	addressbook	lv	Importēt no
-import from ldif, csv, or vcard	addressbook	lv	Importēt no LDIF, CSV vai VCard
+import from ldif, csv, or vcard	addressbook	lv	Importēt no LDIF, CSV vai vCard
 import from outlook	addressbook	lv	Importēt no Outlook
-import multiple vcard	addressbook	lv	Importēt vairākas VCard
+import multiple vcard	addressbook	lv	Importēt vairākas vCard
 import next set	addressbook	lv	Importēt nākošo porciju
-infolog	addressbook	lv	Projekti
+infolog	addressbook	lv	InfoLog Kontaktpersona
+infolog-organisation	addressbook	lv	InfoLog organizācija
 international	addressbook	lv	Internacion?ls
 label	addressbook	lv	Eti?ete (label)
 last modified	addressbook	lv	Pēdējo reizi pārveidots
@@ -112,19 +124,23 @@ ldif	addressbook	lv	LDIF
 line 2	addressbook	lv	2. rindiņa
 links	addressbook	lv	Saites
 list all categories	addressbook	lv	Kategoriju saraksts
-load vcard	addressbook	lv	Ielādēt VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	lv	Ielādēt pielāgotos laukus indeksā, pat ja pielāgotā lauka sleja ir izslēgta (piemēram, lai tos parādītu konkrētā indeksa slejā).
+load vcard	addressbook	lv	Ielādēt vCard
 location	addressbook	lv	Novietojums
 mark records as private	addressbook	lv	Iezīmēt ierakstus kā privātus
+merge duplicates	addressbook	lv	Dublikātu apvienošana
+merge into first or account, deletes all other!	addressbook	lv	Apvienot pirmajā vai kontā, dzēš visus pārējos!
 message phone	addressbook	lv	Autoatbildētājs
 middle name	addressbook	lv	Otrais vārds
 mobile	addressbook	lv	Mobīlais
 mobile phone	addressbook	lv	Mobīlais tālrunis
 modem phone	addressbook	lv	Modēma tālrunis
 move to addressbook	addressbook	lv	Pārvietot uz adrešu grāmatu
-multiple vcard	addressbook	lv	Vairākas VCard
+multiple vcard	addressbook	lv	Vairākas vCard
 no country selected	addressbook	lv	Nav izvēlēta neviena valsts
 no distribution list	addressbook	lv	Nav izplatīšanas saraksta
-no vcard	addressbook	lv	Nav VCard
+no vcard	addressbook	lv	Nav vCard
+not shared	addressbook	lv	nav koplietoti
 number of records to read (%1)	addressbook	lv	Lasāmo ierakstu skaits (%1)
 other number	addressbook	lv	Cits nummurs
 other phone	addressbook	lv	Cits telefons
@@ -145,6 +161,7 @@ record access	addressbook	lv	Piekļuve ierakstam
 record owner	addressbook	lv	Ieraksta īpašnieks
 repetition	addressbook	lv	Atkārtojums
 role	addressbook	lv	Loma
+search letter	addressbook	lv	Meklēt burtu
 select all	addressbook	lv	Iezīmēt visus
 select the type of conversion	addressbook	lv	Iezīmēt sarunas veidu
 select the type of conversion:	addressbook	lv	Izvēlēties sarunas veidu:
@@ -169,15 +186,20 @@ today is %1's birthday!	common	lv	Šodien ir %1 ir dzimšanas diena!
 tomorrow is %1's birthday.	common	lv	Rīt %1 ir dzimšanas diena.
 translation	addressbook	lv	Tulkojums
 type	addressbook	lv	Tips
+unshare	addressbook	lv	vairs nav koplietošanas
+unshared	addressbook	lv	vairs nav koplietojams
 update a single entry by passing the fields.	addressbook	lv	Atjaunini vienu ierakstu apejot lauku
 updated	addressbook	lv	Atjaunināts
 use country list	addressbook	lv	Izmantot valstu sarakstu
-vcard	common	lv	VCard
-vcards require a first name entry.	addressbook	lv	VCard pieprasa vārda ievadīšanu
-vcards require a last name entry.	addressbook	lv	VCard pieprasa uzvārda ievadīšanu
+user groups are automatically shown as distribution lists.	addressbook	lv	Lietotāju grupas automātiski tiek parādītas kā sadales saraksti.
+vcard	common	lv	vCard
+vcards require a first name entry.	addressbook	lv	vCard pieprasa vārda ievadīšanu
+vcards require a last name entry.	addressbook	lv	vCard pieprasa uzvārda ievadīšanu
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	lv	BRĪDINĀJUMS!! LDAP ir derīgs tikai tad, ja tu neizmanto kontaktus kontu glabātuvei!
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lv	Apvienojot ierakstus dokumentos, tie tiks saglabāti šeit. Ja direktorija nav norādīta, tie tiks saglabāti jūsu mājas direktorijā (/home/...).
 work phone	addressbook	lv	Darba telefons
-you must select a vcard. (*.vcf)	addressbook	lv	Jums ir jāizvēlas Vcard. (*.vcf)
+you are not allowed to share into the addressbook of %1	addressbook	lv	Jums nav atļauts kopīgot ar adrešu grāmatu %1
+you must select a vcard. (*.vcf)	addressbook	lv	Jums ir jāizvēlas vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	lv	Jums ir jāzvēlas vismaz 1 kolonna ko parīdit
 zip code	common	lv	Pasta inekss
 zip_note	addressbook	lv	<p><b>Piezīme:</b> Fails drīkst būt .zip ar sazipotiem .csv, .vcf, or .ldif failiem. Tomēr, vienā zip failā lieciet viena tipa failus.

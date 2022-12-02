@@ -104,6 +104,7 @@ category automatically added to new events	calendar	de	Kategorie, die automatisc
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
 change your status	calendar	de	Eigenen Status ändern
+changed event-data applied	calendar	de	Änderungen am Termin angewendet
 charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
 choose a category	calendar	de	Wählen Sie eine Kategorie
@@ -407,7 +408,7 @@ notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihr
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
 notification settings	calendar	de	Benachrichtigungseinstellungen
 notify	calendar	de	Benachrichtigen
-notify all externals (non-users) about this event	calendar	de	Benachrichtigt alle Externen (Nicht-Benutzer) über diesen Termin
+notify all externals (non-users) about this event	calendar	de	Benachrichtigt Externe (Nicht-Benutzer) über Termin
 notify externals	calendar	de	Externe Teilnehmer benachrichtigen
 notify non-egroupware users about event updates	calendar	de	Teilnehmer außerhalb EGroupware über Terminänderungen benachrichtigen?
 number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)

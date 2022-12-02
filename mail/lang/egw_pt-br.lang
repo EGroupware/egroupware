@@ -46,6 +46,7 @@ compose as new	mail	pt-br	Compor como novo
 compress folder	mail	pt-br	Compactar pasta
 condition	mail	pt-br	condição
 configuration settings	mail	pt-br	As definições de configuração
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pt-br	Os valores configurados serão definidos automaticamente no diálogo de composição para o respeitado campo ao compor um novo e-mail.
 confirm attach message	mail	pt-br	Confirme anexar mensagem
 confirm move to folder	mail	pt-br	Confirme Mover para pasta
 connect to profile %1	mail	pt-br	Conecte-se ao Perfil 1%
@@ -155,10 +156,13 @@ mail settings	mail	pt-br	Configurações de E-Mail
 mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
 matches	mail	pt-br	coincidentes
 matches regexp	mail	pt-br	coincidentes com a expressão
+modify subject	mail	pt-br	Modificar o assunto
+modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
 move selected to	mail	pt-br	mover selecionados para
 move to	mail	pt-br	mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
 never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
+new subject	mail	pt-br	Novo tema
 no access	mail	pt-br	Sem acesso
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt-br	Nenhum endereço em PARA/CC/CCO informado e nenhuma pasta para salvar mensagens definida.
 no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
@@ -177,6 +181,7 @@ permission denied	mail	pt-br	Permissão negada
 please select a address	mail	pt-br	Por favor, selecione um endereço
 please select the number of days to wait between responses	mail	pt-br	Por favor, selecione o número de dias para aguardar entre respostas.
 please supply the message to send with auto-responses	mail	pt-br	Por favor, informe a mensagem para enviar como auto-resposta.
+predefined addresses for compose	mail	pt-br	Endereços pré-definidos para composição
 printview	mail	pt-br	visualização da impressão
 quicksearch	mail	pt-br	Pesquia rápida
 refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
@@ -191,15 +196,18 @@ reply to	mail	pt-br	Responde a
 replyto	mail	pt-br	Responde a
 required pear class mail/mimedecode.php not found.	mail	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 row order style	mail	pt-br	estilo da ordem de linha
+save all attachments to filemanager	mail	pt-br	Salvar todos os anexos para o gerenciador de arquivos
 save as draft	mail	pt-br	salvar como rascunho
 save as infolog	mail	pt-br	salvar como tarefa
 save message to disk	mail	pt-br	Salvar mensagem no disco
 select file(s) from vfs	mail	pt-br	Selecione o arquivo (s) a partir de VFS
+select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 sent	mail	pt-br	Enviado
 sent folder	mail	pt-br	Pasta Enviadas
 set / remove flags	mail	pt-br	Colocar / Remover Bandeiras
 set / remove labels	mail	pt-br	Ajustar / Remover Etiquetas
 set flags	mail	pt-br	Bandeiras de bandeira
+set predefined values for compose...	mail	pt-br	Definir valores pré-definidos para compor ...
 sieve script name	mail	pt-br	nome do script sieve
 signature	mail	pt-br	Assinatura
 size(...->0)	mail	pt-br	Tamanho (...->0)

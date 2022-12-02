@@ -16,6 +16,7 @@ charset for the csv export	addressbook	zh	用于 CSV 输出的字符集
 click to select a color	preferences	zh	点击选择一颜色
 color	preferences	zh	颜色
 country	preferences	zh	国家
+dark mode theme	preferences	zh	黑暗模式主题
 date format	preferences	zh	日期格式
 default	preferences	zh	默认
 default application	preferences	zh	默认应用程序
@@ -33,6 +34,8 @@ enables or disables drag and drop functions in all applications. if the browser 
 enter your new password	preferences	zh	请输入您的新密码
 enter your old password	preferences	zh	请输入您的旧密码
 failed to change password.	preferences	zh	更改密码失败。请联系系统管理员。
+fast	preferences	zh	快速更新
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	zh	快速更新将新条目添加到列表的顶部，并在原地更新现有的条目，除非列表是按最后修改排序的。如果列表不是按最后修改时间排序的，则精确更新会做全面刷新。
 forced preferences	preferences	zh	强制参数配置
 help off	preferences	zh	关闭提示信息
 hours	preferences	zh	小时
@@ -40,12 +43,14 @@ how do you like to display accounts	preferences	zh	您喜欢以何种方式显�
 how do you like to select accounts	preferences	zh	您喜欢以何种方式选择帐户
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	zh	在页面顶部导航栏导显示多少个图标。其它图标放进下拉菜单中，在导航栏最右边可随时点击下拉按钮显示他们。
 how should egroupware display dates for you.	preferences	zh	以何种方式显示日期。
+how to update lists	preferences	zh	如何更新列表
 icon	preferences	zh	图标
 icons and text	preferences	zh	图标和文字
 icons only	preferences	zh	只显示图标
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	zh	图像链接到某一条目可以被显示为缩略图。你可以把将此关闭以加快网页显示。
 in which country are you. this is used to set certain defaults for you.	preferences	zh	您所在的国家/地区。这是用来为您设定默认。
 interface/template selection	preferences	zh	界面/模板选择
+it sets content size (text only) according to selected size.	preferences	zh	它根据选定的尺寸设置内容尺寸（仅文本）。
 language	preferences	zh	语言
 max matches per page	preferences	zh	每页的最大匹配数
 max number of icons in navbar	preferences	zh	导航栏最多显示图标数量
@@ -67,6 +72,7 @@ select the theme (visualization) of the rich text editor.	preferences	zh	选择 
 selectbox	preferences	zh	选择框
 selectbox with groupmembers	common	zh	组成员选择框
 selectbox with primary group and search	preferences	zh	基本群组和搜索选择框
+set content size	preferences	zh	设置内容尺寸
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	zh	该选项根据您的意愿. 出于安全性原因, 您可能不希望公开显示您的用户名。
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目。
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	进行用户参数配置时总是显示这些帮助消息，或只应要求时显示。

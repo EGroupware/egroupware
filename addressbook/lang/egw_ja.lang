@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	ja	%1 公開キーを追加しました。
 %1 records imported	addressbook	ja	%1 件インポートしました
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ja	%1 個のレコードを読み込みましたが、まだインポートされていません。画面を戻って予行演習モードを解除してください。
+%1 shared this contact on %2 with %3 %4	addressbook	ja	1 はこのコンタクトを %2 で %3 %4 と共有しました。
 %1 starts with '%2'	addressbook	ja	%1 を %2 で開始
 %s please calculate the result	addressbook	ja	%s 結果を計算してください
 (e.g. 1969)	addressbook	ja	(例 1969)
@@ -275,6 +276,7 @@ group %1	addressbook	ja	グループ %1
 h	addressbook	ja	時間
 hide accounts from addressbook	addressbook	ja	ユーザ・アカウントを隠す
 hide all accounts	addressbook	ja	全アカウントを隠す
+hide user groups as distribution lists	addressbook	ja	配布リストとしてのユーザーグループを非表示にする
 hides accounts completly from the adressbook.	addressbook	ja	アドレス帳でユーザ・アカウントを隠します。
 history logging	admin	ja	履歴を記録
 home address	addressbook	ja	住所（自宅）
@@ -308,7 +310,8 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
 in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
 income	addressbook	ja	収入
-infolog	addressbook	ja	インフォログ
+infolog	addressbook	ja	InfoLogお問い合わせ先
+infolog-organisation	addressbook	ja	InfoLogの組織
 insert	addressbook	ja	挿入
 insufficent rights to delete this list!	addressbook	ja	このリストを削除する権限が不足しています!
 insufficent rights to edit this list!	addressbook	ja	このリストを編集する権限が不足しています!
@@ -333,6 +336,7 @@ list already exists!	addressbook	ja	リストは既に存在します!
 list created	addressbook	ja	リストを作成しました。
 list creation failed, no rights!	addressbook	ja	リストの作成失敗(権限不足)!
 list of files linked to the current record	addressbook	ja	このレコードにリンクするファイルの一覧
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ja	カスタムフィールド列がオフの場合でも、インデックスにカスタムフィールドをロードします（例：特定のインデックス列に表示する場合）。
 load vcard	addressbook	ja	vCard をロード
 location	addressbook	ja	地域
 locations	addressbook	ja	地域
@@ -368,6 +372,7 @@ no country selected	addressbook	ja	国が選択されていません
 no distribution list	addressbook	ja	配信リスト無し
 no fallback	addressbook	ja	既定値無し
 no vcard	addressbook	ja	vCard 無し
+not shared	addressbook	ja	ノーシェア
 number	addressbook	ja	番号
 number of records to read (%1)	addressbook	ja	読み込むレコード数（%1）
 open %1 crm view	addressbook	ja	%1 CRM 表示を開く
@@ -442,6 +447,12 @@ send succeeded to %1	common	ja	%1 への送信成功
 seperator	addressbook	ja	区切り文字
 set full name and file as field in contacts of all users (either all or only empty values)	admin	ja	ユーザの氏名、およびファイル名を設定してください。
 set only full name	addressbook	ja	氏名（フルネーム）でのみ指定
+share into addressbook	addressbook	ja	アドレス帳への共有
+share writable	addressbook	ja	共有編集可能
+shared	addressbook	ja	シェアード
+shared by me	addressbook	ja	共有
+shared into addressbook %1	addressbook	ja	アドレス帳で共有されている %1
+shared with	addressbook	ja	と共有する。
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ja	カラムが空でも写真と自宅住所を表示しますか？
 show	addressbook	ja	表示
 show active accounts	addressbook	ja	アクティブ・アカウントを表示
@@ -494,6 +505,8 @@ unable to import into %1, using %2	addressbook	ja	%2 による %1 へのイン�
 unique id (uid)	addressbook	ja	固有 ID (UID)
 unique id<br />(to update existing records)	addressbook	ja	固有 ID<br />既存レコードの更新用
 unknown type %1, imported as %2	addressbook	ja	未知のタイプ %1 を %2 としてインポートしました。
+unshare	addressbook	ja	シェア終了
+unshared	addressbook	ja	きょうゆうしなくなった
 update a single entry by passing the fields.	addressbook	ja	項目を送信してデータを更新。
 update fields by edited organisations?	admin	ja	編集済み組織・団体の項目を更新しますか？
 updated	addressbook	ja	更新済み
@@ -508,6 +521,7 @@ use country list	addressbook	ja	国選択リストを使う
 use setup for a full account-migration	admin	ja	アカウント移行時に設定を使う
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 used for links and for the own sorting of the list	addressbook	ja	リンク、およびリストの独自並べ変えで使用。
+user groups are automatically shown as distribution lists.	addressbook	ja	ユーザーグループは自動的に配布リストとして表示されます。
 user preference	addressbook	ja	個人設定
 vcard	common	ja	vCard
 vcards require a first name entry.	addressbook	ja	vCard には、名前（氏名の名）が必要です。
@@ -519,6 +533,7 @@ warning: all contacts found will be deleted!	addressbook	ja	警告: 見つかっ
 weekday	addressbook	ja	曜日
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ja	アドレス帳のリンクを他のアプリケーションで表示するか否かを指定します。この設定を変更した場合は、再ログイン後に変更が反映されます。
 when viewing a contact, show linked entries from the selected application	addressbook	ja	コンタクト表示時に、指定されたアプリケーションのリンク項目を表示する
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ja	エントリーを文書に統合すると、ここに保存されます。ディレクトリが指定されていない場合は、ホームディレクトリ(/home/...)に格納されます。
 where to add the email address	addressbook	ja	メール・アドレスの追加先
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	ja	既定の住所書式が未定義である国のデータで使用する住所書式。
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ja	現在のアドレス帳に対して書き込み権限が無い場合にコンタクトを保存するアドレス帳。
@@ -537,6 +552,7 @@ yes, for the next week	addressbook	ja	はい（翌1週間）
 yes, for today and tomorrow	addressbook	ja	はい（今日と明日）
 yes, only admins can purge deleted items	admin	ja	はい（管理者だけが削除済みデータをパージ可能）
 yes, users can purge their deleted items	admin	ja	はい（ユーザ自身が削除済みデータをパージ可能）
+you are not allowed to share into the addressbook of %1	addressbook	ja	アドレス帳 %1 への共有が許可されていません。
 you are not permitted to delete contact %1	addressbook	ja	コンタクト %1 を削除する権限がありません
 you are not permittet to delete this contact	addressbook	ja	このコンタクトを削除する権限がありません
 you are not permittet to edit this contact	addressbook	ja	このコンタクトを編集する権限がありません

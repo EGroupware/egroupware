@@ -11,6 +11,7 @@
 %1 files copied.	filemanager	ru	%1 файлов скопировано.
 %1 files deleted.	filemanager	ru	%1 файлов удалено.
 %1 files moved.	filemanager	ru	%1 файлов перемещено.
+%1 files unlocked.	filemanager	ru	%1 файл разблокирован.
 %1 starts with '%2'	filemanager	ru	%1 началось с '%2'
 %1 successful unmounted.	filemanager	ru	%1 успешно отмонтирован.
 %1 successful uploaded.	filemanager	ru	%1 успешно загружено.
@@ -140,6 +141,8 @@ go home	filemanager	ru	Переход Домой
 go to	filemanager	ru	Переход к
 go to your home directory	filemanager	ru	Переход к домашнему каталогу
 go up	filemanager	ru	Переход выше
+hidden upload	filemanager	ru	Скрытая загрузка
+hidden uploads	filemanager	ru	Скрытые загрузки
 id	filemanager	ru	Идентификатор ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
@@ -151,6 +154,7 @@ link %1: %2	filemanager	ru	Ссылка %1: %2
 link target	filemanager	ru	Целевая ссылка
 link target %1 not found!	filemanager	ru	Целевая ссылка %1 не найдена!
 location	filemanager	ru	Положение
+lock	filemanager	ru	Заблокировать
 log out as superuser	filemanager	ru	Выход из режима суперпользователь
 mail files	filemanager	ru	Отправить файлы
 max folderlinks	admin	ru	Максимальные связи папки

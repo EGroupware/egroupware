@@ -89,6 +89,7 @@ compose as new	mail	sl	Sestavi kot novo
 compress folder	mail	sl	Stisni mapo
 condition	mail	sl	Pogoj
 configuration settings	mail	sl	Nastavitve konfiguracije
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sl	Prednastavljene vrednosti se bodo samodejno nastavile v pogovornem oknu compose za upoštevano polje pri sestavljanju novega e-poštnega sporočila.
 confirm	mail	sl	Potrdi
 confirm attach message	mail	sl	Potrdite sporočilo o prijavi
 confirm move to folder	mail	sl	Potrdite premik v mapo
@@ -323,6 +324,8 @@ message saved successfully.	mail	sl	Sporočilo je bilo uspešno shranjeno.
 message send failed: %1	mail	sl	Poslano sporočilo ni uspelo:% 1
 message send successfully.	mail	sl	Sporočilo je uspešno poslano.
 miscellaneous	mail	sl	Razno
+modify subject	mail	sl	Spremeni predmet
+modify subject of this message	mail	sl	Spremeni predmet tega sporočila
 move	mail	sl	Premakni se
 move folder	mail	sl	Premakni mapo
 move selected mails to archive	mail	sl	Premakni izbrana e-poštna sporočila v arhiv
@@ -337,6 +340,7 @@ never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
 never show	mail	sl	nikoli ne pokaži
 new mail notification	mail	sl	Novo obvestilo o pošti
 new message type	mail	sl	Nova vrsta sporočila
+new subject	mail	sl	Nov predmet
 no (valid) send folder set in preferences	mail	sl	Ne (veljavno) Pošljite nastavljeno mapo v nastavitvah
 no access	mail	sl	Ni dostopa
 no action defined!	mail	sl	Nobeno dejanje ni definirano!
@@ -383,6 +387,7 @@ please select a address	mail	sl	Izberite naslov
 please select the number of days to wait between responses	mail	sl	Izberite koliko dni naj počakam med odgovori
 please supply the message to send with auto-responses	mail	sl	Vpišite sporočilo, ki se bo poslalo pri samodejnem odgovoru
 post	mail	sl	prejem
+predefined addresses for compose	mail	sl	Vnaprej določeni naslovi za sestavljanje
 prevent managing filters	mail	sl	Preprečite upravljanje filtrov
 prevent managing folders	mail	sl	Preprečite upravljanje map
 prevent managing notifications	mail	sl	Preprečite upravljanje obvestil
@@ -443,6 +448,7 @@ rule priority position	mail	sl	Položaj prednostnega pravila
 rule with priority	mail	sl	pravilo s prednostjo
 rules	mail	sl	pravila
 save all	mail	sl	Shrani vse
+save all attachments to filemanager	mail	sl	Shranite vse priponke v datotečni upravljalnik
 save as calendar	mail	sl	Shrani kot koledar
 save as default	mail	sl	shranite kot privzeto
 save as draft	mail	sl	Shrani kot osnutek
@@ -473,6 +479,7 @@ select file to import into folder	mail	sl	Izberite datoteko, ki jo želite uvozi
 select file(s) from vfs	mail	sl	Izberite datoteke iz VFS
 select files to upload	mail	sl	Izberite datoteke za nalaganje
 select multiple	mail	sl	Izberite več
+select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
 selected	mail	sl	izbran
 selected date range (with quicksearch)	mail	sl	Izbrano časovno obdobje (s hitrim iskanjem)
 send a reject message:	mail	sl	Pošiljanje zavrnjenega sporočila:
@@ -487,6 +494,7 @@ serverside vacationnotice (via sieve) are not activated	mail	sl	Odsotna sporoči
 set / remove flags	mail	sl	Nastavite / Odstrani zastavice
 set / remove labels	mail	sl	Nastavite / Odstrani oznake
 set it as default:	mail	sl	ga nastavite kot privzeto:
+set predefined values for compose...	mail	sl	Nastavite vnaprej določene vrednosti za compose ...
 should new messages show up on the home page	mail	sl	Če se na domači strani prikažejo nova sporočila
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sl	Če je treba vstaviti podpis po (standardnem) ali pred odgovorom ali vnaprej, in ali mora biti podpis med zapisom viden in spremenljiv.
 show	mail	sl	prikaži

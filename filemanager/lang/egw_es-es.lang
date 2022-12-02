@@ -14,6 +14,7 @@
 %1 files deleted.	filemanager	es-es	%1 ficheros borrados.
 %1 files moved.	filemanager	es-es	%1 ficheros movidos.
 %1 files or directories deleted in %2 seconds.	filemanager	es-es	%1 archivos o directorios suprimidos en %2 segundos.
+%1 files unlocked.	filemanager	es-es	%1 archivos desbloqueados.
 %1 shares deleted.	filemanager	es-es	%1 comparticiones borradas
 %1 starts with '%2'	filemanager	es-es	%1 empieza por '%2'
 %1 successful unmounted.	filemanager	es-es	% desmontado correctamente.
@@ -169,6 +170,8 @@ go home	filemanager	es-es	ir al inicio
 go to	filemanager	es-es	Ir A
 go to your home directory	filemanager	es-es	Ir al directorio personal
 go up	filemanager	es-es	Subir
+hidden upload	filemanager	es-es	Subida oculta
+hidden uploads	filemanager	es-es	Subidas ocultas
 id	filemanager	es-es	Id
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
@@ -183,6 +186,7 @@ link target	filemanager	es-es	Vincular destino
 link target %1 not found!	filemanager	es-es	¡No se ha encontrado el enlace de destino %1!
 list view	filemanager	es-es	Vista de lista
 location	filemanager	es-es	Ubicación
+lock	filemanager	es-es	Bloquear
 log out as superuser	filemanager	es-es	Cerrar sesión como superusuario
 mail files	filemanager	es-es	Enviar archivos por correo
 mail paste	filemanager	es-es	Pegar correo
@@ -305,7 +309,7 @@ you are not allowed to upload a script!	filemanager	es-es	¡NO tiene permiso par
 you can only grant additional rights, you can not take rights away!	filemanager	es-es	¡Sólo se pueden conceder permisos adicionales, NO recortar permisos!
 you can use regular upload [+] button to upload files.	filemanager	es-es	Puede usar el botón de carga regular [+] para cargar archivos.
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	es-es	¡Debes convertirte en raiz para habilitar o deshabilitar el control de versiones en un directorio!
+you need to become root, to enable or disable versioning on a directory!	filemanager	es-es	Necesitas convertirte en superuser para activar o desactivar el versionado de una carpeta.
 you need to select an owner!	filemanager	es-es	¡Necesita seleccionar un propietario!
 you need to select some files first!	filemanager	es-es	¡Necesita seleccionar antes algunos ficheros!
 you will be redirected to your home directory.	filemanager	es-es	Se le va a redirigir a su directorio personal

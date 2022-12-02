@@ -1,4 +1,5 @@
 %1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
+(leave empty for no quota)	mail	id	(Biarkan kosong untuk tidak ada kuota)
 (no subject)	mail	id	(tanpa subyek)
 activating by date requires a start- and end-date!	mail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
 add to addressbook	mail	id	Tambahkan ke buku alamat
@@ -11,6 +12,7 @@ compose	mail	id	Tulis
 compose as new	mail	id	tulis sbg pesan baru
 compress folder	mail	id	Mampatkan folder
 condition	mail	id	kondisi
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	id	Nilai yang dikonfigurasi akan diatur secara otomatis pada dialog penulisan untuk bidang yang dihormati saat membuat email baru.
 contains	mail	id	mengandung
 copy to	mail	id	Salin ke
 date(newest first)	mail	id	Tanggal (terbaru)
@@ -62,7 +64,10 @@ mail settings	mail	id	Pengaturan Mail
 mark as deleted	mail	id	Tandai sbg terhapus
 matches	mail	id	kecocokan
 matches regexp	mail	id	cocok regexp
+modify subject	mail	id	Ubah subjek
+modify subject of this message	mail	id	Ubah subjek pesan ini
 move to	mail	id	Pindahkan ke
+new subject	mail	id	Subjek baru
 no access	mail	id	No access
 no folders	mail	id	tiada folder
 no signature	mail	id	tiada tandatangan
@@ -72,6 +77,7 @@ organisation	admin	id	Organisasi
 organization	mail	id	organisasi
 original message	mail	id	pesan asal
 permission denied	mail	id	Ijin ditolak
+predefined addresses for compose	mail	id	Alamat yang telah ditentukan sebelumnya untuk penulisan
 printview	mail	id	lihat cetakan
 quicksearch	mail	id	Cari cepat
 reject with	mail	id	tolak dengan
@@ -84,13 +90,16 @@ reply all	mail	id	Balas ke Semua
 reply to	mail	id	Balas Ke
 replyto	mail	id	ReplyTo
 save all	mail	id	Simpan semuanya
+save all attachments to filemanager	mail	id	Simpan semua lampiran ke filemanager
 save as draft	mail	id	simpan sbg draft
 save as infolog	mail	id	simpan sbg infolog
 save message to disk	mail	id	simpan pesan ke disk
 select all	mail	id	Pilih semua
+select or insert email address	mail	id	Pilih atau masukkan alamat email
 sender	mail	id	Pengirim
 sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
+set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
 signature	mail	id	Tandatangan
 size(...->0)	mail	id	Ukuran (...->0)
 size(0->...)	mail	id	Ukuran (0->...)

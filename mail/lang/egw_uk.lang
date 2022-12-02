@@ -1,3 +1,5 @@
+(leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 deleted	mail	uk	Видалено
 disable	mail	uk	Відключити
 edit account	mail	uk	Редагувати рахунок
@@ -5,7 +7,14 @@ enable	mail	uk	Включити
 event details follow	mail	uk	Подробиці події
 extended	mail	uk	Розширений
 from	mail	uk	Від
+modify subject	mail	uk	Змінити тему
+modify subject of this message	mail	uk	Змінити тему цього повідомлення
+new subject	mail	uk	Нова тема
 permission denied	mail	uk	Заборонено
+predefined addresses for compose	mail	uk	Заздалегідь визначені адреси для компонування
+save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
+select or insert email address	mail	uk	Виберіть або вставте адресу електронної пошти
+set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
 small view	mail	uk	маленький вигляд
 text	mail	uk	Текст
 write	mail	uk	Записати

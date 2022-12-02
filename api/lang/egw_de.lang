@@ -703,7 +703,7 @@ import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer
 import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
 import xml	common	de	XML Import
 in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	de	Um in die Zwischenablage zu kopieren, müssen Sie Flash Player durch klicken auf die graue Box erlauben.\nSie können Flash Player für EGroupware in den Einstellungen Ihres Browsers auch permanent erlauben.
-include access to any linked files (links tab)	common	de	Beinhaltet Zugriff auf jegliche verküpfte Dateien (Reiter Verküpfungen)
+include access to any linked files (links tab)	common	de	Beinhaltet Zugriff auf jegliche verknüpfte Dateien (Reiter Verknüpfungen)
 increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
 indent	common	de	Einzug vergrößern
 index/name of returned content (name of the template, link / method for image)	common	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)

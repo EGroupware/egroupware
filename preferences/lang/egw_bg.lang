@@ -22,14 +22,18 @@ disable	preferences	bg	Забранява
 edit custom fields	preferences	bg	Редакция на полета по избор
 enable	preferences	bg	позволява
 enter your new password	preferences	bg	Въведете нова парола
+fast	preferences	bg	Бърз
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	bg	Бързото актуализиране добавя нови записи винаги отгоре на списъка и актуализира съществуващите на място, освен ако списъкът не е подреден по последна промяна. Точните актуализации извършват пълно обновяване, ако списъкът не е подреден по последна промяна.
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите
 how do you like to select accounts	preferences	bg	Как искате да се избират акаунтите
 how should egroupware display dates for you.	preferences	bg	Как EGroupware да показва датите
+how to update lists	preferences	bg	Как да актуализирате списъци
 icon	preferences	bg	Картинки
 icons and text	preferences	bg	Картинки и текст
 icons only	preferences	bg	само картинки
 in which country are you. this is used to set certain defaults for you.	preferences	bg	Страната, в която се намирате. Използва се за някои настройки по подразбиране.
+it sets content size (text only) according to selected size.	preferences	bg	Той задава размера на съдържанието (само за текст) в съответствие с избрания размер.
 language	preferences	bg	Език
 max matches per page	preferences	bg	Максимален брой съвпадения на страница
 max number of icons in navbar	preferences	bg	Максимален брой картинки в лентата за управление
@@ -39,6 +43,7 @@ please, select a new theme	preferences	bg	Моля изберете нова т�
 re-enter your password	preferences	bg	Въведете отново паролата
 select different theme	preferences	bg	Избор на различна тема
 select one	preferences	bg	Изберете
+set content size	preferences	bg	Задаване на размера на съдържанието
 show number of current users	preferences	bg	Показване на броя включени в момента потребители
 text only	preferences	bg	Само текст
 the two passwords are not the same	preferences	bg	Паролите не съвпадат

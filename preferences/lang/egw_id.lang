@@ -16,6 +16,7 @@ charset for the csv export	addressbook	id	Charset untuk ekspor CSV
 click to select a color	preferences	id	Klik untuk memilih warna
 color	preferences	id	Warna
 country	preferences	id	Negara
+dark mode theme	preferences	id	Tema mode gelap
 date format	preferences	id	Format tanggal
 default	preferences	id	bawaan
 default application	preferences	id	Aplikasi Bawaan
@@ -31,18 +32,22 @@ enable	preferences	id	enable
 enter your new password	preferences	id	Masukan password baru anda
 enter your old password	preferences	id	Masukan password lama anda
 failed to change password.	preferences	id	Gagal mengubah password.
+fast	preferences	id	Cepat
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	id	Pembaruan cepat menambahkan entri baru selalu di atas daftar dan memperbarui yang sudah ada di tempat, kecuali daftar diurutkan berdasarkan modifikasi terakhir. Pembaruan yang tepat melakukan penyegaran penuh, jika daftar tidak diurutkan berdasarkan modifikasi terakhir.
 forced preferences	preferences	id	Kesukaan Dipaksakan
 help off	preferences	id	Help off
 hours	preferences	id	jam
 how do you like to display accounts	preferences	id	Tampilan akoun sesuai kesukaan anda
 how do you like to select accounts	preferences	id	Pilihan akoun sesuai kesukaan anda
 how should egroupware display dates for you.	preferences	id	Bagaimana seharusnya EGroupware menampilkan tanggal.
+how to update lists	preferences	id	Cara memperbarui daftar
 icon	preferences	id	Ikon
 icons and text	preferences	id	Ikon dan teks
 icons only	preferences	id	hanya ikon
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	id	Gambar terkait pada suatu entri dapat ditampilkan dalam <em>thumbnails.</em> Anda dapat mematikannya untuk mempercepat tampilan halaman.
 in which country are you. this is used to set certain defaults for you.	preferences	id	Negara anda. Ini digunakan untuk menentukan bawaan tertentu.
 interface/template selection	preferences	id	Pemilihan Antarmuka/Templat
+it sets content size (text only) according to selected size.	preferences	id	Ini menetapkan ukuran konten (hanya teks) menurut ukuran yang dipilih.
 language	preferences	id	Bahasa
 max matches per page	preferences	id	Maks. pencocokan per halaman
 max number of icons in navbar	preferences	id	Maks. jumlah ikon pada baris navigasi
@@ -63,6 +68,7 @@ select one	preferences	id	Pilih satu
 selectbox	preferences	id	Kotak pilihan
 selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok
 selectbox with primary group and search	preferences	id	Kotak pilihan dengan pencarian kelompok utama
+set content size	preferences	id	Mengatur ukuran konten
 show helpmessages by default	preferences	id	Tampilkan pesan bantuan menurut bawaan
 show links between egroupware aps as	common	id	Tampilkan tautan antar aplikasi EGroupware sebagai
 show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai

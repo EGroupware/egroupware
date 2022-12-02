@@ -10,6 +10,7 @@ change your settings	preferences	lv	Mainīt tavus uzstādījumus
 click to select a color	preferences	lv	Noklikšķini, lai izvēlētos krāsu
 color	preferences	lv	Krāsa
 country	preferences	lv	Valsts
+dark mode theme	preferences	lv	Tumšā režīma tēma
 date format	preferences	lv	Datuma formāts
 default	preferences	lv	noklusējums
 default application	preferences	lv	Noklusējuma programmatūra
@@ -22,17 +23,22 @@ edit custom fields	preferences	lv	rediģēt klientu laukus
 enable	preferences	lv	Aktivizēt
 enter your new password	preferences	lv	Ievadi jauno paroli
 failed to change password.	preferences	lv	Neizdevād nomainīt paroli.
+fast	preferences	lv	Ātrā
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	lv	Ātrā atjaunināšana pievieno jaunus ierakstus vienmēr saraksta augšpusē un atjaunina esošos ierakstus to vietā, ja vien saraksts nav sakārtots pēc pēdējās izmaiņas. Precīzi atjauninājumi veic pilnīgu atjaunināšanu, ja saraksts nav sakārtots pēc pēdējās izmaiņas.
 forced preferences	preferences	lv	Vajadzīgie iestatījumi
 help off	preferences	lv	Palīgs izslēgts
 hours	preferences	lv	stundas
 how do you like to display accounts	preferences	lv	Kā tu vēlies prādīt kontus?
 how do you like to select accounts	preferences	lv	Kā tu vēlies atzīmēt kontus?
+how to update lists	preferences	lv	Kā atjaunināt sarakstus
 icon	preferences	lv	Ikona
 icons and text	preferences	lv	Ikonas un teksts
 icons only	preferences	lv	tikai ikonas
 in which country are you. this is used to set certain defaults for you.	preferences	lv	Kurā valstī tu atrodies? Tas tiek lietots, lai noteiktu tev nepieciešamos noklusējumus
 interface/template selection	preferences	lv	Saskarnes/Veidnes izvēle
+it sets content size (text only) according to selected size.	preferences	lv	Tā nosaka satura izmēru (tikai teksta) atbilstoši izvēlētajam izmēram.
 language	preferences	lv	Valoda
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	lv	Padarīt lietojumprogrammu sarakstu ritināmu ar ritināšanas pogām uz augšu/uz leju (noderīgi lietotājiem, kas strādā ar peli bez ritināšanas ritenīša).
 max matches per page	preferences	lv	Maksimālo atbilstošo ierakstu skaits lapā
 max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku joslā
 no default	preferences	lv	Nav noklusējuma
@@ -42,6 +48,7 @@ re-enter your password	preferences	lv	Atkārto savu paroli
 select different theme	preferences	lv	Atzīmē citu tēmu
 select one	preferences	lv	Atzīmē vienu
 selectbox	preferences	lv	Izvēlne (selectbox)
+set content size	preferences	lv	Iestatīt satura izmēru
 should the number of active sessions be displayed for you all the time.	preferences	lv	Vai aktīvo sesiju skaitam vajadzētu tikt tev parā�ītam visu laiku?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	lv	Vai šīm palīdzības vēstulēm vienmēr jāparādās, kad tu maini iestatījumus, vai tikai pēc tava pieprasījuma?
 show helpmessages by default	preferences	lv	Rādīt palīga vēstules pēc noklusējuma
@@ -49,6 +56,7 @@ show navigation bar as	preferences	lv	Rādīt navigācijas joslu kā
 show number of current users	preferences	lv	Rādīt patreizējo lietotaju skaitu
 show text on navigation icons	preferences	lv	Rādīt tekstu uz navigācijas ikonām
 show_more_apps	common	lv	Rādīt vairāk aplikācijas
+small paragraph	preferences	lv	Mazs fonts
 text only	preferences	lv	Tikai teksts
 the two passwords are not the same	preferences	lv	Abas paroles nav vienādas
 theme (colors/fonts) selection	preferences	lv	Tēmas(krāsu/fontu) izvēle

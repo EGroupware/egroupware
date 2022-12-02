@@ -4,6 +4,7 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	pt-br	%1 campo(s) em %2 outro(s) membro(s) da organização alterado(s)
 %1 records imported	addressbook	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar o campo Testar Importação)
+%1 shared this contact on %2 with %3 %4	addressbook	pt-br	%1 dividiu este contato em %2 %3 %4
 %1 starts with '%2'	addressbook	pt-br	%1 inicia(m) com '%2'
 %s please calculate the result	addressbook	pt-br	%s por favor calcule o resultado
 (e.g. 1969)	addressbook	pt-br	(ex. 1969)
@@ -29,7 +30,7 @@ added by synchronisation	addressbook	pt-br	adicionado por sincronização
 added to distribution list	addressbook	pt-br	adicionado a uma lista de distribuição
 additional information about using ldap as contact repository	admin	pt-br	Informação adicional sobre usar LDAP como respositório de contas
 address book	common	pt-br	Livro de Contatos
-address book - vcard in	addressbook	pt-br	Livro de Contatos - VCard
+address book - vcard in	addressbook	pt-br	Livro de Contatos - vCard
 address book - view	addressbook	pt-br	Livro de Contatos - Exibir
 address line 2	addressbook	pt-br	Endereço Linha 2
 address type	addressbook	pt-br	Tipo de endereço
@@ -42,7 +43,7 @@ addressbook the contact should be saved to	addressbook	pt-br	Livro de Contatos e
 addressbook the contact should be shown	addressbook	pt-br	Livro de Contatos em que o contato deverá ser exibido
 addressbook vcard import	addressbook	pt-br	Importação de endereços vCard
 addressbook-fieldname	addressbook	pt-br	Livro de Contatos - Nome do Campo
-addvcard	addressbook	pt-br	Adicionar VCard
+addvcard	addressbook	pt-br	Adicionar vCard
 advanced search	addressbook	pt-br	Pesquisa avançada
 all contacts	addressbook	pt-br	Todos os contatos
 allow users to maintain their own account-data	admin	pt-br	Permitir usuários a manter seus próprios dados de contatos
@@ -147,6 +148,9 @@ don't hide empty columns	addressbook	pt-br	Não ocultar colunas vazias
 download	addressbook	pt-br	Baixar
 download export file (uncheck to debug output in browser)	addressbook	pt-br	Baixar arquivo exportado (Desmarque Depurar no navegador)
 download this contact as vcard file	addressbook	pt-br	baixar este contato como arquivo vCard
+duplicate threshold	addressbook	pt-br	Limiar duplicado
+duplicate warning	addressbook	pt-br	Advertência duplicada
+duplicates	addressbook	pt-br	Duplicações
 duration	addressbook	pt-br	Duração
 edit custom field	addressbook	pt-br	Editar campo personalizado
 edit custom fields	admin	pt-br	Editar campos personalizados
@@ -166,7 +170,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	p
 existing links	addressbook	pt-br	Links existentes
 exists	addressbook	pt-br	Existe
 export as csv	addressbook	pt-br	Exportar como CSV
-export as vcard	addressbook	pt-br	Exportar como VCard
+export as vcard	addressbook	pt-br	Exportar como vCard
 export contacts	addressbook	pt-br	Exportar contatos
 export definition to use for nextmatch export	addressbook	pt-br	Definição Exportar para usar para exportação NextMatch
 export file name	addressbook	pt-br	Exportar arquivo
@@ -184,6 +188,8 @@ field %1 has been updated !	addressbook	pt-br	Campo %1 foi atualizado !
 field name	addressbook	pt-br	Nome do campo
 fields for the csv export	addressbook	pt-br	Campos para a exportação CSV
 fields the user is allowed to edit himself	admin	pt-br	Campos que ao usuário é permitir editar
+fields to check for duplicates	addressbook	pt-br	Campos para verificação de duplicatas
+fields to consider when looking for duplicate contacts.	addressbook	pt-br	Campos a serem considerados ao procurar por contatos duplicados.
 fields to show in address list	addressbook	pt-br	Campos a serem exibidos na lista de endereços
 fieldseparator	addressbook	pt-br	Separador de campos
 for read only ldap	admin	pt-br	para LDAP somente leitura
@@ -199,6 +205,8 @@ grant addressbook access	common	pt-br	Permitir acesso ao Livro de Contatos
 group %1	addressbook	pt-br	Grupo %1
 h	addressbook	pt-br	h
 hide accounts from addressbook	addressbook	pt-br	Ocultar contas do Livro de Contatos
+hide all accounts	addressbook	pt-br	Ocultar todas as contas
+hide user groups as distribution lists	addressbook	pt-br	Ocultar grupos de usuários como listas de distribuição
 hides accounts completly from the adressbook.	addressbook	pt-br	Oculta completamente contas dos Contatos
 history logging	admin	pt-br	Registro de histórico
 home address	addressbook	pt-br	Endereço residencial
@@ -211,6 +219,7 @@ home phone	addressbook	pt-br	Telefone residencial
 home state	addressbook	pt-br	Estado
 home street	addressbook	pt-br	Rua, Av, Trav., etc.
 home zip code	addressbook	pt-br	CEP
+how many fields must match for the record to be considered a duplicate.	addressbook	pt-br	Quantos campos devem coincidir para que o registro seja considerado uma duplicata.
 html link to the current record	addressbook	pt-br	Link HTML para o registro atual
 icon	addressbook	pt-br	Ícone
 if accounts are already in ldap	admin	pt-br	se as contas já estiverem em LDAP
@@ -219,15 +228,16 @@ import contacts	addressbook	pt-br	Importar contatos
 import csv-file into addressbook	addressbook	pt-br	Importar arquivo CSV para o Livro de Contatos
 import file	addressbook	pt-br	Importar arquivo
 import from	addressbook	pt-br	Importar de
-import from ldif, csv, or vcard	addressbook	pt-br	Importar de LDIF, CSV ou VCard
+import from ldif, csv, or vcard	addressbook	pt-br	Importar de LDIF, CSV ou vCard
 import from outlook	addressbook	pt-br	Importar do Outlook
-import multiple vcard	addressbook	pt-br	Importar múltiplo VCard
+import multiple vcard	addressbook	pt-br	Importar múltiplo vCard
 import next set	addressbook	pt-br	Importar próximo conjunto
-import_instructions	addressbook	pt-br	No Netscape, abra o Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do format LDIF.<p> Ou, no Outlook, selecione a sua pastas de contatos, selecione <b>Importar e Exportar...</b> do menu <b>Arquivo</b> e exporte seus contatos para um arquivo separado por vírgulas (CSV). Ou no Palmdesktop 4.0 ou superior, vá para seu Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do tipo VCard.
+import_instructions	addressbook	pt-br	No Netscape, abra o Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do format LDIF.<p> Ou, no Outlook, selecione a sua pastas de contatos, selecione <b>Importar e Exportar...</b> do menu <b>Arquivo</b> e exporte seus contatos para um arquivo separado por vírgulas (CSV). Ou no Palmdesktop 4.0 ou superior, vá para seu Livro de Contatos e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do tipo vCard.
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
 in %1 days (%2) is %3's birthday.	addressbook	pt-br	Em %1 dia(s) (%2) será aniversário de %3
 income	addressbook	pt-br	Renda
-infolog	addressbook	pt-br	Tarefas
+infolog	addressbook	pt-br	Contato tarefas
+infolog-organisation	addressbook	pt-br	Organização tarefas
 insert	addressbook	pt-br	Inserir
 insufficent rights to delete this list!	addressbook	pt-br	Direitos insuficientes para remover esta lista!
 international	addressbook	pt-br	Internacional
@@ -249,11 +259,13 @@ list already exists!	addressbook	pt-br	Lista já existe!
 list created	addressbook	pt-br	Lista criada
 list creation failed, no rights!	addressbook	pt-br	Criação da lista falhou. Sem direitos suficientes!
 list of files linked to the current record	addressbook	pt-br	Lista de arquivos vinculados ao registro atual
-load vcard	addressbook	pt-br	Carregar VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	pt-br	Carregar campos personalizados no índice, mesmo que a coluna de campos personalizados esteja desligada (por exemplo, para exibi-los em uma coluna de índice específica)
+load vcard	addressbook	pt-br	Carregar vCard
 location	addressbook	pt-br	Localização
 locations	addressbook	pt-br	Localizações
 manage mapping	addressbook	pt-br	Gerenciar mapeamento
 mark records as private	addressbook	pt-br	Marcar registos como particulares
+merge duplicates	addressbook	pt-br	Fusão de duplicatas
 merge into first or account, deletes all other!	addressbook	pt-br	Mesclar na primeira conta, deletar o restante!
 merged	addressbook	pt-br	mesclado
 message after submitting the form	addressbook	pt-br	Mensagem após enviar o formulário
@@ -267,7 +279,7 @@ modem phone	addressbook	pt-br	Telefone de Dados (Modem)
 more ...	addressbook	pt-br	Mais...
 move to addressbook	addressbook	pt-br	Mudar para o livro de endereços
 moved	addressbook	pt-br	movido
-multiple vcard	addressbook	pt-br	Múltiplo VCard
+multiple vcard	addressbook	pt-br	Múltiplo vCard
 name for the distribution list	addressbook	pt-br	Nome da lista de distribuição
 name of current user, all other contact fields are valid too	addressbook	pt-br	Nome do usuário atual, todos outros campos são válidos também
 name, address	addressbook	pt-br	Nome, Endereço
@@ -277,7 +289,8 @@ next date	addressbook	pt-br	Próxima data
 no categories selected	addressbook	pt-br	nenhuma categoria selecionada
 no country selected	addressbook	pt-br	Nenhum país selecionado
 no distribution list	addressbook	pt-br	Sem lista de distribuição
-no vcard	addressbook	pt-br	Nenhum VCard
+no vcard	addressbook	pt-br	Nenhum vCard
+not shared	addressbook	pt-br	não compartilhado
 number	addressbook	pt-br	Número
 number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
 options for type	admin	pt-br	Opções para tipo
@@ -319,6 +332,7 @@ replacements for inserting contacts into documents	addressbook	pt-br	Substituiç
 required fields *	addressbook	pt-br	campos requeridos *
 role	addressbook	pt-br	Função
 room	addressbook	pt-br	Sala
+search letter	addressbook	pt-br	Carta de busca
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pt-br	Selecione uma foto no formato jpeg. Ela será alterada para o tamanho de 60 pixels de largura
 select a view	addressbook	pt-br	Selecionar uma exibição
 select addressbook type	addressbook	pt-br	Selecionar tipo de Livro de Contatos
@@ -372,6 +386,8 @@ tomorrow is %1's birthday.	common	pt-br	Amanhã é o aniversário de %1.
 translation	addressbook	pt-br	Tradução
 type	addressbook	pt-br	Tipo
 unable to delete	addressbook	pt-br	Não é possível excluir
+unshare	addressbook	pt-br	Não mais compartilhar
+unshared	addressbook	pt-br	não mais compartilhado
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
 update fields by edited organisations?	admin	pt-br	Atualizar campos por organizações editadas
 updated	addressbook	pt-br	Atualizado
@@ -382,16 +398,18 @@ use an extra tab for private custom fields?	admin	pt-br	Usar uma aba extra para 
 use country list	addressbook	pt-br	Usar lista de países
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa
 used for links and for the own sorting of the list	addressbook	pt-br	usado para links e para a ordem própria da lista
+user groups are automatically shown as distribution lists.	addressbook	pt-br	Os grupos de usuários são automaticamente mostrados como listas de distribuição.
 user preference	addressbook	pt-br	Preferência do usuário
-vcard	common	pt-br	VCard
-vcards require a first name entry.	addressbook	pt-br	VCards requer um primeiro nome.
-vcards require a last name entry.	addressbook	pt-br	VCards requerem que o último nome esteja preenchido
+vcard	common	pt-br	vCard
+vcards require a first name entry.	addressbook	pt-br	vCards requer um primeiro nome.
+vcards require a last name entry.	addressbook	pt-br	vCards requerem que o último nome esteja preenchido
 verification	addressbook	pt-br	Verificação
 view linked infolog entries	addressbook	pt-br	Exibir entradas de Tarefas relacionadas
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt-br	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
 warning: all contacts found will be deleted!	addressbook	pt-br	AVISO: Todos os contatos encontrados serão removidos!
 weekday	addressbook	pt-br	Dia da semana
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pt-br	O que deverá ser exibido pelos links para o Livro de Contatos que estão em outros aplicativos. Valores vazios serão desconsiderados. Você precisará fazer novo login ser alterar esta configuração!
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pt-br	Quando você funde as entradas em documentos, eles serão armazenados aqui. Se nenhum diretório for fornecido, eles serão armazenados em seu diretório pessoal (/home/...)
 where to add the email address	addressbook	pt-br	onde adicionar o endereço de email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pt-br	Qual formato de endereço deverá ser usado para países onde o formato padrão não é conhecido. Se o formato de endereço de um país for conhecido, este será usado independente desta configuração.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pt-br	Qual Livro de Contatos deverá ser selecionado quando estiver incluindo um contato E você não tiver permissão de inclusão.
@@ -407,13 +425,14 @@ yes, for the next two weeks	addressbook	pt-br	Sim, para as próximas duas semana
 yes, for the next week	addressbook	pt-br	Sim, para a próxima semana
 yes, for today and tomorrow	addressbook	pt-br	Sim, para hoje e amanhã
 yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
+you are not allowed to share into the addressbook of %1	addressbook	pt-br	Você não está autorizado a compartilhar para endereçar livro %1
 you are not permitted to delete contact %1	addressbook	pt-br	Você não tem permissão para deletar o contato %1
 you are not permittet to delete this contact	addressbook	pt-br	Você não tem permissão para deletar este contato
 you are not permittet to edit this contact	addressbook	pt-br	Você não tem permissão para editar este contato
 you are not permittet to view this contact	addressbook	pt-br	Você não tem permissão para exibir este contato
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	pt-br	Você somente pode usar LDAP como repositório de contas se as contas estiverem salvas em LDAP também!
 you can respond by visiting:	addressbook	pt-br	Para exibi-lo, visite:
-you must select a vcard. (*.vcf)	addressbook	pt-br	Você deve selecionar um vcard. (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	pt-br	Você deve selecionar um vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	pt-br	Você deve selecionar pelo menos uma coluna para ser exibida.
 you need to select a distribution list	addressbook	pt-br	Você deve selecionar uma lista de distribuição
 you need to select some contacts first	addressbook	pt-br	Você deve selecionar alguns contatos primeiro

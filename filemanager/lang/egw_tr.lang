@@ -1,3 +1,4 @@
+%1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
 actions	filemanager	tr	Eylemler
 applications	common	tr	Uygulamalar
 custom fields	filemanager	tr	Özel Alanlar
@@ -5,7 +6,11 @@ disable	filemanager	tr	Engelle
 download	filemanager	tr	?ndir
 enable	filemanager	tr	Etkinleştir
 expires	filemanager	tr	Sona Eriyor
+hidden upload	filemanager	tr	Gizli yükleme
+hidden uploads	filemanager	tr	Gizli yüklemeler
 link	filemanager	tr	Link
 location	filemanager	tr	Konum
+lock	filemanager	tr	Kilit
 modified	filemanager	tr	Değiştirilmiş
 permissions	filemanager	tr	Ayarlar
+you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürümlemeyi etkinleştirmek veya devre dışı bırakmak için superuser olmanız gerekir!

@@ -15,7 +15,6 @@ audio effect	preferences	es-es	Efecto de audio
 audio effect enables|disables sound effects used in the theme	preferences	es-es	El efecto de audio habilita|deshabilita los efectos de sonido usados en el tema
 automatically start with this font	preferences	es-es	Comenzar automáticamente con esta tipografía
 automatically start with this font size	preferences	es-es	Comenzar automáticamente con este tamaño de tipografía
-automatically start with this format block	preferences	es-es	Comience automáticamente con este bloque de formato
 br	preferences	es-es	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	es-es	Cambia la contraseña de un usuario pasando la contraseña anterior y la nueva. Si es correcto, devuelve TRUE, y si no, FALSE.
 change password	preferences	es-es	Cambiar contraseña
@@ -32,6 +31,7 @@ country	preferences	es-es	País
 current password	preferences	es-es	Contraseña actual
 custom login box color, defaults to above color darkened	preferences	es-es	Color del cuadro de inicio de sesión personalizado, por defecto el color anterior se oscureció
 custom sidebar menu active color, defaults to above color darkened	preferences	es-es	Color de menú de barra lateral personalizado activo, por defecto el color anterior se oscureció
+dark mode theme	preferences	es-es	Tema en modo oscuro
 dark moono theme	preferences	es-es	Tema Moono oscuro
 data exchange settings	preferences	es-es	Opciones para intercambio de datos
 date format	preferences	es-es	Formato de la fecha
@@ -60,6 +60,8 @@ enter your new password	preferences	es-es	Introduzca la contraseña nueva
 enter your old password	preferences	es-es	Introduzca la contraseña anterior
 error	preferences	es-es	Error
 failed to change password.	preferences	es-es	Fallo al cambiar la contraseña.
+fast	preferences	es-es	Rápido
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	es-es	La actualización rápida añade nuevas entradas siempre al principio de la lista y actualiza las existentes en su lugar, a menos que la lista esté ordenada por la última modificación. Las actualizaciones exactas hacen una actualización completa, si la lista no está ordenada por la última modificación.
 features of the editor	preferences	es-es	Características del editor
 font size unit	preferences	es-es	Unidad de tamaño de tipografía
 forced preferences	preferences	es-es	Preferencias forzadas
@@ -72,14 +74,17 @@ how do you like to select accounts	preferences	es-es	¿Cómo desea seleccionar l
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas; si no, seleccione su fecha y hora local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-es	Número de iconos a mostrar en la barra de navegación en la parte superior de la página. Los iconos adicionales van en un menú desplegable, en la parte derecha de la barra de navegación.
 how should egroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas
+how to update lists	preferences	es-es	Cómo actualizar las listas
 icon	preferences	es-es	Icono
 icons and text	preferences	es-es	Iconos y texto
 icons only	preferences	es-es	Sólo iconos
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	es-es	Las imágenes vinculadas a una entrada pueden mostrarse como miniaturas. Puede desactivar este comportamiento para acelerar la carga de la página.
 in which country are you. this is used to set certain defaults for you.	preferences	es-es	País en el que se encuentra. Se utiliza para configurar ciertos detalles.
 interface/template selection	preferences	es-es	Selección de interfaz/plantilla
+it sets content size (text only) according to selected size.	preferences	es-es	Establece el tamaño del contenido (sólo texto) según el tamaño seleccionado.
 language	preferences	es-es	Idioma
 lowercase letters	preferences	es-es	letras minúsculas
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	es-es	Hacer que la lista de aplicaciones se pueda desplazar con botones de desplazamiento hacia arriba y hacia abajo (útil para los usuarios que trabajan con un ratón sin rueda de desplazamiento)
 max matches per page	preferences	es-es	Número máximo de coincidencias por página
 max number of icons in navbar	preferences	es-es	Número máximo de iconos en la barra de navegación
 no default	preferences	es-es	Sin valor predeterminado
@@ -110,6 +115,7 @@ select the theme (visualization) of the rich text editor.	preferences	es-es	Sele
 selectbox	preferences	es-es	Cuadro de selección
 selectbox with groupmembers	common	es-es	Lista desplegable con los miembros del grupo
 selectbox with primary group and search	preferences	es-es	Cuadro de selección con grupo principal y búsqueda
+set content size	preferences	es-es	Establecer el tamaño del contenido
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-es	Ponga esto a su gusto. Por razones de seguridad, puede no querer mostrar su usuario en público.
 should the number of active sessions be displayed for you all the time.	preferences	es-es	¿Mostrar el número de sesiones activas todo el tiempo?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	es-es	¿Mostrar estos mensajes de ayuda al modificar preferencias, o sólo cuando lo solicite?

@@ -20,7 +20,7 @@ added	addressbook	sv	Skapad
 added by synchronisation	addressbook	sv	Infogad av synkroniseringen
 additional information about using ldap as contact repository	admin	sv	Övrig information om hur man använder LDAP som kontaktdatabas
 address book	common	sv	Adressbok
-address book - vcard in	addressbook	sv	Adressbok - VCard i
+address book - vcard in	addressbook	sv	Adressbok - vCard i
 address book - view	addressbook	sv	Adressbok - visa
 address line 2	addressbook	sv	Adressrad 2
 address type	addressbook	sv	Adresstyp
@@ -29,7 +29,7 @@ addressbook menu	addressbook	sv	Adressbok meny
 addressbook preferences	addressbook	sv	Adressbok alternativ
 addressbook the contact should be saved to	addressbook	sv	Adressbok kontakten skall sparas till
 addressbook-fieldname	addressbook	sv	Adressbok fältnamn
-addvcard	addressbook	sv	Lägg till VCard
+addvcard	addressbook	sv	Lägg till vCard
 advanced search	addressbook	sv	Avanserad sökning
 all contacts	addressbook	sv	Alla kontakter
 allow users to maintain their own account-data	admin	sv	Tillåt användare att underhålla sin egen kontaktinformation
@@ -109,7 +109,10 @@ doesn't matter	addressbook	sv	Oviktigt
 domestic	addressbook	sv	Inrikes
 download	addressbook	sv	Ladda ned
 download export file (uncheck to debug output in browser)	addressbook	sv	Ladda ned exportfil (Kryssa ur för att se felsökningsresultat i webbläsare
-download this contact as vcard file	addressbook	sv	Ladda ner kontakten som en VCard fil
+download this contact as vcard file	addressbook	sv	Ladda ner kontakten som en vCard fil
+duplicate threshold	addressbook	sv	Tröskelvärde för duplikat
+duplicate warning	addressbook	sv	Varning för dubbletter
+duplicates	addressbook	sv	Duplikat
 duration	addressbook	sv	Varaktighet
 edit custom field	addressbook	sv	Ändra anpassat fält
 edit custom fields	admin	sv	Ändra anpassade fält
@@ -126,7 +129,7 @@ error saving the contact !!!	addressbook	sv	Fel vid sparande av kontakten
 error: the entry has been updated since you opened it for editing!	addressbook	sv	Posten har ändrats sedan du öppnade den för skrivning!
 existing links	addressbook	sv	Nuvarande länkar
 export as csv	addressbook	sv	Exportera som CSV
-export as vcard	addressbook	sv	Exportera som VCard
+export as vcard	addressbook	sv	Exportera som vCard
 export contacts	addressbook	sv	Exportera kontakter
 export file name	addressbook	sv	Exportens filnamn
 export from addressbook	addressbook	sv	Exportera från adressboken
@@ -141,6 +144,8 @@ field %1 has been updated !	addressbook	sv	Fält %1 har uppdaterats!
 field name	addressbook	sv	Fältnamn
 fields for the csv export	addressbook	sv	CSV export fält
 fields the user is allowed to edit himself	admin	sv	Fält användaren själv kan ändra
+fields to check for duplicates	addressbook	sv	Fält för kontroll av dubbletter
+fields to consider when looking for duplicate contacts.	addressbook	sv	Fält som ska beaktas när du letar efter dubbla kontakter.
 fields to show in address list	addressbook	sv	Fält att visa i adresslistan
 fieldseparator	addressbook	sv	Fältavskiljare
 for read only ldap	admin	sv	för skrivskyddad LDAP
@@ -152,6 +157,10 @@ global categories	addressbook	sv	Globala kategorier
 grant addressbook access	common	sv	Reglera åtkomst till adressboken
 group %1	addressbook	sv	Grupp %1
 h	addressbook	sv	t
+hide accounts from addressbook	addressbook	sv	Dölja användarkonton
+hide all accounts	addressbook	sv	Dölja alla konton
+hide user groups as distribution lists	addressbook	sv	Dölja användargrupper som distributionslistor
+hides accounts completly from the adressbook.	addressbook	sv	Dölja användarkonton helt och hållet från adressboken.
 home address	addressbook	sv	Hem: Adress
 home address, birthday, ...	addressbook	sv	Hem: Adress, Födelsedag, ...
 home city	addressbook	sv	Hem: Stad
@@ -161,6 +170,7 @@ home phone	addressbook	sv	Hem: Telefon
 home state	addressbook	sv	Hem: Län
 home street	addressbook	sv	Hem: Gata
 home zip code	addressbook	sv	Hem: Postnummer
+how many fields must match for the record to be considered a duplicate.	addressbook	sv	Hur många fält som måste stämma överens för att posten ska betraktas som en dubblett.
 icon	addressbook	sv	Ikon
 if accounts are already in ldap	admin	sv	om konton redan existerar i LDAP
 import	addressbook	sv	Importera
@@ -168,14 +178,15 @@ import contacts	addressbook	sv	Importera kontakter
 import csv-file into addressbook	addressbook	sv	Importera CSV-fil till adressboken
 import file	addressbook	sv	Importera fil
 import from	addressbook	sv	Importera från
-import from ldif, csv, or vcard	addressbook	sv	Importera LDIF, CSV eller VCard
+import from ldif, csv, or vcard	addressbook	sv	Importera LDIF, CSV eller vCard
 import from outlook	addressbook	sv	Importera från OutLook
-import multiple vcard	addressbook	sv	Importera Flera VCard
+import multiple vcard	addressbook	sv	Importera Flera vCard
 import next set	addressbook	sv	Importera nästa set
 import_instructions	addressbook	sv	I Netscape, öpnna adressboken och välj <b>Export</b> från <b>File</b> menyn. Filen kommer att exporteras i LDIF-format.<p>Eller, i Outlook, Välj kontaktmappen, välj sedan <b>Import och Export...</b> från <b>Fil</b> menyn och exportera dina kontakter som komma-separerad textfil (CSV). <p>Eller, i Palm Desktop 4.0 eller senare, Besök adressboken och välj <b>Export</b> från <b>File</b> menyn. Exportfilen kommer att vara i vCard-format.
 in %1 days (%2) is %3's birthday.	addressbook	sv	Om %1 dagar (%2) fyller %3 år
 income	addressbook	sv	Inkomst
-infolog	addressbook	sv	InfoLogg
+infolog	addressbook	sv	InfoLog Kontakt
+infolog-organisation	addressbook	sv	InfoLog Organisation
 international	addressbook	sv	Internationell
 label	addressbook	sv	Etikett
 last modified	addressbook	sv	Senast ändrad
@@ -189,10 +200,12 @@ link title for contacts show	addressbook	sv	Länktitel för kontakter
 links	addressbook	sv	Länkar
 list all categories	addressbook	sv	Visa alla kategorier
 list all customfields	addressbook	sv	Visa alla anpassade fält
-load vcard	addressbook	sv	Ladda VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	sv	Ladda in anpassade fält i index, även om kolumnen för anpassade fält är avstängd (t.ex. för att visa dem i en specifik indexkolumn).
+load vcard	addressbook	sv	Ladda vCard
 location	addressbook	sv	Plats
 locations	addressbook	sv	Placering
 mark records as private	addressbook	sv	Markera posten som privat
+merge duplicates	addressbook	sv	Slå ihop dubbletter
 merge into first or account, deletes all other!	addressbook	sv	Slå samman med första eller konto, radera all annan
 merged	addressbook	sv	Sammanslagna
 message phone	addressbook	sv	Röstbrevlåda
@@ -205,11 +218,11 @@ modem phone	addressbook	sv	Modemnummer
 more ...	addressbook	sv	Mer ...
 move to addressbook	addressbook	sv	Flytta till adressboken
 moved	addressbook	sv	Flyttad
-multiple vcard	addressbook	sv	Multipla VCard
+multiple vcard	addressbook	sv	Multipla vCard
 name, address	addressbook	sv	Namn, adress
 no country selected	addressbook	sv	Inget land har valts
 no distribution list	addressbook	sv	Ingen distributionslista
-no vcard	addressbook	sv	Inget VCard
+no vcard	addressbook	sv	Inget vCard
 number	addressbook	sv	Nummer
 number of records to read (%1)	addressbook	sv	Antal poster att läsa (%1)
 options for type	admin	sv	Alternativ för typen
@@ -245,6 +258,7 @@ record owner	addressbook	sv	Postens ägare
 repetition	addressbook	sv	Återkommande
 role	addressbook	sv	Roll
 room	addressbook	sv	Rum
+search letter	addressbook	sv	Sök bokstav
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	sv	Välj ett jpeg porträtt foto. Bilden skalas om till 60 pixel.
 select a view	addressbook	sv	Välj vy
 select addressbook type	addressbook	sv	Välj adressbok typ
@@ -291,14 +305,16 @@ upload or delete the photo	addressbook	sv	Ladda upp eller radera foto
 use country list	addressbook	sv	Använd nationslista
 use setup for a full account-migration	admin	sv	Använd installationen för en komplett konto migrering
 used for links and for the own sorting of the list	addressbook	sv	Används för länkar och sortering av listan
-vcard	common	sv	VCard
-vcards require a first name entry.	addressbook	sv	VCard kräver ett förnamn
-vcards require a last name entry.	addressbook	sv	VCard kräver ett efternamn
-view linked infolog entries	addressbook	sv	Visa länkade InfoLogg poster
+user groups are automatically shown as distribution lists.	addressbook	sv	Användargrupper visas automatiskt som distributionslistor.
+vcard	common	sv	vCard
+vcards require a first name entry.	addressbook	sv	vCard kräver ett förnamn
+vcards require a last name entry.	addressbook	sv	vCard kräver ett efternamn
+view linked infolog entries	addressbook	sv	Visa länkade InfoLog poster
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sv	WARNING!! LDAP är bara giltigt om du inte använder kontakter för att lagra konton
 warning: all contacts found will be deleted!	addressbook	sv	VARNING: Alla hittade kontakter raderas
 weekday	addressbook	sv	Veckodag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sv	Vad ska länkar till adressboken visa i andra applikationer? Tomma värden ignoreras. Do måste logga in återigen för att se förändringar.
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	sv	När du sammanför poster i dokument lagras de här. Om ingen katalog anges kommer de att lagras i din hemkatalog (/home/...).
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sv	Vilken adressbok ska väljas när konstakter skapas men du saknar behörighet till aktuell?
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sv	Vilka fält ska exporteras? Alla betyder alla fält, inklusive anpassade, i adressboken. Företag eller Hem adresserna innehåller endast namn, företag och vald adress.
@@ -315,7 +331,7 @@ you are not permittet to edit this contact	addressbook	sv	Du har inte behörighe
 you are not permittet to view this contact	addressbook	sv	Du har inte behörighet att läsa kontakten
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	sv	Du kan bara välja LDAP som kontaktdatabas om konton hanteras i LDAP.
 you can respond by visiting:	addressbook	sv	Du kan svara genom att besöka:
-you must select a vcard. (*.vcf)	addressbook	sv	Du måste välja VCard (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	sv	Du måste välja vCard (*.vcf)
 you must select at least 1 column to display	addressbook	sv	Du måste välja minst 1 kolumn att visa
 you need to select some contacts first	addressbook	sv	Du måste välja kontakter först
 zip code	common	sv	Postnummer

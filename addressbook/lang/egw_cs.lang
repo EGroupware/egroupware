@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	cs	%1 veřejných klíčů bylo přidáno.
 %1 records imported	addressbook	cs	%1 záznamů importováno
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	cs	%1 záznamů načteno (zatím nebyly importovány, můžete se vrátit %2zpět%3 a odškrtnout Testovat Import)
+%1 shared this contact on %2 with %3 %4	addressbook	cs	%1 sdílel tento kontakt na %2 %3 %4
 %1 starts with '%2'	addressbook	cs	%1 začíná s '%2'
 %s please calculate the result	addressbook	cs	%s prosím spočítejte výsledek
 (e.g. 1969)	addressbook	cs	(např. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	cs	Přidáno synchronizací
 added to distribution list	addressbook	cs	Přidáno do rozesílacího seznamu
 additional information about using ldap as contact repository	admin	cs	Další informace k používání LDAP jako databáze kontaktů
 address book	common	cs	Adresář
-address book - vcard in	addressbook	cs	Adresář - VCard v
+address book - vcard in	addressbook	cs	Adresář - vCard v
 address book - view	addressbook	cs	Adresář - pohled
 address line 2	addressbook	cs	Adresa - 2. řádek
 address line 2 (private)	addressbook	cs	Adresa - 2. řádek (soukromá)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	cs	Kontakty adresáře by m�
 addressbook vcard export	addressbook	cs	Export adresáře ve formátu vCard
 addressbook vcard import	addressbook	cs	Import adresáře ve formátu vCard
 addressbook-fieldname	addressbook	cs	Adresář - název položky
-addvcard	addressbook	cs	Přidat VCard
+addvcard	addressbook	cs	Přidat vCard
 advanced search	addressbook	cs	Rozšířené hledání
 all addressbooks	addressbook	cs	Všechny adresáře
 all contacts	addressbook	cs	Všechny kontakty
@@ -201,7 +202,9 @@ don't hide empty columns	addressbook	cs	Neschovávat prázdné sloupce
 download	addressbook	cs	Stáhnout
 download export file (uncheck to debug output in browser)	addressbook	cs	Stáhnout exportní soubor (Odškrtněte debugovací výstup v prohlížeči)
 download this contact as vcard file	addressbook	cs	stáhnout kontakt jako vCard soubor
+duplicate threshold	addressbook	cs	Duplicitní práh
 duplicate warning	addressbook	cs	Opakované varování
+duplicates	addressbook	cs	Duplikáty
 duration	addressbook	cs	Trvání
 each category in its own field	addressbook	cs	Každá kategorie ve vlastním poli
 each option in its own field	addressbook	cs	Každá volba ve vlastním poli
@@ -230,7 +233,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 existing links	addressbook	cs	Stávající odkazy
 exists	addressbook	cs	Stávající
 export as csv	addressbook	cs	Exportovat jako CSV
-export as vcard	addressbook	cs	Exportovat jako VCard
+export as vcard	addressbook	cs	Exportovat jako vCard
 export contacts	addressbook	cs	Exportovat kontakty
 export definition to use for nextmatch export	addressbook	cs	Export definic pro použití v dalších exportech
 export definitition to use for nextmatch export	addressbook	cs	Export definic pro použití v dalších exportech
@@ -254,6 +257,8 @@ field %1 has been updated !	addressbook	cs	Položka %1 byla zaktualizována.
 field name	addressbook	cs	Název položky
 fields for the csv export	addressbook	cs	Položky k exportu do CSV
 fields the user is allowed to edit himself	admin	cs	Položky, které si smí editovat sami uživatelé
+fields to check for duplicates	addressbook	cs	Pole pro kontrolu duplicit
+fields to consider when looking for duplicate contacts.	addressbook	cs	Pole, která je třeba zohlednit při hledání duplicitních kontaktů.
 fields to copy when copying an address?	admin	cs	Které položky se budou kopírovat při kopírování adresy
 fields to show in address list	addressbook	cs	Položky, které se zobrazují v seznamu adres
 fieldseparator	addressbook	cs	Oddělovač položek
@@ -272,6 +277,8 @@ grant addressbook access	common	cs	Přidělit přístup k adresáři
 group %1	addressbook	cs	Skupina %1
 h	addressbook	cs	h
 hide accounts from addressbook	addressbook	cs	Nezobrazovat účty v adresáři
+hide all accounts	addressbook	cs	Skrýt všechny účty
+hide user groups as distribution lists	addressbook	cs	Skrýt skupiny uživatelů jako distribuční seznamy
 hides accounts completly from the adressbook.	addressbook	cs	Kompletně skryje účty před adresářem.
 history logging	admin	cs	Protokolování historie
 home address	addressbook	cs	Domácí adresa
@@ -285,6 +292,7 @@ home state	addressbook	cs	Domov - stát
 home street	addressbook	cs	Domov - ulice
 home zip code	addressbook	cs	Domov - PSČ
 how many contacts should non-admins be able to export	admin	cs	Kolik kontaktů budou moci exportovat uživatelé bez oprávnění administrátora
+how many fields must match for the record to be considered a duplicate.	addressbook	cs	Kolik polí se musí shodovat, aby byl záznam považován za duplicitní.
 html link to the current record	addressbook	cs	HTML odkaz na aktuální záznam
 icon	addressbook	cs	Ikona
 if accounts are already in ldap	admin	cs	pokud jsou účty již v LDAP
@@ -294,18 +302,18 @@ import contacts	addressbook	cs	Importovat kontakty
 import csv-file into addressbook	addressbook	cs	Importovat soubor CSV do adresáře
 import file	addressbook	cs	Importovat soubor
 import from	addressbook	cs	Importovat z
-import from ldif, csv, or vcard	addressbook	cs	Importovat z LDIFu, CSV nebo VCard
+import from ldif, csv, or vcard	addressbook	cs	Importovat z LDIFu, CSV nebo vCard
 import from outlook	addressbook	cs	Importovat z Outlooku
-import multiple vcard	addressbook	cs	Importovat více VCard
+import multiple vcard	addressbook	cs	Importovat více vCard
 import next set	addressbook	cs	Importovat následující sadu
-import_instructions	addressbook	cs	V prohlížeči Netscape otevřete Adresář a vyberte <b>Exportovat</b> z menu <b>Soubor</b>. Exportovaný soubor bude ve formátu LDIF.<p>Nebo v Outlooku vyberte složku s Kontakty, zvolte <b>Import a export</b> z menu <b>Start</b> a vyexportujte své kontakty do souboru typu CSV (text oddělený čárkami).<p>Nebo v Palm Desktopu 4.0 a vyšším vyberte <b>Export</b> z menu <b>File</b>. Exportovaný soubor bude ve formátu VCard.
+import_instructions	addressbook	cs	V prohlížeči Netscape otevřete Adresář a vyberte <b>Exportovat</b> z menu <b>Soubor</b>. Exportovaný soubor bude ve formátu LDIF.<p>Nebo v Outlooku vyberte složku s Kontakty, zvolte <b>Import a export</b> z menu <b>Start</b> a vyexportujte své kontakty do souboru typu CSV (text oddělený čárkami).<p>Nebo v Palm Desktopu 4.0 a vyšším vyberte <b>Export</b> z menu <b>File</b>. Exportovaný soubor bude ve formátu vCard.
 importer's personal	addressbook	cs	osobní toho, kdo prování import
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	cs	Importuje kontakty z CSV souboru do Vašeho adresáře. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete zvolit jiné oddělovače.
 imports contacts into your addressbook from a vcard file.	addressbook	cs	Importuje kontakty ze souboru vCard do Vašeho adresáře.
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 income	addressbook	cs	Hospodářský výsledek
-infolog	addressbook	cs	InfoLog
-infolog-organisation	addressbook	cs	Otevření zobrazení organizace v aplikaci Infolog CRM
+infolog	addressbook	cs	InfoLog Kontakt
+infolog-organisation	addressbook	cs	Organizace InfoLog
 insert	addressbook	cs	Vložit
 insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
 insufficent rights to edit this list!	addressbook	cs	Nemáte dostatečná oprávnění k úpravě tohoto seznamu!
@@ -330,7 +338,8 @@ list already exists!	addressbook	cs	Seznam už existuje!
 list created	addressbook	cs	Seznam vytvořen
 list creation failed, no rights!	addressbook	cs	Vytvoření seznamu selhalo, nedostatečná práva!
 list of files linked to the current record	addressbook	cs	Seznam připojených souborů k aktuálnímu záznamu
-load vcard	addressbook	cs	Nahrát VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	cs	Načtení vlastních polí v indexu, i když je sloupec vlastních polí vypnutý (např. pro jejich zobrazení v konkrétním sloupci indexu).
+load vcard	addressbook	cs	Nahrát vCard
 location	addressbook	cs	Umístění
 locations	addressbook	cs	umístění
 mail vcard	addressbook	cs	Odeslat vizitku vCard
@@ -338,6 +347,7 @@ main categories in their own field	addressbook	cs	Hlavní kategorie v jejich vla
 manage mapping	addressbook	cs	Spravovat mapování
 mark records as private	addressbook	cs	Označit záznamy jako soukromé
 merge contacts	addressbook	cs	Sloučit kontakty
+merge duplicates	addressbook	cs	Sloučení duplicit
 merge into first or account, deletes all other!	addressbook	cs	Sloučení do prvního nebo do účtu, smaže všechny ostatní!
 merged	addressbook	cs	sloučeno
 message after submitting the form	addressbook	cs	Zpráva po odeslání formuláře
@@ -352,18 +362,19 @@ modem phone	addressbook	cs	Telefon modemu
 more ...	addressbook	cs	Více ...
 move to addressbook	addressbook	cs	Přesunout do adresáře
 moved	addressbook	cs	přesunuto
-multiple vcard	addressbook	cs	Více VCard
+multiple vcard	addressbook	cs	Více vCard
 name for the distribution list	addressbook	cs	Název distribučního seznamu
 name of current user, all other contact fields are valid too	addressbook	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name, address	addressbook	cs	Jméno, adresa
 new contact submitted by %1 at %2	addressbook	cs	Nový kontakt odeslal(a) %1 v %2
-new window opened to edit infolog for your selection	addressbook	cs	Otevřeno nové okno pro editaci Infologu na základě vašeho výběru
+new window opened to edit infolog for your selection	addressbook	cs	Otevřeno nové okno pro editaci InfoLog na základě vašeho výběru
 next date	addressbook	cs	Následující datum
 no categories selected	addressbook	cs	nebyly vybrány žádné kategorie
 no country selected	addressbook	cs	Žádná vybraná země
 no distribution list	addressbook	cs	Neexistuje rozesílací seznam
 no fallback	addressbook	cs	Žádné nouzové řešení
-no vcard	addressbook	cs	Žádná VCard
+no vcard	addressbook	cs	Žádná vCard
+not shared	addressbook	cs	nesdílený
 number	addressbook	cs	Čislo
 number of records to read (%1)	addressbook	cs	Počet záznamů k načtení (%1)
 open %1 crm view	addressbook	cs	Otevřít CRM pohled na %1
@@ -498,6 +509,8 @@ unable to import into %1, using %2	addressbook	cs	Nebylo možné importovat do %
 unique id (uid)	addressbook	cs	Unikátní ID (UID)
 unique id<br />(to update existing records)	addressbook	cs	Unikátní ID<br />(pro aktualizaci stávajících záznamů)
 unknown type %1, imported as %2	addressbook	cs	Neznámý typ %1, bylo importováno jako %2
+unshare	addressbook	cs	Již nesdílet
+unshared	addressbook	cs	již není sdílena
 update a single entry by passing the fields.	addressbook	cs	Aktualizovat záznam vyplněním položek.
 update fields by edited organisations?	admin	cs	Aktualizovat položky editovanými organizacemi?
 updated	addressbook	cs	Aktualizováno
@@ -512,17 +525,19 @@ use country list	addressbook	cs	Použít seznam zemí
 use setup for a full account-migration	admin	cs	pro kompletní migraci účtů použijte setup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 used for links and for the own sorting of the list	addressbook	cs	použito pro odkazy a vlastní třídění seznamu
+user groups are automatically shown as distribution lists.	addressbook	cs	Uživatelské skupiny se automaticky zobrazí jako distribuční seznamy.
 user preference	addressbook	cs	Uživatelské předvolby
-vcard	common	cs	VCard
-vcards require a first name entry.	addressbook	cs	VCard vyžaduje křestní jméno v záznamu
-vcards require a last name entry.	addressbook	cs	VCard vyžaduje příjmení v záznamu
+vcard	common	cs	vCard
+vcards require a first name entry.	addressbook	cs	vCard vyžaduje křestní jméno v záznamu
+vcards require a last name entry.	addressbook	cs	vCard vyžaduje příjmení v záznamu
 verification	addressbook	cs	Ověření
-view linked infolog entries	addressbook	cs	Zobrazit odkazované záznamy v InfoLogu
+view linked infolog entries	addressbook	cs	Zobrazit odkazované záznamy v InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP je použitelný jen v případě, že NEpoužíváte kontakty pro ukládání uživatelských účtů!
 warning: all contacts found will be deleted!	addressbook	cs	VAROVÁNÍ: Všechny kontakty budou smazány!
 weekday	addressbook	cs	Pracovní den
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	cs	Co mají odkazy na adresář zobrazovat v ostatních aplikacích. Prázdné hodnoty budou vynechány. Pokud změníte toto nastavení, musíte se znovu přihlásit!
 when viewing a contact, show linked entries from the selected application	addressbook	cs	Při zobrazení kontaktu zobrazovat také připojené záznamy z vybraných aplikací
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	cs	Při slučování záznamů do dokumentů budou uloženy právě zde. Pokud není zadán žádný adresář, budou uloženy v domovském adresáři (/home/...).
 where to add the email address	addressbook	cs	kam přidat e-mailovou adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	cs	Jaký formát adres má adresář používat u zemí, jejichž adresní formát nezná. Pokud je formát znám, je použit bez ohledu na toto nastavení.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	cs	Který adresář má být vybrán v případě, že přidáváte kontakt a pro aktuální adresář nemáte dostatečná práva.
@@ -541,6 +556,7 @@ yes, for the next week	addressbook	cs	Ano, po následující týden
 yes, for today and tomorrow	addressbook	cs	Ano, po dnešní a zítřejší den
 yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 yes, users can purge their deleted items	admin	cs	Ano, uživatelé mohou odstranit jejich smazané záznamy
+you are not allowed to share into the addressbook of %1	addressbook	cs	Nejste oprávněni sdílet do adresáře %1
 you are not permitted to delete contact %1	addressbook	cs	Nemáte oprávnění ke smazání kontaktu %1
 you are not permittet to delete this contact	addressbook	cs	Nemáte oprávnění ke smazání tohoto kontaktu
 you are not permittet to edit this contact	addressbook	cs	Nemáte oprávnění k editaci tohoto kontaktu

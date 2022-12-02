@@ -9,14 +9,14 @@ add a single entry by passing the fields.	addressbook	pt	Adicionar um registo ú
 add custom field	addressbook	pt	Adicionar campo personalizado
 added	addressbook	pt	Adicionado
 address book	common	pt	Livro de Endereços
-address book - vcard in	addressbook	pt	Livro de endereços - VCard
+address book - vcard in	addressbook	pt	Livro de endereços - vCard
 address book - view	addressbook	pt	Livro de endereços - Ver
 address line 2	addressbook	pt	Linha de endereço 2
 address type	addressbook	pt	Tipo de endereço
 addressbook	common	pt	Livro de endereços
 addressbook preferences	addressbook	pt	Preferências do livro de endereços
 addressbook-fieldname	addressbook	pt	Livro de endereços - Nome do campo
-addvcard	addressbook	pt	Adicionar VCard
+addvcard	addressbook	pt	Adicionar vCard
 advanced search	addressbook	pt	Pesquisa avançada
 alt. csv import	addressbook	pt	Importar CSV
 always	addressbook	pt	Sempre
@@ -74,6 +74,9 @@ domestic	addressbook	pt	Doméstico
 download	addressbook	pt	Transferência
 download export file (uncheck to debug output in browser)	addressbook	pt	Transferir ficheiro de exportação (desmarque a opção "fazer debug do resultado no navegador")
 download this contact as vcard file	addressbook	pt	transferor este contacto como ficheiro vCard
+duplicate threshold	addressbook	pt	Duplicar o limiar
+duplicate warning	addressbook	pt	Duplicação do aviso
+duplicates	addressbook	pt	Duplicações
 duration	addressbook	pt	Duração
 edit custom field	addressbook	pt	Editar campo personalizado
 edit custom fields	admin	pt	Editar campos personalizados
@@ -98,6 +101,8 @@ fax number	common	pt	Número de fax
 field %1 has been added !	addressbook	pt	Campo %1 foi adicionado !
 field %1 has been updated !	addressbook	pt	Campo %1 foi actualizado !
 field name	addressbook	pt	Nome do campo
+fields to check for duplicates	addressbook	pt	Campos para verificação de duplicados
+fields to consider when looking for duplicate contacts.	addressbook	pt	Campos a considerar na procura de contactos duplicados.
 fields to show in address list	addressbook	pt	Campos a exibir na lista de endereços
 fieldseparator	addressbook	pt	Separador de campos
 full name	addressbook	pt	Nome completo
@@ -108,6 +113,10 @@ geo	addressbook	pt	GEO
 global categories	addressbook	pt	Categorias gerais
 grant addressbook access	common	pt	Permitir acesso ao livro de endereços
 h	addressbook	pt	h
+hide accounts from addressbook	addressbook	pt	Ocultar contas de utilizador
+hide all accounts	addressbook	pt	Ocultar todas as contas
+hide user groups as distribution lists	addressbook	pt	Ocultar grupos de utilizadores como listas de distribuição
+hides accounts completly from the adressbook.	addressbook	pt	Esconder completamente as contas de utilizador do livro de endereços.
 history logging	admin	pt	Logging História
 home city	addressbook	pt	Cidade
 home country	addressbook	pt	País
@@ -116,6 +125,7 @@ home phone	addressbook	pt	Telefone
 home state	addressbook	pt	Bairro
 home street	addressbook	pt	Rua
 home zip code	addressbook	pt	Código postal
+how many fields must match for the record to be considered a duplicate.	addressbook	pt	Quantos campos devem coincidir para que o registo seja considerado como duplicado.
 html link to the current record	addressbook	pt	Link HTML para o registro atual
 icon	addressbook	pt	Ícone
 import	addressbook	pt	Importar
@@ -123,13 +133,14 @@ import contacts	addressbook	pt	Importar contactos
 import csv-file into addressbook	addressbook	pt	Importar ficheiro CSV para o livro de endereços
 import file	addressbook	pt	Importar ficheiro
 import from	addressbook	pt	Importar de
-import from ldif, csv, or vcard	addressbook	pt	Importar de LDIF, CSV, ou VCard
+import from ldif, csv, or vcard	addressbook	pt	Importar de LDIF, CSV, ou vCard
 import from outlook	addressbook	pt	Importar do Outlook
-import multiple vcard	addressbook	pt	Importar vários VCard
+import multiple vcard	addressbook	pt	Importar vários vCard
 import next set	addressbook	pt	Importar o conjunto seguinte
-import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado VCard.
+import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado vCard.
 income	addressbook	pt	Entrada
-infolog	addressbook	pt	Acesso à informação
+infolog	addressbook	pt	Contacto InfoLog
+infolog-organisation	addressbook	pt	Organização InfoLog
 insert	addressbook	pt	Inserir
 international	addressbook	pt	Internacional
 label	addressbook	pt	Comentário
@@ -143,20 +154,24 @@ links and attached files	addressbook	pt	Links e arquivos anexados
 list all categories	addressbook	pt	Listar todas as categorias
 list all customfields	addressbook	pt	Listar todos os campos personalizados
 list of files linked to the current record	addressbook	pt	Lista de arquivos vinculados ao registro atual
-load vcard	addressbook	pt	Carregar VCard
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	pt	Carregar campos personalizados no índice, mesmo que a coluna de campos personalizados esteja desligada (por exemplo, para os mostrar numa coluna de índice específica)
+load vcard	addressbook	pt	Carregar vCard
 location	addressbook	pt	Local
 manage mapping	addressbook	pt	Gerenciar mapeamento
 mark records as private	addressbook	pt	Marcar registos como privados
+merge duplicates	addressbook	pt	Fusão de duplicados
+merge into first or account, deletes all other!	addressbook	pt	Fusão em primeiro lugar ou conta, elimina todos os outros!
 message phone	addressbook	pt	Telefone de mensagens
 middle name	addressbook	pt	Nome do meio
 mobile	addressbook	pt	Telemóvel
 mobile phone	addressbook	pt	Telemóvel
 modem phone	addressbook	pt	Telefone de dados (Modem)
 more ...	addressbook	pt	Mais..
-multiple vcard	addressbook	pt	Vários VCard
+multiple vcard	addressbook	pt	Vários vCard
 no country selected	addressbook	pt	Nenhum país seleccionado
 no distribution list	addressbook	pt	Sem lista de distribuição
-no vcard	addressbook	pt	Nenhum VCard
+no vcard	addressbook	pt	Nenhum vCard
+not shared	addressbook	pt	não partilhado
 number	addressbook	pt	Número
 number of records to read (%1)	addressbook	pt	Número de registos por ler (%1)
 options for type	admin	pt	Opções por tipo
@@ -183,6 +198,7 @@ record access	addressbook	pt	Acesso ao registo
 record owner	addressbook	pt	Dono do registo
 repetition	addressbook	pt	Repetição
 role	addressbook	pt	Papel
+search letter	addressbook	pt	Pesquisar carta
 select all	addressbook	pt	Seleccionar tudo
 select multiple contacts for a further action	addressbook	pt	Selecionar vários contatos para uma nova acção
 select the type of conversion	addressbook	pt	Seleccionar o tipo de conversão
@@ -211,24 +227,29 @@ to many might exceed your execution-time-limit	addressbook	pt	Demasiados podem e
 today is %1's birthday!	common	pt	Hoje é o aniversário de %1.
 tomorrow is %1's birthday.	common	pt	Amanhã é o aniversário de %1.
 translation	addressbook	pt	Tradução
+unshare	addressbook	pt	Não partilhar mais
+unshared	addressbook	pt	já não partilhado
 update a single entry by passing the fields.	addressbook	pt	Actualizar um registo único passando os campos.
 updated	addressbook	pt	Actualizado
 use country list	addressbook	pt	Utilizar lista de países
-vcard	common	pt	VCard
-vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome.
-vcards require a last name entry.	addressbook	pt	VCards requer um apelido.
+user groups are automatically shown as distribution lists.	addressbook	pt	Os grupos de utilizadores são automaticamente mostrados como listas de distribuição.
+vcard	common	pt	vCard
+vcards require a first name entry.	addressbook	pt	vCards requer um primeiro nome.
+vcards require a last name entry.	addressbook	pt	vCards requer um apelido.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	Aviso!! LDAP é válido apenas se não estiver a utilizar contactos para armazenamento de contas!
 warning: all contacts found will be deleted!	addressbook	pt	Aviso: Todos os contactos encontrados serão eliminados!
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	pt	Ao fundir entradas em documentos, estes serão armazenados aqui. Se não for fornecido nenhum directório, eles serão armazenados no seu directório pessoal (/home/...)
 whole query	addressbook	pt	Consulta Whole
 work phone	addressbook	pt	Telefone de trabalho
 write (update or add) a single entry by passing the fields.	addressbook	pt	Editar (actualizar ou adicionar) um registo único passando os campos.
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
+you are not allowed to share into the addressbook of %1	addressbook	pt	Não está autorizado a partilhar o livro de endereços %1
 you are not permitted to delete contact %1	addressbook	pt	Não tem permissões para eliminar o contacto %1
 you are not permittet to delete this contact	addressbook	pt	Não tem permissões para eliminar este contacto
 you are not permittet to edit this contact	addressbook	pt	Não tem permissões para editar este contacto
 you are not permittet to view this contact	addressbook	pt	Não tem permissões para ver este contacto
 you can respond by visiting:	addressbook	pt	Você pode responder, visitando
-you must select a vcard. (*.vcf)	addressbook	pt	É necessário seleccionar um vcard. (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	pt	É necessário seleccionar um vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	pt	É necessário seleccionar pelo menos uma coluna a apresentar
 you need to select some entries first	addressbook	pt	Você precisa selecionar algumas entradas em primeiro lugar.
 zip code	common	pt	Código postal

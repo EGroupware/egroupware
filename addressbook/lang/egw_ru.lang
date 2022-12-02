@@ -34,7 +34,7 @@ added by synchronisation	addressbook	ru	Добавлено при синхрон
 added to distribution list	addressbook	ru	Добавлено в список рассылки
 additional information about using ldap as contact repository	admin	ru	Дополнительная информация об использовании LDAP в качестве хранилища контактов
 address book	common	ru	Контакты
-address book - vcard in	addressbook	ru	Адресная книга VCard в
+address book - vcard in	addressbook	ru	Адресная книга vCard в
 address book - view	addressbook	ru	Адресная книга - вид
 address line 2	addressbook	ru	Строка адреса 2
 address type	addressbook	ru	Тип адреса
@@ -50,7 +50,7 @@ addressbook the contact should be shown	addressbook	ru	Адресная книг
 addressbook vcard export	addressbook	ru	Адресная книга, экспорт vCard
 addressbook vcard import	addressbook	ru	Адресная книга, импорт vCard
 addressbook-fieldname	addressbook	ru	Адресная книга - имя поля
-addvcard	addressbook	ru	Добавить VCard
+addvcard	addressbook	ru	Добавить vCard
 advanced search	addressbook	ru	Расширенный поиск
 all contacts	addressbook	ru	Все контакты
 all in one field	addressbook	ru	Все в одном поле
@@ -170,6 +170,9 @@ don't hide empty columns	addressbook	ru	Не скрывать пустые ко�
 download	addressbook	ru	Загрузить
 download export file (uncheck to debug output in browser)	addressbook	ru	Загрузить файл экспорта (снимите отметку, чтобы вывести отладку в браузер)
 download this contact as vcard file	addressbook	ru	Загрузить этот контакт как файл vCard
+duplicate threshold	addressbook	ru	Порог дублирования
+duplicate warning	addressbook	ru	Предупреждение о дубликатах
+duplicates	addressbook	ru	Дубликаты
 duration	addressbook	ru	Длительность
 each category in its own field	addressbook	ru	Каждая категория в её собственном поле
 each option in its own field	addressbook	ru	Каждая опция в её собственном поле
@@ -218,6 +221,8 @@ field %1 has been updated !	addressbook	ru	Обновлено поле %1 !
 field name	addressbook	ru	Имя поля
 fields for the csv export	addressbook	ru	Поля для экспорта в CSV
 fields the user is allowed to edit himself	admin	ru	Поля, которые пользователь может редактировать самостоятельно
+fields to check for duplicates	addressbook	ru	Поля для проверки дубликатов
+fields to consider when looking for duplicate contacts.	addressbook	ru	Поля, которые следует учитывать при поиске дубликатов контактов.
 fields to copy when copying an address?	admin	ru	Какие поля копировать при копировании контакта?
 fields to show in address list	addressbook	ru	Какие поля показывать в списке адресов
 fieldseparator	addressbook	ru	Разделитель полей
@@ -234,6 +239,8 @@ grant addressbook access	common	ru	Предоставить доступ к ад
 group %1	addressbook	ru	Группа %1
 h	addressbook	ru	час
 hide accounts from addressbook	addressbook	ru	Скрыть учётные записи из адресной книги
+hide all accounts	addressbook	ru	Скрыть все учетные записи
+hide user groups as distribution lists	addressbook	ru	Скрыть группы пользователей как списки рассылки
 hides accounts completly from the adressbook.	addressbook	ru	Полностью скрывает учётные записи из адресной книги
 history logging	admin	ru	История записей
 home address	addressbook	ru	Домашний адрес
@@ -247,6 +254,7 @@ home state	addressbook	ru	Домашний - регион
 home street	addressbook	ru	Домашний - улица
 home zip code	addressbook	ru	Домашний почтовый индекс
 how many contacts should non-admins be able to export	admin	ru	Сколько контактов может экспортировать не-администратор
+how many fields must match for the record to be considered a duplicate.	addressbook	ru	Сколько полей должно совпадать, чтобы запись считалась дубликатом.
 html link to the current record	addressbook	ru	HTML-ссылка на запись
 icon	addressbook	ru	Пиктограмма
 if accounts are already in ldap	admin	ru	Если учётная запись уже в LDAP
@@ -266,7 +274,8 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	ru	Импортирует контакты в вашу адресную книгу из файла vCard
 in %1 days (%2) is %3's birthday.	addressbook	ru	Через %1 день/дней (51) наступит День рождения %3
 income	addressbook	ru	Входящие
-infolog	addressbook	ru	ИнфоЖурнал
+infolog	addressbook	ru	Контакт InfoLog
+infolog-organisation	addressbook	ru	Организация InfoLog
 insert	addressbook	ru	Вставить
 insufficent rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!
 international	addressbook	ru	Международный
@@ -290,6 +299,7 @@ list already exists!	addressbook	ru	Список уже существует!
 list created	addressbook	ru	Список создан
 list creation failed, no rights!	addressbook	ru	Неудача при создании списка, нет прав!
 list of files linked to the current record	addressbook	ru	Список файлов, связанных с текущей записью
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ru	Загружать пользовательские поля в индекс, даже если колонка пользовательских полей выключена (например, чтобы отобразить их в определенной колонке индекса)
 load vcard	addressbook	ru	Загрузить vCard
 location	addressbook	ru	Расположени
 locations	addressbook	ru	Местоположения
@@ -298,6 +308,7 @@ main categories in their own field	addressbook	ru	Основные катего�
 manage mapping	addressbook	ru	Управление отображениями
 mark records as private	addressbook	ru	Пометить записи как личные
 merge contacts	addressbook	ru	Слияние контактов
+merge duplicates	addressbook	ru	Объединить дубликаты
 merge into first or account, deletes all other!	addressbook	ru	Слить с первым или учётной записью, удалить все остальные!
 merged	addressbook	ru	Слито
 message after submitting the form	addressbook	ru	Сообщение после отправки формы
@@ -322,7 +333,8 @@ no categories selected	addressbook	ru	Не выбрано категорий
 no country selected	addressbook	ru	Страна не выбрана
 no distribution list	addressbook	ru	Нет списка рассылки
 no fallback	addressbook	ru	Нет резерва
-no vcard	addressbook	ru	Нет визитной карточки VCard
+no vcard	addressbook	ru	Нет визитной карточки vCard
+not shared	addressbook	ru	не разделенный
 number	addressbook	ru	Номер
 number of records to read (%1)	addressbook	ru	Количество записей для чтения (%1)
 open email addresses in external mail program	addressbook	ru	Открывать адреса электронной почты во внешней почтовой программе
@@ -370,6 +382,7 @@ replacements for inserting contacts into documents	addressbook	ru	Подстан
 required fields *	addressbook	ru	Требуемые поля
 role	addressbook	ru	Должность
 room	addressbook	ru	Комната
+search letter	addressbook	ru	Поисковое письмо
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	ru	Выбрать фотографию jpeg портретного формата. Она будет масштабирована до 60 пикселей в ширину
 select a view	addressbook	ru	Выбрать вид
 select addressbook type	addressbook	ru	Выбрать тип адресной книги
@@ -437,6 +450,8 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	ru	Невозможно удалить
 unique id (uid)	addressbook	ru	Уникальный ID (UID)
 unique id<br />(to update existing records)	addressbook	ru	Уникальный ID<br /> для обновления существующих записей
+unshare	addressbook	ru	Больше не делиться
+unshared	addressbook	ru	больше не делится
 update a single entry by passing the fields.	addressbook	ru	Обновление записи при помощи передачи полей
 update fields by edited organisations?	admin	ru	Обновить поля отредактированной организации?
 updated	addressbook	ru	Обновлено
@@ -448,6 +463,7 @@ use country list	addressbook	ru	Использовать список стран
 use setup for a full account-migration	admin	ru	Использовать установку для полной миграции учётных записей
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	ru	Используйте этот тег для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 used for links and for the own sorting of the list	addressbook	ru	Используется для создания ссылок и собственных условий сортировки списка
+user groups are automatically shown as distribution lists.	addressbook	ru	Группы пользователей автоматически отображаются в виде списков рассылки.
 user preference	addressbook	ru	Пользовательские настройки
 vcard	common	ru	vCard
 vcards require a first name entry.	addressbook	ru	vCard требует наличия имени
@@ -458,6 +474,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	ru	ПРЕДУПРЕЖДЕНИЕ: Все найденные контакты будут удалены!
 weekday	addressbook	ru	Рабочий день
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ru	Изображение перехода к адресной книге в других приложениях. Значение «пусто» не допустимо. После изменения данной настройки следует выполнить вход в систему снова
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ru	Когда вы объединяете записи в документы, они будут храниться здесь. Если каталог не указан, они будут храниться в вашем домашнем каталоге (/home/...).
 where to add the email address	addressbook	ru	Куда добавлять адреса электронной почты
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	ru	Какой формат адреса должна использовать адресная книга для стран с неизвестным форматом адреса. Если формат адреса страны известен, он используется вне зависимости от настройки этого параметра
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ru	Какая адресная книга должна быть выбрана при добавлении контакта, если нет прав на текущую адресную книгу
@@ -476,6 +493,7 @@ yes, for the next week	addressbook	ru	Да, для следующей недел
 yes, for today and tomorrow	addressbook	ru	Да, на сегодня и завтра
 yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут очистить удалённые записи
 yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удалённые ими записи
+you are not allowed to share into the addressbook of %1	addressbook	ru	Вам не разрешено делиться информацией в адресной книге %1
 you are not permitted to delete contact %1	addressbook	ru	Вам не разрешено удалять контакт %1
 you are not permittet to delete this contact	addressbook	ru	Вам не разрешено удалять этот контакт
 you are not permittet to edit this contact	addressbook	ru	Вам не разрешено редактировать этот контакт

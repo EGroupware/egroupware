@@ -94,6 +94,7 @@ compose as new	mail	el	Σύνταξη ως νεό μήνυμα
 compress folder	mail	el	Συμπίεση φακέλου
 condition	mail	el	Συνθήκη
 configuration settings	mail	el	Παραμετροποίηση ρυθμίσεων
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	el	Οι προκαθορισμένες τιμές θα οριστούν αυτόματα στο διάλογο σύνταξης για το σεβαστό πεδίο κατά τη σύνταξη ενός νέου email.
 confirm	mail	el	Επιβεβαίωση
 confirm attach message	mail	el	Επιβεβαίωση επισύναψης μηνύματος
 confirm move to folder	mail	el	Επιβεβαίωση μετακίνησης σε φάκελο
@@ -334,6 +335,7 @@ please select a address	mail	el	Παρακαλώ επιλέξτε μία διε�
 please select the number of days to wait between responses	mail	el	παρακαλώ επιλέξτε τον αριθμό των ημερών για αναμονή μεταξύ των απαντήσεων
 please supply the message to send with auto-responses	mail	el	Παρακαλώ τροφοδοτήστε το μήνυμα προς αποστολή με αυτόματες απαντήσεις
 please wait while sending your mail	mail	el	Παρακαλώ περμένετε όσο στέλνουμε το μήνυμα σας
+predefined addresses for compose	mail	el	Προκαθορισμένες διευθύνσεις για σύνταξη
 prevent managing filters	mail	el	Να αποκλείεται η διαχείριση φίλτρων
 prevent managing folders	mail	el	Να αποκλείεται η διαχείριση φακέλων
 prevent managing notifications	mail	el	Να αποκλείεται η διαχείριση ειδοποιήσεων
@@ -417,6 +419,7 @@ sent	mail	el	Αποστολή
 sent folder	mail	el	Φάκελος σταλθέντων
 set flags	mail	el	Σημειώστε το e-mail ως
 set it as default:	mail	el	ορίστε το ως προεπιλογή:
+set predefined values for compose...	mail	el	Ορισμός προκαθορισμένων τιμών για τη σύνταξη ...
 show	mail	el	εμφάνιση
 show all addresses	mail	el	Εμφάνιση όλων των διευθύνσεων
 show all attachments	mail	el	Εμφάνιση όλων των συνημμένων

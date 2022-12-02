@@ -16,6 +16,7 @@ charset for the csv export	addressbook	nl	Karakterset voor de CSV export
 click to select a color	preferences	nl	Klik om een kleur te kiezen
 color	preferences	nl	Kleur
 country	preferences	nl	Land
+dark mode theme	preferences	nl	Thema donkere modus
 data exchange settings	preferences	nl	Data exchange instellingen
 date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
@@ -34,6 +35,8 @@ enables or disables drag and drop functions in all applications. if the browser 
 enter your new password	preferences	nl	Voer uw nieuwe wachtwoord in
 enter your old password	preferences	nl	Voer uw oude wachtwoord in
 failed to change password.	preferences	nl	Wachtwoord kan niet worden gewijzigd.
+fast	preferences	nl	Snel
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	nl	Snelle update voegt nieuwe items altijd bovenaan de lijst toe en werkt bestaande op hun plaats bij, tenzij de lijst is gesorteerd op laatst gewijzigd. Exacte updates worden volledig vernieuwd als de lijst niet is gesorteerd op laatst gewijzigd.
 forced preferences	preferences	nl	Geforceerde voorkeuren
 general settings	preferences	nl	Algemene instellingen
 help off	preferences	nl	Help uitgeschakeld
@@ -43,13 +46,16 @@ how do you like to select accounts	preferences	nl	Hoe wilt u accounts selecteren
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	nl	Hoeveel uur bent vóór of achter op de tijdzone van de server? <br />Selecteer '0' als u zich in dezelfde tijdzone bevindt.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	nl	Hoeveel iconen moeten worden weergegeven in de navigatiebalk bovenaan de pagina? De Overige iconen van toepassingen staan in het uitklapmenu rechtsbovenaan de pagina. Dit uitklapmenu is standaard verborgen en kunt u uitklappen door op het blauwe pijltje naar beneden te klikken.
 how should egroupware display dates for you.	preferences	nl	Hoe moet EGroupware datums weergeven.
+how to update lists	preferences	nl	Hoe lijsten bijwerken
 icon	preferences	nl	Icoon
 icons and text	preferences	nl	Iconen en tekst
 icons only	preferences	nl	Alleen iconen
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	nl	Afbeeldingen gekoppeld aan een record kunnen worden weergegeven als miniaturen. U kunt dit uitschakelen om de snelheid van weergave te verhogen.
 in which country are you. this is used to set certain defaults for you.	preferences	nl	In welk land bevindt u zich? Dit wordt gebruikt om bepaalde standaardinstellingen voor u te maken.
 interface/template selection	preferences	nl	Interface/Template Selectie
+it sets content size (text only) according to selected size.	preferences	nl	Het stelt de inhoudsgrootte (alleen tekst) in volgens de geselecteerde grootte.
 language	preferences	nl	Taal
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	nl	Toepassingenlijst scrolbaar maken met omhoog/omlaag knoppen (handig voor gebruikers die werken met een muis zonder scrollwiel)
 max matches per page	preferences	nl	Max. resultaten per pagina
 max number of icons in navbar	preferences	nl	Max. aantal iconen in de navigatiebalk
 no default	preferences	nl	Geen standaard
@@ -70,6 +76,7 @@ select the theme (visualization) of the rich text editor.	preferences	nl	Kies he
 selectbox	preferences	nl	Keuzevenster
 selectbox with groupmembers	common	nl	Keuzevenster met groepsleden
 selectbox with primary group and search	preferences	nl	Keuzevenster met primaire groep en zoekveld
+set content size	preferences	nl	Inhoudsformaat instellen
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	nl	Stel dit in naar uw voorkeuren. Voor veiligheidsredenen, wilt u eventueel niet uw gebruikersnaam publiekelijk weergeven.
 should the number of active sessions be displayed for you all the time.	preferences	nl	Moet het aantal actieve sessies altijd aan u worden weergegeven?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	nl	Moet deze extra uitleg altijd worden weergegeven als u uw voorkeuren wijzigd?

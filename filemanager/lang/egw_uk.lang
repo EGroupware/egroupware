@@ -1,3 +1,4 @@
+%1 files unlocked.	filemanager	uk	Розблоковано %1 файл.
 actions	filemanager	uk	Дії
 applications	common	uk	Приложення
 comment	filemanager	uk	Коментувати
@@ -6,9 +7,13 @@ disable	filemanager	uk	Відключити
 download	filemanager	uk	Загрузити
 enable	filemanager	uk	Включити
 expires	filemanager	uk	Обмежено
+hidden upload	filemanager	uk	Приховане завантаження
+hidden uploads	filemanager	uk	Приховані завантаження
 id	filemanager	uk	Id
 link	filemanager	uk	Посилання
 location	filemanager	uk	Місце
+lock	filemanager	uk	Заблокувати
 modified	filemanager	uk	Змінено
 open	filemanager	uk	відкрито
 permissions	filemanager	uk	Дозволи
+you need to become root, to enable or disable versioning on a directory!	filemanager	uk	Вам необхідно стати суперкористувачем, щоб увімкнути або вимкнути версійність теки!

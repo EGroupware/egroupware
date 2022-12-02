@@ -14,6 +14,7 @@ change your settings	preferences	pt	Altere as suas preferências
 click to select a color	preferences	pt	Clique aqui para seleccionar uma cor
 color	preferences	pt	Cor
 country	preferences	pt	País
+dark mode theme	preferences	pt	Tema do modo negro
 data exchange settings	preferences	pt	Configurações de troca de dados
 date format	preferences	pt	Formato de data
 default	preferences	pt	por omissão
@@ -28,6 +29,8 @@ enable	preferences	pt	Activar
 enter your new password	preferences	pt	Insira sua nova senha
 enter your old password	preferences	pt	Insira sua antiga senha
 failed to change password.	preferences	pt	Não foi possível alterar a senha.
+fast	preferences	pt	Rápido
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	pt	Actualização rápida adicionar novas entradas sempre no topo da lista e actualizar as existentes no local, a menos que a lista seja ordenada pela última modificação. As actualizações exactas fazem uma actualização completa, se a lista não for ordenada pela última modificação.
 forced preferences	preferences	pt	Preferências obrigatórias
 general settings	preferences	pt	Definições gerais
 help off	preferences	pt	Ajuda
@@ -37,12 +40,15 @@ how do you like to select accounts	preferences	pt	Como deseja seleccionar as con
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pt	Horas de avanço ou atraso relativamente ao fuso horário do servidro.<br>Se estiver no mesmo fuso horário que o servidor, seleccione 0 horas. Caso contrário, seleccione a sua data e hora locais.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pt	Número de ícones a ser exibidos na barra de navegação no topo da página. Os ícones adicionais irão para um outro menu. Para aceder a este menu basta clicar no ícone mais à direita da barra de navegação.
 how should egroupware display dates for you.	preferences	pt	Forma como o EGroupware deve apresentar-lhe as datas.
+how to update lists	preferences	pt	Como actualizar listas
 icon	preferences	pt	Ícone
 icons and text	preferences	pt	Ícones e texto
 icons only	preferences	pt	Apenas ícones
 in which country are you. this is used to set certain defaults for you.	preferences	pt	O país em que se encontra. Isto é utilizado para configurar algumas definições por omissão por si.
 interface/template selection	preferences	pt	Selecção de Interface/Modelo
+it sets content size (text only) according to selected size.	preferences	pt	Estabelece o tamanho do conteúdo (apenas texto) de acordo com o tamanho seleccionado.
 language	preferences	pt	Idioma
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pt	Faça com que a lista de aplicações possa ser deslocada com botões de deslocamento para cima/para baixo (útil para utilizadores que trabalham com o rato sem roda de rolagem)
 max matches per page	preferences	pt	Máximo de ocorrências por página
 max number of icons in navbar	preferences	pt	Número máximo de ícones na barra de navegação
 no default	preferences	pt	Não definido por omissão
@@ -58,6 +64,7 @@ select one	preferences	pt	Seleccione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt	Seleccione o idioma dos textos e mensagens do EGroupware.<br>Alguns idiomas podem não conter todas as mensagens. Nesse caso verá uma mensagem em inglês.
 selectbox	preferences	pt	Caixa de selecção
 selectbox with primary group and search	preferences	pt	Caixa de seleccção com grupo primário e pesquisa
+set content size	preferences	pt	Estabelece o tamanho do conteúdo
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt	Configure esta opção a seu gosto. Por razões de segurança, evite exibir o seu nome de utilizador publicamente.
 should the number of active sessions be displayed for you all the time.	preferences	pt	O número de sessões activas deve ser-lhe sempre apresentado.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	pt	Estas mensagens de ajuda devem ser apresentadas sempre que existirem modificações de preferências, ou a pedido.

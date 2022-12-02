@@ -1,0 +1,5 @@
+%1 files unlocked.	filemanager	lt	%1 failai atrakinti.
+hidden upload	filemanager	lt	Paslėptas įkėlimas
+hidden uploads	filemanager	lt	Paslėptas įkėlimas
+lock	filemanager	lt	Užrakinti
+you need to become root, to enable or disable versioning on a directory!	filemanager	lt	Kad įjungtumėte arba išjungtumėte aplanko versijų nustatymą, turite tapti superuser!

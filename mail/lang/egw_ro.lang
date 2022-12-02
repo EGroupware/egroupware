@@ -1,0 +1,9 @@
+(leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
+modify subject	mail	ro	Modificați subiectul
+modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
+new subject	mail	ro	Subiect nou
+predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
+save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
+select or insert email address	mail	ro	Selectați sau introduceți adresa de e-mail
+set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...

@@ -12,6 +12,7 @@
 %1 files copied.	filemanager	pt-br	%1 arquivos copiados.
 %1 files deleted.	filemanager	pt-br	%1 arquivos removidos.
 %1 files moved.	filemanager	pt-br	%1 arquivos movidos.
+%1 files unlocked.	filemanager	pt-br	%1 arquivos desbloqueados.
 %1 starts with '%2'	filemanager	pt-br	%1 inicia com '%2'
 %1 successful unmounted.	filemanager	pt-br	1% de sucesso desmontado.
 %1 successful uploaded.	filemanager	pt-br	% 1 enviado com sucesso.
@@ -132,6 +133,8 @@ go home	filemanager	pt-br	ir à pasta Home
 go to	filemanager	pt-br	Ir Para
 go to your home directory	filemanager	pt-br	Ir à sua pasta Home
 go up	filemanager	pt-br	Acima
+hidden upload	filemanager	pt-br	Carregamento oculto
+hidden uploads	filemanager	pt-br	Carregamentos ocultos
 id	filemanager	pt-br	ID
 inherited	filemanager	pt-br	Herdado
 link	filemanager	pt-br	Link
@@ -139,6 +142,7 @@ link %1: %2	filemanager	pt-br	Link %1: %2
 link target	filemanager	pt-br	destino do link
 link target %1 not found!	filemanager	pt-br	Destino do link% 1 não encontrado!
 location	filemanager	pt-br	Localização
+lock	filemanager	pt-br	Fechadura
 log out as superuser	filemanager	pt-br	Sair como superusuário
 mail files	filemanager	pt-br	arquivos de correio
 mail paste	filemanager	pt-br	Correio pasta
@@ -235,6 +239,7 @@ vfs mounts and versioning	common	pt-br	Montagens VFS e versionamento
 wrong username or password!	filemanager	pt-br	Nome de usuário ou senha errada!
 you are not allowed to upload a script!	filemanager	pt-br	Você não tem permissão para fazer o upload de um script!
 you do not have access to %1	filemanager	pt-br	Você não possui acesso a %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	pt-br	Você precisa se tornar superuser, para ativar ou desativar a versão em uma pasta!
 you need to select an owner!	filemanager	pt-br	Você precisa selecionar um proprietário!
 you need to select some files first!	filemanager	pt-br	Você precisa selecionar alguns arquivos antes!
 you will be redirected to your home directory.	filemanager	pt-br	Você será redirecionado ao seu diretório Home

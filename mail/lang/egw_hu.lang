@@ -1,4 +1,5 @@
 %1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
+(leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	hu	(nincs tárgy)
 activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
 add to addressbook	mail	hu	címjegyzékhez hozzáad
@@ -16,6 +17,7 @@ compose	mail	hu	Szerkeszt
 compose as new	mail	hu	szerkesztés újként
 compress folder	mail	hu	Mappa tömörítése
 condition	mail	hu	feltétel
+configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
 contains	mail	hu	tartalmaz
 copy to	mail	hu	Másold ide:
 date(newest first)	mail	hu	Dátum (újak elsőnek)
@@ -94,10 +96,13 @@ mail settings	mail	hu	eMail beállítások
 mark as deleted	mail	hu	Törlésre megjelöl
 matches	mail	hu	egyezés
 matches regexp	mail	hu	reguláris kifejezés egyezése
+modify subject	mail	hu	Tárgy módosítása
+modify subject of this message	mail	hu	Az üzenet tárgyának módosítása
 move selected to	mail	hu	kijelöltek mozgatása
 move to	mail	hu	kijelöltek mozgatása
 move to trash	mail	hu	Szemetesbe mozgatás
 never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emaileket
+new subject	mail	hu	Új tárgy
 no access	mail	hu	Nincs hozzáférés
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	hu	Nincs címzett és mappa az üzenet mentéséhez beállítva.
 no folders	mail	hu	nincs mappa
@@ -116,6 +121,7 @@ permission denied	mail	hu	Hozzáférés megtagadva
 please select a address	mail	hu	Kérlek válassz címet
 please select the number of days to wait between responses	mail	hu	Kérlek add hány napot várjon a válaszok között
 please supply the message to send with auto-responses	mail	hu	Kérlek add meg az automatikus válaszüzenetet
+predefined addresses for compose	mail	hu	Előre definiált címek az összeállításhoz
 printview	mail	hu	nyomtatási kép
 quicksearch	mail	hu	Gyorskeresés
 refresh time in minutes	mail	hu	Frissítési időintervallum percben
@@ -129,14 +135,17 @@ reply to	mail	hu	Válasz
 replyto	mail	hu	Válasz
 row order style	mail	hu	sorok rendezése
 save all	mail	hu	Összes mentése
+save all attachments to filemanager	mail	hu	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	hu	Mentés vázlatként
 save as infolog	mail	hu	Mentés InfoLog-ként
 save message to disk	mail	hu	Üzenet mentése lemezre
 select all	mail	hu	Minden kiválasztása
+select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
 sender	mail	hu	Feladó
 sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
 set flags	mail	hu	Jelölje meg az e-mailt
+set predefined values for compose...	mail	hu	Előre meghatározott értékek beállítása az összeállításhoz ...
 sieve	mail	hu	Sieve
 sieve script name	mail	hu	Sieve szűrő szkript neve
 signature	mail	hu	Aláírás

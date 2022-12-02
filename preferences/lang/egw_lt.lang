@@ -1,0 +1,7 @@
+dark mode theme	preferences	lt	Tamsaus režimo tema
+fast	preferences	lt	Greita
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	lt	Greitas atnaujinimas naujus įrašus prideda visada sąrašo viršuje, o esamus atnaujina vietoje, nebent sąrašas surūšiuotas pagal paskutinį pakeitimą. Tikslūs atnaujinimai atlieka visišką atnaujinimą, jei sąrašas nesurūšiuotas pagal paskutinį pakeitimą.
+how to update lists	preferences	lt	Kaip atnaujinti sąrašus
+it sets content size (text only) according to selected size.	preferences	lt	Jis nustato turinio dydį (tik teksto) pagal pasirinktą dydį.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	lt	Paraiškų sąrašą galima slinkti slinkimo į viršų ir į apačią mygtukais (naudinga naudotojams, dirbantiems su pele be slinkimo ratuko).
+set content size	preferences	lt	Nustatyti turinio dydį

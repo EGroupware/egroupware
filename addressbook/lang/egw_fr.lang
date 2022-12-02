@@ -8,6 +8,7 @@
 %1 public keys added.	addressbook	fr	%1 clé(s) publique(s) ajoutée(s).
 %1 records imported	addressbook	fr	%1 enregistrements importés.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation)
+%1 shared this contact on %2 with %3 %4	addressbook	fr	%1 a communiqué ce contact le %2 %3 %4
 %1 starts with '%2'	addressbook	fr	%1 débute avec '%2'
 %s please calculate the result	addressbook	fr	%s calculez s'il vous plait le résultat
 (e.g. 1969)	addressbook	fr	(e.g. 1969)
@@ -41,7 +42,7 @@ added by synchronisation	addressbook	fr	ajouté par synchronisation
 added to distribution list	addressbook	fr	ajouté à la liste de diffusion
 additional information about using ldap as contact repository	admin	fr	Informations complémentaires pour utiliser LDAP comme dépôt de contacts
 address book	common	fr	Carnet d'adresses
-address book - vcard in	addressbook	fr	Carnet d'adresses - Entrée VCard
+address book - vcard in	addressbook	fr	Carnet d'adresses - Entrée vCard
 address book - view	addressbook	fr	Carnet d'adresses - Voir
 address line 2	addressbook	fr	Adresse ligne 2
 address line 2 (private)	addressbook	fr	Adresse ligne 2 (privé)
@@ -59,7 +60,7 @@ addressbook the contact should be shown	addressbook	fr	Carnet d'adresse à affic
 addressbook vcard export	addressbook	fr	Import vCard du carnet d'adresses
 addressbook vcard import	addressbook	fr	Import vCard du carnet d'adresses
 addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom du champ
-addvcard	addressbook	fr	Ajouter VCard
+addvcard	addressbook	fr	Ajouter vCard
 advanced search	addressbook	fr	Recherche avancée
 all addressbooks	addressbook	fr	Tous les carnets d'adresses
 all contacts	addressbook	fr	Tous les contacts
@@ -233,7 +234,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	f
 existing links	addressbook	fr	Liens existants
 exists	addressbook	fr	Existe
 export as csv	addressbook	fr	Exporter au format CSV
-export as vcard	addressbook	fr	Export au format VCard
+export as vcard	addressbook	fr	Export au format vCard
 export contacts	addressbook	fr	Exporter les contacts
 export definition to use for nextmatch export	addressbook	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 export definitition to use for nextmatch export	addressbook	fr	Définition de l'export à utiliser pour l'export "nextmatch"
@@ -303,18 +304,18 @@ import contacts	addressbook	fr	Importer les contacts
 import csv-file into addressbook	addressbook	fr	Importer le fichier CSV dans le carnet d'adresses
 import file	addressbook	fr	Importer le fichier
 import from	addressbook	fr	Importer depuis
-import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou VCard
+import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou vCard
 import from outlook	addressbook	fr	Importer depuis Outlook
-import multiple vcard	addressbook	fr	Importation VCard Multiple
+import multiple vcard	addressbook	fr	Importation vCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
-import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format VCard.
+import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format vCard.
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
 imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
 in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
 income	addressbook	fr	Revenus
-infolog	addressbook	fr	InfoLog
-infolog-organisation	addressbook	fr	Ouvrir la vue Infolog CRM sur l'organisation
+infolog	addressbook	fr	Contact InfoLog
+infolog-organisation	addressbook	fr	Organisation InfoLog
 insert	addressbook	fr	Insérer
 insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste !
 insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e!
@@ -340,10 +341,10 @@ list created	addressbook	fr	Liste créée
 list creation failed, no rights!	addressbook	fr	La création de la liste a échoué, aucune autorisation!
 list of files linked to the current record	addressbook	fr	Listes des fichiers liés à l'enregistrement courant
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	fr	Charger les champs personnalisé sur l'index, même si le champ personnalisé est vide (ie. pour les afficher dans une colonne spécifique)
-load vcard	addressbook	fr	Charger VCard
+load vcard	addressbook	fr	Charger vCard
 location	addressbook	fr	Emplacement
 locations	addressbook	fr	localisations
-mail vcard	addressbook	fr	Email VCard
+mail vcard	addressbook	fr	Email vCard
 main categories in their own field	addressbook	fr	Principales catégories dans leurs propre domaine/champ
 manage mapping	addressbook	fr	Gestion des correspondances
 mark records as private	addressbook	fr	Marquer l´enregistrement comme privé
@@ -363,24 +364,25 @@ modem phone	addressbook	fr	Téléphone modem
 more ...	addressbook	fr	Plus ...
 move to addressbook	addressbook	fr	Déplacer vers le carnet d'adresses
 moved	addressbook	fr	déplacé(s)
-multiple vcard	addressbook	fr	VCard multiples
+multiple vcard	addressbook	fr	vCard multiples
 name for the distribution list	addressbook	fr	Nom de la liste de diffusino
 name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 name, address	addressbook	fr	Nom, adresse
 new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
-new window opened to edit infolog for your selection	addressbook	fr	Nouvelle fenêtre ouverte pour modifier un infolog.
+new window opened to edit infolog for your selection	addressbook	fr	Nouvelle fenêtre ouverte pour modifier un InfoLog.
 next date	addressbook	fr	Date de prochain contact
 no categories selected	addressbook	fr	Aucune catégorie sélectionnée
 no country selected	addressbook	fr	Aucun pays sélectionné
 no distribution list	addressbook	fr	Aucune liste de diffusion
 no fallback	addressbook	fr	Pas de fallback
-no vcard	addressbook	fr	Pas de VCard
+no vcard	addressbook	fr	Pas de vCard
+not shared	addressbook	fr	n'a pas été partagé
 number	addressbook	fr	Numéro
 number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
 open %1 crm view	addressbook	fr	Ouvrir la vue CRM %1
 open email addresses in external mail program	addressbook	fr	Ouvrir les adresses email dans un programme externe
 open for editing?	addressbook	fr	Ouvrir en modification ?
-open infolog crm view	preferences	fr	Ouvrir la vue CRM de l'Infolog
+open infolog crm view	preferences	fr	Ouvrir la vue CRM de l'InfoLog
 open tracking system crm view	preferences	fr	Ouvrir la vue CRM du Traqueur
 options for type	admin	fr	Options pour le type
 organisation	addressbook	fr	Organisation
@@ -509,6 +511,8 @@ unable to import into %1, using %2	addressbook	fr	Impossible d'importer dans %1,
 unique id (uid)	addressbook	fr	ID unique (UID)
 unique id<br />(to update existing records)	addressbook	fr	ID Unique<br />pour mettre à jour des enregistrements existants
 unknown type %1, imported as %2	addressbook	fr	Type %1 inconnu, importé comme %2
+unshare	addressbook	fr	Ne plus partager
+unshared	addressbook	fr	ne plus partager
 update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
 update fields by edited organisations?	admin	fr	Champs à mettre à jour pour les organisations modifiées
 updated	addressbook	fr	Mis à jour
@@ -525,9 +529,9 @@ use this tag for addresslabels. put the content, you want to repeat, between two
 used for links and for the own sorting of the list	addressbook	fr	utilisé pour les liens et le tri de la liste
 user groups are automatically shown as distribution lists.	addressbook	fr	Les groupes d'utilisateurs sont automatiquement affichés comme des listes de diffusion.
 user preference	addressbook	fr	Préférences de l'utilisateur
-vcard	common	fr	VCard
-vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée prénom.
-vcards require a last name entry.	addressbook	fr	Les Vcards nécessitent une entrée nom de famille.
+vcard	common	fr	vCard
+vcards require a first name entry.	addressbook	fr	Les vCards nécessitent une entrée prénom.
+vcards require a last name entry.	addressbook	fr	Les vcards nécessitent une entrée nom de famille.
 verification	addressbook	fr	Vérification
 view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoLog
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	ATTENTION!! LDAP est valide seulement si vous n'utilisez PAS les contacts pour le stockage des comptes!
@@ -535,6 +539,7 @@ warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT : Tous
 weekday	addressbook	fr	Jour de la semaine
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fr	Que devraient afficher les liens du carnet d'adresses dans les autres applications. Les valeurs vides ne seront pas prises en compte. Vous devez vous reconnecter si vous modifiez ce paramètre!
 when viewing a contact, show linked entries from the selected application	addressbook	fr	A l'affichage du contact, afficher les entrées liées sur les applications sélectionnées
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	fr	Lorsque vous fusionnez des entrées dans des documents, elles sont stockées ici. Si aucun répertoire n'est fourni, elles seront stockées dans votre répertoire personnel (/home/...).
 where to add the email address	addressbook	fr	Où ajouter des adresses email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fr	Sélectionner quel format doit être utilisée pour les pays avec un format d'adresse inconnu.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fr	Quel carnet d'adresses devra être sélectionné quand vous ajoutez un contact ET que vous n'avez pas d'autorisation pour le carnet d'adresses en cours.
@@ -553,13 +558,14 @@ yes, for the next week	addressbook	fr	Oui, pour la semaine prochaine
 yes, for today and tomorrow	addressbook	fr	Oui, pour aujourd'hui et demain
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
 yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
+you are not allowed to share into the addressbook of %1	addressbook	fr	Vous ne pouvez pas partager dans le carnet d'adresses de %1
 you are not permitted to delete contact %1	addressbook	fr	Vous n'êtes pas autorisés à supprimer le contact %1
 you are not permittet to delete this contact	addressbook	fr	Vous n'êtes pas autorisés à supprimer ce contact
 you are not permittet to edit this contact	addressbook	fr	Vous n'êtes pas autorisés à modifier ce contact
 you are not permittet to view this contact	addressbook	fr	Vous n'êtes pas autorisés à voir ce contact
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	fr	Vous ne pouvez utiliser LDAP comme dépôt de contacts que si les comptes sont aussi stockés dans LDAP!
 you can respond by visiting:	addressbook	fr	Pour le voir, visitez :
-you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*.vcf)
+you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
 you need to select a distribution list	addressbook	fr	Vous devez choisir une liste de diffusion
 you need to select some contacts first	addressbook	fr	Vous devez d'abord choisir les contacts

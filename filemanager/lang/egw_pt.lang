@@ -1,4 +1,5 @@
 %1 already exists as a file	filemanager	pt	%1 já existe como um ficheiro
+%1 files unlocked.	filemanager	pt	%1 ficheiros desbloqueados.
 actions	filemanager	pt	Acções
 administrators	filemanager	pt	Administradores
 applications	common	pt	Aplicações
@@ -47,10 +48,13 @@ go home	filemanager	pt	Ir para directoria principal
 go to	filemanager	pt	Ir para
 go to your home directory	filemanager	pt	Ir para sua pasta Home
 go up	filemanager	pt	Subir
+hidden upload	filemanager	pt	Carregamento oculto
+hidden uploads	filemanager	pt	Carregamentos ocultos
 id	filemanager	pt	ID
 link	filemanager	pt	Ligação
 link target %1 not found!	filemanager	pt	Destino do link% 1 não encontrado!
 location	filemanager	pt	Local
+lock	filemanager	pt	Fechadura
 mime type	filemanager	pt	Tipo MIME
 modified	filemanager	pt	Modificado
 move	filemanager	pt	Mover
@@ -90,4 +94,5 @@ upload fields	filemanager	pt	campos de envio de arquivos
 upload files	filemanager	pt	Enviar Arquivos
 used space	filemanager	pt	Espaço utilizado
 you do not have access to %1	filemanager	pt	Não tem acesso a %1
+you need to become root, to enable or disable versioning on a directory!	filemanager	pt	Tem de se tornar superuser, para activar ou desactivar a versão numa pasta!
 your home dir did not exist, egroupware created a new one.	filemanager	pt	A sua directoria principal não existe. O EGroupware criou uma nova.

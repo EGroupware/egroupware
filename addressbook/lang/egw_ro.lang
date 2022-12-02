@@ -1,10 +1,33 @@
+%1 shared this contact on %2 with %3 %4	addressbook	ro	%1 a partajat acest contact pe %2 %3 %4
+duplicate threshold	addressbook	ro	Pragul de duplicare
+duplicate warning	addressbook	ro	Avertisment de duplicat
+duplicates	addressbook	ro	Dubluri
+fields to check for duplicates	addressbook	ro	Câmpuri pentru a verifica dacă există dubluri
+fields to consider when looking for duplicate contacts.	addressbook	ro	Câmpuri care trebuie luate în considerare atunci când se caută contacte duplicate.
+hide accounts from addressbook	addressbook	ro	Ascundeți conturile de utilizator
+hide all accounts	addressbook	ro	Ascundeți toate conturile
+hide user groups as distribution lists	addressbook	ro	Ascundeți grupurile de utilizatori ca liste de distribuție
+hides accounts completly from the adressbook.	addressbook	ro	Ascundeți complet conturile de utilizator din cartea de adrese.
+how many fields must match for the record to be considered a duplicate.	addressbook	ro	Câte câmpuri trebuie să corespundă pentru ca înregistrarea să fie considerată duplicat.
+infolog	addressbook	ro	InfoLog Contact
+infolog-organisation	addressbook	ro	Organizația InfoLog
+load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	ro	Încărcați câmpurile personalizate în index, chiar dacă coloana câmpurilor personalizate este dezactivată (de exemplu, pentru a le afișa într-o anumită coloană de index)
+merge duplicates	addressbook	ro	Unificarea dublurilor
+merge into first or account, deletes all other!	addressbook	ro	Fuzionează în primul sau în cont, șterge toate celelalte!
 move to addressbook	addressbook	ro	Mutarea în cartea de adrese
 no country selected	addressbook	ro	Nici o țară selectată
 no distribution list	addressbook	ro	Nici o listă de distribuție
+not shared	addressbook	ro	nu este împărtășită
 prevent deleting of contacts	admin	ro	Prevenirea ștergerii contactelor
+search letter	addressbook	ro	Scrisoare de căutare
 share into addressbook	addressbook	ro	Partajați în agenda de adrese
 share writable	addressbook	ro	Partajare inscriptibilă
 shared	addressbook	ro	partajat
 shared by me	addressbook	ro	Partajat de mine
 shared into addressbook %1	addressbook	ro	partajat în addressbook %1
 shared with	addressbook	ro	Împărtășit cu
+unshare	addressbook	ro	Nu mai partajați
+unshared	addressbook	ro	nu mai este partajat
+user groups are automatically shown as distribution lists.	addressbook	ro	Grupurile de utilizatori sunt afișate automat ca liste de distribuție.
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	ro	Atunci când unificați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun director, acestea vor fi stocate în directorul dvs. personal (/home/...).
+you are not allowed to share into the addressbook of %1	addressbook	ro	Nu aveți permisiunea de a partaja în cartea de adrese %1

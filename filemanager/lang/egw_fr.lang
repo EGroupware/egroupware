@@ -14,6 +14,7 @@
 %1 files deleted.	filemanager	fr	%1 fichier(s) supprimé(s)
 %1 files moved.	filemanager	fr	%1 fichier(s) déplacé(s)
 %1 files or directories deleted in %2 seconds.	filemanager	fr	%1 fichiers ou répertoires supprimés en %2 secondes.
+%1 files unlocked.	filemanager	fr	%1 fichiers déverrouillés.
 %1 shares deleted.	filemanager	fr	%1 partages supprimés.
 %1 starts with '%2'	filemanager	fr	%1 débute avec '%2'
 %1 successful unmounted.	filemanager	fr	%1 démonté avec succès.
@@ -41,7 +42,6 @@ allow a maximum of the above configured folderlinks to be configured in settings
 and all it's childeren	filemanager	fr	et tous ses sous-éléments
 application fields	filemanager	fr	Champs de l'application
 applications	common	fr	Applications
-apply the changes	filemanager	fr	Appliquer les changements
 backend	filemanager	fr	Backend
 backend url	filemanager	fr	URL du Backend
 backend url to mount	filemanager	fr	URL du Backend à monter
@@ -51,7 +51,6 @@ cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1
 cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
 check all	filemanager	fr	Vérifier tout
 check virtual filesystem	common	fr	Vérifier le système de fichiers virtuel
-choose a file for uploading	filemanager	fr	Chosiir un fichier à uploader
 clear search	filemanager	fr	réinitialiser termes de la recherche
 clipboard is empty!	filemanager	fr	Le presse-papier est vide !
 comment	filemanager	fr	Commentaire
@@ -143,7 +142,6 @@ file deleted.	filemanager	fr	Fichier supprimé
 file names cannot contain "%1"	filemanager	fr	Les noms de fichier ne peuvent contenir "%1"
 file or directory not found!	filemanager	fr	Fichier ou répertoire non trouvé !
 file successful uploaded.	filemanager	fr	Fichier uploadé avec succès !
-file upload	filemanager	fr	Uploader le fichier
 filemanager	common	fr	Gestionnaire de fichiers
 filemanager configuration	admin	fr	Configuration du gestionnaire de fichiers
 filemanager fields:	filemanager	fr	Champs du gestionnaire de fichiers
@@ -161,11 +159,11 @@ folder up	filemanager	fr	Répertoire parent
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 general	filemanager	fr	Général
 general fields:	filemanager	fr	Champs généraux :
-general settings	filemanager	fr	Paramètres généraux
 go home	filemanager	fr	Répertoire personnel
 go to	filemanager	fr	Aller dans
 go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
 go up	filemanager	fr	Remonter
+hidden upload	filemanager	fr	Upload masqués
 hidden uploads	filemanager	fr	Uploads masqués
 id	filemanager	fr	Id
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
@@ -180,19 +178,16 @@ link target	filemanager	fr	Cible du lien
 link target %1 not found!	filemanager	fr	Cible du lien %1 non trouvé
 list view	filemanager	fr	Vue en liste
 location	filemanager	fr	Emplacement
+lock	filemanager	fr	Verrouiller
 log out as superuser	filemanager	fr	Log out du profil super-utilisateur
-mail	filemanager	fr	Email
 mail files	filemanager	fr	Envoyer des fichiers par email
 mail paste	filemanager	fr	Coller un mail
 max folderlinks	admin	fr	Nombre de liens de dossiers max
-merge	filemanager	fr	Fusionner
-merge settings	filemanager	fr	Fusionner les paramètres
 mime type	filemanager	fr	Type MIME
 modified	filemanager	fr	Modifié
 modified between	filemanager	fr	Modifié entre
 modify all subdirectories and their content	filemanager	fr	Modifier tous les sous-répertoires et leurs contenus
 mount	filemanager	fr	Monter
-mount permanently	filemanager	fr	Monter de manière permanente
 mountpoints	filemanager	fr	Points de montage
 move	filemanager	fr	Déplacer
 move into folder	filemanager	fr	Déplacer vers un dossier
@@ -214,7 +209,6 @@ operation	filemanager	fr	Opération
 paste link	filemanager	fr	Coller le lien
 path %1 not found or not a directory!	filemanager	fr	Chemin %1 non trouvé ou n'est pas un répertoire
 percentage	filemanager	fr	Pourcentage
-permission denied	filemanager	fr	Permission refusée
 permission denied!	filemanager	fr	Permission refusée !
 permissions	filemanager	fr	Permissions
 permissions of %1 changed.	filemanager	fr	Permissions de %1 modifiées !
@@ -244,7 +238,6 @@ save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au
 save as zip	filemanager	fr	Sauvegarder en zip
 save changes	filemanager	fr	Enregistrer les changements
 saved %1	filemanager	fr	%1 enregistré
-saves this entry	filemanager	fr	Sauvegarder cette entrée
 saving properties failed!	filemanager	fr	Echec de l'enregistrement des propriétés !
 search for '%1'	filemanager	fr	Recherche de '%1'
 searchstring	filemanager	fr	Chaine de recherche
@@ -293,7 +286,7 @@ you are not allowed to upload a script!	filemanager	fr	Vous n'êtes pas autoris�
 you can only grant additional rights, you can not take rights away!	filemanager	fr	Vous pouvez seulement attribuer des droits supplémentaires mais pas en retirer !
 you can use regular upload [+] button to upload files.	filemanager	fr	Vous pouvez utiliser le bouton [+] pour uploader des fichiers.
 you do not have access to %1	filemanager	fr	Vous n'avez pas accès à %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	fr	Vous devez vous connecter en root, pour activer ou désactiver le versionning sur un répertoire !
+you need to become root, to enable or disable versioning on a directory!	filemanager	fr	Vous devez vous connecter en superuser, pour activer ou désactiver le versionning sur un répertoire !
 you need to select an owner!	filemanager	fr	Vous devez choisir un propriétaire !
 you need to select some files first!	filemanager	fr	Vous devez d'abord sélectionner des fichiers !
 you will be redirected to your home directory.	filemanager	fr	Vous allez être redigiré vers votre répertoire personnel.

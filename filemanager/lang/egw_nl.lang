@@ -12,6 +12,7 @@
 %1 files copied.	filemanager	nl	%1 bestanden gekopieerd.
 %1 files deleted.	filemanager	nl	%1 bestanden verwijderd.
 %1 files moved.	filemanager	nl	%1 bestanden verplaatst.
+%1 files unlocked.	filemanager	nl	%1 bestanden ontgrendeld.
 %1 starts with '%2'	filemanager	nl	%1 start met '%2'
 %1 successful unmounted.	filemanager	nl	%1 succesvol losgekoppeld
 %1 successful uploaded.	filemanager	nl	%1 uploaden succesvol
@@ -146,6 +147,8 @@ go home	filemanager	nl	ga naar home
 go to	filemanager	nl	Ga naar
 go to your home directory	filemanager	nl	Ga naar uw homedirectory
 go up	filemanager	nl	naar boven
+hidden upload	filemanager	nl	Verborgen upload
+hidden uploads	filemanager	nl	Verborgen uploads
 id	filemanager	nl	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Die actie staat dan toe dat het document wordt gedownload met de data %1 toegevoegd.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	nl	Als u hier een specifieke map (volledig vfs pad) definieert, %1 dan wordt er een actie getoond voor elk document, Het icoon staat dan toe dat het document wordt gedownload met de data toegevoegd.
@@ -157,6 +160,7 @@ link %1: %2	filemanager	nl	Link %1: %2
 link target	filemanager	nl	Link doel
 link target %1 not found!	filemanager	nl	Link doel %1 niet gevonden !
 location	filemanager	nl	Locatie
+lock	filemanager	nl	Vergrendel
 log out as superuser	filemanager	nl	Uitloggen als supergebruiker
 mail files	filemanager	nl	Mail bestanden
 mail paste	filemanager	nl	Mail plakken
@@ -262,7 +266,7 @@ wrong username or password!	filemanager	nl	Onjuiste gebruikersnaam of wachtwoord
 you are not allowed to upload a script!	filemanager	nl	U mag GEEN script uploaden !
 you can only grant additional rights, you can not take rights away!	filemanager	nl	U kunt alleen rechten toevoegen, u kunt NIET rechten afnemen !
 you do not have access to %1	filemanager	nl	U heeft geen toegang tot %1
-you need to become root, to enable or disable versioning on a directory!	filemanager	nl	U moet als root zijn aangemeld. om versiebeheer aan of uit te zetten voor mappen !
+you need to become root, to enable or disable versioning on a directory!	filemanager	nl	U moet als superuser zijn aangemeld. om versiebeheer aan of uit te zetten voor mappen !
 you need to select an owner!	filemanager	nl	U moet een eigenaar selecteren
 you need to select some files first!	filemanager	nl	U moet eerst enkele bestanden selecteren
 you will be redirected to your home directory.	filemanager	nl	U wordt omgeleid naar uw Home Directory
