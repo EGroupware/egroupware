@@ -684,6 +684,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			render(this._buttonsTemplate(), this);
 			this.requestUpdate();
 		}
+		if(changedProperties.has("width"))
+		{
+			this.style.setProperty("--width", this.width ? this.width + "px" : "initial");
+		}
 	}
 
 	_loadTemplate()
