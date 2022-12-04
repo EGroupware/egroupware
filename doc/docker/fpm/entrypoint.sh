@@ -28,9 +28,18 @@ test -n "$EGW_MAX_EXECUTION_TIME" && test "$EGW_MAX_EXECUTION_TIME" -ge 90 && \
 # ToDo check version before copy
 rsync -a --delete /usr/share/egroupware-sources/ /usr/share/egroupware/
 
+# exclude deprecated apps from old packages (not installed via git), always exclude sitemgr
+test "$PHP_VERSION" = "7.4" || {
+  EXCLUDE="--exclude sitemgr"
+  for app in phpgwapi etemplate wiki phpbrain
+  do
+    [ -d /usr/share/egroupware-extra/$app -a ! -d /usr/share/egroupware-extra/$app/.git ] && \
+      EXCLUDE="$EXCLUDE --exclude $app"
+  done
+}
 # sources of extra apps merged into our sources (--ignore-existing to NOT overwrite any regular sources!)
 test -d /usr/share/egroupware-extra && \
-	rsync -a --ignore-existing /usr/share/egroupware-extra/ /usr/share/egroupware/
+	rsync -a --ignore-existing --exclude .git $EXCLUDE /usr/share/egroupware-extra/ /usr/share/egroupware/
 
 # check and if necessary change ownership of /var/lib/egroupware and our header.inc.php
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \
