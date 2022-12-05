@@ -4774,13 +4774,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				$refreshData['vacationnotice'] = lang('Vacation notice is active');
 				$refreshData['vacationrange'] = ($vacation['status']=='by_date'? Api\DateTime::server2user($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.Api\DateTime::server2user($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
-				if ($vacation['status'] == 'by_date' && $vacation['end_date']+ 24*3600 < time())$refreshData = '';
+				if($vacation['status'] == 'by_date' && $vacation['end_date'] + 24 * 3600 < time())
+				{
+					$refreshData = null;
+				}
 			}
 		}
 		if ($vacation==false)
 		{
-			$refreshData['vacationnotice'] =  '';
-			$refreshData['vacationrange'] =  '';
+			$refreshData = null;
 		}
 		$response = Api\Json\Response::get();
 		$response->call('app.mail.mail_refreshVacationNotice',$refreshData);
