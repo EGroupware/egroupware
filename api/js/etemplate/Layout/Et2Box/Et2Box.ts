@@ -83,7 +83,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		return html`
             <div part="base" ${this.id ? html`id="${this.id}"` : ''} class=${classMap({
                 "no-print-gap": noGap
-            })} hey>
+            })}>
                 <slot></slot>
             </div> `;
 
