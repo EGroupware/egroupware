@@ -109,9 +109,9 @@ class setup_cmd_admin extends setup_cmd
 		// to run all hooks (some of them can NOT run inside setup)
 		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --add-user '.
 			escapeshellarg($this->admin_user.'@'.$this->domain.','.$this->admin_password.','.$this->admin_user);
+		$output = []; $ret = 0;
 		if (php_sapi_name() !== 'cli' || !file_exists(EGW_SERVER_ROOT.'/stylite') || file_exists(EGW_SERVER_ROOT.'/managementserver'))
 		{
-			$output = $ret = null;
 			exec($cmd,$output,$ret);
 		}
 		$output = implode("\n",$output);
