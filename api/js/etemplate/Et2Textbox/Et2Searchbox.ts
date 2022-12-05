@@ -64,7 +64,8 @@ export class Et2Searchbox extends Et2Textbox
 			// Stop from bubbling; enter in search is just for here.
 			event.stopPropagation();
 
-			this._oldChange(event);
+			// Lose focus, which triggers change, instead of calling change handler which would trigger again when losing focus
+			this.blur();
 		}
 	}
 
