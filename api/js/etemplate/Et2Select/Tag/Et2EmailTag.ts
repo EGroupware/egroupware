@@ -77,7 +77,7 @@ export class Et2EmailTag extends Et2Tag
 			 * Check if the email is associated with an existing contact, and if it is not show a button to create
 			 * a new contact with this email address.
 			 */
-			contact_plus: {
+			contactPlus: {
 				type: Boolean,
 				reflect: true,
 			},
@@ -86,15 +86,15 @@ export class Et2EmailTag extends Et2Tag
 			 * If the email is a contact, we normally show the contact name instead of the email.
 			 * Set to true to turn this off and always show the email
 			 */
-			full_email: {type: Boolean}
+			fullEmail: {type: Boolean}
 		}
 	}
 
 	constructor(...args : [])
 	{
 		super(...args);
-		this.contact_plus = true;
-		this.full_email = false;
+		this.contactPlus = true;
+		this.fullEmail = false;
 		this.handleMouseEnter = this.handleMouseEnter.bind(this);
 		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -105,7 +105,7 @@ export class Et2EmailTag extends Et2Tag
 	{
 		super.connectedCallback();
 
-		if(this.contact_plus && this.egw().app('addressbook'))
+		if(this.contactPlus && this.egw().app('addressbook'))
 		{
 			this.addEventListener("mouseenter", this.handleMouseEnter);
 			this.addEventListener("mouseleave", this.handleMouseLeave);
@@ -154,7 +154,7 @@ export class Et2EmailTag extends Et2Tag
 		{
 			this._contactPlusNode.classList.add("contact_plus_contact");
 			// Add name in if missing
-			if(!this.full_email && data.n_fn && !this.splitEmail(this.value).name)
+			if(!this.fullEmail && data.n_fn && !this.splitEmail(this.value).name)
 			{
 				// Append current value as email, data may have work & home email in it
 				this.textContent = data.n_fn + " <" + this.value + ">"
@@ -230,7 +230,7 @@ export class Et2EmailTag extends Et2Tag
 	 */
 	set textContent(new_content)
 	{
-		if(this.full_email)
+		if(this.fullEmail)
 		{
 			super.textContent = new_content;
 			return;
