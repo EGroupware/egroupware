@@ -117,13 +117,13 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 			
 			/* Override primary styling - we use variant=primary on first dialog button */
 			.button--standard.button--primary {
-				background-color: var(--sl-color-gray-200);
+				background-color: hsl(240deg 5% 96%);
 				border-color: var(--sl-color-gray-400);
 				color: var(--sl-input-color-hover);
 			}
 			.button--standard.button--primary:hover:not(.button--disabled),
 			.button--standard.button--primary.button--checked:not(.button--disabled) {
-				background-color: var(--sl-color-gray-200);
+				background-color: var(--sl-color-gray-150);
 				border-color: var(--sl-color-gray-600);
 				color: initial;
 			}
