@@ -109,8 +109,8 @@ class setup_cmd_install extends setup_cmd
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 
 		// Set the DB's client charset if a system-charset is set
-		self::$egw_setup->system_charset = strtolower($this->charset);
-		self::$egw_setup->db->Link_ID->SetCharSet($this->charset);
+		self::$egw_setup->system_charset = 'utf-8';
+		self::$egw_setup->db->Link_ID->SetCharSet(self::$egw_setup->db->Type === 'mysql' ? 'utf8' : 'utf-8');
 		$_POST['ConfigLang'] = $this->lang;
 
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
