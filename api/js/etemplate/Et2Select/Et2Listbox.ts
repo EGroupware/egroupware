@@ -151,9 +151,12 @@ export class Et2Listbox extends RowLimitedMixin(Et2widgetWithSelectMixin(SlMenu)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-menu-item value="${option.value}"
-                          title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
-                          class="${option.class}" .option=${option}>
+            <sl-menu-item
+                    value="${option.value}"
+                    title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+                    class="${option.class}" .option=${option}
+                    ?checked=${option.value === this.value || this.multiple && this.value.indexOf(option.value) >= 0}
+            >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;
