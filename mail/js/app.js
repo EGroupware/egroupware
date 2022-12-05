@@ -4316,8 +4316,18 @@ app.classes.mail = AppJS.extend(
 	 */
 	edit_vacation: function(_action, _senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
-		this.egw.open_link('mail.mail_sieve.editVacation&acc_id='+acc_id,'_blank','700x560');
+		let acc_id;
+		if (!Array.isArray(_senders))
+		{
+			// Coming from "on vacation" in nm header
+			acc_id = parseInt(this.et2.getWidgetById('nm[foldertree]').value);
+		}
+		else
+		{
+			// Coming from tree
+			acc_id = parseInt(_senders[0].id);
+		}
+		this.egw.open_link('mail.mail_sieve.editVacation&acc_id=' + acc_id, '_blank', '700x560');
 	},
 
 	subscription_refresh: function(_data)
