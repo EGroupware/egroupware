@@ -12,6 +12,7 @@ import {css, html, LitElement, render, SlotMixin} from "@lion/core";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
+import {SlMenuItem} from "@shoelace-style/shoelace";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -478,7 +479,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			return this.querySelectorAll(this.optionTag + ".freeEntry");
 		}
 
-		get search_options() : SelectOption[]
+		get select_options() : SelectOption[]
 		{
 			let options = [];
 
@@ -490,12 +491,18 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 				})
 			}
 			// Any provided options
-			options = options.concat(this.__search_options);
+			options = options.concat(this.__select_options);
 
 			// Any kept remote options
 			options = options.concat(this._selected_remote);
 
 			return options;
+		}
+
+		set select_options(options : SelectOption[])
+		{
+			this.__select_options = options;
+			this.requestUpdate('select_options');
 		}
 
 		get value()
@@ -789,21 +796,21 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		async _handleSearchBlur(event : FocusEvent)
 		{
 			clearTimeout(this._searchTimeout);
-			if(event.relatedTarget && [this, this.dropdown].indexOf((<Element>event.relatedTarget).parentElement) == -1 ||
-				event.relatedTarget === null
-			)
+			if(event.relatedTarget && event.relatedTarget instanceof SlMenuItem)
 			{
-				// Try any value they had in progress
-				if(this._searchInputNode.value && this.allowFreeEntries)
-				{
-					this.createFreeEntry(this._searchInputNode.value);
-				}
-				await this.dropdown.hide();
-				this.clearSearch();
-				if(event.relatedTarget && event.relatedTarget !== this)
-				{
-					event.relatedTarget.focus();
-				}
+				return;
+			}
+
+			// Try any value they had in progress
+			if(this._searchInputNode.value && this.allowFreeEntries)
+			{
+				this.createFreeEntry(this._searchInputNode.value);
+			}
+			await this.dropdown.hide();
+			this.clearSearch();
+			if(event.relatedTarget && event.relatedTarget !== this)
+			{
+				event.relatedTarget.focus();
 			}
 		}
 
