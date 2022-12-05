@@ -69,7 +69,7 @@ use HTTP_WebDAV_Server;
  */
 class Vfs extends Vfs\Base
 {
-	const PREFIX = 'vfs://default'; // using the original definition sometimes gives an autoloading error: Vfs\StreamWrapper::PREFIX;
+	const PREFIX = Vfs\StreamWrapper::PREFIX;
 
 	/**
 	 * Name of the lock table
