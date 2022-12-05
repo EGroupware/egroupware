@@ -6,26 +6,29 @@
         <appicon class="onlyPrint"/>
         <html id="msg"/>
         <vbox class="mailDisplay">
-            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true" list_header="short"/>
-			<hbox class="mailPreviewHeaders">
-				<description id="mail_displaysubject" readonly="true"
-							 hover_action="app.mail.modifyMessageSubjectDialog"
-							 hover_action_title="Modify subject of this message"/>
-				<hbox class="mailPreviewHeaders smimeIcons">
-					<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="!@smime=smime_sign"
-						   align="right" width="24"/>
-					<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
-						   disabled="!@smime=smime_encrypt" align="right" width="24"/>
-				</hbox>
-			</hbox>
+            <toolbar id="displayToolbar" width="100%" view_range="6" flat_list="true" list_header="short"
+                     class="noPrint"/>
+            <hbox class="mailPreviewHeaders">
+                <description id="mail_displaysubject" readonly="true"
+                             hover_action="app.mail.modifyMessageSubjectDialog"
+                             hover_action_title="Modify subject of this message"/>
+                <hbox class="mailPreviewHeaders smimeIcons">
+                    <image id="smime_signature" src="smime_sign" statustext="Smime signed message"
+                           disabled="!@smime=smime_sign"
+                           align="right" width="24"/>
+                    <image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message"
+                           disabled="!@smime=smime_encrypt" align="right" width="24"/>
+                </hbox>
+            </hbox>
 
-			<hbox width="100%" class="mailPreviewHeaders">
-				<lavatar src="@avatar" lname="@from[0]" shape="rounded"/>
-				<vbox class="previewWrapper">
-					<hbox>
-                        <et2-details class="details" title="details" toggleOnHover="true" hoist="true" toggleAlign="left">
+            <hbox width="100%" class="mailPreviewHeaders">
+                <lavatar src="@avatar" lname="@from[0]" shape="rounded"/>
+                <vbox class="previewWrapper">
+                    <hbox>
+                        <et2-details class="details noPrint" title="details" toggleOnHover="true" hoist="true"
+                                     toggleAlign="left">
                             <et2-select-email slot="summary" value="@from" readonly="true" multiple="true"/>
-                            <hbox  disabled="!@from">
+                            <hbox disabled="!@from">
                                 <description value="From" class="firstColumnTitle"/>
                                 <et2-select-email id="from" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
@@ -46,18 +49,76 @@
                                 <et2-select-email id="bcc" readonly="true" multiple="true"></et2-select-email>
                             </hbox>
                         </et2-details>
-                        <date-time-today align="right" id="mail_displaydate" readonly="true"/>
+                        <date-time-today align="right" id="mail_displaydate" class="noPrint" readonly="true"/>
+                        <date-time align="right" id="mail_displaydate" class="onlyPrint" readonly="true"
+                                   style="max-width: fit-content;"/>
+                        <vbox class="onlyPrint">
+                            <hbox>
+                                <grid id="from">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@sender">
+                                <description value="Sender" class="firstColumnTitle"/>
+                                <grid id="sender">
+                                    <columns>
+                                        <column/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <et2-select-email id="${row}" readonly="true"></et2-select-email>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </hbox>
+                            <hbox disabled="!@to">
+                                <description value="To" class="firstColumnTitle"/>
+                                <et2-select-email id="to" readonly="true" multiple="true" fullEmail="true"/>
+                            </hbox>
+                            <hbox disabled="!@cc">
+                                <description value="Cc" class="firstColumnTitle"/>
+                                <et2-select-email id="cc" readonly="true" multiple="true" fullEmail="true"/>
+                            </hbox>
+                            <hbox disabled="!@bcc">
+                                <description value="Bcc" class="firstColumnTitle"/>
+                                <et2-select-email id="bcc" readonly="true" multiple="true" fullEmail="true"/>
+                            </hbox>
+                        </vbox>
                     </hbox>
-                    <et2-details  toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@mail_displayattachments">
+                    <grid id="mail_displayattachments" class="attachments onlyPrint">
+                        <columns>
+                            <column/>
+                            <column width="70%"/>
+                            <column width="11%"/>
+                        </columns>
+                        <rows>
+                            <row class="row attachmentRow">
+                                <description id="${row}[type]"/>
+                                <description class="et2_link useEllipsis" id="${row}[filename]" no_lang="1"
+                                             expose_view="true" mime="$row_cont[type]" mime_data="$row_cont[mime_data]"
+                                             href="$row_cont[mime_url]"/>
+                                <description align="right" id="${row}[size]"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <et2-details toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true"
+                                 class="attachments noPrint" hoist="true" disabled="!@mail_displayattachments">
                         <hbox slot="summary">
-                            <grid class="previewAttachmentArea egwGridView_grid" >
+                            <grid class="previewAttachmentArea egwGridView_grid">
                                 <columns>
                                     <column disabled="!@showtempname"/>
                                     <column disabled="!@showtempname"/>
                                     <column disabled="!@showtempname"/>
                                     <column disabled="!@showtempname"/>
-                                    <column width="70%" />
-                                    <column width="11%" />
+                                    <column width="70%"/>
+                                    <column width="11%"/>
                                     <column width="10%"/>
                                 </columns>
                                 <rows>
