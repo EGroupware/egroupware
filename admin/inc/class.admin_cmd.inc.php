@@ -160,7 +160,7 @@ abstract class admin_cmd
 	 *
 	 * @return string
 	 */
-	function __tostring()
+	function __toString()
 	{
 		return $this->type;
 	}
@@ -274,7 +274,7 @@ abstract class admin_cmd
 	 * of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash
 	 * of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
 	 *
-	 * @return string sussess message
+	 * @return string success message
 	 * @throws Exception(lang('Invalid remote id or name "%1"!',$this->remote_id),997) or other Exceptions reported from remote
 	 */
 	protected function remote_exec()
@@ -380,35 +380,42 @@ abstract class admin_cmd
 			$vars['type'] = substr($this->type, 11);
 		}
 
-		admin_cmd::$sql->init($vars);
-		if (admin_cmd::$sql->save() != 0)
+		try
 		{
-			return false;
-		}
-		if (!$this->id)
-		{
-			$this->id = admin_cmd::$sql->data['id'];
-			// if the cmd has no uid yet, we create one from our id and the install-id of this eGW instance
-			if (!$this->uid)
+			admin_cmd::$sql->init($vars);
+			if (admin_cmd::$sql->save() != 0)
 			{
-				$this->uid = $this->id.'-'.$GLOBALS['egw_info']['server']['install_id'];
-				admin_cmd::$sql->save(array('uid' => $this->uid));
+				return false;
+			}
+			if (!$this->id)
+			{
+				$this->id = admin_cmd::$sql->data['id'];
+				// if the cmd has no uid yet, we create one from our id and the install-id of this eGW instance
+				if (!$this->uid)
+				{
+					$this->uid = $this->id . '-' . $GLOBALS['egw_info']['server']['install_id'];
+					admin_cmd::$sql->save(array('uid' => $this->uid));
+				}
+			}
+			// install an async job, if we saved a scheduled job
+			if ($this->status == admin_cmd::scheduled && empty($this->rrule))
+			{
+				admin_cmd::_set_async_job();
+			}
+			// schedule periodic execution, if we have a rrule
+			elseif (!empty($this->rrule) && $this->status != admin_cmd::deleted)
+			{
+				$this->set_periodic_job();
+			}
+			// existing object with no rrule, cancel evtl. running periodic job
+			elseif ($vars['id'])
+			{
+				$this->cancel_periodic_job();
 			}
 		}
-		// install an async job, if we saved a scheduled job
-		if ($this->status == admin_cmd::scheduled && empty($this->rrule))
-		{
-			admin_cmd::_set_async_job();
-		}
-		// schedule periodic execution, if we have an rrule
-		elseif (!empty($this->rrule) && $this->status != admin_cmd::deleted)
-		{
-			$this->set_periodic_job();
-		}
-		// existing object with no rrule, cancle evtl. running periodic job
-		elseif($vars['id'])
-		{
-			$this->cancel_periodic_job();
+		catch (Api\Db\Exception $e) {
+			_egw_log_exception($e);
+			return false;
 		}
 		return true;
 	}
@@ -461,7 +468,7 @@ abstract class admin_cmd
 	}
 
 	/**
-	 * Instanciated the object / subclass using the given data
+	 * Instantiate the object / subclass using the given data
 	 *
 	 * @static
 	 * @param array $data

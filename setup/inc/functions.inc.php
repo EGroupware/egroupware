@@ -30,7 +30,7 @@ if(file_exists(__DIR__.'/../../header.inc.php'))
 	include_once(__DIR__.'/../../header.inc.php');
 }
 // for an old header we need to setup a reference for the domains
-if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
+if (!isset($GLOBALS['egw_domain']) && isset($GLOBALS['phpgw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
 
 /*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
 if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))

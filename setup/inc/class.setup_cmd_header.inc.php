@@ -313,7 +313,7 @@ class setup_cmd_header extends setup_cmd
 	 *
 	 * @param string $arg current cli argument processed
 	 * @param string $name name of the property
-	 * @param array/string $data string with type or array containing values for type, allowed
+	 * @param array|string $data string with type or array containing values for type, allowed
 	 * @param mixed $value value to set
 	 */
 	private function _parse_value($arg,$name,$data,$value)
@@ -321,7 +321,7 @@ class setup_cmd_header extends setup_cmd
 		static $domain=null;
 
 		if (!is_array($data)) $data = array('type' => $data);
-		$type = $data['type'];
+		$type = $data['type'] ?? '';
 
 		if (isset($data['allowed']))
 		{
@@ -341,31 +341,37 @@ class setup_cmd_header extends setup_cmd
 		}
 		elseif ($value !== '')
 		{
-			self::_set_value($GLOBALS,str_replace('@',$domain,$type),$name,$value);
+			self::_set_global(str_replace('@', $domain, $type), $name, $value);
 			if ($type == 'egw_info/server/server_root')
 			{
-				self::_set_value($GLOBALS,'egw_info/server/include_root',$name,$value);
+				self::_set_global('egw_info/server/include_root', $name, $value);
 			}
 		}
 	}
 
 	/**
-	 * Set a value in the given array $arr with (multidimensional) key $index[/$name]
+	 * Set a value in $GLOBALS with (multidimensional) key $index[/$name]
 	 *
-	 * @param array &$arr
 	 * @param string $index multidimensional index written with / as separator, eg. egw_info/server/
 	 * @param string $name additional index to use if $index end with a slash
 	 * @param mixed $value value to set
 	 */
-	static private function _set_value(&$arr,$index,$name,$value)
+	private static function _set_global($index, $name, $value)
 	{
 		if (substr($index,-1) == '/') $index .= $name;
 
-		$var =& $arr;
-		foreach(explode('/',$index) as $name)
+		$var = null;
+		foreach(explode('/',$index) as $n)
 		{
-			$var =& $var[$name];
+			if (isset($var))
+			{
+				$var =& $var[$n];
+			}
+			else
+			{
+				$var =& $GLOBALS[$n];
+			}
 		}
-		if (true) $var = $value;
+		$var = $value;
 	}
 }
