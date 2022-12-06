@@ -532,7 +532,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	}
 
 	/**
-	 * Only internally do our onClick on buttons
+	 * Only internally do our onClick on buttons in the footer
 	 * This calls _onClose() when the dialog is closed
 	 *
 	 * @param {MouseEvent} ev
@@ -540,7 +540,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	 */
 	_onButtonClick(ev : MouseEvent)
 	{
-		if(ev.target instanceof Et2Button)
+		if(ev.target instanceof Et2Button && ev.target.slot == 'footer')
 		{
 			return this._onClick(ev);
 		}
