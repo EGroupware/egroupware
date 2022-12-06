@@ -445,7 +445,7 @@ export class Et2LinkList extends Et2LinkString
 
 				let evt = document.createEvent('MouseEvent');
 				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-				a[0].dispatchEvent(evt);
+				a.dispatchEvent(evt);
 				a.remove();
 				return false;
 			}
