@@ -155,7 +155,7 @@ export class Et2LinkList extends Et2LinkString
 		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
             ${this._thumbnailTemplate(link)}
-            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entry_id="${id}"
+            <et2-link slot="${this._get_row_id(link)}" app="${link.app}" entryId="${id}"
                       ._parent=${this}
                       .value=${link}></et2-link>
             <et2-description slot="${this._get_row_id(link)}" ._parent=${this} class="remark"
@@ -462,7 +462,7 @@ export class Et2LinkList extends Et2LinkString
 			window.location.href = this.egw().link('/index.php', {
 				menuaction: 'api.EGroupware\\Api\\Etemplate\\Widget\\Link.download_zip',
 				app: this.application,
-				id: this.entry_id
+				id: this.entryId
 			});
 		});
 
@@ -519,7 +519,7 @@ export class Et2LinkList extends Et2LinkString
 		// Find the link
 		let link = this.querySelector("et2-link[slot='" + _ev.currentTarget.id + "']");
 
-		let _link_data = Object.assign({app: link.app, id: link.entry_id}, link.dataset);
+		let _link_data = Object.assign({app: link.app, id: link.entryId}, link.dataset);
 		// Comment only available if link_id is there and not readonly
 		this.context.getItem("comment").set_enabled(typeof _link_data.link_id != 'undefined' && !this.readonly);
 		// File info only available for existing files
