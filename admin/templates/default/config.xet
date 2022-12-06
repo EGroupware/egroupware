@@ -209,11 +209,11 @@
 				</row>
 				<row>
 					<description value="After how many unsuccessful attempts to login, an account should be blocked (default 3) ?" label="%s:"/>
-					<textbox id="newsettings[num_unsuccessful_id]" size="5"/>
+					<integer id="newsettings[num_unsuccessful_id]" size="5"/>
 				</row>
 				<row>
 					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 15) ?" label="%s:"/>
-					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
+					<integer id="newsettings[num_unsuccessful_ip]" size="5"/>
 				</row>
 				<row>
 					<description value="Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)"/>
@@ -222,7 +222,7 @@
 				</row>
 				<row>
 					<description value="How many minutes should an account or IP be blocked (default 1) ?" label="%s:"/>
-					<textbox id="newsettings[block_time]" size="5"/>
+					<integer id="newsettings[block_time]" size="5"/>
 				</row>
 
 				<row>
@@ -272,11 +272,11 @@
 				</row>
 				<row>
 					<description value="Force users to change their password regularily?(empty for no,number for after that number of days" label="%s:"/>
-					<textbox id="newsettings[change_pwd_every_x_days]" size="5"/>
+					<integer id="newsettings[change_pwd_every_x_days]" size="5"/>
 				</row>
 				<row>
 					<description value="Warn users about the need to change their password? The number set here should be lower than the value used to enforce the change of passwords every X days. Only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)" label="%s:"/>
-					<textbox id="newsettings[warn_about_upcoming_pwd_change]" size="5"/>
+					<integer id="newsettings[warn_about_upcoming_pwd_change]" size="5"/>
 				</row>
 				<row>
 					<description value="Passwords require a minimum number of characters" label="%s:"/>
@@ -339,7 +339,7 @@
     				</row> -->
 				<row>
 					<description value="How many days should entries stay in the access log, before they get deleted (default 90) ?" label="%s:"/>
-					<textbox id="newsettings[max_access_log_age]" size="5"/>
+					<integer id="newsettings[max_access_log_age]" size="5"/>
 				</row>
 				<row>
 					<description value="Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)" label="%s:"/>
