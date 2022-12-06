@@ -501,8 +501,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 
 		set select_options(options : SelectOption[])
 		{
-			this.__select_options = options;
-			this.requestUpdate('select_options');
+			super.select_options = options;
 		}
 
 		get value()
