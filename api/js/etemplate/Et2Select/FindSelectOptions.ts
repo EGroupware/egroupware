@@ -233,6 +233,10 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 			{
 				option = {label: option};
 			}
+			else if(option === null)
+			{
+				option = {label: key + ""};
+			}
 			option.value = option.value??key.trim();	// link_search prefixes keys with one space
 			fixed_options.push(option);
 		}
