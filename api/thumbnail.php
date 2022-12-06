@@ -32,7 +32,7 @@ $GLOBALS['egw']->session->commit_session();
 
 if (!read_thumbnail(get_srcfile()))
 {
-	header('404 Not found');
+	http_response_code(404);   // Not found
 }
 
 /**
