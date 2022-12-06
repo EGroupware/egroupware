@@ -120,6 +120,10 @@ export function find_select_options(widget, attr_options?, options : SelectOptio
 			content_options = [...new Map([...cleanSelectOptions(options), ...cleanSelectOptions(content_options || [])].map(item =>
 				[item.value, item])).values()];
 		}
+		if(content_options)
+		{
+			content_options = cleanSelectOptions(content_options);
+		}
 	}
 
 	// Check whether the options entry was found, if not read it from the
