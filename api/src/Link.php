@@ -143,6 +143,12 @@ class Link extends Link\Storage
 	 * Turns on debug-messages
 	 */
 	const DEBUG = false;
+
+	/**
+	 * Flag to mark an app+id as not cacheable
+	 */
+	const NO_CACHE_FLAG = "NO CACHE";
+
 	/**
 	 * other apps can participate in the linking by implementing a 'search_link' hook, which
 	 * has to return an array in the format of an app_register entry below
@@ -150,16 +156,17 @@ class Link extends Link\Storage
 	 * @var array
 	 */
 	static $app_register = array(
-		'api-accounts' => array(	// user need run-rights for home
-			'app' => 'api',
-			'name' => 'Accounts',
-			'icon' => 'addressbook/accounts',
-			'query' => 'EGroupware\\Api\\Accounts::link_query',
-			'title' => 'EGroupware\\Api\\Accounts::title',
-			'view' => array('menuaction'=>'addressbook.addressbook_ui.view','ajax'=>'true'),
-			'view_id' => 'account_id'
+		'api-accounts' => array(    // user need run-rights for home
+									'app'     => 'api',
+									'name'    => 'Accounts',
+									'icon'    => 'addressbook/accounts',
+									'query'   => 'EGroupware\\Api\\Accounts::link_query',
+									'title'   => 'EGroupware\\Api\\Accounts::title',
+									'view'    => array('menuaction' => 'addressbook.addressbook_ui.view',
+													   'ajax'       => 'true'),
+									'view_id' => 'account_id'
 		),
-		'api' => array(
+		'api'          => array(
 			// handling of text or pdf files by browser in a popup window
 			'mime' => array(
 				'application/pdf' => array(
@@ -1788,15 +1795,20 @@ class Link extends Link\Storage
 
 		$ret = $cache =& self::get_cache($app, $id,'file_access');
 
-		if (!isset($ret) || $required == Acl::EDIT && !($ret & $required))
+		if(!isset($ret) || $ret == self::NO_CACHE_FLAG || $required == Acl::EDIT && !($ret & $required))
 		{
-			if(($method = self::get_registry($app,'file_access')))
+			if(($method = self::get_registry($app, 'file_access')))
 			{
 				$ret = self::exec($method, array($id, $required, $rel_path));
 				// bool return value means cacheable, non-bool, means not cacheable, because of $rel_path
-				if (is_bool($ret))
+				if(is_bool($ret) && $cache !== self::NO_CACHE_FLAG)
 				{
-					$cache |= $ret ? $required|Acl::READ : 0;
+					$cache |= $ret ? $required | Acl::READ : 0;
+				}
+				else
+				{
+					// Do not cache anything for this app+id or any non boolean (false) will override
+					$cache = self::NO_CACHE_FLAG;
 				}
 				$ret = $ret ? $required|Acl::READ : 0;
 			}
