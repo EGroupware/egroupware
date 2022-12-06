@@ -229,7 +229,7 @@ class Auth
 		if (is_null($daysLeftUntilChangeReq) && !empty($GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']))
 		{
 			// maxage - passwordage = days left until change is required
-			$daysLeftUntilChangeReq = ($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - ((DateTime::to('now','ts')-($alpwchange_val?$alpwchange_val:0))/86400));
+			$daysLeftUntilChangeReq = ((float)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] - ((DateTime::to('now','ts')-($alpwchange_val?$alpwchange_val:0))/86400));
 		}
 		if ($alpwchange_val == 0 ||	// admin requested password change
 			$passwordAgeBorder > $alpwchange_val ||	// change password every N days policy requests change
