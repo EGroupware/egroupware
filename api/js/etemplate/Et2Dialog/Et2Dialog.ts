@@ -235,7 +235,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			/**
 			 * Allow other controls to be accessed while the dialog is visible
 			 */
-			modal: Boolean,
+			modal: {type: Boolean, reflect: true},
 
 			/**
 			 * Title for the dialog, goes in the header

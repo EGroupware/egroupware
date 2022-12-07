@@ -788,6 +788,12 @@ et2-dialog .dialog--has_message {
     display: flex;
 }
 
+/* Non-modal dialogs don't cover application tabs (add them to the app content div), not body */
+et2-dialog:not([modal])::part(base), et2-dialog:not([modal])::part(overlay) {
+    inset: 50px 0 0 0;
+}
+
+
 /**
  * Custom field list
  */
@@ -2718,24 +2724,6 @@ table.egwGridView_outer thead tr th.noResize:hover {
     background-color: #3875d7;
 }
 
-/**
- * et2_dialog: EGroupware left aligns all buttons, but [Delete]
- */
-div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-    float: left;
-    width: 100%;
-}
-
-div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
-    float: left;
-    margin-right: 1em;
-    background-position: 3px;
-    outline: none;
-}
-
-div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
-    float: right;
-}
 
 .et2_prompt #message {
     white-space: pre-wrap;
@@ -2767,10 +2755,6 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.right {
 .long_task .message.error {
     color: white;
     background-image: none;
-}
-
-div.ui-dialog div.ui-dialog-content > div {
-    width: 100%;
 }
 
 /**
