@@ -229,6 +229,10 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 		for(let key in <any>options)
 		{
 			let option : any = options[key];
+			if(typeof option === 'number')
+			{
+				option = "" + option;
+			}
 			if(typeof option === 'string')
 			{
 				option = {label: option};
@@ -237,7 +241,7 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 			{
 				option = {label: key + ""};
 			}
-			option.value = option.value??key.trim();	// link_search prefixes keys with one space
+			option.value = option.value ?? key.trim();	// link_search prefixes keys with one space
 			fixed_options.push(option);
 		}
 	}
