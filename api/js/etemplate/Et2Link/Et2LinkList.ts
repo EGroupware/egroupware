@@ -582,9 +582,10 @@ export class Et2LinkList extends Et2LinkString
 				{
 					// Append "" to make sure it's a string, not undefined
 					remark.classList.remove("loading");
-					// Update internal data
-					link.comment = comment + "";
-					remark.value = link.comment;
+					// Update internal data & displayed comment
+					remark.value = link.remark = comment + "";
+					// Update link widget
+					remark.parentElement.querySelector("et2-link").value = link;
 				}
 			});
 	}
