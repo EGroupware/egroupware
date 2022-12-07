@@ -224,11 +224,11 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				}
 				
 				/* Non-modal dialogs don't have an overlay */
-				:host(:not([modal])) .dialog, :host(:not([modal])) .dialog__overlay {
+				:host(:not([isModal])) .dialog, :host(:not([isModal])) .dialog__overlay {
 					pointer-events: none;
 					background: transparent;
 				}
-				:host(:not([modal])) .dialog__panel {
+				:host(:not([isModal])) .dialog__panel {
 					pointer-events: auto;
 				}
 			`
@@ -243,8 +243,9 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 			/**
 			 * Allow other controls to be accessed while the dialog is visible
+			 * while not conflicting with internal attribute
 			 */
-			modal: {type: Boolean, reflect: true},
+			isModal: {type: Boolean, reflect: true},
 
 			/**
 			 * Title for the dialog, goes in the header
@@ -362,7 +363,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		{
 			this._setApiInstance(parent_egw);
 		}
-		this.modal = true;
+		this.isModal = false;
 		this.dialog_type = Et2Dialog.PLAIN_MESSAGE;
 		this.destroyOnClose = true;
 		this.hideOnEscape = this.hideOnEscape === false ? false : true;
@@ -396,7 +397,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		// Prevent close if they click the overlay when the dialog is modal
 		this.addEventListener('sl-request-close', event =>
 		{
-			if(this.modal && event.detail.source === 'overlay')
+			if(this.isModal && event.detail.source === 'overlay')
 			{
 				event.preventDefault();
 			}
@@ -999,7 +1000,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				listeners: {
 					move: this._onMoveResize
 				},
-				modifiers: (this.modal ? [] : [
+				modifiers: (this.isModal ? [] : [
 					interact.modifiers.restrict({
 						restriction: 'parent',
 						endOnly: true
@@ -1069,6 +1070,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			message: _message,
 			title: _title || dialog.egw().lang('Confirmation required'),
 			buttons: typeof _buttons != 'undefined' ? _buttons : Et2Dialog.BUTTONS_YES_NO,
+			isModal: true,
 			dialog_type: typeof _type != 'undefined' ? _type : Et2Dialog.QUESTION_MESSAGE,
 			icon: _icon,
 			value: _value
@@ -1096,6 +1098,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			message: _message,
 			title: _title,
 			buttons: Et2Dialog.BUTTONS_OK,
+			isModal: true,
 			dialog_type: _type || Et2Dialog.INFORMATION_MESSAGE
 		});
 
@@ -1131,6 +1134,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			},
 			title: _title || 'Input required',
 			buttons: _buttons || Et2Dialog.BUTTONS_OK_CANCEL,
+			isModal: true,
 			value: {
 				content: {
 					value: _value,
@@ -1252,6 +1256,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				}
 			},
 			title: _title || 'please wait...',
+			isModal: true,
 			buttons: buttons
 		});
 		dialog.egw().window.document.body.appendChild(<LitElement><unknown>dialog);

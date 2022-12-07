@@ -54,6 +54,13 @@ export class et2_dialog extends Et2Dialog
 	constructor(parent?, attrs?)
 	{
 		super(parent?.egw() || egw);
+		if(attrs.hasOwnProperty("modal"))
+		{
+			// modal is an internal property of SlDialog
+			console.warn("modal is an internal property, use isModal instead");
+			attrs.isModal = attrs.modal;
+			delete attrs.modal;
+		}
 		if(attrs)
 		{
 			this.transformAttributes(attrs);
@@ -95,7 +102,7 @@ export class et2_dialog extends Et2Dialog
 		// move the overlay dialog into appendTo dom since we want it to be shown in that container
 		if(this.appendTo)
 		{
-			document.getElementsByClassName(this.appendTo.replace('.', ''))[0].appendChild(this._cachedOverlayContentNode);
+			document.getElementsByClassName(this.appendTo.replace('.', ''))[0].appendChild(this);
 		}
 	}
 
@@ -104,7 +111,7 @@ export class et2_dialog extends Et2Dialog
 		// revert the moved container back to its original position in order to be able to teardown the overlay properly
 		if(this.appendTo)
 		{
-			document.getElementsByClassName('global-overlays__overlay-container')[0].appendChild(this._cachedOverlayContentNode);
+			document.getElementsByClassName('global-overlays__overlay-container')[0].appendChild(this);
 		}
 		super.handleClose(ev);
 	}
