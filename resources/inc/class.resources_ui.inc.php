@@ -480,7 +480,7 @@ class resources_ui
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-		$content = is_array($content) ? $content : array('res_id' => $res_id, 'cat_id' => $content['cat_id']);
+		$content = is_array($content) ? $content : array('res_id' => $res_id) + ($content['cat_id'] ? ['cat_id' => $content['cat_id']] : []);
 		if ($res_id > 0)
 		{
 			$content = array_merge($this->bo->read($res_id), $content);
