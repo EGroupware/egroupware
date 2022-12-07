@@ -788,10 +788,6 @@ et2-dialog .dialog--has_message {
     display: flex;
 }
 
-/* Non-modal dialogs don't cover application tabs (add them to the app content div), not body */
-et2-dialog:not([modal])::part(base), et2-dialog:not([modal])::part(overlay) {
-    inset: 50px 0 0 0;
-}
 
 
 /**

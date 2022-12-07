@@ -222,6 +222,15 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 					border-top: 1px solid silver;
 					margin-top: 0.5em;
 				}
+				
+				/* Non-modal dialogs don't have an overlay */
+				:host(:not([modal])) .dialog, :host(:not([modal])) .dialog__overlay {
+					pointer-events: none;
+					background: transparent;
+				}
+				:host(:not([modal])) .dialog__panel {
+					pointer-events: auto;
+				}
 			`
 		];
 	}
@@ -990,6 +999,12 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				listeners: {
 					move: this._onMoveResize
 				},
+				modifiers: (this.modal ? [] : [
+					interact.modifiers.restrict({
+						restriction: 'parent',
+						endOnly: true
+					})
+				])
 			});
 	}
 
