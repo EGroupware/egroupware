@@ -32,6 +32,16 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	const PREFIX = 'vfs://default';
 
 	/**
+	 * We do not use this constant anywhere, but if you call
+	 * setup/setup-cli.php --admin default,admin,secret,newuser,secret,User,New
+	 * without this constant defined using php8.1, we get an error:
+	 * An error happened: Undefined constant EGroupware\Api\Vfs\StreamWrapper::vfs
+	 *
+	 * Defining this constant makes the error not happen.  See ticket #74694
+	 */
+	const vfs = "Who wants this";
+
+	/**
 	 * Should unreadable entries in a not writable directory be hidden, default yes
 	 */
 	const HIDE_UNREADABLES = true;
