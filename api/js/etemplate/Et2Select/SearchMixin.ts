@@ -502,6 +502,16 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 		set select_options(options : SelectOption[])
 		{
 			super.select_options = options;
+
+			// Remove any selected remote, they're real options now
+			for(let remote_index = this._selected_remote.length - 1; remote_index >= 0; remote_index--)
+			{
+				let remote = this._selected_remote[remote_index];
+				if(options.findIndex(o => o.value == remote.value) != -1)
+				{
+					this._selected_remote.splice(remote_index, 1);
+				}
+			}
 		}
 
 		get value()
