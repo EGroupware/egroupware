@@ -804,17 +804,27 @@ export class et2_vfsUpload extends et2_file
 	}
 
 	getDOMNode(sender) {
-		if(sender && sender !== this && sender._type.indexOf('vfs') >= 0 )
+		if(sender && sender !== this && (sender.tagName && sender.tagName.indexOf("VFS") >= 0 || sender._type && sender._type.indexOf('vfs') >= 0))
 		{
-			var value = sender.getValue && sender.getValue() || sender.options.value || {};
-			var row =  jQuery("[data-path='"+(value.path.replace(/'/g, '&quot'))+"']",this.list);
-			if(sender._type === 'vfs-mime')
+			let value = sender.getValue && sender.getValue() || sender.options?.value || false;
+			let row;
+			if(value)
 			{
-				return jQuery('.icon',row).get(0) || null;
+				// Have a value, we can find the right place
+				row = jQuery("[data-path='" + (value.path.replace(/'/g, '&quot')) + "']", this.list);
 			}
 			else
 			{
-				return jQuery('.title',row).get(0) || null;
+				// No value, just use the last one
+				row = jQuery("[data-path]", this.list).last();
+			}
+			if(sender.tagName === "ET2-VFS-MIME" || sender._type === 'vfs-mime')
+			{
+				return jQuery('.icon', row).get(0) || null;
+			}
+			else
+			{
+				return jQuery('.title', row).get(0) || null;
 			}
 		}
 		else
@@ -887,7 +897,7 @@ export class et2_vfsUpload extends et2_file
 		jQuery(document.createElement("td"))
 			.addClass('title')
 			.appendTo(row);
-		let mime = <et2_vfsMime> et2_createWidget('vfs-mime',{value: file_data}, this);
+		let mime = <Et2VfsMime>et2_createWidget('vfs-mime', {value: file_data}, this);
 
 		// Trigger expose on click, if supported
 		let vfs_attrs = {value: file_data, onclick: undefined};
