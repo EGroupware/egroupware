@@ -923,7 +923,6 @@ export class et2_vfsUpload extends et2_file
 		{
 			mime.set_value(file_data);
 			vfs.set_value(file_data);
-			mime.doLoadingFinished();
 			vfs.doLoadingFinished();
 		}
 
