@@ -759,10 +759,13 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 					// Scroll the new tag into view
 					if(event.detail && event.detail.item)
 					{
+						// Causes sidemenu (calendar) to scroll to top & get stuck
+						/*
 						this.updateComplete.then(() =>
 						{
-							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value.replace(/'/g, "\\\'") + "']")?.scrollIntoView();
+							this.shadowRoot.querySelector("et2-tag[value='" + event.detail.item.value.replace(/'/g, "\\\'") + "']")?.scrollIntoView({block: "nearest"});
 						});
+						 */
 					}
 				}
 				else if(!this.multiple && this.searchEnabled)
