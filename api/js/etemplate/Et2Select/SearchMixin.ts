@@ -978,7 +978,7 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Remove remote options that aren't used
 			let keepers = this._selected_remote.reduce((prev, current) =>
 			{
-				return ":not([value='" + current.value.replace(/'/g, "\\\'") + "'])";
+				return prev + ":not([value='" + current.value.replace(/'/g, "\\\'") + "'])";
 			}, "");
 			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
 			target.childNodes.forEach((n) =>
