@@ -59,7 +59,9 @@
 					</row>
 					<row class="mailComposeHeaders" >
 						<description value="To"/>
-						<taglist-email id="to" allowDragAndDrop="true" width="100%" onclick="app.mail.address_click" multiple="true" include_lists="true" onchange="app.mail.recipients_onchange" empty_label="select or insert email address"/>
+						<taglist-email id="to" allowDragAndDrop="true" width="100%" onclick="app.mail.address_click"
+                                       multiple="true" include_lists="true" onchange="app.mail.recipients_onchange"
+                                       empty_label="select or insert email address" autofocus="true"/>
 						<hbox>
 							<description id="cc_expander" value="Cc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
 							<description id="bcc_expander" value="Bcc" class="et2_button_text" onclick="app.mail.compose_fieldExpander"/>
