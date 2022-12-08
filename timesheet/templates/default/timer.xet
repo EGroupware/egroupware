@@ -17,9 +17,9 @@
 				<row disabled="@disable=/specific/">
 					<description value="Timer"/>
 					<old-box id="specific_timer" value="00:00" class="timesheet_timer"/>
-					<et2-button id="specific[start]" label="Start" image="timesheet/play-blue"/>
-					<et2-button id="specific[pause]" label="Pause" image="timesheet/pause-orange" disabled="true"/>
-					<et2-button id="specific[stop]" label="Stop" image="timesheet/stop" disabled="true"/>
+					<et2-button id="specific[start]" label="Start" image="timesheet/play-blue" onclick="egw.timer_button"/>
+					<et2-button id="specific[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
+					<et2-button id="specific[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
 				</row>
 				<row disabled="@disable=/specific/">
 					<description />
@@ -31,9 +31,9 @@
 				<row disabled="@disable=/overall/">
 					<description value="Working time"/>
 					<old-box id="overall_timer" value="00:00" class="timesheet_timer overall"/>
-					<et2-button id="overall[start]" label="Start" image="timesheet/play"/>
-					<et2-button id="overall[pause]" label="Pause" image="timesheet/pause-orange" disabled="true"/>
-					<et2-button id="overall[stop]" label="Stop" image="timesheet/stop" disabled="true"/>
+					<et2-button id="overall[start]" label="Start" image="timesheet/play" onclick="egw.timer_button"/>
+					<et2-button id="overall[pause]" label="Pause" image="timesheet/pause-orange" disabled="true" onclick="egw.timer_button"/>
+					<et2-button id="overall[stop]" label="Stop" image="timesheet/stop" disabled="true" onclick="egw.timer_button"/>
 				</row>
 				<row disabled="@disable=/overall/">
 					<description />

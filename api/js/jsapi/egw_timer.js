@@ -441,19 +441,6 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: (button_id, value) =>		// return false to prevent dialog closing
 			{
-				if (button_id !== 'close') {
-					try {
-						timerAction(button_id.replace(/_([a-z]+)\[([a-z]+)\]/, '$1-$2'),
-							// eT2 operates in user-time, while timers here always operate in UTC
-							value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
-					}
-					catch (e) {
-						Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
-					}
-					setButtonState();
-					updateTimes();
-					return false;
-				}
 				dialog = undefined;
 			},
 			title: _title || 'Start & stop timer',
@@ -576,6 +563,28 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			});
 			// Add to DOM, dialog will auto-open
 			document.body.appendChild(dialog);
+		},
+
+		/**
+		 * Start, Pause or Stop clicked in timer-dialog
+		 *
+		 * @param {Event} _ev
+		 * @param {Et2Button} _button
+		 */
+		timer_button: function(_ev, _button)
+		{
+			const value = dialog.value;
+			try {
+				timerAction(_button.id.replace(/^([a-z]+)\[([a-z]+)\]$/, '$1-$2'),
+					// eT2 operates in user-time, while timers here always operate in UTC
+					value.time ? new Date((new Date(value.time)).valueOf() + egw.getTimezoneOffset() * 60000) : undefined);
+			}
+			catch (e) {
+				Et2Dialog.alert(e, egw.lang('Invalid Input'), Et2Dialog.ERROR_MESSAGE);
+			}
+			setButtonState();
+			updateTimes();
+			return false;
 		},
 
 		/**
