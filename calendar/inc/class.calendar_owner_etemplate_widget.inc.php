@@ -299,7 +299,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$type = $data['type'];
 
 		$value = array(
-			'value' => substr($id, 0, -1) == $type ? $id : $type . $id,
+			'value' => substr($id, 0, 1) == $type ? $id : $type . $id,
 			'label' => $title,
 			'app'   => lang($data['app'])
 		);

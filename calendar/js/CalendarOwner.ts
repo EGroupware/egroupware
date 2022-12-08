@@ -79,13 +79,14 @@ export class CalendarOwner extends Et2Select
 						}
 						// Put it in the list of options
 						let index = this.select_options.findIndex(o => o.value == owner);
-						if(index !== -1)
+						let remote_index = this._selected_remote.findIndex(o => o.value == owner);
+						if(remote_index !== -1)
 						{
-							this.select_options[index] = data[owner];
+							this._selected_remote[remote_index] = data[owner];
 						}
-						else
+						else if(index == -1)
 						{
-							this.select_options.push(data[owner]);
+							this._selected_remote.push(data[owner]);
 						}
 					}
 					this.requestUpdate("select_options");
