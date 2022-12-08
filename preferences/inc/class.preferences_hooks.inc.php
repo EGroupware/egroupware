@@ -133,10 +133,11 @@ class preferences_hooks
 
 
 		$textsize = array (
-			'10' => lang('small'),
-			'12' => lang('standard'),
-			'14' => lang('large'),
-			'16' => lang('x-large')
+			'10' => lang('x-small'),
+			'12' => lang('small'),
+			'14' => lang('standard'),
+			'16' => lang('large'),
+			'18' => lang('x-large')
 		);
 
 		// Settings array for this app
@@ -163,7 +164,7 @@ class preferences_hooks
 				'help' => lang('It sets content size (text only) according to selected size.'),
 				'xmlrpc' => True,
 				'values' => $textsize,
-				'default' => '12',
+				'default' => '14',
 				'admin'  => False,
 			),
 			'lazy-update' => array(
