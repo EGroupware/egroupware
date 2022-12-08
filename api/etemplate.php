@@ -136,7 +136,7 @@ function send_template()
 			return $matches[0];
 		}, $str);
 
-		// Change details title --> summary
+		// Change details title --> summary (This can currently not kope with nested details like in smallpart.curse.xet
 		$str = preg_replace_callback('#<details([^>]*?)>(.*?)</details>#su', static function ($matches)
 		{
 			$attrs = parseAttrs($matches[1]);
@@ -145,7 +145,7 @@ function send_template()
 				$attrs['summary'] = $attrs['title'];
 				unset($attrs['title']);
 			}
-			return "<et2-details " . stringAttrs($attrs) . '>' . $matches[2] . "</et2-details>";
+			return "<et2-details" . stringAttrs($attrs) . '>' . $matches[2] . "</et2-details>";
 		}, $str);
 
 		// Change splitter dockside -> primary + vertical
@@ -165,7 +165,7 @@ function send_template()
 			}
 			unset($attrs['dock_side']);
 
-			return "<$tag " . stringAttrs($attrs) . '>' . $matches[2] . "</$tag>";
+			return "<$tag" . stringAttrs($attrs) . '>' . $matches[2] . "</$tag>";
 		}, $str);
 
 		// modify <(image|description) expose_view="true" --> <et2-*-expose
@@ -220,7 +220,7 @@ function send_template()
 				$attrs['app'] = $attrs['only_app'];
 				unset($attrs['only_app'], $attrs['readonly']);
 			}
-			return "<$tag " . stringAttrs($attrs) . "></$tag>";
+			return "<$tag" . stringAttrs($attrs) . "></$tag>";
 		}, $str);
 
 		// handling of select and taglist widget, incl. removing of type attribute
@@ -292,7 +292,7 @@ function send_template()
 				$matches[2] = preg_replace('/^(select|taglist)/', '', $attrs['type']);
 				unset($attrs['type']);
 			}
-			return '<et2-select' . $matches[2] . ' ' . stringAttrs($attrs) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
+			return '<et2-select' . $matches[2] . stringAttrs($attrs) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
 		}, $str);
 
 		// nextmatch headers
@@ -316,7 +316,7 @@ function send_template()
 				$matches[2] = "filter";
 			}
 
-			return '<et2-nextmatch-header-' . $matches[2] . ' ' . stringAttrs($attrs) . '/>';
+			return '<et2-nextmatch-header-' . $matches[2] . stringAttrs($attrs) . '/>';
 		}, $str);
 
 		// fix <(button|buttononly|timestamper).../> --> <et2-(button|image|button-timestamp) (noSubmit="true")?.../>
@@ -351,7 +351,7 @@ function send_template()
 				$tag = 'et2-button-icon';
 			}
 			unset($attrs['background_image']);
-			return "<$tag " . stringAttrs($attrs) . '></' . $tag . '>';
+			return "<$tag" . stringAttrs($attrs) . '></' . $tag . '>';
 		}, $str);
 
 		$str = preg_replace('#<time_or_date\s([^>]+)/>#', '<et2-date-time-today $1></et2-date-time-today>', $str);
@@ -383,9 +383,9 @@ function send_template()
 						$tab_attrs['summary'] = $tab_attrs['label'];
 						$tab_attrs['title'] = $tab_attrs['statustext'];
 						unset($tab_attrs['label'], $tab_attrs['statustext']);
-						$details[] = $indent."\t".'<et2-details '.stringAttrs($tab_attrs).'>'."\n$indent\t\t".$panels[0][$n]."\n$indent\t</et2-details>";
+						$details[] = $indent."\t".'<et2-details'.stringAttrs($tab_attrs).'>'."\n$indent\t\t".$panels[0][$n]."\n$indent\t</et2-details>";
 					}
-					return $indent.'<vbox '.stringAttrs($tabbox_attrs).">\n".implode("\n", $details)."\n$indent</vbox>";
+					return $indent.'<vbox'.stringAttrs($tabbox_attrs).">\n".implode("\n", $details)."\n$indent</vbox>";
 				}, $str);
 		}
 
@@ -499,6 +499,10 @@ function send_template()
  */
 function parseAttrs($str)
 {
+	if (empty($str) || !trim($str))
+	{
+		return [];
+	}
 	if (!preg_match_all('/(^|\s)([a-z\d_-]+)="([^"]*)"/i', $str, $attrs, PREG_PATTERN_ORDER))
 	{
 		throw new Exception("Can NOT parse attributes from '$str'");
@@ -509,12 +513,18 @@ function parseAttrs($str)
 /**
  * Combine attribute array into a string
  *
+ * If there are attributes the returned string is prefixed with a single space, otherwise an empty string is returned.
+ *
  * @param array $attrs
  * @return string
  */
 function stringAttrs(array $attrs)
 {
-	return implode(' ', array_map(static function ($name, $value) {
+	if (!$attrs)
+	{
+		return '';
+	}
+	return ' '.implode(' ', array_map(static function ($name, $value) {
 		return $name . '="' . $value . '"';
 	}, array_keys($attrs), $attrs));
 }
