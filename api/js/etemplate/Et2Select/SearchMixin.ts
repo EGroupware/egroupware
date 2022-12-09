@@ -986,12 +986,12 @@ export const Et2WithSearchMixin = <T extends Constructor<LitElement>>(superclass
 			// Remove any previously selected remote options that aren't used anymore
 			this._selected_remote = this._selected_remote.filter((option) =>
 			{
-				return this.value.indexOf(option.value) != -1;
+				return this.multiple ? this.value.indexOf(option.value) != -1 : this.value == option.value;
 			});
 			// Remove remote options that aren't used
 			let keepers = this._selected_remote.reduce((prev, current) =>
 			{
-				return prev + ":not([value='" + current.value.replace(/'/g, "\\\'") + "'])";
+				return prev + ":not([value='" + ('' + current.value).replace(/'/g, "\\\'") + "'])";
 			}, "");
 			target.querySelectorAll(".remote" + keepers).forEach(o => o.remove());
 			target.childNodes.forEach((n) =>
