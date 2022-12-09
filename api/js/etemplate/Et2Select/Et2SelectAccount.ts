@@ -10,13 +10,14 @@
 import {Et2Select} from "./Et2Select";
 import {SelectOption} from "./FindSelectOptions";
 import {Et2Image} from "../Et2Image/Et2Image";
+import {SelectAccountMixin} from "./SelectAccountMixin";
 
 export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
 
 /**
  * @customElement et2-select-account
  */
-export class Et2SelectAccount extends Et2Select
+export class Et2SelectAccount extends SelectAccountMixin(Et2Select)
 {
 	static get properties()
 	{

@@ -13,6 +13,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {StaticOptions} from "./StaticOptions";
 import {find_select_options, SelectOption} from "./FindSelectOptions";
+import {SelectAccountMixin} from "./SelectAccountMixin";
 
 const so = new StaticOptions();
 
@@ -216,53 +217,10 @@ li {
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
 customElements.define("et2-select_ro", Et2SelectReadonly);
 
-export class Et2SelectAccountReadonly extends Et2SelectReadonly
+export class Et2SelectAccountReadonly extends SelectAccountMixin(Et2SelectReadonly)
 {
 
-	protected account_options = [];
 
-	get select_options()
-	{
-		return [...this.account_options, ...super.select_options];
-	}
-
-	set select_options(value : SelectOption[])
-	{
-		super.select_options = value;
-	}
-
-	set value(new_value)
-	{
-		super.value = new_value;
-		if(!new_value)
-		{
-			return;
-		}
-		for(let id of this.value)
-		{
-			let account_name = null;
-			let option = <SelectOption>{value: id, label: id + " ..."};
-			this.account_options.push(option);
-			if(new_value && (account_name = this.egw().link_title('api-accounts', id, false)))
-			{
-				option.label = account_name;
-			}
-			else if(!account_name)
-			{
-				// Not already cached, need to fetch it
-				this.egw().link_title('api-accounts', id, true).then(title =>
-				{
-					option.label = title;
-					this.requestUpdate();
-				});
-			}
-		}
-	}
-
-	get value()
-	{
-		return super.value;
-	}
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
