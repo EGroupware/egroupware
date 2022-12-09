@@ -10,6 +10,7 @@
 
 namespace EGroupware\Admin;
 
+use admin_cmd_account_app;
 use admin_cmd_edit_group;
 use EGroupware\Api;
 use EGroupware\Api\Framework;
