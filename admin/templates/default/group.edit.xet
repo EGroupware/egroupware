@@ -8,7 +8,7 @@
 	<template id="admin.group.edit.apps" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" id="apps" overflow="auto" height="200" resize_ratio="1">
 			<columns>
-				<column/>
+				<column width="32px"/>
 				<column/>
 				<column/>
 			</columns>
