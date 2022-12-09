@@ -57,7 +57,7 @@ export class Et2SelectThumbnail extends Et2Select
 		// Make sure not to double-add
 		if(!this.select_options.find(o => o.value == text))
 		{
-			this.select_options.push(<SelectOption>{
+			this.__select_options.push(<SelectOption>{
 				value: text,
 				label: "",
 				icon: text
