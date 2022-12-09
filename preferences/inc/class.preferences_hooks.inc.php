@@ -137,7 +137,7 @@ class preferences_hooks
 			'12' => lang('small'),
 			'14' => lang('standard'),
 			'16' => lang('large'),
-			'18' => lang('x-large')
+			'20' => lang('x-large')
 		);
 
 		// Settings array for this app
