@@ -46,22 +46,24 @@ export class Et2Details extends Et2Widget(SlDetails)
             	margin-left: auto;
             	order: 1;
             }
-            
-            .details.hoist {
-            	position: relative;
-            }
-            .details.hoist .details__body {
-            	position: absolute;
-            	z-index: var(--sl-z-index-drawer);
-				background: var(--sl-color-neutral-0);
-				box-shadow: var(--sl-shadow-large);
-				width: 100%;
-				border-radius: var(--sl-border-radius-small);
-				border: 1px solid var(--sl-color-neutral-200);
-				max-height: 15em;
-    			overflow-y: auto;
-            }
-            `,
+
+              .details.hoist {
+                position: relative;
+              }
+
+              .details.hoist .details__body {
+                position: absolute;
+                z-index: var(--sl-z-index-drawer);
+                background: var(--sl-color-neutral-0);
+                box-shadow: var(--sl-shadow-large);
+                width: 100%;
+                min-width: fit-content;
+                border-radius: var(--sl-border-radius-small);
+                border: 1px solid var(--sl-color-neutral-200);
+                max-height: 15em;
+                overflow-y: auto;
+              }
+			`,
 		];
 	}
 
