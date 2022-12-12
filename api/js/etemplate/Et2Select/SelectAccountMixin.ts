@@ -54,6 +54,12 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 			let val = Array.isArray(this.value) ? this.value : [this.value];
 			for(let id of val)
 			{
+				// Don't add if it's already there
+				if(this.account_options.findIndex(o => o.value == id) != -1)
+				{
+					continue;
+				}
+
 				let account_name = null;
 				let option = <SelectOption>{value: id, label: id + " ..."};
 				this.account_options.push(option);

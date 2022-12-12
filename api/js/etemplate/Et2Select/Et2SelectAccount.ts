@@ -75,7 +75,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2Select)
 		{
 			return [];
 		}
-		let select_options : Array<SelectOption> = [...this.__select_options] || [];
+		let select_options : Array<SelectOption> = [...super.select_options] || [];
 		// for primary_group we only display owngroups == own memberships, not other groups
 		if (type === 'primary_group' && this.accountType !== 'accounts')
 		{
