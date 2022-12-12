@@ -95,6 +95,20 @@ export class Et2Details extends Et2Widget(SlDetails)
 		}
 	}
 
+	/**
+	 * List of properties that get translated
+	 * Done separately to not interfere with properties - if we re-define label property,
+	 * labels go missing.
+	 */
+	static get translate()
+	{
+		return {
+			...super.translate,
+			summary: true
+		}
+	}
+
+
 	constructor(...args : any[])
 	{
 		super();

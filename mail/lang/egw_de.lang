@@ -405,6 +405,7 @@ notify about new mail in this folders	mail	de	Über neue E-Mails in diesem Ordne
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
+on vacation	mail	de	Abwesenheit
 one address is not valid	mail	de	Eine Adresse ist ungültig
 only if currently in an other app	mail	de	Nur anzeigen wenn aktuell in einer anderen Anwendung
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	de	Macht nur dann Sinn, wenn das Passwort auf einem anderen Weg, außerhalb dieser Mail, den Empfängern mitgeteilt wird!
