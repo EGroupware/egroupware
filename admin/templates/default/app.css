@@ -144,19 +144,23 @@ span#admin-mailaccount_acc_id {
 /**
  * new et2 site configuration
  */
-#admin-site-config > div > span.subHeader  {
-	border-bottom: 3px solid #696969;
-	padding-left: 3px;
-	padding-bottom: 3px;
-	display: block;
-	margin-bottom: 5px;
+#admin-site-config > div > .subHeader {
+    border-bottom: 3px solid #696969;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    display: block;
+    margin-bottom: 5px;
 }
+
 #admin-index_ajax_target > form[id$="-config"] tr.th > td,
-#admin-site-config span.subHeader  {
-	font-weight: bold;
-	font-size: 110%;
+#admin-site-config .subHeader {
+    font-weight: bold;
+    font-size: 110%;
 }
-#admin-acl {width:99%;}
+
+#admin-acl {
+    width: 99%;
+}
 
 #admin-categories-edit_owner {overflow-y: auto;}
 #admin-categories-edit_icon_url {
