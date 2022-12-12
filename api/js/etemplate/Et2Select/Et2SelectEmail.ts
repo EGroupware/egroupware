@@ -156,10 +156,15 @@ export class Et2SelectEmail extends Et2Select
 	protected _createTagNode(item)
 	{
 		let tag = super._createTagNode(item);
+
 		tag.fullEmail = this.fullEmail;
+
+		// Re-set after setting fullEmail as that can change what we show
+		tag.textContent = item.getTextLabel().trim();
+
 		if(!this.readonly && this.allowFreeEntries && this.allowDragAndDrop)
 		{
-			let dragTranslate = {x:0,y:0};
+			let dragTranslate = {x: 0, y: 0};
 			tag.class = item.classList.value + " et2-select-draggable";
 			let draggable = interact(tag).draggable({
 				startAxis: 'xy',
