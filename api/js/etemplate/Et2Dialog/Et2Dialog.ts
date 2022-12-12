@@ -688,7 +688,8 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		super.updated(changedProperties);
 		if(changedProperties.has("template"))
 		{
-			this._loadTemplate();
+			// Wait until update is finished to avoid an error in Safari
+			this.updateComplete.then(() => this._loadTemplate());
 		}
 		if(changedProperties.has("buttons"))
 		{
