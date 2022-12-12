@@ -21,8 +21,6 @@ import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
 import {et2_vfsSelect} from "../et2_widget_vfs";
 import {LinkInfo} from "./Et2Link";
-import {Et2LinkList} from "./Et2LinkList";
-import {et2_DOMWidget} from "../et2_core_DOMWidget";
 import {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
 
@@ -109,6 +107,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
 		this.handleEntryCleared = this.handleEntryCleared.bind(this);
 		this.handleLinkButtonClick = this.handleLinkButtonClick.bind(this);
+
+		this.handleLinkDeleted = this.handleLinkDeleted.bind(this);
 	}
 
 	firstUpdated()
@@ -116,6 +116,18 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		// Add file buttons in
 		// TODO: Replace when they're webcomponents
 		this._fileButtons();
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this.getInstanceManager().DOMContainer.addEventListener("et2-delete", this.handleLinkDeleted);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.getInstanceManager().DOMContainer.removeEventListener("et2-delete", this.handleLinkDeleted);
 	}
 
 	/**
@@ -308,15 +320,11 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 				}
 			}
 
-			// Look for a link-list so we can refresh it
-			let list_widget = (<Et2LinkList><unknown>(<et2_DOMWidget>this.getParent()).getDOMNode().querySelector('et2-link-list'));
-			// If there's an array of data (entry is not yet saved), updating the list with only server info will
-			// not work, so add them in explicitly.
-			if(list_widget && success)
-			{
-				// Update link list, passing data if server provided it
-				list_widget.get_links(typeof success == "object" ? Object.values(success) : []);
-			}
+			// Send an event so listeners can update
+			this.dispatchEvent(new CustomEvent("et2-change", {
+				bubbles: true,
+				detail: typeof success == "object" ? Object.values(success) : []
+			}));
 		}
 		else
 		{
@@ -420,6 +428,23 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			link_info.push(<LinkInfo>selected);
 		}
 		this.createLink(link_info)
+	}
+
+	/**
+	 * Handle a link being removed
+	 *
+	 * Event is thrown every time a link is removed (from a LinkList) but we only care if the
+	 * entry hasn't been saved yet and has no ID.  In this case we've been keeping the list
+	 * to submit and link server-side so we have to remove the deleted link from our list.
+	 *
+	 * @param {CustomEvent} e
+	 */
+	handleLinkDeleted(e : CustomEvent)
+	{
+		if(e && e.detail && this.value && typeof this.value.to_id == "object")
+		{
+			delete this.value.to_id[e.detail.link_id || ""]
+		}
 	}
 
 	get link_button() : Et2Button

@@ -111,12 +111,29 @@ export class Et2LinkList extends Et2LinkString
 
 		this._handleRowHover = this._handleRowHover.bind(this);
 		this._handleRowContext = this._handleRowContext.bind(this);
+
+		this._handleChange = this._handleChange.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
 		this._createContextMenu();
+
+		// Look for LinkTo and listen for change so we can update
+		this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+		{
+			link.addEventListener("et2-change", this._handleChange);
+		})
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.getInstanceManager().DOMContainer.querySelectorAll("et2-link-to").forEach(link =>
+		{
+			link.removeEventListener("et2-change", this._handleChange);
+		})
 	}
 
 	protected _listTemplate()
@@ -231,6 +248,20 @@ export class Et2LinkList extends Et2LinkString
 	}
 
 	/**
+	 * We listen to LinkTo widgets so we can update
+	 *
+	 * @param _ev
+	 * @protected
+	 */
+	protected _handleChange(_ev)
+	{
+		if(_ev && typeof _ev.currentTarget)
+		{
+			this.get_links(_ev.detail || []);
+		}
+	}
+
+	/**
 	 * Build a thumbnail for the link
 	 * @param link
 	 * @returns {TemplateResult}
@@ -300,14 +331,25 @@ export class Et2LinkList extends Et2LinkString
 		let link_element = <HTMLElement>this.querySelector("et2-link[slot='" + this._get_row_id(link) + "']");
 		link_element.classList.add("loading");
 
-		this.dispatchEvent(new CustomEvent("before_delete", {detail: link}));
+		this.dispatchEvent(new CustomEvent("et2-before-delete", {detail: link}));
 
-		let removeLink = () => {this.querySelectorAll("[slot='" + this._get_row_id(link) + "']").forEach(e => e.remove());};
+		let removeLink = () =>
+		{
+			this.querySelectorAll("[slot='" + this._get_row_id(link) + "']").forEach(e => e.remove());
+			if(this._link_list.indexOf(link) != -1)
+			{
+				this._link_list.splice(this._link_list.indexOf(link), 1);
+			}
+			this.dispatchEvent(new CustomEvent("et2-delete", {bubbles: true, detail: link}));
+		};
 
 		// Unsaved entry, had no ID yet
-		if(typeof this.entryId !== "string" && this.entryId[link.link_id])
+		if(!this.entryId || typeof this.entryId !== "string" && this.entryId[link.link_id])
 		{
-			delete this.entryId[link.link_id];
+			if(this.entryId)
+			{
+				delete this.entryId[link.link_id];
+			}
 			removeLink();
 		}
 		else if(typeof this.entryId == "string" && link.link_id)
