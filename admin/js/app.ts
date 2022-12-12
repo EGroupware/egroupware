@@ -645,27 +645,38 @@ class AdminApp extends EgwApp
 	 */
 	_acl_dialog(content, sel_options?, etemplate?, app?, callback? : Function)
 	{
-		if(typeof content == 'undefined') content = {};
+		if(typeof content == 'undefined')
+		{
+			content = {};
+		}
 
 		// Determine which application we're running as
 		app = app ? app : egw.app_name();
 		// can be either admin or preferences!
-		if (app != 'admin') app = 'preferences';
+		if(app != 'admin')
+		{
+			app = 'preferences';
+		}
 		// Get by ID, since this.et2 isn't always the ACL list
 		var et2 = etemplate ? etemplate : etemplate2.getById('admin-acl').widgetContainer;
-		var className = app+'_acl';
+		var className = app + '_acl';
 		var acl_rights : any = {};
 		var readonlys : any = {acl: {}};
 		var modifications : any = {};
 
 		// Select options are already here, just pull them and pass along
-		sel_options = et2.getArrayMgr('sel_options').data||{};
+		sel_options = {
+			...{
+				acl_account: [],
+				acl_location: []
+			}, ...(et2.getArrayMgr('sel_options').data || {})
+		};
 
 		// Some defaults
 		if(et2 && et2.getWidgetById('nm'))
 		{
 			// This is which checkboxes are available for each app
-			acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights')||{};
+			acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights') || {};
 
 			if(!content.acl_appname)
 			{
@@ -736,13 +747,21 @@ class AdminApp extends EgwApp
 		{
 			readonlys.acl_account = true;
 		}
+		let wait = []
 		if(content.acl_location)
 		{
-			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
-			this.egw.link_title('api-accounts', content.acl_location, true).then(title => {
-				sel_options.acl_location[content.acl_location] = title;
-			});
+			wait.push(this.egw.link_title('api-accounts', content.acl_location, true).then(title =>
+			{
+				sel_options.acl_location.push({value: content.acl_location, label: title});
+			}));
 		}
+
+		// Make sure new accounts are in the list, client side cache won't have them
+		wait.push(this.egw.link_title('api-accounts', content.acl_account, true).then(title =>
+		{
+			sel_options.acl_account.push({value: content.acl_account, label: title});
+			sel_options.acl_location.push({value: content.acl_account, label: title});
+		}));
 
 		var dialog_options = {
 			callback: (_button_id, _value) =>
@@ -848,10 +867,13 @@ class AdminApp extends EgwApp
 		}
 
 		// Create the dialog
-		this.acl_dialog = new Et2Dialog(app);
-		this.acl_dialog.transformAttributes(dialog_options);
+		Promise.all(wait).then(() =>
+		{
+			this.acl_dialog = new Et2Dialog(app);
+			this.acl_dialog.transformAttributes(dialog_options);
 
-		document.body.appendChild(<LitElement><unknown>this.acl_dialog);
+			document.body.appendChild(<LitElement><unknown>this.acl_dialog);
+		});
 	}
 
 	/**
