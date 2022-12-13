@@ -70,7 +70,7 @@ class setup
 	 *
 	 * @var float
 	 */
-	var $required_php_version = 7.4;
+	var $required_php_version = 8.0;
 	/**
 	 * PHP Version recommended for EGroupware
 	 *
