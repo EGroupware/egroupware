@@ -41,7 +41,25 @@ class preferences_hooks
 		{
 			$langs = Api\Translation::get_installed_langs();
 
-			$tzs = Api\DateTime::getTimezones();
+			$tz_list = Api\DateTime::getTimezones();
+
+			// Format for select
+			$format = function ($key, $value) use (&$format, &$tzs)
+			{
+				if(is_array($value))
+				{
+					$value = [
+						'label' => $key,
+						'value' => array_map($format, array_keys($value), array_values($value))
+					];
+				}
+				else
+				{
+					$value = ['label' => $value, 'value' => $key];
+				}
+				return $value;
+			};
+			$tzs = array_map($format, array_keys($tz_list), array_values($tz_list));
 		}
 
 		$date_formats = array(
