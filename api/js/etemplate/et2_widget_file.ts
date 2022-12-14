@@ -245,7 +245,14 @@ export class et2_file extends et2_inputWidget
 
 		this.setDOMNode(this.node[0]);
 		// set drop target to widget dom node if no target option is specified
-		if (!this.options.drop_target) this.resumable.assignDrop([this.getDOMNode()]);
+		if(!this.options.drop_target)
+		{
+			this.resumable.assignDrop([this.getDOMNode()]);
+		}
+		else
+		{
+			this.set_drop_target(this.options.drop_target);
+		}
 	}
 
 	/**

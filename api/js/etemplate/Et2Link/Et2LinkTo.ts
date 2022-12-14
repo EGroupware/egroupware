@@ -15,7 +15,6 @@ import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {css, html, LitElement, ScopedElementsMixin} from "@lion/core";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
-import {et2_tabbox} from "../et2_widget_tabs";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
@@ -23,6 +22,7 @@ import {et2_vfsSelect} from "../et2_widget_vfs";
 import {LinkInfo} from "./Et2Link";
 import {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
+import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -176,10 +176,10 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 				{
 					tabs = tabs.getParent();
 				}
-				while(tabs != self.getRoot() && tabs.getType() != 'tabbox');
+				while(tabs != self.getRoot() && tabs.getType() != 'ET2-TABBOX');
 				if(tabs != self.getRoot())
 				{
-					(<et2_tabbox><unknown>tabs).activateTab(self);
+					(<Et2Tabs><unknown>tabs).activateTab(self);
 				}
 				return true;
 			},
