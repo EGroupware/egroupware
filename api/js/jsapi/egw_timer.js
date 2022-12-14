@@ -461,7 +461,8 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 		});
 		// Add to DOM, dialog will auto-open
 		document.body.appendChild(dialog);
-		dialog.getUpdateComplete().then(() => {
+		dialog.updateComplete.then(() =>
+		{
 			// enable/disable buttons based on timer state
 			setButtonState();
 			// update timers in dialog

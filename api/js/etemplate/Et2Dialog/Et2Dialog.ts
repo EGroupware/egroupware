@@ -152,6 +152,15 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	protected _complete_promise : Promise<[number, Object]>;
 
 	/**
+	 * Resolve the template promise
+	 */
+	private _templateResolver : (value) => void;
+	/**
+	 * Resolve the dialog complete promise
+	 */
+	private _completeResolver : (value) => [number, Object];
+
+	/**
 	 * The ID of the button that was clicked.  Always one of the button constants,
 	 * unless custom buttons were used
 	 *
@@ -492,10 +501,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		await super.getUpdateComplete();
 
 		// Wait for template to finish loading
-		if(this._template_widget)
-		{
-			await this._template_promise;
-		}
+		await this._template_promise;
 	}
 
 	getComplete() : Promise<[number, Object]>
@@ -667,6 +673,16 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 	{
 		let old_template = this.__template;
 		this.__template = new_template_name;
+
+		// Create the new promise here so we can wait for it immediately, not in update
+		this._template_promise = new Promise<boolean>((resolve) =>
+		{
+			this._templateResolver = value => resolve(value);
+		});
+		if(!this.__template)
+		{
+			this._templateResolver(true);
+		}
 		this.requestUpdate("template", old_template);
 	}
 
@@ -689,7 +705,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		if(changedProperties.has("template"))
 		{
 			// Wait until update is finished to avoid an error in Safari
-			this.updateComplete.then(() => this._loadTemplate());
+			super.getUpdateComplete().then(() => this._loadTemplate());
 		}
 		if(changedProperties.has("buttons"))
 		{
@@ -742,14 +758,22 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				template += '?' + ((new Date).valueOf() / 86400 | 0).toString();
 			}
 			// File name provided, fetch from server
-			this._template_promise = this._template_widget.load("", template, this.__value || {content: {}},);
+			this._template_widget.load("", template, this.__value || {content: {}},)
+				.then(() =>
+				{
+					this._templateResolver(true);
+				});
 		}
 		else
 		{
 			// Just template name, it better be loaded already
-			this._template_promise = this._template_widget.load(this.__template, '', this.__value || {},
+			this._template_widget.load(this.__template, '', this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
-				undefined, undefined, true);
+				undefined, undefined, true)
+				.then(() =>
+				{
+					this._templateResolver(true);
+				});
 		}
 
 		// Don't let dialog closing destroy the parent session
