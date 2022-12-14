@@ -806,46 +806,58 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 }
 /* MAIL PRINT */
 @media print {
-	html {
-		height: auto !important;
-	}
-	html *, .td_display {
-		border-right: none !important;
-		border-left: none !important;
-	}
-	/* set font size for printing of text mail body and all headers, attachments */
-	.td_display pre, .mailDisplayHeaders, .mailDisplayAttachments * {
-		font-size: 10pt !important;
-		font-family: arial;
-	}
-	#mail-display_mail_displaysubject {
-		font-weight: bold;
-	}
-	.mailDisplayHeaders {
-		border-bottom: 0.1em solid #d7d7d7;
-		padding-top: 4px;
-		padding-bottom: 4px;
-	}
-	#mail-display_mailDisplayBodySrc {
-		display: none;
-	}
-	.tmpPrintDiv {
-		margin-top: 10px;
-		margin-bottom: 30px;
-		display: block;
-		overflow: visible;
-		height: auto;
-	}
-	.tmpPrintDiv td, textarea {
-		font-family: Verdana, Arial, Helvetica, sans-serif;
+    html {
+        height: auto !important;
+    }
 
-	}
-	.tmpPrintDiv .td_display {
-		font-family: Verdana, Arial, Helvetica, sans-serif;
+    html *, .td_display {
+        border-right: none !important;
+        border-left: none !important;
+    }
 
-		color: black;
-		background-color: #FFFFFF;
-	}
+    /* set font size for printing of text mail body and all headers, attachments */
+    .td_display pre, .mailDisplayHeaders, .mailDisplayAttachments * {
+        font-size: 10pt !important;
+        font-family: arial;
+    }
+
+    #mail-display_mail_displaysubject {
+        font-weight: bold;
+    }
+
+    .mailDisplayHeaders {
+        border-bottom: 0.1em solid #d7d7d7;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .firstColumnTitle {
+        min-width: 7.5ex;
+    }
+
+    #mail-display_mailDisplayBodySrc {
+        display: none;
+    }
+
+    .tmpPrintDiv {
+        margin-top: 10px;
+        margin-bottom: 30px;
+        display: block;
+        overflow: visible;
+        height: auto;
+    }
+
+    .tmpPrintDiv td, textarea {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+
+    }
+
+    .tmpPrintDiv .td_display {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+
+        color: black;
+        background-color: #FFFFFF;
+    }
 	.tmpPrintDiv .td_display span[style] {
 
 	}
