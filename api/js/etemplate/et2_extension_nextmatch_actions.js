@@ -449,7 +449,8 @@ export function nm_open_popup(_action, _selected)
 	}
 	else if (popup)
 	{
-		let dialog = new Et2Dialog();
+		let nm = _action.data.nextmatch;
+		let dialog = new Et2Dialog(nm?.egw());
 		dialog.destroyOnClose = false;
 		dialog.id = popup.id;
 		popup.removeAttribute("id");
@@ -491,7 +492,14 @@ export function nm_open_popup(_action, _selected)
 		dialog.appendChild(popup);
 		dialog.requestUpdate();
 
-		document.body.appendChild(dialog);
+		if (nm)
+		{
+			nm.getInstanceManager().DOMContainer.appendChild(dialog);
+		}
+		else
+		{
+			document.body.appendChild(dialog);
+		}
 
 		// Reset global variables
 		nm_popup_action = null;
