@@ -208,21 +208,180 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
 
 * **GET**  requests with an ```Accept: application/json``` header can be used to retrieve single resources / JsContact or JsCalendar schema
 <details>
-   <summary>Example: GET request for a single resource</summary>
+   <summary>Example: GET request for a single resource showcasing available fieldes</summary>
    
 ```
-curl 'https://example.org/egroupware/groupdav.php/addressbook/5593' -H "Accept: application/pretty+json" --user <username>
+curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: application/pretty+json" --user <username>
 {
-  "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
-  "prodId": "EGroupware Addressbook 21.1.001",
-  "created": "2010-10-21T09:55:42Z",
-  "updated": "2014-06-02T14:45:24Z",
-  "name": [
-    { "@type": "NameComponent", "type": "personal", "value": "Default" },
-    { "@type": "NameComponent", "type": "surname", "value": "Tester" }
-  ],
-  "fullName": "Default Tester",
-....
+    "uid": "addressbook-6502-8623c4830472a8ede9f9f8b30d435ea4",
+    "prodId": "EGroupware Addressbook 21.1.003",
+    "created": "2022-12-14T13:35:02Z",
+    "updated": "2022-12-14T13:39:14Z",
+    "kind": "individual",
+    "name": [
+        { "@type": "NameComponent", "type": "prefix", "value": "Prefix/Title" },
+        { "@type": "NameComponent", "type": "personal", "value": "Frist" },
+        { "@type": "NameComponent", "type": "additional", "value": "Middle" },
+        { "@type": "NameComponent", "type": "surname", "value": "Last" },
+        { "@type": "NameComponent", "type": "suffix", "value": "Postfix" }
+    ],
+    "fullName": "Prefix/Title Frist Middle Last Postfix",
+    "organizations": {
+        "org": {
+            "@type": "Organization",
+            "name": "Organisation",
+            "units": { "org_unit": "Department" }
+        }
+    },
+    "titles": {
+        "title": {
+            "@type": "Title",
+            "title": "Postion",
+            "organization": "org"
+        },
+        "role": {
+            "@type": "Title",
+            "title": "Occupation",
+            "organization": "org"
+        }
+    },
+    "emails": {
+        "work": {
+            "@type": "EmailAddress",
+            "email": "email@example.org",
+            "contexts": { "work": true },
+            "pref": 1
+        },
+        "private": {
+            "@type": "EmailAddress",
+            "email": "private.email@example.org",
+            "contexts": { "private": true }
+        }
+    },
+    "phones": {
+        "tel_work": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "voice": true },
+            "contexts": { "work": true }
+        },
+        "tel_cell": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "cell": true },
+            "contexts": { "work": true }
+        },
+        "tel_fax": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "fax": true },
+            "contexts": { "work": true }
+        },
+        "tel_assistent": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "voice": true },
+            "contexts": { "assistant": true }
+        },
+        "tel_car": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "voice": true },
+            "contexts": { "car": true }
+        },
+        "tel_pager": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "pager": true },
+            "contexts": { "work": true }
+        },
+        "tel_home": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "voice": true },
+            "contexts": { "private": true }
+        },
+        "tel_fax_home": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "fax": true },
+            "contexts": { "private": true }
+        },
+        "tel_cell_private": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "cell": true },
+            "contexts": { "private": true }
+        },
+        "tel_other": {
+            "@type": "Phone",
+            "phone": "+1(234)5678901",
+            "features": { "voice": true },
+            "contexts": { "work": true }
+        }
+    },
+    "online": {
+        "url": {
+            "@type": "Resource",
+            "resource": "https://example.org",
+            "type": "uri",
+            "contexts": { "work": true }
+        },
+        "url_home": {
+            "@type": "Resource",
+            "resource": "https://private.example.org",
+            "type": "uri",
+            "contexts": { "private": true }
+        }
+    },
+    "addresses": {
+        "work": {
+            "@type": "Address",
+            "locality": "City",
+            "region": "Rheinland-Pfalz",
+            "country": "DEUTSCHLAND",
+            "postcode": "12345",
+            "countryCode": "DE",
+            "street": [
+                { "@type": "StreetComponent", "type": "name", "value": "Street" },
+                { "@type": "StreetComponent", "type": "separator", "value": "\n" },
+                { "@type": "StreetComponent", "type": "name", "value": "Street2" ],
+            "contexts": { "work": true },
+            "pref": 1
+        },
+        "home": {
+            "@type": "Address",
+            "locality": "PrivateCity",
+            "country": "DEUTSCHLAND",
+            "postcode": "12345",
+            "countryCode": "DE",
+            "street": [
+                { "@type": "StreetComponent", "type": "name", "value": "PrivateStreet" },
+                { "@type": "StreetComponent", "type": "separator", "value": "\n" },
+                { "@type": "StreetComponent", "type": "name", "value": "PrivateStreet2" }
+            ],
+            "contexts": { "home": true }
+        }
+    },
+    "photos": {
+        "photo": {
+            "@type": "File",
+            "href": "https://boulder.egroupware.org/egroupware/api/avatar.php?contact_id=6502&lavatar=1&etag=0",
+            "mediaType": "image/jpeg"
+        }
+    },
+    "anniversaries": {
+        "bday": {
+            "@type": "Anniversary",
+            "type": "birth",
+            "date": "2022-12-14"
+        }
+    },
+    "categories": {
+        "Kategorie": true,
+        "My Contacts": true
+    },
+    "egroupware.org:assistant": "Assistent"
 }
 ```
 </details>
