@@ -153,7 +153,7 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			let options = html`${this._emptyLabelTemplate()}${this.select_options
 				// Filter out empty values if we have empty label to avoid duplicates
 				.filter(o => this.emptyLabel ? o.value !== '' : o)
-				.map(this._optionTemplate.bind(this))}`;
+				.map(this._groupTemplate.bind(this))}`;
 
 			render(options, temp_target);
 			return Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
@@ -266,6 +266,19 @@ export const Et2widgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		{
 			return html`
                 <span>Override _optionTemplate(). ${option.value} => ${option.label}</span>`;
+		}
+
+		_groupTemplate(option) : TemplateResult
+		{
+			if(!Array.isArray(option.value))
+			{
+				return this._optionTemplate(option);
+			}
+			return html`
+                <sl-menu-label>${option.label}</sl-menu-label>
+                ${option.value.map(this._optionTemplate.bind(this))}
+                <sl-divider></sl-divider>
+			`;
 		}
 
 		/**
