@@ -4093,5 +4093,16 @@ button.shortcut-buttons-flatpickr-button {
     background-color: rgba(102, 153, 204, 0.7);
     color: #1e1e1e;
 }
-.selectedTreeRow_lor {background-color: hsl(200deg 98% 39%);}
-.standartTreeRow_lor {background-color: white;}
+
+.selectedTreeRow_lor {
+    background-color: hsl(200deg 98% 39%);
+}
+
+.standartTreeRow_lor {
+    background-color: white;
+}
+
+/* Let Vfs file select dialog be over tinymce dialog */
+.tox-tinymce-aux {
+    z-index: ;
+}
