@@ -42,6 +42,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	let accountData = {};
 	let resolveGroup = {};
 
+	// Hold in-progress request to avoid making more
+	let request = null;
+
 	return {
 		/**
 		 * Set data of current user
@@ -50,7 +53,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_user: function(_data, _need_clone)
+		set_user: function (_data, _need_clone)
 		{
 			userData = _need_clone ? jQuery.extend(true, {}, _data) : _data;
 		},
@@ -88,39 +91,44 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * Get a list of accounts the user has access to
 		 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 		 *
-		 * Currently the list is queried once synchronous from the server by the first et2_selectAccount.
-		 *
 		 * @param {string} type
-		 * @param {bool} async true: return Promise
-		 * @returns {Array|Promise}
+		 * @returns {Promise<{value:string,label:string,icon?:string}[]>}
 		 */
-		accounts: function(type, async)
+		accounts: function (type)
 		{
-			if (typeof type === 'undefined') type = 'accounts';
+			if (typeof type === 'undefined')
+			{
+				type = 'accounts';
+			}
 
-			if(jQuery.isEmptyObject(accountStore))
+			if (request !== null)
+			{
+				return request.then(() =>
+				{
+					debugger;
+					return this.accounts(type)
+				});
+			}
+			if (jQuery.isEmptyObject(accountStore))
 			{
 				const cache_it = data =>
 				{
 					let types = ["accounts", "groups", "owngroups"];
-					for(let t of types)
+					for (let t of types)
 					{
-						if(typeof data[t] === "object")
+						if (typeof data[t] === "object")
 						{
-							accountStore[t] = jQuery.extend(true, [], data[t]||[]);
+							accountStore[t] = jQuery.extend(true, [], data[t] || []);
 						}
 					}
 				}
-				if (async)
+				request = egw.request("EGroupware\\Api\\Framework::ajax_user_list", []).then(_data =>
 				{
-					return egw.request("EGroupware\\Api\\Framework::ajax_user_list",[]).then(_data =>
-					{
-						cache_it(_data);
-						return this.accounts(type);
-					});
-				}
-				// Synchronous
-				egw.json("EGroupware\\Api\\Framework::ajax_user_list",[], cache_it, this, false).sendRequest(false);
+					cache_it(_data);
+					request = null;
+					return this.accounts(type);
+				});
+				return request;
 			}
 			let result = [];
 			if (type === 'both')
@@ -131,7 +139,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			{
 				result = [].concat(accountStore[type]);
 			}
-			return async ? Promise.resolve(result) : result;
+			return Promise.resolve(result);
 		},
 
 		/**

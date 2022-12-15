@@ -37,6 +37,12 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 		 */
 		protected account_options = [];
 
+		constructor()
+		{
+			super();
+			this.account_options = [];
+		}
+
 		/**
 		 * If the value has an account that's not already in the list, check with the server.
 		 * We probably don't have all the accounts client side.  This is similar to freeEntries,
@@ -86,7 +92,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 
 		get select_options()
 		{
-			return [...this.account_options, ...super.select_options];
+			return [...(this.account_options || []), ...super.select_options];
 		}
 
 		set select_options(value : SelectOption[])

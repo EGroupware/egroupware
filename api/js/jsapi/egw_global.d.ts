@@ -549,9 +549,10 @@ declare interface IegwGlobal
 	 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 	 *
 	 * @param {string} type
-	 * @returns {array}
+	 * @returns {Promise}
 	 */
-	accounts(type : "accounts"|"groups"|"both"|"owngroups") : object[];
+	accounts(type : "accounts" | "groups" | "both" | "owngroups") : Promise<{ value : string, label : string, icon? : string }[]>
+
 	/**
 	 * Get account-infos for given numerical _account_ids
 	 *
@@ -561,7 +562,7 @@ declare interface IegwGlobal
 	 * @param {function} _callback
 	 * @param {object} _context
 	 */
-	accountData(_account_ids : number|number[], _field : string, _resolve_groups : boolean,
+	accountData(_account_ids : number | number[], _field : string, _resolve_groups : boolean,
 				_callback : Function, _context : object) : void;
 	/**
 	 * Set account data.  This one can be called from the server to pre-fill the cache.

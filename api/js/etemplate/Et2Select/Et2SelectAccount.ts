@@ -11,13 +11,14 @@ import {Et2Select} from "./Et2Select";
 import {SelectOption} from "./FindSelectOptions";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {SelectAccountMixin} from "./SelectAccountMixin";
+import {Et2StaticSelectMixin} from "./StaticOptions";
 
 export type AccountType = 'accounts'|'groups'|'both'|'owngroups';
 
 /**
  * @customElement et2-select-account
  */
-export class Et2SelectAccount extends SelectAccountMixin(Et2Select)
+export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et2Select))
 {
 	static get properties()
 	{
@@ -44,6 +45,32 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2Select)
 		this.searchOptions = {type: 'account', account_type: 'accounts'};
 		this.__accountType = 'accounts';
 	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		// Start fetch of select_options
+		const type = this.egw().preference('account_selection', 'common');
+		let fetch = [];
+		// for primary_group we only display owngroups == own memberships, not other groups
+		if(type === 'primary_group' && this.accountType !== 'accounts')
+		{
+			if(this.accountType === 'both')
+			{
+				fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(options)}));
+			}
+
+			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(options)}));
+		}
+		else
+		{
+			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(options)}));
+		}
+		this.fetchComplete = Promise.all(fetch)
+			.then(() => this.requestUpdate("select_options"));
+	}
+
 
 	firstUpdated(changedProperties?)
 	{
@@ -76,24 +103,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2Select)
 			return [];
 		}
 		let select_options : Array<SelectOption> = [...super.select_options] || [];
-		// for primary_group we only display owngroups == own memberships, not other groups
-		if (type === 'primary_group' && this.accountType !== 'accounts')
-		{
-			if (this.accountType === 'both')
-			{
-				select_options = select_options.concat(this.egw().accounts('accounts'));
-			}
-			select_options = select_options.concat(this.egw().accounts('owngroups'));
-		}
-		else
-		{
-			select_options = select_options.concat(this.egw().accounts(this.accountType));
-		}
-		// egw.accounts returns value as number, causing the et2-select to not match the option
-		select_options.forEach(option =>
-		{
-			option.value = option.value.toString();
-		});
+
 		return select_options.filter((value, index, self) =>
 		{
 			return self.findIndex(v => v.value === value.value) === index;

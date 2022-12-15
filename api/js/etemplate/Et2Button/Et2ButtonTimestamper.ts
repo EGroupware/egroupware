@@ -13,6 +13,7 @@ import {et2_IInput} from "../et2_core_interfaces";
 import {date} from "../lib/date.js";
 import {Et2Button} from "./Et2Button";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
 
 /**
  * Class which implements the "et2-button-timestamp" tag
@@ -73,17 +74,17 @@ export class Et2ButtonTimestamper extends Et2Button
 	stamp(event: MouseEvent): boolean
 	{
 		const now = new Date(new Date().toLocaleString('en-US', {
-			timeZone: this.timezone || egw.preference('tz')
+			timeZone: this.timezone || this.egw().preference('tz')
 		}));
-		const format = this.format || egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ';
+		const format = this.format || this.egw().preference('dateformat') + ' ' + (this.egw().preference("timeformat") === "12" ? "h:ia" : "H:i") + ' ';
 
 		let text = date(format, now);
 
 		// Get properly formatted user name
-		const user = parseInt(egw.user('account_id'));
-		egw.accounts('accounts', true).then((accounts) =>
+		const user = '' + parseInt(this.egw().user('account_id'));
+		this.egw().accounts('accounts').then((accounts) =>
 		{
-			const account = accounts.filter(option => option.value == user)[0];
+			const account = accounts.filter((option : SelectOption) => option.value == user)[0];
 			text += account.label + ': ';
 
 			const widget = this._get_input(this.target);
