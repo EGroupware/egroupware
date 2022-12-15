@@ -280,7 +280,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		const valueArray = Array.isArray(this.value) ? this.value : (!this.value ? [] : this.value.toString().split(','));
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
-		if(this.select_options.filter((option) => valueArray.find(val => val == option.value)).length === 0)
+		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
+			Array.isArray(option.value) && option.value.filter(o => valueArray.find(val => val == o.value))).length === 0)
 		{
 			let oldValue = this.value;
 			this.value = this.emptyLabel ? "" : "" + this.select_options[0]?.value;
