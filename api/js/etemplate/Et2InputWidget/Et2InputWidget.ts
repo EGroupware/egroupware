@@ -104,6 +104,15 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				onchange: {
 					type: Function
 				},
+				/**
+				 * Have browser focus this input on load.
+				 * Overrides etemplate2.focusOnFirstInput(), use only once per page
+				 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes
+				 */
+				autofocus: {
+					type: Boolean,
+					reflect: true
+				}
 			};
 		}
 
