@@ -68,7 +68,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(options)}));
 		}
 		this.fetchComplete = Promise.all(fetch)
-			.then(() => this.requestUpdate("select_options"));
+			.then(() => this._renderOptions());
 	}
 
 
