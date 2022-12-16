@@ -4,8 +4,9 @@
 <overlay>
     <template id="filemanager.quota" template="" lang="" group="0" version="1.9.004">
         <vbox>
-            <textbox label="User home quota" id="quota" blur="(EPL Only)" disabled="true"/>
+            <textbox label="User home quota" id="quota" blur="(EPL Only)" disabled="true" class="et2-label-fixed"/>
             <textbox label="Group home quota" id="group_quota" blur="(EPL Only)" disabled="true"
+                     class="et2-label-fixed"
                      help-text="Enter a file size, e.g. 100K, 200M or 2G"/>
             <button label="Recalculate" id="button[recalculate]" statustext="Recalculate directory sizes"/>
             <grid id="oversize" disabled="!@oversize">

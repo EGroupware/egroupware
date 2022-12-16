@@ -423,7 +423,7 @@ class filemanager_admin extends filemanager_ui
 		{
 			$content['check_oversize'] = true;
 		}
-		$readonlys['quota'] = !($GLOBALS['egw_info']['apps']['stylite']);
+		
 		$tpl = new Etemplate('filemanager.quota');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Quota');
 		$tpl->exec('filemanager.filemanager_admin.quota', $content, $sel_options, $readonlys);
