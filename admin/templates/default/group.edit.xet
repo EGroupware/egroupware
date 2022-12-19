@@ -42,8 +42,8 @@
                     <url-email id="account_email" size="40" maxlength="64" class="et2_fullWidth"/>
                 </row>
                 <row>
-                    <description value="Filesystem quota" disabled="!@epl"/>
-                    <textbox id="quota" readonly="true" blur="@default_quota"/>
+                    <description value="Filesystem quota"/>
+                    <textbox id="quota" disabled="!@epl" blur="@default_quota"/>
                 </row>
             </rows>
 		</grid>

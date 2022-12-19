@@ -91,6 +91,8 @@ class admin_account
 					'loginshell' => $GLOBALS['egw_info']['server']['ldap_account_shell'],
 				);
 			}
+
+			$account['default_quota'] = lang('(EPL Only)');
 			// should we show extra ldap attributes home-directory and login-shell
 			$account['ldap_extra_attributes'] = $GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
 				get_class($GLOBALS['egw']->accounts->backend) === 'EGroupware\\Api\\Accounts\\Ldap';

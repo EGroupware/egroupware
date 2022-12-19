@@ -217,6 +217,7 @@ class Groups
 		}
 		$run_rights = $content['account_id'] ? $this->acl->get_user_applications($content['account_id'], false, false) : array();
 		$content['apps'] = $content['old_run'] = array();
+		$content['default_quota'] = lang('(EPL Only)');
 		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 		{
 			if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
