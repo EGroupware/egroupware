@@ -106,6 +106,9 @@
     width: initial;
     width: var(--label-width, 8em);
 }
+.et2-label-fixed::part(form-control-help-text) {
+    left: calc(var(--sl-spacing-medium) + var(--label-width,8em));
+}
 
 /**
  * VBox widget
