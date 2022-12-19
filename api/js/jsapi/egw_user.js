@@ -105,7 +105,6 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			{
 				return request.then(() =>
 				{
-					debugger;
 					return this.accounts(type)
 				});
 			}
