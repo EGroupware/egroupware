@@ -8,7 +8,7 @@
  */
 
 import {Et2Select} from "./Et2Select";
-import {SelectOption} from "./FindSelectOptions";
+import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
 import {Et2Image} from "../Et2Image/Et2Image";
 import {SelectAccountMixin} from "./SelectAccountMixin";
 import {Et2StaticSelectMixin} from "./StaticOptions";
@@ -58,14 +58,14 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		{
 			if(this.accountType === 'both')
 			{
-				fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(options)}));
+				fetch.push(this.egw().accounts('accounts').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 			}
 
-			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(options)}));
+			fetch.push(this.egw().accounts('owngroups').then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 		}
 		else
 		{
-			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(options)}));
+			fetch.push(this.egw().accounts(this.accountType).then(options => {this.static_options = this.static_options.concat(cleanSelectOptions(options))}));
 		}
 		this.fetchComplete = Promise.all(fetch)
 			.then(() => this._renderOptions());

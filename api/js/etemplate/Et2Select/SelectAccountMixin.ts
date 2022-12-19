@@ -79,7 +79,7 @@ export const SelectAccountMixin = <T extends Constructor<LitElement>>(superclass
 					this.egw().link_title('api-accounts', id, true).then(title =>
 					{
 						option.label = title;
-						this.requestUpdate();
+						this.requestUpdate('select_options');
 					});
 				}
 			}
