@@ -4104,5 +4104,5 @@ button.shortcut-buttons-flatpickr-button {
 
 /* Let Vfs file select dialog be over tinymce dialog */
 .tox-tinymce-aux {
-    z-index: 790;
+    z-index: 790 !important;
 }
