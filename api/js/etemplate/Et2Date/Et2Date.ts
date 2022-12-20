@@ -518,7 +518,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		// Remove Lion's inert attribute so we can work in Et2Dialog
 		options.onOpen = [() =>
 		{
-			this._instance.calendarContainer.removeAttribute("inert")
+			this._instance.calendarContainer?.removeAttribute("inert")
 		}];
 
 		return options;
@@ -682,7 +682,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		let parsedDate = null
 		try
 		{
-			parsedDate = this._instance.parseDate(value, this._instance.config.altFormat)
+			parsedDate = this._instance.parseDate(value, this.getOptions().altFormat)
 		}
 		catch(e)
 		{
@@ -691,10 +691,10 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		// If they typed a valid date/time, try to update flatpickr
 		if(parsedDate)
 		{
-			const formattedDate = this._instance.formatDate(parsedDate, this._instance.config.altFormat)
+			const formattedDate = this._instance.formatDate(parsedDate, this.getOptions().altFormat)
 			if(value === formattedDate &&
 				// Avoid infinite loop of setting the same value back triggering another change
-				this._instance.input.value !== this._instance.formatDate(parsedDate, this._instance.config.dateFormat))
+				this._instance.input.value !== this._instance.formatDate(parsedDate, this.getOptions().dateFormat))
 			{
 				this._instance.setDate(value, true, this._instance.config.altFormat)
 			}

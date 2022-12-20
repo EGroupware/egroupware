@@ -37,6 +37,7 @@ import './Et2Checkbox/Et2CheckboxReadonly';
 import './Et2Date/Et2Date';
 import './Et2Date/Et2DateDuration';
 import './Et2Date/Et2DateDurationReadonly';
+import './Et2Date/Et2DateRange';
 import './Et2Date/Et2DateReadonly';
 import './Et2Date/Et2DateSinceReadonly';
 import './Et2Date/Et2DateTime';
