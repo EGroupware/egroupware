@@ -169,7 +169,13 @@ class Select extends Etemplate\Widget
 			{
 				if ($child->type == 'option') $allowed[] = (string)$child->attrs['value'];
 			}
-			$allowed = array_map('strval', $allowed);
+			// Make sure values are strings so they match, also handling option groups
+			$stringified = array();
+			array_walk_recursive($allowed, function ($a, $b) use (&$stringified) {
+				if($b == 'value') $stringified[] = $a;
+				else if (is_int($b)) $stringified[] = strval($a);
+			});
+			$allowed = $stringified;
 
 			// Add empty as an option, we check for required value later
 			$allowed[] = '';
