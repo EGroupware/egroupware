@@ -1133,7 +1133,7 @@ class Translation
 				// load all translations from cache at once
 				if ($tree_level) $lang_arr = Cache::getTree(__CLASS__, $tree_level);
 				if ($instance_level) $lang_arr = Cache::getInstance(__CLASS__, $instance_level);
-				$lang_arr = $lang_arr[$app.':en'];
+				$lang_arr = $lang_arr[$app.':en'] ?? [];
 				$ids = array_filter(array_keys($lang_arr), function($haystack) use($translation, $lang_arr) {
 					return stripos($lang_arr[$haystack],$translation) !== false;
 				});
