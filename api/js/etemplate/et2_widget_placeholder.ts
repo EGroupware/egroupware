@@ -323,22 +323,23 @@ export class et2_placeholder_select extends et2_inputWidget
 				// Handle groups of groups
 				if(typeof et2_placeholder_select.placeholders[appname][key].label !== "undefined")
 				{
-					options[key] = et2_placeholder_select.placeholders[appname][key];
+					options.push({label:key, value: et2_placeholder_select.placeholders[appname][key]});
 				}
 				else
 				{
-					options[this.egw().lang(key)] = [];
+					let a = {label: key, value:[]};
 					for(let sub of Object.keys(et2_placeholder_select.placeholders[appname][key]))
 					{
 						if(!et2_placeholder_select.placeholders[appname][key][sub])
 						{
 							continue;
 						}
-						options[this.egw().lang(key)].push({
+						a.value.push({
 							value: key + '-' + sub,
 							label: this.egw().lang(sub)
 						});
 					}
+					options.push(a);
 				}
 			}
 			else
