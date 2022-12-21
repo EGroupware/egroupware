@@ -246,7 +246,10 @@ class resources_ui
 				'disableClass' => 'no_book',
 				'onExecute' => 'javaScript:app.resources.book',
 			),
-
+			'documents'=> resources_merge::document_action(
+				$this->prefs['document_dir'], ++$group, 'Insert in document', 'document_',
+				$this->prefs['default_document']
+			),
 			'delete' => array(
 				'caption' => 'Delete',
 				'group' => ++$group,

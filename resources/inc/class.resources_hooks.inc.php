@@ -47,6 +47,7 @@ class resources_hooks
 						'accessory_of' => -1
 					),false)."','_blank',800,600,'yes')";
 			}
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=resources.resources_merge.show_replacements');
 			display_sidebox($appname,$title,$file);
 		}
 
