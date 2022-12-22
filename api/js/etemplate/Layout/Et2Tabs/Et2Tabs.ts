@@ -411,6 +411,73 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	}
 
 	/**
+	 * Keyboard navigation
+	 * Copy + Paste from parent due to tagname differences (sl-tab vs et2-tab)
+	 *
+	 * @param event
+	 */
+	handleKeyDown(event)
+	{
+		const target = event.target;
+		const tab = target.closest("et2-tab");
+		const tabGroup = tab == null ? void 0 : tab.closest("et2-tabbox");
+		if(tabGroup !== this)
+		{
+			return;
+		}
+		if(["Enter", " "].includes(event.key))
+		{
+			if(tab !== null)
+			{
+				this.setActiveTab(tab, {scrollBehavior: "smooth"});
+				event.preventDefault();
+			}
+		}
+		if(["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key))
+		{
+			const activeEl = document.activeElement;
+			const isRtl = this.localize.dir() === "rtl";
+			if((activeEl == null ? void 0 : activeEl.tagName.toLowerCase()) === "et2-tab")
+			{
+				let index = this.tabs.indexOf(activeEl);
+				if(event.key === "Home")
+				{
+					index = 0;
+				}
+				else if(event.key === "End")
+				{
+					index = this.tabs.length - 1;
+				}
+				else if(["top", "bottom"].includes(this.placement) && event.key === (isRtl ? "ArrowRight" : "ArrowLeft") || ["start", "end"].includes(this.placement) && event.key === "ArrowUp")
+				{
+					index--;
+				}
+				else if(["top", "bottom"].includes(this.placement) && event.key === (isRtl ? "ArrowLeft" : "ArrowRight") || ["start", "end"].includes(this.placement) && event.key === "ArrowDown")
+				{
+					index++;
+				}
+				if(index < 0)
+				{
+					index = this.tabs.length - 1;
+				}
+				if(index > this.tabs.length - 1)
+				{
+					index = 0;
+				}
+				this.tabs[index].focus({preventScroll: true});
+				if(this.activation === "auto")
+				{
+					this.setActiveTab(this.tabs[index], {scrollBehavior: "smooth"});
+				}
+				if(["top", "bottom"].includes(this.placement))
+				{
+					scrollIntoView(this.tabs[index], this.nav, "horizontal");
+				}
+				event.preventDefault();
+			}
+		}
+	}
+	/**
 	 * Set up for printing
 	 *
 	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
