@@ -15,8 +15,9 @@ Egroupware
 	<template id="calendar.toolbar">
 		<box>
 			<box class="et2_toolbar_actionlist">
-				<buttononly id="add" background_image="true" image="add" onclick="app.calendar.toolbar_action(widget);"/>
-			</box>
+                <buttononly id="add" background_image="true" image="add" class="imageOnly" label="add new event"
+                            onclick="app.calendar.toolbar_action(widget);"/>
+            </box>
 		</box>
 		<searchbox id="keywords" blur="Search" overlay="false" onchange="app.calendar.update_state({view: 'listview',search: widget.getValue()});return false;"/>
 		<toolbar id="toolbar" width="100%" flat_list="false"/>

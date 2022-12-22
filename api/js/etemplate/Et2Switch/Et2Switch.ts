@@ -107,27 +107,6 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 
 	}
 
-	get label()
-	{
-		return this._labelNode?.textContent || "";
-	}
-
-	set label(label_text)
-	{
-		if(this._labelNode)
-		{
-			this._labelNode.textContent = label_text;
-		}
-		else
-		{
-			this.updateComplete.then(() =>
-			{
-				this.label = label_text;
-			})
-		}
-	}
-
-
 	set value(new_value : string | boolean)
 	{
 		this.requestUpdate("checked");
@@ -160,7 +139,7 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 	labelTemplate()
 	{
 		return html`
-			<span class="label">
+            <span class="label" aria-label="${this.label}">
 				<span class="on"></span>
 				<span class="off"></span>
 			</span>

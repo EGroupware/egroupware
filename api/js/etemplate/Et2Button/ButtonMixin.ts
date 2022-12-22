@@ -70,6 +70,12 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
             :host([hideonreadonly][disabled]) {
             	display:none !important;
             }
+
+			/* Leave label there for accessability, but position it so it can't be seen */
+			:host(.imageOnly) .button__label {
+				position: absolute;
+				left: -999px
+			}
             
             /* Set size for icon */
             ::slotted(img.imageOnly) {

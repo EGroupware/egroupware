@@ -624,6 +624,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		{
 			widget = <Et2Checkbox>loadWebComponent('et2-switch', {
 				id: `${this.id}-${action.id}`,
+				label: action.caption,
 				toggleOn: action.data.toggle_on,
 				toggleOff: action.data.toggle_off,
 				class: `et2_toolbar_draggable${this.id}`,
@@ -638,6 +639,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 			widget = <Et2Button>loadWebComponent(egwIsMobile() && !this.preference[action.id]?"et2-button-icon":"et2-button", {
 				id: `${this.id}-${action.id}`,
 				image: action.iconUrl || '',
+				label: action.caption,
 				slot: "buttons",
 				class: `et2_toolbar_draggable${this.id}`,
 				readonly: false
@@ -657,8 +659,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				this.preference[action.id] || !action.iconUrl)	&&
 				!(isCheckbox && isToggleSwitch)) // no caption for slideswitch checkboxes
 			{
-				widget.classList.add(action.iconUrl?'et2_toolbar_hasCaption':'et2_toolbar_onlyCaption');
-				widget.label = action.caption;
+				widget.classList.add(action.iconUrl ? 'et2_toolbar_hasCaption' : 'et2_toolbar_onlyCaption');
 			}
 		}
 	}

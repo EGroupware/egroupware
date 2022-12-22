@@ -2772,6 +2772,12 @@ table.egwGridView_outer thead tr th.noResize:hover {
 .et2_toolbar .et2_toolbar_actionlist et2-button.et2_toolbar_onlyCaption::part(prefix) {
     width: auto;
 }
+
+.et2_toolbar .et2_toolbar_actionlist et2-button.et2_toolbar_onlyCaption::part(label) {
+    position: absolute;
+    left: -999px;
+}
+
 div.et2_toolbar.ui-widget-header {
     background: none;
 }
