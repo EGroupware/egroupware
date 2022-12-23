@@ -79,7 +79,8 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true" imageUpload="link_to"/>
+					<htmlarea statustext="Web-Site for this resource" id="long_description" height="200"
+                              imageUpload="link_to"/>
 				</row>
 			</rows>
 		</grid>
