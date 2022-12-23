@@ -14,6 +14,8 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Auth\OpenIDConnectClient;
+use Jumbojett\OpenIDConnectClientException;
 
 /**
  * Wizard to create mail accounts
@@ -204,6 +206,11 @@ class admin_mail
 		), $readonlys, $content, 2);
 	}
 
+	const OFFICE365_CLIENT_ID = 'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09';
+	const OFFICE365_CLIENT_SECRET = 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i';
+	const OFFICE365_IMAP_HOST = 'outlook.office365.com';
+	const OFFICE365_SMTP_HOST = 'smtp.office365.com';
+
 	/**
 	 * Try to autoconfig an account
 	 *
@@ -218,10 +225,10 @@ class admin_mail
 			if (!isset($content['acc_smtp_host'])) $content['acc_smtp_host'] = '';	// do manual mode right away
 			return $this->smtp($content, lang('Skipping IMAP configuration!'));
 		}
-		$content['output'] = '';
-		$sel_options = $readonlys = array();
+		$tpl = new Etemplate('admin.mailwizard');
+		$sel_options = $readonlys = $hosts = [];
 
-		$content['connected'] = $connected = false;
+		$connected = $content['connected'] ?? null;
 		if (empty($content['acc_imap_username']))
 		{
 			$content['acc_imap_username'] = $content['ident_email'];
@@ -237,6 +244,19 @@ class admin_mail
 					$ssl_type => $content['acc_imap_port'],
 				);
 			}
+		}
+		// Office 365 Mail
+		elseif (preg_match('/@[^.]+\.onmicrosoft\.com$/i', $content['acc_imap_username']))
+		{
+			$content['output'] = lang('Using Office365 mail servers')."\n";
+			list(, $domain) = explode('@', $content['acc_imap_username']);
+			$hosts[self::OFFICE365_IMAP_HOST] = array(
+				self::SSL_TLS => 993,
+			);
+			$content['acc_smpt_host'] = self::OFFICE365_SMTP_HOST;
+			$content['acc_sieve_enabled'] = false;
+			$content['acc_oauth_provider_url'] = "https://login.microsoftonline.com/$domain";
+			$content['acc_oauth_client_id'] = self::OFFICE365_CLIENT_ID;
 		}
 		elseif (($ispdb = self::mozilla_ispdb($content['ident_email'])) && count($ispdb['imap']))
 		{
@@ -267,7 +287,7 @@ class admin_mail
 		}
 
 		// iterate over all hosts and try to connect
-		foreach($hosts as $host => $data)
+		foreach(!isset($connected) ? $hosts : [] as $host => $data)
 		{
 			$content['acc_imap_host'] = $host;
 			// by default we check SSL, STARTTLS and at last an insecure connection
@@ -348,8 +368,8 @@ class admin_mail
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
-		$tpl = new Etemplate('admin.mailwizard');
-		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
+		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys,
+			array_diff_key($content, ['output'=>true]), 2);
 	}
 
 	/**
@@ -1425,9 +1445,9 @@ class admin_mail
 	 * @param int $timeout =null default use value returned by Mail\Imap::getTimeOut()
 	 * @return Horde_Imap_Client_Socket
 	 */
-	protected static function imap_client(array $content, $timeout=null)
+	protected static function imap_client(array &$content, $timeout=null)
 	{
-		return new Horde_Imap_Client_Socket(array(
+		$config = [
 			'username' => $content['acc_imap_username'],
 			'password' => $content['acc_imap_password'],
 			'hostspec' => $content['acc_imap_host'],
@@ -1435,7 +1455,92 @@ class admin_mail
 			'secure' => self::$ssl2secure[(string)array_search($content['acc_imap_ssl'], self::$ssl2type)],
 			'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
 			'debug' => self::DEBUG_LOG,
-		));
+		];
+		if (!empty($content['acc_oauth_provider_url']))
+		{
+			$config['xoauth2_token'] = self::oauthToken($content);
+			if (empty($config['password'])) $config['password'] = 'xxx';    // some password is required, even if not used
+		}
+		return new Horde_Imap_Client_Socket($config);
+	}
+
+	/**
+	 * Acquire OAuth access (and refresh) token
+	 */
+	protected static function oauthToken(array &$content)
+	{
+		if (empty($content['acc_oauth_client_secret']))
+		{
+			switch($content['acc_oauth_client_id'])
+			{
+				case self::OFFICE365_CLIENT_ID:
+					$content['acc_oauth_client_secret'] = self::OFFICE365_CLIENT_SECRET;
+					break;
+				default:
+					throw new Exception(lang("No OAuth client secret for provider '%1'!", $content['acc_oauth_provider_url']));
+			}
+		}
+		$oidc = new OpenIDConnectClient($content['acc_oauth_provider_url'],
+			$content['acc_oauth_client_id'], $content['acc_oauth_client_secret']);
+
+		// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
+		if ($content['acc_oauth_client_id'] = self::OFFICE365_CLIENT_ID)
+		{
+			$oidc->setWellKnownConfigParameters(['appid' => $content['acc_oauth_client_id']]);
+		}
+
+		// we need to use response_code=query / GET request to keep our session token!
+		$oidc->setResponseTypes(['code']);  // to be able to use query, not 'id_token'
+		$oidc->setAllowImplicitFlow(true);
+		$oidc->addAuthParam(['response_mode' => 'query']); // to keep cookie, not 'form_post'
+
+		// ToDo: the last 3 are Office365 specific scopes
+		$oidc->addScope(['openid', 'email', 'profile', 'https://outlook.office.com/IMAP.AccessAsUser.All', 'https://outlook.office.com/SMTP.Send', 'https://outlook.office.com/User.Read']);
+
+		if (!empty($content['acc_oauth_access_token']) || !empty($content['acc_oauth_refresh_token']))
+		{
+			if (empty($content['acc_oauth_access_token']))
+			{
+				$content['acc_oauth_access_token'] = $oidc->refreshToken($content['acc_oauth_refresh_token']);
+			}
+			return new Horde_Imap_Client_Password_Xoauth2($content['acc_imap_username'], $content['acc_oauth_access_token']);
+		}
+		// Run OAuth authentification, will NOT return, but call success or failure callbacks below
+		$oidc->authenticateThen(__CLASS__.'::oauthAuthenticated', [$content], __CLASS__.'::oauthFailure', [$content]);
+	}
+
+	/**
+	 * Oauth success callback calling autoconfig again
+	 *
+	 * @param OpenIDConnectClient $oidc
+	 * @param array $content
+	 * @return void
+	 */
+	public static function oauthAuthenticated(OpenIDConnectClient $oidc, array $content)
+	{
+		$content['acc_oauth_access_token'] = $oidc->getAccessToken();
+		$content['acc_oauth_refresh_token'] = $oidc->getRefreshToken();
+
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
+
+		$obj = new self;
+		$obj->autoconfig($content);
+	}
+
+	/**
+	 * Oauth failure callback calling autoconfig again
+	 *
+	 * @param OpenIDConnectClientException|null $exception
+	 * @param array $content
+	 */
+	public static function oauthFailure(Throwable  $exception=null, array $content)
+	{
+		$content['output'] .= lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed'));
+
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
+
+		$obj = new self;
+		$obj->autoconfig($content);
 	}
 
 	/**
