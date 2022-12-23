@@ -573,7 +573,7 @@ class calendar_uiforms extends calendar_ui
 								if (is_numeric($uid))
 								{
 									$id = $uid;
-									$type = 'u';
+									$type = '';
 								}
 								else
 								{
@@ -3500,21 +3500,21 @@ class calendar_uiforms extends calendar_ui
 			$AB = new Api\Contacts();
 			$accounts = array(0 => $GLOBALS['egw_info']['user']['account_id']);
 
-			$participants[0] = array (
-				'uid' => $GLOBALS['egw_info']['user']['account_id'],
-				'delete_id' => $GLOBALS['egw_info']['user']['account_id'],
-				'status' => 'A',
+			$participants[0] = array(
+				'uid'        => $GLOBALS['egw_info']['user']['account_id'],
+				'delete_id'  => $GLOBALS['egw_info']['user']['account_id'],
+				'status'     => 'A',
 				'old_status' => 'A',
-				'app' => 'User',
-				'role' => 'REQ-PARTICIPANT'
+				'app'        => 'api-accounts',
+				'role'       => 'REQ-PARTICIPANT'
 			);
 			foreach($mailContent['addresses'] as $address)
 			{
 				// Get available contacts from the email
 				$contacts = $AB->search(array(
-						'email' => $address['email'],
-						'email_home' => $address['email']
-					),'contact_id,contact_email,contact_email_home,egw_addressbook.account_id as account_id','','','',false,'OR',false,array('owner' => 0),'',false);
+											'email' => $address['email'],
+																																												   'email_home' => $address['email']
+										), 'contact_id,contact_email,contact_email_home,egw_addressbook.account_id as account_id', '', '', '', false, 'OR', false, array('owner' => 0), '', false);
 				if (is_array($contacts))
 				{
 					foreach($contacts as $account)
