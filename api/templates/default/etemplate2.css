@@ -2107,7 +2107,7 @@ div.message.floating, lion-validation-feedback[type] {
 
 lion-validation-feedback[type] {
     top: initial;
-    margin-top: calc(-0.5 * var(--sl-input-height-medium));
+    margin-top: calc(-0.2 * var(--sl-input-height-medium));
 }
 
 .message.validation_error, lion-validation-feedback[type="error"] {
