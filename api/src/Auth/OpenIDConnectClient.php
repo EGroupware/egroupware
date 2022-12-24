@@ -22,15 +22,49 @@ if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) && $GLOB
 
 /**
  * Extended OpenIDConnect client allowing to authenticate via some kind of promise, see authenticateThen method.
+ *
+ * It also uses https://proxy.egroupware.org/oauth as redirect-url to be registered with providers, implemented by the following Nginx location block:
+ *
+ * location /oauth {
+ *  if ($arg_state ~ ^(?<redirect_host>[^&:%]+)(:|%3a)(?<redirect_path>[^&:%]+)(:|%3a)) {
+ *      return 302 https://$redirect_host/$redirect_path/api/oauth.php?$args;
+ *  }
+ *  return 301 https://github.com/EGroupware/egroupware/blob/master/api/src/Auth/OpenIDConnectClient.php;
+ * }
+ *
+ * This redirects requests to a host and path provided additional with the nonce query parameter:
+ * https://proxy.egroupware.org/oauth?state=test.egroupware.org:test:<state>&<other-args> --> https://test.egroupware.org/egroupware/api/oauth.php?<all-arguments>
+ *
+ * @link https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider
  */
 class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 {
+	const EGROUPWARE_OAUTH_PROXY = 'https://proxy.egroupware.org/oauth';
+
 	public function __construct($provider_url = null, $client_id = null, $client_secret = null, $issuer = null)
 	{
 		parent::__construct($provider_url, $client_id, $client_secret, $issuer);
 
-		// set correct redirect URL, which is NOT the current URL, but always /api/oauth.php
-		$this->setRedirectURL(Api\Framework::getUrl(Api\Framework::link('/api/oauth.php')));
+		// set https://proxy.egroupware.org/oauth as redirect URL, which redirects to host and path given in nonce parameter plus /api/oauth.php
+		$this->setRedirectURL(self::EGROUPWARE_OAUTH_PROXY);
+	}
+
+	/**
+	 * Stores nonce
+	 *
+	 * Reimplemented to add host and EGroupware path to the state, to allow proxy.egroupware.org to redirect to the correct host
+	 *
+	 * @param string $state
+	 * @return string
+	 */
+	protected function setState($state)
+	{
+		// add host and EGroupware path to nonce
+		$state = Api\Header\Http::host().':'.
+			(explode('/', parse_url($GLOBALS['egw_info']['server']['webserver_url'] ?: '/', PHP_URL_PATH))[1] ?? '').
+			':'.$state;
+
+		return parent::setState($state);
 	}
 
 	/**
