@@ -145,13 +145,30 @@ class admin_mail
 	/**
 	 * List of domains know to not support Sieve
 	 *
-	 * Used to switch Sieve off by default, thought users can allways try switching it on.
+	 * Used to switch Sieve off by default, thought users can always try switching it on.
 	 * Testing not existing Sieve with google takes a long time, as ports are open,
 	 * but not answering ...
 	 *
 	 * @var array
 	 */
 	public static $no_sieve_blacklist = array('gmail.com', 'googlemail.com', 'outlook.office365.com');
+
+	const ADD_CLIENT_TO_WELL_KNOWN = 'add-client-to-well-known';
+
+	/**
+	 * Regular expressions to match domain in username to imap/smtp servers and oauth provider
+	 *
+	 * @var array[] email-regexp => [imap-host, smtp-host, oauth-provider, client-id, client-secret, scopes] pairs
+	 */
+	public static $oauth_domain_regexps = [
+		'/@([^.]\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$1',
+			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
+			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access',
+			[self::ADD_CLIENT_TO_WELL_KNOWN => 'appid']],
+		'/@g(oogle)?mail\.com$/i' => ['imap.gmail.com', 'smtp.gmail.com', 'accounts.google.com',
+			'581021931838-unqjf9tivr9brnmo34rbsoj179ojp79p.apps.googleusercontent.com', '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',
+			'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email'],
+	];
 
 	/**
 	 * Is current use a mail administrator / has run rights for EMailAdmin
@@ -206,10 +223,30 @@ class admin_mail
 		), $readonlys, $content, 2);
 	}
 
-	const OFFICE365_CLIENT_ID = 'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09';
-	const OFFICE365_CLIENT_SECRET = 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i';
-	const OFFICE365_IMAP_HOST = 'outlook.office365.com';
-	const OFFICE365_SMTP_HOST = 'smtp.office365.com';
+	/**
+	 * Find server config by email-domain incl. oauth data
+	 *
+	 * @param $email
+	 * @return array|null
+	 */
+	public static function oauthDomainMatch($email)
+	{
+		foreach(self::$oauth_domain_regexps as $regexp => [$imap, $smtp, $provider, $client, $secret, $scopes, $extra])
+		{
+			if (preg_match($regexp, $email, $matches))
+			{
+				return [
+					'imap' => $imap,
+					'smtp' => $smtp,
+					'provider' => $provider ? 'https://'.strtr($provider, ['$1' => $matches[1] ?? null, '$2' => $matches[2] ?? null]): null,
+					'client' => $client,
+					'secret' => $secret,
+					'scopes' => array_merge(['openid'], explode(' ', $scopes)),
+				]+($extra ?? []);
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Try to autoconfig an account
@@ -245,18 +282,18 @@ class admin_mail
 				);
 			}
 		}
-		// Office 365 Mail
-		elseif (preg_match('/@[^.]+\.onmicrosoft\.com$/i', $content['acc_imap_username']))
+		// supported oauth providers
+		elseif (($oauth = self::oauthDomainMatch($content['acc_imap_username'])))
 		{
-			$content['output'] = lang('Using Office365 mail servers')."\n";
-			list(, $domain) = explode('@', $content['acc_imap_username']);
-			$hosts[self::OFFICE365_IMAP_HOST] = array(
-				self::SSL_TLS => 993,
-			);
-			$content['acc_smpt_host'] = self::OFFICE365_SMTP_HOST;
+			$content['output'] = lang('Using IMAP:%1, SMTP:%2, OAUTH:%3:', $oauth['imap'], $oauth['smtp'], $oauth['provider'])."\n";
+			$hosts[$oauth['imap']] = true;
+			$content['acc_smpt_host'] = $oauth['smtp'];
 			$content['acc_sieve_enabled'] = false;
-			$content['acc_oauth_provider_url'] = "https://login.microsoftonline.com/$domain";
-			$content['acc_oauth_client_id'] = self::OFFICE365_CLIENT_ID;
+			$content['acc_oauth_provider_url'] = $oauth['provider'];
+			$content['acc_oauth_client_id'] = $oauth['client'];
+			$content['acc_oauth_client_secret'] = $oauth['secret'];
+			$content['acc_oauth_scopes'] = $oauth['scopes'];
+			$content[self::ADD_CLIENT_TO_WELL_KNOWN] = $oauth[self::ADD_CLIENT_TO_WELL_KNOWN] ?? null;
 		}
 		elseif (($ispdb = self::mozilla_ispdb($content['ident_email'])) && count($ispdb['imap']))
 		{
@@ -284,6 +321,13 @@ class admin_mail
 		else
 		{
 			$hosts = $this->guess_hosts($content['ident_email'], 'imap');
+		}
+
+		// check if support OAuth for that domain or we have a password
+		if (empty($oauth) && empty($content['acc_imap_password']))
+		{
+			Etemplate::set_validation_error('acc_imap_password', lang('Field must not be empty!'));
+			$connected = false;
 		}
 
 		// iterate over all hosts and try to connect
@@ -1471,31 +1515,21 @@ class admin_mail
 	{
 		if (empty($content['acc_oauth_client_secret']))
 		{
-			switch($content['acc_oauth_client_id'])
-			{
-				case self::OFFICE365_CLIENT_ID:
-					$content['acc_oauth_client_secret'] = self::OFFICE365_CLIENT_SECRET;
-					break;
-				default:
-					throw new Exception(lang("No OAuth client secret for provider '%1'!", $content['acc_oauth_provider_url']));
-			}
+			throw new Exception(lang("No OAuth client secret for provider '%1'!", $content['acc_oauth_provider_url']));
 		}
 		$oidc = new OpenIDConnectClient($content['acc_oauth_provider_url'],
 			$content['acc_oauth_client_id'], $content['acc_oauth_client_secret']);
 
 		// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
-		if ($content['acc_oauth_client_id'] = self::OFFICE365_CLIENT_ID)
+		if (!empty($content[self::ADD_CLIENT_TO_WELL_KNOWN]))
 		{
-			$oidc->setWellKnownConfigParameters(['appid' => $content['acc_oauth_client_id']]);
+			$oidc->setWellKnownConfigParameters([$content[self::ADD_CLIENT_TO_WELL_KNOWN] => $content['acc_oauth_client_id']]);
 		}
 
 		// we need to use response_code=query / GET request to keep our session token!
 		$oidc->setResponseTypes(['code']);  // to be able to use query, not 'id_token'
-		$oidc->setAllowImplicitFlow(true);
-		$oidc->addAuthParam(['response_mode' => 'query']); // to keep cookie, not 'form_post'
-
-		// ToDo: the last 3 are Office365 specific scopes
-		$oidc->addScope(['openid', 'email', 'profile', 'https://outlook.office.com/IMAP.AccessAsUser.All', 'https://outlook.office.com/SMTP.Send', 'https://outlook.office.com/User.Read']);
+		//$oidc->setAllowImplicitFlow(true);
+		$oidc->addScope($content['acc_oauth_scopes']);
 
 		if (!empty($content['acc_oauth_access_token']) || !empty($content['acc_oauth_refresh_token']))
 		{
