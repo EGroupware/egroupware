@@ -52,6 +52,8 @@ use Horde_Imap_Client_Mailbox_List;
  * @property-read boolean $acc_imap_administration enable administration
  * @property-read string $acc_imap_admin_username
  * @property-read string $acc_imap_admin_password
+ * @property-read string $acc_oauth_username
+ * @property-read string $acc_oauth_access_token
  * @property-read boolean $acc_further_identities are non-admin users allowed to create further identities
  * @property-read boolean $acc_user_editable are non-admin users allowed to edit this account, if it is for them
  * @property-read array $params parameters passed to constructor (all above as array)
@@ -179,6 +181,12 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			'secure' => Account::ssl2secure($this->params['acc_imap_ssl']),
 			'timeout' => $_timeout,
 		)+self::$default_params;
+
+		// if we have an OAuth access-token for the user, pass it to the imap-client
+		if (!$_adminConnection && !empty($this->params['acc_oauth_access_token']) && $parent_params['username'] === $this->params['acc_oauth_username'])
+		{
+			$parent_params['xoauth2_token'] = new \Horde_Imap_Client_Password_Xoauth2($parent_params['username'], $this->acc_oauth_access_token);
+		}
 
 		if ($parent_params['cache'] === true)
 		{

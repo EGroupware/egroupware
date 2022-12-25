@@ -26,7 +26,7 @@ if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) && $GLOB
  * It also uses https://proxy.egroupware.org/oauth as redirect-url to be registered with providers, implemented by the following Nginx location block:
  *
  * location /oauth {
- *  if ($arg_state ~ ^(?<redirect_host>[^&:%]+)(:|%3a)(?<redirect_path>[^&:%]+)(:|%3a)) {
+ *  if ($arg_state ~* ^(?<redirect_host>[^&:%]+)(:|%3a)(?<redirect_path>[^&:%]+)(:|%3a)) {
  *      return 302 https://$redirect_host/$redirect_path/api/oauth.php?$args;
  *  }
  *  return 301 https://github.com/EGroupware/egroupware/blob/master/api/src/Auth/OpenIDConnectClient.php;
@@ -36,10 +36,31 @@ if (!empty($GLOBALS['egw_info']['server']['cookie_samesite_attribute']) && $GLOB
  * https://proxy.egroupware.org/oauth?state=test.egroupware.org:test:<state>&<other-args> --> https://test.egroupware.org/egroupware/api/oauth.php?<all-arguments>
  *
  * @link https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider
+ * @link https://github.com/mozilla/releases-comm-central/blob/master/mailnews/base/src/OAuth2Providers.jsm
  */
 class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 {
 	const EGROUPWARE_OAUTH_PROXY = 'https://proxy.egroupware.org/oauth';
+
+	const ADD_CLIENT_TO_WELL_KNOWN = 'add-client-to-well-known';
+	const ADD_AUTH_PARAM = 'add-auth-param';
+
+	/**
+	 * Regular expressions to match domain in username to imap/smtp servers and oauth provider
+	 *
+	 * @var array[] email-regexp => [imap-host, smtp-host, oauth-provider, client-id, client-secret, scopes] pairs
+	 */
+	public static $oauth_domain_regexps = [
+		'/(^|@)([^.]\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$2',
+			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
+			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
+			[self::ADD_CLIENT_TO_WELL_KNOWN => 'appid']],
+		'/(^|@)g(oogle)?mail\.com$/i' => ['imap.gmail.com', 'smtp.gmail.com', 'accounts.google.com',
+			'581021931838-unqjf9tivr9brnmo34rbsoj179ojp79p.apps.googleusercontent.com', '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',
+			'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email',
+			// https://stackoverflow.com/questions/10827920/not-receiving-google-oauth-refresh-token
+			[self::ADD_AUTH_PARAM => ['access_type' => 'offline', 'prompt' => 'consent']]],
+	];
 
 	public function __construct($provider_url = null, $client_id = null, $client_secret = null, $issuer = null)
 	{
@@ -47,6 +68,68 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 
 		// set https://proxy.egroupware.org/oauth as redirect URL, which redirects to host and path given in nonce parameter plus /api/oauth.php
 		$this->setRedirectURL(self::EGROUPWARE_OAUTH_PROXY);
+
+		// ToDo: set proxy, if configured in EGroupware
+		//$this->setHttpProxy("http://my.proxy.com:80/");
+	}
+
+	/**
+	 * Find server config by email-domain incl. oauth data
+	 *
+	 * @param string $domain domain or email address
+	 * @return array|null for keys provider, client, secret, scopes, imap, smtp
+	 */
+	public static function providerByDomain($domain)
+	{
+		foreach(self::$oauth_domain_regexps as $regexp => [$imap, $smtp, $provider, $client, $secret, $scopes, $extra])
+		{
+			if (preg_match($regexp, $domain, $matches))
+			{
+				return [
+						'imap' => $imap,
+						'smtp' => $smtp,
+						'provider' => $provider ? 'https://'.strtr($provider, ['$1' => $matches[1] ?? null, '$2' => $matches[2] ?? null]): null,
+						'client' => $client,
+						'secret' => $secret,
+						'scopes' => array_merge(['openid'], explode(' ', $scopes)),
+					]+($extra ?? []);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get OIDC client object for the given domain/email
+	 *
+	 * @param string $domain domain or email address
+	 * @return self|null
+	 */
+	public static function byDomain($domain)
+	{
+		if (!($provider = self::providerByDomain($domain)))
+		{
+			return null;
+		}
+		$oidc = new self($provider['provider'], $provider['client'], $provider['secret']);
+
+		// we need to use response_code=query / GET request to keep our session token!
+		$oidc->setResponseTypes(['code']);  // to be able to use query, not 'id_token'
+
+		// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
+		if (!empty($provider[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN]))
+		{
+			$oidc->setWellKnownConfigParameters([$provider[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] => $provider['client']]);
+		}
+
+		// Google requires access_type=offline to return a refresh-token
+		if (!empty($provider[self::ADD_AUTH_PARAM]))
+		{
+			$oidc->addAuthParam($provider[self::ADD_AUTH_PARAM]);
+		}
+
+		$oidc->addScope($provider['scopes']);
+
+		return $oidc;
 	}
 
 	/**

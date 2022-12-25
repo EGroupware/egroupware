@@ -67,7 +67,7 @@
 				</row>
 				<row>
 					<description for="acc_imap_password" value="Password"/>
-					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off"/>
+					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off" blur="Leave empty to use OAuth, if supported"/>
 					<description id="acc_imap_account_id" class="emailadmin_diagnostic"/>
 					<description/>
 				</row>
@@ -220,7 +220,7 @@
 				<row class="@manual_class">
 					<description for="acc_smtp_password" value="Password"/>
 					<hbox>
-						<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off"/>
+						<passwd id="acc_smtp_password" size="32" maxlength="128" autocomplete="off" blur="Leave empty to use OAuth, if supported"/>
 						<description id="acc_smtp_account_id" class="emailadmin_diagnostic"/>
 					</hbox>
 				</row>

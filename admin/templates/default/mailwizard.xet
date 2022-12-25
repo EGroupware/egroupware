@@ -23,7 +23,7 @@
 				</row>
 				<row>
 					<description value="Password" for="acc_imap_password"/>
-					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off" blur="Can be left empty, if OAuth is supported" class="et2_required"/>
+					<passwd id="acc_imap_password" size="32" maxlength="128" autocomplete="off"  blur="Leave empty to use OAuth, if supported" class="et2_required"/>
 				</row>
 				<row class="@manual_class">
 					<description value="IMAP server" for="acc_imap_host"/>

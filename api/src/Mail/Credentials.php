@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
+use Jumbojett\OpenIDConnectClientException;
 
 /**
  * Mail account credentials are stored in egw_ea_credentials for given
@@ -80,9 +81,14 @@ class Credentials
 	const SPAMTITAN = 128;
 
 	/**
+	 * Refresh token for IMAP & SMTP via OAuth
+	 */
+	const OAUTH_REFRESH_TOKEN = 256;
+
+	/**
 	 * All credentials
 	 */
-	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA|self::SPAMTITAN;
+	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA|self::SPAMTITAN|self::OAUTH_REFRESH_TOKEN;
 
 	/**
 	 * Password in cleartext
@@ -132,6 +138,7 @@ class Credentials
 		self::SMIME => 'acc_smime_',
 		self::TWOFA => '2fa_',
 		self::SPAMTITAN => 'acc_spam_',
+		self::OAUTH_REFRESH_TOKEN => 'acc_oauth_'
 	);
 
 	/**
@@ -183,8 +190,8 @@ class Credentials
 				'account_id' => $account_id,
 				'(cred_type & '.(int)$type.') > 0',	// postgreSQL require > 0, or gives error as it expects boolean
 			), __LINE__, __FILE__, false,
-				// account_id DESC ensures 0=all allways overwrite (old user-specific credentials)
-				'ORDER BY account_id ASC', self::APP);
+				// account_id DESC ensures 0=all always overwrite (old user-specific credentials)
+				'ORDER BY account_id ASC, cred_type ASC', self::APP);
 			//error_log(__METHOD__."($acc_id, $type, ".array2string($account_id).") nothing in cache");
 		}
 		else
@@ -230,10 +237,54 @@ class Credentials
 					$results[$prefix.'cred_id'] = $row['cred_id'];
 					$results[$prefix.'account_id'] = $row['account_id'];
 					$results[$prefix.'pw_enc'] = $row['cred_pw_enc'];
+
+					// for OAuth we return the access- and not the refresh-token
+					if ($pattern == self::OAUTH_REFRESH_TOKEN)
+					{
+						unset($results[$prefix.'password']);
+						$results[$prefix.'refresh_token'] = self::UNAVAILABLE;  // no need to make it available
+						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password);
+						// if no extra imap&smtp username set, set the oauth one
+						foreach(['acc_imap_', 'acc_smtp_'] as $pre)
+						{
+							if (empty($results[$pre.'username']))
+							{
+								$results[$pre.'username'] = $row['cred_username'];
+								$results[$pre.'password'] = '**oauth**';
+							}
+						}
+					}
 				}
 			}
 		}
 		return $results;
+	}
+
+	/**
+	 * Get cached access-token, or use refresh-token to get a new one
+	 *
+	 * @param string $username
+	 * @param string $refresh_token
+	 * @return string|null
+	 */
+	static protected function getAccessToken($username, $refresh_token)
+	{
+		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($username, $refresh_token)
+		{
+			if (!($oidc = Api\Auth\OpenIDConnectClient::byDomain($username)))
+			{
+				return null;
+			}
+			try
+			{
+				$token = $oidc->refreshToken($refresh_token);
+				return $token->access_token;
+			}
+			catch (OpenIDConnectClientException $e) {
+				_egw_log_exception($e);
+			}
+			return null;
+		}, [], 3500);   // access-token have a livetime of 3600s, give it some margin
 	}
 
 	/**

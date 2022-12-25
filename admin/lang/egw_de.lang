@@ -585,6 +585,7 @@ ldap server admin password	admin	de	LDAP-Server Administrator-Passwort
 ldap server hostname or ip address	admin	de	LDAP-Server Hostname oder IP-Adresse
 ldap settings	admin	de	LDAP-Einstellungen
 leave empty for no quota	admin	de	leer lassen um Quota zu deaktivieren
+leave empty to use oauth, if supported	admin	de	Leer lassen um OAuth zu benutzen, wenn unterstützt
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
 leave unchanged	admin	de	unverändert lassen
@@ -653,6 +654,7 @@ no login history exists for this user	admin	de	Benutzer hat sich noch nie angeme
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no message returned.	admin	de	Keine Nachricht zurückgeliefert.
 no modes available	admin	de	Kein Modus verfügbar
+no oauth client secret for provider '%1'!	admin	de	Kein OAuth Client Secret für den Provider '%1'!
 no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine Gruppe hinzuzufügen
 no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufügen
 no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um eine Gruppe zu erstellen
@@ -673,6 +675,7 @@ number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzu
 number of users	admin	de	Anzahl Benutzer
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	de	Numeriere Anwendungen aufeinander folgend. Wenn sie nicht aufeinander folgend numeriert sind, funktioniert das Sortieren der Anwendungen nicht. Ändert nicht die Reihenfolge der Anwendungen
 nummeric account id	admin	de	numerische Benutzer ID
+oauth authentiction	admin	de	OAuth Authentifizierung
 offer to installing egroupware as mail-handler	admin	de	Anbieten EGroupware als Mail-Handler zu installieren
 official egroupware usage statistic	admin	de	Offizielle EGroupware Nutzungsstatistik
 one day	admin	de	ein Tag
@@ -861,6 +864,7 @@ subtype	admin	de	Untertyp
 subversion checkout	admin	de	Subversion checkout (svn)
 success	admin	de	erfolgreich
 successful connected to %1 server%2.	admin	de	Erfolgreich zu %1 Server verbunden%2.
+successfull, but no refresh-token received!	admin	de	Erfolgreiche, aber keine Refresh-Token erhalten!
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
 switch it off, if users are randomly thrown out	admin	de	schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
@@ -939,6 +943,7 @@ upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Si
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, Kleinbuchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz
+use admin credentials to connect without a session-password, e.g. for sso	admin	de	Benutze Admin Zugangsdaten zur Verbindung ohne Sitzungspasswort, z.B. für SingleSignOn
 use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
 use default	admin	de	Vorgabe verwenden
 use ldap defaults	admin	de	LDAP Standardeinstellungen benutzen
@@ -971,6 +976,7 @@ users can define their own signatures	admin	de	Anwender können ihre eigenen Sig
 users can utilize these stationery templates	admin	de	Benutzer können diese Briefpapiervorlagen verwenden
 users choice	admin	de	Benutzerauswahl
 using data from mozilla ispdb for provider %1	admin	de	Benutzer Mozilla ISPDB für Provider %1
+using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutzer IMAP: %1, SMTP: %2, OAuth: %3:
 vacation messages with start- and end-date require an admin account to be set	admin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 vacation notice	admin	de	Abwesenheitsnotiz
 value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!

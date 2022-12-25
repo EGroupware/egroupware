@@ -588,6 +588,7 @@ ldap server admin password	admin	en	LDAP server admin password
 ldap server hostname or ip address	admin	en	LDAP server host name or IP address
 ldap settings	admin	en	LDAP settings
 leave empty for no quota	admin	en	Leave empty for no quota
+leave empty to use oauth, if supported	admin	en	Leave empty to use OAuth, if supported
 leave the category untouched and return back to the list	admin	en	Leave the category untouched and return back to the list.
 leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list.
 leave unchanged	admin	en	Leave unchanged
@@ -656,6 +657,7 @@ no login history exists for this user	admin	en	No login history exists for this 
 no matches found	admin	en	No matches found!
 no message returned.	admin	en	No message returned
 no modes available	admin	en	No modes available!
+no oauth client secret for provider '%1'!	admin	en	No OAuth client secret for provider '%1'!
 no permission to add groups	admin	en	No permission to add groups!
 no permission to add users	admin	en	No permission to add users!
 no permission to create groups	admin	en	No permission to create groups!
@@ -676,6 +678,7 @@ number of sessions / egroupware logins in the last 30 days	admin	en	Number of se
 number of users	admin	en	Number of users
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	en	Number the applications serially. If they are not numbered serially, sorting the applications could work wrong. This will not change the application's order.
 nummeric account id	admin	en	Numeric account ID
+oauth authentiction	admin	en	OAuth Authentiction
 offer to installing egroupware as mail-handler	admin	en	Offer to installing EGroupware as mail-handler
 official egroupware usage statistic	admin	en	Official EGroupware usage statistic
 one day	admin	en	One day
@@ -864,6 +867,7 @@ subtype	admin	en	Sub type
 subversion checkout	admin	en	Subversion checkout
 success	admin	en	Success
 successful connected to %1 server%2.	admin	en	Successful connected to %1 server%2.
+successfull, but no refresh-token received!	admin	en	Successfull, but NO refresh-token received!
 switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	en	Switch it off, if users are randomly logged out
@@ -942,6 +946,7 @@ upload your logo or enter the url	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage
+use admin credentials to connect without a session-password, e.g. for sso	admin	en	Use admin credentials to connect without a session-password, e.g. for SSO
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
 use default	admin	en	use default
 use ldap defaults	admin	en	Use LDAP defaults
@@ -974,6 +979,7 @@ users can define their own signatures	admin	en	Users can define their own signat
 users can utilize these stationery templates	admin	en	Users can utilize these stationery templates
 users choice	admin	en	Users choice
 using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla ISPDB for provider %1
+using imap:%1, smtp:%2, oauth:%3:	admin	en	Using IMAP:%1, SMTP:%2, OAUTH:%3:
 vacation messages with start- and end-date require an admin account to be set	admin	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	admin	en	Vacation notice
 value for column %1 is not unique!	admin	en	Value for column %1 is not unique!

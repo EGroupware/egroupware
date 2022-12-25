@@ -153,23 +153,6 @@ class admin_mail
 	 */
 	public static $no_sieve_blacklist = array('gmail.com', 'googlemail.com', 'outlook.office365.com');
 
-	const ADD_CLIENT_TO_WELL_KNOWN = 'add-client-to-well-known';
-
-	/**
-	 * Regular expressions to match domain in username to imap/smtp servers and oauth provider
-	 *
-	 * @var array[] email-regexp => [imap-host, smtp-host, oauth-provider, client-id, client-secret, scopes] pairs
-	 */
-	public static $oauth_domain_regexps = [
-		'/@([^.]\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$1',
-			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
-			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access',
-			[self::ADD_CLIENT_TO_WELL_KNOWN => 'appid']],
-		'/@g(oogle)?mail\.com$/i' => ['imap.gmail.com', 'smtp.gmail.com', 'accounts.google.com',
-			'581021931838-unqjf9tivr9brnmo34rbsoj179ojp79p.apps.googleusercontent.com', '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',
-			'https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email'],
-	];
-
 	/**
 	 * Is current use a mail administrator / has run rights for EMailAdmin
 	 *
@@ -224,31 +207,6 @@ class admin_mail
 	}
 
 	/**
-	 * Find server config by email-domain incl. oauth data
-	 *
-	 * @param $email
-	 * @return array|null
-	 */
-	public static function oauthDomainMatch($email)
-	{
-		foreach(self::$oauth_domain_regexps as $regexp => [$imap, $smtp, $provider, $client, $secret, $scopes, $extra])
-		{
-			if (preg_match($regexp, $email, $matches))
-			{
-				return [
-					'imap' => $imap,
-					'smtp' => $smtp,
-					'provider' => $provider ? 'https://'.strtr($provider, ['$1' => $matches[1] ?? null, '$2' => $matches[2] ?? null]): null,
-					'client' => $client,
-					'secret' => $secret,
-					'scopes' => array_merge(['openid'], explode(' ', $scopes)),
-				]+($extra ?? []);
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Try to autoconfig an account
 	 *
 	 * @param array $content
@@ -270,7 +228,21 @@ class admin_mail
 		{
 			$content['acc_imap_username'] = $content['ident_email'];
 		}
-		if (!empty($content['acc_imap_host']))
+		// supported oauth providers
+		if (($oauth = OpenIDConnectClient::providerByDomain($content['acc_imap_username'])))
+		{
+			$content['output'] = lang('Using IMAP:%1, SMTP:%2, OAUTH:%3:', $oauth['imap'], $oauth['smtp'], $oauth['provider'])."\n";
+			$hosts[$oauth['imap']] = true;
+			$content['acc_smpt_host'] = $oauth['smtp'];
+			$content['acc_sieve_enabled'] = false;
+			$content['acc_oauth_provider_url'] = $oauth['provider'];
+			$content['acc_oauth_client_id'] = $oauth['client'];
+			$content['acc_oauth_client_secret'] = $oauth['secret'];
+			$content['acc_oauth_scopes'] = $oauth['scopes'];
+			$content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] = $oauth[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] ?? null;
+			$content[OpenIDConnectClient::ADD_AUTH_PARAM] = $oauth[OpenIDConnectClient::ADD_AUTH_PARAM] ?? null;
+		}
+		elseif (!empty($content['acc_imap_host']))
 		{
 			$hosts = array($content['acc_imap_host'] => true);
 			if ($content['acc_imap_port'] > 0 && !in_array($content['acc_imap_port'], array(143,993)))
@@ -281,19 +253,6 @@ class admin_mail
 					$ssl_type => $content['acc_imap_port'],
 				);
 			}
-		}
-		// supported oauth providers
-		elseif (($oauth = self::oauthDomainMatch($content['acc_imap_username'])))
-		{
-			$content['output'] = lang('Using IMAP:%1, SMTP:%2, OAUTH:%3:', $oauth['imap'], $oauth['smtp'], $oauth['provider'])."\n";
-			$hosts[$oauth['imap']] = true;
-			$content['acc_smpt_host'] = $oauth['smtp'];
-			$content['acc_sieve_enabled'] = false;
-			$content['acc_oauth_provider_url'] = $oauth['provider'];
-			$content['acc_oauth_client_id'] = $oauth['client'];
-			$content['acc_oauth_client_secret'] = $oauth['secret'];
-			$content['acc_oauth_scopes'] = $oauth['scopes'];
-			$content[self::ADD_CLIENT_TO_WELL_KNOWN] = $oauth[self::ADD_CLIENT_TO_WELL_KNOWN] ?? null;
 		}
 		elseif (($ispdb = self::mozilla_ispdb($content['ident_email'])) && count($ispdb['imap']))
 		{
@@ -324,7 +283,7 @@ class admin_mail
 		}
 
 		// check if support OAuth for that domain or we have a password
-		if (empty($oauth) && empty($content['acc_imap_password']))
+		if (empty($oauth) && empty($content['acc_oauth_provider_url']) && empty($content['acc_imap_password']))
 		{
 			Etemplate::set_validation_error('acc_imap_password', lang('Field must not be empty!'));
 			$connected = false;
@@ -773,7 +732,7 @@ class admin_mail
 						$content['smtp_output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
 						$content['acc_smtp_port'] = $port;
 
-						$mail = new Horde_Mail_Transport_Smtphorde($params=array(
+						$params = [
 							'username' => $content['acc_smtp_username'],
 							'password' => $content['acc_smtp_password'],
 							'host' => $content['acc_smtp_host'],
@@ -781,7 +740,12 @@ class admin_mail
 							'secure' => self::$ssl2secure[(string)array_search($content['acc_smtp_ssl'], self::$ssl2type)],
 							'timeout' => self::TIMEOUT,
 							'debug' => self::DEBUG_LOG,
-						));
+						];
+						if (!empty($content['acc_oauth_provider_url']))
+						{
+							$params['xoauth2_token'] = self::oauthToken($content, true);
+						}
+						$mail = new Horde_Mail_Transport_Smtphorde($params);
 						// create smtp connection and authenticate, if credentials given
 						$smtp = $mail->getSMTPObject();
 						$content['smtp_output'] .= "\n".lang('Successful connected to %1 server%2.', 'SMTP',
@@ -1503,7 +1467,7 @@ class admin_mail
 		if (!empty($content['acc_oauth_provider_url']))
 		{
 			$config['xoauth2_token'] = self::oauthToken($content);
-			if (empty($config['password'])) $config['password'] = 'xxx';    // some password is required, even if not used
+			if (empty($config['password'])) $config['password'] = '**oauth**';    // some password is required, even if not used
 		}
 		return new Horde_Imap_Client_Socket($config);
 	}
@@ -1511,7 +1475,7 @@ class admin_mail
 	/**
 	 * Acquire OAuth access (and refresh) token
 	 */
-	protected static function oauthToken(array &$content)
+	protected static function oauthToken(array &$content, bool $smtp=false)
 	{
 		if (empty($content['acc_oauth_client_secret']))
 		{
@@ -1521,9 +1485,14 @@ class admin_mail
 			$content['acc_oauth_client_id'], $content['acc_oauth_client_secret']);
 
 		// Office365 requires client-ID as appid GET parameter (https://github.com/jumbojett/OpenID-Connect-PHP/issues/190)
-		if (!empty($content[self::ADD_CLIENT_TO_WELL_KNOWN]))
+		if (!empty($content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN]))
 		{
-			$oidc->setWellKnownConfigParameters([$content[self::ADD_CLIENT_TO_WELL_KNOWN] => $content['acc_oauth_client_id']]);
+			$oidc->setWellKnownConfigParameters([$content[OpenIDConnectClient::ADD_CLIENT_TO_WELL_KNOWN] => $content['acc_oauth_client_id']]);
+		}
+		// Google requires access_type=offline&prompt=consent to return a refresh-token
+		if (!empty($content[OpenIDConnectClient::ADD_AUTH_PARAM]))
+		{
+			$oidc->addAuthParam($content[OpenIDConnectClient::ADD_AUTH_PARAM]);
 		}
 
 		// we need to use response_code=query / GET request to keep our session token!
@@ -1537,9 +1506,13 @@ class admin_mail
 			{
 				$content['acc_oauth_access_token'] = $oidc->refreshToken($content['acc_oauth_refresh_token']);
 			}
-			return new Horde_Imap_Client_Password_Xoauth2($content['acc_imap_username'], $content['acc_oauth_access_token']);
+			if ($smtp)
+			{
+				return new Horde_Smtp_Password_Xoauth2($content['acc_oauth_username'] ?? $content['acc_smtp_username'], $content['acc_oauth_access_token']);
+			}
+			return new Horde_Imap_Client_Password_Xoauth2($content['acc_oauth_username'] ?? $content['acc_imap_username'], $content['acc_oauth_access_token']);
 		}
-		// Run OAuth authentification, will NOT return, but call success or failure callbacks below
+		// Run OAuth authentication, will NOT return, but call success or failure callbacks below
 		$oidc->authenticateThen(__CLASS__.'::oauthAuthenticated', [$content], __CLASS__.'::oauthFailure', [$content]);
 	}
 
@@ -1552,8 +1525,16 @@ class admin_mail
 	 */
 	public static function oauthAuthenticated(OpenIDConnectClient $oidc, array $content)
 	{
+		if (empty($content['acc_oauth_username']))
+		{
+			$content['acc_oauth_username'] = $content['acc_imap_username'];
+		}
+		if (empty($content['acc_oauth_refresh_token'] = $oidc->getRefreshToken()))
+		{
+			$content['output'] .= lang('OAuth Authentiction').': '.lang('Successfull, but NO refresh-token received!');
+			$content['connected'] = false;
+		}
 		$content['acc_oauth_access_token'] = $oidc->getAccessToken();
-		$content['acc_oauth_refresh_token'] = $oidc->getRefreshToken();
 
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 
@@ -1570,6 +1551,7 @@ class admin_mail
 	public static function oauthFailure(Throwable  $exception=null, array $content)
 	{
 		$content['output'] .= lang('OAuth Authentiction').': '.($exception ? $exception->getMessage() : lang('failed'));
+		$content['connected'] = false;
 
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 

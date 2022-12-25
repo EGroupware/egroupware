@@ -555,7 +555,7 @@ class Account implements \ArrayAccess
 			// Horde use locale for translation of error messages
 			Api\Preferences::setlocale(LC_MESSAGES);
 
-			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
+			$config = [
 				'username' => $params['acc_smtp_username'] ?? null,
 				'password' => $params['acc_smtp_password'] ?? null,
 				'host' => $params['acc_smtp_host'],
@@ -563,7 +563,13 @@ class Account implements \ArrayAccess
 				'secure' => $secure,
 				'debug' => self::SMTP_DEBUG_LOG,
 				//'timeout' => self::TIMEOUT,
-			));
+			];
+			// if we have an OAuth access-token for the user, pass it on
+			if (!empty($params['acc_oauth_access_token']) && $config['username'] === $params['acc_oauth_username'])
+			{
+				$config['xoauth2_token'] = new \Horde_Smtp_Password_Xoauth2($params['acc_oauth_username'], $params['acc_oauth_access_token']);
+			}
+			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde($config);
 		}
 		return $this->smtpTransport;
 	}
@@ -1305,29 +1311,38 @@ class Account implements \ArrayAccess
 		}
 		// check for whom we have to store credentials
 		$valid_for = self::credentials_valid_for($data, $user);
-		// add imap credentials
-		$cred_type = $data['acc_imap_username'] == $data['acc_smtp_username'] &&
+		// add oauth credentials
+		if (!empty($data['acc_oauth_username'] ?? $data['acc_imap_username']) && !empty($data['acc_oauth_refresh_token']))
+		{
+			Credentials::write($data['acc_id'], $data['acc_oauth_username'] ?? $data['acc_imap_username'], $data['acc_oauth_refresh_token'],
+				$cred_type=Credentials::OAUTH_REFRESH_TOKEN, $valid_for, $data['acc_oauth_cred_id']);
+		}
+		else
+		{
+			// add imap credentials
+			$cred_type = $data['acc_imap_username'] == $data['acc_smtp_username'] &&
 			$data['acc_imap_password'] == $data['acc_smtp_password'] ? 3 : 1;
-		// if both passwords are unavailable, they seem identical, do NOT store them together, as they are not!
-		if ($cred_type == 3 && $data['acc_imap_password'] == Credentials::UNAVAILABLE &&
-			$data['acc_imap_password'] == Credentials::UNAVAILABLE &&
-			$data['acc_imap_cred_id'] != $data['acc_smtp_cred_id'])
-		{
-			$cred_type = 1;
-		}
-		Credentials::write($data['acc_id'], $data['acc_imap_username'], $data['acc_imap_password'],
-			$cred_type, $valid_for, $data['acc_imap_cred_id']);
-		// add smtp credentials if necessary and different from imap
-		if ($data['acc_smtp_username'] && $cred_type != 3)
-		{
-			Credentials::write($data['acc_id'], $data['acc_smtp_username'], $data['acc_smtp_password'],
-				2, $valid_for, $data['acc_smtp_cred_id'] != $data['acc_imap_cred_id'] ?
-					$data['acc_smtp_cred_id'] : null);
-		}
-		// delete evtl. existing SMTP credentials, after storing IMAP&SMTP together now
-		elseif ($data['acc_smtp_cred_id'])
-		{
-			Credentials::delete($data['acc_id'], $valid_for, Credentials::SMTP, true);
+			// if both passwords are unavailable, they seem identical, do NOT store them together, as they are not!
+			if ($cred_type == 3 && $data['acc_imap_password'] == Credentials::UNAVAILABLE &&
+				$data['acc_imap_password'] == Credentials::UNAVAILABLE &&
+				$data['acc_imap_cred_id'] != $data['acc_smtp_cred_id'])
+			{
+				$cred_type = 1;
+			}
+			Credentials::write($data['acc_id'], $data['acc_imap_username'], $data['acc_imap_password'],
+				$cred_type, $valid_for, $data['acc_imap_cred_id']);
+			// add smtp credentials if necessary and different from imap
+			if ($data['acc_smtp_username'] && $cred_type != 3)
+			{
+				Credentials::write($data['acc_id'], $data['acc_smtp_username'], $data['acc_smtp_password'],
+					2, $valid_for, $data['acc_smtp_cred_id'] != $data['acc_imap_cred_id'] ?
+						$data['acc_smtp_cred_id'] : null);
+			}
+			// delete evtl. existing SMTP credentials, after storing IMAP&SMTP together now
+			elseif ($data['acc_smtp_cred_id'])
+			{
+				Credentials::delete($data['acc_id'], $valid_for, Credentials::SMTP, true);
+			}
 		}
 
 		// store or delete admin credentials
