@@ -975,8 +975,8 @@ users can define their own identities	admin	de	Anwender können ihre eigenen Ide
 users can define their own signatures	admin	de	Anwender können ihre eigenen Signaturen definieren
 users can utilize these stationery templates	admin	de	Benutzer können diese Briefpapiervorlagen verwenden
 users choice	admin	de	Benutzerauswahl
-using data from mozilla ispdb for provider %1	admin	de	Benutzer Mozilla ISPDB für Provider %1
-using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutzer IMAP: %1, SMTP: %2, OAuth: %3:
+using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB für Provider %1
+using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutze IMAP: %1, SMTP: %2, OAuth: %3:
 vacation messages with start- and end-date require an admin account to be set	admin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 vacation notice	admin	de	Abwesenheitsnotiz
 value for column %1 is not unique!	admin	de	Wert für die Spalte %1 ist nicht eindeutig!
