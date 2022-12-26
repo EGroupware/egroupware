@@ -51,7 +51,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 	 * @var array[] email-regexp => [imap-host, smtp-host, oauth-provider, client-id, client-secret, scopes] pairs
 	 */
 	public static $oauth_domain_regexps = [
-		'/(^|@)([^.]+\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$2',
+		'/(^|@)([^.@]+\.onmicrosoft\.com)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/$2',
 			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
 			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
 			[self::ADD_CLIENT_TO_WELL_KNOWN => 'appid']],
@@ -88,7 +88,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 				return [
 						'imap' => $imap,
 						'smtp' => $smtp,
-						'provider' => $provider ? 'https://'.strtr($provider, ['$1' => $matches[1] ?? null, '$2' => $matches[2] ?? null]): null,
+						'provider' => $provider ? 'https://'.strtr($provider, ['$1' => $matches[1] ?? 'common', '$2' => $matches[2] ?? 'common']): null,
 						'client' => $client,
 						'secret' => $secret,
 						'scopes' => array_merge(['openid'], explode(' ', $scopes)),
