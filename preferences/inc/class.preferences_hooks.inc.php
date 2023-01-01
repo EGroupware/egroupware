@@ -358,6 +358,9 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> date_default_timezone_get(),
+				'attributes' => array(
+					'search' => true
+				)
 			),
 			'tz_selection' => array(
 				'type'   => 'multiselect',
@@ -368,6 +371,9 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => date_default_timezone_get(),
+				'attributes' => array(
+					'search' => true
+				)
 			),
 			'dateformat' => array(
 				'type'   => 'select',
