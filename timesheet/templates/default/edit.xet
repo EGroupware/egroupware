@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" >
@@ -15,48 +14,46 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Project" for="ts_project"/>
-					<hbox disabled="@pm_integration=none">
-						<link-entry id="pm_id" onchange="app.timesheet.pm_id_changed" only_app='projectmanager' blur='None' class="et2_fullWidth" width="99%"/>
-					</hbox>
-					<description/>
-					<hbox disabled="@pm_integration=full" span="all">
-						<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="et2_fullWidth"/>
-					</hbox>
+					<et2-description  value="Project" for="ts_project"></et2-description>
+					<et2-hbox  disabled="@pm_integration=none">
+						<et2-link-entry  id="pm_id" onchange="app.timesheet.pm_id_changed" width="99%" onlyApp="projectmanager" placeholder="None"></et2-link-entry>
+					</et2-hbox>
+					<et2-description></et2-description>
+					<et2-hbox  disabled="@pm_integration=full" span="all">
+						<et2-textbox  id="ts_project" maxlength="80" placeholder="@ts_project_blur"></et2-textbox>
+					</et2-hbox>
 				</row>
 				<row disabled="@ts_viewtype">
-					<description value="Unitprice" for="ts_unitprice"/>
-					<hbox disabled="@pm_integration=none" >
+					<et2-description  value="Unitprice" for="ts_unitprice"></et2-description>
+					<et2-hbox  disabled="@pm_integration=none" >
 						<projectmanager-pricelist id="pl_id" class="et2_fullWidth"
                                                   onchange="window.app.timesheet.et2.getWidgetById('ts_unitprice').set_value(this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1));"
                                                   emptyLabel="None"/>
-					</hbox>
-					<description/>
-					<hbox disabled="@pm_integration=none">
-						<textbox type="float" id="ts_unitprice" span="all" class="et2_fullWidth"/>
-					</hbox>
+					</et2-hbox>
+					<et2-description></et2-description>
+					<et2-hbox  disabled="@pm_integration=none">
+						<et2-number  id="ts_unitprice" span="all"></et2-number>
+					</et2-hbox>
 				</row>
 				<row class="row" disabled="!@ts_viewtype">
-					<description value="comment"/>
-					<textbox multiline="true" id="ts_description_short" rows="5" cols="50" class="et2_fullWidth"/>
-					<description/>
-					<description/>
-					<description/>
+					<et2-description  value="comment"></et2-description>
+					<et2-textarea  id="ts_description_short" rows="5" cols="50"></et2-textarea>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
-					<description value="Quantity" for="ts_quantity"/>
-					<textbox type="float" blur="@ts_quantity_blur" statustext="empty if identical to duration" id="ts_quantity" precision="3" class="et2_fullWidth"/>
-					<description/>
-					<description value="Category" for="cat_id"/>
-					<menulist span="all">
-						<menupopup type="select-cat" id="cat_id" options="None,,,timesheet"  class="et2_fullWidth"/>
-					</menulist>
+					<et2-description  value="Quantity" for="ts_quantity"></et2-description>
+					<et2-number  statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
+					<et2-description></et2-description>
+					<et2-description  value="Category" for="cat_id"></et2-description>
+					<et2-select-cat  span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<textbox multiline="true" id="ts_description" rows="9" cols="70" class="et2_fullWidth"/>
+		<et2-textarea  id="ts_description" rows="9" cols="70"></et2-textarea>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%" overflow="auto">
@@ -65,21 +62,21 @@
 			</columns>
 			<rows>
 				<row class="row" disabled="@status_only">
-					<link-to id="link_to"/>
+					<et2-link-to  id="link_to"></et2-link-to>
 				</row>
 				<row class="th">
-					<description value="Existing links"/>
+					<et2-description  value="Existing links"></et2-description>
 				</row>
 				<row class="row_off" >
-					<link-list id="link_to"/>
+					<et2-link-list  id="link_to"></et2-link-list>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<box  width="100%" overflow="auto">
+		<et2-box  width="100%" overflow="auto">
 			<customfields class="et2_fullWidth"/>
-		</box>
+		</et2-box>
 	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
 		<historylog id="history"/>
@@ -95,18 +92,18 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description value="Time"/>
-					<description value="Recorded"/>
-					<description value="Type"/>
-					<description value="Duration"/>
-					<description value="Sum"/>
+					<et2-description  value="Time"></et2-description>
+					<et2-description  value="Recorded"></et2-description>
+					<et2-description  value="Type"></et2-description>
+					<et2-description  value="Duration"></et2-description>
+					<et2-description  value="Sum"></et2-description>
 				</row>
 				<row>
-					<date-time id="${row}[tse_time]" readonly="true"/>
-					<date-time id="${row}[tse_timestamp]" readonly="true"/>
-					<select id="${row}[tse_type]" readonly="true"/>
-					<date-duration display_format="h:m" data_format="s" id="${row}[time]" readonly="true"/>
-					<date-duration display_format="h:m" data_format="s" id="${row}[total]" readonly="true"/>
+					<et2-date-time  id="${row}[tse_time]" readonly="true"></et2-date-time>
+					<et2-date-time  id="${row}[tse_timestamp]" readonly="true"></et2-date-time>
+					<et2-select  id="${row}[tse_type]" readonly="true"></et2-select>
+					<et2-date-duration  id="${row}[time]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
+					<et2-date-duration  id="${row}[total]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
 				</row>
 			</rows>
 		</grid>
@@ -124,27 +121,27 @@
 			</columns>
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
-					<description value="Title" for="ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" maxlength="255" class="et2_fullWidth et2_required" tabindex="1" span="4"/>
-					<textbox type="integer" id="ts_id" readonly="true"/>
-					<appicon src="timesheet"/>
+					<et2-description  value="Title" for="ts_title"></et2-description>
+					<et2-textbox  id="ts_title" maxlength="255" class="et2_required" tabindex="1" span="4" placeholder="@ts_title_blur"></et2-textbox>
+					<et2-number  id="ts_id" readonly="true" precision="0"></et2-number>
+					<et2-appicon  src="timesheet"></et2-appicon>
 				</row>
 				<row class="dialogHeader2">
-					<description value="Date" for="ts_start"/>
-					<date id="ts_start" needed="1" class="et2_fullWidth"/>
-					<description/>
-					<description value="Starttime"/>
-					<date-timeonly id="start_time" class="et2_fullWidth"/>
+					<et2-description  value="Date" for="ts_start"></et2-description>
+					<et2-date  id="ts_start" required="1"></et2-date>
+					<et2-description></et2-description>
+					<et2-description  value="Starttime"></et2-description>
+					<et2-date-timeonly  id="start_time"></et2-date-timeonly>
 				</row>
 				<row class="row dialogHeader3">
-					<description value="Duration" for="ts_duration"/>
-					<date-duration id="ts_duration" display_format="hm" class="et2_fullWidth"/>
-					<description/>
-					<description value="or endtime" class="et2_noWrap"/>
-					<date-timeonly id="end_time" class="et2_fullWidth"/>
+					<et2-description  value="Duration" for="ts_duration"></et2-description>
+					<et2-date-duration  id="ts_duration" displayFormat="hm"></et2-date-duration>
+					<et2-description></et2-description>
+					<et2-description  value="or endtime" class="et2_noWrap"></et2-description>
+					<et2-date-timeonly  id="end_time"></et2-date-timeonly>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="200">
+					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="200">
 						<tabs>
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>
@@ -161,42 +158,38 @@
 							<template id="timesheet.edit.history"/>
 							<template id="timesheet.edit.events"/>
 						</tabpanels>
-					</tabbox>
+					</et2-tabbox>
 				</row>
 				<row class="dialogOperators">
-					<description value="User" for="ts_owner"/>
-					<select id="ts_owner" no_lang="1" span="2"/>
-					<description value="Status"  disabled="@no_ts_status"/>
-					<menulist span="3">
-						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" empty_label="please select" disabled="@no_ts_status"/>
-					</menulist>
+					<et2-description  value="User" for="ts_owner"></et2-description>
+					<et2-select  id="ts_owner" span="2" noLang="1"></et2-select>
+					<et2-description  value="Status" disabled="@no_ts_status"></et2-description>
+					<et2-select  span="3" statustext="select a status of the timesheet" id="ts_status" disabled="@no_ts_status" emptyLabel="please select"></et2-select>
 				</row>
 				<row class="dialogOperators">
-					<description value="Last modified"/>
-					<hbox span="3" class="et2_fullWidth">
-						<menulist>
-							<menupopup type="select-account" id="ts_modifier" readonly="true"/>
-						</menulist>
-						<date-time id="ts_modified" readonly="true" align="left" disabled="!@ts_modified"/>
-					</hbox>
-					<hbox>
-						<description value="Created"/>
-						<date-time id="ts_created" readonly="true" align="left"/>
-					</hbox>
+					<et2-description  value="Last modified"></et2-description>
+					<et2-hbox  span="3">
+						<et2-select-account  id="ts_modifier" readonly="true"></et2-select-account>
+						<et2-date-time  id="ts_modified" readonly="true" align="left" disabled="!@ts_modified"></et2-date-time>
+					</et2-hbox>
+					<et2-hbox>
+						<et2-description  value="Created"></et2-description>
+						<et2-date-time  id="ts_created" readonly="true" align="left"></et2-date-time>
+					</et2-hbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<hbox orient="0" span="all">
-						<hbox>
-							<button hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit" background_image="1"/>
-							<button hideOnReadonly="true" statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new" background_image="1"/>
-							<button hideOnReadonly="true" statustext="Saves the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
-							<button hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply" background_image="1"/>
-							<button statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					<et2-hbox  orient="0" span="all">
+						<et2-hbox>
+							<et2-button  hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit"></et2-button>
+							<et2-button  hideOnReadonly="true" statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]" image="save_new"></et2-button>
+							<et2-button  hideOnReadonly="true" statustext="Saves the changes made" label="Save" id="button[save]" image="save"></et2-button>
+							<et2-button  hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply"></et2-button>
+							<et2-button  statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 							<html id="js"/>
-						</hbox>
-						<button hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
-						<button hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete" background_image="1"/>
-					</hbox>
+						</et2-hbox>
+						<et2-button  hideOnReadonly="true" align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete"></et2-button>
+						<et2-button  hideOnReadonly="true" align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]" image="undelete"></et2-button>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

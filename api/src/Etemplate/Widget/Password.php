@@ -107,7 +107,7 @@ class Password extends Etemplate\Widget\Textbox
 				$value = Credentials::encrypt($value_in, 0, $encryption);
 			}
 
-			if ((string)$value === '' && $this->attrs['needed'])
+			if ((string)$value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
@@ -148,4 +148,4 @@ class Password extends Etemplate\Widget\Textbox
 		$response->data($decrypted);
 	}
 }
-Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Password', array('passwd'));
+Etemplate\Widget::registerWidget(__NAMESPACE__.'\\Password', ['et2-password', 'passwd']);

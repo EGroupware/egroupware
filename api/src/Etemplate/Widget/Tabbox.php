@@ -61,7 +61,7 @@ class Tabbox extends Etemplate\Widget
 			$this->tabs_attr_evaluated = true;	// we must not evaluate tabs attribte more then once!
 
 			// add_tabs toggles replacing or adding to existing tabs
-			if(!$this->attrs['add_tabs'])
+			if(!($this->attrs['addTabs'] ?? $this->attrs['add_tabs']))
 			{
 				$this->children[1]->children = array();
 			}

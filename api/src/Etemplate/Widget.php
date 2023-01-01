@@ -18,6 +18,8 @@ use ReflectionMethod;
 
 /**
  * eTemplate widget baseclass
+ *
+ * @property-read string $required check $attrs['required'] ?? $attrs['needed']
  */
 class Widget
 {
@@ -50,10 +52,13 @@ class Widget
 	public $bool_attr_default = array(
 		'disabled' => null,	// null = no default
 		'statustext_html' => false,
+		'statustextHtml' => false,
 		'no_lang' => false,
+		'noLang' => false,
 		// strictly speeding only for input widgets, but server-side input-widgets have a validation method, but no shared parent
 		'readonly' => null,	// null = no default
 		'needed' => false,
+		'required' => false,
 	);
 
 	/**
@@ -798,6 +803,21 @@ class Widget
 	{
 		foreach($this->children as $child_num => $child) {
 			$this->children[$child_num] = clone $child;
+		}
+	}
+
+	/**
+	 * Implement some (readonly) attributes
+	 *
+	 * @param $name
+	 * @return void
+	 */
+	public function __get($name)
+	{
+		switch($name)
+		{
+			case 'required':
+				return $this->attrs['required'] ?? $this->attrs['needed'] ?? false;
 		}
 	}
 

@@ -60,7 +60,7 @@ class Customfilter extends Widget\Transformer
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		self::setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
+		self::setElementAttribute($form_name, 'options', trim($this->attrs['widgetOptions'] ?? $this->attrs['widget_options']) != '' ? ($this->attrs['widgetOptions'] ?? $this->attrs['widget_options']) : '');
 
 		self::setElementAttribute($form_name, 'type', $this->attrs['type']);
 		if($widget_type)

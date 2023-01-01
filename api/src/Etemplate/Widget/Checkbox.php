@@ -59,7 +59,7 @@ class Checkbox extends Etemplate\Widget
 			if (!isset($value))	return;	// value not transmitted --> nothing to validate
 			$valid =& self::get_array($validated, $form_name, true);
 
-			if (!$value && $this->attrs['needed'])
+			if (!$value && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
@@ -75,9 +75,9 @@ class Checkbox extends Etemplate\Widget
 					// Expand any content stuff
 					$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
 				}
-				if(array_key_exists('unselected_value',$this->attrs))
+				if(array_key_exists('unselectedValue',$this->attrs) || array_key_exists('unselected_value',$this->attrs))
 				{
-					$unselected_value = self::expand_name($this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
+					$unselected_value = self::expand_name($this->attrs['unselectedValue'] ?? $this->attrs['unselected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'],$expand['cont']);
 				}
 			}
 			if ($type == 'radio')

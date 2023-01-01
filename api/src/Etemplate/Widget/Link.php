@@ -69,7 +69,7 @@ class Link extends Etemplate\Widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
-		if($value && !is_array($value) && !$this->attrs['only_app'])
+		if($value && !is_array($value) && !($this->attrs['onlyApp'] ?? $this->attrs['only_app']))
 		{
 			// Try to explode
 			if(count(explode(':',$value)) < 2)

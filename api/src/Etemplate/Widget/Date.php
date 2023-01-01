@@ -70,7 +70,7 @@ class Date extends Transformer
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value =& self::get_array(self::$request->content, $form_name, false, true);
 
-		if($this->type != 'date-duration' && $value)
+		if(!in_array($this->type, ['et2-date-duration', 'date-duration']) && $value)
 		{
 			$value = $this->format_date($value);
 		}
@@ -115,14 +115,15 @@ class Date extends Transformer
 			return $value;
 		}    // otherwise we will get current date or 1970-01-01 instead of an empty value
 
+		$format = $this->attrs['dataFormat'] ?? $this->attrs['data_format'];
 		// for DateTime objects (regular PHP and Api\DateTime ones), set user timezone
 		if($value instanceof \DateTime)
 		{
 			$date = Api\DateTime::server2user($value);
 		}
 		// if data_format given, try that first, before leaving it to Api\DateTime to figure it out
-		elseif (!empty($this->attrs['data_format']) && $this->attrs['data_format'] !== 'object' &&
-			($date = Api\DateTime::createFromFormat($this->attrs['data_format'], $value, Api\DateTime::$user_timezone)))
+		elseif (!empty($format) && $format !== 'object' &&
+			($date = Api\DateTime::createFromFormat($format, $value, Api\DateTime::$user_timezone)))
 		{
 			// set AND checked above
 		}
@@ -130,7 +131,7 @@ class Date extends Transformer
 		{
 			$date = new Api\DateTime($value);
 		}
-		if($this->type === 'date-timeonly' && $date)
+		if (in_array($this->type, ['et2-date-timeonly', 'date-timeonly']) && $date)
 		{
 			$date->setDate(1970, 1, 1);
 		}
@@ -185,7 +186,7 @@ class Date extends Transformer
 				}
 			}
 
-			if((string)$value === '' && $this->attrs['needed'])
+			if((string)$value === '' && $this->required)
 			{
 				self::set_validation_error($form_name, lang('Field must not be empty !!!'));
 			}
@@ -265,12 +266,12 @@ class Date extends Transformer
 				// Not null, blank
 				$value = '';
 			}
-			elseif($date && empty($this->attrs['data_format']))    // integer timestamp
+			elseif($date && empty($this->attrs['data_format']) && empty($this->attrs['dataFormat']))    // integer timestamp
 			{
 				$valid = $date->format('ts');
 			}
 			// string with formatting letters like for php's date() method
-			elseif($date && ($valid = $date->format($this->attrs['data_format'])))
+			elseif($date && ($valid = $date->format($this->attrs['dataFormat'] ?? $this->attrs['data_format'])))
 			{
 				// Nothing to do here
 			}

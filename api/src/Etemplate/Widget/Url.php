@@ -73,7 +73,7 @@ class Url extends Etemplate\Widget
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 
-			if ((string)$value === '' && $this->attrs['needed'])
+			if ((string)$value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 				return;
@@ -85,7 +85,7 @@ class Url extends Etemplate\Widget
 				{
 					case 'url':
 						$this->attrs['preg'] = self::URL_PREG;
-						if($this->attrs['allow_path'])
+						if($this->attrs['allowPath'] ?? $this->attrs['allow_path'])
 						{
 							$url_valid = $value[0] === '/';
 
@@ -103,10 +103,10 @@ class Url extends Etemplate\Widget
 								// Remove intl chars & check again, but if it passes we'll keep the original
 								filter_var(preg_replace('/[^[:print:]]/','',$value), FILTER_VALIDATE_URL);
 						}
-						if(array_key_exists('trailing_slash', $this->attrs))
+						if(array_key_exists('trailing_slash', $this->attrs) || array_key_exists('trailingSlash', $this->attrs))
 						{
 							$trailing_slash = substr($value, -1) === '/';
-							$url_valid = (($this->attrs['trailing_slash'] == 'true') == $trailing_slash);
+							$url_valid = ((($this->attrs['trailingSlash'] ?? $this->attrs['trailing_slash']) == 'true') == $trailing_slash);
 						}
 						//error_log(__METHOD__."() filter_var(value=".array2string($value).", FILTER_VALIDATE_URL)=".array2string(filter_var($value, FILTER_VALIDATE_URL))." --> url_valid=".array2string($url_valid));
 						// remove http:// validation prefix again

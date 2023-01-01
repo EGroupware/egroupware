@@ -153,7 +153,7 @@ class Taglist extends Etemplate\Widget
 					// If in allowed options, skip account check to support app-specific options
 					if(count($allowed) > 0 && in_array($val, $allowed)) continue;
 					// validate accounts independent of options know to server
-					$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
+					$account_type = $this->attrs['accountType'] ?? $this->attrs['account_type'] ?? 'accounts';
 					$type = $GLOBALS['egw']->accounts->exists($val);
 					//error_log(__METHOD__."($cname,...) form_name=$form_name, widget_type=$widget_type, account_type=$account_type, type=$type");
 					if (!$type || $type == 1 && in_array($account_type, array('groups', 'owngroups', 'memberships')) ||
@@ -179,7 +179,7 @@ class Taglist extends Etemplate\Widget
 					self::set_validation_error($form_name, lang("'%1' is NOT allowed ('%2')!", $val, implode("','", array_keys($allowed))), '');
 					unset($value[$key]);
 				}
-				if(str_contains($this->type, 'email') && $this->attrs['include_lists'] && is_numeric($val))
+				if(str_contains($this->type, 'email') && ($this->attrs['includeLists'] ?? $this->attrs['include_lists']) && is_numeric($val))
 				{
 					$lists = $GLOBALS['egw']->contacts->get_lists(Api\Acl::READ);
 					if(!array_key_exists($val, $lists))
@@ -199,7 +199,7 @@ class Taglist extends Etemplate\Widget
 					}
 				}
 			}
-			if ($ok && $value === '' && $this->attrs['needed'])
+			if ($ok && $value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}

@@ -156,7 +156,7 @@ class HtmlArea extends Etemplate\Widget
 			{
 				$value = Api\Html\HtmLawed::purify(
 					self::get_array($content, $form_name),
-					$this->attrs['validation_rules']
+					$this->attrs['validationRules'] ?? $this->attrs['validation_rules']
 				);
 			}
 			$valid =& self::get_array($validated, $form_name, true);

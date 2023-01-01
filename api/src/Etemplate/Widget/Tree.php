@@ -278,7 +278,7 @@ class Tree extends Etemplate\Widget
 				}
 				$value = implode(',',$value);
 			}
-			if ($ok && $value === '' && $this->attrs['needed'])
+			if ($ok && $value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
@@ -297,8 +297,9 @@ class Tree extends Etemplate\Widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		if (($templated_path = self::templateImagePath($this->attrs['image_path'] ?? null)) !== ($this->attrs['image_path'] ?? null))
+		if (($templated_path = self::templateImagePath($this->attrs['imagePath'] ?? $this->attrs['image_path'] ?? null)) !== ($this->attrs['imagePath'] ?? $this->attrs['image_path'] ?? null))
 		{
+			self::setElementAttribute($form_name, 'imagePath', $this->attrs['imagePath'] = $templated_path);
 			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path'] = $templated_path);
 			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
 		}

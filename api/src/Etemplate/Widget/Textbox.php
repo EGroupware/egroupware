@@ -126,7 +126,7 @@ class Textbox extends Etemplate\Widget
 
 			$value = $value_in = self::get_array($content, $form_name);
 
-			if ((string)$value === '' && $this->attrs['needed'])
+			if ((string)$value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 			}
@@ -153,7 +153,7 @@ class Textbox extends Etemplate\Widget
 			}
 			elseif ($this->attrs['type'] == 'integer' || $this->attrs['type'] == 'float')	// cast int and float and check range
 			{
-				if ((string)$value !== '' || $this->attrs['needed'])	// empty values are Ok if needed is not set
+				if ((string)$value !== '' || $this->required)	// empty values are Ok if needed is not set
 				{
 					$value = $this->attrs['type'] == 'integer' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 

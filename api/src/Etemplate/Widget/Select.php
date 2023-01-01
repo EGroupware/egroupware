@@ -198,7 +198,7 @@ class Select extends Etemplate\Widget
 						if(count($allowed) > 0 && in_array($val, $allowed)) continue 2;	// +1 for switch
 
 						// validate accounts independent of options know to server
-						$account_type = $this->attrs['account_type'] ? $this->attrs['account_type'] : 'accounts';
+						$account_type = $this->attrs['accountType'] ?? $this->attrs['account_type'] ?? 'accounts';
 						$type = $GLOBALS['egw']->accounts->exists($val);
 						//error_log(__METHOD__."($cname,...) form_name=$form_name, widget_type=$widget_type, account_type=$account_type, type=$type");
 						if (!$type || $type == 1 && in_array($account_type, array('groups', 'owngroups', 'memberships')) ||
@@ -242,7 +242,7 @@ class Select extends Etemplate\Widget
 						}
 				}
 			}
-			if ($ok && $value === '' && $this->attrs['needed'])
+			if ($ok && $value === '' && $this->required)
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
@@ -378,9 +378,10 @@ class Select extends Etemplate\Widget
 					self::$request->sel_options[$form_name] = array_merge(self::$request->sel_options[$form_name], $type_options);
 
 					// if no_lang was modified, forward modification to the client
-					if ($no_lang != $this->attrs['no_lang'])
+					if ($no_lang != ($this->attrs['noLang'] ?? $this->attrs['no_lang']))
 					{
 						self::setElementAttribute($form_name, 'no_lang', $no_lang);
+						self::setElementAttribute($form_name, 'noLang', $no_lang);
 					}
 				}
 				$form_names_done[$form_name] = true;

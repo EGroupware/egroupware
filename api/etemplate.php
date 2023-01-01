@@ -34,31 +34,80 @@ $GLOBALS['egw_info'] = array(
 );
 
 $start = microtime(true);
-include '../header.inc.php';
+include dirname(__DIR__).'/header.inc.php';
 
 send_template();
+
+/**
+ * Give usage plus option error and exit
+ *
+ * @param string $prog
+ * @param string? $err
+ * @return void
+ */
+function usage($prog, $err=null)
+{
+	error_log("Usage: $prog [(-i|--in-place)] <xet-file>\n");
+	error_log("\t convert <xet-file> to new syntax and output or replace it in-place.\n\n");
+	if ($err) error_log("$err\n\n");
+	exit;
+}
 
 function send_template()
 {
 	$header_include = microtime(true);
 
-	// release session, as we don't need it and it blocks parallel requests
-	$GLOBALS['egw']->session->commit_session();
+	if (PHP_SAPI === 'cli')
+	{
+		$in_place = false;
+		$args = $_SERVER['argv'];
+		$prog = array_shift($args);
+		while($args[0][0] === '-')
+		{
+			switch($arg = array_shift($args))
+			{
+				case '-i':
+				case '--in-place':
+					$in_place = true;
+					break;
+				default:
+					usage($prog, "Invalid argument '$arg'!");
+			}
+			if (count($args) !== 1)
+			{
+				usage($prog);
+			}
+		}
+		$fspath = array_shift($args);
+		if ($fspath[0] !== '/') $fspath = '/'.$fspath;
+	}
+	else
+	{
+		// release session, as we don't need it and it blocks parallel requests
+		$GLOBALS['egw']->session->commit_session();
 
-	header('Content-Type: application/xml; charset=UTF-8');
+		header('Content-Type: application/xml; charset=UTF-8');
 
-	//$path = EGW_SERVER_ROOT.$_SERVER['PATH_INFO'];
+		$fspath = $_SERVER['PATH_INFO'];
+	}
 	// check for customized template in VFS
-	list(, $app, , $template, $name) = explode('/', $_SERVER['PATH_INFO']);
+	list(, $app, , $template, $name) = explode('/', $fspath);
 	$path = Api\Etemplate::rel2path(Api\Etemplate::relPath($app . '.' . basename($name, '.xet'), $template));
 	if(empty($path) || !file_exists($path) || !is_readable($path))
 	{
-		http_response_code(404);
+		if (PHP_SAPI === 'cli')
+		{
+			usage("Path '$path' NOT found!");
+		}
+		else
+		{
+			http_response_code(404);
+		}
 		exit;
 	}
 	$cache = $GLOBALS['egw_info']['server']['temp_dir'].'/egw_cache/eT2-Cache-'.
 		$GLOBALS['egw_info']['server']['install_id'].'-'.str_replace('/', '-', $_SERVER['PATH_INFO']);
-	if (file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
+	if (PHP_SAPI !== 'cli' && file_exists($cache) && filemtime($cache) > max(filemtime($path), filemtime(__FILE__)) &&
 		($str = file_get_contents($cache)) !== false)
 	{
 		$cache_read = microtime(true);
@@ -453,7 +502,37 @@ function send_template()
 	// stop here for not existing file or path-traversal for both file and cache here
 	if(empty($str) || strpos($path, '..') !== false)
 	{
-		http_response_code(404);
+		if (PHP_SAPI === 'cli')
+		{
+			usage("Path '$path' NOT found!");
+		}
+		else
+		{
+			http_response_code(404);
+		}
+		exit;
+	}
+
+	// remove old CSV Id
+	$str = trim(str_replace("<!-- \$Id$ -->\n", '', $str))."\n";
+
+	// replace DTD
+	$str = preg_replace('/^<!DOCTYPE.*>$/m',
+		'<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">', $str);
+
+	// cli just echos or updates the file
+	if (PHP_SAPI === 'cli')
+	{
+		if (!$in_place)
+		{
+			echo $str;
+		}
+		elseif (!is_writable($path) ||
+			!rename($path, dirname($path).'/'.basename($path, '.xet').'.old.xet') ||
+			file_put_contents($path, $str) !== strlen($str))
+		{
+			error_log("Error writing file '$path'!\n");
+		}
 		exit;
 	}
 

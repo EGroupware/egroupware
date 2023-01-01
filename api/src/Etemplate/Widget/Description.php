@@ -42,7 +42,7 @@ class Description extends Etemplate\Widget
 	 */
 	public function beforeSendToClient($cname, array $expand=null)
 	{
-		if (!empty($this->attrs['activate_links']))
+		if (!empty($this->attrs['activate_links']) && !empty($this->attrs['activateLinks']))
 		{
 			$form_name = self::form_name($cname, $this->id, $expand);
 			$value =& self::get_array(self::$request->content, $form_name);
