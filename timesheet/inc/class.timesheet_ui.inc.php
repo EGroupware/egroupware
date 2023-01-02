@@ -907,7 +907,7 @@ class timesheet_ui extends timesheet_bo
 			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $rows['no_ts_unitprice'] = 1;
 			if ($query['selectcols'] && in_array('ts_total_price',$query['selectcols'])===false) $rows['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
+		$rows['no_ts_status'] = is_array($query['selectcols']) && in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
 			$query['no_status'];
 
 		if ($query['search'])
