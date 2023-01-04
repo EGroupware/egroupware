@@ -228,7 +228,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			this._handleClick = this._handleClick.bind(this);
 
 			// make all sizable widgets large by default on mobile template
-			if (egwIsMobile())
+			if(typeof egwIsMobile == "function" && egwIsMobile())
 			{
 				this.size = "large";
 			}
@@ -1478,7 +1478,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				}
 				break;
 			case Function:
-				if(typeof attrValue == "string" && mgr.getPerspectiveData().row == null &&
+				if(typeof attrValue == "string" && mgr && mgr.getPerspectiveData().row == null &&
 					(attrValue.indexOf("$row") > -1 || attrValue.indexOf("$row_cont") > -1)
 				)
 				{

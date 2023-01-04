@@ -383,7 +383,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			...super.slots,
 			input: () =>
 			{
-				if(egwIsMobile())
+				if(typeof egwIsMobile == "function" && egwIsMobile())
 				{
 					// Plain input for mobile
 					const text = document.createElement('input');
@@ -434,7 +434,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	async init()
 	{
 		// Plain input for mobile
-		if(egwIsMobile())
+		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
 			return;
 		}
@@ -602,7 +602,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		}
 		// Handle timezone offset, flatpickr uses local time
 		let formatDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
-		if(egwIsMobile())
+		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
 			this.updateComplete.then(() =>
 			{
@@ -928,7 +928,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	protected _incrementButtonTemplate()
 	{
 		// No increment buttons on mobile
-		if(egwIsMobile())
+		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
 			return '';
 		}

@@ -10,6 +10,9 @@ let element : Et2Date;
 
 async function before()
 {
+	// Stub global function
+	sinon.stub(window, "egwIsMobile").returns(false);
+
 	// Create an element to test with, and wait until it's ready
 	// @ts-ignore
 	element = await fixture<Et2Date>(html`

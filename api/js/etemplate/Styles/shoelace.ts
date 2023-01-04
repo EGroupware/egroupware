@@ -39,21 +39,20 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-  	  --sl-font-size-medium: ${egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
-  		
-      --sl-input-height-small: 24px;
-      --sl-input-height-medium: 32px;
-      --sl-button-font-size-medium: ${egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
-      --sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
-      --sl-spacing-small: 0.1rem;
-      --sl-spacing-medium: 0.5rem;
-      
-      --sl-input-border-radius-small: 2px;
-      --sl-input-border-radius-medium: 3px;
-      --sl-input-border-color-focus: #E6E6E6;
-      --indicator-color: #696969;
-      --sl-input-focus-ring-color: #26537C;
-      --sl-focus-ring-width: 2px;
+
+	--sl-input-height-small: 24px;
+	--sl-input-height-medium: 32px;
+	--sl-button-font-size-medium: ${typeof egw != "undefined" && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
+	--sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
+	--sl-spacing-small: 0.1rem;
+	--sl-spacing-medium: 0.5rem;
+
+	--sl-input-border-radius-small: 2px;
+	--sl-input-border-radius-medium: 3px;
+	--sl-input-border-color-focus: #E6E6E6;
+	--indicator-color: #696969;
+	--sl-input-focus-ring-color: #26537C;
+	--sl-focus-ring-width: 2px;
       --sl-color-gray-150: #f0f0f0;
       
   }

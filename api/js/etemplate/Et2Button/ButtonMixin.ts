@@ -12,7 +12,6 @@
 import {css, LitElement, PropertyValues} from "@lion/core";
 import '../Et2Image/Et2Image';
 import shoelace from "../Styles/shoelace";
-import {Et2Button} from "./Et2Button";
 
 type Constructor<T = LitElement> = new (...args : any[]) => T;
 export const ButtonMixin = <T extends Constructor>(superclass : T) => class extends superclass

@@ -12,13 +12,6 @@ import fs from 'fs';
 import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
 
-// Get tests for web components (in their own directory)
-const webComponents = fs.readdirSync('api/js/etemplate')
-	.filter(
-		dir => fs.statSync(`api/js/etemplate/${dir}`).isDirectory() && fs.existsSync(`api/js/etemplate/${dir}/test`),
-	)
-	.map(dir => `api/js/etemplate/${dir}/test`);
-
 // Add any test files in app/js/test/
 const appJS = fs.readdirSync('.')
 	.filter(
@@ -50,13 +43,12 @@ export default {
 		//playwrightLauncher({ product: 'webkit' }),
 	],
 	groups:
-		webComponents.map(pkg =>
-		{
-			return {
-				name: `${pkg}`,
-				files: `${pkg}/*.test.ts`
-			};
-		}).concat(
+		[
+			{
+				name: 'api',
+				files: 'api/js/etemplate/**/test/*.test.js'
+			}
+		].concat(
 			appJS.map(app =>
 				{
 					return {
@@ -65,8 +57,7 @@ export default {
 					}
 				}
 			)
-		)
-	,
+		),
 
 	plugins: [
 		// Handles typescript
